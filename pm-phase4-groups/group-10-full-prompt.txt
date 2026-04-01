@@ -1,0 +1,948 @@
+## Doc: Plans/Contracts_V0.md
+### Intent 1 (Run: r-20260312-160857-01, Anchor: `## 6. HITLRequest`, Op: replace_section)
+```markdown
+**Definition:** `HITLRequest` is the canonical persisted/requestable contract for a human-approval pause at an orchestrator boundary.
+
+**Minimum fields:**
+```json
+{
+  "request_id": "HITL-...",
+  "run_id": "PM-...",
+  "tier_id": "subtask-001",
+  "tier_type": "subtask",
+  "request_kind": "tier_boundary_approval",
+  "message": "Subtask complete — approval required to continue.",
+  "allowed_actions": ["approve_continue", "reject", "cancel_run"]
+}
+```
+
+Rules:
+- `request_kind` is `tier_boundary_approval` for V0.
+- `allowed_actions[]` is the HITL-only action list contract for approval requests.
+- runtime blocked/recovery payloads use ordered `allowed_action_ids[]` instead.
+- `recovery_options[]` is not canonical runtime vocabulary.
+- `hitl.approval_requested`, `hitl.approved`, `hitl.rejected`, and `hitl.cancelled` events MUST carry a stable `request_id`.
+- rejections MAY add `reject_resolution` (`rerun | skip | abort`) and optional `rationale`.
+
+ContractRef: ContractName:Plans/human-in-the-loop.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Crosswalk.md
+
+Compatibility rule:
+- Cross-document readers MUST NOT treat HITL `allowed_actions[]` as the canonical runtime blocked-action field.
+- The canonical runtime blocked-action field remains `allowed_action_ids[]` in blocked projections and blocked events.
+
+ContractRef: ContractName:Plans/Decision_Policy.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/Executor_Protocol.md
+```
+### Intent 2 (Run: r-20260312-203855-01, Anchor: `## 6. HITLRequest`, Op: replace_section)
+```markdown
+Approval and recovery are anchored to runtime blocked episodes rather than to tier-boundary request objects.
+
+### 6.1 Canonical blocked-episode approval anchor
+Required runtime-facing fields are:
+- `run_id`
+- `node_id`
+- `blocked_sequence`
+- `attempt_id?`
+- `blocked_reason_code`
+- `allowed_action_ids[]`
+- `approval_scope_key`
+- `approver_identity?`
+- `detail_ref?`
+
+Rules:
+- `waiting_approval` is a blocked runtime state, not a separate orchestration ontology.
+- `blocked_sequence` is the canonical approval anchor for resume, approve, decline, skip, abort, and retry flows.
+- `allowed_action_ids[]` is canonical. `allowed_actions[]` is not canonical.
+- `request_id` is compatibility lineage only and MUST NOT be the primary approval target.
+
+ContractRef: ContractName:Plans/human-in-the-loop.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/storage-plan.md
+
+### 6.2 Scope and persistence rules
+Rules:
+- approvals bind to canonical runtime identity first: `run_id`, `node_id`, `blocked_sequence`, and `attempt_id?`
+- a blocked-episode approval does not imply a broader policy approval unless the `approval_scope_key` says so explicitly
+- unresolved blocked episodes survive restart and are rehydrated rather than reminted opportunistically
+- a failed approval attempt or failed switch of recovery action remains historically material and must persist in records/history
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Decision_Policy.md, ContractName:Plans/Progression_Gates.md
+
+### 6.3 Compatibility boundary
+Older request-centric payloads may continue to carry `request_id` for lineage and migration, but any consumer that mutates runtime state must resolve through the blocked-episode identity model.
+
+ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Run_Graph_View.md, ContractName:Plans/Orchestrator_Page.md
+
+```
+### Intent 3 (Run: r-20260312-203855-01, Anchor: `## 7. UICommand`, Op: replace_section)
+```markdown
+`UICommand` is the canonical command envelope. Shared navigation and identity-open primitives sit underneath public wrapper commands rather than beside them.
+
+### 7.1 UICommand envelope
+Required envelope fields are:
+- `command_id`
+- `command_kind`
+- `args`
+- `context?`
+- `normalization?`
+
+`command_kind` is closed to:
+- `shell_view`
+- `navigation_wrapper`
+- `domain_action`
+
+`normalization` is closed to:
+- `wrapper`
+- `deprecated_alias`
+
+Rules:
+- deprecated aliases point at `alias_of_command_id`
+- stable wrapper commands point at `normalizes_to_contract`
+- wrapper commands remain user-facing command IDs; they do not disappear behind a public `cmd.nav.*` family
+
+ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Progression_Gates.md, ContractName:Plans/Crosswalk.md
+
+### 7.2 `route_target`
+`route_target` is the canonical navigation-and-focus contract.
+
+Required fields:
+- `target_kind`
+- `project_id`
+
+Allowed focus fields:
+- `focused_run_id`
+- `thread_id`
+- `tab_id`
+- `inspector_target`
+
+Exactly one selector is required:
+- `subject_id`
+- or `object_kind` + `object_id`
+
+`target_kind` is closed to:
+- `primary_view`
+- `side_panel`
+- `bottom_panel`
+- `embedded_surface`
+- `page_tab`
+
+`subject_id` is closed to:
+- `doc:<document_id>`
+- `artifact:<artifact_id>`
+
+`object_kind` is closed to:
+- `thread`
+- `message`
+- `wizard`
+- `usage_event`
+- `run`
+- `node`
+- `attempt`
+- `scheduler_pass`
+- `blocked_episode`
+- `safe_point`
+- `remediation`
+- `feature_seam`
+- `work_package`
+- `lane`
+- `worktree`
+- `concern`
+- `promotion`
+- `graph_patch`
+- `graph_generation`
+
+`inspector_target` is closed to:
+- `summary`
+- `evidence`
+- `artifacts`
+- `history`
+- `reviews`
+- `usage`
+- `lineage`
+- `details`
+
+Rules:
+- `project_id` is required
+- route activation must override remembered shell state when needed to reveal the requested object, scope, and destination surface
+- route activation may reuse remembered shell state when that state still reveals the requested object cleanly
+- `resume_url` is serialized transport only and decodes to `route_target`; it is not a stronger parallel primitive
+
+ContractRef: ContractName:Plans/Crosswalk.md, ContractName:Plans/FileManager.md, ContractName:Plans/FinalGUISpec.md
+
+### 7.3 `OpenSubject`
+`OpenSubject` is the canonical identity-native source-open contract.
+
+Required fields:
+- `subject_id`
+- `open_intent`
+
+`open_intent` is closed to:
+- `open_source`
+- `open_preview`
+- `open_review`
+
+Rules:
+- `OpenSubject` resolves canonical identity to the best source realization
+- `OpenSubject` may resolve to `OpenFile` or to a transient `generated://<artifact_id>` buffer
+- transport details do not belong in the `OpenSubject` contract itself
+
+ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md
+
+```
+### Intent 4 (Run: r-20260313-152345-01, Anchor: `#### Persona/runtime snapshot payload contract`, Op: replace_section)
+```markdown
+The following object is the canonical persisted payload fragment for any event that claims to expose requested/effective Persona, runtime-resolution, or provider auth/account identity state:
+
+```json
+{
+  "requested_persona": "rust-engineer",
+  "effective_persona": "rust-engineer",
+  "persona_selection_source": "auto_surface_resolver",
+  "selection_reason": "Auto: Rust repo + code task",
+  "persona_override_scope": "none",
+  "persona_override_owner_id": null,
+  "requested_platform": "gemini",
+  "effective_platform": "gemini",
+  "requested_model": "google/gemini-2.5-pro",
+  "effective_model": "google/gemini-2.5-pro",
+  "requested_variant": "powerful",
+  "effective_variant": "powerful",
+  "requested_auth_mode": "auto",
+  "effective_auth_mode": "oauth",
+  "requested_account_policy": "project_default",
+  "effective_account_id": "acct-gemini-oauth-main",
+  "effective_account_label": "Primary Gemini",
+  "effective_provider_identity": "user@example.com",
+  "effective_project_id": "proj-123",
+  "account_switch_reason": null,
+  "effective_temperature": null,
+  "effective_top_p": null,
+  "effective_reasoning_effort": null,
+  "effective_talkativeness": "talk_more",
+  "applied_persona_controls": [],
+  "skipped_persona_controls": []
+}
+```
+
+Rules:
+- `requested_persona` and `effective_persona` remain the canonical persisted field names across all surfaces. They store canonical Persona IDs.
+- Persisted payloads MUST NOT introduce parallel canonical fields named `requested_persona_id` or `effective_persona_id`. Older readers may accept them only as migration aliases before normalization.
+- `requested_auth_mode` and `effective_auth_mode` are the canonical persisted auth-surface fields for provider-using runs.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD, ContractName:Plans/Models_System.md
+
+- `requested_account_policy` stores the requested routing/control policy (`project_default`, role override, manual preferred-account override, or equivalent), while `effective_account_id` identifies the provider account actually used.
+- `effective_account_label`, `effective_provider_identity`, and `effective_project_id` are optional non-secret disclosure fields for audit/UI correlation only.
+- `effective_provider_identity` is provider-native identity metadata only; it MUST NOT replace the canonical internal `account_id`.
+
+ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/storage-plan.md, PolicyRule:no_secrets_in_storage
+
+- `run.started` MUST include the full snapshot when a run reaches prompt/runtime assembly.
+- `run.completed` MUST include the final effective snapshot used by the completed run.
+- `chat.subagent_started`, `chat.subagent_completed`, `run.tier_started`, `run.tier_completed`, and `run.persona_stage_changed` MUST either inline these fields or carry them as a child object named `persona_runtime_snapshot`.
+- If a run proceeds without auth/account specificity, the auth/account fie
+```
+[... truncated, full length: 3357 chars]
+### Intent 5 (Run: r-20260313-152345-01, Anchor: `### 4.1 AuthState`, Op: replace_section)
+```markdown
+Represents the canonical authentication status for a provider summary or a single provider account visible in Settings / Setup / Health.
+
+**Minimum fields:**
+```json
+{
+  "provider": "gemini",
+  "auth_surface": "oauth",
+  "account_id": "acct-gemini-oauth-main",
+  "account_label": "Primary Gemini",
+  "provider_identity": "user@example.com",
+  "state": "LoggedIn",
+  "credential_state": "present",
+  "configuration_state": "ready",
+  "availability_state": "eligible",
+  "effective_project_id": "proj-123",
+  "updated_at": "2026-02-23T00:00:00Z"
+}
+```
+
+Rules:
+- `state` uses the canonical auth lifecycle set (`AuthJobState`): `LoggedOut` | `LoggingIn` | `LoggedIn` | `LoggingOut` | `AuthExpired` | `AuthFailed`.
+- `account_id` is the stable internal key.
+- `account_label` is the user-facing editable label.
+- `provider_identity` is provider-native identity metadata only (email, subject, or provider descriptor) and MUST NOT be treated as the canonical internal key.
+
+ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md
+
+- `credential_state` uses the canonical account-scoped values `missing | present | expired | invalid | revoked`.
+- `configuration_state` uses the canonical account-scoped values `ready | needs_configuration | validation_required`.
+- `availability_state` uses the canonical account-scoped values `eligible | cooldown | hard_blocked | disabled`.
+- Provider-level cards MAY aggregate multiple account records, but aggregated display MUST preserve auth-surface and account distinctions whenever they change routing, quota semantics, or recovery behavior.
+
+ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/Contracts_V0.md#AuthState, ContractName:Plans/FinalGUISpec.md
+
+- Gemini OAuth and API-key profiles MUST be represented as separate account records under one provider rather than as pseudo-providers.
+- Secrets (tokens, API keys, refresh tokens, bearer credentials) MUST NOT be stored in `AuthState` when persisted; secrets live only in the OS credential store.
+
+ContractRef: PolicyRule:no_secrets_in_storage, ContractName:Plans/Architecture_Invariants.md#INV-002, ContractName:Plans/rewrite-tie-in-memo.md
+```
+### Intent 6 (Run: r-20260313-152345-01, Anchor: `### 4.2 AuthPolicy`, Op: replace_section)
+```markdown
+Defines deterministic defaults for auth method selection per provider.
+
+Canonical enum contracts for implementation:
+```text
+ProviderAuthMethod = OAuthBrowser | OAuthDeviceCode | ApiKey | GoogleCredentials | CliInteractive
+RequestedAuthMode = auto | oauth | api_key | device_code | google_credentials | cli_interactive
+```
+
+Rules:
+- Cursor and Claude Code use `CliInteractive` (CLI-bridged only).
+- Codex supports `OAuthBrowser`, `OAuthDeviceCode`, and `ApiKey` for direct-provider auth/calls.
+- GitHub Copilot uses `OAuthDeviceCode` for direct-provider auth/calls.
+- Gemini uses direct-provider auth/calls with `OAuthBrowser`, `ApiKey`, and `GoogleCredentials` where the provider/runtime capability matrix supports them.
+- OpenCode uses server credentials for server access plus provider-native auth managed by OpenCode.
+
+ContractRef: ContractName:Plans/GitHub_API_Auth_and_Flows.md, ContractName:Plans/CLI_Bridged_Providers.md, SchemaID:Spec_Lock.json#locked_decisions.auth_model
+
+- Gemini is one provider with mixed OAuth and API-key account pools.
+- Gemini's default `requested_auth_mode` is `auto`, and the provider-default auth-surface preference is OAuth first, then API key, unless project/run policy overrides it.
+- Explicit `oauth` requests MUST filter to OAuth-eligible accounts only.
+- Explicit `api_key` requests MUST filter to API-key-eligible accounts only.
+- There is no silent cross-surface fallback between explicit `oauth` and explicit `api_key` requests.
+
+ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/rewrite-tie-in-memo.md, ContractName:Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD
+
+- `auto` resolves auth-surface preference before account selection and then chooses an eligible account inside the first viable surface.
+- Same-provider accounts are not interchangeable. Policy precedence is: provider default -> account override -> role-by-provider override -> role-by-account override -> run snapshot -> attempt/message resolution.
+- Manual `set active` / preferred-account selection is an override/debug control, not the default operating model.
+- For GitHub, default interactive auth MUST be OAuth device-code flow.
+
+ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/GitHub_API_Auth_and_Flows.md, ContractName:Plans/FinalGUISpec.md
+```
+### Intent 7 (Run: r-20260313-152345-01, Anchor: `### 4.4 Setup/Health lifecycle contracts`, Op: replace_section)
+```markdown
+Canonical enum contracts for implementation:
+```text
+InstallableComponent = CursorCli | ClaudeCli | Playwright
+InstallJobState = NotInstalled | Installing | Installed | Uninstalling | Failed
+AuthJobState = LoggedOut | LoggingIn | LoggedIn | LoggingOut | AuthExpired | AuthFailed
+AuthRealm = github_api | copilot_github
+AuthSurface = oauth | api_key | google_credentials | device_code | cli_interactive
+CredentialState = missing | present | expired | invalid | revoked
+ConfigurationState = ready | needs_configuration | validation_required
+AvailabilityState = eligible | cooldown | hard_blocked | disabled
+```
+
+Rules:
+- `InstallableComponent` applies to Setup/Health install controls only.
+- `InstallJobState` and `AuthJobState` are real-time UI/backend states and MUST be streamed deterministically.
+- `AuthJobState` is the user-facing derived chip. Backend state machines MUST derive it from auth-surface, credential, configuration, and availability state rather than inventing provider-specific ad-hoc enums.
+- Setup and Health MUST be able to show both provider summary state and account-scoped state when a provider supports multiple accounts.
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Multi-Account.md, ContractName:Plans/storage-plan.md
+
+- `AuthRealm` values MUST be isolated: tokens/state for `github_api` and `copilot_github` are separate and MUST NOT be cross-consumed.
+- `credential_state`, `configuration_state`, and `availability_state` are canonical account-scoped dimensions and MUST NOT be collapsed into provider-global booleans when they alter routing, quota, or recovery semantics.
+- `needs_configuration` is the canonical user-facing partial-setup status for Gemini OAuth accounts; do not use provider-specific `needs_project` as the canonical persisted/display state name.
+
+ContractRef: ContractName:Plans/GitHub_API_Auth_and_Flows.md, ContractName:Plans/Multi-Account.md, ContractName:Plans/rewrite-tie-in-memo.md
+```
+### Intent 8 (Run: r-20260313-152345-02, Anchor: `#### Persona/runtime snapshot payload contract`, Op: replace_section)
+```markdown
+The following object is the canonical persisted payload fragment for any event that claims to expose requested/effective Persona, runtime-resolution, or provider auth/account identity state:
+
+```json
+{
+  "requested_persona": "rust-engineer",
+  "effective_persona": "rust-engineer",
+  "persona_selection_source": "auto_surface_resolver",
+  "selection_reason": "Auto: Rust repo + code task",
+  "persona_override_scope": "none",
+  "persona_override_owner_id": null,
+  "requested_platform": "gemini",
+  "effective_platform": "gemini",
+  "requested_model": "google/gemini-2.5-pro",
+  "effective_model": "google/gemini-2.5-pro",
+  "requested_variant": "powerful",
+  "effective_variant": "powerful",
+  "requested_auth_mode": "auto",
+  "effective_auth_mode": "oauth",
+  "requested_account_policy": "project_default",
+  "effective_account_id": "acct-gemini-oauth-main",
+  "effective_account_label": "Primary Gemini",
+  "effective_provider_identity": "user@example.com",
+  "effective_project_id": "proj-123",
+  "account_switch_reason": null,
+  "effective_temperature": null,
+  "effective_top_p": null,
+  "effective_reasoning_effort": null,
+  "effective_talkativeness": "talk_more",
+  "applied_persona_controls": [],
+  "skipped_persona_controls": []
+}
+```
+
+Rules:
+- `requested_persona` and `effective_persona` remain the canonical persisted field names across all surfaces. They store canonical Persona IDs.
+- Persisted payloads MUST NOT introduce parallel canonical fields named `requested_persona_id` or `effective_persona_id`. Older readers may accept them only as migration aliases before normalization.
+- `requested_auth_mode` and `effective_auth_mode` are the canonical persisted auth-surface fields for provider-using runs.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD, ContractName:Plans/Models_System.md
+
+- `requested_account_policy` stores the requested routing/control policy (`project_default`, role override, manual preferred-account override, or equivalent), while `effective_account_id` identifies the provider account actually used.
+- `effective_account_label`, `effective_provider_identity`, and `effective_project_id` are optional non-secret disclosure fields for audit/UI correlation only.
+- `effective_provider_identity` is provider-native identity metadata only; it MUST NOT replace the canonical internal `account_id`.
+
+ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/storage-plan.md, PolicyRule:no_secrets_in_storage
+
+- `run.started` MUST include the full snapshot when a run reaches prompt/runtime assembly.
+- `run.completed` MUST include the final effective snapshot used by the completed run.
+- `chat.subagent_started`, `chat.subagent_completed`, `run.tier_started`, `run.tier_completed`, and `run.persona_stage_changed` MUST either inline these fields or carry them as a child object named `persona_runtime_snapshot`.
+- If a run proceeds without auth/account specificity, the auth/account fie
+```
+[... truncated, full length: 3357 chars]
+### Intent 9 (Run: r-20260313-152345-02, Anchor: `### 4.1 AuthState`, Op: replace_section)
+```markdown
+Represents the canonical authentication status for a provider summary or a single provider account visible in Settings / Setup / Health.
+
+**Minimum fields:**
+```json
+{
+  "provider": "gemini",
+  "auth_surface": "oauth",
+  "account_id": "acct-gemini-oauth-main",
+  "account_label": "Primary Gemini",
+  "provider_identity": "user@example.com",
+  "state": "LoggedIn",
+  "credential_state": "present",
+  "configuration_state": "ready",
+  "availability_state": "eligible",
+  "effective_project_id": "proj-123",
+  "updated_at": "2026-02-23T00:00:00Z"
+}
+```
+
+Rules:
+- `state` uses the canonical auth lifecycle set (`AuthJobState`): `LoggedOut` | `LoggingIn` | `LoggedIn` | `LoggingOut` | `AuthExpired` | `AuthFailed`.
+- `account_id` is the stable internal key.
+- `account_label` is the user-facing editable label.
+- `provider_identity` is provider-native identity metadata only (email, subject, or provider descriptor) and MUST NOT be treated as the canonical internal key.
+
+ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md
+
+- `credential_state` uses the canonical account-scoped values `missing | present | expired | invalid | revoked`.
+- `configuration_state` uses the canonical account-scoped values `ready | needs_configuration | validation_required`.
+- `availability_state` uses the canonical account-scoped values `eligible | cooldown | hard_blocked | disabled`.
+- Provider-level cards MAY aggregate multiple account records, but aggregated display MUST preserve auth-surface and account distinctions whenever they change routing, quota semantics, or recovery behavior.
+
+ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/Contracts_V0.md#AuthState, ContractName:Plans/FinalGUISpec.md
+
+- Gemini OAuth and API-key profiles MUST be represented as separate account records under one provider rather than as pseudo-providers.
+- Secrets (tokens, API keys, refresh tokens, bearer credentials) MUST NOT be stored in `AuthState` when persisted; secrets live only in the OS credential store.
+
+ContractRef: PolicyRule:no_secrets_in_storage, ContractName:Plans/Architecture_Invariants.md#INV-002, ContractName:Plans/rewrite-tie-in-memo.md
+```
+### Intent 10 (Run: r-20260313-152345-02, Anchor: `### 4.2 AuthPolicy`, Op: replace_section)
+```markdown
+Defines deterministic defaults for auth method selection per provider.
+
+Canonical enum contracts for implementation:
+```text
+ProviderAuthMethod = OAuthBrowser | OAuthDeviceCode | ApiKey | GoogleCredentials | CliInteractive
+RequestedAuthMode = auto | oauth | api_key | device_code | google_credentials | cli_interactive
+```
+
+Rules:
+- Cursor and Claude Code use `CliInteractive` (CLI-bridged only).
+- Codex supports `OAuthBrowser`, `OAuthDeviceCode`, and `ApiKey` for direct-provider auth/calls.
+- GitHub Copilot uses `OAuthDeviceCode` for direct-provider auth/calls.
+- Gemini uses direct-provider auth/calls with `OAuthBrowser`, `ApiKey`, and `GoogleCredentials` where the provider/runtime capability matrix supports them.
+- OpenCode uses server credentials for server access plus provider-native auth managed by OpenCode.
+
+ContractRef: ContractName:Plans/GitHub_API_Auth_and_Flows.md, ContractName:Plans/CLI_Bridged_Providers.md, SchemaID:Spec_Lock.json#locked_decisions.auth_model
+
+- Gemini is one provider with mixed OAuth and API-key account pools.
+- Gemini's default `requested_auth_mode` is `auto`, and the provider-default auth-surface preference is OAuth first, then API key, unless project/run policy overrides it.
+- Explicit `oauth` requests MUST filter to OAuth-eligible accounts only.
+- Explicit `api_key` requests MUST filter to API-key-eligible accounts only.
+- There is no silent cross-surface fallback between explicit `oauth` and explicit `api_key` requests.
+
+ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/rewrite-tie-in-memo.md, ContractName:Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD
+
+- `auto` resolves auth-surface preference before account selection and then chooses an eligible account inside the first viable surface.
+- Same-provider accounts are not interchangeable. Policy precedence is: provider default -> account override -> role-by-provider override -> role-by-account override -> run snapshot -> attempt/message resolution.
+- Manual `set active` / preferred-account selection is an override/debug control, not the default operating model.
+- For GitHub, default interactive auth MUST be OAuth device-code flow.
+
+ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/GitHub_API_Auth_and_Flows.md, ContractName:Plans/FinalGUISpec.md
+```
+### Intent 11 (Run: r-20260313-152345-02, Anchor: `### 4.4 Setup/Health lifecycle contracts`, Op: replace_section)
+```markdown
+Canonical enum contracts for implementation:
+```text
+InstallableComponent = CursorCli | ClaudeCli | Playwright
+InstallJobState = NotInstalled | Installing | Installed | Uninstalling | Failed
+AuthJobState = LoggedOut | LoggingIn | LoggedIn | LoggingOut | AuthExpired | AuthFailed
+AuthRealm = github_api | copilot_github
+AuthSurface = oauth | api_key | google_credentials | device_code | cli_interactive
+CredentialState = missing | present | expired | invalid | revoked
+ConfigurationState = ready | needs_configuration | validation_required
+AvailabilityState = eligible | cooldown | hard_blocked | disabled
+```
+
+Rules:
+- `InstallableComponent` applies to Setup/Health install controls only.
+- `InstallJobState` and `AuthJobState` are real-time UI/backend states and MUST be streamed deterministically.
+- `AuthJobState` is the user-facing derived chip. Backend state machines MUST derive it from auth-surface, credential, configuration, and availability state rather than inventing provider-specific ad-hoc enums.
+- Setup and Health MUST be able to show both provider summary state and account-scoped state when a provider supports multiple accounts.
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Multi-Account.md, ContractName:Plans/storage-plan.md
+
+- `AuthRealm` values MUST be isolated: tokens/state for `github_api` and `copilot_github` are separate and MUST NOT be cross-consumed.
+- `credential_state`, `configuration_state`, and `availability_state` are canonical account-scoped dimensions and MUST NOT be collapsed into provider-global booleans when they alter routing, quota, or recovery semantics.
+- `needs_configuration` is the canonical user-facing partial-setup status for Gemini OAuth accounts; do not use provider-specific `needs_project` as the canonical persisted/display state name.
+
+ContractRef: ContractName:Plans/GitHub_API_Auth_and_Flows.md, ContractName:Plans/Multi-Account.md, ContractName:Plans/rewrite-tie-in-memo.md
+```
+### Intent 12 (Run: r-20260313-152345-03, Anchor: `#### Persona/runtime snapshot payload contract`, Op: replace_section)
+```markdown
+The following object is the canonical persisted payload fragment for any event that claims to expose requested/effective Persona, runtime-resolution, or provider auth/account identity state:
+
+```json
+{
+  "requested_persona": "rust-engineer",
+  "effective_persona": "rust-engineer",
+  "persona_selection_source": "auto_surface_resolver",
+  "selection_reason": "Auto: Rust repo + code task",
+  "persona_override_scope": "none",
+  "persona_override_owner_id": null,
+  "requested_platform": "gemini",
+  "effective_platform": "gemini",
+  "requested_model": "google/gemini-2.5-pro",
+  "effective_model": "google/gemini-2.5-pro",
+  "requested_variant": "powerful",
+  "effective_variant": "powerful",
+  "requested_auth_mode": "auto",
+  "effective_auth_mode": "oauth",
+  "requested_account_policy": "project_default",
+  "effective_account_id": "acct-gemini-oauth-main",
+  "effective_account_label": "Primary Gemini",
+  "effective_provider_identity": "user@example.com",
+  "effective_project_id": "proj-123",
+  "account_switch_reason": null,
+  "effective_temperature": null,
+  "effective_top_p": null,
+  "effective_reasoning_effort": null,
+  "effective_talkativeness": "talk_more",
+  "applied_persona_controls": [],
+  "skipped_persona_controls": []
+}
+```
+
+Rules:
+- `requested_persona` and `effective_persona` remain the canonical persisted field names across all surfaces. They store canonical Persona IDs.
+- Persisted payloads MUST NOT introduce parallel canonical fields named `requested_persona_id` or `effective_persona_id`. Older readers may accept them only as migration aliases before normalization.
+- `requested_auth_mode` and `effective_auth_mode` are the canonical persisted auth-surface fields for provider-using runs.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD, ContractName:Plans/Models_System.md
+
+- `requested_account_policy` stores the requested routing/control policy (`project_default`, role override, manual preferred-account override, or equivalent), while `effective_account_id` identifies the provider account actually used.
+- `effective_account_label`, `effective_provider_identity`, and `effective_project_id` are optional non-secret disclosure fields for audit/UI correlation only.
+- `effective_provider_identity` is provider-native identity metadata only; it MUST NOT replace the canonical internal `account_id`.
+
+ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/storage-plan.md, PolicyRule:no_secrets_in_storage
+
+- `run.started` MUST include the full snapshot when a run reaches prompt/runtime assembly.
+- `run.completed` MUST include the final effective snapshot used by the completed run.
+- `chat.subagent_started`, `chat.subagent_completed`, `run.tier_started`, `run.tier_completed`, and `run.persona_stage_changed` MUST either inline these fields or carry them as a child object named `persona_runtime_snapshot`.
+- If a run proceeds without auth/account specificity, the auth/account fie
+```
+[... truncated, full length: 3357 chars]
+### Intent 13 (Run: r-20260313-152345-03, Anchor: `### 4.1 AuthState`, Op: replace_section)
+```markdown
+Represents the canonical authentication status for a provider summary or a single provider account visible in Settings / Setup / Health.
+
+**Minimum fields:**
+```json
+{
+  "provider": "gemini",
+  "auth_surface": "oauth",
+  "account_id": "acct-gemini-oauth-main",
+  "account_label": "Primary Gemini",
+  "provider_identity": "user@example.com",
+  "state": "LoggedIn",
+  "credential_state": "present",
+  "configuration_state": "ready",
+  "availability_state": "eligible",
+  "effective_project_id": "proj-123",
+  "updated_at": "2026-02-23T00:00:00Z"
+}
+```
+
+Rules:
+- `state` uses the canonical auth lifecycle set (`AuthJobState`): `LoggedOut` | `LoggingIn` | `LoggedIn` | `LoggingOut` | `AuthExpired` | `AuthFailed`.
+- `account_id` is the stable internal key.
+- `account_label` is the user-facing editable label.
+- `provider_identity` is provider-native identity metadata only (email, subject, or provider descriptor) and MUST NOT be treated as the canonical internal key.
+
+ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md
+
+- `credential_state` uses the canonical account-scoped values `missing | present | expired | invalid | revoked`.
+- `configuration_state` uses the canonical account-scoped values `ready | needs_configuration | validation_required`.
+- `availability_state` uses the canonical account-scoped values `eligible | cooldown | hard_blocked | disabled`.
+- Provider-level cards MAY aggregate multiple account records, but aggregated display MUST preserve auth-surface and account distinctions whenever they change routing, quota semantics, or recovery behavior.
+
+ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/Contracts_V0.md#AuthState, ContractName:Plans/FinalGUISpec.md
+
+- Gemini OAuth and API-key profiles MUST be represented as separate account records under one provider rather than as pseudo-providers.
+- Secrets (tokens, API keys, refresh tokens, bearer credentials) MUST NOT be stored in `AuthState` when persisted; secrets live only in the OS credential store.
+
+ContractRef: PolicyRule:no_secrets_in_storage, ContractName:Plans/Architecture_Invariants.md#INV-002, ContractName:Plans/rewrite-tie-in-memo.md
+```
+### Intent 14 (Run: r-20260313-152345-03, Anchor: `### 4.2 AuthPolicy`, Op: replace_section)
+```markdown
+Defines deterministic defaults for auth method selection per provider.
+
+Canonical enum contracts for implementation:
+```text
+ProviderAuthMethod = OAuthBrowser | OAuthDeviceCode | ApiKey | GoogleCredentials | CliInteractive
+RequestedAuthMode = auto | oauth | api_key | device_code | google_credentials | cli_interactive
+```
+
+Rules:
+- Cursor and Claude Code use `CliInteractive` (CLI-bridged only).
+- Codex supports `OAuthBrowser`, `OAuthDeviceCode`, and `ApiKey` for direct-provider auth/calls.
+- GitHub Copilot uses `OAuthDeviceCode` for direct-provider auth/calls.
+- Gemini uses direct-provider auth/calls with `OAuthBrowser`, `ApiKey`, and `GoogleCredentials` where the provider/runtime capability matrix supports them.
+- OpenCode uses server credentials for server access plus provider-native auth managed by OpenCode.
+
+ContractRef: ContractName:Plans/GitHub_API_Auth_and_Flows.md, ContractName:Plans/CLI_Bridged_Providers.md, SchemaID:Spec_Lock.json#locked_decisions.auth_model
+
+- Gemini is one provider with mixed OAuth and API-key account pools.
+- Gemini's default `requested_auth_mode` is `auto`, and the provider-default auth-surface preference is OAuth first, then API key, unless project/run policy overrides it.
+- Explicit `oauth` requests MUST filter to OAuth-eligible accounts only.
+- Explicit `api_key` requests MUST filter to API-key-eligible accounts only.
+- There is no silent cross-surface fallback between explicit `oauth` and explicit `api_key` requests.
+
+ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/rewrite-tie-in-memo.md, ContractName:Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD
+
+- `auto` resolves auth-surface preference before account selection and then chooses an eligible account inside the first viable surface.
+- Same-provider accounts are not interchangeable. Policy precedence is: provider default -> account override -> role-by-provider override -> role-by-account override -> run snapshot -> attempt/message resolution.
+- Manual `set active` / preferred-account selection is an override/debug control, not the default operating model.
+- For GitHub, default interactive auth MUST be OAuth device-code flow.
+
+ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/GitHub_API_Auth_and_Flows.md, ContractName:Plans/FinalGUISpec.md
+```
+### Intent 15 (Run: r-20260313-152345-03, Anchor: `### 4.4 Setup/Health lifecycle contracts`, Op: replace_section)
+```markdown
+Canonical enum contracts for implementation:
+```text
+InstallableComponent = CursorCli | ClaudeCli | Playwright
+InstallJobState = NotInstalled | Installing | Installed | Uninstalling | Failed
+AuthJobState = LoggedOut | LoggingIn | LoggedIn | LoggingOut | AuthExpired | AuthFailed
+AuthRealm = github_api | copilot_github
+AuthSurface = oauth | api_key | google_credentials | device_code | cli_interactive
+CredentialState = missing | present | expired | invalid | revoked
+ConfigurationState = ready | needs_configuration | validation_required
+AvailabilityState = eligible | cooldown | hard_blocked | disabled
+```
+
+Rules:
+- `InstallableComponent` applies to Setup/Health install controls only.
+- `InstallJobState` and `AuthJobState` are real-time UI/backend states and MUST be streamed deterministically.
+- `AuthJobState` is the user-facing derived chip. Backend state machines MUST derive it from auth-surface, credential, configuration, and availability state rather than inventing provider-specific ad-hoc enums.
+- Setup and Health MUST be able to show both provider summary state and account-scoped state when a provider supports multiple accounts.
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Multi-Account.md, ContractName:Plans/storage-plan.md
+
+- `AuthRealm` values MUST be isolated: tokens/state for `github_api` and `copilot_github` are separate and MUST NOT be cross-consumed.
+- `credential_state`, `configuration_state`, and `availability_state` are canonical account-scoped dimensions and MUST NOT be collapsed into provider-global booleans when they alter routing, quota, or recovery semantics.
+- `needs_configuration` is the canonical user-facing partial-setup status for Gemini OAuth accounts; do not use provider-specific `needs_project` as the canonical persisted/display state name.
+
+ContractRef: ContractName:Plans/GitHub_API_Auth_and_Flows.md, ContractName:Plans/Multi-Account.md, ContractName:Plans/rewrite-tie-in-memo.md
+```
+### Intent 16 (Run: r-20260317-164124-01, Anchor: `### 1.1 EventRecord -- canonical persisted envelope (schema: `pm.event.v0`)`, Op: replace_section)
+```markdown
+The following object is the canonical persisted payload fragment for any event that claims to expose requested/effective Persona, runtime-resolution, workflow-overlay, or provider auth/account identity state:
+
+```json
+{
+  "requested_mode_overlay": "deep_plan",
+  "effective_mode_overlay": "deep_plan",
+  "requested_runtime_mode": "plan",
+  "effective_runtime_mode": "plan",
+  "requested_persona": "rust-engineer",
+  "effective_persona": "rust-engineer",
+  "persona_selection_source": "auto_surface_resolver",
+  "selection_reason": "Auto: Rust repo + code task",
+  "persona_override_scope": "none",
+  "persona_override_owner_id": null,
+  "requested_platform": "gemini",
+  "effective_platform": "gemini",
+  "requested_model": "google/gemini-2.5-pro",
+  "effective_model": "google/gemini-2.5-pro",
+  "requested_variant": "powerful",
+  "effective_variant": "powerful",
+  "requested_auth_mode": "auto",
+  "effective_auth_mode": "oauth",
+  "requested_account_policy": "project_default",
+  "effective_account_id": "acct-gemini-oauth-main",
+  "effective_account_label": "Primary Gemini",
+  "effective_provider_identity": "user@example.com",
+  "effective_project_id": "proj-123",
+  "account_switch_reason": null,
+  "effective_temperature": null,
+  "effective_top_p": null,
+  "effective_reasoning_effort": null,
+  "effective_talkativeness": "talk_more",
+  "applied_persona_controls": [],
+  "skipped_persona_controls": []
+}
+```
+
+Rules:
+- `requested_mode_overlay`, `effective_mode_overlay`, `requested_runtime_mode`, and `effective_runtime_mode` are canonical persisted field names for chat/runtime workflow and posture identity
+- `requested_persona` and `effective_persona` remain the canonical persisted persona field names across all surfaces
+- persisted payloads MUST NOT introduce parallel canonical fields named `requested_persona_id` or `effective_persona_id`
+- `requested_auth_mode` and `effective_auth_mode` are the canonical persisted auth-surface fields for provider-using runs
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD, ContractName:Plans/Models_System.md
+
+Additional rules:
+- `deep_plan` MUST survive the overlay fields and MUST NOT disappear from persisted records solely because the runtime posture is planning
+- `requested_account_policy` stores the requested routing/control policy while `effective_account_id` identifies the provider account actually used
+- `effective_account_label`, `effective_provider_identity`, and `effective_project_id` are optional non-secret disclosure fields for audit/UI correlation only
+- `effective_provider_identity` is provider-native identity metadata only and MUST NOT replace the canonical internal `account_id`
+- `run.started` and `run.completed` MUST include the full snapshot when the run reaches prompt/runtime assembly and when it completes
+
+ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/storage-plan.md, PolicyRule:no_secrets_in_storage
+
+```
+### Intent 17 (Run: r-20260317-164124-02, Anchor: `### 1.1 EventRecord -- canonical persisted envelope (schema: `pm.event.v0`)`, Op: replace_section)
+```markdown
+The following object is the canonical persisted payload fragment for any event that claims to expose requested/effective Persona, runtime-resolution, workflow-overlay, or provider auth/account identity state:
+
+```json
+{
+  "requested_mode_overlay": "deep_plan",
+  "effective_mode_overlay": "deep_plan",
+  "requested_runtime_mode": "plan",
+  "effective_runtime_mode": "plan",
+  "requested_persona": "rust-engineer",
+  "effective_persona": "rust-engineer",
+  "persona_selection_source": "auto_surface_resolver",
+  "selection_reason": "Auto: Rust repo + code task",
+  "persona_override_scope": "none",
+  "persona_override_owner_id": null,
+  "requested_platform": "gemini",
+  "effective_platform": "gemini",
+  "requested_model": "google/gemini-2.5-pro",
+  "effective_model": "google/gemini-2.5-pro",
+  "requested_variant": "powerful",
+  "effective_variant": "powerful",
+  "requested_auth_mode": "auto",
+  "effective_auth_mode": "oauth",
+  "requested_account_policy": "project_default",
+  "effective_account_id": "acct-gemini-oauth-main",
+  "effective_account_label": "Primary Gemini",
+  "effective_provider_identity": "user@example.com",
+  "effective_project_id": "proj-123",
+  "account_switch_reason": null,
+  "effective_temperature": null,
+  "effective_top_p": null,
+  "effective_reasoning_effort": null,
+  "effective_talkativeness": "talk_more",
+  "applied_persona_controls": [],
+  "skipped_persona_controls": []
+}
+```
+
+Rules:
+- `requested_mode_overlay`, `effective_mode_overlay`, `requested_runtime_mode`, and `effective_runtime_mode` are canonical persisted field names for chat/runtime workflow and posture identity
+- `requested_persona` and `effective_persona` remain the canonical persisted persona field names across all surfaces
+- persisted payloads MUST NOT introduce parallel canonical fields named `requested_persona_id` or `effective_persona_id`
+- `requested_auth_mode` and `effective_auth_mode` are the canonical persisted auth-surface fields for provider-using runs
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD, ContractName:Plans/Models_System.md
+
+Additional rules:
+- `deep_plan` MUST survive the overlay fields and MUST NOT disappear from persisted records solely because the runtime posture is planning
+- `requested_account_policy` stores the requested routing/control policy while `effective_account_id` identifies the provider account actually used
+- `effective_account_label`, `effective_provider_identity`, and `effective_project_id` are optional non-secret disclosure fields for audit/UI correlation only
+- `effective_provider_identity` is provider-native identity metadata only and MUST NOT replace the canonical internal `account_id`
+- `run.started` and `run.completed` MUST include the full snapshot when the run reaches prompt/runtime assembly and when it completes
+
+ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/storage-plan.md, PolicyRule:no_secrets_in_storage
+
+```
+### Intent 18 (Run: r-20260317-164124-03, Anchor: `### 1.1 EventRecord -- canonical persisted envelope (schema: `pm.event.v0`)`, Op: replace_section)
+```markdown
+The following object is the canonical persisted payload fragment for any event that claims to expose requested/effective Persona, runtime-resolution, workflow-overlay, or provider auth/account identity state:
+
+```json
+{
+  "requested_mode_overlay": "deep_plan",
+  "effective_mode_overlay": "deep_plan",
+  "requested_runtime_mode": "plan",
+  "effective_runtime_mode": "plan",
+  "requested_persona": "rust-engineer",
+  "effective_persona": "rust-engineer",
+  "persona_selection_source": "auto_surface_resolver",
+  "selection_reason": "Auto: Rust repo + code task",
+  "persona_override_scope": "none",
+  "persona_override_owner_id": null,
+  "requested_platform": "gemini",
+  "effective_platform": "gemini",
+  "requested_model": "google/gemini-2.5-pro",
+  "effective_model": "google/gemini-2.5-pro",
+  "requested_variant": "powerful",
+  "effective_variant": "powerful",
+  "requested_auth_mode": "auto",
+  "effective_auth_mode": "oauth",
+  "requested_account_policy": "project_default",
+  "effective_account_id": "acct-gemini-oauth-main",
+  "effective_account_label": "Primary Gemini",
+  "effective_provider_identity": "user@example.com",
+  "effective_project_id": "proj-123",
+  "account_switch_reason": null,
+  "effective_temperature": null,
+  "effective_top_p": null,
+  "effective_reasoning_effort": null,
+  "effective_talkativeness": "talk_more",
+  "applied_persona_controls": [],
+  "skipped_persona_controls": []
+}
+```
+
+Rules:
+- `requested_mode_overlay`, `effective_mode_overlay`, `requested_runtime_mode`, and `effective_runtime_mode` are canonical persisted field names for chat/runtime workflow and posture identity
+- `requested_persona` and `effective_persona` remain the canonical persisted persona field names across all surfaces
+- persisted payloads MUST NOT introduce parallel canonical fields named `requested_persona_id` or `effective_persona_id`
+- `requested_auth_mode` and `effective_auth_mode` are the canonical persisted auth-surface fields for provider-using runs
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD, ContractName:Plans/Models_System.md
+
+Additional rules:
+- `deep_plan` MUST survive the overlay fields and MUST NOT disappear from persisted records solely because the runtime posture is planning
+- `requested_account_policy` stores the requested routing/control policy while `effective_account_id` identifies the provider account actually used
+- `effective_account_label`, `effective_provider_identity`, and `effective_project_id` are optional non-secret disclosure fields for audit/UI correlation only
+- `effective_provider_identity` is provider-native identity metadata only and MUST NOT replace the canonical internal `account_id`
+- `run.started` and `run.completed` MUST include the full snapshot when the run reaches prompt/runtime assembly and when it completes
+
+ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/storage-plan.md, PolicyRule:no_secrets_in_storage
+
+```
+### Intent 19 (Run: r-20260318-160350-01, Anchor: `## 7. UICommand`, Op: replace_section)
+```markdown
+`UICommand` is the canonical command envelope. Shared navigation and identity-open primitives sit underneath public wrapper commands rather than beside them.
+
+### 7.1 UICommand envelope
+Required envelope fields are:
+- `command_id`
+- `command_kind`
+- `args`
+- `context?`
+- `normalization?`
+
+`command_kind` is closed to:
+- `shell_view`
+- `navigation_wrapper`
+- `domain_action`
+
+`normalization` is closed to:
+- `wrapper`
+- `deprecated_alias`
+
+Rules:
+- deprecated aliases point at `alias_of_command_id`
+- stable wrapper commands point at `normalizes_to_contract`
+- wrapper commands remain user-facing command IDs; they do not disappear behind a public `cmd.nav.*` family
+- shell-facing commands may carry terminal-scoped identity args, but those identities still normalize through the canonical route and persistence model
+
+ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Progression_Gates.md, ContractName:Plans/Crosswalk.md
+
+### 7.2 `route_target`
+`route_target` is the canonical navigation-and-focus contract.
+
+Required fields:
+- `target_kind`
+- `project_id`
+
+Allowed focus fields:
+- `focused_run_id`
+- `thread_id`
+- `tab_id`
+- `browser_session_id`
+- `terminal_section_id`
+- `terminal_tab_id`
+- `terminal_pane_id`
+- `terminal_session_id`
+- `dev_session_id`
+- `inspector_target`
+
+Exactly one selector is required:
+- `subject_id`
+- or `object_kind` + `object_id`
+
+`target_kind` is closed to:
+- `primary_view`
+- `side_panel`
+- `bottom_panel`
+- `embedded_surface`
+- `page_tab`
+- `detached_window`
+
+`subject_id` is closed to:
+- `doc:<document_id>`
+- `artifact:<artifact_id>`
+
+`object_kind` is closed to:
+- `thread`
+- `message`
+- `wizard`
+- `usage_event`
+- `run`
+- `node`
+- `attempt`
+- `scheduler_pass`
+- `blocked_episode`
+- `safe_point`
+- `remediation`
+- `feature_seam`
+- `work_package`
+- `lane`
+- `worktree`
+- `concern`
+- `promotion`
+- `graph_patch`
+- `graph_generation`
+- `browser_session`
+- `terminal_section`
+- `terminal_tab`
+- `terminal_pane`
+- `terminal_session`
+- `dev_session`
+
+`inspector_target` is closed to:
+- `summary`
+- `evidence`
+- `artifacts`
+- `history`
+- `reviews`
+- `usage`
+- `lineage`
+- `details`
+
+Rules:
+- `project_id` is required
+- route activation must override remembered shell state when needed to reveal the requested object, scope, and destination surface
+- route activation may reuse remembered shell state when that state still reveals the requested object cleanly
+- terminal routes prefer exact same-session reveal when `terminal_session_id` is supplied and still resolvable
+- historical terminal routes may reveal a historical pane or receipt view, but they MUST NOT synthesize live PTY continuity
+- `resume_url` is serialized transport only and decodes to `route_target`; it is not a stronger parallel primitive
+
+ContractRef: ContractName:Plans/Crosswalk.md, ContractName:Plans/FileManager.md, ContractName:Plans/FinalGUISpec.md
+
+### 7.3 `OpenSubject`
+`OpenSubject` is the canonical identity-native source-open contract.
+
+Required fields:
+- `subject
+```
+[... truncated, full length: 3603 chars]

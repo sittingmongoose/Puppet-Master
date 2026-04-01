@@ -21,5 +21,5 @@ Usage depends on a **complex storage solution**; the feature cannot deliver 5h/7
   - scan seglog for counters (tool latency distributions, error rates)
   - store rollups in redb for fast dashboard queries
 
-Until this stack exists, Usage can still provide **state-file-first** behavior (aggregate from `usage.jsonl` as in "Data Sources: State Files") for 5h/7d and Ledger; the storage plan is required for scalable dashboard numbers, consistent rollups, and optional Tantivy-backed search.
+Until this stack exists, any temporary compatibility path MUST still preserve the canonical pipeline: 5h/7d and dashboard windows are owned by rollups, not by ad hoc `usage.jsonl` scans. `usage.jsonl` may still appear as a human-readable mirror or Ledger compatibility input during migration, but it is not the canonical rollup source.
 

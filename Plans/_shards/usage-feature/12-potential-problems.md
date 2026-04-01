@@ -8,7 +8,7 @@
   - Users might assume "no data" means "no usage" instead of "API not configured"; or they may not know how to enable live data.
 - **Mitigation**
   - In Usage view (or tooltip), document which env vars enable live data per platform (e.g. "Set ANTHROPIC_API_KEY for Claude 5h/7d").
-  - **Always** show a fallback: aggregate from `usage.jsonl` (e.g. "Last 5h: X requests, Y tokens") so we display something even when no usage API secrets are configured.
+  - **Always** show a fallback: display the project-local canonical usage summary available from current rollups/projections even when provider API quota data is unavailable.
   - Clearly label source: "From this project's usage" vs "From Claude (API)" when both exist.
 
 ### Problem 2: Rate limits on usage APIs
@@ -29,9 +29,9 @@
 - **Impact**
   - Ledger shows wrong or missing fields; 5h/7d aggregation might miss data or double-count if we add a second reader; bugs when we change one path and forget the other.
 - **Mitigation**
-  - Unify on one write path and one schema for `usage.jsonl` (e.g. `UsageRecord` extended to match STATE_FILES §5.2 and Ledger; or Ledger and aggregation both use `platforms::UsageTracker` with a single event format).
+  - Unify on one canonical write path and one `UsageRecord` schema. If `usage.jsonl` persists, it is a mirror / compatibility artifact rather than an independent canonical source.
   - Document the schema in STATE_FILES and in code; use the same types for write and read where possible.
-  - Prefer reusing `platforms::UsageTracker::get_usage_summary(platform, time_range)` for 5h/7d from local data if we can feed it from the same file we write.
+  - Prefer one projector/reader path for local summaries so Ledger, rollups, and UI projections do not fork into separate attribution models.
 
 ### Problem 4: 5h/7d semantics differ by platform
 
@@ -44,16 +44,17 @@
   - Avoid one generic "5h/7d" column when semantics differ; use platform-specific columns or clearly labeled sections.
 
 ### Problem 5: Ledger file size
-
 - **Risk**
-  - `usage.jsonl` grows unbounded; very large files slow Ledger load and 5h/7d aggregation (full scan).
+  - Event storage (seglog) grows unbounded over long-running or high-throughput projects. Very large seglogs slow analytics scan jobs and increase startup recovery time.
 - **Impact**
-  - Slow UI, timeouts, or high memory when opening Ledger or refreshing Usage.
+  - Slow UI refresh for 5h/7d windows, elevated memory during rollup recalculation, or degraded startup when the seglog requires extended CRC validation.
 - **Mitigation**
-  - Retention policy: e.g. keep last 90 days; archive or delete older lines (with optional export-first).
-  - Optional rotation or compaction (e.g. daily summary + trim raw events older than N days).
-  - Ledger: pagination or lazy load (e.g. load last N entries first); aggregation: incremental or windowed read instead of full file scan when possible.
+  - Retention policy: keep raw seglog events for a configurable window (default 90 days); archive or compact older events with an optional export-first step.
+  - Seglog compaction: periodic background job consolidates older fine-grained events into daily summary records, reducing scan time while preserving attribution fidelity.
+  - Rollup freshness: 5h/7d windows are served from redb rollups, not from raw event scans. Background analytics jobs refresh rollups incrementally; UI shows the last committed rollup plus an explicit freshness cue when a refresh is in progress.
+  - `usage.jsonl` is a human-readable mirror only and MUST NOT be used for aggregation, rollup computation, or 5h/7d window serving. If retained for debugging, it follows the same retention policy as seglog.
 
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md
 ### Problem 6: Stale data
 
 - **Risk**

@@ -130,12 +130,25 @@ Per operation × provider → native / pm-composed / unsupported [XV2-FIX — 6 
 - **Google Custom Search JSON API**: NOT available to new customers, scheduled for discontinuation 2027-01-01. PM must NOT design around Google official search as strategic backend. Google adapter slot must be a pluggable adapter with display label 'Google' regardless of actual backend. [XV-ADD]
 - **DuckDuckGo**: no official API (HTML scraping only), poor suitability for JavaScript-heavy SPAs, best-effort/no-key fallback. DDG is ENABLED BY DEFAULT as fallback (LOCKED). [XV-ADD]
 - **Exa**: free tier works WITHOUT API key; user API key overcomes rate-limit ceilings; default numResults=8; free-plan rate-limit → graceful fallback to next provider, not hard failure. [XV-ADD]
+- [AUDIT3-FIX] **Exa rate-limit user-facing recovery guidance (LOCKED)**: When Exa hits a rate limit (HTTP 429) and PM falls back to the next provider, the chat activity label MUST include a user-readable explanation AND a path to resolution. Example: `"Searching Web: <query> (Exa rate-limited → fell back to DuckDuckGo. Add an Exa API key in Settings > Providers to avoid rate limits.)"` This guidance appears in both the chat activity label AND the audit log `provider_fallback_summary`. Do not silently fall back without user-visible explanation.
 - **Tavily**: requires API key, free tier = 1,000 credits/month, $0.008/credit PAYG. Parameters: search_depth (ultra-fast/fast/basic/advanced), max_results, include/exclude domains, time_range, topic, include_images, include_raw_content, chunks_per_source. Best practice: two-step search-then-extract. CRITICAL: Tavily extract must NOT replace native Site Reader — they serve distinct roles (provider-side enrichment vs PM-native structured reading). [XV-ADD]
+- [AUDIT3-FIX] **Tavily Settings UI layout rule (LOCKED)**: Tavily's advanced provider options (`search_depth`, `max_results`, `include_domains`/`exclude_domains`, `time_range`, `topic`, `include_images`, `include_raw_content`, `chunks_per_source`) MUST be placed behind an expandable **"Advanced"** section in the Settings UI, NOT displayed at top level. Top-level Tavily settings show only: enable/disable toggle, API key field, and provider priority position.
+- [AUDIT3-FIX] **Tavily `include_raw_content` default = `false` (LOCKED)**: `include_raw_content` MUST default to `false` (conservative). PM already reads top search-result sources via native Site Reader, so fetching raw content through Tavily is redundant and risks unexpectedly large payloads. Users can enable it in the Advanced section when needed.
+- [AUDIT3-FIX] **Tavily heavy-mode reservation rule (LOCKED)**: `search_depth: "advanced"`, `include_raw_content: true`, and high `chunks_per_source` values MUST be reserved for precision needs or fallback scenarios — NOT used as defaults. Default runtime behavior should use lighter Tavily modes (e.g. `search_depth: "basic"` or `"fast"`), letting PM's search-then-read heuristic handle depth via native Site Reader. Heavier Tavily modes activate only when: (a) lighter pass returned insufficient results, or (b) user explicitly requests deeper provider-side retrieval.
 - **Anthropic/OpenAI**: model-native web-search providers MUST reuse PM's provider-account/auth model. Do NOT expose separate web-search API key fields if provider account is already configured. Settings UI should show: provider name, enabled toggle, capability badges, effective account label, effective model, auth state, rate-limit summary. [XV-ADD]
 
 #### Provider Settings IA [XV-ADD]
 - Three provider classes for settings display: (1) Account-backed (Anthropic, OpenAI) — derive web-search from existing auth, (2) API-backed (Exa, Tavily, Google-compatible, Firecrawl) — separate API key, (3) No-key (DuckDuckGo) — always available, no config needed. Settings rows should show health/error state and last-failure messaging. [XV-ADD]
 - Two-class provider model (model-native vs backend/API) is a DESIGN PRINCIPLE, not just classification [XV-ADD]
+
+#### Granular Editor Help Text [AUDIT3-FIX]
+- Settings UI granular permission editor must include contextual help text with examples:
+  - Host/domain pattern fields: examples like `https://docs.rs/*`, `https://developer.mozilla.org/*`
+  - Session-approval scope: search/research use `*` wildcard; extract/crawl/map/read use host-scoped patterns
+  - Provider-specific settings: explain what each controls (e.g., "API Key — required for Exa/Tavily/Firecrawl; not needed for DuckDuckGo")
+  - Provider ordering: explain reordering effect on fallback behavior
+- Help text is inline (tooltip or below-field), NOT a separate help page.
+- [AUDIT3-FIX] **Settings must surface support tier per provider per operation (LOCKED)**: Settings UI / `/web` help / autocomplete surfaces MUST show BOTH provider availability AND support tier (`native`, `PM-composed`, or `unsupported`) for each provider × operation combination. This is a disclosure requirement so users understand what "supported" means for a given provider. Display as a capability matrix or per-provider badge row.
 
 #### Provider Behavior Rules [XV-ADD]
 - Provider fallback on rate-limit/outage: fall to next provider in priority order that supports the SAME operation [XV2-FIX — clarified same-operation constraint], do NOT stop. Fallback must be shown in BOTH chat activity label AND audit log. [XV-ADD]
@@ -154,28 +167,31 @@ Per operation × provider → native / pm-composed / unsupported [XV2-FIX — 6 
 - Collapsed preview: 5 lines
 - Expanded preview: 15 lines
 - Persists after completion
-- Full metadata (status, cwd, command summary, elapsed time, exit/truncation details)
+- Full metadata (locked): status, cwd, command summary, elapsed time, exit code / truncation indicator [RECOVERY-FIX]
 - ⚠️ [XV2-FIX] Shell-integration-opaque caveat: when shell integration is opaque (no reliable command boundaries), PM must degrade gracefully — must NOT fabricate exact command text or boundaries. Metadata fields that depend on shell integration (command summary, exit code attribution) should be marked approximate or omitted.
+- **READ-ONLY and non-interactive** — user cannot type into the mini terminal card [RECOVERY-FIX]
 - One card per command
-- Retries create new terminal + new card (not reuse)
-- Long-running/watch-mode: same card model
+- Retries create a new terminal and therefore a new mini terminal card — they do NOT append to the existing card [RECOVERY-FIX]
+- Long-running/watch-mode commands are handled the same as any other command card — no special treatment [RECOVERY-FIX]
 - Live by default while command active
 - Copy works directly from card
 - `Open in Terminal` opens PM's built-in terminal (NOT external OS terminal)
 - Opens view onto same live command/session
-- Repeated `Open in Terminal` idempotent (focuses existing, no duplicates)
-- No special failure treatment beyond normal card status/meta
+- Repeated `Open in Terminal` idempotent (focuses existing, no duplicates) — `Open in Terminal` reuses/focuses the existing terminal view for that command rather than creating duplicates [RECOVERY-FIX]
+- No special extra failure treatment or retry affordance beyond the normal command-card status/meta presentation [RECOVERY-FIX] — ⚠️ reconciliation with blocked-recovery matrix: the matrix handles the `blocked` state (actionable block requiring user intervention); `failed` state has no additional recovery affordance beyond status display.
 - Placement: inline exactly where command happened
-- Optional textual summary after card
+- A textual summary may appear after an inline card in the message flow — card does not suppress subsequent text [RECOVERY-FIX]
+- [AUDIT3-FIX] **Narrative Order Rule (LOCKED)**: Preserve narrative order — (1) command trigger in assistant narrative, (2) inline operation card (mini terminal/search/diff), (3) assistant textual summary/commentary. Cards do not float out of narrative position.
 
 #### Inline Operation Card Family (LOCKED)
 - Shared template: command, search, edit events
 - Same inline preview pattern for terminal outputs, search results, code-edit previews/diffs
 - **Shared anatomy**: type icon+label, status badge (running/completed/blocked/failed/cancelled), title/summary, subject detail, primary open action, expand/collapse, bounded preview body, optional secondary actions
 - **Search card**: primary action opens search results view/list (NOT jump to file); individual hits open files; collapsed=5 results, expanded=15, scrollable, 50-result cap; NO copy
-- **Diff card**: one per edit command; opening opens file in editor showing diff; cap=50 lines; diff preview sizing same as other cards; NO copy
+- **Diff card**: one per edit command; opening opens file in editor showing diff; cap=50 lines; diff preview sizing same as other cards; NO copy; [RECOVERY-FIX] when diff exceeds 50-line inline cap, truncate with "Show full diff" expansion affordance — truncation is by LINES, not hunks
 - **Terminal card**: copy allowed; may show bounded live tail while active
 - **Web operation cards** [XV-ADD]: 6 types — Searching Web, Extracting Site, Researching Web, Crawling Site, Mapping Site, Reading Site. Same shared anatomy; collapsed shows query/URL + source count
+- [RECOVERY-FIX] Copy scope: NO copy action for search result cards or diff cards — copy is limited to text content cards, code blocks, and terminal output
 
 #### Card Summary Defaults (LOCKED)
 - Command: `Ran: <command>` or `Running: <command>`
@@ -193,16 +209,32 @@ Per operation × provider → native / pm-composed / unsupported [XV2-FIX — 6 
 - **Headless mode** → show "open in Terminal" option; links to `blocked_reason_code` + `allowed_action_ids[]`
 - ⚠️ [XV2-FIX] Headless-specific recovery: "Open in Terminal" is impossible in headless mode. When headless, use `headless_ask_denied` resume guidance instead — return structured `status: "unavailable"` with `reason: "headless"` and allow the agent to proceed with a fallback strategy or surface the blockage to the orchestrator. Do NOT offer GUI-only recovery actions in headless context.
 
+#### block_reason_code → Recovery Path Mapping [RECOVERY-FIX]
+- `permission_denied` → re-prompt approval (approval card: once / session / always / deny)
+- `network_error` → retry with backoff (exponential backoff; show retry count to user)
+- `provider_unavailable` → fallback to next provider in priority order; if no fallback available, show provider health / auth surface
+- `headless_unavailable` → structured unavailable response: `status: "unavailable", reason: "headless"`; allow agent fallback or orchestrator escalation (do NOT offer GUI-only recovery)
+- `timeout` → configurable retry (honor per-operation timeout config; surface elapsed time and retry option to user)
+
 #### Action Taxonomy [XV-ADD]
 - **expand**: show more output inline (within current card/context)
 - **show terminal**: reveal existing PTY session
 - **background**: move long-running operation to background
+  - [RECOVERY-FIX] Background card state: when an operation card enters `background` state (user chose to background it), the card shows a `backgrounded` badge. Completion updates the badge to the final state (`completed` or `failed`) with a notification to the user.
 - **detach / pop-out**: separate window
+  - [AUDIT3-FIX] **Scope rule**: detach/pop-out, if supported, applies to the **canonical terminal surface**, NOT the inline mini terminal card/preview. The mini terminal is always inline and read-only; pop-out targets the full PM terminal view for that session.
 - ⚠️ "Terminal thread" is an **ANTI-PATTERN** — do not imply a special thread type
 
 #### Operation Card Scope Exclusion [XV-ADD]
 - Simple read/grep/glob results are **inline text**, NOT operation cards
 - Cards are reserved for stateful, time-bounded operations with lifecycle (pending→running→completed/failed/cancelled)
+- [AUDIT3-FIX] **Named Widget Family Exclusion List**: The inline operation-card family explicitly EXCLUDES the following — they are separate widget families that MUST NOT be collapsed into the operation-card pattern:
+  1. **Question cards** — separate questionnaire widget with draft/submit lifecycle
+  2. **Approval cards** — separate permission-request widget with once/session/always/deny actions
+  3. **Sticky plan panel** — separate persistent plan-tracker surface, not an inline card
+  4. **Thought-stream blocks** — separate reasoning-transparency surface
+  5. **Subagent blocks** — separate delegated-task disclosure surface
+  - These exclusions are definitional — adding any to the operation-card family requires an explicit design decision, not implicit drift.
 
 #### Card Status Badge State Machine [XV-ADD]
 - States: `pending` → `running` → `completed` | `failed` | `cancelled`
@@ -225,10 +257,12 @@ Per operation × provider → native / pm-composed / unsupported [XV2-FIX — 6 
 - `Open in Terminal` / `Show Terminal` must focus SAME live session
 - After promotion: chat stops acting as full transcript owner; card shows status + bounded tail
 - Recovery: process alive + attach fails → `Retry attach`, `View output log`, `Stop process`; process ended → focus historical output; inline-only + complete → `View output` / `Rerun in Terminal`
+- ⚠️ [RECOVERY-FIX] `Rerun in Terminal` is PROPOSED — absent from UI_Command_Catalog.md with no command ID. Needs canonical landing before implementation.
 - Terminology: use `Open in Terminal`, NOT `Pop Out Terminal`
 - Large payloads store full data behind refs/blobs; cards show bounded previews only
 - Cards persist on thread reload; re-rendered from persisted source/metadata
 - Search and diff operations have NO streaming rule — results appear complete, not progressively streamed [XV-ADD]
+- [RECOVERY-FIX] Web operation cards render on COMPLETION (not streaming). The activity label (e.g., `Researching Web: <query>`) streams progress text; card content appears only when the operation completes.
 
 ### PART E: RECOVERED CHAT CONTROLS & MESSAGE ACTIONS (from w-20260316-160450)
 
@@ -240,6 +274,7 @@ Per operation × provider → native / pm-composed / unsupported [XV2-FIX — 6 
 - **NO delete action** (explicitly locked by user)
 - Inline rewind warning, NO extra confirmation dialog
 - Stop/Edit/Resend disappear once next user message sent
+- [RECOVERY-FIX] Run-completion edge case: when a run completes and no next message is queued, Stop becomes disabled; Edit/Resend remain available on the last user message. If a queued message exists when the run completes, it auto-sends.
 - Render as icons, not text labels
 
 #### Queued Messages / Steer Semantics [XV2-ADD]
@@ -259,6 +294,7 @@ Per operation × provider → native / pm-composed / unsupported [XV2-FIX — 6 
 - Most recent user row: copy + edit + resend + contextual stop
 - Older messages: copy only
 - Code blocks: visible copy, open in editor (if filename), go to definition (if LSP)
+- ✅ [GAP-RESOLVE] **RESOLVED — Decision #13**: Code-block copy affordance is LOCKED as **always-visible** on fenced code blocks. Copy coexists with LSP actions (open in editor, go to definition) without conflict.
 - Code block fallback [XV-ADD]: when no filename or LSP binding exists, copy still works; other affordances (open in editor, go to definition) are omitted/disabled, not errored
 
 #### Scroll / Auto-Follow (LOCKED)
@@ -269,7 +305,7 @@ Per operation × provider → native / pm-composed / unsupported [XV2-FIX — 6 
 #### Copy Behavior (LOCKED)
 - All user + assistant messages: always-visible copy icons (NOT hover-only)
 - ⚠️ [XV2-FIX] Copy icon visibility contradiction: This ledger locks "always-visible copy icons" for message-level copy, but canonical assistant-chat-design.md lines 286-295 specifies message-level actions appear in a hover/focus action row (hidden until hover/focus). **Ledger intent**: PM deliberately departs from the canonical hover-only pattern for copy — PM locks always-visible copy as a usability choice. This is a known divergence from canonical current state, not an oversight. If canonical updates to always-visible, this note can be removed.
-- Code blocks: copy coexists with file-open/LSP actions — [XV2-FIX] Resolved per old ledger lines 2058-2060: ordinary fenced code blocks SHOULD show a visible copy affordance (not hover-only). Status: **resolved in old ledger, needs canonical promotion** — promote this to a locked decision once canonical confirms.
+- Code blocks: copy coexists with file-open/LSP actions — ✅ [GAP-RESOLVE] **RESOLVED — Decision #13**: LOCKED as always-visible copy affordance on fenced code blocks, coexisting with LSP actions. Status: **LOCKED**.
 - Diff cards: do NOT inherit generic code-block copy (distinct operation-card rules)
 
 #### Subagent Disclosure Requirements [XV-ADD]
@@ -289,22 +325,28 @@ Per operation × provider → native / pm-composed / unsupported [XV2-FIX — 6 
 - Both produce normalized TODO list; users can edit/add/remove/reorder before approval
 - Plan is read-only until execute; keeps plan panel visible
 - Deep Plan uses same todo function but produces fuller plan artifact for review/edit/questions before execution
+- [AUDIT3-FIX] **Deep Plan Q&A Loop (named first-class feature, LOCKED)**: The pre-execution question phase is formally named the **Q&A loop**. It runs between artifact production and execution approval: PM poses clarifying questions, user answers, plan may be revised before approval. This is the primary behavioral differentiator between Plan mode (produces todo → proceeds) and Deep Plan mode (produces artifact → **Q&A loop** → approval → execution). Any downstream spec must reference Q&A loop by name.
 - Deep Plan does **materially more** thinking, research, clarifying-question work — the difference is **degree/intensity**, not categorical [XV-FIX] (old ledger LOCKED this as "difference is degree/intensity")
 
 #### Normalized TODO Schema (LOCKED)
 - `todo_id`, `title`, `summary`, `status`, `dependencies[]`, `owner_hint`, `verification_hint`, `notes?`, `order_index?`
+- [RECOVERY-FIX] `notes?` and `order_index?` are from old-ledger spec (w-20260316-160450 line ~3766-3775), NOT yet in canonical `assistant-chat-design.md`. Need canonical landing before these fields are implementation-locked.
 - Status set: `pending`, `in_progress`, `completed`, `blocked`, `skipped`
 - ⚠️ [XV2-FIX] `superseded` status: The inline progress format (below) uses `Superseded TODO N/M` and the Plan/TODO State Model includes `superseded` as a plan-level state, but `superseded` is absent from this TODO-item status set. Resolution: `superseded` is a **plan-level** state (the entire plan is superseded by a revision), NOT an individual TODO-item status. Inline progress text `Superseded TODO 5/5` refers to a TODO within a superseded plan. Individual TODOs in a superseded plan retain their last status; the plan-level `superseded` flag governs visibility.
+- [RECOVERY-FIX] TODO item statuses: `pending` / `in_progress` / `completed` / `blocked` / `skipped`. `superseded` is a PLAN-LEVEL state only — individual TODOs in a superseded plan retain their last status.
 - `owner_hint` lifecycle [XV-ADD]: starts as advisory suggestion, can evolve to effective delegated owner during execution
+- [RECOVERY-FIX] `owner_hint` advisory→effective mechanism: `owner_hint` starts as an advisory field in tool output. It becomes effective when crew delegation resolves it to a concrete provider/model/persona mapping. Recording: seglog captures both `owner_hint_advisory` and `owner_hint_resolved` for audit trail. Evolution trigger is crew delegation resolution, not a user action.
 - TODOs carry forward into execution
 
 #### Plan/TODO State Model (LOCKED)
 - Distinguish: `draft`, `approved`, `executing`, `completed`, `blocked`, `superseded`
 - Revisions/replans create explicit new draft/revision state (NOT invisible mutation)
 - After approval: structural edits gated/restricted; status updates continue automatically
+- [RECOVERY-FIX] Structural edit definition (per old ledger ~line 3783): Structural edits = adding / removing / reordering TODO items. Non-structural = updating status, notes, verification_hint on existing items. Post-approval policy: structural edits require re-approval (trigger replan/revise flow); non-structural edits (status, notes) are free and continue automatically.
 - Later changes require explicit replan/revise flow — create new revision rather than invisibly mutate history [XV-ADD]
 - Bounded revision/status history persisted for plan auditability [XV-ADD]
 - Storage event: `chat.plan_todo_updated` = canonical event family for TODO persistence
+- [RECOVERY-FIX] `chat.plan_todo_updated` minimal payload schema: `{ plan_id: string, todo_id: string, field: string, old_value: any, new_value: any, source: "agent" | "user" }`
 
 #### Sticky Plan Panel (LOCKED)
 - Per-thread, shows: plan title/summary, todo list in canonical order, status badge per todo, dependency hints, owner/delegated-executor badge, verification hint
@@ -321,6 +363,7 @@ Per operation × provider → native / pm-composed / unsupported [XV2-FIX — 6 
 - Plan/Deep Plan = mandatory normalized TODO
 - Non-Plan execution: agent may auto-use `todowrite` when multi-step enough
 - Triggers: 3+ meaningful steps, dependencies, multi-file/multi-subsystem, delegated subagent/crew, explicit user request
+- [RECOVERY-FIX] Auto-use on-trigger behavior: when auto-use heuristic fires, agent emits a `todowrite` tool call with proposed TODO items. If auto-approved (per permission preset), items are created silently. If ask-mode, user sees an approval prompt with the proposed items before creation.
 
 #### todowrite/todoread Tool Contract (LOCKED)
 - Expand to use normalized TODO schema from planning outputs
@@ -329,11 +372,22 @@ Per operation × provider → native / pm-composed / unsupported [XV2-FIX — 6 
 - Same schema works for single-agent, subagent, crew execution
 - Remove `todowrite` from blanket `ask/plan` mode auto-deny — this is a **3-location fix**: mode deny list, preset table, reconciliation map [XV-ADD]
 - Subagent default = deny unless explicitly re-enabled by run config
+- [AUDIT3-FIX] **Named Doc Contradictions for 3-Location Fix**: The 3-location fix must also resolve these specific contradictions:
+  1. **`FinalGUISpec.md`**: current wording "todo checkboxes" is too thin relative to the normalized TODO schema — must expand to execution-tracker semantics
+  2. **`Tools.md`**: current `todowrite`/`todoread` tool contract lags the normalized TODO contract — I/O must be expanded to match full schema (including `dependencies[]`, `owner_hint`, `verification_hint`)
+  3. **All docs**: must stop implying todo tracking is only a static checklist instead of a live execution tracker
 
 #### Deep Plan → TODO Projection Sync Rule [XV2-ADD]
 - Per canonical requirement: editing Deep Plan markdown (the rich artifact) MUST update the normalized TODO projection BEFORE execution begins.
 - Flow: user edits Deep Plan artifact → PM extracts/diffs TODO changes → normalized TODO list updated → execution proceeds from updated TODOs.
 - This ensures the TODO list (which drives execution) never drifts from the user-approved Deep Plan artifact.
+
+#### Plan/TODO Per-Doc Landing Zones [AUDIT3-FIX]
+- **`Plans/assistant-chat-design.md`** → Add sticky-panel-vs-inline-progress division + auto-use heuristic guidance
+- **`Plans/FinalGUISpec.md`** → Expand sticky-card into fuller execution-tracker contract; define status badges, item-focus behavior, post-approval edit restrictions
+- **`Plans/Tools.md`** → Expand `todowrite`/`todoread` I/O to match normalized TODO contract
+- **`Plans/storage-plan.md`** → Ensure thread-scoped plan/todo state persists with revision/status history
+- **`Plans/feature-list.md`** → Dependent summary update after SSOT docs reconciled
 
 ### PART G: RECOVERED QUESTION CARD / QUESTIONNAIRE SYSTEM (from w-20260316-160450)
 
@@ -354,21 +408,37 @@ Per operation × provider → native / pm-composed / unsupported [XV2-FIX — 6 
 
 #### Questionnaire Draft Persistence [XV-ADD]
 - Drafts auto-save; storage landing zone defined in storage-plan.md
+- [AUDIT3-FIX] **Thread-scoped draft state (LOCKED)**: Questionnaire draft state is thread-scoped — bound to the specific thread where presented. Drafts auto-save continuously; no manual save exposed. Persisted data is bounded/structured (per-question draft values only). On thread reload/navigation-return, draft state restored so user can resume without data loss.
 - Dismiss is explicit state returning `status: 'dismissed'`, NOT fabricated partial answers
 - Draft persistence allows resume after navigation/close
+- [RECOVERY-FIX] Questionnaire draft persistence landing zone in storage-plan.md is currently UNVERIFIED. `draft_value` (per-question saved text) and partial answers need an explicit storage section in storage-plan.md. Flag for reconciliation — do not assume coverage until confirmed.
 
 #### Multi-Question Lifecycle [XV-ADD]
 - 5 states: `draft` → `incomplete` → `ready_to_submit` → `submitted` → `paused`
 - (Already reflected in Question Card Schema flow states below; this section names the lifecycle explicitly)
+- [RECOVERY-FIX] Lifecycle transition triggers (previously undefined):
+  - `pending` → `active`: question presented to user in chat UI
+  - `active` → `answered`: user submits a response
+  - `active` → `dismissed`: user explicitly dismisses the question/questionnaire
+  - `active` → `expired`: timeout reached (only if timeout is configured on the question)
+  - `answered` → (terminal): no further transitions
+  - `dismissed` → (terminal): no further transitions
+  - (Note: `pending`/`active` map to `draft`/`incomplete` in the 5-state UI lifecycle above; triggers apply to both layers.)
 
 #### Question Card Schema (LOCKED)
 - `question_id`, `prompt`, `options[]`, `allow_other`, `allow_multi_select`, `required`, `response_kind` ⚠️, `draft_value`, `validation_state` ⚠️, `submitted_at?`
-- ⚠️ `response_kind` and `validation_state` are STILL UNRESOLVED — semantics/enum values not yet locked [XV-ADD]
+- [RECOVERY-FIX] Canonical field name is `question`, NOT `prompt`. Card schema must use `question` to match tool contract (old ledger ~line 3710-3718: QuestionItem uses `question` consistently). Any `prompt` references in the card schema above are errors pending correction. `prompt` may exist at the envelope/header level only — it is NOT the per-question field name.
+- ✅ [GAP-RESOLVE] **RESOLVED — Decision #9**: `response_kind` and `validation_state` are LOCKED:
+  - `response_kind`: `"selection" | "freeform" | "mixed"`
+  - `validation_state`: `"valid" | "invalid" | "pending"`
+  - Both fields are optional; omit if not needed by the question type.
 - ⚠️ [XV2-FIX] **Field-name normalization note**: Schema field names and tool contract field names have drifted. Canonical names (tool contract is authoritative where conflicts exist):
   - Schema `prompt` ↔ Tool `question` → **canonical: `question`** (tool contract is the wire format)
   - Schema `allow_other` ↔ Tool `allow_freeform?`/`allow_other?` → **canonical: `allow_freeform`** (with `allow_other` as deprecated alias)
+  - [RECOVERY-FIX] Canonical field name is `allow_freeform` (not `allow_other`). This field controls whether the user can enter a freeform text response in addition to pre-defined options. `allow_other` is a deprecated alias and must not be introduced in new code.
   - Schema `allow_multi_select` ↔ Tool `multi_select?` → **canonical: `multi_select`** (shorter form)
   - Schema `draft_value` ↔ Tool `default_values?` → **these are distinct**: `default_values` = initial suggestion from tool caller, `draft_value` = user's in-progress input (PM-managed state). Both retained.
+  - [RECOVERY-FIX] `default_values?: string[]` = pre-selected option IDs when the question is first shown (caller-supplied initial suggestion). `draft_value?: string` = saved freeform draft text (PM-managed, for resume after dismiss/navigate away). These are distinct fields, not aliases. Do not collapse them.
   - Schema must be updated to use canonical names before implementation lock.
 - Flow states: `draft`, `incomplete`, `ready_to_submit`, `submitted`, `paused`
 
@@ -376,14 +446,17 @@ Per operation × provider → native / pm-composed / unsupported [XV2-FIX — 6 
 - Input: `mode: "single_question" | "questionnaire"`, `header?`, `prompt?`, `questions: Array<QuestionItem>`
 - QuestionItem: `question_id`, `question`, `description?`, `options?`, `required?` (default true), `multi_select?` (default false), `allow_freeform?`/`allow_other?` (default true), `placeholder?`, `default_values?`
 - Output: `status: "answered" | "submitted" | "dismissed" | "timed_out" | "unavailable"`, `answers: Array<{question_id, values: string[]}>`, optional `answer_text?` for single-question callers
-- ~~`source?` field in answers~~: deliberately excluded per old ledger final pass [XV-FIX]
+- [RECOVERY-FIX] `source?` field: INCLUDED as optional per old ledger final recommendation (old ledger ~line 3722). Full answer item shape: `{ question_id, values: string[], source?: "option" | "other" | "freeform" }` — indicates whether the answer came from a pre-defined option, an 'other' freeform entry, or pure freeform input. The previous claim "deliberately excluded per old ledger final pass" was false; the old ledger explicitly includes it.
+- [AUDIT3-FIX] **`source?` field RE-LOCKED (LOCKED)**: `source?: "option" | "other" | "freeform"` is a confirmed, included optional field in every answer item. Old ledger (line 3722) locked this; demotion to Open Question was unjustified. Status: **LOCKED — do not re-open.**
 - Headless/HITL-unavailable = `status = "unavailable"` (NOT fabricated answers)
-- Subagents should NOT spam users with independent question flows
+- [RECOVERY-FIX] Subagent question tool access is DENIED by default. Subagents do not question the user directly unless explicitly granted permission by run config. This is a hard default, not a soft preference. (Old ledger ~line 3731: "Children do not question the user directly by default.") The previous soft wording "should NOT spam users" understated this rule.
+- [AUDIT3-FIX] **Coordinated top-level Q&A = product rule (architectural principle)**: The prohibition on subagent-direct question flows is not merely a configurable default — it is a **product rule**. The entire question system is designed so one question flow per user interaction is owned by the top-level orchestrator. Subagents needing user input must escalate to parent. Framing as merely a "default" understates design intent. Landing zone: `assistant-chat-design.md` §15.2.
 - Add `question` to Permissions_System.md; default = allow when HITL available
 - Legacy single-question mode is syntactic sugar over the richer multi-question envelope [XV-ADD]
+- [RECOVERY-FIX] Single-question syntactic sugar mechanism: Single-question mode is syntactic sugar for a 1-item questionnaire. Tool emits `question` (singular) with the same QuestionItem schema. Runtime wraps it in an implicit single-item questionnaire. Response envelope is identical to multi-question output (`status`, `answers[]`, optional `answer_text?`).
 - Reference: existing `question_ids[]` in Contracts_V0.md proves multi-question is canonical [XV-ADD]
-- ⚠️ UNRESOLVED [XV-ADD]: `options` format — `string[]` vs `Array<{id, label, description?}>` — needs final decision
-- [XV2-FIX] `options` format resolution note: old ledger v1 contract locked **object-array format** `Array<{id, label, description?}>`. Status: **resolved in old ledger, needs canonical promotion**. Recommend locking object-array as canonical; `string[]` accepted as shorthand (auto-expanded to `{id: str, label: str}` at ingestion).
+- ✅ [GAP-RESOLVE] **RESOLVED — Decision #8**: `options` format is LOCKED as `Array<{id: string, label: string, description?: string}>` (object-array). `string[]` is accepted as shorthand and auto-expanded to `{id: str, label: str}` at ingestion. Object-array is the canonical wire format.
+- [XV2-FIX] `options` format resolution note: old ledger v1 contract locked **object-array format** `Array<{id, label, description?}>`. Status: **LOCKED — canonical** (see GAP-RESOLVE above).
 
 #### Questionnaire Lifecycle / Output Status Normalization [XV2-ADD]
 - ⚠️ The lifecycle states and tool output statuses are inconsistent:
@@ -433,12 +506,16 @@ Per operation × provider → native / pm-composed / unsupported [XV2-FIX — 6 
 - **Do NOT persist**: transient rendering state, animation positions, scroll offsets, ephemeral JS variables
 - (Complements the existing Visualizer Persistence section above)
 
-- ⚠️ UNRESOLVED [XV-ADD]: Visualizer theme token injection schema — exact token names, format, and injection mechanism not yet locked
-- ⚠️ [XV2-FIX] **Theme-token injection in LOCKED section**: The above unresolved item sits inside the supposedly LOCKED Inline Visualizer section. This is explicitly flagged: the visualizer behavior is locked but the theme-token injection schema (token names, CSS custom property format, injection timing, bridge API shape) remains an **open design gap** within the locked section. Implementation cannot fully proceed on themed visualizers until this is resolved.
+- ✅ [GAP-RESOLVE] **RESOLVED — Decision #10**: Visualizer theme-token injection is LOCKED:
+  - **Mechanism**: CSS custom properties injected as inline `style` attribute on the visualizer container at render time.
+  - **MVP tokens**: `--pm-viz-bg`, `--pm-viz-fg`, `--pm-viz-accent`, `--pm-viz-border`, `--pm-viz-font-family`, `--pm-viz-font-size`
+  - **Constraint**: Visualizer fragments MUST use these tokens; hardcoded colors are prohibited.
+- ⚠️ [XV2-FIX] **Theme-token injection in LOCKED section**: The above unresolved item sits inside the supposedly LOCKED Inline Visualizer section. ~~This is explicitly flagged: the visualizer behavior is locked but the theme-token injection schema (token names, CSS custom property format, injection timing, bridge API shape) remains an **open design gap** within the locked section.~~ [GAP-RESOLVE] This gap is now RESOLVED per Decision #10 above.
 - ⚠️ NOTE [XV-FIX]: External reference conclusions (e.g., "ALL ADOPTED" claims elsewhere in ledger) should be read as "transferable ideas" — do not copy raw assumptions from external references without PM-specific validation
 
 #### Chat Widget Taxonomy (LOCKED)
 - Plain code blocks, diff/operation cards, Mermaid/native diagram cards, question cards = **related but distinct message widgets** (not one overloaded "rich block" type)
+- [RECOVERY-FIX] **Inline visual module** is the sixth distinct message widget type (FINDING-H02). Add to taxonomy: `plain code blocks` | `diff/operation cards` | `Mermaid/native diagram cards` | `question cards` | `inline visual module`. The inline visual module (HTML/SVG sandboxed fragment with narrow bridge) is categorically distinct from Mermaid cards and from plain code blocks — it has its own rendering pipeline, sandbox settings, theme-token injection, and bridge API. Do not conflate with the Mermaid card type.
 
 ### PART I: RECOVERED SLASH COMMANDS (from w-20260316-160450)
 
@@ -462,8 +539,12 @@ Unified reserved set: `/new`, `/model`, `/effort`, `/mode`, `/export`, `/compact
 - Natural language routes through same dispatcher
 - Do NOT flatten into separate top-level slash families (`/search`, `/crawl`)
 
-#### /skill Helper — Status: PROPOSED / UNRESOLVED [XV-FIX] [XV2-FIX]
-- `/skill use <skill-id>`, `/skill list`, `/skill show <skill-id>` — [XV2-FIX] subcommand shape (`use|list|show`) is PROPOSED only; canonical docs define only lightweight `/skill` with no subcommand family. Do not treat this shape as locked.
+#### /skill Invocation — ✅ [GAP-RESOLVE] LOCKED — Decision #14: Triple-Path Discovery
+- **Skills panel**: browse, filter, and invoke skills directly from the GUI
+- **Slash command**: `/skill <skill_name> [args]` — `/skill` with no args lists available skills
+- **Natural language**: agent detects skill-appropriate requests and invokes automatically
+- No subcommand family for MVP (no `/skill use`, `/skill list`, `/skill show` subcommands). All three paths invoke the same `invoke_skill` tool contract.
+- ~~`/skill use <skill-id>`, `/skill list`, `/skill show <skill-id>` — [XV2-FIX] subcommand shape (`use|list|show`) is PROPOSED only; canonical docs define only lightweight `/skill` with no subcommand family. Do not treat this shape as locked.~~
 - Lightweight helper, NOT full management family
 - Management remains in Agent Config > Skills
 - Natural-language invocation routes same dispatcher
@@ -498,6 +579,7 @@ Unified reserved set: `/new`, `/model`, `/effort`, `/mode`, `/export`, `/compact
   - "extract this page" → `webextract`
   - "read this URL" → `webfetch`
   - "research topic" → `webresearch`
+  - [AUDIT3-FIX] "read this site" / "read this URL" / "fetch this page" → `webfetch` (routes to native Site Reader `Reading Site` path, NOT to `websearch` or provider `extract`). Reading intents MUST resolve to `webfetch`, not `websearch`.
 
 ### PART J: RECOVERED SKILLS / AGENT CONFIG (from w-20260316-160450)
 
@@ -522,7 +604,9 @@ Unified reserved set: `/new`, `/model`, `/effort`, `/mode`, `/export`, `/compact
 
 #### Skill Source/Readiness Model (LOCKED)
 - Source types: `bundled`, `catalog_installed`, `manual_import`, `project_local`, `global_local`, `shadowed`
+- [AUDIT3-FIX] **`pm_enhanced` source type (LOCKED)**: Add `pm_enhanced` to the skill source type enum. Identifies skills where PM ships an enhanced/customized variant of an upstream portable skill. Display as a visible badge in Skills catalog UI. Ordering: `bundled` > `pm_enhanced` > `catalog_installed` > `manual_import` > `project_local` > `global_local` > `shadowed`.
 - Readiness/status: `ready`, `ready_with_warnings`, `invalid`, `shadowed`, `disabled`
+- [AUDIT3-FIX] **5-state vocabulary confirmed (LOCKED)**: Cross-reference of old ledger confirms identical 5-state set: `ready`, `ready_with_warnings`, `invalid`, `shadowed`, `disabled`. No 6th state exists. Vocabulary locked.
 - Badges: `referenced_by_persona`, `auto_invokable`, `requires_missing_capability`, `catalog_update_available`
 
 #### Skill Store vs Skills Page (LOCKED)
@@ -541,24 +625,44 @@ Unified reserved set: `/new`, `/model`, `/effort`, `/mode`, `/export`, `/compact
 #### Skills Auto-Invocation Rules [XV-ADD]
 - Do NOT auto-invoke skills with `invalid` or warning-blocked status
 - `auto_invokable` flag with context matching determines when skills are automatically suggested/invoked
+- [AUDIT3-FIX] **NL/Slash Discovery Scoping for `ready_with_warnings` (LOCKED)**: Discovery surfaces BOTH `ready` and `ready_with_warnings` entries (with visible ⚠ annotation). **Auto-invocation** (agent-initiated, no user gesture) restricted to `ready` only. `invalid` entries excluded from both surfaces entirely. Summary: discovery = ready + ready_with_warnings (annotated); auto-invoke = ready only.
 
 #### Natural-Language Skill Routing [XV-ADD]
 - NL requests route through canonical skill registry, not filesystem discovery
+- [AUDIT3-FIX] **Dynamic skill descriptions (LOCKED)**: The `skill` tool's runtime tool-description MUST dynamically expose names and descriptions of currently runtime-ready skills. When PM presents the `skill` tool to the model, the description includes the live roster of active skill names and summaries from manifests. Updates whenever skill registry changes (import, enable, disable, revalidate).
 
 #### Skill Permission Model [XV-ADD]
 - `skill` permissions operate over skill IDs, not filesystem paths
 - Permission grants are identity-based
+- [AUDIT3-FIX] **Skills must respect FileSafe path constraints**: Skill resource paths must only disclose paths within allowed roots. If a skill attempts to access paths outside the FileSafe allowlist, normal blocked-action recovery applies. Skill permission grants operate over canonical skill IDs, NOT raw filesystem paths — but underlying file operations within the skill still pass through FileSafe.
 
 #### Agent Config Tab Model Detail [XV-ADD]
 - Personas tab: persona list, persona editing, cross-links to provider settings
+- [AUDIT3-FIX] **Personas tab expanded spec (LOCKED)**: Three content categories: (1) **Persona list and editing** — create, edit, delete, reorder; (2) **Runtime preferences** — per-persona behavioral preferences (response style, verbosity, default model, tool posture, output format defaults); applied automatically when persona is active; (3) **Skill refs** — skills associated with/activated for this persona; clicking cross-links to Skills tab. Cross-links to provider settings remain.
 - Skills tab: installed skills management, catalog link, skill status
 - Non-goals: Agent Config does NOT manage authentication, provider keys, system health, or global rules (those stay in Settings)
 
-#### Skill Tool Input Contract [XV-ADD] — STILL MISSING [XV2-FIX] ⚠️ IMPLEMENTATION BLOCKER
-- Only output envelope is defined (see Skill Tool Runtime Contract above)
-- Input contract needs: `skill_id`, `invocation_context`, `parameters` schema
-- Flagged as **INCOMPLETE** — must be resolved before implementation
-- [XV2-FIX] Both the ledger and canonical docs lack this contract. This is an **implementation blocker**: no tool can be built without a defined input envelope. Escalate to reconciliation.
+#### Skill Tool Input Contract [XV-ADD] — ✅ [GAP-RESOLVE] LOCKED — Decision #1
+```
+invoke_skill {
+  skill_id: string,
+  input: Record<string,any>,
+  context?: {
+    project_root: string,
+    active_file?: string,
+    selection?: string,
+    conversation_id: string
+  },
+  timeout?: number  // ms, default 30000
+}
+→ {
+  status: "success" | "error" | "partial",
+  output: any,
+  artifacts?: Artifact[],
+  error?: { code: string, message: string }
+}
+```
+Skill defines its own `input` schema via manifest. PM validates against schema before invocation.
 
 #### cmd.chat.delete_message — Policy vs Existence [XV2-FIX]
 - Canonical `UI_Command_Catalog.md` defines `cmd.chat.delete_message` as an existing command ID.
@@ -622,6 +726,7 @@ Full key table (16+ keys):
 - **DESIRED state** (this ledger's position): 4-tier ladder with durable `always` creating persistent permission rules (project or global scoped)
 - **CURRENT canonical state**: Neither canonical doc supports durable `always`; Permissions_System.md's `always` is session-scoped; assistant-chat-design.md has no `always` at all
 - **⚠️ REQUIRES RECONCILIATION**: This conflict must be resolved during reconciliation. Both canonical docs must be updated to match the 4-tier model, or the ledger must be revised downward.
+- [RECOVERY-FIX] **Implementation target: 4-tier model.** The 4-tier ladder (`once` / `for session` / `always`-durable / `deny`) is the LOCKED DESIRED STATE for this ledger. Reconciliation MUST update both `Permissions_System.md` and `assistant-chat-design.md` to reflect the 4-tier model. Do NOT implement the 3-tier model found in canonical docs — those docs are out of date. The reconciliation pass must bring canonical docs in line with the 4-tier target before implementation begins.
 
 #### Approval Ladder (LOCKED — EXPANDED)
 - Current ladder too small: only `once` / `for session` / `deny`
@@ -632,6 +737,12 @@ Full key table (16+ keys):
 - `deny` = reject this invocation
 - When choosing `always`, surface scope selection: **project** or **global**
 - Do NOT collapse durable approval into ad-hoc allowlists
+- [AUDIT3-FIX] **Approval Card Exact Button Wording (LOCKED)**:
+  - **`Once`** — "Approve only this invocation"
+  - **`For Session`** — search/research: "Approve this tool for the rest of the current session" (pattern: `*`); extract/crawl/map/fetch: "Approve this host/site for the rest of the current session" (pattern: `https://host.example/*`)
+  - **`Always`** — create durable permission rule (surfaces project/global scope selection)
+  - **`Deny`** — reject this invocation AND reject any other pending asks in the same batch/session. This cascades to queued permission requests in the same approval batch — prevents users from having to deny a stream of related requests one by one.
+  - ⚠️ Deny cascade semantics: when user clicks Deny, the runtime must also reject other pending asks in the same session per the existing reject-all-pending contract.
 
 #### Approval UI Disclosure (LOCKED)
 - Show source/layer that governs each permission decision: mode override | session cache | Persona profile | project rule | global rule | default
@@ -655,6 +766,14 @@ Full key table (16+ keys):
   - Rationale: URL-scoped read operations where host scoping is understandable and safer
 - Approving `webcrawl` "For Session" auto-approves crawl/map/extract/fetch matching same host pattern
 - Approving `webresearch` "For Session" does NOT create broad allow for unrelated tools
+- [AUDIT3-FIX] **Per-Operation Approval-Card Summary Text Templates**:
+  - `websearch` → show tool name + query preview
+  - `webfetch` → show tool name + target host/URL
+  - `webextract` → show tool name + target host/URL
+  - `webresearch` → show tool name + task summary + estimated source count when available
+  - `webcrawl` → show tool name + root URL + page/depth caps
+  - `webmap` → show tool name + root URL + page/depth caps
+  - Session-approval pattern derivation: search/research → `*` tool-wide session allow; extract/crawl/map/fetch → host-scoped pattern like `https://docs.example.com/*`
 
 #### Permission Preset Reconciliation (LOCKED — FULL DETAIL)
 - Presets must stop being narrower than product's own planning/research features
@@ -676,6 +795,12 @@ Full key table (16+ keys):
 #### Approval Ladder Scope Detail [XV-ADD]
 - When user chooses `always`, surface scope selection: **project** or **global**
 - Do NOT collapse durable approval into ad-hoc FileSafe allowlists
+- [AUDIT3-FIX] **Suggested-pattern pre-population for durable `always` (LOCKED)**: When user chooses durable `always`, PM MUST pre-populate/suggest a pattern derived from invocation context:
+  - `websearch` / `webresearch` → suggested pattern: `*` (host unknown upfront)
+  - `webfetch` / `webextract` → suggested pattern: `https://<actual-host>/*` (derived from URL)
+  - `webcrawl` / `webmap` → suggested pattern: `https://<actual-root-host>/*` (derived from `root_url`)
+  - User may edit the suggested pattern before confirming; suggestion is a convenience default, not a lock.
+- [AUDIT3-FIX] **No-active-project conditional**: When no active project context exists, the scope selection for durable `always` MUST only offer **Global** — **Project** option is hidden/disabled. Prevents orphaned project-scoped rules with no project to bind to.
 - Durable `Always` = canonical rule creation, not session cache or persona mutation
 
 #### Persona Non-Mutation Rule [XV-ADD]
@@ -701,6 +826,18 @@ Full key table (16+ keys):
 - Impacted areas: any doc or ledger entry referencing FinalGUISpec section numbers for Permissions, Skills, or slash commands should be treated as broken until section numbers are verified/updated.
 - Flag for reconciliation: FinalGUISpec.md section numbering needs audit.
 
+#### Permissions/Logging/Subagents Reconciliation — Acceptance Checklist (ATOMIC GATE) [AUDIT3-FIX]
+- **All 8 items MUST pass before the permissions/logging/subagents reconciliation packet is complete:**
+  1. ☐ **Durable approval path exists** — 4-tier ladder implemented in canonical docs
+  2. ☐ **Blocked states surface recovery actions** — every blocked tool state shows a direct recovery path
+  3. ☐ **Historical runs show frozen snapshots** — never recomputed from current settings
+  4. ☐ **Both audit surfaces exist** — in-thread transparency AND dedicated log/audit surface
+  5. ☐ **Open in Terminal focuses same session** — not a new one
+  6. ☐ **Long-running promotes to Terminal** — not bloating chat
+  7. ☐ **Subagent usage visible/auditable** — which subagent/persona used, why, what task
+  8. ☐ **Task lifecycle persists** — in thread history and storage with defined event schema
+- This checklist is the exit gate. Partial completion = NOT DONE.
+
 ### PART L: RECOVERED SUBAGENT / TASK BEHAVIOR (from w-20260316-160450)
 
 #### Subagent Defaults (Direction established but contract details still thin [XV-FIX])
@@ -720,6 +857,8 @@ Full key table (16+ keys):
 - **Default denials for subagents**:
   - `todowrite` / `todoread` = denied by default unless explicitly re-enabled by run config
   - Nested `task` use = denied by default unless target subagent explicitly permits it
+  - [RECOVERY-FIX] `question` = denied by default; subagents must NOT independently spawn question flows — per `assistant-chat-design.md` §15.2 ("Children do not question the user directly by default"). Subagents must escalate to the parent orchestrator to surface questions to the user. This is FINDING-X01 from the cross-validation audit.
+  - [AUDIT3-FIX] **Architectural principle / product rule**: The `question` denial for subagents is an architectural principle, not a soft runtime preference. Runtime must enforce at tool-dispatch layer. Any run-config override granting `question` to a subagent must be explicit, logged, and visible (audit transparency). This is a product-level invariant, not a per-run tunable.
 - **Resume**: resumed tasks continue same delegated session identity, NOT fresh spawn
 
 #### Crew Delegation Model (LOCKED)
@@ -733,9 +872,11 @@ Full key table (16+ keys):
 - Note: old ledger left this as acceptance criterion, not fully locked
 - Implementation must define event schema
 
-#### Task Lifecycle States [XV-ADD]
-- States: `created` → `queued` → `running` → `completed` / `failed` / `cancelled` / `timed_out`
-- **OPEN QUESTIONS**: failure behavior semantics, timeout duration/policy, retry-after-failure rules
+#### Task Lifecycle States [XV-ADD] — ✅ [GAP-RESOLVE] LOCKED — Decision #15
+- **6 states**: `pending → running → completed | failed | cancelled | timed_out`
+- **Failure**: emits `task.failed` event with error; parent agent decides retry
+- **Timeout**: configurable per-task; default 120s regular tasks, 300s long-running tasks
+- **Retry**: parent agent responsibility, not automatic; max 2 retries recommended
 
 #### Automatic Subagent Session [XV-ADD]
 - Subagent sessions are created automatically when orchestrator delegates
@@ -753,10 +894,13 @@ Full key table (16+ keys):
 - **Plan**: all Read-only + ask: `webfetch`, `websearch`, `webextract`, `webresearch`, `webcrawl`, `webmap`, `logread`, `task`. EXPLICITLY: web tools at `ask`, NOT auto-deny
 - **Full**: allow all tools except: deny nested `task` by default, deny `media.generate` by default
 
-#### Crew Delegation owner_hint Mapping [XV-ADD] [XV2-FIX] ⚠️ IMPLEMENTATION BLOCKER
-- Concrete mapping algorithm STILL UNRESOLVED — **implementation blocker**: no crew delegation can be built without a defined mapping algorithm
-- [XV2-FIX] Escalate to reconciliation: must define (a) how `owner_hint` value maps to a specific subagent type, (b) fallback behavior when no specialist matches the hint, (c) whether partial-match or best-effort delegation is allowed
-- Needs: how `owner_hint` maps to actual subagent selection, what happens when no specialist matches
+#### Crew Delegation owner_hint Mapping [XV-ADD] — ✅ [GAP-RESOLVE] LOCKED — Decision #2
+**Mapping algorithm:**
+1. `owner_hint` is a string tag (e.g., `"code-review"`, `"test-writer"`, `"researcher"`)
+2. PM checks agent config `crew.roles` map → `{ "code-review": { provider, model, persona } }`
+3. No mapping found → fall back to current session's provider/model (same agent, different persona)
+4. Mapping found but provider unavailable → error with `capability_unavailable`; do NOT silently fall back
+5. Partial match NOT supported in MVP — exact match only
 
 ### PART M: RECOVERED LSP TOOL CONTRACT (from w-20260316-160450)
 
@@ -964,6 +1108,7 @@ Full key table (16+ keys):
 5. Do NOT collapse distinct concepts into one status blob (keep: inherited/overridden, requested, effective, honored/skipped/clamped, current/stale/degraded/unavailable as separate dimensions)
 
 #### Known Drift (MUST FIX)
+- [AUDIT3-FIX] `operational_identity` canonicalization gap — must be: (1) defined in `Contracts_V0.md` or `Prompt_Pipeline.md` with clear semantics; (2) added to `storage-plan.md` persisted field set; (3) referenced consistently across `Multi-Account.md`, `CLI_Bridged_Providers.md`, `Provider_OpenCode.md`. Until canonicalized, feature-specific docs MUST NOT invent shadow names for this concept.
 - `Plans/Personas.md` §10.11B lists `requested_persona_id`/`effective_persona_id` — contradicts `Contracts_V0.md` canonical naming lock
 - User explicitly locked that `_id` suffix variants must NOT become parallel canonical fields
 - **Resolution**: reconciliation must fix `Personas.md` to use canonical names only
@@ -1047,6 +1192,7 @@ Full event family list:
 8. **Persona/runtime snapshots**: effective runtime record snapshots
 9. **Background runs**: long-running/watch-mode commands (same card model, NOT separate "background" card type)
 10. **Permission snapshots**: immutable snapshots frozen at attempt start
+- [AUDIT3-FIX] **`web.operation.*` event family PROHIBITION (LOCKED)**: Do NOT create a separate parallel `web.operation.*` seglog event family for web operations. All web operation events MUST use the existing `tool.invoked` / `tool.denied` event family with web-specific fields under `payload.meta`. A separate `web.operation.*` family is only permissible if later analytics truly require it — this is an explicit prohibition against preemptive creation.
 
 #### Web-Operation Audit Payload (LOCKED)
 Additive fields under `payload.meta` for all web tool invocations:
@@ -1067,7 +1213,11 @@ Additive fields under `payload.meta` for all web tool invocations:
 - `projection_freshness`: `current` | `refreshing` | `stale` (required per old ledger for every web operation) [XV-ADD]
 - `projection_health`: `healthy` | `degraded` | `unavailable` (required per old ledger for every web operation) [XV-ADD]
 - `sources_ref?`: pointer/ref to normalized sources set when too large for inline [XV-ADD]
+- [AUDIT3-FIX] **`warnings_count?` and `error_code?` in common audit payload (LOCKED)**: Two optional fields in the common `payload.meta` shape for ALL web operation audit events:
+  - `warnings_count?: number` — count of non-fatal warnings during the operation
+  - `error_code?: string` — present when `success = false`; value is one of the canonical error codes from the Web Error Taxonomy
 - Result-shape hints by operation: `query_preview` (search), `url` (fetch/extract), `content_format` (fetch), `task_preview` (research), etc.
+- [AUDIT3-FIX] **`depth_limit?` audit field for crawl/map operations**: `webcrawl`/`webmap` result-shape hints include `depth_limit?` — the effective depth limit applied (may differ from `max_depth` input if provider imposed lower ceiling). Audit/transparency field, not an input parameter.
 
 #### Named Ref Fields for Large Payloads [XV-ADD]
 - `sources_ref` — pointer to normalized source list blob
@@ -1080,6 +1230,12 @@ Additive fields under `payload.meta` for all web tool invocations:
 - **Inline in audit log**: previews, summaries, metadata, source counts
 - **Ref/blob storage**: full extracted pages, source lists, crawl results, map data
 - Large payloads store full data behind refs/blobs while audit entries show bounded previews
+
+#### Storage Ownership Split — Contracts_V0.md vs storage-plan.md (LOCKED) [AUDIT3-FIX]
+- **`Contracts_V0.md` owns**: Event type names, top-level `EventRecord` schema/envelope, canonical requested/effective runtime snapshot fields, generic rule that tool-specific payloads live under `payload.meta`
+- **`storage-plan.md` owns**: Concrete web-operation payload fields, blob/ref strategy, per-tool `payload.meta` child field registrations, blob-ref naming conventions, secrets scrubber requirements, cache storage structure and TTL table
+- **Boundary rule**: Do NOT duplicate schemas across both docs. `Contracts_V0.md` = envelope; `storage-plan.md` = concrete child payloads. `Tools.md` and chat docs define user/tool semantics, not persistence envelopes.
+- **Inline vs ref/blob split** (storage-plan.md owned): Inline = short previews, counts, enum-like routing fields, error codes. By ref = extracted page bodies, research synthesis, full source sets, crawl inventories, map graph payloads.
 
 #### Activity Labels (LOCKED)
 - `Searching Web: <query>`, `Reading Site: <url>`, `Extracting Site: <url>`, `Researching Web: <task>`, `Crawling Site: <url>`, `Mapping Site: <url>`
@@ -1116,6 +1272,19 @@ Additive fields under `payload.meta` for all web tool invocations:
   - `web_operation`, `web_input`, `denial_reason_code`, `denial_source` (policy | permission | mode | user), `suggested_recovery_action`
 - Denied operations still emit seglog events for audit completeness.
 
+#### tool.denied Payload Field Reconciliation [AUDIT3-FIX]
+- **Renames** (old → current, current name is canonical):
+  - `web_input_preview?` → `web_input` (current uses structured object)
+  - `blocked_reason_code?` → `denial_reason_code` (semantic rename; more specific to denial context)
+- **Missing from current — RESTORED**:
+  - `requested_adapter_id?` — which adapter was requested for the denied operation
+  - `projection_freshness?` — `current` | `refreshing` | `stale`
+  - `projection_health?` — `healthy` | `degraded` | `unavailable`
+  - `allowed_action_ids[]?` — machine-actionable recovery paths for UI
+  - `headless_denied?` — boolean; true when denial occurred in headless mode
+- **Full reconciled `tool.denied.payload.meta` field set**:
+  - `web_operation`, `web_input`, `denial_reason_code`, `denial_source` (`policy`|`permission`|`mode`|`user`), `suggested_recovery_action`, `requested_adapter_id?`, `projection_freshness?`, `projection_health?`, `allowed_action_ids[]?`, `headless_denied?`
+
 #### Approval-Card Summaries Per Operation [XV-ADD]
 - Each web operation type has specific approval card wording.
 - Session-approval scope patterns:
@@ -1138,11 +1307,17 @@ Additive fields under `payload.meta` for all web tool invocations:
   10. `web_rate_limited` — rate limit exceeded
   11. `web_parse_failure` — content could not be parsed/extracted
   12. `web_provider_error` — upstream provider returned an error
+  13. `projection_too_stale` — projection freshness is stale beyond acceptable threshold; operation cannot proceed with confidence [AUDIT3-FIX]
+  14. `empty_result` — operation completed successfully but returned zero results (distinct from error; still surfaced as a recoverable condition) [AUDIT3-FIX]
+  15. `crawl_limit_reached` — crawl operation hit max_pages or max_depth limit before exhausting discovered URLs [AUDIT3-FIX]
+- [AUDIT3-FIX] **Canonical error code table unification note**: All web operation error codes (the 15 above PLUS the general error code set: `invalid_input`, `permission_denied`, `user_declined`, `unsupported_operation`, `no_eligible_adapter`, `adapter_unavailable`) must be assembled into ONE canonical error code table during reconciliation. Overlap between web-specific codes (`web_rate_limited`, `web_timeout`, `web_content_blocked`) and general codes (`rate_limited`, `timeout`, `content_blocked`) must be deduplicated with clear scoping rules.
 
 #### Log Summary / Inspector Contract [XV-ADD]
 - Summary rows in log view with on-demand deref behavior (click to expand full payload).
 - Dedicated log/audit surface exists alongside chat transparency — BOTH surfaces required, not one replacing the other.
 - Log inspector supports: filter by event family, search by tool/operation, time-range queries, export.
+- [AUDIT3-FIX] **Log summary rows use 5-item format**: (1) Operation label, (2) Short query/url/task preview (truncated), (3) Success/failure status, (4) Fallback note (when occurred), (5) Source/page counts (when present). Log summary MUST NOT inline full content — those are behind refs.
+- [AUDIT3-FIX] **History inspector deref policy: on-demand only, never eager**. History rows combine: (a) canonical runtime snapshot fields, (b) web-operation payload from `payload.meta`, (c) dereferenced refs ONLY on demand (click-to-expand). Eager deref of large blobs degrades log browsing and violates the inline/ref storage split.
 
 #### In-Thread Section Triggers [XV-ADD]
 - Rules for when in-thread activity sections appear:
@@ -1187,6 +1362,7 @@ Additive fields under `payload.meta` for all web tool invocations:
 - Support iframe-aware reading in the native rewrite
 - Preserve clean separation between read/observe behavior and richer interaction/automation behavior
 - Full browser interaction capability in v1 (not just passive structured reading)
+- [AUDIT3-FIX] **Iframe handling expectations (LOCKED)**: Site Reader MUST handle nested iframes during structured reading: (1) recursively discover iframes (max 3 levels deep); (2) cross-origin iframes: attempt content extraction where browser security policy allows, gracefully skip with warning when blocked by same-origin policy or X-Frame-Options; (3) per-frame CDP sessions for content extraction when browser runtime available; (4) iframe content merged into parent page's `PageRepresentation` with source-frame attribution. Distinct from Inline Visualizer iframe sandboxing (Part H) — Site Reader iframes are *read targets*, not *rendering containers*.
 
 #### External Ecosystem Findings (Design Evidence, Not Normative)
 - **Swift-Agent-Skills / agent-skills ecosystem**: portable folder-based skills with `SKILL.md` plus optional resources — PATTERN ADOPTED; keep PM registry/discovery/runtime contract canonical
@@ -1232,24 +1408,33 @@ Additive fields under `payload.meta` for all web tool invocations:
 - `api_key?: string` (required for cloud; stored in global user settings, NOT project-scoped)
 - `base_url?: string` (default `https://api.firecrawl.dev`; user overrides for self-hosted)
 - `timeout_ms?: number` (default 60000; applies to all Firecrawl operations)
-- `proxy_mode?: "basic" | "stealth" | "enhanced" | "auto"` (default `"auto"`; cloud only)
+- `proxy_mode?: "basic" | "enhanced" | "auto"` (default `"auto"`; cloud only) [FC-FIX: removed invalid "stealth" value — Firecrawl API supports only basic/enhanced/auto]
 - `cache_enabled?: boolean` (default true; uses Firecrawl's built-in cache)
 
 #### Capability Matrix (Firecrawl Provider)
 
 | PM Operation | Firecrawl Support | Firecrawl Endpoint | Tier | Notes |
 |---|---|---|---|---|
-| `search` | native | POST /v2/search | native | Uses Serper (Google); live search with optional scraping of results [XV-FIX: was "returns full page content not just snippets"] |
-| `extract` | native | POST /v2/extract | native | LLM-powered; JSON Schema support; URL wildcards; enableWebSearch |
-| `research` | native | POST /v2/agent (beta) | native | Autonomous Spark-1 agent; no URLs required; 20-2500 credits [XV-FIX: marked beta] |
-| `crawl` | native | POST /v2/crawl | native | Async job; includePaths/excludePaths; sitemap modes; dedup |
-| `map` | native | POST /v2/map | native | Search filter; dedup similar URLs [XV-REMOVE: "Up to 100k URLs" — unverified specific claim] |
-| `fetch` | native | POST /v2/scrape | native | Multiple formats; 6 actions (wait, click, scroll, write, press, screenshot); change tracking [XV-FIX: was "12+ formats" (overstated), action count corrected to 6] [XV2-ADD: Firecrawl advanced docs reference additional actions (executeJavascript, scrape, pdf) beyond the 6 listed here — action set may be larger than documented. Verify against latest API before implementation.] |
-| `batch_scrape` | native | POST /v2/batch/scrape | native | Bulk URL scraping with webhook completion notification [XV-ADD] |
+| `websearch` | native | POST /v2/search | native | Uses Serper (Google); live search with optional scraping of results [XV-FIX: was "returns full page content not just snippets"] [FC-FIX2: renamed to canonical PM name] |
+| `webextract` | native | POST /v2/extract | native | LLM-powered; JSON Schema support; URL wildcards; enableWebSearch [FC-FIX2: renamed to canonical PM name] |
+| `webresearch` | native | POST /v2/agent (beta) | native | Autonomous Spark-1 agent; no URLs required; 20-2500 credits [XV-FIX: marked beta] [FC-FIX2: renamed to canonical PM name] |
+| `webcrawl` | native | POST /v2/crawl | native | Async job; includePaths/excludePaths; sitemap modes; dedup [FC-FIX2: renamed to canonical PM name] |
+| `webmap` | native | POST /v2/map | native | Search filter; dedup similar URLs [XV-REMOVE: "Up to 100k URLs" — unverified specific claim] [FC-FIX2: renamed to canonical PM name] |
+| `webfetch` | native | POST /v2/scrape | native | Multiple formats; 6 actions (wait, click, scroll, write, press, screenshot); change tracking [XV-FIX: was "12+ formats" (overstated), action count corrected to 6] [XV2-ADD: Firecrawl advanced docs reference additional actions (executeJavascript, scrape, pdf) beyond the 6 listed here — action set may be larger than documented. Verify against latest API before implementation.] [FC-FIX2: renamed to canonical PM name] |
+| `batch_webfetch` (Firecrawl: /v2/batch/scrape) | native | POST /v2/batch/scrape | native | Bulk URL scraping with webhook completion notification [XV-ADD] [FC-FIX2: renamed from batch_scrape to align with Part V naming] |
 
 [XV-FIX] **Firecrawl endpoint inventory** (corrected per official docs): /v2/scrape, /v2/crawl, /v2/map, /v2/search, /v2/extract, /v2/batch/scrape, /v2/agent (beta). [XV-REMOVE: `browser` endpoint removed — not in Firecrawl docs.]
 
-[XV-FIX] **Async operation support**: Only extract, batch/scrape, and agent clearly support async via polling/webhooks. Other endpoints return results synchronously. [XV-REMOVE: previous claim that "all operations return job IDs" was incorrect. WebSocket delivery claim also removed — unconfirmed.]
+[FC-FIX] **Async operation support**: The following Firecrawl endpoints return job IDs and require polling/webhooks for completion: `/v2/crawl`, `/v2/extract`, `/v2/batch/scrape`, `/v2/agent`. Other endpoints (`/v2/scrape`, `/v2/search`, `/v2/map`) return results synchronously.
+
+**Adapter async pattern**: For async Firecrawl operations, the PM adapter:
+1. Sends initial request → receives `{ success: true, id: "<job_id>" }`
+2. Polls `GET /v2/<operation>/<job_id>` at intervals: 2s, 4s, 8s, 15s, 30s (exponential backoff, max 30s interval)
+3. Poll response includes `status: "scraping" | "processing" | "completed" | "failed" | "cancelled"` and partial `data` when available (exact values vary by Firecrawl endpoint; adapter should treat any non-"completed" non-"failed" status as in-progress) [FC-FIX2]
+4. On `completed`: return full results to PM tool layer
+5. On `failed`: map Firecrawl error to PM error code, return to tool layer
+6. Timeout: if polling exceeds provider `timeout_ms` config, return `timeout` error with any partial results
+7. Webhook alternative: if PM is configured with a webhook endpoint, Firecrawl can POST results directly (NOT MVP — polling is the v1 pattern)
 
 [XV-ADD] **Firecrawl pricing/rate-limit complexity note**: Cost can spike sharply with agent/batch operations. Shared global rate limits across endpoints. Self-hosted option available but has degradation/stability pain points (container management, proxy rotation, anti-bot updates).
 
@@ -1266,6 +1451,7 @@ Additive fields under `payload.meta` for all web tool invocations:
 - `exclude_domains` → not directly supported; PM filters post-search
 - `time_range` → `tbs` (Firecrawl time-based search parameter)
 - PM `scrapeOptions` defaults: `formats: ["markdown"]`, `onlyMainContent: true`
+- [FC-FIX2] **Response transformation**: Firecrawl `/v2/search` returns results separated by source type (`{ web: [...], images: [...], news: [...] }`). Adapter MUST flatten into PM's unified `results` array, tagging each item with `source_type`. Merge order: web results first, then news, then images (preserving per-source rank ordering within each group).
 
 **webfetch → Firecrawl /v2/scrape:**
 - `url` → `url`
@@ -1273,8 +1459,8 @@ Additive fields under `payload.meta` for all web tool invocations:
 - `actions` → `actions` (PM action subset maps to Firecrawl's 6 action types: wait, click, scroll, write, press, screenshot) [XV-FIX: was 9; standardized to 6 per official docs]
 - `cache_ttl` → `maxAge` (Firecrawl uses ms; PM exposes seconds)
 - `change_tracking` → `formats` includes `{type:"changeTracking"}`
-- `timeout` → `timeout` (Firecrawl ms; PM seconds, convert) [XV2-FIX: `timeout` is NOT a parameter in the enhanced webfetch contract (Part S). This mapping assumes an input that doesn't exist in the PM contract. Either add `timeout` to webfetch input or treat this as a provider-internal default only.]
-- `detail_level` → `onlyMainContent` (PM minimal → true, PM full → false) + `onlyCleanContent` [XV2-FIX: `detail_level` is NOT a parameter in the enhanced webfetch contract (Part S). It exists in webextract as `detail_hint` but not webfetch. This mapping has no PM-side input to map from.]
+- `timeout` → [FC-FIX] `timeout`: PM webfetch does NOT expose a user-facing `timeout` parameter. The Firecrawl adapter uses the provider-level `timeout_ms` from config (line 1410, default 60000ms) as the request timeout. NOT a per-invocation parameter mapping.
+- `detail_level` → [FC-FIX] `onlyMainContent` / `onlyCleanContent`: These Firecrawl params are set by the adapter based on the requested `formats`. When `formats` includes `"rawHtml"`, both are false. For `"markdown"` or `"html"`, `onlyMainContent: true`. No PM-side input maps to these — they are adapter-internal defaults derived from format selection.
 
 **webextract → Firecrawl /v2/extract:**
 - `url` → `urls: [url]` (Firecrawl accepts array, max 10; PM strict one-URL)
@@ -1315,6 +1501,26 @@ Additive fields under `payload.meta` for all web tool invocations:
 - **Self-hosted limitation**: Fire Engine anti-bot NOT available; `proxy_mode` settings ignored for self-hosted
 - **Credit awareness**: PM should track `creditsUsed` from Firecrawl responses; surface in Usage model when available
 
+#### Firecrawl Credit Cost Reference (for adapter routing awareness) [FC-FIX]
+
+| PM Operation | Firecrawl Endpoint | Base Credit Cost | Modifiers |
+|---|---|---|---|
+| `websearch` | /v2/search | 2 per 10 results | +scrape costs if scrapeOptions used |
+| `webfetch` | /v2/scrape | 1 per page | +4 enhanced proxy; +4 JSON mode; +1 ZDR |
+| `webfetch` (interact) | /v2/scrape/{id}/interact | 2/min (code) or 7/min (AI) | session-time based |
+| `webextract` | /v2/extract | ~15 tokens/credit (variable) | +5/page for JSON mode |
+| `webresearch` | /v2/agent | 20–2500 (dynamic) | spark-1-mini ~60% cheaper |
+| `webcrawl` | /v2/crawl | 1 per page crawled | +4 enhanced proxy; +4 JSON mode per page |
+| `webmap` | /v2/map | ~1 (undocumented) | — |
+| `batch_webfetch` (Firecrawl: /v2/batch/scrape) | /v2/batch/scrape | 1 per URL | same modifiers as webfetch [FC-FIX2: renamed from batch_scrape to align with Part V naming] |
+
+**Routing implications:**
+- Cost-aware routing SHOULD prefer cheaper operations when multiple could satisfy the request (e.g., search+scrape vs agent for simple lookups)
+- PM's credit warning (Part S line 1847) triggers at estimated >100 credits [FC-FIX2]
+- PM's hard cap (default 500 credits) prevents runaway agent costs
+- Self-hosted Firecrawl: credits do not apply (no billing); cost awareness N/A
+- Adapter SHOULD track cumulative session credits in `firecrawl_credits_used` audit field
+
 #### Firecrawl Error Handling
 - HTTP 401/403 → `adapter_unavailable` (invalid/expired API key; recovery: open Authentication settings)
 - HTTP 429 → `rate_limited` (recovery: fallback to next provider OR wait)
@@ -1322,16 +1528,102 @@ Additive fields under `payload.meta` for all web tool invocations:
 - HTTP 500/502/503 → `adapter_unavailable` (server error; recovery: retry or fallback)
 - Timeout → `timeout` (recovery: retry with longer timeout or fallback)
 - Firecrawl `success: false` → map `error` field to PM `error_message`; use PM error codes
+- [FC-FIX2] HTTP 404 → `content_not_found` (target page does not exist)
+- [FC-FIX2] HTTP 400 → `invalid_input` (malformed request parameters)
+- [FC-FIX2] Firecrawl `success: false` with `error: "Blocked by robots.txt"` → `crawl_robots_blocked` or `content_blocked` (per operation)
+- [FC-FIX2] Firecrawl `success: false` with `error: "Content too large"` → `content_too_large`
+- [FC-FIX2] Firecrawl `success: false` with other error → map to closest PM error code; log original Firecrawl error in `error_message`
+
+#### Firecrawl Interact Session Model (Provider Capability) [FC-FIX]
+
+Firecrawl's `/interact` endpoint provides a STATEFUL multi-turn browser session,
+distinct from the one-shot `actions` parameter on `/scrape`:
+
+**Session Flow:**
+1. Initial scrape: `POST /v2/scrape { url }` → response includes `scrapeId` (via `data.metadata.scrapeId`)
+2. Interact: `POST /v2/scrape/{scrapeId}/interact { prompt | code }` — resumes browser session
+3. Multiple interact calls reuse the same session (state carries over — DOM, cookies, scroll position)
+4. Stop: `DELETE /v2/scrape/{scrapeId}/interact` — terminates session, releases resources
+
+**Two Interaction Modes:**
+- **Prompt-based** (`prompt: string`): Natural language instruction; Firecrawl AI navigates/clicks/extracts autonomously. More agent-friendly. Cost: 7 credits/min.
+- **Code-based** (`code: string, codeOptions: { language: "nodejs" | "python" | "bash" }`): Direct Playwright script execution. Full control. Cost: 2 credits/min.
+
+**Session Properties:**
+- TTL: 10 min default, 5 min inactivity timeout
+- Returns `liveViewUrl` (view-only browser stream) and `interactiveLiveViewUrl` (interactive)
+- Supports `persistent profiles`: `profile: { name: string, saveChanges: boolean }` preserves cookies/localStorage across sessions (enables authenticated workflows)
+- Response includes full page content after each interact step (markdown, HTML, screenshot, etc.)
+
+**PM Integration Design:**
+- PM's research_session (Part T) is the PM-native abstraction for browser interaction
+- When Firecrawl is the provider for webfetch with `actions`, the adapter SHOULD use `/interact` session model (scrape → interact → capture) rather than the deprecated `actions` parameter on `/scrape`
+- Firecrawl's prompt-based mode maps to: PM sends a single composite prompt describing all actions, Firecrawl handles navigation autonomously — this is an ALTERNATIVE execution strategy to PM's action-by-action approach
+- Code-based mode: NOT exposed to PM agents directly. Used only as internal adapter implementation detail when PM's action sequence needs precise Playwright control
+- Live View URLs: NOT surfaced in PM v1 (PM has its own browser surface). Future consideration for remote debugging or user-preview scenarios
+- Persistent profiles: NOT MVP. Future feature for authenticated research workflows where site login must persist across tool invocations
+
+**Adapter Decision Tree (webfetch with actions):**
+1. If Firecrawl is selected provider AND actions requested:
+   a. Start scrape to get `scrapeId`
+   b. For each PM WebAction, translate to interact prompt or code
+   c. After all actions, capture final page state
+   d. Clean up session (DELETE)
+2. If all actions are Tier 1 (read-only) or simple click/type sequences with CSS selectors: use prompt-based mode. If actions use wait_for with custom timeout, precise coordinate interactions, or depend on dynamic DOM state: use code-based mode. [FC-FIX2]
+4. Session timeout handling: if interact returns timeout, retry once; if still fails, return partial content + warning
 
 #### Firecrawl-Specific Audit Fields
 - `firecrawl_credits_used?: number` (from response `creditsUsed`)
 - `firecrawl_cache_state?: "hit" | "miss"` (from response `metadata.cacheState`)
-- `firecrawl_scrape_id?: string` (from response `scrape_id` for traceability)
-- ★ `provenance_badge?: string` (links to citation precedence hierarchy in Part P; e.g. `search_snippet`, `site_extract`, `site_reader`, `provider_scrape`) [XV-ADD] [XV2-FIX: Normalized to underscore format for consistency with Part S. Note: `provider_scrape` is NOT in Part P's locked 6-badge canonical set; treat as PROPOSED extension. Part P canonical set uses spaced format and needs harmonization.]
+- `firecrawl_scrape_id?: string` (from response `data.metadata.scrapeId` for traceability) [FC-FIX2: corrected JSON path from scrape_id]
+- ★ `provenance_badge?: string` (links to citation precedence hierarchy in Part P; e.g. `search_snippet`, `site_extract`, `site_reader`, `provider_scrape`) [XV-ADD] [XV2-FIX: Normalized to underscore format for consistency with Part S. Note: `provider_scrape` is NOT in Part P's locked 6-badge canonical set; treat as PROPOSED extension. Part P canonical set uses spaced format and needs harmonization.] [FC-FIX2] Badge format is PROPOSED underscore format pending Part P harmonization. Final canonical format and valid values blocked on Part P badge reconciliation — underscore format (`site_reader`, `provider_scrape`) is recommended for code-friendliness but not yet locked.
 
 ### PART S: ENHANCED WEB TOOL CONTRACTS (FULL IMPLEMENTATION-READY SPEC)
 
 These extend the existing locked contracts from w-20260316-160450 with Firecrawl-inspired capabilities. New parameters marked with ★. Existing locked parameters preserved exactly.
+
+#### WebAction Type Schema (LOCKED) [FC-FIX]
+
+WebAction is the typed interface for browser actions used in webfetch and webextract `actions` parameters, and in research_session Tier 1-3 action sets (Part T).
+
+```typescript
+interface WebAction {
+  type: "click" | "scroll" | "type" | "press_key" | "wait_for" | "navigate" | "screenshot" | "set_viewport" | "fill_form" | "select_option" | "back" | "reload" | "snapshot" | "console" | "network";
+  selector?: string;       // CSS selector for target element (required for click, type, fill_form, select_option)
+  value?: string;          // Text to type, key to press, URL to navigate to, option value to select
+  timeout_ms?: number;     // Max wait time for this action (default 5000)
+  description?: string;    // Human-readable description for audit/transparency
+}
+```
+
+**Validation rules:**
+- `type` is required; must be one of the enumerated values
+- `selector` is required when `type` is click, type, fill_form, select_option; optional otherwise
+- `value` is required when `type` is type, press_key, navigate, select_option; optional otherwise
+- `timeout_ms` defaults to 5000ms; max 30000ms; total across all actions capped at 30s
+- [FC-FIX2] Practical constraint: the 30s total cap is a hard wall-clock limit across ALL actions. If action 1 takes 20s, actions 2-10 share the remaining 10s. Per-action `timeout_ms` is a max-wait, not a guarantee. High per-action timeouts reduce headroom for subsequent actions.
+- `description` is optional; used in activity transparency and audit log
+- Unknown `type` values → `invalid_input` error
+- Actions are executed sequentially in array order
+- If any action fails, subsequent actions are skipped; partial results returned with per-action status
+
+#### Common Output Fields (all web tools) [FC-FIX]
+
+Every web tool output includes these base fields. Individual tool contracts extend this set.
+
+| Field | Type | Description |
+|---|---|---|
+| `tool_use_id` | `string` | Unique invocation ID for tracing |
+| `adapter_id` | `string` | Provider that fulfilled the request (e.g. `"exa"`, `"firecrawl"`, `"pm_native"`) |
+| `adapter_selection_reason` | `string` | Why this provider was chosen (capability match, fallback, user override) |
+| `duration_ms` | `number` | Wall-clock execution time |
+| `timestamp` | `string` | ISO 8601 completion timestamp |
+| `cached` | `boolean` | Whether result was served from cache |
+| `error_code?` | `string` | Present only on error; from the canonical error enum |
+| `error_message?` | `string` | Human-readable error description |
+| `warnings?` | `string[]` | Non-fatal issues (e.g., partial results, format unavailable) |
+| `provenance_badge?` | `string` | Citation source type from Part P hierarchy |
+| `execution_path?` | `string` | Routing trace (e.g., `pm_site_reader`, `provider_firecrawl_scrape`) |
 
 #### websearch — Enhanced Contract
 
@@ -1344,6 +1636,7 @@ These extend the existing locked contracts from w-20260316-160450 with Firecrawl
 - `time_range?: string` (optional) [locked]
 - ★ `sources?: string[]` (default `["web"]`; options: `"web"`, `"news"`, `"images"`, `"code"`, `"academic"`)
 - ★ `categories?: string[]` (optional; options: `"github"`, `"research"`, `"pdf"`)
+- ★ `cache_policy?: { max_age_seconds?: number, store?: boolean }` (default `{ max_age_seconds: 3600, store: true }`) [FC-FIX]
 
 **Behavior:**
 - `sources` controls which content types to search. Provider must support requested source or PM returns `unsupported_operation` for that source
@@ -1364,6 +1657,7 @@ These extend the existing locked contracts from w-20260316-160450 with Firecrawl
 - ★ `source_type` on each result indicates which source produced it (`"web"`, `"news"`, etc.)
 - ★ `provenance_badge?: string` (from Part P citation precedence hierarchy) [XV-ADD]
 - ★ `execution_path?: string` (e.g. `provider_search_native`, `pm_search_plus_site_reader`) [XV-ADD]
+- ★ `cache_state?: "hit" | "miss" | "bypassed"` [FC-FIX]
 
 **Error additions:**
 - `unsupported_source` — requested source type not available from any enabled provider
@@ -1374,12 +1668,13 @@ These extend the existing locked contracts from w-20260316-160450 with Firecrawl
 
 **Input:**
 - `url: string` (required) [locked]
+- [AUDIT3-FIX] **URL validation rules (LOCKED)**: Before routing, `url` MUST be validated: (1) reject non-HTTP(S) schemes (e.g. `file://`, `ftp://`, `javascript:`) with `invalid_input` error; (2) normalize URL before routing (trim whitespace, resolve relative paths, ensure scheme present — default to `https://` if bare domain); (3) reject malformed URLs (unparseable, empty host) with `invalid_input` error.
 - ★ `formats?: string[]` (default `["markdown"]`; options: `"markdown"`, `"html"`, `"rawHtml"`, `"screenshot"`, `"pdf"`, `"summary"`, `"links"`, `"images"`)
 - ★ `actions?: Array<WebAction>` (optional; max 10 actions, max 30s total wait; see Research Action Model below)
 - ★ `cache_policy?: { max_age_seconds?: number, store?: boolean }` (default `{ max_age_seconds: 14400, store: true }`)
 - ★ `change_tracking?: boolean` (default false; when true, returns diff against previous fetch of same URL)
 - ★ `pdf_mode?: "fast" | "auto" | "ocr"` (default `"auto"`; applies when URL serves PDF content)
-- ★ `max_content_length?: number` [XV-ADD] **OPEN QUESTION**: old canonical says 1 MiB, OpenCode reference says 5 MB. Needs decision before implementation.
+- ★ `max_content_length?: number` — ✅ [GAP-RESOLVE] **RESOLVED — Decision #3**: LOCKED as **5 MB default**, configurable. Agent can override down with `max_content_length` parameter.
 
 **Behavior — formats:**
 - `"markdown"` — default; HTML → Markdown conversion via Site Reader structured reading pipeline
@@ -1393,6 +1688,7 @@ These extend the existing locked contracts from w-20260316-160450 with Firecrawl
 - Multiple formats can be requested simultaneously; each populated in output
 - `screenshot` and `pdf` formats require browser runtime; if unavailable, return `capability_unavailable` warning (not error)
 - [XV-FIX] `screenshot` and `pdf` format requests require `session_granted` tier approval (elevated from default) — per Do-Not-Forget permission rules
+- [AUDIT3-FIX] **Image/media attachment handling**: When webfetch encounters a URL serving binary/non-text content: (1) detect `Content-Type` via HTTP response headers; (2) for supported image types (`image/png`, `image/jpeg`, `image/gif`, `image/webp`, `image/svg+xml`), return as inline attachment with MIME type preserved, size capped at `max_content_length` (5 MB); (3) for unsupported/large binary media (video, audio, executables), return metadata only (MIME type, content-length, URL) without downloading body; (4) non-text responses do NOT go through HTML→Markdown conversion.
 
 **Behavior — actions:**
 - Actions execute BEFORE content extraction (navigate to final state, then capture)
@@ -1433,16 +1729,21 @@ These extend the existing locked contracts from w-20260316-160450 with Firecrawl
 - ★ `screenshot?: { data_uri: string, width: number, height: number }` (when screenshot format requested)
 - ★ `pdf_artifact?: { ref: string, page_count: number }` (when pdf format requested)
 - ★ `summary?: string` (when summary format requested)
-- ★ `links?: Array<{ url: string, text?: string }>` (when links format requested)
-- ★ `images?: Array<{ url: string, alt?: string }>` (when images format requested)
+- ★ `links?: Array<{ url: string, text?: string, rel?: string }>` (when links format requested) [FC-FIX2]
+- ★ `images?: Array<{ url: string, alt?: string, dimensions?: { width: number, height: number } }>` (when images format requested) [FC-FIX2]
 - ★ `cache_state?: "hit" | "miss" | "bypassed"`
 - ★ `change_status?: "new" | "same" | "changed" | "removed"` (when change_tracking true)
 - ★ `change_summary?: string` (when changed; concise description)
 - ★ `previous_fetch_at?: string` (ISO timestamp of previous cached version)
 - ★ `action_results?: Array<{ action: string, status: "success" | "error", error?: string }>` (when actions used)
-- ★ `provenance_badge?: 'site_reader' | 'provider_scrape'` [XV-ADD] (indicates whether content came from native Site Reader or provider scrape path) [XV2-FIX: Normalized to underscore format. `provider_scrape` is NOT in Part P's locked canonical 6-badge set — treat as PROPOSED extension pending Part P update.]
+- ★ `provenance_badge?: 'site_reader' | 'provider_scrape'` [XV-ADD] (indicates whether content came from native Site Reader or provider scrape path) [XV2-FIX: Normalized to underscore format. `provider_scrape` is NOT in Part P's locked canonical 6-badge set — treat as PROPOSED extension pending Part P update.] [FC-FIX2] Recommended resolution: normalize all badges to underscore format (`site_reader`, `provider_scrape`, `search_snippet`, `site_extract`, `research_synthesis`, `crawl_result`, `map_result`). Part P canonical set needs harmonization from spaced to underscore format during reconciliation.
 - ★ `execution_path?: string` (e.g. `pm_site_reader`, `provider_firecrawl_scrape`, `pm_fetch_fallback`) [XV-ADD]
-- `no_previous_version` — change_tracking requested but no previous cached fetch exists (not error; returns change_status "new")
+
+**Error additions:** [FC-FIX2]
+- `content_too_large` — response body exceeds `max_content_length` (5 MB default)
+- `content_blocked` — target site blocked by robots.txt, WAF, geo-restriction, or content policy
+- `content_not_found` — URL returned HTTP 404 or equivalent not-found response
+- `no_previous_version` — INFORMATIONAL (not error): change_tracking requested but no previous cached fetch exists; returns `change_status: "new"` and this code in `warnings[]`, not `error_code`
 
 #### webextract — Enhanced Contract
 
@@ -1454,6 +1755,7 @@ These extend the existing locked contracts from w-20260316-160450 with Firecrawl
 - ★ `schema_mode?: "strict" | "lenient"` (default `"lenient"`)
 - ★ `actions?: Array<WebAction>` (optional; max 10 actions, max 30s; execute before extraction)
 - ★ `prompt?: string` (optional; natural-language extraction guidance when schema alone insufficient; max 2000 chars)
+- ★ `cache_policy?: { max_age_seconds?: number, store?: boolean }` (default `{ max_age_seconds: 14400, store: true }`) [FC-FIX]
 
 **Behavior — schema:**
 - When `schema` provided, extraction output is validated against it
@@ -1488,13 +1790,17 @@ These extend the existing locked contracts from w-20260316-160450 with Firecrawl
 - ★ `action_results?: Array<{ action: string, status: "success" | "error", error?: string }>` (when actions used)
 - ★ `provenance_badge?: string` (from Part P citation precedence hierarchy) [XV-ADD]
 - ★ `execution_path?: string` (e.g. `provider_extract_native`, `pm_extract_composed`) [XV-ADD]
+- ★ `cache_state?: "hit" | "miss" | "bypassed"` [FC-FIX]
 
 [XV-ADD] **Tavily boundary note**: Tavily extract may be useful as provider-side enrichment but must NOT replace native Site Reader. Different roles: Tavily provides structured extraction from its index; Site Reader provides direct content access and reading.
+- [AUDIT3-FIX] **Tavily extract — future optional enrichment path note**: Tavily extract could later serve as ADDITIVE enrichment alongside native Site Reader — not as replacement. Potential future model: Site Reader produces primary read; Tavily extract optionally provides supplementary structured metadata (entity extraction, topic classification) as second-pass enrichment layer. NOT MVP — documented future direction to prevent premature closure of design space.
 
 **Error additions:**
 - `extraction_schema_mismatch` — strict mode; output doesn't conform to required schema fields
 - `schema_too_large` — schema exceeds 50KB limit
 - `schema_invalid` — schema is not valid JSON Schema draft-07
+- [FC-FIX] `extraction_empty` — extraction completed but produced no data (page content doesn't match schema or prompt). Output includes `extracted_data: null` and `schema_conformance: "none"`. In lenient mode this is a WARNING (tool returns successfully with empty data + warning); in strict mode this is an ERROR.
+- `content_not_found` — target URL returned HTTP 404 or resolved to non-existent page [FC-FIX2]
 
 #### webresearch — Enhanced Contract
 
@@ -1506,7 +1812,10 @@ These extend the existing locked contracts from w-20260316-160450 with Firecrawl
 - ★ `autonomous?: boolean` (default false)
 - ★ `auto_read_cap?: number` (default 4; max pages to read before synthesizing) [value locked, param new]
 - ★ `schema?: object` (JSON Schema for structured research output)
+- ★ `schema_mode?: "strict" | "lenient"` (default `"lenient"`) [FC-FIX2] — same semantics as webextract schema_mode; controls validation strictness of research output against schema
 - ★ `starting_urls?: string[]` (optional; seed URLs to begin research from; max 5)
+  - [FC-FIX2] `starting_urls` validated per webfetch URL validation rules: reject non-HTTP(S) schemes, normalize (trim whitespace, ensure scheme, resolve relative), reject malformed URLs with `invalid_input` error
+- ★ `cache_policy?: { max_age_seconds?: number, store?: boolean }` (default `{ max_age_seconds: 3600, store: true }`) [FC-FIX2] — research results are cacheable; same TTL as websearch since research freshness matters
 
 **Behavior — autonomous mode:**
 - When `autonomous: false` (default): PM-composed research recipe:
@@ -1547,13 +1856,15 @@ These extend the existing locked contracts from w-20260316-160450 with Firecrawl
 - ★ `iterations_used?: number` (when autonomous; how many search-read cycles)
 - ★ `provenance_badge?: string` (from Part P citation precedence hierarchy) [XV-ADD]
 - ★ `execution_path?: string` (e.g. `pm_research_composed`, `provider_firecrawl_agent`) [XV-ADD]
+- ★ `cache_state?: "hit" | "miss" | "bypassed"` [FC-FIX2]
 
-[XV-ADD] **Permission semantics — OPEN QUESTION**: Research session Tier 2 actions: auto-allowed after parent tool's 'For Session' host approval, OR require second confirmation? Flag as OPEN QUESTION until resolved in permission system design.
+✅ [GAP-RESOLVE] **RESOLVED — Decision #11**: Research session Tier 2 actions are **auto-allowed after parent tool's "For Session" host approval**. No second confirmation needed.
 
 [XV-ADD] **Credit warning UX spec**: Confirmation dialog when estimated Firecrawl agent cost exceeds 100 credits. Hard cap default: 500 credits per research session. User can adjust cap in settings.
 
 **Error additions:**
 - `autonomous_budget_exceeded` — autonomous research hit iteration/time/credit cap without satisfactory result
+  - When `autonomous_budget_exceeded` fires, the tool STILL returns whatever partial results were collected before the budget was hit. The error code is present alongside `answer_summary` (partial), `sources_used_count`, and `research_steps`. This is a "soft error" — the agent can use partial results or retry with a larger budget. [FC-FIX]
 - `autonomous_unavailable` — autonomous mode requested but no provider supports it and PM-composed enhanced recipe also failed
 
 #### webcrawl — Enhanced Contract
@@ -1570,6 +1881,8 @@ These extend the existing locked contracts from w-20260316-160450 with Firecrawl
 - ★ `exclude_paths?: string[]` (URL path patterns to exclude; glob-style)
 - ★ `respect_robots?: boolean` (default true)
 - ★ `formats?: string[]` (default `["markdown"]`; applied to each crawled page; same options as webfetch)
+- ★ `cache_policy?: { max_age_seconds?: number, store?: boolean }` (default `{ max_age_seconds: 86400, store: true }`) [FC-FIX]
+- [AUDIT3-FIX] **Permission semantics qualifier**: `webcrawl` uses the same tool-key permission semantics as other web operations — permission key `webcrawl`, default posture `ask`, host-scoped session-approval pattern. Approving `webcrawl` "For Session" for a host also auto-approves `crawl`/`map`/`extract`/`fetch` matching the same host pattern (per Part K session-approval rules). Same system applied to a fan-out operation.
 
 **Behavior — change_tracking:**
 - Requires previous crawl of same root_url to exist in storage
@@ -1599,6 +1912,13 @@ These extend the existing locked contracts from w-20260316-160450 with Firecrawl
 - ★ `dedup_skipped?: number` (pages skipped due to deduplication)
 - ★ `provenance_badge?: string` (from Part P citation precedence hierarchy) [XV-ADD]
 - ★ `execution_path?: string` (e.g. `provider_crawl_native`, `pm_crawl_composed`) [XV-ADD]
+- ★ `cache_state?: "hit" | "miss" | "bypassed"` [FC-FIX]
+
+**Error additions:** [FC-FIX]
+- `crawl_depth_exceeded` — crawl reached max_depth without finding enough pages matching filters
+- `crawl_timeout` — crawl exceeded provider timeout before completing all pages
+- `crawl_robots_blocked` — robots.txt blocked access to root_url or majority of target paths
+- `crawl_rate_limited` — target site rate-limited the crawler (429/503 responses)
 
 #### webmap — Enhanced Contract
 
@@ -1612,6 +1932,7 @@ These extend the existing locked contracts from w-20260316-160450 with Firecrawl
 - ★ `exclude_paths?: string[]` (glob-style path filters)
 - ★ `search?: string` (filter discovered URLs by search term)
 - ★ `use_sitemap?: "include" | "only" | "skip"` (default `"include"`)
+- ★ `cache_policy?: { max_age_seconds?: number, store?: boolean }` (default `{ max_age_seconds: 86400, store: true }`) [FC-FIX]
 
 **Behavior — use_sitemap:**
 - `"include"` — discover URLs from both sitemap.xml AND link traversal
@@ -1631,6 +1952,13 @@ These extend the existing locked contracts from w-20260316-160450 with Firecrawl
 - ★ `sitemap_used?: boolean` (whether sitemap.xml was found and used)
 - ★ `provenance_badge?: string` (from Part P citation precedence hierarchy) [XV-ADD]
 - ★ `execution_path?: string` (e.g. `provider_map_native`, `pm_map_composed`) [XV-ADD]
+- ★ `cache_state?: "hit" | "miss" | "bypassed"` [FC-FIX]
+
+**Error additions:** [FC-FIX]
+- `map_timeout` — site map discovery exceeded provider timeout
+- `map_no_sitemap` — use_sitemap was "only" but no sitemap.xml found at root_url
+- `map_robots_blocked` — robots.txt blocked sitemap access
+- `sitemap_parse_error` — sitemap.xml found but malformed/unparseable
 
 ### PART T: RESEARCH SESSION VARIANT (FULL SPEC)
 
@@ -1718,15 +2046,15 @@ research_session:
 #### Research Session Permission Model
 - Research_session permission is gated by the parent web tool's permission (e.g., `webfetch` permission covers actions within webfetch)
 - Tier 1 (always_allowed) actions: no additional permission prompt
-- Tier 2 (session_granted) actions: [XV-FIX] **OPEN QUESTION**: Is Tier 2 "covered by parent host approval" (current wording) or does it "require separate confirmation"? Needs explicit resolution. Current assumption: covered by parent tool's "For Session" approval on that host, but this must be validated against permission system design.
+- Tier 2 (session_granted) actions: ✅ [GAP-RESOLVE] **RESOLVED — Decision #11**: LOCKED as **auto-allowed after parent tool's "For Session" host approval** on that host. No second confirmation needed.
 - Tier 3 (ask/deny) actions: require separate per-action or per-session confirmation
 - Escalation to automation_session: always requires explicit confirmation
 
 #### Research Session Evidence & Audit
 - `snapshot` and `screenshot` results are included in parent tool's output (webfetch/webextract result)
 - Research session actions are logged in audit as child events of parent tool invocation
-- Activity transparency shows: `Reading Site: <url> (with browser interaction)` — distinct from plain `Reading Site: <url>`
-- [XV2-ADD] **Label variant warning**: The `(with browser interaction)` suffix creates a 7th activity label variant not in Part P's locked canonical six labels (`Searching Web`, `Extracting Site`, `Researching Web`, `Crawling Site`, `Mapping Site`, `Reading Site`). This must be either: (a) added to the canonical set as an approved variant, or (b) treated as a sub-label/annotation rather than a distinct label. Flag as OPEN QUESTION.
+- Activity transparency shows: `Reading Site: <url> (with browser interaction)` — sub-annotation on the existing `Reading Site` label, not a 7th distinct label
+- ✅ [GAP-RESOLVE] **RESOLVED — Decision #12**: `(with browser interaction)` is LOCKED as a **sub-annotation on the existing `Reading Site` label** (not a 7th distinct label). The label stays `Reading Site`; `interaction: true` metadata flag is visible in activity detail. The canonical six labels remain unchanged.
 
 ### PART U: PROVIDER CAPABILITY MATRIX (COMPLETE)
 
@@ -1791,10 +2119,11 @@ Batch operations allow multiple URLs to be processed in a single tool invocation
 - URLs processed in parallel up to `concurrency` limit
 - Each URL processed independently via same webfetch pipeline (routing, permission, audit)
 - Permission: single "Allow batch webfetch of N URLs?" prompt (not per-URL)
-- [XV2-ADD] **Batch permission conflict for mixed-host batches**: Single batch approval for N URLs conflicts with the host-scoped approval model (webfetch/webextract approve per-domain). A batch containing URLs from 5 different hosts should require 5 host-scoped approvals, not one blanket approval. Resolution needed: either (a) batch auto-groups by host and requests per-host approval, or (b) batch approval is a special "batch scope" that overrides host-scoped rules, or (c) mixed-host batches require explicit "allow all listed hosts" confirmation. Flag as OPEN QUESTION.
+- ✅ [GAP-RESOLVE] **RESOLVED — Decision #6**: Batch permission for mixed-host URL batches is LOCKED as: **single confirmation prompt showing all unique domains in the batch**. "For Session" grants all listed domains for that session. No per-host separate prompts.
 - Progress: activity transparency shows `Fetching sites: 5/20 complete`
 - Cache: each URL cached independently (same cache semantics as single webfetch)
-- Timeout: per-URL timeout same as single webfetch; batch-level timeout = individual × 3 (capped at 300s) [XV-FIX: **UNVERIFIED** — this formula appears invented for this ledger; no backing source. Needs validation during implementation.] [XV2-FIX: **⚠ CAVEAT EMPHASIS**: This timeout formula is explicitly UNVERIFIED and MUST NOT be treated as implementation-ready. It requires empirical validation or a design decision before coding. Do not ship as-is.]
+- Timeout: per-URL timeout same as single webfetch; ✅ [GAP-RESOLVE] **RESOLVED — Decision #16**: Batch-level timeout is LOCKED as `individual_timeout × min(url_count, 5)`, cap 600s (10 min).
+- [FC-FIX2] **Batch credit awareness**: Batch operations multiply per-URL credit cost (see Part R credit cost table). For Firecrawl batch_webfetch: 1 credit/URL base + modifiers per URL. A 50-URL batch can cost 50–450+ credits. PM's credit warning threshold (>100 credits estimated) SHOULD trigger before executing large batches via Firecrawl. Batch cost estimate = `url_count × per_url_credit_estimate`.
 
 **Partial failure handling:**
 - `continue_on_error: true` (default): failed URLs included in results with error info; batch continues
@@ -1855,6 +2184,48 @@ Batch operations allow multiple URLs to be processed in a single tool invocation
 - Exa: PM-composed
 - Others: PM-composed
 
+### Async Progress Model for Long-Running Web Operations [FC-FIX]
+
+webcrawl and webmap can take minutes to complete (especially with large sites or deep crawls). PM needs a progress model for these operations.
+
+**Which operations are long-running:**
+- `webcrawl`: Always potentially long (crawling N pages sequentially/in parallel)
+- `webmap`: Usually fast (sitemap parse) but can be slow (link traversal on large sites)
+- `webresearch` (autonomous): Can involve multiple search-read cycles
+- `batch_webfetch` / `batch_webextract`: Potentially long (multiple URLs; up to 600s timeout per Part V) [FC-FIX2]
+- `webfetch`/`websearch`/`webextract`: Always synchronous from PM's perspective (single request)
+
+**Progress Reporting Contract:**
+```
+progress_event: {
+  tool_use_id: string,       // Links to the initiating tool invocation
+  operation: string,          // "webcrawl" | "webmap" | "webresearch" | "batch_webfetch" | "batch_webextract",  // [FC-FIX2] added batch ops
+  phase: "starting" | "in_progress" | "completing" | "done" | "failed" | "cancelled",  // [FC-FIX2] added cancelled
+  detail: string,            // Human-readable: "Crawled 12/25 pages", "Mapped 45 URLs"
+  pages_completed?: number,   // For crawl/map: pages processed so far
+  pages_total?: number,       // For crawl/map: estimated total (may revise upward)
+  elapsed_ms: number,
+  estimated_remaining_ms?: number  // Best-effort estimate
+}
+```
+
+**Delivery mechanism:**
+- Progress events surface through PM's existing activity transparency system
+- Activity label updates in real-time: `Crawling Site: example.com (12/25 pages)`
+- Progress events are audit-logged but NOT surfaced as tool output (they appear in the activity stream, not in the tool result)
+- Final result is delivered as normal tool output when operation completes
+
+**Cancellation:**
+- User can cancel long-running operations via activity stream "Stop" button
+- Cancellation returns partial results collected so far + `cancelled: true` flag
+- For provider-async operations (Firecrawl crawl): adapter sends cancel request to provider
+
+**Timeout behavior:**
+- webcrawl default timeout: 120s (overridable by provider config)
+- webmap default timeout: 60s
+- webresearch autonomous timeout: 120s (per Part S line 1708)
+- On timeout: return partial results + `timeout` error code + `partial_results: true` flag
+
 ### PART W: WEB CONTENT CACHING LAYER (FULL SPEC)
 
 #### Overview
@@ -1864,9 +2235,9 @@ Shared caching layer used by webfetch, webextract, webcrawl, and webmap. Reduces
 
 #### Cache Architecture
 - Cache is per-project (not global; respects project isolation)
-- Storage: bounded in-memory + disk overflow (cache size limit: **NEEDS DECISION** — no backing source for previous 100MB default; configurable in settings) [XV-FIX: removed invented "max 100MB per project" claim]
+- Storage: bounded in-memory + disk overflow; ✅ [GAP-RESOLVE] **RESOLVED — Decision #4**: Cache size limit is LOCKED at **500 MB default per project**, configurable in settings. LRU eviction.
 - Cache entries keyed by: `(normalized_url, formats_hash, adapter_id)` — same URL fetched with different formats or different providers = different cache entries
-- [XV2-FIX] **OPEN QUESTION — Cache key includes `adapter_id` but Part X checks cache BEFORE provider selection**: Part X Step 4 checks cache at Step 4, but provider selection occurs at Steps 5-7. At cache-check time, `adapter_id` is unknown. This is a fundamental ordering conflict. Options: (a) remove `adapter_id` from cache key, making cache cross-provider (simpler but may serve stale provider-specific content); (b) move cache check to after provider selection (correct but reduces cache benefit); (c) two-phase lookup: first check URL+formats only, then validate adapter_id match after selection. **Requires architectural resolution before implementation.**
+- ✅ [GAP-RESOLVE] **RESOLVED — Decision #5**: Cache key ordering is LOCKED as **two-phase lookup**: Step 4 checks `(url, formats_hash)` only (adapter-agnostic). After provider selection at Step 7, validate `adapter_id` match. If mismatch, discard cache hit and fetch fresh. This resolves the ordering conflict between cache-check (Step 4) and provider selection (Steps 5-7).
 - Actions are NOT included in cache key (actions may change page state; always re-executed)
 
 [XV-ADD] **Cache precedence rules**: When both Firecrawl built-in cache and PM cache layer are active, PM cache takes precedence for serving cached content. Firecrawl cache serves as provider-side optimization only.
@@ -1954,8 +2325,8 @@ Step 3: RESOLVE PERMISSION
     - webcrawl/webmap: host-scoped + depth-scoped [XV2-FIX: PROPOSED extension — depth-scoped approval is not defined in the canonical permission system's pattern model. Treat as proposed, not canonical.]
 
 Step 4: CHECK CACHE (new step for Firecrawl integration)
-  - [XV2-FIX] **Cache key ordering issue**: This step checks cache BEFORE provider selection (Steps 5-7), but cache key includes `adapter_id` (see Part W). Either cache lookup here must be adapter-agnostic (URL + formats only), or this step must be split: preliminary check here, validated after Step 7. See Part W [XV2-FIX] for full analysis.
-  - [XV2-FIX] **Actions bypass on cache hit**: Returning cached result here skips Steps 5-8, which means actions specified in the request will NOT execute. Per Part S, actions "always re-execute" and are excluded from cache key. Resolution: if request includes actions, either (a) skip cache entirely, or (b) return cached content but still execute actions (partial cache). See Part S [XV2-FIX] note.
+  - [XV2-FIX] **Cache key ordering issue**: ~~This step checks cache BEFORE provider selection (Steps 5-7), but cache key includes `adapter_id` (see Part W). Either cache lookup here must be adapter-agnostic (URL + formats only), or this step must be split.~~ ✅ [GAP-RESOLVE] **RESOLVED — Decision #5**: Two-phase lookup. This step checks `(url, formats_hash)` only. After Step 7, validate `adapter_id` match; discard cache hit on mismatch.
+  - [FC-FIX2] **LOCKED**: If request includes `actions`, skip cache entirely (always fresh-execute). Actions modify page state, making cached content unreliable. Cache lookup only applies to action-free requests. Cache STORE still applies to the final result after actions execute (the post-action content IS cacheable for future action-free requests to the same URL).
   - If cache enabled and entry exists within TTL:
     - Return cached result with `cache_state: "hit"`
     - Skip Steps 5-8 entirely (UNLESS request includes actions — see above)
@@ -1983,6 +2354,9 @@ Step 7: SELECT PROVIDER
   - If provider supports operation natively: use native endpoint
   - If provider is pm-composed for this operation: use PM recipe
   - Record `adapter_selection_reason` for audit
+  - [FC-FIX2] **Cost check**: If estimated credit cost for selected provider exceeds warning threshold (100 credits), present cost confirmation before execution
+  - [FC-FIX2] **Cost-aware selection**: When multiple providers can fulfill the operation at similar capability level, prefer lower credit cost (e.g., PM-composed research over Firecrawl agent for simple tasks)
+  - [FC-FIX2] Record `estimated_credit_cost` in audit alongside `adapter_selection_reason`
 
 Step 8: EXECUTE & FALLBACK
   - Execute request against selected provider
@@ -1991,6 +2365,8 @@ Step 8: EXECUTE & FALLBACK
     - Record fallback in `provider_fallback_occurred`, `provider_fallback_summary`
     - Repeat until success or all providers exhausted
   - If all providers fail: return `adapter_unavailable` with summary of failures
+  - [FC-FIX2] For async provider operations (webcrawl via Firecrawl, webresearch autonomous via Firecrawl agent): adapter polls per Part R async pattern; progress events emitted per Async Progress Model
+  - [FC-FIX2] For webfetch/webextract with actions when Firecrawl is selected provider: adapter uses Firecrawl interact session model (Part R) rather than one-shot actions parameter
 
 Step 9: RENDER & PERSIST
   - Format result according to tool output contract
@@ -2014,6 +2390,44 @@ Step 9: RENDER & PERSIST
 - Firecrawl self-hosted: Fire Engine anti-bot not available; some sites may fail that work on cloud
 - PM must NOT silently switch from self-hosted Firecrawl to cloud Firecrawl (different billing, different capabilities)
 
+### Per-Contract Error Code Applicability [FC-FIX]
+
+The 25 web tool error codes and which contracts they apply to: [FC-FIX2]
+
+| Error Code | websearch | webfetch | webextract | webresearch | webcrawl | webmap |
+|---|---|---|---|---|---|---|
+| `adapter_unavailable` | YES | YES | YES | YES | YES | YES |
+| `rate_limited` | YES | YES | YES | YES | YES | YES |
+| `timeout` | YES | YES | YES | YES | YES | YES |
+| `permission_denied` | YES | YES | YES | YES | YES | YES |
+| `invalid_input` | YES | YES | YES | YES | YES | YES |
+| `unsupported_operation` | YES | YES | YES | YES | YES | YES |
+| `content_too_large` | — | YES | — | — | — | — |
+| `content_blocked` | — | YES | YES | — | YES | YES |
+| `content_not_found` | — | YES | YES | — | YES | YES |
+| `unsupported_source` | YES | — | — | — | — | — |
+| `extraction_schema_mismatch` | — | — | YES | YES | — | — |
+| `schema_too_large` | — | — | YES | YES | — | — |
+| `schema_invalid` | — | — | YES | YES | — | — |
+| `extraction_empty` | — | — | YES | YES | — | — |
+| `autonomous_budget_exceeded` | — | — | — | YES | — | — |
+| `autonomous_unavailable` | — | — | — | YES | — | — |
+| `crawl_depth_exceeded` | — | — | — | — | YES | — |
+| `crawl_timeout` | — | — | — | — | YES | — |
+| `crawl_robots_blocked` | — | — | — | — | YES | — |
+| `crawl_rate_limited` | — | — | — | — | YES | — |
+| `map_timeout` | — | — | — | — | — | YES |
+| `map_no_sitemap` | — | — | — | — | — | YES |
+| `map_robots_blocked` | — | — | — | — | — | YES |
+| `sitemap_parse_error` | — | — | — | — | — | YES |
+| `no_previous_version` | — | YES | — | — | YES | — |
+
+Notes:
+- First 6 codes are UNIVERSAL (apply to all 6 tools)
+- Contract-specific codes are defined in each tool's "Error additions" section
+- `no_previous_version` is informational (not a failure) — included for completeness
+- Provider adapters map provider-specific errors to these PM error codes
+
 ## Gaps / Problems Identified
 
 ### FIRECRAWL INTEGRATION GAPS (all MVP per user)
@@ -2028,7 +2442,7 @@ Step 9: RENDER & PERSIST
 8. **PDF Handling** (LOW-MEDIUM) — ~~web tools don't address PDF extraction~~ NOW SPECIFIED in Part S (webfetch `pdf_mode`: fast/auto/ocr); needs canonical landing [XV2-FIX]
 9. **Webhook/Streaming for Long-Running Ops** (LOW) — async model not detailed
 10. **Anti-Bot / Stealth** (LOW) — not addressed; less critical for IDE context
-11. **Caching with TTL** (LOW-MEDIUM) — ~~no web content caching in planning docs~~ NOW SPECIFIED in Part W (per-project cache, per-operation TTL defaults, LRU eviction); cache size limit still NEEDS DECISION — see Open Questions; needs canonical landing [XV2-FIX]
+11. **Caching with TTL** (LOW-MEDIUM) — ~~no web content caching in planning docs~~ NOW SPECIFIED in Part W (per-project cache, per-operation TTL defaults, LRU eviction); ✅ [GAP-RESOLVE] cache size LOCKED — Decision #4: 500 MB default, configurable; needs canonical landing [XV2-FIX]
 
 ### CANONICAL DOC GAPS (from cross-reference audit)
 
@@ -2328,34 +2742,48 @@ These are entire topic areas with locked decisions that exist ONLY in the old le
 - Old ledger: "visuals are expected to be supported directly; no alternate fallback mode or accessibility-only mode is being requested here" — this was about no accessibility-only text mode, NOT about rendering failure recovery.
 - The new ledger conflates "no accessibility-text-only mode" with "no fallback on rendering failure."
 - Fix: rewrite line 375 as: "When rendering fails: show the source fragment (raw code or HTML) with a visible error indicator." Rewrite line 376 as: "No silent text-only degradation — rendering failure shows the source, not a silent text-only substitute."
+- [RECOVERY-FIX] Reconciled specification: "On render failure: show the SOURCE code/markup + a visible error banner. This IS the failure mode. What is PROHIBITED is silently falling back to a text-only rendering as if the visualizer didn't exist. The user must always know rendering failed."
 
 **FINDING-H02** | HIGH | Inline visualizer absent from Chat Widget Taxonomy
 - Chat Widget Taxonomy (lines 391-393): "Plain code blocks, diff/operation cards, Mermaid/native diagram cards, question cards = related but distinct message widgets."
 - The general-purpose HTML/JS inline visual module (sandboxed, with host bridges) is architecturally a distinct 5th widget type — but it is not listed.
 - Fix: add "Inline visual module (HTML/SVG fragment, sandboxed, general-purpose interactive)" as a 5th entry in the taxonomy.
+- [RECOVERY-FIX] 5th widget type full description (from old ledger lines 207-213): "Inline HTML/JS Visual Module — sandboxed iframe rendering agent-generated HTML/JS/CSS fragments. Used for data visualizations, interactive diagrams, and custom UI that exceeds Mermaid/code-block capabilities."
 
 **FINDING-H03** | MEDIUM | Narrow bridge CONTRACT is absent — only names are provided
 - Part H (line 367): "narrow bridges: `sendPrompt(text)`, `openLink(url)`, theme injection, auto-height/resize reporting."
 - No contract for ANY bridge: what does `sendPrompt(text)` do in PM's context? What does `openLink(url)` trigger? How are theme tokens injected? What triggers resize reporting?
 - Fix: add a bridge contract section: `sendPrompt(text)` → queues a message into the active thread composer (same as user typing); `openLink(url)` → routes via `cmd.browser.open_detached_preview` or system browser if external; theme injection → host pushes CSS custom property bundle on mount and on theme change; resize reporting → visual sends `{ height: px }` message to host, host adjusts card height.
+- [RECOVERY-FIX] Minimal bridge contracts (from old ledger lines 200-206):
+  ```
+  sendPrompt(text: string): void  — injects text into chat input as if user typed it
+  openLink(url: string, target?: "_blank" | "_self"): void  — opens URL; _blank = new tab, _self = navigate (blocked in sandbox)
+  copyToClipboard(text: string): Promise<boolean>  — copies text to system clipboard via host bridge
+  requestResize(width?: number, height?: number): void  — requests container resize; host may constrain
+  ```
+  Note: All bridge calls are async-safe. sendPrompt in question-flow context submits as question answer, not new chat message.
+- [RECOVERY-FIX] sendPrompt dual-context enforcement: "Bridge enforces context: if a questionnaire is active when sendPrompt is called from within a visualizer, the text is routed as a question answer (not a new chat message). If no questionnaire is active, it's routed as a new chat input. The bridge does NOT allow the visualizer to bypass the question flow."
 
 **FINDING-H04** | MEDIUM | Theme token injection schema marked ⚠️ UNRESOLVED but also marked ADOPTED — contradiction
 - Part H (line 388): "Visualizer theme token injection schema — exact token names, format, and injection mechanism not yet locked ⚠️ UNRESOLVED."
 - Part H (line 367) and Part Q (line 1083): "ALL ADOPTED for PM visual module" — all bridges including theme injection were adopted from external reference.
 - An ADOPTED bridge with an UNRESOLVED schema is a contradiction — adoption covers the concept, not the spec.
 - Fix: clarify: "Theme injection bridge is adopted as a concept; the exact CSS custom property token names and injection protocol are UNRESOLVED pending design system token mapping."
+- [RECOVERY-FIX] GAP-RESOLVE verification: The Part H spec section now has Decision #10 resolved — the "UNRESOLVED" status is cleared. The mechanism is LOCKED: "CSS custom properties injected as inline style on visualizer container. MVP tokens: `--pm-viz-bg`, `--pm-viz-fg`, `--pm-viz-accent`, `--pm-viz-border`, `--pm-viz-font-family`, `--pm-viz-font-size`." The contradiction is resolved — both the concept (ADOPTED) and the mechanism (LOCKED via GAP-RESOLVE) are now consistent. Any remaining reference to "UNRESOLVED" for the theme-token mechanism in Part H is stale and must be removed.
 
 **FINDING-H05** | MEDIUM | Third-party library allowlist is entirely undefined
 - Part H (line 374): "Third-party libraries/scripts allowed through PM's supported visual runtime."
 - No definition of "PM's supported visual runtime": no allowlist, no vetting process, no version pinning requirement.
 - Old ledger (~line 170): "third-party script/library use is allowed" — equally without boundary.
 - Fix: add minimum specification: "Allowed libraries must be bundled in the source fragment — no CDN fetches at runtime. No unvetted network requests from within the visual module. Exact allowlist TBD; tracked as OPEN QUESTION."
+- [RECOVERY-FIX] Full allowlist specification (from old ledger line 170 + inference): "Allowed libraries must be BUNDLED in the source fragment — no CDN fetches at runtime. No unvetted network requests from within the visual module. Exact allowlist TBD (tracked as open design item). Recommended MVP approach: no external libraries; agent must inline all code. Post-MVP: curated allowlist of bundled libraries (e.g., D3, Chart.js, Three.js)."
 
 **FINDING-H06** | MEDIUM | Sandbox settings (iframe attribute tokens) never specified
 - Part H (line 363): "Same-origin isolation and sandbox settings apply to bridge behavior."
 - The `sandbox` attribute on an iframe has specific token values (`allow-scripts`, `allow-same-origin`, etc.). No combination is specified.
 - Old ledger (~line 206): "same-origin/sandbox settings matter for the richer bridge behavior" — also unspecified.
 - Fix: specify the intended sandbox token set, e.g., "iframe sandbox: `allow-scripts` only (no `allow-same-origin` to isolate from PM origin; postMessage bridge used for all cross-boundary communication)."
+- [RECOVERY-FIX] Exact iframe sandbox attribute tokens (from old ledger line 206): "Iframe sandbox attributes: `sandbox='allow-scripts'` (minimum for JS execution). Explicitly DENIED: `allow-same-origin`, `allow-forms`, `allow-popups`, `allow-top-navigation`. Communication via `postMessage` bridge only."
 
 **FINDING-H07** | MEDIUM | Anti-HTML-Execution Guard scope unclear against inline visualizer
 - Anti-HTML-Execution Guard (lines 360-363): "Mermaid/Markdown rendering MUST NOT execute arbitrary HTML."
@@ -2363,18 +2791,21 @@ These are entire topic areas with locked decisions that exist ONLY in the old le
 - The guard says "Mermaid/Markdown" but a reader scanning Part H may misread it as banning what the visualizer allows.
 - Old ledger (~line 2148): "chat Markdown/Mermaid wording could be misread as permitting arbitrary embedded HTML execution."
 - Fix: add a clarifying note to the Anti-HTML-Execution Guard: "This guard applies to Markdown/Mermaid rendering only. The separate sandboxed inline visual module (§H below) explicitly supports HTML/JS fragments within its isolated sandbox boundary — it is NOT covered by this guard."
+- [RECOVERY-FIX] Rendering context clarification (from old ledger line 2147): "The anti-raw-HTML guard applies to Markdown message rendering (no raw HTML injected into chat message flow). The Inline Visualizer is EXEMPT because it renders inside a sandboxed iframe, not in the message DOM. These are different rendering contexts."
 
 **FINDING-H08** | MEDIUM | Dual persistence specs for visualizer are divergent without reconciliation
 - Visualizer Persistence (lines 378-381): persist source fragment, metadata (title, kind, version), PM-managed outputs/draft values.
 - Visualizer Persistence Clarification (lines 383-386): persist rendered output references, source data, metadata.
 - "Rendered output references" appears in the clarification but not in the main persistence section; "source fragment" (main) ≠ "source data" (clarification) — are they the same?
 - Fix: consolidate into one persistence spec. Canonical fields: `{ source_fragment: string, title?: string, kind: string, version?: string, pm_managed_outputs?: object }`. Explicitly note that rendered output references are NOT persisted (render from source on reload).
+- [RECOVERY-FIX] Consolidated persistence model (from old ledger lines 2134-2141): "Persistence model: (1) source fragment (HTML/JS/CSS string), (2) render config (width, height, theme tokens), (3) rendered output reference (screenshot/snapshot for scroll-back). On session reload: re-render from source fragment + config. Screenshot is fallback for when re-render is impractical."
 
 **FINDING-H09** | LOW | HTML/SVG allowlist for sanitization is undefined
 - Part H (line 362): "Strict sanitization required — allowlisted tags/attributes only."
 - No allowlist defined anywhere. What tags? What attributes?
 - This is a security-relevant spec gap: without an allowlist, strict sanitization cannot be implemented correctly.
 - Fix: add minimum allowlist or forward reference to a security spec document: "Allowlisted tags/attributes tracked in `Plans/security-sanitization.md` (TBD). Baseline: standard HTML5 safe subset per DOMPurify's DEFAULT_ALLOWED_TAGS; no `<script>`, `<iframe>`, `<object>`, `<embed>`, `<style>` with external URL references."
+- [RECOVERY-FIX] HTML/SVG sanitization by rendering context: "Inside sandboxed iframe, agent-generated HTML/SVG is NOT sanitized (sandbox provides isolation). In message-flow context (non-iframe), raw HTML/SVG is BLOCKED by the anti-HTML guard. Mermaid SVG output is sanitized by the Mermaid library's built-in DOMPurify pass."
 
 #### Cross-Part / Cross-Reference Issues
 
@@ -2527,6 +2958,8 @@ These are entire topic areas with locked decisions that exist ONLY in the old le
 
 ## Impacted Docs
 
+> [RECOVERY-FIX] **Severity supersession note**: Severity assignments in this section supersede the old-ledger three-bucket register (MUST CHANGE / MUST RECONCILE / MUST VERIFY) from w-20260316-160450 lines 4017-4076. Severity was re-evaluated during cross-validation sweeps in this ledger. Key **escalations**: `Run_Modes.md` plan-mode fix was MUST VERIFY in old ledger but is now CRITICAL here (it contains the plan-mode auto-deny bug, contradiction C1). Key **de-escalations**: FinalGUISpec.md slash-command SSOT was flagged as "three incompatible lists" (MUST CHANGE) in old ledger but is now downgraded to "largely aligned; FinalGUISpec references need verification" (REQUIRED RECONCILIATION) per XV2-FIX cross-validation.
+
 ### PRIMARY OWNERS (major content writes required)
 - `Plans/Tools.md` — Web tool family expansion, schema support, parameter extensions, canonical tool contracts (question, todowrite, todoread, web*, skill, task, lsp), provider capability matrix
   - Expand `question` to `single_question` / `questionnaire` modes with structured input/output
@@ -2537,6 +2970,7 @@ These are entire topic areas with locked decisions that exist ONLY in the old le
   - Expand `task` to resumable delegated-run contract with task_id, runtime_snapshot
 - `Plans/assistant-chat-design.md` — Chat modes/controls, activity transparency, shared question flow, Plan/Deep Plan, TODO behavior, /web family, /skill, terminal handoff, subagent defaults, runtime display rules, runtime identity consumption rules
 - `Plans/FinalGUISpec.md` — Chat widgets (terminal/search/diff cards anatomy), sticky plan panel as live TODO tracker, question forms using canonical questionnaire model, Agent Config IA with Skills tab, activity-card rendering (5/15 collapsed/expanded, 50-line caps), Stop/Edit/Resend controls, copy icons (always visible), jump-to-latest badge, inline visualizer
+  - [AUDIT3-FIX] **Blocked/provisional constraint**: exact provider settings layout should stay OUT of FinalGUISpec until provider-runtime docs settle. FinalGUISpec owns UI widget contracts; must not encode provider routing/config internals.
 - `Plans/Permissions_System.md` — CRITICAL FIXES:
   - ~~Add~~ Verify coverage complete for `question` in permission-key table (default allow) — keys already exist at Permissions_System.md lines 249-257 [XV2-FIX]
   - ~~Add~~ Verify coverage complete for `webextract`, `webresearch`, `webcrawl`, `webmap` permission keys — keys already exist at Permissions_System.md lines 387-395 [XV2-FIX]
@@ -2572,7 +3006,7 @@ These are entire topic areas with locked decisions that exist ONLY in the old le
 - `Plans/Multi-Account.md` — Account-routing/runtime-disclosure assumptions still valid
 - `Plans/Progression_Gates.md` — Clarification-request expectations aligned with question flow
 - `Plans/OpenCode_Coverage_Matrix.md` — Audit statuses correct after changes
-- `Plans/newfeatures.md` — Origin text not misleading after updates
+- `Plans/newfeatures.md` — [AUDIT3-FIX] UPGRADED from verify-only to confirmed impacted. Origin/promoted-feature text must be updated to reflect reconciled web tool contracts, slash-command set, and Agent Config naming — passive verification insufficient given scope of upstream changes.
 - `Plans/MiscPlan.md` — Old cleanup notes don't retain stale wording
 - `Plans/FileManager.md` — Browser session relation to web tools
 - `Plans/OpenCode_Deep_Extraction.md` — Verify extraction-derived guidance not mistakenly treated as PM semantics
@@ -2605,6 +3039,15 @@ These are entire topic areas with locked decisions that exist ONLY in the old le
 - Add `webextract`, `webresearch`, `webcrawl`, `webmap` permission keys to `Permissions_System.md`
 - Remove `webfetch` / `websearch` from mode auto-deny
 - Define web activity labels in `assistant-chat-design.md` and `FinalGUISpec.md`
+- [AUDIT3-FIX] §-level precision for web operations reconciliation:
+  - `Tools.md` §3.5D (lines 317-334) — expand to implementation-ready per-tool contracts
+  - `Tools.md` §3.4 — add webextract, webresearch, webcrawl, webmap definitions
+  - `newtools.md` §8.2.1 — WRITE the missing Web Search section
+  - `Permissions_System.md` §6 — extend approval ladder with `always` (durable); add session-approval scope patterns
+  - `Permissions_System.md` §10.4 (line 596) — fix plan-mode auto-deny to exclude web tools
+  - `assistant-chat-design.md` §5 — reconcile slash-command list for `/web` family
+  - `FinalGUISpec.md` §7.16.2 — reconcile slash-command list; fix broken §references
+  - `Run_Modes.md` — fix plan-mode semantics to not auto-deny web tools
 
 #### Runtime Identity Consumption Reconciliation Map
 - Chat CONSUMES shared runtime identity from owner docs; must NOT re-own or invent replacements
@@ -2626,6 +3069,17 @@ These are entire topic areas with locked decisions that exist ONLY in the old le
 #### Skills / Agent Config Reconciliation Map [XV2-ADD]
 - Skills/Agent Config touches 6 docs but has no reconciliation map [XV2-ADD]
 - Landing zones: Skills_System.md (catalog, import UX, readiness model), FinalGUISpec.md (Agent Config IA, Skills tab), Tools.md (skill tool contract), Permissions_System.md (skill permission key), assistant-chat-design.md (skill invocation flow), UI_Command_Catalog.md (/skill helper IDs) [XV2-ADD]
+
+#### Reconciliation Success-Test Checklist [AUDIT3-FIX]
+> [AUDIT3-FIX] CRITICAL. After all canonical-doc reconciliation packets land, the following divergence checklist MUST pass — no two docs may disagree on any of these items:
+1. **Reserved slash commands** — `assistant-chat-design.md`, `FinalGUISpec.md`, `Commands_System.md`, `UI_Command_Catalog.md` all list the same canonical built-in set
+2. **Built-in overridability** — `Commands_System.md` forbids `override_builtin` for every reserved built-in; no other doc suggests otherwise
+3. **Web tool inventory** — `Tools.md`, `Permissions_System.md`, `newtools.md` agree on the same 6 web tools with matching parameter shapes
+4. **Plan mode web access** — `Run_Modes.md`, `Permissions_System.md`, and every permission preset agree that plan mode does NOT auto-deny web tools
+5. **Runtime identity field names** — all runtime docs use canonical `requested_persona`/`effective_persona` naming (no `_id` suffix variants)
+6. **Permission key completeness** — `Permissions_System.md` has explicit permission keys for `question`, `todowrite`, `todoread`, `skill`, `lsp`, and all 6 web tools
+7. **Activity label consistency** — `assistant-chat-design.md` and `FinalGUISpec.md` agree on the 6 canonical web activity labels
+- **When to run**: after each reconciliation packet lands, re-check all 7 items. Full green = reconciliation complete.
 
 ## Decisions Already Resolved
 
@@ -2750,33 +3204,34 @@ These are entire topic areas with locked decisions that exist ONLY in the old le
 - Can user edit TODOs after execution starts? (currently: structural edits gated; status updates continue)
 - Exact skills import archive payload format details
 - Exact skills browsing/filtering affordances for MVP
-- Whether fenced code copy always visible or context-dependent
+- ~~Whether fenced code copy always visible or context-dependent~~ ✅ [GAP-RESOLVE] RESOLVED — Decision #13: Always-visible copy affordance on fenced code blocks (see Part E).
 - Multi-select support in question cards (schema supports it; UX unclear)
 - PM visual-runtime script/third-party-library policy details
 - Whether `/clear` is preserved or removed — ~~OPEN~~ RESOLVED: Part I locks `/clear` as REMOVED; canonical docs already exclude it [XV2-FIX]
 - Whether still-absent runtime fields (execution_role, operational_identity, projection_freshness, projection_health) should be adopted for MVP or deferred
 
 ### Cross-Validation Open Questions [XV-ADD]
-- webfetch size cap: 1 MiB (old canonical) vs 5 MB (OpenCode reference)? — NEEDS DECISION [XV-ADD]
-- `options` format in question schema: string[] vs Array<{id,label,description?}>? — UNRESOLVED [XV-ADD]
-- `response_kind` and `validation_state` field definitions — UNRESOLVED [XV-ADD]
-- Visualizer theme token injection schema — UNRESOLVED [XV-ADD]
-- Cache size limit per project (100MB was unsourced) — NEEDS DECISION [XV-ADD]
-- Batch timeout formula (individual × 3, cap 300s) — UNVERIFIED, needs validation [XV-ADD]
-- Research session Tier 2 permission: auto-allowed after host approval, or second confirmation? — UNRESOLVED [XV-ADD]
+- ~~webfetch size cap: 1 MiB (old canonical) vs 5 MB (OpenCode reference)? — NEEDS DECISION~~ ✅ [GAP-RESOLVE] RESOLVED — Decision #3: 5 MB default, configurable; agent can override down with `max_content_length`. [XV-ADD]
+- ~~`options` format in question schema: string[] vs Array<{id,label,description?}>? — UNRESOLVED~~ ✅ [GAP-RESOLVE] RESOLVED — Decision #8: Object-array `Array<{id, label, description?}>` is canonical; `string[]` auto-expanded at ingestion. [XV-ADD]
+- ~~`response_kind` and `validation_state` field definitions — UNRESOLVED~~ ✅ [GAP-RESOLVE] RESOLVED — Decision #9: `response_kind`: `"selection" | "freeform" | "mixed"`; `validation_state`: `"valid" | "invalid" | "pending"`; both optional. [XV-ADD]
+- ~~Visualizer theme token injection schema — UNRESOLVED~~ ✅ [GAP-RESOLVE] RESOLVED — Decision #10: CSS custom properties injected inline on container; MVP tokens locked (see Part H). [XV-ADD]
+- ~~Cache size limit per project (100MB was unsourced) — NEEDS DECISION~~ ✅ [GAP-RESOLVE] RESOLVED — Decision #4: 500 MB default per project, configurable, LRU eviction. [XV-ADD]
+- ~~Batch timeout formula (individual × 3, cap 300s) — UNVERIFIED, needs validation~~ ✅ [GAP-RESOLVE] RESOLVED — Decision #16: `individual_timeout × min(url_count, 5)`, cap 600s. [XV-ADD]
+- ~~Research session Tier 2 permission: auto-allowed after host approval, or second confirmation? — UNRESOLVED~~ ✅ [GAP-RESOLVE] RESOLVED — Decision #11: Auto-allowed after parent tool's "For Session" host approval; no second confirmation. [XV-ADD]
 - Credit warning UX thresholds (100 credits confirm, 500 hard cap): correct defaults? — NEEDS VALIDATION [XV-ADD]
-- Crew delegation owner_hint: concrete mapping algorithm — UNRESOLVED [XV-ADD]
-- Task lifecycle: exact states, failure behavior, timeout semantics — STILL THIN [XV-ADD]
-- Code-block visible copy: always visible or only on hover/focus? — STILL OPEN (was open in old ledger) [XV-ADD]
+- ~~Crew delegation owner_hint: concrete mapping algorithm — UNRESOLVED~~ ✅ [GAP-RESOLVE] RESOLVED — Decision #2: Exact-match `crew.roles` map; fallback to current session on no match; error on unavailable provider (see Part L). [XV-ADD]
+- ~~Task lifecycle: exact states, failure behavior, timeout semantics — STILL THIN~~ ✅ [GAP-RESOLVE] RESOLVED — Decision #15: 6-state lifecycle locked; failure/timeout/retry semantics locked (see Part L). [XV-ADD]
+- ~~Code-block visible copy: always visible or only on hover/focus? — STILL OPEN (was open in old ledger)~~ ✅ [GAP-RESOLVE] RESOLVED — Decision #13: Always-visible copy affordance (see Part E). [XV-ADD]
 - Per-operation provider override: NOT MVP, but no post-MVP design direction exists [XV-ADD]
-- `/skill` lock status: intentionally unresolved per old ledger — STILL OPEN [XV-ADD]
-- MCP dedicated SSOT document vs distributed across existing docs — NEEDS DECISION [XV-ADD]
+- ~~`/skill` lock status: intentionally unresolved per old ledger — STILL OPEN~~ ✅ [GAP-RESOLVE] RESOLVED — Decision #14: Triple-path discovery locked (Skills panel, `/skill` slash command, NL auto-invoke); no subcommand family for MVP (see Part I). [XV-ADD]
+- ~~MCP dedicated SSOT document vs distributed across existing docs — NEEDS DECISION~~ ✅ [GAP-RESOLVE] RESOLVED — Decision #7: Dedicated `Plans/MCP_Integration.md` is the single SSOT; cross-references from Tools.md, storage-plan.md, Permissions_System.md. [XV-ADD]
 - `source?` in question answers: old ledger final recommendation (line 3722) INCLUDES it as optional `source?: "option" | "other" | "freeform"`; current ledger excluded it without supporting evidence. Needs resolution. [XV2-ADD]
+- [AUDIT3-FIX] ~~`source?` Open Question~~ **RESOLVED AND RE-LOCKED**: confirmed INCLUDED as optional per old ledger line 3722. See Part G [AUDIT3-FIX] entry. Status: **LOCKED**.
 
 ### New Questions Emerging from Deep Specs
 - **research_session as 5th session class vs restricted automation_session?** — Part T defines it as a restricted automation_session (same runtime, subset of actions). But should we mint a separate session_class value `"research_session"` for telemetry/audit distinction? Recommendation: yes, mint the session class but reuse automation_session infrastructure
 - **Firecrawl credit budget enforcement** — When autonomous webresearch delegates to Firecrawl /agent (20-2500 credits), should PM enforce a hard credit cap? How should user be warned? Recommendation: require confirmation when estimated cost > 100 credits; hard cap default 500 credits (user-adjustable)
-- **Batch webfetch permission UX** — Single approval for batch of N URLs, or per-domain approval? Recommendation: single approval showing unique domains in batch
+- ~~**Batch webfetch permission UX** — Single approval for batch of N URLs, or per-domain approval?~~ ✅ [GAP-RESOLVE] RESOLVED — Decision #6: Single confirmation prompt showing all unique domains; "For Session" grants all listed domains. (see Part V)
 - **Cache cross-session behavior** — Cache is per-project, but should cache persist across PM restarts? Recommendation: yes, disk-backed cache survives restart; in-memory portion rebuilt lazily
 - **webextract prompt + schema interaction** — When both provided, is prompt used for extraction guidance and schema for validation only? Or does schema constrain the LLM prompt? Recommendation: prompt guides extraction; schema validates output (two-phase)
 - **webfetch `formats: ["screenshot"]` permission** — Screenshot requires browser runtime, which means higher permission tier than static fetch. Should screenshot format auto-elevate to session_granted? Recommendation: yes, screenshot/pdf formats require session_granted tier
@@ -2811,6 +3266,13 @@ Given the scope, this should likely be split into multiple reconciliation packet
 - **Packet E**: Permissions/runtime (presets, approval ladder, runtime identity, logging) → Permissions_System.md, Contracts_V0.md, Personas.md
 - **Packet F**: Contradiction fixes (slash SSOT, override policy, field naming) → cross-doc fixes
 
+### Packetization Derived-Outputs Guardrail [AUDIT3-FIX]
+- Packets must NOT include derived-only outputs that duplicate or contradict source content:
+  - Rule 1: Packet doc intent buckets include MUST CHANGE + MUST RECONCILE docs only. MUST VERIFY docs checked during review but not primary targets.
+  - Rule 2: Do NOT put derived-only outputs (ledger summaries, audit tables, cross-reference matrices) into packet intent buckets — they are research artifacts.
+  - Rule 3: If a packet generates content restating something owned by another canonical doc, REFERENCE the owner doc, not duplicate inline.
+  - Violation creates reconciliation drift — the exact problem this ledger exists to solve.
+
 ## Do-Not-Forget Details
 
 ### Firecrawl-Specific
@@ -2821,6 +3283,10 @@ Given the scope, this should likely be split into multiple reconciliation packet
 - PM's Site Reader detail-level approach already more sophisticated than Firecrawl's onlyMainContent
 - AGPL license — patterns only, no code import
 - PM is strict superset of Firecrawl's action model (40 vs 9 actions)
+- [FC-FIX] Firecrawl supports Zero Data Retention (ZDR) for enterprise compliance: `zeroDataRetention: true` on scrape (+1 credit/page), `enterprise: ["zdr"]` on search (10 credits/10 results). When ZDR enabled, PM cache becomes the ONLY persistence layer. NOT MVP — enterprise feature for future consideration. Adapter config: `firecrawl_zdr?: boolean` (global setting, not per-request).
+- [FC-FIX] Firecrawl search returns structured multi-source response (`{ web: [...], images: [...], news: [...] }`). PM's websearch adapter flattens this into a single `results` array with `source_type` tags per item. This transformation is adapter-internal; the PM contract (Part S) already defines the flat output shape.
+- [FC-FIX] Firecrawl webhook delivery includes `X-Firecrawl-Signature` header (HMAC-SHA256 of payload). If PM adds webhook-based async completion in future (instead of polling), signature verification is MANDATORY. NOT MVP.
+- [FC-FIX] Firecrawl `storeInCache` and `minAge` parameters exist but are NOT mapped as PM-exposed parameters. PM's own cache layer (Part W) handles caching above the provider level. The adapter passes `maxAge` (mapped from `cache_policy.max_age_seconds`) and lets Firecrawl use its default `storeInCache: true`.
 
 ### Lost-Spec Recovery
 - Source: w-20260316-160450 working_ledger.md (4,076 lines, ~128KB)
@@ -2879,6 +3345,28 @@ Given the scope, this should likely be split into multiple reconciliation packet
 - Preview sizing consistency: 5-collapsed / 15-expanded / 50-cap applies uniformly across terminal, search, and diff cards — do not introduce per-card-type exceptions without explicit decision [XV2-ADD]
 - Skill "discovered vs usable" distinction: a skill appearing in the catalog does NOT mean it is ready to use; readiness status (source_type, validation warnings) gates usability [XV2-ADD]
 - Failure presentation simplicity: tool failures show a single clear error message with recovery action — do not present multiple competing error surfaces for the same failure [XV2-ADD]
+- [RECOVERY-FIX] Terminal ownership model: terminal sessions are owned by the **PM runtime**, not by individual tools or commands. Tools trigger terminal activity; PM runtime manages the terminal session lifecycle (creation, binding, teardown). A tool ending does not equal a terminal session ending. No individual tool may claim ownership of a terminal session or spawn a competing terminal model. (Old ledger ~line 78-94, LOCKED.)
+- [RECOVERY-FIX] Mini terminal is read-only in chat: the mini terminal card embedded in the chat message is a **read-only preview** — users cannot type into it. Interaction with the live terminal session requires clicking `Open in Terminal` to focus the PM terminal. (Old ledger ~line 78, 488: "mini terminal is read-only/non-interactive".)
+- [RECOVERY-FIX] No copy for search/diff cards: search result cards and diff cards do **NOT** inherit the generic copy affordance. Copy is available on terminal cards and code blocks; it is explicitly absent from search and diff operation cards. Do not add copy to these card types without an explicit decision. (See Part D lines ~175-176.)
+
+### Wording Discipline Checklist [AUDIT3-FIX]
+- 3-rule wording discipline for all reconciliation packets:
+  1. **Prefer canonical runtime vocabulary**: use "platform/model/auth/account policy/effective account" — do not invent synonyms
+  2. **Use provider-layer vocabulary correctly**: use "provider capability registry / adapter" for web execution layer — do not conflate with runtime identity terms
+  3. **No duplicate top-level nouns**: if canonical runtime docs already own a term, do not create a duplicate (e.g., do not create `chat_model` when `effective_model` exists)
+
+### Chat-Thread vs Broader-Doc Contradiction Advisory [AUDIT3-FIX]
+- Watch for contradictions between chat-thread docs (`assistant-chat-design.md`) and broader GUI/runtime docs (`FinalGUISpec.md`, `Contracts_V0.md`, `Permissions_System.md`, `Run_Modes.md`).
+- Chat-thread docs describe behavior FROM THE CHAT PERSPECTIVE; GUI/runtime docs FROM THE SYSTEM PERSPECTIVE. When they disagree, system-perspective doc is authoritative for contracts; chat-perspective doc is authoritative for UX presentation only.
+- Especially fragile for: permission semantics, runtime identity display, slash-command availability, mode-dependent tool access.
+
+### Three-Way Inline Rendering Distinction [AUDIT3-FIX]
+- The three rendering paths are architecturally distinct and MUST NOT be collapsed:
+  1. **One-shot `bash` tool invocations** — inline terminal operation cards with mini-terminal preview
+  2. **Search tools** — inline search result cards (no terminal preview, no copy affordance)
+  3. **Shell-owned live terminal surfaces** — full terminal sessions via `Open in Terminal`
+- These share card anatomy but have DIFFERENT content models, interaction affordances, and lifecycle rules.
+- Collapsing any two requires an explicit design decision — do not let it happen by accident.
 
 ### Firecrawl Integration Model
 - Firecrawl is a lower-priority provider (below Exa, Tavily; above DDG)
@@ -2890,6 +3378,21 @@ Given the scope, this should likely be split into multiple reconciliation packet
 - PM must NOT silently switch between self-hosted and cloud Firecrawl
 - Firecrawl parameter mappings fully specified per operation (see Part R)
 - Firecrawl error codes mapped to PM error taxonomy (see Part R)
+- [FC-FIX] All Firecrawl implementation-readiness gaps from 3-agent audit now resolved:
+  - WebAction type schema defined (Part S)
+  - Common output fields enumerated (Part S)
+  - Cache fields added to all 6 contracts (Part S)
+  - Error sections added to webcrawl/webmap (Part S)
+  - Interact session model fully specified (Part R)
+  - Phantom parameter mappings fixed (Part R)
+  - Async job model corrected with crawl included (Part R)
+  - Credit cost reference table added (Part R)
+  - Invalid "stealth" proxy mode removed (Part R)
+  - Per-contract error applicability table added (cross-cutting)
+  - Async progress model for long-running operations added (cross-cutting)
+  - ZDR, webhook, search transform, cache param notes added (Do-Not-Forget)
+  - Empty extraction edge case specified (Part S webextract)
+  - Partial results on budget exceeded clarified (Part S webresearch)
 
 ### Web Tool Enhancements (Firecrawl-Inspired, Now Specified)
 - websearch: `sources` (web/news/images/code/academic) + `categories` (github/research/pdf)
@@ -2899,5 +3402,5 @@ Given the scope, this should likely be split into multiple reconciliation packet
 - webcrawl: `change_tracking`, `dedup`, `include/exclude_paths`, `respect_robots`, `formats`
 - webmap: `include/exclude_paths`, `search` filter, `use_sitemap` modes
 - Batch operations: webfetch (max 50 URLs, concurrency 3-10), webextract (max 10 URLs, concurrency 3-5)
-- Caching: per-project, ~~bounded 100MB,~~ per-operation TTL defaults, LRU eviction — cache size limit NEEDS DECISION (see Open Questions) [XV2-FIX]
+- Caching: per-project, **500 MB default** (configurable), per-operation TTL defaults, LRU eviction — ✅ [GAP-RESOLVE] RESOLVED — Decision #4 (see Part W) [XV2-FIX]
 - Routing: 9-step algorithm updated with cache check (new Step 4) and Firecrawl routing notes

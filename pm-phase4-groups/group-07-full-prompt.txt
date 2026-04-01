@@ -1,0 +1,655 @@
+## Doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+### Intent 1 (Run: r-20260317-181906-03, Anchor: `### 3.18 Built-in Browser and Click-to-Context`, Op: replace_section)
+```markdown
+The built-in browser is a real PM-controlled browser surface. It is separate from `web_search`, `web_fetch`, and Site Reader / Reading Site behavior, and it supports direct user browsing, watchable live automation, screenshots, structured snapshots, DevTools, PM-owned auth/device flows, and deterministic capture into chat.
+
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/FileManager.md, ContractName:Plans/assistant-chat-design.md
+
+#### Canonical browser runtime and host model
+
+- the canonical browser runtime is CEF-class embedded Chromium
+- Puppet Master ships a PM-managed pinned bundled runtime and updates it atomically as a matched set
+- lower-level bindings plus a PM-owned shim/bridge are preferred over making an experimental wrapper the architectural linchpin
+- native child-window embedding is the baseline host path
+- offscreen rendering is secondary and not the primary browser-host contract
+- runtime damage, version mismatch, or absence surfaces as `runtime_unavailable`
+- the UI must not silently fall through to an unrelated legacy system-webview browser model
+
+ContractRef: ContractName:Plans/rewrite-tie-in-memo.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Permissions_System.md
+
+#### Entry points and normal browsing behavior
+
+- `Open` keeps HTML in source/editor mode
+- `Open in Browser` opens the subject in a `workspace_preview`
+- `Open in Detached Browser` opens the subject in a `detached_preview`
+- split browser layout is a second-step layout action after opening, not a separate first-class open command
+- the editor/workspace tab surface is the canonical in-shell browser host
+- the bottom panel may expose browser-adjacent activity, evidence, or DevTools-linked panes, but it is not the primary browser host
+
+ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/UI_Command_Catalog.md
+
+#### Capture to chat and evidence behavior
+
+Capture into chat is explicit and user-triggered.
+
+- text selection uses `browser_selection_context`
+- element pick uses `browser_element_context`
+- native document selection continues to use `document_selection_context`
+- capture creates removable composer chips and MUST NOT silently send a hidden message
+- if there is no writable active composer or thread, PM opens a new thread and records requested versus effective target
+- ordinary browsing clicks MUST NOT unexpectedly create or send chat context
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/storage-plan.md
+
+Accepted browser capture actions and labels are:
+- `Add Selection to Chat`
+- `Add Selection + Screenshot`
+- `Add Selection + Full Screenshot`
+- `Pick Element for Chat`
+- `Pick Element + Screenshot`
+- `Pick Element + Full Screenshot`
+- `Add Screenshot to Chat`
+- `Add Full Screenshot to Chat`
+
+The default combined capture is context plus clipped screenshot. Full-page combined capture remains explicit.
+
+ContractRef: Con
+```
+[... truncated, full length: 21643 chars]
+### Intent 2 (Run: r-20260317-181906-03, Anchor: `## 4. Command families required by the promoted features`, Op: replace_section)
+```markdown
+The UI command catalog must expose stable commands for:
+- project switch and project open-in-new-workspace-tab
+- workspace tab create/close/reopen/move/focus
+- detached window open/attach/close for supported surfaces
+- thread context detail open/focus/close and context compaction actions
+- branch-from-restore and branch-open actions
+- browser open/focus/detach/open-DevTools/toggle-DevTools-dock actions
+- browser capture/share actions for selection, element pick, screenshot, and full screenshot flows
+- browser takeover/pause/let-continue/stop-keep-browser actions for `automation_session`
+- browser promote-to-normal-browsing action
+- browser recovery actions `Reopen`, `Retry`, and `Keep Closed`
+- dev session start/stop/restart/show-output/show-ports
+- catalog install/update/remove/enable/disable/apply-later actions
+
+ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Wiring_Matrix.md
+```
+### Intent 3 (Run: r-20260317-181906-03, Anchor: `## 5. Persistence and restore rules`, Op: replace_section)
+```markdown
+- project restore uses stable `project_id`, not raw path alone
+- workspace tabs restore independently
+- detached windows restore only when their surface class and platform support allow it
+- in-shell normal browser tabs restore by project/workspace tab and profile scope
+- detached normal browsing restores with the originating normal browsing session when supported
+- auth sessions and automation sessions do not silently resume active work after restart
+- terminal sessions and dev sessions have explicit restore eligibility; a running process is never assumed alive after restart without verification
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Permissions_System.md
+
+Additional browser persistence rules:
+- promotion from paused automation into normal browsing changes future restore behavior because the session is no longer treated as automation
+- browser requested/effective runtime and capability state is stored as frozen runtime history, not recomputed heuristically from current settings
+- crash recovery preserves recoverable metadata and any completed evidence artifacts when possible
+- no browser session class may silently bleed storage into another profile scope
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/Contracts_V0.md
+```
+### Intent 4 (Run: r-20260317-181906-03, Anchor: `## 6. Non-goals and anti-drift rules`, Op: replace_section)
+```markdown
+The following are explicitly non-canonical after promotion:
+- title-bar project bar as the primary project-switch shell
+- floating thread-selector overlay as the canonical thread navigation model
+- detached usage pop-out as the canonical per-thread usage surface
+- one broad browser-instance model with LRU reuse as the core browser contract
+- the bottom panel as the primary browser host
+- silent automatic context injection from ordinary browser clicks or text selection
+- silent storage bleed between browser session classes or profile scopes
+- raw CDP or arbitrary browser code execution as the guaranteed core browser contract
+- generic watch mode as the primary dev-loop model
+- MCP as config-and-passthrough only
+- app-level-only tool permission scope as sufficient for the promoted project-switch/MCP/browser model
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/FileManager.md
+```
+### Intent 5 (Run: r-20260318-160350-01, Anchor: `### 1.6 Dev-loop and terminal surface model`, Op: replace_section)
+```markdown
+The dev loop is shell-first and session-oriented. Terminal is the canonical interactive shell surface, and chat, output, problems, debug console, ports, and dev controls consume terminal or dev-session state instead of owning PTY state themselves.
+
+Rules:
+- Puppet Master supports up to two terminal sections/components.
+- A terminal section may be docked in the main shell or detached into its own window.
+- Each terminal section owns an ordered tab strip.
+- Each terminal tab owns from one to four panes.
+- Pane layout supports row and column splits, and removing a pane rebalances the remaining panes deterministically.
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/FileManager.md, ContractName:Plans/storage-plan.md
+
+### Terminal section, tab, pane, and session model
+- `terminal_section_id` owns presentation continuity, dock/detach state, and section-level visibility.
+- `terminal_tab_id` owns tab title, pin state, order, section membership, and selected-pane state.
+- `terminal_pane_id` owns split-tree slot identity and visible session binding.
+- `terminal_session_id` owns runtime PTY continuity.
+- `dev_session_id` owns higher-level dev workflow continuity and may link terminal, output, problems, debug-console, and ports surfaces without replacing the underlying shell-session identity.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/FinalGUISpec.md
+
+Rules:
+- a pane binds to exactly one live or historical `terminal_session_id` at a time
+- a tab may contain panes bound to different terminal sessions
+- moving or relabeling a tab or pane changes presentation state only and MUST NOT mint a new runtime identity
+- a `dev_session_id` is not a shell-session alias and MUST NOT be used where exact PTY continuity is required
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/assistant-chat-design.md
+
+### Cross-surface ownership and reveal rules
+- `Open in Terminal` and `Show Terminal` first reveal the existing session bound by `terminal_session_id`.
+- If that session is hidden inside another pane, tab, or section, Puppet Master reveals and focuses the existing container before creating anything new.
+- If only historical state remains, the reveal target shows historical transcript and recovery controls instead of faking a live shell.
+- Explicit `New Terminal`, explicit split, and explicit restart create new runtime identity.
+- Output, Problems, Debug Console, and Ports are distinct surfaces that preserve linkback to the owning terminal or dev session.
+
+ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/storage-plan.md
+
+### Interaction modes and selection semantics
+Base interaction modes are:
+- `live_input`
+- `scrollback_review`
+
+Overlay states are:
+- `selection_active`
+- `search_active`
+- `tui_capture`
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans
+```
+[... truncated, full length: 6066 chars]
+### Intent 6 (Run: r-20260318-160350-01, Anchor: `### 2.1 Requested vs effective state`, Op: replace_section)
+```markdown
+The promoted feature set depends on one requested-vs-effective state model across terminal, browser, provider, tool, and project-scoped runtime behavior.
+
+Rules:
+- requested state is what the user, Persona, project, command, or settings surface asked for
+- effective state is what the runtime actually resolved and executed after permission, platform, renderer, shell-integration, health, capability, or policy evaluation
+- requested vs effective differences MUST be visible when they change available actions, session routing, restore behavior, or capability disclosure
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Tools.md, ContractName:Plans/Permissions_System.md
+
+This rule applies to:
+- Persona, platform/provider, model, and account routing
+- MCP and tool availability
+- browser trust and capability tiers
+- terminal renderer mode, shell-integration tier, detach/windowing capability, clipboard or IME capability, accessibility support, and transcript-retention tier
+- project-scoped overrides after project switch
+
+ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md
+
+Additional rules:
+- switching projects recalculates effective terminal, browser, tool, and provider state for the new project context
+- historical runtime and shell surfaces show frozen captured effective state rather than recomputing from current settings
+- requested preferences MUST NOT let the UI imply a terminal or shell capability that the effective runtime cannot currently provide
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md
+
+```
+### Intent 7 (Run: r-20260318-160350-01, Anchor: `### 2.2 Stable identities`, Op: replace_section)
+```markdown
+The promoted feature set requires first-class stable identities for:
+- `project_id`
+- `workspace_tab_id`
+- `window_id`
+- `thread_id`
+- `branch_id`
+- `browser_tab_id`
+- `preview_session_id`
+- `terminal_section_id`
+- `terminal_tab_id`
+- `terminal_pane_id`
+- `terminal_session_id`
+- `dev_session_id`
+- `automation_session_id`
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/FinalGUISpec.md
+
+Identity rules:
+- a path alone is not a sufficient identity for project restore semantics
+- `workspace_tab_id` is distinct from `project_id` so multiple tabs may point at the same project with different local shell state
+- `browser_tab_id` is distinct from `preview_session_id` so multiple browser containers can render the same preview subject without collapsing persistence
+- `terminal_section_id` owns presentation continuity rather than PTY continuity
+- `terminal_tab_id` and `terminal_pane_id` own workspace continuity and reveal targets inside the shell chrome
+- `terminal_session_id` owns exact PTY continuity and is the canonical meaning of “same terminal session”
+- `dev_session_id` owns higher-level workflow continuity and MUST NOT replace `terminal_session_id` when exact shell reuse is required
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FileManager.md, ContractName:Plans/assistant-chat-design.md
+
+Action-identity rules:
+- `Open in Terminal` and `Show Terminal` target existing `terminal_session_id` bindings first
+- `New Terminal`, explicit split, and explicit restart produce new runtime identity even when they reuse an existing pane or tab container
+- moving, renaming, pinning, docking, or detaching sections, tabs, and panes are presentation changes only and do not mint new PTY identity
+
+ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/storage-plan.md
+
+```
+### Intent 8 (Run: r-20260318-160350-01, Anchor: `### 3.14 Full IDE-Style Terminal and Panes`, Op: replace_section)
+```markdown
+Terminal, Problems, Output, Debug Console, and Ports are canonical shell-adjacent panes. They are distinct surfaces with separate responsibilities, but they remain linked by terminal-session and dev-session identity rather than by loose textual association.
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/FileManager.md, ContractName:Plans/storage-plan.md
+
+#### Canonical pane family
+- **Terminal** owns live interactive PTY state, transcript, search-in-scrollback, and command-block overlays.
+- **Output** owns structured or aggregated process output views that are linked back to terminal or dev-session identity.
+- **Problems** owns problem and diagnostic views linked to the same terminal or dev-session provenance when the problem source is shell-backed.
+- **Debug Console** remains distinct from Terminal even when both are visible in the same runtime section.
+- **Ports** owns discovered or declared service endpoints, watches, and open-port affordances linked to the owning dev session.
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Wiring_Matrix.md
+
+#### Persistence and recovery guarantees
+Terminal persistence uses three guarantee tiers:
+
+| Tier | What belongs here | Rules |
+|---|---|---|
+| `guaranteed_durable` | section/tab/pane layout, titles, pin state, selected tab or pane, terminal-session and dev-session bindings, restore banners, durable settings refs | MUST restore deterministically after restart or project reopen |
+| `best_effort_durable` | bounded transcript snapshots, command-block metadata, shell-integration hints, cwd snapshots, exit metadata, derived Output or Ports linkage | MAY be pruned or absent after crashes or storage pressure, but absence must be disclosed |
+| `transient_only` | live PTY state, full scrollback beyond retained bounds, active TUI alternate-screen content, active selection ranges, in-flight search highlights | MUST NOT be faked after restart |
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Contracts_V0.md
+
+Canonical restore outcomes are:
+- `restored_live`
+- `restored_exited`
+- `restored_disconnected`
+- `restored_without_history`
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Glossary.md, ContractName:Plans/assistant-chat-design.md
+
+#### Shortcut, automation, and reveal rules
+- terminal shortcuts coexist with PM-wide shortcuts through explicit scope and precedence rules
+- PM-built-in agents control terminal sessions through the canonical terminal subsystem rather than through a parallel hidden shell model
+- chat command cards, output rows, problem rows, and ports rows use exact session or dev-session linkback where available
+- `Open in Terminal` is idempotent same-session reveal, not shorthand for `New Terminal`
+- `Show Terminal` reveals the existing section, tab, and pane that already own the referenced session before considering creation of a ne
+```
+[... truncated, full length: 6691 chars]
+### Intent 9 (Run: r-20260318-160350-01, Anchor: `## 4. Command families required by the promoted features`, Op: replace_section)
+```markdown
+The UI command catalog must expose stable commands for:
+- project switch and project open-in-new-workspace-tab
+- workspace tab create, close, reopen, move, and focus
+- detached window open, reattach, and close for supported surfaces
+- thread context detail open, focus, close, and context-compaction actions
+- branch-from-restore and branch-open actions
+- browser open, focus, detach, open-DevTools, toggle-DevTools-dock, share, revoke-share, capture, takeover, promotion, and recovery actions
+- terminal show, focus, new-tab, split-pane, move-to-section, rename, pin, close-pane, close-tab, clear-scrollback, restart-session, terminate-session, kill-session, detach-section, and reattach-section actions
+- dev-session start, stop, restart, show-output, show-problems, and show-ports actions
+- catalog install, update, remove, enable, disable, and apply-later actions
+
+ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/assistant-chat-design.md
+
+Rules:
+- `Open in Terminal` and `Show Terminal` normalize to the terminal command family rather than inventing chat-local commands
+- terminal layout changes and terminal runtime actions are separate command categories even when they share one visual toolbar
+- cross-surface reveal commands target canonical identities such as `terminal_session_id` and `dev_session_id` rather than freeform labels
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/storage-plan.md
+
+```
+### Intent 10 (Run: r-20260318-160350-01, Anchor: `## 5. Persistence and restore rules`, Op: replace_section)
+```markdown
+- project restore uses stable `project_id`, not raw path alone
+- workspace tabs restore independently
+- detached windows restore only when their surface class and platform support allow it
+- in-shell normal browser tabs restore by project and workspace tab and preserve profile scope
+- detached normal browsing restores with the originating normal browsing session when supported
+- auth sessions and automation sessions do not silently resume active work after restart
+- terminal sessions and dev sessions have explicit restore eligibility; a running process is never assumed alive after restart without verification
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Permissions_System.md
+
+Terminal persistence guarantees:
+- section, tab, pane, selection-of-active-pane, labels, pin state, dock/detach placement, and linked dev-session references are `guaranteed_durable`
+- bounded transcript snapshots, command-block metadata, cwd snapshots, shell-integration hints, and derived Output or Ports linkage are `best_effort_durable`
+- live PTY continuity, unlimited scrollback, active TUI alternate-screen content, live selections, and in-flight search highlights are `transient_only`
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Glossary.md
+
+Canonical restore outcomes are:
+- `restored_live`
+- `restored_exited`
+- `restored_disconnected`
+- `restored_without_history`
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FileManager.md
+
+Additional rules:
+- promotion from paused automation into normal browsing changes future restore behavior because the session is no longer treated as automation
+- browser requested/effective runtime and capability state is stored as frozen runtime history rather than recomputed heuristically from current settings
+- crash recovery preserves recoverable metadata and completed evidence artifacts when possible
+- terminal restart or replacement creates a new `terminal_session_id`; restoring a historical pane never synthesizes that new identity automatically
+- no browser or terminal session class may silently bleed storage into another profile scope
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/Contracts_V0.md
+
+```
+### Intent 11 (Run: r-20260318-160350-02, Anchor: `### 1.6 Dev-loop and terminal surface model`, Op: replace_section)
+```markdown
+The dev loop is shell-first and session-oriented. Terminal is the canonical interactive shell surface, and chat, output, problems, debug console, ports, and dev controls consume terminal or dev-session state instead of owning PTY state themselves.
+
+Rules:
+- Puppet Master supports up to two terminal sections/components.
+- A terminal section may be docked in the main shell or detached into its own window.
+- Each terminal section owns an ordered tab strip.
+- Each terminal tab owns from one to four panes.
+- Pane layout supports row and column splits, and removing a pane rebalances the remaining panes deterministically.
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/FileManager.md, ContractName:Plans/storage-plan.md
+
+### Terminal section, tab, pane, and session model
+- `terminal_section_id` owns presentation continuity, dock/detach state, and section-level visibility.
+- `terminal_tab_id` owns tab title, pin state, order, section membership, and selected-pane state.
+- `terminal_pane_id` owns split-tree slot identity and visible session binding.
+- `terminal_session_id` owns runtime PTY continuity.
+- `dev_session_id` owns higher-level dev workflow continuity and may link terminal, output, problems, debug-console, and ports surfaces without replacing the underlying shell-session identity.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/FinalGUISpec.md
+
+Rules:
+- a pane binds to exactly one live or historical `terminal_session_id` at a time
+- a tab may contain panes bound to different terminal sessions
+- moving or relabeling a tab or pane changes presentation state only and MUST NOT mint a new runtime identity
+- a `dev_session_id` is not a shell-session alias and MUST NOT be used where exact PTY continuity is required
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/assistant-chat-design.md
+
+### Cross-surface ownership and reveal rules
+- `Open in Terminal` and `Show Terminal` first reveal the existing session bound by `terminal_session_id`.
+- If that session is hidden inside another pane, tab, or section, Puppet Master reveals and focuses the existing container before creating anything new.
+- If only historical state remains, the reveal target shows historical transcript and recovery controls instead of faking a live shell.
+- Explicit `New Terminal`, explicit split, and explicit restart create new runtime identity.
+- Output, Problems, Debug Console, and Ports are distinct surfaces that preserve linkback to the owning terminal or dev session.
+
+ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/storage-plan.md
+
+### Interaction modes and selection semantics
+Base interaction modes are:
+- `live_input`
+- `scrollback_review`
+
+Overlay states are:
+- `selection_active`
+- `search_active`
+- `tui_capture`
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans
+```
+[... truncated, full length: 6066 chars]
+### Intent 12 (Run: r-20260318-160350-02, Anchor: `### 2.1 Requested vs effective state`, Op: replace_section)
+```markdown
+The promoted feature set depends on one requested-vs-effective state model across terminal, browser, provider, tool, and project-scoped runtime behavior.
+
+Rules:
+- requested state is what the user, Persona, project, command, or settings surface asked for
+- effective state is what the runtime actually resolved and executed after permission, platform, renderer, shell-integration, health, capability, or policy evaluation
+- requested vs effective differences MUST be visible when they change available actions, session routing, restore behavior, or capability disclosure
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Tools.md, ContractName:Plans/Permissions_System.md
+
+This rule applies to:
+- Persona, platform/provider, model, and account routing
+- MCP and tool availability
+- browser trust and capability tiers
+- terminal renderer mode, shell-integration tier, detach/windowing capability, clipboard or IME capability, accessibility support, and transcript-retention tier
+- project-scoped overrides after project switch
+
+ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md
+
+Additional rules:
+- switching projects recalculates effective terminal, browser, tool, and provider state for the new project context
+- historical runtime and shell surfaces show frozen captured effective state rather than recomputing from current settings
+- requested preferences MUST NOT let the UI imply a terminal or shell capability that the effective runtime cannot currently provide
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md
+
+```
+### Intent 13 (Run: r-20260318-160350-02, Anchor: `### 2.2 Stable identities`, Op: replace_section)
+```markdown
+The promoted feature set requires first-class stable identities for:
+- `project_id`
+- `workspace_tab_id`
+- `window_id`
+- `thread_id`
+- `branch_id`
+- `browser_tab_id`
+- `preview_session_id`
+- `terminal_section_id`
+- `terminal_tab_id`
+- `terminal_pane_id`
+- `terminal_session_id`
+- `dev_session_id`
+- `automation_session_id`
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/FinalGUISpec.md
+
+Identity rules:
+- a path alone is not a sufficient identity for project restore semantics
+- `workspace_tab_id` is distinct from `project_id` so multiple tabs may point at the same project with different local shell state
+- `browser_tab_id` is distinct from `preview_session_id` so multiple browser containers can render the same preview subject without collapsing persistence
+- `terminal_section_id` owns presentation continuity rather than PTY continuity
+- `terminal_tab_id` and `terminal_pane_id` own workspace continuity and reveal targets inside the shell chrome
+- `terminal_session_id` owns exact PTY continuity and is the canonical meaning of “same terminal session”
+- `dev_session_id` owns higher-level workflow continuity and MUST NOT replace `terminal_session_id` when exact shell reuse is required
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FileManager.md, ContractName:Plans/assistant-chat-design.md
+
+Action-identity rules:
+- `Open in Terminal` and `Show Terminal` target existing `terminal_session_id` bindings first
+- `New Terminal`, explicit split, and explicit restart produce new runtime identity even when they reuse an existing pane or tab container
+- moving, renaming, pinning, docking, or detaching sections, tabs, and panes are presentation changes only and do not mint new PTY identity
+
+ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/storage-plan.md
+
+```
+### Intent 14 (Run: r-20260318-160350-02, Anchor: `### 3.14 Full IDE-Style Terminal and Panes`, Op: replace_section)
+```markdown
+Terminal, Problems, Output, Debug Console, and Ports are canonical shell-adjacent panes. They are distinct surfaces with separate responsibilities, but they remain linked by terminal-session and dev-session identity rather than by loose textual association.
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/FileManager.md, ContractName:Plans/storage-plan.md
+
+#### Canonical pane family
+- **Terminal** owns live interactive PTY state, transcript, search-in-scrollback, and command-block overlays.
+- **Output** owns structured or aggregated process output views that are linked back to terminal or dev-session identity.
+- **Problems** owns problem and diagnostic views linked to the same terminal or dev-session provenance when the problem source is shell-backed.
+- **Debug Console** remains distinct from Terminal even when both are visible in the same runtime section.
+- **Ports** owns discovered or declared service endpoints, watches, and open-port affordances linked to the owning dev session.
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Wiring_Matrix.md
+
+#### Persistence and recovery guarantees
+Terminal persistence uses three guarantee tiers:
+
+| Tier | What belongs here | Rules |
+|---|---|---|
+| `guaranteed_durable` | section/tab/pane layout, titles, pin state, selected tab or pane, terminal-session and dev-session bindings, restore banners, durable settings refs | MUST restore deterministically after restart or project reopen |
+| `best_effort_durable` | bounded transcript snapshots, command-block metadata, shell-integration hints, cwd snapshots, exit metadata, derived Output or Ports linkage | MAY be pruned or absent after crashes or storage pressure, but absence must be disclosed |
+| `transient_only` | live PTY state, full scrollback beyond retained bounds, active TUI alternate-screen content, active selection ranges, in-flight search highlights | MUST NOT be faked after restart |
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Contracts_V0.md
+
+Canonical restore outcomes are:
+- `restored_live`
+- `restored_exited`
+- `restored_disconnected`
+- `restored_without_history`
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Glossary.md, ContractName:Plans/assistant-chat-design.md
+
+#### Shortcut, automation, and reveal rules
+- terminal shortcuts coexist with PM-wide shortcuts through explicit scope and precedence rules
+- PM-built-in agents control terminal sessions through the canonical terminal subsystem rather than through a parallel hidden shell model
+- chat command cards, output rows, problem rows, and ports rows use exact session or dev-session linkback where available
+- `Open in Terminal` is idempotent same-session reveal, not shorthand for `New Terminal`
+- `Show Terminal` reveals the existing section, tab, and pane that already own the referenced session before considering creation of a ne
+```
+[... truncated, full length: 6691 chars]
+### Intent 15 (Run: r-20260318-160350-02, Anchor: `## 4. Command families required by the promoted features`, Op: replace_section)
+```markdown
+The UI command catalog must expose stable commands for:
+- project switch and project open-in-new-workspace-tab
+- workspace tab create, close, reopen, move, and focus
+- detached window open, reattach, and close for supported surfaces
+- thread context detail open, focus, close, and context-compaction actions
+- branch-from-restore and branch-open actions
+- browser open, focus, detach, open-DevTools, toggle-DevTools-dock, share, revoke-share, capture, takeover, promotion, and recovery actions
+- terminal show, focus, new-tab, split-pane, move-to-section, rename, pin, close-pane, close-tab, clear-scrollback, restart-session, terminate-session, kill-session, detach-section, and reattach-section actions
+- dev-session start, stop, restart, show-output, show-problems, and show-ports actions
+- catalog install, update, remove, enable, disable, and apply-later actions
+
+ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/assistant-chat-design.md
+
+Rules:
+- `Open in Terminal` and `Show Terminal` normalize to the terminal command family rather than inventing chat-local commands
+- terminal layout changes and terminal runtime actions are separate command categories even when they share one visual toolbar
+- cross-surface reveal commands target canonical identities such as `terminal_session_id` and `dev_session_id` rather than freeform labels
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/storage-plan.md
+
+```
+### Intent 16 (Run: r-20260318-160350-02, Anchor: `## 5. Persistence and restore rules`, Op: replace_section)
+```markdown
+- project restore uses stable `project_id`, not raw path alone
+- workspace tabs restore independently
+- detached windows restore only when their surface class and platform support allow it
+- in-shell normal browser tabs restore by project and workspace tab and preserve profile scope
+- detached normal browsing restores with the originating normal browsing session when supported
+- auth sessions and automation sessions do not silently resume active work after restart
+- terminal sessions and dev sessions have explicit restore eligibility; a running process is never assumed alive after restart without verification
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Permissions_System.md
+
+Terminal persistence guarantees:
+- section, tab, pane, selection-of-active-pane, labels, pin state, dock/detach placement, and linked dev-session references are `guaranteed_durable`
+- bounded transcript snapshots, command-block metadata, cwd snapshots, shell-integration hints, and derived Output or Ports linkage are `best_effort_durable`
+- live PTY continuity, unlimited scrollback, active TUI alternate-screen content, live selections, and in-flight search highlights are `transient_only`
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Glossary.md
+
+Canonical restore outcomes are:
+- `restored_live`
+- `restored_exited`
+- `restored_disconnected`
+- `restored_without_history`
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FileManager.md
+
+Additional rules:
+- promotion from paused automation into normal browsing changes future restore behavior because the session is no longer treated as automation
+- browser requested/effective runtime and capability state is stored as frozen runtime history rather than recomputed heuristically from current settings
+- crash recovery preserves recoverable metadata and completed evidence artifacts when possible
+- terminal restart or replacement creates a new `terminal_session_id`; restoring a historical pane never synthesizes that new identity automatically
+- no browser or terminal session class may silently bleed storage into another profile scope
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/Contracts_V0.md
+
+```
+### Intent 17 (Run: r-20260320-164907-01, Anchor: `#### Capture to chat and evidence behavior`, Op: replace_section)
+```markdown
+Capture into chat remains explicit and user-triggered for ordinary browsing.
+
+Required ordinary capture rules:
+- text selection uses `browser_selection_context`
+- element pick uses `browser_element_context`
+- native document selection continues to use `document_selection_context`
+- explicit capture creates removable composer chips and MUST NOT silently send a hidden message
+- if there is no writable active composer or thread, PM opens a new thread and records requested versus effective target
+- ordinary browsing clicks MUST NOT unexpectedly create or send chat context
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/storage-plan.md
+
+Accepted explicit browser capture actions and labels remain:
+- `Add Selection to Chat`
+- `Add Selection + Screenshot`
+- `Add Selection + Full Screenshot`
+- `Pick Element for Chat`
+- `Pick Element + Screenshot`
+- `Pick Element + Full Screenshot`
+- `Add Screenshot to Chat`
+- `Add Full Screenshot to Chat`
+
+ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Runtime_Artifacts_Panel.md
+
+Debug-investigation auto-ingestion is a separate visible contract.
+
+Rules for active investigations:
+- when a browser session is bound to an active investigation, bounded evidence may be added automatically to the visible Investigation Context
+- investigation auto-ingestion must create visible context items with provenance, timestamp, redaction/truncation state, and revoke controls
+- investigation auto-ingestion does not create hidden user messages, hidden composer chips, or invisible prompt-only payloads
+- the default combined manual capture remains context plus clipped screenshot; full-page combined capture remains explicit even during Debug Mode
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Prompt_Pipeline.md
+
+```
+### Intent 18 (Run: r-20260320-164907-01, Anchor: `#### Permission, recovery, and promotion rules`, Op: insert_after)
+```markdown
+#### Debug investigation browser automation rules
+
+Active Debug investigations may bind a browser target and drive it through the canonical browser session model.
+
+Required rules:
+- browser-led reproduction and evidence capture run in a visible `automation_session` when PM is driving the browser
+- manual takeover is a pause/resume handoff, not simultaneous mixed human-and-agent control of the same active automation step
+- auth handoff continues to use isolated `auth_session` behavior and must not silently promote credentials or state into normal browsing
+- completed traces, recordings, screenshots, console summaries, and network summaries route into Runtime Artifacts and visible Investigation Context summaries
+- browser-target debugging for remote-mode projects is limited to PM-managed project targets such as forwarded URLs or project-owned web entrypoints; arbitrary remote attach remains out of scope for MVP
+
+ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/GitHub_Integration.md
+
+#### Debug investigation browser scenario matrix
+
+| scenario_id | preconditions | action | expected visible behavior | expected persistence |
+|---|---|---|---|---|
+| `debug_browser_auto_ingest_visible` | active investigation bound to a browser target | agent captures screenshot / console / network evidence | evidence appears as visible Investigation Context items and linked artifacts | `debug.investigation.context_item_added`, `runtime_artifact.*`, and any related `browser.context_captured` or browser-session refs |
+| `debug_browser_takeover_pause_resume` | visible automation session exists | user takes over or later resumes | browser remains visible, automation is paused/resumed without silent session reclassification | takeover state changes persist on the owning browser session and investigation |
+| `debug_browser_auth_handoff` | auth step is required mid-investigation | PM opens isolated auth session | auth work is isolated and explicit; normal browsing state is not silently mutated | auth session and investigation linkage persist with explicit scope and cleanup state |
+| `debug_browser_remote_project_target` | remote-mode project exposes a PM-managed URL or forwarded port | agent debugs browser target | UI stays bound to remote project authority; no silent local fallback or ad-hoc remote attach language | investigation and browser evidence retain remote project and browser identity refs |
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/assistant-chat-design.md
+
+```
+### Intent 19 (Run: r-20260326-015830-01, Anchor: `### 1.5 Thread usage surface`, Op: insert_after)
+```markdown
+#### 1.5.1 Assistant worktree integration
+
+Threads can optionally be bound to git worktrees, enabling isolated branch-per-thread workflows. This is an MVP feature gated behind a per-project setting.
+
+**Surface points:**
+- Chat header worktree button (visible when project is a git repo)
+- Thread selector worktree icon (shows branch glyph when thread has worktree)
+- Source Control Worktrees accordion section (unified inventory of all worktrees)
+- File manager breadcrumb worktree toggle
+- Settings > Branching > Assistant Worktrees (10 configuration keys)
+- Merge-back dialog (squash/merge/rebase, PR, export)
+- Pre-merge test gate (auto-detect or configured command)
+
+**Primary spec:** `Plans/assistant-chat-design.md` §Worktrees in Assistant
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FinalGUISpec.md
+```
+### Intent 20 (Run: r-20260326-015830-02, Anchor: `### 1.5 Thread usage surface`, Op: insert_after)
+```markdown
+#### 1.5.1 Assistant worktree integration
+
+Threads can optionally be bound to git worktrees, enabling isolated branch-per-thread workflows. This is an MVP feature gated behind a per-project setting.
+
+**Surface points:**
+- Chat header worktree button (visible when project is a git repo)
+- Thread selector worktree icon (shows branch glyph when thread has worktree)
+- Source Control Worktrees accordion section (unified inventory of all worktrees)
+- File manager breadcrumb worktree toggle
+- Settings > Branching > Assistant Worktrees (10 configuration keys)
+- Merge-back dialog (squash/merge/rebase, PR, export)
+- Pre-merge test gate (auto-detect or configured command)
+
+**Primary spec:** `Plans/assistant-chat-design.md` §Worktrees in Assistant
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FinalGUISpec.md
+```

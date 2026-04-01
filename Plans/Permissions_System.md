@@ -26,31 +26,62 @@ ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md
 
 ## 1. Definitions and scope
 
+### 1.1 Path normalization invariants
+
+Before any permission match, path comparison, or scope check, paths MUST be normalized in this order:
+1. Expand `~` and `$HOME` to the real home-directory path.
+2. Resolve an absolute path and eliminate `.` / `..` components.
+3. Resolve symlinks with `realpath()`.
+4. Match only against the normalized canonical path.
+
+ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/Executor_Protocol.md
+
+Required behavior:
+- `realpath()` failure is fail-closed. Broken symlink, permission error, or missing target means deny.
+- PM MUST NOT compare against the unresolved path as a fallback.
+- Unexpanded `~` in a runtime path comparison is always a bug.
+
+ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/Architecture_Invariants.md
+
 <a id="DEF-SCOPE"></a>
+### 1.2 Tool registry/policy vs Permission rules
 
-### 1.1 Tool registry/policy vs Permission rules
-
-Two distinct concepts exist:
-
-- **Tool registry/policy** (`Plans/Tools.md`): Defines *what tools exist* (built-in, MCP-discovered, custom), their schemas, input/output contracts, and how they integrate with the central registry. The tool registry is the consumer of permission rules.
-- **Permission rules** (this document): Define *when a tool invocation is allowed, requires approval, or is denied*. Permission rules are evaluated by the policy engine at invocation time. The tool registry consumes these rules; permission rules do not depend on the registry's internal structure.
-
-**Direction of dependency:** Tool policy consumes permission rules, not vice versa. The permission system is policy-layer-only and has no knowledge of tool implementation details.
+The permission system defines when a tool invocation is allowed, requires approval, or is denied. `Plans/Tools.md` defines what tools exist and how dispatch occurs. Tool policy consumes permission rules; permission rules do not depend on tool implementation details.
 
 ContractRef: ContractName:Plans/Tools.md, Primitive:DRYRules
 
-### 1.2 HTE vs DAE applicability
+### 1.3 HTE vs DAE applicability
 
-Permission rules apply in both execution strategies defined by `Plans/Run_Modes.md`:
-
-| Strategy | Permission enforcement |
-|----------|----------------------|
-| **HTE** (Hosted Tool Execution) | Puppet Master evaluates permissions before executing each tool call itself. Full control; the permission engine is the sole gatekeeper. |
-| **DAE** (Delegated Agent Execution) | The provider CLI executes tools. Puppet Master enforces permissions via pre-spawn policy injection (CLI args derived from the resolved permission set per `Plans/Tools.md` §10.8) and post-hoc reconciliation (end-of-run scans per `Plans/Run_Modes.md` §5.4). Permission violations detected post-hoc trigger kill conditions. |
+Permission rules apply in both execution strategies. In HTE, Puppet Master is the sole tool dispatcher. In DAE, Puppet Master enforces the resolved permission ceiling through pre-spawn policy injection and post-hoc reconciliation; DAE never creates an execution path that bypasses permission canon.
 
 ContractRef: ContractName:Plans/Run_Modes.md#STRATEGY-HTE, ContractName:Plans/Run_Modes.md#STRATEGY-DAE, ContractName:Plans/Tools.md
 
----
+Universal invariant: `policy.may_execute_tool()` MUST be applied before every tool dispatch regardless of nesting depth, child-run path, execution strategy, or provider surface. Child/subagent/crew context is not a bypass.
+
+ContractRef: ContractName:Plans/Architecture_Invariants.md, ContractName:Plans/orchestrator-subagent-integration.md
+
+### 1.4 Permission-state mutation and hook safety
+### 1.5 Executable-code auto-load prohibition
+
+MCP servers, custom tool definitions, executable configuration scripts, and plugin-provided hooks MUST NOT auto-load or auto-execute without explicit user approval or a verified trust signal.
+
+ContractRef: ContractName:Plans/Plugins_System.md, ContractName:Plans/Tools.md
+
+Required rules:
+- New or modified MCP server configurations discovered at project load time MUST be presented to the user for approval before the server process is spawned.
+- Custom tools defined in project configuration (e.g., `.puppet-master/tools/`) MUST NOT be registered into the tool registry until the user explicitly approves them or the tool definition carries a valid trust signature.
+- Plugin hooks that modify tool arguments or inject executable behavior MUST be governed by the same approval flow. Unsigned or unapproved hooks are blocked from registration.
+- The default permission for any unknown or newly-discovered executable-code source is `ask` (require explicit user confirmation).
+
+ContractRef: ContractName:Plans/Architecture_Invariants.md, ContractName:Plans/Executor_Protocol.md
+
+Any mutable permission state shared across threads or async tasks MUST be protected by an `RwLock` / read-write lock. Unguarded mutation of allowlists, deny rules, session approvals, or cached effective policy state is prohibited.
+
+ContractRef: ContractName:Plans/Architecture_Invariants.md, ContractName:Plans/storage-plan.md
+
+Hooks that modify tool arguments or effective invocation context MUST trigger a fresh permission evaluation on the modified arguments before dispatch. Hook execution can narrow permissions, but MUST NOT widen them after the original check has already passed.
+
+ContractRef: ContractName:Plans/Plugins_System.md, ContractName:Plans/Tools.md
 
 ## 2. Permission actions
 
@@ -73,7 +104,29 @@ The tool invocation is paused pending user approval. The user is presented with 
 The tool invocation is blocked. The policy engine emits a `tool.denied` event (`Plans/Contracts_V0.md#EventRecord`) and returns an error to the agent. The tool is not executed.
 
 ### 2.4 Deterministic precedence across layers
-ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Personas.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md
+
+Permission rules are evaluated in a strict layer precedence. The first layer that produces a defined rule for the invocation wins; higher-precedence layers shadow lower layers on a per-rule basis, but they do NOT replace the entire lower ruleset.
+
+ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Personas.md#PERSONA-INJECTION, PolicyRule:Decision_Policy.md§2
+
+| Priority | Layer | Source | Description |
+|---|---|---|---|
+| 1 | Mode override | `Plans/Run_Modes.md` | `ask` / `plan` clamp mutating capability; `yolo` applies only where policy allows. |
+| 2 | Parent/run ceiling | runtime envelope | Parent execution ceiling and inherited restriction patterns. |
+| 3 | Session cache | runtime | Prior explicit approvals scoped to the session. |
+| 4 | Persona overrides | `Plans/Personas.md` | Named permission profile for the active Persona. |
+| 5 | Project-level | `.puppet-master/permissions.toml` | Project-local rules. |
+| 6 | Global-level | user config | User-wide rules. |
+| 7 | Defaults | this document | Hardcoded fallback table. |
+
+ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Tools.md
+
+Child inheritance rules:
+- Child runs inherit both action ceilings and restrictive argument-pattern rules from the parent chain.
+- Inheritance is additive-downward: a child may narrow authority, but MUST NOT widen it.
+- The permission chain is evaluated as Parent Agent -> Parent Session -> Child Session -> Child Agent, then project/global/default layers.
+
+ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Executor_Protocol.md
 
 ### 2.4A Requested vs effective permissioned capability state
 
@@ -92,20 +145,11 @@ Display rule:
 
 <a id="PRECEDENCE-LAYERS"></a>
 
-Permission rules are evaluated in a strict layer precedence. The **first layer that produces a defined rule for the tool invocation** wins. Within a single layer's ruleset, last-match-wins ordering applies (§3.1).
+`#PRECEDENCE-LAYERS` is an anchor alias for the canonical precedence contract in §2.4. This subsection owns requested-vs-effective disclosure only; it does not redefine the layer table.
 
-| Priority | Layer | Source | Description |
-|----------|-------|--------|-------------|
-| 1 (highest) | **Mode override** | `Plans/Run_Modes.md` | `yolo` → all `allow`; `ask`/`plan` → mutating tools `deny`. Applied unconditionally. |
-| 2 | **Session cache** | Runtime | "Approve for session" grants from prior `always` responses (§6.2). Assistant-only; ephemeral. |
-| 3 | **Persona overrides** | `Plans/Personas.md` §5.2 | The active Persona's `default_permissions_profile` names a profile whose rules are applied. |
-| 4 | **Project-level** | `.puppet-master/permissions.toml` | Per-project permission rules. |
-| 5 | **Global-level** | `~/.config/puppet-master/permissions.toml` | User-wide permission rules. |
-| 6 (lowest) | **Defaults** | §7 of this document | Hardcoded defaults table. |
+Rule: the same effective result produced by §2.4 is what the UI must show as executable capability.
 
-Rule: Within a single layer, if the layer contains multiple matching rules (e.g., granular patterns), **last-match-wins** ordering applies (§3.1).
-
-ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Personas.md#PERSONA-INJECTION, PolicyRule:Decision_Policy.md§2
+ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Tools.md, PolicyRule:Decision_Policy.md§2
 
 ---
 
@@ -426,34 +470,37 @@ ContractRef: ContractName:Plans/FileSafe.md, PolicyRule:no_secrets_in_storage
 
 ## 8. Resolution algorithm
 
-Permission resolution must account for parent ceilings, child narrowing, runtime mode ceilings, and canonical blocked versus awaiting-parent outcomes.
+### 8.1 Banned-command full-string check
 
-ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Tools.md, ContractName:Plans/Models_System.md
+Banned-command evaluation MUST scan the full command string, not just the first token. The scan includes shell metacharacters and substitution forms such as `;`, `&&`, `||`, `|`, `$()`, and backticks.
 
-Resolution sequence:
-1. establish parent effective runtime mode ceiling
-2. establish parent effective permission ceiling
-3. resolve requested child Persona and runtime surface
-4. compute effective child capability subset from the parent-allowed universe
-5. apply child Persona or task-specific narrowing
-6. apply target-surface compatibility narrowing
-7. classify the result as allowed, awaiting parent action, or blocked
+ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/Tools.md
 
-Child-specific invariants:
-- children may narrow but must not widen the parent mode ceiling.
-- children may narrow but must not widen the parent permission ceiling.
-- children may not self-elevate tools, skills, plugins, or MCP access.
-- missing capability cases that can be handled by parent rerouting or reframing map to `awaiting_parent`.
-- hard provider, tool, policy, or permission restrictions map to `blocked`.
+A command that passes a first-token allowlist but contains a banned destructive sequence in its arguments is still denied. First-token-only checking is prohibited.
 
-ContractRef: ContractName:Plans/Skills_System.md, ContractName:Plans/Plugins_System.md, ContractName:Plans/storage-plan.md
+ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Architecture_Invariants.md
 
-Blocked payload rules:
-- canonical action field is `allowed_action_ids[]`.
-- `recovery_options[]` and `allowed_actions[]` are deprecated compatibility terms only.
-- a blocked child must preserve the exact blocking rule or guard key and the effective permission snapshot reference.
+### 8.2 Hook re-check and execution-path invariance
 
-ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/FileSafe.md, ContractName:Plans/Progression_Gates.md
+Resolution happens before dispatch and again after any arg-touching hook mutation. The dispatch layer MUST NOT call the underlying tool implementation until both checks pass on the final argument set.
+
+ContractRef: ContractName:Plans/Plugins_System.md, ContractName:Plans/Tools.md
+
+Required order:
+1. Normalize request context and candidate paths.
+2. Evaluate `policy.may_execute_tool()` on the original invocation.
+3. Run arg-touching hooks, if any.
+4. Re-run permission checks on the modified invocation.
+5. Dispatch only if the re-check passes.
+
+ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Architecture_Invariants.md
+
+### 8.3 Shell environment isolation routing
+
+Environment isolation for shell/session processes is jointly owned by `Plans/orchestrator-subagent-integration.md` and `Plans/Tools.md`. The permission layer consumes that invariant when evaluating agent/crew execution context, but does not define shell lifecycle behavior itself.
+
+ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Tools.md
+
 ## 9. Persistence and storage
 
 <a id="PERSISTENCE"></a>

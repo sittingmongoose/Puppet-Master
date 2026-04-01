@@ -24,6 +24,18 @@ ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md
 
 ## 2. Coverage Matrix
 
+**Coverage status amendment (r-20260328-192850-01):** The following rows were previously marked `Partial` and are updated to `Covered` by the amendments in this research packet run:
+
+| Row | Topic | Previously | Now | Resolved by |
+|---|---|---|---|---|
+| 28 | Provider transform layer | Partial | **Covered** | `CLI_Bridged_Providers.md` §Tool-call correlation now includes complete transform contract with tool ID invariants, FinishReason mapping, and stream cancel semantics |
+| 29 | Provider error classification | Partial | **Covered** | `Executor_Protocol.md` §7.1 per-class retry matrix provides unified error classification with counts and backoff; `CLI_Bridged_Providers.md` adds FinishReasonUnknown handling |
+| 32 | Context handling / compaction / rotation | Partial | **Covered** | `Prompt_Pipeline.md` §2.0 and §2.2.1 now specify compaction thresholds, immune content cap, thinking block preservation, and role alternation validation |
+| 34 | MCP integration | Partial | **Covered** | `Tools.md` §5 now specifies full MCP lifecycle: lazy-load, startup timeout, listTools retry/stale, connection pool, per-tool timeout, Windows MCP, pre-dispatch validation, refresh triggers |
+
+ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Executor_Protocol.md
+
+
 | # | OpenCode Topic Area | Extraction Pointer(s) | Puppet Master SSOT Owner (Doc + Anchor) | Dependent Plans Referencing SSOT | Coverage Status | Notes |
 |---|---|---|---|---|---|---|
 | 1 | **Run modes + enforcement** (plan/ask/regular/yolo, strategy selection, budgets, kill conditions) | §7A.1–§7A.3 | `Plans/Run_Modes.md` #MODE-ask, #MODE-plan, #MODE-regular, #MODE-yolo, #STRATEGY-HTE, #STRATEGY-DAE, #KILL-CONDITIONS, #OUTCOME-TAXONOMY | Tools.md, FileSafe.md, CLI_Bridged_Providers.md, Permissions_System.md, Personas.md, assistant-chat-design.md, human-in-the-loop.md | **Covered** | Full four-mode taxonomy with deterministic selection algorithm, budget table, and kill conditions. |
@@ -53,13 +65,13 @@ ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md
 | 25 | **Models — selection priority** | §7H.2 | `Plans/Models_System.md` #SELECTION-PRIORITY | Run_Modes.md, Personas.md | **Covered** | 6-level chain. |
 | 26 | **Models — options + variants** | §7H.3 | `Plans/Models_System.md` #MODEL-OPTIONS, #VARIANTS | — | **Covered** | Per-provider/model options, built-in + custom variants. |
 | 27 | **Models — per-Persona override** | §7H.2 (agent.model) | `Plans/Models_System.md` #PERSONA-MODEL-OVERRIDES | Personas.md | **Covered** | `default_model` + `default_variant` in PERSONA.md. |
-| 28 | **Provider transform layer** | §7H.4, §10.3 | `Plans/CLI_Bridged_Providers.md` (§ provider transform), `Plans/Models_System.md` §3.4 | Provider_OpenCode.md | **Partial** | Mentioned in both docs but neither defines a complete transform-layer contract with anchors. No `#PROVIDER-TRANSFORM` anchor. |
-| 29 | **Provider error classification (retryable, overflow, auth)** | §7H.5, §10.3 | `Plans/CLI_Bridged_Providers.md` (auth error), `Plans/Models_System.md` §4 | Run_Modes.md §5 kill conditions | **Partial** | Overflow detection and retryable-error retry policy are described in Models_System.md §4 but lack a canonical anchor. Auth-error classification lives in CLI_Bridged_Providers.md. No unified error-classification SSOT. |
+| 28 | **Provider transform layer** | §7H.4, §10.3 | `Plans/CLI_Bridged_Providers.md` (§ provider transform), `Plans/Models_System.md` §3.4 | Provider_OpenCode.md | **Covered** | `CLI_Bridged_Providers.md` §Tool-call correlation now includes complete transform contract with tool ID invariants, FinishReason mapping, and stream cancel semantics. |
+| 29 | **Provider error classification (retryable, overflow, auth)** | §7H.5, §10.3 | `Plans/CLI_Bridged_Providers.md` (auth error), `Plans/Executor_Protocol.md` §7.1 | Run_Modes.md §5 kill conditions | **Covered** | `Executor_Protocol.md` §7.1 per-class retry matrix provides unified error classification with counts and backoff; `CLI_Bridged_Providers.md` adds FinishReasonUnknown handling. |
 | 30 | **Tool lifecycle and hook boundaries** | §10.1 | `Plans/Tools.md` (tool semantics), `Plans/Plugins_System.md` #HOOK-TOOL-EXECUTE | — | **Covered** | Tool execution before/after hooks defined in Plugins_System.md; tool semantics in Tools.md. |
 | 31 | **Subagent management** | §7B.1–§7B.3 | `Plans/orchestrator-subagent-integration.md` §4 (registry), `Plans/Personas.md` #DEF-SUBAGENT | interview-subagent-integration.md, Tools.md §3.6 (task tool) | **Covered** | Registry-driven Persona set; task-tool validation. |
-| 32 | **Context handling / compaction / rotation** | §7B.4, §7B.5 | `Plans/Prompt_Pipeline.md` #ASSEMBLY-PIPELINE, #COMPACTION, `Plans/FileSafe.md` Part B (context compilation), `Plans/Run_Modes.md` §7 (mode-specific context deltas) | — | **Partial** | Prompt assembly + pruning contracts now have a dedicated SSOT (Prompt_Pipeline.md). Detailed compaction thresholds remain owned by FileSafe.md Part B / Run_Modes.md and still need stable anchors if referenced cross-doc. |
+| 32 | **Context handling / compaction / rotation** | §7B.4, §7B.5 | `Plans/Prompt_Pipeline.md` #ASSEMBLY-PIPELINE, #COMPACTION, `Plans/FileSafe.md` Part B (context compilation), `Plans/Run_Modes.md` §7 (mode-specific context deltas) | — | **Covered** | `Prompt_Pipeline.md` §2.0 and §2.2.1 now specify compaction thresholds, immune content cap, thinking block preservation, and role alternation validation. |
 | 33 | **LSP integration** | — (not in extraction §7) | `Plans/LSPSupport.md` (canonical) | FinalGUISpec.md §7.4.2 (Settings > LSP), FileManager.md §10.10 | **Covered** | Not part of extraction scope but has its own SSOT. |
-| 34 | **MCP integration** | §7D.1 (MCP prompts → commands) | `Plans/newtools.md` (MCP config, server list), `Plans/Tools.md` §5 (MCP in registry) | FinalGUISpec.md §7.4 Advanced (MCP config card) | **Partial** | MCP tools enter the central registry and permission model, but there is no single `Plans/MCP_System.md` SSOT. Config paths, GUI, and discovery rules are split across newtools.md, Tools.md, and FinalGUISpec.md. |
+| 34 | **MCP integration** | §7D.1 (MCP prompts → commands) | `Plans/newtools.md` (MCP config, server list), `Plans/Tools.md` §5 (MCP in registry) | FinalGUISpec.md §7.4 Advanced (MCP config card) | **Covered** | `Tools.md` §5 now specifies full MCP lifecycle: lazy-load, startup timeout, listTools retry/stale, connection pool, per-tool timeout, Windows MCP, pre-dispatch validation, refresh triggers. |
 | 35 | **GitHub API: Auth vs usage/tool** | — (not in extraction §7) | `Plans/GitHub_API_Auth_and_Flows.md` (auth contract), `Plans/GitHub_Integration.md` (Git panel + API usage) | FinalGUISpec.md, Architecture_Invariants.md #INV-002 | **Covered** | OAuth device-code default; no secrets in storage. Not part of OpenCode extraction scope. |
 | 36 | **GUI config wiring — Permissions** | — | `Plans/Permissions_System.md` §10, `Plans/FinalGUISpec.md` §7.4.10 | — | **Covered** | Dedicated tab with all sub-sections. |
 | 37 | **GUI config wiring — Commands** | — | `Plans/Commands_System.md` §6, `Plans/FinalGUISpec.md` §7.4.11 | — | **Covered** | Rules & Commands tab. |
@@ -197,14 +209,8 @@ These are documentation-only edits required to close coverage gaps. They are NOT
 
 | Coverage Status | Count | Examples |
 |---|---|---|
-| **Covered** | 32 | Run modes, permissions (all facets), commands, skills (discovery + schema + Persona refs), prompt pipeline, formatters, plugins, models, subagents, LSP, GitHub auth |
-| **Partial** | 7 | Skills agent surface as-commands (#17), provider transform layer (#28), provider error classification (#29), context/compaction (#32), MCP integration (#34), GUI Skills tab subsectioning (#38) |
-| **Missing** | 0 | — (no remaining extraction-core SSOT docs missing; remaining gaps are anchors/subsections) |
+| **Covered** | 36 | Run modes, permissions, provider transform/error classification, context compaction, MCP lifecycle, GitHub auth, models, subagents, LSP |
+| **Partial** | 3 | Skills agent surface as-commands (#17), GUI Skills tab subsectioning (#38), any future external-only bridge work not yet packetized |
+| **Missing** | 0 | — |
 
-**Remaining gaps (high value):**
-- Add stable anchors for provider transform and error classification (`CLI_Bridged_Providers.md`) and for context compilation/compaction thresholds (FileSafe.md / Run_Modes.md), so other plans can ContractRef them cleanly.
-- Consider adding a dedicated numbered `§7.4.X` Skills subsection in FinalGUISpec.md for symmetry with other subsystem tabs.
-
----
-
-*Document created for audit purposes only; no code changes.*
+ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Executor_Protocol.md

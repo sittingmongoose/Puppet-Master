@@ -1,0 +1,2236 @@
+## Doc: Plans/FileManager.md
+### Intent 1 (Run: r-20260312-160857-01, Anchor: `## 13. Git Status Integration`, Op: replace_section)
+```markdown
+File Manager integrates with Source Control, not with a legacy combined Git panel.
+
+### 13.1 Git status overlay in file tree
+
+The file tree may show Git status badges, but those badges are read-only indicators unless the user opens Source Control or a file diff.
+
+ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/UI_Command_Catalog.md
+
+### 13.2 Source Control strip
+
+The file-tree header or strip may expose compact repo state, but its primary action targets are:
+- `Open in Source Control`
+- `Open diff`
+- `Open compare`
+
+It must not claim ownership of commit, history, graph, or worktree management.
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/WorktreeGitImprovement.md
+
+### 13.3 Repo-aware filtering and worktree context
+
+When multiple worktrees or repo roots are relevant:
+- the file tree must show which repo/worktree is active
+- file-status overlays must resolve against that active repo/worktree
+- any handoff to Source Control must preserve `repo_id` and `worktree_id`
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Orchestrator_Page.md
+```
+### Intent 2 (Run: r-20260312-203855-01, Anchor: `### 4.1 Open-file contract`, Op: replace_section)
+```markdown
+Source-open behavior uses two canonical contracts.
+
+### OpenFile
+`OpenFile` remains the path-based editor open contract.
+
+Required fields are:
+- `path`
+- `line?`
+- `range?`
+- `target_group?`
+
+### OpenSubject
+`OpenSubject` is the identity-native source-open contract.
+
+Required fields are:
+- `subject_id`
+- `open_intent`
+
+Rules:
+- `subject_id` is closed to `doc:<document_id>` and `artifact:<artifact_id>`
+- `OpenSubject` resolves to the best source realization, including `OpenFile` or a transient `generated://<artifact_id>` buffer
+- `OpenSubject` is used for artifact-backed and generated subjects that do not have a stable workspace path
+- `OpenFile` remains the canonical contract for real workspace documents
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md
+
+Route/open rules:
+- shell navigation uses `route_target`
+- source realization uses `OpenSubject` or `OpenFile`
+- `resume_url` is serialized transport only and does not replace the canonical route/open split
+
+ContractRef: ContractName:Plans/Crosswalk.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/assistant-chat-design.md
+
+```
+### Intent 3 (Run: r-20260313-183219-01, Anchor: `### 2.4.1 Embedded document pane shared-buffer contract`, Op: insert_after)
+```markdown
+### 2.4.1A Embedded document annotations and chat handoff boundary
+
+The Embedded Document Pane shares document identity and buffer state with File Editor, but annotation and chat-handoff state remain adjacent review state rather than extra file buffers.
+
+Rules:
+- Durable annotations anchor to canonical source text in the shared buffer, not to rendered DOM state.
+- Creating or resolving annotations does not create a second buffer, a second dirty flag, or a separate undo/history branch for the file itself.
+- `Send selection to chat` creates thread-scoped composer-prep state and does not mutate the file buffer.
+- If a selection was made against stale rendered state, mutating annotation creation must fail explicitly rather than silently rebase to a different span.
+
+ContractRef: ContractName:Plans/rewrite-tie-in-memo.md, ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md
+```
+### Intent 4 (Run: r-20260313-183219-01, Anchor: `### 8.4 Click-to-context when viewing HTML`, Op: replace_section)
+```markdown
+When viewing a local HTML file in the built-in browser, clicking an element still sends `browser_element_context` to the Assistant. The Assistant receives a structured element summary (`tag`, `id`, `class`, `text`, `role`, `rect`, `parent path`, optional HTML snippet) so the user can ask for changes or explanations about that part of the page.
+
+ContractRef: ContractName:Plans/newfeatures.md, ContractName:Plans/assistant-chat-design.md
+
+Boundary rules:
+- This HTML/browser path remains separate from native document review selection handoff.
+- Native document surfaces use `document_selection_context` and may also support durable annotations when deterministic source mapping exists.
+- Browser/HTML click-to-context does not imply durable annotations or `Resubmit with Annotations` semantics.
+- Capture privilege and source-mutation privilege remain separate even for workspace-backed HTML preview.
+
+ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/rewrite-tie-in-memo.md
+```
+### Intent 5 (Run: r-20260317-164124-01, Anchor: `### OpenSubject`, Op: insert_after)
+```markdown
+#### Thread context detail documents
+
+The thread-scoped Context Detail Pane may be realized as a generated editor-tab document.
+
+Rules:
+- shell destination and focus are owned by `route_target`
+- generated document realization for the Context Detail Pane uses the canonical `OpenSubject` path rather than raw-path guessing
+- repeated opens for the same thread reuse the existing tab identity instead of opening duplicate tabs
+- the implementation may back the tab with a generated document id rather than a workspace file path, but the route/open split remains canonical
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/assistant-chat-design.md
+
+```
+### Intent 6 (Run: r-20260317-164124-02, Anchor: `### OpenSubject`, Op: replace_section)
+```markdown
+`OpenSubject` is the identity-native source-open contract.
+
+Required fields are:
+- `subject_id`
+- `open_intent`
+
+Rules:
+- `subject_id` is closed to `doc:<document_id>` and `artifact:<artifact_id>`
+- `OpenSubject` resolves to the best source realization, including `OpenFile` or a transient `generated://<artifact_id>` buffer
+- `OpenSubject` is used for artifact-backed and generated subjects that do not have a stable workspace path
+- `OpenFile` remains the canonical contract for real workspace documents
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md
+
+Route/open rules:
+- shell navigation uses `route_target`
+- source realization uses `OpenSubject` or `OpenFile`
+- `resume_url` is serialized transport only and does not replace the canonical route/open split
+
+ContractRef: ContractName:Plans/Crosswalk.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/assistant-chat-design.md
+
+#### Thread context detail documents
+
+The thread-scoped Context Detail Pane may be realized as a generated editor-tab document.
+
+Rules:
+- shell destination and focus are owned by `route_target`
+- generated document realization for the Context Detail Pane uses the canonical `OpenSubject` path rather than raw-path guessing
+- repeated opens for the same thread reuse the existing tab identity instead of opening duplicate tabs
+- the implementation may back the tab with a generated document id rather than a workspace file path, but the route/open split remains canonical
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/assistant-chat-design.md
+
+```
+### Intent 7 (Run: r-20260317-164124-03, Anchor: `### OpenSubject`, Op: replace_section)
+```markdown
+`OpenSubject` is the identity-native source-open contract.
+
+Required fields are:
+- `subject_id`
+- `open_intent`
+
+Rules:
+- `subject_id` is closed to `doc:<document_id>` and `artifact:<artifact_id>`
+- `OpenSubject` resolves to the best source realization, including `OpenFile` or a transient `generated://<artifact_id>` buffer
+- `OpenSubject` is used for artifact-backed and generated subjects that do not have a stable workspace path
+- `OpenFile` remains the canonical contract for real workspace documents
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md
+
+Route/open rules:
+- shell navigation uses `route_target`
+- source realization uses `OpenSubject` or `OpenFile`
+- `resume_url` is serialized transport only and does not replace the canonical route/open split
+
+ContractRef: ContractName:Plans/Crosswalk.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/assistant-chat-design.md
+
+#### Thread context detail documents
+
+The thread-scoped Context Detail Pane may be realized as a generated editor-tab document.
+
+Rules:
+- shell destination and focus are owned by `route_target`
+- generated document realization for the Context Detail Pane uses the canonical `OpenSubject` path rather than raw-path guessing
+- repeated opens for the same thread reuse the existing tab identity instead of opening duplicate tabs
+- the implementation may back the tab with a generated document id rather than a workspace file path, but the route/open split remains canonical
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/assistant-chat-design.md
+
+```
+### Intent 8 (Run: r-20260317-181906-01, Anchor: `### 8.2A Rewrite normalization for HTML/browser preview (2026-03-08)`, Op: replace_section)
+```markdown
+HTML preview and browser preview use the canonical browser session-class model and the same PM browser runtime as the built-in browser feature.
+
+Rules:
+- `Open` keeps the file in source/editor mode
+- `Open in Browser` opens the file in a `workspace_preview`
+- `Open in Detached Browser` opens the file in a `detached_preview`
+- split browser layout is a second-step layout action after opening, not a separate open command
+- file-backed HTML preview is editor-tab-first rather than bottom-panel-first
+- auth and automation browser sessions do not become file-manager preview tabs automatically
+
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md
+```
+### Intent 9 (Run: r-20260317-181906-01, Anchor: `### 8.3 Same browser surface as built-in browser and click-to-context`, Op: replace_section)
+```markdown
+HTML preview uses the same built-in browser defined by the promoted browser owner spec rather than a separate WebView or stale `newfeatures.md` authority path. Local HTML preview, normal browsing, screenshots, console/network inspection, DevTools, and watchable browser testing all use the same PM browser runtime and session-class model.
+
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/newtools.md, ContractName:Plans/storage-plan.md
+```
+### Intent 10 (Run: r-20260317-181906-01, Anchor: `### 8.4 Click-to-context when viewing HTML`, Op: replace_section)
+```markdown
+Click-to-context in HTML/browser mode is explicit and uses the same browser capture model as the main built-in browser.
+
+- text selection uses `browser_selection_context`
+- element pick uses `browser_element_context`
+- capture creates removable composer chips and never silently submits a message
+- when no writable active thread/composer exists, PM opens a new thread and places the chips there
+- the default combined capture is context plus clipped screenshot; full-page combined capture remains explicit
+- browser capture does not imply durable document annotations or `Resubmit with Annotations` behavior
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Runtime_Artifacts_Panel.md
+```
+### Intent 11 (Run: r-20260317-181906-01, Anchor: `### 9A. Browser tab and detached preview normalization (2026-03-08)`, Op: replace_section)
+```markdown
+The canonical browser container model is editor/workspace-tab-first for in-shell browsing.
+
+Rules:
+- in-shell normal browsing uses browser tabs in the editor/workspace surface, not a free-floating browser-instance pool
+- detached preview/browser windows are first-class and outside the in-shell browser-tab cap
+- bottom-panel browser hosting is not canonical behavior
+- LRU browser-instance reuse is not canonical behavior
+- `automation_session` and `auth_session` are not counted as normal in-shell browser tabs
+
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md
+```
+### Intent 12 (Run: r-20260317-181906-01, Anchor: `### 14.6 HTML preview and hot reload`, Op: replace_section)
+```markdown
+Full HTML/browser mode must support relative asset resolution, local script execution appropriate to a workspace preview, reload/hot reload, explicit click-to-context and capture-to-chat actions, screenshot/console/network/DevTools access, and detached browser open without changing the underlying preview subject identity.
+
+Hot reload scope watches the HTML file plus linked local CSS/JS/image assets, debounces reloads, and preserves scroll/location when reasonable.
+
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/rewrite-tie-in-memo.md
+```
+### Intent 13 (Run: r-20260317-181906-02, Anchor: `## Summary`, Op: replace_section)
+```markdown
+The app provides a **File Manager** (pop-out side panel), an **in-app IDE-style editor** (File Editor strip), and **@ mention in chat** for file context. File Manager and editor share the same project context; chat integrates via @ mention and **click-to-open** so file paths and code blocks in the thread open in the editor. Full behavior and MVP scope are defined below.
+
+This plan also covers **image viewing** and **HTML-in-browser preview with hot reload**; **split editor panes**; **drag editor out to its own window and back** (detach/snap); **tabs** in the editor and Terminal and **browser tabs plus detached preview windows**; **language/framework presets**; and the editor enhancement set. **LSP (Language Server Protocol) is in scope for MVP**: diagnostics, hover, autocomplete, go-to-definition, and symbol search use language servers when available for the current preset; see **§10.10**. Full LSP integration in the **Chat Window** remains in **Plans/LSPSupport.md §5.1** and **Plans/assistant-chat-design.md §9.1**.
+
+**Scope of this document:** This spec defines File Manager, editor, @ mention, click-to-open, image/HTML preview, tabs, and editor enhancements. It defers chat UX details to `Plans/assistant-chat-design.md`, layout to `Plans/FinalGUISpec.md`, and browser click-to-context / agent-driven browser actions to the promoted browser owner in `Plans/Section15_MVP_Promoted_Features_Spec.md` plus the reconciled browser chat, prompt, permission, and storage docs. Storage terms (`redb`, `seglog`, project storage design) are defined in rewrite-tie-in and storage-plan docs.
+
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md
+```
+### Intent 14 (Run: r-20260317-181906-02, Anchor: `### 8.2A Rewrite normalization for HTML/browser preview (2026-03-08)`, Op: replace_section)
+```markdown
+HTML preview and browser preview use the canonical browser session-class model and the same PM browser runtime as the built-in browser feature.
+
+Rules:
+- `Open` keeps the file in source/editor mode
+- `Open in Browser` opens the file in a `workspace_preview`
+- `Open in Detached Browser` opens the file in a `detached_preview`
+- split browser layout is a second-step layout action after opening, not a separate open command
+- file-backed HTML preview is editor-tab-first rather than bottom-panel-first
+- preview subject identity is not silently retargeted by over-cap behavior
+- multiple browser tabs may render distinct preview subjects inside the shell
+- preview restore is scoped by project and workspace tab
+- auth and automation browser sessions do not become file-manager preview tabs automatically
+
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md
+```
+### Intent 15 (Run: r-20260317-181906-02, Anchor: `### 8.3 Same browser surface as built-in browser and click-to-context`, Op: replace_section)
+```markdown
+HTML preview uses the same built-in browser defined by the promoted browser owner spec rather than a separate WebView or a stale `newfeatures.md` authority path.
+
+- local HTML preview, normal browsing, screenshots, console/network inspection, DevTools, and watchable browser testing all use the same PM browser runtime and session-class model
+- `workspace_preview` and `detached_preview` cover normal file-backed HTML browsing
+- `automation_session` covers watchable agent-driven browser testing and verification with separate ephemeral state by default
+- `auth_session` covers PM-owned auth and provider/device flows without silently turning into a normal preview tab
+
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/newtools.md, ContractName:Plans/storage-plan.md
+```
+### Intent 16 (Run: r-20260317-181906-02, Anchor: `### 8.4 Click-to-context when viewing HTML`, Op: replace_section)
+```markdown
+Click-to-context in HTML/browser mode is explicit and uses the same browser capture model as the main built-in browser.
+
+- text selection uses `browser_selection_context`
+- element pick uses `browser_element_context`
+- capture creates removable composer chips and never silently submits a message
+- when no writable active thread/composer exists, PM opens a new thread and places the chips there
+- the default combined capture is context plus clipped screenshot; full-page combined capture remains explicit
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Runtime_Artifacts_Panel.md
+
+Boundary rules:
+- the HTML/browser path remains separate from native document review selection handoff
+- native document surfaces use `document_selection_context` and may support durable annotations only when deterministic source mapping exists
+- browser/HTML click-to-context does not imply durable annotations or `Resubmit with Annotations` semantics
+- capture privilege and source-mutation privilege remain separate even for workspace-backed HTML preview
+- ordinary browsing clicks must not unexpectedly create or send chat context
+
+ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/rewrite-tie-in-memo.md, ContractName:Plans/storage-plan.md
+```
+### Intent 17 (Run: r-20260317-181906-02, Anchor: `### 9A. Browser tab and detached preview normalization (2026-03-08)`, Op: replace_section)
+```markdown
+The canonical browser container model is editor/workspace-tab-first for in-shell browsing.
+
+Rules:
+- in-shell normal browsing uses browser tabs in the editor/workspace surface, not a free-floating browser-instance pool
+- detached preview/browser windows are first-class and outside the in-shell browser-tab cap
+- bottom-panel browser hosting is not canonical behavior
+- LRU browser-instance reuse is not canonical behavior
+- when the browser cap is reached, the user gets an explicit choice or deterministic command failure; the app must not silently replace the current preview subject
+- `automation_session` and `auth_session` are not counted as normal in-shell browser tabs
+
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md
+```
+### Intent 18 (Run: r-20260317-181906-02, Anchor: `### 14.6 HTML preview and hot reload`, Op: replace_section)
+```markdown
+Full HTML/browser mode must support:
+- relative asset resolution
+- local script execution appropriate to a workspace preview
+- reload and hot reload
+- explicit click-to-context and explicit capture-to-chat actions when the browser surface is used in that mode
+- screenshots, console/network read, and DevTools access through the canonical browser model
+- detached browser open without changing the underlying preview subject identity
+
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/UI_Command_Catalog.md
+
+Hot reload scope:
+- watch the HTML file itself
+- watch linked local CSS/JS/image assets under the preview contract
+- debounce reloads to avoid thrash (default 400 ms remains acceptable)
+- preserve scroll/location when reasonable
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/rewrite-tie-in-memo.md
+```
+### Intent 19 (Run: r-20260317-181906-02, Anchor: `### 14.7 Error and fallback behavior`, Op: replace_section)
+```markdown
+Required fallback rules:
+- if the PM browser runtime is unavailable or damaged, present explicit `runtime_unavailable` remediation and keep source/native surfaces usable
+- if normal embedding is temporarily unavailable, the product may use the detached window path on the same PM browser model rather than silently falling through to an unrelated legacy browser runtime
+- if Mermaid parse/render fails, show source plus explicit render error; do not silently drop the diagram
+- if Markdown preview generation fails, keep source editor usable and show a visible preview error state
+- if a preview edit cannot be reversed into a safe source patch, focus source rather than mutating preview state
+- if browser or browser-subprocess crash occurs, preserve recoverable metadata and any completed browser evidence when possible
+
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Runtime_Artifacts_Panel.md
+```
+### Intent 20 (Run: r-20260317-181906-02, Anchor: `### 14.8 Non-goals`, Op: replace_section)
+```markdown
+- no hidden diagram object model
+- no promise that every preview surface is embedded in-process in the same way on every platform
+- no arbitrary WYSIWYG DOM editing for Markdown/HTML as an MVP requirement
+- no bottom-panel-primary browser model
+- no silent automatic chat-context injection from browser clicks or selection
+- no alternate stale browser authority outside the promoted Section 15 owner and reconciled subsystem docs
+
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FinalGUISpec.md
+```
+### Intent 21 (Run: r-20260317-181906-02, Anchor: `### 14.9 Acceptance criteria`, Op: replace_section)
+```markdown
+- opening an HTML file supports source editing, `Open in Browser`, `Open in Detached Browser`, and browser split as a second-step layout action without changing canonical source storage
+- HTML files support full rendered browser-like viewing with local asset resolution, explicit click-to-context, screenshots, and DevTools access on the canonical PM browser model
+- watchable browser automation runs use a visible `automation_session` that the user can safely pause, stop-and-keep, or promote to normal browsing
+- browser evidence capture routes screenshots, traces, videos, and recordings into the shared runtime artifact pipeline
+- browser recovery uses `Reopen`, `Retry`, and `Keep Closed`, and completed browser evidence survives when possible
+- image files still render natively and do not require the browser runtime
+
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/storage-plan.md
+```
+### Intent 22 (Run: r-20260317-181906-03, Anchor: `## Summary`, Op: replace_section)
+```markdown
+The app provides a **File Manager** (pop-out side panel), an **in-app IDE-style editor** (File Editor strip), and **@ mention in chat** for file context. File Manager and editor share the same project context; chat integrates via @ mention and **click-to-open** so file paths and code blocks in the thread open in the editor. Full behavior and MVP scope are defined below.
+
+This plan also covers **image viewing** and **HTML-in-browser preview with hot reload**; **split editor panes**; **drag editor out to its own window and back** (detach/snap); **tabs** in the editor and Terminal and **browser tabs plus detached preview windows**; **language/framework presets**; and the editor enhancement set. **LSP (Language Server Protocol) is in scope for MVP**: diagnostics, hover, autocomplete, go-to-definition, and symbol search use language servers when available for the current preset; see **§10.10**. Full LSP integration in the **Chat Window** remains in **Plans/LSPSupport.md §5.1** and **Plans/assistant-chat-design.md §9.1**.
+
+**Scope of this document:** This spec defines File Manager, editor, @ mention, click-to-open, image/HTML preview, tabs, and editor enhancements. It defers chat UX details to `Plans/assistant-chat-design.md`, layout to `Plans/FinalGUISpec.md`, and browser click-to-context / agent-driven browser actions to the promoted browser owner in `Plans/Section15_MVP_Promoted_Features_Spec.md` plus the reconciled browser chat, prompt, permission, and storage docs. Storage terms (`redb`, `seglog`, project storage design) are defined in rewrite-tie-in and storage-plan docs.
+
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md
+```
+### Intent 23 (Run: r-20260317-181906-03, Anchor: `### 8.2A Rewrite normalization for HTML/browser preview (2026-03-08)`, Op: replace_section)
+```markdown
+HTML preview and browser preview use the canonical browser session-class model and the same PM browser runtime as the built-in browser feature.
+
+Rules:
+- `Open` keeps the file in source/editor mode
+- `Open in Browser` opens the file in a `workspace_preview`
+- `Open in Detached Browser` opens the file in a `detached_preview`
+- split browser layout is a second-step layout action after opening, not a separate open command
+- file-backed HTML preview is editor-tab-first rather than bottom-panel-first
+- preview subject identity is not silently retargeted by over-cap behavior
+- multiple browser tabs may render distinct preview subjects inside the shell
+- preview restore is scoped by project and workspace tab
+- auth and automation browser sessions do not become file-manager preview tabs automatically
+
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md
+```
+### Intent 24 (Run: r-20260317-181906-03, Anchor: `### 8.3 Same browser surface as built-in browser and click-to-context`, Op: replace_section)
+```markdown
+HTML preview uses the same built-in browser defined by the promoted browser owner spec rather than a separate WebView or a stale `newfeatures.md` authority path.
+
+- local HTML preview, normal browsing, screenshots, console/network inspection, DevTools, and watchable browser testing all use the same PM browser runtime and session-class model
+- `workspace_preview` and `detached_preview` cover normal file-backed HTML browsing
+- `automation_session` covers watchable agent-driven browser testing and verification with separate ephemeral state by default
+- `auth_session` covers PM-owned auth and provider/device flows without silently turning into a normal preview tab
+
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/newtools.md, ContractName:Plans/storage-plan.md
+```
+### Intent 25 (Run: r-20260317-181906-03, Anchor: `### 8.4 Click-to-context when viewing HTML`, Op: replace_section)
+```markdown
+Click-to-context in HTML/browser mode is explicit and uses the same browser capture model as the main built-in browser.
+
+- text selection uses `browser_selection_context`
+- element pick uses `browser_element_context`
+- capture creates removable composer chips and never silently submits a message
+- when no writable active thread/composer exists, PM opens a new thread and places the chips there
+- the default combined capture is context plus clipped screenshot; full-page combined capture remains explicit
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Runtime_Artifacts_Panel.md
+
+Boundary rules:
+- the HTML/browser path remains separate from native document review selection handoff
+- native document surfaces use `document_selection_context` and may support durable annotations only when deterministic source mapping exists
+- browser/HTML click-to-context does not imply durable annotations or `Resubmit with Annotations` semantics
+- capture privilege and source-mutation privilege remain separate even for workspace-backed HTML preview
+- ordinary browsing clicks must not unexpectedly create or send chat context
+
+ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/rewrite-tie-in-memo.md, ContractName:Plans/storage-plan.md
+```
+### Intent 26 (Run: r-20260317-181906-03, Anchor: `### 9A. Browser tab and detached preview normalization (2026-03-08)`, Op: replace_section)
+```markdown
+The canonical browser container model is editor/workspace-tab-first for in-shell browsing.
+
+Rules:
+- in-shell normal browsing uses browser tabs in the editor/workspace surface, not a free-floating browser-instance pool
+- detached preview/browser windows are first-class and outside the in-shell browser-tab cap
+- bottom-panel browser hosting is not canonical behavior
+- LRU browser-instance reuse is not canonical behavior
+- when the browser cap is reached, the user gets an explicit choice or deterministic command failure; the app must not silently replace the current preview subject
+- `automation_session` and `auth_session` are not counted as normal in-shell browser tabs
+
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md
+```
+### Intent 27 (Run: r-20260317-181906-03, Anchor: `### 14.6 HTML preview and hot reload`, Op: replace_section)
+```markdown
+Full HTML/browser mode must support:
+- relative asset resolution
+- local script execution appropriate to a workspace preview
+- reload and hot reload
+- explicit click-to-context and explicit capture-to-chat actions when the browser surface is used in that mode
+- screenshots, console/network read, and DevTools access through the canonical browser model
+- detached browser open without changing the underlying preview subject identity
+
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/UI_Command_Catalog.md
+
+Hot reload scope:
+- watch the HTML file itself
+- watch linked local CSS/JS/image assets under the preview contract
+- debounce reloads to avoid thrash (default 400 ms remains acceptable)
+- preserve scroll/location when reasonable
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/rewrite-tie-in-memo.md
+```
+### Intent 28 (Run: r-20260317-181906-03, Anchor: `### 14.7 Error and fallback behavior`, Op: replace_section)
+```markdown
+Required fallback rules:
+- if the PM browser runtime is unavailable or damaged, present explicit `runtime_unavailable` remediation and keep source/native surfaces usable
+- if normal embedding is temporarily unavailable, the product may use the detached window path on the same PM browser model rather than silently falling through to an unrelated legacy browser runtime
+- if Mermaid parse/render fails, show source plus explicit render error; do not silently drop the diagram
+- if Markdown preview generation fails, keep source editor usable and show a visible preview error state
+- if a preview edit cannot be reversed into a safe source patch, focus source rather than mutating preview state
+- if browser or browser-subprocess crash occurs, preserve recoverable metadata and any completed browser evidence when possible
+
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Runtime_Artifacts_Panel.md
+```
+### Intent 29 (Run: r-20260317-181906-03, Anchor: `### 14.8 Non-goals`, Op: replace_section)
+```markdown
+- no hidden diagram object model
+- no promise that every preview surface is embedded in-process in the same way on every platform
+- no arbitrary WYSIWYG DOM editing for Markdown/HTML as an MVP requirement
+- no bottom-panel-primary browser model
+- no silent automatic chat-context injection from browser clicks or selection
+- no alternate stale browser authority outside the promoted Section 15 owner and reconciled subsystem docs
+
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FinalGUISpec.md
+```
+### Intent 30 (Run: r-20260317-181906-03, Anchor: `### 14.9 Acceptance criteria`, Op: replace_section)
+```markdown
+- opening an HTML file supports source editing, `Open in Browser`, `Open in Detached Browser`, and browser split as a second-step layout action without changing canonical source storage
+- HTML files support full rendered browser-like viewing with local asset resolution, explicit click-to-context, screenshots, and DevTools access on the canonical PM browser model
+- watchable browser automation runs use a visible `automation_session` that the user can safely pause, stop-and-keep, or promote to normal browsing
+- browser evidence capture routes screenshots, traces, videos, and recordings into the shared runtime artifact pipeline
+- browser recovery uses `Reopen`, `Retry`, and `Keep Closed`, and completed browser evidence survives when possible
+- image files still render natively and do not require the browser runtime
+
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/storage-plan.md
+```
+### Intent 31 (Run: r-20260318-160350-01, Anchor: `## 9. Tabs: Editor, Terminal, Browser`, Op: replace_section)
+```markdown
+### 9A. Terminal tabs, panes, and sections
+Terminal containers are shell-workspace state, not a loose collection of generic bottom-panel tabs.
+
+Rules:
+- Puppet Master supports up to two terminal sections/components
+- each terminal section owns an ordered terminal-tab strip
+- each terminal tab contains from one to four panes
+- pane layout supports row and column splits and rebalances deterministically when a pane closes
+- tabs and panes can be reordered without changing the bound runtime identity
+
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md
+
+Terminal naming and focus rules:
+- explicit user labels override all automatic naming
+- when no explicit label exists, the tab title uses the strongest available session-derived label such as current task or cwd summary
+- pin state prevents accidental bulk-close behavior and remains visible in the tab strip
+- `Open in Terminal` and `Show Terminal` reveal the existing pane, tab, and section that already own the referenced `terminal_session_id`
+- explicit `New Terminal` and explicit split create new runtime identity instead of retargeting an unrelated pane silently
+
+ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/assistant-chat-design.md
+
+Capacity and close rules:
+- MVP does not use silent LRU eviction for terminal tabs
+- `Close Others` and similar bulk actions exclude pinned terminal tabs
+- closing a pane or tab that still owns a live session requires explicit close-versus-terminate semantics rather than silent process orphaning
+- moving a terminal tab between sections changes presentation only and MUST NOT mint a new `terminal_session_id`
+
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md
+
+### 9B. Browser tab and detached preview normalization (2026-03-08)
+The canonical browser container model is editor/workspace-tab-first for in-shell browsing.
+
+Rules:
+- in-shell normal browsing uses browser tabs in the editor/workspace surface, not a free-floating browser-instance pool
+- detached preview/browser windows are first-class and outside the in-shell browser-tab cap
+- bottom-panel browser hosting is not canonical behavior
+- LRU browser-instance reuse is not canonical behavior
+- when the browser cap is reached, the user gets an explicit choice or deterministic command failure; the app must not silently replace the current preview subject
+- `automation_session` and `auth_session` are not counted as normal in-shell browser tabs
+
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md
+
+### 9C. Terminal and browser anti-collapse rule
+Terminal tabs and browser tabs are nearby shell surfaces, but they are not interchangeable containers.
+
+Rules:
+- terminal tab semantics MUST NOT be re
+```
+[... truncated, full length: 3458 chars]
+### Intent 32 (Run: r-20260318-160350-02, Anchor: `## 9. Tabs: Editor, Terminal, Browser`, Op: replace_section)
+```markdown
+### 9A. Terminal tabs, panes, and sections
+Terminal containers are shell-workspace state, not a loose collection of generic bottom-panel tabs.
+
+Rules:
+- Puppet Master supports up to two terminal sections/components
+- each terminal section owns an ordered terminal-tab strip
+- each terminal tab contains from one to four panes
+- pane layout supports row and column splits and rebalances deterministically when a pane closes
+- tabs and panes can be reordered without changing the bound runtime identity
+
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md
+
+Terminal naming and focus rules:
+- explicit user labels override all automatic naming
+- when no explicit label exists, the tab title uses the strongest available session-derived label such as current task or cwd summary
+- pin state prevents accidental bulk-close behavior and remains visible in the tab strip
+- `Open in Terminal` and `Show Terminal` reveal the existing pane, tab, and section that already own the referenced `terminal_session_id`
+- explicit `New Terminal` and explicit split create new runtime identity instead of retargeting an unrelated pane silently
+
+ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/assistant-chat-design.md
+
+Capacity and close rules:
+- MVP does not use silent LRU eviction for terminal tabs
+- `Close Others` and similar bulk actions exclude pinned terminal tabs
+- closing a pane or tab that still owns a live session requires explicit close-versus-terminate semantics rather than silent process orphaning
+- moving a terminal tab between sections changes presentation only and MUST NOT mint a new `terminal_session_id`
+
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md
+
+### 9B. Browser tab and detached preview normalization (2026-03-08)
+The canonical browser container model is editor/workspace-tab-first for in-shell browsing.
+
+Rules:
+- in-shell normal browsing uses browser tabs in the editor/workspace surface, not a free-floating browser-instance pool
+- detached preview/browser windows are first-class and outside the in-shell browser-tab cap
+- bottom-panel browser hosting is not canonical behavior
+- LRU browser-instance reuse is not canonical behavior
+- when the browser cap is reached, the user gets an explicit choice or deterministic command failure; the app must not silently replace the current preview subject
+- `automation_session` and `auth_session` are not counted as normal in-shell browser tabs
+
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md
+
+### 9C. Terminal and browser anti-collapse rule
+Terminal tabs and browser tabs are nearby shell surfaces, but they are not interchangeable containers.
+
+Rules:
+- terminal tab semantics MUST NOT be re
+```
+[... truncated, full length: 3458 chars]
+### Intent 33 (Run: r-20260319-030558-01, Anchor: `## Table of Contents`, Op: replace_section)
+```markdown
+1. [File Manager panel](#1-file-manager-panel)
+    - [1.1 Drag and drop (external ↔ File Manager)](#11-drag-and-drop-external--file-manager)
+2. [In-app IDE-style editor (MVP)](#2-in-app-ide-style-editor-mvp)
+3. [@ mention in chat](#3-mention-in-chat)
+4. [Integration: File Manager, editor, and chat](#4-integration-file-manager-editor-and-chat)
+    - [4.1 Open-file contract](#41-open-file-contract)
+5. [Click-to-open from chat](#5-click-to-open-from-chat)
+6. [Out of scope](#6-out-of-scope)
+7. [Edge cases](#7-edge-cases)
+8. [Image viewer and HTML preview](#8-image-viewer-and-html-preview)
+9. [Tabs: Editor, Terminal, Browser](#9-tabs-editor-terminal-browser)
+10. [Editor navigation and semantic affordances](#10-editor-navigation-and-semantic-affordances)
+    - [10.1 Breadcrumbs and outline](#101-breadcrumbs-and-outline)
+    - [10.2 Go to symbol and semantic navigation](#102-go-to-symbol-and-semantic-navigation)
+    - [10.3 Diagnostics, gutter markers, and change markers](#103-diagnostics-gutter-markers-and-change-markers)
+    - [10.4 Definition, references, hover, and code actions](#104-definition-references-hover-and-code-actions)
+11. [File tree actions, local filter, and chat handoff](#11-file-tree-actions-local-filter-and-chat-handoff)
+    - [11.1 Canonical tree action catalog](#111-canonical-tree-action-catalog)
+    - [11.2 Clipboard, drag/drop, and transfer engine](#112-clipboard-dragdrop-and-transfer-engine)
+    - [11.3 Local tree filter, selection, and current-file reveal](#113-local-tree-filter-selection-and-current-file-reveal)
+    - [11.4 Open With and Save Local Copy](#114-open-with-and-save-local-copy)
+12. [Source Control handoff, compare, and review](#12-source-control-handoff-compare-and-review)
+    - [12.1 File-tree Source Control strip and diff entrypoints](#121-file-tree-source-control-strip-and-diff-entrypoints)
+    - [12.2 Compare-target defaults](#122-compare-target-defaults)
+    - [12.3 Hunk actions, conflict review, and diff-local search](#123-hunk-actions-conflict-review-and-diff-local-search)
+    - [12.4 Change-marker ownership and revert boundaries](#124-change-marker-ownership-and-revert-boundaries)
+13. [Git Status Integration](#13-git-status-integration)
+14. [Markdown, Mermaid, HTML, SVG, and Image Rendering](#14-markdown-mermaid-html-svg-and-image-rendering-rewrite-addendum----2026-03-07)
+
+```
+### Intent 34 (Run: r-20260319-030558-01, Anchor: `### 2.2 Editing and saving`, Op: replace_section)
+```markdown
+- **Editable content:** Opened files are editable (not read-only preview). User edits update one shared authoritative buffer per file path.
+- **Save:** Save writes the current buffer to the file path. On success, dirty state clears and the user sees explicit success feedback. On failure (disk full, permission denied, path deleted, read-only file, disconnected remote destination), the buffer stays dirty, last-saved state does not advance, and the user gets visible recovery actions such as `Retry` and optional `Save As`.
+- **Unsaved indicator:** Each tab shows unsaved state, and at least one other stable shell location must also surface that state so it remains visible when the tab strip is crowded.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FileSafe.md, ContractName:Plans/FinalGUISpec.md
+
+- **Revert:** `Revert` reloads from disk. `Revert last agent edit` is a chat-owned restore action that routes through `cmd.chat.revert`; the editor never fabricates the revert itself.
+- **Revert last agent edit contract:** When `target_message_id` is omitted, the backend resolves it to the latest assistant turn in the active thread that produced persisted file mutations. If that turn touched multiple files, the revert applies to the whole turn across all affected files. After revert, the backend emits a refresh notification and the editor reloads the affected buffers.
+- **Restore to… / History:** The editor and document pane fetch restore points from the backend store and invoke the same restore pipeline; neither surface stores or manufactures restore points independently.
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Crosswalk.md, ContractName:Plans/FileSafe.md
+
+- **Recover unsaved (required MVP):** Unsaved-buffer recovery is required for both local and remote-backed buffers.
+- Recovery snapshots represent local unsaved buffer state only; they do not imply that a remote write succeeded.
+- For recovered remote-backed buffers, the banner copy is: `Recovered local edits — remote destination not yet synchronized`.
+- A recovered remote-backed buffer must reconnect or revalidate the destination before save/flush can claim success.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/FinalGUISpec.md
+
+```
+### Intent 35 (Run: r-20260319-030558-01, Anchor: `### 14.2 Editor/view modes`, Op: replace_section)
+```markdown
+Supported modes for render-capable documents:
+
+- **Source**: normal text editor surface.
+- **Preview**: rendered-only surface.
+- **Split**: source + rendered preview side-by-side or stacked.
+- **Detached preview**: separate window using the same `PreviewSession`.
+- **Workspace browser**: browser-capable rendered mode hosted in the editor/workspace-tab shell as `workspace_preview`.
+- **Detached browser**: browser-capable rendered mode hosted in a detached preview/browser window as `detached_preview`.
+
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md
+
+Rules:
+- HTML opens in source mode by default and offers `Open in Browser` and `Open in Detached Browser` as first-class alternates.
+- Browser split is a second-step layout action after opening into `workspace_preview`; it is not a separate open target enum.
+- `Open in browser panel/window` is retired as canonical wording.
+- Image and SVG viewing remain native where appropriate and are not forced through browser runtime ownership.
+- Switching modes never changes the canonical source buffer model.
+
+ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/rewrite-tie-in-memo.md, ContractName:Plans/FileSafe.md
+
+```
+### Intent 36 (Run: r-20260319-030558-01, Anchor: `### 14.3 Preview state model`, Op: replace_section)
+```markdown
+The editor/file manager owns document-side state that binds to shared `PreviewSession` and browser-session records.
+
+Minimum per-document UI state:
+- `document_id`
+- `path`
+- `content_kind`
+- `source_revision`
+- `preview_subject_id`
+- `preview_session_id?`
+- `browser_session_id?`
+- `preview_mode` (`none`, `preview_only`, `preview_split`, `detached_preview`, `workspace_preview`)
+- `trust_tier`
+- `can_structured_edit_preview`
+- `last_preview_error`
+- `export_preferences`
+- `scroll_sync_enabled`
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/FinalGUISpec.md
+
+Rules:
+- `workspace_preview` and `detached_preview` replace the stale `browser_panel` mode vocabulary.
+- Browser-session identity is separate from preview-subject identity and may outlive one visible editor tab.
+- Preview recovery restores UI intent and recent state, but it does not require a persisted live webview instance or DOM state.
+- Preview editing continues to resolve to bounded source patches through the shared buffer model.
+
+ContractRef: ContractName:Plans/rewrite-tie-in-memo.md, ContractName:Plans/FileSafe.md, ContractName:Plans/Runtime_Artifacts_Panel.md
+
+```
+### Intent 37 (Run: r-20260319-030558-01, Anchor: `## 9. Tabs: Editor, Terminal, Browser`, Op: replace_section)
+```markdown
+### 9A. Terminal tabs, panes, and sections
+Terminal containers are shell-workspace state, not a loose collection of generic bottom-panel tabs.
+
+Rules:
+- Puppet Master supports up to two terminal sections/components.
+- Each terminal section owns an ordered terminal-tab strip.
+- Each terminal tab contains from one to four panes.
+- Pane layout supports row and column splits and rebalances deterministically when a pane closes.
+- Tabs and panes can be reordered without changing the bound runtime identity.
+
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md
+
+### 9B. Browser tab and detached preview normalization (2026-03-08)
+The canonical browser container model is editor/workspace-tab-first for in-shell browsing.
+
+Rules:
+- in-shell normal browsing uses browser tabs in the editor/workspace surface, not a free-floating browser-instance pool
+- detached preview/browser windows are first-class and outside the in-shell browser-tab cap
+- bottom-panel browser hosting is not canonical behavior
+- LRU browser-instance reuse is not canonical behavior
+- when the browser cap is reached, the user gets an explicit choice or deterministic command failure; the app must not silently replace the current preview subject
+- `automation_session` and `auth_session` are not counted as normal in-shell browser tabs
+
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md
+
+### 9C. Terminal and browser anti-collapse rule
+Terminal tabs and browser tabs are nearby shell surfaces, but they are not interchangeable containers.
+
+Rules:
+- terminal tab semantics MUST NOT be reused as browser-session semantics
+- browser-tab caps and terminal-tab behavior are configured and disclosed independently
+- route and focus actions preserve the correct object kind (`browser_session`, `terminal_tab`, `terminal_pane`, `terminal_session`, or `dev_session`) instead of flattening them into one generic tab concept
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Wiring_Matrix.md
+
+## 10. Editor navigation and semantic affordances
+### 10.1 Breadcrumbs and outline
+Breadcrumbs are the editor-owned orientation surface above the active file.
+
+Rules:
+- the breadcrumb path is `file > symbol > block` when semantic structure is available
+- LSP `documentSymbol` is the preferred owner for outline/breadcrumb structure when a server is available
+- when LSP is unavailable, the editor falls back to heuristic outline extraction for the active file rather than hiding the feature entirely
+- breadcrumb clicks route through the same open-file and reveal contract as other editor navigation actions
+
+ContractRef: ContractName:Plans/LSPSupport.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md
+
+### 10.2 Go to symbol and semantic navigation
+`Go to symbol` is an editor/
+```
+[... truncated, full length: 12326 chars]
+### Intent 38 (Run: r-20260319-030558-02, Anchor: `## Table of Contents`, Op: replace_section)
+```markdown
+1. [File Manager panel](#1-file-manager-panel)
+    - [1.1 Drag and drop (external ↔ File Manager)](#11-drag-and-drop-external--file-manager)
+2. [In-app IDE-style editor (MVP)](#2-in-app-ide-style-editor-mvp)
+3. [@ mention in chat](#3-mention-in-chat)
+4. [Integration: File Manager, editor, and chat](#4-integration-file-manager-editor-and-chat)
+    - [4.1 Open-file contract](#41-open-file-contract)
+5. [Click-to-open from chat](#5-click-to-open-from-chat)
+6. [Out of scope](#6-out-of-scope)
+7. [Edge cases](#7-edge-cases)
+8. [Image viewer and HTML preview](#8-image-viewer-and-html-preview)
+9. [Tabs: Editor, Terminal, Browser](#9-tabs-editor-terminal-browser)
+10. [Editor navigation and semantic affordances](#10-editor-navigation-and-semantic-affordances)
+    - [10.1 Breadcrumbs and outline](#101-breadcrumbs-and-outline)
+    - [10.2 Go to symbol and semantic navigation](#102-go-to-symbol-and-semantic-navigation)
+    - [10.3 Diagnostics, gutter markers, and change markers](#103-diagnostics-gutter-markers-and-change-markers)
+    - [10.4 Definition, references, hover, and code actions](#104-definition-references-hover-and-code-actions)
+11. [File tree actions, local filter, and chat handoff](#11-file-tree-actions-local-filter-and-chat-handoff)
+    - [11.1 Canonical tree action catalog](#111-canonical-tree-action-catalog)
+    - [11.2 Clipboard, drag/drop, and transfer engine](#112-clipboard-dragdrop-and-transfer-engine)
+    - [11.3 Local tree filter, selection, and current-file reveal](#113-local-tree-filter-selection-and-current-file-reveal)
+    - [11.4 Open With and Save Local Copy](#114-open-with-and-save-local-copy)
+12. [Source Control handoff, compare, and review](#12-source-control-handoff-compare-and-review)
+    - [12.1 File-tree Source Control strip and diff entrypoints](#121-file-tree-source-control-strip-and-diff-entrypoints)
+    - [12.2 Compare-target defaults](#122-compare-target-defaults)
+    - [12.3 Hunk actions, conflict review, and diff-local search](#123-hunk-actions-conflict-review-and-diff-local-search)
+    - [12.4 Change-marker ownership and revert boundaries](#124-change-marker-ownership-and-revert-boundaries)
+13. [Git Status Integration](#13-git-status-integration)
+14. [Markdown, Mermaid, HTML, SVG, and Image Rendering](#14-markdown-mermaid-html-svg-and-image-rendering-rewrite-addendum----2026-03-07)
+
+```
+### Intent 39 (Run: r-20260319-030558-02, Anchor: `### 2.2 Editing and saving`, Op: replace_section)
+```markdown
+- **Editable content:** Opened files are editable (not read-only preview). User edits update one shared authoritative buffer per file path.
+- **Save:** Save writes the current buffer to the file path. On success, dirty state clears and the user sees explicit success feedback. On failure (disk full, permission denied, path deleted, read-only file, disconnected remote destination), the buffer stays dirty, last-saved state does not advance, and the user gets visible recovery actions such as `Retry` and optional `Save As`.
+- **Unsaved indicator:** Each tab shows unsaved state, and at least one other stable shell location must also surface that state so it remains visible when the tab strip is crowded.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FileSafe.md, ContractName:Plans/FinalGUISpec.md
+
+- **Revert:** `Revert` reloads from disk. `Revert last agent edit` is a chat-owned restore action that routes through `cmd.chat.revert`; the editor never fabricates the revert itself.
+- **Revert last agent edit contract:** When `target_message_id` is omitted, the backend resolves it to the latest assistant turn in the active thread that produced persisted file mutations. If that turn touched multiple files, the revert applies to the whole turn across all affected files. After revert, the backend emits a refresh notification and the editor reloads the affected buffers.
+- **Restore to… / History:** The editor and document pane fetch restore points from the backend store and invoke the same restore pipeline; neither surface stores or manufactures restore points independently.
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Crosswalk.md, ContractName:Plans/FileSafe.md
+
+- **Recover unsaved (required MVP):** Unsaved-buffer recovery is required for both local and remote-backed buffers.
+- Recovery snapshots represent local unsaved buffer state only; they do not imply that a remote write succeeded.
+- For recovered remote-backed buffers, the banner copy is: `Recovered local edits — remote destination not yet synchronized`.
+- A recovered remote-backed buffer must reconnect or revalidate the destination before save/flush can claim success.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/FinalGUISpec.md
+
+```
+### Intent 40 (Run: r-20260319-030558-02, Anchor: `### 14.2 Editor/view modes`, Op: replace_section)
+```markdown
+Supported modes for render-capable documents:
+
+- **Source**: normal text editor surface.
+- **Preview**: rendered-only surface.
+- **Split**: source + rendered preview side-by-side or stacked.
+- **Detached preview**: separate window using the same `PreviewSession`.
+- **Workspace browser**: browser-capable rendered mode hosted in the editor/workspace-tab shell as `workspace_preview`.
+- **Detached browser**: browser-capable rendered mode hosted in a detached preview/browser window as `detached_preview`.
+
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md
+
+Rules:
+- HTML opens in source mode by default and offers `Open in Browser` and `Open in Detached Browser` as first-class alternates.
+- Browser split is a second-step layout action after opening into `workspace_preview`; it is not a separate open target enum.
+- `Open in browser panel/window` is retired as canonical wording.
+- Image and SVG viewing remain native where appropriate and are not forced through browser runtime ownership.
+- Switching modes never changes the canonical source buffer model.
+
+ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/rewrite-tie-in-memo.md, ContractName:Plans/FileSafe.md
+
+```
+### Intent 41 (Run: r-20260319-030558-02, Anchor: `### 14.3 Preview state model`, Op: replace_section)
+```markdown
+The editor/file manager owns document-side state that binds to shared `PreviewSession` and browser-session records.
+
+Minimum per-document UI state:
+- `document_id`
+- `path`
+- `content_kind`
+- `source_revision`
+- `preview_subject_id`
+- `preview_session_id?`
+- `browser_session_id?`
+- `preview_mode` (`none`, `preview_only`, `preview_split`, `detached_preview`, `workspace_preview`)
+- `trust_tier`
+- `can_structured_edit_preview`
+- `last_preview_error`
+- `export_preferences`
+- `scroll_sync_enabled`
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/FinalGUISpec.md
+
+Rules:
+- `workspace_preview` and `detached_preview` replace the stale `browser_panel` mode vocabulary.
+- Browser-session identity is separate from preview-subject identity and may outlive one visible editor tab.
+- Preview recovery restores UI intent and recent state, but it does not require a persisted live webview instance or DOM state.
+- Preview editing continues to resolve to bounded source patches through the shared buffer model.
+
+ContractRef: ContractName:Plans/rewrite-tie-in-memo.md, ContractName:Plans/FileSafe.md, ContractName:Plans/Runtime_Artifacts_Panel.md
+
+```
+### Intent 42 (Run: r-20260319-030558-02, Anchor: `## 9. Tabs: Editor, Terminal, Browser`, Op: replace_section)
+```markdown
+### 9A. Terminal tabs, panes, and sections
+Terminal containers are shell-workspace state, not a loose collection of generic bottom-panel tabs.
+
+Rules:
+- Puppet Master supports up to two terminal sections/components.
+- Each terminal section owns an ordered terminal-tab strip.
+- Each terminal tab contains from one to four panes.
+- Pane layout supports row and column splits and rebalances deterministically when a pane closes.
+- Tabs and panes can be reordered without changing the bound runtime identity.
+
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md
+
+### 9B. Browser tab and detached preview normalization (2026-03-08)
+The canonical browser container model is editor/workspace-tab-first for in-shell browsing.
+
+Rules:
+- in-shell normal browsing uses browser tabs in the editor/workspace surface, not a free-floating browser-instance pool
+- detached preview/browser windows are first-class and outside the in-shell browser-tab cap
+- bottom-panel browser hosting is not canonical behavior
+- LRU browser-instance reuse is not canonical behavior
+- when the browser cap is reached, the user gets an explicit choice or deterministic command failure; the app must not silently replace the current preview subject
+- `automation_session` and `auth_session` are not counted as normal in-shell browser tabs
+
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md
+
+### 9C. Terminal and browser anti-collapse rule
+Terminal tabs and browser tabs are nearby shell surfaces, but they are not interchangeable containers.
+
+Rules:
+- terminal tab semantics MUST NOT be reused as browser-session semantics
+- browser-tab caps and terminal-tab behavior are configured and disclosed independently
+- route and focus actions preserve the correct object kind (`browser_session`, `terminal_tab`, `terminal_pane`, `terminal_session`, or `dev_session`) instead of flattening them into one generic tab concept
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Wiring_Matrix.md
+
+## 10. Editor navigation and semantic affordances
+### 10.1 Breadcrumbs and outline
+Breadcrumbs are the editor-owned orientation surface above the active file.
+
+Rules:
+- the breadcrumb path is `file > symbol > block` when semantic structure is available
+- LSP `documentSymbol` is the preferred owner for outline/breadcrumb structure when a server is available
+- when LSP is unavailable, the editor falls back to heuristic outline extraction for the active file rather than hiding the feature entirely
+- breadcrumb clicks route through the same open-file and reveal contract as other editor navigation actions
+
+ContractRef: ContractName:Plans/LSPSupport.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md
+
+### 10.2 Go to symbol and semantic navigation
+`Go to symbol` is an editor/
+```
+[... truncated, full length: 12326 chars]
+### Intent 43 (Run: r-20260320-164907-01, Anchor: `### 8.3 Same browser surface as built-in browser and click-to-context`, Op: insert_after)
+```markdown
+### 8.3A Debug target binding from editor and browser-backed files
+
+File-backed preview subjects may be used as Debug targets without changing File Manager ownership of open/reveal behavior.
+
+Required rules:
+- `workspace_preview` and `detached_preview` browser sessions may be selected as `browser_target` inputs for Debug Mode
+- target binding preserves canonical browser identity (`browser_session_id`, `session_class`, and any `preview_subject_id`) instead of using a raw path-only attach model
+- promoting a file-backed preview into an `automation_session` for reproduction keeps preview-subject identity separate from automation-session identity
+- File Manager owns source open / reveal and preview hosting, but it does not own investigation lifecycle, automation policy, or cleanup semantics
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md
+
+Run/debug preset reconciliation:
+- project presets and run/debug configurations continue to produce `dev_session` or debugger-oriented entrypoints
+- the classical DAP debugger surface remains separate from Assistant Debug Mode
+- opening source from a Debug artifact or Investigation Context uses canonical `OpenFile` / `OpenSubject` flows rather than feature-local path guessing
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Contracts_V0.md
+
+```
+### Intent 44 (Run: r-20260326-015830-01, Anchor: `### 10.1 Breadcrumbs and outline`, Op: replace_section)
+```markdown
+The breadcrumb bar at the top of each file panel follows the chain:
+
+`file > symbol > block`
+
+Each crumb is clickable and shows a dropdown (siblings at that depth).
+
+ContractRef: ContractName:Plans/LSPSupport.md, ContractName:Plans/FinalGUISpec.md
+
+**Worktree toggle in breadcrumb:**
+
+When the active chat thread has a bound worktree and `file_manager.worktree_follow_thread` is `true`:
+- Breadcrumb prepends a worktree indicator crumb: `🌿 <branch_name> > file > symbol > block`
+- The worktree crumb is a toggle: click to switch the file manager root between worktree path and project root
+- Visual: muted icon when showing project root; accent when showing worktree
+- Tooltip: "Showing worktree: <branch_name>" or "Showing project root"
+- Thread switch auto-updates the breadcrumb worktree crumb when `worktree_follow_thread` is on
+
+When the thread has no worktree binding, or when `worktree_follow_thread` is `false`, the worktree crumb is absent and the breadcrumb reverts to the standard `file > symbol > block` chain.
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md, ContractName:Plans/GitHub_Integration.md
+```
+### Intent 45 (Run: r-20260326-015830-02, Anchor: `### 10.1 Breadcrumbs and outline`, Op: replace_section)
+```markdown
+The breadcrumb bar at the top of each file panel follows the chain:
+
+`file > symbol > block`
+
+Each crumb is clickable and shows a dropdown (siblings at that depth).
+
+ContractRef: ContractName:Plans/LSPSupport.md, ContractName:Plans/FinalGUISpec.md
+
+**Worktree toggle in breadcrumb:**
+
+When the active chat thread has a bound worktree and `file_manager.worktree_follow_thread` is `true`:
+- Breadcrumb prepends a worktree indicator crumb: `🌿 <branch_name> > file > symbol > block`
+- The worktree crumb is a toggle: click to switch the file manager root between worktree path and project root
+- Visual: muted icon when showing project root; accent when showing worktree
+- Tooltip: "Showing worktree: <branch_name>" or "Showing project root"
+- Thread switch auto-updates the breadcrumb worktree crumb when `worktree_follow_thread` is on
+
+When the thread has no worktree binding, or when `worktree_follow_thread` is `false`, the worktree crumb is absent and the breadcrumb reverts to the standard `file > symbol > block` chain.
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md, ContractName:Plans/GitHub_Integration.md
+```
+## Doc: Plans/orchestrator-subagent-integration.md
+### Intent 1 (Run: r-20260312-203855-01, Anchor: `## Relationship Between the Two Plans`, Op: replace_section)
+```markdown
+The rewrite no longer treats `Phase -> Task -> Subtask -> Iteration` as the canonical orchestration ontology.
+
+Canonical orchestration identity is:
+- `Feature Seam`
+- `Work Package`
+- `Node`
+- graph generation lineage
+- lane/worktree lineage
+
+Rules:
+- any surviving phase/task/subtask language is derived decomposition/view language only
+- conversational actors, interview actors, and document builders may share runtime identity semantics with orchestration actors without becoming graph objects
+- worktree ownership, recovery, approval, usage, and routing must align to run/node/attempt/lane/worktree identity rather than to `tier_id`
+
+ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/storage-plan.md
+
+```
+### Intent 2 (Run: r-20260312-203855-01, Anchor: `## Tier-Level Subagent Strategy`, Op: replace_section)
+```markdown
+Canonical worker strategy is graph-owned rather than tier-owned.
+
+Default worker policy is:
+- node execution default = `subagent`
+- retry default = `fresh worker`
+
+GUI override surface must allow:
+- `subagent` vs `agent`
+- `fresh worker` vs `reused worker`
+
+Governance strategy is:
+- package-local governance through `Package Overseer`
+- seam-level integration governance through `Seam Overseer`
+- node execution through node workers bound to `execution_unit_context`
+
+ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/Run_Graph_View.md
+
+`Tier Context` survives only as derived decomposition/view context when needed for prompt helpers or legacy labels. It does not remain the canonical runtime context.
+
+ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Crosswalk.md, ContractName:Plans/Decision_Policy.md
+
+```
+### Intent 3 (Run: r-20260316-160450-01, Anchor: `### 4. Canonical list of subagent names`, Op: insert_after)
+```markdown
+### Delegated tool-contract alignment
+Delegated runtime behavior stays aligned with the centralized Assistant Chat and tool-contract model rather than defining orchestrator-local variants.
+
+Rules:
+- `task` launches delegated runs with narrowed-or-equal permission snapshots rather than freeform child policy
+- `todowrite` and `todoread` stay denied by default for subagent runs unless run config explicitly re-enables them
+- delegated execution consumes the same normalized TODO schema as approved chat planning output
+- direct user questionnaire prompting stays on the top-level assistant/question-flow surface unless runtime explicitly delegates that boundary
+
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/assistant-chat-design.md
+```
+### Intent 4 (Run: r-20260320-164907-01, Anchor: `## Tier-Level Subagent Strategy`, Op: insert_after)
+```markdown
+## Debug-capable investigation orchestration
+
+Orchestrator may launch shared investigations when builds, tests, environment setup, or runtime verification fail.
+
+Required rules:
+- Orchestrator does not switch into the Assistant `Debug` mode strip; instead, it uses the same shared investigation contracts and debug-capable tools under orchestration ownership
+- investigation state remains subordinate to the owning attempt / remediation lineage rather than replacing orchestrator run identity
+- delegated workers may contribute evidence, traces, or fixes to the same `investigation_id` when they are operating on the same issue
+- only one mutation-capable investigation may target the same project/worktree at a time unless the orchestrator explicitly isolates work in a separate worktree or host context
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Tools.md, ContractName:Plans/MiscPlan.md
+
+```
+### Intent 5 (Run: r-20260320-170511-01, Anchor: `## Tier-Level Subagent Strategy`, Op: replace_section)
+```markdown
+Canonical worker strategy remains graph-owned rather than tier-owned, but provider/runtime selection for node workers must now use the reconciled runtime ontology.
+
+ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Run_Graph_View.md
+
+Required orchestration rules:
+- node execution selects from the same provider-entry / account-or-profile model used elsewhere in the rewrite.
+- the orchestrator may request a provider family pool, but the frozen requested/effective runtime snapshot must still identify the concrete provider entry selected for each node worker.
+- OpenCode subagent execution selects a server profile, not an account row.
+- GitHub Copilot and Codex subagent execution use direct-provider account rows rather than legacy CLI assumptions.
+- orchestrator-side skill and MCP behavior follows the PM-native skill/MCP model and does not require provider-specific native skill delivery contracts.
+
+ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/Provider_OpenCode.md, ContractName:Plans/Skills_System.md
+
+```
+### Intent 6 (Run: r-20260320-170511-01, Anchor: `## Platform-Specific Capabilities & Extensions`, Op: replace_section)
+```markdown
+### Platform capability overview
+
+Platform capability handling is provider-first and uses three execution classes:
+- direct providers
+- CLI-bridged providers
+- server-bridged providers
+
+ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Provider_OpenCode.md, ContractName:Plans/Prompt_Pipeline.md
+
+### Capability surface by platform
+
+**Cursor CLI**
+- `cursor-agent` is the execution runtime.
+- PM-managed account roots and PM-derived MCP/instruction projections define the CLI boundary.
+
+**Claude Code CLI**
+- CLI-backed execution with subscriber, console/API, and SSO setup families.
+- PM-native skill and MCP handling remains canonical.
+
+**Gemini direct**
+- direct API-key provider.
+- runtime invocation is not a CLI subprocess.
+
+**Gemini CLI**
+- separate CLI-backed provider entry.
+- may expose routing behavior that differs from the originally requested model.
+
+**Codex**
+- direct provider with `ChatGPT` and `API key` account rows.
+- no Codex CLI runtime requirement in this plan.
+
+**GitHub Copilot**
+- direct provider with billing/entity semantics beneath the auth-backed account row.
+- no Copilot CLI runtime requirement in this plan.
+
+**OpenCode**
+- server-bridged provider via managed or attached server profiles.
+
+ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/usage-feature.md, ContractName:Plans/FinalGUISpec.md
+
+```
+### Intent 7 (Run: r-20260320-170511-02, Anchor: `## Tier-Level Subagent Strategy`, Op: replace_section)
+```markdown
+Canonical worker strategy remains graph-owned rather than tier-owned, but provider/runtime selection for node workers must now use the reconciled runtime ontology.
+
+ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Run_Graph_View.md
+
+Required orchestration rules:
+- node execution selects from the same provider-entry / account-or-profile model used elsewhere in the rewrite.
+- the orchestrator may request a provider family pool, but the frozen requested/effective runtime snapshot must still identify the concrete provider entry selected for each node worker.
+- OpenCode subagent execution selects a server profile, not an account row.
+- GitHub Copilot and Codex subagent execution use direct-provider account rows rather than legacy CLI assumptions.
+- orchestrator-side skill and MCP behavior follows the PM-native skill/MCP model and does not require provider-specific native skill delivery contracts.
+
+ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/Provider_OpenCode.md, ContractName:Plans/Skills_System.md
+
+```
+### Intent 8 (Run: r-20260320-170511-02, Anchor: `## Platform-Specific Capabilities & Extensions`, Op: replace_section)
+```markdown
+### Platform capability overview
+
+Platform capability handling is provider-first and uses three execution classes:
+- direct providers
+- CLI-bridged providers
+- server-bridged providers
+
+ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Provider_OpenCode.md, ContractName:Plans/Prompt_Pipeline.md
+
+### Capability surface by platform
+
+**Cursor CLI**
+- `cursor-agent` is the execution runtime.
+- PM-managed account roots and PM-derived MCP/instruction projections define the CLI boundary.
+
+**Claude Code CLI**
+- CLI-backed execution with subscriber, console/API, and SSO setup families.
+- PM-native skill and MCP handling remains canonical.
+
+**Gemini direct**
+- direct API-key provider.
+- runtime invocation is not a CLI subprocess.
+
+**Gemini CLI**
+- separate CLI-backed provider entry.
+- may expose routing behavior that differs from the originally requested model.
+
+**Codex**
+- direct provider with `ChatGPT` and `API key` account rows.
+- no Codex CLI runtime requirement in this plan.
+
+**GitHub Copilot**
+- direct provider with billing/entity semantics beneath the auth-backed account row.
+- no Copilot CLI runtime requirement in this plan.
+
+**OpenCode**
+- server-bridged provider via managed or attached server profiles.
+
+ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/usage-feature.md, ContractName:Plans/FinalGUISpec.md
+
+```
+### Intent 9 (Run: r-20260323-192127-01, Anchor: `## Plan Mode Strategy & Defaults`, Op: replace_section)
+```markdown
+The orchestrator must follow the reconciled PM rule for delegated work in `ask` and `plan`.
+
+ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Tools.md, ContractName:Plans/assistant-chat-design.md
+
+Canonical decision:
+- `ask` and `plan` may launch delegated child runs only for read-only research or analysis.
+- required planning dependencies may still be child runs when they remain read-only.
+- parent mode is a hard ceiling.
+- the orchestrator must not silently widen a read-only planning run into execution authority.
+
+The orchestrator should classify planning children as `required` or `optional` so planning completion and summarization behave deterministically.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Contracts_V0.md
+
+```
+### Intent 10 (Run: r-20260323-192127-01, Anchor: `### 4. Subagent -- Backend`, Op: replace_section)
+```markdown
+The orchestrator launches PM child runs, not provider-native ad hoc agent processes.
+
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Personas.md, ContractName:Plans/storage-plan.md
+
+Backend requirements:
+- every delegated launch creates a canonical child-run record.
+- each child is marked `required` or `optional`.
+- child routing resolves requested versus effective Persona, runtime surface, model, and effort.
+- capability narrowing is applied before launch.
+- child lifecycle actions remain distinct: retry, reroute, replacement, resume, cancellation.
+- parent orchestration state is a projection over child records/events, not a separate ad hoc store.
+
+Parent orchestration responsibilities:
+- maintain child rollups by batch and subgroup.
+- consolidate overlapping child escalations before asking the user.
+- summarize required child outcomes before optional findings.
+- keep unresolved required children from being treated as complete.
+
+ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/assistant-chat-design.md
+
+```
+### Intent 11 (Run: r-20260323-192127-01, Anchor: `### Delegated tool-contract alignment`, Op: replace_section)
+```markdown
+Orchestrator delegation enters the same `task` tool child-run contract used elsewhere.
+
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Commands_System.md, ContractName:Plans/interview-subagent-integration.md
+
+Rules:
+- no provider-native `/subagent`, `/agent`, `/fleet`, or `/delegate` syntax is normative orchestrator runtime behavior.
+- launch validation goes through `subagent_registry` and the requested/effective runtime pipeline.
+- explicit runtime-surface requests do not silently fallback.
+- Copilot-native routing remains strict-denied unless the parent is already Copilot-rooted.
+- command subtasks and orchestrator child runs are not separate runtime classes.
+
+ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Provider_OpenCode.md, ContractName:Plans/Run_Modes.md
+
+```
+### Intent 12 (Run: r-20260323-192127-01, Anchor: `### 5. Active Agent Tracking`, Op: replace_section)
+```markdown
+Active child tracking must project from canonical storage and events rather than from mutable side files.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/usage-feature.md
+
+Rules:
+- `active-agents.json` is not canonical runtime truth.
+- child visibility, conflict prevention, and status rollups come from seglog/redb projections.
+- launch order, batch membership, subgroup membership, and parent-child lineage are canonical projection fields.
+- stale child entries are resolved through canonical status and expiry logic, not side-file cleanup heuristics.
+
+ContractRef: ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Prompt_Pipeline.md
+
+```
+### Intent 13 (Run: r-20260323-192127-01, Anchor: `### Puppet Master Crews (Teams/Fleets Alternative)`, Op: replace_section)
+```markdown
+Crew mode is a multi-model coordination overlay over child runs.
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Models_System.md, ContractName:Plans/storage-plan.md
+
+Canonical crew rules:
+- members are child runs.
+- model/provider diversity is the default distinguishing axis.
+- the same task and often the same Persona are preserved across the crew.
+- member-to-member coordination occurs through an attributable crew board.
+- the parent owns final synthesis and user-facing escalation.
+- crew shared state is explicit shared coordination state, not hidden long-term member memory.
+
+Crew defaults and confirmation:
+- default crews live in the model/runtime settings surface.
+- first crew invocation asks whether to use the default crew if one exists.
+- after model choice, PM resolves each member’s provider/runtime surface and discloses the resulting mapping.
+- if any member is Copilot, the crew normalizes to Copilot as a crew-level provider constraint.
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/assistant-memory-subsystem.md, ContractName:Plans/CLI_Bridged_Providers.md
+
+```
+### Intent 14 (Run: r-20260323-192127-02, Anchor: `## Plan Mode Strategy & Defaults`, Op: replace_section)
+```markdown
+The orchestrator must follow the reconciled PM rule for delegated work in `ask` and `plan`.
+
+ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Tools.md, ContractName:Plans/assistant-chat-design.md
+
+Canonical decision:
+- `ask` and `plan` may launch delegated child runs only for read-only research or analysis.
+- required planning dependencies may still be child runs when they remain read-only.
+- parent mode is a hard ceiling.
+- the orchestrator must not silently widen a read-only planning run into execution authority.
+
+The orchestrator should classify planning children as `required` or `optional` so planning completion and summarization behave deterministically.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Contracts_V0.md
+
+```
+### Intent 15 (Run: r-20260323-192127-02, Anchor: `### 4. Subagent -- Backend`, Op: replace_section)
+```markdown
+The orchestrator launches PM child runs, not provider-native ad hoc agent processes.
+
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Personas.md, ContractName:Plans/storage-plan.md
+
+Backend requirements:
+- every delegated launch creates a canonical child-run record.
+- each child is marked `required` or `optional`.
+- child routing resolves requested versus effective Persona, runtime surface, model, and effort.
+- capability narrowing is applied before launch.
+- child lifecycle actions remain distinct: retry, reroute, replacement, resume, cancellation.
+- parent orchestration state is a projection over child records/events, not a separate ad hoc store.
+
+Parent orchestration responsibilities:
+- maintain child rollups by batch and subgroup.
+- consolidate overlapping child escalations before asking the user.
+- summarize required child outcomes before optional findings.
+- keep unresolved required children from being treated as complete.
+
+ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/assistant-chat-design.md
+
+```
+### Intent 16 (Run: r-20260323-192127-02, Anchor: `### Delegated tool-contract alignment`, Op: replace_section)
+```markdown
+Orchestrator delegation enters the same `task` tool child-run contract used elsewhere.
+
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Commands_System.md, ContractName:Plans/interview-subagent-integration.md
+
+Rules:
+- no provider-native `/subagent`, `/agent`, `/fleet`, or `/delegate` syntax is normative orchestrator runtime behavior.
+- launch validation goes through `subagent_registry` and the requested/effective runtime pipeline.
+- explicit runtime-surface requests do not silently fallback.
+- Copilot-native routing remains strict-denied unless the parent is already Copilot-rooted.
+- command subtasks and orchestrator child runs are not separate runtime classes.
+
+ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Provider_OpenCode.md, ContractName:Plans/Run_Modes.md
+
+```
+### Intent 17 (Run: r-20260323-192127-02, Anchor: `### 5. Active Agent Tracking`, Op: replace_section)
+```markdown
+Active child tracking must project from canonical storage and events rather than from mutable side files.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/usage-feature.md
+
+Rules:
+- `active-agents.json` is not canonical runtime truth.
+- child visibility, conflict prevention, and status rollups come from seglog/redb projections.
+- launch order, batch membership, subgroup membership, and parent-child lineage are canonical projection fields.
+- stale child entries are resolved through canonical status and expiry logic, not side-file cleanup heuristics.
+
+ContractRef: ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Prompt_Pipeline.md
+
+```
+### Intent 18 (Run: r-20260323-192127-02, Anchor: `### Puppet Master Crews (Teams/Fleets Alternative)`, Op: replace_section)
+```markdown
+Crew mode is a multi-model coordination overlay over child runs.
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Models_System.md, ContractName:Plans/storage-plan.md
+
+Canonical crew rules:
+- members are child runs.
+- model/provider diversity is the default distinguishing axis.
+- the same task and often the same Persona are preserved across the crew.
+- member-to-member coordination occurs through an attributable crew board.
+- the parent owns final synthesis and user-facing escalation.
+- crew shared state is explicit shared coordination state, not hidden long-term member memory.
+
+Crew defaults and confirmation:
+- default crews live in the model/runtime settings surface.
+- first crew invocation asks whether to use the default crew if one exists.
+- after model choice, PM resolves each member’s provider/runtime surface and discloses the resulting mapping.
+- if any member is Copilot, the crew normalizes to Copilot as a crew-level provider constraint.
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/assistant-memory-subsystem.md, ContractName:Plans/CLI_Bridged_Providers.md
+
+```
+### Intent 19 (Run: r-20260323-192127-03, Anchor: `## Plan Mode Strategy & Defaults`, Op: replace_section)
+```markdown
+The orchestrator must follow the reconciled PM rule for delegated work in `ask` and `plan`.
+
+ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Tools.md, ContractName:Plans/assistant-chat-design.md
+
+Canonical decision:
+- `ask` and `plan` may launch delegated child runs only for read-only research or analysis.
+- required planning dependencies may still be child runs when they remain read-only.
+- parent mode is a hard ceiling.
+- the orchestrator must not silently widen a read-only planning run into execution authority.
+
+The orchestrator should classify planning children as `required` or `optional` so planning completion and summarization behave deterministically.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Contracts_V0.md
+
+```
+### Intent 20 (Run: r-20260323-192127-03, Anchor: `### 4. Subagent -- Backend`, Op: replace_section)
+```markdown
+The orchestrator launches PM child runs, not provider-native ad hoc agent processes.
+
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Personas.md, ContractName:Plans/storage-plan.md
+
+Backend requirements:
+- every delegated launch creates a canonical child-run record.
+- each child is marked `required` or `optional`.
+- child routing resolves requested versus effective Persona, runtime surface, model, and effort.
+- capability narrowing is applied before launch.
+- child lifecycle actions remain distinct: retry, reroute, replacement, resume, cancellation.
+- parent orchestration state is a projection over child records/events, not a separate ad hoc store.
+
+Parent orchestration responsibilities:
+- maintain child rollups by batch and subgroup.
+- consolidate overlapping child escalations before asking the user.
+- summarize required child outcomes before optional findings.
+- keep unresolved required children from being treated as complete.
+
+ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/assistant-chat-design.md
+
+```
+### Intent 21 (Run: r-20260323-192127-03, Anchor: `### Delegated tool-contract alignment`, Op: replace_section)
+```markdown
+Orchestrator delegation enters the same `task` tool child-run contract used elsewhere.
+
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Commands_System.md, ContractName:Plans/interview-subagent-integration.md
+
+Rules:
+- no provider-native `/subagent`, `/agent`, `/fleet`, or `/delegate` syntax is normative orchestrator runtime behavior.
+- launch validation goes through `subagent_registry` and the requested/effective runtime pipeline.
+- explicit runtime-surface requests do not silently fallback.
+- Copilot-native routing remains strict-denied unless the parent is already Copilot-rooted.
+- command subtasks and orchestrator child runs are not separate runtime classes.
+
+ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Provider_OpenCode.md, ContractName:Plans/Run_Modes.md
+
+```
+### Intent 22 (Run: r-20260323-192127-03, Anchor: `### 5. Active Agent Tracking`, Op: replace_section)
+```markdown
+Active child tracking must project from canonical storage and events rather than from mutable side files.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/usage-feature.md
+
+Rules:
+- `active-agents.json` is not canonical runtime truth.
+- child visibility, conflict prevention, and status rollups come from seglog/redb projections.
+- launch order, batch membership, subgroup membership, and parent-child lineage are canonical projection fields.
+- stale child entries are resolved through canonical status and expiry logic, not side-file cleanup heuristics.
+
+ContractRef: ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Prompt_Pipeline.md
+
+```
+### Intent 23 (Run: r-20260323-192127-03, Anchor: `### Puppet Master Crews (Teams/Fleets Alternative)`, Op: replace_section)
+```markdown
+Crew mode is a multi-model coordination overlay over child runs.
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Models_System.md, ContractName:Plans/storage-plan.md
+
+Canonical crew rules:
+- members are child runs.
+- model/provider diversity is the default distinguishing axis.
+- the same task and often the same Persona are preserved across the crew.
+- member-to-member coordination occurs through an attributable crew board.
+- the parent owns final synthesis and user-facing escalation.
+- crew shared state is explicit shared coordination state, not hidden long-term member memory.
+
+Crew defaults and confirmation:
+- default crews live in the model/runtime settings surface.
+- first crew invocation asks whether to use the default crew if one exists.
+- after model choice, PM resolves each member’s provider/runtime surface and discloses the resulting mapping.
+- if any member is Copilot, the crew normalizes to Copilot as a crew-level provider constraint.
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/assistant-memory-subsystem.md, ContractName:Plans/CLI_Bridged_Providers.md
+
+```
+### Intent 24 (Run: r-20260328-192850-01, Anchor: `### Subagent Configuration`, Op: replace_section)
+```markdown
+```yaml
+# .puppet-master/config.yaml (additions)
+
+subagentConfig:
+  enableTierSubagents: true
+
+  # Global execution limits (enforced by orchestrator, not overridable by Persona)
+  executionLimits:
+    maxNestingDepth: 4              # orchestrator -> crew -> agent -> sub-agent
+    maxTotalSpawnedAgents: 99        # kill.agent_count trigger
+    maxToolRoundsPerAgent: 200       # kill.tool_round_limit trigger
+    maxConcurrentCrewsPerPlatform: 4
+    maxConcurrentAgentsPerCrew: 8
+    maxTotalActiveAgents: 32
+
+  # Override automatic selection
+  tierOverrides:
+    phase:
+      default: ["project-manager"]
+      architecture: ["architect-reviewer", "project-manager"]
+      product: ["product-manager", "project-manager"]
+
+    task:
+      rust: ["rust-engineer"]
+      python: ["python-pro"]
+      javascript: ["javascript-pro"]
+      typescript: ["typescript-pro"]
+      backend: ["backend-developer"]
+      frontend: ["frontend-developer"]
+      mobile: ["mobile-developer"]
+
+    subtask:
+      testing: ["test-automator"]
+      documentation: ["technical-writer"]
+      review: ["code-reviewer"]
+
+    iteration:
+      errors: ["debugger"]
+      review: ["code-reviewer"]
+      testing: ["qa-expert"]
+
+  # Disable specific subagents
+  disabledSubagents: []
+
+  # Require specific subagents
+  requiredSubagents: []
+```
+
+ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Executor_Protocol.md
+
+The `executionLimits` block values are the authoritative defaults. `interview-subagent-integration.md` references this section for global concurrency caps — per-interview overrides (such as the Multi-Pass Review reviewer count) are additive constraints, not replacements for the global limits.
+
+ContractRef: ContractName:Plans/interview-subagent-integration.md, ContractName:Plans/Run_Modes.md
+```
+## Doc: Plans/Crosswalk.md
+### Intent 1 (Run: r-20260312-160857-01, Anchor: ``, Op: append)
+```markdown
+## Source Control, GitHub Actions, and Docker Manager Ownership Addendum (2026-03-12)
+
+### SourceControlSurface
+
+Owner: `Plans/GitHub_Integration.md` + `Plans/WorktreeGitImprovement.md`.
+
+Rules:
+- Git-local and Git-remote repo operations, history, graph, stash, conflicts, and worktree UX belong to Source Control.
+- GitHub-hosted workflow/admin behavior does not belong to Source Control.
+- Worktree lifecycle correctness remains owned by the worktree plan even when surfaced through Source Control.
+
+ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/WorktreeGitImprovement.md
+
+### GitHubActionsSurface
+
+Owner: `Plans/GitHub_Integration.md` with auth/runtime constraints from `Plans/GitHub_API_Auth_and_Flows.md`.
+
+Rules:
+- GitHub Actions uses GitHub API identity and capability, not Git transport state, for hosted workflow/admin behavior.
+- Current Branch / Workflows / Settings are separate subviews of one Actions surface.
+
+ContractRef: ContractName:Plans/GitHub_API_Auth_and_Flows.md, ContractName:Plans/newtools.md
+
+### DockerManagerSurface
+
+Owner: `Plans/Containers_Registry_and_Unraid.md` with readiness/result minima from `Plans/newtools.md`.
+
+Rules:
+- Docker Manager is the canonical umbrella for Docker, Podman, registries/Docker Hub, compose, build/bake, Publish / Unraid, and project-focused Kubernetes.
+- Unraid and Kubernetes are not required top-level shell surfaces for MVP.
+
+ContractRef: ContractName:Plans/Containers_Registry_and_Unraid.md, ContractName:Plans/newtools.md
+```
+### Intent 2 (Run: r-20260312-203855-01, Anchor: `## 3. Ownership boundaries`, Op: replace_section)
+```markdown
+Ownership boundaries are explicit so downstream docs cannot re-own orchestration canon accidentally.
+
+### 3.1 Runtime orchestration ownership
+Canonical runtime orchestration ownership is:
+- `Executor_Protocol.md` owns dispatch-time execution context and runtime role boundaries
+- `Contracts_V0.md` owns persisted contract shapes, blocked-episode identity, command envelopes, `route_target`, and `OpenSubject`
+- `storage-plan.md` owns durable record and projection families
+- `Prompt_Pipeline.md` owns requested/effective runtime identity resolution semantics
+
+ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md
+
+### 3.2 Orchestrator ownership
+Canonical Orchestrator ownership is:
+- node graph is the execution model
+- `Feature Seam` and `Work Package` are graph-owned objects
+- `Node` is the smallest executable unit
+- `Package Overseer` and `Seam Overseer` are governance roles; runtime remains the canonical owner of readiness, blockers, transitions, retry budgets, and dispatch
+
+ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/Run_Graph_View.md
+
+### 3.3 Navigation and source-open ownership
+Canonical navigation/source-open ownership is:
+- `Contracts_V0.md` owns `route_target` and `OpenSubject`
+- `FileManager.md` owns `OpenFile`
+- `storage-plan.md` owns persisted subject identity and restore joins
+- `FinalGUISpec.md` owns shell realization and destination-surface behavior
+
+ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md
+
+### 3.4 Source Control and lane/worktree ownership
+Canonical source-control ownership is:
+- Source Control is worktree-first and compact
+- Orchestrator is lane/package/seam operational view
+- `worktree` remains the concrete Git/filesystem backing object
+- `lane` is the primary operational orchestration object bound to package execution and historical lineage
+
+ContractRef: ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/Orchestrator_Page.md
+
+### 3.5 Projection-state ownership
+Projection-state ownership is:
+- `projection_freshness` is closed to `current | refreshing | stale`
+- `projection_health` is closed to `healthy | degraded | unavailable`
+- projection state qualifies UI trust and action gating; it does not replace canonical runtime truth
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Decision_Policy.md, ContractName:Plans/Permissions_System.md
+
+```
+### Intent 3 (Run: r-20260313-183219-01, Anchor: `### 3.13 DocumentInlineNotes`, Op: replace_section)
+```markdown
+**Owner:** GUI contract in `Plans/FinalGUISpec.md`; persistence contract in `Plans/storage-plan.md`; workflow semantics in `Plans/chain-wizard-flexibility.md` and `Plans/interview-subagent-integration.md`; chat-handoff rules in `Plans/assistant-chat-design.md`.
+
+Rules:
+- This primitive now covers durable document annotations on the legacy `note_record.v1` substrate.
+- User-facing term is **Annotations** even though storage keys retain `note` naming for continuity.
+- Durable annotation operations are `comment`, `replace`, `insert_after`, and `remove`.
+- Annotation lifecycle is `open -> addressed -> resolved`.
+- Anchor storage MUST include both `TextPositionSelector { start, end }` and `TextQuoteSelector { exact, prefix, suffix }` when deterministic source text exists.
+
+ContractRef: Primitive:DocumentInlineNotes, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md
+
+- Re-anchoring is deterministic: 1) position selector match, else 2) quote selector match using prefix/suffix preference, else 3) keep the annotation open and surface `Anchor not found — reselect to re-anchor`.
+- `comment` annotations may coexist with any other annotation on the same span.
+- Overlapping mutating annotations conflict by default and are excluded from automatic targeted revision until resolved.
+- `Send selection to chat` is adjacent behavior, not a durable annotation by default.
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/chain-wizard-flexibility.md, ContractName:Plans/interview-subagent-integration.md
+```
+### Intent 4 (Run: r-20260313-183219-01, Anchor: `### 3.14 TargetedRevisionPass`, Op: replace_section)
+```markdown
+**Owner:** Workflow semantics in `Plans/chain-wizard-flexibility.md` and `Plans/interview-subagent-integration.md`; UI placement in `Plans/FinalGUISpec.md`; prompt and persistence details in `Plans/Prompt_Pipeline.md` and `Plans/storage-plan.md`.
+
+Rules:
+- `Resubmit with Annotations` triggers a targeted revision pass scoped to documents with open durable annotations, or a user-selected subset.
+- Targeted revision consumes deterministic ordered annotation records that include `operation`, `intent_kind`, `operation_payload`, anchor data, and bounded provenance.
+- Targeted revision may apply requested edits and/or answer question/comment annotations.
+- For each input annotation, the runtime records `addressed | still_open | cannot_apply`, `addressed_explanation`, and `updated_anchor?`.
+
+ContractRef: Primitive:TargetedRevisionPass, ContractName:Plans/chain-wizard-flexibility.md, ContractName:Plans/storage-plan.md
+
+- Targeted revision MUST NOT trigger Multi-Pass Review.
+- Conflicting or stale mutating annotations are excluded from automatic revision until resolved.
+- One automatic retry is allowed on structured validation failure; after that, the run must explicitly degrade or fail.
+
+ContractRef: ContractName:Plans/interview-subagent-integration.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Permissions_System.md
+```
+### Intent 5 (Run: r-20260313-183219-01, Anchor: `### 3.15 FinalReviewGate`, Op: replace_section)
+```markdown
+**Owner:** Workflow semantics in `Plans/chain-wizard-flexibility.md` and `Plans/interview-subagent-integration.md`; artifact taxonomy and restore semantics in `Plans/storage-plan.md`.
+
+Rules:
+- Multi-Pass Review is final-review only: enabled only when all bundle docs are Approved/Done and no durable annotations remain open.
+- Question/comment annotations count as open until the user resolves them.
+- Pending `Send selection to chat` chips do not satisfy or bypass the gate.
+- Final review runs once by default; rerun explicit only.
+- Final gate is a single decision: `Accept | Reject | Edit`.
+
+ContractRef: Primitive:TargetedRevisionPass, ContractName:Plans/chain-wizard-flexibility.md, ContractName:Plans/interview-subagent-integration.md, ContractName:Plans/storage-plan.md
+```
+### Intent 6 (Run: r-20260323-192127-01, Anchor: ``, Op: append)
+```markdown
+## Subagent, Crew, and Context-Shaping Ownership Addendum (2026-03-26)
+
+Child-run, crew, and context-shaping ownership is split intentionally across owner docs.
+
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md
+
+Ownership map:
+- child-run launch and lifecycle semantics: `Plans/Tools.md`
+- Persona resolution and child Persona rules: `Plans/Personas.md`
+- context reduction, handoff bundles, and cache-affinity rules: `Plans/Prompt_Pipeline.md`
+- child and crew persistence, batches, subgroups, and activity projections: `Plans/storage-plan.md`
+- event names and payload contracts: `Plans/Contracts_V0.md`
+- chat presentation, Context Lens control, and child-card UX: `Plans/assistant-chat-design.md`
+- provider-surface routing and OpenCode/Copilot adapter behavior: `Plans/CLI_Bridged_Providers.md` and `Plans/Provider_OpenCode.md`
+
+Consumer docs should not define alternate canon for those areas.
+
+ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/interview-subagent-integration.md, ContractName:Plans/FinalGUISpec.md
+
+```
+### Intent 7 (Run: r-20260323-192127-02, Anchor: `### 3.6 Projection-state ownership`, Op: insert_after)
+```markdown
+### 3.7 Subagent, crew, and context-shaping ownership
+
+PM child-run ownership is split intentionally:
+
+- `Tools.md` owns the child-run execution contract, lifecycle model, command/tool launch normalization, retry/reroute/replacement semantics, and event-family vocabulary.
+- `Prompt_Pipeline.md` owns dynamic context shrinking, current working set rules, handoff bundle reconstruction, and effective-context versus canonical-history separation.
+- `assistant-chat-design.md` owns child card, batch, subgroup, and crew-board presentation plus Context Lens chat interaction.
+- `storage-plan.md` owns canonical child-run persistence, batch and subgroup structure, event durability, and context-shaping state references.
+- `Personas.md`, `Models_System.md`, and `Permissions_System.md` own requested-versus-effective child persona, effort/runtime, and permission/capability resolution.
+
+ContractRef: Cross-doc ownership for child runs, crews, and context shaping MUST remain explicit so later updates do not reintroduce parallel canon for lifecycle, context management, or UI projection. [Source: Tools.md#task-tool-and-child-run-canon; Prompt_Pipeline.md#dynamic-context-shrinking; storage-plan.md#canonical-child-run-records-and-batch-structure]
+
+Crew mode is a multi-model orchestration overlay, not a separate runtime ontology. Crew shared state belongs to the canonical child-run and storage model, while Assistant memory remains Assistant-only.
+ContractRef: Crew coordination MUST reuse the canonical child-run/storage model and MUST NOT reintroduce standalone child-memory or side-file canon. [Source: assistant-memory-subsystem.md#capability-boundary-assistant-only; WorktreeGitImprovement.md#crew-and-worktree-canon-cleanup]
+
+Context Lens and dynamic context shrinking are related but separately owned concepts. Context Lens is a user-directed chat overlay owned by Assistant Chat and the command/wiring surface. Dynamic context shrinking is a runtime effective-context mechanism owned by Prompt Pipeline and storage/event projection.
+ContractRef: Context Lens and dynamic context shrinking MUST remain distinct ownership domains even when they share rehydration and effective-context assembly primitives. [Source: assistant-chat-design.md#176-context-lens-mute--focus--subcompact; Prompt_Pipeline.md#dynamic-context-shrinking]
+
+```
+### Intent 8 (Run: r-20260323-192127-03, Anchor: `### 3.6 Projection-state ownership`, Op: insert_after)
+```markdown
+### 3.7 Subagent, crew, and context-shaping ownership
+
+PM child-run ownership is split intentionally:
+
+- `Tools.md` owns the child-run execution contract, lifecycle model, command/tool launch normalization, retry/reroute/replacement semantics, and event-family vocabulary.
+- `Prompt_Pipeline.md` owns dynamic context shrinking, current working set rules, handoff bundle reconstruction, and effective-context versus canonical-history separation.
+- `assistant-chat-design.md` owns child card, batch, subgroup, and crew-board presentation plus Context Lens chat interaction.
+- `storage-plan.md` owns canonical child-run persistence, batch and subgroup structure, event durability, and context-shaping state references.
+- `Personas.md`, `Models_System.md`, and `Permissions_System.md` own requested-versus-effective child persona, effort/runtime, and permission/capability resolution.
+
+ContractRef: Cross-doc ownership for child runs, crews, and context shaping MUST remain explicit so later updates do not reintroduce parallel canon for lifecycle, context management, or UI projection. [Source: Tools.md#task-tool-and-child-run-canon; Prompt_Pipeline.md#dynamic-context-shrinking; storage-plan.md#canonical-child-run-records-and-batch-structure]
+
+Crew mode is a multi-model orchestration overlay, not a separate runtime ontology. Crew shared state belongs to the canonical child-run and storage model, while Assistant memory remains Assistant-only.
+ContractRef: Crew coordination MUST reuse the canonical child-run/storage model and MUST NOT reintroduce standalone child-memory or side-file canon. [Source: assistant-memory-subsystem.md#capability-boundary-assistant-only; WorktreeGitImprovement.md#crew-and-worktree-canon-cleanup]
+
+Context Lens and dynamic context shrinking are related but separately owned concepts. Context Lens is a user-directed chat overlay owned by Assistant Chat and the command/wiring surface. Dynamic context shrinking is a runtime effective-context mechanism owned by Prompt Pipeline and storage/event projection.
+ContractRef: Context Lens and dynamic context shrinking MUST remain distinct ownership domains even when they share rehydration and effective-context assembly primitives. [Source: assistant-chat-design.md#176-context-lens-mute--focus--subcompact; Prompt_Pipeline.md#dynamic-context-shrinking]
+
+```
+### Intent 9 (Run: r-20260326-015830-01, Anchor: `### 3.4 Source Control and lane/worktree ownership`, Op: insert_after)
+```markdown
+### 3.5 Assistant thread worktree binding ownership
+
+Thread-to-worktree binding is owned by `Plans/assistant-chat-design.md`.
+
+| Aspect | Owner doc | Consumer docs |
+|---|---|---|
+| Binding data model (1:1, thread↔worktree) | assistant-chat-design.md | storage-plan.md, Contracts_V0.md |
+| Seglog events (`chat.thread_worktree_*`) | assistant-chat-design.md | storage-plan.md, Contracts_V0.md, Wiring_Matrix.md |
+| Commands (`cmd.chat.worktree.*`) | assistant-chat-design.md | UI_Command_Catalog.md, Commands_System.md, Contracts_V0.md |
+| Settings (10 keys) | assistant-chat-design.md | storage-plan.md, FinalGUISpec.md |
+| Merge-back flow | assistant-chat-design.md | GitHub_Integration.md, Executor_Protocol.md |
+| Pre-merge test gate | assistant-chat-design.md | storage-plan.md, Executor_Protocol.md |
+| SC accordion & filter | GitHub_Integration.md | storage-plan.md, FinalGUISpec.md, Wiring_Matrix.md |
+| Worktree record extension (`owner_thread_id`) | storage-plan.md | WorktreeGitImprovement.md, Orchestrator_Page.md |
+| File manager worktree toggle | FileManager.md | assistant-chat-design.md, storage-plan.md |
+| LSP worktree root_identity | LSPSupport.md | assistant-chat-design.md, Executor_Protocol.md |
+
+**Freshness / health projection:** Thread worktree binding state follows the two-dimensional projection model (freshness=current|refreshing|stale × health=healthy|degraded|unavailable) defined in storage-plan.md §Projection state.
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md, ContractName:Plans/DRY_Rules.md
+```
+### Intent 10 (Run: r-20260326-015830-02, Anchor: `### 3.4 Source Control and lane/worktree ownership`, Op: insert_after)
+```markdown
+### 3.5 Assistant thread worktree binding ownership
+
+Thread-to-worktree binding is owned by `Plans/assistant-chat-design.md`.
+
+| Aspect | Owner doc | Consumer docs |
+|---|---|---|
+| Binding data model (1:1, thread↔worktree) | assistant-chat-design.md | storage-plan.md, Contracts_V0.md |
+| Seglog events (`chat.thread_worktree_*`) | assistant-chat-design.md | storage-plan.md, Contracts_V0.md, Wiring_Matrix.md |
+| Commands (`cmd.chat.worktree.*`) | assistant-chat-design.md | UI_Command_Catalog.md, Commands_System.md, Contracts_V0.md |
+| Settings (10 keys) | assistant-chat-design.md | storage-plan.md, FinalGUISpec.md |
+| Merge-back flow | assistant-chat-design.md | GitHub_Integration.md, Executor_Protocol.md |
+| Pre-merge test gate | assistant-chat-design.md | storage-plan.md, Executor_Protocol.md |
+| SC accordion & filter | GitHub_Integration.md | storage-plan.md, FinalGUISpec.md, Wiring_Matrix.md |
+| Worktree record extension (`owner_thread_id`) | storage-plan.md | WorktreeGitImprovement.md, Orchestrator_Page.md |
+| File manager worktree toggle | FileManager.md | assistant-chat-design.md, storage-plan.md |
+| LSP worktree root_identity | LSPSupport.md | assistant-chat-design.md, Executor_Protocol.md |
+
+**Freshness / health projection:** Thread worktree binding state follows the two-dimensional projection model (freshness=current|refreshing|stale × health=healthy|degraded|unavailable) defined in storage-plan.md §Projection state.
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md, ContractName:Plans/DRY_Rules.md
+```
+### Intent 11 (Run: r-20260328-192850-01, Anchor: `### 3.7 Subagent, crew, and context-shaping ownership`, Op: replace_section)
+```markdown
+Subagent and crew ownership is split across three docs. The split is intentional; each doc owns a distinct concern.
+
+ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/interview-subagent-integration.md
+
+| Concern | SSOT owner |
+|---|---|
+| Global execution limits (nesting depth, agent count, tool rounds, concurrency caps) | `Plans/orchestrator-subagent-integration.md` §Subagent Configuration `executionLimits` |
+| Per-interview reviewer count (Multi-Pass Review `max_subagents_spawn`) | `Plans/interview-subagent-integration.md` §Interview concurrency caps |
+| Shell environment isolation (no env leakage across agent/crew boundaries) | `Plans/Permissions_System.md` §8.2 |
+| Context-shaping transitions (context-shrunk, context-rehydrated events) | `Plans/storage-plan.md` §2.2 + `Plans/Prompt_Pipeline.md` §2 |
+| Crew lifecycle and crew-board messages | `Plans/storage-plan.md` §2.2 seglog event families |
+| Requested vs effective runtime surface for child runs | `Plans/Models_System.md` §3 + `Plans/CLI_Bridged_Providers.md` |
+
+ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Run_Modes.md
+
+**Concurrency cap authority:** The `executionLimits` block in `orchestrator-subagent-integration.md` is the canonical source for global concurrency caps (`maxConcurrentCrewsPerPlatform=4`, `maxConcurrentAgentsPerCrew=8`, `maxTotalActiveAgents=32`). Per-interview overrides add additional constraints but MUST NOT exceed global limits.
+
+ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/interview-subagent-integration.md
+
+**Shell isolation:** Each agent execution context receives a clean shell environment. Env variables MUST NOT leak across session, agent, or crew boundaries. See `Plans/Permissions_System.md` §8.2.
+
+ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Executor_Protocol.md
+```
+## Doc: Plans/MiscPlan.md
+### Intent 1 (Run: r-20260320-164907-01, Anchor: `## Runtime Cleanup / Recovery Preservation Addendum (2026-03-09)`, Op: insert_after)
+```markdown
+## Debug investigation instrumentation cleanup addendum (2026-03-23)
+
+Temporary Debug instrumentation must preserve cleanup lineage and safe recovery behavior.
+
+Required rules:
+- every temporary debug mutation lane carries an `instrumentation_id`, declared scope, and explicit cleanup obligation
+- cleanup must account for code instrumentation, temporary env flags, dev dependencies, remote host installs, browser mocks, and other reversible debug-only changes
+- resolved, cancelled, and superseded investigations attempt cleanup automatically; failed cleanup transitions the investigation to `failed_cleanup` instead of pretending success
+- unresolved instrumentation remnants must remain user-visible until cleaned up or explicitly accepted as follow-up work
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/GitHub_Integration.md
+
+```
+### Intent 2 (Run: r-20260320-170511-01, Anchor: `### 7.10 Backend: Agent Skills`, Op: replace_section)
+```markdown
+Backend skill handling follows the PM-native runtime model.
+
+ContractRef: ContractName:Plans/Skills_System.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Tools.md
+
+Required backend behavior:
+- discover skills from PM roots plus compatible import roots defined by the canonical skill system.
+- validate `SKILL.md` frontmatter, including `required_tool_refs` and `optional_tool_refs`.
+- compute runtime readiness before launch from validation state, permission state, and tool availability.
+- bundle PM-selected skill content into the compiled context.
+- expose the PM `skill` tool for on-demand skill retrieval during the run.
+- treat provider-native skill directories and file formats as optional import/export/projection layers only.
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/OpenCode_Deep_Extraction.md, ContractName:Plans/Multi-Account.md
+
+Projection rules:
+- import/discovery from compatible roots is always allowed when enabled by canon.
+- projection/export is optional and explicit.
+- projection state and drift state must be tracked per target.
+- a projection failure does not mean PM-native skill runtime delivery failed.
+
+ContractRef: ContractName:Plans/Skills_System.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md
+
+```
+### Intent 3 (Run: r-20260320-170511-01, Anchor: `### 9.1.21 Skills: discovery, permissions, and runner wiring`, Op: replace_section)
+```markdown
+Skills runtime behavior is canonicalized as registry discovery, permission filtering, readiness validation, context bundling, and on-demand `skill` tool access.
+
+ContractRef: ContractName:Plans/Skills_System.md, ContractName:Plans/FileSafe.md, ContractName:Plans/Tools.md, ContractName:Plans/Prompt_Pipeline.md
+
+Runner implications:
+- there is no MVP requirement to invent a separate provider-native skill runtime-delivery matrix for each provider.
+- direct providers consume PM-native skill bundling and PM tool availability.
+- CLI-bridged providers may receive compatibility projections only when explicitly enabled, but runtime correctness still depends on PM-native bundling plus the PM `skill` tool.
+- server-bridged providers such as OpenCode remain subject to the same PM-native skill canon.
+
+ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Provider_OpenCode.md, ContractName:Plans/Multi-Account.md
+
+```
+### Intent 4 (Run: r-20260320-170511-02, Anchor: `### 7.10 Backend: Agent Skills`, Op: replace_section)
+```markdown
+Backend skill handling follows the PM-native runtime model.
+
+ContractRef: ContractName:Plans/Skills_System.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Tools.md
+
+Required backend behavior:
+- discover skills from PM roots plus compatible import roots defined by the canonical skill system.
+- validate `SKILL.md` frontmatter, including `required_tool_refs` and `optional_tool_refs`.
+- compute runtime readiness before launch from validation state, permission state, and tool availability.
+- bundle PM-selected skill content into the compiled context.
+- expose the PM `skill` tool for on-demand skill retrieval during the run.
+- treat provider-native skill directories and file formats as optional import/export/projection layers only.
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/OpenCode_Deep_Extraction.md, ContractName:Plans/Multi-Account.md
+
+Projection rules:
+- import/discovery from compatible roots is always allowed when enabled by canon.
+- projection/export is optional and explicit.
+- projection state and drift state must be tracked per target.
+- a projection failure does not mean PM-native skill runtime delivery failed.
+
+ContractRef: ContractName:Plans/Skills_System.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md
+
+```
+### Intent 5 (Run: r-20260320-170511-02, Anchor: `### 9.1.21 Skills: discovery, permissions, and runner wiring`, Op: replace_section)
+```markdown
+Skills runtime behavior is canonicalized as registry discovery, permission filtering, readiness validation, context bundling, and on-demand `skill` tool access.
+
+ContractRef: ContractName:Plans/Skills_System.md, ContractName:Plans/FileSafe.md, ContractName:Plans/Tools.md, ContractName:Plans/Prompt_Pipeline.md
+
+Runner implications:
+- there is no MVP requirement to invent a separate provider-native skill runtime-delivery matrix for each provider.
+- direct providers consume PM-native skill bundling and PM tool availability.
+- CLI-bridged providers may receive compatibility projections only when explicitly enabled, but runtime correctness still depends on PM-native bundling plus the PM `skill` tool.
+- server-bridged providers such as OpenCode remain subject to the same PM-native skill canon.
+
+ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Provider_OpenCode.md, ContractName:Plans/Multi-Account.md
+
+```
+### Intent 6 (Run: r-20260323-192127-01, Anchor: `## 10.5 Crews and Subagent Communication Enhancements for Cleanup Operations`, Op: replace_section)
+```markdown
+Cleanup-operation crews, when used, must follow the current PM crew model.
+
+ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-memory-subsystem.md
+
+Rules:
+- cleanup crews are optional overlays, not a separate persistent actor system.
+- cleanup crew members remain PM child runs.
+- crew coordination uses explicit shared state and crew-board messages when enabled.
+- hidden memory files and active-agent side files are not canonical cleanup coordination state.
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/WorktreeGitImprovement.md
+
+```
+### Intent 7 (Run: r-20260323-192127-01, Anchor: `## 10.6 Lifecycle and Quality Enhancements for Cleanup Operations`, Op: replace_section)
+```markdown
+Cleanup lifecycle and quality features must use canonical child-run and blocked-state contracts.
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/storage-plan.md
+
+Rules:
+- blocked cleanup actions use canonical `blocked_reason_code` and `allowed_action_ids[]`.
+- cleanup retries, reroutes, and cancellation preserve canonical lineage.
+- cleanup continuity comes from canonical state and handoff reconstruction, not child-memory files.
+
+ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/assistant-memory-subsystem.md, ContractName:Plans/Tools.md
+
+```
+### Intent 8 (Run: r-20260323-192127-02, Anchor: `## 10.5 Crews and Subagent Communication Enhancements for Cleanup Operations`, Op: replace_section)
+```markdown
+Cleanup-operation crews, when used, must follow the current PM crew model.
+
+ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-memory-subsystem.md
+
+Rules:
+- cleanup crews are optional overlays, not a separate persistent actor system.
+- cleanup crew members remain PM child runs.
+- crew coordination uses explicit shared state and crew-board messages when enabled.
+- hidden memory files and active-agent side files are not canonical cleanup coordination state.
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/WorktreeGitImprovement.md
+
+```
+### Intent 9 (Run: r-20260323-192127-02, Anchor: `## 10.6 Lifecycle and Quality Enhancements for Cleanup Operations`, Op: replace_section)
+```markdown
+Cleanup lifecycle and quality features must use canonical child-run and blocked-state contracts.
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/storage-plan.md
+
+Rules:
+- blocked cleanup actions use canonical `blocked_reason_code` and `allowed_action_ids[]`.
+- cleanup retries, reroutes, and cancellation preserve canonical lineage.
+- cleanup continuity comes from canonical state and handoff reconstruction, not child-memory files.
+
+ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/assistant-memory-subsystem.md, ContractName:Plans/Tools.md
+
+```
+### Intent 10 (Run: r-20260323-192127-03, Anchor: `## 10.5 Crews and Subagent Communication Enhancements for Cleanup Operations`, Op: replace_section)
+```markdown
+Cleanup-operation crews, when used, must follow the current PM crew model.
+
+ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-memory-subsystem.md
+
+Rules:
+- cleanup crews are optional overlays, not a separate persistent actor system.
+- cleanup crew members remain PM child runs.
+- crew coordination uses explicit shared state and crew-board messages when enabled.
+- hidden memory files and active-agent side files are not canonical cleanup coordination state.
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/WorktreeGitImprovement.md
+
+```
+### Intent 11 (Run: r-20260323-192127-03, Anchor: `## 10.6 Lifecycle and Quality Enhancements for Cleanup Operations`, Op: replace_section)
+```markdown
+Cleanup lifecycle and quality features must use canonical child-run and blocked-state contracts.
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/storage-plan.md
+
+Rules:
+- blocked cleanup actions use canonical `blocked_reason_code` and `allowed_action_ids[]`.
+- cleanup retries, reroutes, and cancellation preserve canonical lineage.
+- cleanup continuity comes from canonical state and handoff reconstruction, not child-memory files.
+
+ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/assistant-memory-subsystem.md, ContractName:Plans/Tools.md
+
+```
+### Intent 12 (Run: r-20260326-015830-01, Anchor: `### 3.3 Cleanup Scope`, Op: insert_after)
+```markdown
+#### 3.3.1 Assistant worktree persistence
+
+Assistant-owned worktrees (identified by `owner_thread_id`) are NOT subject to the runner contract cleanup policy that governs orchestrator-owned worktrees. They are persistent by default.
+
+**Cleanup triggers for assistant worktrees:**
+- User clicks Remove in chat header dropdown → confirmation dialog if worktree is dirty
+- User deletes thread → cleanup behavior follows `branching.assistant_worktree_cleanup_default` setting: `ask` (show dialog), `keep` (unbind only, keep worktree on disk as manual), `remove` (remove worktree from disk)
+- User clicks Remove in Source Control worktree row → confirmation dialog if dirty or thread-bound
+- Force-remove via Doctor (orphan cleanup) — only for worktrees with no matching binding and no owner_thread_id
+
+**App uninstall:** Worktree directories under `.puppet-master/worktrees/` are cleaned up by the uninstall process. Branches created in the main repo remain (git data is preserved).
+
+**Completed threads:** When a thread reaches terminal/completed state, its worktree binding remains intact. The user can still merge, create PR, or remove. This allows completed work to be reviewed and integrated at the user's pace.
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md, ContractName:Plans/WorktreeGitImprovement.md
+```
+### Intent 13 (Run: r-20260326-015830-02, Anchor: `### 3.3 Cleanup Scope`, Op: insert_after)
+```markdown
+#### 3.3.1 Assistant worktree persistence
+
+Assistant-owned worktrees (identified by `owner_thread_id`) are NOT subject to the runner contract cleanup policy that governs orchestrator-owned worktrees. They are persistent by default.
+
+**Cleanup triggers for assistant worktrees:**
+- User clicks Remove in chat header dropdown → confirmation dialog if worktree is dirty
+- User deletes thread → cleanup behavior follows `branching.assistant_worktree_cleanup_default` setting: `ask` (show dialog), `keep` (unbind only, keep worktree on disk as manual), `remove` (remove worktree from disk)
+- User clicks Remove in Source Control worktree row → confirmation dialog if dirty or thread-bound
+- Force-remove via Doctor (orphan cleanup) — only for worktrees with no matching binding and no owner_thread_id
+
+**App uninstall:** Worktree directories under `.puppet-master/worktrees/` are cleaned up by the uninstall process. Branches created in the main repo remain (git data is preserved).
+
+**Completed threads:** When a thread reaches terminal/completed state, its worktree binding remains intact. The user can still merge, create PR, or remove. This allows completed work to be reviewed and integrated at the user's pace.
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md, ContractName:Plans/WorktreeGitImprovement.md
+```
+## Doc: Plans/FileSafe.md
+### Intent 1 (Run: r-20260313-183219-01, Anchor: `### 11.3 Prompt Content Checking & Context Compilation`, Op: insert_after)
+```markdown
+### 11.3A Structured chat attachments and forwarded document selections
+
+FileSafe applies to structured chat attachments, not just freeform prompt text and context-file paths.
+
+Rules:
+- FileSafe must inspect the compiled prompt plus structured attachments together before platform send.
+- `document_selection_context` attachments must pass the same mandatory secret-scrub pipeline before seglog/redb/index/blob persistence.
+- Path-based sensitive sources such as `.env`, key/cert paths, credential files, and equivalent secret-bearing locations are not eligible for selection forwarding.
+- If attachment forwarding is blocked, the runtime must emit an explicit block result and visible reason code; it must not pretend the context was sent successfully.
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md, PolicyRule:no_secrets_in_storage
+
+Default handling:
+- Heuristic secret-ish redaction remains off by default.
+- Mandatory secret scrubbing remains on for all structured attachments before persistence.
+- Search/indexing stores bounded summaries and provenance only, not unbounded raw selected text.
+
+ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Prompt_Pipeline.md
+```
+### Intent 2 (Run: r-20260323-192127-01, Anchor: `## FileSafe Action Mapping and Persistence`, Op: replace_section)
+```markdown
+FileSafe outcomes must align with the shared runtime blocked taxonomy and the child-run storage model.
+
+ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md
+
+Required rules:
+- runtime-facing FileSafe blocks use canonical `blocked_reason_code` plus ordered `allowed_action_ids[]`.
+- `recovery_options[]` and `allowed_actions[]` are not canonical shared runtime fields.
+- child runs blocked by FileSafe remain child runs with canonical lineage and status history.
+- rerun and restore behavior must preserve canonical child/run/worktree identities.
+
+Context-shaping and handoff rule:
+- FileSafe does not define alternate child continuity or alternate memory behavior.
+- any rerun or restore after FileSafe denial uses canonical handoff reconstruction.
+
+ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/assistant-memory-subsystem.md, ContractName:Plans/orchestrator-subagent-integration.md
+
+```
+### Intent 3 (Run: r-20260323-192127-02, Anchor: `## FileSafe Action Mapping and Persistence`, Op: replace_section)
+```markdown
+FileSafe outcomes must align with the shared runtime blocked taxonomy and the child-run storage model.
+
+ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md
+
+Required rules:
+- runtime-facing FileSafe blocks use canonical `blocked_reason_code` plus ordered `allowed_action_ids[]`.
+- `recovery_options[]` and `allowed_actions[]` are not canonical shared runtime fields.
+- child runs blocked by FileSafe remain child runs with canonical lineage and status history.
+- rerun and restore behavior must preserve canonical child/run/worktree identities.
+
+Context-shaping and handoff rule:
+- FileSafe does not define alternate child continuity or alternate memory behavior.
+- any rerun or restore after FileSafe denial uses canonical handoff reconstruction.
+
+ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/assistant-memory-subsystem.md, ContractName:Plans/orchestrator-subagent-integration.md
+
+```
+### Intent 4 (Run: r-20260323-192127-03, Anchor: `## FileSafe Action Mapping and Persistence`, Op: replace_section)
+```markdown
+FileSafe outcomes must align with the shared runtime blocked taxonomy and the child-run storage model.
+
+ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md
+
+Required rules:
+- runtime-facing FileSafe blocks use canonical `blocked_reason_code` plus ordered `allowed_action_ids[]`.
+- `recovery_options[]` and `allowed_actions[]` are not canonical shared runtime fields.
+- child runs blocked by FileSafe remain child runs with canonical lineage and status history.
+- rerun and restore behavior must preserve canonical child/run/worktree identities.
+
+Context-shaping and handoff rule:
+- FileSafe does not define alternate child continuity or alternate memory behavior.
+- any rerun or restore after FileSafe denial uses canonical handoff reconstruction.
+
+ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/assistant-memory-subsystem.md, ContractName:Plans/orchestrator-subagent-integration.md
+
+```
+### Intent 5 (Run: r-20260328-192850-01, Anchor: `### 11.1 FileSafe: Write scope (CRITICAL)`, Op: insert_after)
+```markdown
+#### 11.1.1 Symlink resolution invariant (CRITICAL)
+
+All file paths submitted to FileSafe write scope or security filter checks MUST be resolved through `realpath()` before any scope comparison. This is a mandatory invariant, not an aspirational TODO.
+
+ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Architecture_Invariants.md
+
+Required behavior:
+- Call `realpath()` on the submitted path before comparing against `allowed_files` or any scope boundary.
+- If `realpath()` fails for any reason (broken symlink, permission error, non-existent target): **deny access** (fail-closed).
+- NEVER fall back to comparing the unresolved or partially-resolved path against the allowed set.
+- NEVER use `canonicalize().unwrap_or_else(|_| original_path)` — the fallback defeats the invariant.
+
+ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Executor_Protocol.md
+
+The `check_file_write` implementation MUST use a strict `realpath()` that returns an error on any resolution failure, not the `.unwrap_or_else(fallback)` pattern currently shown in the code sketch. The fallback pattern shown in the §11.1 code sketch is the incorrect pattern; this addendum overrides it.
+
+ContractRef: ContractName:Plans/Architecture_Invariants.md, ContractName:Plans/Permissions_System.md
+```
+## Doc: Plans/DRY_Rules.md
+### Intent 1 (Run: r-20260312-203855-01, Anchor: `## 2. Don't duplicate canonical contracts`, Op: replace_section)
+```markdown
+A doc that consumes orchestration, routing, runtime identity, approval, or worktree/lane behavior must consume the owning contract rather than restating feature-local canon.
+
+Rules:
+- owner docs are updated before consumer docs when canon changes
+- stale canonical text must be replaced or retired; append-only clarification is not sufficient when old text would remain misleading
+- a consumer doc must not preserve an older model as a peer option once a replacement canon exists
+- summary, checklist, and feature-list mirrors do not re-own canon and must be reconciled after owner docs change
+
+ContractRef: ContractName:Plans/Crosswalk.md, ContractName:Plans/Decision_Policy.md, ContractName:Plans/Progression_Gates.md
+
+The following concepts are owner-routed and must not be re-owned by consumers:
+- blocked-episode approval identity
+- requested/effective runtime identity
+- account-binding semantics and switch history
+- `route_target` and `OpenSubject`
+- lane/worktree lifecycle semantics
+- concern lifecycle and lineage
+- graph-generation lineage and graph-patch semantics
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/storage-plan.md
+
+```
+### Intent 2 (Run: r-20260326-015830-01, Anchor: `## 3. "Index-only" guidance`, Op: insert_after)
+```markdown
+### 3.1 Assistant worktree DRY routing
+
+Thread-to-worktree binding follows the standard owner-routed DRY pattern:
+
+| Concept | Owner doc | Consumers cross-ref, do not redefine |
+|---|---|---|
+| Thread worktree binding model (1:1) | `Plans/assistant-chat-design.md` | storage-plan.md, Contracts_V0.md, Crosswalk.md |
+| 11 seglog events (`chat.thread_worktree_*`) | `Plans/assistant-chat-design.md` | storage-plan.md, Contracts_V0.md, Wiring_Matrix.md |
+| 6 commands (`cmd.chat.worktree.*`) | `Plans/assistant-chat-design.md` | UI_Command_Catalog.md, Commands_System.md, Contracts_V0.md |
+| 10 settings keys | `Plans/assistant-chat-design.md` | storage-plan.md, FinalGUISpec.md |
+| Merge-back flow (4 paths) | `Plans/assistant-chat-design.md` | GitHub_Integration.md, Executor_Protocol.md |
+| Pre-merge test gate | `Plans/assistant-chat-design.md` | storage-plan.md, Executor_Protocol.md |
+| SC accordion layout | `Plans/GitHub_Integration.md` | storage-plan.md, FinalGUISpec.md |
+| `owner_thread_id` on worktree_record.v1 | `Plans/storage-plan.md` | WorktreeGitImprovement.md, Orchestrator_Page.md |
+
+Consumer docs MUST cross-reference the owner doc rather than redefining canonical details. Tables, enums, field lists, and behavioral rules live in the owner doc only.
+
+ContractRef: ContractName:Plans/Crosswalk.md, ContractName:Plans/assistant-chat-design.md
+```
+### Intent 3 (Run: r-20260326-015830-02, Anchor: `## 3. "Index-only" guidance`, Op: insert_after)
+```markdown
+### 3.1 Assistant worktree DRY routing
+
+Thread-to-worktree binding follows the standard owner-routed DRY pattern:
+
+| Concept | Owner doc | Consumers cross-ref, do not redefine |
+|---|---|---|
+| Thread worktree binding model (1:1) | `Plans/assistant-chat-design.md` | storage-plan.md, Contracts_V0.md, Crosswalk.md |
+| 11 seglog events (`chat.thread_worktree_*`) | `Plans/assistant-chat-design.md` | storage-plan.md, Contracts_V0.md, Wiring_Matrix.md |
+| 6 commands (`cmd.chat.worktree.*`) | `Plans/assistant-chat-design.md` | UI_Command_Catalog.md, Commands_System.md, Contracts_V0.md |
+| 10 settings keys | `Plans/assistant-chat-design.md` | storage-plan.md, FinalGUISpec.md |
+| Merge-back flow (4 paths) | `Plans/assistant-chat-design.md` | GitHub_Integration.md, Executor_Protocol.md |
+| Pre-merge test gate | `Plans/assistant-chat-design.md` | storage-plan.md, Executor_Protocol.md |
+| SC accordion layout | `Plans/GitHub_Integration.md` | storage-plan.md, FinalGUISpec.md |
+| `owner_thread_id` on worktree_record.v1 | `Plans/storage-plan.md` | WorktreeGitImprovement.md, Orchestrator_Page.md |
+
+Consumer docs MUST cross-reference the owner doc rather than redefining canonical details. Tables, enums, field lists, and behavioral rules live in the owner doc only.
+
+ContractRef: ContractName:Plans/Crosswalk.md, ContractName:Plans/assistant-chat-design.md
+```
+## Doc: Plans/Decision_Log.md
+### Intent 1 (Run: r-20260312-203855-01, Anchor: `## Entries`, Op: replace_section)
+```markdown
+### DL-001: OpenCode Deep Extraction — SSOT target mapping for new subsystems
+The mapping captured in `OpenCode_Deep_Extraction.md` remains a reference aid, but local canonical contracts still control final ownership in Puppet Master.
+
+### DL-002: Section numbering shift in OpenCode_Deep_Extraction.md
+Section-number drift in the extraction source must not become canonical drift in local SSOT docs.
+
+### DL-003: Orchestrator execution model
+The canonical orchestration model is the node graph. `Feature Seam` and `Work Package` are first-class graph-owned objects, and `Node` remains the smallest executable unit.
+
+ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Orchestrator_Page.md
+
+### DL-004: Governance split
+`Package Overseer` and `Seam Overseer` are distinct governance roles. Runtime remains the canonical owner of readiness, blockers, transitions, retries, and dispatch.
+
+ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/orchestrator-subagent-integration.md
+
+### DL-005: Completion and promotion model
+`Locally Complete`, `Available to Seam`, and `Seam Complete` remain distinct. Package completion alone is insufficient.
+
+ContractRef: ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/Run_Graph_View.md
+
+### DL-006: Weak integration
+Weak integration remains first-class and includes runtime/GUI mismatch, contract mismatch, workflow gaps, and architecture drift.
+
+ContractRef: ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/Glossary.md
+
+### DL-007: Corroboration threshold
+High-impact claims use deterministic `2-of-3` corroboration. Lesser unresolved concerns remain visible as non-blocking advisory concerns.
+
+ContractRef: ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/Decision_Policy.md
+
+### DL-008: Graph patch lineage
+Graph patching creates a new graph generation and preserves superseded historical paths as visible lineage.
+
+ContractRef: ContractName:Plans/Run_Graph_View.md, ContractName:Plans/storage-plan.md
+
+### DL-009: Source Control boundary
+Source Control is worktree-first and compact. Orchestrator carries lane/package/seam operational context.
+
+ContractRef: ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/GitHub_Integration.md
+
+### DL-010: Shared runtime identity
+Requested/effective runtime identity is shared across assistant, interviewer, builders, overseers, and node workers without collapsing those actors into one ontology.
+
+ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Multi-Account.md
+
+### DL-011: Blocked approval identity
+Blocked episodes anchored by `run_id`, `node_id`, `blocked_sequence`, and `attempt_id?` supersede request-centric HITL identity as canonical runtime approval scope.
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/human-in-the-loop.md
+
+### DL-012: Navigation primitives
+`route_target` is the canonical navigation contract. `OpenSubject` is the canonical identity-native source-open contra
+```
+[... truncated, full length: 3128 chars]
+## Doc: Plans/OpenCode_Coverage_Matrix.md
+### Intent 1 (Run: r-20260328-192850-01, Anchor: `## 2. Coverage Matrix`, Op: insert_after)
+```markdown
+**Coverage status amendment (r-20260328-192850-01):** The following rows were previously marked `Partial` and are updated to `Covered` by the amendments in this research packet run:
+
+| Row | Topic | Previously | Now | Resolved by |
+|---|---|---|---|---|
+| 28 | Provider transform layer | Partial | **Covered** | `CLI_Bridged_Providers.md` §Tool-call correlation now includes complete transform contract with tool ID invariants, FinishReason mapping, and stream cancel semantics |
+| 29 | Provider error classification | Partial | **Covered** | `Executor_Protocol.md` §7.1 per-class retry matrix provides unified error classification with counts and backoff; `CLI_Bridged_Providers.md` adds FinishReasonUnknown handling |
+| 32 | Context handling / compaction / rotation | Partial | **Covered** | `Prompt_Pipeline.md` §2.0 and §2.2.1 now specify compaction thresholds, immune content cap, thinking block preservation, and role alternation validation |
+| 34 | MCP integration | Partial | **Covered** | `Tools.md` §5 now specifies full MCP lifecycle: lazy-load, startup timeout, listTools retry/stale, connection pool, per-tool timeout, Windows MCP, pre-dispatch validation, refresh triggers |
+
+ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Executor_Protocol.md
+```

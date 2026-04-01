@@ -57,6 +57,7 @@ ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Wiring_Matri
 <a id="1.1"></a>
 <a id="EventRecord"></a>
 ### 1.1 EventRecord -- canonical persisted envelope (schema: `pm.event.v0`)
+
 The canonical persisted runtime snapshot keeps the historical base field names stable while allowing additive disclosure fields for runtime family, runtime platform, billing/entity attribution, and server-profile routing.
 
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Models_System.md
@@ -92,15 +93,15 @@ ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/usage-featu
 
 Rules:
 - `requested_platform` and `effective_platform` remain the canonical persisted provider-entry fields.
-- `provider_family_id`, `requested_runtime_platform_id`, `effective_runtime_platform_id`, `requested_model_provider_id`, and `effective_model_provider_id` are additive disclosure fields. They MUST NOT replace the canonical base field names.
+- `provider_family_id`, `requested_runtime_platform_id`, `effective_runtime_platform_id`, `requested_model_provider_id`, and `effective_model_provider_id` are additive disclosure fields; they MUST NOT replace the canonical base field names.
 - `effective_account_id` identifies the effective account record when the runtime subject is account-backed.
 - `connection_profile_id` identifies the effective server profile when the runtime subject is server-bridged.
-- `requested_billing_entity_id`, `effective_billing_entity_id`, `effective_billing_entity_label`, and `effective_entitlement_class` are optional additive fields used only when the provider's quota or policy semantics depend on a billing/entity bucket distinct from the auth identity.
-- `effective_provider_identity` is provider-native descriptive metadata only and MUST NOT be treated as the stable internal account key.
-- `selectable_unit_id` is diagnostic/runtime-debug data only. It MUST NOT be introduced as a parallel canonical base field on persisted EventRecord payloads.
+- `requested_billing_entity_id`, `effective_billing_entity_id`, `effective_billing_entity_label`, and `effective_entitlement_class` are REQUIRED when the provider's quota or policy semantics depend on a distinct billing/entity bucket; when the provider has no such concept, these fields MUST be omitted rather than null-padded.
+- `effective_provider_identity` is provider-native descriptive metadata only and MUST NOT become the stable internal account key.
 - secrets, bearer tokens, API keys, refresh tokens, and raw credential payloads MUST NOT appear in EventRecord payloads.
 
 ContractRef: PolicyRule:no_secrets_in_storage, ContractName:Plans/storage-plan.md, ContractName:Plans/Architecture_Invariants.md#INV-002
+
 ### 1.2 EventEnvelopeV1 -- minimal compatibility envelope
 `EventEnvelopeV1` is the minimal event envelope used by some plans as an intermediate format.
 
@@ -325,7 +326,7 @@ Rules:
 - `auth_job_state` is the canonical authentication chip state and remains distinct from readiness.
 - `readiness_state` is the canonical execution-readiness state and MUST support at least `NeedsSetup`, `Validating`, `Ready`, `Degraded`, and `ExternalNotManaged`.
 - `LoggedIn` is not the same as `Ready`. Billing-entity selection, entitlement validation, trust checks, project/location configuration, or server discovery may keep the row out of `Ready` after login succeeds.
-- `selected_billing_entity_id` is optional and applies only where the effective quota bucket is not implied by the auth identity alone.
+- `selected_billing_entity_id` is conditionally required: it MUST be present when the effective quota bucket depends on entity selection and MUST be omitted when the provider's quota is purely account-scoped (see §Billing entity field contract).
 - provider-level summary cards MAY aggregate multiple AuthState rows, but the underlying row distinctions MUST remain visible whenever they affect routing, quota semantics, or recovery behavior.
 - GitHub auth used for GitHub API operations and GitHub auth used for GitHub Copilot provider execution remain isolated auth realms.
 - attached external OpenCode servers may surface `readiness_state = ExternalNotManaged`; PM may reflect their state but MUST NOT overstate configuration ownership.
@@ -729,17 +730,54 @@ Rules:
 
 ContractRef: ContractName:Plans/FinalGUISpec.md#7.4, ContractName:Plans/FinalGUISpec.md#16.2, PolicyRule:Plans/rewrite-tie-in-memo.md#ui-scaling-migration
 
----
+## Usage and Billing Contracts Addendum
 
-## References
-- `Plans/storage-plan.md` (seglog envelope and persistence)
-- `Plans/Tools.md` (tool permission semantics + payload definitions)
-- `Plans/CLI_Bridged_Providers.md` (normalized provider stream schema)
-- `Plans/GitHub_API_Auth_and_Flows.md` (GitHub auth event types and flows)
-- `Plans/UI_Wiring_Rules.md` (wiring rules and verification strategy)
-- `Plans/Wiring_Matrix.schema.json` (WiringEntry schema)
-- `Plans/Provider_OpenCode.md` (OpenCode server-bridged provider integration)
+### Cost field type contract
 
+All persisted usage/cost values are stored as integer microdollars (`u64`). Presentation converts to decimal currency strings; storage and accumulation do not.
+
+ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/storage-plan.md
+
+### Token bucket contract
+
+The canonical token fields are:
+- `input_tokens`
+- `output_tokens`
+- `cache_read_input_tokens`
+- `cache_creation_input_tokens`
+- `reasoning_tokens`
+
+These fields are individually persisted. Storage-layer aggregation or collapse into a smaller field set is prohibited.
+
+ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/Architecture_Invariants.md
+
+`total_tokens` MAY be stored or derived for convenience, but it MUST NOT replace the individual token buckets.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md
+
+### Usage attribution contract
+
+Usage records and normalized usage events MUST preserve:
+- `provider_id`
+- `model_id`
+- `parent_run_id` when usage is emitted by a child run, tool, title-generation pass, summary pass, or other background operation
+- `billing_entity_id` when quota semantics depend on it
+- `cache_hit?`
+- `cache_strategy?`
+
+ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/Models_System.md
+
+### Billing entity field contract
+`requested_billing_entity_id` and `effective_billing_entity_id` are conditionally required: they MUST be present whenever the provider's quota or policy semantics depend on a billing/entity bucket distinct from the auth identity. When the provider does not use a billing-entity concept, these fields MUST be omitted rather than null-padded.
+
+ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/Models_System.md
+
+This conditional-requirement contract applies uniformly across all PM surfaces:
+- In `EventRecord` (§1.1): billing-entity fields follow this rule. The §1.1 term "additive disclosure fields" describes the extensibility pattern for discovery/routing fields (`provider_family_id`, `runtime_platform_id`, etc.) and does NOT imply that billing-entity fields are unconditionally optional.
+- In `AuthState` (§4.1): `selected_billing_entity_id` follows the same conditional contract. It is present when the effective quota bucket depends on entity selection; it is omitted when the provider's quota is purely account-scoped. The word "optional" in the AuthState rules refers to structural optionality (the field may be absent), not to a weaker normative requirement.
+- In usage attribution: cost attribution is keyed by `(model_id, provider_id, billing_entity_id)` when billing-entity semantics exist; account-only providers omit the billing-entity dimension.
+
+ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/CLI_Bridged_Providers.md
 ## Scheduler, Safe-Point, and Remediation Events Addendum (2026-03-08)
 
 Add the following event families to the canonical contract set.

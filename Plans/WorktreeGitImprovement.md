@@ -77,6 +77,20 @@ The plan is **ready to implement** with the following in mind:
 
 ## 2. Worktree Improvements
 
+### 2.0 Symlink resolution in worktree paths
+
+Worktree path resolution MUST apply the fail-closed symlink policy from `Plans/Permissions_System.md` §1.1 and `Plans/Architecture_Invariants.md` INV-017.
+
+ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/FileSafe.md
+
+Required:
+- All file paths computed relative to a worktree root MUST be normalized via `realpath()` before any scope check or file guard comparison.
+- If `realpath()` fails on a worktree-relative path, the operation MUST be denied.
+- The `working_directory` passed to FileSafe `check_file_write` MUST be the real path of the worktree root, not a symlinked alias.
+
+ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/Architecture_Invariants.md
+
+
 ### 2.1 Base branch for worktree creation
 
 - **Gap:** Worktrees are created with `git worktree add -b <branch> <path>` from **current HEAD** of the main repo. There is no checkout of `config.branching.base_branch` first.
@@ -149,6 +163,45 @@ The plan is **ready to implement** with the following in mind:
 ---
 
 ## 3. Git Improvements
+
+### 3.0 Git subprocess integrity invariant
+#### 3.0.1 Exit-code classification and recovery
+
+Git subprocess exit codes are classified into three recovery categories:
+
+ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/FileSafe.md
+
+| Exit Scenario | Classification | Recovery Action |
+|---|---|---|
+| Exit 0 | success | proceed normally |
+| Exit 1 with `nothing to commit` on stdout | informational | proceed (not an error for commit operations) |
+| Exit 1 (generic failure) | fatal | fail the operation with structured error; do not retry |
+| Exit 128 + signal (e.g., SIGKILL, SIGTERM) | fatal | fail immediately; report the signal in the error |
+| Exit 128 (ambiguous) | fatal | fail the operation; log full stderr for diagnosis |
+| Lock contention (`index.lock` exists) | retryable | retry once after 500ms backoff; fail on second attempt |
+| Network timeout (fetch/push/clone) | retryable | retry with exponential backoff (max 3 attempts, base 1s) |
+| Authentication failure (exit 128 with auth error on stderr) | fatal | fail immediately; surface credential refresh guidance |
+| Disk full / permission denied | fatal | fail immediately; surface the OS-level error |
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Run_Modes.md
+
+Rules:
+- Retryable scenarios MUST use bounded retry with backoff. Maximum 3 retry attempts for network operations; maximum 1 retry for lock contention.
+- Fatal scenarios MUST NOT be retried. The operation fails with a structured error that includes the git command, exit code, and stderr content.
+- The `nothing to commit` case is the only exit-1 scenario that is not treated as a hard error. All other non-zero exits follow the hard-error rule from §3.0.
+
+ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Architecture_Invariants.md
+
+Every git subprocess that mutates or validates PM-managed state MUST treat a non-zero exit status as a hard error.
+
+ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/Executor_Protocol.md
+
+Required behavior:
+- after `git add`, verify staged state with `git status --porcelain`
+- do not silently swallow non-zero exits from `git add`, `git commit`, `git stash`, `git checkout`, or equivalent mutation-sensitive commands
+- distinguish `nothing to commit` from generic failure, but do not treat genuine git command failure as informational noise
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md
 
 ### 3.1 Git binary resolution
 

@@ -1,0 +1,2055 @@
+## Doc: Plans/Tools.md
+### Intent 1 (Run: r-20260316-160450-01, Anchor: `### 3.5A `skill` tool runtime contract`, Op: insert_after)
+```markdown
+### 3.5B `question` tool runtime contract
+The simplified single-string `question` contract is superseded by a two-mode contract.
+
+Canonical modes:
+- `single_question`
+- `questionnaire`
+
+Recommended input envelope:
+- `mode`
+- `header?`
+- `prompt?`
+- `questions: Array<QuestionItem>`
+
+`QuestionItem` minimum fields:
+- `question_id`
+- `question`
+- `description?`
+- `options?`
+- `required?` (default `true`)
+- `multi_select?` (default `false`)
+- `allow_freeform?` / `allow_other?` (default `true`)
+- `placeholder?`
+- `default_values?`
+
+Recommended output envelope:
+- `status: "answered" | "submitted" | "dismissed" | "timed_out" | "unavailable"`
+- `answers: Array<{ question_id, values: string[], source?: "option" | "other" | "freeform" }>`
+- `answer_text?` only as backward-compatible sugar for true single-question callers
+
+Rules:
+- multi-question flows are first-class, not an edge case
+- users may answer in any order
+- required questions block final submit
+- headless / HITL-unavailable paths return `unavailable` rather than fabricated answers
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Contracts_V0.md
+
+### 3.5C `todowrite` and `todoread` runtime contract
+The simplified checklist-only todo tool shapes are superseded by the normalized TODO schema used by planning outputs.
+
+Canonical TODO item fields:
+- `todo_id`
+- `title`
+- `summary`
+- `status`
+- `dependencies[]`
+- `owner_hint`
+- `verification_hint`
+- `notes?`
+- `order_index?`
+
+Canonical status set:
+- `pending`
+- `in_progress`
+- `completed`
+- `blocked`
+- `skipped`
+
+Rules:
+- `todowrite` may create, reorder, and update statuses or notes
+- `todoread` returns the current normalized list for the active thread/run
+- the same schema must survive single-agent, subagent, and crew execution
+- subagent default remains deny unless explicitly re-enabled by run config
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Permissions_System.md
+
+### 3.5D Web operation family runtime contract
+The canonical web tool family is expanded beyond `websearch` and `webfetch`.
+
+Canonical operations:
+- `websearch`
+- `webfetch`
+- `webextract`
+- `webresearch`
+- `webcrawl`
+- `webmap`
+
+Rules:
+- `Reading Site` remains the PM-native Site Reader path rather than a provider-local synonym
+- provider support is disclosed as `native`, `pm_composed`, or `unsupported`
+- natural-language requests and `/web` subcommands route to the same dispatcher
+- provider fallback and evidence provenance remain visible in activity/audit surfaces
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/storage-plan.md
+
+### 3.5E LSP tool runtime reconciliation
+The `lsp` tool surface is widened beyond the minimal MVP read trio.
+
+Recommended read operations:
+- `goToDefinition`
+- `findReferences`
+- `hover`
+- `documentSymbol`
+- `workspaceSymbol`
+- `goToImplementation`
+- `prepareCa
+```
+[... truncated, full length: 3252 chars]
+### Intent 2 (Run: r-20260316-160450-01, Anchor: `### 3.6 Task tool and the 42 subagents (Plans)`, Op: insert_after)
+```markdown
+### 3.6A Task runtime addendum
+The `task` tool launches resumable delegated runs rather than opaque fire-and-forget work.
+
+Rules:
+- task invocations should preserve a stable delegated run/task identity so later history and UI surfaces can correlate follow-ups and results
+- task runs inherit a narrowed-or-equal permission snapshot rather than inventing a looser child policy
+- top-level assistant flows remain the owner of direct user questionnaire prompting unless runtime explicitly delegates that boundary
+- subagent assumptions about `todowrite` / `todoread` availability must honor the subagent-default deny policy unless run config explicitly overrides it
+
+ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/storage-plan.md
+```
+### Intent 3 (Run: r-20260318-160350-01, Anchor: `### 2.4.1 Central policy engine contract`, Op: replace_section)
+```markdown
+Every agent-usable tool attempt MUST pass through one canonical policy engine that resolves permission, approval/HITL, FileSafe, execution, terminal binding when relevant, and result normalization.
+
+Canonical order:
+1. resolve tool identity and permission
+2. evaluate `allow` / `ask` / `deny`
+3. if `ask`, resolve approval or headless fallback
+4. apply FileSafe and other invocation validation
+5. resolve terminal or shell binding for shell-capable actions
+6. execute or reject
+7. normalize the terminal outcome for persistence, analytics, and reveal-linkback behavior
+
+ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/storage-plan.md, ContractName:Plans/CLI_Bridged_Providers.md
+
+Shell-binding rules:
+- `bash` and any canonical shell-backed execution path resolve through the terminal process-host contract when they create or bind shell state
+- non-interactive or hidden shell execution may suppress opening the terminal UI, but it still binds to canonical terminal-session state when execution actually occurs
+- denied or blocked shell calls do not mint fake live terminal sessions
+- chat command cards and other preview surfaces consume normalized terminal state rather than replacing terminal ownership
+
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FinalGUISpec.md
+
+At minimum, the normalized tool-result taxonomy MUST distinguish:
+- `allowed_succeeded`
+- `allowed_runtime_error`
+- `permission_denied`
+- `user_declined`
+- `headless_ask_denied`
+- `filesafe_blocked`
+- `validation_blocked`
+- `cancelled`
+- `timed_out`
+- `post_scan_failure`
+
+ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md
+
+This document owns the normalized tool-result taxonomy and policy order. Provider docs emit observations; storage docs persist normalized results.
+
+ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md
+
+```
+### Intent 4 (Run: r-20260318-160350-01, Anchor: `### 8.2 Policy application order and invocation flow`, Op: replace_section)
+```markdown
+1. **When:** Policy is evaluated when a tool is about to be invoked. For CLI-based platforms, the provider or runner may observe tool calls in the stream, but Puppet Master remains authoritative for policy, terminal binding, and normalized outcome recording.
+2. **Resolve binding:** For shell-capable calls, determine project, workspace tab, cwd, requested shell profile, and whether the call should bind to an existing terminal session or create a new one.
+3. **Allow:** Pass through to platform (or execute built-in); emit `tool.invoked`; when shell execution occurs, write transcript and command-block observations into the canonical terminal model.
+4. **Deny:** Do not pass to platform; return a structured error to the agent; emit `tool.denied` when supported.
+5. **Ask:** In Assistant, show approval UI; on approve, treat as allow for that call (or session approval). In Orchestrator/Interview, if no UI exists, map to **deny** or a **pending-HITL** state when HITL is enabled.
+6. **FileSafe:** After permission allows the tool, FileSafe still applies (for example bash blocklists, write scope, sensitive-path guards).
+7. **Completion:** Normalize the executed outcome and persist enough data for later same-session reveal, history, analytics, and runtime reconciliation.
+
+ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/FileSafe.md, ContractName:Plans/storage-plan.md
+
+Shell-specific rules:
+- `Open in Terminal` later resolves to the same bound terminal session when that session still exists
+- a shell call blocked by permission or FileSafe does not create a success-shaped fallback terminal session
+- provider CLIs may stream shell observations, but Puppet Master records canonical `terminal_session_id`, normalized command identity, cwd, and outcome state
+- derived surfaces such as Output, Problems, and Ports consume these normalized records rather than inventing their own shell ownership
+
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Run_Modes.md
+
+```
+### Intent 5 (Run: r-20260318-160350-02, Anchor: `### 2.4.1 Central policy engine contract`, Op: replace_section)
+```markdown
+Every agent-usable tool attempt MUST pass through one canonical policy engine that resolves permission, approval/HITL, FileSafe, execution, terminal binding when relevant, and result normalization.
+ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md
+
+
+Canonical order:
+1. resolve tool identity and permission
+2. evaluate `allow` / `ask` / `deny`
+3. if `ask`, resolve approval or headless fallback
+4. apply FileSafe and other invocation validation
+5. resolve terminal or shell binding for shell-capable actions
+6. execute or reject
+7. normalize the terminal outcome for persistence, analytics, and reveal-linkback behavior
+
+ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/storage-plan.md, ContractName:Plans/CLI_Bridged_Providers.md
+
+Shell-binding rules:
+- `bash` and any canonical shell-backed execution path resolve through the terminal process-host contract when they create or bind shell state
+- non-interactive or hidden shell execution may suppress opening the terminal UI, but it still binds to canonical terminal-session state when execution actually occurs
+- denied or blocked shell calls do not mint fake live terminal sessions
+- chat command cards and other preview surfaces consume normalized terminal state rather than replacing terminal ownership
+
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FinalGUISpec.md
+
+At minimum, the normalized tool-result taxonomy MUST distinguish:
+ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md
+
+- `allowed_succeeded`
+- `allowed_runtime_error`
+- `permission_denied`
+- `user_declined`
+- `headless_ask_denied`
+- `filesafe_blocked`
+- `validation_blocked`
+- `cancelled`
+- `timed_out`
+- `post_scan_failure`
+
+ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md
+
+This document owns the normalized tool-result taxonomy and policy order. Provider docs emit observations; storage docs persist normalized results.
+
+ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md
+```
+### Intent 6 (Run: r-20260318-160350-02, Anchor: `### 8.2 Policy application order and invocation flow`, Op: replace_section)
+```markdown
+1. **When:** Policy is evaluated when a tool is about to be invoked. For CLI-based platforms, the provider or runner may observe tool calls in the stream, but Puppet Master remains authoritative for policy, terminal binding, and normalized outcome recording.
+2. **Resolve binding:** For shell-capable calls, determine project, workspace tab, cwd, requested shell profile, and whether the call should bind to an existing terminal session or create a new one.
+3. **Allow:** Pass through to platform (or execute built-in); emit `tool.invoked`; when shell execution occurs, write transcript and command-block observations into the canonical terminal model.
+4. **Deny:** Do not pass to platform; return a structured error to the agent; emit `tool.denied` when supported.
+5. **Ask:** In Assistant, show approval UI; on approve, treat as allow for that call (or session approval). In Orchestrator/Interview, if no UI exists, map to **deny** or a **pending-HITL** state when HITL is enabled.
+6. **FileSafe:** After permission allows the tool, FileSafe still applies (for example bash blocklists, write scope, sensitive-path guards).
+7. **Completion:** Normalize the executed outcome and persist enough data for later same-session reveal, history, analytics, and runtime reconciliation.
+
+ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/FileSafe.md, ContractName:Plans/storage-plan.md
+
+Shell-specific rules:
+- `Open in Terminal` later resolves to the same bound terminal session when that session still exists
+- a shell call blocked by permission or FileSafe does not create a success-shaped fallback terminal session
+- provider CLIs may stream shell observations, but Puppet Master records canonical `terminal_session_id`, normalized command identity, cwd, and outcome state
+- derived surfaces such as Output, Problems, and Ports consume these normalized records rather than inventing their own shell ownership
+
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Run_Modes.md
+
+```
+### Intent 7 (Run: r-20260320-164907-01, Anchor: `### 3.1 Tool table`, Op: insert_after)
+```markdown
+### 3.1A Debug-capable tool classification
+
+The tool registry must classify **debug-capable** tools as a cross-surface capability family rather than as an Assistant-only silo.
+
+Required registry rules:
+- `debug_capable` is metadata on a tool or capability, not a new tool ID
+- tools and capabilities may also carry usage tags such as `debug`, `evidence_capture`, `instrumentation`, `reproduction`, and `verification`
+- built-in tools commonly participating in this family include `read`, `grep`, `glob`, `list`, `bash`, the edit group, `logsearch`, `logread`, `lsp`, and `task`
+- browser automation capabilities, DAP controls, runtime-artifact export helpers, eligible MCP tools, and eligible custom tools may also join the family when the registry metadata says they are debug-capable
+
+ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/newtools.md
+
+Cross-surface rules:
+- Assistant Debug Mode is the chat entrypoint that most aggressively prefers this family
+- Orchestrator, Interview, and delegated runs may use the same debug-capable tools under the same permission, artifact, and visibility contracts
+- tool availability, denials, and degraded capability state continue to flow through the same requested/effective policy system and persisted event stream
+- classifying a tool as debug-capable does not authorize hidden evidence ingress or bypass the normal permission model
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/Contracts_V0.md
+
+```
+### Intent 8 (Run: r-20260320-164907-01, Anchor: `### 3.6A Task runtime addendum`, Op: insert_after)
+```markdown
+### 3.6B Delegated debug investigations
+
+Delegated runs launched through `task` may participate in an existing investigation.
+
+Required rules:
+- a delegated run launched inside an investigation inherits `investigation_id` plus a narrowed-or-equal permission snapshot
+- delegated runs may add evidence, instrumentation updates, and verification results to the shared investigation, but they must do so through the canonical investigation and runtime-artifact contracts
+- delegated runs must not create a second mutation-capable investigation against the same project/worktree unless a higher-level owner flow explicitly isolates the work in another worktree or host context
+- any delegated run that installs or mutates temporary instrumentation must also carry the cleanup contract for its own `instrumentation_id`
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/MiscPlan.md, ContractName:Plans/orchestrator-subagent-integration.md
+
+```
+### Intent 9 (Run: r-20260323-192127-01, Anchor: `### 2.3 Session vs run; subagents`, Op: replace_section)
+```markdown
+A PM subagent is a child run. It is not a special-case provider-local actor and it is not defined by provider-native agent-file syntax.
+
+ContractRef: ContractName:Plans/Personas.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md
+
+Canonical child-run identity fields:
+- `child_run_id`
+- `parent_run_id`
+- `thread_id`
+- `batch_id?`
+- `subgroup_id?`
+- `attempt_id?`
+- requested/effective Persona and runtime fields
+- effective provider invocation kind as additive adapter metadata
+
+Provider behavior may still differ. A canonical child run may map to:
+- a native provider subagent path
+- a native provider child-session path
+- a plain provider run
+
+That adapter-level difference does not change the PM child-run canon.
+
+ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Provider_OpenCode.md, ContractName:Plans/Models_System.md
+
+Subagents are disposable by default. Completion, cancellation, or failure normally ends that child. Follow-up work should usually spawn a new child rather than reopen an old one.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-memory-subsystem.md, ContractName:Plans/orchestrator-subagent-integration.md
+
+```
+### Intent 10 (Run: r-20260323-192127-01, Anchor: `### 3.6A Task runtime addendum`, Op: replace_section)
+```markdown
+The `task` tool launches canonical child runs.
+
+ContractRef: ContractName:Plans/Personas.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/Models_System.md
+
+Required task-tool launch contract:
+- validate the requested child against `subagent_registry` when the launch path names a subagent type.
+- resolve requested and effective Persona separately from requested and effective runtime surface.
+- classify each child as `required` or `optional` for parent progress.
+- inherit the parent permission ceiling and compatible capability universe, then narrow as needed.
+- preserve requested versus effective runtime surface, effort, and capability state in metadata.
+
+No-silent-fallback rules:
+- explicit user or command requests for child runtime surface must fail clearly or ask for a new choice if unavailable.
+- implicit orchestrator-selected runtime surfaces may fallback to another compatible surface.
+- fallback reason must be recorded in metadata.
+
+ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Commands_System.md, ContractName:Plans/storage-plan.md
+
+Copilot-native routing rule:
+- only a Copilot-rooted parent may launch a Copilot-native subagent path.
+- a non-Copilot parent must not route into Copilot-native subagent semantics.
+- the correct outcome is strict deny, not silent downgrade.
+
+ContractRef: ContractName:Plans/Provider_OpenCode.md, ContractName:Plans/Models_System.md, ContractName:Plans/Permissions_System.md
+
+Child lifecycle semantics exposed by `task`:
+- retry = same logical child with a new attempt.
+- reroute = same logical child task under a different effective runtime surface.
+- replacement = a new child run because the role or task shape changed materially.
+- cancellation is parent-controlled and explicit.
+- resume applies only to non-terminal interrupted or waiting children.
+
+The `task` tool must not treat command subtasks, interview children, crew members, or orchestrator children as different runtime classes. They all enter the same canonical child-run model.
+
+ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/interview-subagent-integration.md, ContractName:Plans/Commands_System.md
+
+```
+### Intent 11 (Run: r-20260323-192127-01, Anchor: `### 8.0 Event payloads (seglog)`, Op: replace_section)
+```markdown
+Subagent, crew, and context-shaping events must project from a single canonical family.
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md
+
+Required child lifecycle event families:
+- `subagent.spawn_requested`
+- `subagent.spawned`
+- `subagent.started`
+- `subagent.progress`
+- `subagent.work_delta`
+- `subagent.thought_delta`
+- `subagent.awaiting_parent`
+- `subagent.blocked`
+- `subagent.context_expansion_requested`
+- `subagent.user_input_requested`
+- `subagent.completed`
+- `subagent.failed`
+- `subagent.cancel_requested`
+- `subagent.cancelled`
+- `subagent.superseded`
+- `subagent.retry_requested`
+- `subagent.retried`
+- `subagent.rerouted`
+- `subagent.resumed`
+- `subagent.context_shrunk`
+- `subagent.context_rehydrated`
+
+Required crew event families:
+- `crew.created`
+- `crew.member_started`
+- `crew.member_completed`
+- `crew.message_posted`
+- `crew.completed`
+
+Minimum event payload identity fields:
+- `thread_id`
+- `parent_run_id`
+- `child_run_id?`
+- `batch_id?`
+- `subgroup_id?`
+- `attempt_id?`
+- requested/effective Persona and runtime fields where relevant
+- timestamp
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Provider_OpenCode.md
+
+```
+### Intent 12 (Run: r-20260323-192127-02, Anchor: `### 2.3 Session vs run; subagents`, Op: replace_section)
+```markdown
+A PM subagent is a child run. It is not a special-case provider-local actor and it is not defined by provider-native agent-file syntax.
+
+ContractRef: ContractName:Plans/Personas.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md
+
+Canonical child-run identity fields:
+- `child_run_id`
+- `parent_run_id`
+- `thread_id`
+- `batch_id?`
+- `subgroup_id?`
+- `attempt_id?`
+- requested/effective Persona and runtime fields
+- effective provider invocation kind as additive adapter metadata
+
+Provider behavior may still differ. A canonical child run may map to:
+- a native provider subagent path
+- a native provider child-session path
+- a plain provider run
+
+That adapter-level difference does not change the PM child-run canon.
+
+ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Provider_OpenCode.md, ContractName:Plans/Models_System.md
+
+Subagents are disposable by default. Completion, cancellation, or failure normally ends that child. Follow-up work should usually spawn a new child rather than reopen an old one.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-memory-subsystem.md, ContractName:Plans/orchestrator-subagent-integration.md
+
+```
+### Intent 13 (Run: r-20260323-192127-02, Anchor: `### 3.6A Task runtime addendum`, Op: replace_section)
+```markdown
+The `task` tool launches canonical child runs.
+
+ContractRef: ContractName:Plans/Personas.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/Models_System.md
+
+Required task-tool launch contract:
+- validate the requested child against `subagent_registry` when the launch path names a subagent type.
+- resolve requested and effective Persona separately from requested and effective runtime surface.
+- classify each child as `required` or `optional` for parent progress.
+- inherit the parent permission ceiling and compatible capability universe, then narrow as needed.
+- preserve requested versus effective runtime surface, effort, and capability state in metadata.
+
+No-silent-fallback rules:
+- explicit user or command requests for child runtime surface must fail clearly or ask for a new choice if unavailable.
+- implicit orchestrator-selected runtime surfaces may fallback to another compatible surface.
+- fallback reason must be recorded in metadata.
+
+ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Commands_System.md, ContractName:Plans/storage-plan.md
+
+Copilot-native routing rule:
+- only a Copilot-rooted parent may launch a Copilot-native subagent path.
+- a non-Copilot parent must not route into Copilot-native subagent semantics.
+- the correct outcome is strict deny, not silent downgrade.
+
+ContractRef: ContractName:Plans/Provider_OpenCode.md, ContractName:Plans/Models_System.md, ContractName:Plans/Permissions_System.md
+
+Child lifecycle semantics exposed by `task`:
+- retry = same logical child with a new attempt.
+- reroute = same logical child task under a different effective runtime surface.
+- replacement = a new child run because the role or task shape changed materially.
+- cancellation is parent-controlled and explicit.
+- resume applies only to non-terminal interrupted or waiting children.
+
+The `task` tool must not treat command subtasks, interview children, crew members, or orchestrator children as different runtime classes. They all enter the same canonical child-run model.
+
+ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/interview-subagent-integration.md, ContractName:Plans/Commands_System.md
+
+```
+### Intent 14 (Run: r-20260323-192127-02, Anchor: `### 8.0 Event payloads (seglog)`, Op: replace_section)
+```markdown
+Subagent, crew, and context-shaping events must project from a single canonical family.
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md
+
+Required child lifecycle event families:
+- `subagent.spawn_requested`
+- `subagent.spawned`
+- `subagent.started`
+- `subagent.progress`
+- `subagent.work_delta`
+- `subagent.thought_delta`
+- `subagent.awaiting_parent`
+- `subagent.blocked`
+- `subagent.context_expansion_requested`
+- `subagent.user_input_requested`
+- `subagent.completed`
+- `subagent.failed`
+- `subagent.cancel_requested`
+- `subagent.cancelled`
+- `subagent.superseded`
+- `subagent.retry_requested`
+- `subagent.retried`
+- `subagent.rerouted`
+- `subagent.resumed`
+- `subagent.context_shrunk`
+- `subagent.context_rehydrated`
+
+Required crew event families:
+- `crew.created`
+- `crew.member_started`
+- `crew.member_completed`
+- `crew.message_posted`
+- `crew.completed`
+
+Minimum event payload identity fields:
+- `thread_id`
+- `parent_run_id`
+- `child_run_id?`
+- `batch_id?`
+- `subgroup_id?`
+- `attempt_id?`
+- requested/effective Persona and runtime fields where relevant
+- timestamp
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Provider_OpenCode.md
+
+```
+### Intent 15 (Run: r-20260323-192127-03, Anchor: `### 2.3 Session vs run; subagents`, Op: replace_section)
+```markdown
+A PM subagent is a child run. It is not a special-case provider-local actor and it is not defined by provider-native agent-file syntax.
+
+ContractRef: ContractName:Plans/Personas.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md
+
+Canonical child-run identity fields:
+- `child_run_id`
+- `parent_run_id`
+- `thread_id`
+- `batch_id?`
+- `subgroup_id?`
+- `attempt_id?`
+- requested/effective Persona and runtime fields
+- effective provider invocation kind as additive adapter metadata
+
+Provider behavior may still differ. A canonical child run may map to:
+- a native provider subagent path
+- a native provider child-session path
+- a plain provider run
+
+That adapter-level difference does not change the PM child-run canon.
+
+ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Provider_OpenCode.md, ContractName:Plans/Models_System.md
+
+Subagents are disposable by default. Completion, cancellation, or failure normally ends that child. Follow-up work should usually spawn a new child rather than reopen an old one.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-memory-subsystem.md, ContractName:Plans/orchestrator-subagent-integration.md
+
+```
+### Intent 16 (Run: r-20260323-192127-03, Anchor: `### 3.6A Task runtime addendum`, Op: replace_section)
+```markdown
+The `task` tool launches canonical child runs.
+
+ContractRef: ContractName:Plans/Personas.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/Models_System.md
+
+Required task-tool launch contract:
+- validate the requested child against `subagent_registry` when the launch path names a subagent type.
+- resolve requested and effective Persona separately from requested and effective runtime surface.
+- classify each child as `required` or `optional` for parent progress.
+- inherit the parent permission ceiling and compatible capability universe, then narrow as needed.
+- preserve requested versus effective runtime surface, effort, and capability state in metadata.
+
+No-silent-fallback rules:
+- explicit user or command requests for child runtime surface must fail clearly or ask for a new choice if unavailable.
+- implicit orchestrator-selected runtime surfaces may fallback to another compatible surface.
+- fallback reason must be recorded in metadata.
+
+ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Commands_System.md, ContractName:Plans/storage-plan.md
+
+Copilot-native routing rule:
+- only a Copilot-rooted parent may launch a Copilot-native subagent path.
+- a non-Copilot parent must not route into Copilot-native subagent semantics.
+- the correct outcome is strict deny, not silent downgrade.
+
+ContractRef: ContractName:Plans/Provider_OpenCode.md, ContractName:Plans/Models_System.md, ContractName:Plans/Permissions_System.md
+
+Child lifecycle semantics exposed by `task`:
+- retry = same logical child with a new attempt.
+- reroute = same logical child task under a different effective runtime surface.
+- replacement = a new child run because the role or task shape changed materially.
+- cancellation is parent-controlled and explicit.
+- resume applies only to non-terminal interrupted or waiting children.
+
+The `task` tool must not treat command subtasks, interview children, crew members, or orchestrator children as different runtime classes. They all enter the same canonical child-run model.
+
+ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/interview-subagent-integration.md, ContractName:Plans/Commands_System.md
+
+```
+### Intent 17 (Run: r-20260323-192127-03, Anchor: `### 8.0 Event payloads (seglog)`, Op: replace_section)
+```markdown
+Subagent, crew, and context-shaping events must project from a single canonical family.
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md
+
+Required child lifecycle event families:
+- `subagent.spawn_requested`
+- `subagent.spawned`
+- `subagent.started`
+- `subagent.progress`
+- `subagent.work_delta`
+- `subagent.thought_delta`
+- `subagent.awaiting_parent`
+- `subagent.blocked`
+- `subagent.context_expansion_requested`
+- `subagent.user_input_requested`
+- `subagent.completed`
+- `subagent.failed`
+- `subagent.cancel_requested`
+- `subagent.cancelled`
+- `subagent.superseded`
+- `subagent.retry_requested`
+- `subagent.retried`
+- `subagent.rerouted`
+- `subagent.resumed`
+- `subagent.context_shrunk`
+- `subagent.context_rehydrated`
+
+Required crew event families:
+- `crew.created`
+- `crew.member_started`
+- `crew.member_completed`
+- `crew.message_posted`
+- `crew.completed`
+
+Minimum event payload identity fields:
+- `thread_id`
+- `parent_run_id`
+- `child_run_id?`
+- `batch_id?`
+- `subgroup_id?`
+- `attempt_id?`
+- requested/effective Persona and runtime fields where relevant
+- timestamp
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Provider_OpenCode.md
+
+```
+### Intent 18 (Run: r-20260328-192850-01, Anchor: `## 5. MCP integration (in scope)`, Op: replace_section)
+```markdown
+MCP tools enter the central tool registry and permission model. MCP server lifecycle is managed by PM.
+
+ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Executor_Protocol.md
+
+### Spawn policy (lazy-load)
+
+MCP servers MUST be spawned on the first tool call that requires them, NOT at PM startup. Startup-time MCP spawn is prohibited.
+
+ContractRef: ContractName:Plans/Architecture_Invariants.md, ContractName:Plans/Executor_Protocol.md
+
+### Startup and initialization
+
+- `startup_timeout_ms`: 10000 (10 seconds). If the server does not respond to the initialization handshake within this window, mark it `degraded` and do not retry automatically until user action or PM restart.
+- After startup, call `listTools()` to populate the tool registry for this server.
+- `listTools()` retry policy: 3 attempts, 1-second backoff between each. On persistent failure, use the last known stale tool list. Stale list is used until the next refresh cycle.
+
+ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Contracts_V0.md
+
+### Connection pool
+
+Each MCP server with `stdio` transport uses a **persistent subprocess connection pool**. PM MUST NOT spawn a new subprocess per tool call. Connection pool is per-server.
+
+For HTTP/SSE transport servers, PM maintains a persistent connection per configured server endpoint.
+
+ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Architecture_Invariants.md
+
+### Per-tool call timeout
+
+Default: 30 seconds per tool call. Configurable per-server in the MCP server config block. On timeout, the call is cancelled and the tool returns `failure_class=provider_transient`.
+
+ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Run_Modes.md
+
+### Tool list refresh
+
+`listTools()` is re-called (and the registry entry updated) on:
+- User-triggered "Refresh MCP server" action.
+- PM config change that affects the server.
+- Periodic TTL: every 5 minutes (300 seconds).
+
+Stale entries from a prior version of the list are removed from the registry on successful refresh.
+
+ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Contracts_V0.md
+
+### Windows MCP (stdio transport)
+
+On Windows, MCP stdio subprocesses MUST be started with `CREATE_NEW_PROCESS_GROUP` to isolate signal delivery. PM handles Windows subprocess termination via TerminateProcess after a 3-second grace period, not POSIX signal semantics.
+
+ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Architecture_Invariants.md
+
+### Pre-dispatch validation
+
+Before dispatching a tool call to an MCP server, PM MUST verify:
+1. The server is in `healthy` or `degraded` (stale-list) state — not `unavailable`.
+2. The tool name exists in the current (possibly stale) tool list for that server.
+3. The call passes the central permission model check for the `mcp.<server_id>/<tool_name>` key.
+
+ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Executor_Protocol.md
+```
+### Intent 19 (Run: r-20260328-192850-01, Anchor: `### 8.7 MCP server unavailable`, Op: replace_section)
+```markdown
+When an MCP server is unavailable (startup timeout, connection failure, or unhealthy state):
+
+ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Contracts_V0.md
+
+- Tools registered from that server MUST be marked unavailable in the registry.
+- Any tool call to a tool from an unavailable server returns `failure_class=provider_transient` immediately without attempting dispatch.
+- The run MUST NOT be killed by MCP server unavailability unless the tool call is on the critical path and the executor's retry budget is exhausted.
+- PM emits a `mcp.server.unavailable` seglog event with `server_id`, `reason`, and `last_healthy_at` fields.
+- The user sees a degraded indicator for the affected server in the MCP server list.
+- Auto-recovery: PM may attempt one reconnect after a configurable interval (default: 60 seconds) before giving up until user action.
+
+ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Run_Modes.md
+```
+### Intent 20 (Run: r-20260328-192938-01, Anchor: `### 3.1 Tool table`, Op: replace_section)
+```markdown
+| Tool | Purpose | Permission key | Limits / notes |
+|------|----------|----------------|----------------|
+| **bash** | Execute shell commands in project environment | `bash` | FileSafe applies (blocklist, path guards). CWD = project/workspace. Consider timeout and output size limits. |
+| **edit** | Modify existing files via exact string replacements | `edit` | Primary code-edit path. FileSafe write scope can restrict which files. |
+| **write** | Create new files or overwrite existing ones | (same as `edit`) | Same permission as edit; overwrites if file exists. |
+| **read** | Read file contents; supports line ranges | `read` | FileSafe security filter can block sensitive paths (.env, keys). Large files: line-range or size cap. |
+| **grep** | Search file contents with regex; file pattern filtering. Index-accelerated when sparse n-gram index is available (transparent; falls back to raw ripgrep when index is missing/building/corrupted) | `grep` | Respect .gitignore unless .ignore overrides. When index is available: query latency <20ms regardless of repo size. Fallback: raw ripgrep scan |
+| **glob** | Find files by glob pattern (e.g. `**/*.ts`) | `glob` | Returns paths sorted by modification time. Same ignore rules as grep. |
+| **list** | List files and directories; accepts glob filters | `list` | Same ignore rules. Depth/result limits to avoid huge listings. |
+| **patch** | Apply patch files to the codebase | (same as `edit`) | Unified diff; same write scope as edit. |
+| **multiedit** | Multiple edits in one operation (batch string replacements) | (same as `edit`) | OpenCode: edit permission covers edit, write, patch, multiedit. |
+| **webfetch** | Fetch web content from a URL | `webfetch` | URL allowlist/denylist (FileSafe); timeout; size cap. Document which domains are contacted. |
+| **websearch** | Search the web (discovery) | `websearch` | When enabled (env or config); may use Exa or cited-search MCP (newtools §8.2.1). |
+| **webextract** | Extract a target page/site | `webextract` | Targeted site/page extraction with audit visibility. |
+| **webresearch** | Run multi-source web research | `webresearch` | Research synthesis with explicit provenance and support-tier disclosure. |
+| **webcrawl** | Crawl a site or section | `webcrawl` | Multi-page crawl; bounded by permission and fan-out limits. |
+| **webmap** | Map site structure | `webmap` | Site-structure discovery with bounded traversal. |
+| **question** | Ask the user structured questions during execution | `question` | Supports both single-question and multi-question questionnaire flows. Only meaningful when HITL/UI can show prompts. |
+
+ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/FileSafe.md, ContractName:Plans/storage-plan.md
+```
+### Intent 21 (Run: r-20260328-192938-01, Anchor: `#### 3.5.A Additional semantics: chatsearch / logs / repo import and codesearch multi-tier (MVP)`, Op: replace_section)
+```markdown
+This subsection supplements the per-tool table below with required behavior for new MVP tools and multi-tier search backends.
+
+**chatsearch (project chat index)**
+- **Input:** `query: string`, optional `filters: { thread_id?, time_range? }`, `k?: number`.
+- **Output:** hits with `{ thread_id, message_id, ts, role, snippet, score }`.
+- **Scope rule:** MUST be project-scoped (per-project Tantivy index directory).
+- **Secrets policy:** Persisted chat index content MUST comply with PolicyRule:no_secrets_in_storage / INV-002 (mandatory strict secrets scrubbing before persistence).
+- **Context Lens integration:** When Context Lens mutes messages, chatsearch MUST exclude muted message_ids from results returned to the agent (or annotate them as excluded so the context packer can drop them).
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Permissions_System.md
+
+**codesearch (project workspace code search; MVP multi-tier)**
+- **Primary backend:** Tantivy code index (filesystem watcher + chunked documents; see Plans/storage-plan.md).
+- **Secondary backend:** LSP `workspace/symbol` and/or `documentSymbol` for symbol-aware search when LSP is active (Plans/LSPSupport.md).
+- **Fallback backend:** text grep (`grep` tool, index-accelerated when sparse n-gram index is available) when Tantivy index is unavailable or query requires regex semantics.
+- **Output:** Return best-effort results with stable `{ path, line_or_range, snippet, kind? }`.
+- **Ignore + sensitive guards:** Respect `.gitignore` by default; exclude `.env` and `.env.*` (allow `.env.example`) consistent with FileSafe + Permissions defaults.
+- **Secrets policy:** Any indexed/stored snippet text MUST be secrets-scrubbed before persistence to Tantivy.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/LSPSupport.md, ContractName:Plans/FileSafe.md
+
+**grep (index-accelerated regex search; MVP)**
+
+The `grep` tool is transparently accelerated by a per-project sparse n-gram regex index when available.
+
+ContractRef: ContractName:Plans/storage-plan.md, Invariant:INV-002
+
+- **Index architecture:** Per-project sparse n-gram index built locally. Variable-length n-grams extracted using frequency-weighted boundary detection. Index narrows candidate files; ripgrep verifies final results for correctness.
+- **Query flow:** Parse regex via `regex-syntax` → extract literals → normalize (strip CRLF, ASCII-lowercase) → compute covering n-gram set → hash (xxh3 64-bit) → binary search mmap'd lookup table → intersect/union posting lists (Roaring Bitmaps) → candidate file IDs → resolve to paths → filter by path/glob → add dirty-layer paths → ripgrep verification on candidates only.
+- **Conjunction vs disjunction:** Conjunction (all literals required): intersect posting lists. Disjunction (alternation, e.g. `foo|bar`): union-of-intersections — intersect within each alternative, then union across alternatives.
+- **Non-literal patterns:** When `re
+```
+[... truncated, full length: 5567 chars]
+### Intent 22 (Run: r-20260328-192938-01, Anchor: `### 8.0 Event payloads (seglog)`, Op: replace_section)
+```markdown
+Subagent, crew, and context-shaping events must project from a single canonical family.
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md
+
+Required child lifecycle event families:
+- `subagent.spawn_requested`
+- `subagent.spawned`
+- `subagent.started`
+- `subagent.progress`
+- `subagent.work_delta`
+- `subagent.thought_delta`
+- `subagent.awaiting_parent`
+- `subagent.blocked`
+- `subagent.context_expansion_requested`
+- `subagent.user_input_requested`
+- `subagent.completed`
+- `subagent.failed`
+- `subagent.cancel_requested`
+- `subagent.cancelled`
+- `subagent.superseded`
+- `subagent.retry_requested`
+- `subagent.retried`
+- `subagent.rerouted`
+- `subagent.resumed`
+- `subagent.context_shrunk`
+- `subagent.context_rehydrated`
+
+Required crew event families:
+- `crew.created`
+- `crew.member_started`
+- `crew.member_completed`
+- `crew.message_posted`
+- `crew.completed`
+
+Minimum event payload identity fields:
+- `thread_id`
+- `parent_run_id`
+- `child_run_id?`
+- `batch_id?`
+- `subgroup_id?`
+- `attempt_id?`
+- requested/effective Persona and runtime fields where relevant
+- timestamp
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Provider_OpenCode.md
+
+Tool invocation events:
+
+The `tool.invoked` event for `grep` MUST include an optional `index_used: boolean` field indicating whether the sparse n-gram index was used to accelerate the query. When `true`, the index narrowed the candidate file set before ripgrep verification. When `false` or absent, raw ripgrep was used on all files (fallback path).
+
+ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/Contracts_V0.md
+```
+### Intent 23 (Run: r-20260328-192938-02, Anchor: `### 3.1 Tool table`, Op: replace_section)
+```markdown
+| Tool | Purpose | Permission key | Limits / notes |
+|------|----------|----------------|----------------|
+| **bash** | Execute shell commands in project environment | `bash` | FileSafe applies (blocklist, path guards). CWD = project/workspace. Consider timeout and output size limits. |
+| **edit** | Modify existing files via exact string replacements | `edit` | Primary code-edit path. FileSafe write scope can restrict which files. |
+| **write** | Create new files or overwrite existing ones | (same as `edit`) | Same permission as edit; overwrites if file exists. |
+| **read** | Read file contents; supports line ranges | `read` | FileSafe security filter can block sensitive paths (.env, keys). Large files: line-range or size cap. |
+| **grep** | Search file contents with regex; file pattern filtering. Transparently accelerated by the per-project sparse n-gram index when available; the same backend also serves Search-panel regex mode | `grep` | Same limits and permission posture as existing grep. Respect .gitignore unless .ignore overrides. Stale snapshots remain queryable; fallback to raw ripgrep only when the index is missing, building without a valid snapshot, corrupted, disabled, or the query cannot be narrowed |
+| **glob** | Find files by glob pattern (e.g. `**/*.ts`) | `glob` | Returns paths sorted by modification time. Same ignore rules as grep. |
+| **list** | List files and directories; accepts glob filters | `list` | Same ignore rules. Depth/result limits to avoid huge listings. |
+| **patch** | Apply patch files to the codebase | (same as `edit`) | Unified diff; same write scope as edit. |
+| **multiedit** | Multiple edits in one operation (batch string replacements) | (same as `edit`) | OpenCode: edit permission covers edit, write, patch, multiedit. |
+| **webfetch** | Fetch web content from a URL | `webfetch` | URL allowlist/denylist (FileSafe); timeout; size cap. Document which domains are contacted. |
+| **websearch** | Search the web (discovery) | `websearch` | When enabled (env or config); may use Exa or cited-search MCP (newtools §8.2.1). |
+| **webextract** | Extract a target page/site | `webextract` | Targeted site/page extraction with audit visibility. |
+| **webresearch** | Run multi-source web research | `webresearch` | Research synthesis with explicit provenance and support-tier disclosure. |
+| **webcrawl** | Crawl a site or section | `webcrawl` | Multi-page crawl; bounded by permission and fan-out limits. |
+| **webmap** | Map site structure | `webmap` | Site-structure discovery with bounded traversal. |
+| **question** | Ask the user structured questions during execution | `question` | Supports both single-question and multi-question questionnaire flows. Only meaningful when HITL/UI can show prompts. |
+
+ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/FileSafe.md, ContractName:Plans/storage-plan.md
+```
+### Intent 24 (Run: r-20260328-192938-02, Anchor: `#### 3.5.A Additional semantics: chatsearch / logs / repo import and codesearch multi-tier (MVP)`, Op: replace_section)
+```markdown
+This subsection supplements the per-tool table below with required behavior for new MVP tools and multi-tier search backends.
+
+**chatsearch (project chat index)**
+- **Input:** `query: string`, optional `filters: { thread_id?, time_range? }`, `k?: number`.
+- **Output:** hits with `{ thread_id, message_id, ts, role, snippet, score }`.
+- **Scope rule:** MUST be project-scoped (per-project Tantivy index directory).
+- **Secrets policy:** Persisted chat index content MUST comply with PolicyRule:no_secrets_in_storage / INV-002 (mandatory strict secrets scrubbing before persistence).
+- **Context Lens integration:** When Context Lens mutes messages, chatsearch MUST exclude muted message_ids from results returned to the agent (or annotate them as excluded so the context packer can drop them).
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Permissions_System.md
+
+**codesearch (project workspace code search; MVP multi-tier)**
+- **Primary backend:** Tantivy code index (filesystem watcher + chunked documents; see Plans/storage-plan.md).
+- **Secondary backend:** LSP `workspace/symbol` and/or `documentSymbol` for symbol-aware search when LSP is active (Plans/LSPSupport.md).
+- **Fallback backend:** text grep (`grep` tool, index-accelerated when sparse n-gram index is available) when Tantivy index is unavailable or query requires regex semantics.
+- **Output:** Return best-effort results with stable `{ path, line_or_range, snippet, kind? }`.
+- **Ignore + sensitive guards:** Respect `.gitignore` by default; exclude `.env` and `.env.*` (allow `.env.example`) consistent with FileSafe + Permissions defaults.
+- **Secrets policy:** Any indexed/stored snippet text MUST be secrets-scrubbed before persistence to Tantivy.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/LSPSupport.md, ContractName:Plans/FileSafe.md
+
+**grep (index-accelerated regex search; MVP)**
+
+The `grep` tool keeps its existing interface and transparently uses a per-project sparse n-gram regex index when that index can narrow the query.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/GitHub_Integration.md
+
+- **External contract:** Same signature (`pattern`, `path?`, `glob?`), same project scoping, same result limit (1000), same timeout (30s), and same read-only permission posture as today's `grep`. Search-panel regex mode uses the same backend; there is no new user-facing or agent-facing tool name.
+- **Correctness model:** The index is only a candidate reducer. Final results always come from ripgrep verification on authoritative file content. Hash collisions, stale base snapshots, and broad dirty-layer candidate inclusion may increase candidate count, but MUST NOT change final correctness.
+ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/assistant-chat-design.md, Invariant:INV-002
+
+- **Sparse n-gram model:** This is not a classic fixed-trig
+```
+[... truncated, full length: 8237 chars]
+### Intent 25 (Run: r-20260328-192938-02, Anchor: `### 8.0 Event payloads (seglog)`, Op: replace_section)
+```markdown
+Subagent, crew, and context-shaping events must project from a single canonical family.
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md
+
+Required child lifecycle event families:
+- `subagent.spawn_requested`
+- `subagent.spawned`
+- `subagent.started`
+- `subagent.progress`
+- `subagent.work_delta`
+- `subagent.thought_delta`
+- `subagent.awaiting_parent`
+- `subagent.blocked`
+- `subagent.context_expansion_requested`
+- `subagent.user_input_requested`
+- `subagent.completed`
+- `subagent.failed`
+- `subagent.cancel_requested`
+- `subagent.cancelled`
+- `subagent.superseded`
+- `subagent.retry_requested`
+- `subagent.retried`
+- `subagent.rerouted`
+- `subagent.resumed`
+- `subagent.context_shrunk`
+- `subagent.context_rehydrated`
+
+Required crew event families:
+- `crew.created`
+- `crew.member_started`
+- `crew.member_completed`
+- `crew.message_posted`
+- `crew.completed`
+
+Minimum event payload identity fields:
+- `thread_id`
+- `parent_run_id`
+- `child_run_id?`
+- `batch_id?`
+- `subgroup_id?`
+- `attempt_id?`
+- requested/effective Persona and runtime fields where relevant
+- timestamp
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Provider_OpenCode.md
+
+Tool invocation events:
+
+The `tool.invoked` event for `grep` MUST include an optional `index_used: boolean` field indicating whether the sparse n-gram index was used to accelerate the query. When `true`, the index narrowed the candidate file set before ripgrep verification. When `false` or absent, raw ripgrep was used on all files (fallback path).
+
+ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/Contracts_V0.md
+```
+### Intent 26 (Run: r-20260328-192938-03, Anchor: `### 3.1 Tool table`, Op: replace_section)
+```markdown
+| Tool | Purpose | Permission key | Limits / notes |
+|------|----------|----------------|----------------|
+| **bash** | Execute shell commands in project environment | `bash` | FileSafe applies (blocklist, path guards). CWD = project/workspace. Consider timeout and output size limits. |
+| **edit** | Modify existing files via exact string replacements | `edit` | Primary code-edit path. FileSafe write scope can restrict which files. |
+| **write** | Create new files or overwrite existing ones | (same as `edit`) | Same permission as edit; overwrites if file exists. |
+| **read** | Read file contents; supports line ranges | `read` | FileSafe security filter can block sensitive paths (.env, keys). Large files: line-range or size cap. |
+| **grep** | Search file contents with regex; file pattern filtering. Transparently accelerated by the per-project sparse n-gram index when available; the same backend also serves Search-panel regex mode | `grep` | Same limits and permission posture as existing grep. Respect .gitignore unless .ignore overrides. Stale snapshots remain queryable; fallback to raw ripgrep only when the index is missing, building without a valid snapshot, corrupted, disabled, or the query cannot be narrowed |
+| **glob** | Find files by glob pattern (e.g. `**/*.ts`) | `glob` | Returns paths sorted by modification time. Same ignore rules as grep. |
+| **list** | List files and directories; accepts glob filters | `list` | Same ignore rules. Depth/result limits to avoid huge listings. |
+| **patch** | Apply patch files to the codebase | (same as `edit`) | Unified diff; same write scope as edit. |
+| **multiedit** | Multiple edits in one operation (batch string replacements) | (same as `edit`) | OpenCode: edit permission covers edit, write, patch, multiedit. |
+| **webfetch** | Fetch web content from a URL | `webfetch` | URL allowlist/denylist (FileSafe); timeout; size cap. Document which domains are contacted. |
+| **websearch** | Search the web (discovery) | `websearch` | When enabled (env or config); may use Exa or cited-search MCP (newtools §8.2.1). |
+| **webextract** | Extract a target page/site | `webextract` | Targeted site/page extraction with audit visibility. |
+| **webresearch** | Run multi-source web research | `webresearch` | Research synthesis with explicit provenance and support-tier disclosure. |
+| **webcrawl** | Crawl a site or section | `webcrawl` | Multi-page crawl; bounded by permission and fan-out limits. |
+| **webmap** | Map site structure | `webmap` | Site-structure discovery with bounded traversal. |
+| **question** | Ask the user structured questions during execution | `question` | Supports both single-question and multi-question questionnaire flows. Only meaningful when HITL/UI can show prompts. |
+
+ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/FileSafe.md, ContractName:Plans/storage-plan.md
+```
+### Intent 27 (Run: r-20260328-192938-03, Anchor: `#### 3.5.A Additional semantics: chatsearch / logs / repo import and codesearch multi-tier (MVP)`, Op: replace_section)
+```markdown
+This subsection supplements the per-tool table below with required behavior for new MVP tools and multi-tier search backends.
+
+**chatsearch (project chat index)**
+- **Input:** `query: string`, optional `filters: { thread_id?, time_range? }`, `k?: number`.
+- **Output:** hits with `{ thread_id, message_id, ts, role, snippet, score }`.
+- **Scope rule:** MUST be project-scoped (per-project Tantivy index directory).
+- **Secrets policy:** Persisted chat index content MUST comply with PolicyRule:no_secrets_in_storage / INV-002 (mandatory strict secrets scrubbing before persistence).
+- **Context Lens integration:** When Context Lens mutes messages, chatsearch MUST exclude muted message_ids from results returned to the agent (or annotate them as excluded so the context packer can drop them).
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Permissions_System.md
+
+**codesearch (project workspace code search; MVP multi-tier)**
+- **Primary backend:** Tantivy code index (filesystem watcher + chunked documents; see Plans/storage-plan.md).
+- **Secondary backend:** LSP `workspace/symbol` and/or `documentSymbol` for symbol-aware search when LSP is active (Plans/LSPSupport.md).
+- **Fallback backend:** text grep (`grep` tool, index-accelerated when sparse n-gram index is available) when Tantivy index is unavailable or query requires regex semantics.
+- **Output:** Return best-effort results with stable `{ path, line_or_range, snippet, kind? }`.
+- **Ignore + sensitive guards:** Respect `.gitignore` by default; exclude `.env` and `.env.*` (allow `.env.example`) consistent with FileSafe + Permissions defaults.
+- **Secrets policy:** Any indexed/stored snippet text MUST be secrets-scrubbed before persistence to Tantivy.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/LSPSupport.md, ContractName:Plans/FileSafe.md
+
+**grep (index-accelerated regex search; MVP)**
+
+The `grep` tool keeps its existing interface and transparently uses a per-project sparse n-gram regex index when that index can narrow the query.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/GitHub_Integration.md
+
+- **External contract:** Same signature (`pattern`, `path?`, `glob?`), same project scoping, same result limit (1000), same timeout (30s), and same read-only permission posture as today's `grep`. Search-panel regex mode uses the same backend; there is no new user-facing or agent-facing tool name.
+- **Correctness model:** The index is only a candidate reducer. Final results always come from ripgrep verification on authoritative file content. Hash collisions, stale base snapshots, and broad dirty-layer candidate inclusion may increase candidate count, but MUST NOT change final correctness.
+ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/assistant-chat-design.md, Invariant:INV-002
+
+- **Sparse n-gram model:** This is not a classic fixed-trig
+```
+[... truncated, full length: 8959 chars]
+### Intent 28 (Run: r-20260328-192938-03, Anchor: `### 8.0 Event payloads (seglog)`, Op: replace_section)
+```markdown
+Subagent, crew, and context-shaping events must project from a single canonical family.
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md
+
+Required child lifecycle event families:
+- `subagent.spawn_requested`
+- `subagent.spawned`
+- `subagent.started`
+- `subagent.progress`
+- `subagent.work_delta`
+- `subagent.thought_delta`
+- `subagent.awaiting_parent`
+- `subagent.blocked`
+- `subagent.context_expansion_requested`
+- `subagent.user_input_requested`
+- `subagent.completed`
+- `subagent.failed`
+- `subagent.cancel_requested`
+- `subagent.cancelled`
+- `subagent.superseded`
+- `subagent.retry_requested`
+- `subagent.retried`
+- `subagent.rerouted`
+- `subagent.resumed`
+- `subagent.context_shrunk`
+- `subagent.context_rehydrated`
+
+Required crew event families:
+- `crew.created`
+- `crew.member_started`
+- `crew.member_completed`
+- `crew.message_posted`
+- `crew.completed`
+
+Minimum event payload identity fields:
+- `thread_id`
+- `parent_run_id`
+- `child_run_id?`
+- `batch_id?`
+- `subgroup_id?`
+- `attempt_id?`
+- requested/effective Persona and runtime fields where relevant
+- timestamp
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Provider_OpenCode.md
+
+Tool invocation events:
+
+The `tool.invoked` event for `grep` MUST include an optional `index_used: boolean` field indicating whether the sparse n-gram index was used to accelerate the query. When `true`, the index narrowed the candidate file set before ripgrep verification. When `false` or absent, raw ripgrep was used on all files (fallback path).
+
+ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/Contracts_V0.md
+```
+## Doc: Plans/00-plans-index.md
+### Intent 1 (Run: r-20260312-160857-01, Anchor: ``, Op: append)
+```markdown
+## 2026-03-12 addendum — source control, GitHub Actions, and Docker Manager
+
+- `Plans/GitHub_Integration.md` now owns two distinct operational surfaces: Git-first Source Control and GitHub Actions.
+- `Plans/WorktreeGitImprovement.md` remains canonical for worktree correctness and runtime alignment, but Source Control is the primary user-facing worktree surface.
+- `Plans/Containers_Registry_and_Unraid.md` is the canonical owner for Docker Manager, including Publish / Unraid and project-focused Kubernetes placement.
+- `Plans/newtools.md` remains canonical for Docker/Actions doctor and result minima and must be read alongside the feature-owner docs.
+- `Plans/Contracts_V0.md`, `Plans/storage-plan.md`, `Plans/Permissions_System.md`, and `Plans/usage-feature.md` are required anti-drift companions for this packet.
+
+ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/Containers_Registry_and_Unraid.md, ContractName:Plans/newtools.md, ContractName:Plans/storage-plan.md
+```
+### Intent 2 (Run: r-20260312-203855-01, Anchor: `## Anti-drift layer (required reading order)`, Op: replace_section)
+```markdown
+Required reading order for the orchestrator rewrite canon-collapse is:
+1. `Plans/rewrite-tie-in-memo.md`
+2. `Plans/Decision_Log.md`
+3. `Plans/DRY_Rules.md`
+4. `Plans/Crosswalk.md`
+5. `Plans/Contracts_V0.md`
+6. `Plans/storage-plan.md`
+7. `Plans/Prompt_Pipeline.md`
+8. `Plans/Executor_Protocol.md`
+9. `Plans/Decision_Policy.md`
+10. `Plans/Progression_Gates.md`
+
+Primary consumer docs then follow:
+- `Plans/Orchestrator_Page.md`
+- `Plans/Run_Graph_View.md`
+- `Plans/FinalGUISpec.md`
+- `Plans/UI_Command_Catalog.md`
+- `Plans/Widget_System.md`
+- `Plans/usage-feature.md`
+- `Plans/FileManager.md`
+
+Rules:
+- owner docs are reconciled before consumer docs
+- consumer docs must not preserve stale tier-era or request-era canon as peer alternatives
+- summary and checklist mirrors are reconciled after owner and primary consumer docs
+
+ContractRef: ContractName:Plans/DRY_Rules.md, ContractName:Plans/Decision_Policy.md, ContractName:Plans/Progression_Gates.md
+
+```
+### Intent 3 (Run: r-20260313-152345-01, Anchor: `## Rewrite tie-in (2026-02-21)`, Op: replace_section)
+```markdown
+The project is intentionally adapting an OpenCode-style architecture and is mid-transition to a deterministic agent-loop core with:
+- **Providers** behind one unified **event model**
+- **Event-sourced storage**: `seglog` (canonical ledger) -> projections into `redb` (KV state/settings) + Tantivy (search)
+- **Central tool registry + policy engine** and a patch/apply/verify/rollback pipeline
+- **UI rewrite**: Rust + Slint (winit; Skia default)
+- **Auth**: subscription-first; Gemini API key remains an explicit allowed exception, but Gemini is one provider with mixed OAuth/API-key account pools, OAuth-first default preference under `auto`, and requested/effective auth/account identity carried across storage, runtime, setup/health, and usage
+
+ContractRef: ContractName:Plans/rewrite-tie-in-memo.md, ContractName:Plans/Multi-Account.md, ContractName:Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD
+
+See: `Plans/rewrite-tie-in-memo.md`, `Plans/Multi-Account.md`, `Plans/usage-feature.md`, and `Plans/FinalGUISpec.md`.
+
+ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md
+```
+### Intent 4 (Run: r-20260313-152345-02, Anchor: `## Rewrite tie-in (2026-02-21)`, Op: replace_section)
+```markdown
+The project is intentionally adapting an OpenCode-style architecture and is mid-transition to a deterministic agent-loop core with:
+- **Providers** behind one unified **event model**
+- **Event-sourced storage**: `seglog` (canonical ledger) -> projections into `redb` (KV state/settings) + Tantivy (search)
+- **Central tool registry + policy engine** and a patch/apply/verify/rollback pipeline
+- **UI rewrite**: Rust + Slint (winit; Skia default)
+- **Auth**: subscription-first; Gemini API key remains an explicit allowed exception, but Gemini is one provider with mixed OAuth/API-key account pools, OAuth-first default preference under `auto`, and requested/effective auth/account identity carried across storage, runtime, setup/health, and usage
+
+ContractRef: ContractName:Plans/rewrite-tie-in-memo.md, ContractName:Plans/Multi-Account.md, ContractName:Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD
+
+See: `Plans/rewrite-tie-in-memo.md`, `Plans/Multi-Account.md`, `Plans/usage-feature.md`, and `Plans/FinalGUISpec.md`.
+
+ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md
+```
+### Intent 5 (Run: r-20260313-152345-03, Anchor: `## Rewrite tie-in (2026-02-21)`, Op: replace_section)
+```markdown
+The project is intentionally adapting an OpenCode-style architecture and is mid-transition to a deterministic agent-loop core with:
+- **Providers** behind one unified **event model**
+- **Event-sourced storage**: `seglog` (canonical ledger) -> projections into `redb` (KV state/settings) + Tantivy (search)
+- **Central tool registry + policy engine** and a patch/apply/verify/rollback pipeline
+- **UI rewrite**: Rust + Slint (winit; Skia default)
+- **Auth**: subscription-first; Gemini API key remains an explicit allowed exception, but Gemini is one provider with mixed OAuth/API-key account pools, OAuth-first default preference under `auto`, and requested/effective auth/account identity carried across storage, runtime, setup/health, and usage
+
+ContractRef: ContractName:Plans/rewrite-tie-in-memo.md, ContractName:Plans/Multi-Account.md, ContractName:Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD
+
+See: `Plans/rewrite-tie-in-memo.md`, `Plans/Multi-Account.md`, `Plans/usage-feature.md`, and `Plans/FinalGUISpec.md`.
+
+ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md
+```
+### Intent 6 (Run: r-20260316-160450-01, Anchor: `## Plan map`, Op: replace_section)
+```markdown
+| Plan | Primary scope | Notes / canonical intent |
+|------|--------------|--------------------------|
+| `rewrite-tie-in-memo.md` | Locked rewrite decisions | Canonical for rewrite constraints + deltas to apply elsewhere |
+| `Section15_MVP_Promoted_Features_Spec.md` | Promoted Section 15 feature owner | Canonical owner for the promoted Section 15 shell, browser, project-switch, workspace-tab/window, thread-usage, catalog-lifecycle, terminal/dev-loop, and cross-feature defaults/identities/non-goals set. |
+| `agent-rules-context.md` | Application/project rules pipeline | Canonical for rules sourcing + injection into every agent/provider run |
+| `orchestrator-subagent-integration.md` | Main run loop policy: tiers, subagents, wiring validation | Registry-driven Persona set (canonical list §4: Phase, Task lang/domain/framework, Subtask, Iteration, Cross-phase including `explorer` and `requirements-quality-reviewer`). DRY:DATA:subagent_registry; task tool (Tools.md §3.6) validates against this list. Persona definitions, storage, schema, and injection: `Plans/Personas.md` (SSOT). Treat platform specifics as Provider concerns. |
+| `interview-subagent-integration.md` | Interview phases + subagent use | Phase assignments use the registry-driven Persona set; cross-phase (`ux-researcher`, `knowledge-synthesizer`, `context-manager`, `explorer`, `requirements-quality-reviewer`, etc.). Mirrors orchestrator patterns at interview-phase boundaries. Persona injection per `Plans/Personas.md` §5.2. |
+| `assistant-chat-design.md` | Assistant/Chat UX and modes | Canonical for chat/thread/session navigation, PM-native Ask/Plan semantics, slash-command behavior, shared question flows, activity transparency, `/web`, `/skill`, and plan/TODO semantics. |
+| `assistant-memory-subsystem.md` | Assistant-only memory continuity subsystem | Canonical SSOT for Assistant memory boundary, per-project memory stores (`assistant_memory.redb` + lexical/semantic indexes), decay scoring, capsule/retrieval budgets, and maintenance operations. Explicitly separate from rules pipeline contracts. |
+| `FinalGUISpec.md` | Slint GUI contract | Canonical UI source for shell/layout/view placement, responsive behavior, settings IA, chat widgets/activity cards/plan tracker, Agent Config > Skills, browser/terminal surfaces, and Interaction Mode (Expert/ELI5) + Chat ELI5 defaults/independence. |
+| `GitHub_Integration.md` | GitHub/Git IDE integration spec | Git panel (repo/branch/diff/operations), GitHub API (OAuth device-code, PRs, Actions), SSH remote dev servers, no-wizard project flows (Add Existing / New Local / New GitHub Repo). Cross-refs: Plans/GitHub_API_Auth_and_Flows.md, Plans/FileManager.md, Plans/chain-wizard-flexibility.md. |
+| `FileManager.md` | File Manager panel, IDE-style editor, @ mention, click-to-open | Canonical for file tree, editor (tabs, split panes, save, line numbers, syntax), image viewer, HTML/browser preview, detached preview behavior, `@` mention integration, terminal/brows
+```
+[... truncated, full length: 13950 chars]
+### Intent 7 (Run: r-20260317-181906-01, Anchor: `## Plan map`, Op: insert_after)
+```markdown
+### Browser canon reconciliation note (2026-03-18)
+
+The built-in browser packet uses the following ownership split:
+- `Section15_MVP_Promoted_Features_Spec.md` is the browser behavior owner for session classes, runtime model, command/action families, capture rules, permissions defaults, and recovery expectations
+- `rewrite-tie-in-memo.md` is the rewrite-baseline constraint owner for browser-runtime and preview/browser architectural assumptions
+- `FinalGUISpec.md`, `FileManager.md`, and `UI_Command_Catalog.md` are primary browser consumers
+- `assistant-chat-design.md`, `Prompt_Pipeline.md`, `Permissions_System.md`, `storage-plan.md`, `Runtime_Artifacts_Panel.md`, `newtools.md`, and `Wiring_Matrix.md` are reconciliation consumers
+
+`newfeatures.md` remains historical/origin material only for this topic. Normative browser behavior now lives in the promoted Section 15 owner and the reconciled subsystem SSOT docs above.
+
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/rewrite-tie-in-memo.md, ContractName:Plans/newfeatures.md
+```
+### Intent 8 (Run: r-20260317-181906-02, Anchor: `## Plan map`, Op: insert_after)
+```markdown
+### Browser canon reconciliation note (2026-03-19)
+
+The built-in browser packet uses the following ownership split:
+- `Section15_MVP_Promoted_Features_Spec.md` is the browser behavior owner for session classes, runtime model, action/command families, capture rules, permissions defaults, persistence hooks, recovery expectations, and anti-drift/non-goals
+- `rewrite-tie-in-memo.md` is the rewrite-baseline constraint owner for browser-runtime and preview/browser architectural assumptions
+- `FinalGUISpec.md`, `FileManager.md`, and `UI_Command_Catalog.md` are the primary browser consumers for placement, open flows, click-to-context, and user-visible commands
+- `assistant-chat-design.md`, `Prompt_Pipeline.md`, `Permissions_System.md`, `storage-plan.md`, `Runtime_Artifacts_Panel.md`, `newtools.md`, and `Wiring_Matrix.md` are reconciliation consumers for chat capture, prompt assembly, permissions, persistence, evidence, live testing/tooling, and command wiring
+
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/rewrite-tie-in-memo.md, ContractName:Plans/UI_Command_Catalog.md
+
+`newfeatures.md` remains historical/origin material only for this topic. Normative browser behavior now lives in the promoted Section 15 owner and the reconciled subsystem SSOT docs above.
+
+ContractRef: ContractName:Plans/newfeatures.md, ContractName:Plans/FileManager.md, ContractName:Plans/FinalGUISpec.md
+```
+### Intent 9 (Run: r-20260317-181906-03, Anchor: `## Plan map`, Op: insert_after)
+```markdown
+### Browser canon reconciliation note (2026-03-19)
+
+The built-in browser packet uses the following ownership split:
+- `Section15_MVP_Promoted_Features_Spec.md` is the browser behavior owner for session classes, runtime model, action/command families, capture rules, permissions defaults, persistence hooks, recovery expectations, and anti-drift/non-goals
+- `rewrite-tie-in-memo.md` is the rewrite-baseline constraint owner for browser-runtime and preview/browser architectural assumptions
+- `FinalGUISpec.md`, `FileManager.md`, and `UI_Command_Catalog.md` are the primary browser consumers for placement, open flows, click-to-context, and user-visible commands
+- `assistant-chat-design.md`, `Prompt_Pipeline.md`, `Permissions_System.md`, `storage-plan.md`, `Runtime_Artifacts_Panel.md`, `newtools.md`, and `Wiring_Matrix.md` are reconciliation consumers for chat capture, prompt assembly, permissions, persistence, evidence, live testing/tooling, and command wiring
+
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/rewrite-tie-in-memo.md, ContractName:Plans/UI_Command_Catalog.md
+
+`newfeatures.md` remains historical/origin material only for this topic. Normative browser behavior now lives in the promoted Section 15 owner and the reconciled subsystem SSOT docs above.
+
+ContractRef: ContractName:Plans/newfeatures.md, ContractName:Plans/FileManager.md, ContractName:Plans/FinalGUISpec.md
+```
+### Intent 10 (Run: r-20260320-164907-01, Anchor: `### Browser canon reconciliation note (2026-03-19)`, Op: insert_after)
+```markdown
+### Debug canon reconciliation note (2026-03-23)
+
+The Debug Mode packet uses the following ownership split:
+- `assistant-chat-design.md` is the Assistant Debug Mode owner for mode-strip behavior, Investigation Context visibility, thread lifecycle, and slash-command expectations
+- `Run_Modes.md`, `Permissions_System.md`, and `storage-plan.md` own runtime posture, Debug Automation Profile behavior, and persisted investigation identity/state
+- `Section15_MVP_Promoted_Features_Spec.md` owns browser-target debug behavior and the visible browser evidence / automation contract
+- `Runtime_Artifacts_Panel.md`, `Contracts_V0.md`, `Prompt_Pipeline.md`, and `Tools.md` own artifact grouping, event fields, prompt assembly, and shared debug-capable tool semantics
+- `FinalGUISpec.md`, `UI_Command_Catalog.md`, `newtools.md`, `GitHub_Integration.md`, and `feature-list.md` are primary consumers for shell placement, command routing, tooling discovery, remote scope, and summary coverage
+- `Commands_System.md`, `Glossary.md`, `FileManager.md`, `human-in-the-loop.md`, `Architecture_Invariants.md`, `orchestrator-subagent-integration.md`, `interview-subagent-integration.md`, `Wiring_Matrix.md`, `rewrite-tie-in-memo.md`, and `MiscPlan.md` are required reconciliation companions
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md
+
+```
+### Intent 11 (Run: r-20260323-192127-01, Anchor: `## Known cross-cutting duplication hotspots`, Op: replace_section)
+```markdown
+The highest-risk duplication hotspots for this planning set are now:
+
+- child-run canon versus provider-native subagent language
+- Persona selection versus subagent registry language
+- crew shared-state versus legacy memory-manager language
+- dynamic context shrinking versus compaction and Subcompact language
+- requested/effective runtime surface and effort language
+- blocked/awaiting-parent versus older denial or recovery aliases
+- Context Lens UI wording versus command and wiring ownership
+
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Personas.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Contracts_V0.md
+
+Rewrite-era guidance:
+- owner docs define the canon.
+- consumer docs should reference owner docs rather than re-describing the full model.
+- packetization and reconciliation should prefer rewrite-outright where stale canon would remain misleading if left in place.
+
+ContractRef: ContractName:Plans/Crosswalk.md, ContractName:Plans/rewrite-tie-in-memo.md, ContractName:Plans/Progression_Gates.md
+
+```
+### Intent 12 (Run: r-20260323-192127-02, Anchor: `## Known cross-cutting duplication hotspots`, Op: replace_section)
+```markdown
+The highest-risk duplication hotspots for this planning set are now:
+
+- child-run canon versus provider-native subagent language
+- Persona selection versus subagent registry language
+- crew shared-state versus legacy memory-manager language
+- dynamic context shrinking versus compaction and Subcompact language
+- requested/effective runtime surface and effort language
+- blocked/awaiting-parent versus older denial or recovery aliases
+- Context Lens UI wording versus command and wiring ownership
+
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Personas.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Contracts_V0.md
+
+Rewrite-era guidance:
+- owner docs define the canon.
+- consumer docs should reference owner docs rather than re-describing the full model.
+- packetization and reconciliation should prefer rewrite-outright where stale canon would remain misleading if left in place.
+
+ContractRef: ContractName:Plans/Crosswalk.md, ContractName:Plans/rewrite-tie-in-memo.md, ContractName:Plans/Progression_Gates.md
+
+```
+### Intent 13 (Run: r-20260323-192127-03, Anchor: `## Known cross-cutting duplication hotspots`, Op: replace_section)
+```markdown
+The highest-risk duplication hotspots for this planning set are now:
+
+- child-run canon versus provider-native subagent language
+- Persona selection versus subagent registry language
+- crew shared-state versus legacy memory-manager language
+- dynamic context shrinking versus compaction and Subcompact language
+- requested/effective runtime surface and effort language
+- blocked/awaiting-parent versus older denial or recovery aliases
+- Context Lens UI wording versus command and wiring ownership
+
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Personas.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Contracts_V0.md
+
+Rewrite-era guidance:
+- owner docs define the canon.
+- consumer docs should reference owner docs rather than re-describing the full model.
+- packetization and reconciliation should prefer rewrite-outright where stale canon would remain misleading if left in place.
+
+ContractRef: ContractName:Plans/Crosswalk.md, ContractName:Plans/rewrite-tie-in-memo.md, ContractName:Plans/Progression_Gates.md
+
+```
+### Intent 14 (Run: r-20260328-192938-01, Anchor: `## Plan map`, Op: insert_after)
+```markdown
+
+### Instant Grep (sparse n-gram index) canon reconciliation note
+
+The Instant Grep packet uses the following ownership split:
+- `Tools.md` is the primary owner for grep tool semantics, index-accelerated query flow, covering algorithm, fallback behavior, and `tool.invoked` analytics fields
+- `storage-plan.md` is the primary owner for regex index storage layout (§2.1), binary file formats, generation directory scheme, file watcher dual-consumer model (§2.4), and sensitive indexing guards
+- `FinalGUISpec.md` is the primary owner for status bar Indexing indicator (§3.2), Indexing settings section (§7.4.2), and Search panel index-acceleration UX (Search side-panel owner)
+- `GitHub_Integration.md` is the primary owner for remote project search index cache (§C.3), bare Git clone lifecycle, non-Git remote indexer binary, and cache settings
+- `assistant-chat-design.md`, `UI_Command_Catalog.md`, `Glossary.md`, `Architecture_Invariants.md`, `BinaryLocator_Spec.md`, `usage-feature.md`, `Wiring_Matrix.md`, and `00-plans-index.md` are reconciliation consumers
+
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/GitHub_Integration.md
+```
+### Intent 15 (Run: r-20260328-192938-02, Anchor: `## Plan map`, Op: insert_after)
+```markdown
+### Instant Grep canon reconciliation note (2026-03-30)
+
+The Instant Grep packet uses the following ownership split:
+- `Tools.md` is the primary owner for grep tool semantics, sparse-n-gram query flow, covering/fallback rules, and `tool.invoked.index_used`
+- `storage-plan.md` is the primary owner for regex-index storage layout, binary formats, dirty-layer lifecycle, publication, and startup recovery
+- `FinalGUISpec.md` is the primary owner for indexing settings, status-bar disclosure, Search ownership, and remote-cache administration surfaces
+- `GitHub_Integration.md` is the primary owner for remote Git/non-Git cache behavior, verification paths, staging, re-anchor, and no-silent-local-fallback reconciliation
+- `assistant-chat-design.md`, `UI_Command_Catalog.md`, `Glossary.md`, `Architecture_Invariants.md`, `BinaryLocator_Spec.md`, `usage-feature.md`, and `Wiring_Matrix.md` are required reconciliation consumers
+
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/GitHub_Integration.md
+```
+### Intent 16 (Run: r-20260328-192938-03, Anchor: `## Plan map`, Op: insert_after)
+```markdown
+### Instant Grep canon reconciliation note (2026-03-30)
+
+The Instant Grep packet uses the following ownership split:
+- `Tools.md` is the primary owner for grep tool semantics, sparse-n-gram query flow, covering/fallback rules, and `tool.invoked.index_used`
+- `storage-plan.md` is the primary owner for regex-index storage layout, binary formats, dirty-layer lifecycle, publication, and startup recovery
+- `FinalGUISpec.md` is the primary owner for indexing settings, status-bar disclosure, Search ownership, and remote-cache administration surfaces
+- `GitHub_Integration.md` is the primary owner for remote Git/non-Git cache behavior, verification paths, staging, re-anchor, and no-silent-local-fallback reconciliation
+- `assistant-chat-design.md`, `UI_Command_Catalog.md`, `Glossary.md`, `Architecture_Invariants.md`, `BinaryLocator_Spec.md`, `usage-feature.md`, and `Wiring_Matrix.md` are required reconciliation consumers
+
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/GitHub_Integration.md
+```
+## Doc: Plans/feature-list.md
+### Intent 1 (Run: r-20260312-160857-01, Anchor: `## Runtime Scheduler Recovery Summary Consolidation Addendum (2026-03-09)`, Op: insert_after)
+```markdown
+## Source Control, GitHub Actions, and Docker Manager MVP Consolidation Addendum (2026-03-12)
+
+### GUI and views
+- first-class `Source Control` side-panel surface with Changes, History, Graph, Worktrees, and Branches / Stash
+- first-class `GitHub Actions` side-panel surface with Current Branch, Workflows, and Settings
+- first-class `Docker Manager` side-panel surface with Containers, Images, Compose, Registries, Build / Bake, Publish / Unraid, and project-focused Kubernetes
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/Containers_Registry_and_Unraid.md
+
+### Orchestration and recovery
+- run-to-repo lineage and worktree ownership surfaced across Orchestrator tabs
+- run-to-workflow and workflow-to-diff correlation
+- publish/runtime/template and Kubernetes rollout linkage surfaced in Orchestrator and Run Graph
+- cross-surface `Open in Source Control`, `Open in GitHub Actions`, and `Open in Docker Manager` pivots
+
+ContractRef: ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/Run_Graph_View.md, ContractName:Plans/storage-plan.md
+
+### State and commands
+- Source Control, GitHub Actions, and Docker Manager panel state persisted per project where applicable
+- new canonical command families for Source Control, GitHub Actions, Docker Manager, and cross-surface pivots
+- blocked-state and requested-vs-effective rules remain product-wide behavior, not panel-local polish
+
+ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/Decision_Policy.md
+```
+### Intent 2 (Run: r-20260312-203855-01, Anchor: `## Part 1 - Planned and New Features (from Plans)`, Op: replace_section)
+```markdown
+### 1. Rewrite and architecture
+- node graph is the canonical orchestration model
+- `Feature Seam` and `Work Package` are first-class graph-owned objects
+- runtime blocked identity, requested/effective runtime identity, and route/open primitives are canonical cross-cutting contracts
+
+### 2. Chat and assistant
+- assistant chat consumes shared requested/effective runtime identity rather than defining local schema
+- chat navigation, usage pivots, and source-open behavior align to `route_target`, `OpenSubject`, and `OpenFile`
+
+### 3. GUI layout and shell
+- Orchestrator remains tab-first with `Progress`, `Seams`, `Node Graph`, `Evidence`, `History`, and `Ledger`
+- `Progress` is the only widget-composed Orchestrator tab
+- Source Control remains narrow and worktree-first
+
+### 4. Orchestration and subagents
+- `Package Overseer` and `Seam Overseer` are governance roles
+- default node worker policy is `subagent`
+- default retry policy is `fresh worker`
+- graph patching creates new graph generations while preserving historical lineage
+
+### 5. Usage, recovery, and analytics
+- usage correlation is runtime-first, not `tier_id`-first
+- blocked approvals and recovery use runtime blocked-episode identity
+- account pressure and account-switch history are first-class shared runtime records
+
+### 6. Git and worktree
+- lane/worktree lifecycle is split between Orchestrator operational truth and Source Control concrete Git actions
+- historical lane identity survives live worktree cleanup
+
+ContractRef: ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/Run_Graph_View.md, ContractName:Plans/usage-feature.md
+
+```
+### Intent 3 (Run: r-20260313-152345-01, Anchor: `### 1. Rewrite and architecture`, Op: replace_section)
+```markdown
+**Single deterministic agent loop.** Every backend is a Provider behind one unified session/event store, tool registry, and patch/edit pipeline. OpenCode-style provider abstraction, centralized config, and session orchestration make the main engine deterministic and reliable. Platform-specific runner terminology converges on Provider plus unified event model.
+
+**Event-sourced storage (no SQLite).** Storage is seglog as the canonical append-only event ledger, redb for durable KV state/projections/settings, and Tantivy for full-text search over chats, docs, and log summaries. Sessions and runs are replayable from seglog with deterministic projections into redb/Tantivy and checkpointing for resumability. Analytics scan jobs write rollups into redb for Usage, dashboards, and cross-surface attribution.
+
+**GUI rewrite (Rust + Slint).** Desktop UI switches to Rust and Slint with winit backend for Windows, macOS, and Linux. Default renderer is winit + Skia; fallback GPU is winit + FemtoVG-wgpu; emergency software fallback is kept for compatibility.
+
+**Future thin clients.** Mobile and web clients are thin clients against the desktop-owned core and unified event/command APIs.
+
+**Core reliability.** Tools are governed by a central policy engine. Edits go through an explicit patch/apply/verify/rollback pipeline. Plans/ remains the authoritative requirements source for orchestration, safe-edit, subagents, worktree/git, and tooling.
+
+ContractRef: ContractName:Plans/rewrite-tie-in-memo.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md
+
+**Provider and CLI.** Claude Code CLI and Cursor Agent CLI remain bridged Providers. Cursor / ACP remains optional future work only.
+
+**Gemini provider auth/account model.** Gemini is one DirectApi provider with mixed OAuth and API-key account pools. Default `requested_auth_mode` is `auto` with OAuth-first provider preference. Explicit `oauth` and explicit `api_key` requests do not silently cross-fallback. Requested vs effective auth/account identity is recorded across prompt assembly, storage, health, and usage. Gemini API key remains the explicit allowed exception to the broader subscription-first guidance, but OAuth remains first-class and default-preferred. Media follows the same Gemini auth/account rules as regular provider usage.
+
+ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD, ContractName:Plans/Media_Generation_and_Capabilities.md
+
+**Contract-Locked PlanGraph System.** Canonical node-based plan graph and execution remains unchanged in scope, with user-project outputs under `.puppet-master/project/**`, progression gates, verifier role, and Overseer protocol.
+
+ContractRef: ContractName:Plans/Project_Output_Artifacts.md, ContractName:Plans/Progression_Gates.md, ContractName:Plans/Executor_Protocol.md
+```
+### Intent 4 (Run: r-20260313-152345-02, Anchor: `### 1. Rewrite and architecture`, Op: replace_section)
+```markdown
+**Single deterministic agent loop.** Every backend is a Provider behind one unified session/event store, tool registry, and patch/edit pipeline. OpenCode-style provider abstraction, centralized config, and session orchestration make the main engine deterministic and reliable. Platform-specific runner terminology converges on Provider plus unified event model.
+
+**Event-sourced storage (no SQLite).** Storage is seglog as the canonical append-only event ledger, redb for durable KV state/projections/settings, and Tantivy for full-text search over chats, docs, and log summaries. Sessions and runs are replayable from seglog with deterministic projections into redb/Tantivy and checkpointing for resumability. Analytics scan jobs write rollups into redb for Usage, dashboards, and cross-surface attribution.
+
+**GUI rewrite (Rust + Slint).** Desktop UI switches to Rust and Slint with winit backend for Windows, macOS, and Linux. Default renderer is winit + Skia; fallback GPU is winit + FemtoVG-wgpu; emergency software fallback is kept for compatibility.
+
+**Future thin clients.** Mobile and web clients are thin clients against the desktop-owned core and unified event/command APIs.
+
+**Core reliability.** Tools are governed by a central policy engine. Edits go through an explicit patch/apply/verify/rollback pipeline. Plans/ remains the authoritative requirements source for orchestration, safe-edit, subagents, worktree/git, and tooling.
+
+ContractRef: ContractName:Plans/rewrite-tie-in-memo.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md
+
+**Provider and CLI.** Claude Code CLI and Cursor Agent CLI remain bridged Providers. Cursor / ACP remains optional future work only.
+
+**Gemini provider auth/account model.** Gemini is one DirectApi provider with mixed OAuth and API-key account pools. Default `requested_auth_mode` is `auto` with OAuth-first provider preference. Explicit `oauth` and explicit `api_key` requests do not silently cross-fallback. Requested vs effective auth/account identity is recorded across prompt assembly, storage, health, and usage. Gemini API key remains the explicit allowed exception to the broader subscription-first guidance, but OAuth remains first-class and default-preferred. Media follows the same Gemini auth/account rules as regular provider usage.
+
+ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD, ContractName:Plans/Media_Generation_and_Capabilities.md
+
+**Contract-Locked PlanGraph System.** Canonical node-based plan graph and execution remains unchanged in scope, with user-project outputs under `.puppet-master/project/**`, progression gates, verifier role, and Overseer protocol.
+
+ContractRef: ContractName:Plans/Project_Output_Artifacts.md, ContractName:Plans/Progression_Gates.md, ContractName:Plans/Executor_Protocol.md
+```
+### Intent 5 (Run: r-20260313-152345-03, Anchor: `### 1. Rewrite and architecture`, Op: replace_section)
+```markdown
+**Single deterministic agent loop.** Every backend is a Provider behind one unified session/event store, tool registry, and patch/edit pipeline. OpenCode-style provider abstraction, centralized config, and session orchestration make the main engine deterministic and reliable. Platform-specific runner terminology converges on Provider plus unified event model.
+
+**Event-sourced storage (no SQLite).** Storage is seglog as the canonical append-only event ledger, redb for durable KV state/projections/settings, and Tantivy for full-text search over chats, docs, and log summaries. Sessions and runs are replayable from seglog with deterministic projections into redb/Tantivy and checkpointing for resumability. Analytics scan jobs write rollups into redb for Usage, dashboards, and cross-surface attribution.
+
+**GUI rewrite (Rust + Slint).** Desktop UI switches to Rust and Slint with winit backend for Windows, macOS, and Linux. Default renderer is winit + Skia; fallback GPU is winit + FemtoVG-wgpu; emergency software fallback is kept for compatibility.
+
+**Future thin clients.** Mobile and web clients are thin clients against the desktop-owned core and unified event/command APIs.
+
+**Core reliability.** Tools are governed by a central policy engine. Edits go through an explicit patch/apply/verify/rollback pipeline. Plans/ remains the authoritative requirements source for orchestration, safe-edit, subagents, worktree/git, and tooling.
+
+ContractRef: ContractName:Plans/rewrite-tie-in-memo.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md
+
+**Provider and CLI.** Claude Code CLI and Cursor Agent CLI remain bridged Providers. Cursor / ACP remains optional future work only.
+
+**Gemini provider auth/account model.** Gemini is one DirectApi provider with mixed OAuth and API-key account pools. Default `requested_auth_mode` is `auto` with OAuth-first provider preference. Explicit `oauth` and explicit `api_key` requests do not silently cross-fallback. Requested vs effective auth/account identity is recorded across prompt assembly, storage, health, and usage. Gemini API key remains the explicit allowed exception to the broader subscription-first guidance, but OAuth remains first-class and default-preferred. Media follows the same Gemini auth/account rules as regular provider usage.
+
+ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD, ContractName:Plans/Media_Generation_and_Capabilities.md
+
+**Contract-Locked PlanGraph System.** Canonical node-based plan graph and execution remains unchanged in scope, with user-project outputs under `.puppet-master/project/**`, progression gates, verifier role, and Overseer protocol.
+
+ContractRef: ContractName:Plans/Project_Output_Artifacts.md, ContractName:Plans/Progression_Gates.md, ContractName:Plans/Executor_Protocol.md
+```
+### Intent 6 (Run: r-20260313-183219-01, Anchor: `##### Plans/Crosswalk.md`, Op: replace_section)
+```markdown
+- **DocumentCheckpoint.** Document-level restore points / coarse undo checkpoints (Crosswalk §3.11).
+- **DocumentInlineNotes / annotations.** Durable anchored annotations on the legacy note substrate with deterministic re-anchoring and conflict handling (Crosswalk §3.13).
+- **DocumentPane.** Live multi-document preview surface with statuses (writing/draft/needs-review/approved) and read-only protections (Crosswalk §3.7).
+- **DocumentReviewSurface.** Review routing surface for documents (tri-location review routing) (Crosswalk §3.8).
+- **ReviewFindingsSummary.** Structured review findings schema + rendering surface (Crosswalk §3.9).
+- **TargetedRevisionPass.** `Resubmit with Annotations` targeted revision workflow without triggering full review loop (Crosswalk §3.14).
+```
+### Intent 7 (Run: r-20260313-183219-01, Anchor: `##### Plans/storage-plan.md`, Op: replace_section)
+```markdown
+- **Document bundle persistence keys.** Persist doc-builder bundle state, durable annotations on `note_record.v1` lineage, targeted revision runs, thread-scoped composer-prep recovery, and final-review gating in redb (storage-plan §2.3).
+- **Event schema registry.** Central registry of event types/payload schemas for annotation creation/status, selection sent/blocked, revisions, and validation (storage-plan §7).
+- **JSONL mirror generation.** Human-readable JSONL mirror of seglog written by projector (storage-plan §2.4).
+```
+### Intent 8 (Run: r-20260313-183219-01, Anchor: `##### Plans/assistant-chat-design.md`, Op: replace_section)
+```markdown
+- **Context circle pop-out + compact now.** Context usage UI with pop-out detailed breakdown and a `Compact Now` action (Assistant chat design §25).
+- **Per-pass validation model/provider selectors.** Settings UI to select provider+model per validation pass (Pass 1/2/3) with audit mirroring to reports (Assistant chat design §26).
+- **Chat Persona mode + effective Persona display.** Chat supports manual/auto/hybrid Persona modes and must always show effective Persona + selection reason instead of opaque Auto state (Assistant chat design §27).
+- **Natural-language Persona summons in chat.** Chat recognizes explicit requests like `Use Explorer` or `Answer as a technical writer` as Persona overrides with turn/session scope semantics (Assistant chat design §27.3).
+- **Chat Persona aliases and fuzzy matching.** Persona requests resolve through canonical IDs, display names, aliases, and normalized natural-language forms (Assistant chat design §27.4).
+- **Subagent blocks show effective Persona/model/platform.** In-thread subagent blocks display effective Persona, platform, model, and skipped unsupported Persona controls when relevant (Assistant chat design §27.6-§27.7).
+- **Thread attention_required + clarification requests.** Thread state `attention_required` with structured clarification_request forms (yes/no, single/multi-choice, free text) and bounded clarification loops (Assistant chat design §11).
+- **Deep Plan annotations + document-selection attachments.** Deep Plan review uses durable annotations plus thread-scoped `document_selection_context` chips instead of a note-only/browser-only split (Assistant chat design §8.7, §28.4A).
+```
+### Intent 9 (Run: r-20260313-183219-01, Anchor: `##### Plans/FinalGUISpec.md`, Op: replace_section)
+```markdown
+- **Agent activity pane.** Read-only streaming subagent output pane with virtualization constraints (FinalGUISpec §7.19).
+- **Bottom panel multi-tool suite.** Terminal/Problems/Output/Ports/Browser/Debug integrated bottom panel with hot-reload and inspect modes (FinalGUISpec §7.20).
+- **Embedded document pane w/ annotations.** Live multi-doc preview with status badges, selection action palette, durable annotations, thread-scoped send-to-chat chips, and targeted resubmit-with-annotations flow (FinalGUISpec §7.19-§7.19.1).
+- **File manager drag-drop + conflict dialogs.** Explicit UI contract for drag/drop + conflict resolution dialogs in file manager panel (FinalGUISpec §7.17).
+```
+### Intent 10 (Run: r-20260316-160450-01, Anchor: `### 2. Chat and assistant`, Op: replace_section)
+```markdown
+**Chat modes.** Ask is read-only analysis. Plan is read-only until explicit execution and requires clarifying questions, research, and visible plan + TODO output before approval. Interview uses the shared question system. BrainStorm coordinates one Q&A/research phase before one plan. Crew consumes the same approved plan/TODO contract.
+
+**Chat controls.** Copy icons are always visible. `Stop`, `Edit`, and `Resend` apply only to the latest user message, with stop as immediate cancel and edit/resend rewinding later work. When scrolled away from the bottom, chat shows a jump-to-latest control with unseen-count badge.
+
+**Slash commands.** Canonical reserved built-ins are `/new`, `/model`, `/effort`, `/mode`, `/export`, `/compact`, `/stop`, `/resume`, `/rewind`, `/revert`, `/share`, `/settings`, `/doctor`, `/help`, `/web`, and `/skill`. `/cancel` is an alias path to `/stop`. Reserved built-ins are not overridable by custom commands.
+
+**Web and Site Reader.** `/web` exposes `search`, `extract`, `research`, `crawl`, and `map`. User-facing activity labels distinguish `Searching Web`, `Extracting Site`, `Researching Web`, `Crawling Site`, `Mapping Site`, and PM-native `Reading Site`. Final answers preserve source provenance and fallback visibility.
+
+**Question system.** PM supports both single-question and multi-question questionnaire flows. Users may answer in any order, required questions block submit, drafts auto-save, and dismiss pauses the flow explicitly.
+
+**Plan and TODO tracking.** Plan/Deep Plan emit normalized TODOs. The sticky plan panel is the authoritative tracker; inline chat updates are lightweight milestones. `todowrite` / `todoread` use the same normalized TODO schema.
+
+**Terminal and activity transparency.** Chat uses shared inline operation cards for commands, web work, file reads/changes, diffs, and subagent activity. Command cards preview shell-backed activity inline, while the canonical interactive session remains the Terminal surface and `Open in Terminal` focuses the same live session.
+
+**Skills.** Skill management lives in `Agent Config > Skills`; Skill Store is browse/install only. `/skill` is a lightweight invocation helper, not a management family.
+
+**Runtime identity display.** Chat displays shared requested/effective runtime state and frozen historical snapshots, but assistant/chat docs do not own the runtime identity schema.
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Tools.md
+```
+### Intent 11 (Run: r-20260320-164907-01, Anchor: `## Part 1 - Planned and New Features (from Plans)`, Op: insert_after)
+```markdown
+### 6A. Debug Mode and shared debug-capable tooling
+- Assistant Chat exposes `Debug` as a first-class primary mode distinct from the classical `Debugger` / DAP surface
+- Debug-capable tools remain shared platform capabilities across Assistant, Orchestrator, Interview, and delegated runs
+- investigations use canonical `investigation_id`, `instrumentation_id`, visible Investigation Context, and runtime-artifact linkage rather than hidden evidence ingress
+- default Debug behavior is fully automated, evidence-first reproduction / diagnosis / fix / verification / cleanup under a run-scoped Debug Automation Profile
+- remote Debug MVP applies to local projects and PM-managed remote-mode projects only; no arbitrary ad-hoc remote attach and no silent local fallback
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/GitHub_Integration.md
+
+```
+## Doc: Plans/Runtime_Artifacts_Panel.md
+### Intent 1 (Run: r-20260312-160857-01, Anchor: ``, Op: append)
+```markdown
+## Cross-Surface Operation Receipt Linkage Addendum (2026-03-12)
+
+Runtime artifacts and receipt-like summaries for this packet must stay on canonical runtime identity.
+
+Rules:
+- Source Control, GitHub Actions, Docker Manager, and Orchestrator must not invent isolated artifact-local receipt IDs when canonical run/attempt identity already exists.
+- If a receipt-like artifact is surfaced, it must preserve the canonical linkage fields needed to open the related surface in context.
+- cost-bearing receipt items continue to route to canonical Usage/Ledger identity.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/usage-feature.md, ContractName:Plans/Orchestrator_Page.md
+```
+### Intent 2 (Run: r-20260312-203855-01, Anchor: `## 5. Canonical IDs and task_id rule`, Op: replace_section)
+```markdown
+Runtime artifacts are attempt-native, bridge-aware records.
+
+Required common envelope fields include:
+- `artifact_id`
+- `artifact_kind`
+- `logical_artifact_id?`
+- `linked_artifact_id?`
+- `project_id`
+- `run_id`
+- `thread_id?`
+- `node_id?`
+- `attempt_id?`
+- `execution_role?`
+- `provider_attempt_ref?`
+- `usage_event_ref?`
+- `repo_id?`
+- `worktree_id?`
+- `branch_ref?`
+- `workflow_refs?`
+- `docker_refs?`
+- `kubernetes_refs?`
+- `operational_identity?`
+- `detail_ref?`
+- `content_ref?`
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/usage-feature.md, ContractName:Plans/Contracts_V0.md
+
+Rules:
+- `attempt_id` is the canonical local execution anchor
+- bridge refs such as `provider_attempt_ref`, `usage_event_ref`, and receipt refs remain joins rather than replacement primary keys
+- runtime artifact open flows resolve through `OpenSubject` and route/open contracts rather than through feature-local path guessing
+
+ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/Crosswalk.md, ContractName:Plans/FinalGUISpec.md
+
+```
+### Intent 3 (Run: r-20260317-164124-01, Anchor: `## 6. reasoning_tokens and cost_usage`, Op: replace_section)
+```markdown
+**reasoning_tokens:** Required in the usage/cost_usage schema (integer, minimum 0). In the UI, display the field only when value > 0.
+
+**cost_usage artifact:** Attribution record only. It uses the same canonical usage identity and normalized fields as the app-wide Usage page, the thread-scoped Context Detail Pane, Ledger, Run Graph, and Orchestrator usage displays.
+
+Required actions for `cost_usage` items:
+- **Show in Ledger** — navigate to the canonical Ledger surface with the matching usage identity in scope
+- **Show in Usage** — navigate to either app-wide Usage or the canonical thread Context Detail Pane depending on artifact scope, preserving the same run/thread filters
+
+ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/storage-plan.md
+
+Rules:
+- cost_usage artifacts do not create an artifact-local usage model
+- thread-scoped cost_usage artifacts land on the same Context Detail Pane used by the chat context indicator `More Details` action
+- app-wide cost_usage artifacts land on the canonical Usage page
+- when cost is derived from normalized token buckets rather than authoritative provider pricing, user-facing thread surfaces label it as `Estimated Cost`
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/usage-feature.md, ContractName:Plans/FinalGUISpec.md
+
+```
+### Intent 4 (Run: r-20260317-164124-02, Anchor: `## 6. reasoning_tokens and cost_usage`, Op: replace_section)
+```markdown
+**reasoning_tokens:** Required in the usage/cost_usage schema (integer, minimum 0). In the UI, display the field only when value > 0.
+
+**cost_usage artifact:** Attribution record only. It uses the same canonical usage identity and normalized fields as the app-wide Usage page, the thread-scoped Context Detail Pane, Ledger, Run Graph, and Orchestrator usage displays.
+
+Required actions for `cost_usage` items:
+- **Show in Ledger** — navigate to the canonical Ledger surface with the matching usage identity in scope
+- **Show in Usage** — navigate to either app-wide Usage or the canonical thread Context Detail Pane depending on artifact scope, preserving the same run/thread filters
+
+ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/storage-plan.md
+
+Rules:
+- cost_usage artifacts do not create an artifact-local usage model
+- thread-scoped cost_usage artifacts land on the same Context Detail Pane used by the chat context indicator `More Details` action
+- app-wide cost_usage artifacts land on the canonical Usage page
+- when cost is derived from normalized token buckets rather than authoritative provider pricing, user-facing thread surfaces label it as `Estimated Cost`
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/usage-feature.md, ContractName:Plans/FinalGUISpec.md
+
+```
+### Intent 5 (Run: r-20260317-164124-03, Anchor: `## 6. reasoning_tokens and cost_usage`, Op: replace_section)
+```markdown
+**reasoning_tokens:** Required in the usage/cost_usage schema (integer, minimum 0). In the UI, display the field only when value > 0.
+
+**cost_usage artifact:** Attribution record only. It uses the same canonical usage identity and normalized fields as the app-wide Usage page, the thread-scoped Context Detail Pane, Ledger, Run Graph, and Orchestrator usage displays.
+
+Required actions for `cost_usage` items:
+- **Show in Ledger** — navigate to the canonical Ledger surface with the matching usage identity in scope
+- **Show in Usage** — navigate to either app-wide Usage or the canonical thread Context Detail Pane depending on artifact scope, preserving the same run/thread filters
+
+ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/storage-plan.md
+
+Rules:
+- cost_usage artifacts do not create an artifact-local usage model
+- thread-scoped cost_usage artifacts land on the same Context Detail Pane used by the chat context indicator `More Details` action
+- app-wide cost_usage artifacts land on the canonical Usage page
+- when cost is derived from normalized token buckets rather than authoritative provider pricing, user-facing thread surfaces label it as `Estimated Cost`
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/usage-feature.md, ContractName:Plans/FinalGUISpec.md
+
+```
+### Intent 6 (Run: r-20260317-181906-01, Anchor: `## 8. Browser recordings`, Op: replace_section)
+```markdown
+Browser recordings and adjacent browser evidence must preserve the canonical browser session distinction.
+
+- evidence from `workspace_preview` or `detached_preview` retains owning project/workspace/browser-session identity
+- evidence from `automation_session` or `auth_session` does not imply that the underlying browser session is a persistent shell browser tab
+- screenshots, traces, videos, and recordings emitted from browser sessions route through the shared runtime artifact pipeline
+- actions such as `Send to Chat`, `Open`, or `Focus Browser` route back to the owning canonical browser session rather than invent a separate artifact-owned browser shell
+
+Browser evidence artifacts must carry enough metadata to rejoin the owning browser session and project context.
+
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/storage-plan.md, ContractName:Plans/UI_Command_Catalog.md
+```
+### Intent 7 (Run: r-20260317-181906-02, Anchor: `## 8. Browser recordings`, Op: replace_section)
+```markdown
+Browser recordings and adjacent browser evidence must preserve the canonical browser session distinction.
+
+Rules:
+- a recording created from `workspace_preview` or `detached_preview` retains the owning project/workspace/browser-session identity
+- a recording created from `automation_session` or `auth_session` does not imply that the underlying browser session is a persistent shell browser tab
+- screenshots, structured snapshots, traces, videos, and recordings emitted from browser sessions route through the shared runtime artifact pipeline rather than a browser-only store
+- actions such as `Send to Chat`, `Open`, or `Focus Browser` must route back to the owning canonical browser session rather than inventing a separate artifact-owned browser shell
+
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/storage-plan.md, ContractName:Plans/UI_Command_Catalog.md
+
+Browser evidence artifacts MUST carry enough metadata to rejoin the owning browser session and project context. Minimum fields are:
+- `artifact_id`
+- `project_id`
+- `browser_session_id`
+- `session_class`
+- `profile_scope`
+- `workspace_tab_id?`
+- `capture_scope?`
+- `created_at_utc`
+- any owning `run_id` / `thread_id` refs already required by the shared artifact envelope
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Contracts_V0.md
+
+`runtime_artifact.browser_recording` remains a required artifact type. Browser screenshots, traces, and videos emitted from browser sessions must align with the same ownership and open/focus semantics even when their concrete artifact type differs from `browser_recording`.
+
+Completed browser evidence should survive crash and recovery when possible.
+
+ContractRef: ContractName:Plans/newtools.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md
+```
+### Intent 8 (Run: r-20260317-181906-03, Anchor: `## 8. Browser recordings`, Op: replace_section)
+```markdown
+Browser recordings and adjacent browser evidence must preserve the canonical browser session distinction.
+
+Rules:
+- a recording created from `workspace_preview` or `detached_preview` retains the owning project/workspace/browser-session identity
+- a recording created from `automation_session` or `auth_session` does not imply that the underlying browser session is a persistent shell browser tab
+- screenshots, structured snapshots, traces, videos, and recordings emitted from browser sessions route through the shared runtime artifact pipeline rather than a browser-only store
+- actions such as `Send to Chat`, `Open`, or `Focus Browser` must route back to the owning canonical browser session rather than inventing a separate artifact-owned browser shell
+
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/storage-plan.md, ContractName:Plans/UI_Command_Catalog.md
+
+Browser evidence artifacts MUST carry enough metadata to rejoin the owning browser session and project context.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Contracts_V0.md
+
+Minimum fields are:
+- `artifact_id`
+- `project_id`
+- `browser_session_id`
+- `session_class`
+- `profile_scope`
+- `workspace_tab_id?`
+- `capture_scope?`
+- `created_at_utc`
+- any owning `run_id` / `thread_id` refs already required by the shared artifact envelope
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Contracts_V0.md
+
+`runtime_artifact.browser_recording` remains a required artifact type. Browser screenshots, traces, and videos emitted from browser sessions must align with the same ownership and open/focus semantics even when their concrete artifact type differs from `browser_recording`.
+
+Completed browser evidence should survive crash and recovery when possible.
+
+ContractRef: ContractName:Plans/newtools.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md
+```
+### Intent 9 (Run: r-20260320-164907-01, Anchor: `## 5. Canonical IDs and task_id rule`, Op: insert_after)
+```markdown
+## 5A. Debug investigation grouping, manifests, and exports
+
+Runtime artifacts may participate in a shared Debug investigation without changing artifact-family ownership.
+
+Required cross-artifact grouping fields are:
+- `investigation_id?`
+- `instrumentation_id?`
+- `evidence_role?` (`baseline`, `repro`, `diagnosis`, `fix`, `verification`, `cleanup`)
+- `verification_strength?` (`none`, `weak`, `strong`)
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/assistant-chat-design.md
+
+Grouping rules:
+- any runtime artifact may be grouped under an investigation when `investigation_id` is present
+- investigation grouping does not invent a new artifact family; it is an index and navigation layer over the canonical artifact records
+- `context_snapshot`, `tool_llm_trace`, `failed_attempts`, `restore_point`, `before_after_snapshot`, and `subagent_lineage` are required participants for Debug Mode when emitted
+- artifact open/focus actions must route to the owning target surface (browser session, terminal session, debugger surface, file diff, or usage surface) rather than to an artifact-local shell
+
+ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/UI_Command_Catalog.md
+
+Investigation bundle export is summary-first and pointer-based.
+
+Required bundle manifest fields are:
+- `schema_id = pm.investigation_bundle.schema.v1`
+- `bundle_id`
+- `investigation_id`
+- `target_summary`
+- `phase_history`
+- `context_items[]`
+- `artifact_refs[]`
+- `instrumentation_manifest[]`
+- `verification_summary`
+- `cleanup_state`
+- `redaction_and_omission_summary`
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Prompt_Pipeline.md
+
+Export and import rules:
+- raw screenshots, traces, logs, recordings, and diffs remain stored and opened through the shared runtime-artifact system; the bundle manifest references them instead of duplicating bytes inline
+- exporting an investigation writes `runtime_artifact.document` or equivalent manifest-linked metadata plus `debug.investigation.exported`
+- importing a bundle creates an `imported_bundle` debug target and preserves provenance about the external source rather than pretending the bundle is a live local runtime target
+- redacted, revoked, blocked, expired, and omitted items remain visible in the manifest summary so users can tell what was or was not carried forward
+
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/GitHub_Integration.md
+
+```
+## Doc: Plans/chain-wizard-flexibility.md
+### Intent 1 (Run: r-20260313-183219-01, Anchor: `### 5.5 Document review surfaces and generation order`, Op: replace_section)
+```markdown
+Requirements Doc Builder bundle review now uses a unified annotation + chat-handoff model instead of a note-only loop.
+
+#### 5.5.0 Bundle + doc state model
+
+**Bundle-level states (canonical):**
+- `idle`
+- `generating` (some docs `writing…`)
+- `awaiting_user_review` (generation complete; docs are `draft/needs-review`)
+- `revision_running` (`Resubmit with Annotations` targeted revision pass)
+- `awaiting_approvals` (user marks docs Approved/Done)
+- `ready_for_final_review` (all docs approved + no open annotations)
+- `final_review_running` (Multi-Pass Review)
+- `final_gate` (`Accept | Reject | Edit`)
+- `complete`
+- `error` / `interrupted` (resume supported)
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md
+
+**Doc-level states (canonical):**
+- `writing…` -> `draft` -> `approved`
+- `draft` <-> `changes-requested` (open annotations or reply-only targeted revision outcomes)
+- `needs-review` may be used as a doc badge when helpful
+
+ContractRef: Primitive:TargetedRevisionPass, ContractName:Plans/Crosswalk.md
+
+#### 5.5.1 Requirements Doc Builder flow (updated)
+
+1. Conversation phase.
+2. User confirms generation.
+3. Qualifying questions for `empty` and `thin` checklist sections only.
+4. Builder generates staged artifacts as a **bundle**, streaming writes into the Embedded Document Pane.
+5. Generation completes; docs become `draft` / `needs-review`.
+6. User reviews, optionally edits, creates durable annotations, and may send bounded selections to the page-owned chat.
+7. User clicks **Resubmit with Annotations** (targeted revision pass). This step can repeat as needed.
+8. User resolves remaining annotations and marks each doc **Approved/Done**.
+9. When all docs are Approved/Done and there are no open annotations, enable **Run Final Review**. Do not auto-run.
+10. Multi-Pass Review runs once by default and ends with a single gate: **Accept | Reject | Edit**.
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md
+
+**Hard rule:** `Resubmit with Annotations` MUST NOT trigger Multi-Pass Review.
+
+ContractRef: ContractName:Plans/Crosswalk.md
+
+#### 5.5.2 Resubmit with Annotations: targeted revision contract
+
+**Input:**
+- Current doc contents for docs with open durable annotations, or a user-selected subset
+- All open durable annotations in deterministic order by `doc_id`, source start offset, and `annotation_id`
+- Minimal context: document registry, per-doc approval state, requested/effective revision capability, and bounded provenance
+
+ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/storage-plan.md
+
+**Output:**
+- Updated doc text for modified docs
+- Replies for question/comment annotations
+- One result record per input annotation, in the same order, with `outcome = addressed | still_open | cannot_apply`, `addressed_explanation`, `updated_anchor?`, and `failure_code?`
+
+ContractRef: Primitive:Targe
+```
+[... truncated, full length: 4205 chars]
+### Intent 2 (Run: r-20260313-183219-01, Anchor: `### 5.6 Multi-Pass Review (Requirements Doc)`, Op: replace_section)
+```markdown
+Multi-Pass Review is the **final-review** step for the Requirements Doc Builder bundle. Cheap iteration happens through durable annotations plus `Resubmit with Annotations`, not by repeatedly running Multi-Pass Review.
+
+**Trigger (hard gate):**
+- Enabled only when all docs in the bundle are marked **Approved/Done**.
+- Enabled only when there are **no open annotations**; question/comment annotations count as open until the user resolves them.
+- User must explicitly click **Run Final Review**.
+- Must not auto-run when conditions become true.
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Crosswalk.md, ContractName:Plans/storage-plan.md
+
+**Separation rules:**
+- `Send selection to chat` chips do not satisfy or bypass the final-review gate.
+- Targeted revision and final review remain separate runtime actions with separate audit trails.
+- Interrupted targeted revision cleanup must preserve safe-point lineage and unresolved annotations until terminal resolution.
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/MiscPlan.md, ContractName:Plans/storage-plan.md
+```
+### Intent 3 (Run: r-20260316-160450-01, Anchor: `### 15.5 Clarification round cap`, Op: insert_after)
+```markdown
+### 15.6 Shared questionnaire alignment
+Clarification flows consume the shared question system used by Assistant Chat and Interview rather than a wizard-only prompt shape.
+
+Rules:
+- a clarification request may represent one question or a multi-question questionnaire
+- `question_ids[]` remain the canonical stable identifiers for clarification items across report, wizard, and thread surfaces
+- required questions block final submit
+- dismiss pauses the clarification flow rather than fabricating a successful answer set
+- resume behavior restores the outstanding questionnaire state or the persisted resolved outcome
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Contracts_V0.md
+```
+## Doc: Plans/Plugins_System.md
+### Intent 1 (Run: r-20260323-192127-01, Anchor: `### 7.3 Per-Persona plugin overrides`, Op: insert_after)
+```markdown
+### 7.4 Child-run plugin and MCP inheritance
+
+Plugin and MCP effects for child runs are inherited as an effective compatible subset, not as a blind copy of the parent environment.
+
+ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Tools.md, ContractName:Plans/Models_System.md
+
+Rules:
+- child-visible plugin behavior exists only when the child runtime path supports it and the parent effectively allowed it.
+- plugin behavior must not function as a backdoor that widens child permissions or tool authority.
+- MCP availability follows the same parent-ceiling and compatibility-subset rule.
+- requested versus effective dropped capability details should remain visible for debugging.
+
+ContractRef: ContractName:Plans/Skills_System.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md
+
+```
+### Intent 2 (Run: r-20260323-192127-02, Anchor: `### 7.3 Per-Persona plugin overrides`, Op: insert_after)
+```markdown
+### 7.4 Child-run plugin and MCP inheritance
+
+Plugin and MCP effects for child runs are inherited as an effective compatible subset, not as a blind copy of the parent environment.
+
+ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Tools.md, ContractName:Plans/Models_System.md
+
+Rules:
+- child-visible plugin behavior exists only when the child runtime path supports it and the parent effectively allowed it.
+- plugin behavior must not function as a backdoor that widens child permissions or tool authority.
+- MCP availability follows the same parent-ceiling and compatibility-subset rule.
+- requested versus effective dropped capability details should remain visible for debugging.
+
+ContractRef: ContractName:Plans/Skills_System.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md
+
+```
+### Intent 3 (Run: r-20260323-192127-03, Anchor: `### 7.3 Per-Persona plugin overrides`, Op: insert_after)
+```markdown
+### 7.4 Child-run plugin and MCP inheritance
+
+Plugin and MCP effects for child runs are inherited as an effective compatible subset, not as a blind copy of the parent environment.
+
+ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Tools.md, ContractName:Plans/Models_System.md
+
+Rules:
+- child-visible plugin behavior exists only when the child runtime path supports it and the parent effectively allowed it.
+- plugin behavior must not function as a backdoor that widens child permissions or tool authority.
+- MCP availability follows the same parent-ceiling and compatibility-subset rule.
+- requested versus effective dropped capability details should remain visible for debugging.
+
+ContractRef: ContractName:Plans/Skills_System.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md
+
+```
+### Intent 4 (Run: r-20260328-192850-01, Anchor: `## 3. Load order and execution model`, Op: insert_after)
+```markdown
+### 3.1 Auto-load prohibition
+
+PM MUST NOT auto-load executable plugin code from config without explicit user approval. Loading a plugin for the first time requires an explicit user confirmation step.
+
+ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Architecture_Invariants.md
+
+Required behavior:
+- First-time plugin load triggers an approval prompt showing the plugin's source, declared hooks, and requested capabilities.
+- User approval is stored persistently so subsequent loads of the same version do not re-prompt.
+- If plugin source changes (file hash change), the approval MUST be re-requested.
+
+ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/FinalGUISpec.md
+```
+### Intent 5 (Run: r-20260328-192850-01, Anchor: `### 4.1 Tool execution hooks`, Op: insert_after)
+```markdown
+#### 4.1.1 Hook re-check invariant
+
+If a plugin hook modifies tool arguments (via `before_tool` or equivalent pre-call hook), the modified arguments MUST be re-run through the permission check before the tool is dispatched. A hook MUST NOT bypass permission enforcement by modifying arguments after the permission check has already passed.
+
+ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Architecture_Invariants.md
+
+Required sequence for arg-touching hooks:
+1. Run permission check on original arguments.
+2. Run `before_tool` hook (may modify arguments).
+3. Re-run permission check on modified arguments.
+4. Dispatch tool only if re-check passes.
+
+ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Executor_Protocol.md
+
+#### 4.1.2 Signed verification for arg-touching hooks
+
+Plugins that declare arg-touching hooks MUST be signed or explicitly approved at a higher trust level than read-only hooks. This is because arg-touching hooks can be used to inject malicious arguments after permission checks.
+
+ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Architecture_Invariants.md
+```
+## Doc: Plans/human-in-the-loop.md
+### Intent 1 (Run: r-20260312-203855-01, Anchor: `## Tier Boundaries (DRY)`, Op: replace_section)
+```markdown
+Tier boundaries are not a co-equal execution model.
+
+Rules:
+- approvals do not bind to `tier_id` as the canonical execution scope
+- any surviving tier or phase labels are derived grouping/view concepts only
+- approval and recovery flows bind to runtime blocked episodes anchored by `run_id`, `node_id`, `blocked_sequence`, and `attempt_id?`
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Orchestrator_Page.md
+
+```
+### Intent 2 (Run: r-20260312-203855-01, Anchor: `### Canonical HITL request contract`, Op: replace_section)
+```markdown
+The canonical human-in-the-loop contract is a blocked-runtime overlay, not a separate request-centric orchestration model.
+
+Required runtime-facing fields are:
+- `run_id`
+- `node_id`
+- `blocked_sequence`
+- `attempt_id?`
+- `blocked_reason_code`
+- `allowed_action_ids[]`
+- `approval_scope_key`
+- `detail_ref?`
+- `approver_identity?`
+
+Rules:
+- `waiting_approval` is the canonical blocked reason for approval pauses
+- `cmd.runtime.approve` and `cmd.runtime.decline` are the canonical approval/decline commands
+- `cmd.graph.approve_hitl` and `cmd.graph.deny_hitl` do not remain live canon
+- `request_id` may persist for compatibility lineage only and must not remain the primary action target
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/storage-plan.md
+
+Action-family rules:
+- approve/continue resumes the blocked episode using the runtime-owned action set
+- decline keeps the blocked decision historically visible and records the chosen compensating action when one exists
+- skip, abort, retry from safe point, and retry fresh remain action-family decisions surfaced through `allowed_action_ids[]`
+
+ContractRef: ContractName:Plans/Decision_Policy.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Run_Graph_View.md
+
+```
+### Intent 3 (Run: r-20260320-164907-01, Anchor: `### Canonical HITL request contract`, Op: insert_after)
+```markdown
+### Debug automation front-door grants
+
+Debug Mode may ask for a run-scoped front-door grant that covers repeated low-risk investigation actions.
+
+Required rules:
+- the grant remains represented through the canonical blocked-runtime overlay rather than through a new request-centric debug approval model
+- the approval record is anchored by the owning blocked episode and investigation identity
+- shared runtime actions remain canonical; Debug Mode does not invent a separate approval transport
+- declining the grant keeps the investigation alive in a degraded or blocked state when possible rather than silently discarding the investigation
+
+ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md
+
+Scope rules:
+- the front-door grant may cover repeated low-risk evidence reads and declared-scope temporary instrumentation actions only
+- high-risk mutations, auth/state mutation, and publish-side effects still require their own explicit confirmations
+- revoking the grant or finishing the investigation revokes the front-door scope as well
+
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/GitHub_Integration.md
+
+```
+## Doc: Plans/Widget_System.md
+### Intent 1 (Run: r-20260312-203855-01, Anchor: `# Widget System -- Cross-Cutting Specification`, Op: replace_section)
+```markdown
+## 1. Scope and non-scope
+Widget composition remains important, but it is no longer a blanket page-model for every major surface.
+
+In scope:
+- Dashboard widgets
+- Usage widgets
+- Orchestrator `Progress` widgets
+
+Not in scope:
+- `Seams` as a widget canvas
+- `Node Graph` as a widget canvas
+- `Evidence` as a widget canvas
+- `History` as a widget canvas
+- `Ledger` as a widget canvas
+
+ContractRef: ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Crosswalk.md
+
+## 2. Hostability and data contracts
+Widgets consume stable projections and canonical records. They do not define page semantics.
+
+Rules:
+- widget config changes presentation, local filtering, and layout only
+- widget-level filters inherit page/project/focused-run context and do not invent independent run scope
+- a widget action routes through canonical commands and route/open contracts rather than bypassing them
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Contracts_V0.md
+
+## 3. Layout persistence
+Layout persistence uses app-default with project override.
+
+Rules:
+- the default layout key remains stable per page/surface
+- project-specific overrides may diverge from the app default
+- run-level layout persistence is not canonical for Orchestrator `Progress`
+- migration from legacy `dashboard_layout:v1` must retire stale orchestration-hostability assumptions rather than preserve them as peer canon
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Decision_Policy.md, ContractName:Plans/Orchestrator_Page.md
+
+```

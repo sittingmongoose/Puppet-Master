@@ -1,0 +1,909 @@
+## Doc: Plans/assistant-chat-design.md
+### Intent 1 (Run: r-20260318-160350-02, Anchor: `## 22. Live Testing Tools and Hot Reload`, Op: replace_section)
+```markdown
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/FinalGUISpec.md
+
+Live testing and hot reload are dev-session operations.
+
+Rules:
+- assistant-invoked dev actions map to stable UI commands and visible shell state changes
+- `start hot reload dev mode`, `start dev server`, and `run tests in watch mode` are user-facing intents that resolve to canonical `cmd.dev.*` or terminal command IDs
+- the chat surface shows whether a dev session is starting, active, failed, stopping, stopped, or restored as historical state
+- output routes into the canonical Terminal, Output, Problems, Debug Console, and Ports surfaces owned by the shell; chat does not create a parallel dev-output model
+- project switch or workspace-tab close must surface explicit consequences for any active dev session
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/FileManager.md
+
+### Dev-session and terminal binding
+- a dev session may own or link multiple terminal sessions without collapsing them into one PTY identity
+- `Show Output`, `Show Problems`, and `Show Ports` reveal the surfaces linked to the current `dev_session_id`
+- `Open in Terminal` from a dev-status row reveals the primary or last-active `terminal_session_id` for that dev session when one exists
+- stopping a dev session preserves historical shell evidence and linked surface history even when the live process has exited
+
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/storage-plan.md
+
+### Project-switch and close rules
+- switching projects recalculates effective shell, tool, and dev-session state for the new project context
+- background activity from the old project remains visible through badges and attention surfaces tied to its own project and session identities
+- closing a workspace tab or terminal tab with an active dev session requires explicit consequence disclosure; Puppet Master MUST NOT silently orphan the background workflow by default
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/Run_Modes.md
+
+```
+### Intent 2 (Run: r-20260319-030558-01, Anchor: `## 9. File Manager, IDE-style editor, and @ Mention`, Op: replace_section)
+```markdown
+Chat consumes file context through explicit file-reference handoff and canonical editor/file-open contracts.
+
+Rules:
+- `@` mention and picker flows may discover files and symbols, but actual file insertion into the composer is represented as visible chips
+- `cmd.chat.add_file_reference { project_id, thread_id?, path, line_range? }` is the canonical file-reference insertion command
+- file references are file-only in MVP; folder insertion is out of scope
+- clicking a file chip or file citation opens through the shared open-file contract rather than through chat-local navigation rules
+
+ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/FinalGUISpec.md
+
+Restore and review boundaries:
+- `cmd.chat.revert` is the canonical entrypoint for `Revert last agent edit`
+- omitted `target_message_id` resolves to the latest assistant turn in the current thread with persisted file mutations
+- if that assistant turn touched multiple files, the revert applies to the whole turn across all affected files
+- `cmd.chat.rewind` remains conversation-history rewind only
+- Chat may preview or summarize diff/review context, but Source Control owns hunk actions, compare targets, and conflict resolution
+
+ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/Wiring_Matrix.md
+
+Search boundary:
+- chat search/history retrieval is chat-domain retrieval only
+- project-wide find-in-files and replace-in-files remain Search side-panel owned
+- semantic symbol/reference lookup remains editor/LSP owned even when chat launches it
+
+ContractRef: ContractName:Plans/LSPSupport.md, ContractName:Plans/FileManager.md, ContractName:Plans/storage-plan.md
+
+```
+### Intent 3 (Run: r-20260319-030558-01, Anchor: `### 23.1 Gaps (all adopted as MVP)`, Op: replace_section)
+```markdown
+The following MVP gap closures are now adopted as normative behavior for chat integration:
+
+- visible file-reference chips rather than hidden context injection
+- explicit `cmd.chat.add_file_reference` ownership for file handoff
+- explicit separation between `cmd.chat.revert` (file restore) and `cmd.chat.rewind` (conversation rewind)
+- chat consumption of Search, Source Control, and LSP results without taking over their owner responsibilities
+- browser/preview and remote recovery copy aligned with the shared requested/effective and no-silent-fallback contracts
+
+ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/GitHub_Integration.md
+
+```
+### Intent 4 (Run: r-20260319-030558-02, Anchor: `## 9. File Manager, IDE-style editor, and @ Mention`, Op: replace_section)
+```markdown
+Chat consumes file context through explicit file-reference handoff and canonical editor/file-open contracts.
+
+Rules:
+- `@` mention and picker flows may discover files and symbols, but actual file insertion into the composer is represented as visible chips
+- `cmd.chat.add_file_reference { project_id, thread_id?, path, line_range? }` is the canonical file-reference insertion command
+- file references are file-only in MVP; folder insertion is out of scope
+- clicking a file chip or file citation opens through the shared open-file contract rather than through chat-local navigation rules
+
+ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/FinalGUISpec.md
+
+Restore and review boundaries:
+- `cmd.chat.revert` is the canonical entrypoint for `Revert last agent edit`
+- omitted `target_message_id` resolves to the latest assistant turn in the current thread with persisted file mutations
+- if that assistant turn touched multiple files, the revert applies to the whole turn across all affected files
+- `cmd.chat.rewind` remains conversation-history rewind only
+- Chat may preview or summarize diff/review context, but Source Control owns hunk actions, compare targets, and conflict resolution
+
+ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/Wiring_Matrix.md
+
+Search boundary:
+- chat search/history retrieval is chat-domain retrieval only
+- project-wide find-in-files and replace-in-files remain Search side-panel owned
+- semantic symbol/reference lookup remains editor/LSP owned even when chat launches it
+
+ContractRef: ContractName:Plans/LSPSupport.md, ContractName:Plans/FileManager.md, ContractName:Plans/storage-plan.md
+
+```
+### Intent 5 (Run: r-20260319-030558-02, Anchor: `### 23.1 Gaps (all adopted as MVP)`, Op: replace_section)
+```markdown
+The following MVP gap closures are now adopted as normative behavior for chat integration:
+
+- visible file-reference chips rather than hidden context injection
+- explicit `cmd.chat.add_file_reference` ownership for file handoff
+- explicit separation between `cmd.chat.revert` (file restore) and `cmd.chat.rewind` (conversation rewind)
+- chat consumption of Search, Source Control, and LSP results without taking over their owner responsibilities
+- browser/preview and remote recovery copy aligned with the shared requested/effective and no-silent-fallback contracts
+
+ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/GitHub_Integration.md
+
+```
+### Intent 6 (Run: r-20260320-164907-01, Anchor: `## 1. Modes Overview`, Op: replace_section)
+```markdown
+### 1.0 Primary Assistant mode strip
+
+The primary Assistant mode strip exposes five stable choices: `Ask`, `Agent`, `Debug`, `Plan`, and `Deep Plan`.
+
+| Primary Assistant mode | Purpose | Canonical runtime posture | Default execution posture | Primary outputs | Default next step |
+|---|---|---|---|---|---|
+| **Ask** | Read-only explanation, inspection, and research | `ask` | no execution | answer, guidance, cited findings | stay read-only or switch modes |
+| **Agent** | Standard execution workflow for implementation and iteration | `regular` by default, `yolo` only when explicitly chosen | execution-capable | edits, commands, artifacts, verification | continue normal execution |
+| **Debug** | Evidence-first automated diagnosis, fix, verification, and cleanup | `regular` by default; `yolo` only by explicit opt-in | execution-capable investigation | Investigation Context, bounded evidence, fix attempts, verification, cleanup status | continue, export bundle, or close the investigation |
+| **Plan** | Faster, lighter planning for medium-complexity asks | `plan` | read-only | lightweight plan artifact + normalized TODO list | user reviews, then executes or queues |
+| **Deep Plan** | Heavier planning for larger, riskier, or high-uncertainty asks | `plan` | read-only | rich planning artifact + normalized TODO list | user reviews in editor/doc pane, then executes or queues |
+
+ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/UI_Command_Catalog.md
+
+Specialized workflows such as `Interview`, `BrainStorm`, and `Crew` remain supported, but they do not replace the primary Assistant mode strip. They are specialized overlays or routed flows that still normalize through the shared requested/effective runtime and overlay model.
+
+ContractRef: ContractName:Plans/interview-subagent-integration.md, ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Run_Modes.md
+
+### 1.0A Planning workflow rules
+
+Planning-time rules for both `Plan` and `Deep Plan` remain:
+- planning is read-only with respect to project files
+- any planning artifact created during the planning run is a Puppet Master-controlled draft, not a normal repo file by default
+- approval is required before the assistant can switch from planning into execution
+- execution after approval reuses the approved plan/TODO state and runs under `regular` or `yolo`, never under `plan`
+- queueing affects only post-approval execution, never the planning-time read-only run
+
+ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/storage-plan.md
+
+### 1.0B Debug Mode contract
+
+Debug Mode is the explicit Assistant entrypoint for PM's fully automated, evidence-first debugging workflow.
+
+Required rules:
+- Debug Mode is stronger than a behavioral hint. When selected, the assistant is expected to proactively use debug-capable tools, bounded evidence capture, and verification loops when policy and capabilities 
+```
+[... truncated, full length: 7623 chars]
+### Intent 7 (Run: r-20260320-164907-01, Anchor: `### 5.1 Reserved built-ins`, Op: insert_after)
+```markdown
+#### `/mode debug`
+
+`/mode debug` remains a reserved built-in routed through `cmd.chat.mode` with payload `{ mode: "debug" }`.
+
+Required behavior:
+- invoking `/mode debug` switches the thread into the Debug overlay and either resumes the active investigation or opens the canonical target-discovery flow
+- `/mode debug` does not create a hidden secondary thread or hidden background mode state
+- entering Debug from `Plan` or `Deep Plan` leaves planning and creates an execution-capable thread posture; existing plan artifacts remain visible as ordinary context, not as an active planning lock
+- leaving Debug does not silently discard Investigation Context; completed or superseded investigations remain historically visible until explicitly closed or revoked
+
+ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Commands_System.md, ContractName:Plans/Run_Modes.md
+
+```
+### Intent 8 (Run: r-20260320-164907-01, Anchor: `## 11. Threads and chat management`, Op: insert_after)
+```markdown
+### 11.0A Debug investigation lifecycle and reopen semantics
+
+Threads may contain ordinary turns, historical investigations, and at most one active investigation at a time.
+
+Required lifecycle rules:
+- a thread may hold multiple historical investigations, but only one investigation may be `active` for prompt injection and mutation-capable automation at a time
+- choosing a new debug target in a thread with an active investigation must default to `continue current investigation`; switching to a different target requires explicit supersede behavior that marks the older investigation `superseded`
+- `resolved`, `failed`, `cancelled`, and `superseded` investigations reopen as historical views by default; they do not silently restart automation, instrumentation, or browser sessions
+- `attention_required`, `blocked`, and `failed_cleanup` investigations reopen as the same investigation with the same `investigation_id`, outstanding approvals, and pending cleanup state when possible
+- thread restore must rehydrate the visible Investigation Context header, linked artifacts, requested/effective debug posture, and frozen target bindings without silently rebinding to a different target
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/Runtime_Artifacts_Panel.md
+
+Recovery and branch rules:
+- `cmd.chat.resume` remains the canonical resume path for recoverable Debug investigations; there is no debug-local alternate resume pipeline
+- `cmd.chat.rewind` remains conversation-only and MUST NOT erase persisted investigation artifacts or runtime evidence
+- file revert or restore actions remain owned by the canonical file-restore pipeline rather than by thread-local debug history
+- when linked runtime identities expire across restart or disconnect, the thread must surface revalidation requirements rather than silently minting replacement identities
+
+ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/FileSafe.md, ContractName:Plans/GitHub_Integration.md
+
+```
+### Intent 9 (Run: r-20260320-164907-01, Anchor: `## 12. Context usage display`, Op: insert_after)
+```markdown
+### 12.0A Investigation Context for Debug threads
+
+Debug threads expose a visible **Investigation Context** alongside the normal context-usage affordances.
+
+Investigation Context is the live, user-visible bundle of bounded evidence, target metadata, temporary instrumentation state, and verification outcomes that the assistant may use while an investigation is active.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Runtime_Artifacts_Panel.md
+
+Required header fields:
+- `investigation_id`
+- `primary_target`
+- `debug_target_kind`
+- `current_phase`
+- `final_or_intermediate_state`
+- `verification_strength?`
+- `attention_reason_code?`
+- `blocked_reason_code?`
+- `active_instrumentation_count`
+- `last_updated_at_utc`
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Glossary.md
+
+Required per-item states:
+- `active`
+- `redacted`
+- `revoked`
+- `blocked`
+- `expired`
+- `omitted`
+
+Only `active` and `redacted` items may be serialized into prompt context. `revoked`, `blocked`, `expired`, and `omitted` items remain visible for audit but must not be serialized as successful context.
+
+ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Permissions_System.md
+
+Visibility rules:
+- Investigation Context is separate from ordinary browser/document composer chips
+- ordinary browser capture remains explicit and user-triggered
+- Debug auto-ingestion is allowed only inside an active investigation and must create visible Investigation Context items rather than hidden messages
+- every Investigation Context item must expose provenance, timestamp, redaction/truncation state, and a revoke action
+- raw logs, traces, screenshots, and recordings remain owned by Runtime Artifacts; Investigation Context carries bounded summaries and refs rather than raw unbounded payloads
+
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/UI_Command_Catalog.md
+
+Required actions from the Investigation Context surface:
+- `Open target`
+- `Open artifacts`
+- `Export bundle`
+- `Revoke item`
+- `Show raw in Context Detail Pane`
+
+ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/FileManager.md
+
+```
+### Intent 10 (Run: r-20260320-170511-01, Anchor: `### 13.3 Bash and terminal ownership`, Op: replace_section)
+```markdown
+Assistant Chat may preview shell-backed work inline, but the canonical interactive runtime remains the terminal workspace.
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Run_Modes.md
+
+Rules:
+- one inline command card still corresponds to one observed command invocation or session reference.
+- `Open in Terminal` and `Show Terminal` resolve to the exact referenced terminal session, workgroup, and leaf pane when that linkage exists.
+- chat owns compact audit and preview receipts; the bottom runtime terminal workspace owns the canonical PTY layout and interaction state.
+- the bottom runtime workspace uses workgroups and subtabs rather than one flat strip of unrelated tabs.
+- editor-embedded terminal panels are secondary presentations of existing terminal leaf panes and do not become independent chat-owned runtimes.
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Wiring_Matrix.md
+
+```
+### Intent 11 (Run: r-20260320-170511-01, Anchor: `### Dev-session and terminal binding`, Op: replace_section)
+```markdown
+A dev session may own or link multiple terminal sessions without collapsing them into one PTY identity.
+
+Rules:
+- a dev session may span multiple workgroups, leaf panes, and editor-embedded terminal panels.
+- `Show Output`, `Show Problems`, and `Show Ports` reveal the surfaces linked to the current `dev_session_id` without changing the canonical owning runtime records.
+- `Open in Terminal` from a dev-status row reveals the primary or last-active terminal leaf pane for that dev session when one exists.
+- closing a workgroup or pane that is mirrored in the editor stack must remove or update the associated editor panel references.
+- if a pane exists only in the editor stack, the bottom workspace surfaces placeholder guidance rather than pretending the pane no longer exists.
+- stopping a dev session preserves historical shell evidence and linked surface history even when the live process has exited.
+
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/storage-plan.md
+
+```
+### Intent 12 (Run: r-20260320-170511-02, Anchor: `### 13.3 Bash and terminal ownership`, Op: replace_section)
+```markdown
+Assistant Chat may preview shell-backed work inline, but the canonical interactive runtime remains the terminal workspace.
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Run_Modes.md
+
+Rules:
+- one inline command card still corresponds to one observed command invocation or session reference.
+- `Open in Terminal` and `Show Terminal` resolve to the exact referenced terminal session, workgroup, and leaf pane when that linkage exists.
+- chat owns compact audit and preview receipts; the bottom runtime terminal workspace owns the canonical PTY layout and interaction state.
+- the bottom runtime workspace uses workgroups and subtabs rather than one flat strip of unrelated tabs.
+- editor-embedded terminal panels are secondary presentations of existing terminal leaf panes and do not become independent chat-owned runtimes.
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Wiring_Matrix.md
+
+```
+### Intent 13 (Run: r-20260320-170511-02, Anchor: `### Dev-session and terminal binding`, Op: replace_section)
+```markdown
+A dev session may own or link multiple terminal sessions without collapsing them into one PTY identity.
+
+Rules:
+- a dev session may span multiple workgroups, leaf panes, and editor-embedded terminal panels.
+- `Show Output`, `Show Problems`, and `Show Ports` reveal the surfaces linked to the current `dev_session_id` without changing the canonical owning runtime records.
+- `Open in Terminal` from a dev-status row reveals the primary or last-active terminal leaf pane for that dev session when one exists.
+- closing a workgroup or pane that is mirrored in the editor stack must remove or update the associated editor panel references.
+- if a pane exists only in the editor stack, the bottom workspace surfaces placeholder guidance rather than pretending the pane no longer exists.
+- stopping a dev session preserves historical shell evidence and linked surface history even when the live process has exited.
+
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/storage-plan.md
+
+```
+### Intent 14 (Run: r-20260323-192127-01, Anchor: `## 14. Subagents & Crew`, Op: replace_section)
+```markdown
+Subagents and crews use the PM child-run model. A subagent is a child run with its own identity, lifecycle, requested/effective runtime state, and inspectable history. Subagents are disposable by default: spawn, run, complete/cancel/fail, then remain in history instead of being treated as reusable long-lived actors.
+
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md
+
+### Inline subagent cards
+
+Every child run MUST appear inline in the parent thread as a visually distinct subagent card.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/FinalGUISpec.md
+
+Collapsed card content:
+
+| Field | Requirement |
+|---|---|
+| Persona | Show the effective child Persona label. |
+| Task | Show the child task label in plain language. |
+| Status | Show the current status badge. |
+| Provider/model | Shown on hover, matching the hover metadata pattern used by other chat bubbles. |
+
+Expanded panel content:
+
+| Region | Requirement |
+|---|---|
+| Work stream | Live progress and work activity visible while the child is running. |
+| Thought stream | Visible and visually distinct from the work stream. |
+| State block | Shows blocked, awaiting-parent, failure, or cancellation reason when relevant. |
+| Context state | Shows relevant context-shaping disclosures, including context-expansion/rehydration requests and whether dynamic context shrinking affected the child. |
+| Result block | Shows a concise final outcome summary once the child completes. |
+
+ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md
+
+### Child status taxonomy
+
+The chat thread and child-run runtime MUST use the same visible status vocabulary.
+
+| Status | Meaning |
+|---|---|
+| `queued` | Child exists but has not started active execution yet. |
+| `running` | Child is actively executing or streaming work. |
+| `awaiting_parent` | Child is paused pending parent action, clarification, or more context. |
+| `blocked` | Child cannot proceed because of tool, permission, policy, provider, or runtime restriction. |
+| `complete` | Child finished successfully. |
+| `failed` | Child attempted execution and ended unsuccessfully. |
+| `cancelled` | Child was intentionally stopped before completion. |
+
+Signal mapping rules:
+- `clarification_needed`, `user_input_requested`, and `context_expansion_requested` render as `awaiting_parent`.
+- policy/tool/provider/runtime denials render as `blocked`.
+- replacement/supersession is preserved as terminal reason metadata even when the visible terminal status is `cancelled`.
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/storage-plan.md
+
+### Parallel fan-out, batch cards, and subgroup inspection
+
+Parallel child spawning is a first-class behavior. The thread must not assume only one or two children exist.
+```
+[... truncated, full length: 5022 chars]
+### Intent 15 (Run: r-20260323-192127-01, Anchor: `## 15. Plan Mode + Crew Mode`, Op: replace_section)
+```markdown
+Plan-mode and crew-mode rules must align with the PM child-run contract.
+
+ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Prompt_Pipeline.md
+
+### Plan-mode delegated work
+
+`ask` and `plan` may launch delegated child runs only for read-only research or analysis.
+
+ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/Tools.md
+
+Rules:
+- no code-writing, file mutation, or execution child may be launched from `ask` or `plan`.
+- required planning dependencies may still be child runs as long as they remain read-only.
+- parent mode is a hard ceiling; a child may narrow but must not widen parent authority.
+- unresolved required planning children keep the plan provisional rather than falsely complete.
+
+### Crew-mode planning interaction
+
+Crew is an overlay, not a new runtime-mode enum. A crew launched from `plan` remains read-only; a crew launched from `regular` or `yolo` inherits those parent ceilings and guardrails.
+
+ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Models_System.md, ContractName:Plans/orchestrator-subagent-integration.md
+
+### Crew selection flow
+
+When crew mode is first invoked for a relevant scope:
+- if a valid default crew exists, ask whether to use the default crew.
+- otherwise ask which models to use.
+- after model selection, resolve and confirm provider/runtime mapping where ambiguity or restriction-sensitive mapping exists.
+- if any crew member is configured to use Copilot, the entire crew normalizes to Copilot as a crew-level provider constraint.
+
+ContractRef: ContractName:Plans/Models_System.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/CLI_Bridged_Providers.md
+
+```
+### Intent 16 (Run: r-20260323-192127-01, Anchor: `### 17.6 Context Lens (Mute / Focus / Subcompact) — user-directed context shaping (thread-local)`, Op: replace_section)
+```markdown
+Context Lens is the user-facing thread-local context-shaping control.
+
+ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/FinalGUISpec.md
+
+Placement and control shape:
+- the control lives in the top-right of the chat window.
+- it appears immediately to the right of the chat search bar.
+- it renders as an icon with a dropdown arrow.
+- opening the dropdown exposes `Mute`, `Focus`, `Subcompact`, and `Turn Off`.
+
+Mode behavior:
+- all three modes support selecting multiple messages at once.
+- `Mute` applies immediately as selection toggles happen.
+- `Focus` applies immediately as selection toggles happen.
+- `Subcompact` prepares a selection and then requires an explicit apply action because it creates a local summary artifact.
+- `Turn Off` exits Context Lens mode and clears the active selection state.
+
+ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Wiring_Matrix.md
+
+Context assembly rules:
+- muted messages are excluded from effective context assembly and from chatsearch results returned to the agent.
+- focused messages remain protected and high-priority in effective context assembly.
+- Subcompact replaces the selected message region in effective context assembly with a local summary while preserving canonical source history and rehydration handles.
+- Context Lens state is thread-local UI shaping, not Assistant memory.
+- child handoff bundles derive from canonical source state plus current effective shaping state; children do not inherit a lossy copy as their only truth.
+
+ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/assistant-memory-subsystem.md, ContractName:Plans/storage-plan.md
+
+```
+### Intent 17 (Run: r-20260323-192127-01, Anchor: `### 27.7 Provider compatibility disclosure in chat`, Op: replace_section)
+```markdown
+Chat surfaces must disclose requested versus effective runtime choice when the distinction matters to user trust or behavior.
+
+ContractRef: ContractName:Plans/Models_System.md, ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Provider_OpenCode.md
+
+Required disclosure behavior:
+- provider/model for a child run is visible on hover in the collapsed card.
+- the expanded child panel may show requested versus effective runtime surface, effective effort, and fallback reason when a remap occurred.
+- explicit user-chosen runtime surfaces must not silently fallback without disclosure.
+- Copilot-native routing restrictions must surface as incompatibility or denial rather than silently degrading into a different execution path.
+
+Crew-mode disclosure:
+- the default crew confirmation surface shows each member as `model -> provider/runtime surface`.
+- when Copilot forces crew-wide provider normalization, the UI explains that Copilot is being treated as a crew-level provider constraint.
+
+ContractRef: ContractName:Plans/Models_System.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/CLI_Bridged_Providers.md
+
+```
+### Intent 18 (Run: r-20260323-192127-02, Anchor: `## 14. Subagents & Crew`, Op: replace_section)
+```markdown
+Subagents and crews use the PM child-run model. A subagent is a child run with its own identity, lifecycle, requested/effective runtime state, and inspectable history. Subagents are disposable by default: spawn, run, complete/cancel/fail, then remain in history instead of being treated as reusable long-lived actors.
+
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md
+
+### Inline subagent cards
+
+Every child run MUST appear inline in the parent thread as a visually distinct subagent card.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/FinalGUISpec.md
+
+Collapsed card content:
+
+| Field | Requirement |
+|---|---|
+| Persona | Show the effective child Persona label. |
+| Task | Show the child task label in plain language. |
+| Status | Show the current status badge. |
+| Provider/model | Shown on hover, matching the hover metadata pattern used by other chat bubbles. |
+
+Expanded panel content:
+
+| Region | Requirement |
+|---|---|
+| Work stream | Live progress and work activity visible while the child is running. |
+| Thought stream | Visible and visually distinct from the work stream. |
+| State block | Shows blocked, awaiting-parent, failure, or cancellation reason when relevant. |
+| Context state | Shows relevant context-shaping disclosures, including context-expansion/rehydration requests and whether dynamic context shrinking affected the child. |
+| Result block | Shows a concise final outcome summary once the child completes. |
+
+ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md
+
+### Child status taxonomy
+
+The chat thread and child-run runtime MUST use the same visible status vocabulary.
+ContractRef: Child status projection into chat MUST remain a direct projection of canonical child lifecycle state and MUST NOT create a separate chat-only status enum. [Source: Tools.md#event-model; Contracts_V0.md#canonical-runtime-event-outcome-and-action-contract-reconciliation-addendum-2026-03-09]
+
+| Status | Meaning |
+|---|---|
+| `queued` | Child exists but has not started active execution yet. |
+| `running` | Child is actively executing or streaming work. |
+| `awaiting_parent` | Child is paused pending parent action, clarification, or more context. |
+| `blocked` | Child cannot proceed because of tool, permission, policy, provider, or runtime restriction. |
+| `complete` | Child finished successfully. |
+| `failed` | Child attempted execution and ended unsuccessfully. |
+| `cancelled` | Child was intentionally stopped before completion. |
+
+Signal mapping rules:
+- `clarification_needed`, `user_input_requested`, and `context_expansion_requested` render as `awaiting_parent`.
+- policy/tool/provider/runtime denials render as `blocked`.
+- replacement/supersession is preserved as terminal reason metadata even when the visible terminal status is `cancel
+```
+[... truncated, full length: 5325 chars]
+### Intent 19 (Run: r-20260323-192127-02, Anchor: `## 15. Plan Mode + Crew Mode`, Op: replace_section)
+```markdown
+Plan-mode and crew-mode rules must align with the PM child-run contract.
+
+ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Prompt_Pipeline.md
+
+### Plan-mode delegated work
+
+`ask` and `plan` may launch delegated child runs only for read-only research or analysis.
+
+ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/Tools.md
+
+Rules:
+- no code-writing, file mutation, or execution child may be launched from `ask` or `plan`.
+- required planning dependencies may still be child runs as long as they remain read-only.
+- parent mode is a hard ceiling; a child may narrow but must not widen parent authority.
+- unresolved required planning children keep the plan provisional rather than falsely complete.
+
+### Crew-mode planning interaction
+
+Crew is an overlay, not a new runtime-mode enum. A crew launched from `plan` remains read-only; a crew launched from `regular` or `yolo` inherits those parent ceilings and guardrails.
+
+ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Models_System.md, ContractName:Plans/orchestrator-subagent-integration.md
+
+### Crew selection flow
+
+When crew mode is first invoked for a relevant scope:
+- if a valid default crew exists, ask whether to use the default crew.
+- otherwise ask which models to use.
+- after model selection, resolve and confirm provider/runtime mapping where ambiguity or restriction-sensitive mapping exists.
+- if any crew member is configured to use Copilot, the entire crew normalizes to Copilot as a crew-level provider constraint.
+
+ContractRef: ContractName:Plans/Models_System.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/CLI_Bridged_Providers.md
+
+```
+### Intent 20 (Run: r-20260323-192127-02, Anchor: `### 17.6 Context Lens (Mute / Focus / Subcompact) — user-directed context shaping (thread-local)`, Op: replace_section)
+```markdown
+Context Lens is the user-facing thread-local context-shaping control.
+
+ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/FinalGUISpec.md
+
+Placement and control shape:
+- the control lives in the top-right of the chat window.
+- it appears immediately to the right of the chat search bar.
+- it renders as an icon with a dropdown arrow.
+- opening the dropdown exposes `Mute`, `Focus`, `Subcompact`, and `Turn Off`.
+
+Mode behavior:
+- all three modes support selecting multiple messages at once.
+- `Mute` applies immediately as selection toggles happen.
+- `Focus` applies immediately as selection toggles happen.
+- `Subcompact` prepares a selection and then requires an explicit apply action because it creates a local summary artifact.
+- `Turn Off` exits Context Lens mode and clears the active selection state.
+
+ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Wiring_Matrix.md
+
+Context assembly rules:
+- muted messages are excluded from effective context assembly and from chatsearch results returned to the agent.
+- focused messages remain protected and high-priority in effective context assembly.
+- Subcompact replaces the selected message region in effective context assembly with a local summary while preserving canonical source history and rehydration handles.
+- Context Lens state is thread-local UI shaping, not Assistant memory.
+- child handoff bundles derive from canonical source state plus current effective shaping state; children do not inherit a lossy copy as their only truth.
+
+ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/assistant-memory-subsystem.md, ContractName:Plans/storage-plan.md
+
+```
+### Intent 21 (Run: r-20260323-192127-02, Anchor: `### 27.7 Provider compatibility disclosure in chat`, Op: replace_section)
+```markdown
+Chat surfaces must disclose requested versus effective runtime choice when the distinction matters to user trust or behavior.
+
+ContractRef: ContractName:Plans/Models_System.md, ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Provider_OpenCode.md
+
+Required disclosure behavior:
+- provider/model for a child run is visible on hover in the collapsed card.
+- the expanded child panel may show requested versus effective runtime surface, effective effort, and fallback reason when a remap occurred.
+- explicit user-chosen runtime surfaces must not silently fallback without disclosure.
+- Copilot-native routing restrictions must surface as incompatibility or denial rather than silently degrading into a different execution path.
+
+Crew-mode disclosure:
+- the default crew confirmation surface shows each member as `model -> provider/runtime surface`.
+- when Copilot forces crew-wide provider normalization, the UI explains that Copilot is being treated as a crew-level provider constraint.
+
+ContractRef: ContractName:Plans/Models_System.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/CLI_Bridged_Providers.md
+
+```
+### Intent 22 (Run: r-20260323-192127-03, Anchor: `## 14. Subagents & Crew`, Op: replace_section)
+```markdown
+Subagents and crews use the PM child-run model. A subagent is a child run with its own identity, lifecycle, requested/effective runtime state, and inspectable history. Subagents are disposable by default: spawn, run, complete/cancel/fail, then remain in history instead of being treated as reusable long-lived actors.
+
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md
+
+### Inline subagent cards
+
+Every child run MUST appear inline in the parent thread as a visually distinct subagent card.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/FinalGUISpec.md
+
+Collapsed card content:
+
+| Field | Requirement |
+|---|---|
+| Persona | Show the effective child Persona label. |
+| Task | Show the child task label in plain language. |
+| Status | Show the current status badge. |
+| Provider/model | Shown on hover, matching the hover metadata pattern used by other chat bubbles. |
+
+Expanded panel content:
+
+| Region | Requirement |
+|---|---|
+| Work stream | Live progress and work activity visible while the child is running. |
+| Thought stream | Visible and visually distinct from the work stream. |
+| State block | Shows blocked, awaiting-parent, failure, or cancellation reason when relevant. |
+| Context state | Shows relevant context-shaping disclosures, including context-expansion/rehydration requests and whether dynamic context shrinking affected the child. |
+| Result block | Shows a concise final outcome summary once the child completes. |
+
+ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md
+
+### Child status taxonomy
+
+The chat thread and child-run runtime MUST use the same visible status vocabulary.
+ContractRef: ContractName: child_status_projection. Child status projection into chat MUST remain a direct projection of canonical child lifecycle state and MUST NOT create a separate chat-only status enum. [Source: Tools.md#event-model; Contracts_V0.md#canonical-runtime-event-outcome-and-action-contract-reconciliation-addendum-2026-03-09]
+
+| Status | Meaning |
+|---|---|
+| `queued` | Child exists but has not started active execution yet. |
+| `running` | Child is actively executing or streaming work. |
+| `awaiting_parent` | Child is paused pending parent action, clarification, or more context. |
+| `blocked` | Child cannot proceed because of tool, permission, policy, provider, or runtime restriction. |
+| `complete` | Child finished successfully. |
+| `failed` | Child attempted execution and ended unsuccessfully. |
+| `cancelled` | Child was intentionally stopped before completion. |
+
+Signal mapping rules:
+- `clarification_needed`, `user_input_requested`, and `context_expansion_requested` render as `awaiting_parent`.
+- policy/tool/provider/runtime denials render as `blocked`.
+- replacement/supersession is preserved as terminal reason metadata even when
+```
+[... truncated, full length: 5364 chars]
+### Intent 23 (Run: r-20260323-192127-03, Anchor: `## 15. Plan Mode + Crew Mode`, Op: replace_section)
+```markdown
+Plan-mode and crew-mode rules must align with the PM child-run contract.
+
+ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Prompt_Pipeline.md
+
+### Plan-mode delegated work
+
+`ask` and `plan` may launch delegated child runs only for read-only research or analysis.
+
+ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/Tools.md
+
+Rules:
+- no code-writing, file mutation, or execution child may be launched from `ask` or `plan`.
+- required planning dependencies may still be child runs as long as they remain read-only.
+- parent mode is a hard ceiling; a child may narrow but must not widen parent authority.
+- unresolved required planning children keep the plan provisional rather than falsely complete.
+
+### Crew-mode planning interaction
+
+Crew is an overlay, not a new runtime-mode enum. A crew launched from `plan` remains read-only; a crew launched from `regular` or `yolo` inherits those parent ceilings and guardrails.
+
+ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Models_System.md, ContractName:Plans/orchestrator-subagent-integration.md
+
+### Crew selection flow
+
+When crew mode is first invoked for a relevant scope:
+- if a valid default crew exists, ask whether to use the default crew.
+- otherwise ask which models to use.
+- after model selection, resolve and confirm provider/runtime mapping where ambiguity or restriction-sensitive mapping exists.
+- if any crew member is configured to use Copilot, the entire crew normalizes to Copilot as a crew-level provider constraint.
+
+ContractRef: ContractName:Plans/Models_System.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/CLI_Bridged_Providers.md
+
+```
+### Intent 24 (Run: r-20260323-192127-03, Anchor: `### 17.6 Context Lens (Mute / Focus / Subcompact) — user-directed context shaping (thread-local)`, Op: replace_section)
+```markdown
+Context Lens is the user-facing thread-local context-shaping control.
+
+ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/FinalGUISpec.md
+
+Placement and control shape:
+- the control lives in the top-right of the chat window.
+- it appears immediately to the right of the chat search bar.
+- it renders as an icon with a dropdown arrow.
+- opening the dropdown exposes `Mute`, `Focus`, `Subcompact`, and `Turn Off`.
+
+Mode behavior:
+- all three modes support selecting multiple messages at once.
+- `Mute` applies immediately as selection toggles happen.
+- `Focus` applies immediately as selection toggles happen.
+- `Subcompact` prepares a selection and then requires an explicit apply action because it creates a local summary artifact.
+- `Turn Off` exits Context Lens mode and clears the active selection state.
+
+ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Wiring_Matrix.md
+
+Context assembly rules:
+- muted messages are excluded from effective context assembly and from chatsearch results returned to the agent.
+- focused messages remain protected and high-priority in effective context assembly.
+- Subcompact replaces the selected message region in effective context assembly with a local summary while preserving canonical source history and rehydration handles.
+- Context Lens state is thread-local UI shaping, not Assistant memory.
+- child handoff bundles derive from canonical source state plus current effective shaping state; children do not inherit a lossy copy as their only truth.
+
+ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/assistant-memory-subsystem.md, ContractName:Plans/storage-plan.md
+
+```
+### Intent 25 (Run: r-20260323-192127-03, Anchor: `### 27.7 Provider compatibility disclosure in chat`, Op: replace_section)
+```markdown
+Chat surfaces must disclose requested versus effective runtime choice when the distinction matters to user trust or behavior.
+
+ContractRef: ContractName:Plans/Models_System.md, ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Provider_OpenCode.md
+
+Required disclosure behavior:
+- provider/model for a child run is visible on hover in the collapsed card.
+- the expanded child panel may show requested versus effective runtime surface, effective effort, and fallback reason when a remap occurred.
+- explicit user-chosen runtime surfaces must not silently fallback without disclosure.
+- Copilot-native routing restrictions must surface as incompatibility or denial rather than silently degrading into a different execution path.
+
+Crew-mode disclosure:
+- the default crew confirmation surface shows each member as `model -> provider/runtime surface`.
+- when Copilot forces crew-wide provider normalization, the UI explains that Copilot is being treated as a crew-level provider constraint.
+
+ContractRef: ContractName:Plans/Models_System.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/CLI_Bridged_Providers.md
+
+```
+### Intent 26 (Run: r-20260326-015830-01, Anchor: `### 1.1 Chat controls: platform, model, and reasoning/effort`, Op: replace_section)
+```markdown
+The chat window must allow the user to change platform, model, reasoning/effort, and worktree binding without leaving the chat.
+
+Required controls (placement: chat header strip, same area as the context indicator / mode controls):
+
+| Control | Requirement |
+|---|---|
+| **Platform** | Dropdown listing available platforms. Selection applies to the current thread and the next turn. Data comes from `platform_specs`; no hardcoding. |
+| **Model** | Dropdown listing models for the currently selected platform. Models are dynamically discovered where supported, cached, and user-manageable via Settings or a manage-models entrypoint. Fallback model lists come from `platform_specs::fallback_model_ids(platform)`. |
+| **Reasoning / effort** | Shown only when the active platform supports it. Applies to the next turn rather than interrupting an in-flight response. |
+| **Worktree** | Icon button (rightmost in header strip, after Reasoning/effort). Dropdown for per-thread worktree binding: create, unbind, merge, PR, remove. Visual states: unbound (dimmed glyph), bound-clean (lit glyph), bound-dirty (lit glyph + dot indicator), bound-conflict (lit glyph + warning triangle). Hidden when the active project has no git repository. Full specification in the "Worktrees in Assistant" section below. |
+
+ContractRef: ContractName:Plans/Models_System.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/WorktreeGitImprovement.md
+
+A *turn* is one complete user -> agent exchange: one user message plus the full agent response, including tool calls and final result. Changing platform, model, effort, or worktree binding takes effect on the next turn. If the user changes settings while a response is streaming, the current response completes with the prior selection.
+
+ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/storage-plan.md
+```
+### Intent 27 (Run: r-20260326-015830-01, Anchor: ``, Op: append)
+```markdown
+## Worktrees in Assistant
+
+This section specifies the thread-level worktree binding feature: a per-thread worktree button in the chat header, worktree icon in the thread selector, merge-back flow, pre-merge test gate, and all associated lifecycle, data model, events, commands, settings, and error handling.
+
+ContractRef: ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Executor_Protocol.md
+
+### W.1 Chat header worktree button
+
+**Placement:** Chat header strip, after the Reasoning/effort control (rightmost existing control). The header strip currently contains: Platform, Model, Reasoning/effort. The Worktree button is appended after these. Mode buttons (Ask, Agent, Debug, Plan, Deep Plan) are separate from the header strip and not adjacent to this button.
+
+**Visual states:**
+- **Unbound (default):** Dimmed worktree glyph icon. No label text. Tooltip: "No worktree — click to create"
+- **Bound, clean:** Lit/active worktree glyph icon. Tooltip shows branch name. No label text.
+- **Bound, dirty:** Lit worktree glyph with a small dot indicator (same pattern as unsaved-file dot in editor tabs). Tooltip: branch name + "uncommitted changes"
+- **Bound, conflict:** Lit worktree glyph with warning indicator (triangle). Tooltip: branch name + "merge conflict"
+
+Icon colors resolve through theme tokens (`icon-secondary`, `accent-warning`, `accent-error`), not hardcoded hex values. Icon is ~32px and follows existing header overflow/min-width pattern.
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Wiring_Matrix.md
+
+**Dropdown contents when NO worktree bound:**
+
+| Row | Type | Action |
+|-----|------|--------|
+| `None` | Selected label | No action (current state) |
+| `Create Worktree…` | Action row | Opens Create Worktree dialog |
+
+**Dropdown contents when worktree IS bound:**
+
+| Row | Type | Action |
+|-----|------|--------|
+| Branch name | Info label (e.g. `assistant/fix-auth-bug`) | No action |
+| Path | Info sublabel (truncated, e.g. `.puppet-master/worktrees/wt-3`) | No action |
+| Status | Pill (clean/dirty/conflict) | No action |
+| separator | --- | --- |
+| `Unbind` | Action row | Detaches worktree from thread; worktree remains on disk |
+| `Merge into Base…` | Action row | Opens merge confirmation dialog (squash/merge/rebase) |
+| `Create PR…` | Action row | Opens PR creation panel with pre-filled fields |
+| `Remove Worktree` | Action row (destructive) | Detaches AND prunes; shows confirmation if dirty |
+
+ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Contracts_V0.md
+
+**Behavior rules:**
+- Changing binding mid-thread is allowed; change applies to the next turn (same semantics as platform/model changes per §1.1)
+- While a turn is in-flight, the dropdown is read-only (no binding changes during execution)
+- `Unbind` sets thread binding to None; agent's next turn uses main project dir
+- `Remove Worktree` calls `WorktreeManager
+```
+[... truncated, full length: 33983 chars]
+### Intent 28 (Run: r-20260326-015830-02, Anchor: `### 1.1 Chat controls: platform, model, and reasoning/effort`, Op: replace_section)
+```markdown
+The chat window must allow the user to change platform, model, reasoning/effort, and worktree binding without leaving the chat.
+
+Required controls (placement: chat header strip, same area as the context indicator / mode controls):
+
+| Control | Requirement |
+|---|---|
+| **Platform** | Dropdown listing available platforms. Selection applies to the current thread and the next turn. Data comes from `platform_specs`; no hardcoding. |
+| **Model** | Dropdown listing models for the currently selected platform. Models are dynamically discovered where supported, cached, and user-manageable via Settings or a manage-models entrypoint. Fallback model lists come from `platform_specs::fallback_model_ids(platform)`. |
+| **Reasoning / effort** | Shown only when the active platform supports it. Applies to the next turn rather than interrupting an in-flight response. |
+| **Worktree** | Icon button (rightmost in header strip, after Reasoning/effort). Dropdown for per-thread worktree binding: create, unbind, merge, PR, remove. Visual states: unbound (dimmed glyph), bound-clean (lit glyph), bound-dirty (lit glyph + dot indicator), bound-conflict (lit glyph + warning triangle). Hidden when the active project has no git repository. Full specification in the "Worktrees in Assistant" section below. |
+
+ContractRef: ContractName:Plans/Models_System.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/WorktreeGitImprovement.md
+
+A *turn* is one complete user -> agent exchange: one user message plus the full agent response, including tool calls and final result. Changing platform, model, effort, or worktree binding takes effect on the next turn. If the user changes settings while a response is streaming, the current response completes with the prior selection.
+
+ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/storage-plan.md
+```
+### Intent 29 (Run: r-20260326-015830-02, Anchor: ``, Op: append)
+```markdown
+## Worktrees in Assistant
+
+This section specifies the thread-level worktree binding feature: a per-thread worktree button in the chat header, worktree icon in the thread selector, merge-back flow, pre-merge test gate, and all associated lifecycle, data model, events, commands, settings, and error handling.
+
+ContractRef: ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Executor_Protocol.md
+
+### W.1 Chat header worktree button
+
+**Placement:** Chat header strip, after the Reasoning/effort control (rightmost existing control). The header strip currently contains: Platform, Model, Reasoning/effort. The Worktree button is appended after these. Mode buttons (Ask, Agent, Debug, Plan, Deep Plan) are separate from the header strip and not adjacent to this button.
+
+**Visual states:**
+- **Unbound (default):** Dimmed worktree glyph icon. No label text. Tooltip: "No worktree — click to create"
+- **Bound, clean:** Lit/active worktree glyph icon. Tooltip shows branch name. No label text.
+- **Bound, dirty:** Lit worktree glyph with a small dot indicator (same pattern as unsaved-file dot in editor tabs). Tooltip: branch name + "uncommitted changes"
+- **Bound, conflict:** Lit worktree glyph with warning indicator (triangle). Tooltip: branch name + "merge conflict"
+
+Icon colors resolve through theme tokens (`icon-secondary`, `accent-warning`, `accent-error`), not hardcoded hex values. Icon is ~32px and follows existing header overflow/min-width pattern.
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Wiring_Matrix.md
+
+**Dropdown contents when NO worktree bound:**
+
+| Row | Type | Action |
+|-----|------|--------|
+| `None` | Selected label | No action (current state) |
+| `Create Worktree…` | Action row | Opens Create Worktree dialog |
+
+**Dropdown contents when worktree IS bound:**
+
+| Row | Type | Action |
+|-----|------|--------|
+| Branch name | Info label (e.g. `assistant/fix-auth-bug`) | No action |
+| Path | Info sublabel (truncated, e.g. `.puppet-master/worktrees/wt-3`) | No action |
+| Status | Pill (clean/dirty/conflict) | No action |
+| separator | --- | --- |
+| `Unbind` | Action row | Detaches worktree from thread; worktree remains on disk |
+| `Merge into Base…` | Action row | Opens merge confirmation dialog (squash/merge/rebase) |
+| `Create PR…` | Action row | Opens PR creation panel with pre-filled fields |
+| `Remove Worktree` | Action row (destructive) | Detaches AND prunes; shows confirmation if dirty |
+
+ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Contracts_V0.md
+
+**Behavior rules:**
+- Changing binding mid-thread is allowed; change applies to the next turn (same semantics as platform/model changes per §1.1)
+- While a turn is in-flight, the dropdown is read-only (no binding changes during execution)
+- `Unbind` sets thread binding to None; agent's next turn uses main project dir
+- `Remove Worktree` calls `WorktreeManager
+```
+[... truncated, full length: 33983 chars]
+### Intent 30 (Run: r-20260328-192938-01, Anchor: `### 10.2 Agent-callable search tools (project-only)`, Op: replace_section)
+```markdown
+To support both explicit agent reasoning and smart retrieval, provide agent-callable tools (or MCP equivalents) that query the project indices:
+
+- `chatsearch(query, filters={thread_id?, time_range?}, k)` → hits with `thread_id`, `message_id`, `ts`, snippet, score.
+- `codesearch(query, path?, mode={text|symbol}, k)` → hits with `path`, line/range, snippet (symbol-aware when LSP available).
+- `logsearch(query, filters={time_range?, run_id?, thread_id?, tool_name?, level?}, k)` → hits with `event_id`/`blob_ref`, `ts`, short summary/snippet.
+- `logread(ref)` → full payload (bounded by size caps; subject to stricter permission defaults).
+- `grep(pattern, path?, glob?)` → index-accelerated regex search. When the per-project sparse n-gram index is available, grep transparently narrows candidate files before ripgrep verification — query latency <20ms regardless of repo size. Falls back to raw ripgrep when index is unavailable. Same tool interface, same limits (1000 matches, 30s timeout).
+
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/storage-plan.md
+```
+### Intent 31 (Run: r-20260328-192938-02, Anchor: `### 10.2 Agent-callable search tools (project-only)`, Op: replace_section)
+```markdown
+To support both explicit agent reasoning and smart retrieval, provide project-scoped agent-callable tools (or MCP equivalents) that query the project indices:
+
+- `chatsearch(query, filters={thread_id?, time_range?}, k)` -> hits with `thread_id`, `message_id`, `ts`, snippet, score.
+- `codesearch(query, path?, mode={text|symbol}, k)` -> hits with `path`, line/range, snippet (symbol-aware when LSP is available).
+- `logsearch(query, filters={time_range?, run_id?, thread_id?, tool_name?, level?}, k)` -> hits with `event_id` / `blob_ref`, `ts`, short summary or snippet.
+- `logread(ref)` -> full payload (bounded by size caps; subject to stricter permission defaults).
+- `grep(pattern, path?, glob?)` -> transparent regex search over project files. When the per-project sparse n-gram index can narrow the query, grep uses it without changing the interface, limit, timeout, or permission model. When the index is missing, disabled, corrupted, building without a valid snapshot, or skipped for query-specific reasons, grep falls back to raw ripgrep. Stale-but-valid snapshots remain usable, and dirty-layer freshness guarantees still apply.
+
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/storage-plan.md
+```
+### Intent 32 (Run: r-20260328-192938-03, Anchor: `### 10.2 Agent-callable search tools (project-only)`, Op: replace_section)
+```markdown
+To support both explicit agent reasoning and smart retrieval, provide project-scoped agent-callable tools (or MCP equivalents) that query the project indices:
+
+- `chatsearch(query, filters={thread_id?, time_range?}, k)` -> hits with `thread_id`, `message_id`, `ts`, snippet, score.
+- `codesearch(query, path?, mode={text|symbol}, k)` -> hits with `path`, line/range, snippet (symbol-aware when LSP is available).
+- `logsearch(query, filters={time_range?, run_id?, thread_id?, tool_name?, level?}, k)` -> hits with `event_id` / `blob_ref`, `ts`, short summary or snippet.
+- `logread(ref)` -> full payload (bounded by size caps; subject to stricter permission defaults).
+- `grep(pattern, path?, glob?)` -> transparent regex search over project files. When the per-project sparse n-gram index can narrow the query, grep uses it without changing the interface, limit, timeout, or permission model. When the index is missing, disabled, corrupted, building without a valid snapshot, or skipped for query-specific reasons, grep falls back to raw ripgrep. Stale-but-valid snapshots remain usable, and dirty-layer freshness guarantees still apply.
+
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/storage-plan.md
+```

@@ -1,0 +1,2428 @@
+## Doc: Plans/usage-feature.md
+### Intent 1 (Run: r-20260312-160857-01, Anchor: ``, Op: append)
+```markdown
+## Source Control, GitHub Actions, and Docker Manager Cost Attribution Addendum (2026-03-12)
+
+Cross-surface receipts from Source Control, GitHub Actions, Docker Manager, Kubernetes, and Orchestrator must not create feature-local cost views.
+
+Rules:
+- when a receipt or artifact carries `usage_event_ref` or equivalent canonical usage identity, `Show in Ledger` and `Show in Usage` open the canonical Usage surfaces with that event in scope
+- if a user reruns workflows, tails logs, performs repeated registry refreshes, or executes other cost-bearing remote actions, the resulting cost attribution still resolves through canonical usage records
+- any feature-local summary is secondary presentation only and must not replace the canonical Usage/Ledger pipeline
+
+ContractRef: ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/storage-plan.md, ContractName:Plans/GitHub_Integration.md
+```
+### Intent 2 (Run: r-20260312-203855-01, Anchor: `### Canonical UsageRecord fields`, Op: replace_section)
+```markdown
+Canonical usage identity is runtime-first, not tier-first.
+
+Required usage attribution fields are:
+- `usage_event_ref`
+- `project_id`
+- `run_id?`
+- `thread_id?`
+- `node_id?`
+- `attempt_id?`
+- `execution_role?`
+- `provider_id?`
+- `effective_account_id?`
+- `provider_attempt_ref?`
+- `artifact_id?`
+- `receipt_refs?`
+- cost/token/quota payloads
+
+Rules:
+- `tier_id` does not remain the primary usage correlation key
+- usage pivots from graph, artifacts, chat, and Orchestrator resolve through canonical usage identity and route contracts
+- usage history must distinguish requested/effective account/runtime behavior when that affects cost or quota outcomes
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/Contracts_V0.md
+
+```
+### Intent 3 (Run: r-20260312-203855-01, Anchor: `### Ownership and consumption`, Op: replace_section)
+```markdown
+Usage remains a shared surface consumed by chat, runtime, Orchestrator, and Source Control-adjacent artifacts.
+
+Rules:
+- graph and Orchestrator consumers must stop aggregating by `tier_id`
+- `Show in Usage` pivots route through usage identity and `route_target`
+- account pressure and account-switch history remain visible as shared provider-runtime behavior, not as a second quota system
+- stale/degraded usage projections must disclose `projection_freshness` and `projection_health` before live actions rely on them
+
+ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Decision_Policy.md
+
+```
+### Intent 4 (Run: r-20260313-152345-01, Anchor: `### Gemini -- Direct-provider (local counters + estimated cost)`, Op: replace_section)
+```markdown
+- **Availability:** Gemini is a **Direct-provider** with one provider surface and mixed account pools. Supported auth surfaces include OAuth and API key; Google credential-based execution remains capability-gated where supported.
+- **What we show (authoritative):** One shared Gemini usage surface built from the canonical `UsageRecord` pipeline. It may combine provider runtime usage, provider quota APIs, provider usage APIs, provider error hints, and project rollups, but it MUST keep source/effective-mode labels visible.
+- **Mode-aware labeling:** OAuth-backed quota views may be labeled `Gemini quota` when provider semantics are authoritative. API-key/local-only views MUST use source-qualified wording such as `Gemini (estimated)` when authoritative quota data is unavailable.
+
+ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md
+
+- **Account attribution:** Gemini usage records SHOULD expose `effective_account_id`, `effective_auth_mode`, `provider_account_id?`, `signal_confidence`, and `effective_project_id?`.
+- **Project context:** OAuth-backed Gemini usage may require configured/effective project context. That context is part of the effective runtime identity and MUST NOT be inferred from token presence alone.
+- **Naming:** Use `Gemini API key` / `Google API key` terminology. Do not hardcode `AI Studio key` as the canonical product boundary.
+- **Media:** Media generation follows the same requested/effective auth/account rules as normal Gemini usage rather than a separate key-only account system.
+
+ContractRef: ContractName:Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD, ContractName:Plans/Media_Generation_and_Capabilities.md, ContractName:Plans/rewrite-tie-in-memo.md
+```
+### Intent 5 (Run: r-20260313-152345-01, Anchor: `### Summary table (augmentation sources)`, Op: replace_section)
+```markdown
+| Platform   | Primary augmentation | Auth / env | Notes |
+|-----------|----------------------|------------|-------|
+| **Cursor** | API (usage/limits/account only; not for model invocation) | `CURSOR_API_KEY` / app auth | OAuth + CLI for running models; Cursor API augmentation is disabled until Spec Lock pins an endpoint contract. |
+| **Codex** | CLI stream + provider data | CLI login / `CODEX_API_KEY` | Per-run usage from CLI JSON/JSONL + optional provider quota data. |
+| **Copilot** | CLI + REST metrics API | `GITHUB_TOKEN` / `GH_TOKEN` | Per-run usage from CLI; org-level from `/orgs/{org}/copilot/metrics`. |
+| **Claude** | Admin API + stream-json usage | `ANTHROPIC_API_KEY` | Org usage + plan; per-run tokens from stream. |
+| **Gemini** | Shared usage pipeline with auth/account attribution; provider runtime usage, quota APIs, usage APIs, error hints, and project rollups as available | Gemini OAuth accounts and/or Gemini API-key accounts; provider/account policy selects the effective auth surface | One provider surface; OAuth and API-key buckets are distinct and MUST remain source-labeled. |
+
+ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md
+```
+### Intent 6 (Run: r-20260313-152345-01, Anchor: `### Backend implementation notes`, Op: replace_section)
+```markdown
+- **Data layer:** Reuse and extend existing usage/plan-detection logic. Expose a clear current-usage contract per platform that the GUI can poll or subscribe to.
+- **Primary input:** aggregate from `usage.jsonl` / canonical usage projections.
+- **Secondary input:** platform APIs and structured provider/runtime outputs when configured and supported.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/FinalGUISpec.md
+
+- **Gemini source model:** Prefer the shared `UsageRecord` pipeline and carry explicit source attribution instead of hardcoding Gemini to local counters only.
+- **Gemini signal weighting:** strong provider/account telemetry outranks structured runtime output; structured output outranks heuristics; heuristics outrank local-only counters.
+- **Persistence:** event-level data and rollups remain canonical storage concerns; account-health and quota-pressure updates must feed the same control loop used by multi-account routing.
+
+ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/storage-plan.md, PolicyRule:Decision_Policy.md§2
+```
+### Intent 7 (Run: r-20260313-152345-01, Anchor: `### Canonical UsageRecord fields`, Op: replace_section)
+```markdown
+Required fields:
+- `run_kind`
+- `run_id`
+- `tier_id`
+- `attempt_id?`
+- `thread_id?`
+- `effective_platform`
+- `effective_model`
+- `effective_auth_mode?`
+- `effective_account_id?`
+- `input_tokens`
+- `output_tokens`
+- `total_tokens`
+- `estimated_cost?`
+- timestamps sufficient for rollups and ordering
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Run_Graph_View.md, ContractName:Plans/Orchestrator_Page.md
+
+Optional but recommended attribution fields:
+- `provider_account_id?`
+- `usage_source_kind`
+- `signal_confidence`
+- `effective_project_id?`
+- `currency?`
+- `prompt_cache_hit?` / similar optimization counters when available
+
+Ownership and consumption:
+- Ledger reads normalized `UsageRecord` projections rather than ad hoc log parsing
+- Usage page rollups are derived from the same record family
+- Run Graph and Orchestrator aggregate by `tier_id` and `attempt_id?` from the same contract
+- Interview, assistant, builder, and orchestrator runs share the same schema; `run_kind` distinguishes workflow families without creating parallel usage systems
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/FinalGUISpec.md
+
+Rule:
+- There is one usage schema. Compatibility shims may ingest older sources, but new runtime surfaces MUST NOT define alternate token/model/auth/account attribution records.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/Run_Graph_View.md
+```
+### Intent 8 (Run: r-20260313-152345-01, Anchor: `### Gap 4: Quota/plan only from errors`, Op: replace_section)
+```markdown
+- **Current state**
+  - Some providers can only expose reset/plan hints after an error.
+  - For Gemini, the stale assumption that all quota data is local/estimated is no longer sufficient.
+- **Desired**
+  - Proactive usage/quota display from provider APIs or structured runtime output when configured and available.
+  - Error parsing remains a fallback for reset time, plan hints, and rate-limit recovery when stronger signals are unavailable.
+  - Gemini surfaces remain mode-aware: OAuth-backed quota and API-key/local-only estimates MUST stay labeled distinctly.
+
+ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md
+
+- **Acceptance**
+  - User can see usage and reset countdown before hitting a limit when strong or structured signals exist.
+  - After a limit, the app still surfaces `Resets in X` and the switch/fallback reason when available.
+  - The UI shows whether quota pressure came from authoritative, structured, heuristic, or local-only signals.
+
+ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD
+```
+### Intent 9 (Run: r-20260313-152345-02, Anchor: `### Gemini -- Direct-provider (local counters + estimated cost)`, Op: replace_section)
+```markdown
+- **Availability:** Gemini is a **Direct-provider** with one provider surface and mixed account pools. Supported auth surfaces include OAuth and API key; Google credential-based execution remains capability-gated where supported.
+- **What we show (authoritative):** One shared Gemini usage surface built from the canonical `UsageRecord` pipeline. It may combine provider runtime usage, provider quota APIs, provider usage APIs, provider error hints, and project rollups, but it MUST keep source/effective-mode labels visible.
+- **Mode-aware labeling:** OAuth-backed quota views may be labeled `Gemini quota` when provider semantics are authoritative. API-key/local-only views MUST use source-qualified wording such as `Gemini (estimated)` when authoritative quota data is unavailable.
+
+ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md
+
+- **Account attribution:** Gemini usage records SHOULD expose `effective_account_id`, `effective_auth_mode`, `provider_account_id?`, `signal_confidence`, and `effective_project_id?`.
+- **Project context:** OAuth-backed Gemini usage may require configured/effective project context. That context is part of the effective runtime identity and MUST NOT be inferred from token presence alone.
+- **Naming:** Use `Gemini API key` / `Google API key` terminology. Do not hardcode `AI Studio key` as the canonical product boundary.
+- **Media:** Media generation follows the same requested/effective auth/account rules as normal Gemini usage rather than a separate key-only account system.
+
+ContractRef: ContractName:Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD, ContractName:Plans/Media_Generation_and_Capabilities.md, ContractName:Plans/rewrite-tie-in-memo.md
+```
+### Intent 10 (Run: r-20260313-152345-02, Anchor: `### Summary table (augmentation sources)`, Op: replace_section)
+```markdown
+| Platform   | Primary augmentation | Auth / env | Notes |
+|-----------|----------------------|------------|-------|
+| **Cursor** | API (usage/limits/account only; not for model invocation) | `CURSOR_API_KEY` / app auth | OAuth + CLI for running models; Cursor API augmentation is disabled until Spec Lock pins an endpoint contract. |
+| **Codex** | CLI stream + provider data | CLI login / `CODEX_API_KEY` | Per-run usage from CLI JSON/JSONL + optional provider quota data. |
+| **Copilot** | CLI + REST metrics API | `GITHUB_TOKEN` / `GH_TOKEN` | Per-run usage from CLI; org-level from `/orgs/{org}/copilot/metrics`. |
+| **Claude** | Admin API + stream-json usage | `ANTHROPIC_API_KEY` | Org usage + plan; per-run tokens from stream. |
+| **Gemini** | Shared usage pipeline with auth/account attribution; provider runtime usage, quota APIs, usage APIs, error hints, and project rollups as available | Gemini OAuth accounts and/or Gemini API-key accounts; provider/account policy selects the effective auth surface | One provider surface; OAuth and API-key buckets are distinct and MUST remain source-labeled. |
+
+ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md
+```
+### Intent 11 (Run: r-20260313-152345-02, Anchor: `### Backend implementation notes`, Op: replace_section)
+```markdown
+- **Data layer:** Reuse and extend existing usage/plan-detection logic. Expose a clear current-usage contract per platform that the GUI can poll or subscribe to.
+- **Primary input:** aggregate from `usage.jsonl` / canonical usage projections.
+- **Secondary input:** platform APIs and structured provider/runtime outputs when configured and supported.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/FinalGUISpec.md
+
+- **Gemini source model:** Prefer the shared `UsageRecord` pipeline and carry explicit source attribution instead of hardcoding Gemini to local counters only.
+- **Gemini signal weighting:** strong provider/account telemetry outranks structured runtime output; structured output outranks heuristics; heuristics outrank local-only counters.
+- **Persistence:** event-level data and rollups remain canonical storage concerns; account-health and quota-pressure updates must feed the same control loop used by multi-account routing.
+
+ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/storage-plan.md, PolicyRule:Decision_Policy.md§2
+```
+### Intent 12 (Run: r-20260313-152345-02, Anchor: `### Canonical UsageRecord fields`, Op: replace_section)
+```markdown
+Required fields:
+- `run_kind`
+- `run_id`
+- `tier_id`
+- `attempt_id?`
+- `thread_id?`
+- `effective_platform`
+- `effective_model`
+- `effective_auth_mode?`
+- `effective_account_id?`
+- `input_tokens`
+- `output_tokens`
+- `total_tokens`
+- `estimated_cost?`
+- timestamps sufficient for rollups and ordering
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Run_Graph_View.md, ContractName:Plans/Orchestrator_Page.md
+
+Optional but recommended attribution fields:
+- `provider_account_id?`
+- `usage_source_kind`
+- `signal_confidence`
+- `effective_project_id?`
+- `currency?`
+- `prompt_cache_hit?` / similar optimization counters when available
+
+Ownership and consumption:
+- Ledger reads normalized `UsageRecord` projections rather than ad hoc log parsing
+- Usage page rollups are derived from the same record family
+- Run Graph and Orchestrator aggregate by `tier_id` and `attempt_id?` from the same contract
+- Interview, assistant, builder, and orchestrator runs share the same schema; `run_kind` distinguishes workflow families without creating parallel usage systems
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/FinalGUISpec.md
+
+Rule:
+- There is one usage schema. Compatibility shims may ingest older sources, but new runtime surfaces MUST NOT define alternate token/model/auth/account attribution records.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/Run_Graph_View.md
+```
+### Intent 13 (Run: r-20260313-152345-02, Anchor: `### Gap 4: Quota/plan only from errors`, Op: replace_section)
+```markdown
+- **Current state**
+  - Some providers can only expose reset/plan hints after an error.
+  - For Gemini, the stale assumption that all quota data is local/estimated is no longer sufficient.
+- **Desired**
+  - Proactive usage/quota display from provider APIs or structured runtime output when configured and available.
+  - Error parsing remains a fallback for reset time, plan hints, and rate-limit recovery when stronger signals are unavailable.
+  - Gemini surfaces remain mode-aware: OAuth-backed quota and API-key/local-only estimates MUST stay labeled distinctly.
+
+ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md
+
+- **Acceptance**
+  - User can see usage and reset countdown before hitting a limit when strong or structured signals exist.
+  - After a limit, the app still surfaces `Resets in X` and the switch/fallback reason when available.
+  - The UI shows whether quota pressure came from authoritative, structured, heuristic, or local-only signals.
+
+ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD
+```
+### Intent 14 (Run: r-20260313-152345-03, Anchor: `### Gemini -- Direct-provider (local counters + estimated cost)`, Op: replace_section)
+```markdown
+- **Availability:** Gemini is a **Direct-provider** with one provider surface and mixed account pools. Supported auth surfaces include OAuth and API key; Google credential-based execution remains capability-gated where supported.
+- **What we show (authoritative):** One shared Gemini usage surface built from the canonical `UsageRecord` pipeline. It may combine provider runtime usage, provider quota APIs, provider usage APIs, provider error hints, and project rollups, but it MUST keep source/effective-mode labels visible.
+- **Mode-aware labeling:** OAuth-backed quota views may be labeled `Gemini quota` when provider semantics are authoritative. API-key/local-only views MUST use source-qualified wording such as `Gemini (estimated)` when authoritative quota data is unavailable.
+
+ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md
+
+- **Account attribution:** Gemini usage records SHOULD expose `effective_account_id`, `effective_auth_mode`, `provider_account_id?`, `signal_confidence`, and `effective_project_id?`.
+- **Project context:** OAuth-backed Gemini usage may require configured/effective project context. That context is part of the effective runtime identity and MUST NOT be inferred from token presence alone.
+- **Naming:** Use `Gemini API key` / `Google API key` terminology. Do not hardcode `AI Studio key` as the canonical product boundary.
+- **Media:** Media generation follows the same requested/effective auth/account rules as normal Gemini usage rather than a separate key-only account system.
+
+ContractRef: ContractName:Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD, ContractName:Plans/Media_Generation_and_Capabilities.md, ContractName:Plans/rewrite-tie-in-memo.md
+```
+### Intent 15 (Run: r-20260313-152345-03, Anchor: `### Summary table (augmentation sources)`, Op: replace_section)
+```markdown
+| Platform   | Primary augmentation | Auth / env | Notes |
+|-----------|----------------------|------------|-------|
+| **Cursor** | API (usage/limits/account only; not for model invocation) | `CURSOR_API_KEY` / app auth | OAuth + CLI for running models; Cursor API augmentation is disabled until Spec Lock pins an endpoint contract. |
+| **Codex** | CLI stream + provider data | CLI login / `CODEX_API_KEY` | Per-run usage from CLI JSON/JSONL + optional provider quota data. |
+| **Copilot** | CLI + REST metrics API | `GITHUB_TOKEN` / `GH_TOKEN` | Per-run usage from CLI; org-level from `/orgs/{org}/copilot/metrics`. |
+| **Claude** | Admin API + stream-json usage | `ANTHROPIC_API_KEY` | Org usage + plan; per-run tokens from stream. |
+| **Gemini** | Shared usage pipeline with auth/account attribution; provider runtime usage, quota APIs, usage APIs, error hints, and project rollups as available | Gemini OAuth accounts and/or Gemini API-key accounts; provider/account policy selects the effective auth surface | One provider surface; OAuth and API-key buckets are distinct and MUST remain source-labeled. |
+
+ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md
+```
+### Intent 16 (Run: r-20260313-152345-03, Anchor: `### Backend implementation notes`, Op: replace_section)
+```markdown
+- **Data layer:** Reuse and extend existing usage/plan-detection logic. Expose a clear current-usage contract per platform that the GUI can poll or subscribe to.
+- **Primary input:** aggregate from `usage.jsonl` / canonical usage projections.
+- **Secondary input:** platform APIs and structured provider/runtime outputs when configured and supported.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/FinalGUISpec.md
+
+- **Gemini source model:** Prefer the shared `UsageRecord` pipeline and carry explicit source attribution instead of hardcoding Gemini to local counters only.
+- **Gemini signal weighting:** strong provider/account telemetry outranks structured runtime output; structured output outranks heuristics; heuristics outrank local-only counters.
+- **Persistence:** event-level data and rollups remain canonical storage concerns; account-health and quota-pressure updates must feed the same control loop used by multi-account routing.
+
+ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/storage-plan.md, PolicyRule:Decision_Policy.md§2
+```
+### Intent 17 (Run: r-20260313-152345-03, Anchor: `### Canonical UsageRecord fields`, Op: replace_section)
+```markdown
+Required fields:
+- `run_kind`
+- `run_id`
+- `tier_id`
+- `attempt_id?`
+- `thread_id?`
+- `effective_platform`
+- `effective_model`
+- `effective_auth_mode?`
+- `effective_account_id?`
+- `input_tokens`
+- `output_tokens`
+- `total_tokens`
+- `estimated_cost?`
+- timestamps sufficient for rollups and ordering
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Run_Graph_View.md, ContractName:Plans/Orchestrator_Page.md
+
+Optional but recommended attribution fields:
+- `provider_account_id?`
+- `usage_source_kind`
+- `signal_confidence`
+- `effective_project_id?`
+- `currency?`
+- `prompt_cache_hit?` / similar optimization counters when available
+
+Ownership and consumption:
+- Ledger reads normalized `UsageRecord` projections rather than ad hoc log parsing
+- Usage page rollups are derived from the same record family
+- Run Graph and Orchestrator aggregate by `tier_id` and `attempt_id?` from the same contract
+- Interview, assistant, builder, and orchestrator runs share the same schema; `run_kind` distinguishes workflow families without creating parallel usage systems
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/FinalGUISpec.md
+
+Rule:
+- There is one usage schema. Compatibility shims may ingest older sources, but new runtime surfaces MUST NOT define alternate token/model/auth/account attribution records.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/Run_Graph_View.md
+```
+### Intent 18 (Run: r-20260313-152345-03, Anchor: `### Gap 4: Quota/plan only from errors`, Op: replace_section)
+```markdown
+- **Current state**
+  - Some providers can only expose reset/plan hints after an error.
+  - For Gemini, the stale assumption that all quota data is local/estimated is no longer sufficient.
+- **Desired**
+  - Proactive usage/quota display from provider APIs or structured runtime output when configured and available.
+  - Error parsing remains a fallback for reset time, plan hints, and rate-limit recovery when stronger signals are unavailable.
+  - Gemini surfaces remain mode-aware: OAuth-backed quota and API-key/local-only estimates MUST stay labeled distinctly.
+
+ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md
+
+- **Acceptance**
+  - User can see usage and reset countdown before hitting a limit when strong or structured signals exist.
+  - After a limit, the app still surfaces `Resets in X` and the switch/fallback reason when available.
+  - The UI shows whether quota pressure came from authoritative, structured, heuristic, or local-only signals.
+
+ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD
+```
+### Intent 19 (Run: r-20260317-164124-01, Anchor: `### 5. Per-thread usage in Chat (OpenCode-style)`, Op: replace_section)
+```markdown
+Per-thread context/usage in chat is a split inspect/action affordance rather than a direct jump to a chat-shell usage panel.
+
+Rules:
+- the chat header context circle is always the entrypoint for per-thread context state
+- hover opens a lightweight status module showing `Usage`, `Tokens`, estimated `Cost`, and `More Details`
+- click reveals the `Compact Now` action instead of immediately opening the detail surface
+- selecting `Compact Now` dispatches the canonical compaction command for that thread
+- selecting `More Details` opens or focuses the thread-scoped Context Detail Pane in an editor tab
+- app-wide Usage remains the canonical aggregated platform view and is not replaced by this thread-scoped pane
+- mid-stream updates are allowed but must use explicit in-progress states until final usage totals are known
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/FinalGUISpec.md
+
+The Context Detail Pane must support both curated inspection and raw payload inspection.
+
+Required content:
+- curated overview of thread counts, provider/model/mode/persona, and headline tokens/context/estimated cost
+- grouped context and token breakdowns
+- per-message inspection with human-readable fields first
+- raw payload toggles for the full thread and for individual messages
+- drill-downs by mode, provider, model, and other shared runtime identity dimensions when available
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/Prompt_Pipeline.md
+
+Estimated-cost rule:
+- per-thread chat cost uses the OpenCode-style normalization formula as the baseline approximation
+- reasoning tokens are charged at the output-token rate for the estimate
+- cache read and cache write buckets are included when pricing metadata exists
+- provider-sensitive cache normalization caveats must remain visible in raw/debug paths and must not be hidden behind authoritative wording in the chat UI
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/usage-feature.md
+
+```
+### Intent 20 (Run: r-20260317-164124-01, Anchor: `### Cost_usage runtime artifact and Show in Ledger / Show in Usage`, Op: replace_section)
+```markdown
+The `cost_usage` runtime artifact is an attribution record only. It uses the same canonical usage pipeline and schema as `usage.event`.
+
+Required actions for `cost_usage` items are:
+- `Show in Ledger` — navigate to the canonical Ledger surface with the matching usage identity in scope
+- `Show in Usage` — navigate to app-wide Usage or to the thread-scoped Context Detail Pane depending on artifact scope, preserving the same thread/run filters
+
+ContractRef: ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md
+
+Rules:
+- thread-scoped cost usage does not open a chat side-panel usage surface
+- thread-scoped cost usage lands on the same Context Detail Pane used by the chat context circle `More Details` action
+- app-wide cost usage lands on the app-wide Usage surface
+- the artifact does not create a second token or cost model outside the canonical usage schema
+
+ContractRef: ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/FinalGUISpec.md
+
+```
+### Intent 21 (Run: r-20260317-164124-01, Anchor: `## GUI Placement Options`, Op: replace_section)
+```markdown
+The GUI placement model is fixed.
+
+Canonical placement:
+- app-wide Usage is its own page or view
+- compact usage visibility appears in shell and status surfaces where appropriate
+- thread-scoped context detail lives in the chat flow as the context circle plus the editor-tab Context Detail Pane
+- artifact deep-links and chat usage activation land on those same canonical surfaces based on scope
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/assistant-chat-design.md
+
+Non-canonical after this section:
+- thread Usage in the chat shell or side panel as the primary detailed surface
+- detached usage pop-out as the canonical thread detail model
+- direct click on the context circle opening the detail pane without the hover/click split
+- unresolved `tab or panel or pop-out` phrasing that leaves the implementation guessing
+
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/storage-plan.md
+
+```
+### Intent 22 (Run: r-20260317-164124-02, Anchor: `### 5. Per-thread usage in Chat (OpenCode-style)`, Op: replace_section)
+```markdown
+Per-thread context/usage in chat is a split inspect/action affordance rather than a direct jump to a chat-shell usage panel.
+
+Rules:
+- the chat header context circle is always the entrypoint for per-thread context state
+- hover opens a lightweight status module showing `Usage`, `Tokens`, estimated `Cost`, and `More Details`
+- click reveals the `Compact Now` action instead of immediately opening the detail surface
+- selecting `Compact Now` dispatches the canonical compaction command for that thread
+- selecting `More Details` opens or focuses the thread-scoped Context Detail Pane in an editor tab
+- app-wide Usage remains the canonical aggregated platform view and is not replaced by this thread-scoped pane
+- mid-stream updates are allowed but must use explicit in-progress states until final usage totals are known
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/FinalGUISpec.md
+
+The Context Detail Pane must support both curated inspection and raw payload inspection.
+
+Required content:
+- curated overview of thread counts, provider/model/mode/persona, and headline tokens/context/estimated cost
+- grouped context and token breakdowns
+- per-message inspection with human-readable fields first
+- raw payload toggles for the full thread and for individual messages
+- drill-downs by mode, provider, model, and other shared runtime identity dimensions when available
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/Prompt_Pipeline.md
+
+Estimated-cost rule:
+- per-thread chat cost uses the OpenCode-style normalization formula as the baseline approximation
+- reasoning tokens are charged at the output-token rate for the estimate
+- cache read and cache write buckets are included when pricing metadata exists
+- provider-sensitive cache normalization caveats must remain visible in raw/debug paths and must not be hidden behind authoritative wording in the chat UI
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/usage-feature.md
+
+```
+### Intent 23 (Run: r-20260317-164124-02, Anchor: `### Cost_usage runtime artifact and Show in Ledger / Show in Usage`, Op: replace_section)
+```markdown
+The `cost_usage` runtime artifact is an attribution record only. It uses the same canonical usage pipeline and schema as `usage.event`.
+
+Required actions for `cost_usage` items are:
+- `Show in Ledger` — navigate to the canonical Ledger surface with the matching usage identity in scope
+- `Show in Usage` — navigate to app-wide Usage or to the thread-scoped Context Detail Pane depending on artifact scope, preserving the same thread/run filters
+
+ContractRef: ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md
+
+Rules:
+- thread-scoped cost usage does not open a chat side-panel usage surface
+- thread-scoped cost usage lands on the same Context Detail Pane used by the chat context circle `More Details` action
+- app-wide cost usage lands on the app-wide Usage surface
+- the artifact does not create a second token or cost model outside the canonical usage schema
+
+ContractRef: ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/FinalGUISpec.md
+
+```
+### Intent 24 (Run: r-20260317-164124-02, Anchor: `## GUI Placement Options`, Op: replace_section)
+```markdown
+The GUI placement model is fixed.
+
+Canonical placement:
+- app-wide Usage is its own page or view
+- compact usage visibility appears in shell and status surfaces where appropriate
+- thread-scoped context detail lives in the chat flow as the context circle plus the editor-tab Context Detail Pane
+- artifact deep-links and chat usage activation land on those same canonical surfaces based on scope
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/assistant-chat-design.md
+
+Non-canonical after this section:
+- thread Usage in the chat shell or side panel as the primary detailed surface
+- detached usage pop-out as the canonical thread detail model
+- direct click on the context circle opening the detail pane without the hover/click split
+- unresolved `tab or panel or pop-out` phrasing that leaves the implementation guessing
+
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/storage-plan.md
+
+```
+### Intent 25 (Run: r-20260317-164124-03, Anchor: `### 5. Per-thread usage in Chat (OpenCode-style)`, Op: replace_section)
+```markdown
+Per-thread context/usage in chat is a split inspect/action affordance rather than a direct jump to a chat-shell usage panel.
+
+Rules:
+- the chat header context circle is always the entrypoint for per-thread context state
+- hover opens a lightweight status module showing `Usage`, `Tokens`, estimated `Cost`, and `More Details`
+- click reveals the `Compact Now` action instead of immediately opening the detail surface
+- selecting `Compact Now` dispatches the canonical compaction command for that thread
+- selecting `More Details` opens or focuses the thread-scoped Context Detail Pane in an editor tab
+- app-wide Usage remains the canonical aggregated platform view and is not replaced by this thread-scoped pane
+- mid-stream updates are allowed but must use explicit in-progress states until final usage totals are known
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/FinalGUISpec.md
+
+The Context Detail Pane must support both curated inspection and raw payload inspection.
+
+Required content:
+- curated overview of thread counts, provider/model/mode/persona, and headline tokens/context/estimated cost
+- grouped context and token breakdowns
+- per-message inspection with human-readable fields first
+- raw payload toggles for the full thread and for individual messages
+- drill-downs by mode, provider, model, and other shared runtime identity dimensions when available
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/Prompt_Pipeline.md
+
+Estimated-cost rule:
+- per-thread chat cost uses the OpenCode-style normalization formula as the baseline approximation
+- reasoning tokens are charged at the output-token rate for the estimate
+- cache read and cache write buckets are included when pricing metadata exists
+- provider-sensitive cache normalization caveats must remain visible in raw/debug paths and must not be hidden behind authoritative wording in the chat UI
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/usage-feature.md
+
+```
+### Intent 26 (Run: r-20260317-164124-03, Anchor: `### Cost_usage runtime artifact and Show in Ledger / Show in Usage`, Op: replace_section)
+```markdown
+The `cost_usage` runtime artifact is an attribution record only. It uses the same canonical usage pipeline and schema as `usage.event`.
+
+Required actions for `cost_usage` items are:
+- `Show in Ledger` — navigate to the canonical Ledger surface with the matching usage identity in scope
+- `Show in Usage` — navigate to app-wide Usage or to the thread-scoped Context Detail Pane depending on artifact scope, preserving the same thread/run filters
+
+ContractRef: ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md
+
+Rules:
+- thread-scoped cost usage does not open a chat side-panel usage surface
+- thread-scoped cost usage lands on the same Context Detail Pane used by the chat context circle `More Details` action
+- app-wide cost usage lands on the app-wide Usage surface
+- the artifact does not create a second token or cost model outside the canonical usage schema
+
+ContractRef: ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/FinalGUISpec.md
+
+```
+### Intent 27 (Run: r-20260317-164124-03, Anchor: `## GUI Placement Options`, Op: replace_section)
+```markdown
+The GUI placement model is fixed.
+
+Canonical placement:
+- app-wide Usage is its own page or view
+- compact usage visibility appears in shell and status surfaces where appropriate
+- thread-scoped context detail lives in the chat flow as the context circle plus the editor-tab Context Detail Pane
+- artifact deep-links and chat usage activation land on those same canonical surfaces based on scope
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/assistant-chat-design.md
+
+Non-canonical after this section:
+- thread Usage in the chat shell or side panel as the primary detailed surface
+- detached usage pop-out as the canonical thread detail model
+- direct click on the context circle opening the detail pane without the hover/click split
+- unresolved `tab or panel or pop-out` phrasing that leaves the implementation guessing
+
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/storage-plan.md
+
+```
+### Intent 28 (Run: r-20260320-170511-01, Anchor: `### Cursor -- API (usage/account only; not for model invocation)`, Op: replace_section)
+```markdown
+Cursor usage is account and plan augmentation only. PM does not use a Cursor API for model invocation.
+
+ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Multi-Account.md, ContractName:Plans/FinalGUISpec.md
+
+Canonical usage-source classes for Cursor are:
+- `provider-reported`
+- `team-admin-reported`
+- `inferred_from_runtime_refusal`
+
+Rules:
+- PM must not invent a fake universal remaining-request counter when Cursor exposes only plan totals, team allotments, or runtime/editor refusal signals.
+- monthly included usage or request-allotment semantics are shown honestly as plan-cycle data rather than forced into a short rolling-window countdown.
+- `cursor-agent` remains the runtime target for execution and account validation.
+- `CURSOR_API_KEY` is an advanced/non-default setup path and does not change the CLI runtime ownership model.
+- Usage UI must disclose whether the data comes from provider-reported plan data, team-admin data, or inferred refusal/runtime evidence.
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/usage-feature.md, ContractName:Plans/storage-plan.md
+
+```
+### Intent 29 (Run: r-20260320-170511-01, Anchor: `### Codex -- CLI + provider data`, Op: replace_section)
+```markdown
+Codex is a direct provider in PM and supports multiple accounts across two distinct auth families:
+- `Sign in with ChatGPT`
+- `Use API Key`
+
+ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/FinalGUISpec.md
+
+Usage rules:
+- ChatGPT-backed Codex usage and API-key-backed Codex usage are distinct entitlement buckets.
+- PM MUST NOT merge those buckets into one shared pressure or cooldown pool, even when they belong to the same human owner.
+- plan-backed Codex accounts may expose included-usage windows and provider refusals.
+- API-key-backed Codex accounts behave as API-billed usage and may not have the same reset semantics.
+- Usage rows must label the bucket plainly, for example `Plan: ChatGPT Pro` or `Usage Bucket: API billed`.
+
+ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/storage-plan.md, ContractName:Plans/usage-feature.md
+
+```
+### Intent 30 (Run: r-20260320-170511-01, Anchor: `### Copilot -- CLI + REST metrics`, Op: replace_section)
+```markdown
+GitHub Copilot is a direct provider in PM.
+
+PM keeps one auth-backed account row per GitHub login and may resolve one effective billing/entity context beneath that row when premium-request semantics require it.
+
+ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/FinalGUISpec.md
+
+Usage and blocked-state rules:
+- premium-request exhaustion, paid-overage policy, org policy blocks, and entitlement-missing states are distinct conditions and must not all be flattened into a generic cooldown.
+- blocked reasons should remain explicit, including `billing_entity_required`, `included_premium_exhausted`, `paid_overage_disallowed`, `copilot_entitlement_missing`, and `copilot_org_policy_blocked`.
+- if multiple billing entities are available, the account may be `Logged in` but still `Needs setup` until the user chooses the effective billing entity.
+- Usage and status surfaces must show the selected billing/entity context whenever it explains the active quota bucket.
+- GitHub repository auth and local git/worktree behavior remain independent from GitHub Copilot account switching.
+
+ContractRef: ContractName:Plans/GitHub_API_Auth_and_Flows.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Prompt_Pipeline.md
+
+```
+### Intent 31 (Run: r-20260320-170511-01, Anchor: `### Gemini -- Direct-provider (local counters + estimated cost)`, Op: replace_section)
+```markdown
+Gemini usage must distinguish the direct provider from Gemini CLI while still allowing family-level pooling when policy permits.
+
+#### Gemini direct
+
+`Gemini` is the direct API-key provider entry.
+
+Rules:
+- direct Gemini account rows are API-key-backed only.
+- quota identity may depend on effective Google project context as well as the key itself.
+- when PM cannot prove authoritative remaining quota, the UI must show `estimated` or equivalent source-qualified wording rather than pretending the numbers are definitive.
+
+ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Media_Generation_and_Capabilities.md
+
+#### Gemini CLI
+
+`Gemini CLI` is a separate provider entry.
+
+Rules:
+- Gemini CLI may use OAuth, direct API key, or Vertex/Google credential families depending the configured account row.
+- trust can affect runtime MCP visibility, so `Configured` and `Working` must remain separate states.
+- provider-side model routing may still override the explicitly requested model in some flows; PM must show requested/effective differences rather than assuming full determinism.
+- usage/cooldown behavior depends on the active auth family and may range from authoritative remaining counters to softer or inferred pressure.
+
+ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/FinalGUISpec.md
+
+#### Family-pooling rule
+
+When policy pools Gemini direct and Gemini CLI together, the Usage surface must still show which concrete runtime surface actually handled the run and why.
+
+ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/storage-plan.md, ContractName:Plans/usage-feature.md
+
+```
+### Intent 32 (Run: r-20260320-170511-01, Anchor: `### Summary table (augmentation sources)`, Op: replace_section)
+```markdown
+| Provider entry | Primary usage sources | Auth / setup context | UI disclosure rule |
+|---|---|---|---|
+| **Cursor CLI** | provider-reported plan data, team-admin reporting, inferred runtime refusal | `cursor-agent` login default; API key advanced/non-default | show source-confidence; do not fake precise remaining counters |
+| **Codex** | direct provider usage, plan windows, provider refusals, API-billed usage | `ChatGPT` or `API key` account rows | keep plan-backed and API-billed buckets separate |
+| **GitHub Copilot** | provider quotas, premium-request semantics, runtime refusals, policy blocks | GitHub login plus selected billing/entity context when required | show billing/entity and blocked reason explicitly |
+| **Claude Code CLI** | API/admin usage where available, runtime signals, softer subscriber stats | subscriber, console/API, or SSO account rows | show whether data is authoritative or inferred |
+| **Gemini** | provider usage, quota APIs, project attribution, error hints | direct API-key account rows | show project attribution and estimated-vs-authoritative status honestly |
+| **Gemini CLI** | CLI/runtime signals, config/trust state, provider counters when available | OAuth, API-key, ADC, service-account, or Vertex account rows | show concrete runtime surface and auth family |
+| **OpenCode** | server health/discovery plus upstream provider usage where exposed through the server | managed or attached server profiles | separate connected/discovery status from actual provider availability |
+
+ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/Provider_OpenCode.md, ContractName:Plans/FinalGUISpec.md
+
+```
+### Intent 33 (Run: r-20260320-170511-01, Anchor: `### Multi-Account Widget as First-Class Catalog Entry`, Op: replace_section)
+```markdown
+The multi-account widget remains a first-class catalog entry, but it is now a status and observability widget rather than the canonical setup surface.
+
+ContractRef: ContractName:Plans/Widget_System.md, ContractName:Plans/Multi-Account.md, ContractName:Plans/FinalGUISpec.md
+
+Required content:
+- provider entry or server-profile row label
+- active/effective marker
+- plain-language status (`Working` or a concrete reason)
+- pressure/cooldown summary
+- source-confidence / stale label where needed
+- direct link/action into Agent-Config for setup, validation, or repair
+
+Rules:
+- the widget does not replace Agent-Config for account management, billing/entity selection, instruction control, skills, or MCP setup.
+- one GitHub Copilot auth-backed row may show a selected organization/billing entity beneath it rather than rendering duplicate top-level rows.
+- OpenCode server profiles appear alongside account-backed rows with explicit profile-mode labels.
+- the widget must not imply that every provider row has literal installed-local-state semantics; some rows are account-backed, some are server-profile-backed.
+
+ContractRef: ContractName:Plans/Provider_OpenCode.md, ContractName:Plans/usage-feature.md, ContractName:Plans/storage-plan.md
+
+```
+### Intent 34 (Run: r-20260320-170511-02, Anchor: `### Cursor -- API (usage/account only; not for model invocation)`, Op: replace_section)
+```markdown
+Cursor usage is account and plan augmentation only. PM does not use a Cursor API for model invocation.
+
+ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Multi-Account.md, ContractName:Plans/FinalGUISpec.md
+
+Canonical usage-source classes for Cursor are:
+- `provider-reported`
+- `team-admin-reported`
+- `inferred_from_runtime_refusal`
+
+Rules:
+- PM must not invent a fake universal remaining-request counter when Cursor exposes only plan totals, team allotments, or runtime/editor refusal signals.
+- monthly included usage or request-allotment semantics are shown honestly as plan-cycle data rather than forced into a short rolling-window countdown.
+- `cursor-agent` remains the runtime target for execution and account validation.
+- `CURSOR_API_KEY` is an advanced/non-default setup path and does not change the CLI runtime ownership model.
+- Usage UI must disclose whether the data comes from provider-reported plan data, team-admin data, or inferred refusal/runtime evidence.
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/usage-feature.md, ContractName:Plans/storage-plan.md
+
+```
+### Intent 35 (Run: r-20260320-170511-02, Anchor: `### Codex -- CLI + provider data`, Op: replace_section)
+```markdown
+Codex is a direct provider in PM and supports multiple accounts across two distinct auth families:
+- `Sign in with ChatGPT`
+- `Use API Key`
+
+ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/FinalGUISpec.md
+
+Usage rules:
+- ChatGPT-backed Codex usage and API-key-backed Codex usage are distinct entitlement buckets.
+- PM MUST NOT merge those buckets into one shared pressure or cooldown pool, even when they belong to the same human owner.
+- plan-backed Codex accounts may expose included-usage windows and provider refusals.
+- API-key-backed Codex accounts behave as API-billed usage and may not have the same reset semantics.
+- Usage rows must label the bucket plainly, for example `Plan: ChatGPT Pro` or `Usage Bucket: API billed`.
+
+ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/storage-plan.md, ContractName:Plans/usage-feature.md
+
+```
+### Intent 36 (Run: r-20260320-170511-02, Anchor: `### Copilot -- CLI + REST metrics`, Op: replace_section)
+```markdown
+GitHub Copilot is a direct provider in PM.
+
+PM keeps one auth-backed account row per GitHub login and may resolve one effective billing/entity context beneath that row when premium-request semantics require it.
+
+ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/FinalGUISpec.md
+
+Usage and blocked-state rules:
+- premium-request exhaustion, paid-overage policy, org policy blocks, and entitlement-missing states are distinct conditions and must not all be flattened into a generic cooldown.
+- blocked reasons should remain explicit, including `billing_entity_required`, `included_premium_exhausted`, `paid_overage_disallowed`, `copilot_entitlement_missing`, and `copilot_org_policy_blocked`.
+- if multiple billing entities are available, the account may be `Logged in` but still `Needs setup` until the user chooses the effective billing entity.
+- Usage and status surfaces must show the selected billing/entity context whenever it explains the active quota bucket.
+- GitHub repository auth and local git/worktree behavior remain independent from GitHub Copilot account switching.
+
+ContractRef: ContractName:Plans/GitHub_API_Auth_and_Flows.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Prompt_Pipeline.md
+
+```
+### Intent 37 (Run: r-20260320-170511-02, Anchor: `### Gemini -- Direct-provider (local counters + estimated cost)`, Op: replace_section)
+```markdown
+Gemini usage must distinguish the direct provider from Gemini CLI while still allowing family-level pooling when policy permits.
+
+#### Gemini direct
+
+`Gemini` is the direct API-key provider entry.
+
+Rules:
+- direct Gemini account rows are API-key-backed only.
+- quota identity may depend on effective Google project context as well as the key itself.
+- when PM cannot prove authoritative remaining quota, the UI must show `estimated` or equivalent source-qualified wording rather than pretending the numbers are definitive.
+
+ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Media_Generation_and_Capabilities.md
+
+#### Gemini CLI
+
+`Gemini CLI` is a separate provider entry.
+
+Rules:
+- Gemini CLI may use OAuth, direct API key, or Vertex/Google credential families depending the configured account row.
+- trust can affect runtime MCP visibility, so `Configured` and `Working` must remain separate states.
+- provider-side model routing may still override the explicitly requested model in some flows; PM must show requested/effective differences rather than assuming full determinism.
+- usage/cooldown behavior depends on the active auth family and may range from authoritative remaining counters to softer or inferred pressure.
+
+ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/FinalGUISpec.md
+
+#### Family-pooling rule
+
+When policy pools Gemini direct and Gemini CLI together, the Usage surface must still show which concrete runtime surface actually handled the run and why.
+
+ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/storage-plan.md, ContractName:Plans/usage-feature.md
+
+```
+### Intent 38 (Run: r-20260320-170511-02, Anchor: `### Summary table (augmentation sources)`, Op: replace_section)
+```markdown
+| Provider entry | Primary usage sources | Auth / setup context | UI disclosure rule |
+|---|---|---|---|
+| **Cursor CLI** | provider-reported plan data, team-admin reporting, inferred runtime refusal | `cursor-agent` login default; API key advanced/non-default | show source-confidence; do not fake precise remaining counters |
+| **Codex** | direct provider usage, plan windows, provider refusals, API-billed usage | `ChatGPT` or `API key` account rows | keep plan-backed and API-billed buckets separate |
+| **GitHub Copilot** | provider quotas, premium-request semantics, runtime refusals, policy blocks | GitHub login plus selected billing/entity context when required | show billing/entity and blocked reason explicitly |
+| **Claude Code CLI** | API/admin usage where available, runtime signals, softer subscriber stats | subscriber, console/API, or SSO account rows | show whether data is authoritative or inferred |
+| **Gemini** | provider usage, quota APIs, project attribution, error hints | direct API-key account rows | show project attribution and estimated-vs-authoritative status honestly |
+| **Gemini CLI** | CLI/runtime signals, config/trust state, provider counters when available | OAuth, API-key, ADC, service-account, or Vertex account rows | show concrete runtime surface and auth family |
+| **OpenCode** | server health/discovery plus upstream provider usage where exposed through the server | managed or attached server profiles | separate connected/discovery status from actual provider availability |
+
+ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/Provider_OpenCode.md, ContractName:Plans/FinalGUISpec.md
+
+```
+### Intent 39 (Run: r-20260320-170511-02, Anchor: `### Multi-Account Widget as First-Class Catalog Entry`, Op: replace_section)
+```markdown
+The multi-account widget remains a first-class catalog entry, but it is now a status and observability widget rather than the canonical setup surface.
+
+ContractRef: ContractName:Plans/Widget_System.md, ContractName:Plans/Multi-Account.md, ContractName:Plans/FinalGUISpec.md
+
+Required content:
+- provider entry or server-profile row label
+- active/effective marker
+- plain-language status (`Working` or a concrete reason)
+- pressure/cooldown summary
+- source-confidence / stale label where needed
+- direct link/action into Agent-Config for setup, validation, or repair
+
+Rules:
+- the widget does not replace Agent-Config for account management, billing/entity selection, instruction control, skills, or MCP setup.
+- one GitHub Copilot auth-backed row may show a selected organization/billing entity beneath it rather than rendering duplicate top-level rows.
+- OpenCode server profiles appear alongside account-backed rows with explicit profile-mode labels.
+- the widget must not imply that every provider row has literal installed-local-state semantics; some rows are account-backed, some are server-profile-backed.
+
+ContractRef: ContractName:Plans/Provider_OpenCode.md, ContractName:Plans/usage-feature.md, ContractName:Plans/storage-plan.md
+
+```
+### Intent 40 (Run: r-20260323-192127-01, Anchor: ``, Op: append)
+```markdown
+## Subagent and Crew Usage-Source Reconciliation Addendum (2026-03-26)
+
+Usage and quota views may consume child-run and crew usage, but they must not depend on deprecated live-state side files as canonical sources.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Contracts_V0.md
+
+Rules:
+- `active-subagents.json` is not canonical usage state.
+- child and crew usage should be derived from canonical event/storage projections.
+- provider-sensitive cost attribution must respect requested/effective runtime surface and Copilot-native routing constraints.
+- crew quota or usage displays should aggregate canonical child-run usage rather than invent a separate crew-only source of truth.
+
+ContractRef: ContractName:Plans/Models_System.md, ContractName:Plans/Provider_OpenCode.md, ContractName:Plans/CLI_Bridged_Providers.md
+
+```
+### Intent 41 (Run: r-20260323-192127-02, Anchor: `### Ownership and consumption`, Op: replace_section)
+```markdown
+Usage data for child runs, crew mode, and provider-sensitive subagent execution is derived from canonical runtime records and provider usage envelopes, not from side files or transient UI state. `active-subagents.json`, `active-agents.json`, and similar convenience artifacts are not canonical sources of billing or quota truth.
+
+ContractRef: Usage attribution for subagents and crews MUST be derived from canonical child-run records plus provider/runtime usage envelopes, and side files MUST NOT be treated as billing or quota canon. [Source: storage-plan.md#canonical-child-run-records-and-batch-structure; CLI_Bridged_Providers.md#provider-routing-policy-locked]
+
+Ownership is split as follows:
+
+- canonical child identity, lineage, and batch membership come from runtime storage and event records
+- requested versus effective runtime surface comes from provider routing resolution
+- Copilot-native child routing constraints remain provider-policy constraints, not local UI preferences
+- crew usage views aggregate usage across the child runs that belong to the same crew batch or task context
+
+ContractRef: Requested-versus-effective provider/runtime state MUST remain available to usage accounting and inspection so mixed-provider crews and rerouted children do not collapse into ambiguous totals. [Source: Models_System.md#provider-surface-capability-and-effort-resolution; CLI_Bridged_Providers.md#provider-routing-policy-locked]
+
+Usage consumers may present child-level or crew-level summaries, but those projections must remain derived from the same canonical accounting base. Optional helper children and required children may be filtered differently in UX, yet they do not create different billing truth sources.
+ContractRef: Usage summaries MAY differ by UX slice, but all child and crew usage displays MUST project from the same canonical accounting base. [Source: assistant-chat-design.md#14-subagents--crew; storage-plan.md#canonical-child-run-records-and-batch-structure]
+
+```
+### Intent 42 (Run: r-20260323-192127-03, Anchor: `### Ownership and consumption`, Op: replace_section)
+```markdown
+Usage data for child runs, crew mode, and provider-sensitive subagent execution is derived from canonical runtime records and provider usage envelopes, not from side files or transient UI state. `active-subagents.json`, `active-agents.json`, and similar convenience artifacts are not canonical sources of billing or quota truth.
+
+ContractRef: Usage attribution for subagents and crews MUST be derived from canonical child-run records plus provider/runtime usage envelopes, and side files MUST NOT be treated as billing or quota canon. [Source: storage-plan.md#canonical-child-run-records-and-batch-structure; CLI_Bridged_Providers.md#provider-routing-policy-locked]
+
+Ownership is split as follows:
+
+- canonical child identity, lineage, and batch membership come from runtime storage and event records
+- requested versus effective runtime surface comes from provider routing resolution
+- Copilot-native child routing constraints remain provider-policy constraints, not local UI preferences
+- crew usage views aggregate usage across the child runs that belong to the same crew batch or task context
+
+ContractRef: Requested-versus-effective provider/runtime state MUST remain available to usage accounting and inspection so mixed-provider crews and rerouted children do not collapse into ambiguous totals. [Source: Models_System.md#provider-surface-capability-and-effort-resolution; CLI_Bridged_Providers.md#provider-routing-policy-locked]
+
+Usage consumers may present child-level or crew-level summaries, but those projections must remain derived from the same canonical accounting base. Optional helper children and required children may be filtered differently in UX, yet they do not create different billing truth sources.
+ContractRef: Usage summaries MAY differ by UX slice, but all child and crew usage displays MUST project from the same canonical accounting base. [Source: assistant-chat-design.md#14-subagents--crew; storage-plan.md#canonical-child-run-records-and-batch-structure]
+
+```
+### Intent 43 (Run: r-20260328-192850-01, Anchor: `## Gaps (Current State vs. Desired)`, Op: replace_section)
+```markdown
+### Resolved: Cost and token accounting design
+
+The following decisions replace the prior Gap 1–7 framing. All items are resolved and MVP-blocking.
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md
+
+### Cost storage: integer microdollars
+
+All monetary cost values MUST be stored as integer microdollars (`u64`). One US dollar equals 1,000,000 microdollars. `float64` is NEVER used for cost storage. This prevents floating-point drift in aggregations and comparisons.
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md
+
+### Token field segregation
+
+The following five token fields MUST be stored individually in every usage record. They MUST NOT be pre-aggregated or collapsed at the storage layer:
+- `input_tokens`
+- `output_tokens`
+- `cache_read_input_tokens`
+- `cache_creation_input_tokens`
+- `reasoning_tokens`
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md
+
+### Spending limits and budget enforcement
+
+PM enforces spending limits at two check points:
+1. **Pre-request estimate:** Before dispatching a provider call, PM estimates the cost and blocks with `kill.budget_exceeded` if the estimate would exceed the remaining budget.
+2. **Post-response check:** After receiving the response, PM records actual cost and emits a warning event if cumulative spend exceeds 80% of the configured limit.
+
+Both per-run and per-session budget limits are supported.
+
+ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Executor_Protocol.md
+
+### Billing entity and pricing versioning
+
+Cost attribution is keyed by `(model_id, provider_id, billing_entity)`. Pricing tables carry a `pricing_version` metadata field. User-provided price overrides are applied before any warning. Doctor integration warns when the stored pricing data is stale.
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Models_System.md
+
+### Adaptive display precision
+
+When displaying cost values in the GUI:
+- Sub-dollar amounts: show 4 decimal places (e.g., `$0.0012`).
+- Amounts above $1: show 2 decimal places (e.g., `$3.14`).
+- Always show currency label.
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Contracts_V0.md
+
+### 5h/7d usage aggregation
+
+5h/7d usage windows are aggregated from canonical `usage.jsonl` records using `timestamp` and `provider_id` fields. UI reads from the last committed rollup and displays `Updating...` while a background rollup is in progress.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md
+
+### Unified UsageRecord schema
+
+All usage surfaces (Ledger, Usage panel, Run Graph, Orchestrator) MUST derive from the same canonical `UsageRecord` with runtime-first attribution identity. `tier_id` is not the primary correlation key. Compatibility shims may ingest older sources but new surfaces MUST NOT define alternate token/model attribution records.
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractN
+```
+[... truncated, full length: 3025 chars]
+### Intent 44 (Run: r-20260328-192938-01, Anchor: `### Gap 6: Analytics not implemented`, Op: insert_after)
+```markdown
+
+**Index-accelerated grep analytics field:**
+
+The `tool.invoked` seglog event for `grep` includes an optional `index_used: boolean` field. When `true`, the per-project sparse n-gram index was used to accelerate the query (narrowing candidates before ripgrep verification). When `false` or absent, raw ripgrep was used on all files (fallback path — index missing, building, corrupted, or disabled).
+
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md
+
+This field enables analytics views to report:
+- Percentage of grep calls that were index-accelerated vs fallback.
+- Correlation between index availability and grep latency.
+- Per-project index health (e.g., projects with frequent fallback may need index configuration tuning).
+```
+### Intent 45 (Run: r-20260328-192938-02, Anchor: `### Gap 6: Analytics not implemented`, Op: replace_section)
+```markdown
+- **Current state**
+  - No analytics view. Metrics view shows run-level or platform execution stats, not usage-by-date, usage-by-project, or cost-by-model.
+  - No export of usage or analytics (`Export Ledger` exists, but there is no date-range or analytics export).
+- **Desired**
+  - Analytics section or page: aggregate usage by date range, platform, project (if multi-project later), and model; optional cost when available; export current view as CSV/JSON.
+- **Acceptance**
+  - User can see `Usage last 7d / 30d by platform` and `By model` (and optionally cost), and export the visible data.
+
+**Index-accelerated grep analytics field:**
+
+The `tool.invoked` seglog event for `grep` includes an optional `index_used: boolean` field. When `true`, the per-project sparse n-gram index accelerated the query by narrowing candidates before ripgrep verification. When `false` or absent, grep used the raw-ripgrep path because the index was missing, disabled, corrupted, still building without a valid snapshot, or skipped for query-specific reasons (for example no extractable literals, non-ASCII case-insensitive literals, or the 64-gram complexity cap).
+
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md
+
+This field enables analytics views to report:
+- percentage of grep calls that were index-accelerated vs fallback
+- correlation between index availability and grep latency
+- per-project index health (for example, projects with frequent fallback may need index configuration tuning or cache repair)
+```
+### Intent 46 (Run: r-20260328-192938-03, Anchor: `### Gap 6: Analytics not implemented`, Op: replace_section)
+```markdown
+- **Current state**
+  - No analytics view. Metrics view shows run-level or platform execution stats, not usage-by-date, usage-by-project, or cost-by-model.
+  - No export of usage or analytics (`Export Ledger` exists, but there is no date-range or analytics export).
+- **Desired**
+  - Analytics section or page: aggregate usage by date range, platform, project (if multi-project later), and model; optional cost when available; export current view as CSV/JSON.
+- **Acceptance**
+  - User can see `Usage last 7d / 30d by platform` and `By model` (and optionally cost), and export the visible data.
+
+**Index-accelerated grep analytics field:**
+
+The `tool.invoked` seglog event for `grep` includes an optional `index_used: boolean` field. When `true`, the per-project sparse n-gram index accelerated the query by narrowing candidates before ripgrep verification. When `false` or absent, grep used the raw-ripgrep path because the index was missing, disabled, corrupted, still building without a valid snapshot, or skipped for query-specific reasons (for example no extractable literals, non-ASCII case-insensitive literals, or the 64-gram complexity cap).
+
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md
+
+This field enables analytics views to report:
+- percentage of grep calls that were index-accelerated vs fallback
+- correlation between index availability and grep latency
+- per-project index health (for example, projects with frequent fallback may need index configuration tuning or cache repair)
+```
+## Doc: Plans/rewrite-tie-in-memo.md
+### Intent 1 (Run: r-20260312-203855-01, Anchor: `### What's changing (high level)`, Op: insert_after)
+```markdown
+### Orchestrator rewrite canonicalization lock (2026-03-17)
+The orchestrator rewrite is now locked to these cross-doc decisions:
+- node graph is the canonical execution model
+- `Feature Seam` and `Work Package` are first-class graph-owned objects
+- `Node` remains the smallest executable unit
+- `Package Overseer` and `Seam Overseer` are governance roles, not hidden schedulers
+- `Locally Complete`, `Available to Seam`, and `Seam Complete` remain distinct promotion states
+- weak integration remains first-class and blocks seam completion when integration quality is insufficient
+- graph patching creates a new graph generation while preserving historical superseded paths as visible lineage
+- Orchestrator is tab-first with `Progress`, `Seams`, `Node Graph`, `Evidence`, `History`, and `Ledger`
+- `Progress` is the only widget-composed Orchestrator tab
+- Source Control remains compact and worktree-first while Orchestrator carries lane/package/seam operational context
+- shared requested/effective runtime identity spans conversational actors and orchestration actors without collapsing them into one ontology
+- `route_target` and `OpenSubject` are canonical navigation/source-open primitives
+
+ContractRef: ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/Run_Graph_View.md, ContractName:Plans/Crosswalk.md
+
+```
+### Intent 2 (Run: r-20260313-152345-01, Anchor: `### Gemini auth decision (locked)`, Op: replace_section)
+```markdown
+- Gemini is one **DirectApi** provider with mixed OAuth and API-key account pools under the shared provider runtime.
+- The default Gemini `requested_auth_mode` is `auto`, and the provider-default auth-surface preference is OAuth first, then API key, unless project/run policy overrides it.
+- OAuth and API key are distinct Gemini auth surfaces / quota planes and MUST NOT be presented as the same plan or bucket.
+- Gemini API key remains the explicit allowed exception to the broader subscription-first / avoid-API-keys guidance.
+- Requested vs effective auth/account identity MUST be visible across prompt assembly, storage, setup/health, usage, and runtime reporting.
+- Media follows the same requested/effective Gemini auth/account rules as regular Gemini usage.
+
+ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD, ContractName:Plans/storage-plan.md
+```
+### Intent 3 (Run: r-20260313-152345-01, Anchor: `### Immediate contradictions to resolve in Plans (so requirements do not fight each other)`, Op: replace_section)
+```markdown
+- **UI tech:** any plan text that assumes **Iced** UI implementation should be treated as *UX requirements only*, not a widget/library implementation commitment.
+- **UI scaling migration:** Iced custom scaling mechanics (for example token-by-token multiplication layers) MUST be treated as legacy implementation references; Slint-target sections MUST describe native Slint scaling paths.
+
+ContractRef: ContractName:Plans/Contracts_V0.md#8
+
+- **Storage:** any plan that proposes **SQLite** for run/session/history storage needs to be reframed as **event-sourced** storage with seglog/redb/Tantivy projections.
+- **Provider abstraction:** platform-specific execution terminology in touched sections must use **Provider** + unified event model, especially for streaming output and tool gating.
+- **Gemini auth/account:** stale canon that says Gemini UI defaults to API key, or that OAuth is merely an optional fallback to the same bucket, MUST be retired. The canonical model is one provider with mixed OAuth/API-key account pools, OAuth-first default preference under `auto`, no silent cross-surface fallback for explicit auth requests, and requested/effective auth/account identity visible across surfaces.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Multi-Account.md, ContractName:Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD
+
+- **Gemini media:** any plan text that implies non-Cursor Gemini media is API-key-only MUST be retired; media follows the same Gemini auth/account model as standard provider usage.
+- **Automation references:** any mention of Iced-era automation must be treated as a **migration reference pattern only**; rewrite deliverables target Slint runtime contracts and shared evidence schema.
+
+ContractRef: ContractName:Plans/Media_Generation_and_Capabilities.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/rewrite-tie-in-memo.md
+```
+### Intent 4 (Run: r-20260313-152345-02, Anchor: `### Gemini auth decision (locked)`, Op: replace_section)
+```markdown
+- Gemini is one **DirectApi** provider with mixed OAuth and API-key account pools under the shared provider runtime.
+- The default Gemini `requested_auth_mode` is `auto`, and the provider-default auth-surface preference is OAuth first, then API key, unless project/run policy overrides it.
+- OAuth and API key are distinct Gemini auth surfaces / quota planes and MUST NOT be presented as the same plan or bucket.
+- Gemini API key remains the explicit allowed exception to the broader subscription-first / avoid-API-keys guidance.
+- Requested vs effective auth/account identity MUST be visible across prompt assembly, storage, setup/health, usage, and runtime reporting.
+- Media follows the same requested/effective Gemini auth/account rules as regular Gemini usage.
+
+ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD, ContractName:Plans/storage-plan.md
+```
+### Intent 5 (Run: r-20260313-152345-02, Anchor: `### Immediate contradictions to resolve in Plans (so requirements do not fight each other)`, Op: replace_section)
+```markdown
+- **UI tech:** any plan text that assumes **Iced** UI implementation should be treated as *UX requirements only*, not a widget/library implementation commitment.
+- **UI scaling migration:** Iced custom scaling mechanics (for example token-by-token multiplication layers) MUST be treated as legacy implementation references; Slint-target sections MUST describe native Slint scaling paths.
+
+ContractRef: ContractName:Plans/Contracts_V0.md#8
+
+- **Storage:** any plan that proposes **SQLite** for run/session/history storage needs to be reframed as **event-sourced** storage with seglog/redb/Tantivy projections.
+- **Provider abstraction:** platform-specific execution terminology in touched sections must use **Provider** + unified event model, especially for streaming output and tool gating.
+- **Gemini auth/account:** stale canon that says Gemini UI defaults to API key, or that OAuth is merely an optional fallback to the same bucket, MUST be retired. The canonical model is one provider with mixed OAuth/API-key account pools, OAuth-first default preference under `auto`, no silent cross-surface fallback for explicit auth requests, and requested/effective auth/account identity visible across surfaces.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Multi-Account.md, ContractName:Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD
+
+- **Gemini media:** any plan text that implies non-Cursor Gemini media is API-key-only MUST be retired; media follows the same Gemini auth/account model as standard provider usage.
+- **Automation references:** any mention of Iced-era automation must be treated as a **migration reference pattern only**; rewrite deliverables target Slint runtime contracts and shared evidence schema.
+
+ContractRef: ContractName:Plans/Media_Generation_and_Capabilities.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/rewrite-tie-in-memo.md
+```
+### Intent 6 (Run: r-20260313-152345-03, Anchor: `### Gemini auth decision (locked)`, Op: replace_section)
+```markdown
+- Gemini is one **DirectApi** provider with mixed OAuth and API-key account pools under the shared provider runtime.
+- The default Gemini `requested_auth_mode` is `auto`, and the provider-default auth-surface preference is OAuth first, then API key, unless project/run policy overrides it.
+- OAuth and API key are distinct Gemini auth surfaces / quota planes and MUST NOT be presented as the same plan or bucket.
+- Gemini API key remains the explicit allowed exception to the broader subscription-first / avoid-API-keys guidance.
+- Requested vs effective auth/account identity MUST be visible across prompt assembly, storage, setup/health, usage, and runtime reporting.
+- Media follows the same requested/effective Gemini auth/account rules as regular Gemini usage.
+
+ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD, ContractName:Plans/storage-plan.md
+```
+### Intent 7 (Run: r-20260313-152345-03, Anchor: `### Immediate contradictions to resolve in Plans (so requirements do not fight each other)`, Op: replace_section)
+```markdown
+- **UI tech:** any plan text that assumes **Iced** UI implementation should be treated as *UX requirements only*, not a widget/library implementation commitment.
+- **UI scaling migration:** Iced custom scaling mechanics (for example token-by-token multiplication layers) MUST be treated as legacy implementation references; Slint-target sections MUST describe native Slint scaling paths.
+
+ContractRef: ContractName:Plans/Contracts_V0.md#8
+
+- **Storage:** any plan that proposes **SQLite** for run/session/history storage needs to be reframed as **event-sourced** storage with seglog/redb/Tantivy projections.
+- **Provider abstraction:** platform-specific execution terminology in touched sections must use **Provider** + unified event model, especially for streaming output and tool gating.
+- **Gemini auth/account:** stale canon that says Gemini UI defaults to API key, or that OAuth is merely an optional fallback to the same bucket, MUST be retired. The canonical model is one provider with mixed OAuth/API-key account pools, OAuth-first default preference under `auto`, no silent cross-surface fallback for explicit auth requests, and requested/effective auth/account identity visible across surfaces.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Multi-Account.md, ContractName:Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD
+
+- **Gemini media:** any plan text that implies non-Cursor Gemini media is API-key-only MUST be retired; media follows the same Gemini auth/account model as standard provider usage.
+- **Automation references:** any mention of Iced-era automation must be treated as a **migration reference pattern only**; rewrite deliverables target Slint runtime contracts and shared evidence schema.
+
+ContractRef: ContractName:Plans/Media_Generation_and_Capabilities.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/rewrite-tie-in-memo.md
+```
+### Intent 8 (Run: r-20260313-183219-01, Anchor: `### Source/preview mapping and edit contract`, Op: replace_section)
+```markdown
+Preview mutation and document annotation are related but distinct contracts. Direct preview mutation remains a validated shared-buffer patch path; annotation and chat handoff remain review-layer operations until an explicit direct-edit bridge is invoked.
+
+#### Preview action protocol v1
+
+All successful preview mutations resolve to canonical text patches against the same shared buffer model used by File Editor.
+
+**Operation payloads**
+- `toggle_checkbox` -> `{ target_state?: boolean }`
+- `edit_heading_text` -> `{ replacement_text }`
+- `edit_list_item_text` -> `{ replacement_text }`
+- `set_link_target` -> `{ href, title? }`
+- `set_inline_format` -> `{ format: "bold" | "italic" | "code", enable }`
+- `replace_mermaid_block` -> `{ replacement_source }`
+
+ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/FinalGUISpec.md
+
+**Patch rules**
+- The runtime MUST resolve `node_id` against the current parse tree for the provided `parse_revision`.
+- The runtime MUST validate `source_revision` before patch application.
+- The resulting patch MUST stay constrained to the mapped source span for that node or block.
+- Requests MUST fail with `ambiguous_mapping` when the requested operation would require modifying text outside the mapped node span.
+- Requests MUST fail with `unsupported_region` for raw HTML regions, malformed Markdown regions, unknown extensions, and opaque fenced content.
+
+ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/Permissions_System.md
+
+**Shared-buffer integration**
+- Successful preview edits apply through the same in-memory buffer/update path as File Editor.
+- Successful preview edits MUST update dirty state, undo/redo history, and downstream preview re-render using the existing editor/document pipeline.
+- Preview actions MUST NOT write directly to disk and MUST NOT bypass the normal save path.
+- Each successful preview action creates one undo step unless the host editor later adds explicit coalescing rules.
+
+ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/storage-plan.md
+
+**UI outcomes and result codes**
+- On `applied_patch`, the source buffer and rendered preview update to the new `source_revision`.
+- On `rejected_stale_revision`, `ambiguous_mapping`, or `unsupported_region`, the UI focuses source at the mapped region when possible and shows a deterministic user-facing reason.
+- Direct preview mutation result codes remain: `applied_patch`, `rejected_stale_revision`, `unsupported_region`, `ambiguous_mapping`, `permission_denied`, `fallback_focus_source`, and `render_error`.
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Crosswalk.md
+
+#### Selection annotations and chat handoff boundary
+
+Selection actions such as `comment`, `replace`, `insert_after`, `remove`, and `send_selection_to_chat` are not direct preview-mutation operations.
+
+- On source-backed or deterministically mapped preview surfaces, selection actions may create durable annotations or `document_selection_co
+```
+[... truncated, full length: 3615 chars]
+### Intent 9 (Run: r-20260317-181906-01, Anchor: `#### PreviewSession lifecycle and identity contract`, Op: replace_section)
+```markdown
+`PreviewSession` remains a durable runtime contract for rendered subject identity, but browser-capable surfaces layer a distinct browser-session identity on top of preview identity so that browser tabs, detached windows, automation sessions, and auth sessions do not collapse into one broad preview-instance model.
+
+Identity rules:
+- moving the same preview subject between source-linked preview surfaces keeps the same `preview_session_id` when `preview_subject_id` and `source_revision` remain unchanged
+- browser-capable surfaces additionally carry a distinct `browser_session_id` and `session_class`
+- detaching normal browsing is an attachment change, not a new preview subject, unless the user explicitly creates a separate detached profile
+- `bottom_panel_browser` is not a canonical attachment target
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/FinalGUISpec.md
+```
+### Intent 10 (Run: r-20260317-181906-01, Anchor: `#### Platform runtime matrix and degraded-mode UX`, Op: replace_section)
+```markdown
+The rendering system must define one browser product model across supported desktop platforms: a PM-managed pinned bundled CEF-class Chromium runtime with editor-tab primary hosting and first-class detached windows.
+
+Required doctor/preflight checks validate bundled browser runtime health, version match, browser startup path, and both editor-tab and detached host paths under the same PM browser abstraction.
+
+Browser runtime failure must not silently swap to an unrelated legacy webview/browser model.
+
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/newtools.md, ContractName:Plans/Permissions_System.md
+```
+### Intent 11 (Run: r-20260317-181906-02, Anchor: `#### PreviewSession lifecycle and identity contract`, Op: replace_section)
+```markdown
+`PreviewSession` is a durable runtime contract for rendered subject identity, but browser-capable surfaces layer a distinct browser-session identity on top of preview identity so that browser tabs, detached windows, automation sessions, and auth sessions do not collapse into one broad preview-instance model.
+
+**Lifecycle states**
+- `created`
+- `loading`
+- `ready`
+- `stale`
+- `degraded`
+- `error`
+- `closed`
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/FileManager.md
+
+**Identity rules**
+- moving the same preview subject between source-linked preview surfaces keeps the same `preview_session_id` when `preview_subject_id`, `source_revision`, `preview_surface_kind`, and `transport_mode` remain unchanged
+- browser-capable surfaces additionally carry a distinct `browser_session_id` and `session_class`
+- detaching normal browsing is an attachment change, not a new preview subject, unless the user explicitly creates separate detached state
+- `bottom_panel_browser` is not a canonical attachment target
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Permissions_System.md
+
+**Attachment rules**
+- a single `PreviewSession` MAY be visible in multiple read-only surfaces at the same time
+- only one attachment may hold mutation-capable focus at a time
+- `attached_surface` is the currently focused attachment; additional viewers are tracked as secondary attachments in runtime state
+- canonical attachment targets are `chat_card`, `editor_preview`, `embedded_doc_pane`, `editor_browser_tab`, and `detached_window`
+
+ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md
+
+**Persistence and audit expectations**
+- the app MUST persist enough state to restore the user's last preview mode, last successful attachment target, and last visible preview error per subject
+- the app MUST NOT persist live DOM state or browser storage as part of `PreviewSession` state
+- preview lifecycle changes MUST emit canonical events in `storage-plan.md` and be invocable through canonical UI commands in `UI_Command_Catalog.md`
+- browser-linked runtime artifacts retain explicit `browser_session_id` and `session_class` linkage rather than inventing a separate browser-recording shell
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Runtime_Artifacts_Panel.md
+
+**Minimum restore rule**
+- on restart, the product restores preview intent (`none`, `inline`, `split`, `browser_tab`, `detached`) and reconstructs a new live runtime session as needed; it does not attempt to deserialize an old live browser instance
+- normal browser sessions restore according to profile scope and session class
+- live automation/auth sessions do not silently resume active work after restart
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Section15_
+```
+[... truncated, full length: 3962 chars]
+### Intent 12 (Run: r-20260317-181906-02, Anchor: `#### Platform runtime matrix and degraded-mode UX`, Op: replace_section)
+```markdown
+The rendering system must define one browser product model across supported desktop platforms: a PM-managed pinned bundled CEF-class Chromium runtime with editor-tab primary hosting and first-class detached windows.
+
+| Platform | Embedded browser status | Guaranteed path | Runtime dependency | Required degraded UX |
+|---|---|---|---|---|
+| Windows | supported through the PM-managed bundled Chromium runtime | editor-tab browser plus detached window on the same PM browser model | PM-managed bundled Chromium runtime | show `runtime_unavailable` remediation and keep source/native surfaces usable |
+| macOS | supported through the PM-managed bundled Chromium runtime | editor-tab browser plus detached window on the same PM browser model | PM-managed bundled Chromium runtime | show `runtime_unavailable` remediation and keep source/native surfaces usable |
+| Linux X11 | supported through the PM-managed bundled Chromium runtime | editor-tab browser plus detached window on the same PM browser model | PM-managed bundled Chromium runtime plus platform prerequisites required by the chosen embedding path | show `runtime_unavailable` remediation and keep source/native surfaces usable |
+| Linux Wayland | supported through the same PM browser abstraction with platform-specific embedding details hidden behind the PM bridge | editor-tab browser plus detached window on the same PM browser model | PM-managed bundled Chromium runtime plus platform prerequisites required by the chosen embedding path | show `runtime_unavailable` remediation and keep source/native surfaces usable |
+
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Permissions_System.md
+
+**Required doctor/preflight checks**
+- bundled browser runtime is present and healthy
+- browser runtime version matches the app-managed expected runtime set
+- browser startup path is healthy for the current platform session
+- editor-tab browser host and detached browser host can both be validated under the same PM browser abstraction
+
+ContractRef: ContractName:Plans/newtools.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/storage-plan.md
+
+**Required degraded behavior**
+- generated Markdown/Mermaid preview failure must keep source usable
+- browser runtime failure must use explicit user-facing remediation and MUST NOT silently swap to an unrelated legacy webview/browser model
+- blank panes and screenshot-only substitution are not acceptable steady-state fallback behavior for browser-class surfaces
+- browser capability degradations must remain visible through requested/effective runtime disclosure rather than being hidden behind platform heuristics
+
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/storage-plan.md
+```
+### Intent 13 (Run: r-20260317-181906-03, Anchor: `#### PreviewSession lifecycle and identity contract`, Op: replace_section)
+```markdown
+`PreviewSession` is a durable runtime contract for rendered subject identity, but browser-capable surfaces layer a distinct browser-session identity on top of preview identity so that browser tabs, detached windows, automation sessions, and auth sessions do not collapse into one broad preview-instance model.
+
+**Lifecycle states**
+- `created`
+- `loading`
+- `ready`
+- `stale`
+- `degraded`
+- `error`
+- `closed`
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/FileManager.md
+
+**Identity rules**
+- moving the same preview subject between source-linked preview surfaces keeps the same `preview_session_id` when `preview_subject_id`, `source_revision`, `preview_surface_kind`, and `transport_mode` remain unchanged
+- browser-capable surfaces additionally carry a distinct `browser_session_id` and `session_class`
+- detaching normal browsing is an attachment change, not a new preview subject, unless the user explicitly creates separate detached state
+- `bottom_panel_browser` is not a canonical attachment target
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Permissions_System.md
+
+**Attachment rules**
+- a single `PreviewSession` MAY be visible in multiple read-only surfaces at the same time
+- only one attachment may hold mutation-capable focus at a time
+- `attached_surface` is the currently focused attachment; additional viewers are tracked as secondary attachments in runtime state
+- canonical attachment targets are `chat_card`, `editor_preview`, `embedded_doc_pane`, `editor_browser_tab`, and `detached_window`
+
+ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md
+
+**Persistence and audit expectations**
+- the app MUST persist enough state to restore the user's last preview mode, last successful attachment target, and last visible preview error per subject
+- the app MUST NOT persist live DOM state or browser storage as part of `PreviewSession` state
+- preview lifecycle changes MUST emit canonical events in `storage-plan.md` and be invocable through canonical UI commands in `UI_Command_Catalog.md`
+- browser-linked runtime artifacts retain explicit `browser_session_id` and `session_class` linkage rather than inventing a separate browser-recording shell
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Runtime_Artifacts_Panel.md
+
+**Minimum restore rule**
+- on restart, the product restores preview intent (`none`, `inline`, `split`, `browser_tab`, `detached`) and reconstructs a new live runtime session as needed; it does not attempt to deserialize an old live browser instance
+- normal browser sessions restore according to profile scope and session class
+- live automation/auth sessions do not silently resume active work after restart
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Section15_
+```
+[... truncated, full length: 3962 chars]
+### Intent 14 (Run: r-20260317-181906-03, Anchor: `#### Platform runtime matrix and degraded-mode UX`, Op: replace_section)
+```markdown
+The rendering system must define one browser product model across supported desktop platforms: a PM-managed pinned bundled CEF-class Chromium runtime with editor-tab primary hosting and first-class detached windows.
+
+| Platform | Embedded browser status | Guaranteed path | Runtime dependency | Required degraded UX |
+|---|---|---|---|---|
+| Windows | supported through the PM-managed bundled Chromium runtime | editor-tab browser plus detached window on the same PM browser model | PM-managed bundled Chromium runtime | show `runtime_unavailable` remediation and keep source/native surfaces usable |
+| macOS | supported through the PM-managed bundled Chromium runtime | editor-tab browser plus detached window on the same PM browser model | PM-managed bundled Chromium runtime | show `runtime_unavailable` remediation and keep source/native surfaces usable |
+| Linux X11 | supported through the PM-managed bundled Chromium runtime | editor-tab browser plus detached window on the same PM browser model | PM-managed bundled Chromium runtime plus platform prerequisites required by the chosen embedding path | show `runtime_unavailable` remediation and keep source/native surfaces usable |
+| Linux Wayland | supported through the same PM browser abstraction with platform-specific embedding details hidden behind the PM bridge | editor-tab browser plus detached window on the same PM browser model | PM-managed bundled Chromium runtime plus platform prerequisites required by the chosen embedding path | show `runtime_unavailable` remediation and keep source/native surfaces usable |
+
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Permissions_System.md
+
+**Required doctor/preflight checks**
+- bundled browser runtime is present and healthy
+- browser runtime version matches the app-managed expected runtime set
+- browser startup path is healthy for the current platform session
+- editor-tab browser host and detached browser host can both be validated under the same PM browser abstraction
+
+ContractRef: ContractName:Plans/newtools.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/storage-plan.md
+
+**Required degraded behavior**
+- generated Markdown/Mermaid preview failure must keep source usable
+- browser runtime failure must use explicit user-facing remediation and MUST NOT silently swap to an unrelated legacy webview/browser model
+- blank panes and screenshot-only substitution are not acceptable steady-state fallback behavior for browser-class surfaces
+- browser capability degradations must remain visible through requested/effective runtime disclosure rather than being hidden behind platform heuristics
+
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/storage-plan.md
+```
+### Intent 15 (Run: r-20260320-164907-01, Anchor: `### Plans likely needing the most rewrite-aware edits`, Op: replace_section)
+```markdown
+- `Plans/newfeatures.md`
+  - keep treating it as historical/origin material only; promoted browser/debug/runtime behavior now lives in the reconciled owner docs
+- `Plans/assistant-chat-design.md`
+  - keep chat-mode UX and slash-command behavior, but reconcile the mode strip, Investigation Context, and visible-vs-hidden evidence ingress with the rewrite storage/prompt model
+- `Plans/Run_Modes.md`, `Plans/Permissions_System.md`, and `Plans/storage-plan.md`
+  - keep the rewrite runtime/persistence model authoritative and ensure Debug stays an overlay, not a fifth runtime enum or a hidden global permission profile
+- `Plans/Prompt_Pipeline.md` and `Plans/Contracts_V0.md`
+  - carry Investigation Context, event types, and bounded attachment semantics through the canonical prompt/event contracts rather than leaving them as UI-only ideas
+- `Plans/Section15_MVP_Promoted_Features_Spec.md`, `Plans/FinalGUISpec.md`, `Plans/UI_Command_Catalog.md`, and `Plans/Runtime_Artifacts_Panel.md`
+  - retire stale browser / bottom-panel / `Debug` wording, keep Debug Mode distinct from the classical debugger surface, and preserve the visible browser-evidence contract
+- `Plans/Tools.md`, `Plans/newtools.md`, and `Plans/GitHub_Integration.md`
+  - keep debug-capable tooling cross-surface, registry-driven, remote-authority-safe, and compatible with the shared artifact/doctor pipeline
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md
+
+```
+### Intent 16 (Run: r-20260320-170511-01, Anchor: `### Immediate contradictions to resolve in Plans (so requirements do not fight each other)`, Op: replace_section)
+```markdown
+The following contradictions must be retired during reconciliation so the rewrite does not preserve parallel canon.
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Multi-Account.md, ContractName:Plans/FinalGUISpec.md
+
+- **Provider split:** retire any wording that treats Gemini direct and Gemini CLI as one mixed provider surface.
+- **Direct-provider canon:** retire any wording that describes Codex or GitHub Copilot as CLI-driven runtime providers in PM.
+- **OpenCode ontology:** retire `server` / `cli_launcher` language that obscures the canonical `Managed Server` / `Attach to Existing Server` server-profile model.
+- **Runtime vocabulary:** keep `requested_platform` / `effective_platform` canonical and add family/runtime-platform/billing fields additively rather than minting a parallel primary vocabulary.
+- **Skill and MCP ownership:** retire any wording that makes provider-native skill or MCP configuration the primary runtime path; PM-native skills and PM-native MCP remain canonical.
+- **Cursor runtime boundary:** retire `--user-data-dir` as the CLI multi-account isolation contract; PM-managed `HOME` / `XDG_*` roots for `cursor-agent` are the canonical CLI boundary.
+- **Terminal/editor GUI canon:** retire the older flat bottom-terminal strip, single editor dock slot, and separate command-log strip assumptions in favor of workgroups, subtabs, split-pane trees, multi-panel editor terminal stack, and explicit DnD semantics.
+
+ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Provider_OpenCode.md, ContractName:Plans/assistant-chat-design.md
+
+```
+### Intent 17 (Run: r-20260320-170511-02, Anchor: `### Immediate contradictions to resolve in Plans (so requirements do not fight each other)`, Op: replace_section)
+```markdown
+The following contradictions must be retired during reconciliation so the rewrite does not preserve parallel canon.
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Multi-Account.md, ContractName:Plans/FinalGUISpec.md
+
+- **Provider split:** retire any wording that treats Gemini direct and Gemini CLI as one mixed provider surface.
+- **Direct-provider canon:** retire any wording that describes Codex or GitHub Copilot as CLI-driven runtime providers in PM.
+- **OpenCode ontology:** retire `server` / `cli_launcher` language that obscures the canonical `Managed Server` / `Attach to Existing Server` server-profile model.
+- **Runtime vocabulary:** keep `requested_platform` / `effective_platform` canonical and add family/runtime-platform/billing fields additively rather than minting a parallel primary vocabulary.
+- **Skill and MCP ownership:** retire any wording that makes provider-native skill or MCP configuration the primary runtime path; PM-native skills and PM-native MCP remain canonical.
+- **Cursor runtime boundary:** retire `--user-data-dir` as the CLI multi-account isolation contract; PM-managed `HOME` / `XDG_*` roots for `cursor-agent` are the canonical CLI boundary.
+- **Terminal/editor GUI canon:** retire the older flat bottom-terminal strip, single editor dock slot, and separate command-log strip assumptions in favor of workgroups, subtabs, split-pane trees, multi-panel editor terminal stack, and explicit DnD semantics.
+
+ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Provider_OpenCode.md, ContractName:Plans/assistant-chat-design.md
+
+```
+## Doc: Plans/interview-subagent-integration.md
+### Intent 1 (Run: r-20260313-183219-01, Anchor: `### 5.4 Multi-Pass Review (Interview Documents)`, Op: replace_section)
+```markdown
+Multi-Pass Review is the **final-review** step for the Interview document bundle. Cheap iteration during interview doc creation happens via durable annotations plus `Resubmit with Annotations`, not by repeatedly running Multi-Pass Review.
+
+**Bundle preconditions (hard gate):**
+- Multi-Pass Review is enabled only when all docs in the interview bundle are marked **Approved/Done**.
+- There must be **no open annotations**; question/comment annotations remain gating items until resolved.
+- User explicitly clicks **Run Final Review**.
+- Runs once by default; rerun explicit only.
+
+ContractRef: ContractName:Plans/chain-wizard-flexibility.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Crosswalk.md
+
+**Live preview + annotations (required supporting workflow):**
+- During interview doc creation and targeted resubmits, the Embedded Document Pane provides live multi-document preview.
+- Per-doc badges include `writing…`, `draft`, `needs-review`, `changes-requested`, and `approved`.
+- The selection palette offers durable annotations on source-backed or deterministically mapped docs, and `Send selection to chat` on supported review surfaces.
+- Read-only / no-source-map renders are `Send selection to chat` only in v1.
+- `Resubmit with Annotations` triggers a targeted revision pass and MUST NOT trigger Multi-Pass Review.
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Permissions_System.md
+```
+### Intent 2 (Run: r-20260313-183219-01, Anchor: `### 5.1 Interview artifact review loop: TargetedRevisionPass`, Op: replace_section)
+```markdown
+Interview-generated human-readable artifacts use the same bundle review loop as the Requirements Doc Builder, but with interview-owned chat routing and recovery state.
+
+**SSOT:**
+- Workflow semantics: `Plans/chain-wizard-flexibility.md` §5.5
+- Ownership boundary: `Plans/Crosswalk.md` §3.14
+- UI contract: `Plans/FinalGUISpec.md` §7.19.1
+
+ContractRef: ContractName:Plans/chain-wizard-flexibility.md, ContractName:Plans/Crosswalk.md, ContractName:Plans/FinalGUISpec.md
+
+**Required behavior:**
+1. After interview document generation completes, artifacts enter the shared document-bundle review flow (`draft` / `changes-requested` / `approved`).
+2. Users may create durable annotations on interview artifacts using the same anchored annotation model as Requirements Doc Builder bundles.
+3. Users may also forward bounded selections into the interview-owned chat thread as `document_selection_context` attachments.
+4. Clicking **Resubmit with Annotations** launches a targeted revision pass over interview artifacts with open durable annotations, or a user-selected subset.
+5. The targeted revision pass MAY update artifact content and/or answer question/comment annotations without modifying artifact text.
+6. For each processed annotation, the pass MUST record `addressed_explanation` and an updated anchor when re-anchoring succeeds.
+7. The targeted revision pass MUST NOT trigger Multi-Pass Review.
+8. Final Multi-Pass Review remains a separate final-only gate and is enabled only when all bundle docs are `Approved/Done` and no annotations remain `open`.
+9. Resume/recovery MUST restore document statuses, annotation states, selected revision scope, pending thread-scoped chips, and any in-progress targeted revision run from persisted state.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Prompt_Pipeline.md
+
+This section is intentionally DRY: interview bundles reuse the same annotation-driven targeted revision lifecycle rather than defining a second review model.
+```
+### Intent 3 (Run: r-20260316-160450-01, Anchor: `### Activity and progress visibility`, Op: insert_after)
+```markdown
+### Shared question-system alignment
+Interview question UX is the baseline visual and behavioral pattern for the shared PM question system.
+
+Rules:
+- Interview may emit one question or a structured questionnaire
+- suggested-option chips and `Something else` / freeform remain baseline affordances when applicable
+- question identity remains stable across interview, assistant clarification, and requirements-builder clarification flows
+- the shared `question` tool contract can drive Interview-style multi-question flows without inventing Interview-only payload shapes
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Tools.md, ContractName:Plans/chain-wizard-flexibility.md
+```
+### Intent 4 (Run: r-20260320-164907-01, Anchor: `### Cross-Phase Subagents`, Op: insert_after)
+```markdown
+### Debug-capable validation and remediation
+
+Interview may use shared debug-capable tools during testing, verification, and environment validation phases, but it does not become the owner of Assistant Debug Mode.
+
+Required rules:
+- Interview-triggered debugging work uses the same `investigation_id`, evidence, instrumentation, and cleanup contracts as Assistant or Orchestrator investigations
+- any evidence gathered for interview validation must be summarized and linked, not pasted as raw unbounded logs into interview artifacts
+- temporary instrumentation introduced during interview validation must either be cleaned up before phase completion or be carried forward explicitly as unresolved work with cleanup state
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/MiscPlan.md
+
+```
+### Intent 5 (Run: r-20260320-170511-01, Anchor: `### Cross-Phase Subagents`, Op: replace_section)
+```markdown
+Cross-phase subagents continue to serve document generation, answer validation, quality review, and research operations, but they now inherit the reconciled PM-native tool and skill model.
+
+ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Skills_System.md, ContractName:Plans/Tools.md
+
+Cross-phase rules:
+- cited web search, PM-native skills, and PM-native MCP availability are resolved by PM before provider execution rather than delegated to provider-native wiring.
+- skill readiness for interview helpers is determined from `required_tool_refs` and `optional_tool_refs`, not by heuristics or provider-specific assumptions.
+- interview subagents inherit the same requested/effective runtime disclosure fields and provider-entry vocabulary used elsewhere.
+
+ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/FinalGUISpec.md
+
+```
+### Intent 6 (Run: r-20260320-170511-01, Anchor: `## Platform-Specific Limitations & Workarounds`, Op: replace_section)
+```markdown
+### Cursor CLI
+
+Cursor interview execution targets `cursor-agent` and inherits the same trust and profile-isolation rules as the rest of the CLI integration.
+
+### Codex
+
+PM interview execution does not require a Codex CLI MCP-server runtime. Codex in PM is a direct provider with `ChatGPT` and `API key` account rows.
+
+### Claude Code CLI
+
+Claude Code may support file-based and runtime-scoped agent facilities. PM still treats CLI-native subagent files as compatibility or delivery details beneath the PM-native skill/instruction model.
+
+### GitHub Copilot
+
+GitHub Copilot is a direct provider in PM. Premium-request or billing-entity requirements are handled through the same account-row plus entitlement-context model used elsewhere.
+
+ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/FinalGUISpec.md
+
+```
+### Intent 7 (Run: r-20260320-170511-02, Anchor: `### Cross-Phase Subagents`, Op: replace_section)
+```markdown
+Cross-phase subagents continue to serve document generation, answer validation, quality review, and research operations, but they now inherit the reconciled PM-native tool and skill model.
+
+ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Skills_System.md, ContractName:Plans/Tools.md
+
+Cross-phase rules:
+- cited web search, PM-native skills, and PM-native MCP availability are resolved by PM before provider execution rather than delegated to provider-native wiring.
+- skill readiness for interview helpers is determined from `required_tool_refs` and `optional_tool_refs`, not by heuristics or provider-specific assumptions.
+- interview subagents inherit the same requested/effective runtime disclosure fields and provider-entry vocabulary used elsewhere.
+
+ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/FinalGUISpec.md
+
+```
+### Intent 8 (Run: r-20260320-170511-02, Anchor: `## Platform-Specific Limitations & Workarounds`, Op: replace_section)
+```markdown
+### Cursor CLI
+
+Cursor interview execution targets `cursor-agent` and inherits the same trust and profile-isolation rules as the rest of the CLI integration.
+
+### Codex
+
+PM interview execution does not require a Codex CLI MCP-server runtime. Codex in PM is a direct provider with `ChatGPT` and `API key` account rows.
+
+### Claude Code CLI
+
+Claude Code may support file-based and runtime-scoped agent facilities. PM still treats CLI-native subagent files as compatibility or delivery details beneath the PM-native skill/instruction model.
+
+### GitHub Copilot
+
+GitHub Copilot is a direct provider in PM. Premium-request or billing-entity requirements are handled through the same account-row plus entitlement-context model used elsewhere.
+
+ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/FinalGUISpec.md
+
+```
+### Intent 9 (Run: r-20260323-192127-01, Anchor: `### 1. Subagent Configuration`, Op: replace_section)
+```markdown
+Interview uses the reconciled PM child-run and Persona-stage model.
+
+ContractRef: ContractName:Plans/Personas.md, ContractName:Plans/Tools.md, ContractName:Plans/Prompt_Pipeline.md
+
+Canonical Interview rules:
+- Interview child work launches PM child runs.
+- stage and phase behavior resolve Personas rather than relying on legacy provider-native phase-subagent command names.
+- provider-native invocation syntax is interoperability-only, not Interview runtime canon.
+- requested/effective runtime fields must remain visible for Interview child launches.
+
+Legacy migration rule:
+- `phase_subagents` and `phase_secondary_subagents` are migration aliases only.
+- new persisted canonical Interview config must use Persona-oriented stage fields.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/orchestrator-subagent-integration.md
+
+```
+### Intent 10 (Run: r-20260323-192127-01, Anchor: `### Interview Persona config contract`, Op: replace_section)
+```markdown
+Interview Persona configuration is stage-driven and normalized to PM Persona terminology.
+
+ContractRef: ContractName:Plans/Personas.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/storage-plan.md
+
+Canonical persisted fields:
+- `mode`
+- `stage_persona_overrides`
+- `phase_primary_personas`
+- `phase_secondary_personas`
+- optional per-stage model/runtime overrides
+- optional next-run explicit override
+
+Rules:
+- legacy `phase_subagents` names remain migration aliases only.
+- validation and persistence must normalize aliases to canonical Persona IDs.
+- delegated launch validation still goes through `subagent_registry`.
+- stage-level Persona resolution goes through `persona_registry`.
+
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Contracts_V0.md
+
+```
+### Intent 11 (Run: r-20260323-192127-01, Anchor: `## Crews and Subagent Communication Enhancements for Interview Flow`, Op: replace_section)
+```markdown
+Interview may use crews, but only under the reconciled PM crew model.
+
+ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md
+
+Interview crew rules:
+- crew mode is optional and explicit.
+- crew members remain PM child runs.
+- crew coordination uses an attributable crew board rather than hidden peer channels.
+- crew recommendations in generated artifacts should default to model/provider diversity as the main differentiator.
+- Interview must not treat old crew board files or memory files as canonical shared state.
+
+Generated plan and PRD recommendations:
+- may include suggested crew members or crew-capable task hints.
+- must not make crew use mandatory for correctness unless the runtime path can actually satisfy the requirement.
+- must preserve the same requested/effective runtime disclosure semantics used elsewhere.
+
+ContractRef: ContractName:Plans/Models_System.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/CLI_Bridged_Providers.md
+
+```
+### Intent 12 (Run: r-20260323-192127-01, Anchor: `### 3. Cross-Session Memory for Interview Decisions`, Op: replace_section)
+```markdown
+Interview continuity must come from canonical runtime state, stored outputs, and handoff bundles, not from child-memory files.
+
+ContractRef: ContractName:Plans/assistant-memory-subsystem.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Prompt_Pipeline.md
+
+Rules:
+- `.puppet-master/memory/*` is not canonical Interview child or crew continuity storage.
+- `src/core/memory.rs`-style memory assumptions are not the rewrite-era Interview continuity mechanism.
+- Assistant memory is not forwarded into Interview subagents.
+- resume and recovery use canonical storage plus handoff reconstruction.
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/assistant-chat-design.md
+
+```
+### Intent 13 (Run: r-20260323-192127-02, Anchor: `### 1. Subagent Configuration`, Op: replace_section)
+```markdown
+Interview uses the reconciled PM child-run and Persona-stage model.
+
+ContractRef: ContractName:Plans/Personas.md, ContractName:Plans/Tools.md, ContractName:Plans/Prompt_Pipeline.md
+
+Canonical Interview rules:
+- Interview child work launches PM child runs.
+- stage and phase behavior resolve Personas rather than relying on legacy provider-native phase-subagent command names.
+- provider-native invocation syntax is interoperability-only, not Interview runtime canon.
+- requested/effective runtime fields must remain visible for Interview child launches.
+
+Legacy migration rule:
+- `phase_subagents` and `phase_secondary_subagents` are migration aliases only.
+- new persisted canonical Interview config must use Persona-oriented stage fields.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/orchestrator-subagent-integration.md
+
+```
+### Intent 14 (Run: r-20260323-192127-02, Anchor: `### Interview Persona config contract`, Op: replace_section)
+```markdown
+Interview Persona configuration is stage-driven and normalized to PM Persona terminology.
+
+ContractRef: ContractName:Plans/Personas.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/storage-plan.md
+
+Canonical persisted fields:
+- `mode`
+- `stage_persona_overrides`
+- `phase_primary_personas`
+- `phase_secondary_personas`
+- optional per-stage model/runtime overrides
+- optional next-run explicit override
+
+Rules:
+- legacy `phase_subagents` names remain migration aliases only.
+- validation and persistence must normalize aliases to canonical Persona IDs.
+- delegated launch validation still goes through `subagent_registry`.
+- stage-level Persona resolution goes through `persona_registry`.
+
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Contracts_V0.md
+
+```
+### Intent 15 (Run: r-20260323-192127-02, Anchor: `## Crews and Subagent Communication Enhancements for Interview Flow`, Op: replace_section)
+```markdown
+Interview may use crews, but only under the reconciled PM crew model.
+
+ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md
+
+Interview crew rules:
+- crew mode is optional and explicit.
+- crew members remain PM child runs.
+- crew coordination uses an attributable crew board rather than hidden peer channels.
+- crew recommendations in generated artifacts should default to model/provider diversity as the main differentiator.
+- Interview must not treat old crew board files or memory files as canonical shared state.
+
+Generated plan and PRD recommendations:
+- may include suggested crew members or crew-capable task hints.
+- must not make crew use mandatory for correctness unless the runtime path can actually satisfy the requirement.
+- must preserve the same requested/effective runtime disclosure semantics used elsewhere.
+
+ContractRef: ContractName:Plans/Models_System.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/CLI_Bridged_Providers.md
+
+```
+### Intent 16 (Run: r-20260323-192127-02, Anchor: `### 3. Cross-Session Memory for Interview Decisions`, Op: replace_section)
+```markdown
+Interview continuity must come from canonical runtime state, stored outputs, and handoff bundles, not from child-memory files.
+
+ContractRef: ContractName:Plans/assistant-memory-subsystem.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Prompt_Pipeline.md
+
+Rules:
+- `.puppet-master/memory/*` is not canonical Interview child or crew continuity storage.
+- `src/core/memory.rs`-style memory assumptions are not the rewrite-era Interview continuity mechanism.
+- Assistant memory is not forwarded into Interview subagents.
+- resume and recovery use canonical storage plus handoff reconstruction.
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/assistant-chat-design.md
+
+```
+### Intent 17 (Run: r-20260323-192127-03, Anchor: `### 1. Subagent Configuration`, Op: replace_section)
+```markdown
+Interview uses the reconciled PM child-run and Persona-stage model.
+
+ContractRef: ContractName:Plans/Personas.md, ContractName:Plans/Tools.md, ContractName:Plans/Prompt_Pipeline.md
+
+Canonical Interview rules:
+- Interview child work launches PM child runs.
+- stage and phase behavior resolve Personas rather than relying on legacy provider-native phase-subagent command names.
+- provider-native invocation syntax is interoperability-only, not Interview runtime canon.
+- requested/effective runtime fields must remain visible for Interview child launches.
+
+Legacy migration rule:
+- `phase_subagents` and `phase_secondary_subagents` are migration aliases only.
+- new persisted canonical Interview config must use Persona-oriented stage fields.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/orchestrator-subagent-integration.md
+
+```
+### Intent 18 (Run: r-20260323-192127-03, Anchor: `### Interview Persona config contract`, Op: replace_section)
+```markdown
+Interview Persona configuration is stage-driven and normalized to PM Persona terminology.
+
+ContractRef: ContractName:Plans/Personas.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/storage-plan.md
+
+Canonical persisted fields:
+- `mode`
+- `stage_persona_overrides`
+- `phase_primary_personas`
+- `phase_secondary_personas`
+- optional per-stage model/runtime overrides
+- optional next-run explicit override
+
+Rules:
+- legacy `phase_subagents` names remain migration aliases only.
+- validation and persistence must normalize aliases to canonical Persona IDs.
+- delegated launch validation still goes through `subagent_registry`.
+- stage-level Persona resolution goes through `persona_registry`.
+
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Contracts_V0.md
+
+```
+### Intent 19 (Run: r-20260323-192127-03, Anchor: `## Crews and Subagent Communication Enhancements for Interview Flow`, Op: replace_section)
+```markdown
+Interview may use crews, but only under the reconciled PM crew model.
+
+ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md
+
+Interview crew rules:
+- crew mode is optional and explicit.
+- crew members remain PM child runs.
+- crew coordination uses an attributable crew board rather than hidden peer channels.
+- crew recommendations in generated artifacts should default to model/provider diversity as the main differentiator.
+- Interview must not treat old crew board files or memory files as canonical shared state.
+
+Generated plan and PRD recommendations:
+- may include suggested crew members or crew-capable task hints.
+- must not make crew use mandatory for correctness unless the runtime path can actually satisfy the requirement.
+- must preserve the same requested/effective runtime disclosure semantics used elsewhere.
+
+ContractRef: ContractName:Plans/Models_System.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/CLI_Bridged_Providers.md
+
+```
+### Intent 20 (Run: r-20260323-192127-03, Anchor: `### 3. Cross-Session Memory for Interview Decisions`, Op: replace_section)
+```markdown
+Interview continuity must come from canonical runtime state, stored outputs, and handoff bundles, not from child-memory files.
+
+ContractRef: ContractName:Plans/assistant-memory-subsystem.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Prompt_Pipeline.md
+
+Rules:
+- `.puppet-master/memory/*` is not canonical Interview child or crew continuity storage.
+- `src/core/memory.rs`-style memory assumptions are not the rewrite-era Interview continuity mechanism.
+- Assistant memory is not forwarded into Interview subagents.
+- resume and recovery use canonical storage plus handoff reconstruction.
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/assistant-chat-design.md
+
+```
+### Intent 21 (Run: r-20260328-192850-01, Anchor: `### Interview concurrency caps`, Op: replace_section)
+```markdown
+When spawning interview subagents (phase subagents, research, validation, document generation, Multi-Pass reviewers), the interview phase manager MUST respect the global execution limits defined in `Plans/orchestrator-subagent-integration.md` §Subagent Configuration `executionLimits`.
+
+ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Run_Modes.md
+
+Global limits that apply to interview runs:
+- `maxConcurrentCrewsPerPlatform`: 4
+- `maxConcurrentAgentsPerCrew`: 8
+- `maxTotalActiveAgents`: 32
+- `maxNestingDepth`: 4
+
+ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Executor_Protocol.md
+
+**Multi-Pass Review reviewer cap:** The `max_subagents_spawn` setting (range 1–10, default 3) limits how many reviewer subagents participate in a single Multi-Pass Review run. This is a separate, complementary concern — it constrains reviewer parallelism within one Multi-Pass Review invocation, not the global orchestration concurrency. It is not a replacement for and does not override the global `maxConcurrentAgentsPerCrew` limit.
+
+ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/FinalGUISpec.md
+```
+## Doc: Plans/WorktreeGitImprovement.md
+### Intent 1 (Run: r-20260312-160857-01, Anchor: `### 4.2 GUI improvements`, Op: replace_section)
+```markdown
+GUI ownership for worktrees is normalized around Source Control and Orchestrator.
+
+Primary ownership:
+- Source Control is the primary operational surface for worktree inventory and user actions.
+- Orchestrator consumes worktree identity, ownership, blocked state, and lineage for run/history/recovery views.
+- Settings > Branching and Health may expose configuration or diagnostics, but they are not the primary place to manage active worktrees.
+
+ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/FinalGUISpec.md
+
+Required Source Control worktree behavior:
+- list all active worktrees for the current repo
+- show branch, path, owner run/tier, dirty/conflict/orphaned state, age, and upstream relation
+- support `open`, `compare`, `recover`, `prune`, and `view lineage`
+- surface explicit disabled reasons when active-run ownership or blocked state prevents a destructive action
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/storage-plan.md
+
+Required Orchestrator consumption:
+- Progress, Tiers, History, and Node Graph must be able to show the worktree used by the run/attempt
+- `dirty_worktree` and `worktree_conflict` MUST present recovery CTAs that route back to Source Control with the correct worktree in scope
+- historical runs MUST preserve the historical worktree reference even when the live worktree has been pruned or retired
+
+ContractRef: ContractName:Plans/Run_Graph_View.md, ContractName:Plans/Decision_Policy.md, ContractName:Plans/Executor_Protocol.md
+```
+### Intent 2 (Run: r-20260312-203855-01, Anchor: `## 4. GUI for Git & Worktrees`, Op: replace_section)
+```markdown
+Source Control and Orchestrator have a deliberate split.
+
+Source Control is:
+- compact
+- worktree-first
+- Git-native
+
+Orchestrator is:
+- lane/package/seam operational
+- history/lineage focused
+- concern/recovery/governance aware
+
+ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/FinalGUISpec.md
+
+Rules:
+- Source Control rows are concrete worktrees, branches, and paths
+- package, lane, and run context appear as attached metadata in Source Control rather than as the primary grouping axis
+- Orchestrator does not duplicate a raw worktree inventory
+- lane identity survives after a live worktree is archived or removed
+- cleanup posture belongs to Orchestrator; archive/prune/remove execution belongs to Source Control
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Decision_Policy.md, ContractName:Plans/FileManager.md
+
+```
+### Intent 3 (Run: r-20260323-192127-01, Anchor: `## 7.12 Crews and Subagent Communication Enhancements for Git/Worktree Operations`, Op: replace_section)
+```markdown
+Git and worktree coordination must use the reconciled PM crew model rather than ad hoc crew-memory or side-file canon.
+
+ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-memory-subsystem.md
+
+Required rules:
+- git/worktree coordination crews are optional overlays, not separate persistent actor systems.
+- crew members remain child runs.
+- crew coordination uses explicit shared crew state and crew-board messages when enabled.
+- `.puppet-master/memory/*` is not canonical crew coordination state.
+- `active-agents.json` is not canonical git/worktree coordination state.
+
+If git/worktree coordination is needed:
+- store canonical lineage, ownership, and conflict state in seglog/redb projections.
+- treat longer-lived crew identity as explicit shared state, not hidden child memory.
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/FileSafe.md
+
+```
+### Intent 4 (Run: r-20260323-192127-01, Anchor: `## 7.13 Lifecycle and Quality Enhancements for Git/Worktree Operations`, Op: replace_section)
+```markdown
+Git/worktree lifecycle and quality features must align with the current child-run, crew, and blocked-state canon.
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Permissions_System.md
+
+Required rules:
+- reuse canonical child-run and crew events rather than inventing separate active-agent lifecycle files.
+- blocked payloads use canonical `blocked_reason_code` plus ordered `allowed_action_ids[]`.
+- cleanup, reroute, and retry behavior must preserve child lineage and worktree ownership fields.
+- quality and handoff metadata belong in canonical event/storage structures rather than memory-manager files.
+
+Cross-session continuity for git/worktree behavior comes from canonical state and handoff reconstruction, not from child-memory files.
+
+ContractRef: ContractName:Plans/assistant-memory-subsystem.md, ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Prompt_Pipeline.md
+
+```
+### Intent 5 (Run: r-20260323-192127-02, Anchor: `## 7.12 Crews and Subagent Communication Enhancements for Git/Worktree Operations`, Op: replace_section)
+```markdown
+Git and worktree coordination must use the reconciled PM crew model rather than ad hoc crew-memory or side-file canon.
+
+ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-memory-subsystem.md
+
+Required rules:
+- git/worktree coordination crews are optional overlays, not separate persistent actor systems.
+- crew members remain child runs.
+- crew coordination uses explicit shared crew state and crew-board messages when enabled.
+- `.puppet-master/memory/*` is not canonical crew coordination state.
+- `active-agents.json` is not canonical git/worktree coordination state.
+
+If git/worktree coordination is needed:
+- store canonical lineage, ownership, and conflict state in seglog/redb projections.
+- treat longer-lived crew identity as explicit shared state, not hidden child memory.
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/FileSafe.md
+
+```
+### Intent 6 (Run: r-20260323-192127-02, Anchor: `## 7.13 Lifecycle and Quality Enhancements for Git/Worktree Operations`, Op: replace_section)
+```markdown
+Git/worktree lifecycle and quality features must align with the current child-run, crew, and blocked-state canon.
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Permissions_System.md
+
+Required rules:
+- reuse canonical child-run and crew events rather than inventing separate active-agent lifecycle files.
+- blocked payloads use canonical `blocked_reason_code` plus ordered `allowed_action_ids[]`.
+- cleanup, reroute, and retry behavior must preserve child lineage and worktree ownership fields.
+- quality and handoff metadata belong in canonical event/storage structures rather than memory-manager files.
+
+Cross-session continuity for git/worktree behavior comes from canonical state and handoff reconstruction, not from child-memory files.
+
+ContractRef: ContractName:Plans/assistant-memory-subsystem.md, ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Prompt_Pipeline.md
+
+```
+### Intent 7 (Run: r-20260323-192127-03, Anchor: `## 7.12 Crews and Subagent Communication Enhancements for Git/Worktree Operations`, Op: replace_section)
+```markdown
+Git and worktree coordination must use the reconciled PM crew model rather than ad hoc crew-memory or side-file canon.
+
+ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-memory-subsystem.md
+
+Required rules:
+- git/worktree coordination crews are optional overlays, not separate persistent actor systems.
+- crew members remain child runs.
+- crew coordination uses explicit shared crew state and crew-board messages when enabled.
+- `.puppet-master/memory/*` is not canonical crew coordination state.
+- `active-agents.json` is not canonical git/worktree coordination state.
+
+If git/worktree coordination is needed:
+- store canonical lineage, ownership, and conflict state in seglog/redb projections.
+- treat longer-lived crew identity as explicit shared state, not hidden child memory.
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/FileSafe.md
+
+```
+### Intent 8 (Run: r-20260323-192127-03, Anchor: `## 7.13 Lifecycle and Quality Enhancements for Git/Worktree Operations`, Op: replace_section)
+```markdown
+Git/worktree lifecycle and quality features must align with the current child-run, crew, and blocked-state canon.
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Permissions_System.md
+
+Required rules:
+- reuse canonical child-run and crew events rather than inventing separate active-agent lifecycle files.
+- blocked payloads use canonical `blocked_reason_code` plus ordered `allowed_action_ids[]`.
+- cleanup, reroute, and retry behavior must preserve child lineage and worktree ownership fields.
+- quality and handoff metadata belong in canonical event/storage structures rather than memory-manager files.
+
+Cross-session continuity for git/worktree behavior comes from canonical state and handoff reconstruction, not from child-memory files.
+
+ContractRef: ContractName:Plans/assistant-memory-subsystem.md, ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Prompt_Pipeline.md
+
+```
+### Intent 9 (Run: r-20260326-015830-01, Anchor: `## 4. GUI for Git & Worktrees`, Op: replace_section)
+```markdown
+Source Control and Orchestrator have a deliberate split. Assistant Chat adds a third surface for worktree interaction.
+
+Source Control is:
+- compact
+- worktree-first
+- Git-native
+- the unified worktree inventory (all worktrees visible regardless of owner)
+
+Orchestrator is:
+- lane/package/seam operational
+- history/lineage focused
+- concern/recovery/governance aware
+
+Assistant Chat is:
+- thread-level worktree binding and lifecycle
+- merge-back flow (squash/merge/rebase, PR creation)
+- natural language worktree operations
+
+ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/assistant-chat-design.md
+
+Rules:
+- Source Control rows are concrete worktrees, branches, and paths
+- package, lane, and run context appear as attached metadata in Source Control rather than as the primary grouping axis
+- Source Control maintains the unified worktree inventory — orchestrator-owned, assistant-owned, and manual worktrees are all visible in the Worktrees accordion section
+- Orchestrator does not duplicate a raw worktree inventory; it shows lane/worktree summary in the Progress tab
+- Assistant Chat provides per-thread worktree binding via the chat header worktree button; it does not duplicate Source Control's inventory
+- lane identity survives after a live worktree is archived or removed
+- cleanup posture belongs to Orchestrator for orch-owned worktrees; assistant-owned worktree cleanup is user-initiated via thread delete or chat dropdown
+- the `owner_thread_id` field on `worktree_record.v1` identifies assistant-owned worktrees alongside existing `owner_run_id`/`owner_tier_id`
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Decision_Policy.md, ContractName:Plans/FileManager.md, ContractName:Plans/Crosswalk.md
+
+### 4.1 Assistant-created worktree lifecycle
+
+Assistant worktrees are created via the chat header worktree button or auto-create setting. They follow the same `WorktreeManager` backend as orchestrator worktrees.
+
+**Naming:** Directory `.puppet-master/worktrees/thread-{short_id}` where `short_id` is first 8 chars of `thread_id`. Branch name `assistant/<sanitized_title>` (temp name `assistant/thread-{short_id}` before title generation).
+
+**Persistence:** Assistant worktrees are persistent — they are NOT auto-cleaned by the runner contract or cleanup policy. They remain on disk until the user explicitly removes them (via chat dropdown Remove, thread delete cleanup, or Source Control Remove action).
+
+**Soft limit:** Advisory warning toast at configurable threshold (default 10 worktrees per project). Never blocks creation.
+
+**Doctor check:** WorktreeManager Doctor reports orphaned assistant worktrees (no matching `worktree_binding_reverse` key and no `owner_thread_id`) alongside orphaned orch worktrees. Also reports stale `.git/pm-merge.lock` files and incomplete merge/rebase states (`.git/MERGE_HEAD`, `.git/rebase-merge/`).
+
+ContractRef: ContractN
+```
+[... truncated, full length: 3102 chars]
+### Intent 10 (Run: r-20260326-015830-02, Anchor: `## 4. GUI for Git & Worktrees`, Op: replace_section)
+```markdown
+Source Control and Orchestrator have a deliberate split. Assistant Chat adds a third surface for worktree interaction.
+
+Source Control is:
+- compact
+- worktree-first
+- Git-native
+- the unified worktree inventory (all worktrees visible regardless of owner)
+
+Orchestrator is:
+- lane/package/seam operational
+- history/lineage focused
+- concern/recovery/governance aware
+
+Assistant Chat is:
+- thread-level worktree binding and lifecycle
+- merge-back flow (squash/merge/rebase, PR creation)
+- natural language worktree operations
+
+ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/assistant-chat-design.md
+
+Rules:
+- Source Control rows are concrete worktrees, branches, and paths
+- package, lane, and run context appear as attached metadata in Source Control rather than as the primary grouping axis
+- Source Control maintains the unified worktree inventory — orchestrator-owned, assistant-owned, and manual worktrees are all visible in the Worktrees accordion section
+- Orchestrator does not duplicate a raw worktree inventory; it shows lane/worktree summary in the Progress tab
+- Assistant Chat provides per-thread worktree binding via the chat header worktree button; it does not duplicate Source Control's inventory
+- lane identity survives after a live worktree is archived or removed
+- cleanup posture belongs to Orchestrator for orch-owned worktrees; assistant-owned worktree cleanup is user-initiated via thread delete or chat dropdown
+- the `owner_thread_id` field on `worktree_record.v1` identifies assistant-owned worktrees alongside existing `owner_run_id`/`owner_tier_id`
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Decision_Policy.md, ContractName:Plans/FileManager.md, ContractName:Plans/Crosswalk.md
+
+### 4.1 Assistant-created worktree lifecycle
+
+Assistant worktrees are created via the chat header worktree button or auto-create setting. They follow the same `WorktreeManager` backend as orchestrator worktrees.
+
+**Naming:** Directory `.puppet-master/worktrees/thread-{short_id}` where `short_id` is first 8 chars of `thread_id`. Branch name `assistant/<sanitized_title>` (temp name `assistant/thread-{short_id}` before title generation).
+
+**Persistence:** Assistant worktrees are persistent — they are NOT auto-cleaned by the runner contract or cleanup policy. They remain on disk until the user explicitly removes them (via chat dropdown Remove, thread delete cleanup, or Source Control Remove action).
+
+**Soft limit:** Advisory warning toast at configurable threshold (default 10 worktrees per project). Never blocks creation.
+
+**Doctor check:** WorktreeManager Doctor reports orphaned assistant worktrees (no matching `worktree_binding_reverse` key and no `owner_thread_id`) alongside orphaned orch worktrees. Also reports stale `.git/pm-merge.lock` files and incomplete merge/rebase states (`.git/MERGE_HEAD`, `.git/rebase-merge/`).
+
+ContractRef: ContractN
+```
+[... truncated, full length: 3102 chars]
+### Intent 11 (Run: r-20260328-192850-01, Anchor: `## 2. Worktree Improvements`, Op: insert_after)
+```markdown
+### 2.0 Symlink resolution in worktree paths
+
+Worktree path resolution MUST apply the fail-closed symlink policy from `Plans/Permissions_System.md` §1.1 and `Plans/Architecture_Invariants.md` INV-017.
+
+ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/FileSafe.md
+
+Required:
+- All file paths computed relative to a worktree root MUST be normalized via `realpath()` before any scope check or file guard comparison.
+- If `realpath()` fails on a worktree-relative path, the operation MUST be denied.
+- The `working_directory` passed to FileSafe `check_file_write` MUST be the real path of the worktree root, not a symlinked alias.
+
+ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/Architecture_Invariants.md
+```
+## Doc: Plans/Executor_Protocol.md
+### Intent 1 (Run: r-20260312-203855-01, Anchor: `## 1. Role definitions`, Op: replace_section)
+```markdown
+### 1.1 Builder / node worker
+The execution worker that performs the node attempt.
+
+### 1.2 Verifier / reviewer / corroborator
+The execution-support actors that review, verify, or corroborate work products without becoming the scheduler.
+
+### 1.3 Package Overseer
+Local governance for one `Work Package`.
+
+### 1.4 Seam Overseer
+Cross-package integration governance for one `Feature Seam`.
+
+### 1.5 Runtime scheduler
+The canonical owner of readiness, blocked state, transitions, retry budgets, wakeups, and dispatch.
+
+Rules:
+- overseers are governance actors, not hidden second schedulers
+- most node execution may be performed through overseer-spawned node workers, but runtime still owns canonical execution state
+- conversational actors that share runtime identity semantics do not become orchestration nodes, packages, or seams
+
+ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/orchestrator-subagent-integration.md
+
+```
+### Intent 2 (Run: r-20260312-203855-01, Anchor: `## 5. Node execution fields`, Op: replace_section)
+```markdown
+The canonical dispatch/runtime packet carries `execution_unit_context`.
+
+Required fields are:
+- `project_id`
+- `run_id`
+- `node_id`
+- `attempt_id`
+- `feature_seam_id?`
+- `work_package_id?`
+- `lane_id?`
+- `worktree_id?`
+- `blocked_sequence?`
+- `safe_point_id?`
+- `remediation_root_id?`
+- `graph_generation_id?`
+- `execution_role`
+- requested/effective runtime identity snapshot fields
+- requested/effective account-binding fields
+- `operational_identity?`
+- `allowed_action_ids[]?`
+
+ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md
+
+Rules:
+- `TierContext` does not remain the canonical execution context
+- any surviving decomposition or view context is derived and non-canonical
+- mutation, audit, blocked actions, and routing resolve through runtime identity anchored by run/node/attempt/blocked-sequence lineage
+
+ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Run_Graph_View.md, ContractName:Plans/Orchestrator_Page.md
+
+```
+### Intent 3 (Run: r-20260326-015830-01, Anchor: `### 8. Safe points`, Op: insert_after)
+```markdown
+#### 8.1 Worktree snapshot in safe-point payloads
+
+When an execution unit runs inside a worktree (thread-owned or orchestrator-owned), the safe-point event payload MUST include:
+
+| Field | Type | Description |
+|---|---|---|
+| `worktree_id` | string? | ID of bound worktree, null if running in main repo |
+| `worktree_path` | string? | Absolute path of worktree on disk |
+| `worktree_branch` | string? | Branch checked out in worktree |
+| `worktree_dirty` | bool | Whether worktree has uncommitted changes at snapshot time |
+
+These fields enable remediation/resume to restore the correct execution context. They are advisory for recovery — the canonical binding source is the redb projection from seglog events.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/assistant-chat-design.md
+```
+### Intent 4 (Run: r-20260326-015830-01, Anchor: ``, Op: append)
+```markdown
+## Execution Context: Worktree Handoff
+
+When Orchestrator or Assistant Chat creates an execution unit that should run inside a worktree, the execution context handoff includes worktree identity.
+
+ContractRef: ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/assistant-chat-design.md
+
+### Worktree-aware execution unit context
+
+The execution context MUST include:
+- `working_directory`: set to worktree root path (not project root) when worktree is bound
+- `worktree_id`: identifier of the target worktree
+- `worktree_branch`: branch name checked out in worktree
+- `is_worktree`: bool flag distinguishing worktree context from main repo context
+
+**Caller responsibilities:**
+- Orchestrator sets these fields when launching a DAE in a lane-owned worktree
+- Assistant Chat sets these fields when the active thread has a bound worktree and the user runs agent-mode or plan-mode work
+- If `is_worktree` is false or absent, execution defaults to project root
+
+**Executor responsibilities:**
+- File operations resolve relative to `working_directory`
+- Git operations target the worktree, not the main repo
+- Terminal sessions start in `working_directory`
+- LSP root identity uses worktree path when `is_worktree` is true
+
+ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/LSPSupport.md, ContractName:Plans/Commands_System.md
+
+### Mode interaction
+
+All assistant chat modes (Ask, Agent, Plan, Deep Plan, Debug) operate within the thread's worktree when one is bound:
+- Ask mode: read-only context from worktree files
+- Agent mode: file edits go to worktree
+- Plan/Deep Plan mode: plans execute in worktree context
+- Debug mode: debug operations target worktree
+
+Mode transitions do not affect worktree binding — the binding is thread-level, not mode-level.
+
+ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/assistant-chat-design.md
+```
+### Intent 5 (Run: r-20260326-015830-02, Anchor: `### 8. Safe points`, Op: insert_after)
+```markdown
+#### 8.1 Worktree snapshot in safe-point payloads
+
+When an execution unit runs inside a worktree (thread-owned or orchestrator-owned), the safe-point event payload MUST include:
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/assistant-chat-design.md
+
+| Field | Type | Description |
+|---|---|---|
+| `worktree_id` | string? | ID of bound worktree, null if running in main repo |
+| `worktree_path` | string? | Absolute path of worktree on disk |
+| `worktree_branch` | string? | Branch checked out in worktree |
+| `worktree_dirty` | bool | Whether worktree has uncommitted changes at snapshot time |
+
+These fields enable remediation/resume to restore the correct execution context. They are advisory for recovery — the canonical binding source is the redb projection from seglog events.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/assistant-chat-design.md
+```
+### Intent 6 (Run: r-20260326-015830-02, Anchor: ``, Op: append)
+```markdown
+## Execution Context: Worktree Handoff
+
+When Orchestrator or Assistant Chat creates an execution unit that should run inside a worktree, the execution context handoff includes worktree identity.
+
+ContractRef: ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/assistant-chat-design.md
+
+### Worktree-aware execution unit context
+
+The execution context MUST include:
+- `working_directory`: set to worktree root path (not project root) when worktree is bound
+- `worktree_id`: identifier of the target worktree
+- `worktree_branch`: branch name checked out in worktree
+- `is_worktree`: bool flag distinguishing worktree context from main repo context
+
+ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md
+
+**Caller responsibilities:**
+- Orchestrator sets these fields when launching a DAE in a lane-owned worktree
+- Assistant Chat sets these fields when the active thread has a bound worktree and the user runs agent-mode or plan-mode work
+- If `is_worktree` is false or absent, execution defaults to project root
+
+**Executor responsibilities:**
+- File operations resolve relative to `working_directory`
+- Git operations target the worktree, not the main repo
+- Terminal sessions start in `working_directory`
+- LSP root identity uses worktree path when `is_worktree` is true
+
+ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/LSPSupport.md, ContractName:Plans/Commands_System.md
+
+### Mode interaction
+
+All assistant chat modes (Ask, Agent, Plan, Deep Plan, Debug) operate within the thread's worktree when one is bound:
+- Ask mode: read-only context from worktree files
+- Agent mode: file edits go to worktree
+- Plan/Deep Plan mode: plans execute in worktree context
+- Debug mode: debug operations target worktree
+
+Mode transitions do not affect worktree binding — the binding is thread-level, not mode-level.
+
+ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/assistant-chat-design.md
+```
+### Intent 7 (Run: r-20260328-192850-01, Anchor: `### 7. Failure classes and retry entry points`, Op: replace_section)
+```markdown
+The executor MUST classify failed or non-executed attempts into one canonical `failure_class` / `blocked_reason_code` family before deciding the next action.
+ContractRef: ContractName:Plans/Decision_Policy.md, ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Contracts_V0.md
+
+### 7.1 Per-class retry matrix
+
+| failure_class | Max retries | Backoff | Auto-retry? | Notes |
+|---|---|---|---|---|
+| `provider_transient` | 3 | 1s / 2s / 4s (exponential) | Yes | Network errors, 429, 503, transient provider failures |
+| `structured_output_invalid` | 2 | none | Yes | Invalid structured output from provider |
+| `auth_expired` | 1 | immediate after refresh | Yes (once) | Refresh token, rebuild client, retry once |
+| `permission_denied` | 0 | — | No | Requires user decision |
+| `filesafe_blocked` | 0 | — | No | FileSafe block is never auto-retried |
+| `storage_io` | 1 | brief delay | Yes (once) | Single retry on I/O error |
+| `verification_failed` | 0 | — | No | Requires replan or user escalation |
+| `reviewer_findings` | 0 | — | No | Multi-pass findings require explicit handling |
+| `user_declined` | 0 | — | No | User said no; do not retry |
+| `headless_ask_denied` | 0 | — | No | No interactive path; fail the step |
+| `external_side_effect_blocked` | 0 | — | No | Side-effect guard; user must unblock |
+| `graph_integrity` | 0 | — | No | Structural graph error; requires replan |
+| `replan_required` | 0 | — | No | Trigger replan path, not retry |
+
+ContractRef: ContractName:Plans/Decision_Policy.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/orchestrator-subagent-integration.md
+
+The executor MUST NOT apply generic retry behavior without classifying the attempt first.
+
+ContractRef: ContractName:Plans/Decision_Policy.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/orchestrator-subagent-integration.md
+
+### 7.2 Doom-loop guard
+
+If the same triple `(tool_name, serialized_args_hash, error_message)` is observed twice consecutively at the same nesting level, the executor MUST emit `kill.identical_failure` and terminate the run immediately, bypassing the retry matrix.
+
+ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Contracts_V0.md
+
+### 7.3 Signal handling and process lifecycle
+
+- Provider processes: `SIGTERM` / `SIGINT` → 5-second grace window → `SIGKILL`.
+- MCP/LSP subprocesses: `SIGTERM` → 3-second grace window → `SIGKILL`.
+- `SIGHUP` to PM main process: trigger config reload, not shutdown.
+- All managed subprocesses MUST run in their own process group (`setsid` / `CREATE_NEW_PROCESS_GROUP`).
+- Shutdown is guarded by a `Once` primitive. Re-entrant shutdown calls are safe no-ops.
+
+ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Contracts_V0.md
+```
+## Doc: Plans/Skills_System.md
+### Intent 1 (Run: r-20260316-160450-01, Anchor: `## 6. GUI requirements`, Op: replace_section)
+```markdown
+Skill management lives in `Agent Config > Skills`.
+
+### 6.1 Management surface
+The Skills tab is the canonical management surface for installed, bundled, and imported skills.
+
+Required capabilities:
+- show a browseable catalog of currently available skills
+- distinguish bundled PM skills, imported skills, and catalog-installed skills
+- show readiness / validation state and missing-runtime requirements
+- expose management actions in the catalog itself
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Tools.md, ContractName:Plans/Permissions_System.md
+
+### 6.2 Import and install flows
+Required import/install flows:
+- drag/drop skill folder or file import
+- file-picker import
+- Skill Store launcher for browse/install-only flows
+
+Rules:
+- imported metadata populates the catalog entry
+- validation runs immediately on import
+- simple single-file imports may be wrapped into a generated enclosing folder when needed by the runtime
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FileSafe.md, ContractName:Plans/storage-plan.md
+
+### 6.3 Slash and runtime boundary
+`/skill` is a lightweight invocation helper only.
+
+Rules:
+- skill management MUST NOT move into a `/skills` management family
+- runtime skill access remains the `skill` tool and the skill registry
+- the GUI must preserve the distinction between “discovered” and “actually runnable on PM”
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Commands_System.md, ContractName:Plans/UI_Command_Catalog.md
+```
+### Intent 2 (Run: r-20260323-192127-01, Anchor: `### 5.2 External directory guard`, Op: insert_after)
+```markdown
+### 5.3 Child-run inheritance
+
+Skills do not blindly copy into child runs. A child receives only the effective compatible subset of the parent-allowed skill universe.
+
+ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Tools.md
+
+Rules:
+- a child may use a skill only if the parent effectively allowed it.
+- the target runtime surface must support the behavior needed by that skill.
+- child Persona or task-specific narrowing may disable a skill that the parent still had.
+- a child must not gain skill-powered capability that exceeds the parent ceiling.
+
+ContractRef: ContractName:Plans/Plugins_System.md, ContractName:Plans/Models_System.md, ContractName:Plans/storage-plan.md
+
+```
+### Intent 3 (Run: r-20260323-192127-02, Anchor: `### 5.2 External directory guard`, Op: insert_after)
+```markdown
+### 5.3 Child-run inheritance
+
+Skills do not blindly copy into child runs. A child receives only the effective compatible subset of the parent-allowed skill universe.
+
+ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Tools.md
+
+Rules:
+- a child may use a skill only if the parent effectively allowed it.
+- the target runtime surface must support the behavior needed by that skill.
+- child Persona or task-specific narrowing may disable a skill that the parent still had.
+- a child must not gain skill-powered capability that exceeds the parent ceiling.
+
+ContractRef: ContractName:Plans/Plugins_System.md, ContractName:Plans/Models_System.md, ContractName:Plans/storage-plan.md
+
+```
+### Intent 4 (Run: r-20260323-192127-03, Anchor: `### 5.2 External directory guard`, Op: insert_after)
+```markdown
+### 5.3 Child-run inheritance
+
+Skills do not blindly copy into child runs. A child receives only the effective compatible subset of the parent-allowed skill universe.
+
+ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Tools.md
+
+Rules:
+- a child may use a skill only if the parent effectively allowed it.
+- the target runtime surface must support the behavior needed by that skill.
+- child Persona or task-specific narrowing may disable a skill that the parent still had.
+- a child must not gain skill-powered capability that exceeds the parent ceiling.
+
+ContractRef: ContractName:Plans/Plugins_System.md, ContractName:Plans/Models_System.md, ContractName:Plans/storage-plan.md
+
+```
+## Doc: Plans/Progression_Gates.md
+### Intent 1 (Run: r-20260312-203855-01, Anchor: `## GATE-010 -- Wiring matrix validation`, Op: replace_section)
+```markdown
+`GATE-010` verifies canonical command binding and route-aware navigation normalization.
+
+The gate must fail when any of the following are true:
+- a public wrapper command lacks declared normalization metadata
+- a deprecated alias is treated as an independent canonical command
+- a routed command bypasses the canonical `route_target` / `OpenSubject` contract family
+- a command row claims layout-only semantics while actually targeting a runtime object, usage object, or cross-surface focus action
+- a command/action payload still keys approval or usage correlation by `request_id` or `tier_id` where blocked/runtime or usage identity is canonical
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Crosswalk.md
+
+Evidence for this gate must capture:
+- command ID
+- command kind
+- normalization metadata when present
+- handler binding
+- emitted target contract or action family
+- failure reason when the row is invalid
+
+ContractRef: ContractName:Plans/UI_Wiring_Rules.md, ContractName:Plans/evidence.schema.json, ContractName:Plans/Wiring_Matrix.schema.json
+
+```
+### Intent 2 (Run: r-20260312-203855-01, Anchor: `## GATE-014 -- Document Set packaging verification`, Op: replace_section)
+```markdown
+`GATE-014` verifies packet completeness against the reconciled impacted-doc set.
+
+The gate must fail when any of the following are true:
+- a doc marked MUST CHANGE is absent from the packet
+- a doc marked MUST RECONCILE is absent from the packet
+- a packet uses append-only placement where canon replacement/retirement is required
+- a packet targets a structured container indirectly instead of replacing the owning headed section with the final canonical content
+- a packet preserves stale tier-era or request-era canonical text as a peer option rather than collapsing to the replacement canon
+
+ContractRef: ContractName:Plans/DRY_Rules.md, ContractName:Plans/Decision_Policy.md, ContractName:Plans/Contracts_V0.md
+
+Verification-only docs may be absent from the packet only when the reconciliation pass explicitly confirmed they do not require edits for the current change set.
+
+ContractRef: ContractName:Plans/Decision_Log.md, ContractName:Plans/00-plans-index.md, ContractName:Plans/feature-list.md
+
+```

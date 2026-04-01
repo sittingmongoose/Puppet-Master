@@ -1,5 +1,19 @@
 ## 2. Worktree Improvements
 
+### 2.0 Symlink resolution in worktree paths
+
+Worktree path resolution MUST apply the fail-closed symlink policy from `Plans/Permissions_System.md` §1.1 and `Plans/Architecture_Invariants.md` INV-017.
+
+ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/FileSafe.md
+
+Required:
+- All file paths computed relative to a worktree root MUST be normalized via `realpath()` before any scope check or file guard comparison.
+- If `realpath()` fails on a worktree-relative path, the operation MUST be denied.
+- The `working_directory` passed to FileSafe `check_file_write` MUST be the real path of the worktree root, not a symlinked alias.
+
+ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/Architecture_Invariants.md
+
+
 ### 2.1 Base branch for worktree creation
 
 - **Gap:** Worktrees are created with `git worktree add -b <branch> <path>` from **current HEAD** of the main repo. There is no checkout of `config.branching.base_branch` first.

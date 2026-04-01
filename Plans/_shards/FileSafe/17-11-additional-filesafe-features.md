@@ -2,106 +2,60 @@
 
 ### 11.1 FileSafe: Write scope (CRITICAL)
 
-**Problem:** Agents may write to files not declared in the active plan, causing scope creep and conflicts.
+#### 11.1.1 Realpath-before-scope-check invariant
 
-**Solution:** Implement write-scope enforcement that blocks writes to files not explicitly listed in the current task/subtask plan. (Internal module name remains `FileGuard`; product and GUI use **Write scope** only.)
+All file paths submitted to FileSafe write-scope or security-filter checks MUST be resolved through `realpath()` before any scope comparison.
 
-```rust
-// DRY:DATA:FileGuard — FileSafe write scope: blocks writes outside active plan
-pub struct FileGuard {
-    enabled: bool,
-}
+ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Architecture_Invariants.md
 
-impl FileGuard {
-    // DRY:FN:check_file_write — Check if file write is allowed
-    /// Check if a file write is allowed based on plan metadata
-    ///
-    /// # Arguments
-    ///
-    /// * `file_path` - Normalized absolute path to the file
-    /// * `working_directory` - Working directory context (may be worktree)
-    ///
-    /// # Behavior
-    ///
-    /// - If guard disabled: always allow
-    /// - If file_path matches any allowed file pattern: allow
-    /// - If file_path is in allowed_files set: allow
-    /// - If file_path is under allowed directory: allow (if directory-level permissions enabled)
-    /// - Otherwise: block
-    pub fn check_file_write(&self, file_path: &Path, working_directory: &Path, allowed_files: &HashSet<PathBuf>) -> Result<(), GuardError> {
-        if !self.enabled {
-            return Ok(());
-        }
-        
-        // Normalize paths for comparison
-        let file_path_normalized = file_path.canonicalize()
-            .unwrap_or_else(|_| file_path.to_path_buf());
-        
-        // Check exact match
-        if allowed_files.contains(&file_path_normalized) {
-            return Ok(());
-        }
-        
-        // Check relative path match (file_path relative to working_directory)
-        if let Ok(relative) = file_path_normalized.strip_prefix(working_directory) {
-            let relative_path = relative.to_path_buf();
-            if allowed_files.contains(&relative_path) {
-                return Ok(());
-            }
-        }
-        
-        // Check directory-level permissions (if enabled)
-        // If any parent directory is in allowed_files, allow
-        let mut current = file_path_normalized.parent();
-        while let Some(dir) = current {
-            if allowed_files.contains(dir) {
-                return Ok(());
-            }
-            current = dir.parent();
-        }
-        
-        // AutoDecision: MVP does not support wildcard patterns for write scope; allow exact paths and explicit directories only.
-        
-        Err(GuardError::FileNotInPlan {
-            file: file_path_normalized,
-        })
-    }
-    
-    // DRY:FN:load_allowed_files_from_request — Load allowed files from ExecutionRequest metadata
-    /// Load allowed files list from ExecutionRequest
-    ///
-    /// Checks:
-    /// 1. `request.env_vars.get("PUPPET_MASTER_ALLOWED_FILES")` - JSON array of paths
-    /// 2. `request.context_files` - Context files are implicitly allowed
-    /// 3. Plan metadata file (if available in context)
-    pub fn load_allowed_files_from_request(request: &ExecutionRequest) -> Result<HashSet<PathBuf>> {
-        let mut allowed = HashSet::new();
-        
-        // 1. Check env var for explicit allowed files list
-        if let Some(files_json) = request.env_vars.get("PUPPET_MASTER_ALLOWED_FILES") {
-            if let Ok(files) = serde_json::from_str::<Vec<String>>(files_json) {
-                for file_str in files {
-                    allowed.insert(PathBuf::from(file_str));
-                }
-            }
-        }
-        
-        // 2. Add context files (implicitly allowed)
-        for context_file in &request.context_files {
-            allowed.insert(context_file.clone());
-        }
-        
-        // AutoDecision: do not implicitly allow `working_directory` or project root; write scope is plan-driven and fails closed.
-         
-        Ok(allowed)
-    }
-}
-```
+Required behavior:
+- normalize relative paths against `working_directory`
+- resolve symlinks through `realpath()`
+- if resolution fails for any reason, deny access (fail-closed)
+- never fall back to comparing the unresolved path against `allowed_files`
 
-**Per-request update:** AutoDecision: use Option B (no interior mutability). The runner computes `allowed_files` per request via `FileGuard::load_allowed_files_from_request(request)` and passes `&allowed_files` into `check_file_write(...)` for each check; `FileGuard` does not store request-scoped allowlists.
+ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Executor_Protocol.md
 
-**Integration:** Load allowed files from task/subtask plan metadata (or from `ExecutionRequest` env_vars/context_files as in `load_allowed_files_from_request`). Write-scope checks happen in `BaseRunner::execute_command()` before spawn, alongside the command blocklist.
+The fallback pattern `canonicalize().unwrap_or_else(|_| original_path)` is prohibited for FileSafe-managed write-scope checks.
 
+ContractRef: ContractName:Plans/Architecture_Invariants.md, ContractName:Plans/Tools.md
+
+#### 11.1.2 Atomic write contract
+
+All FileSafe-managed file mutations MUST use the atomic write pattern `temp -> fsync -> rename` in the target directory. Direct `os.WriteFile`-style writes are not allowed for managed mutations.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Architecture_Invariants.md
+
+Temp-file lifecycle rules:
+- temp files live in a per-session temp directory or same-directory temp naming scheme
+- boot/startup janitor sweeps stale `.tmp.*` artifacts from incomplete writes
+- stale-temp cleanup emits a structured recovery event when artifacts are removed
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md
+
+#### 11.1.3 Case folding and file-record lifecycle
+FileSafe and permission matching MUST use the same filesystem-awareness for case sensitivity.
+
+ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Executor_Protocol.md
+
+Case-sensitivity detection contract:
+- At project/worktree root initialization, PM probes case sensitivity by creating a temporary probe file (e.g., `.pm_case_probe`) and checking whether the filesystem distinguishes it from `.PM_CASE_PROBE`.
+- If the probe succeeds (both names resolve to the same inode), the filesystem is case-insensitive.
+- If the probe cannot be created (read-only filesystem, permission error, or other I/O failure), PM defaults to case-sensitive mode (the stricter assumption).
+- The detected case-sensitivity flag is cached per project root and reused for all FileSafe and permission path comparisons within that project session.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Architecture_Invariants.md
+
+Normalization rules:
+- On case-insensitive filesystems: apply Unicode NFC normalization followed by locale-independent lowercasing before path comparison.
+- On case-sensitive filesystems: compare paths byte-for-byte after NFC normalization only.
+- The normalization method MUST be identical in FileSafe write-scope checks and Permissions_System path-pattern matching. Divergence between the two is a security defect.
+
+ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Tools.md
+
+In-memory file records are bounded by an LRU cap of 10,000 entries. Eviction rebuilds from canonical event state on next access; it does not silently lose guard correctness.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Architecture_Invariants.md
 ### 11.2 Security Filter (CRITICAL)
 
 **Problem:** Agents may access sensitive files (`.env`, credentials, keys) during execution.

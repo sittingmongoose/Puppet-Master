@@ -36,7 +36,7 @@ Use this section to derive a phased implementation plan. Dependencies are stated
 
 **Risks and mitigations:**  
 - **Gap -- plan metadata:** Orchestrator must set allowed files on each ExecutionRequest for write scope; implement **get_allowed_files_for_current_subtask** and pass via env or request field (§15.9 Gap 2).  
-- **Gap -- worktree paths:** Normalize paths relative to `working_directory` and handle symlinks (§15.9 Gap 4).  
+- **Worktree paths (resolved):** Path normalization and symlink handling are specified by §11.1.1 (realpath-before-scope-check invariant) and §11.1.3 (case-folding and probe-file detection contract).  
 - **False positives:** Log all blocks; allow override and approved list; tune patterns from feedback (§12.2).
 
 ---

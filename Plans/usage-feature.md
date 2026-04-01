@@ -40,7 +40,7 @@ Usage depends on a **complex storage solution**; the feature cannot deliver 5h/7
   - scan seglog for counters (tool latency distributions, error rates)
   - store rollups in redb for fast dashboard queries
 
-Until this stack exists, Usage can still provide **state-file-first** behavior (aggregate from `usage.jsonl` as in "Data Sources: State Files") for 5h/7d and Ledger; the storage plan is required for scalable dashboard numbers, consistent rollups, and optional Tantivy-backed search.
+Until this stack exists, any temporary compatibility path MUST still preserve the canonical pipeline: 5h/7d and dashboard windows are owned by rollups, not by ad hoc `usage.jsonl` scans. `usage.jsonl` may still appear as a human-readable mirror or Ledger compatibility input during migration, but it is not the canonical rollup source.
 
 ## Executive Summary
 
@@ -53,7 +53,7 @@ The app will expose a **Usage** section that gives users clear, persistent visib
 | **AGENTS.md -- Usage Tracking & Plan Detection** | Canonical source for per-platform usage sources (Claude Admin API, Copilot metrics, Gemini quotas, Codex/Cursor error parsing), env vars, and error-message parsing. |
 | **Plans/newfeatures.md §3** | Persistent rate limit and usage visibility: 5h/7d in dashboard/header, tier config usage, alerts; data layer + widget + background refresh. |
 | **Plans/newfeatures.md §7** | Analytics view: aggregate usage over time and by dimension; reporting layer on top of usage/plan detection. |
-| **Plans/assistant-chat-design.md §12** | Context/usage display: **context circle** (OpenCode-style) at top of chat -- hover shows tokens/usage %/cost; click opens **Usage tab for that thread** with detailed breakdown. Token or context-window usage, rate limits. |
+| **Plans/assistant-chat-design.md §12** | Context/usage display: **context circle** (OpenCode-style) at top of chat -- hover shows tokens/usage %/cost; thread-scoped detail opens the canonical Context Detail Pane/editor-tab surface rather than a separate thread Usage tab. |
 | **orchestrator-subagent-integration.md** | Platform quota display and resource monitoring (e.g. quota usage in GUI, crew quota). |
 | **Plans/newfeatures.md §19.2** | Technical mechanism for 5h/7d (session usage from stream, account-level via `claude --account` or Admin API); mid-stream usage and context % from stream-json. |
 | **Plans/storage-plan.md** | Implementation checklist for seglog, redb, projectors, analytics scan; Usage reads rollups from redb produced by analytics scan jobs over seglog. |
@@ -254,8 +254,9 @@ For implementers: the flow by which usage is collected and stored can be referen
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/Provider_OpenCode.md, PolicyRule:Decision_Policy.md§2
 ### Backend implementation notes
 - **Data layer:** Reuse and extend existing usage/plan-detection logic. Expose a clear current-usage contract per platform that the GUI can poll or subscribe to.
-- **Primary input:** aggregate from `usage.jsonl` / canonical usage projections.
+- **Primary input:** canonical usage projections and redb rollups derived from the seglog pipeline.
 - **Secondary input:** platform APIs and structured provider/runtime outputs when configured and supported.
+- **Compatibility input:** `usage.jsonl` may still be read as a human-readable mirror or migration input, but not as the canonical 5h/7d rollup source.
 
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/FinalGUISpec.md
 
@@ -284,143 +285,92 @@ Non-canonical after this section:
 ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/storage-plan.md
 ## Gaps (Current State vs. Desired)
 
-### Gap 1: 5h/7d not in GUI
+### Resolved: canonical usage and cost design
 
-- **Current state**
-  - No 5h or 7d window is displayed anywhere in the app (Dashboard, Config, Ledger, or header).
-  - **Data exists:** `usage.jsonl` has `timestamp`, `platform`, `tokens`, `tier_id`, `session_id` per event -- we can aggregate by 5h/7d from this file.
-  - `platforms::UsageTracker` has `QuotaInfo`, `PlanInfo`, and error parsing (e.g., Codex 5h message limit); the GUI never calls these.
-  - Doctor `usage_check` only counts ledger lines per platform; it does not compute 5h/7d or show limits.
-- **Desired**
-  - Always-visible 5h/7d (or platform-equivalent window) per platform in at least one of: Dashboard, header, or dedicated Usage page.
-  - Plan label shown where available (from API or error-derived `PlanInfo`).
-  - **Primary feed:** aggregate from `usage.jsonl` (filter by timestamp; sum tokens/requests per platform). **Optional:** platform APIs when env vars are set.
-- **Acceptance**
-  - User can see "Last 5h: X requests, Y tokens" (and, where applicable, "7d" or platform-specific label) per platform without running a CLI command.
+The prior Gap 1–7 framing is retired. The following items are resolved and MVP-blocking.
 
-### Gap 2: No live platform usage APIs in GUI path
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md
 
-- **Current state**
-  - AGENTS.md documents Claude Admin API (`/v1/organizations/usage_report/claude_code`), Copilot metrics API, Gemini direct-provider usage (local counters + estimated cost), Codex error parsing.
-  - No app code path calls these APIs and exposes results to the UI.
-  - Quota is inferred from config (`platform_config.quota`) or from error parsing only after a run fails.
-- **Desired**
-  - Optional background fetch of platform/org usage APIs when the user has set the required env vars.
-  - Results surfaced in Usage view and (optionally) in tier config when selecting a platform.
-  - Clear "N/A" or "Set ANTHROPIC_API_KEY for live data" when APIs are not configured; local aggregation still shown.
-- **Acceptance**
-  - When env vars are set, Usage can show provider-reported 5h/7d (or equivalent) where the platform supports it; when not set, we still show usage from `usage.jsonl`.
+### Canonical usage pipeline
 
-### Gap 3: Ledger vs. usage_tracker split
-The canonical fix is a single normalized `UsageRecord` contract shared by Ledger, Usage, Run Graph, and Orchestrator surfaces.
+PM usage surfaces are projection-driven. The canonical flow is:
+`seglog -> analytics scan jobs -> redb rollups -> UI consumers`.
 
-### Canonical UsageRecord fields
+`usage.jsonl` may exist as a human-readable mirror or compatibility source, but it is NOT the canonical rollup source for the 5h/7d windows.
 
-Canonical usage identity is runtime-first, not tier-first.
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md
 
-Required usage attribution fields are:
-- `usage_event_ref`
-- `project_id`
-- `run_id?`
-- `thread_id?`
-- `node_id?`
-- `attempt_id?`
-- `execution_role?`
-- `provider_id?`
-- `effective_account_id?`
-- `provider_attempt_ref?`
-- `artifact_id?`
-- `receipt_refs?`
-- cost/token/quota payloads
+### Cost storage and token segregation
+
+- All cost values are stored as integer microdollars (`u64`).
+- The canonical token buckets are `input_tokens`, `output_tokens`, `cache_read_input_tokens`, `cache_creation_input_tokens`, and `reasoning_tokens`.
+- These fields MUST remain separate at the storage layer; aggregation happens only in presentation or rollup logic.
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Architecture_Invariants.md
+
+### Spending limits and budget enforcement
+### Cost monotonicity and model-switch handling
+
+Cumulative cost for a run or session MUST be monotonically non-decreasing. When a model switch occurs mid-run (e.g., fallback from an expensive model to a cheaper one), the cost counter does not decrease retroactively.
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Models_System.md
 
 Rules:
-- `tier_id` does not remain the primary usage correlation key
-- usage pivots from graph, artifacts, chat, and Orchestrator resolve through canonical usage identity and route contracts
-- usage history must distinguish requested/effective account/runtime behavior when that affects cost or quota outcomes
+- Each provider response adds its actual cost to the cumulative total; cost is never subtracted.
+- If a pre-request cost estimate was higher than the actual post-response cost, the difference is not reclaimed from the cumulative total. The estimate is advisory; the actual is authoritative.
+- Model-switch events are recorded with their own cost attribution. The cumulative total is the sum of all actual costs across all models used within the run or session.
+- If a provider returns a cost of zero (e.g., cached response), the cumulative total remains unchanged.
 
-ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/Contracts_V0.md
-### Ownership and consumption
+ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Run_Modes.md
 
-Usage data for child runs, crew mode, and provider-sensitive subagent execution is derived from canonical runtime records and provider usage envelopes, not from side files or transient UI state. `active-subagents.json`, `active-agents.json`, and similar convenience artifacts are not canonical sources of billing or quota truth.
+Spending limits are enforced at two checkpoints:
+1. **Pre-request estimate:** if the estimated request cost would exceed the remaining budget, PM blocks before dispatch with `stop.budget_exceeded`.
+2. **Post-response actual:** after the provider responds, PM records actual cost and terminates with `done.budget_exceeded` if the run or session budget is exceeded.
 
-ContractRef: Usage attribution for subagents and crews MUST be derived from canonical child-run records plus provider/runtime usage envelopes, and side files MUST NOT be treated as billing or quota canon. [Source: storage-plan.md#canonical-child-run-records-and-batch-structure; CLI_Bridged_Providers.md#provider-routing-policy-locked]
+Warning threshold: PM emits a warning at 80% of the configured remaining budget. Both per-run and per-session budgets are supported.
 
-Ownership is split as follows:
+ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Executor_Protocol.md
 
-- canonical child identity, lineage, and batch membership come from runtime storage and event records
-- requested versus effective runtime surface comes from provider routing resolution
-- Copilot-native child routing constraints remain provider-policy constraints, not local UI preferences
-- crew usage views aggregate usage across the child runs that belong to the same crew batch or task context
+### Billing identity, attribution, and pricing metadata
 
-ContractRef: Requested-versus-effective provider/runtime state MUST remain available to usage accounting and inspection so mixed-provider crews and rerouted children do not collapse into ambiguous totals. [Source: Models_System.md#provider-surface-capability-and-effort-resolution; CLI_Bridged_Providers.md#provider-routing-policy-locked]
+Cost attribution is keyed by `(model_id, provider_id, billing_entity_id)` when billing-entity semantics exist. `parent_run_id` is the canonical attribution bridge for tool-level and subagent-level usage rollups.
 
-Usage consumers may present child-level or crew-level summaries, but those projections must remain derived from the same canonical accounting base. Optional helper children and required children may be filtered differently in UX, yet they do not create different billing truth sources.
-ContractRef: Usage summaries MAY differ by UX slice, but all child and crew usage displays MUST project from the same canonical accounting base. [Source: assistant-chat-design.md#14-subagents--crew; storage-plan.md#canonical-child-run-records-and-batch-structure]
-### Rule
-There is one usage schema. Compatibility shims may ingest older sources, but new runtime surfaces MUST NOT define alternate token/model attribution records.
+Pricing metadata is consumed from `Plans/Models_System.md`; this document uses it but does not own provider pricing tables.
 
-ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Run_Graph_View.md, ContractName:Plans/Orchestrator_Page.md
-### Gap 4: Quota/plan only from errors
-- **Current state**
-  - Some providers can only expose reset/plan hints after an error.
-  - For Gemini, the stale assumption that all quota data is local/estimated is no longer sufficient.
-- **Desired**
-  - Proactive usage/quota display from provider APIs or structured runtime output when configured and available.
-  - Error parsing remains a fallback for reset time, plan hints, and rate-limit recovery when stronger signals are unavailable.
-  - Gemini surfaces remain mode-aware: OAuth-backed quota and API-key/local-only estimates MUST stay labeled distinctly.
+ContractRef: ContractName:Plans/Models_System.md, ContractName:Plans/Contracts_V0.md
 
-ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md
+### Adaptive display precision
 
-- **Acceptance**
-  - User can see usage and reset countdown before hitting a limit when strong or structured signals exist.
-  - After a limit, the app still surfaces `Resets in X` and the switch/fallback reason when available.
-  - The UI shows whether quota pressure came from authoritative, structured, heuristic, or local-only signals.
+UI cost display rules:
+- amounts below `$1.00`: show 4 decimal places
+- amounts at or above `$1.00`: show 2 decimal places
+- always show the currency label
+- when pricing is estimated rather than authoritative, label the surface `Estimated Cost`
 
-ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD
-### Gap 5: Alert threshold not configurable
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Runtime_Artifacts_Panel.md
 
-- **Current state**
-  - "Approaching limit" (e.g. 80%) is mentioned in the plan only; there is no setting or UI for warning threshold.
-  - No way to dismiss or quiet a warning for a period.
-- **Desired**
-  - Configurable warning threshold (e.g. 70%, 80%, 90%) in Settings or Usage/Config.
-  - Optional dismiss or "quiet for N hours" so the same warning does not repeat until after cooldown.
-- **Acceptance**
-  - User can set "Warn when usage above X%" and optionally suppress repeat warnings for a chosen period.
+### 5h / 7d aggregation and freshness
 
-### Gap 6: Analytics not implemented
+The 5h / 7d windows are served from redb rollups. While a background analytics scan is refreshing a window, the UI shows the last committed rollup plus an explicit `Updating...` freshness cue rather than recomputing in the foreground.
 
-- **Current state**
-  - No analytics view. Metrics view shows run-level or platform execution stats, not usage-by-date, usage-by-project, or cost-by-model.
-  - No export of usage or analytics (`Export Ledger` exists, but there is no date-range or analytics export).
-- **Desired**
-  - Analytics section or page: aggregate usage by date range, platform, project (if multi-project later), and model; optional cost when available; export current view as CSV/JSON.
-- **Acceptance**
-  - User can see `Usage last 7d / 30d by platform` and `By model` (and optionally cost), and export the visible data.
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md
 
-**Index-accelerated grep analytics field:**
+### Unified `UsageRecord` schema expectations
 
-The `tool.invoked` seglog event for `grep` includes an optional `index_used: boolean` field. When `true`, the per-project sparse n-gram index accelerated the query by narrowing candidates before ripgrep verification. When `false` or absent, grep used the raw-ripgrep path because the index was missing, disabled, corrupted, still building without a valid snapshot, or skipped for query-specific reasons (for example no extractable literals, non-ASCII case-insensitive literals, or the 64-gram complexity cap).
+All usage surfaces derive from the same `UsageRecord` identity. Minimum shared attribution fields are:
+- `run_id`
+- `parent_run_id` when emitted by a child run, tool, or background operation
+- `provider_id`
+- `model_id`
+- `billing_entity_id?`
+- token buckets
+- `cost_microdollars`
+- `cache_hit?`
+- `cache_strategy?`
 
-ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md
+Compatibility shims may ingest older records, but new surfaces MUST NOT invent a second attribution schema.
 
-This field enables analytics views to report:
-- percentage of grep calls that were index-accelerated vs fallback
-- correlation between index availability and grep latency
-- per-project index health (for example, projects with frequent fallback may need index configuration tuning or cache repair)
-
-### Gap 7: Interview vs. orchestrator usage policy
-
-- **Current state**
-  - Orchestrator records usage to project-level `.puppet-master/usage/usage.jsonl` via `state::UsageTracker`.
-  - Interview runs may or may not write to the same file or in the same format; no single documented policy.
-- **Desired**
-  - Clear policy: all runs (orchestrator and interview) write usage in the same format to the same project-level `usage.jsonl` (or a documented alternative with a single aggregation path).
-  - Usage view is global for the project (or workspace): one place for all platform usage regardless of flow.
-- **Acceptance**
-  - Opening Usage for a project shows combined usage from both orchestrator and interview runs, with consistent fields and no duplicate or conflicting schemas.
-
----
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md
 
 ## Potential Problems
 
@@ -432,7 +382,7 @@ This field enables analytics views to report:
   - Users might assume "no data" means "no usage" instead of "API not configured"; or they may not know how to enable live data.
 - **Mitigation**
   - In Usage view (or tooltip), document which env vars enable live data per platform (e.g. "Set ANTHROPIC_API_KEY for Claude 5h/7d").
-  - **Always** show a fallback: aggregate from `usage.jsonl` (e.g. "Last 5h: X requests, Y tokens") so we display something even when no usage API secrets are configured.
+  - **Always** show a fallback: display the project-local canonical usage summary available from current rollups/projections even when provider API quota data is unavailable.
   - Clearly label source: "From this project's usage" vs "From Claude (API)" when both exist.
 
 ### Problem 2: Rate limits on usage APIs
@@ -453,9 +403,9 @@ This field enables analytics views to report:
 - **Impact**
   - Ledger shows wrong or missing fields; 5h/7d aggregation might miss data or double-count if we add a second reader; bugs when we change one path and forget the other.
 - **Mitigation**
-  - Unify on one write path and one schema for `usage.jsonl` (e.g. `UsageRecord` extended to match STATE_FILES §5.2 and Ledger; or Ledger and aggregation both use `platforms::UsageTracker` with a single event format).
+  - Unify on one canonical write path and one `UsageRecord` schema. If `usage.jsonl` persists, it is a mirror / compatibility artifact rather than an independent canonical source.
   - Document the schema in STATE_FILES and in code; use the same types for write and read where possible.
-  - Prefer reusing `platforms::UsageTracker::get_usage_summary(platform, time_range)` for 5h/7d from local data if we can feed it from the same file we write.
+  - Prefer one projector/reader path for local summaries so Ledger, rollups, and UI projections do not fork into separate attribution models.
 
 ### Problem 4: 5h/7d semantics differ by platform
 
@@ -468,16 +418,17 @@ This field enables analytics views to report:
   - Avoid one generic "5h/7d" column when semantics differ; use platform-specific columns or clearly labeled sections.
 
 ### Problem 5: Ledger file size
-
 - **Risk**
-  - `usage.jsonl` grows unbounded; very large files slow Ledger load and 5h/7d aggregation (full scan).
+  - Event storage (seglog) grows unbounded over long-running or high-throughput projects. Very large seglogs slow analytics scan jobs and increase startup recovery time.
 - **Impact**
-  - Slow UI, timeouts, or high memory when opening Ledger or refreshing Usage.
+  - Slow UI refresh for 5h/7d windows, elevated memory during rollup recalculation, or degraded startup when the seglog requires extended CRC validation.
 - **Mitigation**
-  - Retention policy: e.g. keep last 90 days; archive or delete older lines (with optional export-first).
-  - Optional rotation or compaction (e.g. daily summary + trim raw events older than N days).
-  - Ledger: pagination or lazy load (e.g. load last N entries first); aggregation: incremental or windowed read instead of full file scan when possible.
+  - Retention policy: keep raw seglog events for a configurable window (default 90 days); archive or compact older events with an optional export-first step.
+  - Seglog compaction: periodic background job consolidates older fine-grained events into daily summary records, reducing scan time while preserving attribution fidelity.
+  - Rollup freshness: 5h/7d windows are served from redb rollups, not from raw event scans. Background analytics jobs refresh rollups incrementally; UI shows the last committed rollup plus an explicit freshness cue when a refresh is in progress.
+  - `usage.jsonl` is a human-readable mirror only and MUST NOT be used for aggregation, rollup computation, or 5h/7d window serving. If retained for debugging, it follows the same retention policy as seglog.
 
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md
 ### Problem 6: Stale data
 
 - **Risk**

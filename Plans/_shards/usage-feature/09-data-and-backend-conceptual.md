@@ -22,8 +22,9 @@ For implementers: the flow by which usage is collected and stored can be referen
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/Provider_OpenCode.md, PolicyRule:Decision_Policy.md§2
 ### Backend implementation notes
 - **Data layer:** Reuse and extend existing usage/plan-detection logic. Expose a clear current-usage contract per platform that the GUI can poll or subscribe to.
-- **Primary input:** aggregate from `usage.jsonl` / canonical usage projections.
+- **Primary input:** canonical usage projections and redb rollups derived from the seglog pipeline.
 - **Secondary input:** platform APIs and structured provider/runtime outputs when configured and supported.
+- **Compatibility input:** `usage.jsonl` may still be read as a human-readable mirror or migration input, but not as the canonical 5h/7d rollup source.
 
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/FinalGUISpec.md
 

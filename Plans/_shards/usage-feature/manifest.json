@@ -1,6 +1,6 @@
 {
   "source_path": "Plans/usage-feature.md",
-  "source_sha256": "94dd410836f81dc096673b4b533fde2451eef8d5e6e38453630689cc07f32f99",
+  "source_sha256": "1fcd5a27197df2a21c27b89b13c61849d925f118cfbcab298cf57d3016ba46d4",
   "split_rule": {
     "primary": "## outside fences",
     "fallback": "line-count-200",
@@ -32,7 +32,7 @@
       "dest_path": "Plans/_shards/usage-feature/04-storage-dependency-implementation.md",
       "start_line": 20,
       "end_line": 44,
-      "segment_sha256": "f2dd6f6574c605393af09cd5e5f7eda4542846eedbc701bbde6e7883a1f1b3bc",
+      "segment_sha256": "e21f5b20f1b6842637832c76318f5afab84fe31ef4727b84b14c4d8be6c3c68a",
       "heading": "## Storage dependency (implementation)"
     },
     {
@@ -46,7 +46,7 @@
       "dest_path": "Plans/_shards/usage-feature/06-relationship-to-existing-docs.md",
       "start_line": 49,
       "end_line": 67,
-      "segment_sha256": "f1ed4d2613cae1cc954bcc7b68ef46f50b9921cc4638899de5df279d62f3a95b",
+      "segment_sha256": "e5072b92f7c2c9f1cfbd57422fe0e9e02ce42629a6c4e6bead0b5919e1ab4127",
       "heading": "## Relationship to Existing Docs"
     },
     {
@@ -66,77 +66,77 @@
     {
       "dest_path": "Plans/_shards/usage-feature/09-data-and-backend-conceptual.md",
       "start_line": 233,
-      "end_line": 266,
-      "segment_sha256": "d36633306f5506b7165f7e24d92ded166a70a7896fddab65f9d4263fdcab2617",
+      "end_line": 267,
+      "segment_sha256": "1e3b2923bd055f6f88d743a4fc2dd24b25c7f96fbc157348195b70d4c81e333c",
       "heading": "## Data and Backend (conceptual)"
     },
     {
       "dest_path": "Plans/_shards/usage-feature/10-gui-placement-options.md",
-      "start_line": 267,
-      "end_line": 284,
+      "start_line": 268,
+      "end_line": 285,
       "segment_sha256": "032f98584b32cbb5b4bcbc97450414c8755bd2d69e4c6ecb440300da3aac3e19",
       "heading": "## GUI Placement Options"
     },
     {
       "dest_path": "Plans/_shards/usage-feature/11-gaps-current-state-vs-desired.md",
-      "start_line": 285,
-      "end_line": 424,
-      "segment_sha256": "56e477d5d75a365eb24cff7628e6b2e73a2b5ddb3d0c19bd356bf09968157688",
+      "start_line": 286,
+      "end_line": 374,
+      "segment_sha256": "4673c215560e1599cad78bbee18dcb02a247aae0366f61593c177d11093634b6",
       "heading": "## Gaps (Current State vs. Desired)"
     },
     {
       "dest_path": "Plans/_shards/usage-feature/12-potential-problems.md",
-      "start_line": 425,
-      "end_line": 502,
-      "segment_sha256": "65851099307272a1d3978ffc4a6a9005228ef7892836e2c3c8f03ecbf4b11858",
+      "start_line": 375,
+      "end_line": 453,
+      "segment_sha256": "0d7aed848bf0e0654095fda595c51bbbd2bf42f3623622ecc5373f58aa0affb5",
       "heading": "## Potential Problems"
     },
     {
       "dest_path": "Plans/_shards/usage-feature/13-enhancements-beyond-minimum.md",
-      "start_line": 503,
-      "end_line": 585,
+      "start_line": 454,
+      "end_line": 536,
       "segment_sha256": "f774a33de216b7566e0eff815ff0b45eaee0019e645a3836f57d1d084fb79f5e",
       "heading": "## Enhancements (Beyond Minimum)"
     },
     {
       "dest_path": "Plans/_shards/usage-feature/14-out-of-scope-for-this-plan.md",
-      "start_line": 586,
-      "end_line": 591,
+      "start_line": 537,
+      "end_line": 542,
       "segment_sha256": "840be484e9ac974c58b8b14864280e68212e51926112914c4d3ec88f9055d980",
       "heading": "## Out of Scope for This Plan"
     },
     {
       "dest_path": "Plans/_shards/usage-feature/15-success-criteria.md",
-      "start_line": 592,
-      "end_line": 599,
+      "start_line": 543,
+      "end_line": 550,
       "segment_sha256": "a9e54460761a8ecc70732420dd0d64196f68f6b6adf5ff0eb5043e488a8711c5",
       "heading": "## Success Criteria"
     },
     {
       "dest_path": "Plans/_shards/usage-feature/16-version-history.md",
-      "start_line": 600,
-      "end_line": 615,
+      "start_line": 551,
+      "end_line": 566,
       "segment_sha256": "5a2db29b42b051236663030b2c93f4b9d1233b54cfda06428c57ab7c919052d2",
       "heading": "## Version History"
     },
     {
       "dest_path": "Plans/_shards/usage-feature/17-widget-composed-page-layout-addendum-2026-02-23.md",
-      "start_line": 616,
-      "end_line": 717,
+      "start_line": 567,
+      "end_line": 668,
       "segment_sha256": "9d385fdd502eff58d6c71373bdc7bfdbc771b78979f6b4d089a50105dcaa67d2",
       "heading": "## Widget-Composed Page Layout (Addendum -- 2026-02-23)"
     },
     {
       "dest_path": "Plans/_shards/usage-feature/18-runtime-scheduler-recovery-observability-addendum-2026-03-09.md",
-      "start_line": 718,
-      "end_line": 737,
+      "start_line": 669,
+      "end_line": 688,
       "segment_sha256": "1bce7d6770b4a9176e973da65f275fca964eec5c6cb688a1e637cd58e35f322b",
       "heading": "## Runtime Scheduler / Recovery Observability Addendum (2026-03-09)"
     },
     {
       "dest_path": "Plans/_shards/usage-feature/19-source-control-github-actions-and-docker-manager-cost-attribution-addendum-2026-03-12.md",
-      "start_line": 738,
-      "end_line": 747,
+      "start_line": 689,
+      "end_line": 698,
       "segment_sha256": "c62d0fd607f6d92b9a9f0ff812e876b36644df346c7840550422bee84218b10a",
       "heading": "## Source Control, GitHub Actions, and Docker Manager Cost Attribution Addendum (2026-03-12)"
     }

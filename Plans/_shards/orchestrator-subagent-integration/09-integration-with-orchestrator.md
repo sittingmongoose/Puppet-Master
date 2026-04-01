@@ -301,46 +301,98 @@ ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md#7
 ## Configuration
 
 ### Subagent Configuration
-
 ```yaml
 # .puppet-master/config.yaml (additions)
 
 subagentConfig:
   enableTierSubagents: true
 
-  # Override automatic selection
+  executionLimits:
+    maxNestingDepth: 4
+    maxTotalSpawnedAgents: 99
+    maxToolRoundsPerAgent: 200
+    maxConcurrentCrewsPerPlatform: 4
+    maxConcurrentAgentsPerCrew: 8
+    maxTotalActiveAgents: 32
+
+  taskEnvelopeDefaults:
+    timeoutMs: inherit_parent_remaining_budget
+
   tierOverrides:
     phase:
       default: ["project-manager"]
       architecture: ["architect-reviewer", "project-manager"]
       product: ["product-manager", "project-manager"]
-
     task:
-      # Language-specific overrides
       rust: ["rust-engineer"]
       python: ["python-pro"]
       javascript: ["javascript-pro"]
       typescript: ["typescript-pro"]
-
-      # Domain-specific overrides
       backend: ["backend-developer"]
       frontend: ["frontend-developer"]
       mobile: ["mobile-developer"]
-
     subtask:
       testing: ["test-automator"]
       documentation: ["technical-writer"]
       review: ["code-reviewer"]
-
     iteration:
       errors: ["debugger"]
       review: ["code-reviewer"]
       testing: ["qa-expert"]
 
-  # Disable specific subagents
   disabledSubagents: []
-
-  # Require specific subagents
   requiredSubagents: []
 ```
+
+ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Executor_Protocol.md
+
+`executionLimits` is the SSOT for global subagent concurrency and budget defaults. Interview-mode reviewer caps and other surface-specific caps may narrow these values, but MUST NOT widen them.
+
+ContractRef: ContractName:Plans/interview-subagent-integration.md, ContractName:Plans/Crosswalk.md
+
+#### Task-envelope timeout contract
+
+The task envelope carries a `timeoutMs` field that governs the maximum wall-clock duration for a child task. This contract defines propagation and enforcement semantics.
+
+ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Run_Modes.md
+
+Envelope schema (per-task):
+- `timeoutMs` (u64): maximum wall-clock milliseconds for the child task. Default: `inherit_parent_remaining_budget`.
+- `parentRemainingBudgetMs` (u64): the parent's remaining budget at dispatch time, computed as `parent_timeout - parent_elapsed`.
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Architecture_Invariants.md
+
+Propagation rules:
+- `timeoutMs` defaults to the parent's remaining budget (`parentRemainingBudgetMs`).
+- Per-task overrides MAY narrow the timeout (set `timeoutMs < parentRemainingBudgetMs`).
+- Per-task overrides MUST NOT exceed the parent's remaining budget. If a requested `timeoutMs` exceeds `parentRemainingBudgetMs`, the orchestrator clamps it to the parent's remaining budget and emits a diagnostic warning.
+- At each nesting level, `parentRemainingBudgetMs` is recalculated from the dispatching agent's own remaining budget, not from the original root budget.
+
+ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Executor_Protocol.md
+
+Enforcement:
+- When `timeoutMs` expires, the orchestrator sends a cancellation signal to the child task. The child MUST terminate within a 5-second grace period; after that, the orchestrator forcefully terminates the child's process tree.
+- Timeout expiration produces a structured `done.timeout` event with the child's task ID, elapsed time, and the effective timeout value.
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md
+
+#### Shell and runtime isolation contract
+
+Shell and runtime isolation is enforced at the orchestrator level. These rules are implementation contracts, not advisory governance.
+
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Permissions_System.md
+
+Scope rules:
+- Each agent tree receives its own shell instance set. Shell instances MUST NOT be shared across agent trees.
+- Environment variables MUST NOT leak across session, agent, or crew boundaries. Each shell instance starts with a clean environment derived from the project configuration, not inherited from a sibling or parent shell's runtime mutations.
+- The orchestrator retains full visibility into child communication and shell/runtime identity for audit, diagnostic, and cancellation purposes.
+
+ContractRef: ContractName:Plans/Architecture_Invariants.md, ContractName:Plans/storage-plan.md
+
+Lifecycle rules:
+- Shell instances are created at agent-tree spawn time and destroyed at agent-tree teardown.
+- If a shell instance crashes or becomes unresponsive, the orchestrator MUST NOT silently reuse a sibling's shell. It creates a new isolated shell or fails the task with a structured error.
+- Shell teardown at agent-tree completion MUST clean up all child processes, temporary files, and environment state associated with that shell instance.
+
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Run_Modes.md
 

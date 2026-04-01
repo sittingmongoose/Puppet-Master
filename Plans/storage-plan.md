@@ -164,27 +164,19 @@ ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/GitHub_Integration.
 
 ### 2.2 seglog: format, writer, rotation
 
-Seglog is the canonical event source for child runs, crews, and context-shaping transitions.
+#### 2.2.1 Mandatory CRC32 per record
 
-ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Tools.md, ContractName:Plans/assistant-chat-design.md
+Every seglog record MUST include a CRC32 checksum computed over the record payload. This is a mandatory correctness requirement, not an optional enhancement.
 
-Required event families for this feature set:
-- child lifecycle events
-- crew lifecycle and crew-board message events
-- context-shrunk and context-rehydrated events
-- requested/effective runtime selection events when surfaced as runtime changes
-- blocked and awaiting-parent state transitions for child runs
+ContractRef: ContractName:Plans/Architecture_Invariants.md, ContractName:Plans/Executor_Protocol.md
 
-Side files such as `active-agents.json` and `active-subagents.json` are not canonical event sources.
+On read, CRC32 MUST be validated before the record is processed. If validation fails:
+- the corrupt record is skipped
+- PM emits a recovery/integrity event including record offset and expected vs observed CRC
+- projectors resume from the last known-good checkpoint rather than replaying the corrupt record
 
-ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/interview-subagent-integration.md, ContractName:Plans/usage-feature.md
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Runtime_Artifacts_Panel.md
 
-Rotation and rebuild rules:
-- seglog must contain enough lineage data to reconstruct child batches, subgroups, and crew membership.
-- group/subgroup UI expansion state is not canonical.
-- launch order, batch membership, subgroup membership, and parent-child lineage are canonical.
-
-ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Prompt_Pipeline.md
 ### 2.3 redb: schema, migrations, key patterns
 
 redb projections must be strong enough to rebuild child-run, crew, and context-shaping state after restart without relying on ad hoc JSON side files.
@@ -336,19 +328,24 @@ Rules:
 
 ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Provider_OpenCode.md, ContractName:Plans/storage-plan.md
 ### Naming and migration rules
-- `docker_manage_surface_state` is legacy naming and MUST migrate to `docker_manager.project_state.{project_id}`.
-- `requested_auth_mode` and `effective_*` snapshots remain separate fields.
-- Canonical auth/account routing names are `requested_account_policy`, `effective_account_id`, `effective_account_label?`, `effective_provider_identity?`, `effective_project_id?`, and `account_switch_reason?`.
-- `provider_identity` is provider-native metadata only and MUST NOT replace `account_id`.
 
-ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Multi-Account.md, ContractName:Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD
+Storage migrations are forward-only and monotonic.
 
-- `credential_ref` is the canonical non-secret handle for OS-stored credentials.
-- Secrets, API keys, bearer tokens, refresh tokens, and raw credential payloads MUST remain outside redb and seglog.
-- blocked-state payloads use canonical `allowed_action_ids[]`; `recovery_options[]` is not canonical project-state vocabulary.
-- account-scoped state uses the canonical names `credential_state`, `configuration_state`, and `availability_state`.
+ContractRef: ContractName:Plans/Architecture_Invariants.md, ContractName:Plans/Contracts_V0.md
 
-ContractRef: PolicyRule:no_secrets_in_storage, ContractName:Plans/Permissions_System.md, ContractName:Plans/Contracts_V0.md#AuthState
+Required rules:
+- the seglog schema version is persisted in the header / generation metadata
+- migrations run only forward; downgrade migrations are unsupported
+- backup happens before any destructive migration step
+- migration failure leaves the previous durable state intact and prevents opening a half-migrated store
+
+ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/storage-plan.md
+
+Resource-bounding contract:
+- every persistent or long-lived collection MUST declare either a TTL, a max cardinality, or both
+- file-record caches, rollups, projector queues, and recovery snapshots may not grow without a declared bound
+
+ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/Architecture_Invariants.md
 
 ### 2.4 Projector pipeline: consumption, JSONL mirror, Tantivy, checkpoints
 
@@ -622,29 +619,26 @@ ContractRef: ContractName:Plans/LSPSupport.md, ContractName:Plans/GitHub_Integra
 
 | Problem | Solution |
 |---------|----------|
-| **seglog corruption or partial write** | Append-only with flush; if we detect truncation, stop reading at last complete line. Optional: checksum per record or segment. Recovery: restore from backup or discard tail; projectors resume from last good checkpoint. |
-| **redb corruption** | redb is durable; use backups (e.g. copy `state.redb` periodically). If corruption, restore from backup; seglog is source of truth so we can rebuild redb state from seglog if we have projectors that re-materialize state. |
-| **Projector falls behind** | Tail reader keeps up with writer; if projector is slow (e.g. Tantivy commit), buffer events in memory and process in batches; checkpoint only after commit. If seglog grows faster than projector, consider backpressure or multiple segments. |
-| **Analytics scan blocks UI** | Run scan in background thread/task; never block main thread. Use a "last rollup" timestamp in redb; UI shows last computed rollup and optionally "Updating..." while scan runs. |
-| **Disk full** | seglog writer and redb writes can fail; handle I/O errors: show user-facing error, stop appending, and optionally retry. Retention policy (§2.2) limits seglog size; redb size is bounded by state (not unbounded event history). |
-| **Migration failure** | Migrations run on open; if one fails, log and leave DB at previous version; do not open DB in inconsistent state. Provide a "reset storage" or "recover from seglog" path for power users. |
-| **Multiple app instances** | Single writer for seglog (one process). If we ever support multiple processes (e.g. CLI + GUI), use a lock file or single writer process; document in §2.2. |
-| **Tantivy index size** | Index only what search needs (e.g. message content, thread_id, ts). Optional: skip very old messages or summarize; document retention for search index. |
-| **Checkpoint lost** | If redb checkpoint is lost, projector can restart from beginning of seglog (or from oldest segment we keep). Rebuild is expensive but one-time; ensure seglog retention is long enough to recover. |
-| **API contract (caller handling errors)** | seglog `append()` and redb open/write return `Result`. Callers must handle errors (e.g. surface to user, stop appending, retry policy). No silent swallow; document in §2.2 Writer API. |
-| **Projector panic or crash** | On panic, do not advance checkpoint so the projector can resume from last checkpoint. Design projectors to be **idempotent** (reprocessing same event has same effect, e.g. overwrite same key or dedupe by event id). Catch panic in projector loop, log, and exit or restart from same checkpoint. |
-| **Project deletion and orphaned keys** | When a project is removed (e.g. from recent list), optionally run a cleanup: remove `thread_list.{project_id}`, `editor` keys for that project_id, and any run/checkpoint keys tied to that project. Threads and runs that reference the project can remain in seglog; redb keys are the main cleanup target. Document cleanup as optional or on explicit "forget project" action. |
-| **Thread deleted vs archived** | **Archived:** thread stays in seglog and Tantivy; redb `thread.{id}` gets `archived: true` and thread is omitted from default thread_list or filtered in UI. **Deleted:** same as archived for MVP, or optionally hard-delete: remove from thread_list, mark thread as deleted in metadata; seglog is immutable so events remain; Tantivy can filter by `deleted` flag if we add it via a projector, or we omit from search by filtering thread_id against a "deleted threads" set in redb. |
-| **Queue restore after crash** | Queue state is in redb `queue.{thread_id}`; it is also replayed from seglog `chat.queue_*` events. On load: either read from redb only, or replay queue events for that thread from seglog and overwrite redb. Prefer redb as cache and seglog as source of truth so replay can rebuild queue. |
-| **HITL restore from redb** | On startup, read `checkpoints.hitl.{run_id}`; if any run has pending approval, restore HITL UI (e.g. show approval dialog for that run/tier). Clear key when user approves/rejects. If run is no longer active, clear stale HITL keys in background or on next run completion. |
-| **Interview vs thread identity** | Interview can have its own `interview_id` and optionally a linked `thread_id`. Store interview state in `interview_session.{interview_id}` and `interview_checkpoint.{interview_id}`; thread state in `thread.{thread_id}`. Correlation via event payload (`thread_id` in interview events) for UI and search. |
-| **thread_usage / rollup retention when thread archived or deleted** | Optional: when thread is archived or deleted, remove `rollups.thread_usage.{thread_id}` to save space, or leave for analytics. Document as product choice; implementation can delete on archive/delete or leave. |
-| **Usage/ledger retention policy** | seglog retention (e.g. 90 days) bounds usage history; analytics rollups overwrite 5h/7d. For long-term ledger, optional export or cold storage; document in §2.2 retention. |
-| **Editor keys and project path change** | All editor keys use **project_id** (stable hash or UUID), not raw path. If user moves project, project_id may change (if hash-based); then old editor keys are orphaned. Prefer UUID assigned on first open so moving the folder keeps same project_id; document in §1. |
-| **thread_checkpoint cleanup** | When thread is deleted (or purged), remove `thread_checkpoint.{thread_id}` so we don't accumulate dead keys. Optional background job or on delete. |
-| **HITL with multiple app instances** | Single-writer seglog implies one process. If multiple instances are allowed later, HITL state in redb could be read by another instance; use a lock or "owner" in redb for HITL so only one instance shows the approval UI, or document that multi-instance HITL is unsupported for MVP. |
+| **seglog corruption or partial write** | Append-only with flush and last-complete-record recovery. CRC32 per record is mandatory; validate on every read; corrupt record -> skip + recovery event. |
+| **redb corruption** | Restore from backup or rebuild projections from canonical seglog. |
+| **Projector falls behind** | Buffer events in bounded batches and checkpoint only after a successful commit. |
+| **Analytics scan blocks UI** | Run analytics scans in the background; UI shows last committed rollup plus freshness state. |
+| **Disk full / storage I/O** | Surface a user-facing error, stop unsafe writes, and retry only per storage I/O policy. |
+| **Migration failure** | Leave previous version intact; do not open a half-migrated store. |
+| **Multiple app instances** | Acquire exclusive flock on `<project>/.puppet-master/pm.lock` before any writes. If lock is held, enter read-only/viewer mode and notify the user. |
 
----
+ContractRef: ContractName:Plans/Architecture_Invariants.md, ContractName:Plans/Executor_Protocol.md
+
+| Problem | Solution |
+|---------|----------|
+| **Checkpoint lost** | Rebuild from seglog / last retained segment. |
+| **API contract (caller handling errors)** | `append()` / redb write operations return structured `Result`; no silent swallow. |
+| **Projector panic or crash** | Do not advance checkpoint; restart from last good checkpoint. |
+| **File record LRU eviction** | Cap in-memory file records at 10,000 entries and rebuild lazily on access. |
+| **Boot-time janitor** | After `pm.lock` acquisition, sweep stale `.tmp.*` artifacts, validate lock freshness, and emit a `storage.boot_recovery` event if cleanup was required. |
+| **DB / redb shutdown hygiene** | Close the DB handle in the shutdown sequence before process exit. |
+
+ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/Contracts_V0.md
 
 ## 7. Enhancements
 

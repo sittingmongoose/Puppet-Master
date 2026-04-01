@@ -1,6 +1,6 @@
 {
   "source_path": "Plans/FileSafe.md",
-  "source_sha256": "f5aa85d1fd5df170494e3c60fc223e2e963c9a0891bf91a41e5f27c54007d612",
+  "source_sha256": "6496d13cc88ea27763366d1de9ae5a9ab5bb15eac8b564b4edcaba2ec1270925",
   "split_rule": {
     "primary": "## outside fences",
     "fallback": "line-count-200",
@@ -122,84 +122,84 @@
     {
       "dest_path": "Plans/_shards/FileSafe/17-11-additional-filesafe-features.md",
       "start_line": 1257,
-      "end_line": 1676,
-      "segment_sha256": "3cf20107ea5cc8e36632a38ae11deece6761e6c45cad6f52aaee71a699b149d7",
+      "end_line": 1630,
+      "segment_sha256": "fa1181fd6895806e0fc8dee47798b1c61beb7486a36f39ee606294d4d455c3b4",
       "heading": "## 11. Additional FileSafe Features"
     },
     {
       "dest_path": "Plans/_shards/FileSafe/18-12-gaps-and-potential-issues.md",
-      "start_line": 1677,
-      "end_line": 1753,
+      "start_line": 1631,
+      "end_line": 1707,
       "segment_sha256": "7ef845e59d661c51333e5577a64f18ba14e99eabfc0a83ab065b27075afba18e",
       "heading": "## 12. Gaps and Potential Issues"
     },
     {
       "dest_path": "Plans/_shards/FileSafe/19-13-enhancements.md",
-      "start_line": 1754,
-      "end_line": 1817,
+      "start_line": 1708,
+      "end_line": 1771,
       "segment_sha256": "f0f4ac8ee8c4515db21bf9c624609f8547576cf92f59df09c6683dcd4594478c",
       "heading": "## 13. Enhancements"
     },
     {
       "dest_path": "Plans/_shards/FileSafe/20-14-context-compilation-token-efficiency.md",
-      "start_line": 1818,
-      "end_line": 2041,
+      "start_line": 1772,
+      "end_line": 1995,
       "segment_sha256": "63828e279db6f1a17e218027ae70d9f65f7210a0c582f104ea6622246e669482",
       "heading": "## 14. Context Compilation & Token Efficiency"
     },
     {
       "dest_path": "Plans/_shards/FileSafe/21-15-system-integration-analysis.md",
-      "start_line": 2042,
-      "end_line": 2644,
-      "segment_sha256": "adcd3c5e526cae4e8364a5b748ca2892100aec2d046a2efdcdbaeaf10b7335e8",
+      "start_line": 1996,
+      "end_line": 2612,
+      "segment_sha256": "81d04b903bd93a8b3ed9d16ff1f81ecfb3a11a0a89d5d1bfeb5c19872cb9c8f9",
       "heading": "## 15. System Integration Analysis"
     },
     {
       "dest_path": "Plans/_shards/FileSafe/22-16-references.md",
-      "start_line": 2645,
-      "end_line": 2663,
+      "start_line": 2613,
+      "end_line": 2631,
       "segment_sha256": "ed5bf298452eec2d866478621896227fee3caba7459d528882e977b1f8c6d48d",
       "heading": "## 16. References"
     },
     {
       "dest_path": "Plans/_shards/FileSafe/23-17-implementation-order-and-dependencies.md",
-      "start_line": 2664,
-      "end_line": 2708,
-      "segment_sha256": "c381a890621d34ebf24ce0f26f47abc83ac453167371b95609ed404cce8791b9",
+      "start_line": 2632,
+      "end_line": 2676,
+      "segment_sha256": "550d76c0d2eb1c5655c738d472b94df4d9a5f4fd521e3bd33cca1a830d8fb197",
       "heading": "## 17. Implementation Order and Dependencies"
     },
     {
       "dest_path": "Plans/_shards/FileSafe/24-runtime-blocked-state-integration-addendum-2026-03-08.md",
-      "start_line": 2709,
-      "end_line": 2751,
+      "start_line": 2677,
+      "end_line": 2719,
       "segment_sha256": "6dc3673dbc6fff2553744233dac6acf3d553d11eddc759619a445ea8b4a5eab9",
       "heading": "## Runtime Blocked-State Integration Addendum (2026-03-08)"
     },
     {
       "dest_path": "Plans/_shards/FileSafe/25-filesafe-blocked-outcome-alignment-addendum-2026-03-09.md",
-      "start_line": 2752,
-      "end_line": 2762,
+      "start_line": 2720,
+      "end_line": 2730,
       "segment_sha256": "d2e08c57c70a110004bea36b3e4d23bd27bdcc3dfb8d8c0587f54b90722dfe9b",
       "heading": "## FileSafe Blocked Outcome Alignment Addendum (2026-03-09)"
     },
     {
       "dest_path": "Plans/_shards/FileSafe/26-filesafe-restore-before-rerun-reconciliation-addendum-2026-03-09.md",
-      "start_line": 2763,
-      "end_line": 2771,
+      "start_line": 2731,
+      "end_line": 2739,
       "segment_sha256": "7d231d626e74f3fa7a88559ae2ab87401547553d3e359329919cd1d088cdfd5b",
       "heading": "## FileSafe Restore-Before-Rerun Reconciliation Addendum (2026-03-09)"
     },
     {
       "dest_path": "Plans/_shards/FileSafe/27-filesafe-runtime-blocked-and-restore-override-consolidation-addendum-2026-03-09.md",
-      "start_line": 2772,
-      "end_line": 2791,
+      "start_line": 2740,
+      "end_line": 2759,
       "segment_sha256": "61f63ec6850859c8b45197b551f06a05db1e203ba5250ff549ea56da7b7b53f0",
       "heading": "## FileSafe Runtime Blocked and Restore Override Consolidation Addendum (2026-03-09)"
     },
     {
       "dest_path": "Plans/_shards/FileSafe/28-filesafe-action-mapping-and-persistence.md",
-      "start_line": 2792,
-      "end_line": 2808,
+      "start_line": 2760,
+      "end_line": 2776,
       "segment_sha256": "55c7506e8d1515673c3fd2622a3f87bab9cd03ce369067d8d39b6f5dfc2eaadc",
       "heading": "## FileSafe Action Mapping and Persistence"
     }

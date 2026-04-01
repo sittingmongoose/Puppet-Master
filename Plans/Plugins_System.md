@@ -93,9 +93,20 @@ If the same `id` appears in multiple sources, the **first-discovered instance wi
 
 ## 3. Load order and execution model
 
-<a id="LOAD-ORDER"></a>
+### 3.1 Auto-load prohibition
 
-### 3.1 Deterministic load order
+PM MUST NOT auto-load executable plugin code from config without explicit user approval.
+
+ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Architecture_Invariants.md
+
+Required behavior:
+- first-time plugin load shows source, declared hooks, requested capabilities, and trust implications
+- approval is version/hash-sensitive; source change requires new approval
+- config-only discovery does not imply execution approval
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md
+
+### 3.2 Deterministic load order
 
 Plugins are loaded in strict priority order (§2.1). Within a single source (e.g., project-local), plugins are loaded in lexicographic order by `id`.
 
@@ -155,6 +166,31 @@ Rule: Every hook event MUST be listed in this table. New events require an updat
 ContractRef: PolicyRule:Decision_Policy.md§2, ContractName:Plans/Tools.md
 
 ### 4.1 Tool execution hooks
+
+#### 4.1.1 Hook re-check invariant
+
+If a plugin hook modifies tool arguments, the modified arguments MUST be re-run through permission and validation checks before dispatch. Hooks may not widen permissions after the original check has passed.
+
+ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Architecture_Invariants.md
+
+Required sequence:
+1. evaluate permission/validation on original arguments
+2. run arg-touching hook
+3. re-run permission/validation on modified arguments
+4. dispatch only if the re-check passes
+
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Executor_Protocol.md
+
+Plugins that declare arg-touching hooks require a higher-trust approval posture (signed or explicitly elevated approval) than read-only hooks.
+
+ContractRef: ContractName:Plans/Architecture_Invariants.md, ContractName:Plans/FinalGUISpec.md
+
+#### 4.1.2 Signed verification for arg-touching hooks
+
+Plugins that declare arg-touching hooks MUST be signed or explicitly approved at a higher trust level than read-only hooks. This is because arg-touching hooks can be used to inject malicious arguments after permission checks.
+
+ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Architecture_Invariants.md
+
 
 <a id="HOOK-TOOL-EXECUTE"></a>
 

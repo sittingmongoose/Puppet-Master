@@ -1,0 +1,434 @@
+## Doc: Plans/UI_Command_Catalog.md
+### Intent 1 (Run: r-20260312-160857-01, Anchor: `#### 2.5A Containers & Registry / Docker Manage commands`, Op: replace_section)
+```markdown
+#### 2.5A Source Control commands
+
+| Command ID | Args schema (keys only) | Expected events | Affected surfaces |
+|---|---|---|---|
+| `cmd.source_control.switch_subview` | `{ subview }` | layout/UI state only | Source Control |
+| `cmd.source_control.select_repo` | `{ repo_id }` | layout/UI state only | Source Control |
+| `cmd.source_control.select_worktree` | `{ worktree_id }` | layout/UI state only | Source Control, Orchestrator |
+| `cmd.source_control.open_history_commit` | `{ repo_id, commit }` | layout/UI state only | Source Control |
+| `cmd.source_control.open_graph_commit` | `{ repo_id, commit }` | layout/UI state only | Source Control |
+| `cmd.source_control.compare_refs` | `{ repo_id, left_ref, right_ref, worktree_id? }` | layout/UI state only | Source Control |
+| `cmd.source_control.resolve_conflict` | `{ repo_id, path, worktree_id? }` | no persisted domain event (navigation/open action) | Source Control, File Editor |
+| `cmd.git.worktree.open` | `{ worktree_id }` | no persisted domain event (navigation/open action) | Source Control |
+| `cmd.git.worktree.compare` | `{ worktree_id, compare_target? }` | layout/UI state only | Source Control |
+| `cmd.git.worktree.recover` | `{ worktree_id }` | `tool.invoked` or `tool.denied`; runtime events emitted by orchestrator/worktree manager | Source Control, Orchestrator |
+| `cmd.git.worktree.prune` | `{ worktree_id }` | `tool.invoked` or `tool.denied`; runtime events emitted by orchestrator/worktree manager | Source Control |
+
+ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/Contracts_V0.md
+
+#### 2.5B GitHub Actions commands
+
+| Command ID | Args schema (keys only) | Expected events | Affected surfaces |
+|---|---|---|---|
+| `cmd.github.actions.switch_subview` | `{ subview }` | layout/UI state only | GitHub Actions |
+| `cmd.github.actions.focus_current_branch` | `{ repo_id, branch, worktree_id? }` | layout/UI state only | GitHub Actions |
+| `cmd.github.actions.refresh` | `{ repo_id, scope? }` | no persisted domain event (API fetch + cache) | GitHub Actions |
+| `cmd.github.actions.rerun` | `{ workflow_run_id }` | `github.actions.rerun.started`, terminal: `github.actions.rerun.completed` or `github.actions.rerun.failed` or `github.actions.rerun.blocked` | GitHub Actions |
+| `cmd.github.actions.cancel` | `{ workflow_run_id }` | `github.actions.cancel.started`, terminal: `github.actions.cancel.completed` or `github.actions.cancel.failed` or `github.actions.cancel.blocked` | GitHub Actions |
+| `cmd.github.actions.pin_workflow` | `{ workflow_id, pinned }` | layout/UI state only | GitHub Actions |
+| `cmd.github.actions.dispatch` | `{ workflow_id, ref, inputs? }` | `github.actions.dispatch.started`, terminal: `github.actions.dispatch.completed` or `github.actions.dispatch.failed` or `github.actions.dispatch.blocked` | GitHub Actions |
+| `cmd.github.actions.upsert_secret` | `{ scope, name, value, environment? }` | `github.actions.secret.upd
+```
+[... truncated, full length: 7669 chars]
+### Intent 2 (Run: r-20260312-160857-01, Anchor: `### 2.8A Side-panel and artifacts navigation commands`, Op: replace_section)
+```markdown
+| Command | Payload | Event / persistence | Notes |
+|---|---|---|---|
+| `cmd.panel.switch` | `{ "panel_id": "source_control" | "github_actions" | "docker_manager" | "artifacts" | "chat" | "files" | "run_debug", "project_id": "<optional>", "context?": { "repo_id?": "<optional>", "worktree_id?": "<optional>", "workflow_run_id?": "<optional>", "publish_result_id?": "<optional>", "k8s_ref?": "<optional>" } }` | Layout/UI state only; no domain event required. | Single side-panel slot; last-click wins. |
+| `cmd.artifacts.open_panel` | `{ "project_id": "<optional>", "filter": { "artifact_type": "<optional>", "task_id": "<optional>" } }` | Layout/UI state only; no domain event required. | Opens or focuses the Artifacts panel. |
+| `cmd.artifacts.show_in_ledger` | `{ "artifact_id": "<required>", "usage_event_ref": "<optional>", "run_id": "<optional>", "thread_id": "<optional>" }` | Layout/UI state only; no domain event required. | Opens canonical Ledger / Usage-linked state. |
+| `cmd.artifacts.show_in_usage` | `{ "artifact_id": "<required>", "usage_event_ref": "<optional>", "run_id": "<optional>", "thread_id": "<optional>" }` | Layout/UI state only; no domain event required. | Opens canonical Usage state. |
+| `cmd.orchestrator.open_in_source_control` | `{ run_id, attempt_id?, repo_id?, worktree_id?, commit_range? }` | Layout/UI state only; no domain event required. | Cross-surface Orchestrator pivot. |
+| `cmd.orchestrator.open_in_github_actions` | `{ run_id, workflow_run_id?, job_id?, step_id? }` | Layout/UI state only; no domain event required. | Cross-surface Orchestrator pivot. |
+| `cmd.orchestrator.open_in_docker_manager` | `{ run_id, publish_result_id?, runtime_ref?, k8s_ref? }` | Layout/UI state only; no domain event required. | Cross-surface Orchestrator pivot. |
+
+ContractRef: ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/usage-feature.md
+```
+### Intent 3 (Run: r-20260312-203855-01, Anchor: `### 2.4 Run Graph commands`, Op: replace_section)
+```markdown
+Canonical Run Graph and runtime recovery commands are:
+- `cmd.runtime.approve`
+- `cmd.runtime.decline`
+- `cmd.runtime.retry_from_safe_point`
+- `cmd.runtime.retry_fresh`
+- `cmd.runtime.open_attempt_details`
+- `cmd.runtime.open_queue_analysis`
+- `cmd.runtime.open_safe_point`
+- `cmd.runtime.open_remediation`
+- `cmd.runtime.open_blocked_episode`
+
+Rules:
+- graph approval and recovery commands target blocked/runtime identity, not `request_id`
+- `cmd.graph.approve_hitl` and `cmd.graph.deny_hitl` do not remain canonical command IDs
+- any graph-facing wrapper command normalizes to the runtime command family and canonical `route_target` semantics
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/human-in-the-loop.md, ContractName:Plans/Run_Graph_View.md
+
+```
+### Intent 4 (Run: r-20260312-203855-01, Anchor: `### 2.5 Orchestrator page commands`, Op: replace_section)
+```markdown
+Canonical Orchestrator commands are:
+- `cmd.orchestrator.focus_object`
+- `cmd.orchestrator.focus_run`
+- `cmd.orchestrator.open_graph_generation`
+- `cmd.orchestrator.open_graph_patch`
+- `cmd.orchestrator.open_concern`
+- `cmd.orchestrator.open_promotion`
+- `cmd.orchestrator.open_review`
+- `cmd.orchestrator.open_corroboration`
+- `cmd.orchestrator.open_in_source_control`
+
+Rules:
+- Orchestrator object opens are route-consuming navigation wrappers, not layout-only commands
+- cross-tab deep links preserve `project_id`, `focused_run_id`, object identity, and inspector focus
+- commands that pivot into Source Control or Usage remain public wrapper commands and normalize internally to canonical route/open contracts
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/FinalGUISpec.md
+
+```
+### Intent 5 (Run: r-20260312-203855-01, Anchor: `### 2.8A Side-panel and artifacts navigation commands`, Op: replace_section)
+```markdown
+Cross-surface navigation commands remain domain-readable wrappers.
+
+Canonical examples are:
+- `cmd.project.open`
+- `cmd.chat.focus_thread_usage`
+- `cmd.artifacts.show_in_usage`
+- `cmd.artifacts.show_in_ledger`
+- `cmd.orchestrator.open_in_source_control`
+
+Rules:
+- wrapper commands stay public and readable
+- wrapper commands declare normalization metadata rather than inventing ad hoc route payloads
+- deprecated aliases are modeled distinctly from stable wrappers
+- the catalog does not require a large public `cmd.nav.*` family to achieve route consistency
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Progression_Gates.md, ContractName:Plans/Crosswalk.md
+
+```
+### Intent 6 (Run: r-20260316-160450-01, Anchor: `### 2.7 Chat slash commands (reserved)`, Op: replace_section)
+```markdown
+Reserved Assistant Chat slash commands use stable canonical UI command IDs.
+
+| Canonical UI command ID | Slash syntax | Payload | Primary outcome | Surface |
+|---|---|---|---|---|
+| `cmd.chat.new` | `/new` | `{}` | `chat.thread.created` | Assistant chat |
+| `cmd.chat.model` | `/model` | `{ model_id }` | session model state update | Assistant chat |
+| `cmd.chat.effort` | `/effort` | `{ level }` | session effort state update | Assistant chat |
+| `cmd.chat.mode` | `/mode` | `{ mode }` | session mode state update | Assistant chat |
+| `cmd.chat.export` | `/export` | `{ format? }` | `chat.thread.exported` | Assistant chat |
+| `cmd.chat.compact_context` | `/compact` | `{ thread_id }` | `context.compaction.started`, `context.compaction.completed` | Assistant chat |
+| `cmd.chat.stop` | `/stop` | `{ thread_id? }` | stream stop / run stop behavior | Assistant chat |
+| `cmd.chat.resume` | `/resume` | `{ thread_id? }` | runtime recovery or resume action | Assistant chat |
+| `cmd.chat.rewind` | `/rewind` | `{ thread_id, target_message_id? }` | thread rewind UI / runtime action | Assistant chat |
+| `cmd.chat.revert` | `/revert` | `{ thread_id, target_message_id? }` | restore/revert workflow | Assistant chat |
+| `cmd.chat.share` | `/share` | `{ thread_id, format? }` | share/export flow | Assistant chat |
+| `cmd.chat.settings` | `/settings` | `{}` | navigation only | Settings panel |
+| `cmd.chat.doctor` | `/doctor` | `{}` | `doctor.run.started` | Doctor page |
+| `cmd.chat.help` | `/help` | `{}` | UI help display | Assistant chat |
+| `cmd.chat.web.search` | `/web search` | `{ query }` | web search activity | Assistant chat |
+| `cmd.chat.web.extract` | `/web extract` | `{ url }` | site extraction activity | Assistant chat |
+| `cmd.chat.web.research` | `/web research` | `{ task }` | research activity | Assistant chat |
+| `cmd.chat.web.crawl` | `/web crawl` | `{ url }` | crawl activity | Assistant chat |
+| `cmd.chat.web.map` | `/web map` | `{ url }` | map activity | Assistant chat |
+| `cmd.chat.skill.invoke` | `/skill` | `{ skill_ref, arguments? }` | skill invocation/load | Assistant chat |
+
+Rules:
+- `/cancel` is an alias path to `cmd.chat.stop`; it does not own a separate canonical command ID.
+- `/clear` is not part of the canonical reserved Assistant Chat command set.
+- Reserved slash commands MUST remain aligned with `Plans/assistant-chat-design.md` and MUST NOT be treated as user-overridable commands.
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Commands_System.md, ContractName:Plans/Tools.md
+```
+### Intent 7 (Run: r-20260317-164124-01, Anchor: `### 2.6 Chat context usage commands`, Op: replace_section)
+```markdown
+| Command ID | Payload | Domain event(s) | UI surface(s) |
+|---|---|---|---|
+| `cmd.chat.compact_context` | `{ thread_id }` | `context.compaction.started`, `context.compaction.completed` | Chat context circle click affordance, command palette |
+| `cmd.chat.open_thread_context_details` | `{ thread_id }` | layout/UI state only | Chat context hover module, artifact deep-links |
+| `cmd.chat.focus_thread_context_details` | `{ thread_id }` | layout/UI state only | Editor tab / thread Context Detail Pane |
+| `cmd.chat.close_thread_context_details` | `{ thread_id }` | layout/UI state only | Editor tab / thread Context Detail Pane |
+
+Rules:
+- hover-summary disclosure is passive UI and does not require its own stable command ID
+- choosing `More Details` dispatches `cmd.chat.open_thread_context_details`
+- clicking the circle may reveal `Compact Now` locally, but `cmd.chat.compact_context` is dispatched only when the user actually chooses that action
+- `cmd.chat.open_thread_usage`, `cmd.chat.focus_thread_usage`, and `cmd.chat.close_thread_usage` are superseded and MUST NOT remain canonical IDs
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Runtime_Artifacts_Panel.md
+
+```
+### Intent 8 (Run: r-20260317-164124-01, Anchor: `### 2.6A Render / browser preview commands`, Op: insert_after)
+```markdown
+### 2.6B Chat message action commands
+
+| Command ID | Payload | Domain event(s) | UI surface(s) |
+|---|---|---|---|
+| `cmd.chat.copy_message` | `{ thread_id, message_id }` | no persisted domain event | Message hover row |
+| `cmd.chat.edit_last_user_message` | `{ thread_id, message_id }` | layout/UI state only | Message hover row, composer |
+| `cmd.chat.resend_last_user_message` | `{ thread_id, message_id }` | runtime/thread rewind plus normal run-start events | Message hover row |
+
+Rules:
+- `cmd.chat.copy_message` is valid for any message in the thread
+- `cmd.chat.edit_last_user_message` and `cmd.chat.resend_last_user_message` are valid only for the most recent user-sent message in that thread
+- `cmd.chat.resend_last_user_message` rewinds/discards later generated work after that user message and then replays the message; it is not a transport retry alias
+- `cmd.chat.rewind` remains the explicit history-navigation command and is not silently renamed to `Resend`
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Run_Modes.md
+
+```
+### Intent 9 (Run: r-20260317-164124-02, Anchor: `### 2.6 Chat context usage commands`, Op: replace_section)
+```markdown
+| Command ID | Payload | Domain event(s) | UI surface(s) |
+|---|---|---|---|
+| `cmd.chat.compact_context` | `{ thread_id }` | `context.compaction.started`, `context.compaction.completed` | Chat context circle click affordance, command palette |
+| `cmd.chat.open_thread_context_details` | `{ thread_id }` | layout/UI state only | Chat context hover module, artifact deep-links |
+| `cmd.chat.focus_thread_context_details` | `{ thread_id }` | layout/UI state only | Editor tab / thread Context Detail Pane |
+| `cmd.chat.close_thread_context_details` | `{ thread_id }` | layout/UI state only | Editor tab / thread Context Detail Pane |
+
+Rules:
+- hover-summary disclosure is passive UI and does not require its own stable command ID
+- choosing `More Details` dispatches `cmd.chat.open_thread_context_details`
+- clicking the circle may reveal `Compact Now` locally, but `cmd.chat.compact_context` is dispatched only when the user actually chooses that action
+- `cmd.chat.open_thread_usage`, `cmd.chat.focus_thread_usage`, and `cmd.chat.close_thread_usage` are superseded and MUST NOT remain canonical IDs
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Runtime_Artifacts_Panel.md
+
+```
+### Intent 10 (Run: r-20260317-164124-02, Anchor: `### 2.6A Render / browser preview commands`, Op: replace_section)
+```markdown
+| Command ID | Payload | Domain event(s) | UI surface(s) |
+|---|---|---|---|
+| `cmd.browser.open_workspace_preview` | `{ project_id, target, workspace_tab_id }` | layout/UI state only | File preview, Browser tab, Ports |
+| `cmd.browser.open_detached_preview` | `{ project_id, target, source_workspace_tab_id }` | layout/UI state only | File preview, Browser tab |
+| `cmd.browser.focus_browser_tab` | `{ browser_tab_id }` | layout/UI state only | Browser surface |
+| `cmd.browser.detach_browser_tab` | `{ browser_tab_id }` | layout/UI state only | Browser surface |
+| `cmd.browser.share_with_agent` | `{ browser_tab_id, thread_id }` | `browser.context_shared` | Browser chrome, Assistant chat |
+| `cmd.browser.revoke_share_with_agent` | `{ browser_tab_id, thread_id? }` | `browser.context_share_revoked` | Browser chrome, attention surfaces |
+| `cmd.dev.start_session` | `{ project_id, workspace_tab_id, mode, target? }` | `dev.session.started` | Toolbar, Chat, Ports, Terminal |
+| `cmd.dev.stop_session` | `{ dev_session_id }` | `dev.session.stopping`, `dev.session.stopped` | Toolbar, Chat, Ports, Terminal |
+| `cmd.dev.restart_session` | `{ dev_session_id }` | `dev.session.restarting`, `dev.session.started` | Toolbar, Chat, Ports, Terminal |
+| `cmd.catalog.install_item` | `{ item_type, item_id, version? }` | `catalog.install.started`, `catalog.install.completed` | Catalog |
+| `cmd.catalog.update_item` | `{ item_type, item_id, target_version? }` | `catalog.update.started`, `catalog.update.completed` | Catalog |
+| `cmd.catalog.remove_item` | `{ item_type, item_id }` | `catalog.remove.started`, `catalog.remove.completed` | Catalog |
+
+#### Chat message action commands
+
+| Command ID | Payload | Domain event(s) | UI surface(s) |
+|---|---|---|---|
+| `cmd.chat.copy_message` | `{ thread_id, message_id }` | no persisted domain event | Message hover row |
+| `cmd.chat.edit_last_user_message` | `{ thread_id, message_id }` | layout/UI state only | Message hover row, composer |
+| `cmd.chat.resend_last_user_message` | `{ thread_id, message_id }` | runtime/thread rewind plus normal run-start events | Message hover row |
+
+Rules:
+- `cmd.chat.copy_message` is valid for any message in the thread
+- `cmd.chat.edit_last_user_message` and `cmd.chat.resend_last_user_message` are valid only for the most recent user-sent message in that thread
+- `cmd.chat.resend_last_user_message` rewinds/discards later generated work after that user message and then replays the message; it is not a transport retry alias
+- `cmd.chat.rewind` remains the explicit history-navigation command and is not silently renamed to `Resend`
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Run_Modes.md
+
+```
+### Intent 11 (Run: r-20260317-164124-03, Anchor: `### 2.6 Chat context usage commands`, Op: replace_section)
+```markdown
+| Command ID | Payload | Domain event(s) | UI surface(s) |
+|---|---|---|---|
+| `cmd.chat.compact_context` | `{ thread_id }` | `context.compaction.started`, `context.compaction.completed` | Chat context circle click affordance, command palette |
+| `cmd.chat.open_thread_context_details` | `{ thread_id }` | layout/UI state only | Chat context hover module, artifact deep-links |
+| `cmd.chat.focus_thread_context_details` | `{ thread_id }` | layout/UI state only | Editor tab / thread Context Detail Pane |
+| `cmd.chat.close_thread_context_details` | `{ thread_id }` | layout/UI state only | Editor tab / thread Context Detail Pane |
+
+Rules:
+- hover-summary disclosure is passive UI and does not require its own stable command ID
+- choosing `More Details` dispatches `cmd.chat.open_thread_context_details`
+- clicking the circle may reveal `Compact Now` locally, but `cmd.chat.compact_context` is dispatched only when the user actually chooses that action
+- `cmd.chat.open_thread_usage`, `cmd.chat.focus_thread_usage`, and `cmd.chat.close_thread_usage` are superseded and MUST NOT remain canonical IDs
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Runtime_Artifacts_Panel.md
+
+```
+### Intent 12 (Run: r-20260317-164124-03, Anchor: `### 2.6A Render / browser preview commands`, Op: replace_section)
+```markdown
+| Command ID | Payload | Domain event(s) | UI surface(s) |
+|---|---|---|---|
+| `cmd.browser.open_workspace_preview` | `{ project_id, target, workspace_tab_id }` | layout/UI state only | File preview, Browser tab, Ports |
+| `cmd.browser.open_detached_preview` | `{ project_id, target, source_workspace_tab_id }` | layout/UI state only | File preview, Browser tab |
+| `cmd.browser.focus_browser_tab` | `{ browser_tab_id }` | layout/UI state only | Browser surface |
+| `cmd.browser.detach_browser_tab` | `{ browser_tab_id }` | layout/UI state only | Browser surface |
+| `cmd.browser.share_with_agent` | `{ browser_tab_id, thread_id }` | `browser.context_shared` | Browser chrome, Assistant chat |
+| `cmd.browser.revoke_share_with_agent` | `{ browser_tab_id, thread_id? }` | `browser.context_share_revoked` | Browser chrome, attention surfaces |
+| `cmd.dev.start_session` | `{ project_id, workspace_tab_id, mode, target? }` | `dev.session.started` | Toolbar, Chat, Ports, Terminal |
+| `cmd.dev.stop_session` | `{ dev_session_id }` | `dev.session.stopping`, `dev.session.stopped` | Toolbar, Chat, Ports, Terminal |
+| `cmd.dev.restart_session` | `{ dev_session_id }` | `dev.session.restarting`, `dev.session.started` | Toolbar, Chat, Ports, Terminal |
+| `cmd.catalog.install_item` | `{ item_type, item_id, version? }` | `catalog.install.started`, `catalog.install.completed` | Catalog |
+| `cmd.catalog.update_item` | `{ item_type, item_id, target_version? }` | `catalog.update.started`, `catalog.update.completed` | Catalog |
+| `cmd.catalog.remove_item` | `{ item_type, item_id }` | `catalog.remove.started`, `catalog.remove.completed` | Catalog |
+
+#### Chat message action commands
+
+| Command ID | Payload | Domain event(s) | UI surface(s) |
+|---|---|---|---|
+| `cmd.chat.copy_message` | `{ thread_id, message_id }` | no persisted domain event | Message hover row |
+| `cmd.chat.edit_last_user_message` | `{ thread_id, message_id }` | layout/UI state only | Message hover row, composer |
+| `cmd.chat.resend_last_user_message` | `{ thread_id, message_id }` | runtime/thread rewind plus normal run-start events | Message hover row |
+
+Rules:
+- `cmd.chat.copy_message` is valid for any message in the thread
+- `cmd.chat.edit_last_user_message` and `cmd.chat.resend_last_user_message` are valid only for the most recent user-sent message in that thread
+- `cmd.chat.resend_last_user_message` rewinds/discards later generated work after that user message and then replays the message; it is not a transport retry alias
+- `cmd.chat.rewind` remains the explicit history-navigation command and is not silently renamed to `Resend`
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Run_Modes.md
+
+```
+### Intent 13 (Run: r-20260317-181906-01, Anchor: `### 2.6A Render / browser preview commands`, Op: replace_section)
+```markdown
+| Command ID | Payload | Domain event(s) | UI surface(s) |
+|---|---|---|---|
+| `cmd.browser.open_workspace_preview` | `{ project_id, target, workspace_tab_id }` | `browser.session.created`, `browser.session.state_changed` | File preview, command palette, editor/browser tab |
+| `cmd.browser.open_detached_preview` | `{ project_id, target, source_workspace_tab_id }` | `browser.session.created`, `browser.session.state_changed` | File preview, command palette, detached browser |
+| `cmd.browser.open_devtools` | `{ browser_session_id, mode? }` | layout/UI state only | browser chrome, command palette |
+| `cmd.browser.toggle_devtools_dock` | `{ browser_session_id, dock }` | layout/UI state only | browser chrome, DevTools surface |
+| `cmd.browser.pick_element_for_chat` | `{ browser_session_id, thread_id? }` | `browser.context_captured` | browser chrome, assistant chat |
+| `cmd.browser.add_selection_to_chat` | `{ browser_session_id, thread_id? }` | `browser.context_captured` | browser chrome, assistant chat |
+| `cmd.browser.add_selection_screenshot_to_chat` | `{ browser_session_id, thread_id?, scope:'clip' }` | `browser.context_captured`, `runtime_artifact.created` | browser chrome, assistant chat |
+| `cmd.browser.add_full_screenshot_to_chat` | `{ browser_session_id, thread_id?, scope:'full' }` | `runtime_artifact.created` | browser chrome, assistant chat |
+| `cmd.browser.share_with_agent` | `{ browser_session_id, thread_id }` | `browser.context_shared` | browser chrome, assistant chat |
+| `cmd.browser.revoke_share_with_agent` | `{ browser_session_id, thread_id? }` | `browser.context_share_revoked` | browser chrome, attention surfaces |
+| `cmd.browser.take_over` | `{ browser_session_id, takeover_choice }` | `browser.session.takeover_state_changed` | takeover prompt |
+| `cmd.browser.promote_to_normal_browsing` | `{ browser_session_id, target_workspace_tab_id? }` | `browser.session.promoted` | browser chrome, command palette |
+| `cmd.browser.reopen` | `{ browser_session_id }` | `browser.session.state_changed` | recovery banner, attention center |
+| `cmd.browser.retry` | `{ browser_session_id }` | `browser.session.state_changed` | recovery banner, attention center |
+| `cmd.browser.keep_closed` | `{ browser_session_id }` | `browser.session.closed` | recovery banner, attention center |
+
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/storage-plan.md
+```
+### Intent 14 (Run: r-20260317-181906-02, Anchor: `### 2.6A Render / browser preview commands`, Op: replace_section)
+```markdown
+| Command ID | Payload | Domain event(s) | UI surface(s) |
+|---|---|---|---|
+| `cmd.browser.open_workspace_preview` | `{ project_id, target, workspace_tab_id }` | `browser.session.created`, `browser.session.state_changed` | File preview, command palette, editor/browser tab |
+| `cmd.browser.open_detached_preview` | `{ project_id, target, source_workspace_tab_id }` | `browser.session.created`, `browser.session.state_changed` | File preview, command palette, detached browser |
+| `cmd.browser.focus_browser_tab` | `{ browser_session_id }` | layout/UI state only | editor/browser tab surface |
+| `cmd.browser.detach_browser_tab` | `{ browser_session_id }` | `browser.session.state_changed` | editor/browser tab surface |
+| `cmd.browser.open_devtools` | `{ browser_session_id, mode? }` | layout/UI state only | browser chrome, command palette |
+| `cmd.browser.toggle_devtools_dock` | `{ browser_session_id, dock }` | layout/UI state only | browser chrome, DevTools surface |
+| `cmd.browser.pick_element_for_chat` | `{ browser_session_id, thread_id? }` | `browser.context_captured` | browser chrome, assistant chat |
+| `cmd.browser.add_selection_to_chat` | `{ browser_session_id, thread_id? }` | `browser.context_captured` | browser chrome, assistant chat |
+| `cmd.browser.add_selection_screenshot_to_chat` | `{ browser_session_id, thread_id?, scope:'clip' }` | `browser.context_captured`, `runtime_artifact.created` | browser chrome, assistant chat |
+| `cmd.browser.add_selection_full_screenshot_to_chat` | `{ browser_session_id, thread_id?, scope:'full' }` | `browser.context_captured`, `runtime_artifact.created` | browser chrome, assistant chat |
+| `cmd.browser.add_screenshot_to_chat` | `{ browser_session_id, thread_id?, scope:'clip' }` | `runtime_artifact.created` | browser chrome, assistant chat |
+| `cmd.browser.add_full_screenshot_to_chat` | `{ browser_session_id, thread_id?, scope:'full' }` | `runtime_artifact.created` | browser chrome, assistant chat |
+| `cmd.browser.share_with_agent` | `{ browser_session_id, thread_id }` | `browser.context_shared` | browser chrome, assistant chat |
+| `cmd.browser.revoke_share_with_agent` | `{ browser_session_id, thread_id? }` | `browser.context_share_revoked` | browser chrome, attention surfaces |
+| `cmd.browser.take_over` | `{ browser_session_id, takeover_choice:'pause_agent'|'let_agent_continue'|'stop_agent_keep_browser' }` | `browser.session.takeover_state_changed` | browser takeover prompt, automation banner |
+| `cmd.browser.pause_agent` | `{ browser_session_id }` | `browser.session.takeover_state_changed` | browser chrome, automation banner |
+| `cmd.browser.let_agent_continue` | `{ browser_session_id }` | `browser.session.takeover_state_changed` | browser takeover prompt |
+| `cmd.browser.stop_agent_keep_browser` | `{ browser_session_id }` | `browser.session.takeover_state_changed`, `dev.session.stopped` | browser takeover prompt, browser chrome |
+| `cmd.browser.promote_to_normal_browsing` | `{ browser_session_id, target_workspa
+```
+[... truncated, full length: 5735 chars]
+### Intent 15 (Run: r-20260317-181906-03, Anchor: `### 2.6A Render / browser preview commands`, Op: replace_section)
+```markdown
+| Command ID | Payload | Domain event(s) | UI surface(s) |
+|---|---|---|---|
+| `cmd.browser.open_workspace_preview` | `{ project_id, target, workspace_tab_id }` | `browser.session.created`, `browser.session.state_changed` | File preview, command palette, editor/browser tab |
+| `cmd.browser.open_detached_preview` | `{ project_id, target, source_workspace_tab_id }` | `browser.session.created`, `browser.session.state_changed` | File preview, command palette, detached browser |
+| `cmd.browser.focus_browser_tab` | `{ browser_session_id }` | layout/UI state only | editor/browser tab surface |
+| `cmd.browser.detach_browser_tab` | `{ browser_session_id }` | `browser.session.state_changed` | editor/browser tab surface |
+| `cmd.browser.open_devtools` | `{ browser_session_id, mode? }` | layout/UI state only | browser chrome, command palette |
+| `cmd.browser.toggle_devtools_dock` | `{ browser_session_id, dock }` | layout/UI state only | browser chrome, DevTools surface |
+| `cmd.browser.pick_element_for_chat` | `{ browser_session_id, thread_id? }` | `browser.context_captured` | browser chrome, assistant chat |
+| `cmd.browser.add_selection_to_chat` | `{ browser_session_id, thread_id? }` | `browser.context_captured` | browser chrome, assistant chat |
+| `cmd.browser.add_selection_screenshot_to_chat` | `{ browser_session_id, thread_id?, scope:'clip' }` | `browser.context_captured`, `runtime_artifact.created` | browser chrome, assistant chat |
+| `cmd.browser.add_selection_full_screenshot_to_chat` | `{ browser_session_id, thread_id?, scope:'full' }` | `browser.context_captured`, `runtime_artifact.created` | browser chrome, assistant chat |
+| `cmd.browser.add_screenshot_to_chat` | `{ browser_session_id, thread_id?, scope:'clip' }` | `runtime_artifact.created` | browser chrome, assistant chat |
+| `cmd.browser.add_full_screenshot_to_chat` | `{ browser_session_id, thread_id?, scope:'full' }` | `runtime_artifact.created` | browser chrome, assistant chat |
+| `cmd.browser.share_with_agent` | `{ browser_session_id, thread_id }` | `browser.context_shared` | browser chrome, assistant chat |
+| `cmd.browser.revoke_share_with_agent` | `{ browser_session_id, thread_id? }` | `browser.context_share_revoked` | browser chrome, attention surfaces |
+| `cmd.browser.take_over` | `{ browser_session_id, takeover_choice:'pause_agent'|'let_agent_continue'|'stop_agent_keep_browser' }` | `browser.session.takeover_state_changed` | browser takeover prompt, automation banner |
+| `cmd.browser.pause_agent` | `{ browser_session_id }` | `browser.session.takeover_state_changed` | browser chrome, automation banner |
+| `cmd.browser.let_agent_continue` | `{ browser_session_id }` | `browser.session.takeover_state_changed` | browser takeover prompt |
+| `cmd.browser.stop_agent_keep_browser` | `{ browser_session_id }` | `browser.session.takeover_state_changed`, `dev.session.stopped` | browser takeover prompt, browser chrome |
+| `cmd.browser.promote_to_normal_browsing` | `{ browser_session_id, target_workspa
+```
+[... truncated, full length: 5735 chars]
+### Intent 16 (Run: r-20260318-160350-01, Anchor: `### 2.6A Render / browser preview commands`, Op: replace_section)
+```markdown
+Browser, terminal, and dev-session commands share one shell/runtime interaction family. Browser commands own browser-session behavior, terminal commands own section or tab or pane or session behavior, and dev commands own dev-workflow behavior.
+
+#### Browser preview and browsing commands
+| Command ID | Payload | Domain event(s) | UI surface(s) |
+|---|---|---|---|
+| `cmd.browser.open_workspace_preview` | `{ project_id, target, workspace_tab_id }` | `browser.session.created`, `browser.session.state_changed` | File preview, command palette, editor/browser tab |
+| `cmd.browser.open_detached_preview` | `{ project_id, target, source_workspace_tab_id }` | `browser.session.created`, `browser.session.state_changed` | File preview, command palette, detached browser |
+| `cmd.browser.focus_browser_tab` | `{ browser_session_id }` | layout/UI state only | editor/browser tab surface |
+| `cmd.browser.detach_browser_tab` | `{ browser_session_id }` | `browser.session.state_changed` | editor/browser tab surface |
+| `cmd.browser.open_devtools` | `{ browser_session_id, mode? }` | layout/UI state only | browser chrome, command palette |
+| `cmd.browser.toggle_devtools_dock` | `{ browser_session_id, dock }` | layout/UI state only | browser chrome, DevTools surface |
+| `cmd.browser.pick_element_for_chat` | `{ browser_session_id, thread_id? }` | `browser.context_captured` | browser chrome, assistant chat |
+| `cmd.browser.add_selection_to_chat` | `{ browser_session_id, thread_id? }` | `browser.context_captured` | browser chrome, assistant chat |
+| `cmd.browser.add_selection_screenshot_to_chat` | `{ browser_session_id, thread_id?, scope:'clip' }` | `browser.context_captured`, `runtime_artifact.created` | browser chrome, assistant chat |
+| `cmd.browser.add_selection_full_screenshot_to_chat` | `{ browser_session_id, thread_id?, scope:'full' }` | `browser.context_captured`, `runtime_artifact.created` | browser chrome, assistant chat |
+| `cmd.browser.add_screenshot_to_chat` | `{ browser_session_id, thread_id?, scope:'clip' }` | `runtime_artifact.created` | browser chrome, assistant chat |
+| `cmd.browser.add_full_screenshot_to_chat` | `{ browser_session_id, thread_id?, scope:'full' }` | `runtime_artifact.created` | browser chrome, assistant chat |
+| `cmd.browser.share_with_agent` | `{ browser_session_id, thread_id }` | `browser.context_shared` | browser chrome, assistant chat |
+| `cmd.browser.revoke_share_with_agent` | `{ browser_session_id, thread_id? }` | `browser.context_share_revoked` | browser chrome, attention surfaces |
+| `cmd.browser.take_over` | `{ browser_session_id, takeover_choice:'pause_agent'|'let_agent_continue'|'stop_agent_keep_browser' }` | `browser.session.takeover_state_changed` | browser takeover prompt, automation banner |
+| `cmd.browser.pause_agent` | `{ browser_session_id }` | `browser.session.takeover_state_changed` | browser chrome, automation banner |
+| `cmd.browser.let_agent_continue` | `{ browser_session_id }` | `browser.session.takeover_state_changed
+```
+[... truncated, full length: 9922 chars]
+### Intent 17 (Run: r-20260318-160350-02, Anchor: `### 2.6A Render / browser preview commands`, Op: replace_section)
+```markdown
+Browser, terminal, and dev-session commands share one shell/runtime interaction family. Browser commands own browser-session behavior, terminal commands own section or tab or pane or session behavior, and dev commands own dev-workflow behavior.
+
+#### Browser preview and browsing commands
+| Command ID | Payload | Domain event(s) | UI surface(s) |
+|---|---|---|---|
+| `cmd.browser.open_workspace_preview` | `{ project_id, target, workspace_tab_id }` | `browser.session.created`, `browser.session.state_changed` | File preview, command palette, editor/browser tab |
+| `cmd.browser.open_detached_preview` | `{ project_id, target, source_workspace_tab_id }` | `browser.session.created`, `browser.session.state_changed` | File preview, command palette, detached browser |
+| `cmd.browser.focus_browser_tab` | `{ browser_session_id }` | layout/UI state only | editor/browser tab surface |
+| `cmd.browser.detach_browser_tab` | `{ browser_session_id }` | `browser.session.state_changed` | editor/browser tab surface |
+| `cmd.browser.open_devtools` | `{ browser_session_id, mode? }` | layout/UI state only | browser chrome, command palette |
+| `cmd.browser.toggle_devtools_dock` | `{ browser_session_id, dock }` | layout/UI state only | browser chrome, DevTools surface |
+| `cmd.browser.pick_element_for_chat` | `{ browser_session_id, thread_id? }` | `browser.context_captured` | browser chrome, assistant chat |
+| `cmd.browser.add_selection_to_chat` | `{ browser_session_id, thread_id? }` | `browser.context_captured` | browser chrome, assistant chat |
+| `cmd.browser.add_selection_screenshot_to_chat` | `{ browser_session_id, thread_id?, scope:'clip' }` | `browser.context_captured`, `runtime_artifact.created` | browser chrome, assistant chat |
+| `cmd.browser.add_selection_full_screenshot_to_chat` | `{ browser_session_id, thread_id?, scope:'full' }` | `browser.context_captured`, `runtime_artifact.created` | browser chrome, assistant chat |
+| `cmd.browser.add_screenshot_to_chat` | `{ browser_session_id, thread_id?, scope:'clip' }` | `runtime_artifact.created` | browser chrome, assistant chat |
+| `cmd.browser.add_full_screenshot_to_chat` | `{ browser_session_id, thread_id?, scope:'full' }` | `runtime_artifact.created` | browser chrome, assistant chat |
+| `cmd.browser.share_with_agent` | `{ browser_session_id, thread_id }` | `browser.context_shared` | browser chrome, assistant chat |
+| `cmd.browser.revoke_share_with_agent` | `{ browser_session_id, thread_id? }` | `browser.context_share_revoked` | browser chrome, attention surfaces |
+| `cmd.browser.take_over` | `{ browser_session_id, takeover_choice:'pause_agent'|'let_agent_continue'|'stop_agent_keep_browser' }` | `browser.session.takeover_state_changed` | browser takeover prompt, automation banner |
+| `cmd.browser.pause_agent` | `{ browser_session_id }` | `browser.session.takeover_state_changed` | browser chrome, automation banner |
+| `cmd.browser.let_agent_continue` | `{ browser_session_id }` | `browser.session.takeover_state_changed
+```
+[... truncated, full length: 9922 chars]
+### Intent 18 (Run: r-20260319-030558-01, Anchor: `### 2.0A Promoted Section 15 command families`, Op: replace_section)
+```markdown
+The command catalog additions for this packet normalize Search, file-tree actions, Source Control diff/review, and chat restore handoff into stable command families.
+
+Required families:
+- `cmd.search.*`
+- `cmd.file.*`
+- `cmd.source_control.*`
+- `cmd.git.*` diff/review commands listed below
+- `cmd.chat.add_file_reference`
+- `cmd.chat.revert`
+- `cmd.chat.rewind`
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/FileManager.md, ContractName:Plans/GitHub_Integration.md
+
+Family rules:
+- Search commands own persistent Search-panel behavior only; they do not replace command-palette navigation or semantic LSP navigation.
+- `cmd.file.*` covers file-tree actions only; it does not absorb terminal or chat-owned commands.
+- `cmd.chat.revert` and `cmd.chat.rewind` remain distinct commands with non-overlapping semantics.
+- Git diff/review commands mutate repository state and MUST NOT be described as editor undo.
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/LSPSupport.md
+
+```

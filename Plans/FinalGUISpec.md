@@ -751,6 +751,26 @@ Rules:
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/FileManager.md, ContractName:Plans/assistant-chat-design.md
 ### 7.4 Settings and inspectors
 
+#### 7.4.0A Runtime usage, lock, and MCP readiness alignment
+Usage, storage-lock, and MCP readiness disclosures in Settings/inspectors must align with their owner docs rather than invent local semantics.
+
+ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/storage-plan.md
+
+Required inspector/UI rules:
+- Adaptive cost display precision:
+  - amounts below `$0.01`: show 6 decimal places (micro-dollar visibility)
+  - amounts from `$0.01` to below `$1.00`: show 4 decimal places
+  - amounts at or above `$1.00`: show 2 decimal places
+  - always show the currency label
+  - when pricing is estimated rather than authoritative, label the surface `Estimated Cost`
+- when startup flock on `pm.lock` places PM into read-only/viewer mode, the owning inspector explicitly says so and explains why writes are unavailable
+- MCP settings cards surface `healthy`, `degraded`, and `unavailable` startup/readiness states and reflect `startup_timeout_ms` behavior rather than pretending the server is instantly ready
+
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Contracts_V0.md
+
+**Global agent concurrency limits are NOT defined in this section.** The authoritative source for `maxConcurrentCrewsPerPlatform`, `maxConcurrentAgentsPerCrew`, `maxTotalActiveAgents`, `maxNestingDepth`, and related execution limits is `Plans/orchestrator-subagent-integration.md` §Subagent Configuration `executionLimits`.
+
+ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Run_Modes.md
 #### 7.4.1 Assistant Worktrees settings subsection
 
 Settings > Branching tab includes a new subsection `Assistant Worktrees` below existing branching controls. It contains 10 project-level settings organized in three visual sub-groups:

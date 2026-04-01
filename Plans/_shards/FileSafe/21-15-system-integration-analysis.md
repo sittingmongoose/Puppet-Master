@@ -1,7 +1,6 @@
 ## 15. System Integration Analysis
 
 ### 15.1 Integration with BaseRunner
-
 **Current Architecture:**
 - `BaseRunner::execute_command()` spawns platform CLI processes
 - Already has circuit breaker, quota manager, rate limiter, permission audit
@@ -13,64 +12,71 @@
 pub async fn execute_command(...) -> Result<ExecutionResult> {
     // 1. Circuit breaker check (existing)
     if self.circuit_breaker.is_open() { ... }
-    
+
     // 2. QUOTA CHECK (existing)
     if let Err(e) = self.quota_manager.enforce_quota(...) { ... }
-    
+
     // 3. RATE LIMIT (existing)
     self.rate_limiter.acquire(...).await?;
-    
+
     // 4. NEW: FileSafe (add here)
-    // Note: Prompt content is checked at platform runner level (after context compilation). Here we check only the final command string and file paths.
-    // Build command string
+    // Note: Prompt content is checked at platform runner level (after context compilation).
+    // Here we check only the final command string and file paths.
     let full_command = format!("{} {}", self.command, args.join(" "));
-    
+
     // Check command string (blocklist + approved whitelist)
     if let Err(e) = self.bash_guard.check_command(&full_command) {
-        // Check if verification gate operation (allow destructive during QA)
         if self.is_verification_gate_operation(&request) {
             warn!("Destructive command allowed during verification gate: {}", e);
         } else {
             return Err(anyhow!("Destructive command blocked: {}", e));
         }
     }
-    
+
     // Check file writes (if write scope enabled)
-    // Extract file paths from prompt or context files
     let allowed_files = FileGuard::load_allowed_files_from_request(&request)?;
     for file_path in self.extract_file_paths_from_request(&request)? {
-        // Resolve path relative to working directory
         let resolved_path = if file_path.is_absolute() {
             file_path
         } else {
             request.working_directory.join(&file_path)
         };
-        
-        // Normalize path (handle worktree symlinks, .., etc.)
+
+        // §11.1.1 realpath-before-scope-check: fail-closed on resolution error
         let normalized_path = resolved_path.canonicalize()
-            .unwrap_or_else(|_| resolved_path);
-        
-        if let Err(e) = self.file_guard.check_file_write(&normalized_path, &request.working_directory, &allowed_files) {
+            .map_err(|e| GuardError::SymlinkResolution {
+                original: resolved_path.clone(),
+                reason: e.to_string(),
+            })?;
+
+        if let Err(e) = self.file_guard.check_file_write(
+            &normalized_path, &request.working_directory, &allowed_files
+        ) {
             return Err(anyhow!("File write blocked: {}", e));
         }
         if let Err(e) = self.security_filter.check_file_access(&normalized_path) {
             return Err(anyhow!("Sensitive file access blocked: {}", e));
         }
     }
-    
+
     // 5. PERMISSION AUDIT (existing)
     if let Some(ref audit) = self.permission_audit { ... }
-    
+
     // 6. Continue with spawn logic...
 }
 ```
 
-**Key Integration Details:**
+ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Architecture_Invariants.md
+
+**Key integration rules:**
 - Guards are initialized in `BaseRunner::new()` alongside other components
 - All guards use `Arc<>` for thread-safe sharing
 - Guard errors are logged via existing logging infrastructure
 - Guard violations are logged to event log (if available) or filesafe-events.jsonl
+- Path resolution follows §11.1.1: `canonicalize()` failure produces `GuardError::SymlinkResolution`, never a silent fallback to the unresolved path
+- The fallback pattern `canonicalize().unwrap_or_else(|_| original_path)` is prohibited in all FileSafe-managed code paths
 
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Executor_Protocol.md
 ### 15.2 Integration with Orchestrator
 
 **Current Architecture:**
@@ -256,9 +262,12 @@ impl FileGuard {
             working_dir.join(file_path)
         };
         
-        // Normalize path (handle worktree symlinks)
+        // §11.1.1 realpath-before-scope-check: fail-closed on resolution error
         let normalized = resolved_path.canonicalize()
-            .unwrap_or_else(|_| resolved_path);
+            .map_err(|e| GuardError::SymlinkResolution {
+                original: resolved_path.clone(),
+                reason: e.to_string(),
+            })?;
         
         // Check against allowed files (also normalized)
         // AutoDecision: match only against `allowed_files` computed from request metadata; FileGuard does not store request-scoped allowlists.
@@ -422,9 +431,14 @@ pub struct GateOverrideConfig {
 **Fix:** Implement Option B config wiring (build run config from GUI at orchestrator start)
 
 #### Gap 4: Worktree Path Resolution
-**Issue:** Write scope needs to resolve relative paths correctly in worktree context
-**Impact:** Write scope may block legitimate operations or allow blocked operations
-**Fix:** Normalize paths relative to `working_directory`, handle worktree symlinks
+
+**Issue:** Write-scope checks must resolve relative paths correctly in worktree context without trusting symlink aliases.
+
+**Impact:** Inconsistent normalization can either block legitimate writes or allow writes outside the intended worktree scope.
+
+**Resolved contract:** Normalize candidate paths relative to `working_directory`, then resolve `realpath()` before any scope check. If canonicalization fails, deny access. The real worktree root, not a symlink alias, is the base path for guard comparison.
+
+ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/WorktreeGitImprovement.md
 
 #### Gap 5: Interview Phase Detection
 **Issue:** No way to detect interview operations for relaxed security filter
