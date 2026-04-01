@@ -266,17 +266,29 @@ Source: GitHub OAuth device flow docs (see References). ContractRef: PolicyRule:
 ContractRef: PolicyRule:no_secrets_in_storage
 
 ### Token lifecycle
-- On successful token acquisition, Puppet Master must: ContractRef: EventType:auth.github.authenticated, PolicyRule:no_secrets_in_storage
-  1) store the token in the OS credential store, ContractRef: PolicyRule:no_secrets_in_storage
-  2) validate the token by calling `GET /user`,
-  3) verify scopes (see next section),
-  4) emit `auth.github.authenticated`.
 
-ContractRef: EventType:auth.github.authenticated
+Token lifecycle for all GitHub-authenticated flows follows deterministic refresh and rebuild rules.
 
-- On disconnect, Puppet Master must delete the credential-store entry and clear any cached non-secret metadata; then emit `auth.github.disconnected`. ContractRef: EventType:auth.github.disconnected, PolicyRule:no_secrets_in_storage
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/CLI_Bridged_Providers.md
 
-ContractRef: EventType:auth.github.disconnected
+**Proactive refresh:** before each provider/API call, PM checks remaining token TTL. If TTL remaining is at or below 20% of total TTL, PM refreshes before dispatch. Waiting for expiry is not acceptable.
+
+ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Executor_Protocol.md
+
+**Credential rebuild on refresh:** after any refresh, PM rebuilds the HTTP client / transport object from scratch. Updating only the credential field on an existing client is insufficient.
+
+ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Architecture_Invariants.md
+
+**Windows OAuth redirect listener:**
+- bind only to `127.0.0.1`
+- if the configured callback port is unavailable, fall back to an ephemeral loopback port
+- if listener startup still fails, provide a manual copy/paste auth-code fallback
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/FinalGUISpec.md
+
+**Token storage:** tokens live in the OS credential store, never in plain-text config, seglog, or other persistent event payloads.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Architecture_Invariants.md
 
 ### Credential-store unavailable
 If the OS credential store cannot be accessed, Puppet Master MUST: ContractRef: EventType:auth.github.failed, PolicyRule:no_secrets_in_storage
@@ -435,9 +447,16 @@ ContractRef: EventType:auth.github.failed, SchemaID:pm.event.v0
 
 ## Acceptance criteria (testable)
 
-> Verification proof for each criterion must conform to `Plans/evidence.schema.json`. Invariant checks are validated per `Plans/Progression_Gates.md` GATE-003 (architecture invariants) and GATE-009 (ContractRef enforcement). ContractRef: SchemaID:evidence.schema.json, Plans/Progression_Gates.md#GATE-003, Plans/Progression_Gates.md#GATE-009
+### Auth correctness acceptance criteria (additional)
 
-ContractRef: SchemaID:evidence.schema.json, Plans/Progression_Gates.md#GATE-003, Plans/Progression_Gates.md#GATE-009
+ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/CLI_Bridged_Providers.md
+
+- Given a token with TTL <= 20% remaining, PM refreshes before the outbound call is dispatched.
+- Given a successful refresh, subsequent calls use a newly constructed client/transport instance rather than the prior pooled client.
+- Given a Windows OAuth flow, the listener binds only to `127.0.0.1`, retries with an ephemeral port when needed, and offers manual code entry when loopback binding cannot be started.
+- Given credential-store unavailability, PM fails closed with explicit recovery guidance rather than writing tokens to plain-text fallbacks.
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Architecture_Invariants.md
 
 ### Auth and security
 1) **No external auth-shell dependency:** no external auth-shell subprocess invocation exists for GitHub auth/status, repo create, fork, or PR operations. ContractRef: SchemaID:Spec_Lock.json#github_operations

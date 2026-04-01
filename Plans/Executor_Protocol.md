@@ -255,26 +255,39 @@ ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractNa
 
 ### 7. Failure classes and retry entry points
 
-The executor MUST classify failed or non-executed attempts into one canonical `failure_class` / `blocked_reason_code` family before deciding the next action.
+The executor classifies every failed or non-executed attempt into one canonical `failure_class` / `blocked_reason_code` family before deciding the next action.
+
 ContractRef: ContractName:Plans/Decision_Policy.md, ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Contracts_V0.md
 
-Required classes:
-- `provider_transient`
-- `structured_output_invalid`
-- `verification_failed`
-- `reviewer_findings`
-- `permission_denied`
-- `user_declined`
-- `headless_ask_denied`
-- `filesafe_blocked`
-- `external_side_effect_blocked`
-- `auth_expired`
-- `storage_io`
-- `graph_integrity`
-- `replan_required`
+### 7.1 Per-class retry matrix
 
-The executor MUST NOT apply generic retry behavior without classifying the attempt first.
-ContractRef: ContractName:Plans/Decision_Policy.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/orchestrator-subagent-integration.md
+| `failure_class` | Max retries | Backoff | Auto-retry? | Notes |
+|---|---|---|---|---|
+| `provider_transient` | 3 | 1s / 2s / 4s | Yes | network errors, 429, transient 5xx |
+| `structured_output_invalid` | 2 | none | Yes | malformed provider structured output |
+| `auth_expired` | 1 | immediate after refresh | Yes | refresh once, rebuild client, retry once |
+| `permission_denied` | 0 | — | No | requires user decision |
+| `filesafe_blocked` | 0 | — | No | never auto-retry |
+| `storage_io` | 1 | brief delay | Yes | single retry on I/O failure |
+| `quota_exceeded` | 0 | — | No | user action or later retry window |
+
+ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/GitHub_API_Auth_and_Flows.md
+
+Generic retry without prior classification is prohibited.
+
+ContractRef: ContractName:Plans/Decision_Policy.md, ContractName:Plans/Architecture_Invariants.md
+
+### 7.2 Doom-loop guard
+
+If the same triple `(tool_name, serialized_args_hash, error_message)` is observed twice consecutively at the same nesting level, the executor MUST emit `stop.identical_failure` and terminate the run immediately.
+
+ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Contracts_V0.md
+
+### 7.3 Signal handling and process lifecycle
+
+Provider processes receive `SIGTERM` / `SIGINT` with a 5-second grace window. MCP and LSP subprocesses receive a 3-second grace window. `SIGHUP` reloads config. All managed subprocesses run in isolated process groups.
+
+ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/storage-plan.md
 
 ### 8. Safe points
 

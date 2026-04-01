@@ -528,16 +528,54 @@ See [OpenCode -- Custom tools](https://opencode.ai/docs/tools/#custom-tools) for
 ---
 
 ## 5. MCP integration (in scope)
-ContractRef: ContractName:Plans/newtools.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/Personas.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md
 
-MCP-discovered tools are first-class tools in the central registry and participate in the same requested-vs-effective resolution model as built-in, provider, custom, and skill-backed tools.
+MCP tools enter the central tool registry and permission model. MCP server lifecycle is PM-owned.
 
-Rules:
-- enabling an MCP server expresses requested availability, not guaranteed effective availability
-- effective availability is recalculated from server health, provider/platform support, project scope, Persona/permission state, and policy at runtime
-- project switching recalculates effective MCP availability for the new project context
-- app-level-only permission scope is not sufficient for the promoted shell/project-switch model
-- namespacing and wildcarding remain mandatory for policy resolution and diagnostics
+ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Executor_Protocol.md
+
+### Spawn policy (lazy-load)
+
+MCP servers MUST be spawned on the first tool call that requires them, never at PM startup. A startup timeout does not mark the server permanently broken; it marks the server `degraded` and starts a background readiness probe.
+
+ContractRef: ContractName:Plans/Architecture_Invariants.md, ContractName:Plans/Executor_Protocol.md
+
+### Startup, listTools, and stale-list behavior
+
+- `startup_timeout_ms`: `10000` by default.
+- On timeout, the server becomes `degraded`; PM retries one readiness probe in the background before treating the server as `unavailable` until user action.
+- `listTools()` retries 3 times with 1-second backoff.
+- If retries fail and a prior tool list exists, PM keeps the last-known tool list marked `stale`; a transient list failure MUST NOT permanently delete the server from the registry.
+- Refresh triggers: explicit user refresh, config change, or periodic TTL refresh every 5 minutes.
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md
+
+### Connection model
+
+Each stdio server uses one persistent subprocess connection pool per configured server. PM MUST NOT spawn a new subprocess per tool call. HTTP/SSE MCP servers use a persistent client/session per endpoint.
+
+ContractRef: ContractName:Plans/Architecture_Invariants.md, ContractName:Plans/Executor_Protocol.md
+
+### Schema isolation and OAuth state
+
+MCP schema handling is fail-safe:
+- Detect `$ref` cycles with a visited-set.
+- Maximum traversal depth: 32.
+- Reject resolved schemas above 64 KiB.
+- Provider-specific sanitizers MAY rewrite unsupported forms (for example Gemini-family `anyOf -> oneOf`, stripping unsupported `const` or encoding metadata) before presentation.
+- Malformed schema output becomes a structured `mcp_schema_mismatch` diagnostic; it MUST NOT crash the registry.
+
+ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Architecture_Invariants.md
+
+OAuth/client state is keyed by provider + scope, not by a transient per-call server instance. Refresh and token-write paths use compare-and-swap / atomic update semantics so successful callbacks are not immediately clobbered by a second writer.
+
+ContractRef: ContractName:Plans/GitHub_API_Auth_and_Flows.md, ContractName:Plans/storage-plan.md
+
+### Windows MCP subprocess behavior
+
+Windows stdio MCP processes MUST be started with `CREATE_NEW_PROCESS_GROUP`. Graceful stop uses `CTRL_BREAK_EVENT`; if the process does not exit within 3 seconds, PM escalates to force termination.
+
+ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Run_Modes.md
+
 ## 6. Ways to add tools (implementation angles)
 
 | Mechanism | What it adds | Where it's configured | Notes |
@@ -636,23 +674,40 @@ ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/Contracts_V
 - **Mid-run:** Run config is an immutable snapshot at start (FinalGUISpec §9.7). Changing Settings (including tool permissions) mid-run does **not** affect the active run; next run picks up the new config.
 
 ### 8.2 Policy application order and invocation flow
-1. **When:** Policy is evaluated when a tool is about to be invoked. For CLI-based platforms, the provider or runner may observe tool calls in the stream, but Puppet Master remains authoritative for policy, terminal binding, and normalized outcome recording.
-2. **Resolve binding:** For shell-capable calls, determine project, workspace tab, cwd, requested shell profile, and whether the call should bind to an existing terminal session or create a new one.
-3. **Allow:** Pass through to platform (or execute built-in); emit `tool.invoked`; when shell execution occurs, write transcript and command-block observations into the canonical terminal model.
-4. **Deny:** Do not pass to platform; return a structured error to the agent; emit `tool.denied` when supported.
-5. **Ask:** In Assistant, show approval UI; on approve, treat as allow for that call (or session approval). In Orchestrator/Interview, if no UI exists, map to **deny** or a **pending-HITL** state when HITL is enabled.
-6. **FileSafe:** After permission allows the tool, FileSafe still applies (for example bash blocklists, write scope, sensitive-path guards).
-7. **Completion:** Normalize the executed outcome and persist enough data for later same-session reveal, history, analytics, and runtime reconciliation.
 
-ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/FileSafe.md, ContractName:Plans/storage-plan.md
+Tool dispatch follows one canonical order. No tool implementation is invoked directly outside this flow.
 
-Shell-specific rules:
-- `Open in Terminal` later resolves to the same bound terminal session when that session still exists
-- a shell call blocked by permission or FileSafe does not create a success-shaped fallback terminal session
-- provider CLIs may stream shell observations, but Puppet Master records canonical `terminal_session_id`, normalized command identity, cwd, and outcome state
-- derived surfaces such as Output, Problems, and Ports consume these normalized records rather than inventing their own shell ownership
+ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Architecture_Invariants.md
 
-ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Run_Modes.md
+Required order:
+1. Normalize the invocation context and expand relevant paths.
+2. Evaluate `policy.may_execute_tool()` on the invocation.
+3. For file-affecting tools, run FileSafe/write-scope checks on the normalized path arguments.
+4. Apply provider-specific argument normalizers (for example malformed JSON repair, XML-wrapper stripping, or schema-family coercions) where the tool surface explicitly allows them.
+5. Run `schema.validate_tool_args()` on the post-normalization argument set.
+6. Run arg-touching hooks.
+7. Re-run permission and schema validation if hook output changed arguments.
+8. Dispatch only if all checks pass.
+
+ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/Plugins_System.md
+
+Failure behavior:
+- Invalid arguments MUST produce a structured tool result with `is_error=true`; PM MUST NOT execute the tool and then "best effort" repair the failure afterwards.
+- Provider-specific retry decisions MUST use structured error classes or status codes, never substring matching on error text.
+
+ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Contracts_V0.md
+
+#### Shell-runtime rules
+
+Shell-dispatch rules are part of the canonical tool flow:
+- Banned-command checks scan the full command string.
+- `eval` is prohibited.
+- Shell selection is platform-aware (`/bin/bash` or equivalent on Unix; `cmd.exe` / PowerShell family on Windows based on configured tool semantics).
+- Shell instances are isolated per agent tree so environment variables do not leak across session/agent boundaries.
+- Shell lifecycle is mutex-guarded. Work queues MUST be non-blocking; writes to a dead shell return a structured error instead of hanging forever.
+
+ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/orchestrator-subagent-integration.md
+
 ### 8.3 Registry → platform CLI flag derivation
 
 The runner (or a dedicated module) derives platform-specific CLI flags from the **canonical** permission set so the platform only sees tools we allow. Example mapping (implement in platform_specs or runner):
@@ -683,14 +738,20 @@ When the user enables **YOLO** (Assistant), treat all tools as **allow** for tha
 - **Wildcard matching:** **Prefix match.** A rule `mymcp_*` matches any tool name that **starts with** `mymcp_`. More general globs (e.g. `*_read`) can be added later if needed; document the rule in the registry spec.
 
 ### 8.7 MCP server unavailable
-If an MCP server is enabled but unavailable, the user sees deterministic degraded behavior.
 
-Rules:
-- the UI must show the server as unavailable with reason when that state is knowable
-- tool visibility and invocation behavior follow one canonical policy rather than ad hoc hiding in one surface and disabled-state display in another
-- when the tools are omitted from invocation surfaces, the unavailability still remains visible in settings/health diagnostics
-- when a tool is shown but unavailable, the disabled reason and remediation path must be explicit
-- no success-shaped fallback is allowed
+When an MCP server is unavailable because of startup timeout, transport failure, auth loss, schema mismatch, or repeated health-check failure, PM treats this as a structured degraded-state condition.
+
+ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Contracts_V0.md
+
+Required behavior:
+- Tools from that server are marked `unavailable` in the registry.
+- Calls to those tools fail immediately with a structured error and `failure_class=provider_transient` (or a stricter class when the error is known-fatal).
+- PM emits a structured diagnostic containing `server_id`, `reason`, `last_healthy_at`, and whether a stale list is still available.
+- One automatic reconnect attempt MAY occur after the configured cool-down (default 60 seconds); after that, recovery requires user action or config change.
+- User surfaces show the server as `degraded` or `unavailable`; PM MUST NOT silently hide the server after a single transient failure.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md
+
 ### 9.1 Gaps and potential problems
 
 | Gap / risk | Description | Mitigation |
@@ -766,9 +827,9 @@ The Permissions GUI is specified in `Plans/Permissions_System.md` §10 and `Plan
 
 ### 10.6 FileSafe integration order and API
 
-- **Order:** (1) **Tool permission** (allow/deny/ask per `Plans/Permissions_System.md` §8) — if deny, stop and return "Tool disabled." (2) If **ask**, surface to user; on approve, continue. (3) **FileSafe** — for bash: command blocklist; for edit/write: write scope; for read: sensitive-file filter. If FileSafe blocks, return "Blocked by FileSafe: &lt;reason&gt;" and do not execute.
-- **Single API (recommended):** `policy.may_execute_tool(tool_name, invocation_context) -> Result<Allow | Deny(reason) | Ask, Error>`. Internally: resolve permission (allow/deny/ask); if allow (or ask and approved), then run FileSafe check; return Allow only if both pass. Runner calls this once per tool call before executing or forwarding.
-- **FileSafe contract:** FileSafe exposes e.g. `check_bash_command(cmd)`, `check_write_path(path)`, `check_read_path(path)`. Policy engine calls these after permission resolves to allow (or ask-approved).
+- **Canonical order owner:** `§8.2` is the authoritative dispatch sequence. This subsection is an API summary only and MUST NOT be read as a competing order definition.
+- **Single API (recommended):** `policy.may_execute_tool(tool_name, invocation_context) -> Result<Allow | Deny(reason) | Ask, Error>` remains the permission entrypoint within that sequence. Runner code calls it before any underlying tool implementation is invoked.
+- **FileSafe contract:** FileSafe exposes e.g. `check_bash_command(cmd)`, `check_write_path(path)`, `check_read_path(path)`. For file-affecting or shell-affecting tools, FileSafe runs on normalized arguments inside the canonical `§8.2` flow; hook-mutated arguments trigger the required re-checks before dispatch.
 
 ### 10.7 Ask UI contract
 

@@ -1,0 +1,600 @@
+{
+  "schema_id": "pm.research_packet.v1",
+  "run_id": "r-20260328-192850-02",
+  "created_at_utc": "2026-03-31T18:34:05.465Z",
+  "topic": "A2A protocol evaluation (REJECTED) + OpenCode deep-dive (10 categories, 500+ issues) + reconciled planning-doc packet for 16 MUST CHANGE + 5 MUST RECONCILE docs",
+  "objective": "Emit a fidelity-preserving research packet that carries the reconciled PM design into the 21 packet docs without dropping owner-doc detail: execution budgets and kill conditions, permission inheritance and hook safety, tool validation and MCP lifecycle, provider adapter correctness, pricing and usage modeling, file and storage integrity, prompt/cache preservation, orchestrator ownership, and consumer-doc reconciliation.",
+  "decisions": [
+    {
+      "id": "max_nesting_depth",
+      "value": 4,
+      "rationale": "Prevents unbounded orchestrator-crew-agent recursion; kill.recursion_depth trigger."
+    },
+    {
+      "id": "max_total_spawned_agents",
+      "value": 99,
+      "rationale": "Hard cap on total spawned agents per run; kill.agent_count trigger."
+    },
+    {
+      "id": "max_tool_rounds",
+      "value": 200,
+      "rationale": "Per-agent tool-call round limit; kill.tool_round_limit trigger."
+    },
+    {
+      "id": "max_concurrent_crews_per_platform",
+      "value": 4,
+      "rationale": "Three-level concurrency: crew cap per platform."
+    },
+    {
+      "id": "max_concurrent_agents_per_crew",
+      "value": 8,
+      "rationale": "Three-level concurrency: agent cap per crew."
+    },
+    {
+      "id": "max_total_active_agents",
+      "value": 32,
+      "rationale": "Three-level concurrency: total active agents across all crews."
+    },
+    {
+      "id": "retry_provider_transient_count",
+      "value": 3,
+      "rationale": "Provider transient errors (network, 429, 503): retry 3x."
+    },
+    {
+      "id": "retry_provider_transient_backoff_seconds",
+      "value": [
+        1,
+        2,
+        4
+      ],
+      "rationale": "Exponential backoff 1/2/4s between retries."
+    },
+    {
+      "id": "retry_structured_output_invalid",
+      "value": 2,
+      "rationale": "Invalid structured output: retry up to 2x."
+    },
+    {
+      "id": "retry_auth_expired",
+      "value": 1,
+      "rationale": "Expired auth: refresh once then one retry; further failures are fatal."
+    },
+    {
+      "id": "retry_permission_denied",
+      "value": 0,
+      "rationale": "Permission denied is never auto-retried; requires user decision."
+    },
+    {
+      "id": "retry_filesafe_blocked",
+      "value": 0,
+      "rationale": "FileSafe block is never auto-retried; blocked_reason_code=filesafe_blocked."
+    },
+    {
+      "id": "retry_storage_io",
+      "value": 1,
+      "rationale": "Storage I/O errors: single retry after brief delay."
+    },
+    {
+      "id": "doom_loop_identical_failure_triple",
+      "value": "(tool_name, args_hash, error_message)",
+      "rationale": "Exact-match triple: same tuple twice consecutively triggers kill.identical_failure."
+    },
+    {
+      "id": "signal_provider_grace_ms",
+      "value": 5000,
+      "rationale": "SIGTERM/SIGINT to provider processes: 5s grace window before SIGKILL."
+    },
+    {
+      "id": "signal_mcp_lsp_grace_ms",
+      "value": 3000,
+      "rationale": "SIGTERM to MCP/LSP subprocesses: 3s grace window before SIGKILL."
+    },
+    {
+      "id": "signal_hup_action",
+      "value": "config_reload",
+      "rationale": "SIGHUP triggers config reload, not shutdown."
+    },
+    {
+      "id": "process_group_isolation",
+      "value": "setsid_or_CREATE_NEW_PROCESS_GROUP",
+      "rationale": "Each managed subprocess gets its own process group to prevent signal leakage."
+    },
+    {
+      "id": "shutdown_idempotent_guard",
+      "value": "Once_guard",
+      "rationale": "Shutdown guarded by a Once primitive; re-entrant calls are safe no-ops."
+    },
+    {
+      "id": "seglog_crc32_mandatory",
+      "value": true,
+      "rationale": "CRC32 per seglog record is MANDATORY. Corrupt records trigger recovery event and are NOT silently skipped."
+    },
+    {
+      "id": "pm_lock_flock_mandatory",
+      "value": true,
+      "rationale": "Startup flock on .puppet-master/pm.lock is MANDATORY. If lock is held, enter read-only mode."
+    },
+    {
+      "id": "file_mutation_atomic_write",
+      "value": "temp_fsync_rename",
+      "rationale": "All FileSafe-managed file mutations use atomic temp-fsync-rename. os.WriteFile is NEVER used directly."
+    },
+    {
+      "id": "file_record_lru_cap",
+      "value": 10000,
+      "rationale": "File record LRU eviction cap: 10K entries."
+    },
+    {
+      "id": "cost_storage_type",
+      "value": "integer_microdollars_u64",
+      "rationale": "All costs stored as integer microdollars (u64). float64 is NEVER used for cost storage."
+    },
+    {
+      "id": "token_fields_no_aggregate",
+      "value": [
+        "input_tokens",
+        "output_tokens",
+        "cache_read_input_tokens",
+        "cache_creation_input_tokens",
+        "reasoning_tokens"
+      ],
+      "rationale": "Five token fields stored individually; MUST NOT be aggregated at storage layer."
+    },
+    {
+      "id": "budget_warning_threshold_pct",
+      "value": 80,
+      "rationale": "At 80% of remaining budget, emit warning event before blocking."
+    },
+    {
+      "id": "billing_entity_key",
+      "value": "(model_id, provider_id, billing_entity)",
+      "rationale": "Cost attribution key is this triple; not tier_id-first."
+    },
+    {
+      "id": "finish_reason_unknown_empty_is_error",
+      "value": true,
+      "rationale": "FinishReasonUnknown + empty content MUST be treated as error, not normal completion."
+    },
+    {
+      "id": "tool_call_id_format",
+      "value": "UUID_only",
+      "rationale": "Tool call IDs MUST be UUID. Name+input deduplication is NEVER used as substitute."
+    },
+    {
+      "id": "credential_refresh_rebuilds_http_client",
+      "value": true,
+      "rationale": "On credential refresh, HTTP client MUST be rebuilt from scratch, not just field updated."
+    },
+    {
+      "id": "system_role_name_openai_reasoning",
+      "value": "developer",
+      "rationale": "For OpenAI reasoning models, system message role name is 'developer', not 'system'."
+    },
+    {
+      "id": "gemini_provider_count",
+      "value": 2,
+      "rationale": "Gemini is two separate providers: Gemini Direct (API only) and Gemini CLI (OAuth+API, CLI-wrapped). Separate capability matrix entries required."
+    },
+    {
+      "id": "compaction_immune_cap_pct",
+      "value": 30,
+      "rationale": "Total immune content MUST NOT exceed 30% of effective context window."
+    },
+    {
+      "id": "compaction_pressure_start_pct",
+      "value": 70,
+      "rationale": "Conservative context shrinking begins at 70% of effective context window."
+    },
+    {
+      "id": "compaction_pressure_aggressive_pct",
+      "value": 85,
+      "rationale": "Aggressive shrinking above 85% before full compaction is considered."
+    },
+    {
+      "id": "compaction_large_block_threshold_tokens",
+      "value": 1200,
+      "rationale": "Stale blocks above 1200 tokens eligible for conservative auto-shrink."
+    },
+    {
+      "id": "banned_command_check_full_string",
+      "value": true,
+      "rationale": "Banned-command check scans full command string including all metacharacters. First-token-only check is insufficient."
+    },
+    {
+      "id": "path_normalization_before_match",
+      "value": "tilde_HOME_expand_then_realpath",
+      "rationale": "Tilde and HOME must be expanded, then realpath() called, before any permission match."
+    },
+    {
+      "id": "symlink_policy",
+      "value": "realpath_before_scope_check_fail_closed",
+      "rationale": "Call realpath() before scope check. If it fails, deny access. Never fall back to unresolved path."
+    },
+    {
+      "id": "mcp_spawn_timing",
+      "value": "lazy_on_first_tool_call",
+      "rationale": "MCP servers spawned on first tool call, NOT at PM startup."
+    },
+    {
+      "id": "mcp_startup_timeout_ms",
+      "value": 10000,
+      "rationale": "MCP server startup timeout: 10000ms. Mark degraded on timeout."
+    },
+    {
+      "id": "mcp_list_tools_retry_count",
+      "value": 3,
+      "rationale": "listTools() retry 3x with 1s backoff. On failure use stale list. Refresh every 5min."
+    },
+    {
+      "id": "mcp_per_tool_timeout_s",
+      "value": 30,
+      "rationale": "Per-tool call timeout default: 30s. Configurable per-server."
+    },
+    {
+      "id": "mcp_connection_pool",
+      "value": "persistent_subprocess_per_server",
+      "rationale": "MCP uses persistent subprocess connection pool per server. Never spawn new process per call."
+    },
+    {
+      "id": "oauth_proactive_refresh_threshold_pct",
+      "value": 20,
+      "rationale": "If token TTL remaining is <= 20%, proactively refresh before provider call."
+    },
+    {
+      "id": "windows_oauth_bind",
+      "value": "127.0.0.1_only_ephemeral_port_fallback",
+      "rationale": "Windows OAuth listener binds to 127.0.0.1 only. Ephemeral fallback port allowed. Copy-paste auth code as final fallback."
+    },
+    {
+      "id": "schema_cycle_detection_max_depth",
+      "value": 32,
+      "rationale": "Track visited $refs during schema traversal. Max depth 32. Schema size cap 64 KiB."
+    },
+    {
+      "id": "a2a_internal_orchestration",
+      "value": "rejected",
+      "rationale": "A2A is not adopted for PM internal agent/subagent orchestration because it adds opacity, weakens billing/cache fidelity, and cannot express PM-native execution controls."
+    },
+    {
+      "id": "a2a_external_interop",
+      "value": "separate_future_work_item",
+      "rationale": "External A2A interop remains additive-only future scope and does not replace PM internal orchestration."
+    },
+    {
+      "id": "canonical_usage_pipeline",
+      "value": "seglog_to_analytics_scan_to_redb_rollups_to_ui",
+      "rationale": "Usage surfaces read canonical rollups from analytics scans over seglog rather than treating usage.jsonl as the canonical rollup source."
+    },
+    {
+      "id": "google_cache_strategy",
+      "value": "cachedContent_api_family",
+      "rationale": "Google/Gemini caching is provider-specific and must not be flattened into Anthropic/OpenAI marker behavior."
+    }
+  ],
+  "doc_intents": [
+    {
+      "path": "Plans/Run_Modes.md",
+      "intent": "update",
+      "anchors": [
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "## 4. Budget defaults",
+          "content_markdown": "### 4.1 Concurrency caps (all strategies)\n\nThree-level concurrency limits apply globally across all run strategies and MUST NOT be overridden by Persona or overlay configuration alone.\n\nContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Executor_Protocol.md\n\n| Cap | Default | Scope | Kill / behavior |\n|---|---|---|---|\n| `max_concurrent_crews_per_platform` | 4 | Per provider platform | New crew spawn requests queue until a slot is free. |\n| `max_concurrent_agents_per_crew` | 8 | Per active crew context | Reviewer or worker spawns queue rather than widening the limit. |\n| `max_total_active_agents` | 32 | Entire run | Global cap across all crews and direct child agents. |\n\nContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/interview-subagent-integration.md\n\n### 4.2 Run-envelope budget fields\n\nBudget limits are enforced by the run supervisor regardless of strategy. They are frozen into the run envelope and survive pause/resume for the same `run_id`.\n\nContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Contracts_V0.md\n\n| Budget key | Default | Applies to | Meaning |\n|---|---|---|---|\n| `max_nesting_depth` | 4 | All modes | Maximum orchestrator -> crew -> agent -> child nesting depth before `stop.recursion_depth`. |\n| `max_total_spawned_agents` | 99 | All modes | Hard cap on total spawned agents before `stop.agent_count`. |\n| `max_tool_rounds` | 200 | All modes | Same-level tool-call round ceiling per agent before `stop.tool_round_limit`. |\n| `max_wall_ms` | 1200000 | All modes | Maximum wall-clock duration for the run. |\n| `max_estimated_tokens` | 80000 | All modes | Estimated token ceiling for the run budget. |\n| `max_same_shell_failure` | 3 | DAE / host-managed shell surfaces | Consecutive failures of the same canonical shell fingerprint before stop. |\n| `max_write_thrashing` | 5 writes / 10 min | DAE / hosted mutation paths | Same normalized file identity rewritten too often in a sliding window. |\n| `max_retryable_errors` | 3 | All modes | Ceiling on retryable provider/executor failures before run termination. |\n| `task_timeout_ms` | inherit parent remaining budget | Subagent task envelope | Per-task cap; may narrow parent budget but MUST NOT exceed it. |\n\nContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/orchestrator-subagent-integration.md\n\nInterpretation rules:\n- `max_tool_rounds` is distinct from `max_nesting_depth`; one limits same-level iteration, the other limits recursive delegation depth.\n- Budget overrides MAY narrow defaults per run, but MUST NOT widen beyond the hard policy ceiling.\n- Queueing at concurrency caps is deterministic; PM MUST NOT silently discard or auto-widen queued work.\n\nContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/storage-plan.md"
+        },
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "### 5.1 Universal kill conditions (all strategies)",
+          "content_markdown": "The following stop conditions apply in all run strategies. When any condition is met, the run is terminated immediately and a canonical `run.killed` seglog event is emitted with `stop_condition`, `stop_threshold`, and `observed_value` fields.\n\nContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Contracts_V0.md\n\n| Stop condition | Trigger | Default threshold | Configurable |\n|---|---|---|---|\n| `stop.recursion_depth` | Nesting depth exceeds `max_nesting_depth` | 4 | Yes |\n| `stop.agent_count` | Total spawned agents exceed `max_total_spawned_agents` | 99 | Yes |\n| `stop.tool_round_limit` | Tool-call rounds exceed `max_tool_rounds` | 200 | Yes |\n| `stop.task_timeout` | Individual task exceeds `task_timeout_ms` or inherited remaining budget | Per envelope | Yes |\n| `stop.budget_exceeded` | Pre-request estimate or post-response actual exceeds remaining budget | Per run/session budget | Yes |\n| `stop.identical_failure` | Same `(tool_name, args_hash, error_message)` triple observed twice consecutively | exact-match | No |\n| `stop.user_cancel` | User explicitly cancels the run | — | No |\n| `stop.hte_tool_observed` | Provider-originated tool call appears during HTE | 0 observed | No |\n\nContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Permissions_System.md\n\n#### Exact-match doom-loop guard\n\nThe doom-loop guard is exact-match only. PM MUST compare the same `(tool_name, serialized_args_hash, error_message)` triple at the same nesting level across consecutive attempts. Fuzzy matching, substring matching, and \"looks similar\" heuristics are prohibited for this stop condition.\n\nContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Architecture_Invariants.md\n\n#### Signal handling and process lifecycle\n\n`SIGTERM` / `SIGINT` request graceful shutdown. `SIGHUP` triggers config reload, not shutdown. Every managed provider, MCP, terminal, and LSP subprocess MUST run in its own process group (`setsid` on Unix; `CREATE_NEW_PROCESS_GROUP` on Windows) so signal delivery stays scoped.\n\nContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Contracts_V0.md\n\nGrace periods:\n- Provider processes: 5 seconds, then force terminate.\n- MCP and LSP subprocesses: 3 seconds, then force terminate.\n- Shutdown entrypoints MUST be guarded by a `Once`/idempotent primitive; re-entrant shutdown is a safe no-op.\n\nContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/LSPSupport.md"
+        }
+      ]
+    },
+    {
+      "path": "Plans/Permissions_System.md",
+      "intent": "update",
+      "anchors": [
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "## 1. Definitions and scope",
+          "content_markdown": "### 1.1 Path normalization invariants\n\nBefore any permission match, path comparison, or scope check, paths MUST be normalized in this order:\n1. Expand `~` and `$HOME` to the real home-directory path.\n2. Resolve an absolute path and eliminate `.` / `..` components.\n3. Resolve symlinks with `realpath()`.\n4. Match only against the normalized canonical path.\n\nContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/Executor_Protocol.md\n\nRequired behavior:\n- `realpath()` failure is fail-closed. Broken symlink, permission error, or missing target means deny.\n- PM MUST NOT compare against the unresolved path as a fallback.\n- Unexpanded `~` in a runtime path comparison is always a bug.\n\nContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/Architecture_Invariants.md\n\n<a id=\"DEF-SCOPE\"></a>\n### 1.2 Tool registry/policy vs Permission rules\n\nThe permission system defines when a tool invocation is allowed, requires approval, or is denied. `Plans/Tools.md` defines what tools exist and how dispatch occurs. Tool policy consumes permission rules; permission rules do not depend on tool implementation details.\n\nContractRef: ContractName:Plans/Tools.md, Primitive:DRYRules\n\n### 1.3 HTE vs DAE applicability\n\nPermission rules apply in both execution strategies. In HTE, Puppet Master is the sole tool dispatcher. In DAE, Puppet Master enforces the resolved permission ceiling through pre-spawn policy injection and post-hoc reconciliation; DAE never creates an execution path that bypasses permission canon.\n\nContractRef: ContractName:Plans/Run_Modes.md#STRATEGY-HTE, ContractName:Plans/Run_Modes.md#STRATEGY-DAE, ContractName:Plans/Tools.md\n\nUniversal invariant: `policy.may_execute_tool()` MUST be applied before every tool dispatch regardless of nesting depth, child-run path, execution strategy, or provider surface. Child/subagent/crew context is not a bypass.\n\nContractRef: ContractName:Plans/Architecture_Invariants.md, ContractName:Plans/orchestrator-subagent-integration.md\n\n### 1.4 Permission-state mutation and hook safety\n\nAny mutable permission state shared across threads or async tasks MUST be protected by an `RwLock` / read-write lock. Unguarded mutation of allowlists, deny rules, session approvals, or cached effective policy state is prohibited.\n\nContractRef: ContractName:Plans/Architecture_Invariants.md, ContractName:Plans/storage-plan.md\n\nHooks that modify tool arguments or effective invocation context MUST trigger a fresh permission evaluation on the modified arguments before dispatch. Hook execution can narrow permissions, but MUST NOT widen them after the original check has already passed.\n\nContractRef: ContractName:Plans/Plugins_System.md, ContractName:Plans/Tools.md"
+        },
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "### 2.4 Deterministic precedence across layers",
+          "content_markdown": "Permission rules are evaluated in a strict layer precedence. The first layer that produces a defined rule for the invocation wins; higher-precedence layers shadow lower layers on a per-rule basis, but they do NOT replace the entire lower ruleset.\n\nContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Personas.md#PERSONA-INJECTION, PolicyRule:Decision_Policy.md§2\n\n| Priority | Layer | Source | Description |\n|---|---|---|---|\n| 1 | Mode override | `Plans/Run_Modes.md` | `ask` / `plan` clamp mutating capability; `yolo` applies only where policy allows. |\n| 2 | Parent/run ceiling | runtime envelope | Parent execution ceiling and inherited restriction patterns. |\n| 3 | Session cache | runtime | Prior explicit approvals scoped to the session. |\n| 4 | Persona overrides | `Plans/Personas.md` | Named permission profile for the active Persona. |\n| 5 | Project-level | `.puppet-master/permissions.toml` | Project-local rules. |\n| 6 | Global-level | user config | User-wide rules. |\n| 7 | Defaults | this document | Hardcoded fallback table. |\n\nContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Tools.md\n\nChild inheritance rules:\n- Child runs inherit both action ceilings and restrictive argument-pattern rules from the parent chain.\n- Inheritance is additive-downward: a child may narrow authority, but MUST NOT widen it.\n- The permission chain is evaluated as Parent Agent -> Parent Session -> Child Session -> Child Agent, then project/global/default layers.\n\nContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Executor_Protocol.md"
+        },
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "## 8. Resolution algorithm",
+          "content_markdown": "### 8.1 Banned-command full-string check\n\nBanned-command evaluation MUST scan the full command string, not just the first token. The scan includes shell metacharacters and substitution forms such as `;`, `&&`, `||`, `|`, `$()`, and backticks.\n\nContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/Tools.md\n\nA command that passes a first-token allowlist but contains a banned destructive sequence in its arguments is still denied. First-token-only checking is prohibited.\n\nContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Architecture_Invariants.md\n\n### 8.2 Hook re-check and execution-path invariance\n\nResolution happens before dispatch and again after any arg-touching hook mutation. The dispatch layer MUST NOT call the underlying tool implementation until both checks pass on the final argument set.\n\nContractRef: ContractName:Plans/Plugins_System.md, ContractName:Plans/Tools.md\n\nRequired order:\n1. Normalize request context and candidate paths.\n2. Evaluate `policy.may_execute_tool()` on the original invocation.\n3. Run arg-touching hooks, if any.\n4. Re-run permission checks on the modified invocation.\n5. Dispatch only if the re-check passes.\n\nContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Architecture_Invariants.md\n\n### 8.3 Shell environment isolation routing\n\nEnvironment isolation for shell/session processes is jointly owned by `Plans/orchestrator-subagent-integration.md` and `Plans/Tools.md`. The permission layer consumes that invariant when evaluating agent/crew execution context, but does not define shell lifecycle behavior itself.\n\nContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Tools.md"
+        }
+      ]
+    },
+    {
+      "path": "Plans/Tools.md",
+      "intent": "update",
+      "anchors": [
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "## 5. MCP integration (in scope)",
+          "content_markdown": "MCP tools enter the central tool registry and permission model. MCP server lifecycle is PM-owned.\n\nContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Executor_Protocol.md\n\n### Spawn policy (lazy-load)\n\nMCP servers MUST be spawned on the first tool call that requires them, never at PM startup. A startup timeout does not mark the server permanently broken; it marks the server `degraded` and starts a background readiness probe.\n\nContractRef: ContractName:Plans/Architecture_Invariants.md, ContractName:Plans/Executor_Protocol.md\n\n### Startup, listTools, and stale-list behavior\n\n- `startup_timeout_ms`: `10000` by default.\n- On timeout, the server becomes `degraded`; PM retries one readiness probe in the background before treating the server as `unavailable` until user action.\n- `listTools()` retries 3 times with 1-second backoff.\n- If retries fail and a prior tool list exists, PM keeps the last-known tool list marked `stale`; a transient list failure MUST NOT permanently delete the server from the registry.\n- Refresh triggers: explicit user refresh, config change, or periodic TTL refresh every 5 minutes.\n\nContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md\n\n### Connection model\n\nEach stdio server uses one persistent subprocess connection pool per configured server. PM MUST NOT spawn a new subprocess per tool call. HTTP/SSE MCP servers use a persistent client/session per endpoint.\n\nContractRef: ContractName:Plans/Architecture_Invariants.md, ContractName:Plans/Executor_Protocol.md\n\n### Schema isolation and OAuth state\n\nMCP schema handling is fail-safe:\n- Detect `$ref` cycles with a visited-set.\n- Maximum traversal depth: 32.\n- Reject resolved schemas above 64 KiB.\n- Provider-specific sanitizers MAY rewrite unsupported forms (for example Gemini-family `anyOf -> oneOf`, stripping unsupported `const` or encoding metadata) before presentation.\n- Malformed schema output becomes a structured `mcp_schema_mismatch` diagnostic; it MUST NOT crash the registry.\n\nContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Architecture_Invariants.md\n\nOAuth/client state is keyed by provider + scope, not by a transient per-call server instance. Refresh and token-write paths use compare-and-swap / atomic update semantics so successful callbacks are not immediately clobbered by a second writer.\n\nContractRef: ContractName:Plans/GitHub_API_Auth_and_Flows.md, ContractName:Plans/storage-plan.md\n\n### Windows MCP subprocess behavior\n\nWindows stdio MCP processes MUST be started with `CREATE_NEW_PROCESS_GROUP`. Graceful stop uses `CTRL_BREAK_EVENT`; if the process does not exit within 3 seconds, PM escalates to force termination.\n\nContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Run_Modes.md"
+        },
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "### 8.2 Policy application order and invocation flow",
+          "content_markdown": "Tool dispatch follows one canonical order. No tool implementation is invoked directly outside this flow.\n\nContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Architecture_Invariants.md\n\nRequired order:\n1. Normalize the invocation context and expand relevant paths.\n2. Evaluate `policy.may_execute_tool()` on the invocation.\n3. For file-affecting tools, run FileSafe/write-scope checks on the normalized path arguments.\n4. Apply provider-specific argument normalizers (for example malformed JSON repair, XML-wrapper stripping, or schema-family coercions) where the tool surface explicitly allows them.\n5. Run `schema.validate_tool_args()` on the post-normalization argument set.\n6. Run arg-touching hooks.\n7. Re-run permission and schema validation if hook output changed arguments.\n8. Dispatch only if all checks pass.\n\nContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/Plugins_System.md\n\nFailure behavior:\n- Invalid arguments MUST produce a structured tool result with `is_error=true`; PM MUST NOT execute the tool and then \"best effort\" repair the failure afterwards.\n- Provider-specific retry decisions MUST use structured error classes or status codes, never substring matching on error text.\n\nContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Contracts_V0.md\n\n#### Shell-runtime rules\n\nShell-dispatch rules are part of the canonical tool flow:\n- Banned-command checks scan the full command string.\n- `eval` is prohibited.\n- Shell selection is platform-aware (`/bin/bash` or equivalent on Unix; `cmd.exe` / PowerShell family on Windows based on configured tool semantics).\n- Shell instances are isolated per agent tree so environment variables do not leak across session/agent boundaries.\n- Shell lifecycle is mutex-guarded. Work queues MUST be non-blocking; writes to a dead shell return a structured error instead of hanging forever.\n\nContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/orchestrator-subagent-integration.md"
+        },
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "### 8.7 MCP server unavailable",
+          "content_markdown": "When an MCP server is unavailable because of startup timeout, transport failure, auth loss, schema mismatch, or repeated health-check failure, PM treats this as a structured degraded-state condition.\n\nContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Contracts_V0.md\n\nRequired behavior:\n- Tools from that server are marked `unavailable` in the registry.\n- Calls to those tools fail immediately with a structured error and `failure_class=provider_transient` (or a stricter class when the error is known-fatal).\n- PM emits a structured diagnostic containing `server_id`, `reason`, `last_healthy_at`, and whether a stale list is still available.\n- One automatic reconnect attempt MAY occur after the configured cool-down (default 60 seconds); after that, recovery requires user action or config change.\n- User surfaces show the server as `degraded` or `unavailable`; PM MUST NOT silently hide the server after a single transient failure.\n\nContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md"
+        }
+      ]
+    },
+    {
+      "path": "Plans/CLI_Bridged_Providers.md",
+      "intent": "update",
+      "anchors": [
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "## Tool-call correlation + reconciliation",
+          "content_markdown": "Tool-call correlation and provider reconciliation are UUID-first, failure-class-aware, and transport-independent. The same rules apply to CLI-bridged, server-bridged, and direct provider adapters.\n\nContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Executor_Protocol.md\n\n### Tool call identity invariants\n\n- Every normalized tool call MUST have a UUID `tool_use_id`.\n- Name+input deduplication MUST NOT be used as a substitute for identity.\n- If a provider emits a non-UUID identifier, PM wraps it with a UUID and preserves the provider ID separately as diagnostic correlation metadata.\n- Duplicate IDs in the same logical response are a protocol error and MUST be surfaced as diagnostics.\n\nContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Architecture_Invariants.md\n\n### Normalized usage event minimum fields\n\nThe normalized `usage` event MUST preserve the canonical billing/token fields when known:\n\nContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/Models_System.md\n\n| Field | Requirement |\n|---|---|\n| `input_tokens` | required when provider exposes usage |\n| `output_tokens` | required when provider exposes usage |\n| `cache_read_input_tokens` | preserve separately; do not fold into output |\n| `cache_creation_input_tokens` | preserve separately |\n| `reasoning_tokens` | preserve separately |\n| `total_tokens` | MAY be derived, but never as a replacement for the individual buckets |\n| `cost_microdollars` | integer microdollars only |\n| `pricing_version` | include when pricing metadata is versioned |\n| `provider_id`, `model_id`, `billing_entity_id` | preserve attribution identity when known |\n\nContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/Models_System.md\n\n### FinishReason mapping\n\n| Provider finish state | Normalized handling |\n|---|---|\n| `FinishReasonUnknown` + empty content + no tool calls | error; map to `failure_class=provider_transient` |\n| `FinishReasonUnknown` + non-empty content | complete with warning diagnostic |\n| `FinishReasonContentFilter` | terminal `done.failed` with explicit content-filter reason |\n| `FinishReasonSafety` | terminal `done.failed` with explicit safety reason |\n| `length` with incomplete `tool_use` | synthesize `tool_result(ok=false, error=truncated_by_length)` and DO NOT dispatch the tool |\n| missing finish reason | treat as `FinishReasonUnknown` |\n\nContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Contracts_V0.md\n\n### HTTP/status to failure-class mapping\n\n| Condition | Normalized `failure_class` | Retry posture |\n|---|---|---|\n| 401 / expired credential | `auth_expired` | refresh once, rebuild client, retry once |\n| 403 / explicit denial | `permission_denied` | no auto-retry |\n| 402 / quota exceeded | `quota_exceeded` | no auto-retry |\n| 429 / rate limit | `provider_transient` | retry using `Retry-After` or default backoff |\n| 5xx / transport transient | `provider_transient` | retry per executor matrix |\n| malformed structured output | `structured_output_invalid` | retry up to class limit |\n\nContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/GitHub_API_Auth_and_Flows.md\n\n### Stream cancellation and replay safety\n\n`ctx.Err() != nil` means the context was cancelled or timed out. Cancellation is not retried. Reversing this check causes indefinite retry loops on cancelled streams.\n\nContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Run_Modes.md\n\n### Provider guard rails\n\nProviders and adapters MUST fail safely on malformed or partial input:\n- guard `choices.len() == 0` before indexing provider output\n- fail fast when client construction returns nil / invalid transport handles\n- validate malformed tool-call JSON at storage time, not only at replay time\n- bounds-check MIME and other parser splits before indexing into tokens\n- emit required fields in tool schemas; omitting provider-required fields is an adapter bug\n- retry decisions use structured codes or status classes, never substring matching on raw error text\n\nContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Architecture_Invariants.md\n\n### Credential refresh and cache markers\n\nAfter credential refresh, the adapter MUST rebuild the HTTP client or equivalent transport object. When a provider/runtime surface does not support cache markers together with OAuth, the adapter strips or suppresses cache markers based on the capability flag `cache_with_oauth=false` instead of sending a request known to fail.\n\nContractRef: ContractName:Plans/Models_System.md, ContractName:Plans/GitHub_API_Auth_and_Flows.md"
+        }
+      ]
+    },
+    {
+      "path": "Plans/Models_System.md",
+      "intent": "update",
+      "anchors": [
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "### 3.3 Standard option fields",
+          "content_markdown": "#### 3.3.1 Runtime and pricing capability fields\n\nThe capability matrix includes transport-shaping and billing-shaping fields that are consumed by provider adapters, prompt assembly, and usage attribution.\n\nContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Contracts_V0.md\n\n| Field | Type | Meaning |\n|---|---|---|\n| `system_role_name` | string | Role name used for system-level instructions (`system` or `developer`) |\n| `streaming` | bool | Provider supports incremental stream delivery |\n| `tool_use` | bool | Provider/runtime surface supports tool calls |\n| `thinking_blocks` | bool | Provider can emit or replay reasoning/thinking blocks |\n| `cache_control` | enum/string | Cache strategy family supported by the provider surface |\n| `cache_with_oauth` | bool | Cache markers remain valid when this surface is authenticated with OAuth |\n| `assistant_prefill` | bool | Assistant-prefill semantics are supported |\n| `parallel_tool_calls` | bool | Provider supports true parallel tool-call issuance |\n| `image_input` | bool | Image payloads accepted |\n| `max_payload_bytes` | integer | Hard payload ceiling |\n| `pricing_version` | string | Versioned pricing metadata key used for cost calculation |\n| `billing_entity_mode` | enum | whether billing attribution is account-only or requires billing-entity keying |\n\nContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/Prompt_Pipeline.md\n\n#### 3.3.2 `system_role_name` values\n\n| Provider family | `system_role_name` |\n|---|---|\n| Anthropic | `system` |\n| OpenAI standard | `system` |\n| OpenAI reasoning family | `developer` |\n| Gemini Direct | `system` |\n| Gemini CLI | `system` |\n| Other providers | `system` by default |\n\nContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Executor_Protocol.md\n\n#### 3.3.3 Compaction threshold defaults\n\nPer-model defaults are part of the model metadata and MAY be overridden by model-specific config:\n- `pressure_start_pct = 70`\n- `pressure_aggressive_pct = 85`\n- `large_block_threshold = 1200`\n\nContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/FinalGUISpec.md"
+        },
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "## 4. Model availability and error handling",
+          "content_markdown": "### 4.1 Availability and runtime-surface checks\n\nA model is available only when its provider/runtime surface is registered, authenticated, reachable, and compatible with the requested run posture.\n\nContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Run_Modes.md\n\n### 4.2 Pricing metadata and stale-pricing behavior\n\nPricing metadata is versioned. `pricing_version` identifies the pricing table used for cost calculation. User-supplied overrides are applied before warnings. Doctor integration warns when stored pricing metadata is stale relative to the current provider metadata snapshot.\n\nContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/FinalGUISpec.md\n\nCost attribution is keyed by `(model_id, provider_id, billing_entity_id)` when the provider's quota semantics depend on a billing entity; account-only providers omit the billing-entity dimension.\n\nContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/usage-feature.md\n\n### 4.3 Bedrock region prefix lookup\n\nRegion-prefix mapping MUST use an explicit lookup table rather than string slicing.\n\n| Region family | Prefix |\n|---|---|\n| `us-east-*`, `us-west-*` | `us` |\n| `eu-*` | `eu` |\n| `ap-*` | `ap` |\n| `sa-*` | `sa` |\n| unknown/new region | no implicit prefix; require explicit mapping update |\n\nContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Architecture_Invariants.md\n\n### 4.4 Two Gemini providers\n\nGemini is registered as two distinct providers and MUST stay distinct in capability, auth, caching, and billing logic.\n\n| Provider ID | Auth method | Transport | Cache posture | Notes |\n|---|---|---|---|---|\n| `gemini_direct` | API key | Direct HTTP | provider-native API strategy | API-only; no CLI dependency |\n| `gemini_cli` | OAuth and/or API key via CLI | CLI-wrapped | depends on CLI/runtime surface; `cache_with_oauth` may differ | CLI installation required |\n\nContractRef: ContractName:Plans/GitHub_API_Auth_and_Flows.md, ContractName:Plans/CLI_Bridged_Providers.md"
+        }
+      ]
+    },
+    {
+      "path": "Plans/usage-feature.md",
+      "intent": "update",
+      "anchors": [
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "## Gaps (Current State vs. Desired)",
+          "content_markdown": "### Resolved: canonical usage and cost design\n\nThe prior Gap 1–7 framing is retired. The following items are resolved and MVP-blocking.\n\nContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md\n\n### Canonical usage pipeline\n\nPM usage surfaces are projection-driven. The canonical flow is:\n`seglog -> analytics scan jobs -> redb rollups -> UI consumers`.\n\n`usage.jsonl` may exist as a human-readable mirror or compatibility source, but it is NOT the canonical rollup source for the 5h/7d windows.\n\nContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md\n\n### Cost storage and token segregation\n\n- All cost values are stored as integer microdollars (`u64`).\n- The canonical token buckets are `input_tokens`, `output_tokens`, `cache_read_input_tokens`, `cache_creation_input_tokens`, and `reasoning_tokens`.\n- These fields MUST remain separate at the storage layer; aggregation happens only in presentation or rollup logic.\n\nContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Architecture_Invariants.md\n\n### Spending limits and budget enforcement\n\nSpending limits are enforced at two checkpoints:\n1. **Pre-request estimate:** if the estimated request cost would exceed the remaining budget, PM blocks before dispatch with `stop.budget_exceeded`.\n2. **Post-response actual:** after the provider responds, PM records actual cost and terminates with `done.budget_exceeded` if the run or session budget is exceeded.\n\nWarning threshold: PM emits a warning at 80% of the configured remaining budget. Both per-run and per-session budgets are supported.\n\nContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Executor_Protocol.md\n\n### Billing identity, attribution, and pricing metadata\n\nCost attribution is keyed by `(model_id, provider_id, billing_entity_id)` when billing-entity semantics exist. `parent_run_id` is the canonical attribution bridge for tool-level and subagent-level usage rollups.\n\nPricing metadata is consumed from `Plans/Models_System.md`; this document uses it but does not own provider pricing tables.\n\nContractRef: ContractName:Plans/Models_System.md, ContractName:Plans/Contracts_V0.md\n\n### Adaptive display precision\n\nUI cost display rules:\n- amounts below `$1.00`: show 4 decimal places\n- amounts at or above `$1.00`: show 2 decimal places\n- always show the currency label\n- when pricing is estimated rather than authoritative, label the surface `Estimated Cost`\n\nContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Runtime_Artifacts_Panel.md\n\n### 5h / 7d aggregation and freshness\n\nThe 5h / 7d windows are served from redb rollups. While a background analytics scan is refreshing a window, the UI shows the last committed rollup plus an explicit `Updating...` freshness cue rather than recomputing in the foreground.\n\nContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md\n\n### Unified `UsageRecord` schema expectations\n\nAll usage surfaces derive from the same `UsageRecord` identity. Minimum shared attribution fields are:\n- `run_id`\n- `parent_run_id` when emitted by a child run, tool, or background operation\n- `provider_id`\n- `model_id`\n- `billing_entity_id?`\n- token buckets\n- `cost_microdollars`\n- `cache_hit?`\n- `cache_strategy?`\n\nCompatibility shims may ingest older records, but new surfaces MUST NOT invent a second attribution schema.\n\nContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md"
+        }
+      ]
+    },
+    {
+      "path": "Plans/Contracts_V0.md",
+      "intent": "update",
+      "anchors": [
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "### 1.1 EventRecord -- canonical persisted envelope (schema: `pm.event.v0`)",
+          "content_markdown": "The canonical persisted runtime snapshot keeps the historical base field names stable while allowing additive disclosure fields for runtime family, runtime platform, billing/entity attribution, and server-profile routing.\n\nContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Models_System.md\n\n```json\n{\n  \"requested_platform\": \"copilot\",\n  \"effective_platform\": \"copilot\",\n  \"provider_family_id\": \"github_copilot\",\n  \"requested_runtime_platform_id\": \"copilot_direct\",\n  \"effective_runtime_platform_id\": \"copilot_direct\",\n  \"requested_model\": \"openai/gpt-5-codex\",\n  \"effective_model\": \"openai/gpt-5-codex\",\n  \"requested_model_provider_id\": \"openai\",\n  \"effective_model_provider_id\": \"openai\",\n  \"requested_auth_mode\": \"oauth\",\n  \"effective_auth_mode\": \"oauth\",\n  \"effective_account_id\": \"acct-copilot-work\",\n  \"effective_provider_identity\": \"user@example.com\",\n  \"requested_billing_entity_id\": \"org-acme\",\n  \"effective_billing_entity_id\": \"org-acme\",\n  \"effective_billing_entity_label\": \"Acme Engineering\",\n  \"effective_entitlement_class\": \"org_subscription\",\n  \"connection_profile_id\": null,\n  \"effective_project_id\": null,\n  \"account_switch_reason\": null,\n  \"requested_reasoning_effort\": \"medium\",\n  \"effective_reasoning_effort\": \"medium\"\n}\n```\n\nContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/usage-feature.md, ContractName:Plans/Provider_OpenCode.md\n\nRules:\n- `requested_platform` and `effective_platform` remain the canonical persisted provider-entry fields.\n- `provider_family_id`, `requested_runtime_platform_id`, `effective_runtime_platform_id`, `requested_model_provider_id`, and `effective_model_provider_id` are additive disclosure fields; they MUST NOT replace the canonical base field names.\n- `effective_account_id` identifies the effective account record when the runtime subject is account-backed.\n- `connection_profile_id` identifies the effective server profile when the runtime subject is server-bridged.\n- `requested_billing_entity_id`, `effective_billing_entity_id`, `effective_billing_entity_label`, and `effective_entitlement_class` are REQUIRED when the provider's quota or policy semantics depend on a distinct billing/entity bucket; when the provider has no such concept, these fields MUST be omitted rather than null-padded.\n- `effective_provider_identity` is provider-native descriptive metadata only and MUST NOT become the stable internal account key.\n- secrets, bearer tokens, API keys, refresh tokens, and raw credential payloads MUST NOT appear in EventRecord payloads.\n\nContractRef: PolicyRule:no_secrets_in_storage, ContractName:Plans/storage-plan.md, ContractName:Plans/Architecture_Invariants.md#INV-002"
+        },
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "## Usage and Billing Contracts Addendum",
+          "content_markdown": "### Cost field type contract\n\nAll persisted usage/cost values are stored as integer microdollars (`u64`). Presentation converts to decimal currency strings; storage and accumulation do not.\n\nContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/storage-plan.md\n\n### Token bucket contract\n\nThe canonical token fields are:\n- `input_tokens`\n- `output_tokens`\n- `cache_read_input_tokens`\n- `cache_creation_input_tokens`\n- `reasoning_tokens`\n\nThese fields are individually persisted. Storage-layer aggregation or collapse into a smaller field set is prohibited.\n\nContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/Architecture_Invariants.md\n\n`total_tokens` MAY be stored or derived for convenience, but it MUST NOT replace the individual token buckets.\n\nContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md\n\n### Usage attribution contract\n\nUsage records and normalized usage events MUST preserve:\n- `provider_id`\n- `model_id`\n- `parent_run_id` when usage is emitted by a child run, tool, title-generation pass, summary pass, or other background operation\n- `billing_entity_id` when quota semantics depend on it\n- `cache_hit?`\n- `cache_strategy?`\n\nContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/Models_System.md\n\n### Billing entity field contract\n\n`requested_billing_entity_id` and `effective_billing_entity_id` are required whenever the provider's quota or policy semantics depend on a billing/entity bucket distinct from the auth identity. When the provider does not use a billing-entity concept, these fields MUST be omitted.\n\nContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/Models_System.md"
+        }
+      ]
+    },
+    {
+      "path": "Plans/FileSafe.md",
+      "intent": "update",
+      "anchors": [
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "### 11.1 FileSafe: Write scope (CRITICAL)",
+          "content_markdown": "#### 11.1.1 Realpath-before-scope-check invariant\n\nAll file paths submitted to FileSafe write-scope or security-filter checks MUST be resolved through `realpath()` before any scope comparison.\n\nContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Architecture_Invariants.md\n\nRequired behavior:\n- normalize relative paths against `working_directory`\n- resolve symlinks through `realpath()`\n- if resolution fails for any reason, deny access (fail-closed)\n- never fall back to comparing the unresolved path against `allowed_files`\n\nContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Executor_Protocol.md\n\nThe fallback pattern `canonicalize().unwrap_or_else(|_| original_path)` is prohibited for FileSafe-managed write-scope checks.\n\nContractRef: ContractName:Plans/Architecture_Invariants.md, ContractName:Plans/Tools.md\n\n#### 11.1.2 Atomic write contract\n\nAll FileSafe-managed file mutations MUST use the atomic write pattern `temp -> fsync -> rename` in the target directory. Direct `os.WriteFile`-style writes are not allowed for managed mutations.\n\nContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Architecture_Invariants.md\n\nTemp-file lifecycle rules:\n- temp files live in a per-session temp directory or same-directory temp naming scheme\n- boot/startup janitor sweeps stale `.tmp.*` artifacts from incomplete writes\n- stale-temp cleanup emits a structured recovery event when artifacts are removed\n\nContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md\n\n#### 11.1.3 Case folding and file-record lifecycle\n\nFileSafe and permission matching MUST use the same filesystem-awareness for case sensitivity. PM detects case sensitivity at the project/worktree root and applies consistent normalization across both guards.\n\nContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Executor_Protocol.md\n\nIn-memory file records are bounded by an LRU cap of 10,000 entries. Eviction rebuilds from canonical event state on next access; it does not silently lose guard correctness.\n\nContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Architecture_Invariants.md"
+        },
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "#### Gap 4: Worktree Path Resolution",
+          "content_markdown": "**Issue:** Write-scope checks must resolve relative paths correctly in worktree context without trusting symlink aliases.\n\n**Impact:** Inconsistent normalization can either block legitimate writes or allow writes outside the intended worktree scope.\n\n**Resolved contract:** Normalize candidate paths relative to `working_directory`, then resolve `realpath()` before any scope check. If canonicalization fails, deny access. The real worktree root, not a symlink alias, is the base path for guard comparison.\n\nContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/WorktreeGitImprovement.md"
+        }
+      ]
+    },
+    {
+      "path": "Plans/storage-plan.md",
+      "intent": "update",
+      "anchors": [
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "#### 2.2.1 Mandatory CRC32 per record",
+          "content_markdown": "Every seglog record MUST include a CRC32 checksum computed over the record payload. This is a mandatory correctness requirement, not an optional enhancement.\n\nContractRef: ContractName:Plans/Architecture_Invariants.md, ContractName:Plans/Executor_Protocol.md\n\nOn read, CRC32 MUST be validated before the record is processed. If validation fails:\n- the corrupt record is skipped\n- PM emits a recovery/integrity event including record offset and expected vs observed CRC\n- projectors resume from the last known-good checkpoint rather than replaying the corrupt record\n\nContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Runtime_Artifacts_Panel.md"
+        },
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "### Naming and migration rules",
+          "content_markdown": "Storage migrations are forward-only and monotonic.\n\nContractRef: ContractName:Plans/Architecture_Invariants.md, ContractName:Plans/Contracts_V0.md\n\nRequired rules:\n- the seglog schema version is persisted in the header / generation metadata\n- migrations run only forward; downgrade migrations are unsupported\n- backup happens before any destructive migration step\n- migration failure leaves the previous durable state intact and prevents opening a half-migrated store\n\nContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/storage-plan.md\n\nResource-bounding contract:\n- every persistent or long-lived collection MUST declare either a TTL, a max cardinality, or both\n- file-record caches, rollups, projector queues, and recovery snapshots may not grow without a declared bound\n\nContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/Architecture_Invariants.md"
+        },
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "## 6. Potential problems and solutions",
+          "content_markdown": "| Problem | Solution |\n|---------|----------|\n| **seglog corruption or partial write** | Append-only with flush and last-complete-record recovery. CRC32 per record is mandatory; validate on every read; corrupt record -> skip + recovery event. |\n| **redb corruption** | Restore from backup or rebuild projections from canonical seglog. |\n| **Projector falls behind** | Buffer events in bounded batches and checkpoint only after a successful commit. |\n| **Analytics scan blocks UI** | Run analytics scans in the background; UI shows last committed rollup plus freshness state. |\n| **Disk full / storage I/O** | Surface a user-facing error, stop unsafe writes, and retry only per storage I/O policy. |\n| **Migration failure** | Leave previous version intact; do not open a half-migrated store. |\n| **Multiple app instances** | Acquire exclusive flock on `<project>/.puppet-master/pm.lock` before any writes. If lock is held, enter read-only/viewer mode and notify the user. |\n\nContractRef: ContractName:Plans/Architecture_Invariants.md, ContractName:Plans/Executor_Protocol.md\n\n| Problem | Solution |\n|---------|----------|\n| **Checkpoint lost** | Rebuild from seglog / last retained segment. |\n| **API contract (caller handling errors)** | `append()` / redb write operations return structured `Result`; no silent swallow. |\n| **Projector panic or crash** | Do not advance checkpoint; restart from last good checkpoint. |\n| **File record LRU eviction** | Cap in-memory file records at 10,000 entries and rebuild lazily on access. |\n| **Boot-time janitor** | After `pm.lock` acquisition, sweep stale `.tmp.*` artifacts, validate lock freshness, and emit a `storage.boot_recovery` event if cleanup was required. |\n| **DB / redb shutdown hygiene** | Close the DB handle in the shutdown sequence before process exit. |\n\nContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/Contracts_V0.md"
+        }
+      ]
+    },
+    {
+      "path": "Plans/Prompt_Pipeline.md",
+      "intent": "update",
+      "anchors": [
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "## 2. Compaction and pruning",
+          "content_markdown": "### 2.0 Compaction-immune content\n\nThe following content MUST survive compaction unchanged unless the user explicitly removes it:\n- system prompt and persona instructions\n- active tool schemas\n- user-pinned context\n- blocks tagged `compaction_immune: true`\n- current/recent reasoning blocks required for correct continuation\n\nContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Contracts_V0.md\n\nThe total immune set MUST NOT exceed 30% of the effective context window. If the immune set would exceed that cap, PM must surface an explicit sizing problem rather than silently dropping required context.\n\nContractRef: ContractName:Plans/Models_System.md, ContractName:Plans/Architecture_Invariants.md\n\n### 2.1 Context assembly and cache preservation\n\nPrompt assembly preserves cache-friendly stable prefixes. PM keeps role-specific context compilation, compaction-aware re-reads, and once-per-phase skill bundling so repeated turns do not re-inject the same bulky context unnecessarily.\n\nContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/Tools.md\n\nProvider-specific cache strategy is explicit:\n- Anthropic: ephemeral/cache-control marker strategy\n- Google/Gemini family: provider-native cached-content style strategy\n- OpenAI family: metadata/adapter-controlled cache-control strategy\n- Unsupported surfaces: disable cache-marker emission and fall back safely\n\nContractRef: ContractName:Plans/Models_System.md, ContractName:Plans/CLI_Bridged_Providers.md\n\nReasoning blocks MUST be preserved through replay and compaction. PM MAY summarize them when the provider surface cannot replay them verbatim, but MUST NOT silently strip them.\n\nContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/Contracts_V0.md\n\n### 2.2 Dynamic context shrinking\n\nThresholds are model-owned metadata:\n- `pressure_start_pct = 70`\n- `pressure_aggressive_pct = 85`\n- `large_block_threshold = 1200`\n\nContractRef: ContractName:Plans/Models_System.md, ContractName:Plans/storage-plan.md\n\nLow-context warning rule: if remaining context falls below 15% of the effective window after adding tool output or injected context, PM emits a diagnostic warning so the agent can adapt before hard compaction.\n\nContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Executor_Protocol.md\n\n### 2.3 Post-filter integrity rules\n\nAfter filtering, pruning, or compaction, PM MUST validate role alternation and message-boundary correctness. Plugin transforms MUST NOT delete system/persona content, reorder messages in a way that breaks alternation, or modify immune content.\n\nContractRef: ContractName:Plans/Plugins_System.md, ContractName:Plans/Architecture_Invariants.md"
+        }
+      ]
+    },
+    {
+      "path": "Plans/orchestrator-subagent-integration.md",
+      "intent": "update",
+      "anchors": [
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "### Subagent Configuration",
+          "content_markdown": "```yaml\n# .puppet-master/config.yaml (additions)\n\nsubagentConfig:\n  enableTierSubagents: true\n\n  executionLimits:\n    maxNestingDepth: 4\n    maxTotalSpawnedAgents: 99\n    maxToolRoundsPerAgent: 200\n    maxConcurrentCrewsPerPlatform: 4\n    maxConcurrentAgentsPerCrew: 8\n    maxTotalActiveAgents: 32\n\n  taskEnvelopeDefaults:\n    timeoutMs: inherit_parent_remaining_budget\n\n  tierOverrides:\n    phase:\n      default: [\"project-manager\"]\n      architecture: [\"architect-reviewer\", \"project-manager\"]\n      product: [\"product-manager\", \"project-manager\"]\n    task:\n      rust: [\"rust-engineer\"]\n      python: [\"python-pro\"]\n      javascript: [\"javascript-pro\"]\n      typescript: [\"typescript-pro\"]\n      backend: [\"backend-developer\"]\n      frontend: [\"frontend-developer\"]\n      mobile: [\"mobile-developer\"]\n    subtask:\n      testing: [\"test-automator\"]\n      documentation: [\"technical-writer\"]\n      review: [\"code-reviewer\"]\n    iteration:\n      errors: [\"debugger\"]\n      review: [\"code-reviewer\"]\n      testing: [\"qa-expert\"]\n\n  disabledSubagents: []\n  requiredSubagents: []\n```\n\nContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Executor_Protocol.md\n\n`executionLimits` is the SSOT for global subagent concurrency and budget defaults. Interview-mode reviewer caps and other surface-specific caps may narrow these values, but MUST NOT widen them.\n\nContractRef: ContractName:Plans/interview-subagent-integration.md, ContractName:Plans/Crosswalk.md\n\nTask-envelope timeout rules:\n- `timeoutMs` defaults to the parent's remaining budget\n- per-task overrides MAY narrow the timeout\n- overrides MUST NOT exceed the parent's remaining budget\n\nContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Run_Modes.md\n\nShell/runtime isolation rules:\n- shell instances are scoped per agent tree\n- environment variables MUST NOT leak across session, agent, or crew boundaries\n- orchestrator retains full visibility into child communication and shell/runtime identity\n\nContractRef: ContractName:Plans/Tools.md, ContractName:Plans/storage-plan.md"
+        }
+      ]
+    },
+    {
+      "path": "Plans/GitHub_API_Auth_and_Flows.md",
+      "intent": "update",
+      "anchors": [
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "### Token lifecycle",
+          "content_markdown": "Token lifecycle for all GitHub-authenticated flows follows deterministic refresh and rebuild rules.\n\nContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/CLI_Bridged_Providers.md\n\n**Proactive refresh:** before each provider/API call, PM checks remaining token TTL. If TTL remaining is at or below 20% of total TTL, PM refreshes before dispatch. Waiting for expiry is not acceptable.\n\nContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Executor_Protocol.md\n\n**Credential rebuild on refresh:** after any refresh, PM rebuilds the HTTP client / transport object from scratch. Updating only the credential field on an existing client is insufficient.\n\nContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Architecture_Invariants.md\n\n**Windows OAuth redirect listener:**\n- bind only to `127.0.0.1`\n- if the configured callback port is unavailable, fall back to an ephemeral loopback port\n- if listener startup still fails, provide a manual copy/paste auth-code fallback\n\nContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/FinalGUISpec.md\n\n**Token storage:** tokens live in the OS credential store, never in plain-text config, seglog, or other persistent event payloads.\n\nContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Architecture_Invariants.md"
+        },
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "### Auth correctness acceptance criteria (additional)",
+          "content_markdown": "ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/CLI_Bridged_Providers.md\n\n- Given a token with TTL <= 20% remaining, PM refreshes before the outbound call is dispatched.\n- Given a successful refresh, subsequent calls use a newly constructed client/transport instance rather than the prior pooled client.\n- Given a Windows OAuth flow, the listener binds only to `127.0.0.1`, retries with an ephemeral port when needed, and offers manual code entry when loopback binding cannot be started.\n- Given credential-store unavailability, PM fails closed with explicit recovery guidance rather than writing tokens to plain-text fallbacks.\n\nContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Architecture_Invariants.md"
+        }
+      ]
+    },
+    {
+      "path": "Plans/LSPSupport.md",
+      "intent": "update",
+      "anchors": [
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "### 7.1 Registration-before-spawn invariant",
+          "content_markdown": "An LSP server MUST be registered in the session map (keyed by `(host_id, server_id, root_identity)`) before its process is spawned. Spawning before registration creates a window where the process exists but cannot be found, tracked, or shut down.\n\nContractRef: ContractName:Plans/Architecture_Invariants.md, ContractName:Plans/Executor_Protocol.md\n\nRequired sequence:\n1. Acquire the session-map write lock.\n2. Insert the session record with status `starting`.\n3. Release the write lock.\n4. Spawn the subprocess.\n5. Transition the record to `ready` or `failed` after handshake completion.\n\nContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Run_Modes.md\n\nIf spawn fails after registration, the session record is cleaned up or marked `failed` so the slot does not remain permanently occupied.\n\nContractRef: ContractName:Plans/Architecture_Invariants.md, ContractName:Plans/storage-plan.md"
+        }
+      ]
+    },
+    {
+      "path": "Plans/Executor_Protocol.md",
+      "intent": "update",
+      "anchors": [
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "### 7. Failure classes and retry entry points",
+          "content_markdown": "The executor classifies every failed or non-executed attempt into one canonical `failure_class` / `blocked_reason_code` family before deciding the next action.\n\nContractRef: ContractName:Plans/Decision_Policy.md, ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Contracts_V0.md\n\n### 7.1 Per-class retry matrix\n\n| `failure_class` | Max retries | Backoff | Auto-retry? | Notes |\n|---|---|---|---|---|\n| `provider_transient` | 3 | 1s / 2s / 4s | Yes | network errors, 429, transient 5xx |\n| `structured_output_invalid` | 2 | none | Yes | malformed provider structured output |\n| `auth_expired` | 1 | immediate after refresh | Yes | refresh once, rebuild client, retry once |\n| `permission_denied` | 0 | — | No | requires user decision |\n| `filesafe_blocked` | 0 | — | No | never auto-retry |\n| `storage_io` | 1 | brief delay | Yes | single retry on I/O failure |\n| `quota_exceeded` | 0 | — | No | user action or later retry window |\n\nContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/GitHub_API_Auth_and_Flows.md\n\nGeneric retry without prior classification is prohibited.\n\nContractRef: ContractName:Plans/Decision_Policy.md, ContractName:Plans/Architecture_Invariants.md\n\n### 7.2 Doom-loop guard\n\nIf the same triple `(tool_name, serialized_args_hash, error_message)` is observed twice consecutively at the same nesting level, the executor MUST emit `stop.identical_failure` and terminate the run immediately.\n\nContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Contracts_V0.md\n\n### 7.3 Signal handling and process lifecycle\n\nProvider processes receive `SIGTERM` / `SIGINT` with a 5-second grace window. MCP and LSP subprocesses receive a 3-second grace window. `SIGHUP` reloads config. All managed subprocesses run in isolated process groups.\n\nContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/storage-plan.md"
+        }
+      ]
+    },
+    {
+      "path": "Plans/Architecture_Invariants.md",
+      "intent": "update",
+      "anchors": [
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "## INV-013 -- Pre-dispatch tool validation",
+          "content_markdown": "`policy.may_execute_tool()` MUST be called for every tool dispatch at every nesting depth regardless of invocation path. No child-run, plugin path, provider surface, or shell bridge may bypass this invariant.\n\nContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Tools.md\n\nEnforcement may be static (import-graph / compile-time gate) or runtime (central dispatch gate), but direct calls to tool implementations without this permission gate are prohibited.\n\nContractRef: Invariant:INV-013, ContractName:Plans/Architecture_Invariants.md"
+        }
+      ]
+    },
+    {
+      "path": "Plans/Plugins_System.md",
+      "intent": "update",
+      "anchors": [
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "### 3.1 Auto-load prohibition",
+          "content_markdown": "PM MUST NOT auto-load executable plugin code from config without explicit user approval.\n\nContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Architecture_Invariants.md\n\nRequired behavior:\n- first-time plugin load shows source, declared hooks, requested capabilities, and trust implications\n- approval is version/hash-sensitive; source change requires new approval\n- config-only discovery does not imply execution approval\n\nContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md"
+        },
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "#### 4.1.1 Hook re-check invariant",
+          "content_markdown": "If a plugin hook modifies tool arguments, the modified arguments MUST be re-run through permission and validation checks before dispatch. Hooks may not widen permissions after the original check has passed.\n\nContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Architecture_Invariants.md\n\nRequired sequence:\n1. evaluate permission/validation on original arguments\n2. run arg-touching hook\n3. re-run permission/validation on modified arguments\n4. dispatch only if the re-check passes\n\nContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Executor_Protocol.md\n\nPlugins that declare arg-touching hooks require a higher-trust approval posture (signed or explicitly elevated approval) than read-only hooks.\n\nContractRef: ContractName:Plans/Architecture_Invariants.md, ContractName:Plans/FinalGUISpec.md"
+        }
+      ]
+    },
+    {
+      "path": "Plans/Crosswalk.md",
+      "intent": "update",
+      "anchors": [
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "### 3.7 Subagent, crew, and context-shaping ownership",
+          "content_markdown": "Subagent and crew ownership is intentionally split across owner docs. Each concern has one authoritative home.\n\nContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/interview-subagent-integration.md\n\n| Concern | SSOT owner |\n|---|---|\n| Global execution limits (`maxNestingDepth`, `maxTotalSpawnedAgents`, `maxToolRoundsPerAgent`, concurrency caps) | `Plans/orchestrator-subagent-integration.md` |\n| Per-interview reviewer cap (`max_subagents_spawn`) | `Plans/interview-subagent-integration.md` |\n| Shell environment isolation and shell lifecycle | `Plans/orchestrator-subagent-integration.md` + `Plans/Tools.md` jointly |\n| Context-shaping transitions and compaction-state events | `Plans/Prompt_Pipeline.md` + `Plans/storage-plan.md` |\n| Crew lifecycle and message-board events | `Plans/storage-plan.md` |\n| Requested vs effective runtime surface for child runs | `Plans/Models_System.md` + `Plans/CLI_Bridged_Providers.md` |\n\nContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Tools.md\n\nPer-surface docs may narrow these behaviors, but MUST NOT redefine the owners above.\n\nContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/assistant-chat-design.md"
+        }
+      ]
+    },
+    {
+      "path": "Plans/interview-subagent-integration.md",
+      "intent": "update",
+      "anchors": [
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "### Interview concurrency caps",
+          "content_markdown": "Interview-mode spawning MUST respect the global execution limits defined in `Plans/orchestrator-subagent-integration.md`.\n\nContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Run_Modes.md\n\nGlobal limits that still apply to interview runs:\n- `maxConcurrentCrewsPerPlatform = 4`\n- `maxConcurrentAgentsPerCrew = 8`\n- `maxTotalActiveAgents = 32`\n- `maxNestingDepth = 4`\n\nContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Crosswalk.md\n\n**Multi-Pass Review reviewer cap:** `max_subagents_spawn` (default 3, configurable within its own range) limits reviewer parallelism inside one Multi-Pass Review operation. It is an additional narrowing cap, not a replacement for the global orchestration limits.\n\nContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/orchestrator-subagent-integration.md"
+        }
+      ]
+    },
+    {
+      "path": "Plans/OpenCode_Coverage_Matrix.md",
+      "intent": "update",
+      "anchors": [
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "## 6. Summary",
+          "content_markdown": "| Coverage Status | Count | Examples |\n|---|---|---|\n| **Covered** | 36 | Run modes, permissions, provider transform/error classification, context compaction, MCP lifecycle, GitHub auth, models, subagents, LSP |\n| **Partial** | 3 | Skills agent surface as-commands (#17), GUI Skills tab subsectioning (#38), any future external-only bridge work not yet packetized |\n| **Missing** | 0 | — |\n\nContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Executor_Protocol.md"
+        }
+      ]
+    },
+    {
+      "path": "Plans/WorktreeGitImprovement.md",
+      "intent": "update",
+      "anchors": [
+        {
+          "anchor_type": "heading",
+          "operation": "insert_after",
+          "anchor": "## 3. Git Improvements",
+          "content_markdown": "### 3.0 Git subprocess integrity invariant\n\nEvery git subprocess that mutates or validates PM-managed state MUST treat a non-zero exit status as a hard error.\n\nContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/Executor_Protocol.md\n\nRequired behavior:\n- after `git add`, verify staged state with `git status --porcelain`\n- do not silently swallow non-zero exits from `git add`, `git commit`, `git stash`, `git checkout`, or equivalent mutation-sensitive commands\n- distinguish `nothing to commit` from generic failure, but do not treat genuine git command failure as informational noise\n\nContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md"
+        }
+      ]
+    },
+    {
+      "path": "Plans/FinalGUISpec.md",
+      "intent": "update",
+      "anchors": [
+        {
+          "anchor_type": "heading",
+          "operation": "insert_after",
+          "anchor": "### 7.4 Settings and inspectors",
+          "content_markdown": "#### 7.4.0A Runtime usage, lock, and MCP readiness alignment\n\nUsage, storage-lock, and MCP readiness disclosures in Settings/inspectors must align with their owner docs rather than invent local semantics.\n\nContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/storage-plan.md\n\nRequired inspector/UI rules:\n- cost displays below `$1.00` use 4 decimal places; at or above `$1.00` use 2 decimal places\n- when startup flock on `pm.lock` places PM into read-only/viewer mode, the owning inspector explicitly says so and explains why writes are unavailable\n- MCP settings cards surface `healthy`, `degraded`, and `unavailable` startup/readiness states and reflect `startup_timeout_ms` behavior rather than pretending the server is instantly ready\n\nContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Contracts_V0.md"
+        }
+      ]
+    }
+  ]
+}

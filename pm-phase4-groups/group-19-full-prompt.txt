@@ -1,0 +1,2414 @@
+## Doc: Plans/Media_Generation_and_Capabilities.md
+### Intent 1 (Run: r-20260313-152345-01, Anchor: `### 2.4 Backend routing`, Op: replace_section)
+```markdown
+**Cursor backend special case:**
+- When the active backend is Cursor **and** `kind=image`: route via Cursor-native image generation. No Gemini account or API key is required.
+- When the active backend is Cursor **and** `kind` is `video`, `tts`, or `music`: the capability is disabled with `disabled_reason: BACKEND_UNSUPPORTED`.
+
+ContractRef: ToolID:media.generate, ContractName:Plans/CLI_Bridged_Providers.md, PolicyRule:Decision_Policy.md§2
+
+**All non-Cursor backends:**
+- Media generation uses the same canonical Gemini requested/effective auth/account resolution model as standard Gemini provider usage.
+- Resolve `requested_auth_mode`, provider capability block, eligible auth surfaces, and the eligible account pool before dispatch.
+- If the resolved effective account is OAuth-backed and media-capable, route with that OAuth-backed Gemini account context.
+- If the resolved effective account is API-key-backed and media-capable, route with that API-key-backed Gemini account context.
+- If no eligible Gemini account exists for the resolved request/policy, media capabilities are disabled with `disabled_reason: NOT_CONFIGURED`.
+- Explicit `oauth` and explicit `api_key` requests use the same no-silent-cross-fallback rule as the rest of the Gemini provider.
+
+ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD, ContractName:Plans/rewrite-tie-in-memo.md
+```
+### Intent 2 (Run: r-20260313-152345-01, Anchor: `### 4.3 Banner/footnote`, Op: replace_section)
+```markdown
+When visible media capabilities are disabled because no eligible Gemini account is configured for the resolved request/policy, the dropdown footer displays this banner/footnote:
+
+> **"Configure Gemini access in Settings → Authentication."** Sign in with Gemini OAuth or add a Google/Gemini API key. [Get API key]
+
+The `Get API key` text is a clickable convenience link to the Google AI Studio API-key page, but the surrounding copy MUST NOT imply AI Studio is the only valid source of Gemini API keys.
+
+ContractRef: ToolID:capabilities.get, Invariant:INV-003, ContractName:Plans/rewrite-tie-in-memo.md
+
+When multiple visible capabilities are disabled for the same missing-configuration reason, show the footer banner once and keep it pinned at the bottom of the dropdown while the list scrolls. The banner is supplemental guidance; per-item disabled reasons remain visible on hover/focus.
+
+ContractRef: ToolID:capabilities.get, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Multi-Account.md
+```
+### Intent 3 (Run: r-20260313-152345-01, Anchor: `### 4.4 Cursor backend behavior`, Op: replace_section)
+```markdown
+When the active backend is Cursor:
+- **Image** is **enabled** without requiring Gemini credentials because it routes via Cursor-native image generation.
+- **Video**, **TTS**, and **Music** are **disabled** with `disabled_reason: BACKEND_UNSUPPORTED`.
+- Cursor's image special case does not create a separate Gemini account model; non-Cursor media still follows the canonical Gemini requested/effective auth/account flow.
+
+ContractRef: ToolID:capabilities.get, ToolID:media.generate, ContractName:Plans/CLI_Bridged_Providers.md
+```
+### Intent 4 (Run: r-20260313-152345-01, Anchor: `### 5.2 Disabled-reason messages`, Op: replace_section)
+```markdown
+**Not configured reason (`NOT_CONFIGURED`):**
+> “This feature requires Gemini access. Sign in with Gemini OAuth or add a Google/Gemini API key in Settings → Authentication, then try again.”
+
+ContractRef: ToolID:capabilities.get, ContractName:Plans/rewrite-tie-in-memo.md
+
+**Model unavailable reason (`MODEL_UNAVAILABLE`):**
+> “That model isn’t available with the current Gemini account or API key (or it isn’t enabled). Pick a different model in Settings, or ask ‘What models are available?’”
+
+ContractRef: ToolID:capabilities.get, ContractName:Plans/Models_System.md#MODEL-ID
+
+**Admin disabled reason (`ADMIN_DISABLED`):**
+> “This feature is disabled in Settings. Enable it under Media settings, then try again.”
+
+ContractRef: ToolID:capabilities.get, Invariant:INV-003
+
+**Backend unsupported reason (`BACKEND_UNSUPPORTED`):**
+> “The current backend supports Image Generation only. To use Video/TTS/Music, use a non-Cursor backend with an eligible Gemini account or API key for media generation.”
+
+ContractRef: ToolID:capabilities.get, ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Multi-Account.md
+```
+### Intent 5 (Run: r-20260313-152345-01, Anchor: `## 6. Acceptance criteria`, Op: replace_section)
+```markdown
+These criteria are testable assertions that MUST hold for any conforming implementation.
+
+ContractRef: ContractName:Plans/Media_Generation_and_Capabilities.md, ContractName:Plans/Progression_Gates.md
+
+<a id="AC-MED01"></a>
+**AC-MED01:** `capabilities.get` MUST return all media capabilities (`media.image`, `media.video`, `media.tts`, `media.music`) and all registered provider-tool capabilities, each with `enabled`, `disabled_reason`, and `setup_hint` fields.
+
+ContractRef: ToolID:capabilities.get
+
+<a id="AC-MED02"></a>
+**AC-MED02:** `disabled_reason` values MUST be exactly one of the six canonical values defined in §1.3. No ad-hoc reason strings are permitted.
+
+ContractRef: ToolID:capabilities.get, PolicyRule:Decision_Policy.md§2
+
+<a id="AC-MED03"></a>
+**AC-MED03:** When the active backend is Cursor and no eligible Gemini account is configured, `media.image` MUST be enabled (routed via Cursor-native generation) and `media.video`, `media.tts`, `media.music` MUST be disabled with `BACKEND_UNSUPPORTED`.
+
+ContractRef: ToolID:capabilities.get, ToolID:media.generate, ContractName:Plans/CLI_Bridged_Providers.md
+
+<a id="AC-MED03A"></a>
+**AC-MED03A:** When the active backend is Cursor and a valid Gemini API key and/or Gemini OAuth account is configured, `media.image` MUST remain enabled via Cursor-native generation and `media.video`, `media.tts`, `media.music` MUST remain disabled with `BACKEND_UNSUPPORTED`.
+
+ContractRef: ToolID:capabilities.get, ToolID:media.generate, ContractName:Plans/Multi-Account.md
+
+<a id="AC-MED04"></a>
+**AC-MED04:** When the active backend is non-Cursor and at least one eligible Gemini account exists for the resolved request/policy, each media capability (`media.image`, `media.video`, `media.tts`, `media.music`) is eligible for enablement and routes through the Gemini media provider path, **subject to**: (a) the per-capability Settings > Media toggle (if toggled OFF -> `ADMIN_DISABLED`), and (b) the underlying model being available for that kind (if unavailable -> `MODEL_UNAVAILABLE`). An eligible account alone does NOT guarantee all four are enabled.
+
+ContractRef: ToolID:capabilities.get, ToolID:media.generate, ContractName:Plans/Multi-Account.md
+
+<a id="AC-MED05"></a>
+**AC-MED05:** When the active backend is non-Cursor and no eligible Gemini account exists for the resolved request/policy, all four media capabilities MUST be disabled with `NOT_CONFIGURED`.
+
+ContractRef: ToolID:capabilities.get, ToolID:media.generate, ContractName:Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD
+
+<a id="AC-MED06"></a>
+**AC-MED06:** The `model_override` field in `media.generate` MUST resolve via alias -> exact model id -> exact displayName -> else `MODEL_UNAVAILABLE`. The override MUST NOT change the persistent model in Settings.
+
+ContractRef: ToolID:media.generate, ContractName:Plans/Models_System.md#MODEL-ID
+
+<a id="AC-MED07"></a>
+**AC-MED07:** The capability picker dropdown MUST display disabled capabilities as greyed-out items with a tooltip 
+```
+[... truncated, full length: 7249 chars]
+### Intent 6 (Run: r-20260313-152345-02, Anchor: `### 2.4 Backend routing`, Op: replace_section)
+```markdown
+**Cursor backend special case:**
+- When the active backend is Cursor **and** `kind=image`: route via Cursor-native image generation. No Gemini account or API key is required.
+- When the active backend is Cursor **and** `kind` is `video`, `tts`, or `music`: the capability is disabled with `disabled_reason: BACKEND_UNSUPPORTED`.
+
+ContractRef: ToolID:media.generate, ContractName:Plans/CLI_Bridged_Providers.md, PolicyRule:Decision_Policy.md§2
+
+**All non-Cursor backends:**
+- Media generation uses the same canonical Gemini requested/effective auth/account resolution model as standard Gemini provider usage.
+- Resolve `requested_auth_mode`, provider capability block, eligible auth surfaces, and the eligible account pool before dispatch.
+- If the resolved effective account is OAuth-backed and media-capable, route with that OAuth-backed Gemini account context.
+- If the resolved effective account is API-key-backed and media-capable, route with that API-key-backed Gemini account context.
+- If no eligible Gemini account exists for the resolved request/policy, media capabilities are disabled with `disabled_reason: NOT_CONFIGURED`.
+- Explicit `oauth` and explicit `api_key` requests use the same no-silent-cross-fallback rule as the rest of the Gemini provider.
+
+ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD, ContractName:Plans/rewrite-tie-in-memo.md
+```
+### Intent 7 (Run: r-20260313-152345-02, Anchor: `### 4.3 Banner/footnote`, Op: replace_section)
+```markdown
+When visible media capabilities are disabled because no eligible Gemini account is configured for the resolved request/policy, the dropdown footer displays this banner/footnote:
+
+> **"Configure Gemini access in Settings → Authentication."** Sign in with Gemini OAuth or add a Google/Gemini API key. [Get API key]
+
+The `Get API key` text is a clickable convenience link to the Google AI Studio API-key page, but the surrounding copy MUST NOT imply AI Studio is the only valid source of Gemini API keys.
+
+ContractRef: ToolID:capabilities.get, Invariant:INV-003, ContractName:Plans/rewrite-tie-in-memo.md
+
+When multiple visible capabilities are disabled for the same missing-configuration reason, show the footer banner once and keep it pinned at the bottom of the dropdown while the list scrolls. The banner is supplemental guidance; per-item disabled reasons remain visible on hover/focus.
+
+ContractRef: ToolID:capabilities.get, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Multi-Account.md
+```
+### Intent 8 (Run: r-20260313-152345-02, Anchor: `### 4.4 Cursor backend behavior`, Op: replace_section)
+```markdown
+When the active backend is Cursor:
+- **Image** is **enabled** without requiring Gemini credentials because it routes via Cursor-native image generation.
+- **Video**, **TTS**, and **Music** are **disabled** with `disabled_reason: BACKEND_UNSUPPORTED`.
+- Cursor's image special case does not create a separate Gemini account model; non-Cursor media still follows the canonical Gemini requested/effective auth/account flow.
+
+ContractRef: ToolID:capabilities.get, ToolID:media.generate, ContractName:Plans/CLI_Bridged_Providers.md
+```
+### Intent 9 (Run: r-20260313-152345-02, Anchor: `### 5.2 Disabled-reason messages`, Op: replace_section)
+```markdown
+**Not configured reason (`NOT_CONFIGURED`):**
+> “This feature requires Gemini access. Sign in with Gemini OAuth or add a Google/Gemini API key in Settings → Authentication, then try again.”
+
+ContractRef: ToolID:capabilities.get, ContractName:Plans/rewrite-tie-in-memo.md
+
+**Model unavailable reason (`MODEL_UNAVAILABLE`):**
+> “That model isn’t available with the current Gemini account or API key (or it isn’t enabled). Pick a different model in Settings, or ask ‘What models are available?’”
+
+ContractRef: ToolID:capabilities.get, ContractName:Plans/Models_System.md#MODEL-ID
+
+**Admin disabled reason (`ADMIN_DISABLED`):**
+> “This feature is disabled in Settings. Enable it under Media settings, then try again.”
+
+ContractRef: ToolID:capabilities.get, Invariant:INV-003
+
+**Backend unsupported reason (`BACKEND_UNSUPPORTED`):**
+> “The current backend supports Image Generation only. To use Video/TTS/Music, use a non-Cursor backend with an eligible Gemini account or API key for media generation.”
+
+ContractRef: ToolID:capabilities.get, ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Multi-Account.md
+```
+### Intent 10 (Run: r-20260313-152345-02, Anchor: `## 6. Acceptance criteria`, Op: replace_section)
+```markdown
+These criteria are testable assertions that MUST hold for any conforming implementation.
+
+ContractRef: ContractName:Plans/Media_Generation_and_Capabilities.md, ContractName:Plans/Progression_Gates.md
+
+<a id="AC-MED01"></a>
+**AC-MED01:** `capabilities.get` MUST return all media capabilities (`media.image`, `media.video`, `media.tts`, `media.music`) and all registered provider-tool capabilities, each with `enabled`, `disabled_reason`, and `setup_hint` fields.
+
+ContractRef: ToolID:capabilities.get
+
+<a id="AC-MED02"></a>
+**AC-MED02:** `disabled_reason` values MUST be exactly one of the six canonical values defined in §1.3. No ad-hoc reason strings are permitted.
+
+ContractRef: ToolID:capabilities.get, PolicyRule:Decision_Policy.md§2
+
+<a id="AC-MED03"></a>
+**AC-MED03:** When the active backend is Cursor and no eligible Gemini account is configured, `media.image` MUST be enabled (routed via Cursor-native generation) and `media.video`, `media.tts`, `media.music` MUST be disabled with `BACKEND_UNSUPPORTED`.
+
+ContractRef: ToolID:capabilities.get, ToolID:media.generate, ContractName:Plans/CLI_Bridged_Providers.md
+
+<a id="AC-MED03A"></a>
+**AC-MED03A:** When the active backend is Cursor and a valid Gemini API key and/or Gemini OAuth account is configured, `media.image` MUST remain enabled via Cursor-native generation and `media.video`, `media.tts`, `media.music` MUST remain disabled with `BACKEND_UNSUPPORTED`.
+
+ContractRef: ToolID:capabilities.get, ToolID:media.generate, ContractName:Plans/Multi-Account.md
+
+<a id="AC-MED04"></a>
+**AC-MED04:** When the active backend is non-Cursor and at least one eligible Gemini account exists for the resolved request/policy, each media capability (`media.image`, `media.video`, `media.tts`, `media.music`) is eligible for enablement and routes through the Gemini media provider path, **subject to**: (a) the per-capability Settings > Media toggle (if toggled OFF -> `ADMIN_DISABLED`), and (b) the underlying model being available for that kind (if unavailable -> `MODEL_UNAVAILABLE`). An eligible account alone does NOT guarantee all four are enabled.
+
+ContractRef: ToolID:capabilities.get, ToolID:media.generate, ContractName:Plans/Multi-Account.md
+
+<a id="AC-MED05"></a>
+**AC-MED05:** When the active backend is non-Cursor and no eligible Gemini account exists for the resolved request/policy, all four media capabilities MUST be disabled with `NOT_CONFIGURED`.
+
+ContractRef: ToolID:capabilities.get, ToolID:media.generate, ContractName:Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD
+
+<a id="AC-MED06"></a>
+**AC-MED06:** The `model_override` field in `media.generate` MUST resolve via alias -> exact model id -> exact displayName -> else `MODEL_UNAVAILABLE`. The override MUST NOT change the persistent model in Settings.
+
+ContractRef: ToolID:media.generate, ContractName:Plans/Models_System.md#MODEL-ID
+
+<a id="AC-MED07"></a>
+**AC-MED07:** The capability picker dropdown MUST display disabled capabilities as greyed-out items with a tooltip 
+```
+[... truncated, full length: 7249 chars]
+### Intent 11 (Run: r-20260313-152345-03, Anchor: `### 2.4 Backend routing`, Op: replace_section)
+```markdown
+**Cursor backend special case:**
+- When the active backend is Cursor **and** `kind=image`: route via Cursor-native image generation. No Gemini account or API key is required.
+- When the active backend is Cursor **and** `kind` is `video`, `tts`, or `music`: the capability is disabled with `disabled_reason: BACKEND_UNSUPPORTED`.
+
+ContractRef: ToolID:media.generate, ContractName:Plans/CLI_Bridged_Providers.md, PolicyRule:Decision_Policy.md§2
+
+**All non-Cursor backends:**
+- Media generation uses the same canonical Gemini requested/effective auth/account resolution model as standard Gemini provider usage.
+- Resolve `requested_auth_mode`, provider capability block, eligible auth surfaces, and the eligible account pool before dispatch.
+- If the resolved effective account is OAuth-backed and media-capable, route with that OAuth-backed Gemini account context.
+- If the resolved effective account is API-key-backed and media-capable, route with that API-key-backed Gemini account context.
+- If no eligible Gemini account exists for the resolved request/policy, media capabilities are disabled with `disabled_reason: NOT_CONFIGURED`.
+- Explicit `oauth` and explicit `api_key` requests use the same no-silent-cross-fallback rule as the rest of the Gemini provider.
+
+ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD, ContractName:Plans/rewrite-tie-in-memo.md
+```
+### Intent 12 (Run: r-20260313-152345-03, Anchor: `### 4.3 Banner/footnote`, Op: replace_section)
+```markdown
+When visible media capabilities are disabled because no eligible Gemini account is configured for the resolved request/policy, the dropdown footer displays this banner/footnote:
+
+> **"Configure Gemini access in Settings → Authentication."** Sign in with Gemini OAuth or add a Google/Gemini API key. [Get API key]
+
+The `Get API key` text is a clickable convenience link to the Google AI Studio API-key page, but the surrounding copy MUST NOT imply AI Studio is the only valid source of Gemini API keys.
+
+ContractRef: ToolID:capabilities.get, Invariant:INV-003, ContractName:Plans/rewrite-tie-in-memo.md
+
+When multiple visible capabilities are disabled for the same missing-configuration reason, show the footer banner once and keep it pinned at the bottom of the dropdown while the list scrolls. The banner is supplemental guidance; per-item disabled reasons remain visible on hover/focus.
+
+ContractRef: ToolID:capabilities.get, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Multi-Account.md
+```
+### Intent 13 (Run: r-20260313-152345-03, Anchor: `### 4.4 Cursor backend behavior`, Op: replace_section)
+```markdown
+When the active backend is Cursor:
+- **Image** is **enabled** without requiring Gemini credentials because it routes via Cursor-native image generation.
+- **Video**, **TTS**, and **Music** are **disabled** with `disabled_reason: BACKEND_UNSUPPORTED`.
+- Cursor's image special case does not create a separate Gemini account model; non-Cursor media still follows the canonical Gemini requested/effective auth/account flow.
+
+ContractRef: ToolID:capabilities.get, ToolID:media.generate, ContractName:Plans/CLI_Bridged_Providers.md
+```
+### Intent 14 (Run: r-20260313-152345-03, Anchor: `## 5. UI copy strings`, Op: replace_section)
+```markdown
+The following strings are the canonical verbatim copy for media UI surfaces.
+
+### 5.1 Capability click prompts
+
+**Image click prompt:**
+> "What image are we generating? Describe the subject, style, and optionally aspect ratio (1:1, 16:9), size (1024, 2048), and how many variations you want."
+
+**Video click prompt:**
+> "What video are we generating? Describe the scene, camera/style, duration, and aspect ratio/resolution if you have a preference."
+
+**TTS click prompt:**
+> "What text should I speak, and what voice/style should it use? You can also choose output format (WAV/MP3) if available."
+
+**Music click prompt:**
+> "What music are we generating? Share genre, mood, tempo (BPM), and duration. If you want, mention instruments or references."
+
+ContractRef: ToolID:capabilities.get, Invariant:INV-003
+
+### 5.2 Disabled-reason messages
+
+**Not configured reason (`NOT_CONFIGURED`):**
+> "This feature requires Gemini access. Sign in with Gemini OAuth or add a Google/Gemini API key in Settings -> Authentication, then try again."
+
+ContractRef: ToolID:capabilities.get, ContractName:Plans/rewrite-tie-in-memo.md
+
+**Model unavailable reason (`MODEL_UNAVAILABLE`):**
+> "That model isn't available with the current Gemini account or API key (or it isn't enabled). Pick a different model in Settings, or ask 'What models are available?'"
+
+ContractRef: ToolID:capabilities.get, ContractName:Plans/Models_System.md#MODEL-ID
+
+**Admin disabled reason (`ADMIN_DISABLED`):**
+> "This feature is disabled in Settings. Enable it under Media settings, then try again."
+
+ContractRef: ToolID:capabilities.get, Invariant:INV-003
+
+**Backend unsupported reason (`BACKEND_UNSUPPORTED`):**
+> "The current backend supports Image Generation only. To use Video/TTS/Music, use a non-Cursor backend with an eligible Gemini account or API key for media generation."
+
+ContractRef: ToolID:capabilities.get, ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Multi-Account.md
+
+**Rate limited reason (`RATE_LIMITED`):**
+> "This feature is temporarily rate-limited. Wait a moment and try again."
+
+ContractRef: ToolID:capabilities.get, Invariant:INV-003
+
+**Quota exceeded reason (`QUOTA_EXCEEDED`):**
+> "API quota for this feature has been exhausted. Check your provider usage dashboard or wait for quota to reset."
+
+ContractRef: ToolID:capabilities.get, Invariant:INV-003
+```
+### Intent 15 (Run: r-20260313-152345-03, Anchor: `## 6. Acceptance criteria`, Op: replace_section)
+```markdown
+These criteria are testable assertions that MUST hold for any conforming implementation.
+
+ContractRef: ContractName:Plans/Media_Generation_and_Capabilities.md, ContractName:Plans/Progression_Gates.md
+
+<a id="AC-MED01"></a>
+**AC-MED01:** `capabilities.get` MUST return all media capabilities (`media.image`, `media.video`, `media.tts`, `media.music`) and all registered provider-tool capabilities, each with `enabled`, `disabled_reason`, and `setup_hint` fields.
+
+ContractRef: ToolID:capabilities.get
+
+<a id="AC-MED02"></a>
+**AC-MED02:** `disabled_reason` values MUST be exactly one of the six canonical values defined in §1.3. No ad-hoc reason strings are permitted.
+
+ContractRef: ToolID:capabilities.get, PolicyRule:Decision_Policy.md§2
+
+<a id="AC-MED03"></a>
+**AC-MED03:** When the active backend is Cursor and no eligible Gemini account is configured, `media.image` MUST be enabled (routed via Cursor-native generation) and `media.video`, `media.tts`, `media.music` MUST be disabled with `BACKEND_UNSUPPORTED`.
+
+ContractRef: ToolID:capabilities.get, ToolID:media.generate, ContractName:Plans/CLI_Bridged_Providers.md
+
+<a id="AC-MED03A"></a>
+**AC-MED03A:** When the active backend is Cursor and a valid Gemini API key and/or Gemini OAuth account is configured, `media.image` MUST remain enabled via Cursor-native generation and `media.video`, `media.tts`, `media.music` MUST remain disabled with `BACKEND_UNSUPPORTED`.
+
+ContractRef: ToolID:capabilities.get, ToolID:media.generate, ContractName:Plans/Multi-Account.md
+
+<a id="AC-MED04"></a>
+**AC-MED04:** When the active backend is non-Cursor and at least one eligible Gemini account exists for the resolved request/policy, each media capability (`media.image`, `media.video`, `media.tts`, `media.music`) is eligible for enablement and routes through the Gemini media provider path, **subject to**: (a) the per-capability Settings > Media toggle (if toggled OFF -> `ADMIN_DISABLED`), and (b) the underlying model being available for that kind (if unavailable -> `MODEL_UNAVAILABLE`). An eligible account alone does NOT guarantee all four are enabled.
+
+ContractRef: ToolID:capabilities.get, ToolID:media.generate, ContractName:Plans/Multi-Account.md
+
+<a id="AC-MED05"></a>
+**AC-MED05:** When the active backend is non-Cursor and no eligible Gemini account exists for the resolved request/policy, all four media capabilities MUST be disabled with `NOT_CONFIGURED`.
+
+ContractRef: ToolID:capabilities.get, ToolID:media.generate, ContractName:Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD
+
+<a id="AC-MED06"></a>
+**AC-MED06:** The `model_override` field in `media.generate` MUST resolve via alias -> exact model id -> exact displayName -> else `MODEL_UNAVAILABLE`. The override MUST NOT change the persistent model in Settings.
+
+ContractRef: ToolID:media.generate, ContractName:Plans/Models_System.md#MODEL-ID
+
+<a id="AC-MED07"></a>
+**AC-MED07:** The capability picker dropdown MUST display disabled capabilities as greyed-out items with a tooltip 
+```
+[... truncated, full length: 7249 chars]
+### Intent 16 (Run: r-20260320-170511-01, Anchor: `### 2.4 Backend routing`, Op: replace_section)
+```markdown
+Cursor remains the special-case backend for Cursor-native image generation.
+
+ContractRef: ToolID:media.generate, ContractName:Plans/CLI_Bridged_Providers.md, PolicyRule:Decision_Policy.md§2
+
+Cursor rules:
+- when the active backend is Cursor and `kind=image`, route via Cursor-native image generation.
+- when the active backend is Cursor and `kind` is `video`, `tts`, or `music`, disable the capability with `disabled_reason: BACKEND_UNSUPPORTED`.
+
+ContractRef: ToolID:capabilities.get, ToolID:media.generate, ContractName:Plans/usage-feature.md
+
+All non-Cursor backends follow the canonical Gemini media routing model.
+
+Required routing order:
+1. resolve the requested provider/runtime surface for media
+2. resolve the requested/effective auth family and eligible account or profile set
+3. choose the concrete runtime surface that actually supports the requested media kind
+4. record the resulting requested/effective runtime snapshot
+
+Media routing rules:
+- Gemini direct media follows the direct Gemini provider path only.
+- Gemini CLI media uses the Gemini CLI runtime only when the required helper path is configured and a compatible API-key-backed media route exists.
+- when Gemini CLI media depends on nanobanana, PM installs and updates nanobanana per PM-managed Gemini CLI account root only when media is enabled.
+- PM injects `NANOBANANA_API_KEY` at launch instead of duplicating secrets into provider-managed config.
+- OAuth-only or Vertex-backed Gemini CLI accounts without a compatible API-key media path are `media_partial` or `media_unavailable` rather than silently cross-falling back.
+- when family pooling chooses `Gemini` direct instead of `Gemini CLI` because of media capability, the requested/effective runtime disclosure must make that switch visible.
+
+ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/FinalGUISpec.md
+
+```
+### Intent 17 (Run: r-20260320-170511-01, Anchor: `### 4.4 Cursor backend behavior`, Op: replace_section)
+```markdown
+When the active backend is Cursor:
+- image remains enabled through Cursor-native image generation
+- video, TTS, and music remain disabled with `disabled_reason: BACKEND_UNSUPPORTED`
+- Cursor's image special case does not create a separate Gemini account model
+- non-Cursor media still follows the canonical requested/effective Gemini routing model described in `### 2.4 Backend routing`
+
+ContractRef: ToolID:capabilities.get, ToolID:media.generate, ContractName:Plans/CLI_Bridged_Providers.md
+
+```
+### Intent 18 (Run: r-20260320-170511-02, Anchor: `### 2.4 Backend routing`, Op: replace_section)
+```markdown
+Cursor remains the special-case backend for Cursor-native image generation.
+
+ContractRef: ToolID:media.generate, ContractName:Plans/CLI_Bridged_Providers.md, PolicyRule:Decision_Policy.md§2
+
+Cursor rules:
+- when the active backend is Cursor and `kind=image`, route via Cursor-native image generation.
+- when the active backend is Cursor and `kind` is `video`, `tts`, or `music`, disable the capability with `disabled_reason: BACKEND_UNSUPPORTED`.
+
+ContractRef: ToolID:capabilities.get, ToolID:media.generate, ContractName:Plans/usage-feature.md
+
+All non-Cursor backends follow the canonical Gemini media routing model.
+
+Required routing order:
+1. resolve the requested provider/runtime surface for media
+2. resolve the requested/effective auth family and eligible account or profile set
+3. choose the concrete runtime surface that actually supports the requested media kind
+4. record the resulting requested/effective runtime snapshot
+
+Media routing rules:
+- Gemini direct media follows the direct Gemini provider path only.
+- Gemini CLI media uses the Gemini CLI runtime only when the required helper path is configured and a compatible API-key-backed media route exists.
+- when Gemini CLI media depends on nanobanana, PM installs and updates nanobanana per PM-managed Gemini CLI account root only when media is enabled.
+- PM injects `NANOBANANA_API_KEY` at launch instead of duplicating secrets into provider-managed config.
+- OAuth-only or Vertex-backed Gemini CLI accounts without a compatible API-key media path are `media_partial` or `media_unavailable` rather than silently cross-falling back.
+- when family pooling chooses `Gemini` direct instead of `Gemini CLI` because of media capability, the requested/effective runtime disclosure must make that switch visible.
+
+ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/FinalGUISpec.md
+
+```
+### Intent 19 (Run: r-20260320-170511-02, Anchor: `### 4.4 Cursor backend behavior`, Op: replace_section)
+```markdown
+When the active backend is Cursor:
+- image remains enabled through Cursor-native image generation
+- video, TTS, and music remain disabled with `disabled_reason: BACKEND_UNSUPPORTED`
+- Cursor's image special case does not create a separate Gemini account model
+- non-Cursor media still follows the canonical requested/effective Gemini routing model described in `### 2.4 Backend routing`
+
+ContractRef: ToolID:capabilities.get, ToolID:media.generate, ContractName:Plans/CLI_Bridged_Providers.md
+
+```
+## Doc: Plans/Run_Modes.md
+### Intent 1 (Run: r-20260317-164124-01, Anchor: `## 1. Canonical mode definitions`, Op: replace_section)
+```markdown
+### 1.0 Runtime mode and workflow-overlay separation
+
+Runtime modes remain the canonical execution-posture family.
+
+Rules:
+- runtime modes are closed to `ask`, `plan`, `regular`, and `yolo`
+- workflow identity is preserved separately through `requested_mode_overlay` and `effective_mode_overlay`
+- overlay identity may be richer than runtime posture; for example `deep_plan` remains visible in the overlay fields while the runtime posture is still planning
+- chat-facing labels such as `Ask`, `Agent`, `Plan`, and `Deep Plan` are display derivations over shared overlay/runtime fields, not a replacement runtime schema
+
+ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/assistant-chat-design.md
+
+### 1.1 `ask`
+`ask` is the read-only inspection and explanation posture.
+
+Rules:
+- no project mutation or execution authority is implied
+- compact chat display may label this as `Ask`
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FileSafe.md, ContractName:Plans/Prompt_Pipeline.md
+
+### 1.2 `plan`
+`plan` is the read-only planning posture.
+
+Rules:
+- planning remains read-only with respect to project files
+- `plan` posture may be paired with `plan` or `deep_plan` overlay identity
+- overlay identity, plan thoroughness, and later execution handoff remain preserved separately from the runtime posture itself
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/storage-plan.md
+
+### 1.3 `regular`
+`regular` is the standard execution posture with normal approvals.
+
+ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Prompt_Pipeline.md
+
+### 1.4 `yolo`
+`yolo` is the full-automation execution posture.
+
+ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/FileSafe.md, ContractName:Plans/Prompt_Pipeline.md
+
+```
+### Intent 2 (Run: r-20260317-164124-02, Anchor: `## 1. Canonical mode definitions`, Op: replace_section)
+```markdown
+### 1.0 Runtime mode and workflow-overlay separation
+
+Runtime modes remain the canonical execution-posture family.
+
+Rules:
+- runtime modes are closed to `ask`, `plan`, `regular`, and `yolo`
+- workflow identity is preserved separately through `requested_mode_overlay` and `effective_mode_overlay`
+- overlay identity may be richer than runtime posture; for example `deep_plan` remains visible in the overlay fields while the runtime posture is still planning
+- chat-facing labels such as `Ask`, `Agent`, `Plan`, and `Deep Plan` are display derivations over shared overlay/runtime fields, not a replacement runtime schema
+
+ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/assistant-chat-design.md
+
+### 1.1 `ask`
+`ask` is the read-only inspection and explanation posture.
+
+Rules:
+- no project mutation or execution authority is implied
+- compact chat display may label this as `Ask`
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FileSafe.md, ContractName:Plans/Prompt_Pipeline.md
+
+### 1.2 `plan`
+`plan` is the read-only planning posture.
+
+Rules:
+- planning remains read-only with respect to project files
+- `plan` posture may be paired with `plan` or `deep_plan` overlay identity
+- overlay identity, plan thoroughness, and later execution handoff remain preserved separately from the runtime posture itself
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/storage-plan.md
+
+### 1.3 `regular`
+`regular` is the standard execution posture with normal approvals.
+
+ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Prompt_Pipeline.md
+
+### 1.4 `yolo`
+`yolo` is the full-automation execution posture.
+
+ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/FileSafe.md, ContractName:Plans/Prompt_Pipeline.md
+
+```
+### Intent 3 (Run: r-20260317-164124-03, Anchor: `## 1. Canonical mode definitions`, Op: replace_section)
+```markdown
+### 1.0 Runtime mode and workflow-overlay separation
+
+Runtime modes remain the canonical execution-posture family.
+
+Rules:
+- runtime modes are closed to `ask`, `plan`, `regular`, and `yolo`
+- workflow identity is preserved separately through `requested_mode_overlay` and `effective_mode_overlay`
+- overlay identity may be richer than runtime posture; for example `deep_plan` remains visible in the overlay fields while the runtime posture is still planning
+- chat-facing labels such as `Ask`, `Agent`, `Plan`, and `Deep Plan` are display derivations over shared overlay/runtime fields, not a replacement runtime schema
+
+ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/assistant-chat-design.md
+
+### 1.1 `ask`
+`ask` is the read-only inspection and explanation posture.
+
+Rules:
+- no project mutation or execution authority is implied
+- compact chat display may label this as `Ask`
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FileSafe.md, ContractName:Plans/Prompt_Pipeline.md
+
+### 1.2 `plan`
+`plan` is the read-only planning posture.
+
+Rules:
+- planning remains read-only with respect to project files
+- `plan` posture may be paired with `plan` or `deep_plan` overlay identity
+- overlay identity, plan thoroughness, and later execution handoff remain preserved separately from the runtime posture itself
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/storage-plan.md
+
+### 1.3 `regular`
+`regular` is the standard execution posture with normal approvals.
+
+ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Prompt_Pipeline.md
+
+### 1.4 `yolo`
+`yolo` is the full-automation execution posture.
+
+ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/FileSafe.md, ContractName:Plans/Prompt_Pipeline.md
+
+```
+### Intent 4 (Run: r-20260318-160350-01, Anchor: `### 5.3 DAE-specific kill conditions`, Op: replace_section)
+```markdown
+| Condition | Reason code | Description |
+|-----------|-------------|-------------|
+| Repeated shell failure | `kill.shell_failure` | Same canonical shell command fails `max_same_shell_failure` consecutive times. |
+| Write thrashing | `kill.write_thrash` | Same file written more than `max_write_thrashing` times within 10 minutes. |
+
+`kill.shell_failure` counting contract:
+- a shell failure increments the streak only when an actually executed canonical shell tool invocation ends with `tool_result.ok == false`, non-zero exit, timeout, or signal termination
+- permission denials, FileSafe blocks, validation failures, missing execution due to policy, and synthesized reconciler closures do **not** count as shell failures
+- the canonical shell fingerprint is `(tool_name, normalized_command, normalized_cwd)` after adapter normalization, including removal of provider wrapper boilerplate such as an outer `bash -lc` added by Puppet Master
+- user-interface-only terminal actions such as reveal, pin, rename, clear-scrollback, or pane movement do **not** count as executed shell invocations
+- explicit terminal restart or explicit session replacement resets shell-failure continuity because a new `terminal_session_id` is created
+- success of the same fingerprint resets the streak to zero; a different executed fingerprint also resets the previous fingerprint's streak
+
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/storage-plan.md, ContractName:Plans/UI_Command_Catalog.md
+
+`kill.write_thrash` counting contract:
+- file identity is the normalized project-relative real path of the mutated jail path after symlink / `.` / `..` collapse
+- a qualifying write is an actual content-changing create / overwrite / append / rename-destination / delete observed from the authoritative jail diff or equivalent live mutation metadata
+- denied, blocked, no-diff, rollback, and Puppet-Master-owned post-processing writes do **not** count
+- the window is a **sliding** 10-minute window using the run supervisor's monotonic clock; a kill occurs immediately when a new qualifying write would make the count exceed the configured ceiling for that file
+
+ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/storage-plan.md
+
+```
+### Intent 5 (Run: r-20260318-160350-01, Anchor: `## 6. Run outcome taxonomy`, Op: replace_section)
+```markdown
+<a id="OUTCOME-TAXONOMY"></a>
+
+Every run terminates with exactly one outcome value.
+
+ContractRef: ContractName:Plans/Contracts_V0.md#EventRecord, PolicyRule:Decision_Policy.md§2
+
+| Outcome | Meaning |
+|---------|---------|
+| `done.ok` | Run completed successfully; all objectives met. |
+| `done.failed` | Run terminated due to error, kill condition, or scan failure. |
+| `done.deferred` | Run paused; work remains but requires external input (for example HITL approval). |
+| `done.rotated` | Run terminated and a follow-up run was spawned (context rotation). |
+| `done.gutter` | Run terminated without meaningful progress; provider produced no actionable output. |
+
+ContractRef: ContractName:Plans/Contracts_V0.md#EventRecord, ContractName:Plans/Tools.md, ContractName:Plans/storage-plan.md
+
+Rules:
+- the outcome MUST be recorded in the terminal `done` event of the normalized provider stream and persisted via `EventRecord` to seglog
+- the normalized provider `done.payload.status` remains a coarse transport-facing terminal status (`success | cancelled | failed`), while `done.payload.outcome` carries the canonical taxonomy above
+- user-driven terminal restart or replacement mints a new runtime identity instead of mutating the prior run outcome in place
+- clearing scrollback or revealing an existing terminal session does not mint a new run outcome
+
+ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md
+
+```
+### Intent 6 (Run: r-20260318-160350-01, Anchor: `## 10. Acceptance criteria`, Op: replace_section)
+```markdown
+These criteria are testable assertions that MUST hold for any conforming implementation.
+
+ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Progression_Gates.md
+
+<a id="AC-01"></a>
+**AC-01:** In HTE strategy, any `tool_use` event observed in the provider stream MUST trigger kill condition `kill.hte_tool_observed` and terminate the run with `done.failed`.
+
+<a id="AC-02"></a>
+**AC-02:** In DAE strategy, end-of-run scans (§5.4) MUST execute for every terminal outcome. A scan failure MUST escalate the outcome to `done.failed`.
+
+<a id="AC-03"></a>
+**AC-03:** Mode selection is deterministic: given identical run envelope and config inputs, the resolution algorithm (§3) MUST produce the same `(mode, strategy)` pair.
+
+<a id="AC-04"></a>
+**AC-04:** In `ask` and `plan` modes, no project-file mutation may occur. Any write attempt to a project file MUST be blocked by the permission layer (not merely by FileSafe).
+
+<a id="AC-05"></a>
+**AC-05:** In `yolo` mode, FileSafe guards MUST remain active. Disabling FileSafe while `yolo` is active MUST produce a user-visible warning (per `Plans/FileSafe.md` §10a).
+
+<a id="AC-06"></a>
+**AC-06:** Budget limits (§4) MUST be enforced regardless of mode. Exceeding any budget MUST trigger the corresponding kill condition.
+
+<a id="AC-07"></a>
+**AC-07:** Every run MUST terminate with exactly one outcome from the taxonomy (§6), recorded in the `done` event and persisted to seglog.
+
+<a id="AC-08"></a>
+**AC-08:** UI/workflow state MUST normalize deterministically into the canonical runtime mode enum before strategy selection. `Interview`, `BrainStorm`, and `Crew` MUST NOT create additional runtime mode values.
+
+<a id="AC-09"></a>
+**AC-09:** In `regular` mode, `cli_bridged_strategy = "dae"` with `dae_allowed != true` MUST deterministically fall back to HTE and persist `strategy_resolution_reason = "regular_dae_disallowed"`.
+
+<a id="AC-10"></a>
+**AC-10:** In `yolo` mode, a provider with `dae_allowed != true` MUST fail before provider spawn with `stop_reason = "yolo_requires_dae_provider"`; it MUST NOT silently downgrade to HTE.
+
+<a id="AC-11"></a>
+**AC-11:** `kill.shell_failure` counts only actually executed shell failures for one canonical shell fingerprint. Policy denials, FileSafe blocks, UI-only terminal actions, and different shell fingerprints MUST NOT increment the same streak.
+
+<a id="AC-12"></a>
+**AC-12:** `kill.write_thrash` counts only qualifying content-changing writes to one normalized file identity within a sliding 10-minute window. Writes to different files, aged-out writes, and denied / blocked / no-diff operations MUST NOT trigger the ceiling.
+
+<a id="AC-13"></a>
+**AC-13:** Child/subagent/rotated follow-up runs MUST inherit the parent effective context overlay. A read-only parent run (`ask` or `plan`) MUST NOT widen into `full_execution` context in any child run.
+
+<a id="AC-14"></a>
+**AC-14:** When a shell-backed invocation is bound to a terminal session, later `Open in Terminal` or `Show Terminal` act
+```
+[... truncated, full length: 3462 chars]
+### Intent 7 (Run: r-20260318-160350-02, Anchor: `### 5.3 DAE-specific kill conditions`, Op: replace_section)
+```markdown
+| Condition | Reason code | Description |
+|-----------|-------------|-------------|
+| Repeated shell failure | `kill.shell_failure` | Same canonical shell command fails `max_same_shell_failure` consecutive times. |
+| Write thrashing | `kill.write_thrash` | Same file written more than `max_write_thrashing` times within 10 minutes. |
+
+`kill.shell_failure` counting contract:
+- a shell failure increments the streak only when an actually executed canonical shell tool invocation ends with `tool_result.ok == false`, non-zero exit, timeout, or signal termination
+- permission denials, FileSafe blocks, validation failures, missing execution due to policy, and synthesized reconciler closures do **not** count as shell failures
+- the canonical shell fingerprint is `(tool_name, normalized_command, normalized_cwd)` after adapter normalization, including removal of provider wrapper boilerplate such as an outer `bash -lc` added by Puppet Master
+- user-interface-only terminal actions such as reveal, pin, rename, clear-scrollback, or pane movement do **not** count as executed shell invocations
+- explicit terminal restart or explicit session replacement resets shell-failure continuity because a new `terminal_session_id` is created
+- success of the same fingerprint resets the streak to zero; a different executed fingerprint also resets the previous fingerprint's streak
+
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/storage-plan.md, ContractName:Plans/UI_Command_Catalog.md
+
+`kill.write_thrash` counting contract:
+- file identity is the normalized project-relative real path of the mutated jail path after symlink / `.` / `..` collapse
+- a qualifying write is an actual content-changing create / overwrite / append / rename-destination / delete observed from the authoritative jail diff or equivalent live mutation metadata
+- denied, blocked, no-diff, rollback, and Puppet-Master-owned post-processing writes do **not** count
+- the window is a **sliding** 10-minute window using the run supervisor's monotonic clock; a kill occurs immediately when a new qualifying write would make the count exceed the configured ceiling for that file
+
+ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/storage-plan.md
+
+```
+### Intent 8 (Run: r-20260318-160350-02, Anchor: `## 6. Run outcome taxonomy`, Op: replace_section)
+```markdown
+<a id="OUTCOME-TAXONOMY"></a>
+
+Every run terminates with exactly one outcome value.
+
+ContractRef: ContractName:Plans/Contracts_V0.md#EventRecord, PolicyRule:Decision_Policy.md§2
+
+| Outcome | Meaning |
+|---------|---------|
+| `done.ok` | Run completed successfully; all objectives met. |
+| `done.failed` | Run terminated due to error, kill condition, or scan failure. |
+| `done.deferred` | Run paused; work remains but requires external input (for example HITL approval). |
+| `done.rotated` | Run terminated and a follow-up run was spawned (context rotation). |
+| `done.gutter` | Run terminated without meaningful progress; provider produced no actionable output. |
+
+ContractRef: ContractName:Plans/Contracts_V0.md#EventRecord, ContractName:Plans/Tools.md, ContractName:Plans/storage-plan.md
+
+Rules:
+- the outcome MUST be recorded in the terminal `done` event of the normalized provider stream and persisted via `EventRecord` to seglog
+- the normalized provider `done.payload.status` remains a coarse transport-facing terminal status (`success | cancelled | failed`), while `done.payload.outcome` carries the canonical taxonomy above
+- user-driven terminal restart or replacement mints a new runtime identity instead of mutating the prior run outcome in place
+- clearing scrollback or revealing an existing terminal session does not mint a new run outcome
+
+ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md
+
+```
+### Intent 9 (Run: r-20260318-160350-02, Anchor: `## 10. Acceptance criteria`, Op: replace_section)
+```markdown
+These criteria are testable assertions that MUST hold for any conforming implementation.
+
+ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Progression_Gates.md
+
+<a id="AC-01"></a>
+**AC-01:** In HTE strategy, any `tool_use` event observed in the provider stream MUST trigger kill condition `kill.hte_tool_observed` and terminate the run with `done.failed`.
+ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Tools.md
+
+
+<a id="AC-02"></a>
+**AC-02:** In DAE strategy, end-of-run scans (§5.4) MUST execute for every terminal outcome. A scan failure MUST escalate the outcome to `done.failed`.
+ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Tools.md
+
+
+<a id="AC-03"></a>
+**AC-03:** Mode selection is deterministic: given identical run envelope and config inputs, the resolution algorithm (§3) MUST produce the same `(mode, strategy)` pair.
+ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Contracts_V0.md
+
+
+<a id="AC-04"></a>
+**AC-04:** In `ask` and `plan` modes, no project-file mutation may occur. Any write attempt to a project file MUST be blocked by the permission layer (not merely by FileSafe).
+ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/FileSafe.md
+
+
+<a id="AC-05"></a>
+**AC-05:** In `yolo` mode, FileSafe guards MUST remain active. Disabling FileSafe while `yolo` is active MUST produce a user-visible warning (per `Plans/FileSafe.md` §10a).
+ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/Run_Modes.md
+
+
+<a id="AC-06"></a>
+**AC-06:** Budget limits (§4) MUST be enforced regardless of mode. Exceeding any budget MUST trigger the corresponding kill condition.
+ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Progression_Gates.md
+
+
+<a id="AC-07"></a>
+**AC-07:** Every run MUST terminate with exactly one outcome from the taxonomy (§6), recorded in the `done` event and persisted to seglog.
+ContractRef: ContractName:Plans/Contracts_V0.md#EventRecord, ContractName:Plans/storage-plan.md
+
+
+<a id="AC-08"></a>
+**AC-08:** UI/workflow state MUST normalize deterministically into the canonical runtime mode enum before strategy selection. `Interview`, `BrainStorm`, and `Crew` MUST NOT create additional runtime mode values.
+ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Contracts_V0.md
+
+
+<a id="AC-09"></a>
+**AC-09:** In `regular` mode, `cli_bridged_strategy = "dae"` with `dae_allowed != true` MUST deterministically fall back to HTE and persist `strategy_resolution_reason = "regular_dae_disallowed"`.
+ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/CLI_Bridged_Providers.md
+
+
+<a id="AC-10"></a>
+**AC-10:** In `yolo` mode, a provider with `dae_allowed != true` MUST fail before provider spawn with `stop_reason = "yolo_requires_dae_provider"`; it MUST NOT silently downgrade to HTE.
+ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/CLI_Bridged_Providers.md
+
+
+<a id="AC-11"></a>
+**AC-11:** `kill.shell_failure` counts only
+```
+[... truncated, full length: 4753 chars]
+### Intent 10 (Run: r-20260320-164907-01, Anchor: `### 1.0 Runtime mode and workflow-overlay separation`, Op: replace_section)
+```markdown
+Runtime modes remain the canonical execution-posture family.
+
+Rules:
+- runtime modes are closed to `ask`, `plan`, `regular`, and `yolo`
+- workflow identity is preserved separately through `requested_mode_overlay` and `effective_mode_overlay`
+- overlay identity may be richer than runtime posture; `deep_plan`, `debug`, `interview`, `brainstorm`, and `crew` are overlay values, not runtime-mode enum values
+- chat-facing labels such as `Ask`, `Agent`, `Debug`, `Plan`, and `Deep Plan` are display derivations over shared overlay/runtime fields, not a replacement runtime schema
+- the classical debugger surface and Debug Console are UI surfaces only and must never be serialized as runtime-mode values or overlay values
+
+ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/assistant-chat-design.md
+
+Canonical overlay / runtime examples:
+
+| Visible workflow label | requested/effective overlay | Canonical runtime mode | Notes |
+|---|---|---|---|
+| Ask | `ask` | `ask` | Always read-only. |
+| Plan | `plan` | `plan` | Read-only planning posture. |
+| Deep Plan | `deep_plan` | `plan` | Overlay preserves deeper planning identity. |
+| Agent | `agent` | `regular` or `yolo` | Standard execution posture. |
+| Debug | `debug` | `regular` by default, `yolo` only by explicit opt-in | Evidence-first investigation overlay. |
+| Interview | `interview` | `regular` or `plan` depending owner flow | Specialized routed workflow; not a new runtime enum. |
+| BrainStorm | `brainstorm` | `regular` or `plan` depending owner flow | Specialized routed workflow; not a new runtime enum. |
+| Crew | `crew` | `regular` or `plan` depending owner flow | Specialized routed workflow; not a new runtime enum. |
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/interview-subagent-integration.md, ContractName:Plans/orchestrator-subagent-integration.md
+
+```
+### Intent 11 (Run: r-20260320-164907-01, Anchor: `## 3. Deterministic strategy selection`, Op: replace_section)
+```markdown
+Strategy selection is a pure function of `(requested_runtime_mode, effective_mode_overlay, config, policy)`.
+
+Given the same inputs, the same strategy MUST be selected.
+
+ContractRef: PolicyRule:Decision_Policy.md§2, PolicyRule:Decision_Policy.md§3
+
+Before strategy selection, any surface-specific workflow state MUST normalize to the runtime-mode enum in this document:
+
+| Surface state | Effective overlay | Normalized runtime mode | Notes |
+|---|---|---|---|
+| `Ask` | `ask` | `ask` | Read-only posture. |
+| `Plan` | `plan` | `plan` | Read-only planning posture. |
+| `Deep Plan` | `deep_plan` | `plan` | Read-only planning posture with deeper overlay identity. |
+| `Agent` with standard approvals | `agent` | `regular` | Standard execute posture. |
+| `Debug` with standard approvals | `debug` | `regular` | Default Debug posture. |
+| `Debug` with explicit YOLO posture | `debug` | `yolo` | Power-user opt-in only. |
+| Execute from Interview / BrainStorm / Crew with standard approvals | `interview` / `brainstorm` / `crew` | `regular` | Workflow overlays do not create extra runtime-mode enum values. |
+| Explicit YOLO posture outside Debug | `agent` or specialized overlay | `yolo` | Full-automation posture. |
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Contracts_V0.md
+
+| Mode | `writes_allowed` | Strategy | Selection rule |
+|---|---|---|---|
+| `ask` | `false` | HTE | Always HTE; no opt-out. |
+| `plan` | `false` | HTE | Always HTE; no opt-out. |
+| `regular` | conditional | HTE (default) | HTE unless `cli_bridged_strategy == "dae"` in run config **and** provider policy allows DAE. |
+| `yolo` | `true` | DAE | DAE with mandatory guardrails + scans. |
+
+**Resolution algorithm:**
+
+1. Read normalized runtime `mode` from the run envelope.
+2. If `mode ∈ {ask, plan}` -> strategy = HTE. Return.
+3. If `mode == yolo` -> strategy = DAE. Return.
+4. If `mode == regular`:
+   a. If run config contains `cli_bridged_strategy: "dae"` and the active provider policy flag `dae_allowed == true` -> strategy = DAE. Return.
+   b. Otherwise -> strategy = HTE. Return.
+
+ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/Tools.md
+
+Debug-specific resolution notes:
+- `effective_mode_overlay = debug` with `mode ∈ {ask, plan}` is an invalid automated-debug combination and MUST be normalized before run spawn; the runtime must not execute a Debug investigation in read-only posture
+- the default Debug posture is `mode = regular` with HTE unless the user explicitly requests a DAE-capable posture and provider policy allows it
+- `yolo` still requires DAE; if the provider policy snapshot does not allow DAE, the run MUST fail before provider spawn with `stop_reason = "yolo_requires_dae_provider"`; it MUST NOT silently downgrade to HTE
+- `run.started` MUST persist `requested_mode_overlay`, `effective_mode_overlay`, `mode`, `strategy`, `strategy_resolution_reason`, and any acti
+```
+[... truncated, full length: 3173 chars]
+### Intent 12 (Run: r-20260323-192127-01, Anchor: `### 1.0 Runtime mode and workflow-overlay separation`, Op: replace_section)
+```markdown
+Runtime modes and workflow overlays must stay distinct.
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Commands_System.md, ContractName:Plans/orchestrator-subagent-integration.md
+
+Rules:
+- `ask`, `plan`, `regular`, and `yolo` are the runtime-mode canon.
+- `debug`, `deep_plan`, `interview`, `brainstorm`, and `crew` are overlays or routed workflow identities rather than extra runtime-mode enum values.
+- overlay choice must not widen runtime authority.
+- children inherit the parent runtime ceiling and may narrow it only.
+
+```
+### Intent 13 (Run: r-20260323-192127-01, Anchor: `## 9. Puppet Master deltas`, Op: replace_section)
+```markdown
+### 9.1 `ask`
+
+`ask` is read-only. It may launch delegated read-only research children but may not launch execution or mutation children.
+
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/assistant-chat-design.md
+
+### 9.2 `plan`
+
+`plan` is read-only planning posture. It may launch delegated read-only research children, including required planning dependencies, but it may not widen into implementation authority.
+
+ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/assistant-chat-design.md
+
+### 9.3 `regular`
+
+`regular` allows full child-run behavior subject to permission, provider, and capability rules.
+
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Models_System.md, ContractName:Plans/Permissions_System.md
+
+### 9.4 `yolo`
+
+`yolo` may permit broader execution behavior, but it still cannot bypass child capability narrowing, provider restrictions, or the Copilot-native routing exception.
+
+ContractRef: ContractName:Plans/Models_System.md, ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Permissions_System.md
+
+### 9.5 Crew overlay
+
+Crew is an overlay over the current parent mode, not a separate runtime mode. A crew launched from `plan` remains read-only; a crew launched from `regular` or `yolo` inherits that higher parent ceiling while still respecting all other constraints.
+
+ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FinalGUISpec.md
+
+```
+### Intent 14 (Run: r-20260323-192127-02, Anchor: `### 1.0 Runtime mode and workflow-overlay separation`, Op: replace_section)
+```markdown
+Runtime modes and workflow overlays must stay distinct.
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Commands_System.md, ContractName:Plans/orchestrator-subagent-integration.md
+
+Rules:
+- `ask`, `plan`, `regular`, and `yolo` are the runtime-mode canon.
+- `debug`, `deep_plan`, `interview`, `brainstorm`, and `crew` are overlays or routed workflow identities rather than extra runtime-mode enum values.
+- overlay choice must not widen runtime authority.
+- children inherit the parent runtime ceiling and may narrow it only.
+
+```
+### Intent 15 (Run: r-20260323-192127-02, Anchor: `## 9. Puppet Master deltas`, Op: replace_section)
+```markdown
+### 9.1 `ask`
+
+`ask` is read-only. It may launch delegated read-only research children but may not launch execution or mutation children.
+
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/assistant-chat-design.md
+
+### 9.2 `plan`
+
+`plan` is read-only planning posture. It may launch delegated read-only research children, including required planning dependencies, but it may not widen into implementation authority.
+
+ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/assistant-chat-design.md
+
+### 9.3 `regular`
+
+`regular` allows full child-run behavior subject to permission, provider, and capability rules.
+
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Models_System.md, ContractName:Plans/Permissions_System.md
+
+### 9.4 `yolo`
+
+`yolo` may permit broader execution behavior, but it still cannot bypass child capability narrowing, provider restrictions, or the Copilot-native routing exception.
+
+ContractRef: ContractName:Plans/Models_System.md, ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Permissions_System.md
+
+### 9.5 Crew overlay
+
+Crew is an overlay over the current parent mode, not a separate runtime mode. A crew launched from `plan` remains read-only; a crew launched from `regular` or `yolo` inherits that higher parent ceiling while still respecting all other constraints.
+
+ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FinalGUISpec.md
+
+```
+### Intent 16 (Run: r-20260323-192127-03, Anchor: `### 1.0 Runtime mode and workflow-overlay separation`, Op: replace_section)
+```markdown
+Runtime modes and workflow overlays must stay distinct.
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Commands_System.md, ContractName:Plans/orchestrator-subagent-integration.md
+
+Rules:
+- `ask`, `plan`, `regular`, and `yolo` are the runtime-mode canon.
+- `debug`, `deep_plan`, `interview`, `brainstorm`, and `crew` are overlays or routed workflow identities rather than extra runtime-mode enum values.
+- overlay choice must not widen runtime authority.
+- children inherit the parent runtime ceiling and may narrow it only.
+
+```
+### Intent 17 (Run: r-20260323-192127-03, Anchor: `## 9. Puppet Master deltas`, Op: replace_section)
+```markdown
+### 9.1 `ask`
+
+`ask` is read-only. It may launch delegated read-only research children but may not launch execution or mutation children.
+
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/assistant-chat-design.md
+
+### 9.2 `plan`
+
+`plan` is read-only planning posture. It may launch delegated read-only research children, including required planning dependencies, but it may not widen into implementation authority.
+
+ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/assistant-chat-design.md
+
+### 9.3 `regular`
+
+`regular` allows full child-run behavior subject to permission, provider, and capability rules.
+
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Models_System.md, ContractName:Plans/Permissions_System.md
+
+### 9.4 `yolo`
+
+`yolo` may permit broader execution behavior, but it still cannot bypass child capability narrowing, provider restrictions, or the Copilot-native routing exception.
+
+ContractRef: ContractName:Plans/Models_System.md, ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Permissions_System.md
+
+### 9.5 Crew overlay
+
+Crew is an overlay over the current parent mode, not a separate runtime mode. A crew launched from `plan` remains read-only; a crew launched from `regular` or `yolo` inherits that higher parent ceiling while still respecting all other constraints.
+
+ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FinalGUISpec.md
+
+```
+### Intent 18 (Run: r-20260326-015830-01, Anchor: `### 2.2 DAE — Delegated Agent Execution`, Op: insert_after)
+```markdown
+#### 2.2.1 DAE worktree context
+
+When a DAE executes inside a worktree (orchestrator-owned or assistant-owned), the execution context carries the worktree identity:
+- `working_directory` is set to the worktree root path
+- `worktree_id`, `worktree_branch`, and `is_worktree` fields are present in the execution context
+- File operations, git operations, terminal sessions, and LSP root identity all resolve to the worktree path
+
+This applies regardless of whether the DAE was triggered by Orchestrator or by Assistant Chat.
+
+ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/assistant-chat-design.md
+```
+### Intent 19 (Run: r-20260326-015830-01, Anchor: `### Mode rules`, Op: insert_after)
+```markdown
+#### Worktree invariant across modes
+
+All assistant chat modes (Ask, Agent, Plan, Deep Plan, Debug) operate within the active thread's worktree when one is bound:
+- Ask mode: reads files from worktree
+- Agent mode: edits files in worktree
+- Plan/Deep Plan mode: executes plans in worktree context
+- Debug mode: debug operations target worktree
+
+Mode transitions do not change worktree binding — binding is a thread-level property, not a mode-level property.
+
+Worktree commands (`cmd.chat.worktree.*`) are available in all modes, subject to their when-clauses. The worktree header button and dropdown menu are always visible regardless of current mode.
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/UI_Command_Catalog.md
+```
+### Intent 20 (Run: r-20260326-015830-02, Anchor: `### 2.2 DAE — Delegated Agent Execution`, Op: insert_after)
+```markdown
+#### 2.2.1 DAE worktree context
+
+When a DAE executes inside a worktree (orchestrator-owned or assistant-owned), the execution context carries the worktree identity:
+- `working_directory` is set to the worktree root path
+- `worktree_id`, `worktree_branch`, and `is_worktree` fields are present in the execution context
+- File operations, git operations, terminal sessions, and LSP root identity all resolve to the worktree path
+
+This applies regardless of whether the DAE was triggered by Orchestrator or by Assistant Chat.
+
+ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/assistant-chat-design.md
+```
+### Intent 21 (Run: r-20260326-015830-02, Anchor: `### Mode rules`, Op: insert_after)
+```markdown
+#### Worktree invariant across modes
+
+All assistant chat modes (Ask, Agent, Plan, Deep Plan, Debug) operate within the active thread's worktree when one is bound:
+- Ask mode: reads files from worktree
+- Agent mode: edits files in worktree
+- Plan/Deep Plan mode: executes plans in worktree context
+- Debug mode: debug operations target worktree
+
+Mode transitions do not change worktree binding — binding is a thread-level property, not a mode-level property.
+
+Worktree commands (`cmd.chat.worktree.*`) are available in all modes, subject to their when-clauses. The worktree header button and dropdown menu are always visible regardless of current mode.
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/UI_Command_Catalog.md
+```
+### Intent 22 (Run: r-20260328-192850-01, Anchor: `### 5.1 Universal kill conditions (all strategies)`, Op: replace_section)
+```markdown
+The following kill conditions apply in all run strategies. When any condition is met, the run is
+terminated immediately and a canonical `run.killed` seglog event is emitted with `kill_condition`,
+`kill_threshold`, and `observed_value` fields.
+
+ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Contracts_V0.md
+
+| Kill condition | Trigger | Default threshold | Configurable |
+|---|---|---|---|
+| `kill.recursion_depth` | Nesting depth orchestrator to crew to agent exceeds limit | 4 | Yes |
+| `kill.agent_count` | Total spawned agents in run exceeds limit | 99 | Yes |
+| `kill.tool_round_limit` | Tool-call rounds for a single agent exceed limit | 200 | Yes |
+| `kill.task_timeout` | Individual task wall-clock time exceeds configured limit | Per config | Yes |
+| `kill.budget_exceeded` | Pre-request cost estimate would exceed remaining budget | Per run/session | Yes |
+| `kill.identical_failure` | Same `(tool_name, args_hash, error_message)` triple observed twice consecutively | exact-match | No |
+| `kill.user_cancel` | User explicitly cancels the run | — | No |
+
+ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/orchestrator-subagent-integration.md
+
+**`kill.identical_failure` — doom-loop guard:** The triple `(tool_name, serialized_args_hash, error_message)` must match exactly across two consecutive attempts at the same nesting level. Partial or fuzzy matching MUST NOT be used.
+
+ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/FileSafe.md
+
+**Signal handling (all process types):**
+- `SIGTERM` / `SIGINT` to provider processes: 5-second grace window, then `SIGKILL`.
+- `SIGTERM` to MCP/LSP subprocesses: 3-second grace window, then `SIGKILL`.
+- `SIGHUP`: trigger config reload, not shutdown.
+- Each managed subprocess MUST run in its own process group (`setsid` on Unix; `CREATE_NEW_PROCESS_GROUP` on Windows) to prevent signal leakage.
+- Shutdown sequences MUST be guarded by a `Once` primitive so re-entrant calls are safe no-ops.
+
+ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Contracts_V0.md
+```
+### Intent 23 (Run: r-20260328-192850-01, Anchor: `## 4. Budget defaults`, Op: insert_after)
+```markdown
+### 4.1 Concurrency caps (all strategies)
+
+Three-level concurrency limits apply globally across all run strategies and MUST NOT be overridden by Persona or mode configuration alone.
+
+ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Executor_Protocol.md
+
+| Cap | Default | Scope |
+|---|---|---|
+| `max_concurrent_crews_per_platform` | 4 | Per provider platform |
+| `max_concurrent_agents_per_crew` | 8 | Per active crew context |
+| `max_total_active_agents` | 32 | Across all crews in the run |
+
+ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/interview-subagent-integration.md
+
+When any cap is reached, new spawn requests are queued (not rejected). The queue drains when active count drops below the cap.
+
+ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Contracts_V0.md
+```
+## Doc: Plans/CLI_Bridged_Providers.md
+### Intent 1 (Run: r-20260313-152345-01, Anchor: `## Direct-provider companion requirements`, Op: replace_section)
+```markdown
+This document primarily defines bridged transports. For decision completeness, direct-provider integrations MUST follow this companion matrix:
+
+| Provider | Transport class | Required auth paths | Companion rules |
+|---|---|---|---|
+| Codex | `DirectApi` | browser OAuth, headless device-code, API key | No SDK install flow in Puppet Master. Requested/effective auth identity still follows the shared runtime snapshot model. |
+| GitHub Copilot | `DirectApi` | GitHub device flow (`/login/device/code` + `/login/oauth/access_token`) | Polling + auth state updates required. GitHub auth realms remain isolated where specified elsewhere. |
+| Gemini/Google | `DirectApi` | OAuth, API key, Google credential-based mode | One provider with mixed account pools. Default `requested_auth_mode` is `auto` with OAuth-first provider preference. Explicit `oauth` and explicit `api_key` requests MUST NOT silently cross-fallback. Media follows the same requested/effective auth/account rules as normal Gemini usage. Not a CLI subprocess path for auth/runtime. |
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Multi-Account.md, ContractName:Plans/rewrite-tie-in-memo.md
+
+Direct-provider integrations MUST emit the same normalized provider stream schema as bridged transports.
+
+Direct-provider integrations MUST expose the provider capability data needed for routing, usage, and recovery, including `supports_multi_account`, `switch_boundary`, `quota_signal_sources`, `quota_signal_confidence`, `auth_recovery_methods`, `supports_threshold_switch`, `supports_rate_limit_detection`, `supports_reset_countdown`, `supports_manual_set_active`, `supports_cooldown`, `supports_retry_budget`, and `supports_role_scoped_account_pools` where applicable.
+
+ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD, ContractName:Plans/storage-plan.md
+
+Direct-provider integrations MUST NOT rely on per-platform experimental feature switches in Puppet Master (GUI, config keys, or provider invocation). Experimental CLI flags and legacy provider-specific settings are treated as implementation detail and MUST NOT be surfaced as experimental toggles in the Slint rewrite.
+
+ContractRef: ContractName:Plans/newtools.md, ContractName:Plans/Architecture_Invariants.md#INV-009, ContractName:Plans/FinalGUISpec.md
+```
+### Intent 2 (Run: r-20260313-152345-02, Anchor: `## Direct-provider companion requirements`, Op: replace_section)
+```markdown
+This document primarily defines bridged transports. For decision completeness, direct-provider integrations MUST follow this companion matrix:
+
+| Provider | Transport class | Required auth paths | Companion rules |
+|---|---|---|---|
+| Codex | `DirectApi` | browser OAuth, headless device-code, API key | No SDK install flow in Puppet Master. Requested/effective auth identity still follows the shared runtime snapshot model. |
+| GitHub Copilot | `DirectApi` | GitHub device flow (`/login/device/code` + `/login/oauth/access_token`) | Polling + auth state updates required. GitHub auth realms remain isolated where specified elsewhere. |
+| Gemini/Google | `DirectApi` | OAuth, API key, Google credential-based mode | One provider with mixed account pools. Default `requested_auth_mode` is `auto` with OAuth-first provider preference. Explicit `oauth` and explicit `api_key` requests MUST NOT silently cross-fallback. Media follows the same requested/effective auth/account rules as normal Gemini usage. Not a CLI subprocess path for auth/runtime. |
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Multi-Account.md, ContractName:Plans/rewrite-tie-in-memo.md
+
+Direct-provider integrations MUST emit the same normalized provider stream schema as bridged transports.
+
+Direct-provider integrations MUST expose the provider capability data needed for routing, usage, and recovery, including `supports_multi_account`, `switch_boundary`, `quota_signal_sources`, `quota_signal_confidence`, `auth_recovery_methods`, `supports_threshold_switch`, `supports_rate_limit_detection`, `supports_reset_countdown`, `supports_manual_set_active`, `supports_cooldown`, `supports_retry_budget`, and `supports_role_scoped_account_pools` where applicable.
+
+ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD, ContractName:Plans/storage-plan.md
+
+Direct-provider integrations MUST NOT rely on per-platform experimental feature switches in Puppet Master (GUI, config keys, or provider invocation). Experimental CLI flags and legacy provider-specific settings are treated as implementation detail and MUST NOT be surfaced as experimental toggles in the Slint rewrite.
+
+ContractRef: ContractName:Plans/newtools.md, ContractName:Plans/Architecture_Invariants.md#INV-009, ContractName:Plans/FinalGUISpec.md
+```
+### Intent 3 (Run: r-20260313-152345-03, Anchor: `## Direct-provider companion requirements`, Op: replace_section)
+```markdown
+This document primarily defines bridged transports. For decision completeness, direct-provider integrations MUST follow this companion matrix:
+
+| Provider | Transport class | Required auth paths | Companion rules |
+|---|---|---|---|
+| Codex | `DirectApi` | browser OAuth, headless device-code, API key | No SDK install flow in Puppet Master. Requested/effective auth identity still follows the shared runtime snapshot model. |
+| GitHub Copilot | `DirectApi` | GitHub device flow (`/login/device/code` + `/login/oauth/access_token`) | Polling + auth state updates required. GitHub auth realms remain isolated where specified elsewhere. |
+| Gemini/Google | `DirectApi` | OAuth, API key, Google credential-based mode | One provider with mixed account pools. Default `requested_auth_mode` is `auto` with OAuth-first provider preference. Explicit `oauth` and explicit `api_key` requests MUST NOT silently cross-fallback. Media follows the same requested/effective auth/account rules as normal Gemini usage. Not a CLI subprocess path for auth/runtime. |
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Multi-Account.md, ContractName:Plans/rewrite-tie-in-memo.md
+
+Direct-provider integrations MUST emit the same normalized provider stream schema as bridged transports.
+
+Direct-provider integrations MUST expose the provider capability data needed for routing, usage, and recovery, including `supports_multi_account`, `switch_boundary`, `quota_signal_sources`, `quota_signal_confidence`, `auth_recovery_methods`, `supports_threshold_switch`, `supports_rate_limit_detection`, `supports_reset_countdown`, `supports_manual_set_active`, `supports_cooldown`, `supports_retry_budget`, and `supports_role_scoped_account_pools` where applicable.
+
+ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD, ContractName:Plans/storage-plan.md
+
+Direct-provider integrations MUST NOT rely on per-platform experimental feature switches in Puppet Master (GUI, config keys, or provider invocation). Experimental CLI flags and legacy provider-specific settings are treated as implementation detail and MUST NOT be surfaced as experimental toggles in the Slint rewrite.
+
+ContractRef: ContractName:Plans/newtools.md, ContractName:Plans/Architecture_Invariants.md#INV-009, ContractName:Plans/FinalGUISpec.md
+```
+### Intent 4 (Run: r-20260320-170511-01, Anchor: `## Direct-provider companion requirements`, Op: replace_section)
+```markdown
+This doc owns the CLI-bridged provider surfaces only. Direct-provider canon lives in the companion owner docs, but every bridged provider section here must preserve the same requested/effective runtime vocabulary and additive runtime fields.
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Multi-Account.md
+
+Companion split rules:
+- `Gemini` direct and `Gemini CLI` are separate provider entries.
+- `Codex` and `GitHub Copilot` are direct providers and MUST NOT be reintroduced here as CLI runtime rows.
+- `provider_family_id` groups related surfaces but does not replace the concrete provider entry id.
+- bridged providers must surface the same canonical requested/effective base fields plus the additive runtime-platform, billing/entity, and connection-profile fields when they apply.
+
+ContractRef: ContractName:Plans/Models_System.md, ContractName:Plans/usage-feature.md, ContractName:Plans/Provider_OpenCode.md
+
+```
+### Intent 5 (Run: r-20260320-170511-01, Anchor: `## Cursor provider`, Op: replace_section)
+```markdown
+### Transports under one facade
+
+`cursor-agent` is the runtime target for PM's Cursor CLI integration.
+
+PM-owned account isolation for Cursor CLI is defined by a managed home/config/data/cache root for the child runtime, not by editor-style `--user-data-dir` launch tricks.
+
+ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md
+
+### stream-json / ACP requirements
+
+Cursor runtime rules:
+- PM may ingest Cursor stream output and ACP output under one facade, but the account boundary is still the managed `cursor-agent` profile root.
+- `cursor-agent login` is the default browser-auth entry path.
+- top-level API key usage remains an advanced, non-default setup path.
+- trust is an operational state, not a hidden implementation detail; a row may be authenticated yet still not operational for a given workspace until trust or runtime validation is complete.
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/usage-feature.md, ContractName:Plans/Prompt_Pipeline.md
+
+### MCP and instruction projection requirements
+
+MCP and instruction ownership rules for Cursor:
+- PM owns the canonical MCP registry and canonical shared instructions.
+- durable Cursor-facing MCP config is generated into the PM-managed Cursor profile root.
+- project-local `.cursor/mcp.json` or `.cursor/rules/*.mdc` projections are generated only when the active workspace actually needs them.
+- `.cursor/rules/*.mdc` is the primary Cursor rules surface; `.cursorrules` is compatibility only.
+- PM repairs only PM-owned generated files and must surface drift instead of silently overwriting user-managed files.
+
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md
+
+```
+### Intent 6 (Run: r-20260320-170511-01, Anchor: `## OpenCode provider`, Op: replace_section)
+```markdown
+### Transport: HTTP (server-bridged)
+
+OpenCode is always a server-bridged provider in PM.
+
+The canonical runtime subject is a server profile, not an account row.
+
+ContractRef: ContractName:Plans/Provider_OpenCode.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Multi-Account.md
+
+### Server profile modes
+
+OpenCode supports two profile modes:
+- `Managed Server`
+- `Attach to Existing Server`
+
+Rules:
+- managed profiles let PM own launch, reconnect, shutdown, and PM-generated config.
+- attached profiles let PM own endpoint/auth config and health checks, but not the remote process lifecycle.
+- health state and discovery state are separate; the GUI may show `Connected (stale discovery)` or `Connected (discovery failed)` rather than flattening everything into connected/disconnected.
+- last-known discovery is preserved and marked stale when a previously healthy profile becomes temporarily unavailable.
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md, ContractName:Plans/usage-feature.md
+
+### Skills and MCP under OpenCode
+
+OpenCode-specific skill and MCP rules:
+- OpenCode's own skill system sits above its provider list, so PM must not create Codex-specific or Copilot-specific skill projection rules inside an OpenCode profile.
+- PM-native skills remain canonical and may be mirrored into compatible roots when the user enables projection.
+- managed OpenCode profiles may receive PM-managed MCP server configuration when the server supports it; attached profiles remain reflect-only unless PM explicitly adopts a server-side management API.
+
+ContractRef: ContractName:Plans/Skills_System.md, ContractName:Plans/OpenCode_Deep_Extraction.md, ContractName:Plans/Tools.md
+
+```
+### Intent 7 (Run: r-20260320-170511-02, Anchor: `## Direct-provider companion requirements`, Op: replace_section)
+```markdown
+This doc owns the CLI-bridged provider surfaces only. Direct-provider canon lives in the companion owner docs, but every bridged provider section here must preserve the same requested/effective runtime vocabulary and additive runtime fields.
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Multi-Account.md
+
+Companion split rules:
+- `Gemini` direct and `Gemini CLI` are separate provider entries.
+- `Codex` and `GitHub Copilot` are direct providers and MUST NOT be reintroduced here as CLI runtime rows.
+- `provider_family_id` groups related surfaces but does not replace the concrete provider entry id.
+- bridged providers must surface the same canonical requested/effective base fields plus the additive runtime-platform, billing/entity, and connection-profile fields when they apply.
+
+ContractRef: ContractName:Plans/Models_System.md, ContractName:Plans/usage-feature.md, ContractName:Plans/Provider_OpenCode.md
+
+```
+### Intent 8 (Run: r-20260320-170511-02, Anchor: `## Cursor provider`, Op: replace_section)
+```markdown
+### Transports under one facade
+
+`cursor-agent` is the runtime target for PM's Cursor CLI integration.
+
+PM-owned account isolation for Cursor CLI is defined by a managed home/config/data/cache root for the child runtime, not by editor-style `--user-data-dir` launch tricks.
+
+ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md
+
+### stream-json / ACP requirements
+
+Cursor runtime rules:
+- PM may ingest Cursor stream output and ACP output under one facade, but the account boundary is still the managed `cursor-agent` profile root.
+- `cursor-agent login` is the default browser-auth entry path.
+- top-level API key usage remains an advanced, non-default setup path.
+- trust is an operational state, not a hidden implementation detail; a row may be authenticated yet still not operational for a given workspace until trust or runtime validation is complete.
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/usage-feature.md, ContractName:Plans/Prompt_Pipeline.md
+
+### MCP and instruction projection requirements
+
+MCP and instruction ownership rules for Cursor:
+- PM owns the canonical MCP registry and canonical shared instructions.
+- durable Cursor-facing MCP config is generated into the PM-managed Cursor profile root.
+- project-local `.cursor/mcp.json` or `.cursor/rules/*.mdc` projections are generated only when the active workspace actually needs them.
+- `.cursor/rules/*.mdc` is the primary Cursor rules surface; `.cursorrules` is compatibility only.
+- PM repairs only PM-owned generated files and must surface drift instead of silently overwriting user-managed files.
+
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md
+
+```
+### Intent 9 (Run: r-20260320-170511-02, Anchor: `## OpenCode provider`, Op: replace_section)
+```markdown
+### Transport: HTTP (server-bridged)
+
+OpenCode is always a server-bridged provider in PM.
+
+The canonical runtime subject is a server profile, not an account row.
+
+ContractRef: ContractName:Plans/Provider_OpenCode.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Multi-Account.md
+
+### Server profile modes
+
+OpenCode supports two profile modes:
+- `Managed Server`
+- `Attach to Existing Server`
+
+Rules:
+- managed profiles let PM own launch, reconnect, shutdown, and PM-generated config.
+- attached profiles let PM own endpoint/auth config and health checks, but not the remote process lifecycle.
+- health state and discovery state are separate; the GUI may show `Connected (stale discovery)` or `Connected (discovery failed)` rather than flattening everything into connected/disconnected.
+- last-known discovery is preserved and marked stale when a previously healthy profile becomes temporarily unavailable.
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md, ContractName:Plans/usage-feature.md
+
+### Skills and MCP under OpenCode
+
+OpenCode-specific skill and MCP rules:
+- OpenCode's own skill system sits above its provider list, so PM must not create Codex-specific or Copilot-specific skill projection rules inside an OpenCode profile.
+- PM-native skills remain canonical and may be mirrored into compatible roots when the user enables projection.
+- managed OpenCode profiles may receive PM-managed MCP server configuration when the server supports it; attached profiles remain reflect-only unless PM explicitly adopts a server-side management API.
+
+ContractRef: ContractName:Plans/Skills_System.md, ContractName:Plans/OpenCode_Deep_Extraction.md, ContractName:Plans/Tools.md
+
+```
+### Intent 10 (Run: r-20260323-192127-01, Anchor: `## Provider routing policy (locked)`, Op: replace_section)
+```markdown
+Provider routing must preserve PM child-run canon while making surface-specific behavior explicit.
+
+ContractRef: ContractName:Plans/Models_System.md, ContractName:Plans/Tools.md, ContractName:Plans/Run_Modes.md
+
+Routing rules:
+- explicit user or command requests for a child runtime surface do not silently fallback.
+- implicit orchestrator-selected child surfaces may fallback to another compatible surface.
+- requested versus effective runtime surface must remain visible in metadata.
+- `gemini` direct and `gemini-cli` are separate runtime surfaces.
+- Copilot-native child routing is a special exception governed by PM policy rather than generic provider compatibility logic.
+
+ContractRef: ContractName:Plans/Provider_OpenCode.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FinalGUISpec.md
+
+```
+### Intent 11 (Run: r-20260323-192127-01, Anchor: `### ProviderRequestEnvelope (V0)`, Op: replace_section)
+```markdown
+The ProviderRequestEnvelope must carry enough child-run identity to keep PM lineage canonical across bridged providers.
+
+Required fields for child-run execution:
+- `run_id`
+- `thread_id`
+- `parent_run_id?`
+- `child_run_id?`
+- `attempt_id?`
+- requested/effective Persona fields
+- requested/effective runtime surface fields
+- requested/effective model and effort fields
+- capability and permission snapshot refs
+- lineage-preserving prompt parts and attachment refs
+
+ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md
+
+The bridged-provider envelope must not collapse PM lineage into provider-native session identity.
+
+ContractRef: ContractName:Plans/Provider_OpenCode.md, ContractName:Plans/Tools.md, ContractName:Plans/Contracts_V0.md
+
+```
+### Intent 12 (Run: r-20260323-192127-01, Anchor: `## OpenCode provider`, Op: replace_section)
+```markdown
+OpenCode remains a bridged provider under this facade, but PM canon stays child-run-based.
+
+ContractRef: ContractName:Plans/Provider_OpenCode.md, ContractName:Plans/Models_System.md, ContractName:Plans/Tools.md
+
+Rules:
+- OpenCode child-session or task-session behavior is additive correlation data for PM child runs.
+- PM thread and run identity are not remapped to OpenCode session ids.
+- OpenCode-specific cache, billing, and correlation behavior belongs in the OpenCode adapter, not in generic bridged-provider routing.
+- provider-native agent definitions remain interoperability inputs rather than PM runtime canon.
+
+```
+### Intent 13 (Run: r-20260323-192127-02, Anchor: `## Provider routing policy (locked)`, Op: replace_section)
+```markdown
+Provider routing must preserve PM child-run canon while making surface-specific behavior explicit.
+
+ContractRef: ContractName:Plans/Models_System.md, ContractName:Plans/Tools.md, ContractName:Plans/Run_Modes.md
+
+Routing rules:
+- explicit user or command requests for a child runtime surface do not silently fallback.
+- implicit orchestrator-selected child surfaces may fallback to another compatible surface.
+- requested versus effective runtime surface must remain visible in metadata.
+- `gemini` direct and `gemini-cli` are separate runtime surfaces.
+- Copilot-native child routing is a special exception governed by PM policy rather than generic provider compatibility logic.
+
+ContractRef: ContractName:Plans/Provider_OpenCode.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FinalGUISpec.md
+
+```
+### Intent 14 (Run: r-20260323-192127-02, Anchor: `### ProviderRequestEnvelope (V0)`, Op: replace_section)
+```markdown
+The ProviderRequestEnvelope must carry enough child-run identity to keep PM lineage canonical across bridged providers.
+
+Required fields for child-run execution:
+- `run_id`
+- `thread_id`
+- `parent_run_id?`
+- `child_run_id?`
+- `attempt_id?`
+- requested/effective Persona fields
+- requested/effective runtime surface fields
+- requested/effective model and effort fields
+- capability and permission snapshot refs
+- lineage-preserving prompt parts and attachment refs
+
+ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md
+
+The bridged-provider envelope must not collapse PM lineage into provider-native session identity.
+
+ContractRef: ContractName:Plans/Provider_OpenCode.md, ContractName:Plans/Tools.md, ContractName:Plans/Contracts_V0.md
+
+```
+### Intent 15 (Run: r-20260323-192127-02, Anchor: `## OpenCode provider`, Op: replace_section)
+```markdown
+OpenCode remains a bridged provider under this facade, but PM canon stays child-run-based.
+
+ContractRef: ContractName:Plans/Provider_OpenCode.md, ContractName:Plans/Models_System.md, ContractName:Plans/Tools.md
+
+Rules:
+- OpenCode child-session or task-session behavior is additive correlation data for PM child runs.
+- PM thread and run identity are not remapped to OpenCode session ids.
+- OpenCode-specific cache, billing, and correlation behavior belongs in the OpenCode adapter, not in generic bridged-provider routing.
+- provider-native agent definitions remain interoperability inputs rather than PM runtime canon.
+
+```
+### Intent 16 (Run: r-20260323-192127-03, Anchor: `## Provider routing policy (locked)`, Op: replace_section)
+```markdown
+Provider routing must preserve PM child-run canon while making surface-specific behavior explicit.
+
+ContractRef: ContractName:Plans/Models_System.md, ContractName:Plans/Tools.md, ContractName:Plans/Run_Modes.md
+
+Routing rules:
+- explicit user or command requests for a child runtime surface do not silently fallback.
+- implicit orchestrator-selected child surfaces may fallback to another compatible surface.
+- requested versus effective runtime surface must remain visible in metadata.
+- `gemini` direct and `gemini-cli` are separate runtime surfaces.
+- Copilot-native child routing is a special exception governed by PM policy rather than generic provider compatibility logic.
+
+ContractRef: ContractName:Plans/Provider_OpenCode.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FinalGUISpec.md
+
+```
+### Intent 17 (Run: r-20260323-192127-03, Anchor: `### ProviderRequestEnvelope (V0)`, Op: replace_section)
+```markdown
+The ProviderRequestEnvelope must carry enough child-run identity to keep PM lineage canonical across bridged providers.
+
+Required fields for child-run execution:
+- `run_id`
+- `thread_id`
+- `parent_run_id?`
+- `child_run_id?`
+- `attempt_id?`
+- requested/effective Persona fields
+- requested/effective runtime surface fields
+- requested/effective model and effort fields
+- capability and permission snapshot refs
+- lineage-preserving prompt parts and attachment refs
+
+ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md
+
+The bridged-provider envelope must not collapse PM lineage into provider-native session identity.
+
+ContractRef: ContractName:Plans/Provider_OpenCode.md, ContractName:Plans/Tools.md, ContractName:Plans/Contracts_V0.md
+
+```
+### Intent 18 (Run: r-20260323-192127-03, Anchor: `## OpenCode provider`, Op: replace_section)
+```markdown
+OpenCode remains a bridged provider under this facade, but PM canon stays child-run-based.
+
+ContractRef: ContractName:Plans/Provider_OpenCode.md, ContractName:Plans/Models_System.md, ContractName:Plans/Tools.md
+
+Rules:
+- OpenCode child-session or task-session behavior is additive correlation data for PM child runs.
+- PM thread and run identity are not remapped to OpenCode session ids.
+- OpenCode-specific cache, billing, and correlation behavior belongs in the OpenCode adapter, not in generic bridged-provider routing.
+- provider-native agent definitions remain interoperability inputs rather than PM runtime canon.
+
+```
+### Intent 19 (Run: r-20260328-192850-01, Anchor: `## Tool-call correlation + reconciliation`, Op: replace_section)
+```markdown
+Tool call identity in PM normalized streams is UUID-based. The following invariants apply to all providers including CLI-bridged ones.
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Tools.md
+
+### Tool call ID invariants
+
+- Every tool call in the normalized stream MUST have a UUID identifier.
+- **Name+input deduplication is NEVER used as a substitute for a unique tool call ID.** If a provider returns a non-UUID identifier, PM MUST assign a UUID wrapper ID for internal correlation while preserving the provider's original ID in a `provider_tool_call_id` field.
+- Duplicate tool call IDs within the same message are a protocol error; the second occurrence MUST be logged and dropped.
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Architecture_Invariants.md
+
+### FinishReason mapping
+
+ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Contracts_V0.md
+
+- `FinishReasonUnknown` combined with **empty content and no tool calls** MUST be treated as an error (`failure_class=provider_transient`), not a normal completion. This is a known failure mode in CLI-bridged provider paths.
+- Providers that omit a finish reason field entirely are treated as `FinishReasonUnknown`.
+- `FinishReasonUnknown` with non-empty content is treated as a successful completion with a warning event emitted.
+
+ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Run_Modes.md
+
+### Stream cancellation
+
+When cancelling an in-progress provider stream, the context error nil-check direction is:
+
+```
+if ctx.Err() != nil {
+    // context is cancelled or timed out — do NOT retry
+}
+```
+
+The condition `ctx.Err() == nil` (no error) means the context is still active and the error came from the stream itself, not from cancellation. Reversing this check causes cancelled streams to be retried indefinitely.
+
+ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Contracts_V0.md
+
+### Credential rebuild on refresh
+
+When provider credentials are refreshed (token rotation, OAuth re-auth, API key change), the HTTP client or transport layer MUST be rebuilt from scratch. Updating only the credential field on an existing client is insufficient because TLS sessions and connection pools may hold state bound to old credentials.
+
+ContractRef: ContractName:Plans/GitHub_API_Auth_and_Flows.md, ContractName:Plans/Executor_Protocol.md
+
+### Gemini CLI tool deduplication
+
+When using the Gemini CLI provider, the CLI may introduce duplicate tool entries in certain response paths. PM MUST deduplicate tool entries by `(tool_name, id)` pair before processing. Pure name-based deduplication is not sufficient when the same tool name appears with different IDs.
+
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Contracts_V0.md
+```
+## Doc: Plans/LSPSupport.md
+### Intent 1 (Run: r-20260316-160450-01, Anchor: `### 9.1 Additional enhancements enabled by LSP`, Op: replace_section)
+```markdown
+The canonical `lsp` tool surface extends beyond the minimal MVP trio of definition/hover/references.
+
+Recommended read operations:
+- `goToDefinition`
+- `findReferences`
+- `hover`
+- `documentSymbol`
+- `workspaceSymbol`
+- `goToImplementation`
+- `prepareCallHierarchy`
+- `incomingCalls`
+- `outgoingCalls`
+
+Write-like operation retained for MVP with approval boundary:
+- `rename`
+
+Rules:
+- read operations remain available when the language server is active and the provider surface can support them
+- `rename` remains approval-gated before any apply-edit path mutates workspace files
+- Chat, editor, and command surfaces must all refer to the same canonical operation names rather than inventing per-surface aliases
+
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/FinalGUISpec.md
+
+Chat-facing expectations:
+- Chat can ask where a symbol is used, what it resolves to, what implements it, or which calls flow into/out of it
+- symbol-aware search may route through LSP-backed workspace/document symbol calls when available
+- LSP diagnostics and navigation remain shared editor/chat infrastructure rather than separate assistant-only logic
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FileManager.md, ContractName:Plans/storage-plan.md
+```
+### Intent 2 (Run: r-20260319-030558-01, Anchor: `### 3.5 Root discovery (per-server rules)`, Op: replace_section)
+```markdown
+Root discovery is host-aware and context-driven.
+
+Rules:
+- session reuse key is `(host_id, server_id, root_identity)`
+- `root_identity` is resolved from the effective project/worktree/remote root selected for the current document and server rules
+- project language detection and preset suggestion are advisory only; actual attachment resolves from file path, effective host context, server rules, and user overrides
+- remote-mode projects use remote host roots and MUST NOT silently attach against a hidden local mirror
+
+ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/FileManager.md, ContractName:Plans/storage-plan.md
+
+Root-selection steps:
+1. determine the effective host context for the file
+2. resolve candidate roots from file path and server heuristics
+3. apply explicit per-project or per-server overrides
+4. compute `root_identity` and attach/reuse the matching session if one exists
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/Contracts_V0.md
+
+```
+### Intent 3 (Run: r-20260319-030558-01, Anchor: `### 3.6 Extension conflicts (multiple servers per extension)`, Op: replace_section)
+```markdown
+Multiple servers may overlap for one language or file kind; overlap is resolved through explicit selection metadata rather than one-off hard-coded exceptions.
+
+Required metadata fields per effective catalog entry:
+- `selection_mode`
+- `selection_family`
+- `primary_priority`
+- `context_markers`
+- `supplementary_families`
+- `capability_profile`
+- `degraded_attach_rules`
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Decision_Policy.md
+
+Rules:
+- one primary server may own a capability family when exclusivity is required
+- supplementary servers may coexist only when their capability families are declared compatible
+- effective overlap resolution must remain user-visible in Settings > LSP and status surfaces
+- remote/degraded attach rules must be explicit; the client must not fabricate healthy capability state when a server is disabled, unavailable, or partially attached
+
+ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Wiring_Matrix.md
+
+```
+### Intent 4 (Run: r-20260319-030558-01, Anchor: `## 5. Integration with Our Editor (FileManager / Rewrite)`, Op: replace_section)
+```markdown
+The editor integrates with LSP through a shared authoritative document store and a host-aware session supervisor.
+
+Rules:
+- the shared document store is the sole authority for open-document text
+- LSP document sync, hover, definition, references, completion, signature help, diagnostics, code actions, rename, and format all operate against that authoritative document state
+- feature requests are gated behind sync barriers so stale document versions do not leak into the UI
+- workspace edits from rename/format/code action flow through the same FileSafe-backed mutation path as other file edits
+- LSP never becomes the owner of Search, diff/review, or chat restore semantics
+
+ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/FileSafe.md, ContractName:Plans/assistant-chat-design.md
+
+UI integration rules:
+- breadcrumbs, outline, go-to-symbol, hover, references, and code actions are editor/LSP-owned affordances
+- diagnostics feed editor markers and Problems, but Problems remains the owner of aggregated problem presentation
+- when LSP is unavailable, fallback navigation/index behavior is explicit and MUST NOT masquerade as healthy LSP state
+- remote-mode files reuse the same architecture with remote host identity; they are not a second LSP subsystem
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/storage-plan.md
+
+```
+### Intent 5 (Run: r-20260319-030558-01, Anchor: `## 13. GUI requirements and cross-references`, Op: replace_section)
+```markdown
+Settings > LSP is a searchable registry-management surface, not a flat toggle list.
+
+It MUST allow the user to:
+- globally enable or disable LSP
+- search and filter the full support catalog
+- enable or disable catalog entries
+- inspect source/classification badges and effective overlap resolution
+- add custom servers
+- inspect requested vs effective attach state per server and project context
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md, ContractName:Plans/GitHub_Integration.md
+
+Cross-surface rules:
+- File Manager and editor consume LSP state for semantic affordances
+- Search remains the owner of text search and replace-in-files
+- Problems remains the owner of aggregated diagnostics display
+- status surfaces disclose freshness, health, and effective capability state rather than hiding degraded attach conditions
+
+ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Wiring_Matrix.md
+
+```
+### Intent 6 (Run: r-20260319-030558-01, Anchor: `### 14.2 Core data structures (conceptual)`, Op: replace_section)
+```markdown
+```text
+LspSessionKey {
+  project_id
+  host_id
+  server_id
+  root_identity
+}
+
+LspSessionProjection {
+  key
+  lifecycle_state
+  freshness
+  health
+  requested_enabled
+  effective_enabled
+  capability_summary
+  restart_budget
+  last_error
+}
+
+DocumentBinding {
+  document_id
+  path
+  version
+  host_id
+  root_identity
+  attached_servers[]
+}
+```
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/FinalGUISpec.md
+
+```
+### Intent 7 (Run: r-20260319-030558-01, Anchor: `### 14.8 Registry contract (ServerSpec)`, Op: replace_section)
+```markdown
+`ServerSpec` is the canonical machine-friendly catalog record for both built-in and custom servers.
+
+Minimum fields:
+- `server_id`
+- `display_name`
+- `source_tags[]`
+- `kind` (`managed_builtin`, `managed_catalog`, `custom`)
+- `language_tags[]`
+- `file_globs[]`
+- `selection_mode`
+- `selection_family`
+- `primary_priority`
+- `supplementary_families[]`
+- `context_markers[]`
+- `capability_profile`
+- `root_rules`
+- `host_support`
+- `degraded_attach_rules`
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Decision_Policy.md
+
+Registry rules:
+- the effective support catalog is the deduped union of Microsoft implementor data, OpenCode catalog data, and Puppet Master overlay metadata
+- user enable/disable and custom-server settings layer on top of the catalog instead of replacing it
+- derived prose tables may be generated from this registry, but this structure remains the SSOT
+
+ContractRef: ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/FileManager.md
+
+```
+### Intent 8 (Run: r-20260319-030558-02, Anchor: `### 3.5 Root discovery (per-server rules)`, Op: replace_section)
+```markdown
+Root discovery is host-aware and context-driven.
+
+Rules:
+- session reuse key is `(host_id, server_id, root_identity)`
+- `root_identity` is resolved from the effective project/worktree/remote root selected for the current document and server rules
+- project language detection and preset suggestion are advisory only; actual attachment resolves from file path, effective host context, server rules, and user overrides
+- remote-mode projects use remote host roots and MUST NOT silently attach against a hidden local mirror
+
+ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/FileManager.md, ContractName:Plans/storage-plan.md
+
+Root-selection steps:
+1. determine the effective host context for the file
+2. resolve candidate roots from file path and server heuristics
+3. apply explicit per-project or per-server overrides
+4. compute `root_identity` and attach/reuse the matching session if one exists
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/Contracts_V0.md
+
+```
+### Intent 9 (Run: r-20260319-030558-02, Anchor: `### 3.6 Extension conflicts (multiple servers per extension)`, Op: replace_section)
+```markdown
+Multiple servers may overlap for one language or file kind; overlap is resolved through explicit selection metadata rather than one-off hard-coded exceptions.
+
+Required metadata fields per effective catalog entry:
+- `selection_mode`
+- `selection_family`
+- `primary_priority`
+- `context_markers`
+- `supplementary_families`
+- `capability_profile`
+- `degraded_attach_rules`
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Decision_Policy.md
+
+Rules:
+- one primary server may own a capability family when exclusivity is required
+- supplementary servers may coexist only when their capability families are declared compatible
+- effective overlap resolution must remain user-visible in Settings > LSP and status surfaces
+- remote/degraded attach rules must be explicit; the client must not fabricate healthy capability state when a server is disabled, unavailable, or partially attached
+
+ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Wiring_Matrix.md
+
+```
+### Intent 10 (Run: r-20260319-030558-02, Anchor: `## 5. Integration with Our Editor (FileManager / Rewrite)`, Op: replace_section)
+```markdown
+The editor integrates with LSP through a shared authoritative document store and a host-aware session supervisor.
+
+Rules:
+- the shared document store is the sole authority for open-document text
+- LSP document sync, hover, definition, references, completion, signature help, diagnostics, code actions, rename, and format all operate against that authoritative document state
+- feature requests are gated behind sync barriers so stale document versions do not leak into the UI
+- workspace edits from rename/format/code action flow through the same FileSafe-backed mutation path as other file edits
+- LSP never becomes the owner of Search, diff/review, or chat restore semantics
+
+ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/FileSafe.md, ContractName:Plans/assistant-chat-design.md
+
+UI integration rules:
+- breadcrumbs, outline, go-to-symbol, hover, references, and code actions are editor/LSP-owned affordances
+- diagnostics feed editor markers and Problems, but Problems remains the owner of aggregated problem presentation
+- when LSP is unavailable, fallback navigation/index behavior is explicit and MUST NOT masquerade as healthy LSP state
+- remote-mode files reuse the same architecture with remote host identity; they are not a second LSP subsystem
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/storage-plan.md
+
+```
+### Intent 11 (Run: r-20260319-030558-02, Anchor: `## 13. GUI requirements and cross-references`, Op: replace_section)
+```markdown
+Settings > LSP is a searchable registry-management surface, not a flat toggle list.
+
+It MUST allow the user to:
+- globally enable or disable LSP
+- search and filter the full support catalog
+- enable or disable catalog entries
+- inspect source/classification badges and effective overlap resolution
+- add custom servers
+- inspect requested vs effective attach state per server and project context
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md, ContractName:Plans/GitHub_Integration.md
+
+Cross-surface rules:
+- File Manager and editor consume LSP state for semantic affordances
+- Search remains the owner of text search and replace-in-files
+- Problems remains the owner of aggregated diagnostics display
+- status surfaces disclose freshness, health, and effective capability state rather than hiding degraded attach conditions
+
+ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Wiring_Matrix.md
+
+```
+### Intent 12 (Run: r-20260319-030558-02, Anchor: `### 14.2 Core data structures (conceptual)`, Op: replace_section)
+```markdown
+```text
+LspSessionKey {
+  project_id
+  host_id
+  server_id
+  root_identity
+}
+
+LspSessionProjection {
+  key
+  lifecycle_state
+  freshness
+  health
+  requested_enabled
+  effective_enabled
+  capability_summary
+  restart_budget
+  last_error
+}
+
+DocumentBinding {
+  document_id
+  path
+  version
+  host_id
+  root_identity
+  attached_servers[]
+}
+```
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/FinalGUISpec.md
+
+```
+### Intent 13 (Run: r-20260319-030558-02, Anchor: `### 14.8 Registry contract (ServerSpec)`, Op: replace_section)
+```markdown
+`ServerSpec` is the canonical machine-friendly catalog record for both built-in and custom servers.
+
+Minimum fields:
+- `server_id`
+- `display_name`
+- `source_tags[]`
+- `kind` (`managed_builtin`, `managed_catalog`, `custom`)
+- `language_tags[]`
+- `file_globs[]`
+- `selection_mode`
+- `selection_family`
+- `primary_priority`
+- `supplementary_families[]`
+- `context_markers[]`
+- `capability_profile`
+- `root_rules`
+- `host_support`
+- `degraded_attach_rules`
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Decision_Policy.md
+
+Registry rules:
+- the effective support catalog is the deduped union of Microsoft implementor data, OpenCode catalog data, and Puppet Master overlay metadata
+- user enable/disable and custom-server settings layer on top of the catalog instead of replacing it
+- derived prose tables may be generated from this registry, but this structure remains the SSOT
+
+ContractRef: ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/FileManager.md
+
+```
+### Intent 14 (Run: r-20260326-015830-01, Anchor: `## 14. Technical implementation`, Op: insert_after)
+```markdown
+### 14.1 Worktree root_identity handling
+
+LSP sessions are keyed by `(host_id, server_id, root_identity)`. When a file belongs to a worktree rather than the main project root, the LSP root_identity MUST use the worktree path.
+
+**Behavior:**
+- When a thread with a bound worktree is active and the user opens files from that worktree, LSP sessions use `root_identity = worktree_path`
+- If an LSP session for `(host_id, server_id, worktree_path)` does not exist, one is started (warm-start on worktree creation if feasible)
+- When the worktree is removed, the associated LSP session is shut down gracefully
+- Multiple worktrees may each have their own LSP session for the same server_id (each with a different root_identity)
+
+**Thread switch behavior:**
+- Switching threads does NOT kill LSP sessions for the previous thread's worktree — they remain available for background diagnostics and are reused if the user switches back
+- LSP session lifecycle is tied to worktree existence, not thread focus
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Executor_Protocol.md
+```
+### Intent 15 (Run: r-20260326-015830-02, Anchor: `## 14. Technical implementation (implementation guide source)`, Op: insert_after)
+```markdown
+### 14.1 Worktree root_identity handling
+
+LSP sessions are keyed by `(host_id, server_id, root_identity)`. When a file belongs to a worktree rather than the main project root, the LSP root_identity MUST use the worktree path.
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Executor_Protocol.md
+
+**Behavior:**
+- When a thread with a bound worktree is active and the user opens files from that worktree, LSP sessions use `root_identity = worktree_path`
+- If an LSP session for `(host_id, server_id, worktree_path)` does not exist, one is started (warm-start on worktree creation if feasible)
+- When the worktree is removed, the associated LSP session is shut down gracefully
+- Multiple worktrees may each have their own LSP session for the same server_id (each with a different root_identity)
+
+**Thread switch behavior:**
+- Switching threads does NOT kill LSP sessions for the previous thread's worktree — they remain available for background diagnostics and are reused if the user switches back
+- LSP session lifecycle is tied to worktree existence, not thread focus
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Executor_Protocol.md
+```
+### Intent 16 (Run: r-20260328-192850-01, Anchor: `## 7. Resolved design decisions and implementation constraints`, Op: insert_after)
+```markdown
+### 7.1 Registration-before-spawn invariant
+
+An LSP server MUST be registered in the session map (keyed by `(host_id, server_id, root_identity)`) before the server process is spawned. Spawning before registration creates a window where the process is running but cannot be found or shut down by the session manager.
+
+ContractRef: ContractName:Plans/Architecture_Invariants.md, ContractName:Plans/Executor_Protocol.md
+
+Required sequence:
+1. Acquire session map write lock.
+2. Insert the session record with status `starting`.
+3. Release write lock.
+4. Spawn the LSP subprocess.
+5. Update status to `ready` (or `failed`) after initialization handshake.
+
+ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/storage-plan.md
+
+If the spawn fails after registration, the session record MUST be cleaned up (removed or marked `failed`) so the slot is not permanently occupied.
+
+ContractRef: ContractName:Plans/Architecture_Invariants.md, ContractName:Plans/Executor_Protocol.md
+```
+## Doc: Plans/Orchestrator_Page.md
+### Intent 1 (Run: r-20260312-160857-01, Anchor: `## Orchestrator Runtime Recovery Contract`, Op: replace_section)
+```markdown
+The Orchestrator page owns the page-level runtime lineage, blocked-state remediation, and cross-surface pivot model for the accepted MVP operational surfaces.
+
+Required lineage payload available to page consumers:
+- `repo_id`
+- `worktree_id`
+- worktree path snapshot
+- branch name and compare target
+- commit or commit-range reference
+- `workflow_id`, `workflow_run_id`, `job_id`, `step_id` when GitHub Actions is involved
+- `publish_result_id`, image refs, digest refs, runtime/context refs, and `template_repo_id` when Docker Manager / Publish / Unraid is involved
+- Kubernetes context, namespace, workload, and rollout ref when the run touched Kubernetes
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Run_Graph_View.md, ContractName:Plans/Contracts_V0.md
+
+Tab requirements:
+- `Progress` shows current worktree, branch, requested vs effective runtime identity, latest workflow status, and latest publish/runtime state when relevant
+- `Tiers` shows worktree ownership and cross-surface CTAs per tier
+- `Node Graph Display` consumes the same lineage identities rather than inventing graph-local ones
+- `History` preserves historical run-to-repo, run-to-actions, and run-to-docker lineage even when live state has changed
+- `Evidence` can pivot to related workflow logs, Docker publish receipts, and Kubernetes rollout detail when present
+- `Ledger` remains the canonical runtime/usage history surface and must not be replaced by feature-local receipt timelines
+
+ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/GitHub_Integration.md
+
+Required CTAs:
+- `Open in Source Control`
+- `Open in GitHub Actions`
+- `Open in Docker Manager`
+- `Retry from safe point`
+- `Start fresh attempt`
+- `Resolve blocked prerequisite`
+
+These CTAs MUST preserve the exact project, run, worktree, and attempt context needed by the target surface.
+
+ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Crosswalk.md
+
+Blocked-state minima:
+- `dirty_worktree`
+- `worktree_conflict`
+- GitHub auth/admin blocked states
+- Docker auth/repo-access/publish blocked states
+- template review / template push blocked states
+- Kubernetes context / apply / rollout blocked states when applicable
+
+Blocked outcomes remain blocked, not failed, when the underlying action was intentionally not executed.
+
+ContractRef: ContractName:Plans/Decision_Policy.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/newtools.md
+```
+### Intent 2 (Run: r-20260312-203855-01, Anchor: `# Orchestrator Page -- Single-Page 6-Tab Specification`, Op: replace_section)
+```markdown
+## 1. Scope and canonical model
+Orchestrator is the operational surface for the rewrite-era execution model.
+
+Canonical execution/model rules:
+- node graph is the canonical execution model
+- `Feature Seam` and `Work Package` are first-class graph-owned objects
+- `Node` is the smallest executable unit
+- tiers/phases do not remain a co-equal execution model
+- package and seam completion are distinct from runtime attempt completion
+
+ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Crosswalk.md, ContractName:Plans/Decision_Log.md
+
+## 2. Page layout
+Orchestrator remains tab-first.
+
+Canonical tabs, in order, are:
+- `Progress`
+- `Seams`
+- `Node Graph`
+- `Evidence`
+- `History`
+- `Ledger`
+
+Rules:
+- `Progress` is widget-composed
+- `Seams`, `Node Graph`, `Evidence`, `History`, and `Ledger` are native tabs, not widget canvases
+- cross-tab deep linking must preserve target object, project scope, run scope, and inspector focus
+
+ContractRef: ContractName:Plans/Widget_System.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/FinalGUISpec.md
+
+## 3. Progress tab
+`Progress` is the operational dashboard for the current focused run.
+
+It must surface at minimum:
+- run header and focused-run identity
+- package and seam summary widgets
+- blocked/attention widgets
+- concern summary widgets
+- lane/worktree summary widgets
+- projection-state badges when freshness/health is not `current` and `healthy`
+
+Layout persistence uses app-default with project override.
+
+Rules:
+- layout scope is project-level, not run-level
+- historical/current run switching does not silently swap widget arrangement
+- widget filters inherit project and focused-run context; widgets do not choose their own run identity
+
+ContractRef: ContractName:Plans/Widget_System.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Decision_Policy.md
+
+## 4. Seams tab
+`Seams` replaces `Tiers`.
+
+The tab must present:
+- seam list and seam detail
+- package availability to seam
+- seam-level integration state
+- weak-integration concerns
+- promotion state and corroboration state when relevant
+
+Rules:
+- `Locally Complete`, `Available to Seam`, and `Seam Complete` remain distinct
+- weak integration includes runtime/GUI mismatch, workflow gaps, wiring problems, state/contract mismatch, and architecture drift
+- seam completion is blocked when integration quality is insufficient even if packages are locally complete
+
+ContractRef: ContractName:Plans/Decision_Policy.md, ContractName:Plans/Run_Graph_View.md, ContractName:Plans/Glossary.md
+
+## 5. Node Graph tab
+`Node Graph` is the full graph/lineage surface.
+
+It must provide:
+- zoom, pan, minimap, focus, search, and overlays
+- current generation emphasis with historical generation lineage retained and clickable
+- right-side detail inspector
+- evidence/artifact deep links
+- blocked/recovery/promotion/corroboration visibility
+
+Inspector detail must show at minimum:
+- requested/effective provider/model/effort/persona/account behavior
+- usage/token/
+```
+[... truncated, full length: 7687 chars]
+### Intent 3 (Run: r-20260326-015830-01, Anchor: `## 11. Source Control boundary`, Op: replace_section)
+```markdown
+Source Control owns compact worktree-first Git operations and the unified worktree inventory UI.
+
+Orchestrator owns lane/package/seam operational context, history/lineage, and concern/recovery/governance. Orchestrator does not duplicate a raw worktree inventory; it shows lane/worktree summary in the Progress tab.
+
+Assistant Chat owns thread-level worktree binding, merge-back flow, and natural-language worktree operations. Assistant-owned worktrees appear in the Source Control inventory alongside orchestrator-owned and manual worktrees.
+
+ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/assistant-chat-design.md
+
+**Ownership model:**
+- `owner_run_id` / `owner_tier_id` → orchestrator-owned
+- `owner_thread_id` → assistant-owned
+- neither → manual (user-created)
+
+All three categories are visible in the Source Control Worktrees accordion. Owner metadata (Thread, Orch, Manual) is displayed as a label on each worktree row.
+
+Cleanup posture:
+- Orchestrator-owned: governed by runner contract cleanup policy
+- Assistant-owned: user-initiated via thread delete, chat dropdown, or Source Control remove action
+- Manual: user-initiated via Source Control remove action
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Crosswalk.md, ContractName:Plans/Contracts_V0.md
+```
+### Intent 4 (Run: r-20260326-015830-02, Anchor: `## 11. Source Control boundary`, Op: replace_section)
+```markdown
+Source Control owns compact worktree-first Git operations and the unified worktree inventory UI.
+
+Orchestrator owns lane/package/seam operational context, history/lineage, and concern/recovery/governance. Orchestrator does not duplicate a raw worktree inventory; it shows lane/worktree summary in the Progress tab.
+
+Assistant Chat owns thread-level worktree binding, merge-back flow, and natural-language worktree operations. Assistant-owned worktrees appear in the Source Control inventory alongside orchestrator-owned and manual worktrees.
+
+ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/assistant-chat-design.md
+
+**Ownership model:**
+- `owner_run_id` / `owner_tier_id` → orchestrator-owned
+- `owner_thread_id` → assistant-owned
+- neither → manual (user-created)
+
+All three categories are visible in the Source Control Worktrees accordion. Owner metadata (Thread, Orch, Manual) is displayed as a label on each worktree row.
+
+Cleanup posture:
+- Orchestrator-owned: governed by runner contract cleanup policy
+- Assistant-owned: user-initiated via thread delete, chat dropdown, or Source Control remove action
+- Manual: user-initiated via Source Control remove action
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Crosswalk.md, ContractName:Plans/Contracts_V0.md
+```
+## Doc: Plans/assistant-memory-subsystem.md
+### Intent 1 (Run: r-20260323-192127-01, Anchor: `## 8. Integration points`, Op: replace_section)
+```markdown
+Assistant memory is intentionally separate from child-run continuity, crew shared state, and context-shaping systems.
+
+ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/interview-subagent-integration.md
+
+### 8.1 Assistant prompt builder
+
+Assistant uses the real memory subsystem. Assistant memory remains Assistant-only.
+
+ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md
+
+### 8.2 Child-run continuity
+
+Subagents, Interview, Orchestrator, requirements builder, and crew members use `NullMemoryProvider` and receive no Assistant memory payload.
+
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Personas.md, ContractName:Plans/Prompt_Pipeline.md
+
+Child continuity comes from:
+- canonical child records
+- reconstructed handoff bundles
+- current effective shaping state
+- crew shared state when crew mode is active
+
+It does not come from hidden child-local long-term memory.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/orchestrator-subagent-integration.md
+
+### 8.3 Crew shared state
+
+Crew shared state may persist longer than an individual child, but it is explicit coordination state rather than personal memory for disposable subagents.
+
+ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md
+
+```
+### Intent 2 (Run: r-20260323-192127-02, Anchor: `## 8. Integration points`, Op: replace_section)
+```markdown
+Assistant memory is intentionally separate from child-run continuity, crew shared state, and context-shaping systems.
+
+ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/interview-subagent-integration.md
+
+### 8.1 Assistant prompt builder
+
+Assistant uses the real memory subsystem. Assistant memory remains Assistant-only.
+
+ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md
+
+### 8.2 Child-run continuity
+
+Subagents, Interview, Orchestrator, requirements builder, and crew members use `NullMemoryProvider` and receive no Assistant memory payload.
+
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Personas.md, ContractName:Plans/Prompt_Pipeline.md
+
+Child continuity comes from:
+- canonical child records
+- reconstructed handoff bundles
+- current effective shaping state
+- crew shared state when crew mode is active
+
+It does not come from hidden child-local long-term memory.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/orchestrator-subagent-integration.md
+
+### 8.3 Crew shared state
+
+Crew shared state may persist longer than an individual child, but it is explicit coordination state rather than personal memory for disposable subagents.
+
+ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md
+
+```
+### Intent 3 (Run: r-20260323-192127-03, Anchor: `## 8. Integration points`, Op: replace_section)
+```markdown
+Assistant memory is intentionally separate from child-run continuity, crew shared state, and context-shaping systems.
+
+ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/interview-subagent-integration.md
+
+### 8.1 Assistant prompt builder
+
+Assistant uses the real memory subsystem. Assistant memory remains Assistant-only.
+
+ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md
+
+### 8.2 Child-run continuity
+
+Subagents, Interview, Orchestrator, requirements builder, and crew members use `NullMemoryProvider` and receive no Assistant memory payload.
+
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Personas.md, ContractName:Plans/Prompt_Pipeline.md
+
+Child continuity comes from:
+- canonical child records
+- reconstructed handoff bundles
+- current effective shaping state
+- crew shared state when crew mode is active
+
+It does not come from hidden child-local long-term memory.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/orchestrator-subagent-integration.md
+
+### 8.3 Crew shared state
+
+Crew shared state may persist longer than an individual child, but it is explicit coordination state rather than personal memory for disposable subagents.
+
+ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md
+
+```
+## Doc: Plans/Run_Graph_View.md
+### Intent 1 (Run: r-20260312-160857-01, Anchor: `### 7.5 Canonical upstream ownership for graph projections`, Op: replace_section)
+```markdown
+The Run Graph consumes canonical runtime projections; it does not invent feature-local state.
+
+Required upstream projection families for this packet:
+
+| Detail area | Canonical owner | Required fields |
+|---|---|---|
+| SCM / worktree lineage | `Plans/storage-plan.md` + `Plans/WorktreeGitImprovement.md` | `repo_id`, `worktree_id`, worktree path snapshot, branch, commit range, compare target |
+| GitHub Actions linkage | `Plans/GitHub_Integration.md` + `Plans/GitHub_API_Auth_and_Flows.md` | workflow, run, job, step, latest status, failed-step reference |
+| Docker / Publish / Unraid linkage | `Plans/Containers_Registry_and_Unraid.md` + `Plans/newtools.md` | runtime/context ref, image refs, `publish_result_id`, digest refs, `template_repo_id`, review state |
+| Kubernetes linkage | `Plans/Containers_Registry_and_Unraid.md` | context, namespace, workload, rollout/apply refs |
+| Usage / cost linkage | `Plans/usage-feature.md` + `Plans/Runtime_Artifacts_Panel.md` | canonical usage event ref or usage_event_seq |
+
+ContractRef: ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/usage-feature.md
+
+Detail-pane rules:
+- the selected-node detail view MUST be able to open the relevant Source Control, GitHub Actions, or Docker Manager surface in-context
+- historical node detail MUST preserve historical lineage even when the live worktree, workflow run, or runtime no longer exists
+- missing live targets must render as historical/retired state, not as silent disappearance
+
+ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Decision_Policy.md
+```
+### Intent 2 (Run: r-20260312-203855-01, Anchor: `# Run Graph View (Node Graph Display) -- Specification`, Op: replace_section)
+```markdown
+## 1. Scope and canonical role
+Run Graph is the canonical graph/lineage inspection surface for orchestrated execution.
+
+Rules:
+- graph nodes are runtime nodes, not tiers
+- graph lineage spans generations when graph patching occurs
+- blocked/recovery/promotion/corroboration state belongs in graph detail when it pertains to the selected node or related lineage object
+
+ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/storage-plan.md
+
+## 2. Layout
+The graph view has three primary regions:
+- top header for run scope, generation scope, and trust state
+- main graph canvas with minimap/search/overlays
+- right-side inspector and table region
+
+Rules:
+- current generation is emphasized by default
+- superseded and historical branches remain visible and clickable
+- large-graph modes use virtualization, level-of-detail reduction, and lineage-focused defaults rather than hiding historical truth
+
+ContractRef: ContractName:Plans/Decision_Policy.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Contracts_V0.md
+
+## 3. Node detail inspector
+The inspector must show at minimum:
+- node summary and graph lineage
+- package and seam mapping
+- requested/effective provider/model/effort/persona/account identity
+- worker policy and retry policy
+- attempt history and safe points
+- lane/worktree/snapshot state
+- usage/token/cost links
+- evidence, artifacts, reviews, promotions, and concerns
+- blocked episode state and allowed runtime actions
+
+ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/usage-feature.md
+
+Rules:
+- `request_id` and `tier_id` do not remain primary graph action keys
+- approval/recovery actions resolve through blocked runtime identity
+- evidence and artifact pivots route into native Evidence and Ledger targets using canonical route/open contracts
+
+ContractRef: ContractName:Plans/human-in-the-loop.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Orchestrator_Page.md
+
+## 4. Data model and identity
+Graph projection identity is anchored by:
+- `project_id`
+- `run_id`
+- `node_id`
+- `attempt_id?`
+- `blocked_sequence?`
+- `graph_generation_id?`
+- `feature_seam_id?`
+- `work_package_id?`
+- `lane_id?`
+- `worktree_id?`
+
+Rules:
+- usage correlation resolves through canonical usage identity such as `usage_event_ref` and runtime attribution fields, not by `tier_id`
+- runtime artifacts link through `artifact_id`, `provider_attempt_ref`, `usage_event_ref`, and external receipt refs as bridges rather than as replacement primary keys
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/usage-feature.md
+
+```
+## Doc: Plans/GitHub_API_Auth_and_Flows.md
+### Intent 1 (Run: r-20260312-160857-01, Anchor: ``, Op: append)
+```markdown
+## GitHub Actions Admin and Readiness Addendum (2026-03-12)
+
+The `github_api` realm also powers the GitHub Actions surface.
+
+Required behavior:
+- list/view/rerun/cancel workflow runs
+- dispatch workflows
+- manage repository and environment secrets
+- manage variables
+- manage environments
+- surface requested vs effective admin capability when auth is present but incomplete
+
+ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/newtools.md, ContractName:Plans/Permissions_System.md
+
+Boundary rules:
+- Git transport state and GitHub API state remain separate systems.
+- An authenticated Git transport does not imply GitHub Actions admin capability.
+- Missing or expired Actions admin capability yields deterministic disabled states and blocked outcomes rather than silent browser fallback.
+
+ContractRef: ContractName:Plans/Crosswalk.md, ContractName:Plans/Decision_Policy.md
+```
+### Intent 2 (Run: r-20260328-192850-01, Anchor: `### Token lifecycle`, Op: replace_section)
+```markdown
+Token lifecycle for all GitHub auth tokens follows these rules:
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/CLI_Bridged_Providers.md
+
+**Proactive refresh:** Before each provider call, PM MUST check the token's remaining TTL. If TTL remaining is at or below 20% of the total TTL, PM MUST refresh the token proactively, before the call. Check-before-use pattern is required; wait-for-expiry is not acceptable.
+
+ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Executor_Protocol.md
+
+**Credential rebuild on refresh:** After any credential refresh, PM MUST rebuild the HTTP client from scratch. Updating only the credential field on an existing client is insufficient and MUST NOT be used. The rebuilt client ensures new credentials are active for all subsequent calls.
+
+ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Architecture_Invariants.md
+
+**Windows OAuth redirect listener:**
+- Bind ONLY to `127.0.0.1` (loopback), not `0.0.0.0`.
+- Use an ephemeral port if the configured callback port is unavailable.
+- Provide a copy-paste auth code fallback path in case the redirect listener cannot be started (firewall, port conflict).
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Executor_Protocol.md
+
+**Token storage:** Tokens MUST be stored in the OS credential store (keychain/credential manager). Tokens MUST NOT be written to plain-text config files or seglog.
+
+ContractRef: ContractName:Plans/Architecture_Invariants.md, ContractName:Plans/storage-plan.md
+```
+### Intent 3 (Run: r-20260328-192850-01, Anchor: `## Acceptance criteria (testable)`, Op: insert_after)
+```markdown
+### Auth correctness acceptance criteria (additional)
+
+ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/CLI_Bridged_Providers.md
+
+- Given a token with TTL ≤ 20% remaining, the pre-call check triggers a refresh BEFORE the call is dispatched.
+- Given a successful credential refresh, the HTTP client in use for subsequent calls is a newly constructed client, not the prior instance.
+- Given a Windows OAuth flow, the redirect listener binds only to 127.0.0.1 and provides a copy-paste fallback if binding fails.
+- Given any JSON/YAML schema with a `$ref` cycle, PM schema traversal detects the cycle, stops at depth 32, and returns an error rather than looping infinitely.
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Architecture_Invariants.md
+```
+## Doc: Plans/OpenCode_Deep_Extraction.md
+### Intent 1 (Run: r-20260320-170511-01, Anchor: `### 9F. Skills`, Op: replace_section)
+```markdown
+1. **Architecture pattern, not ownership transfer:** OpenCode's skills system is a useful reference because it sits above the provider layer. Puppet Master should follow that pattern architecturally while keeping PM-native skills as the canonical runtime path.
+2. **Compatibility roots:** PM maintains its own canonical roots and also imports compatible roots such as `.claude/skills` and `.agents/skills` per the PM skill system. Compatibility import does not make those external roots canonical.
+3. **Projection posture:** Provider-native or tool-native skill projection is optional compatibility only. PM should not require Codex-specific or GitHub-Copilot-specific skill packaging inside OpenCode because OpenCode itself applies one skill system above its provider list.
+4. **Discovery vs runtime:** OpenCode-style discovery compatibility is useful, but PM runtime correctness still depends on PM registry resolution, readiness validation, context bundling, and the PM `skill` tool.
+
+ContractRef: ContractName:Plans/Skills_System.md, ContractName:Plans/MiscPlan.md, ContractName:Plans/Provider_OpenCode.md
+
+```
+### Intent 2 (Run: r-20260320-170511-02, Anchor: `### 9F. Skills`, Op: replace_section)
+```markdown
+1. **Architecture pattern, not ownership transfer:** OpenCode's skills system is a useful reference because it sits above the provider layer. Puppet Master should follow that pattern architecturally while keeping PM-native skills as the canonical runtime path.
+2. **Compatibility roots:** PM maintains its own canonical roots and also imports compatible roots such as `.claude/skills` and `.agents/skills` per the PM skill system. Compatibility import does not make those external roots canonical.
+3. **Projection posture:** Provider-native or tool-native skill projection is optional compatibility only. PM should not require Codex-specific or GitHub-Copilot-specific skill packaging inside OpenCode because OpenCode itself applies one skill system above its provider list.
+4. **Discovery vs runtime:** OpenCode-style discovery compatibility is useful, but PM runtime correctness still depends on PM registry resolution, readiness validation, context bundling, and the PM `skill` tool.
+
+ContractRef: ContractName:Plans/Skills_System.md, ContractName:Plans/MiscPlan.md, ContractName:Plans/Provider_OpenCode.md
+
+```

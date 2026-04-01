@@ -116,31 +116,27 @@ Thread-to-worktree binding is owned by `Plans/assistant-chat-design.md`.
 
 ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md, ContractName:Plans/DRY_Rules.md
 
-### 3.6 Projection-state ownership
-
 ### 3.7 Subagent, crew, and context-shaping ownership
 
-PM child-run ownership is split intentionally:
+Subagent and crew ownership is intentionally split across owner docs. Each concern has one authoritative home.
 
-- `Tools.md` owns the child-run execution contract, lifecycle model, command/tool launch normalization, retry/reroute/replacement semantics, and event-family vocabulary.
-- `Prompt_Pipeline.md` owns dynamic context shrinking, current working set rules, handoff bundle reconstruction, and effective-context versus canonical-history separation.
-- `assistant-chat-design.md` owns child card, batch, subgroup, and crew-board presentation plus Context Lens chat interaction.
-- `storage-plan.md` owns canonical child-run persistence, batch and subgroup structure, event durability, and context-shaping state references.
-- `Personas.md`, `Models_System.md`, and `Permissions_System.md` own requested-versus-effective child persona, effort/runtime, and permission/capability resolution.
+ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/interview-subagent-integration.md
 
-ContractRef: Cross-doc ownership for child runs, crews, and context shaping MUST remain explicit so later updates do not reintroduce parallel canon for lifecycle, context management, or UI projection. [Source: Tools.md#task-tool-and-child-run-canon; Prompt_Pipeline.md#dynamic-context-shrinking; storage-plan.md#canonical-child-run-records-and-batch-structure]
+| Concern | SSOT owner |
+|---|---|
+| Global execution limits (`maxNestingDepth`, `maxTotalSpawnedAgents`, `maxToolRoundsPerAgent`, concurrency caps) | `Plans/orchestrator-subagent-integration.md` |
+| Per-interview reviewer cap (`max_subagents_spawn`) | `Plans/interview-subagent-integration.md` |
+| Shell environment isolation and shell lifecycle | `Plans/orchestrator-subagent-integration.md` + `Plans/Tools.md` jointly |
+| Context-shaping transitions and compaction-state events | `Plans/Prompt_Pipeline.md` + `Plans/storage-plan.md` |
+| Crew lifecycle and message-board events | `Plans/storage-plan.md` |
+| Requested vs effective runtime surface for child runs | `Plans/Models_System.md` + `Plans/CLI_Bridged_Providers.md` |
 
-Crew mode is a multi-model orchestration overlay, not a separate runtime ontology. Crew shared state belongs to the canonical child-run and storage model, while Assistant memory remains Assistant-only.
-ContractRef: Crew coordination MUST reuse the canonical child-run/storage model and MUST NOT reintroduce standalone child-memory or side-file canon. [Source: assistant-memory-subsystem.md#capability-boundary-assistant-only; WorktreeGitImprovement.md#crew-and-worktree-canon-cleanup]
+ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Tools.md
 
-Context Lens and dynamic context shrinking are related but separately owned concepts. Context Lens is a user-directed chat overlay owned by Assistant Chat and the command/wiring surface. Dynamic context shrinking is a runtime effective-context mechanism owned by Prompt Pipeline and storage/event projection.
-ContractRef: Context Lens and dynamic context shrinking MUST remain distinct ownership domains even when they share rehydration and effective-context assembly primitives. [Source: assistant-chat-design.md#176-context-lens-mute--focus--subcompact; Prompt_Pipeline.md#dynamic-context-shrinking]
-Projection-state ownership is:
-- `projection_freshness` is closed to `current | refreshing | stale`
-- `projection_health` is closed to `healthy | degraded | unavailable`
-- projection state qualifies UI trust and action gating; it does not replace canonical runtime truth
+Per-surface docs may narrow these behaviors, but MUST NOT redefine the owners above.
 
-ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Decision_Policy.md, ContractName:Plans/Permissions_System.md
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/assistant-chat-design.md
+
 ## References
 - `Plans/Spec_Lock.json`
 - `Plans/DRY_Rules.md`

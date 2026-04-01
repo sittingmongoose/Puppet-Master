@@ -114,6 +114,63 @@ ContractRef: Primitive:UICommand, ContractName:Plans/UI_Wiring_Rules.md#section-
 
 <a id="INV-012"></a>
 ## INV-012 -- Wiring matrix coverage (Rule 2)
+
+<a id="INV-013"></a>
+## INV-013 -- Pre-dispatch tool validation
+
+`policy.may_execute_tool()` MUST be called for every tool dispatch at every nesting depth regardless of invocation path. No child-run, plugin path, provider surface, or shell bridge may bypass this invariant.
+
+ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Tools.md
+
+Enforcement may be static (import-graph / compile-time gate) or runtime (central dispatch gate), but direct calls to tool implementations without this permission gate are prohibited.
+
+ContractRef: Invariant:INV-013, ContractName:Plans/Architecture_Invariants.md
+
+## INV-014 -- Shared mutable state requires RWMutex
+
+Any data structure shared across threads or async tasks that can be mutated MUST be protected by an `RwLock` (or equivalent). Lock-free approaches are allowed only when formally justified. Silent data races are prohibited.
+
+ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/storage-plan.md
+
+ContractRef: Invariant:INV-014
+
+<a id="INV-015"></a>
+## INV-015 -- Monetary values are integer microdollars
+
+All persisted and in-memory monetary cost values MUST be stored as integer microdollars (`u64`). Float types MUST NOT be used for cost storage or accumulation at any layer. Display conversion to decimal happens only at the presentation layer.
+
+ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/Contracts_V0.md
+
+Enforcement: `clippy` or custom lint to reject `f64`/`f32` fields named `cost*`, `price*`, or `amount*` in persisted structs.
+ContractRef: Invariant:INV-015
+
+<a id="INV-016"></a>
+## INV-016 -- Token fields are never aggregated at storage layer
+
+The five canonical token fields (`input_tokens`, `output_tokens`, `cache_read_input_tokens`, `cache_creation_input_tokens`, `reasoning_tokens`) MUST be stored individually in every usage record. Pre-aggregation or collapsing at the storage or event layer is prohibited.
+
+ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/Contracts_V0.md
+
+ContractRef: Invariant:INV-016
+
+<a id="INV-017"></a>
+## INV-017 -- File mutations are atomic (temp-fsync-rename)
+
+All FileSafe-managed file write operations MUST use the atomic write pattern: write to a temp file, fsync, rename to the target path. Direct `os.WriteFile` or equivalent non-atomic write calls MUST NOT be used for managed files.
+
+ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/storage-plan.md
+
+ContractRef: Invariant:INV-017
+
+<a id="INV-018"></a>
+## INV-018 -- Seglog CRC32 is mandatory
+
+Every seglog record MUST include a CRC32 checksum. Checksum validation MUST occur on every read. A record that fails CRC32 validation MUST be skipped and a recovery event emitted. Silently processing a corrupt record is prohibited.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Executor_Protocol.md
+
+ContractRef: Invariant:INV-018
+
 **Rule:** Every interactive UI element MUST map to exactly one `UICommandID`. The mapping MUST be recorded in the wiring matrix (validated by `Plans/Wiring_Matrix.schema.json`). Every `UICommandID` listed in `Plans/UI_Command_Catalog.md` MUST have a registered handler. No interactive element may exist without a wiring matrix entry; no catalog command may lack a handler.
 
 ContractRef: Primitive:UICommand, ContractName:Plans/UI_Wiring_Rules.md#section-2, SchemaID:Wiring_Matrix.schema.json, Gate:GATE-010

@@ -1,0 +1,589 @@
+## Doc: Plans/Wiring_Matrix.md
+### Intent 1 (Run: r-20260312-160857-01, Anchor: ``, Op: append)
+```markdown
+## Source Control, GitHub Actions, and Docker Manager Wiring Addendum (2026-03-12)
+
+Minimum required new rows for the final packet apply:
+- `btn.panel.source_control` -> `cmd.panel.switch`
+- `btn.panel.github_actions` -> `cmd.panel.switch`
+- `btn.panel.docker_manager` -> `cmd.panel.switch`
+- Source Control subview switches -> `cmd.source_control.switch_subview`
+- worktree compare / recover / prune controls -> `cmd.git.worktree.*`
+- GitHub Actions rerun / cancel / dispatch / pin / admin CRUD controls -> `cmd.github.actions.*`
+- Docker Manager container / image / compose / build-bake / registry / kubernetes controls -> `cmd.docker.*` and `cmd.docker.k8s.*`
+- Orchestrator cross-surface pivots -> `cmd.orchestrator.open_in_source_control`, `cmd.orchestrator.open_in_github_actions`, `cmd.orchestrator.open_in_docker_manager`
+
+ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/UI_Wiring_Rules.md, ContractName:Plans/Orchestrator_Page.md
+```
+### Intent 2 (Run: r-20260317-164124-01, Anchor: `## Runtime Recovery Producer / Consumer Wiring`, Op: replace_section)
+```markdown
+ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/UI_Wiring_Rules.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md
+
+The following rows are required for the promoted Section 15 feature set in addition to the runtime recovery rows already required elsewhere.
+
+| UI element / surface | UICommand ID | Producer | Consumer / handler | Required effect |
+|---|---|---|---|---|
+| Project switcher result row | `cmd.project.switch_active_tab` | Projects view / command palette | shell state controller | Switch active workspace tab to target project and recalc effective state |
+| Project switcher alternate action | `cmd.project.open_in_new_workspace_tab` | Projects view / command palette | shell state controller | Open target project in a new workspace tab |
+| Thread context hover `More Details` | `cmd.chat.open_thread_context_details` | chat header hover module | chat layout / editor-tab controller | Open or focus the canonical thread Context Detail Pane |
+| Thread context click `Compact Now` | `cmd.chat.compact_context` | chat header click affordance | chat runtime controller | Trigger canonical thread compaction |
+| Restore-and-branch CTA | `cmd.chat.branch_from_restore` | History / restore UI | thread/session controller | Create new thread/session branch from restore point |
+| Browser toolbar share button | `cmd.browser.share_with_agent` | browser chrome | browser context controller | Mark current browser subject shared with active thread |
+| Browser toolbar revoke button | `cmd.browser.revoke_share_with_agent` | browser chrome / attention center | browser context controller | Clear shared-with-agent state |
+| Chat live-tool action | `cmd.dev.start_session` | chat action / toolbar | dev-session controller | Start dev session and route output to shell panes |
+| Dev stop button | `cmd.dev.stop_session` | toolbar / ports / terminal | dev-session controller | Stop active dev session deterministically |
+| Catalog install button | `cmd.catalog.install_item` | catalog UI | catalog lifecycle controller | Install target item and propagate subsystem effects |
+| Catalog remove button | `cmd.catalog.remove_item` | catalog UI | catalog lifecycle controller | Remove item using subsystem-specific active-item rules |
+
+This section is normative and not an example/template section.
+
+```
+### Intent 3 (Run: r-20260317-164124-02, Anchor: `## Runtime Recovery Producer / Consumer Wiring`, Op: replace_section)
+```markdown
+ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/UI_Wiring_Rules.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md
+
+The following rows are required for the promoted Section 15 feature set in addition to the runtime recovery rows already required elsewhere.
+
+| UI element / surface | UICommand ID | Producer | Consumer / handler | Required effect |
+|---|---|---|---|---|
+| Project switcher result row | `cmd.project.switch_active_tab` | Projects view / command palette | shell state controller | Switch active workspace tab to target project and recalc effective state |
+| Project switcher alternate action | `cmd.project.open_in_new_workspace_tab` | Projects view / command palette | shell state controller | Open target project in a new workspace tab |
+| Thread context hover `More Details` | `cmd.chat.open_thread_context_details` | chat header hover module | chat layout / editor-tab controller | Open or focus the canonical thread Context Detail Pane |
+| Thread context click `Compact Now` | `cmd.chat.compact_context` | chat header click affordance | chat runtime controller | Trigger canonical thread compaction |
+| Restore-and-branch CTA | `cmd.chat.branch_from_restore` | History / restore UI | thread/session controller | Create new thread/session branch from restore point |
+| Browser toolbar share button | `cmd.browser.share_with_agent` | browser chrome | browser context controller | Mark current browser subject shared with active thread |
+| Browser toolbar revoke button | `cmd.browser.revoke_share_with_agent` | browser chrome / attention center | browser context controller | Clear shared-with-agent state |
+| Chat live-tool action | `cmd.dev.start_session` | chat action / toolbar | dev-session controller | Start dev session and route output to shell panes |
+| Dev stop button | `cmd.dev.stop_session` | toolbar / ports / terminal | dev-session controller | Stop active dev session deterministically |
+| Catalog install button | `cmd.catalog.install_item` | catalog UI | catalog lifecycle controller | Install target item and propagate subsystem effects |
+| Catalog remove button | `cmd.catalog.remove_item` | catalog UI | catalog lifecycle controller | Remove item using subsystem-specific active-item rules |
+
+This section is normative and not an example/template section.
+
+```
+### Intent 4 (Run: r-20260317-164124-03, Anchor: `## Runtime Recovery Producer / Consumer Wiring`, Op: replace_section)
+```markdown
+ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/UI_Wiring_Rules.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md
+
+The following rows are required for the promoted Section 15 feature set in addition to the runtime recovery rows already required elsewhere.
+
+| UI element / surface | UICommand ID | Producer | Consumer / handler | Required effect |
+|---|---|---|---|---|
+| Project switcher result row | `cmd.project.switch_active_tab` | Projects view / command palette | shell state controller | Switch active workspace tab to target project and recalc effective state |
+| Project switcher alternate action | `cmd.project.open_in_new_workspace_tab` | Projects view / command palette | shell state controller | Open target project in a new workspace tab |
+| Thread context hover `More Details` | `cmd.chat.open_thread_context_details` | chat header hover module | chat layout / editor-tab controller | Open or focus the canonical thread Context Detail Pane |
+| Thread context click `Compact Now` | `cmd.chat.compact_context` | chat header click affordance | chat runtime controller | Trigger canonical thread compaction |
+| Restore-and-branch CTA | `cmd.chat.branch_from_restore` | History / restore UI | thread/session controller | Create new thread/session branch from restore point |
+| Browser toolbar share button | `cmd.browser.share_with_agent` | browser chrome | browser context controller | Mark current browser subject shared with active thread |
+| Browser toolbar revoke button | `cmd.browser.revoke_share_with_agent` | browser chrome / attention center | browser context controller | Clear shared-with-agent state |
+| Chat live-tool action | `cmd.dev.start_session` | chat action / toolbar | dev-session controller | Start dev session and route output to shell panes |
+| Dev stop button | `cmd.dev.stop_session` | toolbar / ports / terminal | dev-session controller | Stop active dev session deterministically |
+| Catalog install button | `cmd.catalog.install_item` | catalog UI | catalog lifecycle controller | Install target item and propagate subsystem effects |
+| Catalog remove button | `cmd.catalog.remove_item` | catalog UI | catalog lifecycle controller | Remove item using subsystem-specific active-item rules |
+
+This section is normative and not an example/template section.
+
+```
+### Intent 5 (Run: r-20260317-181906-01, Anchor: `## Runtime Recovery Producer / Consumer Wiring`, Op: replace_section)
+```markdown
+### Minimum required rows
+
+| UI element / surface | UICommand ID | Producer | Consumer / handler | Required effect |
+|---|---|---|---|---|
+| Project switcher result row | `cmd.project.switch_active_tab` | Projects view / command palette | shell state controller | Switch active workspace tab to target project and recalc effective state |
+| Restore-and-branch CTA | `cmd.chat.branch_from_restore` | History / restore UI | thread/session controller | Create new thread/session branch from restore point |
+| Browser toolbar `Open in Browser` | `cmd.browser.open_workspace_preview` | file preview / command palette / open action | browser-session controller | Create or focus the canonical `workspace_preview` browser session |
+| Browser toolbar `Open in Detached Browser` | `cmd.browser.open_detached_preview` | file preview / command palette / open action | browser-session controller | Create or focus the canonical `detached_preview` browser session |
+| Browser toolbar `Open DevTools` | `cmd.browser.open_devtools` | browser chrome / command palette | browser-session controller / DevTools host | Open DevTools for the focused browser session |
+| Browser toolbar `Pick Element for Chat` | `cmd.browser.pick_element_for_chat` | browser chrome | browser context controller | Capture explicit `browser_element_context` into composer-prep state |
+| Browser toolbar `Add Selection to Chat` | `cmd.browser.add_selection_to_chat` | browser chrome | browser context controller | Capture explicit `browser_selection_context` into composer-prep state |
+| Browser takeover prompt | `cmd.browser.take_over` | live browser takeover prompt | browser-session controller / runtime controller | Pause or continue the live automation browser according to the selected takeover choice |
+| Browser action `Promote to Normal Browsing` | `cmd.browser.promote_to_normal_browsing` | browser chrome / automation banner | browser-session controller / storage controller | Promote eligible state into a normal browsing session and update restore behavior |
+| Browser recovery banner `Reopen` | `cmd.browser.reopen` | browser recovery banner / attention center | browser-session controller | Recreate a recoverable browser session after failure |
+| Browser recovery banner `Retry` | `cmd.browser.retry` | browser recovery banner / attention center | browser-session controller / runtime controller | Retry the failed browser launch or action path |
+| Browser recovery banner `Keep Closed` | `cmd.browser.keep_closed` | browser recovery banner / attention center | browser-session controller | Keep the failed browser session closed while preserving auditability |
+
+ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md
+```
+### Intent 6 (Run: r-20260317-181906-02, Anchor: `## Runtime Recovery Producer / Consumer Wiring`, Op: replace_section)
+```markdown
+ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/UI_Wiring_Rules.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md
+
+### Minimum required rows
+
+The following rows are required for the promoted Section 15 feature set in addition to the runtime recovery rows already required elsewhere.
+
+| UI element / surface | UICommand ID | Producer | Consumer / handler | Required effect |
+|---|---|---|---|---|
+| Project switcher result row | `cmd.project.switch_active_tab` | Projects view / command palette | shell state controller | Switch active workspace tab to target project and recalc effective state |
+| Project switcher alternate action | `cmd.project.open_in_new_workspace_tab` | Projects view / command palette | shell state controller | Open target project in a new workspace tab |
+| Thread context hover `More Details` | `cmd.chat.open_thread_context_details` | chat header hover module | chat layout / editor-tab controller | Open or focus the canonical thread Context Detail Pane |
+| Thread context click `Compact Now` | `cmd.chat.compact_context` | chat header click affordance | chat runtime controller | Trigger canonical thread compaction |
+| Restore-and-branch CTA | `cmd.chat.branch_from_restore` | History / restore UI | thread/session controller | Create new thread/session branch from restore point |
+| Browser toolbar `Open in Browser` | `cmd.browser.open_workspace_preview` | file preview / command palette / open action | browser-session controller | Create or focus the canonical `workspace_preview` browser session |
+| Browser toolbar `Open in Detached Browser` | `cmd.browser.open_detached_preview` | file preview / command palette / open action | browser-session controller | Create or focus the canonical `detached_preview` browser session |
+| Browser toolbar `Focus Browser` | `cmd.browser.focus_browser_tab` | browser chrome / command palette | browser-session controller | Focus the owning canonical browser session |
+| Browser toolbar `Detach Browser` | `cmd.browser.detach_browser_tab` | browser chrome | browser-session controller | Convert the owning normal browsing session into detached presentation without inventing a new logical browser subject |
+| Browser toolbar `Open DevTools` | `cmd.browser.open_devtools` | browser chrome / command palette | browser-session controller / DevTools host | Open DevTools for the focused browser session |
+| Browser toolbar `Toggle DevTools Dock` | `cmd.browser.toggle_devtools_dock` | browser chrome / DevTools chrome | DevTools host | Switch the focused browser DevTools between docked layouts |
+| Browser toolbar share button | `cmd.browser.share_with_agent` | browser chrome | browser context controller | Mark current browser subject shared with active thread |
+| Browser toolbar revoke button | `cmd.browser.revoke_share_with_agent` | browser chrome / attention center | browser context controller | Clear shared-with-agent state |
+| Browser toolbar `Pick Element for Chat` | `cmd.browser.p
+```
+[... truncated, full length: 6763 chars]
+### Intent 7 (Run: r-20260317-181906-03, Anchor: `## Runtime Recovery Producer / Consumer Wiring`, Op: replace_section)
+```markdown
+ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/UI_Wiring_Rules.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md
+
+### Minimum required rows
+
+The following rows are required for the promoted Section 15 feature set in addition to the runtime recovery rows already required elsewhere.
+
+| UI element / surface | UICommand ID | Producer | Consumer / handler | Required effect |
+|---|---|---|---|---|
+| Project switcher result row | `cmd.project.switch_active_tab` | Projects view / command palette | shell state controller | Switch active workspace tab to target project and recalc effective state |
+| Project switcher alternate action | `cmd.project.open_in_new_workspace_tab` | Projects view / command palette | shell state controller | Open target project in a new workspace tab |
+| Thread context hover `More Details` | `cmd.chat.open_thread_context_details` | chat header hover module | chat layout / editor-tab controller | Open or focus the canonical thread Context Detail Pane |
+| Thread context click `Compact Now` | `cmd.chat.compact_context` | chat header click affordance | chat runtime controller | Trigger canonical thread compaction |
+| Restore-and-branch CTA | `cmd.chat.branch_from_restore` | History / restore UI | thread/session controller | Create new thread/session branch from restore point |
+| Browser toolbar `Open in Browser` | `cmd.browser.open_workspace_preview` | file preview / command palette / open action | browser-session controller | Create or focus the canonical `workspace_preview` browser session |
+| Browser toolbar `Open in Detached Browser` | `cmd.browser.open_detached_preview` | file preview / command palette / open action | browser-session controller | Create or focus the canonical `detached_preview` browser session |
+| Browser toolbar `Focus Browser` | `cmd.browser.focus_browser_tab` | browser chrome / command palette | browser-session controller | Focus the owning canonical browser session |
+| Browser toolbar `Detach Browser` | `cmd.browser.detach_browser_tab` | browser chrome | browser-session controller | Convert the owning normal browsing session into detached presentation without inventing a new logical browser subject |
+| Browser toolbar `Open DevTools` | `cmd.browser.open_devtools` | browser chrome / command palette | browser-session controller / DevTools host | Open DevTools for the focused browser session |
+| Browser toolbar `Toggle DevTools Dock` | `cmd.browser.toggle_devtools_dock` | browser chrome / DevTools chrome | DevTools host | Switch the focused browser DevTools between docked layouts |
+| Browser toolbar share button | `cmd.browser.share_with_agent` | browser chrome | browser context controller | Mark current browser subject shared with active thread |
+| Browser toolbar revoke button | `cmd.browser.revoke_share_with_agent` | browser chrome / attention center | browser context controller | Clear shared-with-agent state |
+| Browser toolbar `Pick Element for Chat` | `cmd.browser.p
+```
+[... truncated, full length: 6763 chars]
+### Intent 8 (Run: r-20260318-160350-01, Anchor: `## Runtime Recovery Producer / Consumer Wiring`, Op: replace_section)
+```markdown
+### Minimum required rows
+
+The following rows are required for the promoted Section 15 feature set in addition to the runtime recovery rows already required elsewhere.
+
+| UI element / surface | UICommand ID | Producer | Consumer / handler | Required effect |
+|---|---|---|---|---|
+| Project switcher result row | `cmd.project.switch_active_tab` | Projects view / command palette | shell state controller | Switch active workspace tab to target project and recalc effective state |
+| Project switcher alternate action | `cmd.project.open_in_new_workspace_tab` | Projects view / command palette | shell state controller | Open target project in a new workspace tab |
+| Thread context hover `More Details` | `cmd.chat.open_thread_context_details` | chat header hover module | chat layout / editor-tab controller | Open or focus the canonical thread Context Detail Pane |
+| Thread context click `Compact Now` | `cmd.chat.compact_context` | chat header click affordance | chat runtime controller | Trigger canonical thread compaction |
+| Restore-and-branch CTA | `cmd.chat.branch_from_restore` | History / restore UI | thread/session controller | Create new thread/session branch from restore point |
+| Browser toolbar `Open in Browser` | `cmd.browser.open_workspace_preview` | file preview / command palette / open action | browser-session controller | Create or focus the canonical `workspace_preview` browser session |
+| Browser toolbar `Open in Detached Browser` | `cmd.browser.open_detached_preview` | file preview / command palette / open action | browser-session controller | Create or focus the canonical `detached_preview` browser session |
+| Browser toolbar `Focus Browser` | `cmd.browser.focus_browser_tab` | browser chrome / command palette | browser-session controller | Focus the owning canonical browser session |
+| Browser toolbar `Detach Browser` | `cmd.browser.detach_browser_tab` | browser chrome | browser-session controller | Convert the owning normal browsing session into detached presentation without inventing a new logical browser subject |
+| Browser toolbar `Open DevTools` | `cmd.browser.open_devtools` | browser chrome / command palette | browser-session controller / DevTools host | Open DevTools for the focused browser session |
+| Browser toolbar `Toggle DevTools Dock` | `cmd.browser.toggle_devtools_dock` | browser chrome / DevTools chrome | DevTools host | Switch the focused browser DevTools between docked layouts |
+| Browser toolbar share button | `cmd.browser.share_with_agent` | browser chrome | browser context controller | Mark current browser subject shared with active thread |
+| Browser toolbar revoke button | `cmd.browser.revoke_share_with_agent` | browser chrome / attention center | browser context controller | Clear shared-with-agent state |
+| Browser toolbar `Pick Element for Chat` | `cmd.browser.pick_element_for_chat` | browser chrome | browser context controller | Capture explicit `browser_element_context` into composer-prep state |
+| Browser tool
+```
+[... truncated, full length: 10404 chars]
+### Intent 9 (Run: r-20260318-160350-02, Anchor: `## Runtime Recovery Producer / Consumer Wiring`, Op: replace_section)
+```markdown
+### Minimum required rows
+
+The following rows are required for the promoted Section 15 feature set in addition to the runtime recovery rows already required elsewhere.
+
+| UI element / surface | UICommand ID | Producer | Consumer / handler | Required effect |
+|---|---|---|---|---|
+| Project switcher result row | `cmd.project.switch_active_tab` | Projects view / command palette | shell state controller | Switch active workspace tab to target project and recalc effective state |
+| Project switcher alternate action | `cmd.project.open_in_new_workspace_tab` | Projects view / command palette | shell state controller | Open target project in a new workspace tab |
+| Thread context hover `More Details` | `cmd.chat.open_thread_context_details` | chat header hover module | chat layout / editor-tab controller | Open or focus the canonical thread Context Detail Pane |
+| Thread context click `Compact Now` | `cmd.chat.compact_context` | chat header click affordance | chat runtime controller | Trigger canonical thread compaction |
+| Restore-and-branch CTA | `cmd.chat.branch_from_restore` | History / restore UI | thread/session controller | Create new thread/session branch from restore point |
+| Browser toolbar `Open in Browser` | `cmd.browser.open_workspace_preview` | file preview / command palette / open action | browser-session controller | Create or focus the canonical `workspace_preview` browser session |
+| Browser toolbar `Open in Detached Browser` | `cmd.browser.open_detached_preview` | file preview / command palette / open action | browser-session controller | Create or focus the canonical `detached_preview` browser session |
+| Browser toolbar `Focus Browser` | `cmd.browser.focus_browser_tab` | browser chrome / command palette | browser-session controller | Focus the owning canonical browser session |
+| Browser toolbar `Detach Browser` | `cmd.browser.detach_browser_tab` | browser chrome | browser-session controller | Convert the owning normal browsing session into detached presentation without inventing a new logical browser subject |
+| Browser toolbar `Open DevTools` | `cmd.browser.open_devtools` | browser chrome / command palette | browser-session controller / DevTools host | Open DevTools for the focused browser session |
+| Browser toolbar `Toggle DevTools Dock` | `cmd.browser.toggle_devtools_dock` | browser chrome / DevTools chrome | DevTools host | Switch the focused browser DevTools between docked layouts |
+| Browser toolbar share button | `cmd.browser.share_with_agent` | browser chrome | browser context controller | Mark current browser subject shared with active thread |
+| Browser toolbar revoke button | `cmd.browser.revoke_share_with_agent` | browser chrome / attention center | browser context controller | Clear shared-with-agent state |
+| Browser toolbar `Pick Element for Chat` | `cmd.browser.pick_element_for_chat` | browser chrome | browser context controller | Capture explicit `browser_element_context` into composer-prep state |
+| Browser tool
+```
+[... truncated, full length: 10404 chars]
+### Intent 10 (Run: r-20260319-030558-01, Anchor: `## Source Control, GitHub Actions, and Docker Manager Wiring Addendum (2026-03-12)`, Op: replace_section)
+```markdown
+This wiring addendum also covers Search, File Manager action handoff, chat restore/file-reference actions, and host-aware LSP/remote projections because those seams now share one shell slot and one cross-surface identity model.
+
+| Surface / flow | Canonical command / route | Owner doc | Downstream consumers / notes |
+|---|---|---|---|
+| Show Search panel | `cmd.search.show` | `Plans/FinalGUISpec.md` + `Plans/UI_Command_Catalog.md` | Right-hand side panel owner for find/replace-in-files |
+| Run find/replace in files | `cmd.search.find_in_files`, `cmd.search.replace_in_files` | `Plans/UI_Command_Catalog.md` | Query-session state persists in `Plans/storage-plan.md`; remote execution rules live in `Plans/GitHub_Integration.md` |
+| Open Search result | `cmd.search.open_result` | `Plans/UI_Command_Catalog.md` | Uses shared open-file contract from `Plans/FileManager.md` |
+| File-tree actions | `cmd.file.*` | `Plans/FileManager.md` + `Plans/UI_Command_Catalog.md` | Reuse FileSafe-backed transfer/mutation path |
+| Add file to chat | `cmd.chat.add_file_reference` | `Plans/assistant-chat-design.md` | Visible composer chips; file-only in MVP |
+| Revert last agent edit | `cmd.chat.revert` | `Plans/assistant-chat-design.md` | Refreshes editors via canonical mutation pipeline |
+| Rewind chat only | `cmd.chat.rewind` | `Plans/assistant-chat-design.md` | Must not restore files |
+| Source Control subview switch | `cmd.source_control.switch_subview` | `Plans/GitHub_Integration.md` | Keeps Source Control in the right-hand side-panel slot |
+| Diff compare target / search / hunks | `cmd.git.diff_set_compare_target`, `cmd.git.diff_search`, `cmd.git.stage_hunks`, `cmd.git.unstage_hunks`, `cmd.git.discard_hunks`, `cmd.git.conflict_apply_resolution` | `Plans/GitHub_Integration.md` | Diff-local search stays Source Control owned |
+| Host-aware LSP session projection | `(host_id, server_id, root_identity)` session key | `Plans/LSPSupport.md` | Consumed by editor, Problems, status, and persistence |
+| Remote reconnect | `cmd.remote.reconnect` | `Plans/GitHub_Integration.md` | One bounded auto-retry precedes this explicit action |
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/FileManager.md, ContractName:Plans/GitHub_Integration.md
+
+```
+### Intent 11 (Run: r-20260319-030558-02, Anchor: `## Source Control, GitHub Actions, and Docker Manager Wiring Addendum (2026-03-12)`, Op: replace_section)
+```markdown
+This wiring addendum also covers Search, File Manager action handoff, chat restore/file-reference actions, and host-aware LSP/remote projections because those seams now share one shell slot and one cross-surface identity model.
+
+| Surface / flow | Canonical command / route | Owner doc | Downstream consumers / notes |
+|---|---|---|---|
+| Show Search panel | `cmd.search.show` | `Plans/FinalGUISpec.md` + `Plans/UI_Command_Catalog.md` | Right-hand side panel owner for find/replace-in-files |
+| Run find/replace in files | `cmd.search.find_in_files`, `cmd.search.replace_in_files` | `Plans/UI_Command_Catalog.md` | Query-session state persists in `Plans/storage-plan.md`; remote execution rules live in `Plans/GitHub_Integration.md` |
+| Open Search result | `cmd.search.open_result` | `Plans/UI_Command_Catalog.md` | Uses shared open-file contract from `Plans/FileManager.md` |
+| File-tree actions | `cmd.file.*` | `Plans/FileManager.md` + `Plans/UI_Command_Catalog.md` | Reuse FileSafe-backed transfer/mutation path |
+| Add file to chat | `cmd.chat.add_file_reference` | `Plans/assistant-chat-design.md` | Visible composer chips; file-only in MVP |
+| Revert last agent edit | `cmd.chat.revert` | `Plans/assistant-chat-design.md` | Refreshes editors via canonical mutation pipeline |
+| Rewind chat only | `cmd.chat.rewind` | `Plans/assistant-chat-design.md` | Must not restore files |
+| Source Control subview switch | `cmd.source_control.switch_subview` | `Plans/GitHub_Integration.md` | Keeps Source Control in the right-hand side-panel slot |
+| Diff compare target / search / hunks | `cmd.git.diff_set_compare_target`, `cmd.git.diff_search`, `cmd.git.stage_hunks`, `cmd.git.unstage_hunks`, `cmd.git.discard_hunks`, `cmd.git.conflict_apply_resolution` | `Plans/GitHub_Integration.md` | Diff-local search stays Source Control owned |
+| Host-aware LSP session projection | `(host_id, server_id, root_identity)` session key | `Plans/LSPSupport.md` | Consumed by editor, Problems, status, and persistence |
+| Remote reconnect | `cmd.remote.reconnect` | `Plans/GitHub_Integration.md` | One bounded auto-retry precedes this explicit action |
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/FileManager.md, ContractName:Plans/GitHub_Integration.md
+
+```
+### Intent 12 (Run: r-20260320-164907-01, Anchor: `### Minimum required rows`, Op: insert_after)
+```markdown
+### Debug investigation minimum rows
+
+The following rows are additionally required for Debug Mode and Investigation Context wiring.
+
+| UI element / surface | UICommand ID | Producer | Consumer / handler | Required effect |
+|---|---|---|---|---|
+| Assistant mode strip `Debug` | `cmd.chat.mode` | chat header mode strip | session mode controller | switch the thread into Debug overlay and focus the active investigation or target picker |
+| Slash command `/mode debug` | `cmd.chat.mode` | slash-command dispatcher | session mode controller | same canonical mode-switch behavior as the visible mode strip |
+| Debug target picker button | `cmd.chat.open_debug_target_picker` | thread header / command palette | debug investigation controller | reveal canonical target discovery / rebinding flow |
+| Investigation header `Export Bundle` | `cmd.chat.export_investigation_bundle` | Investigation Context card / Context Detail Pane | debug investigation controller / runtime-artifact controller | write bundle manifest and emit export event |
+| Investigation item `Revoke` | `cmd.chat.revoke_investigation_item` | Investigation Context card / Context Detail Pane | debug investigation controller | mark the item revoked and exclude it from future prompt injection |
+| Debug Automation banner `Approve` | `cmd.runtime.approve` | investigation banner / attention surface | runtime controller / permission controller | activate the requested run-scoped Debug Automation Profile |
+
+ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md
+
+```
+### Intent 13 (Run: r-20260320-170511-01, Anchor: `### Minimum required rows`, Op: replace_section)
+```markdown
+The following rows are required for the promoted Section 15 feature set and the reconciled terminal/editor integration model.
+
+| UI element / surface | UICommand ID | Producer | Consumer / handler | Required effect |
+|---|---|---|---|---|
+| Project switcher result row | `cmd.project.switch_active_tab` | Projects view / command palette | shell state controller | Switch active workspace tab to target project and recalc effective state |
+| Project switcher alternate action | `cmd.project.open_in_new_workspace_tab` | Projects view / command palette | shell state controller | Open target project in a new workspace tab |
+| Thread context hover `More Details` | `cmd.chat.open_thread_context_details` | chat header hover module | chat layout / editor-tab controller | Open or focus the canonical thread Context Detail Pane |
+| Thread context click `Compact Now` | `cmd.chat.compact_context` | chat header click affordance | chat runtime controller | Trigger canonical thread compaction |
+| Restore-and-branch CTA | `cmd.chat.branch_from_restore` | History / restore UI | thread/session controller | Create new thread/session branch from restore point |
+| Browser toolbar `Open in Browser` | `cmd.browser.open_workspace_preview` | file preview / command palette / open action | browser-session controller | Create or focus the canonical `workspace_preview` browser session |
+| Browser toolbar `Open in Detached Browser` | `cmd.browser.open_detached_preview` | file preview / command palette / open action | browser-session controller | Create or focus the canonical `detached_preview` browser session |
+| Browser toolbar `Focus Browser` | `cmd.browser.focus_browser_tab` | browser chrome / command palette | browser-session controller | Focus the owning canonical browser session |
+| Browser toolbar `Detach Browser` | `cmd.browser.detach_browser_tab` | browser chrome | browser-session controller | Convert the owning normal browsing session into detached presentation without inventing a new logical browser subject |
+| Browser toolbar `Open DevTools` | `cmd.browser.open_devtools` | browser chrome / command palette | browser-session controller / DevTools host | Open DevTools for the focused browser session |
+| Browser toolbar `Toggle DevTools Dock` | `cmd.browser.toggle_devtools_dock` | browser chrome / DevTools chrome | DevTools host | Switch the focused browser DevTools between docked layouts |
+| Browser toolbar share button | `cmd.browser.share_with_agent` | browser chrome | browser context controller | Mark current browser subject shared with active thread |
+| Browser toolbar revoke button | `cmd.browser.revoke_share_with_agent` | browser chrome / attention center | browser context controller | Clear shared-with-agent state |
+| Browser toolbar `Pick Element for Chat` | `cmd.browser.pick_element_for_chat` | browser chrome | browser context controller | Capture explicit `browser_element_context` into composer-prep state |
+| Browser toolbar `Add Selection to Chat` | `cmd.browser
+```
+[... truncated, full length: 11884 chars]
+### Intent 14 (Run: r-20260320-170511-02, Anchor: `### Minimum required rows`, Op: replace_section)
+```markdown
+The following rows are required for the promoted Section 15 feature set and the reconciled terminal/editor integration model.
+
+| UI element / surface | UICommand ID | Producer | Consumer / handler | Required effect |
+|---|---|---|---|---|
+| Project switcher result row | `cmd.project.switch_active_tab` | Projects view / command palette | shell state controller | Switch active workspace tab to target project and recalc effective state |
+| Project switcher alternate action | `cmd.project.open_in_new_workspace_tab` | Projects view / command palette | shell state controller | Open target project in a new workspace tab |
+| Thread context hover `More Details` | `cmd.chat.open_thread_context_details` | chat header hover module | chat layout / editor-tab controller | Open or focus the canonical thread Context Detail Pane |
+| Thread context click `Compact Now` | `cmd.chat.compact_context` | chat header click affordance | chat runtime controller | Trigger canonical thread compaction |
+| Restore-and-branch CTA | `cmd.chat.branch_from_restore` | History / restore UI | thread/session controller | Create new thread/session branch from restore point |
+| Browser toolbar `Open in Browser` | `cmd.browser.open_workspace_preview` | file preview / command palette / open action | browser-session controller | Create or focus the canonical `workspace_preview` browser session |
+| Browser toolbar `Open in Detached Browser` | `cmd.browser.open_detached_preview` | file preview / command palette / open action | browser-session controller | Create or focus the canonical `detached_preview` browser session |
+| Browser toolbar `Focus Browser` | `cmd.browser.focus_browser_tab` | browser chrome / command palette | browser-session controller | Focus the owning canonical browser session |
+| Browser toolbar `Detach Browser` | `cmd.browser.detach_browser_tab` | browser chrome | browser-session controller | Convert the owning normal browsing session into detached presentation without inventing a new logical browser subject |
+| Browser toolbar `Open DevTools` | `cmd.browser.open_devtools` | browser chrome / command palette | browser-session controller / DevTools host | Open DevTools for the focused browser session |
+| Browser toolbar `Toggle DevTools Dock` | `cmd.browser.toggle_devtools_dock` | browser chrome / DevTools chrome | DevTools host | Switch the focused browser DevTools between docked layouts |
+| Browser toolbar share button | `cmd.browser.share_with_agent` | browser chrome | browser context controller | Mark current browser subject shared with active thread |
+| Browser toolbar revoke button | `cmd.browser.revoke_share_with_agent` | browser chrome / attention center | browser context controller | Clear shared-with-agent state |
+| Browser toolbar `Pick Element for Chat` | `cmd.browser.pick_element_for_chat` | browser chrome | browser context controller | Capture explicit `browser_element_context` into composer-prep state |
+| Browser toolbar `Add Selection to Chat` | `cmd.browser
+```
+[... truncated, full length: 11884 chars]
+### Intent 15 (Run: r-20260323-192127-01, Anchor: ``, Op: append)
+```markdown
+## Context Lens Wiring Addendum (2026-03-26)
+
+The Context Lens control is a first-class chat control and requires explicit producer, consumer, and command wiring.
+
+ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FinalGUISpec.md
+
+### Minimum required rows
+
+| UI element | Command / producer | Consumer / handler | Notes |
+|---|---|---|---|
+| Chat header Context Lens icon+dropdown | `cmd.chat.context_lens.toggle` | Assistant chat header controller | Control lives in the top-right of the chat window immediately to the right of the search bar. |
+| Context Lens menu item: Mute | `cmd.chat.context_lens.set_mode` | Assistant chat thread controller | Sets mode to `mute`. |
+| Context Lens menu item: Focus | `cmd.chat.context_lens.set_mode` | Assistant chat thread controller | Sets mode to `focus`. |
+| Context Lens menu item: Subcompact | `cmd.chat.context_lens.set_mode` | Assistant chat thread controller | Sets mode to `subcompact`. |
+| Context Lens menu item: Turn Off | `cmd.chat.context_lens.turn_off` | Assistant chat thread controller | Clears mode and active selection state. |
+| Chat message selection affordance | `cmd.chat.context_lens.toggle_message_selection` | Assistant chat thread controller | Multi-select supported in all modes. |
+| Context Lens selection clear control | `cmd.chat.context_lens.clear_selection` | Assistant chat thread controller | Clears active selection set. |
+| Subcompact confirmation action | `cmd.chat.context_lens.apply_subcompact` | Assistant chat thread controller + prompt/context state writer | Explicit apply path only for Subcompact. |
+| Subcompact revert action | `cmd.chat.context_lens.revert_subcompact` | Assistant chat thread controller + prompt/context state writer | Rehydrates from canonical source refs. |
+
+ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md
+
+```
+### Intent 16 (Run: r-20260323-192127-02, Anchor: `## Canonical Runtime Producer Consumer and Action Wiring Reconciliation Addendum (2026-03-09)`, Op: insert_after)
+```markdown
+### Context Lens minimum rows
+
+| Producer | Consumer | Payload / Contract | Notes |
+| --- | --- | --- | --- |
+| `cmd.chat.context_lens.toggle` | Assistant chat header controller | toggle request for the top-right Context Lens icon/dropdown | Opens or closes the Context Lens control to the right of the search bar. |
+| `cmd.chat.context_lens.set_mode` | Assistant chat thread projection and selection overlay | mode = `mute` \| `focus` \| `subcompact` | Establishes one active Context Lens mode at a time. |
+| `cmd.chat.context_lens.turn_off` | Assistant chat thread projection and selection overlay | clear active mode and clear transient selection state | Mirrors the `Turn Off` dropdown action in the PM concept. |
+| `cmd.chat.context_lens.toggle_message_selection` | Thread-local context overlay store | message ids[] selection mutation under the current mode | Multi-select is supported in all Context Lens modes. |
+| `cmd.chat.context_lens.clear_selection` | Thread-local context overlay store | clear current selection set for the current mode | Clears pending selection without changing persistent canonical history. |
+| `cmd.chat.context_lens.apply_subcompact` | Subcompact summarizer and effective-context assembler | selected message ids[] -> local summary replacement in effective context | `Subcompact` is explicit-apply and remains distinct from automatic dynamic context shrinking. |
+| `cmd.chat.context_lens.revert_subcompact` | Thread-local context overlay store and effective-context assembler | restore original selected message block into effective assembly | Rehydration uses canonical source messages rather than already-compressed derivatives. |
+
+ContractRef: Context Lens wiring MUST remain thread-local, must support multi-select in all modes, and must keep `Subcompact` as an explicit apply/revert path distinct from automatic dynamic context shrinking. [Source: assistant-chat-design.md#176-context-lens-mute--focus--subcompact; Prompt_Pipeline.md#dynamic-context-shrinking]
+
+The wiring above is part of the canonical chat control surface and must remain aligned with the command catalog, final GUI placement, and effective-context assembly rules.
+ContractRef: Wiring rows for Context Lens MUST remain aligned with command IDs, chat placement, and overlay persistence semantics; a packet may not leave those elements split between unrelated addenda. [Source: UI_Command_Catalog.md#context-lens-command-set; FinalGUISpec.md#context-lens-placement-and-behavior]
+
+```
+### Intent 17 (Run: r-20260323-192127-03, Anchor: `## Canonical Runtime Producer Consumer and Action Wiring Reconciliation Addendum (2026-03-09)`, Op: insert_after)
+```markdown
+### Context Lens minimum rows
+
+| Producer | Consumer | Payload / Contract | Notes |
+| --- | --- | --- | --- |
+| `cmd.chat.context_lens.toggle` | Assistant chat header controller | toggle request for the top-right Context Lens icon/dropdown | Opens or closes the Context Lens control to the right of the search bar. |
+| `cmd.chat.context_lens.set_mode` | Assistant chat thread projection and selection overlay | mode = `mute` \| `focus` \| `subcompact` | Establishes one active Context Lens mode at a time. |
+| `cmd.chat.context_lens.turn_off` | Assistant chat thread projection and selection overlay | clear active mode and clear transient selection state | Mirrors the `Turn Off` dropdown action in the PM concept. |
+| `cmd.chat.context_lens.toggle_message_selection` | Thread-local context overlay store | message ids[] selection mutation under the current mode | Multi-select is supported in all Context Lens modes. |
+| `cmd.chat.context_lens.clear_selection` | Thread-local context overlay store | clear current selection set for the current mode | Clears pending selection without changing persistent canonical history. |
+| `cmd.chat.context_lens.apply_subcompact` | Subcompact summarizer and effective-context assembler | selected message ids[] -> local summary replacement in effective context | `Subcompact` is explicit-apply and remains distinct from automatic dynamic context shrinking. |
+| `cmd.chat.context_lens.revert_subcompact` | Thread-local context overlay store and effective-context assembler | restore original selected message block into effective assembly | Rehydration uses canonical source messages rather than already-compressed derivatives. |
+
+ContractRef: Context Lens wiring MUST remain thread-local, must support multi-select in all modes, and must keep `Subcompact` as an explicit apply/revert path distinct from automatic dynamic context shrinking. [Source: assistant-chat-design.md#176-context-lens-mute--focus--subcompact; Prompt_Pipeline.md#dynamic-context-shrinking]
+
+The wiring above is part of the canonical chat control surface and must remain aligned with the command catalog, final GUI placement, and effective-context assembly rules.
+ContractRef: Wiring rows for Context Lens MUST remain aligned with command IDs, chat placement, and overlay persistence semantics; a packet may not leave those elements split between unrelated addenda. [Source: UI_Command_Catalog.md#context-lens-command-set; FinalGUISpec.md#context-lens-placement-and-behavior]
+
+```
+### Intent 18 (Run: r-20260326-015830-01, Anchor: `## Source Control, GitHub Actions, and Docker Manager Wiring Addendum (2026-03-12)`, Op: insert_after)
+```markdown
+### Assistant Worktree Wiring Addendum
+
+Cross-component wiring for the assistant thread-to-worktree binding feature.
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/Contracts_V0.md
+
+**Chat ↔ WorktreeManager wiring:**
+
+| Source | Target | Trigger | Data flow |
+|---|---|---|---|
+| Chat header button `Create Worktree` | WorktreeManager `create_worktree` | User clicks header button or `cmd.chat.worktree.create` | thread_id, branch_name, base_ref → worktree_id, path |
+| Chat dropdown `Remove Worktree` | WorktreeManager `remove_worktree` | User confirms removal | worktree_id → success/error |
+| Chat dropdown `Bind Existing` | WorktreeManager `list_worktrees` | User opens bind dialog | → unbound worktree list |
+| Chat merge dialog | WorktreeManager `merge_worktree` | User confirms merge | worktree_id, target_branch, strategy → result |
+| Chat merge dialog | WorktreeManager `create_pr` | User clicks Create PR | worktree_id, branch, target → pr_url |
+| Auto-create (thread creation) | WorktreeManager `create_worktree` | `branching.assistant_auto_worktree` is true | thread_id, auto-generated branch name |
+
+**Chat ↔ Source Control wiring:**
+
+| Source | Target | Trigger | Data flow |
+|---|---|---|---|
+| SC Worktrees accordion `Open Thread` | Chat panel navigation | User clicks Open Thread in worktree row | thread_id → scroll to thread |
+| SC Worktrees accordion `Merge` | Chat merge dialog (or standalone) | User clicks Merge on thread-owned row | worktree_id, thread_id → merge dialog |
+| SC filter control | redb filter key | User changes filter | filter enum → persisted key |
+| Chat worktree bound/unbound events | SC worktree list refresh | Seglog event processed | worktree_id → refresh row |
+
+**Chat ↔ File Manager wiring:**
+
+| Source | Target | Trigger | Data flow |
+|---|---|---|---|
+| Thread switch (with worktree) | File manager root | Thread selected, `worktree_follow_thread` true | worktree_path → set FM root |
+| Breadcrumb worktree toggle | File manager root | User clicks worktree crumb | toggle between worktree_path and project_root |
+| Worktree unbound/removed | File manager root reset | Binding removed | → reset FM root to project_root |
+| Chat `Open Worktree Files` | File manager panel | User clicks from header dropdown | worktree_path → open FM panel at path |
+
+**Chat ↔ LSP wiring:**
+
+| Source | Target | Trigger | Data flow |
+|---|---|---|---|
+| Thread switch (with worktree) | LSP root_identity | Thread selected | worktree_path → LSP session key (host_id, server_id, root_identity) |
+| Worktree created | LSP warm-start | New worktree available | worktree_path → background indexing |
+
+**Chat ↔ Executor wiring:**
+
+| Source | Target | Trigger | Data flow |
+|---|---|---|---|
+| Thread with worktree enters Agent/Plan/Debug mode | Executor working_directory | Execution unit created | worktree_path → execution context |
+| Pre-merge test | Executor | Merge dialog test phase | command, work
+```
+[... truncated, full length: 3188 chars]
+### Intent 19 (Run: r-20260326-015830-02, Anchor: `## Source Control, GitHub Actions, and Docker Manager Wiring Addendum (2026-03-12)`, Op: insert_after)
+```markdown
+### Assistant Worktree Wiring Addendum
+
+Cross-component wiring for the assistant thread-to-worktree binding feature.
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/Contracts_V0.md
+
+**Chat ↔ WorktreeManager wiring:**
+
+| Source | Target | Trigger | Data flow |
+|---|---|---|---|
+| Chat header button `Create Worktree` | WorktreeManager `create_worktree` | User clicks header button or `cmd.chat.worktree.create` | thread_id, branch_name, base_ref → worktree_id, path |
+| Chat dropdown `Remove Worktree` | WorktreeManager `remove_worktree` | User confirms removal | worktree_id → success/error |
+| Chat dropdown `Bind Existing` | WorktreeManager `list_worktrees` | User opens bind dialog | → unbound worktree list |
+| Chat merge dialog | WorktreeManager `merge_worktree` | User confirms merge | worktree_id, target_branch, strategy → result |
+| Chat merge dialog | WorktreeManager `create_pr` | User clicks Create PR | worktree_id, branch, target → pr_url |
+| Auto-create (thread creation) | WorktreeManager `create_worktree` | `branching.assistant_auto_worktree` is true | thread_id, auto-generated branch name |
+
+**Chat ↔ Source Control wiring:**
+
+| Source | Target | Trigger | Data flow |
+|---|---|---|---|
+| SC Worktrees accordion `Open Thread` | Chat panel navigation | User clicks Open Thread in worktree row | thread_id → scroll to thread |
+| SC Worktrees accordion `Merge` | Chat merge dialog (or standalone) | User clicks Merge on thread-owned row | worktree_id, thread_id → merge dialog |
+| SC filter control | redb filter key | User changes filter | filter enum → persisted key |
+| Chat worktree bound/unbound events | SC worktree list refresh | Seglog event processed | worktree_id → refresh row |
+
+**Chat ↔ File Manager wiring:**
+
+| Source | Target | Trigger | Data flow |
+|---|---|---|---|
+| Thread switch (with worktree) | File manager root | Thread selected, `worktree_follow_thread` true | worktree_path → set FM root |
+| Breadcrumb worktree toggle | File manager root | User clicks worktree crumb | toggle between worktree_path and project_root |
+| Worktree unbound/removed | File manager root reset | Binding removed | → reset FM root to project_root |
+| Chat `Open Worktree Files` | File manager panel | User clicks from header dropdown | worktree_path → open FM panel at path |
+
+**Chat ↔ LSP wiring:**
+
+| Source | Target | Trigger | Data flow |
+|---|---|---|---|
+| Thread switch (with worktree) | LSP root_identity | Thread selected | worktree_path → LSP session key (host_id, server_id, root_identity) |
+| Worktree created | LSP warm-start | New worktree available | worktree_path → background indexing |
+
+**Chat ↔ Executor wiring:**
+
+| Source | Target | Trigger | Data flow |
+|---|---|---|---|
+| Thread with worktree enters Agent/Plan/Debug mode | Executor working_directory | Execution unit created | worktree_path → execution context |
+| Pre-merge test | Executor | Merge dialog test phase | command, work
+```
+[... truncated, full length: 3188 chars]
+### Intent 20 (Run: r-20260328-192938-01, Anchor: `## Source Control, GitHub Actions, and Docker Manager Wiring Addendum (2026-03-12)`, Op: insert_after)
+```markdown
+
+### Search Index Acceleration Wiring Addendum
+
+Cross-component wiring for the sparse n-gram regex index that transparently accelerates grep and Search panel regex.
+
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md
+
+**Grep tool ↔ Index Engine wiring:**
+
+| Source | Target | Trigger | Data flow |
+|---|---|---|---|
+| Agent/subagent `grep` call | IndexEngine `query` | Tool invocation | pattern, path/glob filters → candidate file IDs |
+| Search panel regex query | IndexEngine `query` | User executes find-in-files with regex ON | pattern, scope → candidate file IDs |
+| IndexEngine candidates | ripgrep verification | Query returns candidate set | file IDs → paths → ripgrep on candidates → final matches |
+| PM-mediated file write | DirtyLayer `insert` | Tool write returns | path → dirty layer (synchronous, before write returns to caller) |
+| File watcher event | DirtyLayer `insert` | External file change detected | path → dirty layer (async, backup for PM-mediated writes) |
+
+ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/UI_Command_Catalog.md
+
+**Index build ↔ Storage wiring:**
+
+| Source | Target | Trigger | Data flow |
+|---|---|---|---|
+| Project open | IndexBuilder `build_full` or `validate` | Project-ready signal (file watcher established) | project_id, HEAD SHA → index build or validation |
+| Git fetch (remote) | IndexBuilder `build_incremental` | New commits detected | old_anchor..new_HEAD diff → changed files → incremental rebuild |
+| `cmd.search.rebuild_regex_index` | IndexBuilder `build_full` | User action or command | project_id → full rebuild (delete + fresh build) |
+| IndexBuilder completion | ArcSwap publish | New generation ready | new IndexSnapshot → atomic pointer swap |
+| Status bar | IndexBuilder state | Build running >2s | build_state, progress % → "Indexing" indicator |
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md
+```
+### Intent 21 (Run: r-20260328-192938-02, Anchor: `### Search Index Acceleration Wiring Addendum`, Op: replace_section)
+```markdown
+Cross-component wiring for the sparse n-gram regex index that transparently accelerates grep and Search-panel regex.
+
+Lifecycle, file-format, and remote-correctness canon remain owned by `Plans/storage-plan.md`, `Plans/GitHub_Integration.md`, and `Plans/Tools.md`. This addendum records cross-component edges only.
+
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md
+
+**Grep tool <-> Index Engine wiring:**
+
+| Source | Target | Trigger | Data flow |
+|---|---|---|---|
+| Agent/subagent `grep` call | IndexEngine `query` | Tool invocation | pattern, path/glob filters -> candidate file IDs |
+| Search-panel regex query | IndexEngine `query` | User executes find-in-files with regex ON | pattern, scope -> candidate file IDs |
+| IndexEngine candidates | ripgrep verification | Query returns candidate set | file IDs -> paths -> verification on authoritative content -> final matches |
+| PM-mediated file write | DirtyLayer `insert` | Tool write returns | path -> generation-aware dirty entry before write success is surfaced |
+| File watcher event | DirtyLayer `insert` | External file change detected | path -> dirty entry (backup/dedup for PM writes) |
+| Remote Git re-anchor | IndexBuilder `build_incremental` | staged dirty content + fetched diff ready | staged paths + `old_anchor..new_HEAD` diff -> changed-file set |
+
+ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/storage-plan.md
+
+**Index build <-> Storage wiring:**
+
+| Source | Target | Trigger | Data flow |
+|---|---|---|---|
+| Project open | IndexBuilder `build_full` or `validate` | Project-ready signal | project_id + current anchor -> validation or full build |
+| Git fetch (remote) | IndexBuilder `build_incremental` | New commits detected | `old_anchor..new_HEAD` diff -> dirty paths -> incremental rebuild |
+| `cmd.search.rebuild_regex_index` | IndexBuilder `build_full` | User action or command | project_id -> full rebuild |
+| Startup recovery | IndexSnapshot `load` | project open / app restart | highest valid generation -> checksum validation -> mmap / rebuild |
+| IndexBuilder completion | ArcSwap publish | New generation ready | new `IndexSnapshot` -> atomic pointer swap |
+| Status bar | IndexBuilder state | Build or refresh lasts >2s | build_state + progress -> `Indexing` / `Refreshing index` indicator |
+| `cmd.search.evict_remote_cache` | RemoteCacheManager `evict_project` | User confirms per-project eviction | remove `r/{hash8}` cache root |
+| `cmd.search.clear_all_remote_caches` | RemoteCacheManager `evict_all` | User confirms global clear | remove all remote cache roots |
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md, ContractName:Plans/GitHub_Integration.md
+```
+### Intent 22 (Run: r-20260328-192938-03, Anchor: `### Search Index Acceleration Wiring Addendum`, Op: replace_section)
+```markdown
+Cross-component wiring for the sparse n-gram regex index that transparently accelerates grep and Search-panel regex.
+
+Lifecycle, file-format, and remote-correctness canon remain owned by `Plans/storage-plan.md`, `Plans/GitHub_Integration.md`, and `Plans/Tools.md`. This addendum records cross-component edges only.
+
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md
+
+**Grep tool <-> Index Engine wiring:**
+
+| Source | Target | Trigger | Data flow |
+|---|---|---|---|
+| Agent/subagent `grep` call | IndexEngine `query` | Tool invocation | pattern, path/glob filters -> candidate file IDs |
+| Search-panel regex query | IndexEngine `query` | User executes find-in-files with regex ON | pattern, scope -> candidate file IDs |
+| IndexEngine candidates | ripgrep verification | Query returns candidate set | file IDs -> paths -> verification on authoritative content -> final matches |
+| PM-mediated file write | DirtyLayer `insert` | Tool write returns | path -> generation-aware dirty entry before write success is surfaced |
+| File watcher event | DirtyLayer `insert` | External file change detected | path -> dirty entry (backup/dedup for PM writes) |
+| Remote Git re-anchor | IndexBuilder `build_incremental` | staged dirty content + fetched diff ready | staged paths + `old_anchor..new_HEAD` diff -> changed-file set |
+
+ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/storage-plan.md
+
+**Index build <-> Storage wiring:**
+
+| Source | Target | Trigger | Data flow |
+|---|---|---|---|
+| Project open | IndexBuilder `build_full` or `validate` | Project-ready signal | project_id + current anchor -> validation or full build |
+| Git fetch (remote) | IndexBuilder `build_incremental` | New commits detected | `old_anchor..new_HEAD` diff -> dirty paths -> incremental rebuild |
+| `cmd.search.rebuild_regex_index` | IndexBuilder `build_full` | User action or command | project_id -> full rebuild |
+| Startup recovery | IndexSnapshot `load` | project open / app restart | highest valid generation -> checksum validation -> mmap / rebuild |
+| IndexBuilder completion | ArcSwap publish | New generation ready | new `IndexSnapshot` -> atomic pointer swap |
+| Status bar | IndexBuilder state | Build or refresh lasts >2s | build_state + progress -> `Indexing` / `Refreshing index` indicator |
+| `cmd.search.evict_remote_cache` | RemoteCacheManager `evict_project` | User confirms per-project eviction | remove `r/{hash8}` cache root |
+| `cmd.search.clear_all_remote_caches` | RemoteCacheManager `evict_all` | User confirms global clear | remove all remote cache roots |
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md, ContractName:Plans/GitHub_Integration.md
+```

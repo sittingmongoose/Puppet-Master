@@ -158,27 +158,46 @@ ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/storag
 
 ## 4. Budget defaults
 
-Budget limits bound resource consumption per run. They are enforced by the run supervisor regardless of strategy.
+### 4.1 Concurrency caps (all strategies)
 
-ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, PolicyRule:Decision_Policy.md§4
+Three-level concurrency limits apply globally across all run strategies and MUST NOT be overridden by Persona or overlay configuration alone.
 
-| Budget key | Default value | Applies to | Description |
-|------------|--------------|------------|-------------|
-| `max_wall_ms` | 1,200,000 (20 min) | All modes | Maximum wall-clock duration for a single run. |
-| `max_tool_calls_observed` | 150 (DAE) / 0 (HTE) | DAE: observed tool calls; HTE: must be 0 | Maximum provider-originated tool calls observed in the stream. |
-| `max_estimated_tokens` | 80,000 | All modes | Estimated token ceiling for the run. |
-| `max_same_shell_failure` | 3 | DAE | Maximum consecutive failures of the same shell command before kill. |
-| `max_write_thrashing` | 5 writes / 10 min | DAE | Maximum writes to the same file within a 10-minute window. |
-| `max_retryable_errors` | 3 | All modes | Maximum retryable provider errors before run termination. |
+ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Executor_Protocol.md
 
-Budget values MAY be overridden per-run via the run envelope's `budget` field. Overrides MUST NOT exceed hard ceilings defined by policy (implementation-defined).
+| Cap | Default | Scope | Kill / behavior |
+|---|---|---|---|
+| `max_concurrent_crews_per_platform` | 4 | Per provider platform | New crew spawn requests queue until a slot is free. |
+| `max_concurrent_agents_per_crew` | 8 | Per active crew context | Reviewer or worker spawns queue rather than widening the limit. |
+| `max_total_active_agents` | 32 | Entire run | Global cap across all crews and direct child agents. |
+
+ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/interview-subagent-integration.md
+
+### 4.2 Run-envelope budget fields
+
+Budget limits are enforced by the run supervisor regardless of strategy. They are frozen into the run envelope and survive pause/resume for the same `run_id`.
+
+ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Contracts_V0.md
+
+| Budget key | Default | Applies to | Meaning |
+|---|---|---|---|
+| `max_nesting_depth` | 4 | All modes | Maximum orchestrator -> crew -> agent -> child nesting depth before `stop.recursion_depth`. |
+| `max_total_spawned_agents` | 99 | All modes | Hard cap on total spawned agents before `stop.agent_count`. |
+| `max_tool_rounds` | 200 | All modes | Same-level tool-call round ceiling per agent before `stop.tool_round_limit`. |
+| `max_wall_ms` | 1200000 | All modes | Maximum wall-clock duration for the run. |
+| `max_estimated_tokens` | 80000 | All modes | Estimated token ceiling for the run budget. |
+| `max_same_shell_failure` | 3 | DAE / host-managed shell surfaces | Consecutive failures of the same canonical shell fingerprint before stop. |
+| `max_write_thrashing` | 5 writes / 10 min | DAE / hosted mutation paths | Same normalized file identity rewritten too often in a sliding window. |
+| `max_retryable_errors` | 3 | All modes | Ceiling on retryable provider/executor failures before run termination. |
+| `task_timeout_ms` | inherit parent remaining budget | Subagent task envelope | Per-task cap; may narrow parent budget but MUST NOT exceed it. |
+
+ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/orchestrator-subagent-integration.md
 
 Interpretation rules:
-- `max_same_shell_failure` counts consecutive failures of one canonical shell fingerprint `(tool_name, normalized_command, normalized_cwd)` within a single run. The default ceiling is `3`.
-- `max_write_thrashing` counts qualifying writes to one normalized file identity within a **sliding** 10-minute window on the run supervisor's monotonic clock. In V0, `budget.max_write_thrashing` overrides only the **count** ceiling; the window remains fixed at 10 minutes.
-- Budget counters are run-local and MUST survive pause/resume for the same `run_id`.
+- `max_tool_rounds` is distinct from `max_nesting_depth`; one limits same-level iteration, the other limits recursive delegation depth.
+- Budget overrides MAY narrow defaults per run, but MUST NOT widen beyond the hard policy ceiling.
+- Queueing at concurrency caps is deterministic; PM MUST NOT silently discard or auto-widen queued work.
 
----
+ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/storage-plan.md
 
 ## 5. Kill conditions and enforcement
 
@@ -189,13 +208,42 @@ A kill condition triggers immediate run termination with outcome `done.failed` a
 ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/CLI_Bridged_Providers.md
 
 ### 5.1 Universal kill conditions (all strategies)
-| Condition | Reason code | Description |
-|-----------|-------------|-------------|
-| Write outside FileSafe scope | `kill.filesafe_violation` | Any write attempt to a path not permitted by FileSafe write-scope rules. |
-| Forbidden token hit | `kill.forbidden_token` | Provider output contains a token on the FileSafe security-filter blocklist. |
-| Token ceiling exceeded | `kill.token_ceiling` | `max_estimated_tokens` budget exceeded. |
-| Wall-clock timeout | `kill.wall_timeout` | `max_wall_ms` budget exceeded. |
-| Retryable error ceiling | `kill.retryable_errors` | `max_retryable_errors` exceeded. |
+
+The following stop conditions apply in all run strategies. When any condition is met, the run is terminated immediately and a canonical `run.killed` seglog event is emitted with `stop_condition`, `stop_threshold`, and `observed_value` fields.
+
+ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Contracts_V0.md
+
+| Stop condition | Trigger | Default threshold | Configurable |
+|---|---|---|---|
+| `stop.recursion_depth` | Nesting depth exceeds `max_nesting_depth` | 4 | Yes |
+| `stop.agent_count` | Total spawned agents exceed `max_total_spawned_agents` | 99 | Yes |
+| `stop.tool_round_limit` | Tool-call rounds exceed `max_tool_rounds` | 200 | Yes |
+| `stop.task_timeout` | Individual task exceeds `task_timeout_ms` or inherited remaining budget | Per envelope | Yes |
+| `stop.budget_exceeded` | Pre-request estimate or post-response actual exceeds remaining budget | Per run/session budget | Yes |
+| `stop.identical_failure` | Same `(tool_name, args_hash, error_message)` triple observed twice consecutively | exact-match | No |
+| `stop.user_cancel` | User explicitly cancels the run | — | No |
+| `stop.hte_tool_observed` | Provider-originated tool call appears during HTE | 0 observed | No |
+
+ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Permissions_System.md
+
+#### Exact-match doom-loop guard
+
+The doom-loop guard is exact-match only. PM MUST compare the same `(tool_name, serialized_args_hash, error_message)` triple at the same nesting level across consecutive attempts. Fuzzy matching, substring matching, and "looks similar" heuristics are prohibited for this stop condition.
+
+ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Architecture_Invariants.md
+
+#### Signal handling and process lifecycle
+
+`SIGTERM` / `SIGINT` request graceful shutdown. `SIGHUP` triggers config reload, not shutdown. Every managed provider, MCP, terminal, and LSP subprocess MUST run in its own process group (`setsid` on Unix; `CREATE_NEW_PROCESS_GROUP` on Windows) so signal delivery stays scoped.
+
+ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Contracts_V0.md
+
+Grace periods:
+- Provider processes: 5 seconds, then force terminate.
+- MCP and LSP subprocesses: 3 seconds, then force terminate.
+- Shutdown entrypoints MUST be guarded by a `Once`/idempotent primitive; re-entrant shutdown is a safe no-op.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/LSPSupport.md
 
 ### 5.2 HTE-specific kill conditions
 | Condition | Reason code | Description |

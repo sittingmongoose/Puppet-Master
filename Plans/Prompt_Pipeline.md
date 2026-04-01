@@ -182,55 +182,56 @@ ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Arti
 
 ## 2. Compaction and pruning
 
-Context reduction in PM has multiple layers and they must remain distinct.
+### 2.0 Compaction-immune content
 
-ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Models_System.md, ContractName:Plans/assistant-memory-subsystem.md
+The following content MUST survive compaction unchanged unless the user explicitly removes it:
+- system prompt and persona instructions
+- active tool schemas
+- user-pinned context
+- blocks tagged `compaction_immune: true`
+- current/recent reasoning blocks required for correct continuation
 
-### 2.1 Distinct layers
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Contracts_V0.md
 
-| Layer | Purpose | Canonical behavior |
-|---|---|---|
-| Provider-side caching | Improve provider prompt/cache reuse | Adapter concern; preserve stable cache-friendly prompt structure. |
-| Dynamic context shrinking | Incrementally shrink stale dynamic blocks while the run continues | Required PM feature; applies conservatively to eligible stale blocks. |
-| Subcompact | User-invoked local summary over selected message regions | Uses the same shrinking substrate where possible, but remains an explicit UI action. |
-| Compaction | Larger continuity-preserving reduction when the assembled payload still does not fit or the user explicitly compacts | Separate from dynamic shrinking. |
-| Rotation | Spawn a follow-up run when compaction still cannot keep the run within limits | Separate from compaction and shrinking. |
+The total immune set MUST NOT exceed 30% of the effective context window. If the immune set would exceed that cap, PM must surface an explicit sizing problem rather than silently dropping required context.
 
-ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md
+ContractRef: ContractName:Plans/Models_System.md, ContractName:Plans/Architecture_Invariants.md
 
+### 2.1 Context assembly and cache preservation
+Prompt assembly preserves cache-friendly stable prefixes. PM keeps role-specific context compilation, compaction-aware re-reads, and once-per-phase skill bundling so repeated turns do not re-inject the same bulky context unnecessarily.
+
+ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/Tools.md
+
+Provider-specific cache strategy is explicit:
+- **Anthropic:** ephemeral/cache-control marker strategy. PM emits `cache_control: { type: "ephemeral" }` on eligible message blocks. Anthropic's server-side cache handles TTL and invalidation transparently; PM does not manage Anthropic cache state.
+- **Google/Gemini family:** provider-native `cachedContent` strategy. PM creates a `cachedContent` resource via the Gemini Caching API with a configurable TTL (default: 5 minutes). The returned `cachedContent` resource name is passed in subsequent `generateContent` requests via the `cachedContent` field. PM tracks the resource TTL and proactively refreshes the cached content before expiry when the underlying context has not changed. Token savings are calculated as the difference between the full context token count and the `cachedContentTokenCount` reported in the provider's usage metadata. When `cache_with_oauth` is `false` for the active Gemini surface, cache-marker emission is suppressed entirely.
+- **OpenAI family:** metadata/adapter-controlled cache-control strategy. PM sets cache-hint headers or metadata per the OpenAI API conventions. Server-side cache behavior is provider-managed; PM does not track cache state for OpenAI surfaces.
+- **Unsupported surfaces:** disable cache-marker emission and fall back safely. No cache-related fields are emitted in the request.
+
+ContractRef: ContractName:Plans/Models_System.md, ContractName:Plans/CLI_Bridged_Providers.md
+
+Reasoning blocks MUST be preserved through replay and compaction. PM MAY summarize them when the provider surface cannot replay them verbatim, but MUST NOT silently strip them.
+
+ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/Contracts_V0.md
 ### 2.2 Dynamic context shrinking
 
-Dynamic context shrinking is required and GUI-configurable.
+Thresholds are model-owned metadata:
+- `pressure_start_pct = 70`
+- `pressure_aggressive_pct = 85`
+- `large_block_threshold = 1200`
 
-Defaults:
-- enabled for tool-result blocks
-- disabled by default for retrieved-context blocks
-- disabled by default for plan/report blocks
-- one master enable/disable switch plus per-category toggles
-- no user-facing aggressiveness tuning in MVP
+ContractRef: ContractName:Plans/Models_System.md, ContractName:Plans/storage-plan.md
 
-Eligibility and trigger rules:
-- a block is eligible only after it leaves the current working set.
-- the most recent still-active result in the current line of work must not be auto-shrunk.
-- current-working-set protection also covers focused/pinned items and unresolved comparison/approval/question/validation state.
-- conservative automatic shrinking begins for a stale eligible block around a large-block threshold of roughly 1200 tokens or equivalent normalized size.
-- context-pressure shrinking begins around 70% of the effective context window and may become more aggressive above roughly 85% before full compaction is considered.
-- tool calls carry structured `_context_updates`; `[]` means no shrink updates were requested.
+Low-context warning rule: if remaining context falls below 15% of the effective window after adding tool output or injected context, PM emits a diagnostic warning so the agent can adapt before hard compaction.
 
-ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/assistant-chat-design.md
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Executor_Protocol.md
 
-### 2.3 Cache-affinity and stability rules
+### 2.3 Post-filter integrity rules
 
-PM must not reproduce cache-hit regressions caused by mutating stable prompt structure.
+After filtering, pruning, or compaction, PM MUST validate role alternation and message-boundary correctness. Plugin transforms MUST NOT delete system/persona content, reorder messages in a way that breaks alternation, or modify immune content.
 
-Rules:
-- do not rewrite the stable prompt spine consisting of static system/provider/Persona/tool-definition content.
-- preserve stable cache lineage across ordinary continuation and resume within the same logical run lineage.
-- branch, rewind, replacement, and other lineage-changing actions establish a new cache lineage.
-- `Compact Now` does not, by itself, force a new cache lineage unless it also changes logical run lineage.
-- do not inject synthetic fake-user replay text such as recap prompts solely to preserve continuity.
+ContractRef: ContractName:Plans/Plugins_System.md, ContractName:Plans/Architecture_Invariants.md
 
-ContractRef: ContractName:Plans/Models_System.md, ContractName:Plans/Provider_OpenCode.md, ContractName:Plans/storage-plan.md
 ## 3. Rotation (follow-up run spawning)
 
 <a id="ROTATION"></a>

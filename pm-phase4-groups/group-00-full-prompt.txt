@@ -1,0 +1,1215 @@
+## Doc: Plans/assistant-chat-design.md
+### Intent 1 (Run: r-20260312-160857-01, Anchor: `### 5.1 Git & GitHub Slash Commands`, Op: replace_section)
+```markdown
+Git and GitHub slash commands are split by surface ownership.
+
+### Source Control commands
+- `/git` and related git-local operations target the Source Control surface and reuse the same code path as Source Control actions.
+- Chat git commands may open or focus Source Control with repo/worktree context when a visual follow-up is needed.
+
+ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/UI_Command_Catalog.md
+
+### GitHub Actions commands
+- `/actions` and `/actions logs` target the GitHub Actions surface and must mirror its run/log/admin failure semantics.
+- Chat responses for Actions runs must preserve workflow/run/job/step identity so the user can continue in the GitHub Actions surface without losing context.
+
+ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/GitHub_API_Auth_and_Flows.md
+
+### Surface boundary rule
+- Chat must not present the old combined Git/GitHub panel model as canonical.
+- When the user asks to inspect repo state, route to Source Control semantics.
+- When the user asks to inspect hosted workflows or GitHub Actions logs/settings, route to GitHub Actions semantics.
+
+ContractRef: ContractName:Plans/Crosswalk.md, ContractName:Plans/FileManager.md
+```
+### Intent 2 (Run: r-20260312-203855-01, Anchor: `### Canonical navigation model`, Op: replace_section)
+```markdown
+Assistant Chat consumes the shared navigation and runtime identity contracts rather than defining chat-local replacements.
+
+Rules:
+- routed opens resolve through `route_target`
+- source opens resolve through `OpenSubject` or `OpenFile`
+- thread usage, artifact usage, ledger pivots, wizard resume, and object-focused opens use the same internal route model
+- `resume_url` is serialized transport only and must not outgrow the canonical route contract
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/FileManager.md, ContractName:Plans/FinalGUISpec.md
+
+Runtime identity display rules:
+- chat may display requested/effective runtime identity and projection state
+- chat must not define assistant-local replacements for the owner-doc field set
+- historical thread/activity views use frozen requested/effective runtime snapshots captured for the execution
+
+ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Multi-Account.md, ContractName:Plans/storage-plan.md
+
+```
+### Intent 3 (Run: r-20260313-152345-01, Anchor: `## Rewrite alignment (2026-02-21)`, Op: replace_section)
+```markdown
+This plan's **UX requirements** remain authoritative. Implementation should target the rewrite described in `Plans/rewrite-tie-in-memo.md`:
+
+- **Core:** Providers + unified event model + deterministic agent loop (OpenCode-style)
+- **Storage/search:** seglog/redb/Tantivy projections (not chat-history SQLite). Implementation checklist and chat mapping: `Plans/storage-plan.md`.
+- **UI:** Rust + Slint (not Iced)
+- **Tooling:** central tool registry + policy engine; tool approvals and results flow through the unified event stream
+- **Auth:** subscription-first; Gemini API key remains the explicit allowed exception, but Gemini itself is one provider with mixed OAuth/API-key account pools, OAuth-first default preference under `auto`, and requested/effective auth/account identity visible to chat/runtime surfaces rather than collapsed into a single generic auth badge
+
+ContractRef: ContractName:Plans/rewrite-tie-in-memo.md, ContractName:Plans/Multi-Account.md, ContractName:Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD
+
+Any references in this plan to current UI widget implementation details should be treated as illustrative; the behavior and data contracts are what must remain stable.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/FinalGUISpec.md
+```
+### Intent 4 (Run: r-20260313-152345-02, Anchor: `## Rewrite alignment (2026-02-21)`, Op: replace_section)
+```markdown
+This plan's **UX requirements** remain authoritative. Implementation should target the rewrite described in `Plans/rewrite-tie-in-memo.md`:
+
+- **Core:** Providers + unified event model + deterministic agent loop (OpenCode-style)
+- **Storage/search:** seglog/redb/Tantivy projections (not chat-history SQLite). Implementation checklist and chat mapping: `Plans/storage-plan.md`.
+- **UI:** Rust + Slint (not Iced)
+- **Tooling:** central tool registry + policy engine; tool approvals and results flow through the unified event stream
+- **Auth:** subscription-first; Gemini API key remains the explicit allowed exception, but Gemini itself is one provider with mixed OAuth/API-key account pools, OAuth-first default preference under `auto`, and requested/effective auth/account identity visible to chat/runtime surfaces rather than collapsed into a single generic auth badge
+
+ContractRef: ContractName:Plans/rewrite-tie-in-memo.md, ContractName:Plans/Multi-Account.md, ContractName:Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD
+
+Any references in this plan to current UI widget implementation details should be treated as illustrative; the behavior and data contracts are what must remain stable.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/FinalGUISpec.md
+```
+### Intent 5 (Run: r-20260313-152345-03, Anchor: `## Rewrite alignment (2026-02-21)`, Op: replace_section)
+```markdown
+This plan's **UX requirements** remain authoritative. Implementation should target the rewrite described in `Plans/rewrite-tie-in-memo.md`:
+
+- **Core:** Providers + unified event model + deterministic agent loop (OpenCode-style)
+- **Storage/search:** seglog/redb/Tantivy projections (not chat-history SQLite). Implementation checklist and chat mapping: `Plans/storage-plan.md`.
+- **UI:** Rust + Slint (not Iced)
+- **Tooling:** central tool registry + policy engine; tool approvals and results flow through the unified event stream
+- **Auth:** subscription-first; Gemini API key remains the explicit allowed exception, but Gemini itself is one provider with mixed OAuth/API-key account pools, OAuth-first default preference under `auto`, and requested/effective auth/account identity visible to chat/runtime surfaces rather than collapsed into a single generic auth badge
+
+ContractRef: ContractName:Plans/rewrite-tie-in-memo.md, ContractName:Plans/Multi-Account.md, ContractName:Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD
+
+Any references in this plan to current UI widget implementation details should be treated as illustrative; the behavior and data contracts are what must remain stable.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/FinalGUISpec.md
+```
+### Intent 6 (Run: r-20260313-183219-01, Anchor: `### 8.7 Review loop for planning artifacts`, Op: replace_section)
+```markdown
+Standard Plan review:
+- user may continue the chat, request revisions, or open the plan in the editor
+- follow-up chat responses may revise the planning artifact
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Crosswalk.md
+
+Deep Plan review:
+- the plan document opens automatically in the editor / preview-capable planning surface
+- users may edit the markdown directly
+- on source-backed or deterministically mapped selections, the review palette offers `Comment / Ask`, `Replace with...`, `Insert after...`, `Remove / Strike this`, and `Send selection to chat`
+- durable actions create annotations on the existing `note_record.v1` lineage; `Send selection to chat` creates a visible pending `document_selection_context` chip on the owning thread
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/FinalGUISpec.md
+
+Deep Plan targeted revision rules:
+- `Resubmit with Annotations` launches a targeted revision pass over docs with open durable annotations, or a user-selected subset
+- targeted revision may update the plan document and/or answer question/comment annotations
+- targeted revision MUST NOT auto-run Multi-Pass Review
+- conflicting or stale mutating annotations are excluded from automatic revision until the user resolves them
+
+ContractRef: ContractName:Plans/chain-wizard-flexibility.md, ContractName:Plans/interview-subagent-integration.md, ContractName:Plans/Crosswalk.md
+
+Deep Plan annotation-handling rules:
+- preserve the annotation lifecycle `open -> addressed -> resolved`
+- preserve deterministic position + quote selector re-anchoring
+- if an anchor cannot be reattached, keep the annotation open and show an explicit warning rather than silently dropping it
+- comment annotations may coexist with other annotations on the same span; overlapping mutating annotations conflict by default
+- final review gates use `no open annotations`, not `no open notes`
+- read-only / no-source-map renders such as plan-graph-like surfaces are `Send selection to chat` only in v1 unless a stable semantic-anchor contract is added later
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FileSafe.md, ContractName:Plans/Permissions_System.md
+```
+### Intent 7 (Run: r-20260313-183219-01, Anchor: `### 28.4A Element-context attachment contract`, Op: replace_section)
+```markdown
+Rendered selection capture uses two canonical typed attachments:
+- `attachment_type = browser_element_context` for browser / HTML element capture
+- `attachment_type = document_selection_context` for native document selections forwarded into chat
+
+ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/FileManager.md, ContractName:Plans/newfeatures.md
+
+`document_selection_context` required fields:
+- `attachment_id`
+- `schema_version`
+- `origin_kind` (`assistant_deep_plan`, `wizard_document_review`, `interview_document_review`, `document_review_surface`, `workspace_preview`)
+- `source_surface`
+- `bundle_id?`
+- `doc_id`
+- `doc_path` or equivalent bounded provenance
+- `display_name?`
+- `captured_at`
+- `selected_text` (bounded)
+- `anchor` (`text_position?`, `text_quote`, or stable semantic anchor id)
+- `requested_target`
+- `effective_target?`
+- `sensitivity_state`
+- `truncation_state`
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FileSafe.md, ContractName:Plans/Permissions_System.md
+
+Composer behavior:
+- capture creates a visible pending composer chip/card immediately visible to the user
+- chips are stored in composer-prep state keyed by `thread_id`, never as global chat state
+- the chip is attached to the next submitted user message by default and the user may remove it before send
+- capturing a selection MUST NOT silently inject a hidden message into the thread
+- hidden chat panels do not auto-open by default; the owning chat surface may pulse/badge and show a toast instead
+- if the owning thread is terminal or non-writable, create a new thread in the same owning surface and record both `requested_target` and `effective_target`
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Permissions_System.md
+
+Prompt assembly:
+- both structured attachment types are serialized before the user's freeform message text
+- `document_selection_context` serializes bounded provenance, anchor, and excerpt fields first; it MUST NOT inject raw unbounded document bodies
+- blocked or expired chips MUST NOT be serialized as successful user attachments
+
+ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/FileSafe.md
+
+Persistence and audit:
+- submitted attachments persist as part of the submitted user message record
+- pending composer chips may persist across restart per thread until sent or removed; if they cannot be restored safely they return as blocked/expired, not silently dropped
+- search/indexing stores bounded summary fields only; do not index unbounded raw document text
+- captures and blocks must be visible in thread history or audit views as user-supplied context, including source provenance and requested/effective target
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FileSafe.md, ContractName:Plans/Crosswalk.md
+```
+### Intent 8 (Run: r-20260316-160450-01, Anchor: `## 5. Commands (slash commands and custom commands)`, Op: replace_section)
+```markdown
+The reserved slash-command surface is canonical and non-overridable.
+
+### 5.1 Reserved built-ins
+Reserved built-ins for Assistant Chat are:
+- `/new`
+- `/model`
+- `/effort`
+- `/mode`
+- `/export`
+- `/compact`
+- `/stop`
+- `/resume`
+- `/rewind`
+- `/revert`
+- `/share`
+- `/settings`
+- `/doctor`
+- `/help`
+- `/web`
+- `/skill`
+
+Rules:
+- Reserved built-ins MUST be visible in the slash-command catalog and settings surfaces.
+- Reserved built-ins MUST NOT be overridden by User Commands.
+- `/cancel` is a deprecated alias of `/stop` and MUST NOT carry separate semantics.
+- `/clear` is not part of the canonical reserved Assistant Chat set and MUST NOT remain a default built-in unless a later packet explicitly reintroduces it.
+
+ContractRef: ContractName:Plans/Commands_System.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Permissions_System.md
+
+### 5.2 `/web` and `/skill`
+`/web` is one canonical command family with these subcommands:
+- `/web search <query>`
+- `/web extract <url>`
+- `/web research <task>`
+- `/web crawl <url>`
+- `/web map <url>`
+
+Natural-language requests for searching, extracting, researching, crawling, or mapping the web MUST route through the same internal dispatcher as `/web`, not a parallel feature-local path.
+
+`/skill` is a lightweight invocation helper for loading or invoking an installed skill. Skill management remains in `Agent Config > Skills` and MUST NOT move into a `/skills` management family.
+
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Skills_System.md, ContractName:Plans/FinalGUISpec.md
+
+### 5.3 Git & GitHub command boundary
+Git and GitHub prefixes remain reserved and route to the canonical source-control / GitHub command surfaces rather than to user-defined command overrides.
+
+ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Commands_System.md
+
+### 5.4 Custom command boundary
+User Commands may complement built-ins, but they do not replace or suppress the canonical Assistant Chat command set. PM-native Ask and Plan behavior remains authoritative even when an upstream reference product handles modes or permissions differently.
+
+ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Commands_System.md, ContractName:Plans/OpenCode_Deep_Extraction.md
+```
+### Intent 9 (Run: r-20260316-160450-01, Anchor: `### 8.6 Normalized TODO contract for planning outputs`, Op: replace_section)
+```markdown
+Both Plan and Deep Plan MUST emit a normalized TODO list even when the visible artifact is markdown-first.
+
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md
+
+Required TODO fields per item:
+- `todo_id`
+- `title`
+- `summary`
+- `dependencies[]`
+- `owner_hint` (`main_agent`, `subagent`, `crew`, or `unspecified`)
+- `verification_hint`
+
+Recommended execution-tracking fields carried by the same canonical TODO identity:
+- `status`
+- `notes?`
+- `order_index?`
+
+Rules:
+- TODO order is the default execution order unless dependencies require otherwise.
+- Dependencies may further constrain order.
+- TODOs are carried forward into execution after approval.
+- Users may edit, add, remove, or reorder TODOs before approval.
+- Deep Plan editing in source markdown must update the normalized TODO projection before execution begins.
+- `todowrite` and `todoread` MUST use this same normalized schema instead of a separate checklist-only shape.
+
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md
+
+#### Live execution tracking
+The sticky plan panel is the authoritative plan/TODO view for the thread.
+
+Rules:
+- Inline chat updates are lightweight milestones, not a competing source of truth.
+- Thread/run-level plan state MUST distinguish at least `draft`, `approved`, `executing`, `completed`, `blocked`, and `superseded`.
+- Replans or revisions MUST create an explicit new draft/revision state rather than silently rewriting historical progress.
+- The same TODO contract must remain consumable by single-agent, subagent, and crew execution.
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md, ContractName:Plans/orchestrator-subagent-integration.md
+```
+### Intent 10 (Run: r-20260316-160450-01, Anchor: `## 13. Activity transparency: search, bash, and file activity`, Op: replace_section)
+```markdown
+Activity transparency uses a shared inline operation-card family rather than isolated one-off widgets.
+
+### 13.1 Operation-card family
+Canonical card types are:
+- command / bash activity
+- web activity
+- files explored
+- files changed
+- code diffs
+- subagent activity
+
+Rules:
+- Cards are inline with the assistant narrative.
+- Each card has a compact summary, expandable details, status badge, and a primary open/focus action appropriate to the card type.
+- Command cards use `Open in Terminal` / `Show Terminal` as the primary action.
+- Search/web cards open sources/results/detail views.
+- Diff/edit cards open the relevant file or diff view in the editor.
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/FileManager.md, ContractName:Plans/Tools.md
+
+### 13.2 Web activity and provenance
+Assistant Chat uses distinct web activity labels:
+- `Searching Web`
+- `Extracting Site`
+- `Researching Web`
+- `Crawling Site`
+- `Mapping Site`
+- `Reading Site`
+
+Rules:
+- `Reading Site` is reserved for PM-native Site Reader work.
+- Search/result provenance MUST distinguish search snippets, extracts, site-reader output, research synthesis, crawl results, and map results.
+- The final Sources block MUST deduplicate repeated URLs while preserving the strongest provenance badge per source.
+- Provider fallback or support-tier changes MUST be visible in the related activity card.
+
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Permissions_System.md
+
+### 13.3 Bash and terminal ownership
+Assistant Chat may preview shell-backed work inline, but the canonical interactive session remains the Terminal surface.
+
+Rules:
+- one inline command card per command invocation
+- collapsed preview defaults to 5 lines; expanded preview defaults to 15 lines
+- `Open in Terminal` focuses the same live session rather than spawning a fresh shell
+- chat owns a compact audit/preview view; Terminal owns the canonical interactive PTY session
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Run_Modes.md
+
+### 13.4 Shared runtime identity display
+Assistant Chat may display requested/effective runtime identity, but it must consume the owner-doc shared runtime model rather than invent assistant-local fields.
+
+Rules:
+- compact cards may show only the most important requested/effective delta
+- expanded views may link to usage/history/details
+- historical thread/activity views MUST show frozen requested/effective runtime state captured for that execution
+- assistant/chat MUST NOT introduce local replacements such as `active_model`, `actual_model`, or `assistant_runtime_state`
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Multi-Account.md
+```
+### Intent 11 (Run: r-20260316-160450-01, Anchor: `## 16. Interview Phase UX (Chat Surface)`, Op: replace_section)
+```markdown
+When the chat is in **Interview** mode, it uses the same shared question system that powers assistant clarification flows and builder clarification flows.
+
+### Shared question system baseline
+Each question flow shows:
+- question text
+- suggested options as buttons/chips when provided
+- a mandatory `Something else` / freeform path when freeform is allowed
+- current draft answer state
+
+Rules:
+- the Interview question UI is the baseline visual pattern for reusable question cards across Assistant, Interviewer, and requirements/document-builder flows
+- questions are required by default unless explicitly marked optional
+- a question flow may contain multiple questions in one questionnaire
+- users may answer in any order and revise answers before final submission
+- dismissing a questionnaire pauses that conversational branch and returns an explicit dismissed state; it does not fabricate a submitted answer set
+
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/chain-wizard-flexibility.md
+
+### Clarification and resume behavior
+Structured clarification flows MUST preserve question identity and resume deterministically.
+
+Rules:
+- `clarification_request` and related wizard/thread surfaces may point at a multi-question questionnaire, not only one prompt at a time
+- `question_ids[]` remain the canonical cross-surface identifiers for clarification work
+- thread resume and wizard resume must restore the same outstanding questionnaire state or its resolved outcome
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/chain-wizard-flexibility.md, ContractName:Plans/storage-plan.md
+
+### Runtime visibility
+Active Interview work blocks must show the effective runtime state required by the shared runtime owner docs.
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/FinalGUISpec.md
+```
+### Intent 12 (Run: r-20260317-164124-01, Anchor: `### 4.1 Chat footer, queue UI, and files touched -- implementation detail`, Op: insert_after)
+```markdown
+### 4.2 Message-level hover actions and resend contract
+
+Message-level controls use a hover/focus row directly below the message body.
+
+Rules:
+- the row is hidden until hover or keyboard focus and does not create permanent always-visible chrome under every message
+- the left cluster is icon-only message actions
+- the right cluster is compact runtime summary plus the info icon
+- `Copy` is available on every message
+- `Edit` and `Resend` are available only on the most recent user-sent message
+- this subsection supersedes earlier message-level `Retry` wording in this document
+
+ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md
+
+`Resend` is a history-aware replay action, not transport retry.
+
+Rules:
+- `Resend` rewinds the thread to the selected latest user message, discards later generated assistant/subagent/runtime history after that point, and replays that user message
+- `Resend` is distinct from provider retry, network retry, backoff, or error recovery terminology
+- if the selected message is no longer the most recent user message, `Resend` is unavailable rather than silently retargeted
+- `Edit` restores the selected latest user message into the composer for user modification before submission
+
+ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Run_Modes.md
+
+Compact runtime summary rules:
+- compact display label is one of `Ask`, `Agent`, `Plan`, or `Deep Plan`
+- compact row shows the resolved display label, model, and either assistant thinking time/duration or the user timestamp
+- the info icon opens the message runtime popover
+
+ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/FinalGUISpec.md
+
+```
+### Intent 13 (Run: r-20260317-164124-01, Anchor: `## 12. Context usage display`, Op: replace_section)
+```markdown
+Per-thread context uses one compact chat entrypoint and one canonical detailed surface.
+
+Rules:
+- the context indicator lives in the chat header for the active thread
+- hovering the indicator opens a lightweight status module
+- the hover module shows `Usage`, `Tokens`, estimated `Cost`, and a bottom action labeled `More Details`
+- clicking the context indicator does not compact immediately; it reveals the `Compact Now` action
+- choosing `Compact Now` triggers the canonical compaction pipeline immediately
+- choosing `More Details` opens or focuses the thread-scoped Context Detail Pane in an editor tab
+- one Context Detail Pane tab exists per thread; repeated opens focus the existing tab instead of opening duplicates
+- app-wide Usage remains a separate surface and is not replaced by the thread-scoped Context Detail Pane
+- earlier thread-Usage-in-side-panel or detached-pop-out wording is superseded by this model
+
+ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/FinalGUISpec.md
+
+The Context Detail Pane is the canonical detailed per-thread context surface.
+
+Required structure:
+- top-level view toggle: `Curated` and `Raw`
+- `Curated` view sections: `Overview`, `Breakdown`, and `Messages`
+- `Raw` view exposes full serialized payload inspection for the thread and for individual messages
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/FileManager.md
+
+`Overview` must show:
+- thread title or session title
+- message counts
+- headline provider, model, mode, persona, and worker summary
+- headline token, context, and estimated-cost metrics
+
+`Breakdown` must show:
+- context-usage bar
+- token buckets
+- grouped breakdowns by role, tool activity, and provider/model when available
+
+`Messages` must show:
+- one expandable row per message
+- compact row fields for role, worker type, mode, model, time or duration, total tokens, and estimated cost when known
+- expanded per-message details with provider, model, effort, persona, token breakdown, context usage, cost, relevant requested/effective deltas, and notable tool or part summary
+- raw payload access without leaving the message row
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Contracts_V0.md
+
+Cost and freshness rules:
+- per-thread cost is labeled `Estimated Cost` unless provider-authoritative cost exists
+- hover and detail surfaces may show in-progress or updating states while a turn is streaming
+- partial streaming updates must not present final totals before they are known
+- raw views may expose lower-level buckets, receipts, or normalization details used to derive the estimate
+
+ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md
+
+```
+### Intent 14 (Run: r-20260317-164124-01, Anchor: `### 13.4 Shared runtime identity display`, Op: replace_section)
+```markdown
+Assistant Chat may display requested/effective runtime identity, but it must consume the owner-doc shared runtime model rather than invent assistant-local fields.
+
+Rules:
+- compact chat surfaces may show only the material display summary needed for that moment
+- the message-under-row summary uses the resolved user-facing mode label, model, and time or duration
+- the mode display label is derived from canonical shared fields rather than from assistant-local string assembly
+- compact chat surfaces do not show version and do not show `current` or `frozen` wording
+- historical thread/activity views show frozen requested/effective runtime state captured for that execution
+- assistant/chat MUST NOT introduce local replacement fields such as `active_model`, `actual_model`, or `assistant_runtime_state`
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Multi-Account.md
+
+Message runtime popover fields are closed to:
+- `Mode`
+- `Provider`
+- `Model`
+- `Effort`
+- `Persona`
+- `Worker`
+- `Tokens`
+- `Context`
+
+Label rules:
+- `Mode` uses the normalized user-facing labels `Ask`, `Agent`, `Plan`, and `Deep Plan`
+- `Worker` is `Agent` or `Subagent`
+- `Tokens` shows compact total and may disclose breakdown on expansion or in the detailed pane
+- `Context` shows used, limit, and percentage when known
+- assistant rows show thinking time or duration; user rows show timestamp
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/usage-feature.md
+
+Display mapping rules:
+- `Deep Plan` is shown when the effective overlay is `deep_plan`
+- `Plan` is shown when the effective overlay is `plan` and the runtime posture is planning
+- `Ask` is shown when the effective runtime posture is `ask` and no higher planning overlay is active
+- `Agent` is shown for normal execution posture when no higher planning overlay is active
+
+ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/assistant-chat-design.md
+
+```
+### Intent 15 (Run: r-20260317-164124-01, Anchor: `### 14.1 Subagent visibility in thread -- implementation detail`, Op: replace_section)
+```markdown
+Subagent entries remain inline thread objects rather than sidebar-only state.
+
+Required visible fields are:
+- persona display name
+- short task label
+- effective model when known
+- time or duration state
+- worker indicator showing that the entry is a subagent activity block
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/FinalGUISpec.md
+
+Visual treatment rules:
+- subagent blocks stay in the same base card family as assistant/agent activity entries
+- subagent blocks use a subtle alternate accent, border, chip, or similar flourish so the user can distinguish them at a glance
+- active subagent blocks may use a distinct running animation from the primary active agent animation
+- the distinction must remain subtle; this is not a separate radically different layout system
+- completed subagent blocks remain in thread history as first-class persisted entries
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Multi-Account.md
+
+Multiple-subagent rules:
+- each active subagent may render as its own block, or the UI may collapse to a compact grouped state when several are active at once
+- whichever presentation is used, the footer active-subagent count and inline blocks must stay consistent
+- persisted history keeps the specific subagent entries rather than only the grouped summary count
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/orchestrator-subagent-integration.md
+
+```
+### Intent 16 (Run: r-20260317-164124-01, Anchor: `### 29.1 Natural-language mode invocation`, Op: replace_section)
+```markdown
+Natural-language mode invocation resolves workflow identity and runtime posture separately.
+
+Required requested/effective fields are:
+- `requested_mode_overlay`
+- `effective_mode_overlay`
+- `requested_runtime_mode`
+- `effective_runtime_mode`
+- `requested_plan_thoroughness`
+- `effective_plan_thoroughness`
+- `selection_source`
+- `selection_reason`
+- `override_scope`
+
+ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Run_Modes.md
+
+Canonical enum closure:
+- `requested_mode_overlay` and `effective_mode_overlay` are closed to `none`, `plan`, `deep_plan`, `interview`, `brainstorm`, and `crew`
+- `requested_runtime_mode` and `effective_runtime_mode` are closed to the canonical runtime postures from `Plans/Run_Modes.md`
+- `deep_plan` MUST survive normalization through the overlay fields and MUST NOT be discarded from historical/runtime records simply because the runtime posture is planning
+
+ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/storage-plan.md
+
+Resolution rules:
+- `use ask mode`, `don't edit`, and `just inspect` resolve to `effective_mode_overlay = none` and canonical runtime `ask`
+- `use plan mode` resolves to `effective_mode_overlay = plan` and canonical runtime `plan`
+- `use deep plan` resolves to `effective_mode_overlay = deep_plan` and canonical runtime `plan`
+- `use agent mode` clears planning overlays and resolves to the normal execution posture for the thread, preserving explicit permission posture such as `regular` or `yolo`
+- compact display labels are derived from the effective overlay plus runtime posture so the visible label can still be `Ask`, `Agent`, `Plan`, or `Deep Plan`
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/FinalGUISpec.md
+
+```
+### Intent 17 (Run: r-20260317-164124-02, Anchor: `### 4.1 Chat footer, queue UI, and files touched -- implementation detail`, Op: replace_section)
+```markdown
+**GUI updates**
+
+- **Footer container:** Add a **chat footer** region at the bottom of the chat view that hosts, in order (top to bottom): (1) pending queued messages strip, (2) composer (text entry), (3) status line for active subagent count, (4) files-touched strip. The footer is **per thread** -- when the user switches threads, it shows that thread's queue, count, and files. Use existing widget patterns (e.g. selectable labels for file paths, styled buttons for Edit / Send now / Cancel) per `docs/gui-widget-catalog.md`; tag new reusable pieces with `// DRY:WIDGET:...`.
+- **Queued messages strip:** When the queue is non-empty, render one row per queued message (max 2). Each row: **preview of message text** (truncate with tooltip or expand on click), plus three actions: **Edit** (opens inline edit or small modal), **Send now (steer)**, **Cancel** (remove from queue). Order: first queued at top. When queue is full, show a "Queue full (2 messages)" hint and disable or warn on further queue attempts. **Empty state:** when queue is empty, this strip can be hidden or show a minimal "No queued messages" so the composer is not pushed down unnecessarily.
+- **Active subagent count line:** A single line below the composer, e.g. "0 active subagents" or "2 active subagents". Style as secondary/muted text; optional: make it a control that expands to list active personas (if we have that data) or links to the thread's run state. **Empty state:** "0 active subagents" when none.
+- **Files touched strip:** A compact list of **file paths** with **diff counts** (additions, deletions). Example: `src/main.rs` (+12 −3) - `docs/readme.md` (+2 −0). Paths should be **selectable/copyable** (e.g. `selectable_label_mono`). **Click opens the file in the in-app IDE-style editor** (Plans/FileManager.md); when the entry has line/range info, the editor opens at that location. **Empty state:** "No files changed in this thread" or hide the strip when empty. If many files (e.g. >10), show a fixed number (e.g. 5) with "+ N more" and expand on click or hover.
+- **Scrolling and layout:** Message area scrolls independently; footer stays fixed at bottom. Ensure keyboard focus (e.g. Tab order) goes: composer → queue actions → other footer controls, and that "focus composer" shortcut is available.
+
+**Backend updates**
+
+- **Thread state:** Each thread must expose (or the chat view must subscribe to):
+  - **Queued messages:** Ordered list (max 2) of `{ id, text }`. Actions: add (when queueing), remove (Cancel or Send now), edit (update text), reorder not required (FIFO only).
+  - **Active subagent count:** Integer -- number of subagents currently "active" for this thread. Define "active" as: subagent run started and not yet completed for this thread (e.g. has an in-flight tool call or turn). Backend or execution layer must emit this (e.g. from orchestrator/crew runtime or from normalized event stream).
+  - **Files touched:** List of `{ path, additions, deletions }` (or `path` + `diff_summa
+```
+[... truncated, full length: 10437 chars]
+### Intent 18 (Run: r-20260317-164124-02, Anchor: `## 12. Context usage display`, Op: replace_section)
+```markdown
+Per-thread context uses one compact chat entrypoint and one canonical detailed surface.
+
+Rules:
+- the context indicator lives in the chat header for the active thread
+- hovering the indicator opens a lightweight status module
+- the hover module shows `Usage`, `Tokens`, estimated `Cost`, and a bottom action labeled `More Details`
+- clicking the context indicator does not compact immediately; it reveals the `Compact Now` action
+- choosing `Compact Now` triggers the canonical compaction pipeline immediately
+- choosing `More Details` opens or focuses the thread-scoped Context Detail Pane in an editor tab
+- one Context Detail Pane tab exists per thread; repeated opens focus the existing tab instead of opening duplicates
+- app-wide Usage remains a separate surface and is not replaced by the thread-scoped Context Detail Pane
+- earlier thread-Usage-in-side-panel or detached-pop-out wording is superseded by this model
+
+ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/FinalGUISpec.md
+
+The Context Detail Pane is the canonical detailed per-thread context surface.
+
+Required structure:
+- top-level view toggle: `Curated` and `Raw`
+- `Curated` view sections: `Overview`, `Breakdown`, and `Messages`
+- `Raw` view exposes full serialized payload inspection for the thread and for individual messages
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/FileManager.md
+
+`Overview` must show:
+- thread title or session title
+- message counts
+- headline provider, model, mode, persona, and worker summary
+- headline token, context, and estimated-cost metrics
+
+`Breakdown` must show:
+- context-usage bar
+- token buckets
+- grouped breakdowns by role, tool activity, and provider/model when available
+
+`Messages` must show:
+- one expandable row per message
+- compact row fields for role, worker type, mode, model, time or duration, total tokens, and estimated cost when known
+- expanded per-message details with provider, model, effort, persona, token breakdown, context usage, cost, relevant requested/effective deltas, and notable tool or part summary
+- raw payload access without leaving the message row
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Contracts_V0.md
+
+Cost and freshness rules:
+- per-thread cost is labeled `Estimated Cost` unless provider-authoritative cost exists
+- hover and detail surfaces may show in-progress or updating states while a turn is streaming
+- partial streaming updates must not present final totals before they are known
+- raw views may expose lower-level buckets, receipts, or normalization details used to derive the estimate
+
+ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md
+
+```
+### Intent 19 (Run: r-20260317-164124-02, Anchor: `### 13.4 Shared runtime identity display`, Op: replace_section)
+```markdown
+Assistant Chat may display requested/effective runtime identity, but it must consume the owner-doc shared runtime model rather than invent assistant-local fields.
+
+Rules:
+- compact chat surfaces may show only the material display summary needed for that moment
+- the message-under-row summary uses the resolved user-facing mode label, model, and time or duration
+- the mode display label is derived from canonical shared fields rather than from assistant-local string assembly
+- compact chat surfaces do not show version and do not show `current` or `frozen` wording
+- historical thread/activity views show frozen requested/effective runtime state captured for that execution
+- assistant/chat MUST NOT introduce local replacement fields such as `active_model`, `actual_model`, or `assistant_runtime_state`
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Multi-Account.md
+
+Message runtime popover fields are closed to:
+- `Mode`
+- `Provider`
+- `Model`
+- `Effort`
+- `Persona`
+- `Worker`
+- `Tokens`
+- `Context`
+
+Label rules:
+- `Mode` uses the normalized user-facing labels `Ask`, `Agent`, `Plan`, and `Deep Plan`
+- `Worker` is `Agent` or `Subagent`
+- `Tokens` shows compact total and may disclose breakdown on expansion or in the detailed pane
+- `Context` shows used, limit, and percentage when known
+- assistant rows show thinking time or duration; user rows show timestamp
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/usage-feature.md
+
+Display mapping rules:
+- `Deep Plan` is shown when the effective overlay is `deep_plan`
+- `Plan` is shown when the effective overlay is `plan` and the runtime posture is planning
+- `Ask` is shown when the effective runtime posture is `ask` and no higher planning overlay is active
+- `Agent` is shown for normal execution posture when no higher planning overlay is active
+
+ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/assistant-chat-design.md
+
+```
+### Intent 20 (Run: r-20260317-164124-02, Anchor: `### 14.1 Subagent visibility in thread -- implementation detail`, Op: replace_section)
+```markdown
+Subagent entries remain inline thread objects rather than sidebar-only state.
+
+Required visible fields are:
+- persona display name
+- short task label
+- effective model when known
+- time or duration state
+- worker indicator showing that the entry is a subagent activity block
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/FinalGUISpec.md
+
+Visual treatment rules:
+- subagent blocks stay in the same base card family as assistant/agent activity entries
+- subagent blocks use a subtle alternate accent, border, chip, or similar flourish so the user can distinguish them at a glance
+- active subagent blocks may use a distinct running animation from the primary active agent animation
+- the distinction must remain subtle; this is not a separate radically different layout system
+- completed subagent blocks remain in thread history as first-class persisted entries
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Multi-Account.md
+
+Multiple-subagent rules:
+- each active subagent may render as its own block, or the UI may collapse to a compact grouped state when several are active at once
+- whichever presentation is used, the footer active-subagent count and inline blocks must stay consistent
+- persisted history keeps the specific subagent entries rather than only the grouped summary count
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/orchestrator-subagent-integration.md
+
+```
+### Intent 21 (Run: r-20260317-164124-02, Anchor: `### 29.1 Natural-language mode invocation`, Op: replace_section)
+```markdown
+Natural-language mode invocation resolves workflow identity and runtime posture separately.
+
+Required requested/effective fields are:
+- `requested_mode_overlay`
+- `effective_mode_overlay`
+- `requested_runtime_mode`
+- `effective_runtime_mode`
+- `requested_plan_thoroughness`
+- `effective_plan_thoroughness`
+- `selection_source`
+- `selection_reason`
+- `override_scope`
+
+ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Run_Modes.md
+
+Canonical enum closure:
+- `requested_mode_overlay` and `effective_mode_overlay` are closed to `none`, `plan`, `deep_plan`, `interview`, `brainstorm`, and `crew`
+- `requested_runtime_mode` and `effective_runtime_mode` are closed to the canonical runtime postures from `Plans/Run_Modes.md`
+- `deep_plan` MUST survive normalization through the overlay fields and MUST NOT be discarded from historical/runtime records simply because the runtime posture is planning
+
+ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/storage-plan.md
+
+Resolution rules:
+- `use ask mode`, `don't edit`, and `just inspect` resolve to `effective_mode_overlay = none` and canonical runtime `ask`
+- `use plan mode` resolves to `effective_mode_overlay = plan` and canonical runtime `plan`
+- `use deep plan` resolves to `effective_mode_overlay = deep_plan` and canonical runtime `plan`
+- `use agent mode` clears planning overlays and resolves to the normal execution posture for the thread, preserving explicit permission posture such as `regular` or `yolo`
+- compact display labels are derived from the effective overlay plus runtime posture so the visible label can still be `Ask`, `Agent`, `Plan`, or `Deep Plan`
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/FinalGUISpec.md
+
+```
+### Intent 22 (Run: r-20260317-164124-03, Anchor: `### 4.1 Chat footer, queue UI, and files touched -- implementation detail`, Op: replace_section)
+```markdown
+**GUI updates**
+
+- **Footer container:** Add a **chat footer** region at the bottom of the chat view that hosts, in order (top to bottom): (1) pending queued messages strip, (2) composer (text entry), (3) status line for active subagent count, (4) files-touched strip. The footer is **per thread** -- when the user switches threads, it shows that thread's queue, count, and files. Use existing widget patterns (e.g. selectable labels for file paths, styled buttons for Edit / Send now / Cancel) per `docs/gui-widget-catalog.md`; tag new reusable pieces with `// DRY:WIDGET:...`.
+- **Queued messages strip:** When the queue is non-empty, render one row per queued message (max 2). Each row: **preview of message text** (truncate with tooltip or expand on click), plus three actions: **Edit** (opens inline edit or small modal), **Send now (steer)**, **Cancel** (remove from queue). Order: first queued at top. When queue is full, show a "Queue full (2 messages)" hint and disable or warn on further queue attempts. **Empty state:** when queue is empty, this strip can be hidden or show a minimal "No queued messages" so the composer is not pushed down unnecessarily.
+- **Active subagent count line:** A single line below the composer, e.g. "0 active subagents" or "2 active subagents". Style as secondary/muted text; optional: make it a control that expands to list active personas (if we have that data) or links to the thread's run state. **Empty state:** "0 active subagents" when none.
+- **Files touched strip:** A compact list of **file paths** with **diff counts** (additions, deletions). Example: `src/main.rs` (+12 −3) - `docs/readme.md` (+2 −0). Paths should be **selectable/copyable** (e.g. `selectable_label_mono`). **Click opens the file in the in-app IDE-style editor** (Plans/FileManager.md); when the entry has line/range info, the editor opens at that location. **Empty state:** "No files changed in this thread" or hide the strip when empty. If many files (e.g. >10), show a fixed number (e.g. 5) with "+ N more" and expand on click or hover.
+- **Scrolling and layout:** Message area scrolls independently; footer stays fixed at bottom. Ensure keyboard focus (e.g. Tab order) goes: composer → queue actions → other footer controls, and that "focus composer" shortcut is available.
+
+**Backend updates**
+
+- **Thread state:** Each thread must expose (or the chat view must subscribe to):
+  - **Queued messages:** Ordered list (max 2) of `{ id, text }`. Actions: add (when queueing), remove (Cancel or Send now), edit (update text), reorder not required (FIFO only).
+  - **Active subagent count:** Integer -- number of subagents currently "active" for this thread. Define "active" as: subagent run started and not yet completed for this thread (e.g. has an in-flight tool call or turn). Backend or execution layer must emit this (e.g. from orchestrator/crew runtime or from normalized event stream).
+  - **Files touched:** List of `{ path, additions, deletions }` (or `path` + `diff_summa
+```
+[... truncated, full length: 10437 chars]
+### Intent 23 (Run: r-20260317-164124-03, Anchor: `## 12. Context usage display`, Op: replace_section)
+```markdown
+Per-thread context uses one compact chat entrypoint and one canonical detailed surface.
+
+Rules:
+- the context indicator lives in the chat header for the active thread
+- hovering the indicator opens a lightweight status module
+- the hover module shows `Usage`, `Tokens`, estimated `Cost`, and a bottom action labeled `More Details`
+- clicking the context indicator does not compact immediately; it reveals the `Compact Now` action
+- choosing `Compact Now` triggers the canonical compaction pipeline immediately
+- choosing `More Details` opens or focuses the thread-scoped Context Detail Pane in an editor tab
+- one Context Detail Pane tab exists per thread; repeated opens focus the existing tab instead of opening duplicates
+- app-wide Usage remains a separate surface and is not replaced by the thread-scoped Context Detail Pane
+- earlier thread-Usage-in-side-panel or detached-pop-out wording is superseded by this model
+
+ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/FinalGUISpec.md
+
+The Context Detail Pane is the canonical detailed per-thread context surface.
+
+Required structure:
+- top-level view toggle: `Curated` and `Raw`
+- `Curated` view sections: `Overview`, `Breakdown`, and `Messages`
+- `Raw` view exposes full serialized payload inspection for the thread and for individual messages
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/FileManager.md
+
+`Overview` must show:
+- thread title or session title
+- message counts
+- headline provider, model, mode, persona, and worker summary
+- headline token, context, and estimated-cost metrics
+
+`Breakdown` must show:
+- context-usage bar
+- token buckets
+- grouped breakdowns by role, tool activity, and provider/model when available
+
+`Messages` must show:
+- one expandable row per message
+- compact row fields for role, worker type, mode, model, time or duration, total tokens, and estimated cost when known
+- expanded per-message details with provider, model, effort, persona, token breakdown, context usage, cost, relevant requested/effective deltas, and notable tool or part summary
+- raw payload access without leaving the message row
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Contracts_V0.md
+
+Cost and freshness rules:
+- per-thread cost is labeled `Estimated Cost` unless provider-authoritative cost exists
+- hover and detail surfaces may show in-progress or updating states while a turn is streaming
+- partial streaming updates must not present final totals before they are known
+- raw views may expose lower-level buckets, receipts, or normalization details used to derive the estimate
+
+ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md
+
+```
+### Intent 24 (Run: r-20260317-164124-03, Anchor: `### 13.4 Shared runtime identity display`, Op: replace_section)
+```markdown
+Assistant Chat may display requested/effective runtime identity, but it must consume the owner-doc shared runtime model rather than invent assistant-local fields.
+
+Rules:
+- compact chat surfaces may show only the material display summary needed for that moment
+- the message-under-row summary uses the resolved user-facing mode label, model, and time or duration
+- the mode display label is derived from canonical shared fields rather than from assistant-local string assembly
+- compact chat surfaces do not show version and do not show `current` or `frozen` wording
+- historical thread/activity views show frozen requested/effective runtime state captured for that execution
+- assistant/chat MUST NOT introduce local replacement fields such as `active_model`, `actual_model`, or `assistant_runtime_state`
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Multi-Account.md
+
+Message runtime popover fields are closed to:
+- `Mode`
+- `Provider`
+- `Model`
+- `Effort`
+- `Persona`
+- `Worker`
+- `Tokens`
+- `Context`
+
+Label rules:
+- `Mode` uses the normalized user-facing labels `Ask`, `Agent`, `Plan`, and `Deep Plan`
+- `Worker` is `Agent` or `Subagent`
+- `Tokens` shows compact total and may disclose breakdown on expansion or in the detailed pane
+- `Context` shows used, limit, and percentage when known
+- assistant rows show thinking time or duration; user rows show timestamp
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/usage-feature.md
+
+Display mapping rules:
+- `Deep Plan` is shown when the effective overlay is `deep_plan`
+- `Plan` is shown when the effective overlay is `plan` and the runtime posture is planning
+- `Ask` is shown when the effective runtime posture is `ask` and no higher planning overlay is active
+- `Agent` is shown for normal execution posture when no higher planning overlay is active
+
+ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/assistant-chat-design.md
+
+```
+### Intent 25 (Run: r-20260317-164124-03, Anchor: `### 14.1 Subagent visibility in thread -- implementation detail`, Op: replace_section)
+```markdown
+Subagent entries remain inline thread objects rather than sidebar-only state.
+
+Required visible fields are:
+- persona display name
+- short task label
+- effective model when known
+- time or duration state
+- worker indicator showing that the entry is a subagent activity block
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/FinalGUISpec.md
+
+Visual treatment rules:
+- subagent blocks stay in the same base card family as assistant/agent activity entries
+- subagent blocks use a subtle alternate accent, border, chip, or similar flourish so the user can distinguish them at a glance
+- active subagent blocks may use a distinct running animation from the primary active agent animation
+- the distinction must remain subtle; this is not a separate radically different layout system
+- completed subagent blocks remain in thread history as first-class persisted entries
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Multi-Account.md
+
+Multiple-subagent rules:
+- each active subagent may render as its own block, or the UI may collapse to a compact grouped state when several are active at once
+- whichever presentation is used, the footer active-subagent count and inline blocks must stay consistent
+- persisted history keeps the specific subagent entries rather than only the grouped summary count
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/orchestrator-subagent-integration.md
+
+```
+### Intent 26 (Run: r-20260317-164124-03, Anchor: `### 29.1 Natural-language mode invocation`, Op: replace_section)
+```markdown
+Natural-language mode invocation resolves workflow identity and runtime posture separately.
+
+Required requested/effective fields are:
+- `requested_mode_overlay`
+- `effective_mode_overlay`
+- `requested_runtime_mode`
+- `effective_runtime_mode`
+- `requested_plan_thoroughness`
+- `effective_plan_thoroughness`
+- `selection_source`
+- `selection_reason`
+- `override_scope`
+
+ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Run_Modes.md
+
+Canonical enum closure:
+- `requested_mode_overlay` and `effective_mode_overlay` are closed to `none`, `plan`, `deep_plan`, `interview`, `brainstorm`, and `crew`
+- `requested_runtime_mode` and `effective_runtime_mode` are closed to the canonical runtime postures from `Plans/Run_Modes.md`
+- `deep_plan` MUST survive normalization through the overlay fields and MUST NOT be discarded from historical/runtime records simply because the runtime posture is planning
+
+ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/storage-plan.md
+
+Resolution rules:
+- `use ask mode`, `don't edit`, and `just inspect` resolve to `effective_mode_overlay = none` and canonical runtime `ask`
+- `use plan mode` resolves to `effective_mode_overlay = plan` and canonical runtime `plan`
+- `use deep plan` resolves to `effective_mode_overlay = deep_plan` and canonical runtime `plan`
+- `use agent mode` clears planning overlays and resolves to the normal execution posture for the thread, preserving explicit permission posture such as `regular` or `yolo`
+- compact display labels are derived from the effective overlay plus runtime posture so the visible label can still be `Ask`, `Agent`, `Plan`, or `Deep Plan`
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/FinalGUISpec.md
+
+```
+### Intent 27 (Run: r-20260317-181906-01, Anchor: `### 28.4A Element-context attachment contract`, Op: replace_section)
+```markdown
+Rendered selection capture uses three canonical typed attachments: `browser_element_context` for browser/HTML element capture, `browser_selection_context` for browser text selection capture, and `document_selection_context` for native document selections.
+
+`browser_selection_context` carries bounded browser-selection provenance including `browser_session_id`, `session_class`, `page_url`, bounded `selected_text`, `selection_anchor?`, `requested_target`, `effective_target?`, `truncation_state`, and `captured_at`.
+
+Composer behavior:
+- capture creates a visible pending composer chip/card immediately visible to the user
+- chips are stored in composer-prep state keyed by `thread_id`
+- the chip attaches to the next submitted user message by default and may be removed before send
+- capturing browser context MUST NOT silently inject a hidden message into the thread
+- if the owning thread is terminal or non-writable, create a new thread in the same owning surface and record both `requested_target` and `effective_target`
+
+ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Permissions_System.md
+```
+### Intent 28 (Run: r-20260317-181906-02, Anchor: `### 28.4A Element-context attachment contract`, Op: replace_section)
+```markdown
+Rendered selection capture uses three canonical typed attachments:
+- `attachment_type = browser_element_context` for browser / HTML element capture
+- `attachment_type = browser_selection_context` for browser text selection capture
+- `attachment_type = document_selection_context` for native document selections forwarded into chat
+
+ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/FileManager.md, ContractName:Plans/storage-plan.md
+
+`browser_element_context` required fields:
+- `attachment_id`
+- `schema_version`
+- `browser_session_id`
+- `session_class`
+- `page_url`
+- `tag_name`
+- `element_ref?`
+- bounded `text_content?`
+- `role?`
+- `rect`
+- `parent_path?`
+- `html_excerpt?`
+- `requested_target`
+- `effective_target?`
+- `captured_at`
+- `truncation_state`
+
+ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Permissions_System.md
+
+`browser_selection_context` required fields:
+- `attachment_id`
+- `schema_version`
+- `origin_kind`
+- `source_surface`
+- `browser_session_id`
+- `session_class`
+- `page_url`
+- bounded `selected_text`
+- `selection_anchor?`
+- `requested_target`
+- `effective_target?`
+- `captured_at`
+- `truncation_state`
+
+ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md
+
+`document_selection_context` required fields:
+- `attachment_id`
+- `schema_version`
+- `origin_kind` (`assistant_deep_plan`, `wizard_document_review`, `interview_document_review`, `document_review_surface`, `workspace_preview`)
+- `source_surface`
+- `bundle_id?`
+- `doc_id`
+- `doc_path` or equivalent bounded provenance
+- `display_name?`
+- `captured_at`
+- `selected_text` (bounded)
+- `anchor` (`text_position?`, `text_quote`, or stable semantic anchor id)
+- `requested_target`
+- `effective_target?`
+- `sensitivity_state`
+- `truncation_state`
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FileSafe.md, ContractName:Plans/Permissions_System.md
+
+Composer behavior:
+- capture creates a visible pending composer chip/card immediately visible to the user
+- chips are stored in composer-prep state keyed by `thread_id`, never as global chat state
+- the chip is attached to the next submitted user message by default and the user may remove it before send
+- capturing browser context MUST NOT silently inject a hidden message into the thread
+- hidden chat panels do not auto-open by default; the owning chat surface may pulse/badge and show a toast instead
+- if the owning thread is terminal or non-writable, create a new thread in the same owning surface and record both `requested_target` and `effective_target`
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Permissions_System.md
+
+Browser capture actions exposed to users are:
+- `Add Selection to Chat`
+- `Add Selection + Screenshot`
+- `Add Selection + Full Screenshot`
+- `Pick Element for Chat`
+- `Pick Element + Scree
+```
+[... truncated, full length: 4618 chars]
+### Intent 29 (Run: r-20260317-181906-03, Anchor: `### 28.4A Element-context attachment contract`, Op: replace_section)
+```markdown
+Rendered selection capture uses three canonical typed attachments:
+- `attachment_type = browser_element_context` for browser / HTML element capture
+- `attachment_type = browser_selection_context` for browser text selection capture
+- `attachment_type = document_selection_context` for native document selections forwarded into chat
+
+ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/FileManager.md, ContractName:Plans/storage-plan.md
+
+`browser_element_context` required fields:
+- `attachment_id`
+- `schema_version`
+- `browser_session_id`
+- `session_class`
+- `page_url`
+- `tag_name`
+- `element_ref?`
+- bounded `text_content?`
+- `role?`
+- `rect`
+- `parent_path?`
+- `html_excerpt?`
+- `requested_target`
+- `effective_target?`
+- `captured_at`
+- `truncation_state`
+
+ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Permissions_System.md
+
+`browser_selection_context` required fields:
+- `attachment_id`
+- `schema_version`
+- `origin_kind`
+- `source_surface`
+- `browser_session_id`
+- `session_class`
+- `page_url`
+- bounded `selected_text`
+- `selection_anchor?`
+- `requested_target`
+- `effective_target?`
+- `captured_at`
+- `truncation_state`
+
+ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md
+
+`document_selection_context` required fields:
+- `attachment_id`
+- `schema_version`
+- `origin_kind` (`assistant_deep_plan`, `wizard_document_review`, `interview_document_review`, `document_review_surface`, `workspace_preview`)
+- `source_surface`
+- `bundle_id?`
+- `doc_id`
+- `doc_path` or equivalent bounded provenance
+- `display_name?`
+- `captured_at`
+- `selected_text` (bounded)
+- `anchor` (`text_position?`, `text_quote`, or stable semantic anchor id)
+- `requested_target`
+- `effective_target?`
+- `sensitivity_state`
+- `truncation_state`
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FileSafe.md, ContractName:Plans/Permissions_System.md
+
+Composer behavior:
+- capture creates a visible pending composer chip/card immediately visible to the user
+- chips are stored in composer-prep state keyed by `thread_id`, never as global chat state
+- the chip is attached to the next submitted user message by default and the user may remove it before send
+- capturing browser context MUST NOT silently inject a hidden message into the thread
+- hidden chat panels do not auto-open by default; the owning chat surface may pulse/badge and show a toast instead
+- if the owning thread is terminal or non-writable, create a new thread in the same owning surface and record both `requested_target` and `effective_target`
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Permissions_System.md
+
+Browser capture actions exposed to users are:
+- `Add Selection to Chat`
+- `Add Selection + Screenshot`
+- `Add Selection + Full Screenshot`
+- `Pick Element for Chat`
+- `Pick Element + Scree
+```
+[... truncated, full length: 4618 chars]
+### Intent 30 (Run: r-20260318-160350-01, Anchor: `### 13.3 Bash and terminal ownership`, Op: replace_section)
+```markdown
+Assistant Chat may preview shell-backed work inline, but the canonical interactive session remains the Terminal surface.
+
+Rules:
+- one inline command card corresponds to one observed command invocation
+- collapsed preview defaults to 5 lines; expanded preview defaults to 15 lines
+- `Open in Terminal` and `Show Terminal` resolve to exact-session reveal when a `terminal_session_id` binding exists
+- chat owns a compact audit and preview layer; Terminal owns the canonical interactive PTY session
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Run_Modes.md
+
+### Command-card model
+Command cards are transcript-adjacent summaries rather than a second shell implementation.
+
+Rules:
+- cards surface summary, status, and a primary reveal action without pretending to own the full shell lifecycle
+- when shell integration is `rich` or `basic`, command cards may expose cwd, duration, exit code, and command labels according to confidence tier
+- when shell integration is `opaque`, the card MUST degrade to lower-confidence activity disclosure and MUST NOT fabricate exact command text or exact command boundaries
+- transcript continuity remains canonical even when command-card metadata is degraded
+
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Tools.md
+
+### Reveal and focus behavior
+- if the referenced terminal session is already visible, `Open in Terminal` and `Show Terminal` simply focus it
+- if the session is hidden inside another pane, tab, or section, the shell reveals the existing pane or tab before creating anything new
+- if only historical state remains, the card opens that historical shell receipt and presents explicit recovery actions instead of silently creating a replacement session
+- explicit `New Terminal` and explicit restart remain separate user-visible actions
+
+ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/storage-plan.md
+
+### Status, degradation, and linked-surface behavior
+Command-card status badges may reflect `starting`, `running`, `exited`, `failed`, `terminated`, `disconnected`, `restoring`, and `attention_required`.
+
+Rules:
+- chat preview stays compact even when the terminal transcript is large
+- Output, Problems, Debug Console, and Ports continue to route through the owning terminal or dev-session identity rather than through chat-local state
+- command cards may link to Output, Problems, or Ports when the command or dev session produced those linked surfaces
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/FileManager.md
+
+```
+### Intent 31 (Run: r-20260318-160350-01, Anchor: `## 22. Live Testing Tools and Hot Reload`, Op: replace_section)
+```markdown
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/FinalGUISpec.md
+
+Live testing and hot reload are dev-session operations.
+
+Rules:
+- assistant-invoked dev actions map to stable UI commands and visible shell state changes
+- `start hot reload dev mode`, `start dev server`, and `run tests in watch mode` are user-facing intents that resolve to canonical `cmd.dev.*` or terminal command IDs
+- the chat surface shows whether a dev session is starting, active, failed, stopping, stopped, or restored as historical state
+- output routes into the canonical Terminal, Output, Problems, Debug Console, and Ports surfaces owned by the shell; chat does not create a parallel dev-output model
+- project switch or workspace-tab close must surface explicit consequences for any active dev session
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/FileManager.md
+
+### Dev-session and terminal binding
+- a dev session may own or link multiple terminal sessions without collapsing them into one PTY identity
+- `Show Output`, `Show Problems`, and `Show Ports` reveal the surfaces linked to the current `dev_session_id`
+- `Open in Terminal` from a dev-status row reveals the primary or last-active `terminal_session_id` for that dev session when one exists
+- stopping a dev session preserves historical shell evidence and linked surface history even when the live process has exited
+
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/storage-plan.md
+
+### Project-switch and close rules
+- switching projects recalculates effective shell, tool, and dev-session state for the new project context
+- background activity from the old project remains visible through badges and attention surfaces tied to its own project and session identities
+- closing a workspace tab or terminal tab with an active dev session requires explicit consequence disclosure; Puppet Master MUST NOT silently orphan the background workflow by default
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/Run_Modes.md
+
+```
+### Intent 32 (Run: r-20260318-160350-02, Anchor: `### 13.3 Bash and terminal ownership`, Op: replace_section)
+```markdown
+Assistant Chat may preview shell-backed work inline, but the canonical interactive session remains the Terminal surface.
+
+Rules:
+- one inline command card corresponds to one observed command invocation
+- collapsed preview defaults to 5 lines; expanded preview defaults to 15 lines
+- `Open in Terminal` and `Show Terminal` resolve to exact-session reveal when a `terminal_session_id` binding exists
+- chat owns a compact audit and preview layer; Terminal owns the canonical interactive PTY session
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Run_Modes.md
+
+### Command-card model
+Command cards are transcript-adjacent summaries rather than a second shell implementation.
+
+Rules:
+- cards surface summary, status, and a primary reveal action without pretending to own the full shell lifecycle
+- when shell integration is `rich` or `basic`, command cards may expose cwd, duration, exit code, and command labels according to confidence tier
+- when shell integration is `opaque`, the card MUST degrade to lower-confidence activity disclosure and MUST NOT fabricate exact command text or exact command boundaries
+- transcript continuity remains canonical even when command-card metadata is degraded
+
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Tools.md
+
+### Reveal and focus behavior
+- if the referenced terminal session is already visible, `Open in Terminal` and `Show Terminal` simply focus it
+- if the session is hidden inside another pane, tab, or section, the shell reveals the existing pane or tab before creating anything new
+- if only historical state remains, the card opens that historical shell receipt and presents explicit recovery actions instead of silently creating a replacement session
+- explicit `New Terminal` and explicit restart remain separate user-visible actions
+
+ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/storage-plan.md
+
+### Status, degradation, and linked-surface behavior
+Command-card status badges may reflect `starting`, `running`, `exited`, `failed`, `terminated`, `disconnected`, `restoring`, and `attention_required`.
+
+Rules:
+- chat preview stays compact even when the terminal transcript is large
+- Output, Problems, Debug Console, and Ports continue to route through the owning terminal or dev-session identity rather than through chat-local state
+- command cards may link to Output, Problems, or Ports when the command or dev session produced those linked surfaces
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/FileManager.md
+
+```

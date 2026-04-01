@@ -472,6 +472,58 @@
 - `kubernetes-expert`, `terraform-expert`, `prisma-expert`, `oauth-oidc-expert`, `jwt-expert`, `playwright-expert` | still strong future advanced/template candidates, but not necessary in the first curated bundled catalog
 - No web research used in this discovery pass.
 - No current `work_id` existed in chat before this initialization, so a new work item was created.
+- Overseer/orchestrator owner-doc research findings:
+- rewrite-owner docs lock orchestrator as graph-first, not tier-first:
+  - `Node` is the smallest executable unit
+  - `Feature Seam` and `Work Package` are first-class graph-owned governance objects
+  - `Package Overseer` and `Seam Overseer` are real governance roles, not legacy tier aliases
+- `Plans/Executor_Protocol.md` is the strongest canon for Overseer boundaries:
+  - `Package Overseer` governs one `Work Package`
+  - `Seam Overseer` governs cross-package integration for one `Feature Seam`
+  - runtime scheduler remains the canonical owner of readiness, blocked state, transitions, retry budgets, wakeups, and dispatch
+  - overseers are explicitly not hidden second schedulers
+- `Plans/Crosswalk.md`, `Plans/Decision_Log.md`, and `Plans/rewrite-tie-in-memo.md` all reinforce the same split:
+  - Overseer = governance
+  - runtime = dispatch/state machine owner
+- `Plans/Orchestrator_Page.md` and `Plans/Run_Graph_View.md` show the practical surface this implies:
+  - Orchestrator is seam/package/node centric
+  - promotion, corroboration, weak integration, evidence, history, and ledger visibility are first-class
+  - Overseer-adjacent work is therefore integration/governance-heavy, not just "manage a queue"
+- Current docs still contain a terminology seam:
+  - `Plans/orchestrator-subagent-integration.md` says "the controlling AI role within the Orchestrator is the Overseer"
+  - rewrite-owner docs split that singular role into `Package Overseer` and `Seam Overseer`
+  - this is a real canon tension that needs normalization before final Persona reconciliation
+- `Plans/orchestrator-subagent-integration.md` still adds important runtime/persona requirements relevant to Overseer:
+  - orchestrator persists a separate Persona-resolution config object with `mode`, `tier_personas`, and `operation_frame_personas`
+  - every tier run must record requested/effective Persona plus selection source/reason
+  - same-tier Persona switching is allowed by operation frame and must not create new tiers
+- `Plans/interview-subagent-integration.md` uses a broader `AI Overseer` concept:
+  - generated plans/docs must assume an AI executor/overseer audience
+  - documents must be wiring-explicit, completeness-oriented, parallelism-aware, and carry specialist/subagent recommendations
+  - this suggests the user-facing `Overseer` Persona may need to operate outside strict Orchestrator runtime too
+- `Plans/Provider_Stream_Mapping_External_Reference_A2A.md` adds a strong normative subjective-audit model:
+  - Overseer performs start-of-tier and end-of-tier audits
+  - Overseer spawns exactly two reviewer subagents for those audits
+  - reviewer verdicts are reduced through deterministic consensus
+  - Overseer may force remediation even when deterministic verifier checks passed, as long as that override is auditable
+- Current best synthesis for PM Persona design:
+- core `Overseer` should not be the scheduler personified
+- it should likely be a user-facing abstraction over the governance-role family
+- likely traits: delegation-first, verification-first, wiring/completeness-sensitive, integration-aware, strong at assigning specialists and spotting weak integration or unfinished work
+- Important clarifying nuance from owner docs:
+- the plans do support Overseer-spawned workers/subagents for node execution
+- `Plans/Executor_Protocol.md` explicitly says "most node execution may be performed through overseer-spawned node workers, but runtime still owns canonical execution state"
+- `Plans/orchestrator-subagent-integration.md` still models node/tier execution through selected subagents and child execution requests
+- so the canon is not "runtime spawns a fresh unrelated main agent for every node with Overseer only observing"
+- the canon is closer to:
+  - runtime scheduler decides what is dispatchable and owns canonical state/attempt lineage
+  - Overseer governs and may spawn/select the workers/subagents that perform the node work
+  - worker execution still lands in canonical runtime/attempt/dispatched-child structures rather than bypassing runtime ownership
+- Direct-implementation boundary nuance:
+- the docs clearly separate `Builder / node worker` from `Package Overseer` and `Seam Overseer`
+- that strongly implies implementation belongs primarily to builder/node-worker roles, not to Overseer itself
+- but the docs do not yet appear to state an equally explicit prohibition such as "Overseer must never directly implement"
+- current canon therefore defines Overseer as delegation-first more strongly than it defines an absolute no-implementation rule
 
 ## Gaps / Problems Identified
 - The docs do not currently provide one clean canonical table that separates:
@@ -550,6 +602,19 @@
 - `Plans/Personas.md` says `requested_persona` / `effective_persona` are canonical
 - `Plans/interview-subagent-integration.md` still uses legacy `requested_persona_id` / `effective_persona_id` in multiple runtime/UI sections
 - `Plans/orchestrator-subagent-integration.md` still contains older phrasing around a future constant list / known subagent names in some areas, even though later sections require `persona_registry` and `subagent_registry` normalization.
+- There is now a sharper orchestration-model tension relevant to `Overseer`:
+- rewrite-owner docs are graph-first (`Node`, `Feature Seam`, `Work Package`)
+- orchestrator integration docs still carry substantial tier-first Persona/default-selection language
+- `Overseer` sits across both layers, so a future core Persona draft will need to decide whether it is governing graph objects, tier work, or both
+- Some current orchestrator Persona examples are stale relative to the current PM core-persona direction:
+- examples still mention `project-manager` and `product-manager`
+- those were removed from PM Persona scope in this thread
+- reconciliation will need to replace those examples rather than silently inheriting them
+- The docs currently use `Overseer` across at least three conceptual layers:
+- singular controlling AI role inside Orchestrator
+- `Package Overseer` / `Seam Overseer` governance roles
+- interview/planning audience shorthand (`AI Overseer`)
+- that terminology overlap will confuse both Persona design and later user-facing docs if it is not normalized
 
 ## Candidate Fixes / Design Directions
 - Separate persona work into four owned packets:
@@ -596,6 +661,18 @@
 - full specialty Persona definitions
 - prompt bodies / intent / defaults / tool guidance / tags / aliases
 - migration notes from provider-native seed files
+- Normalize Overseer canon across docs:
+- keep rewrite-owner rule that `Package Overseer` and `Seam Overseer` are governance roles
+- do not let persona prose or older orchestrator wording collapse Overseer back into "the scheduler"
+- treat the core user-facing `Overseer` Persona as the abstraction over the governance family unless later discussion chooses a stricter split
+- preserve scheduler ownership in runtime docs and keep Overseer focused on governance, delegation, review, promotion, integration quality, and remediation judgment
+- When drafting `Overseer`, inherit the useful `AI Overseer` document-execution behavior from Interview:
+- strong at reading plans/docs as executable instructions
+- pushes for explicit wiring, completeness, and no "built but not wired" outcomes
+- expects specialist recommendations and parallelizable decomposition where appropriate
+- Keep subjective-audit mechanics split correctly:
+- Persona may express verification-first and audit-minded behavior
+- the exact "two reviewers / consensus / forced remediation / observability" contract remains owned by orchestrator/runtime docs, not by Persona prose alone
 - Current naming preference leans toward a catalog-style owner such as `Plans/Persona_Catalog.md` or `Plans/Persona_Builtins.md` rather than prompt-only naming, because the owner needs metadata and grouping, not just raw prompt text.
 - Use research workers/subagents during reconciliation to process the 40 specialty `.claude/agents` prompts into PM Persona packets, but keep the resulting PM canon file-based and PM-owned rather than preserving `.claude` as runtime source.
 - Add collision-management rules to the eventual catalog:
@@ -689,7 +766,17 @@
 - `Plans/Plugins_System.md`
 - `Plans/Commands_System.md`
 - `Plans/orchestrator-subagent-integration.md`
+- `Plans/Orchestrator_Page.md`
+- `Plans/Executor_Protocol.md`
+- `Plans/Glossary.md`
+- `Plans/Crosswalk.md`
+- `Plans/Decision_Log.md`
+- `Plans/rewrite-tie-in-memo.md`
 - `Plans/interview-subagent-integration.md`
+- `Plans/Run_Modes.md`
+- `Plans/Provider_Stream_Mapping_External_Reference_A2A.md`
+- `Plans/chain-wizard-flexibility.md`
+- `Plans/Decision_Policy.md`
 - `Plans/00-plans-index.md`
 - `Plans/OpenCode_Coverage_Matrix.md`
 - `Plans/Run_Graph_View.md`
@@ -796,6 +883,16 @@
 - more collaborative
 - more overtly helpful in tone
 - `General` remains the colder, less talkative, work-first execution Persona.
+- Overseer/orchestrator research direction is now locked far enough for collaborative drafting:
+- owner-doc canon says Overseer is governance-first, not scheduler-first
+- rewrite-owner docs split `Package Overseer` and `Seam Overseer`
+- the likely core `Overseer` Persona direction is a user-facing abstraction over that governance family unless later discussion deliberately splits it further
+- `Overseer` should not be treated as "smart manager General" or as the canonical dispatch owner
+- Clarified execution model:
+- `Package Overseer` may spawn/select subagents/node workers to do node work
+- this does not make Overseer the canonical scheduler
+- runtime still owns readiness, dispatch legality, attempt identity, blocked state, retry/backoff, and wake-cycle behavior
+- Current docs define the role split more strongly than they define a hard "Overseer never implements directly" rule
 - Draft core Persona spec for `explorer`:
 - canonical id: `explorer`
 - role summary: a fast, read-only core Persona for thoroughly exploring codebases and returning grounded findings without making changes
@@ -1332,6 +1429,76 @@
 - "5. Clear next steps."
 - "Your job is not just to collect links, but to produce a trustworthy, source-backed synthesis that can support harder decisions."
 - "If the user wants actual implementation or file changes, hand off to General or another execution-capable Persona."
+- Targeted `Plans/**` research pass on Orchestrator / Overseer found the current rewrite-era orchestration model is not tier-owned; it is graph-owned:
+- node graph is canonical
+- `Feature Seam` and `Work Package` are first-class graph-owned objects
+- `Node` is the smallest executable unit
+- `Package Overseer` and `Seam Overseer` are governance roles, not hidden schedulers
+- Runtime scheduler remains the canonical owner of:
+- readiness
+- blocked state
+- transitions
+- retry budgets
+- wakeups
+- dispatch
+- `Plans/Executor_Protocol.md` still frames the protocol around Builder / Verifier / Overseer, but the role definitions inside the doc already split governance into:
+- `Package Overseer` for one `Work Package`
+- `Seam Overseer` for one `Feature Seam`
+- `Plans/orchestrator-subagent-integration.md` still uses singular wording in places:
+- "The controlling AI role within the Orchestrator is the Overseer"
+- this creates a real naming/model tension with the newer package/seam governance split
+- Current docs imply Overseer is not mainly a coding worker:
+- it governs work
+- it invokes/selects specialists
+- it audits readiness/quality/integration
+- it can re-run or route reviewer/worker subagents
+- it does not own canonical runtime scheduling state
+- Overseer-adjacent responsibilities pulled from the orchestration docs:
+- reads canonical node execution state rather than inferring from summaries
+- enforces lifecycle ordering
+- participates in deterministic next-ready selection logic at the protocol level, but runtime scheduler still owns canonical dispatch/readiness state in the rewrite split
+- triggers or coordinates Builder / reviewer / corroborator style workers
+- performs subjective audits at tier boundaries
+- can force remediation even if deterministic verifier passed, as long as the override is auditable
+- Overseer subjective-audit protocol is surprisingly strong in the current docs:
+- start-of-tier and end-of-tier audits are normative
+- exactly 2 reviewer subagents are spawned for the audit flow in `Plans/Provider_Stream_Mapping_External_Reference_A2A.md`
+- reviewer verdicts collapse to deterministic consensus:
+- both accept -> accept
+- both remediate -> remediate
+- disagreement -> escalate
+- final verdict may set `forced_remediation = true` even after verifier pass
+- all of this must be reconstructable from the diagnostic stream
+- Orchestrator UI implications relevant to the future `Overseer` Persona:
+- Orchestrator is a 6-tab operational surface: `Progress`, `Seams`, `Node Graph`, `Evidence`, `History`, `Ledger`
+- `Seams` owns package availability to seam, seam-level integration state, weak-integration concerns, and promotion/corroboration state
+- `Node Graph` inspector must show requested/effective provider/model/effort/persona/account plus worker policy, retry/review/promotion state, lane/worktree/snapshot state, and evidence links
+- `Ledger` must expose review, concern, promotion, corroboration, graph patch, and recovery records as first-class inspectable records
+- The interview docs use "AI Overseer" in a different but related sense:
+- plans/docs generated by Interview must be written for AI execution
+- instructions must be unambiguous, actionable, and wiring-explicit
+- generated artifacts must include subagent persona recommendations so the Overseer (orchestrator or Assistant) knows which specialists to invoke
+- This suggests an `Overseer` Persona may need strong plan-reading, delegation, and wiring/completeness instincts even outside formal Orchestrator runs
+- `Plans/Multi-Account.md` makes Overseer a first-class execution role for requested/effective runtime identity and account policy:
+- multi-account routing applies to package overseers, seam overseers, node workers, and overseer-spawned workers
+- Overseer is therefore part of the shared runtime identity model, not a chat-only fiction
+- The current orchestrator docs also lock several runtime/Persona rules that the future `Overseer` Persona will need to respect:
+- Orchestrator persists a dedicated Persona-resolution config object separate from delegated-subagent registry data
+- that object includes `mode`, `tier_personas`, `operation_frame_personas`, optional per-tier platform/model overrides, and optional next-run explicit override
+- `tier_personas` define tier defaults; `operation_frame_personas` define within-tier planning/execution/review/verification switches
+- configured tier Persona IDs validate against `persona_registry`, while delegated child-run names still validate against `subagent_registry`
+- Requested/effective runtime identity is mandatory for tier runs, not optional inspector sugar:
+- every tier run records requested Persona, effective Persona, selection source/reason, requested/effective platform/model/variant, applied controls, and skipped controls
+- Orchestrator is graph-first at rewrite owner level but still carries legacy tier-selection text in the integration plan:
+- rewrite-owner docs say node graph is canonical and tiers are not a co-equal execution model
+- orchestrator integration docs still carry normative tier framing (`Phase -> Task -> Subtask -> Iteration`) and tier-based Persona defaults
+- this is workable, but it is a real doc seam that will matter when defining what `Overseer` is actually governing
+- Plan/deep-plan relation to orchestration is now clearer from the owner docs:
+- `plan` and `deep_plan` are workflow overlays on canonical runtime `plan`, not hidden build/execution modes
+- `plan` remains read-only and may launch only read-only research children
+- Deep Plan may recommend Chain Wizard / Interview when the work should become orchestrator-ready artifact generation
+- unresolved clarification or failed validation blocks orchestrator start; runtime execution must not begin while planning questions are still open
+- Wizard/interview blocked or degraded planning state must be preserved into later runtime/orchestrator surfaces with explicit lineage and reason fields
 
 ## Open Questions / Uncertainties
 - Which of the many named Personas are intended to be:
@@ -1368,6 +1535,30 @@
 - How should `Assistant` be distinguished from `collaborator` once `Assistant` is the default chat Persona and `General` is the colder execution Persona?
 - Is `General` the default broad execution Persona while `Assistant` is the default broad chat Persona, with the same rough capability envelope but different interaction style?
 - How should `Overseer` relate to orchestration and run oversight without duplicating system/orchestrator behavior?
+- The current plans still have a real ontology tension around `Overseer`:
+- singular `Overseer` in some docs
+- `Package Overseer` / `Seam Overseer` governance split in rewrite-owner docs
+- runtime scheduler as canonical state/dispatch owner
+- We will need to decide whether the core Persona named `Overseer` is:
+- the user-facing abstraction over both governance roles
+- a chat/planning cousin of those governance roles
+- or a broader conductor persona that can appear outside Orchestrator while still following the same boundaries
+- If `Overseer` becomes a user-selectable core Persona, how much of the formal Orchestrator governance model should it inherit directly?
+- Should it:
+- be allowed as both agent and subagent
+- act as a plan/build coordinator
+- spawn specialists aggressively
+- stay mostly read/review/coordination oriented unless explicitly switched into an execution-capable child
+- How should the core Persona named `Overseer` relate to `Assistant`, `General`, and `Collaborator`?
+- `Assistant` is warm default chat help
+- `General` is broad execution
+- `Overseer` likely needs to be governance-first, delegation-first, verification-first, and integration-aware rather than just "smart manager"
+- How much of the subjective audit protocol belongs in the Persona itself versus in Orchestrator system behavior?
+- The current docs make start/end audits, reviewer spawning, consensus, and forced-remediation auditability normative for Orchestrator
+- that should not be hand-waved into generic Persona prose
+- Does the singular `Overseer` Persona map to both `Package Overseer` and `Seam Overseer`, or should those remain internal/runtime execution-role specializations under one user-facing Persona label?
+- If `Overseer` is user-selectable in chat, how much of the formal orchestrator-only audit contract should follow it outside Orchestrator?
+- Should the Persona express the same governance instincts everywhere, while only Orchestrator runtime gets the hard `two reviewers + consensus + auditable forced-remediation` mechanics?
 - Does `Document Writer` replace `technical-writer` as the core writing Persona, leaving `technical-writer` either removed or demoted to specialty/template status?
 - Is `Bash` truly a core Persona, or a protected built-in specialist because shell-heavy workflows are central to PM?
 - How much light operational action should `Teacher` be allowed to take before it should hand off to `Assistant` or `General`?
@@ -1421,6 +1612,10 @@
 - legacy `*_persona_id` field names versus canonical requested/effective field names
 - Current likely reconciliation target is persona-catalog normalization plus settings-IA cleanup, not a rewrite of the underlying storage/schema model.
 - Reconciliation packet likely needs a dedicated Persona prompt corpus artifact because the built-in/specialty inventory is now too large and too prompt-heavy to live only as scattered examples.
+- If `Overseer` is reconciled later, preserve the distinction between:
+- user-facing core Persona prompt/behavior
+- `Package Overseer` / `Seam Overseer` runtime execution-role semantics
+- runtime scheduler ownership of canonical dispatch/readiness/retry state
 - Preserve the exact 40-file `.claude/agents` inventory so later packetization can decide what becomes bundled PM canon versus optional seed/import material.
 - Preserve the distinction between:
 - source-prompt flavor worth keeping
@@ -1452,3 +1647,15 @@
 - `Assistant` should not be used as a subagent Persona.
 - `explorer` and `bash` are explicitly subagent-only and not user-selectable in chat.
 - `General` and `Assistant` are intentionally close in capability breadth, but should diverge strongly in default tone and interaction style.
+- `Overseer` research found the most important boundary:
+- Overseer is governance/conductor/audit-heavy
+- Overseer is not the canonical scheduler/runtime-state owner
+- rewrite docs split that governance into `Package Overseer` and `Seam Overseer`
+- singular `Overseer` still appears in some docs and will need careful interpretation during reconciliation
+- The Orchestrator-side Overseer model already has strong expectations around:
+- delegation to specialists
+- wiring/completeness scrutiny
+- weak-integration awareness
+- promotion/corroboration awareness
+- review/remediation loops
+- auditable subjective overrides

@@ -36,7 +36,21 @@ This plan's interview-phase semantics remain authoritative. Implementation shoul
 
 ### Interview concurrency caps
 
-When spawning interview subagents (phase subagents, research, validation, document generation, Multi-Pass reviewers), the interview phase manager must respect the **effective per-provider cap** for the Interview context: the Interview-context override if set, else the global default (see `Plans/FinalGUISpec.md` §7.4.7). This prevents both provider rate-limit errors and dev-machine overload. Note: the existing "max review subagents" setting (1-10, default 3) limits how many reviewer subagents participate in a single Multi-Pass Review run — it is a separate, complementary concern to per-platform concurrency caps.
+Interview-mode spawning MUST respect the global execution limits defined in `Plans/orchestrator-subagent-integration.md`.
+
+ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Run_Modes.md
+
+Global limits that still apply to interview runs:
+- `maxConcurrentCrewsPerPlatform = 4`
+- `maxConcurrentAgentsPerCrew = 8`
+- `maxTotalActiveAgents = 32`
+- `maxNestingDepth = 4`
+
+ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Crosswalk.md
+
+**Multi-Pass Review reviewer cap:** `max_subagents_spawn` (default 3, configurable within its own range) limits reviewer parallelism inside one Multi-Pass Review operation. It is an additional narrowing cap, not a replacement for the global orchestration limits.
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/orchestrator-subagent-integration.md
 
 ## Executive Summary
 

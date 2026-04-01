@@ -335,41 +335,88 @@ Rules:
 - provider-native agent definitions remain interoperability inputs rather than PM runtime canon.
 ## Tool-call correlation + reconciliation
 
-### Correlation requirements (normative)
-- Every tool call MUST have a stable `tool_use_id` for the lifetime of `run_id`.
-- The tool call MUST reference:
-  - a Tool ID or stable tool name,
-  - timestamps for start/end when available,
-  - a status lifecycle mapped into `tool_use`/`tool_result`.
-ContractRef: ContractName:Plans/Architecture_Invariants.md#INV-001, ContractName:Plans/Tools.md, Gate:GATE-009
+Tool-call correlation and provider reconciliation are UUID-first, failure-class-aware, and transport-independent. The same rules apply to CLI-bridged, server-bridged, and direct provider adapters.
 
-### Reconciler responsibilities (normative)
-The Reconciler is a logical component that merges multi-source observations into a single normalized stream.
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Executor_Protocol.md
 
-**Inputs (minimum):**
-- stream-json stdout events
-- stderr lines + exit status
-- optional hooks events
-- optional transcript JSONL
+### Tool call identity invariants
 
-**Minimum oddities the Reconciler MUST handle**
-1. **Malformed JSON lines / partial lines**
-   - Strategy: line-buffer with recovery; when a line fails JSON parse, attempt limited concatenation with subsequent lines; otherwise emit `diagnostic(category="malformed_jsonl")` and continue.
+- Every normalized tool call MUST have a UUID `tool_use_id`.
+- Name+input deduplication MUST NOT be used as a substitute for identity.
+- If a provider emits a non-UUID identifier, PM wraps it with a UUID and preserves the provider ID separately as diagnostic correlation metadata.
+- Duplicate IDs in the same logical response are a protocol error and MUST be surfaced as diagnostics.
 
-2. **Out-of-order tool events**
-   - Strategy: if a tool result appears without a captured start event, synthesize a `tool_use` immediately before the `tool_result` (arguments = null).
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Architecture_Invariants.md
 
-3. **Missing tool result**
-    - Strategy: on run completion, any open tool call MUST be closed by synthesizing `tool_result(ok=false, error="missing_tool_result")` before `done`.
+### Normalized usage event minimum fields
 
-4. **Duplicate emissions (retries / replays)**
-   - Strategy: idempotency by `(run_id, tool_use_id, phase)`; duplicate identical events are dropped; conflicting duplicates are emitted as `diagnostic(category="conflicting_duplicate")`.
+The normalized `usage` event MUST preserve the canonical billing/token fields when known:
 
-5. **Mixed-mode output**
-    - Strategy: non-JSON lines under stream-json are treated as stderr-equivalent observations and mapped into `diagnostic(category="mixed_mode_output")`.
-ContractRef: ContractName:Plans/newfeatures.md, ContractName:Plans/Architecture_Invariants.md#INV-001, Gate:GATE-009
+ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/Models_System.md
 
----
+| Field | Requirement |
+|---|---|
+| `input_tokens` | required when provider exposes usage |
+| `output_tokens` | required when provider exposes usage |
+| `cache_read_input_tokens` | preserve separately; do not fold into output |
+| `cache_creation_input_tokens` | preserve separately |
+| `reasoning_tokens` | preserve separately |
+| `total_tokens` | MAY be derived, but never as a replacement for the individual buckets |
+| `cost_microdollars` | integer microdollars only |
+| `pricing_version` | include when pricing metadata is versioned |
+| `provider_id`, `model_id`, `billing_entity_id` | preserve attribution identity when known |
+
+ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/Models_System.md
+
+### FinishReason mapping
+
+| Provider finish state | Normalized handling |
+|---|---|
+| `FinishReasonUnknown` + empty content + no tool calls | error; map to `failure_class=provider_transient` |
+| `FinishReasonUnknown` + non-empty content | complete with warning diagnostic |
+| `FinishReasonContentFilter` | terminal `done.failed` with explicit content-filter reason |
+| `FinishReasonSafety` | terminal `done.failed` with explicit safety reason |
+| `length` with incomplete `tool_use` | synthesize `tool_result(ok=false, error=truncated_by_length)` and DO NOT dispatch the tool |
+| missing finish reason | treat as `FinishReasonUnknown` |
+
+ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Contracts_V0.md
+
+### HTTP/status to failure-class mapping
+
+| Condition | Normalized `failure_class` | Retry posture |
+|---|---|---|
+| 401 / expired credential | `auth_expired` | refresh once, rebuild client, retry once |
+| 403 / explicit denial | `permission_denied` | no auto-retry |
+| 402 / quota exceeded | `quota_exceeded` | no auto-retry |
+| 429 / rate limit | `provider_transient` | retry using `Retry-After` or default backoff |
+| 5xx / transport transient | `provider_transient` | retry per executor matrix |
+| malformed structured output | `structured_output_invalid` | retry up to class limit |
+
+ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/GitHub_API_Auth_and_Flows.md
+
+### Stream cancellation and replay safety
+
+`ctx.Err() != nil` means the context was cancelled or timed out. Cancellation is not retried. Reversing this check causes indefinite retry loops on cancelled streams.
+
+ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Run_Modes.md
+
+### Provider guard rails
+
+Providers and adapters MUST fail safely on malformed or partial input:
+- guard `choices.len() == 0` before indexing provider output
+- fail fast when client construction returns nil / invalid transport handles
+- validate malformed tool-call JSON at storage time, not only at replay time
+- bounds-check MIME and other parser splits before indexing into tokens
+- emit required fields in tool schemas; omitting provider-required fields is an adapter bug
+- retry decisions use structured codes or status classes, never substring matching on raw error text
+
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Architecture_Invariants.md
+
+### Credential refresh and cache markers
+
+After credential refresh, the adapter MUST rebuild the HTTP client or equivalent transport object. When a provider/runtime surface does not support cache markers together with OAuth, the adapter strips or suppresses cache markers based on the capability flag `cache_with_oauth=false` instead of sending a request known to fail.
+
+ContractRef: ContractName:Plans/Models_System.md, ContractName:Plans/GitHub_API_Auth_and_Flows.md
 
 ## Login/auth UX detection state machine
 

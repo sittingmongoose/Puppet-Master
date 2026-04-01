@@ -1,0 +1,1098 @@
+## Doc: Plans/storage-plan.md
+### Intent 1 (Run: r-20260318-160350-02, Anchor: `### Canonical records`, Op: replace_section)
+```markdown
+1. `attempt_record`
+   - fields include `scheduler_pass_id`, requested/effective persona snapshot refs, requested/effective model snapshot refs, requested/effective permission snapshot refs, `requested_auth_mode?`, `effective_auth_mode?`, `requested_account_policy?`, `effective_account_id?`, `effective_project_id?`, `account_switch_reason?`, `replan_generation`, `mutation_capable`, `safe_point_id?`, `provider_attempt_ref?`, remediation lineage refs, and terminal outcome fields
+2. `blocked_projection`
+   - fields include `blocked_reason_code`, ordered `allowed_action_ids[]`, `preserved_local_work`, `requires_safe_point_restore?`, prerequisite metadata, `failure_class?`, `detail_ref?`, `attempt_id?`, and `thread_id?`
+3. `usage_record`
+   - fields include `run_kind`, `run_id`, `node_id?`, `attempt_id?`, `thread_id?`, `usage_event_ref?`, `effective_platform`, `effective_model`, `effective_auth_mode?`, `effective_account_id?`, `provider_account_id?`, `usage_source_kind?`, `signal_confidence?`, `effective_project_id?`, `input_tokens`, `output_tokens`, `total_tokens`, `estimated_cost?`, and usage timestamps suitable for rollups and ledger views
+4. `evidence_record`
+   - fields include `summary`, `summary_kind?`, evidence refs, and any parent-summary/handoff refs needed by completed-prose surfaces
+5. `thread_blocked_notice`
+   - fields include `node_id?`, `attempt_id?`, active blocked metadata, `message_id`, and `resume_url?`
+6. `wizard_runtime_state`
+   - fields include `wizard_status`, `wizard_step`, `blocked_reason_code?`, `clarification_round_count`, `report_ref?`, `resume_url?`, `decomposition_degraded`, `degradation_reason?`, and `replan_generation?`
+
+ContractRef: ContractName:Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD, ContractName:Plans/Multi-Account.md, ContractName:Plans/Contracts_V0.md#EventRecord
+
+7. `terminal_workspace_state`
+   - fields include ordered terminal sections, section presentation (`docked` or `detached`), selected section or tab refs, tab order, pane tree, pane-to-session bindings, labels, pin state, linked `dev_session_id?`, recovery banners, and bounded transcript-snapshot refs used by GUI projection `terminal_state:v1`
+8. `terminal_session_record`
+   - fields include `terminal_session_id`, `project_id`, `workspace_tab_id`, `cwd_snapshot`, `shell_profile_label?`, `shell_integration_tier`, `requested_renderer_mode?`, `effective_renderer_mode`, `capability_degradations[]`, lifecycle state, exit or stop metadata, transcript-retention tier, restore outcome, transcript refs, and linked `dev_session_id?`
+9. `terminal_command_block`
+   - fields include `command_block_id`, transcript anchor refs, observed command label when supported, confidence tier, start and end timestamps, cwd snapshot, exit metadata, and state such as `running`, `succeeded`, `failed`, `terminated`, or `degraded_observation`
+10. `dev_session_record`
+    - fields include `dev_session_id`, intent or mode, lifecycle state, linked terminal session refs, link
+```
+[... truncated, full length: 3291 chars]
+### Intent 2 (Run: r-20260318-160350-02, Anchor: `### Identity and field-name rules`, Op: replace_section)
+```markdown
+- canonical blocked-action field is `allowed_action_ids[]`
+- canonical persisted references use `*_ref` fields; raw `*_path` naming is compatibility-only
+- requested vs effective persona/platform/model state must remain queryable from runtime records so UI surfaces do not reconstruct it heuristically
+- terminal requested/effective capability disclosure uses explicit fields such as `requested_renderer_mode?`, `effective_renderer_mode`, `shell_integration_tier`, `capability_degradations[]`, `restore_outcome`, and transcript-retention tier
+- `terminal_session_id` is the canonical meaning of same-session shell continuity; `dev_session_id` is higher-level workflow continuity only
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Run_Graph_View.md, ContractName:Plans/Orchestrator_Page.md
+
+Additional rules:
+- GUI projection key `terminal_state:v1` may remain as a compatibility-facing projection name, but canonical storage ownership stays with terminal workspace, session, and command-block records
+- restored historical terminal records MUST NOT be misreported as live sessions solely because durable metadata exists
+- requested terminal presentation preferences do not override the effective restore outcome or effective capability state captured for that historical record
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md
+
+```
+### Intent 3 (Run: r-20260319-030558-01, Anchor: `#### Additions: Preview session + browser rendering persistence contract`, Op: insert_after)
+```markdown
+#### Additions: Editor recovery, Search query sessions, and host-aware LSP projections
+
+Required durable records for this seam cluster:
+- `editor_unsaved_buffer.v1:{project_id}:{document_id}`
+- `search_panel_state.v1:{project_id}`
+- `search_query_state.v1:{project_id}:{query_session_id}`
+- `lsp_session_state.v1:{project_id}:{host_id}:{server_id}:{root_identity}`
+- `lsp_diagnostics_snapshot.v1:{project_id}:{host_id}:{server_id}:{root_identity}`
+
+ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/LSPSupport.md, ContractName:Plans/FinalGUISpec.md
+
+Persistence rules:
+- editor unsaved-buffer snapshots are local recovery artifacts only and MUST NOT imply successful remote persistence
+- Search panel state and Search query-session state are distinct; one captures UI intent, the other captures a specific executed query snapshot
+- LSP session projections are keyed by `(host_id, server_id, root_identity)` and capture lifecycle, freshness, health, requested/effective enablement, and restart metadata
+- stale and degraded are separate axes and MUST NOT collapse into one generic offline state
+
+ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/assistant-chat-design.md
+
+```
+### Intent 4 (Run: r-20260319-030558-01, Anchor: `## 5. Gaps and how we address them`, Op: replace_section)
+```markdown
+The remaining persistence gaps for the rewrite shell are addressed by explicit owner-aligned state instead of feature-local ad hoc blobs.
+
+### 5.1 Unsaved editor recovery is required, not optional
+Rules:
+- recover-unsaved is required MVP behavior for local and remote-backed buffers
+- recovery snapshots store local buffer state, capture metadata, host/path identity, and write availability at capture time
+- remote-backed recovery banners must say `Recovered local edits — remote destination not yet synchronized`
+- save success is only claimed after the effective destination confirms the write
+
+ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/FinalGUISpec.md
+
+### 5.2 Requested vs effective runtime state must remain visible
+The persistence model stores enough context to reconstruct effective behavior honestly after restart.
+
+Required stored distinctions:
+- requested vs effective browser runtime/capabilities
+- requested vs effective LSP enablement and attached-server set
+- freshness vs health vs write availability for remote-backed projections
+- restore outcome for historical Search, LSP, browser, and editor recovery surfaces
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/LSPSupport.md, ContractName:Plans/GitHub_Integration.md
+
+### 5.3 Search and Source Control keep separate projection state
+Rules:
+- Search state stores text query intent and query snapshots
+- Source Control state stores repo projections, compare origins, and review context
+- diff-local search does not get persisted as project Search state
+- editor markers consume Source Control/LSP projections but do not become a substitute owner
+
+ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/UI_Command_Catalog.md
+
+### 5.4 Host-aware LSP persistence and restart behavior
+Rules:
+- LSP lifecycle and restart budgets are persisted by host-aware session key
+- restart/reconnect preserves enough state to disclose whether a projection is current, refreshing, stale, degraded, or unavailable
+- remote-mode projects never restore into a silent local fallback path
+
+ContractRef: ContractName:Plans/LSPSupport.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/Wiring_Matrix.md
+
+```
+### Intent 5 (Run: r-20260319-030558-02, Anchor: `#### Additions: Preview session + browser rendering persistence contract`, Op: insert_after)
+```markdown
+#### Additions: Editor recovery, Search query sessions, and host-aware LSP projections
+
+Required durable records for this seam cluster:
+- `editor_unsaved_buffer.v1:{project_id}:{document_id}`
+- `search_panel_state.v1:{project_id}`
+- `search_query_state.v1:{project_id}:{query_session_id}`
+- `lsp_session_state.v1:{project_id}:{host_id}:{server_id}:{root_identity}`
+- `lsp_diagnostics_snapshot.v1:{project_id}:{host_id}:{server_id}:{root_identity}`
+
+ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/LSPSupport.md, ContractName:Plans/FinalGUISpec.md
+
+Persistence rules:
+- editor unsaved-buffer snapshots are local recovery artifacts only and MUST NOT imply successful remote persistence
+- Search panel state and Search query-session state are distinct; one captures UI intent, the other captures a specific executed query snapshot
+- LSP session projections are keyed by `(host_id, server_id, root_identity)` and capture lifecycle, freshness, health, requested/effective enablement, and restart metadata
+- stale and degraded are separate axes and MUST NOT collapse into one generic offline state
+
+ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/assistant-chat-design.md
+
+```
+### Intent 6 (Run: r-20260319-030558-02, Anchor: `## 5. Gaps and how we address them`, Op: replace_section)
+```markdown
+The remaining persistence gaps for the rewrite shell are addressed by explicit owner-aligned state instead of feature-local ad hoc blobs.
+
+### 5.1 Unsaved editor recovery is required, not optional
+Rules:
+- recover-unsaved is required MVP behavior for local and remote-backed buffers
+- recovery snapshots store local buffer state, capture metadata, host/path identity, and write availability at capture time
+- remote-backed recovery banners must say `Recovered local edits — remote destination not yet synchronized`
+- save success is only claimed after the effective destination confirms the write
+
+ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/FinalGUISpec.md
+
+### 5.2 Requested vs effective runtime state must remain visible
+The persistence model stores enough context to reconstruct effective behavior honestly after restart.
+
+Required stored distinctions:
+- requested vs effective browser runtime/capabilities
+- requested vs effective LSP enablement and attached-server set
+- freshness vs health vs write availability for remote-backed projections
+- restore outcome for historical Search, LSP, browser, and editor recovery surfaces
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/LSPSupport.md, ContractName:Plans/GitHub_Integration.md
+
+### 5.3 Search and Source Control keep separate projection state
+Rules:
+- Search state stores text query intent and query snapshots
+- Source Control state stores repo projections, compare origins, and review context
+- diff-local search does not get persisted as project Search state
+- editor markers consume Source Control/LSP projections but do not become a substitute owner
+
+ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/UI_Command_Catalog.md
+
+### 5.4 Host-aware LSP persistence and restart behavior
+Rules:
+- LSP lifecycle and restart budgets are persisted by host-aware session key
+- restart/reconnect preserves enough state to disclose whether a projection is current, refreshing, stale, degraded, or unavailable
+- remote-mode projects never restore into a silent local fallback path
+
+ContractRef: ContractName:Plans/LSPSupport.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/Wiring_Matrix.md
+
+```
+### Intent 7 (Run: r-20260320-164907-01, Anchor: `##### Browser lifecycle events and payloads`, Op: insert_after)
+```markdown
+#### Additions: Debug investigation persistence contract
+
+Debug investigations are first-class persisted runtime records that correlate target discovery, temporary instrumentation, evidence capture, verification, and cleanup across Assistant, Orchestrator, Interview, browser, terminal, and runtime-artifact surfaces.
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/assistant-chat-design.md
+
+**Required redb keys**
+- `debug_investigation_state.v1:{project_id}:{investigation_id}` -> JSON `{ investigation_id, thread_id?, run_id?, parent_attempt_id?, target_kind, target_locator_summary, target_bindings, requested_mode_overlay, effective_mode_overlay, runtime_mode, phase, state, attention_reason_code?, blocked_reason_code?, verification_strength?, active_context_item_ids[], active_instrumentation_ids[], debug_automation_profile_state, opened_at_utc, updated_at_utc, closed_at_utc? }`
+- `debug_investigation_index.v1:{project_id}` -> summary rows for open/recent investigations ordered by `updated_at_utc`
+- `debug_instrumentation_state.v1:{project_id}:{investigation_id}:{instrumentation_id}` -> JSON `{ scope_kind, scope_locator, state, rollback_state, created_by_run_id?, cleanup_required, cleanup_completed_at_utc?, failure_reason? }`
+- `debug_bundle_export.v1:{project_id}:{bundle_id}` -> JSON `{ investigation_id, schema_id, redaction_profile, item_count, artifact_count, created_at_utc }`
+
+ContractRef: ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/GitHub_Integration.md
+
+Required enums:
+- `debug_target_kind = dev_session | browser_target | dap_session | agent_session | imported_bundle`
+- investigation `phase = draft | discovering_targets | preparing_environment | capturing_baseline | instrumenting | reproducing | collecting_evidence | analyzing | applying_fix | verifying | cleaning_up | resolved | attention_required | blocked | failed | failed_cleanup | cancelled | superseded`
+- instrumentation `state = planned | preparing | active | rollback_pending | cleaned_up | revoked | failed_cleanup | unknown_after_recovery`
+
+ContractRef: ContractName:Plans/Glossary.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Run_Modes.md
+
+**Required seglog event types**
+- `debug.investigation.started`
+- `debug.investigation.state_changed`
+- `debug.investigation.target_bound`
+- `debug.investigation.context_item_added`
+- `debug.investigation.context_item_state_changed`
+- `debug.investigation.instrumentation_state_changed`
+- `debug.investigation.verification_recorded`
+- `debug.investigation.exported`
+- `debug.investigation.imported`
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/Runtime_Artifacts_Panel.md
+
+Browser capture reconciliation rule:
+- outside active investigations, `browser.context_captured` continues to represent explicit chip-based capture only
+- inside an active investigation
+```
+[... truncated, full length: 4144 chars]
+### Intent 8 (Run: r-20260320-170511-01, Anchor: `### Identity and field-name rules`, Op: replace_section)
+```markdown
+Canonical naming and identity rules:
+- persisted requested/effective runtime base fields keep the names defined in `Plans/Contracts_V0.md`
+- additive runtime disclosure fields MAY extend those snapshots but MUST NOT rename or shadow them
+- canonical persisted references use stable `*_id` or `*_ref` fields; user-facing labels remain additive disclosure fields only
+- `account_id` identifies account-backed runtime subjects
+- `connection_profile_id` identifies server-profile-backed runtime subjects
+- `terminal_session_id` remains PTY continuity identity
+- `terminal_workgroup_id`, `terminal_leaf_pane_id`, and `editor_terminal_panel_id` identify the terminal layout objects introduced by the updated bottom-terminal/editor model
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/assistant-chat-design.md
+
+Additional runtime-field rules:
+- `requested_platform` and `effective_platform` identify the concrete provider entry/runtime surface used for execution.
+- `provider_family_id` is additive and groups pooled or related runtime surfaces without replacing the concrete provider entry fields.
+- `requested_runtime_platform_id`, `effective_runtime_platform_id`, `requested_model_provider_id`, `effective_model_provider_id`, and billing/entity fields are additive disclosure fields only.
+- `selectable_unit_id` remains diagnostic/scheduler data and MUST NOT become a canonical persisted runtime identity field.
+- terminal historical records MUST preserve the effective restore outcome and capability degradation state captured for that record; the UI MUST NOT infer those values later from current local capabilities.
+
+ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/usage-feature.md, ContractName:Plans/CLI_Bridged_Providers.md
+
+```
+### Intent 9 (Run: r-20260320-170511-01, Anchor: `### 15.1 redb Schema`, Op: replace_section)
+```markdown
+The following logical record families are required in redb so the rewritten provider/runtime and terminal/editor model stays queryable without reconstructing state from ad-hoc logs.
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Multi-Account.md, ContractName:Plans/FinalGUISpec.md
+
+| Record family | Stable key | Required fields | Notes |
+|---|---|---|---|
+| `provider_account_record` | `provider_id/account_id` | `account_id`, `provider_id`, `auth_surface`, `label`, `provider_identity?`, `priority`, `enabled`, `credential_ref`, state dimensions, threshold overrides | Account-backed providers only. |
+| `provider_entitlement_context_record` | `provider_id/account_id/billing_entity_id` | `billing_entity_id`, `label`, `entitlement_class`, `selected`, usage metadata, last validation | Used when auth identity and quota bucket differ. |
+| `server_profile_record` | `provider_id/connection_profile_id` | `connection_profile_id`, `provider_id`, `profile_mode`, endpoint/config summary, readiness state, discovery cache metadata | Required for OpenCode managed/attached server profiles. |
+| `usage_attribution_record` | implementation-defined | frozen requested/effective runtime base fields plus attribution additive fields | Keeps usage and routing reasoning queryable. |
+| `terminal_workspace_state` | `project_id/workspace_tab_id/terminal_workspace_id` | ordered workgroups, active workgroup, split-tree roots, focused leaf pane, detached-section state | Stores the bottom runtime workspace model. |
+| `editor_terminal_panel_state` | `project_id/workspace_tab_id/editor_terminal_panel_id` | `editor_terminal_panel_id`, `terminal_leaf_pane_id`, `terminal_workgroup_id`, order index, title, closed state | Stores the multi-panel editor terminal stack. |
+| `mcp_server_record` | `mcp_server_id` | server identity, transport, credential refs, health snapshot, PM ownership mode | PM-native MCP registry owner. |
+| `skill_record` | `skill_id` or canonical path | source/provenance, local path, validation state, projection state, runtime readiness summary | PM-native skill registry owner. |
+
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Skills_System.md, ContractName:Plans/Provider_OpenCode.md
+
+Schema rules:
+- provider account records and server-profile records remain distinct record families even when they participate in the same runtime selection UI.
+- usage attribution records store the effective billing/entity subset needed for usage explanation; they do not persist scheduler-only internals.
+- terminal workspace state and editor terminal panel state preserve one logical terminal system across the bottom runtime zone and editor embeddings.
+- PM-owned adapter/config projections for CLI runtimes belong in PM-managed sidecar state; they are not the source of truth for the logical records above.
+
+ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FinalGUISpec.md
+
+```
+### Intent 10 (Run: r-20260320-170511-02, Anchor: `### Identity and field-name rules`, Op: replace_section)
+```markdown
+Canonical naming and identity rules:
+- persisted requested/effective runtime base fields keep the names defined in `Plans/Contracts_V0.md`
+- additive runtime disclosure fields MAY extend those snapshots but MUST NOT rename or shadow them
+- canonical persisted references use stable `*_id` or `*_ref` fields; user-facing labels remain additive disclosure fields only
+- `account_id` identifies account-backed runtime subjects
+- `connection_profile_id` identifies server-profile-backed runtime subjects
+- `terminal_session_id` remains PTY continuity identity
+- `terminal_workgroup_id`, `terminal_leaf_pane_id`, and `editor_terminal_panel_id` identify the terminal layout objects introduced by the updated bottom-terminal/editor model
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/assistant-chat-design.md
+
+Additional runtime-field rules:
+- `requested_platform` and `effective_platform` identify the concrete provider entry/runtime surface used for execution.
+- `provider_family_id` is additive and groups pooled or related runtime surfaces without replacing the concrete provider entry fields.
+- `requested_runtime_platform_id`, `effective_runtime_platform_id`, `requested_model_provider_id`, `effective_model_provider_id`, and billing/entity fields are additive disclosure fields only.
+- `selectable_unit_id` remains diagnostic/scheduler data and MUST NOT become a canonical persisted runtime identity field.
+- terminal historical records MUST preserve the effective restore outcome and capability degradation state captured for that record; the UI MUST NOT infer those values later from current local capabilities.
+
+ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/usage-feature.md, ContractName:Plans/CLI_Bridged_Providers.md
+
+```
+### Intent 11 (Run: r-20260320-170511-02, Anchor: `### Required redb keys`, Op: replace_section)
+```markdown
+The promoted provider/runtime rewrite and the updated terminal/editor model require durable record and projection families that preserve concrete runtime surfaces, account/profile identity, entitlement attribution, and terminal layout continuity.
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Multi-Account.md
+
+Required canonical record and projection families include:
+- `attempt_record.v1:{project_id}:{run_id}:{node_id}:{attempt_id}`
+- `blocked_projection.v1:{project_id}:{run_id}:{node_id}:{blocked_sequence}`
+- `artifacts_index.v1:{project_id}:{artifact_id}`
+- `lane_record.v1:{project_id}:{lane_id}`
+- `lane_projection.v1:{project_id}:{lane_id}`
+- `worktree_record.v1:{project_id}:{worktree_id}`
+- `worktree_projection.v1:{project_id}:{worktree_id}`
+- `concern_record.v1:{project_id}:{concern_id}`
+- `project_summary.v1:{project_id}`
+- `project_attention_item.v1:{project_id}:{attention_item_id}`
+- `provider_account_record.v1:{provider_id}:{account_id}`
+- `provider_entitlement_context_record.v1:{provider_id}:{account_id}:{billing_entity_id}`
+- `server_profile_record.v1:{provider_id}:{connection_profile_id}`
+- `account_pressure_episode.v1:{provider_id}:{account_id}:{episode_id}`
+- `account_switch_event.v1:{provider_id}:{event_id}`
+- `terminal_workspace_state.v1:{project_id}:{workspace_tab_id}`
+- `terminal_section_record.v1:{project_id}:{terminal_section_id}`
+- `terminal_tab_record.v1:{project_id}:{terminal_tab_id}`
+- `terminal_pane_record.v1:{project_id}:{terminal_pane_id}`
+- `terminal_leaf_pane_record.v1:{project_id}:{terminal_leaf_pane_id}`
+- `terminal_workgroup_record.v1:{project_id}:{terminal_workgroup_id}`
+- `editor_terminal_panel_state.v1:{project_id}:{workspace_tab_id}:{editor_terminal_panel_id}`
+- `terminal_session_record.v1:{project_id}:{terminal_session_id}`
+- `terminal_command_block.v1:{project_id}:{terminal_session_id}:{command_block_id}`
+- `dev_session_record.v1:{project_id}:{dev_session_id}`
+- `mcp_server_record.v1:{mcp_server_id}`
+- `mcp_runtime_availability.v1:{mcp_server_id}:{provider_id}:{runtime_subject_id}`
+- `mcp_tool_record.v1:{mcp_server_id}:{tool_id}`
+- `skill_record.v1:{skill_id}`
+- `skill_runtime_readiness.v1:{skill_id}:{provider_id}:{runtime_subject_id}`
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Tools.md, ContractName:Plans/Skills_System.md
+
+Required identity and attribution fields across runtime-linked record families include:
+- `project_id`
+- `run_id`
+- `node_id?`
+- `attempt_id?`
+- `blocked_sequence?`
+- `feature_seam_id?`
+- `work_package_id?`
+- `lane_id?`
+- `worktree_id?`
+- `execution_role?`
+- `requested_platform?`
+- `effective_platform?`
+- `provider_family_id?`
+- `requested_runtime_platform_id?`
+- `effective_runtime_platform_id?`
+- `requested_model?`
+- `effective_model?`
+- `requested_auth_mode?`
+- `effective_auth_mode?`
+- `requested_account_policy?`
+- `requested_account_id?`
+- `requested_billing_entity_id?`
+- `effective_account_id?`
+- `e
+```
+[... truncated, full length: 4802 chars]
+### Intent 12 (Run: r-20260323-192127-01, Anchor: `### 2.2 seglog: format, writer, rotation`, Op: replace_section)
+```markdown
+Seglog is the canonical event source for child runs, crews, and context-shaping transitions.
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Tools.md, ContractName:Plans/assistant-chat-design.md
+
+Required event families for this feature set:
+- child lifecycle events
+- crew lifecycle and crew-board message events
+- context-shrunk and context-rehydrated events
+- requested/effective runtime selection events when surfaced as runtime changes
+- blocked and awaiting-parent state transitions for child runs
+
+Side files such as `active-agents.json` and `active-subagents.json` are not canonical event sources.
+
+ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/interview-subagent-integration.md, ContractName:Plans/usage-feature.md
+
+Rotation and rebuild rules:
+- seglog must contain enough lineage data to reconstruct child batches, subgroups, and crew membership.
+- group/subgroup UI expansion state is not canonical.
+- launch order, batch membership, subgroup membership, and parent-child lineage are canonical.
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Prompt_Pipeline.md
+
+```
+### Intent 13 (Run: r-20260323-192127-01, Anchor: `### 2.3 redb: schema, migrations, key patterns`, Op: replace_section)
+```markdown
+redb projections must be strong enough to rebuild child-run, crew, and context-shaping state after restart without relying on ad hoc JSON side files.
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/orchestrator-subagent-integration.md
+
+Minimum canonical record families:
+- `child_run`
+- `child_attempt`
+- `child_batch`
+- `child_subgroup`
+- `crew`
+- `crew_member`
+- `crew_message`
+- `child_context_state`
+- `planning_child_output_projection`
+
+Minimum `child_run` fields:
+- `child_run_id`, `parent_run_id`, `thread_id`
+- `batch_id?`, `subgroup_id?`, launch order
+- requested/effective Persona and runtime surface fields
+- requested/effective effort fields
+- required/optional dependency classification
+- status, terminal reason, blocked reason, awaiting-parent reason
+- provider correlation fields as additive metadata only
+
+Minimum `child_attempt` fields:
+- `attempt_id`
+- retry count
+- reroute history
+- resumable handle when present
+- requested/effective surface for that attempt
+
+ContractRef: ContractName:Plans/Models_System.md, ContractName:Plans/Tools.md, ContractName:Plans/Permissions_System.md
+
+Minimum context-state fields:
+- stable block refs
+- shrink generation
+- current working-set refs
+- Context Lens overlay refs
+- rehydration-capable source refs
+- compacted/rotated lineage markers where applicable
+
+ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/assistant-memory-subsystem.md
+
+```
+### Intent 14 (Run: r-20260323-192127-01, Anchor: `### 4.4 Activity transparency payloads`, Op: replace_section)
+```markdown
+Activity transparency payloads must support the parent thread child-card UX and crew inspection surfaces.
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/FinalGUISpec.md
+
+Required activity projections:
+- child started
+- child progress / work / thought deltas
+- child blocked / awaiting-parent / failed / cancelled
+- child completed
+- batch rollups and subgroup rollups
+- crew-board message summaries when crew mode is active
+- context-shrunk / context-rehydrated disclosures when relevant to the child
+
+Expanded child-panel payload minimums:
+- status
+- work stream
+- thought stream
+- current state reason when non-happy-path
+- result summary when finished
+- provider/model/effort metadata for hover or details surfaces
+
+ContractRef: ContractName:Plans/Models_System.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Tools.md
+
+```
+### Intent 15 (Run: r-20260323-192127-01, Anchor: `### Canonical records`, Op: replace_section)
+```markdown
+Canonical records for this feature set must support rebuild, resume, auditability, and UI reconstruction without hidden side stores.
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/orchestrator-subagent-integration.md
+
+Required canonical records:
+- child runs and attempts
+- child batch and subgroup structure
+- crew and crew-board state
+- planning-output projections derived from plan-mode children
+- context-shaping state tied to stable block refs
+- requested/effective runtime snapshots for child launches
+- blocked-episode and awaiting-parent correlation metadata
+
+Canonical truth exclusions:
+- `.puppet-master/memory/*` is not canonical child or crew continuity storage.
+- `active-agents.json` and `active-subagents.json` are not canonical live-state stores.
+- provider-native session trees are correlation data, not PM identity.
+
+ContractRef: ContractName:Plans/assistant-memory-subsystem.md, ContractName:Plans/Provider_OpenCode.md, ContractName:Plans/WorktreeGitImprovement.md
+
+```
+### Intent 16 (Run: r-20260323-192127-02, Anchor: `### 2.2 seglog: format, writer, rotation`, Op: replace_section)
+```markdown
+Seglog is the canonical event source for child runs, crews, and context-shaping transitions.
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Tools.md, ContractName:Plans/assistant-chat-design.md
+
+Required event families for this feature set:
+- child lifecycle events
+- crew lifecycle and crew-board message events
+- context-shrunk and context-rehydrated events
+- requested/effective runtime selection events when surfaced as runtime changes
+- blocked and awaiting-parent state transitions for child runs
+
+Side files such as `active-agents.json` and `active-subagents.json` are not canonical event sources.
+
+ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/interview-subagent-integration.md, ContractName:Plans/usage-feature.md
+
+Rotation and rebuild rules:
+- seglog must contain enough lineage data to reconstruct child batches, subgroups, and crew membership.
+- group/subgroup UI expansion state is not canonical.
+- launch order, batch membership, subgroup membership, and parent-child lineage are canonical.
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Prompt_Pipeline.md
+
+```
+### Intent 17 (Run: r-20260323-192127-02, Anchor: `### 2.3 redb: schema, migrations, key patterns`, Op: replace_section)
+```markdown
+redb projections must be strong enough to rebuild child-run, crew, and context-shaping state after restart without relying on ad hoc JSON side files.
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/orchestrator-subagent-integration.md
+
+Minimum canonical record families:
+- `child_run`
+- `child_attempt`
+- `child_batch`
+- `child_subgroup`
+- `crew`
+- `crew_member`
+- `crew_message`
+- `child_context_state`
+- `planning_child_output_projection`
+
+Minimum `child_run` fields:
+- `child_run_id`, `parent_run_id`, `thread_id`
+- `batch_id?`, `subgroup_id?`, launch order
+- requested/effective Persona and runtime surface fields
+- requested/effective effort fields
+- required/optional dependency classification
+- status, terminal reason, blocked reason, awaiting-parent reason
+- provider correlation fields as additive metadata only
+
+Minimum `child_attempt` fields:
+- `attempt_id`
+- retry count
+- reroute history
+- resumable handle when present
+- requested/effective surface for that attempt
+
+ContractRef: ContractName:Plans/Models_System.md, ContractName:Plans/Tools.md, ContractName:Plans/Permissions_System.md
+
+Minimum context-state fields:
+- stable block refs
+- shrink generation
+- current working-set refs
+- Context Lens overlay refs
+- rehydration-capable source refs
+- compacted/rotated lineage markers where applicable
+
+ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/assistant-memory-subsystem.md
+
+```
+### Intent 18 (Run: r-20260323-192127-02, Anchor: `### 4.4 Activity transparency payloads`, Op: replace_section)
+```markdown
+Activity transparency payloads must support the parent thread child-card UX and crew inspection surfaces.
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/FinalGUISpec.md
+
+Required activity projections:
+- child started
+- child progress / work / thought deltas
+- child blocked / awaiting-parent / failed / cancelled
+- child completed
+- batch rollups and subgroup rollups
+- crew-board message summaries when crew mode is active
+- context-shrunk / context-rehydrated disclosures when relevant to the child
+
+Expanded child-panel payload minimums:
+- status
+- work stream
+- thought stream
+- current state reason when non-happy-path
+- result summary when finished
+- provider/model/effort metadata for hover or details surfaces
+
+ContractRef: ContractName:Plans/Models_System.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Tools.md
+
+```
+### Intent 19 (Run: r-20260323-192127-02, Anchor: `### Canonical records`, Op: replace_section)
+```markdown
+Canonical records for this feature set must support rebuild, resume, auditability, and UI reconstruction without hidden side stores.
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/orchestrator-subagent-integration.md
+
+Required canonical records:
+- child runs and attempts
+- child batch and subgroup structure
+- crew and crew-board state
+- planning-output projections derived from plan-mode children
+- context-shaping state tied to stable block refs
+- requested/effective runtime snapshots for child launches
+- blocked-episode and awaiting-parent correlation metadata
+
+Canonical truth exclusions:
+- `.puppet-master/memory/*` is not canonical child or crew continuity storage.
+- `active-agents.json` and `active-subagents.json` are not canonical live-state stores.
+- provider-native session trees are correlation data, not PM identity.
+
+ContractRef: ContractName:Plans/assistant-memory-subsystem.md, ContractName:Plans/Provider_OpenCode.md, ContractName:Plans/WorktreeGitImprovement.md
+
+```
+### Intent 20 (Run: r-20260323-192127-03, Anchor: `### 2.2 seglog: format, writer, rotation`, Op: replace_section)
+```markdown
+Seglog is the canonical event source for child runs, crews, and context-shaping transitions.
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Tools.md, ContractName:Plans/assistant-chat-design.md
+
+Required event families for this feature set:
+- child lifecycle events
+- crew lifecycle and crew-board message events
+- context-shrunk and context-rehydrated events
+- requested/effective runtime selection events when surfaced as runtime changes
+- blocked and awaiting-parent state transitions for child runs
+
+Side files such as `active-agents.json` and `active-subagents.json` are not canonical event sources.
+
+ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/interview-subagent-integration.md, ContractName:Plans/usage-feature.md
+
+Rotation and rebuild rules:
+- seglog must contain enough lineage data to reconstruct child batches, subgroups, and crew membership.
+- group/subgroup UI expansion state is not canonical.
+- launch order, batch membership, subgroup membership, and parent-child lineage are canonical.
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Prompt_Pipeline.md
+
+```
+### Intent 21 (Run: r-20260323-192127-03, Anchor: `### 2.3 redb: schema, migrations, key patterns`, Op: replace_section)
+```markdown
+redb projections must be strong enough to rebuild child-run, crew, and context-shaping state after restart without relying on ad hoc JSON side files.
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/orchestrator-subagent-integration.md
+
+Minimum canonical record families:
+- `child_run`
+- `child_attempt`
+- `child_batch`
+- `child_subgroup`
+- `crew`
+- `crew_member`
+- `crew_message`
+- `child_context_state`
+- `planning_child_output_projection`
+
+Minimum `child_run` fields:
+- `child_run_id`, `parent_run_id`, `thread_id`
+- `batch_id?`, `subgroup_id?`, launch order
+- requested/effective Persona and runtime surface fields
+- requested/effective effort fields
+- required/optional dependency classification
+- status, terminal reason, blocked reason, awaiting-parent reason
+- provider correlation fields as additive metadata only
+
+Minimum `child_attempt` fields:
+- `attempt_id`
+- retry count
+- reroute history
+- resumable handle when present
+- requested/effective surface for that attempt
+
+ContractRef: ContractName:Plans/Models_System.md, ContractName:Plans/Tools.md, ContractName:Plans/Permissions_System.md
+
+Minimum context-state fields:
+- stable block refs
+- shrink generation
+- current working-set refs
+- Context Lens overlay refs
+- rehydration-capable source refs
+- compacted/rotated lineage markers where applicable
+
+ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/assistant-memory-subsystem.md
+
+```
+### Intent 22 (Run: r-20260323-192127-03, Anchor: `### 4.4 Activity transparency payloads`, Op: replace_section)
+```markdown
+Activity transparency payloads must support the parent thread child-card UX and crew inspection surfaces.
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/FinalGUISpec.md
+
+Required activity projections:
+- child started
+- child progress / work / thought deltas
+- child blocked / awaiting-parent / failed / cancelled
+- child completed
+- batch rollups and subgroup rollups
+- crew-board message summaries when crew mode is active
+- context-shrunk / context-rehydrated disclosures when relevant to the child
+
+Expanded child-panel payload minimums:
+- status
+- work stream
+- thought stream
+- current state reason when non-happy-path
+- result summary when finished
+- provider/model/effort metadata for hover or details surfaces
+
+ContractRef: ContractName:Plans/Models_System.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Tools.md
+
+```
+### Intent 23 (Run: r-20260323-192127-03, Anchor: `### Canonical records`, Op: replace_section)
+```markdown
+Canonical records for this feature set must support rebuild, resume, auditability, and UI reconstruction without hidden side stores.
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/orchestrator-subagent-integration.md
+
+Required canonical records:
+- child runs and attempts
+- child batch and subgroup structure
+- crew and crew-board state
+- planning-output projections derived from plan-mode children
+- context-shaping state tied to stable block refs
+- requested/effective runtime snapshots for child launches
+- blocked-episode and awaiting-parent correlation metadata
+
+Canonical truth exclusions:
+- `.puppet-master/memory/*` is not canonical child or crew continuity storage.
+- `active-agents.json` and `active-subagents.json` are not canonical live-state stores.
+- provider-native session trees are correlation data, not PM identity.
+
+ContractRef: ContractName:Plans/assistant-memory-subsystem.md, ContractName:Plans/Provider_OpenCode.md, ContractName:Plans/WorktreeGitImprovement.md
+
+```
+### Intent 24 (Run: r-20260326-015830-01, Anchor: ``, Op: append)
+```markdown
+## Assistant Worktree Binding Storage Addendum
+
+This addendum defines storage additions for the assistant thread-to-worktree binding feature.
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/WorktreeGitImprovement.md
+
+### New redb key families
+
+**Thread worktree binding:**
+- Key pattern: `thread_state:{thread_id}:worktree_binding`
+- Value: JSON `{ "worktree_id", "branch_name", "worktree_path", "bound_at_utc", "binding_origin" ("manual"|"auto_create"), "temp_branch_name" }`
+- Projection source: seglog events `chat.thread_worktree_bound` / `chat.thread_worktree_unbound`
+- Rebuild: replay bound/unbound events in sequence order; last event per thread_id determines current state
+
+**Reverse lookup (1:1 enforcement):**
+- Key pattern: `worktree_binding_reverse:{worktree_id}`
+- Value: `thread_id`
+- Projection source: same seglog events
+- Purpose: fast check whether a worktree is already bound to another thread
+
+ContractRef: ContractName:Plans/Crosswalk.md, ContractName:Plans/DRY_Rules.md
+
+**Worktree record extension:**
+- Existing key: `worktree_record.v1:{project_id}:{worktree_id}`
+- New optional field: `owner_thread_id?` alongside existing `owner_run_id?` and `owner_tier_id?`
+- Owner semantics: exactly one of `owner_thread_id`, `owner_run_id/owner_tier_id`, or neither (manual) is set
+
+### New seglog event types (11 total)
+
+| Event type | Fields | Description |
+|------------|--------|-------------|
+| `chat.thread_worktree_bound` | `thread_id`, `worktree_id`, `branch_name`, `worktree_path`, `binding_origin` | Thread bound to worktree |
+| `chat.thread_worktree_unbound` | `thread_id`, `worktree_id`, `reason` (`user_unbind`\|`user_remove`\|`thread_delete`\|`path_missing`) | Thread unbound |
+| `chat.thread_worktree_renamed` | `thread_id`, `worktree_id`, `old_branch_name`, `new_branch_name` | Branch renamed after title gen |
+| `chat.thread_worktree_create_failed` | `thread_id`, `error`, `binding_origin` | Creation failed |
+| `chat.thread_worktree_merged` | `thread_id`, `worktree_id`, `branch_name`, `target_branch`, `strategy`, `result_commit_sha` | Merge completed |
+| `chat.thread_worktree_merge_failed` | `thread_id`, `worktree_id`, `branch_name`, `target_branch`, `strategy`, `error`, `has_conflicts` | Merge failed |
+| `chat.thread_worktree_pr_created` | `thread_id`, `worktree_id`, `branch_name`, `target_branch`, `pr_url`, `pr_number` | PR created |
+| `chat.thread_worktree_pr_failed` | `thread_id`, `worktree_id`, `branch_name`, `error`, `phase` (`push`\|`api`) | PR failed |
+| `chat.thread_worktree_pre_merge_test_started` | `thread_id`, `worktree_id`, `command`, `test_target`, `strategy` | Test started |
+| `chat.thread_worktree_pre_merge_test_passed` | `thread_id`, `worktree_id`, `command`, `duration_ms`, `strategy` | Tests passed |
+| `chat.thread_worktree_pre_merge_test_failed` | `thread_id`, `worktree_id`, `command`, `exit_code`, `duration_ms`, `strategy`, `user_override` | Tests failed |
+
+Naming
+```
+[... truncated, full length: 4675 chars]
+### Intent 25 (Run: r-20260326-015830-02, Anchor: ``, Op: append)
+```markdown
+## Assistant Worktree Binding Storage Addendum
+
+This addendum defines storage additions for the assistant thread-to-worktree binding feature.
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/WorktreeGitImprovement.md
+
+### New redb key families
+
+**Thread worktree binding:**
+- Key pattern: `thread_state:{thread_id}:worktree_binding`
+- Value: JSON `{ "worktree_id", "branch_name", "worktree_path", "bound_at_utc", "binding_origin" ("manual"|"auto_create"), "temp_branch_name" }`
+- Projection source: seglog events `chat.thread_worktree_bound` / `chat.thread_worktree_unbound`
+- Rebuild: replay bound/unbound events in sequence order; last event per thread_id determines current state
+
+**Reverse lookup (1:1 enforcement):**
+- Key pattern: `worktree_binding_reverse:{worktree_id}`
+- Value: `thread_id`
+- Projection source: same seglog events
+- Purpose: fast check whether a worktree is already bound to another thread
+
+ContractRef: ContractName:Plans/Crosswalk.md, ContractName:Plans/DRY_Rules.md
+
+**Worktree record extension:**
+- Existing key: `worktree_record.v1:{project_id}:{worktree_id}`
+- New optional field: `owner_thread_id?` alongside existing `owner_run_id?` and `owner_tier_id?`
+- Owner semantics: exactly one of `owner_thread_id`, `owner_run_id/owner_tier_id`, or neither (manual) is set
+
+### New seglog event types (11 total)
+
+| Event type | Fields | Description |
+|------------|--------|-------------|
+| `chat.thread_worktree_bound` | `thread_id`, `worktree_id`, `branch_name`, `worktree_path`, `binding_origin` | Thread bound to worktree |
+| `chat.thread_worktree_unbound` | `thread_id`, `worktree_id`, `reason` (`user_unbind`\|`user_remove`\|`thread_delete`\|`path_missing`) | Thread unbound |
+| `chat.thread_worktree_renamed` | `thread_id`, `worktree_id`, `old_branch_name`, `new_branch_name` | Branch renamed after title gen |
+| `chat.thread_worktree_create_failed` | `thread_id`, `error`, `binding_origin` | Creation failed |
+| `chat.thread_worktree_merged` | `thread_id`, `worktree_id`, `branch_name`, `target_branch`, `strategy`, `result_commit_sha` | Merge completed |
+| `chat.thread_worktree_merge_failed` | `thread_id`, `worktree_id`, `branch_name`, `target_branch`, `strategy`, `error`, `has_conflicts` | Merge failed |
+| `chat.thread_worktree_pr_created` | `thread_id`, `worktree_id`, `branch_name`, `target_branch`, `pr_url`, `pr_number` | PR created |
+| `chat.thread_worktree_pr_failed` | `thread_id`, `worktree_id`, `branch_name`, `error`, `phase` (`push`\|`api`) | PR failed |
+| `chat.thread_worktree_pre_merge_test_started` | `thread_id`, `worktree_id`, `command`, `test_target`, `strategy` | Test started |
+| `chat.thread_worktree_pre_merge_test_passed` | `thread_id`, `worktree_id`, `command`, `duration_ms`, `strategy` | Tests passed |
+| `chat.thread_worktree_pre_merge_test_failed` | `thread_id`, `worktree_id`, `command`, `exit_code`, `duration_ms`, `strategy`, `user_override` | Tests failed |
+
+Naming
+```
+[... truncated, full length: 4675 chars]
+### Intent 26 (Run: r-20260328-192850-01, Anchor: `### 2.2 seglog: format, writer, rotation`, Op: insert_after)
+```markdown
+#### 2.2.1 Mandatory CRC32 per record
+
+Every seglog record MUST include a CRC32 checksum computed over the record payload. This is a mandatory correctness requirement.
+
+ContractRef: ContractName:Plans/Architecture_Invariants.md, ContractName:Plans/Executor_Protocol.md
+
+On read, the CRC32 MUST be validated before the record is processed. If validation fails:
+- The corrupt record MUST be skipped.
+- A recovery event MUST be emitted to the seglog with `event_type=storage.record_corrupt`, including the record offset and expected vs. observed CRC.
+- Projectors MUST resume from the last known-good checkpoint, not from the corrupt record.
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Executor_Protocol.md
+
+**Note:** The §6 problems table entry that describes CRC as 'Optional' is superseded by this invariant. CRC32 per record is MANDATORY for all seglog implementations.
+
+ContractRef: ContractName:Plans/Architecture_Invariants.md, ContractName:Plans/Contracts_V0.md
+```
+### Intent 27 (Run: r-20260328-192850-01, Anchor: `## 6. Potential problems and solutions`, Op: replace_section)
+```markdown
+| Problem | Solution |
+|---------|----------|
+| **seglog corruption or partial write** | Append-only with flush; if truncation is detected, stop reading at last complete line. **Mandatory CRC32 per record** (see §2.2.1): validate on every read; corrupt record triggers skip + recovery event; projectors resume from last good checkpoint. Recovery: restore from backup or discard tail. |
+| **redb corruption** | redb is durable; use backups (e.g. copy `state.redb` periodically). If corruption, restore from backup; seglog is source of truth so we can rebuild redb state from seglog if we have projectors that re-materialize state. |
+| **Projector falls behind** | Tail reader keeps up with writer; if projector is slow (e.g. Tantivy commit), buffer events in memory and process in batches; checkpoint only after commit. If seglog grows faster than projector, consider backpressure or multiple segments. |
+| **Analytics scan blocks UI** | Run scan in background thread/task; never block main thread. Use a "last rollup" timestamp in redb; UI shows last computed rollup and optionally "Updating..." while scan runs. |
+| **Disk full** | seglog writer and redb writes can fail; handle I/O errors: show user-facing error, stop appending, and optionally retry. Retention policy (§2.2) limits seglog size; redb size is bounded by state. |
+| **Migration failure** | Migrations run on open; if one fails, log and leave DB at previous version; do not open DB in inconsistent state. Provide a "reset storage" or "recover from seglog" path for power users. |
+| **Multiple app instances** | **Mandatory startup flock on `<project>/.puppet-master/pm.lock`.** On startup, PM MUST acquire an exclusive lock on this file before any writes. If the lock is held by another process, PM enters read-only mode and notifies the user. The lock is held for the lifetime of the process. |
+
+ContractRef: ContractName:Plans/Architecture_Invariants.md, ContractName:Plans/Executor_Protocol.md
+
+| Problem | Solution |
+|---------|----------|
+| **Tantivy index size** | Index only what search needs (e.g. message content, thread_id, ts). Optional: skip very old messages or summarize; document retention for search index. |
+| **Checkpoint lost** | If redb checkpoint is lost, projector can restart from beginning of seglog (or from oldest segment we keep). Rebuild is expensive but one-time; ensure seglog retention is long enough to recover. |
+| **API contract (caller handling errors)** | seglog `append()` and redb open/write return `Result`. Callers must handle errors (e.g. surface to user, stop appending, retry policy). No silent swallow; document in §2.2 Writer API. |
+| **Projector panic or crash** | On panic, do not advance checkpoint so the projector can resume from last checkpoint. Design projectors to be **idempotent** (reprocessing same event has same effect). Catch panic in projector loop, log, and exit or restart from same checkpoint. |
+| **Project deletion and orphaned keys** | When a project is removed, optio
+```
+[... truncated, full length: 5533 chars]
+### Intent 28 (Run: r-20260328-192938-01, Anchor: `### 2.1 File locations and directory layout`, Op: replace_section)
+```markdown
+All storage lives under a single **app data root** (e.g. `~/.puppet-master/` or `$XDG_DATA_HOME/puppet-master/` on Linux; `%APPDATA%/puppet-master` on Windows; `~/Library/Application Support/puppet-master` on macOS). Project-specific data (e.g. per-project seglog or redb) may live under **project root / project workspace** (e.g. `.puppet-master/`) when we want isolation per workspace; the plan below assumes **app-global** seglog/redb by default, with **project_id** or **project_path** in keys where needed.
+
+| Path (relative to app data root) | Purpose |
+|----------------------------------|---------||
+| `storage/seglog/` | seglog segment files (or single `events.log`). Append-only. |
+| `storage/redb/` | redb database file(s). One main DB (e.g. `state.redb`) for settings, sessions, checkpoints, rollups; schema versioned via migrations. |
+| `storage/jsonl/` | Human-readable JSONL mirror of seglog (one file per day or one rolling file). Written by projector. |
+| `storage/tantivy/projects/{project_id}/` | **Per-project** Tantivy index directories (e.g. `chat`, `code`, `logs`, optional `docs`). Built by projectors/watchers. Per-project indices are required for project-only search scoping and for long-lived performance (see §2.4 and Plans/assistant-chat-design.md §10.3). |
+| `storage/blobs/` | Blob store for large persisted payloads referenced by `blob_ref` (e.g. secrets-scrubbed tool/log payloads used by `logread`). |
+| `storage/backups/` | Optional: point-in-time copies of redb or seglog for recovery. |
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/GitHub_Integration.md
+
+**Per-project regex index storage (local projects):**
+
+| Path (relative to project root) | Purpose |
+|----------------------------------|---------||
+| `.puppet-master/project/state/regex_index/` | Root directory for sparse n-gram regex index files |
+| `.puppet-master/project/state/regex_index/frequency_table.bin` | Project-specific blended frequency table (~128 KB, 256×256 u16 matrix) |
+| `.puppet-master/project/state/regex_index/gen-{N}/` | Generation-numbered directory (N = monotonic u64). Contains all binary index files for one atomic snapshot |
+| `.puppet-master/project/state/regex_index/gen-{N}/postings.bin` | Posting lists — Roaring Bitmaps of u32 file IDs, flushed sequentially per n-gram hash |
+| `.puppet-master/project/state/regex_index/gen-{N}/lookup.bin` | Sorted xxh3-hash→offset table (memory-mapped). Binary search to find posting list offset in postings.bin |
+| `.puppet-master/project/state/regex_index/gen-{N}/file_map.bin` | Sequential u32 file_id → relative file path mapping (forward-slash normalized) |
+| `.puppet-master/project/state/regex_index/gen-{N}/index_meta.json` | Anchor SHA, timestamps, schema version, file count, per-file xxh3 checksums, generation number, `case_sensitive_fs`, `roaring_format` |
+
+ContractRef: ContractName:Plans/Tools.md, Invariant:INV-002, ContractName:Plans/Architecture_Invariants.md
+
+**Per-project regex index storage (
+```
+[... truncated, full length: 5575 chars]
+### Intent 29 (Run: r-20260328-192938-01, Anchor: `### 2.4 Projector pipeline: consumption, JSONL mirror, Tantivy, checkpoints`, Op: replace_section)
+```markdown
+**Consumption model:** Each projector runs in a loop (or is triggered periodically):
+
+1. Read **checkpoint** from redb (e.g. `projector.jsonl_mirror` → last seglog path + offset).
+2. **Tail** seglog from that position (open file, seek to offset, read new lines; or list segments, read from last segment).
+3. For each event: (a) write to JSONL mirror (if this projector owns the mirror), (b) update Tantivy index (if event type matches), (c) update redb snapshots if needed.
+4. **Commit** new checkpoint to redb (and flush Tantivy) so we don't reprocess on restart.
+
+**JSONL mirror:** Same envelope format as seglog; one file per day under `storage/jsonl/` (e.g. `events_2026-02-21.jsonl`) or one rolling file. Human-readable; useful for debugging and for analytics scan if we prefer scanning JSONL. Writer: single projector that reads seglog and appends to the mirror.
+
+**Tantivy indices (required per project):** Indices are written under `storage/tantivy/projects/{project_id}/…` to enforce **project-only scoping** and keep performance stable for long-lived projects (Plans/assistant-chat-design.md §10.3). Separate index per domain:
+
+- **chat (required):** Documents from `chat.message` (and optionally `chat.thread_created` / `chat.thread_updated`).
+  **Fields (minimum):** `project_id`, `thread_id`, `message_id`, `role`, `ts`, `content`.
+  **Optional fields:** `archived`, `deleted`, `context_overlay_flags` (muted/subcompacted markers) to support Context Lens filtering.
+  **Use:** Chat history search (human + agent), and smart auto-retrieval (RAG) from prior project threads.
+
+- **code (required, MVP):** A project-scoped code search index for the **project workspace / project root**.
+  **Producer:** A file-watcher + indexer (can be implemented as a "projector" even though the source is filesystem change events rather than seglog). The indexer must respect `.gitignore` by default and apply FileSafe-style sensitive-path exclusions (see below).
+  **Chunking:** Index large files as chunks so results return tight snippets (e.g. 4–16 KiB chunks with `chunk_id` and byte/line range metadata).
+  **Fields (minimum):** `project_id`, `path`, `chunk_id`, `content`, `language?`, `mtime` (or `content_hash`).
+  **Use:** `codesearch` tool and auto-retrieval for code grounding. LSP symbol search remains complementary (symbol-aware), not a replacement.
+
+- **logs (required, MVP):** A project-scoped logs/search index based on **log summaries** with pointers to full payload.
+  **Producers:** seglog projectors that consume `tool.invoked`, `tool.denied`, `run.*`, `bash.*`, and error events and emit index documents.
+  **Index the summary, not the blob:** Store only compact summaries/snippets in Tantivy; store full (secrets-scrubbed) payload as a blob/file under `storage/blobs/…` referenced by `blob_ref` (or event id) so log search stays fast and storage remains bounded.
+  **Fields (minimum):** `project_id`, `ts`, `thread_id?`, `run_id?`, `tool_name?`, `level?`, `summary`, `blob_ref` (or 
+```
+[... truncated, full length: 7113 chars]
+### Intent 30 (Run: r-20260328-192938-02, Anchor: `### 2.1 File locations and directory layout`, Op: replace_section)
+```markdown
+All storage lives under a single **app data root** (for example `~/.puppet-master/`, `$XDG_DATA_HOME/puppet-master/`, `%APPDATA%/puppet-master`, or `~/Library/Application Support/puppet-master`). Project-scoped runtime state still lives under `.puppet-master/` inside the workspace when the feature is inherently project-local.
+
+| Path (relative to app data root) | Purpose |
+|----------------------------------|---------|
+| `storage/seglog/` | Append-only seglog segments or rolling event log files |
+| `storage/redb/` | redb database files for settings, checkpoints, snapshots, and rollups |
+| `storage/jsonl/` | Human-readable JSONL mirror emitted by projectors |
+| `storage/tantivy/projects/{project_id}/` | Per-project Tantivy indices (`chat`, `code`, `logs`, optional `docs`) |
+| `storage/blobs/` | Blob store for large secrets-scrubbed payloads referenced by `blob_ref` |
+| `storage/backups/` | Optional point-in-time recovery copies |
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/GitHub_Integration.md
+
+#### Local project regex-index layout
+
+| Path (relative to project root) | Purpose |
+|----------------------------------|---------|
+| `.puppet-master/project/state/regex_index/` | Root directory for the per-project sparse n-gram index |
+| `.puppet-master/project/state/regex_index/frequency_table.bin` | Project-specific blended frequency table (256x256 `u16`) used by both build and query |
+| `.puppet-master/project/state/regex_index/gen-{N}/` | Generation-numbered snapshot directory (`u64`) |
+| `.puppet-master/project/state/regex_index/gen-{N}/postings.bin` | Roaring Bitmap posting lists keyed by xxh3 hash |
+| `.puppet-master/project/state/regex_index/gen-{N}/lookup.bin` | Sorted mmap-friendly hash-to-offset table |
+| `.puppet-master/project/state/regex_index/gen-{N}/file_map.bin` | `u32 file_id -> relative path` mapping, forward-slash normalized |
+| `.puppet-master/project/state/regex_index/gen-{N}/index_meta.json` | Snapshot metadata: anchor, schema version, checksums, generation, compatibility flags |
+
+ContractRef: ContractName:Plans/Tools.md, Invariant:INV-002, ContractName:Plans/Architecture_Invariants.md
+
+#### Remote Git project regex-index cache layout
+
+| Path (relative to app data root) | Purpose |
+|----------------------------------|---------|
+| `.puppet-master/cache/r/{hash8}/` | Remote project cache root (`hash8` = first 8 chars of xxh3(project_id)) |
+| `.puppet-master/cache/r/{hash8}/git/` | Bare Git clone for the primary repository |
+| `.puppet-master/cache/r/{hash8}/git/m/{sub_hash8}/` | Bare Git clones for submodules (recursive, max depth 5) |
+| `.puppet-master/cache/r/{hash8}/dirty/` | Local staging area for remote dirty-file content used by verification and re-anchor merge |
+| `.puppet-master/cache/r/{hash8}/regex_index/` | Same snapshot layout as local projects (`frequency_table.bin` + `gen-{N}/...`) |
+| `.puppet-master/cache/r/{hash8}/manifest.json` | `hash8 -> project_id/submodule_path` mapping for recovery, MAX_
+```
+[... truncated, full length: 7788 chars]
+### Intent 31 (Run: r-20260328-192938-02, Anchor: `### 2.4 Projector pipeline: consumption, JSONL mirror, Tantivy, checkpoints`, Op: replace_section)
+```markdown
+**Consumption model:** Each projector runs in a loop (or is triggered periodically):
+
+1. Read **checkpoint** from redb (e.g. `projector.jsonl_mirror` → last seglog path + offset).
+2. **Tail** seglog from that position (open file, seek to offset, read new lines; or list segments, read from last segment).
+3. For each event: (a) write to JSONL mirror (if this projector owns the mirror), (b) update Tantivy index (if event type matches), (c) update redb snapshots if needed.
+4. **Commit** new checkpoint to redb (and flush Tantivy) so we don't reprocess on restart.
+
+**JSONL mirror:** Same envelope format as seglog; one file per day under `storage/jsonl/` (e.g. `events_2026-02-21.jsonl`) or one rolling file. Human-readable; useful for debugging and for analytics scan if we prefer scanning JSONL. Writer: single projector that reads seglog and appends to the mirror.
+
+**Tantivy indices (required per project):** Indices are written under `storage/tantivy/projects/{project_id}/…` to enforce **project-only scoping** and keep performance stable for long-lived projects (Plans/assistant-chat-design.md §10.3). Separate index per domain:
+
+- **chat (required):** Documents from `chat.message` (and optionally `chat.thread_created` / `chat.thread_updated`).
+  **Fields (minimum):** `project_id`, `thread_id`, `message_id`, `role`, `ts`, `content`.
+  **Optional fields:** `archived`, `deleted`, `context_overlay_flags` (muted/subcompacted markers) to support Context Lens filtering.
+  **Use:** Chat history search (human + agent), and smart auto-retrieval (RAG) from prior project threads.
+
+- **code (required, MVP):** A project-scoped code search index for the **project workspace / project root**.
+  **Producer:** A file-watcher + indexer (can be implemented as a "projector" even though the source is filesystem change events rather than seglog). The indexer must respect `.gitignore` by default and apply FileSafe-style sensitive-path exclusions (see below).
+  **Chunking:** Index large files as chunks so results return tight snippets (e.g. 4–16 KiB chunks with `chunk_id` and byte/line range metadata).
+  **Fields (minimum):** `project_id`, `path`, `chunk_id`, `content`, `language?`, `mtime` (or `content_hash`).
+  **Use:** `codesearch` tool and auto-retrieval for code grounding. LSP symbol search remains complementary (symbol-aware), not a replacement.
+
+- **logs (required, MVP):** A project-scoped logs/search index based on **log summaries** with pointers to full payload.
+  **Producers:** seglog projectors that consume `tool.invoked`, `tool.denied`, `run.*`, `bash.*`, and error events and emit index documents.
+  **Index the summary, not the blob:** Store only compact summaries/snippets in Tantivy; store full (secrets-scrubbed) payload as a blob/file under `storage/blobs/…` referenced by `blob_ref` (or event id) so log search stays fast and storage remains bounded.
+  **Fields (minimum):** `project_id`, `ts`, `thread_id?`, `run_id?`, `tool_name?`, `level?`, `summary`, `blob_ref` (or 
+```
+[... truncated, full length: 11210 chars]
+### Intent 32 (Run: r-20260328-192938-02, Anchor: `### 8.3 Startup and shutdown`, Op: replace_section)
+```markdown
+**Startup order:** (1) Resolve app data root (env override optional). (2) Create `storage/seglog`, `storage/redb`, `storage/jsonl`, `storage/tantivy` if missing. (3) Open redb and run migrations. (4) Open the seglog writer. (5) Start projectors that tail seglog and write JSONL/Tantivy/checkpoints. (6) Start optional analytics schedulers and per-project index services.
+
+**Regex-index startup recovery:** After a project context is known and before the first indexed `grep` or Search-panel regex query for that project:
+1. Scan the relevant `regex_index/` directory.
+2. Pick the highest valid `gen-{N}/` candidate.
+3. Validate `index_meta.json`, per-file xxh3 checksums, and `lookup.bin` sizing / offsets before mmap.
+4. For Git-backed caches, verify `anchor_sha` is still reachable (`git cat-file -t {anchor_sha}`). Unreachable anchors invalidate the snapshot and trigger rebuild from current HEAD.
+5. If a valid snapshot exists, create `IndexSnapshot`, mmap `lookup.bin`, and mark the project `ready`.
+6. If no valid snapshot exists, mark the project `no_index` and transparently serve raw ripgrep until the background full build completes.
+7. Delete orphaned or partial generations opportunistically during this recovery path.
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/Architecture_Invariants.md
+
+**Shutdown:** (1) Signal projectors to stop and flush outputs. (2) Cancel in-flight regex builds and wait briefly for partial-generation cleanup. (3) Flush and close the seglog writer. (4) Close redb. (5) Leave the last valid regex snapshot and any reusable remote cache state in place; ordinary shutdown does not evict caches.
+ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md
+
+**Concurrency and single-writer rules:** Seglog remains a single-writer stream. Regex-index publication is likewise single-writer per project: one build path publishes snapshots, while readers use lock-free `ArcSwap` snapshots and never observe partially-written generations.
+ContractRef: ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/Tools.md, ContractName:Plans/storage-plan.md
+```
+### Intent 33 (Run: r-20260328-192938-03, Anchor: `### 2.1 File locations and directory layout`, Op: replace_section)
+```markdown
+All storage lives under a single **app data root** (for example `~/.puppet-master/`, `$XDG_DATA_HOME/puppet-master/`, `%APPDATA%/puppet-master`, or `~/Library/Application Support/puppet-master`). Project-scoped runtime state still lives under `.puppet-master/` inside the workspace when the feature is inherently project-local.
+
+| Path (relative to app data root) | Purpose |
+|----------------------------------|---------|
+| `storage/seglog/` | Append-only seglog segments or rolling event log files |
+| `storage/redb/` | redb database files for settings, checkpoints, snapshots, and rollups |
+| `storage/jsonl/` | Human-readable JSONL mirror emitted by projectors |
+| `storage/tantivy/projects/{project_id}/` | Per-project Tantivy indices (`chat`, `code`, `logs`, optional `docs`) |
+| `storage/blobs/` | Blob store for large secrets-scrubbed payloads referenced by `blob_ref` |
+| `storage/backups/` | Optional point-in-time recovery copies |
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/GitHub_Integration.md
+
+#### Local project regex-index layout
+
+| Path (relative to project root) | Purpose |
+|----------------------------------|---------|
+| `.puppet-master/project/state/regex_index/` | Root directory for the per-project sparse n-gram index |
+| `.puppet-master/project/state/regex_index/frequency_table.bin` | Project-specific blended frequency table (256x256 `u16`) used by both build and query |
+| `.puppet-master/project/state/regex_index/gen-{N}/` | Generation-numbered snapshot directory (`u64`) |
+| `.puppet-master/project/state/regex_index/gen-{N}/postings.bin` | Roaring Bitmap posting lists keyed by xxh3 hash |
+| `.puppet-master/project/state/regex_index/gen-{N}/lookup.bin` | Sorted mmap-friendly hash-to-offset table |
+| `.puppet-master/project/state/regex_index/gen-{N}/file_map.bin` | `u32 file_id -> relative path` mapping, forward-slash normalized |
+| `.puppet-master/project/state/regex_index/gen-{N}/index_meta.json` | Snapshot metadata: anchor, schema version, checksums, generation, compatibility flags |
+
+ContractRef: ContractName:Plans/Tools.md, Invariant:INV-002, ContractName:Plans/Architecture_Invariants.md
+
+#### Remote Git project regex-index cache layout
+
+| Path (relative to app data root) | Purpose |
+|----------------------------------|---------|
+| `.puppet-master/cache/r/{hash8}/` | Remote project cache root (`hash8` = first 8 chars of xxh3(project_id)) |
+| `.puppet-master/cache/r/{hash8}/git/` | Bare Git clone for the primary repository |
+| `.puppet-master/cache/r/{hash8}/git/m/{sub_hash8}/` | Bare Git clones for submodules (recursive, max depth 5) |
+| `.puppet-master/cache/r/{hash8}/dirty/` | Local staging area for remote dirty-file content used by verification and re-anchor merge |
+| `.puppet-master/cache/r/{hash8}/regex_index/` | Same snapshot layout as local projects (`frequency_table.bin` + `gen-{N}/...`) |
+| `.puppet-master/cache/r/{hash8}/manifest.json` | `hash8 -> project_id/submodule_path` mapping for recovery, MAX_
+```
+[... truncated, full length: 9194 chars]
+### Intent 34 (Run: r-20260328-192938-03, Anchor: `### 2.4 Projector pipeline: consumption, JSONL mirror, Tantivy, checkpoints`, Op: replace_section)
+```markdown
+**Consumption model:** Each projector runs in a loop (or is triggered periodically):
+
+1. Read **checkpoint** from redb (e.g. `projector.jsonl_mirror` → last seglog path + offset).
+2. **Tail** seglog from that position (open file, seek to offset, read new lines; or list segments, read from last segment).
+3. For each event: (a) write to JSONL mirror (if this projector owns the mirror), (b) update Tantivy index (if event type matches), (c) update redb snapshots if needed.
+4. **Commit** new checkpoint to redb (and flush Tantivy) so we don't reprocess on restart.
+
+**JSONL mirror:** Same envelope format as seglog; one file per day under `storage/jsonl/` (e.g. `events_2026-02-21.jsonl`) or one rolling file. Human-readable; useful for debugging and for analytics scan if we prefer scanning JSONL. Writer: single projector that reads seglog and appends to the mirror.
+
+**Tantivy indices (required per project):** Indices are written under `storage/tantivy/projects/{project_id}/…` to enforce **project-only scoping** and keep performance stable for long-lived projects (Plans/assistant-chat-design.md §10.3). Separate index per domain:
+
+- **chat (required):** Documents from `chat.message` (and optionally `chat.thread_created` / `chat.thread_updated`).
+  **Fields (minimum):** `project_id`, `thread_id`, `message_id`, `role`, `ts`, `content`.
+  **Optional fields:** `archived`, `deleted`, `context_overlay_flags` (muted/subcompacted markers) to support Context Lens filtering.
+  **Use:** Chat history search (human + agent), and smart auto-retrieval (RAG) from prior project threads.
+
+- **code (required, MVP):** A project-scoped code search index for the **project workspace / project root**.
+  **Producer:** A file-watcher + indexer (can be implemented as a "projector" even though the source is filesystem change events rather than seglog). The indexer must respect `.gitignore` by default and apply FileSafe-style sensitive-path exclusions (see below).
+  **Chunking:** Index large files as chunks so results return tight snippets (e.g. 4–16 KiB chunks with `chunk_id` and byte/line range metadata).
+  **Fields (minimum):** `project_id`, `path`, `chunk_id`, `content`, `language?`, `mtime` (or `content_hash`).
+  **Use:** `codesearch` tool and auto-retrieval for code grounding. LSP symbol search remains complementary (symbol-aware), not a replacement.
+
+- **logs (required, MVP):** A project-scoped logs/search index based on **log summaries** with pointers to full payload.
+  **Producers:** seglog projectors that consume `tool.invoked`, `tool.denied`, `run.*`, `bash.*`, and error events and emit index documents.
+  **Index the summary, not the blob:** Store only compact summaries/snippets in Tantivy; store full (secrets-scrubbed) payload as a blob/file under `storage/blobs/…` referenced by `blob_ref` (or event id) so log search stays fast and storage remains bounded.
+  **Fields (minimum):** `project_id`, `ts`, `thread_id?`, `run_id?`, `tool_name?`, `level?`, `summary`, `blob_ref` (or 
+```
+[... truncated, full length: 12394 chars]
+### Intent 35 (Run: r-20260328-192938-03, Anchor: `### 8.3 Startup and shutdown`, Op: replace_section)
+```markdown
+**Startup order:** (1) Resolve app data root (env override optional). (2) Create `storage/seglog`, `storage/redb`, `storage/jsonl`, `storage/tantivy` if missing. (3) Open redb and run migrations. (4) Open the seglog writer. (5) Start projectors that tail seglog and write JSONL/Tantivy/checkpoints. (6) Start optional analytics schedulers and per-project index services.
+
+**Regex-index startup recovery:** After a project context is known and before the first indexed `grep` or Search-panel regex query for that project:
+1. Scan the relevant `regex_index/` directory.
+2. Pick the highest valid `gen-{N}/` candidate.
+3. Validate `index_meta.json`, per-file xxh3 checksums, and `lookup.bin` sizing / offsets before mmap.
+4. For Git-backed caches, verify `anchor_sha` is still reachable (`git cat-file -t {anchor_sha}`). Unreachable anchors invalidate the snapshot and trigger rebuild from current HEAD.
+5. If a valid snapshot exists, create `IndexSnapshot`, mmap `lookup.bin`, and mark the project `ready`.
+6. If no valid snapshot exists, mark the project `no_index` and transparently serve raw ripgrep until the background full build completes.
+7. Delete orphaned or partial generations opportunistically during this recovery path.
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/Architecture_Invariants.md
+
+**Shutdown:** (1) Signal projectors to stop and flush outputs. (2) Cancel in-flight regex builds and wait briefly for partial-generation cleanup. (3) Flush and close the seglog writer. (4) Close redb. (5) Leave the last valid regex snapshot and any reusable remote cache state in place; ordinary shutdown does not evict caches.
+ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md
+
+**Concurrency and single-writer rules:** Seglog remains a single-writer stream. Regex-index publication is likewise single-writer per project: one build path publishes snapshots, while readers use lock-free `ArcSwap` snapshots and never observe partially-written generations.
+ContractRef: ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/Tools.md, ContractName:Plans/storage-plan.md
+```

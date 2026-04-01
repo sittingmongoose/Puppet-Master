@@ -1258,106 +1258,60 @@ The guard complements cleanup policies by preventing destructive operations befo
 
 ### 11.1 FileSafe: Write scope (CRITICAL)
 
-**Problem:** Agents may write to files not declared in the active plan, causing scope creep and conflicts.
+#### 11.1.1 Realpath-before-scope-check invariant
 
-**Solution:** Implement write-scope enforcement that blocks writes to files not explicitly listed in the current task/subtask plan. (Internal module name remains `FileGuard`; product and GUI use **Write scope** only.)
+All file paths submitted to FileSafe write-scope or security-filter checks MUST be resolved through `realpath()` before any scope comparison.
 
-```rust
-// DRY:DATA:FileGuard — FileSafe write scope: blocks writes outside active plan
-pub struct FileGuard {
-    enabled: bool,
-}
+ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Architecture_Invariants.md
 
-impl FileGuard {
-    // DRY:FN:check_file_write — Check if file write is allowed
-    /// Check if a file write is allowed based on plan metadata
-    ///
-    /// # Arguments
-    ///
-    /// * `file_path` - Normalized absolute path to the file
-    /// * `working_directory` - Working directory context (may be worktree)
-    ///
-    /// # Behavior
-    ///
-    /// - If guard disabled: always allow
-    /// - If file_path matches any allowed file pattern: allow
-    /// - If file_path is in allowed_files set: allow
-    /// - If file_path is under allowed directory: allow (if directory-level permissions enabled)
-    /// - Otherwise: block
-    pub fn check_file_write(&self, file_path: &Path, working_directory: &Path, allowed_files: &HashSet<PathBuf>) -> Result<(), GuardError> {
-        if !self.enabled {
-            return Ok(());
-        }
-        
-        // Normalize paths for comparison
-        let file_path_normalized = file_path.canonicalize()
-            .unwrap_or_else(|_| file_path.to_path_buf());
-        
-        // Check exact match
-        if allowed_files.contains(&file_path_normalized) {
-            return Ok(());
-        }
-        
-        // Check relative path match (file_path relative to working_directory)
-        if let Ok(relative) = file_path_normalized.strip_prefix(working_directory) {
-            let relative_path = relative.to_path_buf();
-            if allowed_files.contains(&relative_path) {
-                return Ok(());
-            }
-        }
-        
-        // Check directory-level permissions (if enabled)
-        // If any parent directory is in allowed_files, allow
-        let mut current = file_path_normalized.parent();
-        while let Some(dir) = current {
-            if allowed_files.contains(dir) {
-                return Ok(());
-            }
-            current = dir.parent();
-        }
-        
-        // AutoDecision: MVP does not support wildcard patterns for write scope; allow exact paths and explicit directories only.
-        
-        Err(GuardError::FileNotInPlan {
-            file: file_path_normalized,
-        })
-    }
-    
-    // DRY:FN:load_allowed_files_from_request — Load allowed files from ExecutionRequest metadata
-    /// Load allowed files list from ExecutionRequest
-    ///
-    /// Checks:
-    /// 1. `request.env_vars.get("PUPPET_MASTER_ALLOWED_FILES")` - JSON array of paths
-    /// 2. `request.context_files` - Context files are implicitly allowed
-    /// 3. Plan metadata file (if available in context)
-    pub fn load_allowed_files_from_request(request: &ExecutionRequest) -> Result<HashSet<PathBuf>> {
-        let mut allowed = HashSet::new();
-        
-        // 1. Check env var for explicit allowed files list
-        if let Some(files_json) = request.env_vars.get("PUPPET_MASTER_ALLOWED_FILES") {
-            if let Ok(files) = serde_json::from_str::<Vec<String>>(files_json) {
-                for file_str in files {
-                    allowed.insert(PathBuf::from(file_str));
-                }
-            }
-        }
-        
-        // 2. Add context files (implicitly allowed)
-        for context_file in &request.context_files {
-            allowed.insert(context_file.clone());
-        }
-        
-        // AutoDecision: do not implicitly allow `working_directory` or project root; write scope is plan-driven and fails closed.
-         
-        Ok(allowed)
-    }
-}
-```
+Required behavior:
+- normalize relative paths against `working_directory`
+- resolve symlinks through `realpath()`
+- if resolution fails for any reason, deny access (fail-closed)
+- never fall back to comparing the unresolved path against `allowed_files`
 
-**Per-request update:** AutoDecision: use Option B (no interior mutability). The runner computes `allowed_files` per request via `FileGuard::load_allowed_files_from_request(request)` and passes `&allowed_files` into `check_file_write(...)` for each check; `FileGuard` does not store request-scoped allowlists.
+ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Executor_Protocol.md
 
-**Integration:** Load allowed files from task/subtask plan metadata (or from `ExecutionRequest` env_vars/context_files as in `load_allowed_files_from_request`). Write-scope checks happen in `BaseRunner::execute_command()` before spawn, alongside the command blocklist.
+The fallback pattern `canonicalize().unwrap_or_else(|_| original_path)` is prohibited for FileSafe-managed write-scope checks.
 
+ContractRef: ContractName:Plans/Architecture_Invariants.md, ContractName:Plans/Tools.md
+
+#### 11.1.2 Atomic write contract
+
+All FileSafe-managed file mutations MUST use the atomic write pattern `temp -> fsync -> rename` in the target directory. Direct `os.WriteFile`-style writes are not allowed for managed mutations.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Architecture_Invariants.md
+
+Temp-file lifecycle rules:
+- temp files live in a per-session temp directory or same-directory temp naming scheme
+- boot/startup janitor sweeps stale `.tmp.*` artifacts from incomplete writes
+- stale-temp cleanup emits a structured recovery event when artifacts are removed
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md
+
+#### 11.1.3 Case folding and file-record lifecycle
+FileSafe and permission matching MUST use the same filesystem-awareness for case sensitivity.
+
+ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Executor_Protocol.md
+
+Case-sensitivity detection contract:
+- At project/worktree root initialization, PM probes case sensitivity by creating a temporary probe file (e.g., `.pm_case_probe`) and checking whether the filesystem distinguishes it from `.PM_CASE_PROBE`.
+- If the probe succeeds (both names resolve to the same inode), the filesystem is case-insensitive.
+- If the probe cannot be created (read-only filesystem, permission error, or other I/O failure), PM defaults to case-sensitive mode (the stricter assumption).
+- The detected case-sensitivity flag is cached per project root and reused for all FileSafe and permission path comparisons within that project session.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Architecture_Invariants.md
+
+Normalization rules:
+- On case-insensitive filesystems: apply Unicode NFC normalization followed by locale-independent lowercasing before path comparison.
+- On case-sensitive filesystems: compare paths byte-for-byte after NFC normalization only.
+- The normalization method MUST be identical in FileSafe write-scope checks and Permissions_System path-pattern matching. Divergence between the two is a security defect.
+
+ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Tools.md
+
+In-memory file records are bounded by an LRU cap of 10,000 entries. Eviction rebuilds from canonical event state on next access; it does not silently lose guard correctness.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Architecture_Invariants.md
 ### 11.2 Security Filter (CRITICAL)
 
 **Problem:** Agents may access sensitive files (`.env`, credentials, keys) during execution.
@@ -2042,7 +1996,6 @@ impl AgentRole {
 ## 15. System Integration Analysis
 
 ### 15.1 Integration with BaseRunner
-
 **Current Architecture:**
 - `BaseRunner::execute_command()` spawns platform CLI processes
 - Already has circuit breaker, quota manager, rate limiter, permission audit
@@ -2054,64 +2007,71 @@ impl AgentRole {
 pub async fn execute_command(...) -> Result<ExecutionResult> {
     // 1. Circuit breaker check (existing)
     if self.circuit_breaker.is_open() { ... }
-    
+
     // 2. QUOTA CHECK (existing)
     if let Err(e) = self.quota_manager.enforce_quota(...) { ... }
-    
+
     // 3. RATE LIMIT (existing)
     self.rate_limiter.acquire(...).await?;
-    
+
     // 4. NEW: FileSafe (add here)
-    // Note: Prompt content is checked at platform runner level (after context compilation). Here we check only the final command string and file paths.
-    // Build command string
+    // Note: Prompt content is checked at platform runner level (after context compilation).
+    // Here we check only the final command string and file paths.
     let full_command = format!("{} {}", self.command, args.join(" "));
-    
+
     // Check command string (blocklist + approved whitelist)
     if let Err(e) = self.bash_guard.check_command(&full_command) {
-        // Check if verification gate operation (allow destructive during QA)
         if self.is_verification_gate_operation(&request) {
             warn!("Destructive command allowed during verification gate: {}", e);
         } else {
             return Err(anyhow!("Destructive command blocked: {}", e));
         }
     }
-    
+
     // Check file writes (if write scope enabled)
-    // Extract file paths from prompt or context files
     let allowed_files = FileGuard::load_allowed_files_from_request(&request)?;
     for file_path in self.extract_file_paths_from_request(&request)? {
-        // Resolve path relative to working directory
         let resolved_path = if file_path.is_absolute() {
             file_path
         } else {
             request.working_directory.join(&file_path)
         };
-        
-        // Normalize path (handle worktree symlinks, .., etc.)
+
+        // §11.1.1 realpath-before-scope-check: fail-closed on resolution error
         let normalized_path = resolved_path.canonicalize()
-            .unwrap_or_else(|_| resolved_path);
-        
-        if let Err(e) = self.file_guard.check_file_write(&normalized_path, &request.working_directory, &allowed_files) {
+            .map_err(|e| GuardError::SymlinkResolution {
+                original: resolved_path.clone(),
+                reason: e.to_string(),
+            })?;
+
+        if let Err(e) = self.file_guard.check_file_write(
+            &normalized_path, &request.working_directory, &allowed_files
+        ) {
             return Err(anyhow!("File write blocked: {}", e));
         }
         if let Err(e) = self.security_filter.check_file_access(&normalized_path) {
             return Err(anyhow!("Sensitive file access blocked: {}", e));
         }
     }
-    
+
     // 5. PERMISSION AUDIT (existing)
     if let Some(ref audit) = self.permission_audit { ... }
-    
+
     // 6. Continue with spawn logic...
 }
 ```
 
-**Key Integration Details:**
+ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Architecture_Invariants.md
+
+**Key integration rules:**
 - Guards are initialized in `BaseRunner::new()` alongside other components
 - All guards use `Arc<>` for thread-safe sharing
 - Guard errors are logged via existing logging infrastructure
 - Guard violations are logged to event log (if available) or filesafe-events.jsonl
+- Path resolution follows §11.1.1: `canonicalize()` failure produces `GuardError::SymlinkResolution`, never a silent fallback to the unresolved path
+- The fallback pattern `canonicalize().unwrap_or_else(|_| original_path)` is prohibited in all FileSafe-managed code paths
 
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Executor_Protocol.md
 ### 15.2 Integration with Orchestrator
 
 **Current Architecture:**
@@ -2297,9 +2257,12 @@ impl FileGuard {
             working_dir.join(file_path)
         };
         
-        // Normalize path (handle worktree symlinks)
+        // §11.1.1 realpath-before-scope-check: fail-closed on resolution error
         let normalized = resolved_path.canonicalize()
-            .unwrap_or_else(|_| resolved_path);
+            .map_err(|e| GuardError::SymlinkResolution {
+                original: resolved_path.clone(),
+                reason: e.to_string(),
+            })?;
         
         // Check against allowed files (also normalized)
         // AutoDecision: match only against `allowed_files` computed from request metadata; FileGuard does not store request-scoped allowlists.
@@ -2463,9 +2426,14 @@ pub struct GateOverrideConfig {
 **Fix:** Implement Option B config wiring (build run config from GUI at orchestrator start)
 
 #### Gap 4: Worktree Path Resolution
-**Issue:** Write scope needs to resolve relative paths correctly in worktree context
-**Impact:** Write scope may block legitimate operations or allow blocked operations
-**Fix:** Normalize paths relative to `working_directory`, handle worktree symlinks
+
+**Issue:** Write-scope checks must resolve relative paths correctly in worktree context without trusting symlink aliases.
+
+**Impact:** Inconsistent normalization can either block legitimate writes or allow writes outside the intended worktree scope.
+
+**Resolved contract:** Normalize candidate paths relative to `working_directory`, then resolve `realpath()` before any scope check. If canonicalization fails, deny access. The real worktree root, not a symlink alias, is the base path for guard comparison.
+
+ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/WorktreeGitImprovement.md
 
 #### Gap 5: Interview Phase Detection
 **Issue:** No way to detect interview operations for relaxed security filter
@@ -2699,7 +2667,7 @@ Use this section to derive a phased implementation plan. Dependencies are stated
 
 **Risks and mitigations:**  
 - **Gap -- plan metadata:** Orchestrator must set allowed files on each ExecutionRequest for write scope; implement **get_allowed_files_for_current_subtask** and pass via env or request field (§15.9 Gap 2).  
-- **Gap -- worktree paths:** Normalize paths relative to `working_directory` and handle symlinks (§15.9 Gap 4).  
+- **Worktree paths (resolved):** Path normalization and symlink handling are specified by §11.1.1 (realpath-before-scope-check invariant) and §11.1.3 (case-folding and probe-file detection contract).  
 - **False positives:** Log all blocks; allow override and approved list; tune patterns from feedback (§12.2).
 
 ---

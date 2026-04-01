@@ -106,6 +106,57 @@ temperature = 0.7
 
 ### 3.3 Standard option fields
 
+#### 3.3.1 Runtime and pricing capability fields
+
+The capability matrix includes transport-shaping and billing-shaping fields that are consumed by provider adapters, prompt assembly, and usage attribution.
+
+ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Contracts_V0.md
+
+| Field | Type | Meaning |
+|---|---|---|
+| `system_role_name` | string | Role name used for system-level instructions (`system` or `developer`) |
+| `streaming` | bool | Provider supports incremental stream delivery |
+| `tool_use` | bool | Provider/runtime surface supports tool calls |
+| `thinking_blocks` | bool | Provider can emit or replay reasoning/thinking blocks |
+| `cache_control` | enum/string | Cache strategy family supported by the provider surface |
+| `cache_with_oauth` | bool | Cache markers remain valid when this surface is authenticated with OAuth |
+| `assistant_prefill` | bool | Assistant-prefill semantics are supported |
+| `parallel_tool_calls` | bool | Provider supports true parallel tool-call issuance |
+| `image_input` | bool | Image payloads accepted |
+| `max_payload_bytes` | integer | Hard payload ceiling |
+| `pricing_version` | string | Versioned pricing metadata key used for cost calculation |
+| `billing_entity_mode` | enum | whether billing attribution is account-only or requires billing-entity keying |
+
+ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/Prompt_Pipeline.md
+
+#### 3.3.2 `system_role_name` values
+
+| Provider family | `system_role_name` |
+|---|---|
+| Anthropic | `system` |
+| OpenAI standard | `system` |
+| OpenAI reasoning family | `developer` |
+| Gemini Direct | `system` |
+| Gemini CLI | `system` |
+| Other providers | `system` by default |
+
+ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Executor_Protocol.md
+
+#### 3.3.3 Compaction threshold defaults
+
+Per-model defaults are part of the model metadata and MAY be overridden by model-specific config:
+- `pressure_start_pct = 70`
+- `pressure_aggressive_pct = 85`
+- `large_block_threshold = 1200`
+
+ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/FinalGUISpec.md
+
+#### 3.3.4 Common configurable generation options
+
+When `system_role_name` is `developer`, the system instruction MUST be sent with the `developer` role, not the `system` role. Using the wrong role for OpenAI reasoning-family models causes the instruction to be ignored.
+
+ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Executor_Protocol.md
+
 | Field | Type | Default | Description |
 |-------|------|---------|-------------|
 | `max_output_tokens` | `u32` | `32000` | Maximum output tokens. |
@@ -127,29 +178,46 @@ ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Pro
 
 ## 4. Model availability and error handling
 
-<a id="MODEL-ERRORS"></a>
+### 4.1 Availability and runtime-surface checks
 
-### 4.1 Availability check
+A model is available only when its provider/runtime surface is registered, authenticated, reachable, and compatible with the requested run posture.
 
-A model is **available** if its provider is registered, authenticated, and reachable. Model availability is checked:
-- At app startup (provider discovery).
-- On explicit user action ("Refresh models").
-- Before each run (fast check: provider auth state).
+ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Run_Modes.md
 
-### 4.2 Overflow detection
+### 4.2 Pricing metadata and stale-pricing behavior
 
-Context overflow errors are detected via provider-specific error message patterns. When an overflow is detected:
-1. The run is paused.
-2. If auto-compaction is enabled, compaction triggers and the run retries with reduced context.
-3. If compaction is not available or fails, the error is surfaced to the user.
+Pricing metadata is versioned. `pricing_version` identifies the pricing table used for cost calculation. User-supplied overrides are applied before warnings. Doctor integration warns when stored pricing metadata is stale relative to the current provider metadata snapshot.
 
-### 4.3 Retryable errors
+ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/FinalGUISpec.md
 
-Provider-specific retryable errors (rate limits, transient failures) trigger automatic retry with exponential backoff. The retry policy is configurable via `config.provider.<provider_id>.max_retries` (default 3) and `config.provider.<provider_id>.retry_delay_ms` (default 1000).
+Cost attribution is keyed by `(model_id, provider_id, billing_entity_id)` when the provider's quota semantics depend on a billing entity; account-only providers omit the billing-entity dimension.
 
-ContractRef: ContractName:Plans/OpenCode_Deep_Extraction.md
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/usage-feature.md
 
----
+### 4.3 Bedrock region prefix lookup
+
+Region-prefix mapping MUST use an explicit lookup table rather than string slicing.
+
+| Region family | Prefix |
+|---|---|
+| `us-east-*`, `us-west-*` | `us` |
+| `eu-*` | `eu` |
+| `ap-*` | `ap` |
+| `sa-*` | `sa` |
+| unknown/new region | no implicit prefix; require explicit mapping update |
+
+ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Architecture_Invariants.md
+
+### 4.4 Two Gemini providers
+
+Gemini is registered as two distinct providers and MUST stay distinct in capability, auth, caching, and billing logic.
+
+| Provider ID | Auth method | Transport | Cache posture | Notes |
+|---|---|---|---|---|
+| `gemini_direct` | API key | Direct HTTP | provider-native API strategy | API-only; no CLI dependency |
+| `gemini_cli` | OAuth and/or API key via CLI | CLI-wrapped | depends on CLI/runtime surface; `cache_with_oauth` may differ | CLI installation required |
+
+ContractRef: ContractName:Plans/GitHub_API_Auth_and_Flows.md, ContractName:Plans/CLI_Bridged_Providers.md
 
 ## 5. Per-Persona runtime preferences
 
