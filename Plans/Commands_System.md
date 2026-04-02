@@ -417,6 +417,27 @@ Reserved slash-command UICommand IDs (`cmd.chat.new`, `cmd.chat.model`, etc.) ar
 
 ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Contracts_V0.md#UICommand
 
+### 7.1 Debug Mode dispatch family
+
+Debug Mode actions use a separate canonical UICommand family, `cmd.debug.*`, for assistant-thread investigation control. These dispatch IDs are internal wiring identifiers, not User Commands, and they let Assistant Chat, the editor, and debug-adjacent surfaces invoke investigation lifecycle actions without overloading the User Command namespace.
+
+| command_id | label | description | precondition |
+|---|---|---|---|
+| `cmd.debug.start` | Start Investigation | Begins a new debug investigation in current thread | `chat_active && !investigation_active` |
+| `cmd.debug.stop` | End Investigation | Concludes the active investigation | `investigation_active` |
+| `cmd.debug.pause` | Pause Investigation | Pauses evidence collection | `investigation_active` |
+| `cmd.debug.resume` | Resume Investigation | Resumes paused investigation | `investigation_paused` |
+| `cmd.debug.add_breakpoint` | Add Breakpoint | Adds a breakpoint at current editor position | `editor_active && investigation_active` |
+| `cmd.debug.remove_breakpoint` | Remove Breakpoint | Removes selected breakpoint | `breakpoint_selected` |
+| `cmd.debug.clear_breakpoints` | Clear All Breakpoints | Removes all breakpoints | `investigation_active && has_breakpoints` |
+| `cmd.debug.view_evidence` | View Evidence | Opens evidence panel for current investigation | `investigation_active` |
+| `cmd.debug.step` | Step Through | Advances to next execution point | `investigation_active && at_breakpoint` |
+| `cmd.debug.collect_snapshot` | Collect Snapshot | Captures current state as evidence | `investigation_active` |
+
+These Debug Mode dispatch IDs complement, rather than replace, the reserved slash-command surface described in `Plans/assistant-chat-design.md` and the broader UI command catalog in `Plans/UI_Command_Catalog.md`.
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Glossary.md
+
 ---
 
 ## 8. OpenCode baseline and Puppet Master deltas

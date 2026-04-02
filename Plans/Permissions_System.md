@@ -128,6 +128,19 @@ Child inheritance rules:
 
 ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Executor_Protocol.md
 
+### 2.4B Scope specificity across package, seam, lane, project, and global contexts
+
+When multiple rules for the same permission key are simultaneously applicable, the most specific scope wins before falling back to the broader layer order in §2.4. Scope specificity is:
+
+`lane:{lane_id}` > `seam:{seam_id}` > `package:{package_id}` > project > global
+
+Scope meanings:
+- `package:{package_id}` applies only while execution is inside the identified package. A package scope inherits from the enclosing project scope unless explicitly overridden.
+- `seam:{seam_id}` applies only at the named seam boundary, including cross-package transitions and other explicitly modeled boundary crossings.
+- `lane:{lane_id}` applies only within the identified execution lane and is the narrowest durable scope in the standard precedence model.
+
+This specificity order applies anywhere scoped permission material is evaluated, including session-cache approvals, durable project/global rules, and inherited parent/run ceilings. Ties within the same scope still use the layer order in §2.4 and last-match-wins behavior inside the selected ruleset (§3.1).
+
 ### 2.4A Requested vs effective permissioned capability state
 
 The UI and runtime must distinguish requested state from effective state whenever permission, policy, platform, or health constraints change what is actually available.
@@ -217,13 +230,27 @@ allowlist = [
 
 <a id="PATTERN-SUGGESTION"></a>
 
-When a user responds `always` to an `ask` prompt (§6.2), the system inserts a **session-scoped** `allow` rule into the session cache (precedence layer 2, §2.4). The rule uses the tool name and a suggested pattern derived from the invocation context:
+When a user responds `always` to an `ask` prompt (§6.2), the system derives a suggested approval scope from the invocation context and presents the user with scope-bound approval choices instead of silently minting a session-wide allow. Pattern suggestions are still derived from tool-specific context:
 
 - **bash:** The command prefix (first word + space + `*`). Example: invocation `git commit -m "fix"` → pattern `"git *"`.
 - **edit/read/glob/grep:** The directory prefix (`<dir>/**`). Example: invocation path `src/auth/login.rs` → pattern `"src/auth/**"`.
 - **webfetch/websearch:** The domain (`https://<domain>/*`). Example: URL `https://docs.rs/tokio/latest` → pattern `"https://docs.rs/*"`.
+- **webextract/webresearch/webcrawl/webmap:** the normalized target origin and scope. Single-target extraction uses the concrete URL origin (`https://<domain>/*`); bounded crawl/map rules use the approved origin plus an explicit crawl-scope discriminator, never a naked wildcard.
 
-The suggested pattern is displayed to the user during the `always` confirmation. The user MAY edit the pattern before it is saved.
+The suggested pattern is displayed to the user during approval confirmation. The user MAY edit the pattern before a durable project/global rule is created, but the canonical approval anchor remains `approval_scope_key` plus blocked-episode identity rather than a UI session id.
+
+### 3.4A Web-operation permission-key derivation
+
+For canonical permission-key derivation, web operations use normalized suffixes rather than raw user-entered URLs:
+
+- `webextract:{domain}` — extraction from a specific domain
+- `webresearch:{query_category}` — research grouped by query category, where `query_category ∈ {general, code, docs, news}`
+- `webcrawl:{domain}` — bounded crawl authority for a specific domain
+- `webmap:{domain}` — site-structure mapping authority for a specific domain
+
+For any URL-derived web key, the runtime MUST extract the host, normalize it to the registrable domain, and use that canonical domain in the derived key. Example: `docs.example.com` normalizes to `example.com`.
+
+Wildcard matching for preset and policy authoring MAY use `web*:*` to represent all web-operation permission keys as a family. This wildcard is valid for preset definitions and other broad-scope policy surfaces but does not change the requirement that concrete approvals resolve to normalized derived keys.
 
 ---
 
@@ -271,7 +298,7 @@ Covered operations:
 
 **Default action:** `ask`
 
-**Behavior:** This guard is **non-bypassable**. `yolo` mode, session-scoped `always` approvals, and generic prior allows MUST NOT suppress it. A direct user click approves only the exact remote side effect named by that clicked control. If one UI flow chains multiple remote side effects, Puppet Master MUST present a separate approval step for each remote side effect in execution order.
+**Behavior:** This guard is **non-bypassable**. `yolo` mode, scope-bound approval reuse, and generic prior allows MUST NOT suppress it. A direct user click approves only the exact remote side effect named by that clicked control. If one UI flow chains multiple remote side effects, Puppet Master MUST present a separate approval step for each remote side effect in execution order.
 
 **Failure presentation:** When blocked or rejected, the runtime MUST surface an error object that identifies the blocked remote step, the guard name, and the exact recovery options available from the current surface. Docker Manage and orchestrator surfaces MUST show the blocking reason inline; autonomous/chat-driven flows MUST also surface the block in chat/evidence output.
 
@@ -330,19 +357,53 @@ Approves this single invocation. No persistent rule is created. The tool execute
 
 <a id="ASK-ALWAYS"></a>
 
-Approves this invocation AND inserts a session-scoped `allow` rule (§3.4) into the session cache (precedence layer 2, §2.4). The pattern is derived from the invocation context (§3.4) and shown to the user for optional editing.
+Approves this invocation using the canonical blocked-episode anchor. The system MAY additionally authorize future equivalent asks only when the user explicitly chooses a scope-bound or durable approval path defined in §6.4.
 
-After the rule is inserted, the policy engine re-evaluates all pending `ask` requests in the same session. Any that now resolve to `allow` are auto-approved.
+The approval UI may label this action as "Always for this scope", but its behavior is never "always for this session". Reuse depends on the exact `approval_scope_key`, not on sharing a tab, panel, or UI session.
 
-Session-scoped rules do NOT persist across application restarts.
+Direct approval of the current blocked episode does not itself create a durable project/global rule and does not mutate Persona permission profiles.
 
 ### 6.3 `reject`
 
 Denies this invocation. The policy engine emits `tool.denied` and returns a rejection error to the agent. If the user provides feedback text, the error includes the feedback (corrected error); otherwise a bare rejection error is returned.
 
-Rule: A `reject` response MUST also reject ALL other pending `ask` requests in the same session. This prevents cascading permission prompts after the user has indicated disapproval.
+Rule: a `reject` response MUST reject the current blocked episode and MAY reject other still-pending asks only when their `approval_scope_key` exactly matches. A session-wide blast radius is forbidden.
 
 ContractRef: ContractName:Plans/OpenCode_Deep_Extraction.md
+
+### 6.4 Approval scope and durable rule authoring
+
+Every `ask` outcome MUST compute two distinct identifiers before approval UI is shown:
+1. `blocked_episode_ref = { run_id, node_id, blocked_sequence, attempt_id? }`
+2. `approval_scope_key`, a deterministic key derived from the canonical target and runtime context
+
+`approval_scope_key` MUST include, when present: `permission_key`, `operation_family`, `project_id`, `repo_id?`, `workspace_root_id?`, `worktree_id?`, `lane_id?`, `package_id?`, `seam_id?`, `child_run_id?`, `execution_role?`, `actor_role?`, `effective_account_id?`, and the normalized `approval_target_ref` when one exists. A UI session id, panel id, or thread tab id MUST NOT be used as the primary approval scope.
+
+Canonical approval choices are:
+- `once`: approve only the current `blocked_episode_ref`
+- `for_scope`: approve the current blocked episode plus future asks whose `approval_scope_key` exactly matches
+- `create_project_rule`: open explicit durable-rule creation seeded from the suggested pattern; writes only to the project permissions file after a second confirmation
+- `create_global_rule`: same as above, but writes only to the global permissions file
+- `reject`: deny the current blocked episode and any still-pending asks whose `approval_scope_key` exactly matches
+
+Runtime prompts MUST NOT mutate Persona permission profiles. Persona profiles are edited only in Persona/Permissions settings, never as a side effect of an in-chat approval prompt.
+
+When approval is granted for backgrounded or queued work, the decision binds to the exact `{ blocked_episode_ref, approval_scope_key }` pair that was presented. Resuming after approval MUST re-enter preflight; it MUST NOT jump directly into dispatch.
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/human-in-the-loop.md, ContractName:Plans/FinalGUISpec.md
+
+### 6.4A Durable approval persistence, revocation, and migration
+
+The durable approval paths in §6.4 create explicit records rather than implicit session flags:
+
+- `create_project_rule` persists to the project-level permission configuration, survives session restart, and applies to all threads operating in that project subject to the normal scope model.
+- `create_global_rule` persists to the user-level global permission configuration, survives session restart, and applies across all projects subject to more specific overrides.
+
+The canonical stored record format for a durable approval is `{ tool_pattern, action, scope_key?, created_at, created_by_thread_id }`. `scope_key?` MAY be omitted only when the rule is intentionally unscoped beyond its owning layer; otherwise it records the exact package/seam/lane/project/global selector that the user approved.
+
+Revocation MUST be available from Settings → Permissions and from the explicit `cmd.permissions.revoke` command. Revoking a durable rule removes its future effect without rewriting the historical blocked-episode audit trail that recorded the original approval.
+
+If a tool pattern later becomes stale because a tool is renamed or a canonical pattern derivation changes, the runtime MUST flag the rule as stale in the Permissions UI and audit surfaces. Stale durable rules are not auto-deleted; user review or explicit migration tooling is required before removal.
 
 ---
 
@@ -470,6 +531,33 @@ ContractRef: ContractName:Plans/FileSafe.md, PolicyRule:no_secrets_in_storage
 
 ## 8. Resolution algorithm
 
+### 8.0 Parent→child narrowing and effective-set construction
+
+Before a child context begins running, the runtime constructs its inherited effective permission set with a deterministic seven-step narrowing flow:
+
+1. Start from the global durable permission set.
+2. Overlay the active project durable permission set.
+3. Overlay any active `package:{package_id}` scope.
+4. Overlay any active `seam:{seam_id}` scope.
+5. Overlay any active `lane:{lane_id}` scope.
+6. Apply parent/run action ceilings inherited from ancestor contexts.
+7. Apply inherited restrictive argument-pattern rules and freeze the resulting narrowed set for the new context snapshot.
+
+This narrowing flow runs at context-creation boundaries such as thread start, package entry, seam transition, lane activation, or child-run spawn. It produces the context baseline that later real-time checks consume; it is not itself the final per-invocation allow/deny decision.
+
+### 8.0A Composition with per-invocation checks
+
+The narrowing flow in §8.0 and the real-time precedence evaluation in §2.4 are complementary, not competing, algorithms:
+
+- §8.0 determines the effective permission set inherited by a given context (thread, package, seam, lane, child run).
+- §2.4 evaluates each individual tool invocation against that effective set together with real-time layers such as mode override, session-cache approvals, Persona overrides, and defaults.
+
+Operational flow:
+- Parent→child narrowing runs when the context is created or when execution crosses a scope boundary that changes inheritance.
+- The §2.4 per-invocation check runs for every tool call made inside that already-created context.
+
+Conflict rule: if §8.0 narrowing produces a denial but a durable rule says `allow`, the durable rule wins only when it was authored at the same level that introduced the denial or at an enclosing level above it. A narrower child-created rule MUST NOT punch through an ancestor narrowing ceiling.
+
 ### 8.1 Banned-command full-string check
 
 Banned-command evaluation MUST scan the full command string, not just the first token. The scan includes shell metacharacters and substitution forms such as `;`, `&&`, `||`, `|`, `$()`, and backticks.
@@ -515,6 +603,8 @@ ContractRef: PolicyRule:Decision_Policy.md§2, ContractName:Plans/Personas.md#ST
 | **Project** | `<project_root>/.puppet-master/permissions.toml` | TOML | Until user edits/deletes |
 | **Persona** | Named profiles referenced by `default_permissions_profile` in `PERSONA.md` frontmatter; stored alongside global permissions config at `~/.config/puppet-master/permission-profiles/<profile_id>.toml` | TOML | Until user edits/deletes |
 | **Session** | In-memory session cache | Runtime | Current session only; cleared on restart |
+
+Durable approvals created through `create_project_rule` or `create_global_rule` are persisted in their owning config layer as metadata-bearing records with the logical fields `{ tool_pattern, action, scope_key?, created_at, created_by_thread_id }`. File-level TOML projections MAY additionally expose these rules in the simpler per-tool tables shown below, but the stored rule identity and audit metadata remain part of the canonical durable record.
 
 ### 9.1 TOML format
 
@@ -640,7 +730,7 @@ When a tool row is expanded (§10.2), the granular rule editor appears:
 | Preset | Effect |
 |--------|--------|
 | **Read-only** | `edit`, `bash`, `webfetch`, `websearch`, `task`, `repo.import` → `deny`; all others → `allow`. |
-| **Plan mode** | Only `read`, `grep`, `glob`, `list`, `codesearch`, `chatsearch`, `logsearch` → `allow`; everything else → `deny`. |
+| **Plan mode** | `read`, `grep`, `glob`, `list`, `codesearch`, `chatsearch`, `logsearch`, `capabilities.get`, `question`, `skill`, `todoread`, and `todowrite` → `allow`; read-only `lsp` navigation operations → `allow`; `webfetch`, `websearch`, `webextract`, `webresearch`, `webcrawl`, and `webmap` stay external-read operations and resolve through the normal permission stack (default `ask` unless a higher layer already allows them); `edit`, `bash`, `repo.import`, mutating `lsp`, mutation-capable `task`, and all other write-capable operations → `deny`. |
 | **Full** | All tools → `allow` except `bash`, `edit`, `repo.import` → `ask`. |
 
 Applying a preset overwrites the current ruleset with a confirmation dialog: "This will replace your current permissions. Continue?"
@@ -678,6 +768,9 @@ A toggle or tab strip at the top of the Permissions tab:
 
 - **Global** — edits `~/.config/puppet-master/permissions.toml`.
 - **Project** (visible when a project is active) — edits `<project_root>/.puppet-master/permissions.toml`.
+- **Package** (visible when a package context is active) — edits package-scoped rules nested under the active project's permission configuration; inherits from Project until overridden.
+- **Seam** (visible when a seam context is active) — edits seam-boundary rules nested under the active project's permission configuration.
+- **Lane** (visible when a lane context is active) — edits lane-scoped rules nested under the active project's permission configuration.
 
 Changes are saved to the selected scope's file. The effective (merged) permissions are displayed with layer-of-origin badges when in "Global" scope and a project is active.
 
@@ -689,6 +782,35 @@ Permissions UI elements follow the app-level Interaction Mode (Expert/ELI5) togg
 - **Expert:** Full view with all sections visible.
 
 Tooltip keys: `tooltip.permissions.*` prefix.
+
+## 10A. Security model
+
+### 10A.1 Trust boundaries and threat model
+
+The permissions system spans four explicit trust boundaries:
+
+1. user intent and explicit approval surfaces
+2. Puppet Master runtime policy, projection, and audit machinery
+3. tool execution backends
+4. external services reached by tools
+
+Threat model summary:
+- **Prompt injection:** model output or external content attempts to smuggle tool names, arguments, or approval intents that the runtime did not independently authorize.
+- **Privilege escalation:** the model or a child run requests broader permissions than its current ceiling, scope, or durable grants allow.
+- **Data exfiltration:** tools attempt to send project/user data to unauthorized files, hosts, domains, or remote services.
+
+### 10A.2 Capability gates and sandbox boundaries
+
+Permissions are necessary but not sufficient. A tool is executable only when it is both capability-registered and permission-allowed; unregistered tools remain non-runnable even if a rule says `allow`.
+
+Sandbox/capability boundary rules:
+- `bash` executes in the user's environment and is not sandboxed beyond normal OS-level user permissions.
+- file-oriented tools are scoped to the active project root and configured working roots unless explicit policy broadens that access.
+- web-oriented tools must respect configured domain allowlists and web-operation scope keys in addition to normal permission decisions.
+
+### 10A.3 Audit trail
+
+Every permission outcome that matters operationally — grant, deny, or prompt — MUST be written to seglog. The audit record MUST include at least `tool_pattern`, `decision`, `scope`, and `requesting_context`, enabling later review of durable-rule creation, inherited narrowing, and denied/externalized execution attempts.
 
 ---
 
@@ -738,10 +860,10 @@ ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Progre
 **AC-PM05:** The `external_directory` guard (§4.2) MUST trigger for paths outside the project's working roots. Paths on the allowlist (§3.3) MUST bypass the guard.
 
 <a id="AC-PM06"></a>
-**AC-PM06:** The `always` response (§6.2) MUST insert a session-scoped allow rule that auto-approves matching future invocations within the same session. The rule MUST NOT persist across application restarts.
+**AC-PM06:** The `always` response (§6.2) MUST bind approval to the canonical blocked episode and MAY reuse it only through an exact `approval_scope_key` match or explicit durable project/global rule creation. It MUST NOT create a blind session-wide allow.
 
 <a id="AC-PM07"></a>
-**AC-PM07:** The `reject` response (§6.3) MUST reject all pending `ask` requests in the same session.
+**AC-PM07:** The `reject` response (§6.3) MUST reject the current blocked episode and MAY reject other pending asks only when their `approval_scope_key` exactly matches.
 
 <a id="AC-PM08"></a>
 **AC-PM08:** Default `.env` deny rules (§7.1) MUST deny reading `.env` and `.env.*` files while allowing `.env.example`.
@@ -751,6 +873,21 @@ ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Progre
 
 <a id="AC-PM10"></a>
 **AC-PM10:** In `yolo` mode, all tools MUST resolve to `allow` (§8 step 1). In `ask`/`plan` modes, all mutating tools MUST resolve to `deny` (§8 step 1).
+
+<a id="AC-PM11"></a>
+**AC-PM11:** `create_project_rule` and `create_global_rule` (§6.4A) MUST persist durable approval records with `{ tool_pattern, action, scope_key?, created_at, created_by_thread_id }`, survive restart, and be revocable from Settings → Permissions or `cmd.permissions.revoke`.
+
+<a id="AC-PM12"></a>
+**AC-PM12:** Web-operation permission keys (§3.4A) MUST derive `webextract:{domain}`, `webresearch:{query_category}`, `webcrawl:{domain}`, and `webmap:{domain}` from canonical normalized inputs, using registrable-domain normalization for URL-derived keys.
+
+<a id="AC-PM13"></a>
+**AC-PM13:** Scope specificity (§2.4B) MUST resolve `lane` over `seam`, `seam` over `package`, `package` over `project`, and `project` over `global`; package scope MUST inherit from project unless explicitly overridden.
+
+<a id="AC-PM14"></a>
+**AC-PM14:** Context creation MUST run the seven-step narrowing flow in §8.0, and per-invocation dispatch MUST still execute the real-time precedence evaluation in §2.4 for each tool call within that context.
+
+<a id="AC-PM15"></a>
+**AC-PM15:** Permission execution MUST be capability-gated as well as permission-gated, and seglog audit entries (§10A.3) MUST record each grant, deny, and prompt decision with `tool_pattern`, `decision`, `scope`, and `requesting_context`.
 
 ---
 
@@ -824,64 +961,32 @@ This includes:
 
 ### 2. Recovery-option payloads
 
-Permission outcomes that surface to runtime/UI must include exact recovery options.
+Permission outcomes that surface to runtime/UI must include canonical blocked-state actions and family identity.
 
 Minimum fields:
-- `reason_code`
+- `blocked_family` (`blocked_policy` | `blocked_approval` | `blocked_preflight` | `blocked_governance`)
+- `blocked_reason_code`
 - `guard_name?`
-- `recovery_options[]`
-- whether the action executed at all
+- `allowed_action_ids[]`
+- `approval_scope_key?`
+- `approval_target_ref?`
+- `permission_snapshot_id?`
+- `runtime_identity_context?`
+- `revalidation_required?`
+- `executed: false`
 
-### 3. Non-bypassable remote side effects
+Rules:
+- `allowed_action_ids[]` is canonical; prose-only recovery hints are non-conforming
+- approval surfaces in chat/dialogs/cards must summarize the exact target, scope, and drift boundary for the request
+- UI labels may vary, but the exposed actions must map to the canonical semantics: one-shot approval, reusable scope/session approval when policy allows, and deny/decline
+- `blocked_preflight` is used for stale target, undeclared host, drift, or capability/preflight failures discovered before dispatch; these outcomes do not masquerade as `failure_class`
+- payload consumers must render blocked family + action ids without inventing local enum families or alias field names
 
-`external_publish_side_effect` remains non-bypassable and must integrate with the shared blocked-outcome model.
-
-Required rule:
-- blocked remote side effects are preserved as blocked outcomes, not retried automatically and not collapsed into generic failure
-
-### 4. Acceptance criteria
-
-- Permission denials integrate cleanly with runtime blocked outcomes.
-- Recovery options are explicit.
-- Remote side-effect blocks remain non-bypassable and non-ambiguous.
-## Runtime Blocked Permissions / Snapshot Addendum (2026-03-09)
-
-Permission resolution must remain explainable at attempt granularity.
-
-### Required runtime fields
-Permission-related blocked outcomes MUST record:
-- requested permission state
-- effective permission state
-- permission snapshot identifier
-- the exact permission key or rule that caused the block
-- whether the current mode could have asked the user
-
-### Headless ask rule
-If the mode cannot present a required approval interaction, the result is `blocked_reason_code = headless_ask_denied`. This is a blocked outcome, not a generic permission failure.
-
-### External side-effect rule
-`external_publish_side_effect` and equivalent remote-mutation gates MUST remain blocked until explicitly approved or declined. Auth success alone does not clear that block.
-
-### Retry rule
-A permission-related blocked outcome may be reevaluated only after a real prerequisite change: policy edit, approval, mode change, or explicit user action.
-## Permission Prerequisite Wake and Snapshot Reconciliation Addendum (2026-03-09)
-
-When a blocked permission outcome is resolved by policy edit, approval, or mode change:
-- emit `node.prerequisite_resolved`
-- reevaluate readiness in the same scheduler wake cycle
-- create a new attempt snapshot using the new requested/effective permission state
-- keep the prior attempt snapshot immutable
-
-Permission-related blocked outcomes MUST carry the exact blocking rule or permission key plus any metadata needed to bind the prerequisite-specific UI command.
-## Permission Snapshot and Wakeup Chain Addendum
-
-### Field name correction
-
-All references to `recovery_options[]` in this document are replaced by the canonical field name `allowed_action_ids[]`. The deprecated name MUST NOT be used in new content.
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Decision_Policy.md
 
 ### Permission snapshot contract
 
-A permission snapshot captures the resolved permission state at attempt start for auditability and immutability.
+A permission snapshot captures the resolved permission state at attempt start for auditability, immutability, and replay-safe approval logic.
 
 **Schema:**
 ```json
@@ -890,6 +995,21 @@ A permission snapshot captures the resolved permission state at attempt start fo
   "attempt_id": "uuid",
   "node_id": "uuid",
   "captured_at": "ISO-8601 timestamp",
+  "approval_scope_key": "string?",
+  "approval_target_ref": "string?",
+  "requested_account_binding": "string?",
+  "effective_account_binding": "string?",
+  "account_switch_event_ref": "string?",
+  "runtime_identity_context": {
+    "requested_platform": "string",
+    "effective_platform": "string",
+    "provider_family_id": "string?",
+    "requested_runtime_identity": "string?",
+    "effective_runtime_identity": "string?",
+    "host_ref": "string?",
+    "repo_id": "string?",
+    "worktree_id": "string?"
+  },
   "resolved_permissions": {
     "<permission_key>": {
       "resolution": "allow | deny | ask",
@@ -901,10 +1021,11 @@ A permission snapshot captures the resolved permission state at attempt start fo
 ```
 
 **Rules:**
-1. Created at `attempt.started` emission, before any tool invocation.
-2. Immutable after creation -- permission changes during the attempt do NOT retroactively modify the snapshot.
-3. Stored as part of the `attempt_record` in `Plans/storage-plan.md` (field: `permission_snapshot`).
-4. Used for audit trail and for determining whether a permission change requires attempt restart.
+1. The snapshot is created before `attempt.started` becomes durable.
+2. The snapshot is immutable after creation; later policy edits, approvals, account switches, or target drift create a new snapshot and a new attempt lineage entry.
+3. Approval reuse is valid only while `approval_scope_key`, `approval_target_ref`, and the relevant runtime identity context still match. Drift invalidates the prior approval instead of silently reusing it.
+4. `Plans/storage-plan.md` owns the durable key family and joins for this record, but this document owns the payload schema, enums, and interpretation rules.
+5. Chat, provider, and storage surfaces may reference these fields, but they MUST NOT redefine the nested snapshot schema locally.
 
 ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md
 

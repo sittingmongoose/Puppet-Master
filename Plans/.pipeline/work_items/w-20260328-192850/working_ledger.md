@@ -412,7 +412,7 @@ Instead of A2A, fix the real problems OpenCode exposed:
 #### Cluster A: Permissions & Recursion Control
 - **#16 Permission inheritance granularity** → In Permissions_System §8 step 4, add that tool-specific argument pattern rules propagate downward — child inherits both action AND restricting patterns from parent.
 - **#17 Merge-not-replace semantics** → Add clarifying sentence in §2.4: "Higher-precedence layers shadow lower layers on a per-rule basis; they do not replace the entire ruleset."
-- **#18 Max concurrent subagents** → Three-level concurrency: max_concurrent_crews_per_platform (default 4), max_concurrent_agents_per_crew (default 8), max_total_active_agents (default 32). All configurable.
+- **#18 Max concurrent subagents** → Three-level concurrency: max_concurrent_crews_per_platform (default 4), max_concurrent_agents_per_crew (default 8), max_total_active_agents (default 32). These 4/8/32 defaults are the sole ledger SSOT; any 5-crews / 10-agents wording elsewhere is stale doc drift to retire. All configurable.
 
 #### Cluster B: Execution Safety & Doom Loops
 - **#22 Tool argument pre-validation** → Add pre-dispatch validation gate in Tools.md §10.6: schema.validate_tool_args() after policy check. Provider-specific normalizers (GLM unquoting, Qwen XML stripping) run before schema validation. Invalid args → diagnostic + structured error, no execution.
@@ -423,12 +423,12 @@ Instead of A2A, fix the real problems OpenCode exposed:
 
 #### Cluster C: Workspace & File Safety
 - **#20 Workspace isolation (per-subagent)** → Resolved by existing design. HTE inherits parent write-scope; DAE has jail. Add clarifying note.
-- **#29 Atomic writes** → [Validated by OpenCode research: OC uses naive os.WriteFile() for all non-DB files] All FileSafe-managed file mutations MUST use atomic write: write to `<target>.tmp.<random>` same dir → fsync → rename. Applies to seglog entries, redb ops, config/state.
+- **#29 Atomic writes** → [Validated by OpenCode research: OC uses naive os.WriteFile() for all non-DB files] All FileSafe-managed replacement writes MUST use same-directory atomic write: write to `<target>.tmp.<random>` in the target's own directory → fsync(temp) → rename over target. Never stage replacement writes in per-session temp dirs because cross-filesystem rename breaks atomicity. Applies to seglog segment files, redb sidecar/state files, config/state, and any non-append file rewrite.
 - **#30 Snapshot integrity (git exit codes)** → Every git subprocess invocation MUST check exit code. Non-zero on git add/commit/stash/checkout = hard error. After git add, verify with git status --porcelain. Silent failures MUST NOT propagate stale state. Target: WorktreeGitImprovement.md or FileSafe.
-- **#31 Concurrent edit safety** → Optimistic concurrency: before writing, check file mtime/hash against what was read. If changed → conflict error. No file locking. DAE reconciliation already diffs against canonical workspace.
+- **#31 Concurrent edit safety** → Optimistic concurrency: every mutable file read captures `read_revision={mtime_ns, content_sha256}`. Before rename, PM MUST re-check current target against `read_revision`; mismatch → `error.concurrent_edit_conflict` and abort the write. No file locking. Applies to user-visible rewrites and state/config replacements; append-only seglog writes are exempt. DAE reconciliation already diffs against canonical workspace.
 
 #### Cluster D: Process Lifecycle & Signals
-- **#19 Per-task timeout override** → Add timeout_ms field to subagent task envelope in orchestrator-subagent-integration.md. Default: inherit parent remaining budget. Override: capped at parent remaining. Kill: kill.task_timeout.
+- **#19 Per-task timeout override** → Add `timeout_ms` field to the subagent task envelope in orchestrator-subagent-integration.md. Default: inherit parent remaining budget. Override: clamp to parent remaining budget. Internal kill reason: `kill.task_timeout`; terminal run outcome: `done.task_timeout`. After timeout elapses, providers get 5s graceful termination and MCP/LSP surfaces get 3s before forcible teardown.
 - **#41 Resource bounding (unified)** → Lightweight invariant in storage-plan.md: every persistent/long-lived collection MUST declare max cardinality OR TTL (or both). Key collections: seglog=TTL, sessions=max_total_active_agents, MCP handles=registered count, LSP=open project count.
 - **#34 Multi-instance coordination** → On startup, PM acquires flock on `<project>/.puppet-master/pm.lock`. If held, start read-only/viewer mode or prompt user.
 
@@ -444,11 +444,11 @@ Instead of A2A, fix the real problems OpenCode exposed:
 - **#32 Windows path safety** → All paths to shell commands MUST be shell-escaped for target platform. On Windows: quote, double backslashes, or convert to forward slashes. Tool dispatch layer handles escaping — tools MUST NOT do their own.
 
 #### Cluster G: Billing & Caching
-- **#28 Token type segregation** → [Validated by OpenCode: OC has 4 fields at provider level but AGGREGATES to 2 in DB — breakdown lost, reasoning_tokens untracked] Lock segregated schema in Contracts_V0.md: input_tokens, output_tokens, cache_read_input_tokens, cache_creation_input_tokens, reasoning_tokens, total_tokens, cost_usd. ALL persisted separately in seglog, NEVER aggregated at storage layer.
+- **#28 Token type segregation** → [Validated by OpenCode: OC has 4 fields at provider level but AGGREGATES to 2 in DB — breakdown lost, reasoning_tokens untracked] Lock segregated schema in Contracts_V0.md: input_tokens, output_tokens, cache_read_input_tokens, cache_creation_input_tokens, reasoning_tokens, total_tokens, cost_microdollars. `cost_usd` is derived presentation-only (`cost_microdollars / 1_000_000`) and is NOT the canonical persisted field. All token buckets plus `cost_microdollars` persist separately in seglog; NEVER aggregate them away at storage layer.
 
 #### Cluster H: Prompt & Session
 - **#35 Compaction context preservation** → Invariant in Prompt_Pipeline.md: system prompt, persona instructions, active tool schemas, user-pinned context, blocks tagged compaction_immune:true MUST survive all compaction passes unchanged. Compaction operates ONLY on conversation history and tool output blocks.
-- **#36 Large instruction file cap** → Guard: total compaction-immune content MUST NOT exceed 30% of effective context window. If exceeded, truncate lowest-priority pinned content (FIFO). System prompt and persona never truncated. Threshold configurable per-model.
+- **#36 Large instruction file cap** → Guard: `max_compaction_immune_pct` defaults to 30% of effective context window and is overridable per model. Untouchable set: system prompt, persona, active tool schemas. Truncatable set: remaining pinned/immune blocks ordered lowest-priority first, FIFO within priority. If immune content exceeds cap, truncate only the truncatable set until under cap; if the untouchable set alone exceeds cap, keep it intact and emit `diag.compaction_immune_overflow`. System prompt and persona are NEVER truncated.
 - **#37 Storage migration versioning** → Schema version: integer, monotonic, in seglog header. Migration runner: forward-only, no downgrades. Path detection: config > $PUPPET_MASTER_DATA_DIR > project dir > global dir. Backup seglog+redb before any migration.
 
 ### CRITICAL GAPS — RESOLVED (14 items — resolutions decided)
@@ -467,15 +467,15 @@ Instead of A2A, fix the real problems OpenCode exposed:
 - **#48 Windows OAuth callbacks** → Bind 127.0.0.1 only (no firewall prompt). Try configured port, fall back ephemeral. Fallback: manual copy-paste auth code flow. Universal approach.
 
 #### Cluster G: Billing & Caching
-- **#50 Spending limit enforcement** → [Validated by OpenCode: OC has ZERO spending limit enforcement — no config, no logic, only server-side Gemini 429 parsing] PM: (1) Pre-request estimate via input tokens × model pricing, block with kill.budget_exceeded. (2) Post-response actual cost check, stop with done.budget_exceeded. (3) Warning at 80% configurable threshold. (4) Per-run AND per-session budgets. Target: usage-feature.md.
+- **#50 Spending limit enforcement** → [Validated by OpenCode: OC has ZERO spending limit enforcement — no config, no logic, only server-side Gemini 429 parsing] PM: (1) Pre-request estimate via input tokens × model pricing; if the request would exceed budget, block with `kill.budget_exceeded`. (2) Post-response actual cost check; if cumulative spend crosses budget after the response, terminate with `done.budget_exceeded`. (3) Warning threshold is configurable via `warn_budget_pct` (default 80). (4) Enforce both per-run and per-session budgets. Target: usage-feature.md.
 - **#51 Thinking block preservation** → [Validated by OpenCode: OC only tracks for Anthropic, no preservation rule, reasoning_tokens uncosted] Invariant in Prompt_Pipeline.md: thinking/reasoning blocks MUST be preserved through compaction/replay. May summarize but MUST NOT silently strip. If provider doesn't support thinking in replay, adapter converts to compatible format. reasoning_tokens tracked in UsageEvent.
-- **#52 Per-model compaction threshold** → Fields: pressure_start_pct (default 70), pressure_aggressive_pct (default 85), large_block_threshold (default 1200). Defaults in Models_System.md, overridable per-model. Exposed in user settings GUI under advanced model settings.
+- **#52 Per-model compaction threshold** → Fields: pressure_start_pct (default 70), pressure_aggressive_pct (default 85), large_block_threshold (default 1200), max_compaction_immune_pct (default 30). Defaults in Models_System.md, overridable per-model. Exposed in user settings GUI under advanced model settings.
 - **#53 Google cachePoint annotations** → [Validated by OpenCode: ONLY Anthropic has active markers; Google/OpenAI/Copilot/Bedrock passive] KEY INSIGHT: Google caching is fundamentally different — server-side cachedContent API, not per-message markers. PM: per-provider cache strategy in Prompt_Pipeline.md: Anthropic=ephemeral markers, Google=cachedContent API adapter, OpenAI=cache_control metadata, Bedrock=currently unsupported. NOTE: TWO Gemini providers (Direct + CLI) with distinct capabilities.
 - **#54 OAuth + cache_control HTTP 400** → Guard in CLI_Bridged_Providers.md: when OAuth AND provider rejects cache_control with OAuth, adapter strips markers before sending. Capability matrix includes cache_with_oauth:true|false per provider.
 
 #### Cluster I: Remaining
 - **#55 Proactive token refresh** → Pre-expiry check before each provider call: if token within 20% of expiry → refresh first. No background timer — check-before-use. Fallback: reactive refresh after 401. Target: GitHub_API_Auth_and_Flows.md.
-- **#56 Cost sign-flip on model switch** → Invariant in usage-feature.md: cost values MUST be monotonically non-decreasing within session. cost_usd per UsageEvent always ≥ 0. Model switches do NOT reset historical costs. Negative usage clamped to zero + diagnostic.
+- **#56 Cost sign-flip on model switch** → Invariant in usage-feature.md: persisted `cost_microdollars` per UsageEvent MUST always be >= 0, and session cumulative cost MUST be monotonically non-decreasing across model switches. `cost_usd` is derived presentation-only from `cost_microdollars`; it is not the canonical stored field. Model switches do NOT reset historical costs. Negative raw provider cost clamps to zero plus diagnostic.
 
 ## Phase 4: Resolved Decisions
 
@@ -874,5 +874,47 @@ Of 13 findings, 2 are false positives (LF-01, LF-02), 2 are already adequate (LF
 - The usage-feature.md pipeline contradiction is a semantic issue, not just wording — the aggregation section must be rewritten, not merely annotated.
 - Contracts_V0.md needs structural reconciliation (early vs late framing), not just an addendum.
 - Cycle 2 packet should be ~8 doc intents, ~12-15 anchors — much smaller and more surgical than cycle 1.
+
+## Phase 8 — Post-Fidelity Ledger Hardening
+
+### Context
+The fidelity audit showed that the main remaining problems were doc carry-through, not research thinness. However, a few ledger rules still needed tighter canonical wording so future packetization cannot soften or reinterpret them. This phase hardens ledger SSOT only. The previously emitted packet is now stale until regenerated from this hardened ledger.
+
+### Canon Locks (supersede softer wording above)
+1. **Concurrency SSOT**
+   - Canonical defaults remain: `max_concurrent_crews_per_platform=4`, `max_concurrent_agents_per_crew=8`, `max_total_active_agents=32`.
+   - Any 5-crews / 10-agents wording in downstream docs is stale drift to retire.
+
+2. **Budget / timeout status naming**
+   - Pre-dispatch budget block: `kill.budget_exceeded`
+   - Post-response terminal budget overrun: `done.budget_exceeded`
+   - Internal timeout kill reason: `kill.task_timeout`
+   - Terminal timeout outcome: `done.task_timeout`
+   - `stop.budget_exceeded` and `done.timeout` are stale aliases and MUST NOT be treated as canonical names.
+
+3. **File replacement write path**
+   - Replacement writes use same-directory temp files only: `<target>.tmp.<random>` in the target directory, `fsync(temp)`, then atomic rename over the target.
+   - Per-session temp dirs are valid for scratch artifacts and janitor-managed temp state, but NOT for replacement writes that rely on same-filesystem atomic rename.
+   - Optimistic concurrency is mandatory for mutable rewrites: capture `read_revision={mtime_ns, content_sha256}` on read, re-check before rename, and abort with `error.concurrent_edit_conflict` on mismatch.
+
+4. **Compaction overflow algorithm**
+   - `max_compaction_immune_pct` (default 30, overridable per model) is the hard cap for compaction-immune content.
+   - Untouchable set: system prompt, persona, active tool schemas.
+   - Truncatable set: remaining pinned / compaction-immune blocks, ordered lowest-priority first and FIFO within each priority.
+   - Overflow handling: trim only the truncatable set until the immune total is within cap. If the untouchable set alone exceeds cap, keep it intact, emit `diag.compaction_immune_overflow`, and continue.
+
+5. **Cost field / unit contract**
+   - Canonical persisted cost field: `cost_microdollars` (`u64`-style integer semantics in planning terms).
+   - Canonical presentation field: `cost_usd = cost_microdollars / 1_000_000`, derived only at display/export boundaries.
+   - Token buckets (`input_tokens`, `output_tokens`, `cache_read_input_tokens`, `cache_creation_input_tokens`, `reasoning_tokens`, `total_tokens`) remain segregated persisted fields.
+   - Negative raw provider cost is clamped to zero with diagnostic; cumulative session cost never decreases.
+
+### Directionality Cleanup
+- The following items are now fully locked in the ledger and are NOT directional anymore: `#18`, `#19`, `#28`, `#29`, `#31`, `#36`, `#50`, `#52`, `#56`.
+- Items explicitly labeled `FUTURE FEATURE` or `OPEN QUESTION` elsewhere remain open by intent.
+- Remaining work after this phase is doc / packet carry-through, not ledger-level canon discovery.
+
+### Packet / Meta Note
+- Because this hardening changed ledger SSOT after packetization, the work item returns to `active` until a new packet is emitted from the hardened ledger.
 
 <ready_for_packetize/>

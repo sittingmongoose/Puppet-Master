@@ -445,15 +445,6 @@ ContractRef: ContractName:Plans/Contracts_V0.md#EventRecord
 ---
 
 ## 9. GUI requirements
-### 9.3 Catalog-installed plugin and hook lifecycle
-
-Catalog-installed plugins, hooks, and MCP config bundles use explicit lifecycle semantics.
-
-Rules:
-- install/update/remove actions must surface whether the target plugin is currently enabled, loaded, or referenced by Persona settings
-- active plugin updates may require reload, deferred apply, or explicit disable-before-remove behavior depending on the plugin state
-- the GUI must distinguish catalog-installed plugins from manual/local ones
-- uninstalling a catalog plugin must not silently delete unrelated local overrides or config-sourced plugins with the same display name
 
 <a id="GUI-PLUGINS"></a>
 
@@ -486,6 +477,16 @@ Plugin UI elements follow the app-level Interaction Mode (Expert/ELI5) toggle pe
 
 - **ELI5:** Simplified view showing only plugin list with enable/disable toggles. Hook details, tool collision config, and timeout settings are hidden.
 - **Expert:** Full view with all sections visible.
+
+### 9.3 Catalog-installed plugin and hook lifecycle
+
+Catalog-installed plugins, hooks, and MCP config bundles use explicit lifecycle semantics.
+
+Rules:
+- install/update/remove actions must surface whether the target plugin is currently enabled, loaded, or referenced by Persona settings
+- active plugin updates may require reload, deferred apply, or explicit disable-before-remove behavior depending on the plugin state
+- the GUI must distinguish catalog-installed plugins from manual/local ones
+- uninstalling a catalog plugin must not silently delete unrelated local overrides or config-sourced plugins with the same display name
 
 ---
 
@@ -588,27 +589,6 @@ Plugin-driven blocking that affects execution MUST map into the canonical runtim
 ## Plugin Hook Blocked Specification Addendum
 
 This section defines plugin Hook Blocked Specification.
-
-### Hooks that may block execution
-Only execution-flow hooks may trigger `plugin_hook_blocked`:
-- `pre_tool_invoke`
-- `pre_attempt_start`
-- `pre_node_dispatch`
-
-Observation-only hooks such as `post_tool_invoke` and `post_attempt_complete` cannot create `plugin_hook_blocked`.
-
-### Required metadata
-Plugin-blocked payloads MUST include:
-- `blocked_reason_code: plugin_hook_blocked`
-- `plugin_id`
-- `hook_name`
-- `block_reason`
-- canonical `allowed_action_ids[]`
-- `preserved_local_work`
-
-### Recovery scope
-Plugins MUST NOT invent plugin-private runtime recovery semantics. They reuse canonical action families and runtime commands.
-## Plugin Hook Blocked Specification
 
 ### Hooks that may block execution
 Only execution-flow hooks may trigger `plugin_hook_blocked`:

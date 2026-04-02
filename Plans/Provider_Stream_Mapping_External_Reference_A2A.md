@@ -300,31 +300,6 @@ Required behavior:
 Acceptance criteria:
 - A2A/provider normalization does not erase retry/remediation lineage
 - input-provided / resume events remain sufficient to wake blocked runtime flows deterministically
-## Stream Mapping / Wake Reason Alignment Addendum (2026-03-09)
-
-Provider stream mapping must expose the signals needed for event-driven scheduling.
-
-### Required mappings
-- provider completion -> scheduler wake reason for completion
-- input-required / approval-required -> blocked outcome with corresponding reason code
-- auth recovery event -> wake reason for auth recovery
-- backoff-expiry timer event -> wake reason for backoff expiry
-- remediation completion -> wake reason for remediation completion
-
-Stream adapters must preserve attempt identity so wakeups can be correlated to the correct attempt and node.
-## Stream Mapping / Wake Reconciliation Addendum (2026-03-09)
-
-Provider stream normalization must preserve canonical runtime wake and lineage behavior.
-
-Required mappings:
-- completion -> `wake_reason = node_completed` or `verification_completed` as applicable
-- approval/input resolution -> `wake_reason = approval_resolved` or `clarification_resolved`
-- auth recovery -> `wake_reason = auth_recovered`
-- backoff expiry -> `wake_reason = backoff_expired`
-- remediation completion -> `wake_reason = remediation_completed`
-- replan application -> `wake_reason = replan_applied`
-
-Normalized streams MUST preserve `attempt_id` across reconnect/observe-only flows.
 ## Stream Wake and Attempt Continuity Consolidation Addendum (2026-03-09)
 
 Provider/A2A stream normalization MUST preserve canonical wake reasons and attempt continuity.
@@ -340,15 +315,13 @@ Provider/A2A stream normalization MUST preserve canonical wake reasons and attem
 ### Continuity rule
 Normalized streams MUST preserve `attempt_id` across reconnect/observe-only flows and MUST NOT create provider-local retry identity separate from runtime identity.
 
-## Runtime Attempt Identity vs Provider Continuity (2026-03-09)
+## Stream Mapping / Wake Reason Alignment Addendum (2026-03-09)
 
-Runtime `attempt_id` is Puppet Master's per-dispatch identity.
+> **Superseded** — see canonical wake-reason definition above.
 
-Rules:
-- retries, prerequisite resumes, remediation reruns, and restore-before-reruns always create a new runtime `attempt_id`
-- upstream provider/session continuity uses a separate `provider_attempt_ref?`
-- provider/session IDs MUST NOT be reused as runtime `attempt_id`
-- reconnect flows may observe or resume streaming for the same runtime attempt but MUST NOT create hidden provider-local retry identity
+## Stream Mapping / Wake Reconciliation Addendum (2026-03-09)
+
+> **Superseded** — see canonical wake-reason definition above.
 
 ## Runtime Attempt Identity vs Provider Continuity (2026-03-09)
 

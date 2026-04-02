@@ -383,16 +383,24 @@ ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Contracts_V0.md
 
 ### HTTP/status to failure-class mapping
 
-| Condition | Normalized `failure_class` | Retry posture |
-|---|---|---|
-| 401 / expired credential | `auth_expired` | refresh once, rebuild client, retry once |
-| 403 / explicit denial | `permission_denied` | no auto-retry |
-| 402 / quota exceeded | `quota_exceeded` | no auto-retry |
-| 429 / rate limit | `provider_transient` | retry using `Retry-After` or default backoff |
-| 5xx / transport transient | `provider_transient` | retry per executor matrix |
-| malformed structured output | `structured_output_invalid` | retry up to class limit |
+HTTP/status and transport outcomes normalize into the **attempt-outcome** taxonomy first. They do not directly mint blocked-state reasons unless the shared runtime/permission layer says the work never became actionable.
 
-ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/GitHub_API_Auth_and_Flows.md
+| Condition | Classification family | Canonical value | Retry posture |
+|---|---|---|---|
+| 401 / expired credential during or immediately after dispatch | `failure_class` | `auth_expired` | refresh/re-auth as allowed, then retry with a new attempt only if policy permits |
+| 403 / explicit provider or host denial after dispatch | `failure_class` | `permission_denied` | no automatic retry |
+| 402 / quota exhausted | `failure_class` | `quota_exceeded` | no automatic retry; surface quota remediation |
+| 429 / retryable rate limit | `failure_class` | `provider_transient` | retry using `Retry-After` or the shared retry matrix |
+| 5xx / transport outage / connection reset / timeout | `failure_class` | `provider_transient` | retry per executor matrix |
+| malformed structured output / schema breakage | `failure_class` | `structured_output_invalid` | bounded retry up to class limit |
+
+Rules:
+- `failure_class` describes **how an attempt ended**.
+- `blocked_reason_code` describes **why work cannot proceed before or between attempts**.
+- Provider adapters MUST NOT relabel `auth_expired`, `quota_exceeded`, or `structured_output_invalid` as blocked reasons just to fit a UI card or policy branch.
+- If the shared runtime later decides a prerequisite is unresolved (for example approval or preflight drift), that higher-level blocked outcome is additive and separate from the provider attempt result.
+
+ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Decision_Policy.md, ContractName:Plans/Contracts_V0.md
 
 ### Stream cancellation and replay safety
 
@@ -502,15 +510,18 @@ ContractRef: ContractName:Plans/Contracts_V0.md#EventRecord, ContractName:Plans/
 ---
 
 ## Persistence mapping (seglog)
+
 Persistent storage is SSOT in `Plans/storage-plan.md`. This section only states the required mapping from normalized provider runs to seglog event types that already exist in that plan.
 
 Minimum required persistence:
-- Emit `run.started` at run begin with `{ run_id, thread_id, platform, tier_id?, mode, strategy, strategy_resolution_reason }`.
+- Emit `run.started` at run begin with `{ run_id, thread_id, platform, node_id?, mode, strategy, strategy_resolution_reason }`.
 - Emit `usage.event` for any usage updates that can be normalized.
 - Emit tool analytics events per `Plans/Tools.md`:
   - `tool.invoked` when a tool completes (allowed and executed) with required payload fields.
   - `tool.denied` when policy blocks (deny) or user declines (ask) with required payload fields.
 - Emit `run.completed` exactly once with `{ run_id, status, outcome, stop_reason?, budget_key?, budget_limit?, observed_value? }` and an optional usage summary.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Tools.md
 
 ---
 
@@ -613,32 +624,27 @@ For every bridged attempt preserve:
 - `replan_generation`
 
 ### Required signal mapping
-- provider auth challenge -> `blocked_reason_code = auth_expired`
-- interactive approval impossible in current mode -> `blocked_reason_code = headless_ask_denied`
+Bridged providers must preserve canonical runtime identity and taxonomy.
+
+**Concrete provider/runtime identity:**
+- `requested_platform` / `effective_platform` identify the concrete runtime surface used for the attempt.
+- Gemini remains split into two concrete platforms:
+  - `gemini` — Gemini Direct
+  - `gemini_cli` — Gemini CLI
+- `provider_family_id = gemini` is additive grouping metadata only; it MUST NOT replace the concrete requested/effective platform fields.
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Multi-Account.md, ContractName:Plans/Permissions_System.md
+
+**Required taxonomy split:**
+- provider auth challenge after dispatch -> `failure_class = auth_expired`, plus the relevant auth-state transition and stop reason
+- interactive approval impossible in the current mode -> `blocked_reason_code = headless_ask_denied`, with no fabricated provider failure
 - transient transport/provider outage -> `failure_class = provider_transient`
 - provider-side malformed structured output -> `failure_class = structured_output_invalid`
+- stale target / drift detected before dispatch -> shared runtime `blocked_reason_code`, not provider failure-class remapping
 
-### Runtime attempt correlation envelope
-
-`ProviderRequestEnvelope` MUST include:
-- `run_id`
-- `node_id`
-- `attempt_id`
-- `scheduler_pass_id`
-- `replan_generation`
-- `mutation_capable`
-- `permission_snapshot_id`
-- `model_snapshot_id`
-- `safe_point_id?`
-- `remediation_root_id?`
-- `remediation_parent_attempt_id?`
-
-Rules:
-- preserve `run_id`, `thread_id`, `node_id`, `attempt_id`, generation, snapshot ids, and lineage metadata across normalized output
+**Required correlation envelope:**
+- preserve `run_id`, `thread_id`, `node_id`, `attempt_id`, generation/snapshot ids, and remediation lineage across normalized output
 - transport reconnect logic may reconnect only to observe an already-submitted attempt; it MUST NOT silently resubmit prompts or mutate retry counters
-- provider signals MUST normalize to canonical `failure_class` / `blocked_reason_code` values before orchestration or UI consumes them
+- provider signals MUST normalize to canonical `failure_class` and `blocked_reason_code` values before orchestration or UI consumes them
 - prerequisite resolution from provider/auth layers MUST surface a canonical scheduler wake rather than staying provider-local
-- the prompt pipeline and provider envelope use the same immutable handoff bundle for a given attempt
-- any retry, prerequisite resume, remediation rerun, or restore-before-rerun uses a new envelope with a new `attempt_id`
 
-**Usage on message/turn and cost_usage:** Usage may be stored on message/turn for per-thread display. The cost_usage runtime artifact (Plans/Runtime_Artifacts_Panel.md) reuses the same canonical schema as usage.event; there is no second canonical store.
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Multi-Account.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Permissions_System.md

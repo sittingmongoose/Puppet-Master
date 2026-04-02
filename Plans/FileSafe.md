@@ -48,14 +48,14 @@ This plan covers **two pillars**: (1) **FileSafe** -- guards that block destruct
 
 ### Part B -- Context Compilation & Token Efficiency
 
-6. **Role-Specific Context Compiler** -- Builds `.context-{role}.md` per agent role (Phase/Task/Subtask/Iteration) so each agent gets only the context it needs (e.g. phase goal, filtered requirements, conventions). Cuts coordination overhead by ~40-60% at scale.
-7. **Delta Context** -- Adds a "Changed Files (Delta)" section with code slices from recently modified files so agents see what just changed.
+6. **Role-Specific Context Compiler** -- Builds `.context-{context_role}.md` per runtime role (`planning`, `execution`, `verification`, `debug`, `review`) so each run or node attempt receives only the context it needs.
+7. **Delta Context** -- Adds a `Changed Files (Delta)` section with code slices from recently modified files so agents see what just changed.
 8. **Context Cache** -- Caches the compiled context index so compilation is skipped when project files are unchanged.
-9. **Structured Handoff Schemas** -- Typed JSON schemas for inter-agent messages (e.g. progress, blockers, QA results) for reliable parsing.
-10. **Compaction-Aware Re-Reads** -- A deterministic marker indicates when plan/context re-read is needed, avoiding redundant full re-reads every task.
-11. **Skill Bundling** -- Bundles skills referenced in the plan into the compiled context once per phase instead of per task.
+9. **Structured Handoff Schemas** -- Typed JSON schemas for inter-agent progress, blockers, QA results, and similar handoffs.
+10. **Compaction-Aware Re-Reads** -- A deterministic marker indicates when plan/context re-read is needed, avoiding redundant full re-reads every attempt.
+11. **Skill Bundling** -- Bundles skills referenced by the current node/run into compiled context once per relevant scope instead of per child attempt.
 
-**Why critical:** Context compilation and these features reduce token use and improve reliability where coordination and context size matter most (large projects, many phases).
+**Why critical:** Context compilation and these features reduce token use and improve reliability where coordination and context size matter most (large projects, many delegated runs, debug/review loops).
 
 **DRY compliance:** All reusable code is tagged with `DRY:FN:`, `DRY:DATA:`, `DRY:HELPER:`. Platform data uses `platform_specs::`. Widgets reuse components from `src/widgets/`.
 
@@ -1196,11 +1196,11 @@ async fn test_runner_blocks_destructive() {
   - [ ] DRY compliance (tag reusable items)
 
 - [ ] **Context compilation (Part B)**
-  - [ ] Create `src/context/` module: `mod.rs`, `compiler.rs`, `role.rs`, `filters.rs`, `skills.rs`
-  - [ ] Implement `compile_context(phase_id, role, plan_path, working_directory)` and role-specific compilers (Phase, Task, Subtask, Iteration)
-  - [ ] Requirement filtering (phase-mapped only); convention extraction from AGENTS.md; decision extraction from state/progress
-  - [ ] Skill bundling: parse plan frontmatter `skills_used`, resolve paths, append to Task/Iteration context; handle missing skills
-  - [ ] Delta context: git diff since last phase, code slices, "Changed Files (Delta)" section; config `context.delta_context`
+  - [ ] Create `src/context/` module: `mod.rs`, `compiler.rs`, `context_role.rs`, `filters.rs`, `skills.rs`
+  - [ ] Implement `compile_context(run_id, node_id, context_role, plan_path, working_directory)` and runtime-role compilers (`planning`, `execution`, `verification`, `debug`, `review`)
+  - [ ] Requirement filtering (node-mapped only); convention extraction from AGENTS.md; decision extraction from state/progress
+  - [ ] Skill bundling: parse referenced skill metadata, resolve paths, append to the relevant compiled context; handle missing skills
+  - [ ] Delta context: git diff since the last relevant base ref, code slices, "Changed Files (Delta)" section; config `context.delta_context`
   - [ ] Context cache: `context-index.json` with key (paths + mtimes/hashes); skip compile when valid; invalidate on change; config `context.context_cache`
   - [ ] Structured handoff schemas: define message types and JSON schemas; `HandoffMessage` enum + validation in orchestrator; reference doc in docs/
   - [ ] Compaction-aware re-reads: `.compaction-marker` lifecycle (clear on session start, set on compaction); consult before including plan in context
@@ -1773,63 +1773,42 @@ FileSafe settings must be **configurable in the GUI** and **easy to turn on or o
 
 ### 14.1 Role-Specific Context Compiler
 
-**Problem:** Every agent currently receives the same context files regardless of tier or role. Phase planning loads full REQUIREMENTS; task execution loads STATE and full plans; verification loads full protocol docs. That wastes tokens and dilutes focus.
+**Problem:** Every agent currently receives the same context files regardless of the current runtime role. Planning, execution, verification, and debug attempts should not all load identical context blobs.
 
-**Solution:** A **context compiler** produces one compiled context file per role (Phase, Task, Subtask, Iteration). Each file contains only what that role needs. Filtering is deterministic (pattern-based on known file formats), not LLM-based -- zero token cost and reliable.
+**Solution:** A deterministic **context compiler** produces one compiled context file per runtime role. Filtering is structural/pattern-based, not LLM-based.
 
 **Module:** `src/context/` (or `src/prompt/context_compiler.rs`).
 
-**Output files:** `.puppet-master/phases/{phase_id}/.context-{role}.md`.
+**Output files:** `.puppet-master/runs/{run_id}/nodes/{node_id}/.context-{context_role}.md`.
 
 **Compiler contract:**
-
 ```rust
-// DRY:FN:compile_context — Compile role-specific context for agent
 pub fn compile_context(
-    phase_id: &str,
-    role: AgentRole,
+    run_id: &str,
+    node_id: &str,
+    context_role: ContextRole,
     plan_path: Option<&Path>,
     working_directory: &Path,
 ) -> Result<PathBuf>;
 ```
 
-**Role → content mapping:**
+**Context role -> content mapping:**
 
-| Role     | Contents |
-|----------|----------|
-| **Phase**  | Phase goal (from roadmap), success criteria, **filtered requirements** (only phase-mapped), active decisions (from state/progress). |
-| **Task**   | Phase goal, project conventions (from AGENTS.md), **bundled skills** if plan references them. |
-| **Subtask**| Phase goal, conventions, current subtask scope. |
-| **Iteration** | Phase goal, conventions, iteration scope; same as Task when no subtask split. |
+| Context role | Contents |
+|---|---|
+| `planning` | Node goal, success criteria, filtered requirements, active decisions, repo/project rules |
+| `execution` | Node goal, conventions, concrete input files, skills referenced by the node, most recent relevant receipts |
+| `verification` | Node goal, expected acceptance criteria, changed-files delta, verification evidence/history |
+| `debug` | Bound target summary, Investigation Context snapshot, relevant artifacts, current revalidation reason if any |
+| `review` | Compare/review identity, affected files, reviewer comments/annotations, blocking concerns |
 
-**Requirement filtering:** Parse REQUIREMENTS (or prd.json) and include only items whose IDs are listed in the current phase's scope. Use grep/sed or structured parse on a known format; no LLM.
+Rules:
+- selection is driven by runtime posture and node intent, not by deprecated phase/task/subtask/iteration names
+- requirement filtering is deterministic over known formats; no LLM is used for compiler selection
+- when compilation fails or the feature is disabled, PM falls back to the existing direct-file behavior
+- the compiled artifact is a convenience context surface, not a new canonical storage source
 
-**When to run:** Before spawning the agent for that role (e.g. in platform runner or orchestrator): call `compile_context(phase_id, role, plan_path, cwd)`, then add the returned path to `ExecutionRequest.context_files` (or equivalent) so the agent receives the compiled file instead of (or in addition to) raw project files, per config.
-
-**Config:** `context.compiler_enabled` (default true). If false or compilation fails, fall back to existing behavior (direct file reads).
-
-**Example Phase context output (snippet):**
-
-```markdown
-## Phase PH-002 Context (Compiled)
-
-### Goal
-Implement role-specific context compiler and wire into platform runners.
-
-### Success Criteria
-- compile_context() produces .context-{role}.md under .puppet-master/phases/{id}/
-- Only phase-mapped requirements appear in Phase context
-
-### Requirements (REQ-06, REQ-07, REQ-08, REQ-09)
-- [ ] **REQ-06**: compile_context script extracts phase-relevant requirements...
-- [ ] **REQ-07**: Compiler produces .context-phase.md with phase goal...
-
-### Active Decisions
-- Deterministic context compilation (pattern-based, no LLM)
-- Marker-file approach for compaction detection
-```
-
-**Token impact:** Replaces multiple full-file reads with one short file per spawn. Typical savings: ~1.4k-2.8k tokens per Phase spawn; ~0.5k-1.6k per Task/Iteration (e.g. skipping STATE, filtering requirements). Scale-dependent: larger projects see larger absolute savings.
+ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Prompt_Pipeline.md
 
 ---
 
@@ -1839,13 +1818,13 @@ Implement role-specific context compiler and wire into platform runners.
 
 **Behavior:**
 
-- **Input:** Git diff since last phase (or since last commit / tag -- configurable). Optionally restrict to certain dirs (e.g. `src/`).
+- **Input:** Git diff since the last relevant base ref (or since last commit / tag -- configurable). Optionally restrict to certain dirs (e.g. `src/`).
 - **Content:** For each changed file: path, optional short code slices (e.g. first/last N lines or hunks), and a brief summary (e.g. "modified", "added"). Total size capped (e.g. ~225-375 tokens per compiled context).
-- **Output:** Appended to the compiled `.context-{role}.md` when `context.delta_context` is true (e.g. only for Task/Iteration roles if desired).
+- **Output:** Appended to the compiled `.context-{context_role}.md` when `context.delta_context` is true (e.g. only for the relevant execution/verification/review roles if desired).
 
 **Implementation sketch:**
 
-- Run `git diff` (or `git log -p` with limits) from a configured ref (e.g. `HEAD~1`, or last phase tag).
+- Run `git diff` (or `git log -p` with limits) from a configured ref (e.g. `HEAD~1`, or the last relevant checkpoint tag).
 - Parse diff; for each file, optionally read file and take slices (e.g. 20 lines before/after changed regions).
 - Write a "## Changed Files (Delta)" section with path, summary, and slices; enforce token/line limit.
 
@@ -1855,14 +1834,14 @@ Implement role-specific context compiler and wire into platform runners.
 
 ### 14.3 Context Cache
 
-**Purpose:** Avoid recomputing compiled context when project files have not changed (e.g. multiple spawns in the same phase, or re-runs).
+**Purpose:** Avoid recomputing compiled context when project files have not changed (e.g. multiple spawns in the same run, or repeated node attempts).
 
 **Behavior:**
 
-- **Cache key:** Directory or file set that affects context (e.g. `.puppet-master/`, `REQUIREMENTS.md`, `prd.json`, `AGENTS.md`, phase dirs). Represent as a list of paths + mtimes or content hashes.
-- **Cache store:** Single index file, e.g. `.puppet-master/context-index.json`, containing: phase_id, role, list of (path, mtime_or_hash), and path to last compiled output (or hash of its content).
+- **Cache key:** Directory or file set that affects context (e.g. `.puppet-master/`, `REQUIREMENTS.md`, `prd.json`, `AGENTS.md`, run/node state). Represent as a list of paths + mtimes or content hashes.
+- **Cache store:** Single index file, e.g. `.puppet-master/context-index.json`, containing: `run_id`, `node_id`, `context_role`, list of `(path, mtime_or_hash)`, and path to last compiled output (or hash of its content).
 - **Lookup:** Before calling the compiler, compute current key; if it matches cache and cached output path exists and is readable, skip compilation and return cached path.
-- **Invalidation:** On any change to the key (e.g. file under `.puppet-master/` or requirements/prd/AGENTS), delete or invalidate the cache entry for that phase/role and recompute on next request.
+- **Invalidation:** On any change to the key (e.g. file under `.puppet-master/` or requirements/prd/AGENTS), delete or invalidate the cache entry for that run/node/context-role tuple and recompute on next request.
 
 **Config:** `context.context_cache` (default true for large-repo use cases). When false, always run the compiler.
 
@@ -1874,14 +1853,14 @@ Implement role-specific context compiler and wire into platform runners.
 
 **Behavior:**
 
-- **Schema registry:** Define a small set of message types, e.g. `phase_progress`, `task_blocker`, `subtask_result`, `qa_result`, `iteration_complete`. Each has a fixed JSON schema (required fields, types).
+- **Schema registry:** Define a small set of message types, e.g. `run_progress`, `work_package_blocker`, `node_result`, `qa_result`, `attempt_complete`. Each has a fixed JSON schema (required fields, types).
 - **Wire format:** Agents (or the runner wrapping them) send handoff payloads as JSON (e.g. in a well-known field of the execution result or in a side-channel file). Example:
 
 ```json
 {
-  "type": "task_progress",
-  "phase_id": "PH-002",
-  "task_id": "TK-002-01",
+  "type": "node_progress",
+  "run_id": "RUN-002",
+  "node_id": "NODE-002",
   "status": "complete",
   "files_changed": ["src/context/compiler.rs"],
   "commit": "abc123"
@@ -1902,10 +1881,10 @@ Implement role-specific context compiler and wire into platform runners.
 **Behavior:**
 
 - **Marker file:** A deterministic marker file (e.g. `.puppet-master/.compaction-marker`) with a timestamp. Written only when a "compaction" or context-reset event occurs (e.g. session compaction, or explicit "context was trimmed" signal from the platform).
-- **Protocol:** Before spawning a task, check for the marker. If absent, assume plan/context is still valid from a previous load -- skip re-read. If present, re-read plan (and any other context that might have been trimmed), then clear or update the marker so the next task does not re-read unnecessarily.
+- **Protocol:** Before spawning an attempt, check for the marker. If absent, assume plan/context is still valid from a previous load -- skip re-read. If present, re-read plan (and any other context that might have been trimmed), then clear or update the marker so the next attempt does not re-read unnecessarily.
 - **Conservative rule:** On any doubt (e.g. marker present, or read failure), do the re-read. Prefer redundant reads over missing updates.
 
-**Saving:** Typically 1-2 full plan re-reads per phase (~500-1,600 tokens per plan depending on plan size).
+**Saving:** Typically 1-2 full plan re-reads per run (~500-1,600 tokens per plan depending on plan size).
 
 **Integration:** Orchestrator or platform runner consults the marker when building `ExecutionRequest.context_files` (or when deciding whether to include plan path again). Lifecycle: clear marker on session start; set marker when compaction is detected or signaled.
 
@@ -1916,7 +1895,7 @@ Skill bundling is the canonical MVP runtime delivery path for skills during cont
 
 Rules:
 - selected skills are resolved from the canonical skill registry
-- the context compiler decides which resolved skills to inline into the compiled context for the active run/tier
+- the context compiler decides which resolved skills to inline into the compiled context for the active run/context role
 - bundled skill content remains traceable to skill ids and registry metadata
 - on-demand lookup continues to use the `skill` tool; bundling does not eliminate tool-based access
 - provider-native directories or file formats remain import/export/interoperability inputs only
@@ -1935,7 +1914,7 @@ ContractRef: ContractName:Plans/Skills_System.md, ContractName:Plans/Prompt_Pipe
 
 **Projected savings (illustrative):**
 
-| Scale   | Phases | Requirements | Coordination overhead (no compiler) | With compiler | Reduction |
+| Scale   | Nodes | Requirements | Coordination overhead (no compiler) | With compiler | Reduction |
 |---------|--------|--------------|-------------------------------------|----------------|-----------|
 | Small   | 3      | 10           | ~65k tokens                          | ~32k           | ~51%      |
 | Medium  | 5      | 20           | ~150k tokens                         | ~60k           | ~60%      |
@@ -1966,30 +1945,32 @@ pub struct ContextConfig {
 }
 ```
 
-**AgentRole enum (for compiler):**
+**ContextRole enum (for compiler):**
 
 ```rust
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
-pub enum AgentRole {
-    Phase,
-    Task,
-    Subtask,
-    Iteration,
+pub enum ContextRole {
+    Planning,
+    Execution,
+    Verification,
+    Debug,
+    Review,
 }
 
-impl AgentRole {
+impl ContextRole {
     pub fn as_str(&self) -> &'static str {
         match self {
-            Self::Phase => "phase",
-            Self::Task => "task",
-            Self::Subtask => "subtask",
-            Self::Iteration => "iteration",
+            Self::Planning => "planning",
+            Self::Execution => "execution",
+            Self::Verification => "verification",
+            Self::Debug => "debug",
+            Self::Review => "review",
         }
     }
 }
 ```
 
-**Integration with platform runner:** Before building the prompt, if `context.compiler_enabled`, call `context_compiler::compile_context(phase_id, role, plan_path, working_directory)`. On success, add the returned path to the request's context files (or replace a subset). On failure, log and proceed with existing behavior (no compiled context).
+**Integration with platform runner:** Before building the prompt, if `context.compiler_enabled`, call `context_compiler::compile_context(run_id, node_id, context_role, plan_path, working_directory)`. On success, add the returned path to the request's context files (or replace a subset). On failure, log and proceed with existing behavior (no compiled context).
 
 ---
 
@@ -2535,17 +2516,28 @@ pub struct FileSafeViolation {
 - Doctor check validates plan file lists
 
 #### Enhancement 5: Guard Configuration Profiles
-**Allow different guard strictness per tier:**
+Allow different guard strictness by **runtime profile**, not by deprecated tier names.
+
 ```rust
-pub struct TierFileSafeConfig {
-    pub phase: FileSafeConfig,
-    pub task: FileSafeConfig,
-    pub subtask: FileSafeConfig,
-    pub iteration: FileSafeConfig,
+pub struct FileSafeProfileSet {
+    pub plan_read_only: FileSafeConfig,
+    pub standard_execution: FileSafeConfig,
+    pub debug_investigation: FileSafeConfig,
+    pub delegated_child: FileSafeConfig,
+    pub maintenance_recovery: FileSafeConfig,
 }
 ```
-- Phase/Task tiers: stricter guards (planning phase)
-- Subtask/Iteration tiers: more permissive (execution phase)
+
+Profile rules:
+- `plan_read_only` is the strictest profile and denies mutation-capable execution except explicitly allowed read-only planning tools.
+- `standard_execution` is the default for normal agent execution.
+- `debug_investigation` allows bounded temporary instrumentation and cleanup-sensitive operations under stronger disclosure/logging rules.
+- `delegated_child` may be narrower than its parent run based on the delegated work package.
+- `maintenance_recovery` is reserved for restore/cleanup/recovery flows and must not silently broaden into general execution.
+
+Profile selection derives from effective run mode, operation class, and target capabilities. It MUST NOT depend on legacy Phase/Task/Subtask/Iteration naming.
+
+ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/Executor_Protocol.md
 
 ### 15.12 Integration Checklist
 
@@ -2705,8 +2697,9 @@ Minimum fields:
 - `timestamp`
 - `command_or_path_summary`
 - `recovery_allowed`
-- `recovery_options[]`
+- `allowed_action_ids[]`
 
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Permissions_System.md
 ### 4. Safe-point interaction
 
 A FileSafe block that occurs before execution does not consume a mutation safe point and does not require rollback.

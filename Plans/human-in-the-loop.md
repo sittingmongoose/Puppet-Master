@@ -96,6 +96,18 @@ Rules:
 - approval and recovery flows bind to runtime blocked episodes anchored by `run_id`, `node_id`, `blocked_sequence`, and `attempt_id?`
 
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Orchestrator_Page.md
+
+## Package and Seam Completion Gates
+
+The node-model rewrite uses package- and seam-scoped gates while preserving the same human approval affordances.
+
+Canonical gate types:
+- `package_complete_gate` — fires when all nodes in a package have completed. Conditions: all node statuses are in `{completed, skipped}`. Actions: run package-level verification, emit `package.completed` event.
+- `seam_complete_gate` — fires when a seam transition is needed. Conditions: the source package is completed and the target package prerequisites are met. Actions: validate cross-package contracts, transfer context, emit `seam.transition` event.
+
+HITL approval behavior stays intact, but it now binds to these gate types. When HITL is enabled, the existing approve / decline / skip / abort flow applies after `package_complete_gate` or `seam_complete_gate` reaches its decision point.
+
+ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Orchestrator_Page.md
 ## Settings Model
 
 ### Three Independent Toggles
@@ -154,7 +166,7 @@ ContractRef: ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/or
 
      **On reject:** The run remains paused. The tier is marked as `needs_review` in the seglog. A Call-to-Action (CtA) appears in the Assistant chat: "Phase [X] was rejected — [Re-run] [Skip Phase] [Abort Run]." The user must choose an action to proceed. Re-run re-executes the same tier from the beginning. Skip Phase advances to the next tier. Abort Run stops the entire orchestration run.
 
-     **On cancel:** The current run is aborted. The tier is marked as `cancelled` in the seglog. All active subagents for this run receive a cancellation signal. The orchestrator returns to IDLE state. A seglog event `hitl.cancelled` is emitted with the tier context.
+     **On cancel:** The current run is aborted. The tier is marked as `cancelled` in the seglog. All active subagents for this run receive a cancellation signal. The orchestrator returns to IDLE state. A seglog event `hitl.cancelled` is emitted with the node execution context.
 3. When a **task** is completed (end verification done):
    - If **HITL at task** is ON → **pause**. Same idea: human reviews, approves or rejects; on approval → next task.
 4. When a **subtask** is completed (end verification done):
@@ -182,7 +194,7 @@ ContractRef: ContractName:Plans/assistant-chat-design.md
 
 ### Relation to Existing Pause
 
-The Plans/orchestrator-subagent-integration.md mentions a **pause gate** (`PAUSE.md` file) that halts the run until the file is removed or the user resumes. HITL is **separate**: it is a tier-boundary approval gate driven by settings, not by a global pause file. The two can coexist: global pause can still apply; HITL adds additional, tier-specific approval points when enabled.
+The Plans/orchestrator-subagent-integration.md mentions a **pause gate** (`PAUSE.md` file) that halts the run until the file is removed or the user resumes. HITL is **separate**: it is a package-complete / seam-complete approval gate driven by settings, not by a global pause file. The two can coexist: global pause can still apply; HITL adds additional, gate-specific approval points when enabled.
 ContractRef: ContractName:Plans/orchestrator-subagent-integration.md
 
 ## DRY Summary

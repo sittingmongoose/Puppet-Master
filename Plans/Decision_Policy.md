@@ -292,11 +292,11 @@ ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/FileSafe.md
 
 Additional deterministic blocked defaults for this packet:
 
-| blocked_reason_code | default posture | required user-visible effect |
+| blocked trigger | default posture | required user-visible effect |
 |---|---|---|
 | `worktree_conflict` | remain blocked until resolution | show Source Control recovery CTA |
 | `dirty_worktree` | remain blocked until cleanup or restore action | show Source Control recovery CTA |
-| `auth_expired` for GitHub-hosted Actions admin/run actions | remain blocked until auth refresh | show GitHub Actions recovery CTA |
+| `failure_class = auth_expired` for GitHub-hosted Actions admin/run actions when refresh cannot recover | remain blocked until auth refresh | show GitHub Actions recovery CTA |
 | `external_side_effect_blocked` for Docker repo create/push/template push | remain blocked until approval or explicit decline | preserve local build/publish result |
 | Kubernetes apply/exec/port-forward prerequisite block | remain blocked until context/prerequisite resolves | show Docker Manager Kubernetes CTA |
 

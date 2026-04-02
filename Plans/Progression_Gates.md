@@ -62,6 +62,37 @@ ContractRef: ContractName:Plans/Project_Output_Artifacts.md, Gate:GATE-011, Gate
 
 ContractRef: Primitive:Gate, Gate:GATE-012, PolicyRule:Decision_Policy.md§2
 
+## Runtime node-model progression gate definitions
+
+Legacy tier-level gate definitions are replaced by package-, seam-, and lane-scoped progression gates. These gates inherit the existing blocking, approval, and timeout/remediation behavior patterns already defined by the progression system; only the execution entities change from tiers to node-model packages, seams, and lanes.
+
+ContractRef: Primitive:Gate, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/human-in-the-loop.md
+
+### `package_complete_gate`
+
+Pass condition:
+- all nodes in the package are in a terminal resolved state: `completed`, `skipped`, or `failed` with remediation recorded
+- the gate prevents the package from reporting completion until every constituent node is resolved
+
+ContractRef: Primitive:Gate, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/human-in-the-loop.md
+
+### `seam_complete_gate`
+
+Pass condition:
+- the source package is complete
+- target package prerequisites are resolved
+- cross-package transition readiness validates prerequisite resolution, context handoff preparation, and contract compatibility
+
+ContractRef: Primitive:Gate, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Contracts_V0.md
+
+### `lane_complete_gate`
+
+Pass condition:
+- every package assigned to the lane satisfies `package_complete_gate` before the lane reports `done`
+- lane completion remains blocked until all assigned packages are resolved
+
+ContractRef: Primitive:Gate, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Contracts_V0.md
+
 ---
 
 <a id="GATE-001"></a>
@@ -332,7 +363,7 @@ The gate must fail when any of the following are true:
 - a doc marked MUST RECONCILE is absent from the packet
 - a packet uses append-only placement where canon replacement/retirement is required
 - a packet targets a structured container indirectly instead of replacing the owning headed section with the final canonical content
-- a packet preserves stale tier-era or request-era canonical text as a peer option rather than collapsing to the replacement canon
+- a packet preserves stale tier-era, request-era, or legacy tier-level gate text as a peer option rather than collapsing to the canonical `package_complete_gate`, `seam_complete_gate`, and `lane_complete_gate` model
 
 ContractRef: ContractName:Plans/DRY_Rules.md, ContractName:Plans/Decision_Policy.md, ContractName:Plans/Contracts_V0.md
 

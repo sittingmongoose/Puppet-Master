@@ -160,67 +160,62 @@ ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/LSP
 - commit list and filters
 - commit detail
 - changed-file pivots
-- commit-to-parent compare defaults
+- compare sessions seeded from commit, branch, or workflow lineage
 
 `Graph` owns:
-- lineage visualization
-- branch ancestry inspection
-- commit selection handoff into History or diff/review
+- branch ancestry and commit lineage visualization
+- worktree/topology overlays on top of branch ancestry
+- commit selection handoff into History, review, conflict assistance, or diff/open flows
 
-ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/FileManager.md, ContractName:Plans/UI_Command_Catalog.md
+**Canonical compare identity:** Every pivot from History or Graph freezes the compare session identity `{ repo_id, worktree_id?, base_ref, compare_ref, compare_origin, compare_session_id? }`.
+
+Canonical `compare_origin` values for GitHub-owned pivots include:
+- `changes.unstaged`
+- `changes.staged`
+- `history.commit_parent`
+- `conflict.review`
+- `worktree.branch_compare`
+- `actions.run_commit_range`
+- `blocked.dirty_worktree`
+- `recovery.safe_point_retry`
 
 Rules:
 - history compare defaults use `selected commit <-> first parent`
-- opening a file from commit history preserves the history compare origin for downstream review surfaces
-- package/lane/run lineage may appear as metadata, but Git lineage remains the canonical grouping axis
+- opening a file from commit history preserves compare identity and compare origin for downstream review surfaces
+- dedicated review mode and guided conflict assistance consume the frozen compare identity rather than recomputing targets from the current branch later
+- package/lane/run lineage may appear as metadata, but Git lineage remains the canonical grouping axis for this surface
+- if a stored compare target becomes stale or unavailable, the surface shows that stale identity explicitly and offers refresh/recompute instead of silently substituting the current HEAD
 
-ContractRef: ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/FileManager.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/storage-plan.md
 
 ### A.4 Worktrees
 
 Worktrees are first-class UI objects, not hidden plumbing.
 
-The Worktrees accordion section uses single-column expandable rows optimized for the narrow Source Control panel.
-
-ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/assistant-chat-design.md
+The Worktrees accordion uses narrow-panel rows for direct actions, and Source Control also provides a topology-aware view that overlays worktree state on branch ancestry when the user pivots from Graph/History into worktree reasoning.
 
 **Compact row (default state):**
-- Line 1: worktree glyph icon + branch name (truncated with ellipsis if needed) + expand chevron
-- Line 2: status pill + owner label (truncated, tooltip for full)
-- Owner format: `Thread: <thread_title>` or `Orch: <tier_label>` or `Manual`
-- Full-width click target for expand/collapse
+- Line 1: worktree glyph icon + branch name + expand chevron
+- Line 2: status pill + owner label + freshness/health disclosure when degraded
+- Owner format: `Thread: <thread_title>` or `Orch: <node_label>` or `Manual`
 
-**Expanded row:**
-- Detail fields: Path (full, selectable/copyable), Base ref, Created/age
-- Action buttons (stacked/wrapped, not crammed):
-  - `Open Files` — opens worktree root in file manager
-  - `Compare` — opens branch-to-branch diff (worktree HEAD vs base HEAD) via `cmd.git.open_diff`
-  - `Merge` — opens merge confirmation dialog; shown for assistant-owned and manual worktrees only (not orch-owned)
-  - `Create PR` — opens PR creation panel; shown when project has GitHub remote
-  - `Remove` — calls remove_worktree (confirmation if dirty or thread-bound)
-  - `Open Thread` — navigates to owning thread in assistant chat (thread-owned only; hidden if thread deleted). Opens Chat panel and scrolls to thread.
-  - For orch-owned: `Open Thread` replaced with `Open Lane`
+**Expanded row / topology detail:**
+- detail fields: path, base ref, created/age, ahead/behind, dirty/conflict state, linked lane/thread when known
+- actions: `Open Files`, `Compare`, `Merge`, `Create PR`, `Remove`, plus `Open Thread` or `Open Lane` when owned
+- topology overlays show owner/status directly on branch ancestry so worktrees and graph are not disconnected mental models
 
-ContractRef: ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/Decision_Policy.md, ContractName:Plans/Wiring_Matrix.md
-
-**Filtering:** Filter bar at top of Worktrees section: segmented control `All | Threads | Orchestrator | Manual`. Default: `All`. Filter state persisted per project: `config:project:{pid}:source_control.worktree_filter`. Filter bar degrades to icon-only below 280px panel width (tooltip on hover).
-
-**Sorting:** By creation time descending (newest first). No user-configurable sort in MVP.
-
-**Owner model:** Each worktree row displays an owner field. Owner is one of:
-- `Thread: <thread_title>` — assistant-owned via `owner_thread_id`
-- `Orch: <tier_label>` — orchestrator-owned via `owner_run_id`/`owner_tier_id`
-- `Manual` — no owner (user-created or orphaned)
-
-Blocked-state rules:
-- `dirty_worktree` and `worktree_conflict` are explicit runtime states, not generic errors
-- active-run ownership must be visible before prune/remove actions
+**Identity and open rules:**
+- open/review/history/actions pivots use canonical worktree-aware identity `{ repo_id, worktree_id, path? }`
+- remote-native opens MUST carry `repo_id` / `worktree_id` / `path` explicitly rather than reconstructing state from a local cwd guess
+- historical receipts and review sessions remain pinned to the captured worktree identity even after the active selection changes
 - worktree actions MUST preserve safe-point and remediation lineage semantics
 
-ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/assistant-chat-design.md
+**Blocked/freshness rules:**
+- `dirty_worktree` and `worktree_conflict` are explicit runtime states, not generic errors
+- active-run or active-thread ownership must be visible before prune/remove actions
+- stale or disconnected worktree projections remain viewable but block mutation until revalidated
 
-**Minimum width (240px):** Compact rows: branch name truncated; status pill and owner on second line. Expanded rows: fields stack vertically; action buttons wrap.
-
+ContractRef: ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/Decision_Policy.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/assistant-chat-design.md
 ### A.5 Surface boundary rule
 
 Source Control, Orchestrator, and GitHub surfaces keep distinct responsibilities.
@@ -370,17 +365,43 @@ Required stable subviews:
 - `Workflows`
 - `Settings`
 
-ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/UI_Command_Catalog.md
+Panel-level rules:
+- the panel consumes requested/effective runtime identity and account binding from the shared runtime contracts; it MUST NOT invent a GitHub-local auth badge schema
+- every subview exposes freshness through the shared axes `freshness`, `health`, and `write_availability`
+- mutating actions are offered only when `write_availability = writable`; degraded or stale states may remain inspectable but must disclose why writes are blocked
+- workflow/job/admin receipts are durable and project-scoped even when the action occurs outside an orchestrator run
+- the panel owns shell-level placement, focus, and summary disclosure; detailed workflow/admin payload schemas remain owned by GitHub/storage owner docs
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md
 
 ### Current Branch
 
-This subview shows workflow runs for the currently selected repo/worktree branch and supports:
-- latest-run status
-- rerun and cancel when permitted
-- failing job / step drilldown
-- direct pivot to the relevant Source Control diff or changed commit range
+This subview shows workflow runs for the branch currently in scope for the selected repo/worktree context and supports latest-run state, rerun/cancel when permitted, failing-job drilldown, and direct pivots to the relevant compare/review surfaces.
 
-ContractRef: ContractName:Plans/GitHub_API_Auth_and_Flows.md, ContractName:Plans/WorktreeGitImprovement.md
+**Current Branch precedence:**
+1. bound worktree branch for the focused repo/worktree
+2. repo active branch from Source Control when no explicit worktree focus exists
+3. last explicit Actions branch selection if still valid, labeled `historical_selection`
+
+**Required refresh triggers:**
+- workflow run/status events from GitHub
+- push, pull, fetch, or HEAD advance for the in-scope repo/worktree
+- worktree switch, bind, unbind, or branch retarget
+- explicit refresh
+- auth/account switch that changes the effective GitHub identity
+- rerun, cancel, or `workflow_dispatch` completion
+
+**Freshness rules:**
+- `current` — panel data is known to reflect current host state
+- `refreshing` — a refresh is in progress; last successful projection remains visible
+- `stale` — last successful projection is still readable, but mutating Actions are blocked until revalidated
+- stale labels MUST name the stale reason when known (for example auth drift, host disconnect, branch retarget, or refresh backlog)
+
+**Identity/routing rules:**
+- pivots from Actions into diff/review/file/history preserve compare identity, compare origin, and the requested/effective GitHub identity snapshot captured for that workflow context
+- Current Branch never silently reinterprets a historical workflow run as belonging to the newly active branch just because the repo selection changed
+
+ContractRef: ContractName:Plans/GitHub_API_Auth_and_Flows.md, ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/assistant-chat-design.md
 
 ### Workflows
 
@@ -411,9 +432,14 @@ ContractRef: ContractName:Plans/GitHub_API_Auth_and_Flows.md, ContractName:Plans
 ### Workflow authoring alignment
 
 Workflow generation in Settings > Advanced must align with this live Actions surface.
-Generated workflows, required-secrets readiness, and validation outcomes MUST be discoverable from GitHub Actions rather than remaining settings-only state.
 
-ContractRef: ContractName:Plans/newtools.md, ContractName:Plans/FinalGUISpec.md
+Precedence rules:
+- repository workflow YAML in the active repo/worktree becomes runtime truth immediately after save/apply
+- generated workflow metadata, readiness checks, and required-secret suggestions remain advisory until that YAML is applied
+- settings-side workflow authoring MUST deep-link back into GitHub Actions using stable repo/worktree/workflow identity rather than an ad hoc settings-only payload
+- GitHub admin actions such as secret/variable/environment CRUD, workflow pinning, and readiness checks MUST emit durable project-scoped receipts even when they are not attached to an orchestrator run
+
+ContractRef: ContractName:Plans/newtools.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Permissions_System.md
 
 ### C.1 Adding an SSH Target
 
@@ -528,30 +554,27 @@ ContractRef: PolicyRule:no_secrets_in_storage, Invariant:INV-002
 A remote-mode project is a first-class project context bound to a remote host and remote path.
 
 Remote-mode rules:
-- file browsing, file mutation, git operations, terminal launches, Search execution, Source Control projections, LSP execution, and provider-side project tools all run against the remote host context
-- remote-mode projects MUST NOT silently fall back to local checkout, local git, local shell, local Search, or local LSP execution
-- UI surfaces may retain stale snapshots while disconnected, but they must label them accurately and block new host-required mutations when the remote context is unavailable
-- **Search index acceleration exception:** the sparse n-gram index is a local acceleration cache, not a local authority. Candidate narrowing may happen locally, but correctness always comes from verification against authoritative project content
+- file browsing, file mutation, git operations, terminal launches, search execution, Source Control projections, LSP execution, and provider-side project tools all run against the remote host context
+- remote-mode projects MUST NOT silently fall back to local checkout, local git, local shell, local search, or local LSP execution
+ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/LSPSupport.md, ContractName:Plans/storage-plan.md
+- UI surfaces may retain stale snapshots while disconnected, but they must label `freshness`, `health`, and `write_availability` accurately and block new host-required mutations when the remote context is unavailable
+- local acceleration caches are correctness aids only after remote verification; they are never the authority for remote identity or mutation success
 
-ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/LSPSupport.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Tools.md
+**Remote identity contract:**
+Every cross-surface handoff into GitHub/Source Control/FileManager carries, when applicable:
+- `remote_project_ref`
+- `host_ref`
+- `repo_id`
+- `worktree_id?`
+- `path?`
+- `compare_session_id?` / `compare_origin?`
 
-Shared remote-state vocabulary:
+**Remote-aware Open in Source Control semantics:**
+- if remote repo/worktree/path identity is known, open navigates to that exact remote-scoped subject
+- if only a historical receipt remains, open lands in a historical/stale view with reconnect/fetch actions instead of silently substituting a local checkout
+- PM-mediated writes MUST stage the updated content into the remote-aware cache path before returning success so write-then-search freshness remains preserved even before watcher round-trips arrive
 
-| Axis | Values | Meaning |
-|---|---|---|
-| `freshness` | `current`, `refreshing`, `stale` | Whether the projection reflects current host state |
-| `health` | `healthy`, `degraded`, `unavailable` | Whether the underlying host/service path is functioning |
-| `write_availability` | `writable`, `pending_write`, `blocked`, `read_only` | Whether mutations may currently succeed |
-
-ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/LSPSupport.md, ContractName:Plans/Wiring_Matrix.md
-
-Connection-loss rules:
-- on unexpected disconnect, Puppet Master performs one bounded auto-retry
-- if that retry does not recover the host context, the UI exposes an explicit `Reconnect` action
-- local unsaved editor buffers may continue to exist, but they are disclosed as local recovery state rather than as confirmed remote writes
-- Search, Source Control, Problems, and LSP may continue to show stale snapshots while new operations are blocked or degraded
-
-ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FileManager.md, ContractName:Plans/assistant-chat-design.md
+ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/LSPSupport.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Tools.md, ContractName:Plans/FinalGUISpec.md
 
 #### Remote Git project search cache
 

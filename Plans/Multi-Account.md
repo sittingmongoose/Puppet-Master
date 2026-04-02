@@ -11,7 +11,8 @@
 ## 1. Purpose and scope
 - **Purpose:** Support multiple accounts per provider so users can sign into several identities for Claude Code, Codex, Gemini, GitHub Copilot, Cursor, and OpenCode, with conservative account stickiness, threshold-based switching when supported, and provider-specific recovery behavior.
 - **Scope:** Multi-account routing is shared provider-runtime behavior for every provider-using role, including assistant, interviewer, requirements builder, PRD builder, package/seam overseers, node workers, and overseer-spawned workers. It is not an Orchestrator-only feature.
-- **Gemini scope:** Gemini is one provider with mixed OAuth and API-key account pools under a single provider policy. Multiple OAuth accounts and multiple API-key accounts are supported simultaneously.
+- **Gemini scope:** Gemini Direct (`gemini`) and Gemini CLI (`gemini_cli`) are separate provider entries. Gemini Direct is the direct API surface and is API-key only. Gemini CLI is the CLI-wrapped surface and may use OAuth-backed, API-key, or Vertex/Google-credential account rows under its own policy.
+- **Provider-entry count:** The current planning model contains 7 provider entries: Gemini Direct, Gemini CLI, Cursor CLI, Claude Code CLI, Codex, GitHub Copilot, and OpenCode.
 
 ContractRef: ContractName:Plans/rewrite-tie-in-memo.md, ContractName:Plans/storage-plan.md, ContractName:Plans/usage-feature.md
 
@@ -81,7 +82,7 @@ ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, PolicyRule:no_secrets_
 
 ### 3.5 Current Puppet Master context
 
-- **Stack:** Rust/Iced; 6 providers (CLI-bridged: Cursor, Claude Code; Server-bridged: OpenCode; Direct: Codex, GitHub Copilot, Gemini); CLI-only (no in-process OAuth store). **PlatformConfig** per platform -- one identity per platform; no accounts[] or activeAccountId yet. **platform_specs.rs** is single source of truth for CLI/auth -- no multi-account data today.
+- **Stack:** Rust/Iced; planning model uses 7 provider entries (CLI-bridged: Cursor, Claude Code, Gemini CLI; Server-bridged: OpenCode; Direct: Codex, GitHub Copilot, Gemini Direct). CLI-only today for bridged surfaces (no in-process OAuth store). **PlatformConfig** per platform -- one identity per platform; no accounts[] or activeAccountId yet. **platform_specs.rs** is single source of truth for CLI/auth -- no multi-account data today.
 - **Future:** When native auth for Codex, Copilot, Gemini lands, use OpenCode PR #11832 store + rotating-fetch + per-request context as the blueprint for in-process tokens and HTTP.
 
 ---
@@ -95,9 +96,11 @@ ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan
 
 Each provider entry represents one concrete runtime surface, not a loose vendor family label.
 
+The current planning model contains exactly 7 provider entries.
+
 Examples:
-- `gemini` direct provider
-- `gemini_cli`
+- `gemini` direct provider (`Gemini Direct`)
+- `gemini_cli` (`Gemini CLI`)
 - `cursor_cli`
 - `claude_code_cli`
 - `codex`
@@ -105,6 +108,8 @@ Examples:
 - `opencode`
 
 `provider_family_id` is additive grouping metadata only and MUST NOT replace the concrete provider entry id.
+
+Each provider entry MUST also declare the allowed `auth_surface` values its runtime accepts so PM can validate account compatibility before scheduling and so the HTTP/client layer knows how credentials must be attached or delegated.
 
 ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Models_System.md, ContractName:Plans/usage-feature.md
 
@@ -135,6 +140,29 @@ Rules:
 - `provider_identity` is descriptive metadata only.
 - secrets remain outside config/state stores.
 - separate auth families that change quota semantics remain separate account rows.
+- the canonical account-registration shape is `{ account_id: ulid, provider_id, display_name, auth_method, credential_ref, created_at, last_used_at, status }`; additive runtime/health fields may extend this shape without replacing the canonical keys.
+- `status` is the user-facing lifecycle summary and closes to `active | expired | revoked | error`.
+
+Field definitions:
+- `credential_ref` is a pointer to where the credential lives, never the secret itself. Format: `{credential_store}:{key_path}`.
+- supported `credential_ref` stores are:
+  - `os_keychain` for OS-native secret stores (macOS Keychain, Windows Credential Manager, Linux Secret Service)
+  - `env` for environment-variable indirection
+  - `file` for encrypted file-backed credentials
+  - `cli` for credentials delegated to an external CLI tool/runtime
+- example `credential_ref` values:
+  - `os_keychain:pm/openai/account_abc123`
+  - `env:OPENAI_API_KEY`
+  - `file:~/.config/pm/credentials/gemini_cli.json`
+  - `cli:gemini/default`
+- `auth_surface` is the enum describing where/how the credential is consumed at runtime.
+- `auth_surface` values are:
+  - `header_bearer` for `Authorization: Bearer <token>`
+  - `header_api_key` for provider-specific API-key headers such as `x-api-key`
+  - `query_param` for API key in query string; this path is deprecated and PM should warn before use
+  - `cli_managed` when the CLI runtime performs auth internally and PM delegates execution
+  - `oauth_token` for OAuth2 access tokens attached through the `Authorization` header
+- each provider definition MUST specify its supported `auth_surface` values so the HTTP client knows how to attach credentials and so account validation can reject incompatible pairings early.
 
 Examples:
 - Codex `ChatGPT` and Codex `API key` rows are separate account rows.
@@ -289,7 +317,7 @@ ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Decision_Pol
 ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md#AuthPolicy
 
 Canonical Gemini usage/source expectations:
-- show one shared Gemini usage surface rather than separate top-level OAuth/API pages
+- show one shared Gemini-family usage surface rather than separate top-level Gemini Direct vs Gemini CLI pages
 - label OAuth-backed views as `Gemini quota` when authoritative quota semantics are available
 - label API-key/local-only views with source-qualified wording such as `Gemini (estimated)` when authoritative quota data is not available
 - expose `signal_confidence` so users can tell whether quota pressure is authoritative, structured, heuristic, or local-only
@@ -365,6 +393,55 @@ Rules:
 - provider-reported cooldowns remain read-only facts; PM pause and recheck controls are separate overlays.
 
 ContractRef: ContractName:Plans/Contracts_V0.md#Setup/Health-lifecycle-contracts, ContractName:Plans/usage-feature.md, ContractName:Plans/CLI_Bridged_Providers.md
+
+### 9.3.1 Account registration flows
+
+Provider settings MUST expose account lifecycle controls in a consistent location while still honoring provider-specific auth requirements.
+
+Required flows:
+- **Add account:** `Settings -> Providers -> [Provider] -> Add Account`.
+- **Edit account:** allow `display_name` changes and credential rotation; rotating a credential MUST trigger the provider's re-auth or revalidation flow before the updated row returns to `Ready`.
+- **Remove account:** present a confirmation dialog, remove the credential from the OS/store indicated by `credential_ref`, remove the account record, then reassign any threads or defaults pointing at that account to the provider's default account.
+- **Default account:** each provider has exactly one default account. PM uses that default whenever no explicit account selection is made by policy, role, or manual override.
+
+Registration rules:
+- account creation mints a stable `account_id` as a ULID.
+- new account rows use the canonical schema `{ account_id: ulid, provider_id, display_name, auth_method, credential_ref, created_at, last_used_at, status }`.
+- `status` closes to `active | expired | revoked | error`.
+- removing a non-default account MUST preserve requested/effective history for past runs even though the live row is deleted.
+- removing the current default account MUST atomically promote another eligible account or leave the provider in an explicit no-default state that blocks new runs until resolved.
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md
+
+### 9.3.2 Authentication flow walkthroughs
+
+Authentication walkthroughs define the expected PM-side orchestration around provider-native auth mechanisms.
+
+#### API key flow
+1. User opens `Settings -> Providers -> [Provider] -> Add Account`.
+2. User selects `API Key` as the auth method.
+3. User enters the API key into a secure input field.
+4. PM validates the key with a lightweight test API call such as `list models` or the provider's nearest equivalent.
+5. On success, PM stores the key in the OS credential store, writes the resulting `credential_ref`, and marks the account active.
+6. On failure, PM shows a concrete reason such as `invalid key`, `expired`, or `quota exceeded`, and leaves the row recoverable for retry rather than pretending setup succeeded.
+
+#### OAuth device-code flow
+1. User clicks `Sign in with [Provider]`.
+2. PM requests a device code from the provider.
+3. The UI shows the device code, verification URL, and a QR code that points to the same authorization page.
+4. User completes browser-based authorization outside PM.
+5. PM polls for the token every 5 seconds with a total timeout of 5 minutes.
+6. On success, PM stores the refresh token in the OS credential store and keeps the short-lived access token cached in memory only.
+7. On failure or timeout, PM shows a clear error and an explicit retry option.
+
+#### CLI token flow (Gemini CLI)
+1. PM detects an installed Gemini CLI before presenting the CLI-token option as ready.
+2. PM invokes the Gemini CLI auth command in the background.
+3. The Gemini CLI performs its native OAuth/browser flow.
+4. PM reads the resulting token or credential handle from the CLI credential cache and records it through the account row's `credential_ref`.
+5. Ongoing token refresh remains delegated to the Gemini CLI runtime rather than reimplemented inside PM.
+
+ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/rewrite-tie-in-memo.md, ContractName:Plans/FinalGUISpec.md
 
 ### 9.4 Usage and runtime visibility
 

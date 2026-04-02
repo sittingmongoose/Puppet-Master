@@ -39,44 +39,34 @@ ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md#7
 
 | Plan | Relevance |
 |------|-----------|
-| **Plans/orchestrator-subagent-integration.md** | Orchestrator builds iteration prompts and injects context (e.g. TierContextInjectorHook, coordination context). The **rules block** (application + project) must be included when building every iteration prompt or system prompt. Use the shared rules pipeline; do not duplicate rule content in the orchestrator. |
+| **Plans/orchestrator-subagent-integration.md** | Orchestrator builds iteration prompts and injects context (e.g. context injection hook, coordination context). The **rules block** (application + project) must be included when building every iteration prompt or system prompt. Use the shared rules pipeline; do not duplicate rule content in the orchestrator. |
 | **Plans/interview-subagent-integration.md** | Interview builds prompts for research, validation, and phase Q&A. Application rules always injected; project rules injected when the interview is run for a specific (target) project. Use the shared rules pipeline. |
 | **Plans/assistant-chat-design.md** | Assistant chat sends context to the platform CLI. When the user is working in the context of a project, application rules + project rules must be included. When no project is selected, application rules only. Use the shared rules pipeline. |
 | **AGENTS.md** | Today the Puppet Master repo's AGENTS.md contains rules like "Always use Context7 MCP." That content can be **one source** for default application rules (e.g. on first run or when no application rules file exists). Long term, application rules are a **configurable** list so the user can add/edit without editing AGENTS.md in the app repo. |
 
+ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/interview-subagent-integration.md, ContractName:Plans/assistant-chat-design.md
 ## Two-Tier Rules Model
 
-### Application-Level Rules (Puppet Master)
+Despite the legacy heading name, the normative model is **not** a Phase/Task/Subtask/Iteration hierarchy. The durable instruction layers are:
 
-- **Scope:** Every agent run under Puppet Master -- orchestrator iterations, interview, Assistant (and any future agent-invoking flow).
-- **Examples:** "Always use Context7 MCP," "Prefer subscription auth; no API keys (explicit exception: Gemini API key may be used for subscription-backed access)," "Session ID format: PM-YYYY-MM-DD-HH-MM-SS-NNN."
-- **Purpose:** Global policies that must apply regardless of which project is selected or whether there is a project at all (e.g. Assistant in "no project" mode still gets application rules).
-- **Storage:** At **application** (Puppet Master) level: stored in redb settings (`settings` namespace key `app.agent_rules.application_markdown`) as UTF-8 Markdown.
-  ContractRef: SchemaID:Spec_Lock.json#locked_decisions.storage, ContractName:Plans/storage-plan.md
-- **Bootstrap:** If no application rules are configured, seed from the Puppet Master repo's `AGENTS.md` so "Always use Context7 MCP" and similar are present by default.
-  AutoDecision: Bootstrap seed uses the full `AGENTS.md` file contents (no partial extraction rules).
-  ContractRef: PolicyRule:Decision_Policy.md§2, ContractName:AGENTS.md
-- **Editing:** Ideally configurable via GUI (e.g. Settings → Application rules: list or text area) and/or by editing the file; persisted so they survive restarts.
+### Application-Level Rules (Puppet Master)
+- **Scope:** every agent run under Puppet Master, regardless of whether the work is Assistant, Interview, Orchestrator, or a delegated child run
+- **Purpose:** global policies that apply everywhere
+- **Storage:** redb settings key `app.agent_rules.application_markdown`
+- **Bootstrap:** if empty, seed from the Puppet Master repo `AGENTS.md`
 
 ### Project-Level Rules
+- **Scope:** every agent invocation that runs against a selected project/workspace
+- **Purpose:** project-specific conventions, tooling expectations, and non-obvious constraints
+- **Storage:** `<project_root>/.puppet-master/project-rules.md`
 
-- **Scope:** Every agent that works on **that project** (target workspace). When the orchestrator runs against project P, when the interview is run for project P, or when the Assistant is used with project P selected, project P's rules are included.
-- **Examples:** "Always use DRY Method," "Use Pydantic type hints v2.5.0," "No blanket *.log in gitignore."
-- **Purpose:** Project-specific policies that every agent operating on that codebase must follow (style, tooling, conventions).
-- **Storage:** At **project** (target workspace) level: stored at `<project_root>/.puppet-master/project-rules.md` (UTF-8 Markdown). If the file does not exist, treat project rules as empty.
-  AutoDecision: Canonical project rules path is `.puppet-master/project-rules.md` (no alternative filenames).
-  ContractRef: PolicyRule:Decision_Policy.md§2, Primitive:DRYRules
-- Optional: the interview or a future "project setup" flow can generate or seed this from project AGENTS.md or from user input, but the **runtime** source is this file (or equivalent) so project rules are explicit and editable.
-- **Editing:** User edits the file in the project, or a GUI "Project rules" panel that reads/writes that file for the current project. No duplication: one file per project.
+### Order and precedence
+- Application rules are always included first.
+- Project rules are included when a project context exists.
+- Application rules win over project rules on conflict.
+- Node/work-package/attempt-specific context is **not** another rules layer; it belongs to the Work Bundle and Memory Bundle.
 
-### Order and Combination
-
-- When building the context sent to an agent:
-   1. **Application rules** are always included first (so "always use Context7" and similar are never missed).
-   2. **Project rules** are included when the current context has a **project** (workspace path). They follow application rules so project-specific overrides or additions are clear.
-- **Precedence:** Application rules win if a project rule contradicts an application rule.
-  AutoDecision: Treat application rules as non-overridable and always injected before project rules.
-  ContractRef: PolicyRule:Decision_Policy.md§2, Primitive:DRYRules
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Contracts_V0.md, ContractName:AGENTS.md
 
 ## Feeding Rules Into Every Agent
 
@@ -85,12 +75,13 @@ ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md#7
 - **Concept:** One module or function that, given (optional) project path, returns a **single formatted block** of text: "Application rules" + "Project rules" (if project path is set and project rules exist). All callers use this block when building prompts or system prompts.
 - **Signature (EXAMPLE only):** `get_agent_rules_context(application_config, project_path: Option<&Path>) -> String`. Returns the concatenated rules block (with optional headers like "## Application rules" and "## Project rules" for clarity inside the prompt).
 - **Callers:**
-  - **Orchestrator:** When building the iteration prompt (or system prompt) for each phase/task/subtask/iteration, call the rules pipeline with the current workspace path; prepend or append the returned block to the prompt (or inject via existing mechanism like TierContextInjectorHook or a dedicated "rules injector" step).
+  - **Orchestrator:** When building the iteration prompt (or system prompt) for each node, call the rules pipeline with the current workspace path; prepend or append the returned block to the prompt (or inject via the context injection hook or a dedicated "rules injector" step).
   - **Interview:** When building any prompt that goes to an agent (research, validation, phase Q&A), call the rules pipeline with the interview's target project path; include the block in the prompt.
   - **Assistant:** When the user has a project selected, call the rules pipeline with that project path and include the block in the context sent to the CLI. When no project is selected, call with `project_path: None` so only application rules are included.
 - **DRY:** Rule content lives in one place per layer (application store, project file). The pipeline is the single place that assembles them; no copy-paste of "Context7" or "DRY" into multiple prompt builders.
   ContractRef: Primitive:DRYRules
 
+ContractRef: ContractName:Plans/DRY_Rules.md, ContractName:Plans/Prompt_Pipeline.md
 ### Where in the Prompt
 
 - **Injection location (deterministic):** Prepend the combined rules block to the main (user) prompt for every agent invocation.
@@ -133,146 +124,113 @@ Rules:
 
 ## Instruction Bundle Integration (Application + Project + Scoped `AGENTS.md`)
 
-This plan’s **two-tier rules pipeline** (Application rules + Project rules) remains the durable, user-editable source of “rules” text.
+This plan's durable rules pipeline remains the user-editable source of rules text, but every agent invocation assembles a deterministic **Instruction Bundle** instead of relying on tier-era injector naming.
 
-Separately, Puppet Master supports **scoped instruction files** (`AGENTS.md`) and memory injectors (Attempt Journal, Parent Summary) as context-management primitives (SSOT: `Plans/Contracts_V0.md` §5; feature spec verbatim below).
+**Instruction Bundle order:**
+1. Application rules
+2. Project rules (when a project is selected)
+3. Scoped `AGENTS.md` instruction chain, when enabled
 
-### Assistant-memory separation (clarification)
+Rules:
+- the shared rules pipeline outputs rules content only; it does not inject attempt journals, parent summaries, or assistant-only memory
+- Assistant memory, Attempt Journal, and Parent Summary are separate memory/context injectors and MUST NOT masquerade as rules text
+- within the scoped `AGENTS.md` chain, closest scope wins and identical content is deduplicated deterministically
+- Application rules outrank Project rules and all scoped `AGENTS.md` content; Project rules outrank scoped `AGENTS.md`
+- prompt builders for Assistant, Interview, Orchestrator, and delegated child runs all use the same assembly order and names
 
-Rule: Assistant-only memory (`Plans/assistant-memory-subsystem.md`) is continuity/project-state context and MUST NOT be treated as part of Application rules or Project rules assembly.
-
-ContractRef: ContractName:Plans/assistant-memory-subsystem.md#6-prompt-injection-contract, ContractName:Plans/agent-rules-context.md
-
-UI note: The GUI places the Assistant-memory Gist Review panel adjacent to Memory controls and the Rules viewer/editor for visibility, without changing any rules logic (SSOT: `Plans/assistant-memory-subsystem.md` §7).
-
-Rule: The shared rules pipeline MUST output rules content only; Assistant memory injection is a separate Assistant-only stage and is excluded from orchestrator/interview/subagent prompt assembly.
-
-ContractRef: ContractName:Plans/assistant-memory-subsystem.md#1-capability-boundary, ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/interview-subagent-integration.md
-
-Rule: For every agent invocation, Puppet Master MUST assemble an Instruction Bundle that incorporates, in deterministic order:
-1) Application rules (via the rules pipeline)
-2) Project rules (via the rules pipeline, when a project is selected)
-3) Scoped `AGENTS.md` instruction chain (per `InstructionBundleAssembly`, when enabled)
-
-ContractRef: ContractName:Plans/Contracts_V0.md#InstructionBundleAssembly, ContractName:Plans/Contracts_V0.md#ContextInjectionToggles
-
-Rule: Precedence across instruction sources MUST be deterministic: Application rules win over Project rules and all `AGENTS.md` content; Project rules win over all `AGENTS.md` content; within the scoped `AGENTS.md` chain, closest scope wins (deep overrides parent) with deterministic deduplication.
-
-ContractRef: ContractName:Plans/Contracts_V0.md#InstructionBundleAssembly
-
-Rule: If Attempt Journal and/or Parent Summary injection is enabled, Puppet Master MUST inject them into the Memory Bundle for the relevant Iteration scope only, per the tier-visibility rules, and MUST NOT inject attempt-journal history by default.
-
-ContractRef: ContractName:Plans/Contracts_V0.md#AttemptJournal, ContractName:Plans/Contracts_V0.md#ParentSummary, ContractName:Plans/Contracts_V0.md#ContextInjectionToggles
-
-Rule: Any promotion of stable learnings into `AGENTS.md` MUST follow the Promotion rules and MUST preserve `AGENTS.md` lightness budgets.
-
-ContractRef: ContractName:Plans/Contracts_V0.md#PromotionRules, ContractName:Plans/Contracts_V0.md#AgentsMdLightEnforcement
+ContractRef: ContractName:Plans/Contracts_V0.md#InstructionBundleAssembly, ContractName:Plans/assistant-memory-subsystem.md, ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/interview-subagent-integration.md
 
 <a id="FeatureSpecVerbatim"></a>
 ## Feature Spec (Verbatim)
 
-# Feature Spec: Instruction Scoping + Attempt Journaling + Parent Summary + AGENTS.md Light Enforcement
-## Purpose
-Define deterministic, low-bloat context management for Puppet Master’s multi-tier loop: **Phase → Task → Subtask → Iteration**. This is a product requirement for the finished Puppet Master application (user projects), not the current repo.
-## Goals
-1. Fresh context per Iteration with durable learning (Ralph-style).
-2. Deterministic “cone of context” injection, minimizing token waste.
+This feature defines deterministic, low-bloat context management for Puppet Master's node-graph runtime: run/work-package -> node -> attempt. It is a product requirement for the finished Puppet Master application, not a description of the current repo layout.
+
+### Purpose
+Define deterministic, low-bloat context management for Puppet Master's node-graph runtime: run/work-package -> node -> attempt. This is a product requirement for the finished Puppet Master application, not a description of the current repo layout.
+
+### Goals
+1. Fresh context per attempt with durable learning.
+2. Deterministic bundle assembly that minimizes token waste.
 3. Scoped instructions (`AGENTS.md`) that remain short and relevant.
 4. Three user-configurable context injectors with defaults:
-- Parent Summary (default ON)
-- Scoped AGENTS.md beyond top-level (default ON)
-- Attempt Journal (default ON)
-5. Controlled promotion: promote stable, reusable learnings into scoped AGENTS.md without clutter.
-## Non-goals
-- Not a security boundary unless sandboxing is separately specified.
-- Does not dictate subagent strategy (subagents are encouraged but orthogonal).
----
-## Artifact Types (SSOT Definitions)
-### A) Instruction Files (Durable)
+   - Parent Summary (default ON)
+   - Scoped `AGENTS.md` beyond top-level (default ON)
+   - Attempt Journal (default ON)
+5. Controlled promotion of stable learnings into the nearest appropriate `AGENTS.md`.
+
+### Artifact Types (SSOT Definitions)
+#### A) Instruction Files (Durable)
 **Name:** `AGENTS.md`
-**Scope:** applies to subtree rooted at directory containing it.
-**Lightness rule:** `AGENTS.md` is NOT a wiki. Allowed content: minimal invariants, sharp constraints, “gotchas”, and non-obvious conventions. Disallowed content: architecture tours, directory trees, long command encyclopedias, tool quota tables, redundant material discoverable from repo.
-### B) Attempt Journal (Ephemeral, per Subtask Iteration)
-**Name:** `attempt_journal.md` (or JSON) stored in Puppet Master’s workspace sidecar for that Subtask scope.
-**Purpose:** prevent “groundhog day” repeats. Must include:
-- Outcome (SUCCESS/FAIL)
-- What was attempted (≤3 bullets)
-- Evidence (key command/results snippet IDs)
-- Why it failed (≤2 bullets)
-- Next attempt: try first (≤3 steps)
-- Do not repeat (≤2 bullets)
-**Injection:** only the most recent journal is injected into the next Iteration for the same Subtask when toggle ON.
-### C) Parent Summary (Ephemeral, per handoff)
+**Scope:** applies to the subtree rooted at the directory containing it.
+**Lightness rule:** short invariants, constraints, and non-obvious conventions only.
+
+#### B) Attempt Journal (Ephemeral, per node attempt)
+**Name:** `attempt_journal.md` (or structured equivalent) stored in PM sidecar state for the relevant node scope.
+**Purpose:** prevent repeated failed attempts.
+**Injection:** only the most recent journal for the same node lineage is injected into the next attempt when enabled.
+
+#### C) Parent Summary (Ephemeral, per handoff)
 **Name:** `parent_summary.md`
-**Budget:** 5–10 lines hard cap. Contains:
-- Goal (1 line)
-- Definition of Done (1–2 bullets)
-- Constraints (1–2 bullets)
-- Known pitfall (1 bullet)
-**Injection:** injected into Iteration context when toggle ON.
-### D) Promotion (Controlled, optional)
-Promotion moves stable, reusable learnings into the nearest appropriate `AGENTS.md`. Promotion criteria:
-- Non-obvious, stable, scope-relevant
-- Repeats (same pitfall class ≥2 times in that scope within a window)
-- 1–3 lines per insight
-- Not session-specific narrative
-- Fits within `AGENTS.md` budget; otherwise requires replacement/condense
----
-## Context Assembly Semantics (Deterministic Cone)
+**Budget:** 5–10 lines hard cap.
+**Injection:** injected into attempt context when enabled.
+
+#### D) Promotion (Controlled, optional)
+Promotion moves stable, reusable learnings into the nearest appropriate `AGENTS.md` when the learning is non-obvious, stable, and scope-relevant.
+
+### Context Assembly Semantics (Deterministic Cone)
 Puppet Master constructs explicit bundles for each agent run:
-### Bundles
-1) **Instruction Bundle**
-2) **Work Bundle**
-3) **Memory Bundle**
-### Instruction Bundle
-Always includes top-level `AGENTS.md` (if present).
-If toggle `scopedAgentsMd == ON`:
-- Include applicable `AGENTS.md` chain from root → node scope directory.
-- Precedence: deeper overrides parent on conflicts (“closest wins”).
-- Deduplicate identical lines/sections.
-- Prefer structured headings (Critical rules / Scope / SSOT / Checks / etc).
-If toggle `scopedAgentsMd == OFF`:
-- Include only top-level `AGENTS.md`.
-### Work Bundle
-Contains only what is needed to execute this node:
-- Node objective
-- Acceptance criteria / definition of done
-- Inputs (paths/excerpts)
-- Allowed tools + constraints (if any)
-### Memory Bundle
-If toggle `attemptJournal == ON`:
-- Inject most recent `attempt_journal` for the same Subtask (ONLY 1, no history).
-If toggle `parentSummary == ON`:
-- Inject `parent_summary` (5–10 lines max).
+1. **Instruction Bundle**
+2. **Work Bundle**
+3. **Memory Bundle**
+
+#### Instruction Bundle
+Always includes top-level `AGENTS.md` when present. When scoped `AGENTS.md` is enabled, include the applicable chain from root to the current scope directory, with closest-scope precedence and deterministic deduplication.
+
+#### Work Bundle
+Contains only what is needed to execute the current node/attempt: objective, acceptance criteria, inputs, allowed tools, and explicit constraints.
+
+#### Memory Bundle
+When enabled, inject the most recent node-lineage Attempt Journal and/or the bounded Parent Summary. Assistant-only memory remains Assistant-only and is not injected into unrelated orchestrator/interview/delegated runs.
+
+### Visibility Rules
+- coordinating runs/packages see coordinating objectives and summaries, not every child attempt journal by default
+- node execution sees the current node objective, scoped instruction chain, and node-relevant memory only
+- delegated child attempts inherit the same Instruction Bundle ordering plus child-specific Work/Memory Bundles
+- verification/review attempts use the same assembly semantics; they do not reintroduce deprecated tier vocabulary
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/DRY_Rules.md
 ---
-## Tier Visibility Rules (Phase → Task → Subtask → Iteration)
-### Phase agent sees
-- Instruction: top-level + phase-scoped AGENTS.md (if enabled)
-- Work: phase objectives / acceptance criteria
-- Memory: optional summaries relevant to phase (no attempt journal unless phase has its own iteration concept)
-### Task agent sees
-- Instruction: top-level + phase + task scoped (if enabled)
-- Work: task objectives / acceptance criteria
-- Memory: task-level notes if defined (no subtask attempt journals)
-### Subtask agent sees
-- Instruction: top-level + phase + task + subtask scoped (if enabled)
-- Work: subtask objectives / acceptance criteria
-- Memory: may read latest attempt journal metadata for coordination but does not inject full journal unless it is itself the iteration runner
-### Iteration agent sees (lowest tier, minimal but sufficient)
-- Instruction: top-level + phase + task + subtask scoped (if enabled)
-- Work: this iteration’s exact objective + acceptance criteria
+## Visibility examples (coordinating run → work package → node → attempt)
+### Coordinating run sees
+- Instruction: application/project rules plus the relevant scoped instruction chain
+- Work: run and work-package objectives / acceptance criteria
+- Memory: bounded summaries relevant to coordination, not every child attempt journal by default
+
+### Work-package coordinator sees
+- Instruction: application/project rules plus the applicable scoped instruction chain
+- Work: work-package objectives / acceptance criteria
+- Memory: package-level notes and summaries, not unrelated node-attempt journals
+
+### Node execution sees
+- Instruction: top-level plus the applicable scoped instruction chain
+- Work: node objectives / acceptance criteria
+- Memory: node-relevant memory only; coordinating summaries remain bounded
+
+### Attempt execution sees
+- Instruction: the same applicable instruction chain for the bound node scope
+- Work: this attempt's exact objective + acceptance criteria
 - Memory: latest attempt journal (if enabled) + parent summary (if enabled)
-- Excludes: parent full reasoning, other branches, long histories
+- Excludes: unrelated branches, long histories, and parent full reasoning by default
 ---
 ## Workspace & Storage (User-Project Facing Product Behavior)
 Puppet Master should store these artifacts in a sidecar workspace by default:
 - prevents polluting user repos
 - allows consistent lifecycle management and truncation rules
-Recommended: `.puppet-master/workspace/<project>/<phase>/<task>/<subtask>/` containing:
+Recommended: `.puppet-master/workspace/<project>/<run>/<node>/` containing:
 - `AGENTS.md` (managed or user-owned depending on mode)
 - `parent_summary.md`
 - `attempt_journal.md`
-- iteration run artifacts
+- attempt/run artifacts
 ---
 ## GUI Requirements (Product)
 Add “Context Injection” settings (per project; override per run optional):
@@ -307,10 +265,10 @@ Before a run:
 - record truncation in run metadata and UI
 ---
 ## Acceptance Criteria (Testable)
-1) With scoped AGENTS enabled, an Iteration run includes top-level + applicable scope chain, and excludes unrelated scopes.
+1) With scoped AGENTS enabled, an attempt run includes top-level + applicable scope chain, and excludes unrelated scopes.
 2) With scoped AGENTS disabled, only top-level AGENTS is included.
-3) With attempt journal enabled, Iteration N+1 includes the most recent attempt_journal from Iteration N (same subtask), and never includes older journals by default.
-4) Parent summary injection can be toggled off; when on it is capped at 10 lines and included in Iteration context.
+3) With attempt journal enabled, attempt N+1 includes the most recent attempt_journal from attempt N in the same node lineage, and never includes older journals by default.
+4) Parent summary injection can be toggled off; when on it is capped at 10 lines and included in attempt context.
 5) Promotion never grows AGENTS.md beyond budget; if budget would be exceeded, promotion requires replacement/condense.
 6) GUI exposes the three toggles with correct defaults and displays injected context breakdown including truncation.
 7) AGENTS.md lint flags wiki-content patterns and budget violations; strict mode can block runs.

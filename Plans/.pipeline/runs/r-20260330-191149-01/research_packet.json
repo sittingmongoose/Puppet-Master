@@ -1,0 +1,204 @@
+{
+  "schema_id": "research_packet_v1",
+  "run_id": "r-20260330-191149-01",
+  "created_at_utc": "2026-04-02T01:25:14Z",
+  "topic": "Post-audit reconciliation: tier\u2192node residual drift, owner_tier_id\u2192owner_node_id cross-doc rename, and targeted section fixes across 13 planning docs",
+  "objective": "Apply the reconciliation findings from audit work item w-20260330-191149: (1) propagate owner_tier_id\u2192owner_node_id across 6 docs where WorktreeGitImprovement.md already uses owner_node_id; (2) propagate select_for_tier\u2192select_for_node in Personas.md and LSPSupport.md; (3) replace tier_label\u2192node_label in GitHub_Integration.md worktree display; (4) fix tier_id residual in CLI_Bridged_Providers.md run.started envelope; (5) reframe Personas.md \u00a71.1 agent definition from tier to node model; (6) replace TierContextInjectorHook references in agent-rules-context.md; (7) replace recovery_options[] with allowed_action_ids[] in FileSafe.md event fields; (8) reframe FileSafe.md \u00a714.1 context compiler role names from Phase/Task/Subtask/Iteration to node-graph roles.",
+  "decisions": [
+    {
+      "id": "DEC-01",
+      "title": "owner_tier_id renamed to owner_node_id",
+      "rationale": "WorktreeGitImprovement.md L293 already uses owner_node_id. The tier\u2192node migration requires all worktree ownership fields to use the node model. owner_tier_id is a residual from the pre-rewrite tier hierarchy."
+    },
+    {
+      "id": "DEC-02",
+      "title": "select_for_tier renamed to select_for_node",
+      "rationale": "The subagent selection function operates on run-graph nodes, not tiers. Personas.md and LSPSupport.md reference the old name."
+    },
+    {
+      "id": "DEC-03",
+      "title": "tier_label and tier_id in display/envelope contexts replaced with node_label and node_id",
+      "rationale": "GitHub_Integration.md worktree display and CLI_Bridged_Providers.md run.started envelope use tier-era field names that are inconsistent with the canonical node model in Contracts_V0.md and Executor_Protocol.md."
+    },
+    {
+      "id": "DEC-04",
+      "title": "recovery_options[] is non-canonical; allowed_action_ids[] is canonical",
+      "rationale": "FileSafe.md L2768 already states recovery_options[] is not canonical. The event payload minimum fields at L2708 still list recovery_options[]. The canonical field is allowed_action_ids[] per Contracts_V0.md and Permissions_System.md."
+    },
+    {
+      "id": "DEC-05",
+      "title": "orchestrator-subagent-integration.md full body rewrite deferred",
+      "rationale": "The doc body has 571+ tier references across 6000+ lines with a fundamentally different execution model (Phase/Task/Subtask/Iteration hierarchy) than the canonical node-graph model in the addenda. A full body rewrite requires a dedicated follow-up work item and cannot be faithfully emitted as a section-level patch in this packet."
+    },
+    {
+      "id": "DEC-06",
+      "title": "MiscPlan.md full tier sweep deferred",
+      "rationale": "MiscPlan.md has 237+ tier references across 20+ sections spanning cleanup policy, evidence retention, worktree resolution, and execution ordering. A comprehensive tier\u2192node sweep requires a dedicated work item. This packet does not include MiscPlan.md changes."
+    },
+    {
+      "id": "DEC-07",
+      "title": "Permissions_System.md outstanding merge clusters deferred to verification",
+      "rationale": "Eight permissions-merge.md clusters (3, 8-10, 12-15) may or may not be covered by the C05-C09 fixes already applied. Verification is needed before emitting new content. Deferred to a verification pass."
+    },
+    {
+      "id": "DEC-08",
+      "title": "assistant-memory-subsystem.md downgraded to MUST VERIFY",
+      "rationale": "Grep confirms no owner_tier_id or tier_id references exist in assistant-memory-subsystem.md. The drift agent report was incorrect. No doc_intent needed."
+    },
+    {
+      "id": "DEC-09",
+      "title": "FileSafe Part B context compiler role names updated to node-graph model",
+      "rationale": "FileSafe \u00a714.1 defines role-specific context compiler using Phase/Task/Subtask/Iteration as role names. The canonical execution model uses run-graph nodes. Role names must reflect the node-graph hierarchy while remaining meaningful for context scoping."
+    }
+  ],
+  "doc_intents": [
+    {
+      "path": "Plans/assistant-chat-design.md",
+      "intent": "update",
+      "why": "Residual owner_tier_id at L2481-2482 must become owner_node_id to match WorktreeGitImprovement.md L293 canonical field name.",
+      "anchors": [
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "### W.2 Thread-to-worktree binding data model",
+          "content_markdown": "\n**New redb key family:**\n- Key: `thread_state:{thread_id}:worktree_binding`\n- Value (JSON):\n```json\n{\n  \"worktree_id\": \"wt-abc123\",\n  \"branch_name\": \"assistant/fix-auth-bug\",\n  \"worktree_path\": \".puppet-master/worktrees/wt-abc123\",\n  \"bound_at_utc\": \"2026-03-26T02:45:00Z\",\n  \"binding_origin\": \"manual | auto_create\",\n  \"temp_branch_name\": \"assistant/thread-a1b2c3d4\"\n}\n```\n`temp_branch_name` tracks the original temporary branch name assigned before title generation. For UI display, always use `branch_name`; `temp_branch_name` is for internal bookkeeping only.\n\nContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md\n\n**Inverse lookup (for 1:1 enforcement):**\n- Key: `worktree_binding_reverse:{worktree_id}`\n- Value: `thread_id`\n- Used to quickly check if a worktree is already bound to another thread\n\n**Worktree record extension (existing `worktree_record.v1`):**\n- Add optional field: `owner_thread_id?` alongside existing `owner_run_id?` and `owner_node_id?`\n- Owner semantics: exactly one of `owner_thread_id`, `owner_run_id/owner_node_id`, or neither (manual) is set\n\nContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/WorktreeGitImprovement.md\n\n**1:1 enforcement:** Thread-to-worktree binding is strictly 1:1. One worktree per thread, one thread per worktree. Enforced via the reverse lookup key. If a user tries to bind a worktree already bound to another thread: error toast \"This worktree is already bound to thread '{title}'\". Action blocked.\n\nContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Crosswalk.md\n"
+        }
+      ]
+    },
+    {
+      "path": "Plans/storage-plan.md",
+      "intent": "update",
+      "why": "Residual owner_tier_id at L1327-1328 must become owner_node_id to match WorktreeGitImprovement.md L293.",
+      "anchors": [
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "## Assistant Worktree Binding Storage Addendum",
+          "content_markdown": "This addendum defines storage additions for the assistant thread-to-worktree binding feature.\n\nContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/WorktreeGitImprovement.md\n\n### New redb key families\n\n**Thread worktree binding:**\n- Key pattern: `thread_state:{thread_id}:worktree_binding`\n- Value: JSON `{ \"worktree_id\", \"branch_name\", \"worktree_path\", \"bound_at_utc\", \"binding_origin\" (\"manual\"|\"auto_create\"), \"temp_branch_name\" }`\n- Projection source: seglog events `chat.thread_worktree_bound` / `chat.thread_worktree_unbound`\n- Rebuild: replay bound/unbound events in sequence order; last event per thread_id determines current state\n\n**Reverse lookup (1:1 enforcement):**\n- Key pattern: `worktree_binding_reverse:{worktree_id}`\n- Value: `thread_id`\n- Projection source: same seglog events\n- Purpose: fast check whether a worktree is already bound to another thread\n\nContractRef: ContractName:Plans/Crosswalk.md, ContractName:Plans/DRY_Rules.md\n\n**Worktree record extension:**\n- Existing key: `worktree_record.v1:{project_id}:{worktree_id}`\n- New optional field: `owner_thread_id?` alongside existing `owner_run_id?` and `owner_node_id?`\n- Owner semantics: exactly one of `owner_thread_id`, `owner_run_id/owner_node_id`, or neither (manual) is set\n"
+        }
+      ]
+    },
+    {
+      "path": "Plans/Glossary.md",
+      "intent": "update",
+      "why": "Residual owner_tier_id in assistant worktree definition (L39) must become owner_node_id.",
+      "anchors": [
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "### Assistant worktree terms",
+          "content_markdown": "\n| Term | Definition |\n|---|---|\n| **thread worktree binding** | A 1:1 association between an assistant chat thread and a git worktree. Persisted via seglog events and projected into redb. A thread can have at most one worktree; a worktree can be bound to at most one thread. |\n| **assistant worktree** | A git worktree whose `owner_thread_id` field identifies it as owned by an assistant chat thread. Distinguished from orchestrator-owned (`owner_run_id`/`owner_node_id`) and manual (no owner) worktrees. |\n| **worktree header button** | The button in the assistant chat header (between model selector and context-usage) that provides worktree create/bind/remove/merge/PR actions for the active thread. |\n| **merge-back flow** | The process of integrating assistant worktree changes into the target branch. Four paths: local merge (squash/merge/rebase), PR creation, export (patch/diff/stash), and natural-language merge via assistant. |\n| **pre-merge test gate** | Optional automated test execution before merge-back. Tests run against the merged result (default) or branch only. Auto-detects test commands from 9 project types. Configurable, on by default. |\n| **SC accordion** | Source Control's vertically stacked collapsible section layout: Changes, Worktrees, Branches/Stash, History, Graph. Fixed order, multiple sections openable, persist state per project. |\n| **worktree filter** | Segmented control in SC Worktrees section: All \\| Threads \\| Orchestrator \\| Manual. Filters visible worktree rows by owner type. Default: All. Persisted per project. |\n\nContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/storage-plan.md\n"
+        }
+      ]
+    },
+    {
+      "path": "Plans/LSPSupport.md",
+      "intent": "update",
+      "why": "Residual select_for_tier at L958 must become select_for_node to match node-model naming.",
+      "anchors": [
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "### 17.3 Subagent selection from LSP",
+          "content_markdown": "- **Where in the flow:** When the orchestrator is about to **select a subagent for the next node** (task or subtask), it can optionally query LSP diagnostics for **files in scope** for that node. **Decision:** Default **off**. Config key `orchestrator.lsp_subagent_bias` (bool, default false). When true, call `get_diagnostics_for_paths` and apply bias toward matching-language subagent. If any file has diagnostics (e.g. errors) from a language server X, **prefer** the subagent that matches language X (e.g. rust-analyzer \u2192 rust-engineer, pyright \u2192 python-pro).\n- **\"Files in scope\" definition:** One of (configurable or fixed):\n  - **Changed in last iteration** -- Files modified in the most recent iteration (same as LSP gate scope `\"changed_files\"` for consistency).\n  - **Open in editor** -- Files currently open in the run/context.\n  - **Node's file list** -- If the node has an explicit list of files (e.g. from PRD or plan), use that list.\n  - Default: **changed in last iteration** for consistency with LSP gate.\n- **Documentation:** This behavior is specified in **Plans/orchestrator-subagent-integration.md** (Subagent selection from LSP) and summarized here. Implement in the same place that performs `select_for_node`: after building node context, optionally call LSP client `get_diagnostics_for_paths(scope_paths)`; from the returned diagnostics, derive language(s) from `source` or from file extension \u2192 server id mapping; then bias subagent selection toward matching language (e.g. add to ProjectContext or NodeContext: \"prefer_subagents\": [\"rust-engineer\"] when Rust errors present).\n\nContractRef: ContractName:Plans/LSPSupport.md, ContractName:Plans/orchestrator-subagent-integration.md\n\nBias rules (canonical):\n- LSP bias is a **tie-breaker / ranking hint**, not an absolute selector.\n- Explicit plan requirements, node override lists, or hard-coded contract needs (for example `required_subagents`) take precedence over LSP bias.\n- Preferred scope order is: explicit node file list -> changed files in current node -> open files.\n- Default bias threshold is diagnostics with severity `Error`; implementations MAY optionally include `Warning` when configured.\n- The chosen bias inputs and outcome SHOULD be persisted in run metadata or verification evidence so selection remains explainable.\n\nContractRef: ContractName:Plans/LSPSupport.md, ContractName:Plans/orchestrator-subagent-integration.md\n"
+        }
+      ]
+    },
+    {
+      "path": "Plans/Orchestrator_Page.md",
+      "intent": "update",
+      "why": "owner_tier_id at L180 must become owner_node_id. Section also defines cleanup posture.",
+      "anchors": [
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "## 11. Source Control boundary",
+          "content_markdown": "Source Control owns compact worktree-first Git operations and the unified worktree inventory UI.\n\nOrchestrator owns lane/package/seam operational context, history/lineage, and concern/recovery/governance. Orchestrator does not duplicate a raw worktree inventory; it shows lane/worktree summary in the Progress tab.\n\nAssistant Chat owns thread-level worktree binding, merge-back flow, and natural-language worktree operations. Assistant-owned worktrees appear in the Source Control inventory alongside orchestrator-owned and manual worktrees.\n\nContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/assistant-chat-design.md\n\n**Ownership model:**\n- `owner_run_id` / `owner_node_id` \u2192 orchestrator-owned\n- `owner_thread_id` \u2192 assistant-owned\n- neither \u2192 manual (user-created)\n\nAll three categories are visible in the Source Control Worktrees accordion. Owner metadata (Thread, Orch, Manual) is displayed as a label on each worktree row.\n\nContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/WorktreeGitImprovement.md\n\nCleanup posture:\n- Orchestrator-owned: governed by runner contract cleanup policy\n- Assistant-owned: user-initiated via thread delete, chat dropdown, or Source Control remove action\n- Manual: user-initiated via Source Control remove action\n\nContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Crosswalk.md, ContractName:Plans/Contracts_V0.md\n"
+        }
+      ]
+    },
+    {
+      "path": "Plans/GitHub_Integration.md",
+      "intent": "update",
+      "why": "tier_label (L190, L212) and owner_tier_id (L212) must become node_label and owner_node_id in worktree display.",
+      "anchors": [
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "### A.4 Worktrees",
+          "content_markdown": "Worktrees are first-class UI objects, not hidden plumbing.\n\nThe Worktrees accordion section uses single-column expandable rows optimized for the narrow Source Control panel.\n\nContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/assistant-chat-design.md\n\n**Compact row (default state):**\n- Line 1: worktree glyph icon + branch name (truncated with ellipsis if needed) + expand chevron\n- Line 2: status pill + owner label (truncated, tooltip for full)\n- Owner format: `Thread: <thread_title>` or `Orch: <node_label>` or `Manual`\n- Full-width click target for expand/collapse\n\n**Expanded row:**\n- Detail fields: Path (full, selectable/copyable), Base ref, Created/age\n- Action buttons (stacked/wrapped, not crammed):\n  - `Open Files` \u2014 opens worktree root in file manager\n  - `Compare` \u2014 opens branch-to-branch diff (worktree HEAD vs base HEAD) via `cmd.git.open_diff`\n  - `Merge` \u2014 opens merge confirmation dialog; shown for assistant-owned and manual worktrees only (not orch-owned)\n  - `Create PR` \u2014 opens PR creation panel; shown when project has GitHub remote\n  - `Remove` \u2014 calls remove_worktree (confirmation if dirty or thread-bound)\n  - `Open Thread` \u2014 navigates to owning thread in assistant chat (thread-owned only; hidden if thread deleted). Opens Chat panel and scrolls to thread.\n  - For orch-owned: `Open Thread` replaced with `Open Lane`\n\nContractRef: ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/Decision_Policy.md, ContractName:Plans/Wiring_Matrix.md\n\n**Filtering:** Filter bar at top of Worktrees section: segmented control `All | Threads | Orchestrator | Manual`. Default: `All`. Filter state persisted per project: `config:project:{pid}:source_control.worktree_filter`. Filter bar degrades to icon-only below 280px panel width (tooltip on hover).\n\n**Sorting:** By creation time descending (newest first). No user-configurable sort in MVP.\n\n**Owner model:** Each worktree row displays an owner field. Owner is one of:\n- `Thread: <thread_title>` \u2014 assistant-owned via `owner_thread_id`\n- `Orch: <node_label>` \u2014 orchestrator-owned via `owner_run_id`/`owner_node_id`\n- `Manual` \u2014 no owner (user-created or orphaned)\n\nContractRef: ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/Contracts_V0.md\n\nBlocked-state rules:\n- `dirty_worktree` and `worktree_conflict` are explicit runtime states, not generic errors\n- active-run ownership must be visible before prune/remove actions\n- worktree actions MUST preserve safe-point and remediation lineage semantics\n\nContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/assistant-chat-design.md\n\n**Minimum width (240px):** Compact rows: branch name truncated; status pill and owner on second line. Expanded rows: fields stack vertically; action buttons wrap.\n"
+        }
+      ]
+    },
+    {
+      "path": "Plans/CLI_Bridged_Providers.md",
+      "intent": "update",
+      "why": "tier_id? in run.started envelope (L508) is not in canonical Contracts_V0.md. Replace with node_id? to match canonical event schema.",
+      "anchors": [
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "## Persistence mapping (seglog)",
+          "content_markdown": "Persistent storage is SSOT in `Plans/storage-plan.md`. This section only states the required mapping from normalized provider runs to seglog event types that already exist in that plan.\n\nMinimum required persistence:\n- Emit `run.started` at run begin with `{ run_id, thread_id, platform, node_id?, mode, strategy, strategy_resolution_reason }`.\n- Emit `usage.event` for any usage updates that can be normalized.\n- Emit tool analytics events per `Plans/Tools.md`:\n  - `tool.invoked` when a tool completes (allowed and executed) with required payload fields.\n  - `tool.denied` when policy blocks (deny) or user declines (ask) with required payload fields.\n- Emit `run.completed` exactly once with `{ run_id, status, outcome, stop_reason?, budget_key?, budget_limit?, observed_value? }` and an optional usage summary.\n\nContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Tools.md\n\n---\n\n**Usage on message/turn and cost_usage:** Usage may be stored on message/turn for per-thread display. The cost_usage runtime artifact (Plans/Runtime_Artifacts_Panel.md) reuses the same canonical schema as usage.event; there is no second canonical store.\n"
+        }
+      ]
+    },
+    {
+      "path": "Plans/Personas.md",
+      "intent": "update",
+      "why": "\u00a71.1 Agent definition references tier hierarchy (Phase/Task/Subtask/Iteration); must use node-graph model. \u00a76 Reserved Personas enforcement references select_for_tier(); must become select_for_node().",
+      "anchors": [
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "### 1.1 Agent",
+          "content_markdown": "<a id=\"DEF-AGENT\"></a>\n\nAn **Agent** is a running AI execution unit. It is a concrete instance within a Puppet Master run \u2014 a provider process that receives a compiled context (system prompt, instructions, conversation history) and produces a response stream. The Orchestrator spawns Agents for each node in the run graph. An Agent is ephemeral; it exists only for the duration of its run.\n\nContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Executor_Protocol.md\n"
+        },
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "## 6. Reserved Personas",
+          "content_markdown": "<a id=\"RESERVED-PERSONAS\"></a>\n\nThe following Persona IDs are **protected Puppet Master built-in IDs**. They MUST NOT be used for user-created Personas. When the corresponding built-in `PERSONA.md` definitions are present, they remain selectable and assignable as first-class built-ins; the restriction applies only to user-defined collisions.\n\nContractRef: PolicyRule:Decision_Policy.md\u00a72, ContractName:Plans/Personas.md#PERSONA-VALIDATION\n\n| Reserved ID | Planned purpose | Status |\n|-------------|----------------|--------|\n| `collaborator` | User-facing planning and clarification Persona. | Protected built-in ID. |\n| `general-purpose` | Broad default execution Persona for general work. | Protected built-in ID. |\n| `explorer` | Explores existing codebases; read-only investigation Persona. | Protected built-in ID. |\n| `researcher` | Web research + collaboration-focused Persona. | Protected built-in ID. |\n| `deep-researcher` | Broader/longer research Persona with extended context. | Protected built-in ID. |\n\n**Enforcement:** The Persona validation logic (\u00a73.3) MUST reject creation of user Personas with these IDs. If a built-in Persona with one of these IDs exists in canonical Persona storage, `select_for_node()` and surface-specific resolvers MAY return it normally. Imported provider-native agent files MUST NOT overwrite these IDs; collisions are handled per \u00a710.5/\u00a710.8.\n\nContractRef: ContractName:Plans/Personas.md#PERSONA-VALIDATION, ContractName:Plans/orchestrator-subagent-integration.md\n"
+        }
+      ]
+    },
+    {
+      "path": "Plans/agent-rules-context.md",
+      "intent": "update",
+      "why": "TierContextInjectorHook is a legacy code reference (L42, L88). Replace with generic 'context injection hook' mechanism name consistent with node-graph model.",
+      "anchors": [
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "## Relationship to Other Plans",
+          "content_markdown": "| Plan | Relevance |\n|------|-----------|\n| **Plans/orchestrator-subagent-integration.md** | Orchestrator builds iteration prompts and injects context (e.g. context injection hook, coordination context). The **rules block** (application + project) must be included when building every iteration prompt or system prompt. Use the shared rules pipeline; do not duplicate rule content in the orchestrator. |\n| **Plans/interview-subagent-integration.md** | Interview builds prompts for research, validation, and phase Q&A. Application rules always injected; project rules injected when the interview is run for a specific (target) project. Use the shared rules pipeline. |\n| **Plans/assistant-chat-design.md** | Assistant chat sends context to the platform CLI. When the user is working in the context of a project, application rules + project rules must be included. When no project is selected, application rules only. Use the shared rules pipeline. |\n| **AGENTS.md** | Today the Puppet Master repo's AGENTS.md contains rules like \"Always use Context7 MCP.\" That content can be **one source** for default application rules (e.g. on first run or when no application rules file exists). Long term, application rules are a **configurable** list so the user can add/edit without editing AGENTS.md in the app repo. |\n\nContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/interview-subagent-integration.md, ContractName:Plans/assistant-chat-design.md\n"
+        },
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "### Single Rules Pipeline (DRY)",
+          "content_markdown": "- **Concept:** One module or function that, given (optional) project path, returns a **single formatted block** of text: \"Application rules\" + \"Project rules\" (if project path is set and project rules exist). All callers use this block when building prompts or system prompts.\n- **Signature (EXAMPLE only):** `get_agent_rules_context(application_config, project_path: Option<&Path>) -> String`. Returns the concatenated rules block (with optional headers like \"## Application rules\" and \"## Project rules\" for clarity inside the prompt).\n- **Callers:**\n  - **Orchestrator:** When building the iteration prompt (or system prompt) for each node, call the rules pipeline with the current workspace path; prepend or append the returned block to the prompt (or inject via the context injection hook or a dedicated \"rules injector\" step).\n  - **Interview:** When building any prompt that goes to an agent (research, validation, phase Q&A), call the rules pipeline with the interview's target project path; include the block in the prompt.\n  - **Assistant:** When the user has a project selected, call the rules pipeline with that project path and include the block in the context sent to the CLI. When no project is selected, call with `project_path: None` so only application rules are included.\n- **DRY:** Rule content lives in one place per layer (application store, project file). The pipeline is the single place that assembles them; no copy-paste of \"Context7\" or \"DRY\" into multiple prompt builders.\n  ContractRef: Primitive:DRYRules\n\nContractRef: ContractName:Plans/DRY_Rules.md, ContractName:Plans/Prompt_Pipeline.md\n"
+        }
+      ]
+    },
+    {
+      "path": "Plans/FileSafe.md",
+      "intent": "update",
+      "why": "L2708 recovery_options[] is non-canonical (L2768 already says so); replace with allowed_action_ids[]. \u00a714.1 role names Phase/Task/Subtask/Iteration must reflect node-graph model.",
+      "anchors": [
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "### 3. Event and analytics requirements",
+          "content_markdown": "FileSafe event payloads must remain rich enough for both analytics and runtime recovery surfaces.\n\nMinimum fields:\n- `guard_type`\n- `pattern_id` or pattern name\n- `timestamp`\n- `command_or_path_summary`\n- `recovery_allowed`\n- `allowed_action_ids[]`\n\nContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Permissions_System.md\n"
+        },
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "### 14.1 Role-Specific Context Compiler",
+          "content_markdown": "**Problem:** Every agent currently receives the same context files regardless of node type or role. Planning nodes load full REQUIREMENTS; execution nodes load STATE and full plans; verification nodes load full protocol docs. That wastes tokens and dilutes focus.\n\n**Solution:** A **context compiler** produces one compiled context file per node role. Each file contains only what that role needs. Filtering is deterministic (pattern-based on known file formats), not LLM-based -- zero token cost and reliable.\n\n**Module:** `src/context/` (or `src/prompt/context_compiler.rs`).\n\n**Output files:** `.puppet-master/runs/{run_id}/nodes/{node_id}/.context-{role}.md`.\n\n**Compiler contract:**\n\n```rust\n// DRY:FN:compile_context \u2014 Compile role-specific context for agent\npub fn compile_context(\n    node_id: &str,\n    role: AgentRole,\n    plan_path: Option<&Path>,\n    working_directory: &Path,\n) -> Result<PathBuf>;\n```\n\nContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Contracts_V0.md\n\n**Role \u2192 content mapping:**\n\n| Role     | Contents |\n|----------|----------|\n| **Planning**  | Node goal (from roadmap), success criteria, **filtered requirements** (only node-mapped), active decisions (from state/progress). |\n| **Execution**   | Node goal, project conventions (from AGENTS.md), **bundled skills** if plan references them. |\n| **Scoped-execution**| Node goal, conventions, current scoped-execution scope. |\n| **Iteration** | Node goal, conventions, iteration scope; same as Execution when no scope split. |\n\nContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/FileSafe.md\n\n**Requirement filtering:** Parse REQUIREMENTS (or prd.json) and include only items whose IDs are listed in the current node's scope. Use grep/sed or structured parse on a known format; no LLM.\n\n**When to run:** Before spawning the agent for that role (e.g. in platform runner or orchestrator): call `compile_context(node_id, role, plan_path, cwd)`, then add the returned path to `ExecutionRequest.context_files` (or equivalent) so the agent receives the compiled file instead of (or in addition to) raw project files, per config.\n\n**Config:** `context.compiler_enabled` (default true). If false or compilation fails, fall back to existing behavior (direct file reads).\n\nContractRef: ContractName:Plans/FileSafe.md, ConfigKey:context.compiler_enabled\n\n**Example Planning context output (snippet):**\n\n```markdown\n## Node N-002 Context (Compiled)\n\n### Goal\nImplement role-specific context compiler and wire into platform runners.\n\n### Success Criteria\n- compile_context() produces .context-{role}.md under .puppet-master/runs/{run_id}/nodes/{id}/\n- Only node-mapped requirements appear in Planning context\n\n### Requirements (REQ-06, REQ-07, REQ-08, REQ-09)\n- [ ] **REQ-06**: compile_context script extracts node-relevant requirements...\n- [ ] **REQ-07**: Compiler produces .context-planning.md with node goal...\n\n### Active Decisions\n- Deterministic context compilation (pattern-based, no LLM)\n- Marker-file approach for compaction detection\n```\n"
+        }
+      ]
+    }
+  ]
+}

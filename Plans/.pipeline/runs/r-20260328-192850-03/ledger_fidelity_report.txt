@@ -1,0 +1,151 @@
+AUDIT SUMMARY
+- Overall verdict: blocked. The planning docs are not fidelity-complete for implementation use.
+- The packet-touched docs preserve much of the canonical direction, but several implementation-shaping details did not survive cleanly: owner docs still contain stale contradictory text, some structured contracts were compressed into gist-level prose, and a few consumer docs still drift from their owner docs.
+- Future implementation agents could still follow stale or contradictory canon without reopening the ledger.
+- Main risk themes: stale contradictory owner text, owner/consumer drift, and over-summarized operational contracts.
+- Note: `Plans/.pipeline/verifier_report.txt` was empty, so it did not contribute semantic coverage evidence to this audit.
+
+CHUNKING / DELEGATION SUMMARY
+- The ledger was split mechanically by stable heading-owned ranges before semantic review.
+- Seven subauditors were used.
+- Initial chunk map:
+  - Chunk 1: lines 1-216 — Phase 1/A2A evaluation; docs: `Plans/orchestrator-subagent-integration.md`, `Plans/Prompt_Pipeline.md`, `Plans/Contracts_V0.md`, `Plans/usage-feature.md`, `Plans/FinalGUISpec.md`, `Plans/Permissions_System.md`
+  - Chunk 2: lines 217-310 — Phase 2 categories 1-8; docs: `Plans/FinalGUISpec.md`, `Plans/orchestrator-subagent-integration.md`, `Plans/Permissions_System.md`, `Plans/WorktreeGitImprovement.md`, `Plans/Contracts_V0.md`, `Plans/usage-feature.md`
+  - Chunk 3: lines 311-389 — Phase 2 categories 9-10 + Phase 2 gaps/decisions; docs: `Plans/FileSafe.md`, `Plans/Prompt_Pipeline.md`, `Plans/usage-feature.md`, `Plans/FinalGUISpec.md`, `Plans/WorktreeGitImprovement.md`, `Plans/Contracts_V0.md`
+  - Chunk 4: lines 390-510 — Phase 3-4 gap analysis and resolved decisions; docs: `Plans/Permissions_System.md`, `Plans/FileSafe.md`, `Plans/WorktreeGitImprovement.md`, `Plans/FinalGUISpec.md`, `Plans/Prompt_Pipeline.md`, `Plans/Contracts_V0.md`, `Plans/orchestrator-subagent-integration.md`, `Plans/usage-feature.md`
+  - Chunk 5: lines 511-625 — Phase 5 deep sweep; docs: `Plans/WorktreeGitImprovement.md`, `Plans/Permissions_System.md`, `Plans/FileSafe.md`, `Plans/FinalGUISpec.md`, `Plans/Contracts_V0.md`, `Plans/Prompt_Pipeline.md`, `Plans/usage-feature.md`
+  - Chunk 6: lines 626-761 — Phase 6 reconciliation/coverage; docs: `Plans/FileSafe.md`, `Plans/usage-feature.md`, `Plans/Contracts_V0.md`, `Plans/Permissions_System.md`, `Plans/orchestrator-subagent-integration.md`, `Plans/FinalGUISpec.md`, `Plans/WorktreeGitImprovement.md`, `Plans/Prompt_Pipeline.md`
+  - Chunk 7: lines 762-878 — Phase 7 second reconciliation/coverage; docs: `Plans/FileSafe.md`, `Plans/usage-feature.md`, `Plans/Contracts_V0.md`, `Plans/Permissions_System.md`, `Plans/FinalGUISpec.md`, `Plans/WorktreeGitImprovement.md`, `Plans/Prompt_Pipeline.md`
+- Initial outputs for chunks 1, 3, and 4 became unreadable after completion; bounded replacement subauditors were launched on those same ranges and their outputs were merged instead of reading the full ledger directly.
+- Merge weighting favored the later reconciliation passes (Chunks 6-7) whenever earlier-phase findings appeared broader than the ledger's own final remaining-work register.
+- After the first report write, a delayed replacement audit for Chunk 4 arrived and was incorporated into this updated report because it added additional material fidelity failures rather than merely repeating already-logged ones.
+
+LEDGER OBLIGATIONS SUMMARY
+- At least 216 canon-relevant obligations / obligation bundles were extracted across the seven chunks and late replacement audits.
+- Major obligation clusters:
+  - File safety: fail-closed canonicalization, same-directory atomic writes, optimistic concurrency, case folding, temp/lock lifecycle, startup recovery
+  - Usage/billing: canonical `seglog -> analytics scan -> redb rollups -> UI` pipeline, monotonic cost rules, billing-entity conditionality, display precision, spending limits, token/cost field contracts
+  - Prompt/context: cache preservation, compaction immunity, deterministic overflow handling, thinking/reasoning preservation, post-filter integrity, provider-specific cache strategy
+  - Contracts/runtime: normalized stream/events, auth lifecycle, tool execution integrity, timeout/shell isolation, provider capability details
+  - Permissions/orchestration: inherited ceilings, merge-not-replace behavior, hook safety, subagent runtime isolation/visibility, canonical concurrency defaults
+  - Process/MCP/git: readiness states, retry/recovery invariants, exit-code classification, stale optionality cleanup
+- Clusters most at risk of stubbing or loss:
+  - `Plans/FileSafe.md` owner canon, where corrected prose and stale examples now conflict and where some resolved write-path rules remain under-specified
+  - `Plans/usage-feature.md` owner canon, where the canonical pipeline, spending-limit status names, field naming, and compatibility-shim end-state are still not singularly stated everywhere
+  - `Plans/Contracts_V0.md`, where corrected prose survives better than structured examples and some event/status/payload lists remain compressed
+  - `Plans/Prompt_Pipeline.md`, where several implementation-level cache/compaction rules are still compressed into gist-level prose or swapped for softer behavior
+  - `Plans/orchestrator-subagent-integration.md`, where SSOT values and later prose still conflict on concurrency defaults
+- Earlier chunks surfaced broader concerns, but the ledger's later reconciliation passes narrowed the confirmed remaining fidelity gaps to the findings below.
+
+FINDINGS
+- FIDELITY-ID: FID-001
+  severity: blocker
+  where: `Plans/FileSafe.md#3.3 BaseRunner Integration`
+  ledger obligation that did not fully survive: Realpath/canonicalization failure must fail closed and must never fall back to the unresolved path.
+  why the current doc is stubbed / incomplete / over-summarized / mis-owned: The owner doc's normative prose now locks fail-closed behavior, but the embedded implementation-style example still shows `canonicalize().unwrap_or_else(|_| resolved_path)`. That leaves contradictory canon inside the owner doc itself and can steer implementation back to the forbidden fallback path.
+  what kind of recovery is needed: reconcile doc set
+
+- FIDELITY-ID: FID-002
+  severity: high
+  where: `Plans/FileSafe.md#3.1 Modify BaseRunner` and `Plans/FileSafe.md#Issue 5: Guard Initialization Failure`
+  ledger obligation that did not fully survive: The reconciled FileSafe posture is fail-closed; stale disable-on-init-failure / graceful-degradation guidance was supposed to be retired.
+  why the current doc is stubbed / incomplete / over-summarized / mis-owned: Even after the fail-closed rewrite, older text still preserves `BashGuard::disabled()`, `SecurityFilter::disabled()`, and `graceful degradation` style guidance as live plan text. That leaves two competing safety postures in the same owner doc.
+  what kind of recovery is needed: reconcile doc set
+
+- FIDELITY-ID: FID-003
+  severity: high
+  where: `Plans/FileSafe.md#11.1.2 Atomic write contract`
+  ledger obligation that did not fully survive: Phase 3/4 locked atomic writes as same-directory `write <target>.tmp.<random> -> fsync -> rename`, applying across seglog, redb, and config/state surfaces, and paired that with optimistic concurrency checks instead of file locking.
+  why the current doc is stubbed / incomplete / over-summarized / mis-owned: The owner doc keeps only generalized `temp -> fsync -> rename` language and loosens temp placement to `per-session temp directory or same-directory temp naming scheme`, which drops the same-directory atomicity requirement. It also does not carry the read-version / conflict semantics for optimistic concurrency, so a resolved write-path contract remains partly ledger-only.
+  what kind of recovery is needed: packetize fuller section content
+
+- FIDELITY-ID: FID-004
+  severity: high
+  where: `Plans/usage-feature.md#Rewrite alignment (2026-02-21)` and `Plans/usage-feature.md#Storage dependency (implementation)`
+  ledger obligation that did not fully survive: The canonical usage pipeline is `seglog -> analytics scan jobs -> redb rollups -> UI`, and `usage.jsonl` is a mirror/compatibility shim rather than an alternate aggregation source.
+  why the current doc is stubbed / incomplete / over-summarized / mis-owned: Later sections carry the corrected pipeline, but earlier owner-doc sections still describe analytics jobs aggregating over `seglog (and any JSONL mirror)` or scanning `seglog (or JSONL mirror)`. The doc also leaves the `usage.jsonl` shim retirement trigger/end-state ambiguous.
+  what kind of recovery is needed: move detail to owner doc
+
+- FIDELITY-ID: FID-005
+  severity: medium
+  where: `Plans/Contracts_V0.md#4.1 AuthState` and `Plans/Contracts_V0.md#Billing entity field contract`
+  ledger obligation that did not fully survive: Billing-entity fields are conditionally present; when they do not apply, they must be omitted rather than null-padded.
+  why the current doc is stubbed / incomplete / over-summarized / mis-owned: The prose rule was corrected, but the structured example still includes `selected_billing_entity_id: null` immediately next to omission-based prose. That leaves contradictory example-level canon in the owner contract.
+  what kind of recovery is needed: reconcile doc set
+
+- FIDELITY-ID: FID-006
+  severity: medium
+  where: `Plans/usage-feature.md#Adaptive display precision` and `Plans/FinalGUISpec.md#7.4.0A Runtime usage, lock, and MCP readiness alignment`
+  ledger obligation that did not fully survive: Adaptive cost precision is a locked rule and needs one exact owner definition consumed consistently by UI docs.
+  why the current doc is stubbed / incomplete / over-summarized / mis-owned: The planning set still shows drift between the owner usage doc and the GUI consumer around the exact precision tiers. Even where the gist matches, the exact tiering rule is not singularly owned, so an implementer can land on different display behavior depending on which doc they follow.
+  what kind of recovery is needed: update consumer/mirror doc
+
+- FIDELITY-ID: FID-007
+  severity: medium
+  where: `Plans/usage-feature.md#Spending limits and budget enforcement`
+  ledger obligation that did not fully survive: Spending enforcement resolved to distinct pre-request and post-response budget statuses plus a configurable warning threshold, with both per-run and per-session budgets.
+  why the current doc is stubbed / incomplete / over-summarized / mis-owned: The owner doc preserves the general budget logic, but status naming drifts from the resolved terminology and the warning threshold is presented as a fixed 80% behavior instead of a configurable canon knob.
+  what kind of recovery is needed: reconcile doc set
+
+- FIDELITY-ID: FID-008
+  severity: medium
+  where: `Plans/Contracts_V0.md#Token bucket contract` and `Plans/usage-feature.md#Unified UsageRecord schema expectations`
+  ledger obligation that did not fully survive: The resolved usage schema locked separate token buckets alongside a canonical cost field/unit contract.
+  why the current doc is stubbed / incomplete / over-summarized / mis-owned: Token-bucket separation survives, but field/unit ownership drifts between `cost_usd`-style contract framing and `cost_microdollars` schema naming without one clearly reconciled canonical contract. That leaves field-level implementation choice under-specified.
+  what kind of recovery is needed: reconcile doc set
+
+- FIDELITY-ID: FID-009
+  severity: medium
+  where: `Plans/Prompt_Pipeline.md#2.1 Context assembly and cache preservation`
+  ledger obligation that did not fully survive: Provider-specific cache strategy, thinking/reasoning preservation through replay/compaction, and cache-preservation behavior must survive as implementation-grade canon.
+  why the current doc is stubbed / incomplete / over-summarized / mis-owned: The current section captures the gist of cache preservation, but not the full structured owner content the ledger resolved: provider-specific strategy distinctions, thinking-block preservation semantics, and an explicit comparison surface strong enough for implementation without rereading the ledger.
+  what kind of recovery is needed: packetize fuller section content
+
+- FIDELITY-ID: FID-010
+  severity: high
+  where: `Plans/Prompt_Pipeline.md#2.0 Compaction-immune content`
+  ledger obligation that did not fully survive: Large instruction-file overflow behavior was resolved as a deterministic compaction-immune budget algorithm with protected system/persona content and FIFO truncation of lower-priority pinned content when needed.
+  why the current doc is stubbed / incomplete / over-summarized / mis-owned: The owner doc instead softens this into an explicit sizing/error problem and does not preserve the resolved overflow algorithm, the protected-priority carve-out, or the threshold/ordering behavior. That swaps implementation canon for much weaker summary prose.
+  what kind of recovery is needed: packetize fuller section content
+
+- FIDELITY-ID: FID-011
+  severity: medium
+  where: `Plans/Prompt_Pipeline.md#1.1 Compaction immunity` and `Plans/Prompt_Pipeline.md#2.3 Post-filter integrity rules`
+  ledger obligation that did not fully survive: Default compaction-immune content, synthetic-continue boundaries, and empty-message remediation are part of the prompt contract, not optional implementation notes.
+  why the current doc is stubbed / incomplete / over-summarized / mis-owned: The doc preserves the high-level intent, but the final ruleset still lacks a fully explicit default immune-set contract, the remediation path when filtering/compaction yields an empty message, and the structured synthetic-message boundaries the ledger locked.
+  what kind of recovery is needed: packetize fuller section content
+
+- FIDELITY-ID: FID-012
+  severity: medium
+  where: `Plans/orchestrator-subagent-integration.md#Subagent Configuration` and `Plans/orchestrator-subagent-integration.md#Gap #40: Crew size limits and resource management (GUI updates required)`
+  ledger obligation that did not fully survive: Canonical concurrency defaults were resolved to one specific 4/8/32 limit set and should be singular inside the owner doc.
+  why the current doc is stubbed / incomplete / over-summarized / mis-owned: The SSOT block carries 4/8/32, but later prescriptive prose still says `Maximum 10 subagents per crew` and `Maximum 5 active crews per platform`. That leaves conflicting defaults inside the owner doc itself.
+  what kind of recovery is needed: reconcile doc set
+
+- FIDELITY-ID: FID-013
+  severity: medium
+  where: `Plans/orchestrator-subagent-integration.md#Task-envelope timeout contract` and `Plans/Contracts_V0.md#Runtime Scheduler / Attempt Lineage Contract Addendum`
+  ledger obligation that did not fully survive: The timeout envelope canon includes parent-budget clamping plus structured timeout status/payload terminology.
+  why the current doc is stubbed / incomplete / over-summarized / mis-owned: The orchestrator doc preserves timeout propagation and grace-period behavior, but the resolved kill/status naming and payload contract are not carried through consistently into the contracts surface.
+  what kind of recovery is needed: update consumer/mirror doc
+
+- FIDELITY-ID: FID-014
+  severity: medium
+  where: `Plans/FinalGUISpec.md#7.4 Settings and inspectors`
+  ledger obligation that did not fully survive: Per-model compaction thresholds were resolved as user-visible advanced settings and needed an explicit GUI consumer contract.
+  why the current doc is stubbed / incomplete / over-summarized / mis-owned: Prompt_Pipeline carries default threshold values, but FinalGUISpec never picks up the settings surface for viewing/editing those fields. The consumer doc therefore remains too thin for the owner contract it is supposed to expose.
+  what kind of recovery is needed: update consumer/mirror doc
+
+- FIDELITY-ID: FID-015
+  severity: medium
+  where: `Plans/WorktreeGitImprovement.md#3.0 Git subprocess integrity invariant`, `Plans/WorktreeGitImprovement.md#3.11 Empty commit handling`, and `Plans/WorktreeGitImprovement.md#Readiness for implementation`
+  ledger obligation that did not fully survive: The git subprocess invariant and the `nothing to commit` classification must form one coherent rule: non-zero exits are classified and handled, not relegated to optional follow-up work.
+  why the current doc is stubbed / incomplete / over-summarized / mis-owned: The corrected invariant exists, but summary/checklist/readiness sections still frame `nothing to commit` handling as optional/skippable. That leaves stale optionality adjacent to the new owner rule.
+  what kind of recovery is needed: reconcile doc set
+
+FINAL VERDICT
+- The docs are not fidelity-complete for implementation use.
+- The surviving problems are not formatting issues; they are canon-shaping gaps where stale examples, contradictory examples, conflicting defaults, or summary-level prose can still override the intended owner rules.
+- An implementation agent could still make the wrong choices around FileSafe fail-closed behavior, same-directory atomic writes, optimistic concurrency, usage aggregation source, budget/status naming, billing-entity omission, prompt cache/compaction behavior, concurrency defaults, timeout payloads, GUI exposure of thresholds, and git exit handling without reopening the ledger.
+
+<ledger_fidelity_blocked/>
