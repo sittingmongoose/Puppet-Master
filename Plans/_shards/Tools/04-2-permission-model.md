@@ -101,7 +101,7 @@ ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/storage-plan.md
 | **FileSafe.md** | Command blocklist ≈ bash deny; write scope ≈ edit path allowlist; security filter ≈ read path deny (.env). Central policy engine; permission + FileSafe both apply. |
 | **FileManager.md** | Workspace roots, open paths; external_directory and path rules may affect File Manager/editor exposure. |
 | **assistant-chat-design.md** | YOLO/Regular (§3); approve for session ≈ always; bash audit trail and FileSafe. |
-| **orchestrator-subagent-integration.md** | Run config snapshot includes tool permissions; headless ask → deny or HITL; tier/subagent overrides. |
+| **orchestrator-subagent-integration.md** | Run config snapshot includes tool permissions; headless ask → deny or HITL; node/subagent overrides. |
 | **interview-subagent-integration.md** | Same run config and permission snapshot for interview runs. |
 
 ---

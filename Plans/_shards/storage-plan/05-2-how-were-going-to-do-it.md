@@ -99,16 +99,72 @@ ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/GitHub_Integration.
 
 #### 2.2.1 Mandatory CRC32 per record
 
-Every seglog record MUST include a CRC32 checksum computed over the record payload. This is a mandatory correctness requirement, not an optional enhancement.
-
-ContractRef: ContractName:Plans/Architecture_Invariants.md, ContractName:Plans/Executor_Protocol.md
+Every seglog record MUST include a CRC32 checksum computed over the stored payload bytes. This is a mandatory correctness requirement, not an optional enhancement.
 
 On read, CRC32 MUST be validated before the record is processed. If validation fails:
-- the corrupt record is skipped
-- PM emits a recovery/integrity event including record offset and expected vs observed CRC
-- projectors resume from the last known-good checkpoint rather than replaying the corrupt record
+- the corrupt record is treated as a tail-corruption or integrity fault, not as a silently skipped success path
+- PM emits an integrity/recovery event including segment identity, byte offset, and expected vs observed checksum
+- projectors resume from the last durable checkpoint that predates the corrupt record
 
-ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Runtime_Artifacts_Panel.md
+ContractRef: ContractName:Plans/Architecture_Invariants.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Runtime_Artifacts_Panel.md
+
+#### 2.2.2 Concrete wire format
+
+Seglog uses a length-prefixed binary record stream. The canonical payload codec is MessagePack; mirrors and diagnostics may expose the same envelope in JSON, but JSON is not the on-disk authority.
+
+Canonical record structure:
+```text
+SeglogRecord {
+  header: SeglogHeader,
+  payload: bytes
+}
+```
+
+Canonical header fields:
+```text
+SeglogHeader {
+  version: u8,
+  segment_generation: u32,
+  event_type: string,
+  sequence_id: u64,
+  source_timestamp_ns?: u64,
+  observed_timestamp_ns: u64,
+  session_id?: string,
+  project_id?: string,
+  payload_length: u32,
+  checksum_crc32: u32,
+  compression: "none" | "lz4"
+}
+```
+
+Wire-format rules:
+- `payload` is the encoded event payload after any payload-only compression step.
+- `checksum_crc32` is computed over the stored payload bytes.
+- readers validate `payload_length`, then checksum, then decode.
+- a single append operation produces exactly one record; record order is the canonical event order.
+- `source_timestamp_ns?` preserves upstream/authored time when the source provides it; `observed_timestamp_ns` is always populated by the seglog writer.
+
+#### 2.2.3 Deterministic rotation
+
+Seglog rotation is deterministic and generation-aware.
+
+Rules:
+- there is exactly one active writable segment per seglog generation
+- active segment path: `storage/seglog/seg-{generation:06}-{start_seq:020}.active`
+- closed segment path: `storage/seglog/seg-{generation:06}-{start_seq:020}-{end_seq:020}.seglog`
+- rotate on size threshold, clean shutdown, explicit maintenance, or schema-generation change
+- closed segments are immutable; no in-place rewrite is allowed
+- projectors and rebuild tools consume closed segments in lexicographic order, then the active segment tail when present
+
+#### 2.2.4 Replay and rebuild rules
+
+Replay/rebuild rules:
+- redb projections, JSONL mirror files, and Tantivy indices are rebuildable from seglog plus stable checkpoints; none of them outrank seglog as authority
+- on restart, replay begins from the last committed checkpoint `{ segment_generation, segment_name, byte_offset, last_seq }`
+- if the active segment ends with a partial/corrupt tail, rebuild truncates only after the last verified record and records the recovery action
+- rebuild MUST preserve `sequence_id` ordering; regenerated mirrors or indices may differ in file timestamps but not in semantic event order
+
+ContractRef: ContractName:Plans/Architecture_Invariants.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Contracts_V0.md
 
 ### 2.3 redb: schema, migrations, key patterns
 
@@ -143,6 +199,32 @@ Minimum `child_attempt` fields:
 - resumable handle when present
 - requested/effective surface for that attempt
 
+Web-operation child payload extension:
+
+```text
+web_operation_payload {
+  web_operation: "webextract" | "webresearch" | "webcrawl" | "webmap",
+  web_input: {
+    url: string?,                  // target URL (for extract/crawl/map)
+    query: string?,                // search query (for research)
+    domain_scope: string?,         // domain restriction
+    depth_limit: u32?,             // crawl depth limit (for crawl/map)
+  },
+  support_tier: "built_in" | "mcp_backed" | "provider_native",
+  result_summary: {
+    pages_fetched: u32,
+    content_length_bytes: u64,
+    extraction_quality: "full" | "partial" | "failed",
+  },
+}
+```
+
+Rules:
+- this payload is additive child-run / child-attempt metadata for web-capable executions
+- `web_input.url` is used for extract, crawl, and map operations; `web_input.query` is used for research operations
+- `support_tier` records whether the operation came from built-in PM support, MCP backing, or a provider-native surface
+- `result_summary` is persisted only after the operation completes or fails with partial results
+
 ContractRef: ContractName:Plans/Models_System.md, ContractName:Plans/Tools.md, ContractName:Plans/Permissions_System.md
 
 Minimum context-state fields:
@@ -171,8 +253,8 @@ The promoted provider/runtime rewrite and the updated terminal/editor model requ
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Multi-Account.md
 
 Required canonical record and projection families include:
-- `attempt_record.v1:{project_id}:{run_id}:{node_id}:{attempt_id}`
-- `blocked_projection.v1:{project_id}:{run_id}:{node_id}:{blocked_sequence}`
+- `attempt_record.v1:{project_id}:{node_id}:{attempt_number}`
+- `blocked_projection.v1:{project_id}:{node_id}`
 - `artifacts_index.v1:{project_id}:{artifact_id}`
 - `lane_record.v1:{project_id}:{lane_id}`
 - `lane_projection.v1:{project_id}:{lane_id}`
@@ -201,8 +283,125 @@ Required canonical record and projection families include:
 - `mcp_tool_record.v1:{mcp_server_id}:{tool_id}`
 - `skill_record.v1:{skill_id}`
 - `skill_runtime_readiness.v1:{skill_id}:{provider_id}:{runtime_subject_id}`
+- `debug_investigation_record.v1:{project_id}:{investigation_id}`
+- `gha_panel_state.v1:{project_id}`
+- `bundle_registry.v1:{project_id}:{bundle_id}`
+- `note_record.v1:{bundle_id}:{note_id}`
+- `revision_run.v1:{bundle_id}:{revision_id}`
+- `composer_prep_state.v1:{thread_id}`
+- `preview_state.v1:{project_id}:{preview_id}`
+- `browser_session_state.v1:{session_id}`
+- `browser_profile_state.v1:{profile_name}`
 
 ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Tools.md, ContractName:Plans/Skills_System.md
+
+Canonical key reconciliation notes:
+- `attempt_record.v1:{project_id}:{node_id}:{attempt_number}` is the canonical attempt key. `project_id` is required for cross-project queries, retention, and cleanup; `run_id` and `attempt_id` remain stored fields on the record but are not key components.
+- `blocked_projection.v1:{project_id}:{node_id}` is the canonical blocked-state key. The value includes `{ blocked_reason_code, blocked_at, blocked_family, approval_scope_key?, unblock_action_ids[] }`.
+- older 3-component or run-scoped variants are superseded by the canonical forms above and remain migration-read aliases only.
+
+GitHub Actions panel state:
+
+```text
+gha_panel_state.v1:{project_id} {
+  pinned_workflows: string[],      // workflow IDs pinned to panel header
+  filter_status: "all" | "failed" | "running" | "success",
+  auto_refresh_interval_ms: u64,   // default: 30000
+  collapsed_sections: string[],    // collapsed workflow groups
+  last_viewed_run_id: string?,
+  notification_prefs: {
+    notify_on_failure: bool,       // default: true
+    notify_on_success: bool,       // default: false
+  },
+}
+```
+
+Document bundle registry persistence:
+
+```text
+bundle_registry.v1:{project_id}:{bundle_id} {
+  bundle_id: string,
+  project_id: string,
+  created_at: ISO8601,
+  status: "draft" | "in_review" | "approved" | "rejected" | "merged",
+  files: BundleFile[],
+  review_gate: {
+    required_approvals: u32,
+    current_approvals: u32,
+    auto_merge: bool,
+  },
+  notes: NoteRecord[],
+}
+
+note_record.v1:{bundle_id}:{note_id} {
+  note_id: string,
+  bundle_id: string,
+  file_path: string,
+  line_range: [u32, u32],
+  content: string,
+  author: "user" | "agent",
+  created_at: ISO8601,
+  resolved: bool,
+  resolution: string?,
+}
+```
+
+Targeted revision persistence:
+
+```text
+revision_run.v1:{bundle_id}:{revision_id} {
+  revision_id: string,
+  bundle_id: string,
+  trigger: "note_reply" | "resubmit" | "auto_fix",
+  note_reply_index: NoteReplyRef[],  // which notes triggered this revision
+  status: "pending" | "running" | "completed" | "failed",
+  changes: FileChange[],
+  created_at: ISO8601,
+}
+
+composer_prep_state.v1:{thread_id} {
+  draft_text: string,
+  attachments: AttachmentRef[],
+  mode_overlay: ModeOverlay?,
+  persona_id: string?,
+  saved_at: ISO8601,
+}
+```
+
+Preview and browser persistence:
+
+```text
+preview_state.v1:{project_id}:{preview_id} {
+  preview_id: string,
+  preview_type: "web" | "markdown" | "component",
+  source_file: string,
+  port: u16?,
+  status: "starting" | "running" | "stopped" | "error",
+  last_refresh: ISO8601,
+}
+
+browser_session_state.v1:{session_id} {
+  url: string,
+  viewport: { width: u32, height: u32 },
+  scroll_position: { x: f64, y: f64 },
+  zoom_level: f64,
+  dev_tools_open: bool,
+}
+
+browser_profile_state.v1:{profile_name} {
+  user_agent: string?,
+  cookies_enabled: bool,
+  javascript_enabled: bool,
+  custom_headers: Record<string, string>,
+}
+```
+
+Related events:
+- `preview.session.started`
+- `preview.session.stopped`
+- `preview.session.refreshed`
+- `browser.session.navigated`
+- `browser.session.resized`
 
 Required identity and attribution fields across runtime-linked record families include:
 - `project_id`
@@ -260,139 +459,83 @@ Rules:
 - PM-generated CLI adapter config and projection files are derived artifacts and MUST NOT become the canonical ownership store for accounts, MCP state, instruction state, or skills.
 
 ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Provider_OpenCode.md, ContractName:Plans/storage-plan.md
+
+### Canonical terminal persistence decomposition
+
+Storage-plan is the canonical source for terminal persistence keys. The terminal surface persists as the following decomposed key families:
+
+1. `terminal_session.v1:{terminal_session_id}` — PTY session state
+2. `terminal_layout.v1:{project_id}` — terminal panel layout
+3. `terminal_history.v1:{terminal_session_id}` — command history
+4. `terminal_profile.v1:{profile_name}` — shell profile config
+5. `terminal_env.v1:{project_id}` — environment variable overrides
+6. `terminal_cwd.v1:{terminal_session_id}` — working directory
+7. `terminal_scroll.v1:{terminal_session_id}` — scroll buffer state
+8. `terminal_font.v1:global` — terminal font settings
+9. `terminal_color.v1:global` — terminal color scheme
+
+FinalGUISpec §15.1 references `terminal_state:v1` as a subset alias. The canonical keys above provide the full decomposition.
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/FileManager.md
 ### Naming and migration rules
 
 Storage migrations are forward-only and monotonic.
 
-ContractRef: ContractName:Plans/Architecture_Invariants.md, ContractName:Plans/Contracts_V0.md
-
-Required rules:
-- the seglog schema version is persisted in the header / generation metadata
+**Schema/migration rules:**
+- the active storage schema generation is persisted in durable metadata before any destructive migration step runs
 - migrations run only forward; downgrade migrations are unsupported
 - backup happens before any destructive migration step
 - migration failure leaves the previous durable state intact and prevents opening a half-migrated store
+- superseded key families remain migration-read aliases only until the migration window is closed; new writes use the canonical family immediately
 
-ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/storage-plan.md
+**Generative key grammar:**
+- canonical family form: `{record_family}.v{version}:{scope_components...}`
+- scope components use stable identifiers (`project_id`, `thread_id`, `run_id`, `node_id`, `attempt_id`, `snapshot_id`, etc.), never user-facing labels
+- key families name the durable object (`attempt_record`, `debug_investigation_record`, `permission_snapshot_record`), not a UI projection label
+- every new family MUST declare its owner doc, source-of-truth producer, default retention class, and migration/read-alias posture
+ContractRef: ContractName:Plans/Architecture_Invariants.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Permissions_System.md
 
-Resource-bounding contract:
+Examples:
+- `attempt_record.v1:{project_id}:{node_id}:{attempt_number}`
+- `blocked_projection.v1:{project_id}:{node_id}`
+- `debug_investigation_record.v1:{project_id}:{investigation_id}`
+- `permission_snapshot_record.v1:{project_id}:{snapshot_id}`
+
+**Resource-bounding contract:**
 - every persistent or long-lived collection MUST declare either a TTL, a max cardinality, or both
-- file-record caches, rollups, projector queues, and recovery snapshots may not grow without a declared bound
+- every durable family MUST also declare a default `retention_class` so cleanup, preservation, and export rules can reason about it deterministically
+- caches, mirrors, rollups, and rebuildable projections may not grow without a declared bound
 
-ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/Architecture_Invariants.md
+ContractRef: ContractName:Plans/Architecture_Invariants.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/Runtime_Artifacts_Panel.md
 
 ### 2.4 Projector pipeline: consumption, JSONL mirror, Tantivy, checkpoints
 
-**Consumption model:** Each projector runs in a loop (or is triggered periodically):
+**Consumption model:** Each projector advances in canonical seglog order:
 
-1. Read **checkpoint** from redb (e.g. `projector.jsonl_mirror` → last seglog path + offset).
-2. **Tail** seglog from that position (open file, seek to offset, read new lines; or list segments, read from last segment).
-3. For each event: (a) write to JSONL mirror (if this projector owns the mirror), (b) update Tantivy index (if event type matches), (c) update redb snapshots if needed.
-4. **Commit** new checkpoint to redb (and flush Tantivy) so we don't reprocess on restart.
+1. Read checkpoint from redb (`segment_generation`, `segment_name`, `byte_offset`, `last_seq`).
+2. Open seglog at that location and read records in order.
+3. For each event, update only the projections that own it (JSONL mirror, Tantivy, redb snapshot/projector state, analytics enqueue, etc.).
+4. Commit the new checkpoint only after the owned projection writes are durable.
 
-**JSONL mirror:** Same envelope format as seglog; one file per day under `storage/jsonl/` (e.g. `events_2026-02-21.jsonl`) or one rolling file. Human-readable; useful for debugging and for analytics scan if we prefer scanning JSONL. Writer: single projector that reads seglog and appends to the mirror.
-
-**Tantivy indices (required per project):** Indices are written under `storage/tantivy/projects/{project_id}/…` to enforce **project-only scoping** and keep performance stable for long-lived projects (Plans/assistant-chat-design.md §10.3). Separate index per domain:
-
-- **chat (required):** Documents from `chat.message` (and optionally `chat.thread_created` / `chat.thread_updated`).
-  **Fields (minimum):** `project_id`, `thread_id`, `message_id`, `role`, `ts`, `content`.
-  **Optional fields:** `archived`, `deleted`, `context_overlay_flags` (muted/subcompacted markers) to support Context Lens filtering.
-  **Use:** Chat history search (human + agent), and smart auto-retrieval (RAG) from prior project threads.
-
-- **code (required, MVP):** A project-scoped code search index for the **project workspace / project root**.
-  **Producer:** A file-watcher + indexer (can be implemented as a "projector" even though the source is filesystem change events rather than seglog). The indexer must respect `.gitignore` by default and apply FileSafe-style sensitive-path exclusions (see below).
-  **Chunking:** Index large files as chunks so results return tight snippets (e.g. 4–16 KiB chunks with `chunk_id` and byte/line range metadata).
-  **Fields (minimum):** `project_id`, `path`, `chunk_id`, `content`, `language?`, `mtime` (or `content_hash`).
-  **Use:** `codesearch` tool and auto-retrieval for code grounding. LSP symbol search remains complementary (symbol-aware), not a replacement.
-
-- **logs (required, MVP):** A project-scoped logs/search index based on **log summaries** with pointers to full payload.
-  **Producers:** seglog projectors that consume `tool.invoked`, `tool.denied`, `run.*`, `bash.*`, and error events and emit index documents.
-  **Index the summary, not the blob:** Store only compact summaries/snippets in Tantivy; store full (secrets-scrubbed) payload as a blob/file under `storage/blobs/…` referenced by `blob_ref` (or event id) so log search stays fast and storage remains bounded.
-  **Fields (minimum):** `project_id`, `ts`, `thread_id?`, `run_id?`, `tool_name?`, `level?`, `summary`, `blob_ref` (or `event_id`).
-  **Use:** `logsearch` tool, auto-retrieval for "why did this fail," and UI debugging surfaces.
-
-- **docs (optional):** Index selected long-form docs or generated artifacts if needed for retrieval ("teach" mode, doc lookup). Prefer indexing doc summaries/pointers rather than full bodies when possible.
-
+**JSONL mirror policy:**
+- JSONL mirror is derived, human-readable, and rebuildable. It is never authoritative over seglog.
+- The mirror preserves the canonical event envelope in sequence order; projector-local metadata may exist in file naming or side metadata, but not as a semantic fork of the event payload.
+- Mirror files rotate deterministically with seglog generations/segments so replay, diffing, and corruption recovery stay explainable.
+- A missing or stale mirror file is repaired by replaying the corresponding seglog range; PM MUST NOT backfill seglog from JSONL.
 ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Tools.md, ContractName:Plans/FileSafe.md
+- Mirror retention follows the source seglog retention/preservation decision. A preserved or legal-hold seglog range keeps its mirror unless the mirror is explicitly regenerated in place from the same source range.
 
-**File watcher: dual-consumer model (Tantivy + sparse n-gram index):**
+**Tantivy/index rebuild rules:**
+- Tantivy indices, analytics rollups, and other projections rebuild from seglog or the canonical source range chosen by the owning projector.
+- Projector checkpoints are durable ownership boundaries; partial projection writes do not advance checkpoints.
+- Rebuild after schema-version change clears only the derived projection state being regenerated; the canonical seglog and unrelated redb families remain untouched.
 
-The project file watcher is a shared event source with two independent consumers:
-1. **Tantivy code indexer** — receives file-change events, re-indexes affected chunks in the per-project Tantivy code index.
-2. **Sparse n-gram indexer** — receives the same file-change events, adds changed paths to the dirty layer (HashMap with generation stamps). PM-mediated writes (agent/tool writes) update the dirty layer synchronously (before returning to caller) and do NOT rely on the file watcher for freshness. The file watcher serves as backup/dedup for PM-mediated writes and as the primary notification path for external changes (user edits in other tools, git operations).
+**Checkpoint guarantees:**
+- checkpoints encode enough information to resume without duplicate semantic writes
+- sequence order, not file mtime, is the source of truth for replay ordering
+- checkpoint advancement is atomic with projector durability, not with UI refresh timing
 
-ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/GitHub_Integration.md
-
-File watcher overflow handling (applies to both consumers): When the OS emits an overflow/rescan event (inotify `IN_Q_OVERFLOW`, FSEvents "must scan", Windows RDCW buffer overflow): Tantivy triggers a full re-index of the code domain. Sparse n-gram indexer marks ALL indexed files as dirty (invalidating the dirty layer), which triggers the >1000-file re-anchor threshold immediately. Windows: use a generous watcher buffer size (64 KB) to reduce overflow frequency.
-
-ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/FileManager.md
-
-**Sensitive indexing + persistence guards (chat + code + logs + regex n-grams):**
-- **PolicyRule:no_secrets_in_storage / INV-002 (mandatory):** Any text persisted to seglog/redb/Tantivy/blob files/sparse n-gram index MUST be passed through a strict secrets scrubber that removes tokens/credentials/private keys. This mandatory scrub is always-on and not user-configurable. For the sparse n-gram index, scrubbing occurs before n-gram extraction — n-grams are extracted from scrubbed content.
-- **Path-based exclusions (mandatory):** Default deny indexing of `.env` and `.env.*` while allowing `.env.example` (align with Permissions_System default `.env` deny semantics). Exclude common key/cert paths (e.g. `*.pem`, `*.key`, `id_rsa*`) from indexing and from log/blob persistence when detected.
-- **Additional heuristic redaction (optional; default OFF):** `retrieval.redaction.secretish_enabled` MAY apply an additional aggressive heuristic redaction pass (on top of the mandatory scrub) to log-summary indexing, snippet display, and retrieved-context injection.
-
-ContractRef: Invariant:INV-002, ContractName:Plans/Architecture_Invariants.md, ContractName:Plans/Permissions_System.md
-
-**Byte-level operation constraint:**
-
-N-gram extraction and frequency-table counting operate on raw bytes (`u8`). Implementers MUST NOT decode content to Unicode at any point in the indexing or query pipeline. The only byte transformation is ASCII-only lowercasing (`u8::to_ascii_lowercase`: bytes 0x41-0x5A map to 0x61-0x7A; all other bytes pass through unchanged) applied after CRLF stripping.
-
-ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Architecture_Invariants.md
-
-**Blob refs (logs):**
-- Store log payload blobs under `storage/blobs/projects/{project_id}/logs/` with a deterministic filename (e.g. `{event_id}.json` or `{content_hash}.json`).
-- `blob_ref` is a stable identifier that resolves to this blob path; `logread` reads the blob and returns the secrets-scrubbed content (bounded by size caps).
-
-**Schema per index:** Define fields (text, keyword, date) and build documents from event payloads / filesystem scanner output. Index is written incrementally (add/update documents) and periodically committed.
-
-**Checkpoints:** Stored in redb under `checkpoints` namespace. Value encodes enough to resume: e.g. `{ "segment": "events_2026-02-21.ndjson", "offset": 123456 }` or `{ "seq": 99999 }`. On startup, projector reads checkpoint, opens seglog from that position, and continues. Code indexer maintains its own checkpoint (e.g. last scan watermark / file mtime map) and supports a full rebuild when schema changes. Sparse n-gram indexer maintains its own checkpoint via `index_meta.json` (anchor SHA, generation number) — rebuilt automatically on schema version mismatch.
-
-**Regex index build lifecycle and publication:**
-
-Per-project lifecycle states are `no_index`, `building_full`, `ready`, `rebuilding_incremental`, `error`, and `cancelling`.
-- Build queue rule: one active build slot per project. New triggers during a build supersede the in-flight build; the current build observes cancellation between file iterations, cleans partial `gen-{N}` output, and then the newest queued build starts.
-- Build thread resource management: projects share a common build thread pool. When the pool is saturated, pending builds queue FIFO. Build threads use `thread-priority` crate (`ThreadPriority::Min` on all platforms; additionally `QOS_CLASS_UTILITY` on macOS Apple Silicon via `pthread_set_qos_class_self_np`) to prevent editor starvation.
-- Project-ready gate: the first build waits for project-ready (file watcher established; project context resolved; other per-project services initialized) so changes are not missed during initial indexing.
-ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/Tools.md
-
-Build triggers:
-- project open -> validate or full build
-- schema/version mismatch -> full rebuild
-- explicit rebuild command or settings action -> full rebuild
-- remote fetch or local HEAD advance -> dirty-mark + incremental rebuild
-- dirty-layer threshold >1000 files -> re-anchor / incremental rebuild
-- remote non-Git degraded watcher -> periodic 30-minute rebuild while the project remains open
-ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/FinalGUISpec.md
-
-Build and publish path:
-1. Resolve the new anchor (`HEAD` for Git, current remote/local snapshot boundary for non-Git).
-2. Reuse the stored `frequency_table.bin` unless a full rebuild is required.
-3. Read changed files from filesystem, bare-clone objects, or the remote indexer feed; scrub and normalize before extraction.
-4. Extract sparse n-grams and build postings in memory or on streaming buffers.
-5. Serialize a full new snapshot into `gen-{N+1}/` (`postings.bin`, `lookup.bin`, `file_map.bin`, `index_meta.json`).
-6. `sync_all()` every file before publication.
-7. Publish the new `IndexSnapshot` via `ArcSwap<Arc<IndexSnapshot>>`.
-8. Retain old generations until no in-flight reader still holds them.
-- Platform-specific mmap safety: on Windows, `memmap2` file handles are opened with `share_mode(0x7)` (`FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE`) as defense-in-depth for concurrent generation access. On Linux and macOS, mmap'd file deletion is safe via inode-by-fd semantics; generation directories eliminate the need for rename-while-mapped.
-9. On disk full, checksum failure, or cancellation: delete the partial generation and keep serving the last valid snapshot (or raw ripgrep if none exists).
-ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/Architecture_Invariants.md
-
-**Dirty-layer concurrency and freshness contract:**
-
-- DirtyLayer is a generation-aware map keyed by path with deleted-state tracking. Remote staged file content is an adjunct verification cache, not the canonical dirty-layer model.
-- PM-mediated writes insert the dirty record synchronously before returning success; file-watcher notifications are the backup and dedup path for PM writes and the primary path for external changes.
-- Every dirty path is added to query candidate verification, and every deleted dirty path suppresses stale base-index hits.
-- Re-anchor records `build_generation` and clears only dirty entries with `generation <= build_generation` so changes made during a long-running build survive into the next cycle.
-- Dirty-layer state is in-memory only; crash recovery may lose it because the index is a cache rather than the source of truth.
-ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/Wiring_Matrix.md
-
-**Incremental rebuild and degradation rules:**
-
-- Incremental rebuild means incremental extraction of changed files, not patch-in-place posting mutation. Snapshot serialization is always a full rewrite of `postings.bin`, `lookup.bin`, and `file_map.bin`.
-- `frequency_table.bin` is never recomputed during incremental updates because that would invalidate existing n-gram hashes.
-- A stale but valid snapshot remains queryable while background refresh runs. There is no stale-threshold rule that disables the index once it exists.
-- The file-watcher overflow path described above is the all-dirty / immediate re-anchor path for the regex index; Windows uses a 64 KB watcher buffer to reduce overflow frequency.
-ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/GitHub_Integration.md
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Tools.md, ContractName:Plans/FileSafe.md, ContractName:Plans/Runtime_Artifacts_Panel.md
 
 ### 2.5 Analytics scan jobs
 

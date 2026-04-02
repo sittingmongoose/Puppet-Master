@@ -30,8 +30,9 @@
 16. [Migration Mapping](#16-migration-mapping)
 17. [Risks and Mitigations](#17-risks-and-mitigations)
 18. [Promoted Features](#18-promoted-features-formerly-future-considerations)
-19. [Appendix A: Cross-References](#appendix-a-cross-references)
-20. [Appendix B: Locked Decisions Summary](#appendix-b-locked-decisions-summary)
+19. [Persona Editor, Compatibility Disclosure, and Surface-Level Persona Controls](#19-persona-editor-compatibility-disclosure-and-surface-level-persona-controls-2026-03-06)
+20. [Appendix A: Cross-References](#appendix-a-cross-references)
+21. [Appendix B: Locked Decisions Summary](#appendix-b-locked-decisions-summary)
 
 ---
 
@@ -825,6 +826,144 @@ Settings > Storage includes a global **Remote Cache Administration** subsection 
 
 ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/storage-plan.md, ContractName:Plans/UI_Command_Catalog.md
 
+#### 7.4.4 Settings (Unified) panel specification
+
+Settings is the authoritative unified configuration surface formed by merging the former Config, Settings, Login, and Doctor pages into a single routed experience.
+
+Layout contract:
+- **Left sidebar:** settings-group navigation with collapsible category headers, persistent tab selection, and a global settings search field at the top.
+- **Main pane:** selected tab content with section anchors, inline validation, reset actions, and contextual status banners.
+- **Inspector rail (optional on wide layouts):** requested vs effective runtime state, inheritance source, sync status, and health disclosures for the active tab.
+
+Required top-level settings categories:
+- **Appearance:** General, Themes, Layout, window chrome, density, sound effects, accessibility presentation.
+- **Editor:** Editor, File Manager, LSP, Keybindings, Shortcuts, diff/review defaults, preview behaviors.
+- **Workspace:** Project, Branching, Storage, Git, Docker, Kubernetes, Run & Debug, Interview, Memory.
+- **AI / Models:** Providers, Accounts, Agent-Config, Models, Personas, Skills, Plugins, Budget.
+- **Security:** Permissions, Privacy, Rules, FileSafe, approvals, remote host trust.
+- **Advanced:** Updates, Extensions, Advanced, Health, diagnostics, migration tools, reset tools.
+
+Required global capabilities:
+- **Global search:** searches tab names, section headings, labels, and help text; results deep-link to the exact control and scroll it into view.
+- **Settings sync:** optional device-to-device sync for durable user preferences, shortcuts, themes, provider/model preferences, and eligible workspace defaults. Project-local secrets and machine-specific paths remain excluded.
+- **Import / export:** export current settings to a versioned bundle; import with merge preview, conflict handling, and scope selection.
+- **Reset controls:** each tab exposes `Reset tab to defaults`; the root Settings toolbar exposes `Reset all settings` behind a destructive confirmation.
+- **Change provenance:** every editable control can disclose whether the current value is inherited, defaulted, synced, imported, or locally overridden.
+
+#### 7.4.5 Workspace, editor, and remote-host settings
+
+Settings MUST expose durable configuration for workspace behavior, editor policies, and remote editing.
+
+This subsection owns:
+- SSH remote definitions, connection testing, path mapping disclosure, and reconnection policy for remote editing.
+- File Manager behavior, editor rendering defaults, unsaved-buffer recovery policy, diff defaults, and preview handling.
+- Project-scoped workspace preferences such as language detection, indexing, file-watch policies, and local-vs-remote execution disclosures.
+
+#### 7.4.6 Run, debug, and runtime integration settings
+
+Settings MUST expose durable controls for run/debug presets and runtime-adjacent developer surfaces.
+
+This subsection owns:
+- launch configuration templates and per-language debug defaults
+- terminal/browser tab policies, hot reload controls, and port auto-open behavior
+- debugger adapter settings, evidence capture defaults, and investigation retention
+- runtime-output routing preferences for Problems, Output, Ports, and Debug Console
+
+#### 7.4.7 Agent-Config panel specification
+
+The **Agent-Config** panel is the primary surface for provider, model, and account configuration across the application.
+
+Purpose:
+- centralize provider onboarding, account selection, model defaults, quota visibility, and connection validation
+- make requested vs effective runtime configuration inspectable without opening multiple unrelated tabs
+
+Layout:
+- **Left sidebar:** provider list with badges for health, default-provider marker, and quick-add provider action
+- **Main area:** selected provider detail view containing accounts, model defaults, connection controls, and usage information
+
+Required sections in order:
+1. **Provider List** — all configured providers, enabled/disabled state, account count, connection-health badge
+2. **Account Details** — add/remove account, account nickname, entitlement/billing context, credential rotation entrypoint, last validation result
+3. **Model Selection** — default model, per-role model assignments, context-limit disclosure, fallback model chain
+4. **Usage Summary** — recent token/cost usage, quota bucket, rate-limit episodes, billing/entity attribution summary
+5. **Connection Health** — test connection action, last successful validation time, degraded reason, retry guidance, capability summary
+
+Required features:
+- add/remove account
+- set default model
+- view usage
+- test connection
+- configure rate limits and request-concurrency preferences
+
+#### 7.4.8 Container, Docker, and Kubernetes settings
+
+Settings MUST expose a dedicated container/runtime settings area for Docker and Kubernetes-related defaults.
+
+Required tab coverage:
+- Docker daemon connection and context selection
+- default registry / namespace selection
+- image build and publish defaults
+- Kubernetes cluster/context management for project-scoped container workflows
+- resource limits, polling disclosures for external status checks, and local-vs-remote container execution rules
+
+#### 7.4.8A Docker Manager Panel Spec
+
+- **Template repo status row:** bind directly to canonical `TemplateRepoStatus` (`unconfigured`, `config_invalid`, `clean`, `dirty_uncommitted`, `committed_local_only`, `push_in_progress`, `push_failed`, `diverged_remote`, `needs_review`). Presentation copy may translate those values, but the GUI must not invent a second status model.
+- **Unraid controls:** when shared-profile scope is active, expose `Apply shared profile to this repo` as an explicit action in addition to generate/update and push controls.
+- **`ca_profile.xml` editor:** default to shared cross-project maintainer profile with per-project override option, and provide two editing layers: (1) structured controls for known fields and (2) advanced raw XML editing for unknown / passthrough content. Saving from either layer MUST preserve unmodified passthrough XML verbatim. Support picture upload or external URL; uploaded pictures default to repo-managed assets.
+
+Add a contextual **Docker Manager** GUI surface for Docker-related projects. This surface may be implemented as a page or dockable panel, but it MUST behave as a first-class management surface and not merely as a hidden advanced-only dialog.
+
+- **Visibility rule:** show the Docker Manager surface when a Docker-related project is active. Add a setting named **Hide Docker Manager when not used in Project.** Default: enabled.
+- **Auth controls:** place a browser-login button near DockerHub settings, retain PAT entry, show helper text that PAT is recommended, and explain/link how to obtain a PAT.
+- **Auth state presentation:** show requested auth mode separately from effective capability, along with validated account identity, namespace access, and degraded reason when capability is partial.
+- **Repository management controls:** namespace selector, repository selector, refresh action, create-repository action, and create-repository confirmation dialog that displays namespace, repository name, and privacy. Privacy defaults to private and must be visibly labeled as the default.
+- **Runtime controls:** build, run/preview, stop, open running container/web UI, open logs, and health/access state.
+- **Publish controls:** push image, show digest/tag results, and expose target DockerHub repo summary.
+- **Unraid controls:** toggle to auto-generate/update Unraid XML after successful publish (default enabled), toggle to manage template repo (default enabled), template-repo status row, one-click push action, and shortcut into `ca_profile.xml` editing.
+- **Template repo setup flow:** allow both create-new and select-existing when no template repo is configured.
+- **`ca_profile.xml` editor:** default to shared cross-project maintainer profile with per-project override option; all fields editable; support picture upload or external URL; uploaded pictures default to repo-managed assets.
+- **Auto-generated metadata warning:** when `ca_profile.xml` is created automatically, show a visible notice that the user still needs to configure/review the profile.
+- **Safety copy:** make it explicit that repository creation cannot be auto-approved by YOLO or autonomy modes.
+
+ContractRef: ContractName:Plans/Containers_Registry_and_Unraid.md, ContractName:Plans/newtools.md#147-docker-runtime--dockerhub-contract, ContractName:Plans/Permissions_System.md
+
+#### 7.4.9 Settings tab catalog
+
+The unified Settings surface uses a two-level navigation model: category headers in the sidebar, then tabs within the selected category. The minimum tab set is:
+
+| Tab | Key settings |
+|---|---|
+| General | App behavior, launch, notifications, minimize-to-tray, shell defaults |
+| Editor | Editor behavior, indentation, diff defaults, autosave, preview behavior |
+| Terminal | Terminal appearance, shell defaults, transcript retention, layout defaults |
+| Providers | Provider list, add/remove, default selection |
+| Models | Model preferences, role assignments, context limits |
+| Permissions | Permission rules, approval history, preset selection |
+| Accounts | Account management, credential rotation |
+| Extensions | Installed extensions, enable/disable, settings |
+| Themes | Theme selection, custom colors, font settings |
+| Keybindings | Keyboard shortcut customization |
+| Privacy | Telemetry, data collection, local-only mode |
+| Updates | Update channel, auto-update, version info |
+| Advanced | Debug logging, experimental features, reset |
+| LSP | Language server configuration, per-language settings |
+| Git | Git configuration, merge tool, diff tool |
+| Docker | Docker connection, default registry, resource limits |
+| Kubernetes | Cluster configuration, context management |
+| Budget | Token budget, cost limits, alerts |
+| Personas | Persona management, defaults per mode |
+| Skills | Skill management, enable/disable |
+| Plugins | Plugin management, marketplace |
+| Interview | Interview preferences, round caps, detail level |
+| Memory | Memory/context management, retention policies |
+| Shortcuts | Quick actions, custom shortcuts |
+
+Navigation rules:
+- tab count is large enough that group headers and in-sidebar search are mandatory
+- commands such as `Open setting: {name}` must jump to the correct tab and field
+- hidden/unsupported tabs must explain why they are unavailable rather than disappearing silently
+
 Settings and inspectors separate requested state, effective state, inherited defaults, and repaired or degraded runtime outcomes.
 
 ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Models_System.md, ContractName:Plans/Multi-Account.md
@@ -933,6 +1072,352 @@ Remote and degraded rules:
 - Replace-in-files MUST respect remote write availability before presenting a success-shaped UI.
 
 ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Wiring_Matrix.md
+
+#### GitHub Actions side-panel owner
+
+GitHub Actions is the persistent workflow-operations side panel for repository-connected projects.
+
+Layout:
+- **Left column:** workflow list with status filters, pins, and freshness/health badges
+- **Right column:** selected run details, job tree, logs preview, action toolbar, and current requested/effective GitHub identity disclosure
+
+Surface-summary rules:
+- `Current Branch`, `Workflows`, and `Settings` are the stable subviews; detailed workflow/admin lifecycle semantics remain owned by `Plans/GitHub_Integration.md`
+- the panel surfaces the shared freshness axes (`freshness`, `health`, `write_availability`) and disables mutating actions when the owning GitHub context is stale or blocked
+- requested/effective GitHub identity, account binding, and branch/worktree scope are imported from owner docs rather than renamed in the shell spec
+- panel state persists in `gha_panel_state.v1:{project_id}`; receipts and durable workflow/admin state remain owned by storage/GitHub owner docs
+
+ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/UI_Command_Catalog.md
+
+#### Artifacts side-panel owner
+
+Artifacts is the persistent side panel for runtime, build, browser, and review artifacts.
+
+Layout:
+- **Artifact tree:** grouped by run, then job/session, then artifact family
+- **Detail strip:** preview metadata, comparison target, retention info, and actions for the selected artifact
+
+Features:
+- download
+- preview
+- compare
+- delete
+
+State:
+- persist expanded groups, selected artifact, compare target, and preview mode in `artifact_panel_state.v1:{project_id}`
+- artifact content identity and lineage remain owned by `artifacts_index.v1:*`
+
+#### Run & Debug side-panel owner
+
+Run & Debug is the persistent side panel for investigations, debug entrypoints, and runtime diagnostics.
+
+Layout:
+- **Top region:** investigation list with target summary, state, investigation phase, verification state, and last update time
+- **Bottom region:** active or historical investigation detail showing breakpoints, evidence, variables, cleanup/revalidation status, and linked runtime surfaces
+
+Surface-summary rules:
+- the panel binds to canonical debug-investigation records and their linked artifact/evidence refs
+- chat owns debug narrative, inline approval/blocked/investigation cards, and thread-local conversation flow
+- Run & Debug owns the pinned diagnostic/detail presentation, focus state, and cross-surface pivots into Debug Console / Problems / Output / Runtime Artifacts
+- historical investigations remain visible, but only explicitly resumable investigations surface live resume controls; other historical opens are read-only by default
+- freshness and revalidation state must remain visible so users can tell whether a shown investigation is current, restoring, stale, or awaiting explicit revalidation
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/Contracts_V0.md
+
+### 7.16 Chat Panel
+
+The Chat Panel is the canonical threaded assistant workspace for Ask, Agent, Debug, Plan, and Deep Plan modes.
+
+Layout:
+- vertical split with **message stream** in the top 70% and **composer** in the bottom 30%
+- optional collapsible **Plan panel** appears as a side panel within the chat surface when the thread is in Plan or Deep Plan mode
+- header remains sticky while the message stream scrolls independently
+
+#### 7.16.1 Thread header and message stream
+
+Thread header content:
+- editable thread title
+- mode badge
+- persona indicator
+- model indicator
+- token-count summary
+- quick actions for thread search, rename, duplicate, archive, and thread settings
+
+Message stream requirements:
+- scrollable virtualized list of user, assistant, system, tool, approval, and activity message blocks aligned with the taxonomy in `Plans/assistant-chat-design.md`
+- stable message identity so streaming updates mutate existing rows rather than replacing the full list
+- inline activity cards for tool calls, file operations, subagent activity, approvals, run-state transitions, and linked artifacts
+- sticky unread marker and `New messages below` affordance when the user is scrolled away from the bottom
+
+#### 7.16.2 Composer, commands, and plan mode affordances
+
+Composer requirements:
+- multiline text input
+- mode selector exposing at minimum `Steer` and `Queue`
+- attachment button
+- send / stop button
+- visible disabled-state explanation when sending is unavailable
+
+Plan-mode affordances:
+- collapsible Plan panel showing the current plan, plan steps, status, and linked artifacts
+- plan panel supports focusing the active step and jumping to linked documents or evidence
+- when not in a planning mode, the plan panel stays hidden rather than showing an empty placeholder
+
+Commands and approvals:
+- slash commands, mode switches, and tool approvals remain routed through the canonical chat/runtime command catalog
+- tool approval dialogs launched from Chat must preserve thread context and return focus to the composer after completion
+- chat-local controls must not duplicate ownership of Problems, Output, Ports, or Debug Console; they link to those shell surfaces instead
+
+### 7.17 File Manager Panel
+
+The File Manager Panel is the persistent project-tree side panel and defers detailed tree, drag-and-drop, and open-file behavior to `Plans/FileManager.md`.
+
+Required behavior summary:
+- project tree with local filter, expand/collapse persistence, and current-file reveal
+- click-to-open and context-menu actions route through canonical open-file and file-tree action contracts
+- external drag-and-drop, ignored-file visibility rules, and detached-panel behavior remain aligned with `Plans/FileManager.md`
+- File Manager owns tree navigation and file discovery, but not semantic search, diff-local search, or runtime artifact browsing
+
+### 7.18 File Editor
+
+The File Editor is the canonical in-app code and document editing surface.
+
+Required behavior summary:
+- tabbed editor groups with shared buffers, diff view, preview modes, and detach / re-dock support
+- LSP-backed diagnostics, hover, completion, signature help, inlay hints, code actions, code lens, semantic highlighting, and go-to-definition
+- SSH remote editing, stale-write disclosure, and recoverable unsaved local buffer persistence
+- embedded rendering for markdown, mermaid, HTML, SVG, and image documents through the shared preview pipeline
+
+#### 7.18.1 Inline Note Mode
+
+Inline Note Mode enables targeted feedback and annotation inside the editor.
+
+Activation:
+- user selects code in the editor
+- `Add Note` appears in the context menu for the selection
+
+Note creation:
+- captures selection range
+- captures note text
+- optional category: `bug`, `improvement`, `question`, or `style`
+
+Display and persistence:
+- inline annotation markers appear in the editor gutter
+- hover reveals note content and status
+- notes persist via `note_record.v1:{bundle_id}:{note_id}` and remain linkable from bundle review surfaces
+
+### 7.19 Agent Activity
+
+The Agent Activity surface is the canonical inspection view for delegated work, investigations, bundle review progress, and embedded review documents.
+
+Required behavior summary:
+- active and historical child-run / subagent activity list with status, owning thread, target, and outcome
+- clear distinction between running, queued, blocked, remediation, and completed activity
+- direct links to related chat messages, artifacts, investigation records, and review bundles
+
+#### 7.19.1 Embedded document pane
+
+The embedded document pane is a shared-buffer review/document surface used by Interview, Builder, and bundle-review workflows.
+
+Rules:
+- document selection, scroll position, active review stage, and approval state persist through `document_pane_state:v1:{project_id}:{page_context}`
+- the pane shares source-of-truth buffers with File Editor rather than maintaining divergent document copies
+- findings summaries and approval gates render adjacent to the document, not inside unrelated chat-local controls
+
+#### 7.19.2 Bundle controls and review gate
+
+Bundle Controls govern revision loops and approval readiness for reviewed document/file bundles.
+
+Required behavior:
+- `Resubmit` in bundle review sends all unresolved notes as revision context
+- final approval is blocked until every note is resolved, responded to, or dismissed
+- bundle status progression is `draft -> in_review -> all_notes_resolved -> approved -> merged`
+- bundle-level persistence uses `bundle_registry.v1:{project_id}:{bundle_id}` with linked `note_record.v1:*` entries
+
+### 7.20 Bottom runtime zone
+
+The bottom runtime zone is the canonical host for Terminal, Problems, Output, Debug Console, Ports, and linked runtime-adjacent panes.
+
+Required behavior summary:
+- tabbed runtime panes with stable identity and restore behavior
+- terminal/browser/editor integrations reveal the owning pane rather than minting parallel per-feature consoles
+- linked dev-session state, historical/live badges, and recovery outcomes stay visible across pane switches
+
+#### 7.20.1 Terminal and browser tab management
+
+Terminal sections, terminal tabs, browser tabs, and detached previews remain identity-stable across docking, focus changes, and restart recovery.
+
+Rules:
+- runtime tabs persist selection, order, labels, and pin state
+- browser and preview tabs route through canonical browser-session identities and never silently migrate ownership to chat
+- hot reload, output routing, and preview refresh status appear in the owning runtime or preview pane
+
+#### 7.20.2 Debug, Problems, Output, and Ports
+
+The runtime zone must provide:
+- **Problems:** aggregated diagnostics, file links, and source ownership disclosure
+- **Output:** task/build/dev output streams with source tags and search within stream
+- **Debug Console:** adapter and evaluation output for the active debug session
+- **Ports:** detected ports, local/remote accessibility, open-in-browser actions, and hot-reload controls
+
+`Run & Debug` side-panel actions reveal and focus these bottom-panel panes rather than creating duplicate runtime records.
+
+## 8. Widget Catalog
+
+Section 8 defines the **atomic** widget catalog used to compose pages and panels. Detailed widget references align with `Plans/WIDGETS_VISUAL_REFERENCE.md` and `Plans/WIDGETS_QUICK_REFERENCE.md`.
+
+### 8.1 SelectableText contract
+
+`SelectableText` is the canonical non-editable text primitive for logs, code snippets, labels with copy support, and read-only structured values.
+
+Rules:
+- supports mouse and keyboard text selection
+- supports copy without converting the field into an editable input
+- participates in the shared context-menu and clipboard contract defined in §10.9
+- must preserve stable layout when content updates incrementally
+
+### 8.2 Widget categories
+
+Major widget families:
+- **Layout:** SplitPane, TabGroup, Panel
+- **Input:** TextInput, Dropdown, Toggle, Slider
+- **Display:** Tree, List, Table, Card
+- **Feedback:** Toast, Dialog, ProgressBar, Badge
+- **Navigation:** Breadcrumb, SideNav, CommandPalette
+
+Catalog rules:
+- atomic widgets define behavior, focus, and theme-token usage once and are reused across all surfaces
+- page widgets in `Plans/Widget_System.md` are composed from this catalog and are not a substitute for the atomic widget list here
+- widgets must expose accessible labels, stable identity, and deterministic fallback states
+
+## 9. State Management
+
+State management follows a reactive state tree with observable projections consumed by Slint models and shell surfaces.
+
+### 9.1 State architecture
+
+- canonical runtime and durable state live in Rust-owned records/projections
+- Slint surfaces subscribe to observable projections rather than polling
+- UI models update through batched `invoke_from_event_loop` mutations
+
+### 9.2 State categories
+
+- **UI state:** ephemeral, not persisted; hover, local selection, transient panel expansion
+- **Session state:** persisted per session/thread/workspace tab
+- **Project state:** persisted per project and shared across reopened sessions for that project
+- **Global state:** user preferences and cross-project durable defaults
+
+### 9.3 State flow
+
+Canonical flow:
+`User action -> Command -> State mutation -> UI update`
+
+Rules:
+- commands are the mutation boundary
+- mutations write to canonical projections first
+- UI updates render from the new projection state rather than optimistic ad hoc local rewrites unless explicitly marked pending
+
+### 9.4 Conflict resolution
+
+- last-write-wins for UI state
+- merge strategy for project state when multiple durable sources contribute
+- requested vs effective runtime values must remain separately inspectable
+
+### 9.5 Persistence boundaries
+
+- ephemeral state may be discarded on restart unless explicitly promoted
+- persisted state must have stable keys and versioned migrations
+- migration reads from deprecated keys are allowed only during forward migration and must rewrite to the canonical family
+
+### 9.6 Context management
+
+Context management combines thread context, Investigation Context, editor/file references, and review/document references without hiding provenance.
+
+Rules:
+- each context block has stable identity and owner surface
+- context usage counters and token summaries derive from canonical usage/state projections
+- pruning, compaction, and restoration rules must disclose what was removed, summarized, or rehydrated
+
+## 10. UX Patterns
+
+Section 10 defines reusable interaction patterns across pages, panels, dialogs, and editor/runtime surfaces.
+
+### 10.1 Confirmation dialogs
+
+Destructive or irreversible actions require confirmation with explicit consequence copy, especially for delete, reset, merge, publish, repository creation, and credential removal flows.
+
+### 10.2 Undo
+
+Support `Ctrl+Z` / `Cmd+Z` where the owning surface allows reversible edits, including file operations that can be safely reverted, text editing, and message editing. Git-native history actions and external side effects are not mislabeled as editor undo.
+
+### 10.3 Loading states
+
+- skeleton screens for panel/page loads
+- inline spinners or progress indicators for discrete actions
+- keep prior validated content visible with stale/degraded labels when a refresh is in progress
+
+### 10.4 Error display
+
+- inline errors for field validation
+- toast notifications for transient non-blocking failures
+- blocking dialogs for failures that prevent forward progress or risk destructive ambiguity
+
+### 10.5 Empty states
+
+Empty panels must show helpful onboarding content, clear next actions, and contextual shortcuts instead of blank chrome.
+
+### 10.6 Blocked and recovery surfaces
+
+Blocked state, retry, remediation, and recovery affordances must use the canonical blocked/recovery contract and stay visually distinct from ordinary paused or idle states.
+
+### 10.7 Event-driven refresh rule
+
+Event-driven updates are canonical. UI state refresh happens on relevant runtime, filesystem, or provider events rather than generic timers.
+
+Exception:
+- polling is acceptable for external systems that do not provide push updates, such as GitHub Actions status checks; those intervals are freshness aids only and must not become the correctness model for the rest of the shell
+
+### 10.8 Human-in-the-loop approvals
+
+Sensitive operations requiring approval must present:
+- explicit action summary
+- affected resources
+- approval / deny actions
+- audit trail link back to the originating thread, run, or bundle
+
+Approval surfaces must preserve context and never auto-approve hidden follow-up side effects.
+
+### 10.9 Context menus and clipboard
+
+Context menus are the canonical discoverability surface for copy, paste, Add Note, file actions, and selection-scoped operations.
+
+#### 10.9.1 Copy path and copy value
+
+Non-text path/value copy actions must copy the exact underlying value via the shared clipboard helper and must not depend on text rendering quirks.
+
+#### 10.9.2 Text selection and read-only copy
+
+Read-only text, code blocks, logs, and labels must remain selectable and copyable without entering edit mode.
+
+#### 10.9.3 Clipboard safety and feedback
+
+Clipboard actions should provide lightweight success feedback for non-obvious values and must never copy redacted or hidden-secret placeholders as though they were the real value.
+
+### 10.10 LSP-informed affordances
+
+Hover cards, go-to-definition, diagnostics links, and code actions must feel native to the editor/chat workflow and clearly disclose when they are unavailable, stale, or remote-degraded.
+
+### 10.11 Loading-to-live transitions
+
+When moving from placeholder to real data, preserve layout footprint and focus so the interface does not jump unexpectedly.
+
+### 10.12 Detached-surface continuity
+
+Detached panels and windows must preserve identity, selection, and keyboard focus expectations when re-docked.
+
+### 10.13 Sound effects
+
+Optional sound effects may reinforce key workflow events such as approvals required, run completion, or error escalation, but they must remain user-controllable, accessible, and never the sole carrier of important information.
 
 ## 11. Anti-Flickering and Scroll Preservation
 
@@ -1089,7 +1574,7 @@ puppet-master-rs/
 |   |   +-- settings.slint            # Unified (old config + settings + login + doctor)
 |   |   +-- wizard.slint
 |   |   +-- interview.slint
-|   |   +-- tiers.slint
+|   |   +-- nodes.slint
 |   |   +-- evidence.slint
 |   |   +-- evidence_detail.slint
 |   |   +-- metrics.slint
@@ -1201,13 +1686,15 @@ Chat messages, file trees, log outputs, evidence lists, and other long lists use
 | Key | Content | Write Frequency |
 |-----|---------|----------------|
 | `layout:v1` | Panel dock state per panel (docked side + width, or floating position/size); center splits; bottom runtime-panel height; detached-window geometry; split ratios for terminal sections. Single JSON blob for atomic read/write. | On change (debounced 300ms) |
-| `dashboard_layout:v1` | Ordered list of dashboard card IDs + grid column count | On change (debounced 300ms) |
+| `widget_layout:v1:dashboard` | Canonical dashboard widget grid layout, positions, sizes, and widget IDs | On change (debounced 300ms) |
 | `activity_bar_order:v1` | Ordered list of activity bar item IDs + separator position | On change (debounced 300ms) |
 | `theme:v1` | Current ThemeVariant enum value | On change |
 | `editor_state:v1:{project_id}` | Open tabs, active tab, scroll/cursor position per project | On change (debounced 500ms) |
 | `filetree_state:v1:{project_id}` | Expanded folder set, local filter text, and tree scroll position | On change (debounced 300ms) |
 | `search_panel_state.v1:{project_id}` | Search side-panel UI state: last query, replacement text, toggles, include/exclude globs, expanded groups, selected result ref, and active query session ref | On change (debounced 250ms) |
 | `project_state:v1:{project_id}` | Per-project shell snapshot: editor tabs, file-tree expansion, chat thread selection, last active side-panel occupant, active view, language badges, requested/effective LSP selection summary, last-focused Search/Source Control refs, and remote-context summary | On change (debounced 300ms) |
+| `gha_panel_state.v1:{project_id}` | GitHub Actions panel UI state: pins, filters, auto-refresh preference, collapsed groups, and last viewed run | On change (debounced 250ms) |
+| `artifact_panel_state.v1:{project_id}` | Artifacts panel UI state: expanded groups, selected artifact, compare target, and preview mode | On change (debounced 250ms) |
 
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FileManager.md, ContractName:Plans/LSPSupport.md
 
@@ -1223,6 +1710,9 @@ ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FileManager.
 | `document_checkpoints:v1:{project_id}` | Checkpoint metadata for restorable document states | On checkpoint create/restore |
 | `review_findings_summary:v1:{project_id}:{run_id}` | Findings summary payload for requirements/interview review runs | On review completion/update |
 | `review_approval_gate:v1:{project_id}:{run_id}` | Final approval decision state and precondition flags | On approval state change |
+| `debug_investigation_record.v1:{project_id}:{investigation_id}` | Debug investigation record: target summary, phase/state, evidence refs, instrumentation refs, verification state, and cleanup status | On lifecycle change |
+| `bundle_registry.v1:{project_id}:{bundle_id}` | Bundle review registry: files, review gate state, notes summary, and bundle status progression | On change |
+| `note_record.v1:{bundle_id}:{note_id}` | Inline/bundle review note content, range, author, category, resolution, and timestamps | On change |
 | `slash_commands:v1` | Custom slash commands (application-wide) | On save |
 | `slash_commands:v1:{project_id}` | Custom slash commands (project-wide) | On save |
 | `projects:v1` | Project registry: known projects with paths, detected languages, last-opened timestamps, health status, and per-project overrides | On change |
@@ -1241,6 +1731,15 @@ ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-ch
 | `search_query_state.v1:{project_id}:{query_session_id}` | Query-session snapshot: query, replacement, scope, result snapshot ref, freshness, health, and last error | On query update/complete |
 | `lsp_session_state.v1:{project_id}:{host_id}:{server_id}:{root_identity}` | Host-aware LSP session projection: state, freshness, health, restart metadata, capability summary, and last error | On lifecycle change |
 | `lsp_diagnostics_snapshot.v1:{project_id}:{host_id}:{server_id}:{root_identity}` | Diagnostics snapshot ref(s), counts, capture time, freshness, and health for the owning host-aware LSP session | On diagnostics update |
+| `provider_account_record.v1:{provider_id}:{account_id}` | Provider account identity, entitlement metadata, validation state, and account-level configuration | On account change |
+| `server_profile_record.v1:{provider_id}:{connection_profile_id}` | Provider/server profile connection defaults, capability summary, and health metadata | On change |
+| `account_pressure_episode.v1:{provider_id}:{account_id}:{episode_id}` | Rate-limit / pressure episode metadata and recovery history for account selection surfaces | On lifecycle change |
+| `account_switch_event.v1:{provider_id}:{event_id}` | Durable record of account switch reason, source, and effective billing/entity context | On switch |
+| `mcp_server_record.v1:{mcp_server_id}` | MCP server configuration and readiness metadata | On save/change |
+| `skill_record.v1:{skill_id}` | Skill registry entry, enablement, source, and settings summary | On save/change |
+| `web_operation_payload` | Stored child-run metadata for web extract / research / crawl / map summaries referenced by GUI projections | On completion/update |
+| `terminal_layout.v1:{project_id}` | Canonical terminal layout persistence family for terminal sections, pane arrangement, and focused runtime chrome | On change (debounced 300ms) |
+| `terminal_session.v1:{terminal_session_id}` | PTY session continuity record for terminal restore and historical/live verification | On lifecycle change |
 | `ssh_remotes/{id}` | Saved SSH remote record: nickname, host, port, user, auth method, remote folder, jump host, and last test metadata. No secrets. | On save |
 
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md
@@ -1250,6 +1749,8 @@ Normative mapping notes:
 - `preview_state.v1:*`, `preview_source_artifact.v1:*`, `browser_session_state.v1:*`, and `browser_profile_state.v1:*` replace the stale single-blob `browser_state:v1` model.
 - Search and LSP rows in this section are GUI-facing projections and MUST resolve back to owner-doc contracts in `Plans/storage-plan.md`, `Plans/FileManager.md`, and `Plans/LSPSupport.md`.
 - `editor_unsaved_buffer.v1:*` stores local unsaved buffer state only and MUST NOT imply that a remote write succeeded.
+- `dashboard_layout:v1` is a deprecated migration-read alias only; `widget_layout:v1:dashboard` is the canonical dashboard key after migration.
+- §15.1 lists the keys required for GUI state persistence. For the complete key catalog including non-GUI keys, see `Plans/storage-plan.md` §2.3.
 
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FileManager.md, ContractName:Plans/LSPSupport.md
 
@@ -1270,11 +1771,11 @@ ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FileManager.
 On startup:
 1. Read `layout:v1` from redb and restore panel positions, sizes, dock states, and detached-terminal geometry.
 2. Read `theme:v1` from redb and apply theme.
-3. Read `dashboard_layout:v1` and restore card order.
+3. Read `widget_layout:v1:dashboard` and restore dashboard widget layout. On first launch after migration, read from deprecated `dashboard_layout:v1` only when the canonical key is absent, then write back to `widget_layout:v1:dashboard`.
 4. Read `activity_bar_order:v1` and restore icon order.
 5. Read `editor_state:v1:{project}` and restore open tabs.
 6. Read `project_state:v1:{project_id}` and restore the active project-facing shell state.
-7. Read `terminal_state:v1` and restore terminal section layout, tabs, pane tree, labels, and selected focus targets.
+7. Read `terminal_layout.v1:{project_id}` plus linked `terminal_session.v1:{terminal_session_id}` / canonical terminal record families and restore terminal section layout, tabs, pane tree, labels, and selected focus targets. On first launch after migration, a compatibility reader MAY ingest deprecated `terminal_state:v1` payloads and rewrite them into the canonical terminal key family.
 8. Read `hotreload_state:v1:{project_id}` and rehydrate dev-session UI state as historical or verified-live state.
 9. Read `onboarding:v1` and determine whether tour or first-run hints should show.
 10. If a floating or detached window was on a disconnected monitor, fall back to docked presentation or to a safe detached coordinate.
@@ -1322,8 +1823,8 @@ ContractRef: ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/W
 | `projects.rs` | `views/projects.slint` (Home group) | Minimal changes |
 | `wizard.rs` | `views/wizard.slint` (Run group) | Add agent activity pane, intent selection |
 | `interview.rs` | `views/interview.slint` (Run group) | Also available as Chat mode |
-| `tiers.rs` | `views/tiers.slint` (Run group) | Minimal changes |
-| `config.rs` | **Merged into** `views/settings.slint` (Settings group) | Tabs: Tiers, Branching, Verification, Memory, Budgets, Advanced, Interview, YAML |
+| `tiers.rs` | `views/nodes.slint` (Run group) | Renamed to match the node/package/lane/seam model; otherwise minimal changes |
+| `config.rs` | **Merged into** `views/settings.slint` (Settings group) | Tabs: Nodes, Branching, Verification, Memory, Budgets, Advanced, Interview, YAML |
 | `settings.rs` | **Merged into** `views/settings.slint` (Settings group) | Tab: General |
 | `login.rs` | **Merged into** `views/settings.slint` (Settings group) | Tab: Authentication |
 | `doctor.rs` | **Merged into** `views/settings.slint` (Settings group) | Tab: Health |
@@ -1453,7 +1954,7 @@ No features in this specification are deferred.
 | Plan Document | Sections Incorporated |
 |--------------|----------------------|
 | `Plans/assistant-chat-design.md` | Chat panel (§7.16), modes, threads, steer/queue submission, subagent inline blocks, commands, activity transparency, plan panel, context usage, HITL-to-chat handoff |
-| `Plans/FileManager.md` | File Manager (section 7.17), File Editor (section 7.18), embedded document pane shared-buffer contract (section 7.19.1), click-to-open, @ mention, preview, external drag-and-drop, HTML preview/hot reload, click-to-context, open-file contract, shared buffer model, editor diff view, **SSH remote editing (section 7.4.5 and section 7.18)**, **run/debug configurations (section 7.4.6 and section 7.20 Debug)**, **terminal/browser tab management (section 7.20)** |
+| `Plans/FileManager.md` | File Manager (§7.17), File Editor (§7.18), embedded document pane shared-buffer contract (§7.19.1), click-to-open, @ mention, preview, external drag-and-drop, HTML preview/hot reload, click-to-context, open-file contract, shared buffer model, editor diff view, **SSH remote editing (§7.4.5 and §7.18)**, **run/debug configurations (§7.4.6 and §7.20.2)**, **terminal/browser tab management (§7.20.1)** |
 | `Plans/usage-feature.md` | Usage page (§7.8), per-thread usage, ledger, analytics, 5h/7d visibility, alerts |
 | `Plans/human-in-the-loop.md` | HITL settings (§7.4 Settings/HITL tab), HITL approval UI (§10.8) |
 | `Plans/chain-wizard-flexibility.md` | Wizard redesign (section 7.5), intent selection, intent-specific fields, file upload limits, Builder opener + turn semantics, checklist status UI, findings preview, single final approval gate, tri-location chat pointers, embedded document pane + agent activity separation, pause/cancel/resume controls, recovery state, adaptive interview phases |
@@ -1461,16 +1962,16 @@ No features in this specification are deferred.
 | `Plans/agent-rules-context.md` | Settings/Rules tab (§7.4), application + project rules |
 | `Plans/Glossary.md` | Product name "Puppet Master" throughout |
 | `Plans/newfeatures.md` | Bottom panel/terminal (§7.20), thinking display, streaming, keyboard shortcuts, stream event visualization, duration timers, background runs, restore points, config migration dialog, rate-limit banner, version update banner, **instant project switch (§3.4)**, **sound effects (§10.13)**, **hot reload controls (§7.20 Ports)**, **instructions editor (§7.18)**, **language auto-detection (§7.3)** |
-| `Plans/interview-subagent-integration.md` | Interview config tab (section 7.4), agent activity (section 7.19), embedded document pane (section 7.19.1), findings summary preview, single final approval gate, multi-pass review |
-| `Plans/orchestrator-subagent-integration.md` | Dashboard (§7.2), orchestrator controls, tier display |
+| `Plans/interview-subagent-integration.md` | Interview config tab (§7.4), agent activity (§7.19), embedded document pane (§7.19.1), findings summary preview, single final approval gate, multi-pass review |
+| `Plans/orchestrator-subagent-integration.md` | Orchestrator (§7.1), orchestrator controls, node/package/lane/seam display |
 | `Plans/WorktreeGitImprovement.md` | Branching tab in Settings (§7.4), worktree recovery in Health tab |
 | `Plans/FileSafe.md` | Advanced tab in Settings (§7.4), command blocklist, write scope, security filter |
 | `Plans/MiscPlan.md` | Health tab "Clean workspace" button (§7.4), cleanup config in Advanced tab, Shortcuts tab (§7.4) |
 | `Plans/Skills_System.md` | Skills tab (§7.4.16) |
-| `Plans/feature-list.md` | Master feature reference: chat modes (§7.16), thread management, slash commands (§7.16.2), ELI5/YOLO, attachments, Teach, context management (§9.6), editor detach (§7.18), **catalog install UI (§7.4.3)**, **sync bundle manager (§7.4.4)** |
+| `Plans/feature-list.md` | Master feature reference: chat modes (§7.16), thread management, slash commands (§7.16.2), ELI5/YOLO, attachments, Teach, context management (§9.6), editor detach (§7.18), **storage and cache admin UI (§7.4.3)**, **unified settings/search/import/export (§7.4.4)** |
 | `Plans/newtools.md` | MCP configuration in Advanced tab (§7.4), tool discovery during interview, cited web search contract |
-| `Plans/Tools.md` | Tool permissions in Permissions tab (§7.4.10), permission model (allow/deny/ask), presets, central tool registry; tool usage widget on Usage page (§7.8); tool approval dialog in Chat (§7.16) |
-| `Plans/LSPSupport.md` | LSP tab in Settings (§7.4.2), editor LSP features (§7.18: diagnostics, hover, completion, signature help, inlay hints, code actions, code lens, semantic highlighting, go-to-definition), **Chat Window LSP (§7.16: diagnostics in context, @ symbol with LSP, code-block hover/go-to-definition, Problems link)**, Problems tab (§7.20), status bar LSP indicator |
+| `Plans/Tools.md` | Tool permissions in Permissions tab (§7.4.9), permission model (allow/deny/ask), presets, central tool registry; tool usage widget on Usage page (§7.8); tool approval dialog in Chat (§7.16) |
+| `Plans/LSPSupport.md` | LSP tab in Settings (§7.4.9), editor LSP features (§7.18: diagnostics, hover, completion, signature help, inlay hints, code actions, code lens, semantic highlighting, go-to-definition), **Chat Window LSP (§7.16: diagnostics in context, @ symbol with LSP, code-block hover/go-to-definition, Problems link)**, Problems tab (§7.20.2), status bar LSP indicator |
 | `Plans/rewrite-tie-in-memo.md` | Rewrite scope alignment; ensures GUI migration ties into broader rewrite plan |
 | `Plans/FinalGUISpec.md` (internal clipboard contract) | Clipboard migration requirements and verification map: SelectableText contract (§8.1), context-menu clipboard contract (§10.9, §10.9.1-§10.9.3), migration gate (§16.4) |
 
@@ -1554,7 +2055,7 @@ ContractRef: ContractName:Plans/Widget_System.md#4
 Two distinct catalogs now exist. To avoid confusion:
 
 - **Section 8 of this document** (FinalGUISpec Widget Catalog) = **atomic UI components**: StyledButton, StyledInput, StyledBadge, TreeView, CodeBlock, and other building-block primitives. These are reusable across all views and are NOT page widgets.
-- **Plans/Widget_System.md section 2** = **composed page widgets**: OrchestratorStatus, BudgetDonuts, TierTree, LedgerTable, and other content panels built FROM atomic components. These are the widgets users can add/remove/move/resize on the Dashboard, Usage page, and Orchestrator tabs.
+- **Plans/Widget_System.md section 2** = **composed page widgets**: OrchestratorStatus, BudgetDonuts, NodeTree, LedgerTable, and other content panels built FROM atomic components. These are the widgets users can add/remove/move/resize on the Dashboard, Usage page, and Orchestrator tabs.
 
 The relationship: page widgets (Widget_System.md) are composed of atomic components (FinalGUISpec section 8).
 
@@ -1579,11 +2080,11 @@ ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Widget_Syste
 - Section 12.3 of this document -- Dashboard grid responsive breakpoints
 - Section 15.1 of this document -- redb persistence for dashboard layout
 - Plans/storage-plan.md -- redb namespaces
-## 17. Persona Editor, Compatibility Disclosure, and Surface-Level Persona Controls (2026-03-06)
+## 19. Persona Editor, Compatibility Disclosure, and Surface-Level Persona Controls (2026-03-06)
 
 This addendum expands the GUI contract for Persona authoring and runtime visibility.
 
-### 17.1 Persona editor compatibility matrix (required)
+### 19.1 Persona editor compatibility matrix (required)
 
 The Persona editor MUST show provider support state for Persona controls.
 
@@ -1605,7 +2106,7 @@ Minimum provider rows to display:
 - OpenCode
 - Direct/API providers
 
-### 17.2 Persona editor fields (expanded)
+### 19.2 Persona editor fields (expanded)
 
 In addition to existing Persona fields, the editor must support:
 - `default_platform`
@@ -1628,14 +2129,14 @@ In addition to existing Persona fields, the editor must support:
 - `Talk a little less` -> `talk_a_little_less`
 - `Talk less` -> `talk_less`
 
-### 17.3 Compatibility panel copy examples
+### 19.3 Compatibility panel copy examples
 
 The editor should be able to communicate states like:
 - `Claude Code: supports model preference and effort; temperature/top_p not exposed in official CLI settings.`
 - `Cursor CLI: supports prompt/rules steering and some model selection; low-level runtime controls are limited or undocumented.`
 - `Direct/API providers: strongest support for exact runtime controls.`
 
-### 17.4 Surface-level Persona controls
+### 19.4 Surface-level Persona controls
 
 Persona controls are required on the following surfaces:
 - Chat
@@ -1655,25 +2156,25 @@ Each surface should expose, at minimum:
 Interview/Builder visibility rule:
 - The Interview chat surface, Interview activity pane, and Builder activity pane MUST display the same effective-runtime fields for the active run block, even if one surface uses a more compact layout than another.
 
-#### 17.4.1 Persona mode semantics
+#### 19.4.1 Persona mode semantics
 
 - **Auto:** Resolver selects the Persona from surface defaults, mappings, and runtime context. User sees the chosen Persona and reason string but does not pin a manual choice.
 - **Manual:** User explicitly selects a Persona for the next eligible run/turn on that surface. Manual selection overrides Auto resolution until cleared or replaced.
 - **Hybrid:** Resolver proposes a Persona, but the user may override it before execution while still seeing the automatic recommendation and reason text.
 - Mode changes apply only to the next eligible run/turn or queued execution on that surface; they do not retroactively change an active run already in progress.
 
-#### 17.4.2 Selection reason and override behavior
+#### 19.4.2 Selection reason and override behavior
 
 - The **effective Persona display** must show the resolved Persona name plus a one-line reason string such as `User requested`, `Stage default`, `Provider fallback`, or `Mapped from Interview phase`.
 - Every surface needs a compact **Override Persona** affordance (dropdown, popover, or button+menu) with `Set override`, `Clear override`, and `Return to Auto` actions.
 - When overrides are unavailable for the current provider or run state, the control remains visible but locked/disabled with a tooltip explaining why.
 
-#### 17.4.3 Platform/model display scope
+#### 19.4.3 Platform/model display scope
 
 - The `platform/model display` requirement may reuse the existing status-bar/footer platform and model controls where those already exist; the surface must not introduce conflicting duplicate controls.
 - If a user overrides model/platform independently from the Persona, the UI must show both the requested Persona and the effective platform/model outcome.
 
-### 17.5 Runtime display requirements
+### 19.5 Runtime display requirements
 
 When a run is active, the UI must display:
 - requested Persona when explicitly set,
@@ -1692,7 +2193,7 @@ This display requirement applies to:
 - subagent inline blocks,
 - multi-pass reviewer status rows.
 
-### 17.6 Natural-language invocation feedback
+### 19.6 Natural-language invocation feedback
 
 If the user summons a Persona via natural language, the UI must reflect it explicitly, for example:
 - `Persona: Collaborator (User requested)`
@@ -1700,7 +2201,7 @@ If the user summons a Persona via natural language, the UI must reflect it expli
 
 If the override is turn-scoped, the UI should clear back to the previous/auto state on the next eligible turn.
 
-### 17.7 Provider-gap disclosure rule
+### 19.7 Provider-gap disclosure rule
 
 The GUI must never imply that a provider honored a Persona control when it did not.
 
@@ -1710,7 +2211,7 @@ If a control is skipped, the UI must disclose it in at least one of:
 - activity detail popover,
 - run detail/history panel.
 
-#### 17.7.1 Disclosure mechanics
+#### 19.7.1 Disclosure mechanics
 
 - **Honored** = requested control applied as requested. **Skipped** = ignored entirely. **Clamped** = partially honored but changed to a supported value/range.
 - Every disclosure must include: control name, requested value, effective value (if any), and human-readable reason.
@@ -1718,44 +2219,24 @@ If a control is skipped, the UI must disclose it in at least one of:
 - When a limitation is only discovered at runtime, surface the disclosure inline on the active surface **and** persist the same information in run detail/history so it is auditable later.
 - Disclosures must name the provider explicitly (for example: `Claude Code ignored reasoning_effort=high; provider does not support that control on this model`).
 
-### 17.8 Interview/Builder/Orchestrator mapping editors
+### 19.8 Interview/Builder/Orchestrator mapping editors
 
 Settings or surface-specific configuration must support mapping Persona defaults to:
 - Interview stages/phases,
 - Requirements Builder steps/passes,
-- Orchestrator phase/task/subtask/iteration tiers,
+- Orchestrator node/package/lane/seam mappings,
 - Multi-Pass review passes.
 
 These editors should also allow platform/model selection per mapping and show compatibility warnings.
 
-### 17.9 Acceptance criteria addendum
+### 19.9 Acceptance criteria addendum
 
 - Persona editor must disclose unsupported and partially supported controls per provider.
 - All interactive run surfaces must show effective Persona/model/platform and selection reason.
 - Natural-language Persona requests must be visibly reflected in the UI when active.
 - Provider-gap disclosure must be explicit; no silent implied support.
 
-**§7.4.8A Docker Manage + Unraid publishing addendum:**
-
-- **Template repo status row:** bind directly to canonical `TemplateRepoStatus` (`unconfigured`, `config_invalid`, `clean`, `dirty_uncommitted`, `committed_local_only`, `push_in_progress`, `push_failed`, `diverged_remote`, `needs_review`). Presentation copy may translate those values, but the GUI must not invent a second status model.
-- **Unraid controls:** when shared-profile scope is active, expose `Apply shared profile to this repo` as an explicit action in addition to generate/update and push controls.
-- **`ca_profile.xml` editor:** default to shared cross-project maintainer profile with per-project override option, and provide two editing layers: (1) structured controls for known fields and (2) advanced raw XML editing for unknown / passthrough content. Saving from either layer MUST preserve unmodified passthrough XML verbatim. Support picture upload or external URL; uploaded pictures default to repo-managed assets.
-
-Add a contextual **Docker Manage** GUI surface for Docker-related projects. This surface may be implemented as a page or dockable panel, but it MUST behave as a first-class management surface and not merely as a hidden advanced-only dialog.
-
-- **Visibility rule:** show the Docker Manage surface when a Docker-related project is active. Add a setting named **Hide Docker Manage when not used in Project.** Default: enabled.
-- **Auth controls:** place a browser-login button near DockerHub settings, retain PAT entry, show helper text that PAT is recommended, and explain/link how to obtain a PAT.
-- **Auth state presentation:** show requested auth mode separately from effective capability, along with validated account identity, namespace access, and degraded reason when capability is partial.
-- **Repository management controls:** namespace selector, repository selector, refresh action, create-repository action, and create-repository confirmation dialog that displays namespace, repository name, and privacy. Privacy defaults to private and must be visibly labeled as the default.
-- **Runtime controls:** build, run/preview, stop, open running container/web UI, open logs, and health/access state.
-- **Publish controls:** push image, show digest/tag results, and expose target DockerHub repo summary.
-- **Unraid controls:** toggle to auto-generate/update Unraid XML after successful publish (default enabled), toggle to manage template repo (default enabled), template-repo status row, one-click push action, and shortcut into `ca_profile.xml` editing.
-- **Template repo setup flow:** allow both create-new and select-existing when no template repo is configured.
-- **`ca_profile.xml` editor:** default to shared cross-project maintainer profile with per-project override option; all fields editable; support picture upload or external URL; uploaded pictures default to repo-managed assets.
-- **Auto-generated metadata warning:** when `ca_profile.xml` is created automatically, show a visible notice that the user still needs to configure/review the profile.
-- **Safety copy:** make it explicit that repository creation cannot be auto-approved by YOLO or autonomy modes.
-
-ContractRef: ContractName:Plans/Containers_Registry_and_Unraid.md, ContractName:Plans/newtools.md#147-docker-runtime--dockerhub-contract, ContractName:Plans/Permissions_System.md
+> Moved to §7.4.8A — Docker Manager Panel Spec
 
 ## Rendering Surface Addendum (2026-03-07)
 
@@ -1982,6 +2463,8 @@ If a project is already active, the wizard should open on the preloaded feature/
 
 ## Scheduler, blocked, and Remediation GUI Addendum (2026-03-08)
 
+> **Superseded** — see Canonical Blocked/Recovery Behavior below.
+
 ### 1. Dashboard cards
 
 The Dashboard must distinguish:
@@ -2050,6 +2533,8 @@ All scheduler/remediation/blocked UI updates must follow the existing `invoke_fr
 - new runtime widgets obey the event-driven rewrite rule.
 ## Runtime Scheduler / Blocked-State GUI Parity Addendum (2026-03-09)
 
+> **Superseded** — see Canonical Blocked/Recovery Behavior below.
+
 The GUI must expose the packet's runtime state without relying on hidden behavior.
 
 ### Required visible elements
@@ -2066,6 +2551,8 @@ All scheduler, blocked, and remediation widgets MUST update from runtime events/
 ### UX safety rule
 If the GUI cannot perform a required action in the current mode, it must state why and point to the canonical recovery path. The GUI must not present controls that imply hidden fallback, hidden retry, or hidden re-auth behavior.
 ## Runtime Blocked, Queue, and Recovery GUI Reconciliation Addendum (2026-03-09)
+
+> **Superseded** — see Canonical Blocked/Recovery Behavior below.
 
 ### `wizard_blocked` CtA card
 Add a first-class `wizard_blocked` card alongside `wizard_attention_required`.
@@ -2106,6 +2593,8 @@ Thread and run status surfaces MUST include distinct presentations for:
 - if no valid safe point exists, `Retry from safe point` is disabled with an explanation
 ## Runtime Scheduler Recovery GUI Consolidation Addendum (2026-03-09)
 
+> **Superseded** — see Canonical Blocked/Recovery Behavior below.
+
 This addendum retains GUI-specific recovery rules that supplement the canonical blocked/recovery section below.
 
 ### FileSafe rendering
@@ -2116,11 +2605,18 @@ Decomposition degradation is a pre-lock planning state only. GUI copy MUST NOT i
 
 ### All-nodes-blocked gating
 Until owner runtime contracts define dedicated all-blocked events, GUI surfaces MAY derive all-blocked banners from current projections but MUST NOT treat undeclared runtime events as canonical.
-## Blocked / Recovery GUI Reconciliation
+## Canonical Blocked/Recovery Behavior
 This section is the canonical GUI summary for blocked and recovery surfaces.
 
 ### Dashboard Action Required
 Blocked and recovery UI binds to canonical blocked projections and HITL records.
+- `wizard_blocked` is a first-class card alongside `wizard_attention_required`
+- blocked cards use the fields `card_type`, `wizard_id`, `wizard_step`, `blocked_reason_code`, `report_ref`, `resume_url`, and optional `thread_id`
+- `wizard_blocked` uses more severe visual treatment than `wizard_attention_required`
+- primary action: `Resume Wizard`
+- secondary action: `View report`
+- auto-dismiss only when the wizard leaves `blocked`
+- priority order: `wizard_blocked > HITL approval > wizard_attention_required > interrupted > rate limit > warnings`
 - blocked payloads use ordered `allowed_action_ids[]`
 - blocked episodes remain distinct when more than one is active
 - GUI labels may vary by surface, but command binding always resolves through the shared runtime command catalog
@@ -2139,8 +2635,22 @@ The GUI does not synthesize alternate blocked schemas, alternate action arrays, 
 - multiple simultaneous blocked episodes show per-episode controls and a count summary where appropriate
 - remediation-ceiling-exceeded and validation-blocked use the same blocked-payload contract as other blocked episodes rather than bespoke one-off UI treatment
 
+### Runtime state presentation
+Scheduler surfaces MUST visually distinguish:
+- blocked waiting for prerequisite or approval
+- retrying/backoff
+- remediation in progress
+- terminal failure
+
+### Recovery UX rules
+- safe points are runtime recovery anchors and MUST NOT be presented as user-facing restore points
+- retry controls MUST distinguish `Retry from safe point` from `Start fresh attempt`
+- if no valid safe point exists, `Retry from safe point` is disabled with an explanation
+
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/human-in-the-loop.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/assistant-chat-design.md
 ## Blocked-State Visual Distinction and Recovery UX Addendum
+
+> **Superseded** — see Canonical Blocked/Recovery Behavior below.
 
 ### Blocked-state visual distinction
 
@@ -2197,8 +2707,11 @@ ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/chain-w
 
 If all runnable nodes in a run are simultaneously in blocked state:
 
-1. After 10 minutes with no state change, the run emits `run.all_nodes_blocked_warning` and the UI shows a persistent amber banner: "All steps are blocked. Review blocked items to continue."
-2. After 30 minutes with no state change, the run auto-pauses and emits `run.auto_paused` with reason `all_nodes_blocked_timeout`.
-3. The user can resume at any time after resolving blocks.
+> **Superseded** — event-driven blocked-state transitions are canonical. The GUI must react to runtime events and projections, not timer-driven pause or warning thresholds.
+
+Canonical rule:
+1. When all runnable nodes are blocked, the runtime emits the relevant blocked/recovery events and the UI shows the corresponding persistent blocked-state banner or card immediately.
+2. The user can resume at any time after resolving blocks.
+3. Polling intervals are acceptable only for external systems without push delivery (for example GitHub Actions status refresh every 30s) and must be documented as freshness aids rather than canonical correctness logic.
 
 ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Run_Modes.md

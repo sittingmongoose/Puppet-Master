@@ -60,12 +60,21 @@ The tab must present:
 - weak-integration concerns
 - promotion state and corroboration state when relevant
 
+**Weak-integration concern taxonomy (closed set):**
+- `wiring` — missing or incorrect connections between packages, commands, or routed surfaces
+- `workflow` — lifecycle/handoff sequencing is incomplete or contradictory
+- `state` — persisted or projected state contracts disagree or do not survive refresh/restart correctly
+- `gui` — shell presentation, focus, or affordance behavior contradicts the owner contract
+- `design` — a broader canonical design gap remains even though local wiring/state may appear present
+
 Rules:
 - `Locally Complete`, `Available to Seam`, and `Seam Complete` remain distinct
-- weak integration includes runtime/GUI mismatch, workflow gaps, wiring problems, state/contract mismatch, and architecture drift
-- seam completion is blocked when integration quality is insufficient even if packages are locally complete
+- seam completion is blocked when an active weak-integration concern with blocking impact remains unresolved
+- weak-integration concerns carry explicit subtype, owning object refs, and evidence refs so filtering and routing are deterministic
+- seam inspectors stay compact; dense concern/recovery/full-record views open dedicated record views rather than turning inspectors into raw-object dumps
+- page-wide freshness gating applies here: if concern, receipt, or projection freshness is not `current` or health is not `healthy`, mutating actions degrade to inspect/revalidate actions until the owning projection is refreshed
 
-ContractRef: ContractName:Plans/Decision_Policy.md, ContractName:Plans/Run_Graph_View.md, ContractName:Plans/Glossary.md
+ContractRef: ContractName:Plans/Decision_Policy.md, ContractName:Plans/Run_Graph_View.md, ContractName:Plans/Glossary.md, ContractName:Plans/storage-plan.md
 
 ## 5. Node Graph tab
 `Node Graph` is the full graph/lineage surface.
@@ -177,11 +186,13 @@ Assistant Chat owns thread-level worktree binding, merge-back flow, and natural-
 ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/assistant-chat-design.md
 
 **Ownership model:**
-- `owner_run_id` / `owner_tier_id` → orchestrator-owned
+- `owner_run_id` / `owner_node_id` → orchestrator-owned
 - `owner_thread_id` → assistant-owned
 - neither → manual (user-created)
 
 All three categories are visible in the Source Control Worktrees accordion. Owner metadata (Thread, Orch, Manual) is displayed as a label on each worktree row.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/WorktreeGitImprovement.md
 
 Cleanup posture:
 - Orchestrator-owned: governed by runner contract cleanup policy
@@ -189,20 +200,28 @@ Cleanup posture:
 - Manual: user-initiated via Source Control remove action
 
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Crosswalk.md, ContractName:Plans/Contracts_V0.md
-
 ## 12. Concern and notification model
 Concern is first-class.
 
-Concern lifecycle is closed to:
+**Concern lifecycle is closed to:**
 - `active`
 - `acknowledged`
 - `resolved`
 - `dismissed`
+- `superseded`
 
-Rules:
-- `acknowledged` is neither `resolved` nor `dismissed`
+**Transition and guard rules:**
+- `active -> acknowledged` means the concern was reviewed; it does not mean the problem is fixed
+- `active` or `acknowledged -> resolved` requires corroborating evidence or an owning-record transition that proves the concern no longer applies
+- `active` or `acknowledged -> dismissed` requires a dismissal reason such as `duplicate`, `expected_behavior`, `out_of_scope`, or `false_positive`
+- any concern may become `superseded` when merge/split/successor handling replaces it with a newer canonical concern lineage
+- `resolved` and `dismissed` are terminal for that concern record; a later recurrence reopens by creating a successor concern linked through lineage, not by silently mutating history
+
+**Persistence/projection rules:**
 - blocked owner and concern owner are distinct concepts
-- concern lineage must support merge, split, and supersession
-- escalation uses execution impact, blocked owner, persistence, and projection state rather than severity alone
+- concern lineage must support merge, split, supersession, and successor-on-reopen
+- notifications are projections of concern records; acknowledging a notification updates the underlying concern state rather than creating a parallel notification-only lifecycle
+- concern records remain inspectable as first-class records with evidence refs, owner refs, freshness snapshot, and last-state-change timestamps
+- escalation uses execution impact, blocked owner, persistence, freshness/health state, and mutation risk rather than severity alone
 
-ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Decision_Policy.md, ContractName:Plans/Glossary.md
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Decision_Policy.md, ContractName:Plans/Glossary.md, ContractName:Plans/Contracts_V0.md

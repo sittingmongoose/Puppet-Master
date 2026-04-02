@@ -457,6 +457,57 @@ ContractRef: PolicyRule:CU-P2-T12
 6. On session complete → emit done, delete session
 ```
 
+### 13.3 Cancellation and abort contract
+
+Cancellation is a first-class provider control and is distinct from ordinary request failure.
+
+Rules:
+- canceling an in-flight request means Puppet Master sends a provider-specific cancellation action for the active OpenCode transport, such as closing the HTTP stream, canceling the SSE subscription, or triggering an abort signal on the request handle
+- if partial output tokens have already been received, those tokens are retained and the normalized response is marked `completion_reason: cancelled`
+- timeout and cancel are distinct: timeout is automatic after `request_timeout_ms`, while cancel is a user-initiated action
+- after cancellation, the provider connection is returned to the connection pool when healthy, or closed and discarded when the transport is suspected to be corrupted
+- PM MUST emit `provider.request_cancelled { provider_id, request_id, tokens_received, reason: "user" | "timeout" | "budget" | "error" }`
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/storage-plan.md
+
+### 13.4 Concurrency model
+
+OpenCode request dispatch is queue-backed and provider-account scoped.
+
+Rules:
+- default mode is sequential: one active request at a time per provider account
+- parallel mode is allowed only when explicitly enabled, such as subagent execution or other orchestrator-controlled fan-out flows
+- concurrency limit is configurable per provider account; default = `1`; upper bound is provider-specific and MUST respect upstream rate-limit constraints
+- when the concurrency limit is reached, new requests enter a FIFO queue
+- queued requests time out after `queue_timeout_ms` (default `30000ms`) if they have not started execution
+- different accounts for the same provider have independent concurrency limits and independent queues
+- PM MUST emit `provider.request_queued { provider_id, request_id, queue_position, queue_depth }` whenever a request is queued instead of starting immediately
+
+ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Contracts_V0.md
+
+### 13.5 Streaming error recovery
+
+Streaming recovery preserves already-received output while keeping retry ownership aligned with PM runtime policy.
+
+Rules:
+- if the connection breaks mid-stream, PM MUST:
+  1. retain all tokens received so far
+  2. mark the partial response as `completion_reason: stream_error`
+  3. attempt reconnect when `auto_retry_stream: true` (default)
+  4. include `partial_response` context in the retry so the model can continue when the provider supports continuation from partial output
+- provider support for continuation from partial output is not universal; when unsupported, PM preserves the partial output and surfaces the stream error without fabricating a seamless continuation
+
+Rate-limit handling:
+- on HTTP `429`, read `Retry-After` when present; otherwise use exponential backoff `1s → 2s → 4s`
+- maximum rate-limit retries = `3`
+- after the retry limit is exceeded, fail the attempt with `failure_class: rate_limited`
+
+Token/budget handling:
+- if the model hits its output token limit during streaming, the response ends normally with `completion_reason: length`
+- if PM budget enforcement triggers mid-stream, PM terminates the stream, keeps the partial response, and marks `completion_reason: budget_exceeded`
+
+ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md
+
 ---
 
 ## 14. Persistence Mapping (seglog)

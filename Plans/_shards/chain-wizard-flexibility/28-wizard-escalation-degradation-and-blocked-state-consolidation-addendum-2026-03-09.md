@@ -3,16 +3,7 @@
 This section defines canonical Wizard Blocked Lifecycle.
 
 ### Canonical `wizard_status`
-Allowed values:
-- `setup`
-- `requirements`
-- `interview`
-- `validating`
-- `attention_required`
-- `blocked`
-- `ready_to_execute`
-- `complete`
-- `cancelled`
+See canonical `wizard_status` definition in §2.1.
 
 ### Canonical blocked state
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md

@@ -15,23 +15,26 @@ Canonical source: [Plans/FinalGUISpec.md](../../FinalGUISpec.md)
 - [07-5-panel-system.md](07-5-panel-system.md) — ## 5. Panel System
 - [08-6-theme-system.md](08-6-theme-system.md) — ## 6. Theme System
 - [09-7-views-specification.md](09-7-views-specification.md) — ## 7. Views Specification
-- [10-11-anti-flickering-and-scroll-preservation.md](10-11-anti-flickering-and-scroll-preservation.md) — ## 11. Anti-Flickering and Scroll Preservation
-- [11-12-responsive-design.md](11-12-responsive-design.md) — ## 12. Responsive Design
-- [12-13-accessibility.md](12-13-accessibility.md) — ## 13. Accessibility
-- [13-14-slint-file-organization.md](13-14-slint-file-organization.md) — ## 14. Slint File Organization
-- [14-15-persistence.md](14-15-persistence.md) — ## 15. Persistence
-- [15-16-migration-mapping.md](15-16-migration-mapping.md) — ## 16. Migration Mapping
-- [16-17-risks-and-mitigations.md](16-17-risks-and-mitigations.md) — ## 17. Risks and Mitigations
-- [17-18-promoted-features-formerly-future-considerations.md](17-18-promoted-features-formerly-future-considerations.md) — ## 18. Promoted Features (Formerly Future Considerations)
-- [18-appendix-a-cross-references.md](18-appendix-a-cross-references.md) — ## Appendix A: Cross-References
-- [19-appendix-b-locked-decisions-summary.md](19-appendix-b-locked-decisions-summary.md) — ## Appendix B: Locked Decisions Summary
-- [20-appendix-c-dashboard-widget-grid-and-widget-catalog-integration-addendum-2026-02-23.md](20-appendix-c-dashboard-widget-grid-and-widget-catalog-integration-addendum-2026-02-23.md) — ## Appendix C: Dashboard Widget Grid and Widget Catalog Integration (Addendum -- 2026-02-23)
-- [21-17-persona-editor-compatibility-disclosure-and-surface-level-persona-controls-2026-03-06.md](21-17-persona-editor-compatibility-disclosure-and-surface-level-persona-controls-2026-03-06.md) — ## 17. Persona Editor, Compatibility Disclosure, and Surface-Level Persona Controls (2026-03-06)
-- [22-rendering-surface-addendum-2026-03-07.md](22-rendering-surface-addendum-2026-03-07.md) — ## Rendering Surface Addendum (2026-03-07)
-- [23-assistant-planning-ux-addendum-2026-03-08.md](23-assistant-planning-ux-addendum-2026-03-08.md) — ## Assistant Planning UX Addendum (2026-03-08)
-- [24-scheduler-blocked-and-remediation-gui-addendum-2026-03-08.md](24-scheduler-blocked-and-remediation-gui-addendum-2026-03-08.md) — ## Scheduler, blocked, and Remediation GUI Addendum (2026-03-08)
-- [25-runtime-scheduler-blocked-state-gui-parity-addendum-2026-03-09.md](25-runtime-scheduler-blocked-state-gui-parity-addendum-2026-03-09.md) — ## Runtime Scheduler / Blocked-State GUI Parity Addendum (2026-03-09)
-- [26-runtime-blocked-queue-and-recovery-gui-reconciliation-addendum-2026-03-09.md](26-runtime-blocked-queue-and-recovery-gui-reconciliation-addendum-2026-03-09.md) — ## Runtime Blocked, Queue, and Recovery GUI Reconciliation Addendum (2026-03-09)
-- [27-runtime-scheduler-recovery-gui-consolidation-addendum-2026-03-09.md](27-runtime-scheduler-recovery-gui-consolidation-addendum-2026-03-09.md) — ## Runtime Scheduler Recovery GUI Consolidation Addendum (2026-03-09)
-- [28-blocked-recovery-gui-reconciliation.md](28-blocked-recovery-gui-reconciliation.md) — ## Blocked / Recovery GUI Reconciliation
-- [29-blocked-state-visual-distinction-and-recovery-ux-addendum.md](29-blocked-state-visual-distinction-and-recovery-ux-addendum.md) — ## Blocked-State Visual Distinction and Recovery UX Addendum
+- [10-8-widget-catalog.md](10-8-widget-catalog.md) — ## 8. Widget Catalog
+- [11-9-state-management.md](11-9-state-management.md) — ## 9. State Management
+- [12-10-ux-patterns.md](12-10-ux-patterns.md) — ## 10. UX Patterns
+- [13-11-anti-flickering-and-scroll-preservation.md](13-11-anti-flickering-and-scroll-preservation.md) — ## 11. Anti-Flickering and Scroll Preservation
+- [14-12-responsive-design.md](14-12-responsive-design.md) — ## 12. Responsive Design
+- [15-13-accessibility.md](15-13-accessibility.md) — ## 13. Accessibility
+- [16-14-slint-file-organization.md](16-14-slint-file-organization.md) — ## 14. Slint File Organization
+- [17-15-persistence.md](17-15-persistence.md) — ## 15. Persistence
+- [18-16-migration-mapping.md](18-16-migration-mapping.md) — ## 16. Migration Mapping
+- [19-17-risks-and-mitigations.md](19-17-risks-and-mitigations.md) — ## 17. Risks and Mitigations
+- [20-18-promoted-features-formerly-future-considerations.md](20-18-promoted-features-formerly-future-considerations.md) — ## 18. Promoted Features (Formerly Future Considerations)
+- [21-appendix-a-cross-references.md](21-appendix-a-cross-references.md) — ## Appendix A: Cross-References
+- [22-appendix-b-locked-decisions-summary.md](22-appendix-b-locked-decisions-summary.md) — ## Appendix B: Locked Decisions Summary
+- [23-appendix-c-dashboard-widget-grid-and-widget-catalog-integration-addendum-2026-02-23.md](23-appendix-c-dashboard-widget-grid-and-widget-catalog-integration-addendum-2026-02-23.md) — ## Appendix C: Dashboard Widget Grid and Widget Catalog Integration (Addendum -- 2026-02-23)
+- [24-19-persona-editor-compatibility-disclosure-and-surface-level-persona-controls-2026-03-06.md](24-19-persona-editor-compatibility-disclosure-and-surface-level-persona-controls-2026-03-06.md) — ## 19. Persona Editor, Compatibility Disclosure, and Surface-Level Persona Controls (2026-03-06)
+- [25-rendering-surface-addendum-2026-03-07.md](25-rendering-surface-addendum-2026-03-07.md) — ## Rendering Surface Addendum (2026-03-07)
+- [26-assistant-planning-ux-addendum-2026-03-08.md](26-assistant-planning-ux-addendum-2026-03-08.md) — ## Assistant Planning UX Addendum (2026-03-08)
+- [27-scheduler-blocked-and-remediation-gui-addendum-2026-03-08.md](27-scheduler-blocked-and-remediation-gui-addendum-2026-03-08.md) — ## Scheduler, blocked, and Remediation GUI Addendum (2026-03-08)
+- [28-runtime-scheduler-blocked-state-gui-parity-addendum-2026-03-09.md](28-runtime-scheduler-blocked-state-gui-parity-addendum-2026-03-09.md) — ## Runtime Scheduler / Blocked-State GUI Parity Addendum (2026-03-09)
+- [29-runtime-blocked-queue-and-recovery-gui-reconciliation-addendum-2026-03-09.md](29-runtime-blocked-queue-and-recovery-gui-reconciliation-addendum-2026-03-09.md) — ## Runtime Blocked, Queue, and Recovery GUI Reconciliation Addendum (2026-03-09)
+- [30-runtime-scheduler-recovery-gui-consolidation-addendum-2026-03-09.md](30-runtime-scheduler-recovery-gui-consolidation-addendum-2026-03-09.md) — ## Runtime Scheduler Recovery GUI Consolidation Addendum (2026-03-09)
+- [31-canonical-blockedrecovery-behavior.md](31-canonical-blockedrecovery-behavior.md) — ## Canonical Blocked/Recovery Behavior
+- [32-blocked-state-visual-distinction-and-recovery-ux-addendum.md](32-blocked-state-visual-distinction-and-recovery-ux-addendum.md) — ## Blocked-State Visual Distinction and Recovery UX Addendum

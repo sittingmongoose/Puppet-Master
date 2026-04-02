@@ -13,6 +13,15 @@ Requirements Builder and related wizard generation/review work should distinguis
 
 ### Default stage Personas
 
+Wizard-stage defaults:
+
+- **Interview stage:** uses the interview persona.
+- **Planning stage:** uses the planning / architect persona.
+- **Execution stage:** uses the executor persona.
+- **Review stage:** uses the reviewer persona.
+
+These are the default persona assignments for top-level wizard stages. Builder-specific substage defaults remain defined below for drafting and review internals.
+
 ### Deterministic Builder Persona resolver
 
 Requirements Builder MUST resolve Personas in this order:

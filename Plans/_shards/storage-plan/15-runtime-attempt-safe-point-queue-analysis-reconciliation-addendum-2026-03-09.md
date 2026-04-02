@@ -3,8 +3,13 @@
 Storage and projections MUST persist the scheduler and recovery model without ambiguity.
 
 ### Counter semantics
-- `attempt_count` = total dispatch attempts for the node in the run, including the first attempt
-- `retry_count` = `attempt_count - 1`
+- `attempt_count` is the ground-truth count of started attempts for a node in a run, including the first attempt.
+- `retry_count` is derived display data only: `max(attempt_count - 1, 0)`.
+- sub-counter decomposition is additive attribution, not a replacement for `attempt_count`: `attempt_count = initial_attempts + retry_attempts + resume_attempts + remediation_retry_attempts`.
+- permission, auth, approval, safe-point, or revalidation changes produce new attempt snapshots/records; they do not mutate prior attempt counters in place.
+- projections that need lineage MUST join through `attempt_id` and the immutable attempt snapshot, not infer history from `retry_count` alone.
+
+ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Permissions_System.md
 
 ### Projection rules (reconciled)
 - run-graph and orchestrator projections MUST resolve by `attempt_id`, not only `node_id`

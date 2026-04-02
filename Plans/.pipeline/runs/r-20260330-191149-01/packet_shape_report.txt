@@ -1,0 +1,30 @@
+Packet Shape Report
+===================
+run_id: r-20260330-191149-01
+checked_at_utc: 2026-04-02T01:35:00Z
+
+VERDICT: PASS
+
+All 7 shape checks passed:
+
+1) NON-INSERTABLE CONTENT:            PASS (0 blockers)
+2) REPLACE_SECTION BODY START:        PASS (0 blockers)
+3) MISSING HEADING ANCHOR IN SOURCE:  PASS (0 blockers)
+4) OVERLAPPING ANCHOR APPLICATION:    PASS (0 blockers)
+5) STRUCTURED CONTAINER PLACEMENT:    PASS (0 blockers)
+6) CANONICALIZATION STABILITY:        PASS (0 blockers)
+7) CONTRACTREF LOCALITY:              PASS (0 blockers)
+
+Fix applied during check:
+- Plans/storage-plan.md: Merged two overlapping anchors
+  (## Assistant Worktree Binding Storage Addendum + ### New redb key families)
+  into single parent replace_section to prevent child consumption.
+  Packet updated in-place before final pass.
+
+Packet stats:
+- 10 doc_intents, 13 anchors (was 14, merged 2→1)
+- All anchors: heading/replace_section
+- All content_markdown: document-ready, no editor instructions
+- No ContractRef locality violations
+
+No active blockers for current packet.

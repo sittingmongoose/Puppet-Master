@@ -18,6 +18,20 @@ ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/sto
 
 ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Executor_Protocol.md
 
+### 14.1.1 Remote LSP over SSH transport
+
+Remote LSP uses SSH as a stdio tunnel instead of a port-forwarded secondary protocol.
+
+Rules:
+- transport is stdio over SSH; the remote LSP server stdin/stdout are tunneled through the SSH connection rather than exposed by port forwarding
+- connection lifecycle is: SSH connection established → remote LSP server spawned → stdio streams connected → initialize handshake → ready
+- multiple LSP servers may share the same SSH connection via multiplexed channels
+- if SSH disconnects, all remote LSP servers on that connection are marked `degraded`, reconnect is attempted, servers are re-initialized, and pending requests are replayed when safe
+- remote LSP has higher latency by design; PM applies a timeout multiplier for remote operations (default `3x`)
+- remote LSP uses the remote filesystem directly; there is no hidden local sync or mirror for LSP operations
+
+ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/FileManager.md, ContractName:Plans/storage-plan.md
+
 
 ### 14.2 Module and crate layout
 
@@ -61,6 +75,27 @@ DocumentBinding {
 ```
 
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/FinalGUISpec.md
+
+LSP server lifecycle state machine:
+
+States: `stopped → starting → initializing → ready → degraded → stopping → crashed`
+
+| From | To | Trigger | Action |
+|---|---|---|---|
+| stopped | starting | file opened matching server's language | spawn server process |
+| starting | initializing | process started, stdio connected | send `initialize` request |
+| initializing | ready | `initialized` notification received | enable capabilities |
+| ready | degraded | server error / timeout / partial failure | reduce capabilities, show warning |
+| degraded | ready | server recovers / error clears | restore full capabilities |
+| ready | stopping | last file of language closed / user request | send `shutdown` + `exit` |
+| stopping | stopped | server process exits | cleanup resources |
+| any | crashed | server process dies unexpectedly | log error, attempt restart |
+| crashed | starting | auto-restart (max 3 attempts, backoff 2s/4s/8s) | respawn |
+| crashed | stopped | restart limit exceeded | show error, require manual restart |
+
+Resource limits:
+- max memory per server is configurable, default `512MB`
+- max CPU time for a single request is `30s`
 
 ### 14.4 Message flow
 

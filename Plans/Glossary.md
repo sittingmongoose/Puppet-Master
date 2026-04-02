@@ -33,10 +33,11 @@ ContractRef: Invariant:INV-010
 
 ### Assistant worktree terms
 
+
 | Term | Definition |
 |---|---|
 | **thread worktree binding** | A 1:1 association between an assistant chat thread and a git worktree. Persisted via seglog events and projected into redb. A thread can have at most one worktree; a worktree can be bound to at most one thread. |
-| **assistant worktree** | A git worktree whose `owner_thread_id` field identifies it as owned by an assistant chat thread. Distinguished from orchestrator-owned (`owner_run_id`/`owner_tier_id`) and manual (no owner) worktrees. |
+| **assistant worktree** | A git worktree whose `owner_thread_id` field identifies it as owned by an assistant chat thread. Distinguished from orchestrator-owned (`owner_run_id`/`owner_node_id`) and manual (no owner) worktrees. |
 | **worktree header button** | The button in the assistant chat header (between model selector and context-usage) that provides worktree create/bind/remove/merge/PR actions for the active thread. |
 | **merge-back flow** | The process of integrating assistant worktree changes into the target branch. Four paths: local merge (squash/merge/rebase), PR creation, export (patch/diff/stash), and natural-language merge via assistant. |
 | **pre-merge test gate** | Optional automated test execution before merge-back. Tests run against the merged result (default) or branch only. Auto-detects test commands from 9 project types. Configurable, on by default. |
@@ -44,22 +45,6 @@ ContractRef: Invariant:INV-010
 | **worktree filter** | Segmented control in SC Worktrees section: All \| Threads \| Orchestrator \| Manual. Filters visible worktree rows by owner type. Default: All. Persisted per project. |
 
 ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/storage-plan.md
-
-- **Feature Seam**: a first-class graph-owned integration object representing one cross-package feature boundary.
-- **Work Package**: a first-class graph-owned execution/governance object representing package-local work within a seam.
-- **Package Overseer**: the governance actor responsible for one work package.
-- **Seam Overseer**: the governance actor responsible for cross-package integration inside one feature seam.
-- **Weak Integration**: an integration-quality failure family that includes wiring problems, workflow gaps, state/contract mismatches, GUI/runtime mismatch, and architecture drift.
-- **Promotion**: a governance/runtime state transition family that includes package availability and seam completion rather than a single generic “done” flag.
-- **Corroboration**: deterministic major-claim acceptance using the `2-of-3` model of original claim plus two corroborators.
-- **Graph Patch**: a formal structural replan that creates a new graph generation rather than mutating the prior graph in place.
-- **Graph Generation**: one graph lineage generation created by original planning or later graph patching.
-- **Lane**: the orchestration-facing operational identity bound to package execution and historical lineage.
-- **Worktree**: the concrete Git/filesystem backing object used by Source Control and lane execution.
-- **Concern**: a first-class durable issue record with its own lifecycle and lineage.
-
-ContractRef: ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/Run_Graph_View.md, ContractName:Plans/storage-plan.md
-
 ### Runtime and routing terms
 
 - **Blocked Episode**: one runtime-owned blocked period anchored by `run_id`, `node_id`, and `blocked_sequence`.
@@ -73,8 +58,8 @@ ContractRef: ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/Run_Gra
 - **Terminal Section**: the presentation-level terminal container that owns dock/detach state and ordered terminal tabs.
 - **Terminal Tab**: the terminal workspace container that owns title, pin state, order, and selected pane state.
 - **Terminal Pane**: the split-tree slot inside a terminal tab that binds to exactly one live or historical terminal session at a time.
-- **Terminal Session**: the canonical PTY/runtime identity for exact shell continuity.
-- **Dev Session**: the higher-level dev workflow identity that may link multiple terminal, Output, Problems, Debug Console, and Ports surfaces without replacing terminal-session identity.
+- **Terminal Session**: a single PTY instance identified by `terminal_session_id`; minted on terminal creation and replaced with a new ID on restart.
+- **Dev Session**: a logical session representing one period of active development, identified by `dev_session_id`; it may span terminal sessions and chat threads without replacing terminal-session identity.
 - **Command Block**: transcript-layer metadata anchored to one observed command invocation; it is not a replacement for the underlying terminal transcript.
 - **Shell Integration Tier**: the disclosed confidence tier for command/cwd/prompt metadata (`rich | basic | opaque`).
 - **Restore Outcome**: the disclosed recovery result for restored shell state (`restored_live | restored_exited | restored_disconnected | restored_without_history`).
@@ -93,6 +78,42 @@ ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Prompt_Pipel
 - **Attention Reason Code**: machine-readable reason indicating why an investigation needs explicit user awareness even when it is not hard-blocked.
 
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/FileManager.md
+
+### Shell and workspace terms
+
+| Term | Definition |
+|---|---|
+| **Dev Session** | A logical session representing one period of active development. Identified by `dev_session_id`. It spans terminal sessions and chat threads while preserving higher-level workflow continuity. |
+| **Terminal Session** | A single PTY instance. Identified by `terminal_session_id`. It is minted on terminal creation, and a restarted terminal receives a new ID. |
+| **Workspace** | The top-level container for one or more projects. A workspace may be local or remote and owns the surrounding shell, navigation, and settings context. |
+| **Project** | A single codebase/repository within a workspace. Each project has its own settings, LSP instances, indexing state, and persisted operational state. |
+| **Shell Profile** | A named terminal configuration that defines shell binary, environment variables, and working directory defaults for launched terminal sessions. |
+| **Thread** | A single conversation in the chat assistant. Identified by `thread_id` and used as the durable chat-scoped context boundary. |
+| **Investigation** | A debug session within a thread. Identified by `investigation_id` and used to scope evidence, instrumentation, and verification state. |
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md
+
+### Source control, CI, and container orchestration terms
+
+| Term | Definition |
+|---|---|
+| **Worktree** | A git worktree — a separate working directory sharing the same repository — used when PM needs repository-isolated execution or review state without cloning a second repository. |
+| **Branch Strategy** | The branching model used by Puppet Master for multi-node execution, including per-node branches, merge sequencing, and branch-to-lineage mapping. |
+| **Merge Gate** | A gate that validates merge readiness before branches are combined, such as verification, policy, or lineage checks. |
+| **Workflow** | A GitHub Actions workflow definition file (`.yml`) that declares triggers, jobs, and automation behavior. |
+| **Workflow Run** | A single execution instance of a workflow. It records status, jobs, artifacts, and timing for one triggered automation pass. |
+| **Job** | A unit of work within a workflow run. A job groups ordered steps, execution environment, and status reporting. |
+| **Step** | A single command or action within a workflow job. Steps execute in declared order and produce the fine-grained log stream for a job. |
+| **Artifact** | A file or bundle produced by a workflow run, such as logs, binaries, screenshots, or test results, for later download or inspection. |
+| **Container** | A Docker container instance: one runnable container created from an image with concrete runtime state. |
+| **Image** | A Docker image: the packaged template from which containers are created. |
+| **Compose** | Docker Compose: the multi-container orchestration model for defining and running related services together. |
+| **Pod** | A Kubernetes pod: the smallest deployable unit in Kubernetes, containing one or more tightly coupled containers. |
+| **Deployment** | A Kubernetes deployment: the controller that manages pod replicas, rollout history, and declarative desired state. |
+| **Service** | A Kubernetes service: the stable network endpoint that exposes one or more pods. |
+
+ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/Containers_Registry_and_Unraid.md, ContractName:Plans/storage-plan.md
+
 ## 3. Anti-drift documents
 - **Spec Lock** -- `Plans/Spec_Lock.json`; locked decisions that MUST NOT drift.
 - **Crosswalk** -- `Plans/Crosswalk.md`; ownership boundaries for primitives.

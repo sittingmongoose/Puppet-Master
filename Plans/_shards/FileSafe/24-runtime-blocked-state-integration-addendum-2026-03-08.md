@@ -29,8 +29,9 @@ Minimum fields:
 - `timestamp`
 - `command_or_path_summary`
 - `recovery_allowed`
-- `recovery_options[]`
+- `allowed_action_ids[]`
 
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Permissions_System.md
 ### 4. Safe-point interaction
 
 A FileSafe block that occurs before execution does not consume a mutation safe point and does not require rollback.

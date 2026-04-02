@@ -30,9 +30,9 @@ ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md
 <a id="DEF-AGENT"></a>
 ### 1.1 Agent
 
-An **Agent** is a running AI execution unit. It is a concrete instance within a Puppet Master run — a provider process that receives a compiled context (system prompt, instructions, conversation history) and produces a response stream. The Orchestrator spawns Agents for each tier (Phase, Task, Subtask, Iteration). An Agent is ephemeral; it exists only for the duration of its run.
+An **Agent** is a running AI execution unit. It is a concrete instance within a Puppet Master run — a provider process that receives a compiled context (system prompt, instructions, conversation history) and produces a response stream. The Orchestrator spawns Agents for each node in the run graph. An Agent is ephemeral; it exists only for the duration of its run.
 
-<a id="DEF-SUBAGENT"></a>
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Executor_Protocol.md
 ### 1.2 Subagent
 
 A subagent is a child run that resolves a Persona for the child task. It is not merely “the parent Persona, but smaller,” and it is not defined by provider-native agent-file syntax.
@@ -330,10 +330,9 @@ ContractRef: PolicyRule:Decision_Policy.md§2, ContractName:Plans/Personas.md#PE
 | `researcher` | Web research + collaboration-focused Persona. | Protected built-in ID. |
 | `deep-researcher` | Broader/longer research Persona with extended context. | Protected built-in ID. |
 
-**Enforcement:** The Persona validation logic (§3.3) MUST reject creation of user Personas with these IDs. If a built-in Persona with one of these IDs exists in canonical Persona storage, `select_for_tier()` and surface-specific resolvers MAY return it normally. Imported provider-native agent files MUST NOT overwrite these IDs; collisions are handled per §10.5/§10.8.
+**Enforcement:** The Persona validation logic (§3.3) MUST reject creation of user Personas with these IDs. If a built-in Persona with one of these IDs exists in canonical Persona storage, `select_for_node()` and surface-specific resolvers MAY return it normally. Imported provider-native agent files MUST NOT overwrite these IDs; collisions are handled per §10.5/§10.8.
 
----
-
+ContractRef: ContractName:Plans/Personas.md#PERSONA-VALIDATION, ContractName:Plans/orchestrator-subagent-integration.md
 ## 7. Relationship to the Persona registry and delegated-subagent registry
 
 The split between `persona_registry` and `subagent_registry` is mandatory.

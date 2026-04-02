@@ -1,6 +1,6 @@
 {
   "source_path": "Plans/feature-list.md",
-  "source_sha256": "418a394dbb6365a9ec11fef610d92f5e7e75cb2607d30670113ac40d7ceedf80",
+  "source_sha256": "708a52387efa39eea15a8a510e095ed98918717c869bfa595809c21b14dec065",
   "split_rule": {
     "primary": "## outside fences",
     "fallback": "line-count-200",
@@ -17,29 +17,36 @@
     {
       "dest_path": "Plans/_shards/feature-list/02-part-1-planned-and-new-features-from-plans.md",
       "start_line": 10,
-      "end_line": 50,
-      "segment_sha256": "01ffad0561cbb560b834d9d198d351e60a4d6589ed3e6228e25720c9c3306cfb",
+      "end_line": 11,
+      "segment_sha256": "91e82ff30c6a30e4669e798698a1c161b1ee44cf0afa5c0b99410a3139d7766e",
       "heading": "## Part 1 - Planned and New Features (from Plans)"
     },
     {
-      "dest_path": "Plans/_shards/feature-list/03-part-1a-markdown-mermaid-and-unified-rendering-addendum-2026-03-07.md",
-      "start_line": 51,
-      "end_line": 66,
-      "segment_sha256": "2ff1aacaf3e46ec2dec3bab998d376ddeb40648df3c7ec2a98feb00cd921db23",
+      "dest_path": "Plans/_shards/feature-list/03-reference-anchors-used-in-this-document.md",
+      "start_line": 12,
+      "end_line": 105,
+      "segment_sha256": "e2d90e543ac49490fd8e12d6c2e31be510c8ec27c9e3b9d8df3a1601fa754b31",
+      "heading": "## Reference anchors used in this document"
+    },
+    {
+      "dest_path": "Plans/_shards/feature-list/04-part-1a-markdown-mermaid-and-unified-rendering-addendum-2026-03-07.md",
+      "start_line": 106,
+      "end_line": 125,
+      "segment_sha256": "2f8ae1960779cfef421139d237b48c02e60656a3dd72fa9cb005ee8598da6515",
       "heading": "## Part 1A - Markdown, Mermaid, and Unified Rendering Addendum (2026-03-07)"
     },
     {
-      "dest_path": "Plans/_shards/feature-list/04-source-control-github-actions-and-docker-manager-mvp-consolidation-addendum-2026-03-12.md",
-      "start_line": 67,
-      "end_line": 90,
-      "segment_sha256": "ca9a9acaa1cedd94753610a63d70d1c70b16ffbd07aa69b63cb967bb9aa6c57d",
+      "dest_path": "Plans/_shards/feature-list/05-source-control-github-actions-and-docker-manager-mvp-consolidation-addendum-2026-03-12.md",
+      "start_line": 126,
+      "end_line": 154,
+      "segment_sha256": "5d3b56298d4c98b673469ef1b8dab0ca999a539c80ef8289ff550d810fa7e739",
       "heading": "## Source Control, GitHub Actions, and Docker Manager MVP Consolidation Addendum (2026-03-12)"
     },
     {
-      "dest_path": "Plans/_shards/feature-list/05-runtime-scheduler-recovery-summary-consolidation-addendum-2026-03-09.md",
-      "start_line": 91,
-      "end_line": 104,
-      "segment_sha256": "2a12751d858eee97c0f744a572426038aeea333ddb4a1ea323f51f6a212f2903",
+      "dest_path": "Plans/_shards/feature-list/06-runtime-scheduler-recovery-summary-consolidation-addendum-2026-03-09.md",
+      "start_line": 155,
+      "end_line": 171,
+      "segment_sha256": "b5eda739e141afb099ee3fcfaa425ffd521bdc78980ef0ce925a676d4867c02b",
       "heading": "## Runtime Scheduler Recovery Summary Consolidation Addendum (2026-03-09)"
     }
   ]

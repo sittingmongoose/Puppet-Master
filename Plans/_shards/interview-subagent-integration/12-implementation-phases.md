@@ -7,7 +7,7 @@
    - **DRY REQUIREMENT:** Use `subagent_registry::` functions for any subagent name validation -- DO NOT hardcode subagent names
 3. Add subagent configuration to GUI
    - **DRY REQUIREMENT:** Check `docs/gui-widget-catalog.md` FIRST -- use existing widgets (`toggler`, `styled_button`, `selectable_label`, `themed_panel`)
-   - **DRY REQUIREMENT:** Subagent name lists MUST come from `subagent_registry::all_subagent_names()` or `subagent_registry::get_subagents_for_tier()` -- DO NOT hardcode names
+   - **DRY REQUIREMENT:** Subagent name lists MUST come from `subagent_registry::all_subagent_names()` or `subagent_registry::get_subagents_for_node()` -- DO NOT hardcode names
    - **DRY REQUIREMENT:** Tag any new reusable widgets with `// DRY:WIDGET:<name>`
    - **DRY REQUIREMENT:** Run `scripts/generate-widget-catalog.sh` after widget changes
 4. Create subagent mapping utilities

@@ -1,6 +1,6 @@
 {
   "source_path": "Plans/newfeatures.md",
-  "source_sha256": "d5347d3414d4d052ea01f1fa8bba94fa05bfefe8d129c62f7eb2e1e7881e6837",
+  "source_sha256": "263a3d9fdaac728f6349e1c92cfb133ce50086863ff729fd81c15a7d606e34ba",
   "split_rule": {
     "primary": "## outside fences",
     "fallback": "line-count-200",
@@ -38,9 +38,16 @@
     {
       "dest_path": "Plans/_shards/newfeatures/05-high-level-feature-themes.md",
       "start_line": 20,
-      "end_line": 40,
-      "segment_sha256": "6fdbf1606e57d2d8ebb7cf1a532f2b53a01beb1056659bee6c6b45109bb411bb",
+      "end_line": 41,
+      "segment_sha256": "48a5e83863c623cea95e6ec12bf0e6636cb257ee890b37018727e085b3cb4ac7",
       "heading": "## High-level feature themes"
+    },
+    {
+      "dest_path": "Plans/_shards/newfeatures/06-24-browser-preview-and-code-context-integration.md",
+      "start_line": 42,
+      "end_line": 55,
+      "segment_sha256": "94b153af385679ccd945467e400834c6214841e338a10a4c203556655a4cd892",
+      "heading": "## 24. Browser preview and code-context integration"
     }
   ]
 }

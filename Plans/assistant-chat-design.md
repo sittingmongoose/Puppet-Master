@@ -21,19 +21,20 @@
 ---
 
 ## Rewrite alignment (2026-02-21)
-This plan's **UX requirements** remain authoritative. Implementation should target the rewrite described in `Plans/rewrite-tie-in-memo.md`:
+This plan's **UX requirements** remain authoritative. Implementation should target the rewrite described in `Plans/rewrite-tie-in-memo.md` with the following reconciled assumptions:
 
-- **Core:** Providers + unified event model + deterministic agent loop (OpenCode-style)
-- **Storage/search:** seglog/redb/Tantivy projections (not chat-history SQLite). Implementation checklist and chat mapping: `Plans/storage-plan.md`.
-- **UI:** Rust + Slint (not Iced)
-- **Tooling:** central tool registry + policy engine; tool approvals and results flow through the unified event stream
-- **Auth:** subscription-first; Gemini API key remains the explicit allowed exception, but Gemini itself is one provider with mixed OAuth/API-key account pools, OAuth-first default preference under `auto`, and requested/effective auth/account identity visible to chat/runtime surfaces rather than collapsed into a single generic auth badge
+- **Core:** providers + unified event model + deterministic agent loop remain the base architecture.
+- **Storage/search:** seglog/redb/Tantivy projections remain the persistence/search stack; JSONL mirror is derived only.
+- **UI:** Rust + Slint remain the intended shell implementation.
+- **Tooling:** tool registry, approvals, and results normalize through the unified event stream and shared permission/runtime contracts.
+- **Auth/runtime taxonomy:** subscription-first remains the default posture, but Gemini is not one mixed provider. The concrete runtime platforms are `gemini` (**Gemini Direct**; direct API-key transport) and `gemini_cli` (**Gemini CLI**; CLI-wrapped OAuth/API-key/Google-credential flows). Consumers MAY group them under `provider_family_id = gemini`, but chat/runtime surfaces MUST display the concrete requested/effective platform instead of collapsing them into a single generic Gemini badge.
+- **Identity disclosure:** requested/effective runtime identity, account binding, and auth state are imported from the shared runtime contracts. Assistant Chat must not invent a parallel provider/auth field set.
 
-ContractRef: ContractName:Plans/rewrite-tie-in-memo.md, ContractName:Plans/Multi-Account.md, ContractName:Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD
+ContractRef: ContractName:Plans/rewrite-tie-in-memo.md, ContractName:Plans/Multi-Account.md, ContractName:Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD, ContractName:Plans/Contracts_V0.md
 
 Any references in this plan to current UI widget implementation details should be treated as illustrative; the behavior and data contracts are what must remain stable.
 
-ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/FinalGUISpec.md
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/CLI_Bridged_Providers.md
 ## Executive Summary
 
 The **Assistant** is the third major surface alongside **Interview** and **Orchestrator**: a flexible chat for ask/plan/execute, teaching, **addressing dashboard warnings and Calls to Action (CtAs)** -- including HITL approval prompts -- and continuing work after the orchestrator completes. Chat UI is shared between Assistant and Interview with mode-specific presentation (Interview: phase-centric with thought stream and message strip; Assistant: message history, plan panel, thought stream). This plan defines modes, permissions, attachments, File Manager integration, Plan/Crew/BrainStorm behavior, and interview-phase UX. All design follows DRY: single source of truth for platform data (`platform_specs`), subagent names (`subagent_registry`), and reusable widgets per `docs/gui-widget-catalog.md`.
@@ -110,32 +111,34 @@ Planning-time rules for both `Plan` and `Deep Plan` remain:
 ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/storage-plan.md
 
 ### 1.0B Debug Mode contract
-
-Debug Mode is the explicit Assistant entrypoint for PM's fully automated, evidence-first debugging workflow.
+Debug Mode is the explicit Assistant entrypoint for PM's automated, evidence-first debugging workflow.
 
 Required rules:
-- Debug Mode is stronger than a behavioral hint. When selected, the assistant is expected to proactively use debug-capable tools, bounded evidence capture, and verification loops when policy and capabilities allow.
+- Debug Mode is stronger than a behavioral hint. When selected, the assistant is expected to use debug-capable tools, bounded evidence capture, revalidation gates, and verification loops when policy and capabilities allow.
 - Debug Mode is an Assistant-only workflow overlay, but the underlying debug-capable tools remain shared platform capabilities that Orchestrator, Interview, and delegated runs may use under the same contracts.
-- The default Debug loop is: target discovery or confirmation -> baseline capture -> temporary instrumentation when needed -> reproduction -> evidence collection -> diagnosis -> smallest viable fix -> verification -> cleanup.
 - Debug Mode remains execution-capable. There is no stable `Debug + ask` combination for automated investigations.
 - Debug Mode persists `requested_mode_overlay = debug` and `effective_mode_overlay = debug`, while runtime mode and execution strategy continue to resolve through `Plans/Run_Modes.md`.
 
 ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/Permissions_System.md
 
-Supported Debug target kinds are:
-- `dev_session`
-- `browser_target`
-- `dap_session`
-- `agent_session`
-- `imported_bundle`
+**Closed debug phase model:**
+1. `target_binding` — bind or confirm the exact debug target.
+2. `baseline_capture` — capture starting state, reproduction preconditions, and relevant runtime identity.
+3. `instrumentation` — add only the minimum temporary instrumentation required for diagnosis.
+4. `reproduction` — reproduce or confirm the issue against the bound target.
+5. `analysis` — reason over the bounded evidence set.
+6. `repair` — apply the smallest viable fix or remediation step.
+7. `verification` — verify whether the issue is resolved.
+8. `cleanup` — remove temporary instrumentation, temporary env/config, and temporary debug-only runtime state.
 
-Target rules:
-- project-backed targets (`dev_session`, `browser_target`, `dap_session`) require an active project context
-- without an active project, only `agent_session` and `imported_bundle` are available and the unavailable target kinds must be disclosed explicitly
-- target binding is identity-native; Debug Mode must not silently retarget from one bound subject to another
-- starting a different target while an active investigation already exists requires an explicit continue-or-supersede decision
+**Revalidation rules:**
+- Before any mutation-capable step after `target_binding`, the assistant MUST revalidate the investigation when the target identity, bound worktree/branch, requested/effective runtime identity, auth/account binding, or instrumentation availability has drifted.
+- Revalidation is also mandatory after target restarts, debug adapter/session replacement, or evidence expiry that invalidates the current hypothesis.
+- A revalidation gate surfaces an explicit reason in the Investigation Context; it MUST NOT silently continue as though the earlier target binding were still valid.
+- `verification` is not optional. A fix attempt without a recorded verification result remains `attention_required` or `failed_cleanup`, not `resolved`.
+- `cleanup` is the terminal mutation-capable phase for an otherwise successful investigation. Temporary instrumentation may persist only when the user explicitly preserves it or a preservation/hold rule says it must stay.
 
-ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FileManager.md, ContractName:Plans/GitHub_Integration.md
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/GitHub_Integration.md
 
 ### 1.0C Runtime mode normalization (canonical)
 
@@ -232,6 +235,22 @@ There are **two separate ELI5 toggles**; they are independent and must not be co
 - **Stop the agent:** The user must be able to **stop** the agent at any time (e.g. a "Stop" button or shortcut). Stop **cancels** the current run and does **not** send any message. Stopping does not remove queued messages; the next queued message can be processed after stop, or the user can edit/remove queued messages or clear the queue.
 - **Error and failure UX:** When the CLI fails, times out, or returns an error, the thread must show a **clear error state**: the error message (or a user-friendly summary) and, where applicable, **Resend** and **Cancel** (or Dismiss) actions. `Resend` replays the latest eligible user message using the canonical history-aware resend path; Cancel dismisses the error and leaves the queue unchanged. Failed runs do not consume a queued message unless the user explicitly resends; the queue remains so the user can edit, send now, or clear. If the failure was due to a platform or network issue, the UI can suggest switching platform or model (see §12 rate limit hit).
 
+### 4.0A Composer Behavior
+
+The composer follows one stable control model across idle, streaming, interrupted, and scrolled-away states.
+
+Required rules:
+- the primary composer action is **Send** while no assistant generation is active in the thread
+- once the assistant is generating, the same primary action morphs in place from **Send** to **Stop** instead of introducing a second competing control elsewhere in the footer
+- when generation completes, fails, or is cancelled, the primary action returns to **Send** for the next user turn
+- the currently streaming assistant message also exposes a per-message **Stop** icon; selecting it halts generation for that specific in-flight message/run and preserves already-rendered partial output in history
+- when the user is scrolled above the newest content, the thread shows a **Jump to bottom** control with an unseen-count badge; the badge increments as new messages/cards arrive below the viewport
+- activating **Jump to bottom** scrolls to the latest visible boundary, clears the unseen-count badge for content now in view, and restores normal auto-follow behavior
+- assistant messages expose an always-visible **Copy** icon in message chrome so copying the latest assistant output does not require hover discovery
+- user messages are not deletable from thread history; the corrective path is limited to **Edit** plus submit/resend under the canonical history-aware replay rules
+
+ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md
+
 ### 4.1 Chat footer, queue UI, and files touched -- implementation detail
 **GUI updates**
 
@@ -292,7 +311,9 @@ Rules:
 - the left cluster is icon-only message actions
 - the right cluster is compact runtime summary plus the info icon
 - `Copy` is available on every message
+- assistant messages additionally pin a small always-visible `Copy` icon in message chrome; the hover/focus row remains canonical for all other message actions
 - `Edit` and `Resend` are available only on the most recent user-sent message
+- `Delete` is not available for user-authored thread history
 - this subsection supersedes earlier message-level `Retry` wording in this document
 
 ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md
@@ -372,14 +393,119 @@ Natural-language requests for searching, extracting, researching, crawling, or m
 ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Skills_System.md, ContractName:Plans/FinalGUISpec.md
 
 ### 5.3 Git & GitHub command boundary
-Git and GitHub prefixes remain reserved and route to the canonical source-control / GitHub command surfaces rather than to user-defined command overrides.
+Git and GitHub prefixes remain reserved and route into the canonical source-control and GitHub command surfaces rather than to user-defined command overrides.
 
-ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Commands_System.md
+Boundary rules:
+- `/git ...` and natural-language requests for local repository work route to the Git/Source Control command family: status, diff, branch/worktree, commit, merge, revert, stash, and other local repository operations.
+- `/github ...` and natural-language requests for PR, issue, Actions, workflow, review, comment, release, or hosted-repo administration route to the GitHub command family.
+- The assistant MUST NOT silently reinterpret a Git request as a GitHub request, or vice versa, just because one path appears easier.
+- When a user request spans both domains, the assistant must expose the boundary explicitly (for example: local compare first, then hosted PR creation) and preserve the handoff identity between the two stages.
+- Requests that pivot into compare/review/open flows MUST preserve the canonical repo/worktree/compare identity fields rather than reconstructing targets from whatever branch happens to be active later.
+
+GitHub-local detail ownership remains in `Plans/GitHub_Integration.md`; chat owns only the dispatch boundary, routing expectations, and inline disclosure that a request is crossing from local Git to hosted GitHub behavior.
+
+ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Commands_System.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/Contracts_V0.md
 
 ### 5.4 Custom command boundary
 User Commands may complement built-ins, but they do not replace or suppress the canonical Assistant Chat command set. PM-native Ask and Plan behavior remains authoritative even when an upstream reference product handles modes or permissions differently.
 
 ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Commands_System.md, ContractName:Plans/OpenCode_Deep_Extraction.md
+
+## 6. Teach
+
+Teach defines how users deliberately teach Puppet Master durable codebase knowledge, preferences, and workflow constraints from within chat.
+
+ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md
+
+Teach trigger rules:
+- Teach may be invoked explicitly via `/teach` or equivalent natural-language intent such as "remember that...", "for this repo always...", or "please prefer..."
+- the assistant may recommend Teach when it detects reusable guidance, but persistence requires an explicit user-confirming action before the knowledge is stored
+- Teach is a capture workflow, not a separate closed `mode_overlay`; execution posture remains controlled by the thread's current runtime/mode selection unless the user also changes modes
+
+What Teach stores:
+- project conventions such as naming, testing, logging, formatting, architecture boundaries, and generated-file rules
+- user preferences that materially affect future responses or edits
+- recurring environment facts such as canonical commands, repository structure, or approval expectations
+- negative constraints such as "never edit derived files" or "always plan before execution for risky tasks"
+
+Persistence scope:
+- each taught item MUST declare a scope before commit: `thread`, `project`, or `user`
+- `thread` scope persists only with the current thread and its descendants where lineage explicitly carries that memory
+- `project` scope persists across future threads in the same project/workspace
+- `user` scope persists as a user-level preference only when the content is not project-confidential
+- persisted Teach records store at minimum `memory_id`, `scope`, `source_thread_id`, `author_message_id`, `captured_at`, and `normalized_fact`, plus optional `supersedes_memory_id` / `revoked_at`
+
+Effect on future responses:
+- taught knowledge is retrieved into future prompt assembly as explicit memory/context rather than as undocumented hidden prompt mutation
+- when a taught fact materially changes an answer, plan, or execution choice, the assistant should be able to disclose that the response was influenced by taught memory
+- conflicting teachings do not silently overwrite prior knowledge; PM records supersession or revocation so the user can audit why a newer fact won
+- taught knowledge may influence future responses, planning posture, tool-selection defaults, and code-generation choices only within its approved persistence scope
+
+Safety and audit rules:
+- users can inspect, narrow, supersede, or revoke taught knowledge later
+- Teach MUST NOT persist secrets, tokens, passwords, or other credentials
+- ordinary one-off chat instructions do not become taught knowledge unless the user explicitly confirms persistence
+
+ContractRef: ContractName:Plans/Decision_Policy.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Tools.md
+
+## 7. Attachments, Web Search, and Extensibility
+
+Assistant chat accepts structured inputs beyond plain text and exposes external capability integrations without hiding provenance.
+
+ContractRef: ContractName:Plans/Media_Generation_and_Capabilities.md, ContractName:Plans/Tools.md, ContractName:Plans/storage-plan.md
+
+### 7.1 Attachment model
+
+Supported attachment families are:
+- files
+- images
+- URLs
+- inline code snippets
+
+Attachment rules:
+- files may include project files, logs, documents, archives, and generated artifacts addressable through the file-manager/editor contracts
+- images render with preview, filename or source label, and size metadata when known
+- URLs render as normalized link chips/cards and may later resolve into fetched/extracted web-activity cards
+- code snippets pasted into the composer preserve formatting and language hinting when detection is possible
+- attachments persist as structured message payloads rather than being flattened into plain text only
+
+Minimum attachment fields:
+- `attachment_id`
+- `attachment_type`
+- `display_name`
+- `source_ref`
+- `mime_type?`
+- `size_bytes?`
+- `preview_state`
+
+### 7.2 Web search integration
+
+Web search is a first-class chat capability, not a hidden side channel.
+
+Required rules:
+- when the assistant uses web search, the thread shows explicit web activity cards and later source/citation disclosure in the related assistant turn
+- web-derived results appear inline in chat as operation cards, source blocks, or citations tied to the turn that used them
+- fetched/extracted content preserves provenance so users can distinguish search snippets, extracted page text, and synthesized conclusions
+- if the active provider or policy cannot use web search, the assistant discloses that limitation rather than implying that the web was consulted
+- user-supplied URLs and assistant-triggered web results share the same attachment/provenance system while preserving distinct origin labels
+
+### 7.3 Extensibility surface
+
+Assistant chat can surface extensibility points that are callable or inspectable from the thread when policy allows.
+
+Supported extensibility families:
+- skills
+- plugins
+- MCP tools / servers
+
+Required rules:
+- skills, plugins, and MCP-backed tools surface through canonical tool-call, tool-result, and operation-card patterns rather than bespoke invisible integrations
+- when an extensibility point is invoked, chat shows the capability identity, status, and resulting output or failure
+- capability discovery may depend on installation/provider state, but unavailable integrations must not be presented as callable
+- extensibility integrations follow the same permissions, provenance, and audit-trail rules as built-in tools
+- chat should disclose whether an action came from a built-in tool, a skill, a plugin, or an MCP server-backed tool
+
+ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/Contracts_V0.md
 
 ## 8. Plan Mode, Deep Plan Mode, and Plan Thoroughness (PT)
 
@@ -498,32 +624,36 @@ Required TODO fields per item:
 - `dependencies[]`
 - `owner_hint` (`main_agent`, `subagent`, `crew`, or `unspecified`)
 - `verification_hint`
-
-Recommended execution-tracking fields carried by the same canonical TODO identity:
 - `status`
+
+Optional but recommended execution-tracking fields carried by the same canonical TODO identity:
 - `notes?`
 - `order_index?`
+- `blocked_reason_code?`
+- `superseded_by_todo_id?`
+
+**Closed TODO lifecycle:**
+- `draft` — proposed during planning; not yet approved for execution.
+- `approved` — user accepted the item as part of the execution handoff.
+- `queued` — approved but waiting for execution to begin.
+- `ready` — execution has begun and the item has no unmet dependency.
+- `in_progress` — actively being executed.
+- `blocked` — paused behind a real dependency, approval, or prerequisite issue.
+- `completed` — finished with the required verification.
+- `dropped` — intentionally removed from the plan without replacement.
+- `superseded` — replaced by a newer TODO item or plan revision.
 
 Rules:
 - TODO order is the default execution order unless dependencies require otherwise.
 - Dependencies may further constrain order.
-- TODOs are carried forward into execution after approval.
-- Users may edit, add, remove, or reorder TODOs before approval.
-- Deep Plan editing in source markdown must update the normalized TODO projection before execution begins.
+- TODO items keep the same `todo_id` across approval, queueing, execution, and completion unless a deliberate supersession occurs.
+- Replans create a new plan revision, but surviving TODOs keep identity where the work item is materially the same.
+- This TODO lifecycle is a planning/chat contract. It MUST NOT be treated as a synonym for orchestrator node lifecycle or run-graph state.
 - `todowrite` and `todoread` MUST use this same normalized schema instead of a separate checklist-only shape.
 
-ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md
+**Plan-level status** remains distinct from per-item status and is closed to `draft`, `approved`, `executing`, `completed`, `blocked`, and `superseded`.
 
-#### Live execution tracking
-The sticky plan panel is the authoritative plan/TODO view for the thread.
-
-Rules:
-- Inline chat updates are lightweight milestones, not a competing source of truth.
-- Thread/run-level plan state MUST distinguish at least `draft`, `approved`, `executing`, `completed`, `blocked`, and `superseded`.
-- Replans or revisions MUST create an explicit new draft/revision state rather than silently rewriting historical progress.
-- The same TODO contract must remain consumable by single-agent, subagent, and crew execution.
-
-ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md, ContractName:Plans/orchestrator-subagent-integration.md
+ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/Prompt_Pipeline.md
 
 ### 8.7 Review loop for planning artifacts
 
@@ -701,30 +831,101 @@ ContractRef: ContractName:Plans/storage-plan.md
 ---
 ## 11. Threads and chat management
 
+### Message Taxonomy
+
+Canonical chat records use the following message taxonomy.
+
+| message_type | sender | properties | rendering |
+|---|---|---|---|
+| `user` | human | `text`, `attachments[]`, `edit_history[]` | left-aligned bubble |
+| `assistant` | model | `text`, `tool_calls[]`, `citations[]` | right-aligned bubble |
+| `system` | runtime | `text`, `severity` | centered notice |
+| `tool_result` | tool | `tool_id`, `output`, `exit_code` | collapsible card |
+| `operation_card` | runtime | `operation_type`, `status`, `progress` | inline card |
+| `blocked_notice` | runtime | `blocked_family`, `allowed_action_ids[]` | warning card |
+| `error` | runtime | `error_code`, `message` | error banner |
+
+Rules:
+- the visible rendering vocabulary is closed to the taxonomy above unless a later SSOT contract extends it
+- message taxonomy is independent of thread lifecycle state and runtime posture
+- persisted transcript records MUST retain their canonical `message_type` so restore, export, and search do not infer type from presentation alone
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/FinalGUISpec.md
+
+### Thread Lifecycle State Machine
+
+Thread lifecycle state is separate from operational status markers such as `attention_required`, `blocked`, `completed`, or `failed`.
+
+Canonical lifecycle path:
+`creating -> active -> suspended -> archived -> deleted`
+
+Transitions:
+- `creating -> active`: first message sent
+- `active -> suspended`: user closes thread / session ends
+- `suspended -> active`: user reopens thread
+- `active -> archived`: user archives or retention policy triggers
+- `archived -> active`: user unarchives
+- `active -> deleted`: user deletes
+- `archived -> deleted`: retention policy or user deletes
+
+Persistence behavior by state:
+- `creating`: keep only lightweight draft shell metadata; no durable transcript is required until the first user message commits
+- `active`: keep the full transcript, queue state, thread metadata, runtime references, and restorable UI state
+- `suspended`: keep the durable transcript and metadata, but drop ephemeral auto-follow, focus, and non-restorable streaming affordances
+- `archived`: keep transcript, lineage, citations, attachments, and audit metadata while pruning transient composer state, active queue state, and nonessential caches according to retention policy
+- `deleted`: remove the thread from normal user-visible chat surfaces; only minimal tombstone or ledger records required for integrity, sync, or retention compliance may remain
+
+Rules:
+- lifecycle transitions MUST be explicit and auditable
+- archiving does not rewrite message ids, thread lineage, or worktree lineage
+- deletion is terminal for ordinary user navigation even if compliance metadata is retained elsewhere
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Decision_Policy.md
+
+### Thread Identity Model
+
+Thread identity is canonical and stable across reopen, restore, archive, and branch-aware history views.
+
+Required fields and relationships:
+- `thread_id`: format `thr_{ulid}`; minted on the first user message; globally unique within the PM instance
+- `dev_session_id`: optional reference to the originating development/runtime session; one dev session may span multiple threads
+- `terminal_session_id`: optional lineage field when the thread was spawned from a terminal context
+- thread metadata includes `created_at`, `updated_at`, `title`, `mode_overlay`, and `persona_id`
+
+Generation and lineage rules:
+- the system MUST NOT mint a durable `thread_id` for an unsent empty draft
+- `title` is auto-generated from the first user message and remains user-editable without changing identity
+- `mode_overlay` stores the effective workflow overlay for the thread using the canonical closed overlay enum
+- thread records reference their originating `dev_session_id` when present, but a single `dev_session_id` may relate to multiple branched or restored threads
+- when terminal lineage exists, `terminal_session_id` remains attached for audit even if the terminal later exits
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Contracts_V0.md
+
 ### 11.0A Debug investigation lifecycle and reopen semantics
 
 Threads may contain ordinary turns, historical investigations, and at most one active investigation at a time.
 
+**Closed investigation lifecycle:**
+- `active` — the current mutation-capable or evidence-gathering investigation for the thread.
+- `blocked` — waiting on a prerequisite such as approval, target availability, or revalidation.
+- `attention_required` — user input or human review is needed before the investigation may continue.
+- `verifying` — the investigation is in its verification stage and has not yet reached a terminal conclusion.
+- `failed_cleanup` — the investigation found or fixed something, but cleanup could not be completed.
+- `resolved` — verification passed and required cleanup completed (or was explicitly preserved under a documented hold).
+- `cancelled` — the user or runtime stopped the investigation without resolving it.
+- `superseded` — replaced by a newer investigation targeting a different subject or a newer branch of the same problem.
+
 Required lifecycle rules:
-- a thread may hold multiple historical investigations, but only one investigation may be `active` for prompt injection and mutation-capable automation at a time
-- choosing a new debug target in a thread with an active investigation must default to `continue current investigation`; switching to a different target requires explicit supersede behavior that marks the older investigation `superseded`
-- `resolved`, `failed`, `cancelled`, and `superseded` investigations reopen as historical views by default; they do not silently restart automation, instrumentation, or browser sessions
-- `attention_required`, `blocked`, and `failed_cleanup` investigations reopen as the same investigation with the same `investigation_id`, outstanding approvals, and pending cleanup state when possible
-- thread restore must rehydrate the visible Investigation Context header, linked artifacts, requested/effective debug posture, and frozen target bindings without silently rebinding to a different target
+- A thread may hold multiple historical investigations, but only one investigation may be non-terminal (`active`, `blocked`, `attention_required`, `verifying`, or `failed_cleanup`) for prompt injection and mutation-capable automation at a time.
+- Choosing a new debug target in a thread with a non-terminal investigation must default to continuing the current investigation. Switching to a materially different target requires an explicit supersede action that marks the older investigation `superseded`.
+- `resolved`, `cancelled`, and `superseded` investigations reopen as historical views by default; they do not silently restart automation, instrumentation, or browser/dev sessions.
+- Reopening a terminal investigation for new live work creates a new investigation lineage entry linked by `supersedes_investigation_id` unless the prior investigation is still in a resumable non-terminal state.
+- `blocked`, `attention_required`, `verifying`, and `failed_cleanup` investigations reopen against the same `investigation_id` when the bound target, runtime identity, and worktree identity are still valid.
+- Thread restore must rehydrate the visible Investigation Context header, linked artifacts, requested/effective debug posture, revalidation reason (if any), and frozen target bindings without silently rebinding to a different target.
 
-ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/Runtime_Artifacts_Panel.md
+**Revalidation reasons** that prevent silent resume include at minimum target replacement, auth/account switch, worktree or branch drift, HEAD drift for bound file/worktree targets, expired instrumentation, and stale safe-point or remediation lineage.
 
-Recovery and branch rules:
-- `cmd.chat.resume` remains the canonical resume path for recoverable Debug investigations; there is no debug-local alternate resume pipeline
-- `cmd.chat.rewind` remains conversation-only and MUST NOT erase persisted investigation artifacts or runtime evidence
-- file revert or restore actions remain owned by the canonical file-restore pipeline rather than by thread-local debug history
-- when linked runtime identities expire across restart or disconnect, the thread must surface revalidation requirements rather than silently minting replacement identities
-
-ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/FileSafe.md, ContractName:Plans/GitHub_Integration.md
-
-ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/storage-plan.md
-
-Threads and chat management are persistent shell behaviors.
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/UI_Command_Catalog.md
 
 ### Canonical navigation model
 
@@ -759,25 +960,26 @@ ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Multi-Acc
 
 Debug threads expose a visible **Investigation Context** alongside the normal context-usage affordances.
 
-Investigation Context is the live, user-visible bundle of bounded evidence, target metadata, temporary instrumentation state, and verification outcomes that the assistant may use while an investigation is active.
+Investigation Context is the live, user-visible bundle of bounded evidence, target metadata, temporary instrumentation state, verification outcomes, and revalidation state that the assistant may use while an investigation is active.
 
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Runtime_Artifacts_Panel.md
 
-Required header fields:
+**Canonical header fields imported into chat:**
 - `investigation_id`
-- `primary_target`
+- `primary_target_summary`
 - `debug_target_kind`
-- `current_phase`
-- `final_or_intermediate_state`
-- `verification_strength?`
+- `investigation_phase`
+- `state`
+- `verification_state?`
 - `attention_reason_code?`
 - `blocked_reason_code?`
+- `revalidation_reason_code?`
 - `active_instrumentation_count`
 - `last_updated_at_utc`
 
-ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Glossary.md
+Chat-local aliases such as `primary_target` and `final_or_intermediate_state` are retired. Assistant Chat consumes the canonical field names above and may layer presentation labels on top, but it must not rename the durable data contract.
 
-Required per-item states:
+**Required per-item states:**
 - `active`
 - `redacted`
 - `revoked`
@@ -789,95 +991,55 @@ Only `active` and `redacted` items may be serialized into prompt context. `revok
 
 ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Permissions_System.md
 
-Visibility rules:
-- Investigation Context is separate from ordinary browser/document composer chips
-- ordinary browser capture remains explicit and user-triggered
-- Debug auto-ingestion is allowed only inside an active investigation and must create visible Investigation Context items rather than hidden messages
-- every Investigation Context item must expose provenance, timestamp, redaction/truncation state, and a revoke action
-- raw logs, traces, screenshots, and recordings remain owned by Runtime Artifacts; Investigation Context carries bounded summaries and refs rather than raw unbounded payloads
+**Visibility rules:**
+- Investigation Context is separate from ordinary browser/document composer chips.
+- ordinary browser capture remains explicit and user-triggered.
+- Debug auto-ingestion is allowed only inside an active investigation and must create visible Investigation Context items rather than hidden messages.
+- every Investigation Context item must expose provenance, timestamp, redaction/truncation state, and a revoke action.
+- raw logs, traces, screenshots, recordings, and full transcript payloads remain owned by Runtime Artifacts; Investigation Context carries bounded summaries and stable refs rather than raw unbounded payloads.
 
-ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/UI_Command_Catalog.md
-
-Required actions from the Investigation Context surface:
+**Required actions from the Investigation Context surface:**
 - `Open target`
 - `Open artifacts`
 - `Export bundle`
+- `Revalidate target`
 - `Revoke item`
 - `Show raw in Context Detail Pane`
 
-ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/FileManager.md
-
-Per-thread context uses one compact chat entrypoint and one canonical detailed surface.
-
-Rules:
-- the context indicator lives in the chat header for the active thread
-- hovering the indicator opens a lightweight status module
-- the hover module shows `Usage`, `Tokens`, estimated `Cost`, and a bottom action labeled `More Details`
-- clicking the context indicator does not compact immediately; it reveals the `Compact Now` action
-- choosing `Compact Now` triggers the canonical compaction pipeline immediately
-- choosing `More Details` opens or focuses the thread-scoped Context Detail Pane in an editor tab
-- one Context Detail Pane tab exists per thread; repeated opens focus the existing tab instead of opening duplicates
-- app-wide Usage remains a separate surface and is not replaced by the thread-scoped Context Detail Pane
-- earlier thread-Usage-in-side-panel or detached-pop-out wording is superseded by this model
-
-ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/FinalGUISpec.md
-
-The Context Detail Pane is the canonical detailed per-thread context surface.
-
-Required structure:
-- top-level view toggle: `Curated` and `Raw`
-- `Curated` view sections: `Overview`, `Breakdown`, and `Messages`
-- `Raw` view exposes full serialized payload inspection for the thread and for individual messages
-
-ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/FileManager.md
-
-`Overview` must show:
-- thread title or session title
-- message counts
-- headline provider, model, mode, persona, and worker summary
-- headline token, context, and estimated-cost metrics
-
-`Breakdown` must show:
-- context-usage bar
-- token buckets
-- grouped breakdowns by role, tool activity, and provider/model when available
-
-`Messages` must show:
-- one expandable row per message
-- compact row fields for role, worker type, mode, model, time or duration, total tokens, and estimated cost when known
-- expanded per-message details with provider, model, effort, persona, token breakdown, context usage, cost, relevant requested/effective deltas, and notable tool or part summary
-- raw payload access without leaving the message row
-
-ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Contracts_V0.md
-
-Cost and freshness rules:
-- per-thread cost is labeled `Estimated Cost` unless provider-authoritative cost exists
-- hover and detail surfaces may show in-progress or updating states while a turn is streaming
-- partial streaming updates must not present final totals before they are known
-- raw views may expose lower-level buckets, receipts, or normalization details used to derive the estimate
-
-ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/FileManager.md, ContractName:Plans/UI_Command_Catalog.md
 ## 13. Activity transparency: search, bash, and file activity
 
 Activity transparency uses a shared inline operation-card family rather than isolated one-off widgets.
 
 ### 13.1 Operation-card family
-Canonical card types are:
-- command / bash activity
-- web activity
-- files explored
-- files changed
-- code diffs
-- subagent activity
+Activity transparency uses a shared inline operation-card family rather than isolated one-off widgets.
 
-Rules:
-- Cards are inline with the assistant narrative.
-- Each card has a compact summary, expandable details, status badge, and a primary open/focus action appropriate to the card type.
-- Command cards use `Open in Terminal` / `Show Terminal` as the primary action.
-- Search/web cards open sources/results/detail views.
-- Diff/edit cards open the relevant file or diff view in the editor.
+**Closed card taxonomy:**
+- `command_activity`
+- `web_activity`
+- `files_explored`
+- `files_changed`
+- `code_diff`
+- `subagent_activity`
+- `blocked_notice`
+- `approval_request`
+- `clarification_request`
+- `investigation_context`
 
-ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/FileManager.md, ContractName:Plans/Tools.md
+**Shared card rules:**
+- Every card has a stable `card_id`, card type, status badge, created/updated timestamps, and a primary focus/open action appropriate to the card type.
+- Cards are inline with the assistant narrative, not a parallel navigation system.
+- Compact summaries may be terse, but every card expands into structured details instead of free-form prose only.
+- Cards link to owner surfaces through canonical route/open contracts rather than feature-local payloads.
+
+**Family-specific rules:**
+- `blocked_notice` surfaces blocked-family identity, `blocked_reason_code`, and canonical `allowed_action_ids[]`; it does not invent chat-local recovery enums.
+- `approval_request` renders a pending permission decision with direct actions that map to the canonical approval semantics (for example `Allow Once`, allowed scope/session reuse when policy permits, and `Deny`). Permission resolution logic stays owned by `Plans/Permissions_System.md`.
+- `clarification_request` is the structured card form of a question or missing-input requirement; it must not be hidden as ordinary assistant narration.
+- `investigation_context` cards summarize investigation phase, target, verification/revalidation state, and primary pivots into the full Investigation Context and Runtime Artifacts surfaces; they are summaries, not raw artifact dumps.
+- Existing command/web/file/subagent cards continue to use the same skeleton and must not fork the family contract.
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/FileManager.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/Tools.md
 
 ### 13.2 Web activity and provenance
 Assistant Chat uses distinct web activity labels:
@@ -981,6 +1143,24 @@ ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Run_Modes
 Subagents and crews use the PM child-run model. A subagent is a child run with its own identity, lifecycle, requested/effective runtime state, and inspectable history. Subagents are disposable by default: spawn, run, complete/cancel/fail, then remain in history instead of being treated as reusable long-lived actors.
 
 ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md
+
+### 14.1 Subagent visibility in thread -- implementation detail
+
+Subagent work remains visible in the parent thread while preserving transcript compactness.
+
+Required thread-surface behavior:
+- each active subagent shows a real-time status chip with the subagent name, current status (`running`, `waiting`, `done`, or `failed`), and elapsed time
+- the thread header shows an active subagent count badge
+- subagent output streams inline into the thread as collapsible cards
+- users may collapse any subagent output card to a one-line summary and later expand it without losing streamed history
+- when a subagent fails, the failure card names the failing subagent, what it was doing, and the error/failure summary
+
+Interaction rules:
+- collapse/expand state is thread-local and persists while the thread remains open in the current session
+- collapsed summaries preserve the latest status and headline result so the transcript remains scannable
+- inline cards and header badges project canonical child-run state; chat MUST NOT invent a divergent subagent-only lifecycle model
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Tools.md, ContractName:Plans/FinalGUISpec.md
 
 ### Inline subagent cards
 
@@ -1639,21 +1819,31 @@ Definitions:
 
 Chat UI MUST display the effective Persona even when auto mode is active.
 
-Required display content:
-- effective Persona name,
-- selection reason,
-- effective platform,
-- effective model,
-- effective talkativeness when not `model_default`,
-- optional variant/effort,
-- skipped Persona controls when relevant.
+ContractRef: ContractName:Plans/Personas.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/FinalGUISpec.md
+
+Required display content (imported from shared runtime/Persona fields rather than redefined locally):
+- `requested_persona?`
+- `effective_persona`
+- `persona_selection_source`
+- `persona_override_owner_id?`
+- `effective_platform`
+- `effective_model`
+- `effective_talkativeness` when not `model_default`
+- optional `effective_variant?` / `effective_effort?`
+- skipped Persona controls when relevant
 
 Example:
 - `Persona: Rust Engineer (Auto: repo detected as Rust + code task)`
 - `Model: Codex GPT-5.3 (Persona preferred)`
 - `Platform: Codex (Available)`
 
-Auto mode MUST NOT display only `Auto` with no resolved Persona.
+Rules:
+- Auto mode MUST NOT display only `Auto` with no resolved Persona.
+- Assistant Chat consumes the field names owned by `Plans/Personas.md`; it MUST NOT create parallel names such as chat-local selection-source or override-owner aliases.
+- Inline subagent cards, child-run receipts, and any persona chip in the chat header use the same imported runtime field set so the user sees one consistent requested/effective Persona story across the thread.
+- Reserved Personas remain defined in `Plans/Personas.md`; chat acknowledges them only by reference.
+
+ContractRef: ContractName:Plans/Personas.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/orchestrator-subagent-integration.md
 
 ### 27.3 Natural-language Persona invocation in chat
 
@@ -1963,7 +2153,7 @@ Required requested/effective fields are:
 ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Run_Modes.md
 
 Canonical enum closure:
-- `requested_mode_overlay` and `effective_mode_overlay` are closed to `none`, `plan`, `deep_plan`, `interview`, `brainstorm`, and `crew`
+- `requested_mode_overlay` and `effective_mode_overlay` are closed to `none`, `plan`, `deep_plan`, `debug`, `interview`, `brainstorm`, and `crew`
 - `requested_runtime_mode` and `effective_runtime_mode` are closed to the canonical runtime postures from `Plans/Run_Modes.md`
 - `deep_plan` MUST survive normalization through the overlay fields and MUST NOT be discarded from historical/runtime records simply because the runtime posture is planning
 
@@ -2055,6 +2245,8 @@ The interviewer must not start cold:
 
 ## blocked Thread State and Recovery Addendum (2026-03-08)
 
+> **Superseded** — see [Unified Thread Blocked-State Lifecycle](#unified-thread-blocked-state-lifecycle).
+
 ### 1. Canonical thread-state expansion
 
 Assistant thread lifecycle must support both:
@@ -2088,11 +2280,20 @@ Required message behavior:
 
 ### 4. Recovery actions
 
-Required actions when applicable:
-- `Resume Wizard`
-- `View report`
-- `Provide new input`
-- `Open in Chat`
+Recovery actions are rendered from canonical `allowed_action_id` values rather than ad hoc labels.
+
+| action_id | Label | Behavior |
+|---|---|---|
+| `resume` | Resume | Resume the blocked runtime or wizard flow through the canonical scheduler-owned resume path. |
+| `retry` | Retry | Re-run the most recent eligible blocked step or operation when prerequisites are already satisfied. |
+| `abort` | Abort | Stop the blocked flow and mark the current blocked episode intentionally terminated. |
+| `escalate` | Escalate | Hand the blocked episode to a higher-order workflow, parent agent, or explicit user-decision surface. |
+| `provide_input` | Provide new input | Open the clarification/input path required to continue with new user-supplied data. |
+| `view_report` | View report | Open the relevant findings, validation, or failure report associated with the blocked state. |
+| `open_in_chat` | Open in Chat | Focus the relevant thread/context so the user can inspect or continue from the blocked episode. |
+| `replan` | Replan | Start the canonical replanning path when blocked work cannot continue without a new plan. |
+
+Only applicable action ids may appear in `allowed_action_ids[]`; visible labels are projections of the canonical ids above.
 
 ### 5. Acceptance criteria
 
@@ -2101,6 +2302,8 @@ Required actions when applicable:
 - blocking reports/links remain visible and auditable.
 - blocked state recovery actions are explicit rather than implied.
 ## Runtime Blocked / Recovery Thread-State Addendum (2026-03-09)
+
+> **Superseded** — see [Unified Thread Blocked-State Lifecycle](#unified-thread-blocked-state-lifecycle).
 
 Chat thread state must align with runtime execution state.
 
@@ -2127,6 +2330,8 @@ When blocked, the chat thread MUST show:
 ### Resume semantics
 Resume/retry buttons in chat MUST map to canonical runtime actions. Chat MUST NOT invent thread-local resume paths that bypass scheduler classification, safe-point restore requirements, or external approval checks.
 ## Blocked Thread Message and Persistence Reconciliation Addendum (2026-03-09)
+
+> **Superseded** — see [Unified Thread Blocked-State Lifecycle](#unified-thread-blocked-state-lifecycle).
 
 Add a dedicated blocked-state system message contract.
 
@@ -2238,6 +2443,9 @@ ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/WorktreeGitImpr
 
 ### W.2 Thread-to-worktree binding data model
 
+Thread-to-worktree binding is durable, explicit, and identity-bearing.
+
+
 **New redb key family:**
 - Key: `thread_state:{thread_id}:worktree_binding`
 - Value (JSON):
@@ -2251,23 +2459,27 @@ ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/WorktreeGitImpr
   "temp_branch_name": "assistant/thread-a1b2c3d4"
 }
 ```
-`temp_branch_name` tracks the original temporary branch name assigned before title generation. For UI display, always use `branch_name`; `temp_branch_name` is for internal bookkeeping only.
-
-ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md
+`temp_branch_name` tracks the original temporary branch name assigned before title generation. For UI display, always use `branch_name`; `temp_branch_name` is internal bookkeeping only.
 
 **Inverse lookup (for 1:1 enforcement):**
 - Key: `worktree_binding_reverse:{worktree_id}`
 - Value: `thread_id`
-- Used to quickly check if a worktree is already bound to another thread
+- Used to quickly check whether a worktree is already bound to another thread.
 
 **Worktree record extension (existing `worktree_record.v1`):**
-- Add optional field: `owner_thread_id?` alongside existing `owner_run_id?` and `owner_tier_id?`
-- Owner semantics: exactly one of `owner_thread_id`, `owner_run_id/owner_tier_id`, or neither (manual) is set
+- Add optional field: `owner_thread_id?` alongside existing `owner_run_id?` and `owner_node_id?`.
+- Owner semantics: exactly one of `owner_thread_id`, `owner_run_id/owner_node_id`, or neither (manual) is set.
 
-**1:1 enforcement:** Thread-to-worktree binding is strictly 1:1. One worktree per thread, one thread per worktree. Enforced via the reverse lookup key. If a user tries to bind a worktree already bound to another thread: error toast "This worktree is already bound to thread '{title}'". Action blocked.
+**Worktree-aware same-file identity rules:**
+- The canonical file identity for thread-bound chat, debug, Source Control, and GitHub pivots is `{ repo_id, worktree_id, relative_path }`; path alone is not sufficient.
+- The same relative path in two worktrees is treated as two different open subjects unless a compare session explicitly binds them together.
+- Thread-scoped opens default to the thread's bound `worktree_id`. If the thread has no bound worktree, the UI may fall back to the currently selected worktree but must label that fallback explicitly.
+- Historical cards, receipts, and debug evidence remain pinned to the captured `worktree_id` even if the thread later rebinds to a different worktree.
+- Merge-back, compare, and PR creation flows may intentionally bridge the bound worktree to a base branch, but they must preserve both identities rather than collapsing them into one generic path.
 
-ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Crosswalk.md
+**1:1 enforcement:** One worktree per thread, one thread per worktree. If a user tries to bind a worktree already bound to another thread, the action is blocked with an explicit error and a deep link to the owning thread when available.
 
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/GitHub_Integration.md
 ### W.3 Create worktree dialog
 
 **Trigger:** "Create Worktree…" action from chat header dropdown.

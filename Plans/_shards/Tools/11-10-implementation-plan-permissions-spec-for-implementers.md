@@ -24,10 +24,10 @@ Presets apply batch permission rules. Canonical preset definitions: `Plans/Permi
 | Preset | Effect on tool_permissions |
 |--------|----------------------------|
 | **Read-only** | `edit`, `bash`, `webfetch`, `websearch`, `task`, `repo.import` → deny; all others allow (or leave unset to use defaults). |
-| **Plan mode** | Only `read`, `grep`, `glob`, `list`, `codesearch`, `chatsearch`, `logsearch` → allow; everything else → deny. |
+| **Plan mode** | Allow `read`, `grep`, `glob`, `list`, `codesearch`, `chatsearch`, `logsearch`, `question`, `skill`, `todoread`, `todowrite`, `capabilities.get`, read-only `lsp` operations, `webextract`, and `webresearch`; deny `create` / `write`, `edit`, `patch`, `multiedit`, `repo.import`, deployment-capable tools, and any `bash` invocation classified as write-capable or deployment-oriented (MVP-safe preset: deny `bash` entirely). |
 | **Full** | All tools → allow except `bash`, `edit`, `repo.import` → ask. |
 
-Store as the same TOML config; presets are a GUI shortcut to set multiple keys at once.
+Store as the same TOML config; presets are a GUI shortcut to set multiple keys at once. Plan mode allows information gathering but not state mutation.
 ### 10.5 GUI ↔ config serialization
 
 The Permissions GUI is specified in `Plans/Permissions_System.md` §10 and `Plans/FinalGUISpec.md` §7.4.10. The tool registry supplies the list of known tool names (built-in + MCP-discovered) to populate the GUI's per-tool list.

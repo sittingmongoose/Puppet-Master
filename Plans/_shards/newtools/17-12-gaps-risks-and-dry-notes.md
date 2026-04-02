@@ -20,7 +20,7 @@ ContractRef: ContractName:AGENTS.md#automation, SchemaID:evidence.schema.json
 
 - **Interview plan** (`Plans/interview-subagent-integration.md`): Testing phase already uses qa-expert and test-automator; add "tool discovery and selection" as part of that phase; config wiring for new options follows "Interviewer Enhancements and Config Wiring" in orchestrator plan.  
   ContractRef: ContractName:Plans/interview-subagent-integration.md#phase-8-testing, ContractName:Plans/orchestrator-subagent-integration.md#config-wiring
-- **Orchestrator plan** (`Plans/orchestrator-subagent-integration.md`): Test strategy is already loaded and merged into tier criteria; ensure new tool instructions and debug log paths are part of that merged context.  
+- **Orchestrator plan** (`Plans/orchestrator-subagent-integration.md`): Test strategy is already loaded and merged into node criteria; ensure new tool instructions and debug log paths are part of that merged context.  
   ContractRef: ContractName:Plans/orchestrator-subagent-integration.md#test-strategy-loading
 
 ### 12.5 Gaps, issues, and improvements (implementation notes)
@@ -44,7 +44,7 @@ The following gaps, ambiguities, and improvements should be resolved during impl
 
 **Test strategy JSON schema and backward compatibility**
 
-- The consumer of test-strategy.json is `TierTree::load_test_strategy` in `core/tier_node.rs` (schema: `Plans/test_strategy.schema.json`). Implementation MUST extend additively: allow new `testType` values (e.g. `headless_gui`, `framework_tool`) and, if structured tool metadata is needed, add optional fields to `TestItem` and to the loader. Backward compatibility is REQUIRED: the loader MUST tolerate missing `headless_gui`/`framework_tool` items and optional tool metadata in existing test-strategy.json files (no migration of old files required; new fields are additive only).  
+- The consumer of test-strategy.json is `NodeTree::load_test_strategy` in `core/node_tree.rs` (schema: `Plans/test_strategy.schema.json`). Implementation MUST extend additively: allow new `testType` values (e.g. `headless_gui`, `framework_tool`) and, if structured tool metadata is needed, add optional fields to `TestItem` and to the loader. Backward compatibility is REQUIRED: the loader MUST tolerate missing `headless_gui`/`framework_tool` items and optional tool metadata in existing test-strategy.json files (no migration of old files required; new fields are additive only).  
   ContractRef: SchemaID:pm.test_strategy.schema.v1, Gate:GATE-001, PolicyRule:Decision_Policy.md§2
 
 **Verification command for custom headless tool**
@@ -147,7 +147,7 @@ ContractRef: Invariant:INV-002, PolicyRule:no_secrets_in_storage, ContractName:P
 
 **Backward compatibility for existing projects**
 
-- Existing projects with test-strategy.md / test-strategy.json generated before newtools MUST continue to work: the loader in `tier_node` and the prompt builder MUST tolerate missing `headless_gui` / `framework_tool` items and optional tool metadata. No migration of old files is required; new fields are additive only. Implementation MUST verify backward compatibility via test cases or manual verification with a pre-newtools test-strategy.json file.  
+- Existing projects with test-strategy.md / test-strategy.json generated before newtools MUST continue to work: the loader in `node_tree` and the prompt builder MUST tolerate missing `headless_gui` / `framework_tool` items and optional tool metadata. No migration of old files is required; new fields are additive only. Implementation MUST verify backward compatibility via test cases or manual verification with a pre-newtools test-strategy.json file.  
   ContractRef: SchemaID:evidence.schema.json, Gate:GATE-001, PolicyRule:Decision_Policy.md§2
 
 **MCP Doctor check (in scope)**

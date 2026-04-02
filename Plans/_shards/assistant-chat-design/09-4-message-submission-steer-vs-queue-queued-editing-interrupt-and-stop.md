@@ -22,6 +22,22 @@
 - **Stop the agent:** The user must be able to **stop** the agent at any time (e.g. a "Stop" button or shortcut). Stop **cancels** the current run and does **not** send any message. Stopping does not remove queued messages; the next queued message can be processed after stop, or the user can edit/remove queued messages or clear the queue.
 - **Error and failure UX:** When the CLI fails, times out, or returns an error, the thread must show a **clear error state**: the error message (or a user-friendly summary) and, where applicable, **Resend** and **Cancel** (or Dismiss) actions. `Resend` replays the latest eligible user message using the canonical history-aware resend path; Cancel dismisses the error and leaves the queue unchanged. Failed runs do not consume a queued message unless the user explicitly resends; the queue remains so the user can edit, send now, or clear. If the failure was due to a platform or network issue, the UI can suggest switching platform or model (see §12 rate limit hit).
 
+### 4.0A Composer Behavior
+
+The composer follows one stable control model across idle, streaming, interrupted, and scrolled-away states.
+
+Required rules:
+- the primary composer action is **Send** while no assistant generation is active in the thread
+- once the assistant is generating, the same primary action morphs in place from **Send** to **Stop** instead of introducing a second competing control elsewhere in the footer
+- when generation completes, fails, or is cancelled, the primary action returns to **Send** for the next user turn
+- the currently streaming assistant message also exposes a per-message **Stop** icon; selecting it halts generation for that specific in-flight message/run and preserves already-rendered partial output in history
+- when the user is scrolled above the newest content, the thread shows a **Jump to bottom** control with an unseen-count badge; the badge increments as new messages/cards arrive below the viewport
+- activating **Jump to bottom** scrolls to the latest visible boundary, clears the unseen-count badge for content now in view, and restores normal auto-follow behavior
+- assistant messages expose an always-visible **Copy** icon in message chrome so copying the latest assistant output does not require hover discovery
+- user messages are not deletable from thread history; the corrective path is limited to **Edit** plus submit/resend under the canonical history-aware replay rules
+
+ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md
+
 ### 4.1 Chat footer, queue UI, and files touched -- implementation detail
 **GUI updates**
 
@@ -82,7 +98,9 @@ Rules:
 - the left cluster is icon-only message actions
 - the right cluster is compact runtime summary plus the info icon
 - `Copy` is available on every message
+- assistant messages additionally pin a small always-visible `Copy` icon in message chrome; the hover/focus row remains canonical for all other message actions
 - `Edit` and `Resend` are available only on the most recent user-sent message
+- `Delete` is not available for user-authored thread history
 - this subsection supersedes earlier message-level `Retry` wording in this document
 
 ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md

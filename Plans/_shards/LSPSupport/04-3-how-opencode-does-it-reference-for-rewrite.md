@@ -76,6 +76,24 @@ Root-selection steps:
 
 ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/Contracts_V0.md
 
+Language-specific root detection rules:
+
+| Language | Root markers | Priority | Notes |
+|---|---|---|---|
+| JavaScript/TypeScript | package.json, tsconfig.json | package.json > tsconfig.json | Monorepo: each package.json is a root |
+| Rust | Cargo.toml | — | Workspace: root Cargo.toml with [workspace] |
+| Go | go.mod | — | Module root |
+| Python | pyproject.toml, setup.py, setup.cfg | pyproject.toml > setup.py | venv detection separate |
+| Java | pom.xml, build.gradle, build.gradle.kts | — | Multi-module: parent pom |
+| C/C++ | CMakeLists.txt, Makefile, compile_commands.json | CMakeLists.txt > Makefile | |
+| C# | *.sln, *.csproj | .sln > .csproj | Solution is workspace root |
+| Ruby | Gemfile | — | |
+| PHP | composer.json | — | |
+| Swift | Package.swift, *.xcodeproj | Package.swift > xcodeproj | |
+
+Fallback rule:
+- if no language-specific marker is found, use the nearest `.git` directory as the root
+
 ### 3.6 Extension conflicts (multiple servers per extension)
 
 Multiple servers may overlap for one language or file kind; overlap is resolved through explicit selection metadata rather than one-off hard-coded exceptions.

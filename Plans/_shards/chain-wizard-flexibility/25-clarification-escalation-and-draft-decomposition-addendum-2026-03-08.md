@@ -2,18 +2,7 @@
 
 ### 1. Canonical wizard state correction
 
-`blocked` is a canonical wizard state and must be added wherever the canonical `wizard_status` enum is listed.
-
-Canonical enum must include at minimum:
-- `setup`
-- `requirements`
-- `interview`
-- `validating`
-- `attention_required`
-- `blocked`
-- `ready_to_execute`
-- `complete`
-- `cancelled`
+See canonical `wizard_status` definition in §2.1.
 
 ### 2. attention_required vs blocked
 

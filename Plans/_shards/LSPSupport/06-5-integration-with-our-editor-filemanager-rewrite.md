@@ -19,3 +19,31 @@ UI integration rules:
 
 ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/storage-plan.md
 
+### 5.1 Chat LSP
+
+Chat LSP provides language intelligence features within the chat and assistant context.
+
+Purpose:
+- provide language intelligence features within the chat and assistant context
+- let the assistant surface code understanding without requiring the user to leave the chat flow
+
+Capabilities:
+- code completion suggestions in chat input
+- symbol resolution in code blocks
+- hover info for code references in messages
+- go-to-definition from chat code blocks
+
+Activation:
+- Chat LSP activates when a chat thread has an associated project with LSP servers running
+- chat messages containing code blocks are analyzed by the appropriate LSP server based on language detection
+
+Limitations:
+- Chat LSP provides read-only intelligence only; no refactoring and no code actions are exposed through this surface
+- it uses the same LSP server instances as the editor rather than spawning a separate chat-only server pool
+
+Integration:
+- code blocks that map to project files use those real file URIs; other code blocks use the virtual-document contract in §14.8
+- when the relevant server is unavailable or degraded, chat surfaces must disclose that reduced state explicitly
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FileManager.md, ContractName:Plans/FinalGUISpec.md
+

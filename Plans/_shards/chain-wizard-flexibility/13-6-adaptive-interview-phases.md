@@ -124,6 +124,16 @@ ContractRef: ContractName:Plans/Project_Output_Artifacts.md, SchemaID:contracts_
 
 #### 6.6.2 Contract Unification Pass (deterministic, end-of-interview)
 
+The **wizard pipeline** owns the Contract Unification Pass. It is not owned by the interview loop and it is not a post-processing afterthought: it runs **after the interview phase completes** and **before plan generation begins**.
+
+Trigger and ownership rules:
+
+- **Trigger:** the interview status transitions to `completed`.
+- **Owner:** wizard pipeline.
+- **Primary responsibility:** merge all contract fragments emitted across interview rounds/phases into a single coherent contract.
+- **Required output:** unified contract document plus conflict resolution notes.
+- **Failure mode:** if contract conflicts cannot be resolved deterministically, the wizard transitions to `blocked` with `blocked_reason = contract_conflict`.
+
 At interview completion, a single deterministic **Contract Unification Pass** must run to:
 
 1. Deduplicate overlapping fragments across phases (single canonical statement per contract).

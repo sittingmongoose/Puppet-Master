@@ -30,32 +30,34 @@ Planning-time rules for both `Plan` and `Deep Plan` remain:
 ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/storage-plan.md
 
 ### 1.0B Debug Mode contract
-
-Debug Mode is the explicit Assistant entrypoint for PM's fully automated, evidence-first debugging workflow.
+Debug Mode is the explicit Assistant entrypoint for PM's automated, evidence-first debugging workflow.
 
 Required rules:
-- Debug Mode is stronger than a behavioral hint. When selected, the assistant is expected to proactively use debug-capable tools, bounded evidence capture, and verification loops when policy and capabilities allow.
+- Debug Mode is stronger than a behavioral hint. When selected, the assistant is expected to use debug-capable tools, bounded evidence capture, revalidation gates, and verification loops when policy and capabilities allow.
 - Debug Mode is an Assistant-only workflow overlay, but the underlying debug-capable tools remain shared platform capabilities that Orchestrator, Interview, and delegated runs may use under the same contracts.
-- The default Debug loop is: target discovery or confirmation -> baseline capture -> temporary instrumentation when needed -> reproduction -> evidence collection -> diagnosis -> smallest viable fix -> verification -> cleanup.
 - Debug Mode remains execution-capable. There is no stable `Debug + ask` combination for automated investigations.
 - Debug Mode persists `requested_mode_overlay = debug` and `effective_mode_overlay = debug`, while runtime mode and execution strategy continue to resolve through `Plans/Run_Modes.md`.
 
 ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/Permissions_System.md
 
-Supported Debug target kinds are:
-- `dev_session`
-- `browser_target`
-- `dap_session`
-- `agent_session`
-- `imported_bundle`
+**Closed debug phase model:**
+1. `target_binding` — bind or confirm the exact debug target.
+2. `baseline_capture` — capture starting state, reproduction preconditions, and relevant runtime identity.
+3. `instrumentation` — add only the minimum temporary instrumentation required for diagnosis.
+4. `reproduction` — reproduce or confirm the issue against the bound target.
+5. `analysis` — reason over the bounded evidence set.
+6. `repair` — apply the smallest viable fix or remediation step.
+7. `verification` — verify whether the issue is resolved.
+8. `cleanup` — remove temporary instrumentation, temporary env/config, and temporary debug-only runtime state.
 
-Target rules:
-- project-backed targets (`dev_session`, `browser_target`, `dap_session`) require an active project context
-- without an active project, only `agent_session` and `imported_bundle` are available and the unavailable target kinds must be disclosed explicitly
-- target binding is identity-native; Debug Mode must not silently retarget from one bound subject to another
-- starting a different target while an active investigation already exists requires an explicit continue-or-supersede decision
+**Revalidation rules:**
+- Before any mutation-capable step after `target_binding`, the assistant MUST revalidate the investigation when the target identity, bound worktree/branch, requested/effective runtime identity, auth/account binding, or instrumentation availability has drifted.
+- Revalidation is also mandatory after target restarts, debug adapter/session replacement, or evidence expiry that invalidates the current hypothesis.
+- A revalidation gate surfaces an explicit reason in the Investigation Context; it MUST NOT silently continue as though the earlier target binding were still valid.
+- `verification` is not optional. A fix attempt without a recorded verification result remains `attention_required` or `failed_cleanup`, not `resolved`.
+- `cleanup` is the terminal mutation-capable phase for an otherwise successful investigation. Temporary instrumentation may persist only when the user explicitly preserves it or a preservation/hold rule says it must stay.
 
-ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FileManager.md, ContractName:Plans/GitHub_Integration.md
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/GitHub_Integration.md
 
 ### 1.0C Runtime mode normalization (canonical)
 

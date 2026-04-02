@@ -53,7 +53,7 @@ The app will expose a **Usage** section that gives users clear, persistent visib
 | **AGENTS.md -- Usage Tracking & Plan Detection** | Canonical source for per-platform usage sources (Claude Admin API, Copilot metrics, Gemini quotas, Codex/Cursor error parsing), env vars, and error-message parsing. |
 | **Plans/newfeatures.md §3** | Persistent rate limit and usage visibility: 5h/7d in dashboard/header, tier config usage, alerts; data layer + widget + background refresh. |
 | **Plans/newfeatures.md §7** | Analytics view: aggregate usage over time and by dimension; reporting layer on top of usage/plan detection. |
-| **Plans/assistant-chat-design.md §12** | Context/usage display: **context circle** (OpenCode-style) at top of chat -- hover shows tokens/usage %/cost; thread-scoped detail opens the canonical Context Detail Pane/editor-tab surface rather than a separate thread Usage tab. |
+| **Plans/assistant-chat-design.md §12** | Context/usage display: **context circle** (OpenCode-style) at top of chat -- hover shows tokens/usage %/cost; thread-scoped detail opens the canonical Context Detail Pane/editor-tab surface. |
 | **orchestrator-subagent-integration.md** | Platform quota display and resource monitoring (e.g. quota usage in GUI, crew quota). |
 | **Plans/newfeatures.md §19.2** | Technical mechanism for 5h/7d (session usage from stream, account-level via `claude --account` or Admin API); mid-stream usage and context % from stream-json. |
 | **Plans/storage-plan.md** | Implementation checklist for seglog, redb, projectors, analytics scan; Usage reads rollups from redb produced by analytics scan jobs over seglog. |
@@ -371,6 +371,84 @@ All usage surfaces derive from the same `UsageRecord` identity. Minimum shared a
 Compatibility shims may ingest older records, but new surfaces MUST NOT invent a second attribution schema.
 
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md
+
+### Canonical enums
+
+Canonical enum values for usage attribution MUST be shared across persistence, projection, and UI layers.
+
+```text
+usage_source_kind: enum {
+  chat,          // direct user chat interaction
+  subagent,      // subagent execution
+  background,    // background task (indexing, analysis)
+  system,        // system-initiated (health check, model probe)
+  tool,          // tool-initiated (tool calling another model)
+}
+```
+
+```text
+effective_auth_mode: enum {
+  api_key,       // authenticated via API key
+  oauth_token,   // authenticated via OAuth access token
+  cli_managed,   // authentication managed by CLI tool
+  env_variable,  // credential from environment variable
+}
+```
+
+`effective_auth_mode` records how the provider was authenticated for a specific usage record so cost and quota analysis can be grouped by auth path rather than only by provider or model.
+
+ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md
+
+### Canonical `UsageRecord` type
+
+All new usage persistence and projection work MUST normalize into the following canonical shape:
+
+```text
+UsageRecord {
+  usage_id: string,              // unique record ID, format: usg_{ulid}
+  timestamp: ISO8601,            // when the usage occurred
+  dev_session_id: string,        // session context
+  thread_id: string?,            // chat thread if applicable
+  provider_id: string,           // which provider
+  model_id: string,              // which model
+  usage_source_kind: UsageSourceKind,
+  effective_auth_mode: EffectiveAuthMode,
+
+  // Token counts
+  input_tokens: u64,
+  output_tokens: u64,
+  cache_read_tokens: u64?,
+  cache_write_tokens: u64?,
+  total_tokens: u64,
+
+  // Cost
+  estimated_cost_usd: f64?,      // estimated cost based on known pricing
+
+  // Context
+  agent_id: string?,             // if from subagent
+  tool_name: string?,            // if from tool
+  persona_id: string?,           // active persona
+
+  // Performance
+  time_to_first_token_ms: u64?,
+  total_duration_ms: u64,
+  tokens_per_second: f64?,
+}
+```
+
+Ownership:
+- `UsageRecord`s are owned by the session and persisted in the usage store as part of the canonical usage pipeline
+- child runs, tools, and background operations still emit records into the same session-owned store using shared identity rules
+
+Consumption:
+- usage data is consumed by the Usage panel, budget enforcement, and billing/attribution flows
+- thread-scoped context detail reads the same canonical records rather than inventing a chat-only side schema
+
+Aggregation:
+- records can be aggregated by provider, model, session, thread, or time period
+- aggregation MUST preserve source-kind and auth-mode dimensions so dashboards and budgets can explain where usage came from
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Contracts_V0.md
 
 ## Potential Problems
 

@@ -116,6 +116,18 @@ Thread-to-worktree binding is owned by `Plans/assistant-chat-design.md`.
 
 ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md, ContractName:Plans/DRY_Rules.md
 
+### 3.6 Projection-state ownership
+
+Projection freshness/health vocabulary is owned centrally so consumer docs do not invent surface-local degraded-state semantics.
+
+Canonical ownership is:
+- `storage-plan.md` owns the projection-state axes and persisted freshness/health semantics
+- `Decision_Policy.md` owns behavior when stale, degraded, or unavailable state affects execution or mutation gating
+- `FinalGUISpec.md` owns how freshness/health are disclosed in UI surfaces
+- feature/surface docs may consume these states but MUST NOT redefine the axes or collapse them into one field
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Decision_Policy.md, ContractName:Plans/FinalGUISpec.md
+
 ### 3.7 Subagent, crew, and context-shaping ownership
 
 Subagent and crew ownership is intentionally split across owner docs. Each concern has one authoritative home.
@@ -137,6 +149,68 @@ Per-surface docs may narrow these behaviors, but MUST NOT redefine the owners ab
 
 ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/assistant-chat-design.md
 
+### 3.8 Human-in-the-loop ownership
+
+Canonical HITL ownership is:
+- `human-in-the-loop.md` owns approval/decline semantics and the blocked-episode overlay contract
+- `Contracts_V0.md` owns the canonical blocked-episode fields, action ids, and persisted payload shapes
+- `UI_Command_Catalog.md` owns the concrete command ids that execute approval actions
+- `FinalGUISpec.md` and `assistant-chat-design.md` own presentation only
+
+ContractRef: ContractName:Plans/human-in-the-loop.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/UI_Command_Catalog.md
+
+### 3.9 Debug-mode and investigation ownership
+
+Canonical debug/investigation ownership is:
+- `assistant-chat-design.md` owns Assistant Debug Mode as the user-facing workflow overlay and investigation-thread behavior
+- `orchestrator-subagent-integration.md` owns orchestrator/delegated-worker use of shared investigation contracts
+- `Executor_Protocol.md` owns execution-time investigation context propagation
+- `storage-plan.md` owns persisted investigation records, snapshots, and recovery joins
+- `Permissions_System.md` owns the Debug Automation Profile and grant/revalidation semantics
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Permissions_System.md
+
+### 3.10 Permission and approval-scope ownership
+
+Canonical permission ownership is:
+- `Permissions_System.md` owns permission precedence, rule persistence, approval-scope derivation, durable-rule authoring, and blocked-family expectations for permission-caused outcomes
+- `Contracts_V0.md` owns canonical blocked payload shapes, `approval_scope_key`, and action-id field names
+- `human-in-the-loop.md` owns approval interaction semantics, not rule persistence
+- consumer docs may name required permission keys or blocked triggers but MUST NOT redefine the approval-scope contract
+
+ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/human-in-the-loop.md
+
+### 3.11 Remediation lifecycle ownership
+
+Canonical remediation ownership is:
+- `Executor_Protocol.md` owns when remediation is spawned, how it interacts with retry/safe-point flows, and when execution escalates instead of retrying
+- `Contracts_V0.md` owns `remediation.spawned` / `remediation.resolved` event shapes and the canonical `resolution` enum
+- `Decision_Policy.md` owns deterministic remediation ceilings and blocked posture after ceiling exhaustion
+- `storage-plan.md` owns durable remediation lineage, joins, and historical projection behavior
+- Orchestrator/GUI/chat docs consume remediation state but MUST NOT redefine remediation enums or ceiling behavior
+
+ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Decision_Policy.md, ContractName:Plans/storage-plan.md
+
+### 3.12 Provider and account-selection ownership
+
+Canonical provider/account selection ownership is:
+- `Models_System.md` owns provider-entry/runtime-surface selection priority and requested/effective model/runtime fields
+- `Multi-Account.md` owns account selection, provider-entry separation, requested/effective account fields, and switch lineage semantics
+- `Prompt_Pipeline.md` owns when requested/effective provider/account/model decisions freeze into the runtime handoff bundle
+- `CLI_Bridged_Providers.md` and provider-specific docs own transport/capability facts and provider-native fallback constraints, but not the global selection precedence
+
+ContractRef: ContractName:Plans/Models_System.md, ContractName:Plans/Multi-Account.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/CLI_Bridged_Providers.md
+
+### 3.13 Event, record, and terminal-identity ownership
+
+Canonical ownership is:
+- `Contracts_V0.md` owns event families, runtime-facing payload names, and command/event envelopes
+- `storage-plan.md` owns persisted record families, projection joins, `terminal_session_id`, `dev_session_id`, and terminal continuity/restart identity rules
+- `FinalGUISpec.md` owns shell realization and terminal layout presentation
+- consumer docs may extend display metadata but MUST NOT redefine terminal or event identity primitives
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md
+
 ## References
 - `Plans/Spec_Lock.json`
 - `Plans/DRY_Rules.md`
@@ -150,7 +224,7 @@ ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/assistant-ch
 - `Plans/Orchestrator_Page.md`
 
 
-### 3.13 DocumentInlineNotes
+### 3.14 DocumentInlineNotes
 **Owner:** GUI contract in `Plans/FinalGUISpec.md`; persistence contract in `Plans/storage-plan.md`; workflow semantics in `Plans/chain-wizard-flexibility.md` and `Plans/interview-subagent-integration.md`; chat-handoff rules in `Plans/assistant-chat-design.md`.
 
 Rules:
@@ -171,7 +245,7 @@ ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/cha
 
 ---
 
-### 3.14 TargetedRevisionPass
+### 3.15 TargetedRevisionPass
 **Owner:** Workflow semantics in `Plans/chain-wizard-flexibility.md` and `Plans/interview-subagent-integration.md`; UI placement in `Plans/FinalGUISpec.md`; prompt and persistence details in `Plans/Prompt_Pipeline.md` and `Plans/storage-plan.md`.
 
 Rules:
@@ -190,7 +264,7 @@ ContractRef: ContractName:Plans/interview-subagent-integration.md, ContractName:
 
 ---
 
-### 3.15 FinalReviewGate
+### 3.16 FinalReviewGate
 **Owner:** Workflow semantics in `Plans/chain-wizard-flexibility.md` and `Plans/interview-subagent-integration.md`; artifact taxonomy and restore semantics in `Plans/storage-plan.md`.
 
 Rules:

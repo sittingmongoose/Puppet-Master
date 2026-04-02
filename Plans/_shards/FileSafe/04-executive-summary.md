@@ -14,14 +14,14 @@ This plan covers **two pillars**: (1) **FileSafe** -- guards that block destruct
 
 ### Part B -- Context Compilation & Token Efficiency
 
-6. **Role-Specific Context Compiler** -- Builds `.context-{role}.md` per agent role (Phase/Task/Subtask/Iteration) so each agent gets only the context it needs (e.g. phase goal, filtered requirements, conventions). Cuts coordination overhead by ~40-60% at scale.
-7. **Delta Context** -- Adds a "Changed Files (Delta)" section with code slices from recently modified files so agents see what just changed.
+6. **Role-Specific Context Compiler** -- Builds `.context-{context_role}.md` per runtime role (`planning`, `execution`, `verification`, `debug`, `review`) so each run or node attempt receives only the context it needs.
+7. **Delta Context** -- Adds a `Changed Files (Delta)` section with code slices from recently modified files so agents see what just changed.
 8. **Context Cache** -- Caches the compiled context index so compilation is skipped when project files are unchanged.
-9. **Structured Handoff Schemas** -- Typed JSON schemas for inter-agent messages (e.g. progress, blockers, QA results) for reliable parsing.
-10. **Compaction-Aware Re-Reads** -- A deterministic marker indicates when plan/context re-read is needed, avoiding redundant full re-reads every task.
-11. **Skill Bundling** -- Bundles skills referenced in the plan into the compiled context once per phase instead of per task.
+9. **Structured Handoff Schemas** -- Typed JSON schemas for inter-agent progress, blockers, QA results, and similar handoffs.
+10. **Compaction-Aware Re-Reads** -- A deterministic marker indicates when plan/context re-read is needed, avoiding redundant full re-reads every attempt.
+11. **Skill Bundling** -- Bundles skills referenced by the current node/run into compiled context once per relevant scope instead of per child attempt.
 
-**Why critical:** Context compilation and these features reduce token use and improve reliability where coordination and context size matter most (large projects, many phases).
+**Why critical:** Context compilation and these features reduce token use and improve reliability where coordination and context size matter most (large projects, many delegated runs, debug/review loops).
 
 **DRY compliance:** All reusable code is tagged with `DRY:FN:`, `DRY:DATA:`, `DRY:HELPER:`. Platform data uses `platform_specs::`. Widgets reuse components from `src/widgets/`.
 

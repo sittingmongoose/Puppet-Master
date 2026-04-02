@@ -4,7 +4,7 @@ The orchestrator plan (`Plans/orchestrator-subagent-integration.md`) defines lif
 
 ### 1. Interview Phase Hooks (BeforePhase/AfterPhase)
 
-**Concept:** Apply hook-based lifecycle middleware to interview phases, similar to orchestrator tier hooks. Run **BeforePhase** and **AfterPhase** hooks at each interview phase boundary (Scope, Architecture, UX, Data, Security, Deployment, Performance, Testing).
+**Concept:** Apply hook-based lifecycle middleware to interview phases, similar to orchestrator node hooks. Run **BeforePhase** and **AfterPhase** hooks at each interview phase seam boundary (Scope, Architecture, UX, Data, Security, Deployment, Performance, Testing).
 
 **BeforePhase hook responsibilities:**
 

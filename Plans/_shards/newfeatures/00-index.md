@@ -11,3 +11,4 @@ Canonical source: [Plans/newfeatures.md](../../newfeatures.md)
 - [03-rewrite-alignment-2026-03-17.md](03-rewrite-alignment-2026-03-17.md) — ## Rewrite alignment (2026-03-17)
 - [04-executive-summary.md](04-executive-summary.md) — ## Executive Summary
 - [05-high-level-feature-themes.md](05-high-level-feature-themes.md) — ## High-level feature themes
+- [06-24-browser-preview-and-code-context-integration.md](06-24-browser-preview-and-code-context-integration.md) — ## 24. Browser preview and code-context integration

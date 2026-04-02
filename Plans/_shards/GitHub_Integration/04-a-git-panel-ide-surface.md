@@ -91,67 +91,62 @@ ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/LSP
 - commit list and filters
 - commit detail
 - changed-file pivots
-- commit-to-parent compare defaults
+- compare sessions seeded from commit, branch, or workflow lineage
 
 `Graph` owns:
-- lineage visualization
-- branch ancestry inspection
-- commit selection handoff into History or diff/review
+- branch ancestry and commit lineage visualization
+- worktree/topology overlays on top of branch ancestry
+- commit selection handoff into History, review, conflict assistance, or diff/open flows
 
-ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/FileManager.md, ContractName:Plans/UI_Command_Catalog.md
+**Canonical compare identity:** Every pivot from History or Graph freezes the compare session identity `{ repo_id, worktree_id?, base_ref, compare_ref, compare_origin, compare_session_id? }`.
+
+Canonical `compare_origin` values for GitHub-owned pivots include:
+- `changes.unstaged`
+- `changes.staged`
+- `history.commit_parent`
+- `conflict.review`
+- `worktree.branch_compare`
+- `actions.run_commit_range`
+- `blocked.dirty_worktree`
+- `recovery.safe_point_retry`
 
 Rules:
 - history compare defaults use `selected commit <-> first parent`
-- opening a file from commit history preserves the history compare origin for downstream review surfaces
-- package/lane/run lineage may appear as metadata, but Git lineage remains the canonical grouping axis
+- opening a file from commit history preserves compare identity and compare origin for downstream review surfaces
+- dedicated review mode and guided conflict assistance consume the frozen compare identity rather than recomputing targets from the current branch later
+- package/lane/run lineage may appear as metadata, but Git lineage remains the canonical grouping axis for this surface
+- if a stored compare target becomes stale or unavailable, the surface shows that stale identity explicitly and offers refresh/recompute instead of silently substituting the current HEAD
 
-ContractRef: ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/FileManager.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/storage-plan.md
 
 ### A.4 Worktrees
 
 Worktrees are first-class UI objects, not hidden plumbing.
 
-The Worktrees accordion section uses single-column expandable rows optimized for the narrow Source Control panel.
-
-ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/assistant-chat-design.md
+The Worktrees accordion uses narrow-panel rows for direct actions, and Source Control also provides a topology-aware view that overlays worktree state on branch ancestry when the user pivots from Graph/History into worktree reasoning.
 
 **Compact row (default state):**
-- Line 1: worktree glyph icon + branch name (truncated with ellipsis if needed) + expand chevron
-- Line 2: status pill + owner label (truncated, tooltip for full)
-- Owner format: `Thread: <thread_title>` or `Orch: <tier_label>` or `Manual`
-- Full-width click target for expand/collapse
+- Line 1: worktree glyph icon + branch name + expand chevron
+- Line 2: status pill + owner label + freshness/health disclosure when degraded
+- Owner format: `Thread: <thread_title>` or `Orch: <node_label>` or `Manual`
 
-**Expanded row:**
-- Detail fields: Path (full, selectable/copyable), Base ref, Created/age
-- Action buttons (stacked/wrapped, not crammed):
-  - `Open Files` — opens worktree root in file manager
-  - `Compare` — opens branch-to-branch diff (worktree HEAD vs base HEAD) via `cmd.git.open_diff`
-  - `Merge` — opens merge confirmation dialog; shown for assistant-owned and manual worktrees only (not orch-owned)
-  - `Create PR` — opens PR creation panel; shown when project has GitHub remote
-  - `Remove` — calls remove_worktree (confirmation if dirty or thread-bound)
-  - `Open Thread` — navigates to owning thread in assistant chat (thread-owned only; hidden if thread deleted). Opens Chat panel and scrolls to thread.
-  - For orch-owned: `Open Thread` replaced with `Open Lane`
+**Expanded row / topology detail:**
+- detail fields: path, base ref, created/age, ahead/behind, dirty/conflict state, linked lane/thread when known
+- actions: `Open Files`, `Compare`, `Merge`, `Create PR`, `Remove`, plus `Open Thread` or `Open Lane` when owned
+- topology overlays show owner/status directly on branch ancestry so worktrees and graph are not disconnected mental models
 
-ContractRef: ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/Decision_Policy.md, ContractName:Plans/Wiring_Matrix.md
-
-**Filtering:** Filter bar at top of Worktrees section: segmented control `All | Threads | Orchestrator | Manual`. Default: `All`. Filter state persisted per project: `config:project:{pid}:source_control.worktree_filter`. Filter bar degrades to icon-only below 280px panel width (tooltip on hover).
-
-**Sorting:** By creation time descending (newest first). No user-configurable sort in MVP.
-
-**Owner model:** Each worktree row displays an owner field. Owner is one of:
-- `Thread: <thread_title>` — assistant-owned via `owner_thread_id`
-- `Orch: <tier_label>` — orchestrator-owned via `owner_run_id`/`owner_tier_id`
-- `Manual` — no owner (user-created or orphaned)
-
-Blocked-state rules:
-- `dirty_worktree` and `worktree_conflict` are explicit runtime states, not generic errors
-- active-run ownership must be visible before prune/remove actions
+**Identity and open rules:**
+- open/review/history/actions pivots use canonical worktree-aware identity `{ repo_id, worktree_id, path? }`
+- remote-native opens MUST carry `repo_id` / `worktree_id` / `path` explicitly rather than reconstructing state from a local cwd guess
+- historical receipts and review sessions remain pinned to the captured worktree identity even after the active selection changes
 - worktree actions MUST preserve safe-point and remediation lineage semantics
 
-ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/assistant-chat-design.md
+**Blocked/freshness rules:**
+- `dirty_worktree` and `worktree_conflict` are explicit runtime states, not generic errors
+- active-run or active-thread ownership must be visible before prune/remove actions
+- stale or disconnected worktree projections remain viewable but block mutation until revalidated
 
-**Minimum width (240px):** Compact rows: branch name truncated; status pill and owner on second line. Expanded rows: fields stack vertically; action buttons wrap.
-
+ContractRef: ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/Decision_Policy.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/assistant-chat-design.md
 ### A.5 Surface boundary rule
 
 Source Control, Orchestrator, and GitHub surfaces keep distinct responsibilities.

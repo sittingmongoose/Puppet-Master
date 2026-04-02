@@ -748,7 +748,7 @@ When generating a minimal AGENTS.md for the target project:
 3. Link from AGENTS.md: `> For detailed project context, see [docs/project-context.md](docs/project-context.md).`
 4. **Skip condition:** Only skip `docs/project-context.md` creation if the project has fewer than 3 source files (trivial project). AGENTS.md is still generated.
 5. Content of `docs/project-context.md`: technology stack, key architectural decisions, module responsibilities, and codebase patterns extracted from the interview phases.
-- **Two-tier structure:** Section 1 = **Critical (must-read):** Technology & version constraints + DRY + top DO/DON'T in a fixed short block (≤1 screen). Section 2 = **Reference:** Pointer to `docs/project-context.md`. Implement in the generator by emitting a short AGENTS.md and writing `docs/project-context.md` from the same interview output.
+- **Two-part structure:** Section 1 = **Critical (must-read):** Technology & version constraints + DRY + top DO/DON'T in a fixed short block (≤1 screen). Section 2 = **Reference:** Pointer to `docs/project-context.md`. Implement in the generator by emitting a short AGENTS.md and writing `docs/project-context.md` from the same interview output.
 - **Preserve minimality when updating:** Add a line in the generated AGENTS.md: "When updating this file with learnings, keep the Critical and Technology & version constraints sections; do not add long prose--prefer adding links to docs/."
 
 **Cross-reference:** MiscPlan (Plans/MiscPlan.md) describes target-project DRY as interview-seeded and points here for implementation; MiscPlan also states that generated AGENTS.md should be kept minimal.
@@ -762,7 +762,7 @@ All **documentation and plans** produced by the interview (PRD, AGENTS.md, requi
 1. **Audience: AI Overseer.** Every generated document and plan must assume the reader/Overseer is an AI agent. Instructions must be **unambiguous**, **actionable**, and **explicit** (e.g. "wire X to Y", "ensure config key Z is passed to the run config at start"). Avoid prose that only a human would infer.
 
 2. **Wire everything together.** Explicitly call out:
-   - **Config wiring:** Any setting or feature that has a GUI control or config key must state that it must be **wired** into the config shape used at runtime. **Config Wiring:** See orchestrator-subagent-integration.md §config-wiring for the canonical definition of Option B (build at run start, merge order: GUI defaults < interview output < per-tier overrides). Generated AGENTS.md or PRD should remind agents: "Ensure all config and GUI settings are wired so the run sees them; avoid building features that are never passed to the backend."
+   - **Config wiring:** Any setting or feature that has a GUI control or config key must state that it must be **wired** into the config shape used at runtime. **Config Wiring:** See orchestrator-subagent-integration.md §config-wiring for the canonical definition of Option B (build at run start, merge order: GUI defaults < interview output < per-node overrides). Generated AGENTS.md or PRD should remind agents: "Ensure all config and GUI settings are wired so the run sees them; avoid building features that are never passed to the backend."
    - **Component integration:** Tasks that add modules, views, or components must include a step or acceptance criterion that the new code is **integrated** (e.g. declared in parent `mod.rs`, registered in routes, or wired in the GUI). No "add a widget" without "ensure the widget is used in view X."
 
 3. **No partially complete components.** Generated tasks and acceptance criteria must enforce **completeness**:
@@ -809,14 +809,14 @@ ContractRef: Invariant:INV-011, Invariant:INV-012, ContractName:Plans/UI_Wiring_
 
 ContractRef: ContractName:Plans/DRY_Rules.md#7, Gate:GATE-009
 
-**Cross-reference:** Plans/assistant-chat-design.md §14 points here for the full specification. Orchestrator plan "Avoiding Built but Not Wired" and config-wiring (orchestrator-subagent-integration.md §config-wiring: Option B — build at run start, merge order: GUI defaults < interview output < per-tier overrides) are the runtime side; the interview is responsible for generating instructions that lead to wired, complete implementations.
+**Cross-reference:** Plans/assistant-chat-design.md §14 points here for the full specification. Orchestrator plan "Avoiding Built but Not Wired" and config-wiring (orchestrator-subagent-integration.md §config-wiring: Option B — build at run start, merge order: GUI defaults < interview output < per-node overrides) are the runtime side; the interview is responsible for generating instructions that lead to wired, complete implementations.
 
 **PRD Subagent/Parallelization Enforcement (Resolved):**
 Enforcement point: the **scheduler** (in the orchestrator execution engine).
 - When building the run graph from the PRD, the scheduler reads `subagents` and `depends_on` fields from each task.
 - Subagent assignments are passed to the Provider runner as part of the task context.
 - Parallelization is determined by the `depends_on` dependency graph (see §5.2 parallelism schema).
-- **Validation at run start:** `validate_config_wiring_for_tier()` verifies all referenced subagent names exist in the subagent registry. Unknown names → fail fast (see orchestrator-subagent-integration.md subagent name validation).
+- **Validation at run start:** `validate_config_wiring_for_node()` verifies all referenced subagent names exist in the subagent registry. Unknown names → fail fast (see orchestrator-subagent-integration.md subagent name validation).
 
 ### 5.3 DRY method when implementing interview code (Puppet Master codebase)
 

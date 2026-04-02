@@ -37,13 +37,28 @@ ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md
 ### 1.1 Inputs
 
 The prompt pipeline consumes the following deterministic inputs:
-- Run envelope (tier, mode, selected Persona ID(s), selected model/variant)
+- Run envelope (session/timestamp identity, node/package/lane execution context, selected Persona ID(s), selected model/variant)
 - Rules context (`Plans/agent-rules-context.md`)
 - Resolved Personas (`Plans/Personas.md`)
 - Discovered Skills registry (`Plans/Skills_System.md`) and any Persona `default_skill_refs`
 - Tool registry definitions (`Plans/Tools.md`) and permission state (`Plans/Permissions_System.md`)
 - Conversation history + evidence context (`Plans/storage-plan.md` projections)
 - Context compiler outputs (`Plans/FileSafe.md` Part B)
+
+Canonical run envelope fields:
+- `session_id`
+- `timestamp`
+- `thread_id`
+- `run_id`
+- `node_id: string`
+- `package_id: string`
+- `lane_id: string?`
+- `seam_id: string?`
+- selected Persona identifier(s)
+- requested/effective model and variant refs
+- active surface and execution-strategy refs when present
+
+Node/package/lane/seam identity is the canonical execution context; any surviving tier labels are derived grouping metadata only.
 
 ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/FileSafe.md
 
@@ -55,7 +70,7 @@ The prompt MUST be assembled in this stage order:
 
 ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Tools.md, ContractName:Plans/Plugins_System.md
 
-1. **Resolve run config and surface context**: finalize the run envelope (tier/mode/platform/model), identify the active surface, and load the permissions snapshot.
+1. **Resolve run config and surface context**: finalize the run envelope (node/package/lane execution context, platform/model, and surface identity), identify the active surface, and load the permissions snapshot.
 2. **Resolve Persona selection inputs**: detect Persona mode (`manual` / `auto` / `hybrid`), inspect natural-language Persona requests, and compute the requested Persona when present.
 3. **Resolve effective Persona and runtime state**: resolve Persona files, aliases, requested/effective platform/model/variant/runtime controls, and provider capability filtering.
 4. **Resolve skills**: resolve `default_skill_refs` and compute skill bundle inputs.
@@ -160,7 +175,7 @@ ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Runtime_Arti
 
 The compiled prompt MUST include an Instruction Bundle section that contains, at minimum:
 ContractRef: ContractName:Plans/Contracts_V0.md#InstructionBundleAssembly, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/assistant-chat-design.md
-- active runtime mode and tier
+- active execution context (`node_id`, `package_id`, `lane_id?`, `seam_id?`)
 - requested and effective workflow overlay when present
 - active Persona identifier(s)
 - rules context

@@ -140,6 +140,144 @@ Settings > Storage includes a global **Remote Cache Administration** subsection 
 
 ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/storage-plan.md, ContractName:Plans/UI_Command_Catalog.md
 
+#### 7.4.4 Settings (Unified) panel specification
+
+Settings is the authoritative unified configuration surface formed by merging the former Config, Settings, Login, and Doctor pages into a single routed experience.
+
+Layout contract:
+- **Left sidebar:** settings-group navigation with collapsible category headers, persistent tab selection, and a global settings search field at the top.
+- **Main pane:** selected tab content with section anchors, inline validation, reset actions, and contextual status banners.
+- **Inspector rail (optional on wide layouts):** requested vs effective runtime state, inheritance source, sync status, and health disclosures for the active tab.
+
+Required top-level settings categories:
+- **Appearance:** General, Themes, Layout, window chrome, density, sound effects, accessibility presentation.
+- **Editor:** Editor, File Manager, LSP, Keybindings, Shortcuts, diff/review defaults, preview behaviors.
+- **Workspace:** Project, Branching, Storage, Git, Docker, Kubernetes, Run & Debug, Interview, Memory.
+- **AI / Models:** Providers, Accounts, Agent-Config, Models, Personas, Skills, Plugins, Budget.
+- **Security:** Permissions, Privacy, Rules, FileSafe, approvals, remote host trust.
+- **Advanced:** Updates, Extensions, Advanced, Health, diagnostics, migration tools, reset tools.
+
+Required global capabilities:
+- **Global search:** searches tab names, section headings, labels, and help text; results deep-link to the exact control and scroll it into view.
+- **Settings sync:** optional device-to-device sync for durable user preferences, shortcuts, themes, provider/model preferences, and eligible workspace defaults. Project-local secrets and machine-specific paths remain excluded.
+- **Import / export:** export current settings to a versioned bundle; import with merge preview, conflict handling, and scope selection.
+- **Reset controls:** each tab exposes `Reset tab to defaults`; the root Settings toolbar exposes `Reset all settings` behind a destructive confirmation.
+- **Change provenance:** every editable control can disclose whether the current value is inherited, defaulted, synced, imported, or locally overridden.
+
+#### 7.4.5 Workspace, editor, and remote-host settings
+
+Settings MUST expose durable configuration for workspace behavior, editor policies, and remote editing.
+
+This subsection owns:
+- SSH remote definitions, connection testing, path mapping disclosure, and reconnection policy for remote editing.
+- File Manager behavior, editor rendering defaults, unsaved-buffer recovery policy, diff defaults, and preview handling.
+- Project-scoped workspace preferences such as language detection, indexing, file-watch policies, and local-vs-remote execution disclosures.
+
+#### 7.4.6 Run, debug, and runtime integration settings
+
+Settings MUST expose durable controls for run/debug presets and runtime-adjacent developer surfaces.
+
+This subsection owns:
+- launch configuration templates and per-language debug defaults
+- terminal/browser tab policies, hot reload controls, and port auto-open behavior
+- debugger adapter settings, evidence capture defaults, and investigation retention
+- runtime-output routing preferences for Problems, Output, Ports, and Debug Console
+
+#### 7.4.7 Agent-Config panel specification
+
+The **Agent-Config** panel is the primary surface for provider, model, and account configuration across the application.
+
+Purpose:
+- centralize provider onboarding, account selection, model defaults, quota visibility, and connection validation
+- make requested vs effective runtime configuration inspectable without opening multiple unrelated tabs
+
+Layout:
+- **Left sidebar:** provider list with badges for health, default-provider marker, and quick-add provider action
+- **Main area:** selected provider detail view containing accounts, model defaults, connection controls, and usage information
+
+Required sections in order:
+1. **Provider List** — all configured providers, enabled/disabled state, account count, connection-health badge
+2. **Account Details** — add/remove account, account nickname, entitlement/billing context, credential rotation entrypoint, last validation result
+3. **Model Selection** — default model, per-role model assignments, context-limit disclosure, fallback model chain
+4. **Usage Summary** — recent token/cost usage, quota bucket, rate-limit episodes, billing/entity attribution summary
+5. **Connection Health** — test connection action, last successful validation time, degraded reason, retry guidance, capability summary
+
+Required features:
+- add/remove account
+- set default model
+- view usage
+- test connection
+- configure rate limits and request-concurrency preferences
+
+#### 7.4.8 Container, Docker, and Kubernetes settings
+
+Settings MUST expose a dedicated container/runtime settings area for Docker and Kubernetes-related defaults.
+
+Required tab coverage:
+- Docker daemon connection and context selection
+- default registry / namespace selection
+- image build and publish defaults
+- Kubernetes cluster/context management for project-scoped container workflows
+- resource limits, polling disclosures for external status checks, and local-vs-remote container execution rules
+
+#### 7.4.8A Docker Manager Panel Spec
+
+- **Template repo status row:** bind directly to canonical `TemplateRepoStatus` (`unconfigured`, `config_invalid`, `clean`, `dirty_uncommitted`, `committed_local_only`, `push_in_progress`, `push_failed`, `diverged_remote`, `needs_review`). Presentation copy may translate those values, but the GUI must not invent a second status model.
+- **Unraid controls:** when shared-profile scope is active, expose `Apply shared profile to this repo` as an explicit action in addition to generate/update and push controls.
+- **`ca_profile.xml` editor:** default to shared cross-project maintainer profile with per-project override option, and provide two editing layers: (1) structured controls for known fields and (2) advanced raw XML editing for unknown / passthrough content. Saving from either layer MUST preserve unmodified passthrough XML verbatim. Support picture upload or external URL; uploaded pictures default to repo-managed assets.
+
+Add a contextual **Docker Manager** GUI surface for Docker-related projects. This surface may be implemented as a page or dockable panel, but it MUST behave as a first-class management surface and not merely as a hidden advanced-only dialog.
+
+- **Visibility rule:** show the Docker Manager surface when a Docker-related project is active. Add a setting named **Hide Docker Manager when not used in Project.** Default: enabled.
+- **Auth controls:** place a browser-login button near DockerHub settings, retain PAT entry, show helper text that PAT is recommended, and explain/link how to obtain a PAT.
+- **Auth state presentation:** show requested auth mode separately from effective capability, along with validated account identity, namespace access, and degraded reason when capability is partial.
+- **Repository management controls:** namespace selector, repository selector, refresh action, create-repository action, and create-repository confirmation dialog that displays namespace, repository name, and privacy. Privacy defaults to private and must be visibly labeled as the default.
+- **Runtime controls:** build, run/preview, stop, open running container/web UI, open logs, and health/access state.
+- **Publish controls:** push image, show digest/tag results, and expose target DockerHub repo summary.
+- **Unraid controls:** toggle to auto-generate/update Unraid XML after successful publish (default enabled), toggle to manage template repo (default enabled), template-repo status row, one-click push action, and shortcut into `ca_profile.xml` editing.
+- **Template repo setup flow:** allow both create-new and select-existing when no template repo is configured.
+- **`ca_profile.xml` editor:** default to shared cross-project maintainer profile with per-project override option; all fields editable; support picture upload or external URL; uploaded pictures default to repo-managed assets.
+- **Auto-generated metadata warning:** when `ca_profile.xml` is created automatically, show a visible notice that the user still needs to configure/review the profile.
+- **Safety copy:** make it explicit that repository creation cannot be auto-approved by YOLO or autonomy modes.
+
+ContractRef: ContractName:Plans/Containers_Registry_and_Unraid.md, ContractName:Plans/newtools.md#147-docker-runtime--dockerhub-contract, ContractName:Plans/Permissions_System.md
+
+#### 7.4.9 Settings tab catalog
+
+The unified Settings surface uses a two-level navigation model: category headers in the sidebar, then tabs within the selected category. The minimum tab set is:
+
+| Tab | Key settings |
+|---|---|
+| General | App behavior, launch, notifications, minimize-to-tray, shell defaults |
+| Editor | Editor behavior, indentation, diff defaults, autosave, preview behavior |
+| Terminal | Terminal appearance, shell defaults, transcript retention, layout defaults |
+| Providers | Provider list, add/remove, default selection |
+| Models | Model preferences, role assignments, context limits |
+| Permissions | Permission rules, approval history, preset selection |
+| Accounts | Account management, credential rotation |
+| Extensions | Installed extensions, enable/disable, settings |
+| Themes | Theme selection, custom colors, font settings |
+| Keybindings | Keyboard shortcut customization |
+| Privacy | Telemetry, data collection, local-only mode |
+| Updates | Update channel, auto-update, version info |
+| Advanced | Debug logging, experimental features, reset |
+| LSP | Language server configuration, per-language settings |
+| Git | Git configuration, merge tool, diff tool |
+| Docker | Docker connection, default registry, resource limits |
+| Kubernetes | Cluster configuration, context management |
+| Budget | Token budget, cost limits, alerts |
+| Personas | Persona management, defaults per mode |
+| Skills | Skill management, enable/disable |
+| Plugins | Plugin management, marketplace |
+| Interview | Interview preferences, round caps, detail level |
+| Memory | Memory/context management, retention policies |
+| Shortcuts | Quick actions, custom shortcuts |
+
+Navigation rules:
+- tab count is large enough that group headers and in-sidebar search are mandatory
+- commands such as `Open setting: {name}` must jump to the correct tab and field
+- hidden/unsupported tabs must explain why they are unavailable rather than disappearing silently
+
 Settings and inspectors separate requested state, effective state, inherited defaults, and repaired or degraded runtime outcomes.
 
 ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Models_System.md, ContractName:Plans/Multi-Account.md
@@ -248,4 +386,193 @@ Remote and degraded rules:
 - Replace-in-files MUST respect remote write availability before presenting a success-shaped UI.
 
 ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Wiring_Matrix.md
+
+#### GitHub Actions side-panel owner
+
+GitHub Actions is the persistent workflow-operations side panel for repository-connected projects.
+
+Layout:
+- **Left column:** workflow list with status filters, pins, and freshness/health badges
+- **Right column:** selected run details, job tree, logs preview, action toolbar, and current requested/effective GitHub identity disclosure
+
+Surface-summary rules:
+- `Current Branch`, `Workflows`, and `Settings` are the stable subviews; detailed workflow/admin lifecycle semantics remain owned by `Plans/GitHub_Integration.md`
+- the panel surfaces the shared freshness axes (`freshness`, `health`, `write_availability`) and disables mutating actions when the owning GitHub context is stale or blocked
+- requested/effective GitHub identity, account binding, and branch/worktree scope are imported from owner docs rather than renamed in the shell spec
+- panel state persists in `gha_panel_state.v1:{project_id}`; receipts and durable workflow/admin state remain owned by storage/GitHub owner docs
+
+ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/UI_Command_Catalog.md
+
+#### Artifacts side-panel owner
+
+Artifacts is the persistent side panel for runtime, build, browser, and review artifacts.
+
+Layout:
+- **Artifact tree:** grouped by run, then job/session, then artifact family
+- **Detail strip:** preview metadata, comparison target, retention info, and actions for the selected artifact
+
+Features:
+- download
+- preview
+- compare
+- delete
+
+State:
+- persist expanded groups, selected artifact, compare target, and preview mode in `artifact_panel_state.v1:{project_id}`
+- artifact content identity and lineage remain owned by `artifacts_index.v1:*`
+
+#### Run & Debug side-panel owner
+
+Run & Debug is the persistent side panel for investigations, debug entrypoints, and runtime diagnostics.
+
+Layout:
+- **Top region:** investigation list with target summary, state, investigation phase, verification state, and last update time
+- **Bottom region:** active or historical investigation detail showing breakpoints, evidence, variables, cleanup/revalidation status, and linked runtime surfaces
+
+Surface-summary rules:
+- the panel binds to canonical debug-investigation records and their linked artifact/evidence refs
+- chat owns debug narrative, inline approval/blocked/investigation cards, and thread-local conversation flow
+- Run & Debug owns the pinned diagnostic/detail presentation, focus state, and cross-surface pivots into Debug Console / Problems / Output / Runtime Artifacts
+- historical investigations remain visible, but only explicitly resumable investigations surface live resume controls; other historical opens are read-only by default
+- freshness and revalidation state must remain visible so users can tell whether a shown investigation is current, restoring, stale, or awaiting explicit revalidation
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/Contracts_V0.md
+
+### 7.16 Chat Panel
+
+The Chat Panel is the canonical threaded assistant workspace for Ask, Agent, Debug, Plan, and Deep Plan modes.
+
+Layout:
+- vertical split with **message stream** in the top 70% and **composer** in the bottom 30%
+- optional collapsible **Plan panel** appears as a side panel within the chat surface when the thread is in Plan or Deep Plan mode
+- header remains sticky while the message stream scrolls independently
+
+#### 7.16.1 Thread header and message stream
+
+Thread header content:
+- editable thread title
+- mode badge
+- persona indicator
+- model indicator
+- token-count summary
+- quick actions for thread search, rename, duplicate, archive, and thread settings
+
+Message stream requirements:
+- scrollable virtualized list of user, assistant, system, tool, approval, and activity message blocks aligned with the taxonomy in `Plans/assistant-chat-design.md`
+- stable message identity so streaming updates mutate existing rows rather than replacing the full list
+- inline activity cards for tool calls, file operations, subagent activity, approvals, run-state transitions, and linked artifacts
+- sticky unread marker and `New messages below` affordance when the user is scrolled away from the bottom
+
+#### 7.16.2 Composer, commands, and plan mode affordances
+
+Composer requirements:
+- multiline text input
+- mode selector exposing at minimum `Steer` and `Queue`
+- attachment button
+- send / stop button
+- visible disabled-state explanation when sending is unavailable
+
+Plan-mode affordances:
+- collapsible Plan panel showing the current plan, plan steps, status, and linked artifacts
+- plan panel supports focusing the active step and jumping to linked documents or evidence
+- when not in a planning mode, the plan panel stays hidden rather than showing an empty placeholder
+
+Commands and approvals:
+- slash commands, mode switches, and tool approvals remain routed through the canonical chat/runtime command catalog
+- tool approval dialogs launched from Chat must preserve thread context and return focus to the composer after completion
+- chat-local controls must not duplicate ownership of Problems, Output, Ports, or Debug Console; they link to those shell surfaces instead
+
+### 7.17 File Manager Panel
+
+The File Manager Panel is the persistent project-tree side panel and defers detailed tree, drag-and-drop, and open-file behavior to `Plans/FileManager.md`.
+
+Required behavior summary:
+- project tree with local filter, expand/collapse persistence, and current-file reveal
+- click-to-open and context-menu actions route through canonical open-file and file-tree action contracts
+- external drag-and-drop, ignored-file visibility rules, and detached-panel behavior remain aligned with `Plans/FileManager.md`
+- File Manager owns tree navigation and file discovery, but not semantic search, diff-local search, or runtime artifact browsing
+
+### 7.18 File Editor
+
+The File Editor is the canonical in-app code and document editing surface.
+
+Required behavior summary:
+- tabbed editor groups with shared buffers, diff view, preview modes, and detach / re-dock support
+- LSP-backed diagnostics, hover, completion, signature help, inlay hints, code actions, code lens, semantic highlighting, and go-to-definition
+- SSH remote editing, stale-write disclosure, and recoverable unsaved local buffer persistence
+- embedded rendering for markdown, mermaid, HTML, SVG, and image documents through the shared preview pipeline
+
+#### 7.18.1 Inline Note Mode
+
+Inline Note Mode enables targeted feedback and annotation inside the editor.
+
+Activation:
+- user selects code in the editor
+- `Add Note` appears in the context menu for the selection
+
+Note creation:
+- captures selection range
+- captures note text
+- optional category: `bug`, `improvement`, `question`, or `style`
+
+Display and persistence:
+- inline annotation markers appear in the editor gutter
+- hover reveals note content and status
+- notes persist via `note_record.v1:{bundle_id}:{note_id}` and remain linkable from bundle review surfaces
+
+### 7.19 Agent Activity
+
+The Agent Activity surface is the canonical inspection view for delegated work, investigations, bundle review progress, and embedded review documents.
+
+Required behavior summary:
+- active and historical child-run / subagent activity list with status, owning thread, target, and outcome
+- clear distinction between running, queued, blocked, remediation, and completed activity
+- direct links to related chat messages, artifacts, investigation records, and review bundles
+
+#### 7.19.1 Embedded document pane
+
+The embedded document pane is a shared-buffer review/document surface used by Interview, Builder, and bundle-review workflows.
+
+Rules:
+- document selection, scroll position, active review stage, and approval state persist through `document_pane_state:v1:{project_id}:{page_context}`
+- the pane shares source-of-truth buffers with File Editor rather than maintaining divergent document copies
+- findings summaries and approval gates render adjacent to the document, not inside unrelated chat-local controls
+
+#### 7.19.2 Bundle controls and review gate
+
+Bundle Controls govern revision loops and approval readiness for reviewed document/file bundles.
+
+Required behavior:
+- `Resubmit` in bundle review sends all unresolved notes as revision context
+- final approval is blocked until every note is resolved, responded to, or dismissed
+- bundle status progression is `draft -> in_review -> all_notes_resolved -> approved -> merged`
+- bundle-level persistence uses `bundle_registry.v1:{project_id}:{bundle_id}` with linked `note_record.v1:*` entries
+
+### 7.20 Bottom runtime zone
+
+The bottom runtime zone is the canonical host for Terminal, Problems, Output, Debug Console, Ports, and linked runtime-adjacent panes.
+
+Required behavior summary:
+- tabbed runtime panes with stable identity and restore behavior
+- terminal/browser/editor integrations reveal the owning pane rather than minting parallel per-feature consoles
+- linked dev-session state, historical/live badges, and recovery outcomes stay visible across pane switches
+
+#### 7.20.1 Terminal and browser tab management
+
+Terminal sections, terminal tabs, browser tabs, and detached previews remain identity-stable across docking, focus changes, and restart recovery.
+
+Rules:
+- runtime tabs persist selection, order, labels, and pin state
+- browser and preview tabs route through canonical browser-session identities and never silently migrate ownership to chat
+- hot reload, output routing, and preview refresh status appear in the owning runtime or preview pane
+
+#### 7.20.2 Debug, Problems, Output, and Ports
+
+The runtime zone must provide:
+- **Problems:** aggregated diagnostics, file links, and source ownership disclosure
+- **Output:** task/build/dev output streams with source tags and search within stream
+- **Debug Console:** adapter and evaluation output for the active debug session
+- **Ports:** detected ports, local/remote accessibility, open-in-browser actions, and hot-reload controls
+
+`Run & Debug` side-panel actions reveal and focus these bottom-panel panes rather than creating duplicate runtime records.
 

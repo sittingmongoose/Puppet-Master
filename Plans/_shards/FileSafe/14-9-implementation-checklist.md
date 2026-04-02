@@ -87,11 +87,11 @@
   - [ ] DRY compliance (tag reusable items)
 
 - [ ] **Context compilation (Part B)**
-  - [ ] Create `src/context/` module: `mod.rs`, `compiler.rs`, `role.rs`, `filters.rs`, `skills.rs`
-  - [ ] Implement `compile_context(phase_id, role, plan_path, working_directory)` and role-specific compilers (Phase, Task, Subtask, Iteration)
-  - [ ] Requirement filtering (phase-mapped only); convention extraction from AGENTS.md; decision extraction from state/progress
-  - [ ] Skill bundling: parse plan frontmatter `skills_used`, resolve paths, append to Task/Iteration context; handle missing skills
-  - [ ] Delta context: git diff since last phase, code slices, "Changed Files (Delta)" section; config `context.delta_context`
+  - [ ] Create `src/context/` module: `mod.rs`, `compiler.rs`, `context_role.rs`, `filters.rs`, `skills.rs`
+  - [ ] Implement `compile_context(run_id, node_id, context_role, plan_path, working_directory)` and runtime-role compilers (`planning`, `execution`, `verification`, `debug`, `review`)
+  - [ ] Requirement filtering (node-mapped only); convention extraction from AGENTS.md; decision extraction from state/progress
+  - [ ] Skill bundling: parse referenced skill metadata, resolve paths, append to the relevant compiled context; handle missing skills
+  - [ ] Delta context: git diff since the last relevant base ref, code slices, "Changed Files (Delta)" section; config `context.delta_context`
   - [ ] Context cache: `context-index.json` with key (paths + mtimes/hashes); skip compile when valid; invalidate on change; config `context.context_cache`
   - [ ] Structured handoff schemas: define message types and JSON schemas; `HandoffMessage` enum + validation in orchestrator; reference doc in docs/
   - [ ] Compaction-aware re-reads: `.compaction-marker` lifecycle (clear on session start, set on compaction); consult before including plan in context

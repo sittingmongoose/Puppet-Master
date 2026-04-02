@@ -2,7 +2,7 @@
 
 ### 5.1 Problem
 
-- **Config page** loads/saves **GuiConfig** (YAML with `project`, `tiers`, `branching`, `advanced`, ...) to `active_config_path()` (e.g. `puppet-master.yaml`).
+- **Config page** loads/saves **GuiConfig** (YAML with `project`, `nodes`, `branching`, `advanced`, ...) to `active_config_path()` (e.g. `puppet-master.yaml`).
 - **Orchestrator run** uses **PuppetMasterConfig** from `ConfigManager::discover()` (same path). The two YAML shapes differ; many GUI fields (e.g. `advanced.execution.enable_parallel`, `branching.auto_pr`) are not present in the shape the orchestrator expects, so they default.
 - **Result:** "Enable parallel execution" and other such settings have no effect on the run.
 
@@ -21,7 +21,7 @@ Option B remains the canonical run-start config projection path.
 
 Completeness rule:
 - any GUI setting that changes runtime behavior belongs in the run config snapshot built at start
-- interview execution-affecting settings and HITL tier toggles are part of this rule even when their owning feature plans define the detailed semantics
+- interview execution-affecting settings and HITL node toggles are part of this rule even when their owning feature plans define the detailed semantics
 - summaries in this document must reference the owning SSOTs rather than implying that GUI-only execution settings are acceptable
 
 This section extends the minimum-field list with the policy that execution-affecting settings are projected by class, not by ad hoc exception.

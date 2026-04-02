@@ -1,6 +1,6 @@
 {
   "source_path": "Plans/interview-subagent-integration.md",
-  "source_sha256": "5ee40ba7a4cf6b48f812bf408801b1647ba52be773c377440e0f6de428810574",
+  "source_sha256": "d4c35ac7a00a19b4eb11eae3543760a508e698ba15a888cb6684fc44f2ecdbc5",
   "split_rule": {
     "primary": "## outside fences",
     "fallback": "line-count-200",
@@ -74,7 +74,7 @@
       "dest_path": "Plans/_shards/interview-subagent-integration/10-integration-architecture.md",
       "start_line": 242,
       "end_line": 1120,
-      "segment_sha256": "40daa7fdbf3d556ccf23cd793c470a98c62c45d6af0c36212851a61fef0d7db0",
+      "segment_sha256": "815d7dcb0138e71f4f877d42f136ac154ed57c5fac6f893ec0e5a8317515120b",
       "heading": "## Integration Architecture"
     },
     {
@@ -88,7 +88,7 @@
       "dest_path": "Plans/_shards/interview-subagent-integration/12-implementation-phases.md",
       "start_line": 1163,
       "end_line": 1241,
-      "segment_sha256": "3f174e2310b7c0944ad00f2d1a1c07daf128ef909bca52232bc01e49ed91ffcd",
+      "segment_sha256": "4e01ed396d0bde4d95a81f76f0050caface9b283ffd906efeeff397489f72f59",
       "heading": "## Implementation Phases"
     },
     {
@@ -123,7 +123,7 @@
       "dest_path": "Plans/_shards/interview-subagent-integration/17-lifecycle-and-quality-enhancements-for-interview-flow.md",
       "start_line": 1300,
       "end_line": 1622,
-      "segment_sha256": "08db902361a61991c6be6e08e4718e39e1d79447da6ba25e79f3a0b0801894c8",
+      "segment_sha256": "a93ba86f7efcac3c9d8ba75136c58f63e8e254f3bc99a6723abd2f0873b2fafe",
       "heading": "## Lifecycle and Quality Enhancements for Interview Flow"
     },
     {
@@ -137,7 +137,7 @@
       "dest_path": "Plans/_shards/interview-subagent-integration/19-gui-gaps-interview-tab.md",
       "start_line": 1632,
       "end_line": 1763,
-      "segment_sha256": "2445ad86f04c77cd5ec5474b439a6dd9d1e62dccaf943e9c7b8b294c87003db6",
+      "segment_sha256": "efe42a39ce1722566624794411efbef2175cdfc1574ca77d35ad98f871f10fcc",
       "heading": "## GUI gaps: Interview tab"
     },
     {
@@ -216,13 +216,6 @@
       "end_line": 2274,
       "segment_sha256": "fb6cc7773983164c74284ac885a4b641428cc9e5d42ba33cadc28acd5a85d8be",
       "heading": "## Planning-to-Runtime Blocked and Degraded Handoff Consolidation Addendum (2026-03-09)"
-    },
-    {
-      "dest_path": "Plans/_shards/interview-subagent-integration/31-planning-to-runtime-blocked-and-degraded-handoff.md",
-      "start_line": 2275,
-      "end_line": 2283,
-      "segment_sha256": "7ccf5225c959374e46dc80613969eb655d45e42c07a0904756cdbb6a9d4fb47d",
-      "heading": "## Planning-to-Runtime Blocked and Degraded Handoff"
     }
   ]
 }

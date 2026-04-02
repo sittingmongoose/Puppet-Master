@@ -18,8 +18,9 @@
 16. [Migration Mapping](#16-migration-mapping)
 17. [Risks and Mitigations](#17-risks-and-mitigations)
 18. [Promoted Features](#18-promoted-features-formerly-future-considerations)
-19. [Appendix A: Cross-References](#appendix-a-cross-references)
-20. [Appendix B: Locked Decisions Summary](#appendix-b-locked-decisions-summary)
+19. [Persona Editor, Compatibility Disclosure, and Surface-Level Persona Controls](#19-persona-editor-compatibility-disclosure-and-surface-level-persona-controls-2026-03-06)
+20. [Appendix A: Cross-References](#appendix-a-cross-references)
+21. [Appendix B: Locked Decisions Summary](#appendix-b-locked-decisions-summary)
 
 ---
 

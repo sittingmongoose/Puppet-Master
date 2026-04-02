@@ -219,6 +219,120 @@ Gemini is registered as two distinct providers and MUST stay distinct in capabil
 
 ContractRef: ContractName:Plans/GitHub_API_Auth_and_Flows.md, ContractName:Plans/CLI_Bridged_Providers.md
 
+### 4.5 Model Capabilities Catalog
+
+Puppet Master maintains a model capabilities catalog so role-based selection is derived from explicit capability metadata instead of name heuristics.
+
+Capability dimensions:
+- `speed` = observed or provider-declared throughput in tokens/sec.
+- `cost` = normalized price in USD per 1M tokens.
+- `context_window` = maximum provider-accepted token window for the model/runtime surface.
+- `reasoning_quality` = benchmark-backed general reasoning score.
+- `code_quality` = code-specific benchmark score or equivalent evaluation composite.
+- `multimodal` = whether the model/runtime surface supports images, audio, and/or video.
+
+Role assignment criteria:
+
+| Role | Primary objective | Typical usage |
+|---|---|---|
+| `fast` | Lowest latency and cost with adequate quality | Explore agents, simple completions, lightweight drafting |
+| `standard` | Balanced cost and quality | General-purpose agents, default chat, routine editing |
+| `powerful` | Highest reasoning and code quality under normal cost-aware selection | Complex tasks, code review, architecture work |
+| `premium` | Best available capability regardless of cost | Deep planning, critical decisions, high-stakes review |
+
+Selection algorithm:
+1. For the requested role, rank available models by that role's primary dimension.
+2. Apply minimum thresholds on the secondary dimensions required for the run posture (for example: minimum `reasoning_quality`, `code_quality`, or `context_window`).
+3. Break ties deterministically using availability, provider health, and canonical model-id ordering.
+4. If no model satisfies the thresholds, fall back to the next-best model that satisfies the minimum hard constraints and record the downgrade reason.
+
+Provider-specific notes:
+- Different providers MAY populate the same role with different concrete models.
+- A role label is semantic, not provider-exclusive; `fast` on one provider does not imply parity with `fast` on another.
+- Capability normalization MUST occur before role assignment so provider-specific benchmark formats and pricing units do not leak into selection logic.
+
+ContractRef: ContractName:Plans/Decision_Policy.md, ContractName:Plans/usage-feature.md, ContractName:Plans/CLI_Bridged_Providers.md
+
+### 4.6 Model Registration and Discovery Flow
+
+Model registration is a refreshable catalog pipeline, not a static hardcoded list.
+
+Flow:
+1. **Discovery:** PM queries each configured provider for its available models (for example, a `/models` endpoint or equivalent provider-native listing API).
+2. **Registration:** each discovered entry is matched against PM's known model definitions by `model_id`.
+3. **Unknown-model handling:** if a discovered model is not in the known catalog, it is registered as `custom` and requires user-provided capability metadata so role selection and budgeting remain deterministic.
+4. **Availability resolution:** a model is considered available only when its provider is configured, authenticated, and the model is not deprecated.
+5. **Catalog publish:** the resulting provider-scoped model list becomes the source for pickers, role resolution, and runtime validation.
+
+Refresh triggers:
+- provider configuration change,
+- manual refresh initiated by the user or settings UI,
+- periodic background refresh with a configurable interval (default: 1 hour).
+
+Rules:
+- Discovery metadata is provider-scoped; identical `model_id` values from different providers remain distinct runtime surfaces unless explicitly aliased.
+- Registration MUST preserve both known-catalog metadata and provider-reported metadata so stale catalog entries can be reconciled without losing provider truth.
+- Deprecated models MAY remain visible for history rendering, but they MUST NOT be treated as available for new runs.
+
+ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md
+
+### 4.7 Token Counting Abstraction
+
+Token accounting MUST normalize provider differences behind one shared usage type.
+
+Problem statement:
+- providers count tokens differently (for example: OpenAI `tiktoken`, Anthropic tokenizer rules, Google tokenizer rules),
+- preflight estimation and post-run accounting are therefore different concerns,
+- UI and budget systems require one canonical shape.
+
+Canonical normalized type:
+
+| Field | Type | Meaning |
+|---|---|---|
+| `input_tokens` | integer | Prompt/input tokens charged or estimated for the request |
+| `output_tokens` | integer | Completion/output tokens charged or estimated for the response |
+| `total_tokens` | integer | Total tokens for the request/response pair |
+| `cache_read_tokens?` | integer or null | Tokens credited/read from provider cache when reported |
+| `cache_write_tokens?` | integer or null | Tokens written to provider cache when reported |
+
+Counting methods:
+1. **Provider-reported:** use token counts returned by the provider API response. This is preferred and is the authoritative source for actual usage.
+2. **Estimated:** use a local tokenizer approximation before sending a request. This is used for budget checks and warning thresholds.
+3. **Fallback:** when no tokenizer is available, estimate with a `character_count ÷ 4` heuristic.
+
+Budget enforcement and display rules:
+- estimated counts are used for pre-flight budget checks, soft warnings, and context-pressure forecasting,
+- provider-reported counts are used for actual usage tracking, cost attribution, and persisted billing records,
+- usage panels MUST display provider-reported counts when available; if only an estimate exists, the UI MUST show the value with an `(est)` suffix.
+
+ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Prompt_Pipeline.md
+
+### 4.8 Context Window Limits and Effective Capacity
+
+Published model limits are not equal to the safely usable prompt budget. PM therefore tracks both raw limits and effective context.
+
+`effective_context` is calculated as `max_input` minus reserved space for the system prompt and planned output allowance.
+
+| model_family | model_id | max_input | max_output | effective_context | notes |
+|---|---|---:|---:|---:|---|
+| Claude | `claude-sonnet-4` | 200K | 64K | 180K | 20K reserved for output |
+| Claude | `claude-opus-4` | 200K | 32K | 170K | 30K reserved for system |
+| GPT | `gpt-5.1` | 1M | 64K | 900K | |
+| GPT | `gpt-5.4` | 1M | 64K | 900K | |
+| Gemini | `gemini-2.5-pro` | 1M | 65K | 900K | |
+
+Context management strategy:
+- when input approaches `effective_context`, PM MUST trigger context compaction by summarizing older turns,
+- compaction policy MUST preserve pinned instructions, system directives, and recent unresolved work,
+- compaction events MUST be attributable in runtime diagnostics so the user can tell when context was reduced.
+
+Per-model override:
+- users MAY configure custom context limits lower than the provider maximum for cost control or predictable latency,
+- user-defined lower limits participate in pressure calculations exactly like provider limits,
+- implementations MUST reject overrides above the discovered model maximum.
+
+ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/usage-feature.md, ContractName:Plans/FinalGUISpec.md
+
 ## 5. Per-Persona runtime preferences
 
 <a id="PERSONA-MODEL-OVERRIDES"></a>
@@ -601,6 +715,40 @@ Examples:
 - a variant may force a model switch that changes effective support.
 
 ### 10.4.2 Derived control rule: `talkativeness`
+
+`talkativeness` controls how verbose or concise the model's responses should be at the instruction layer.
+
+Scale:
+- `1` = terse, code-only, minimal explanation,
+- `2` = concise with light explanation,
+- `3` = balanced default,
+- `4` = detailed and explanatory,
+- `5` = verbose, teaching-oriented, high-context explanation.
+
+Default:
+- the system default is `3` (`balanced`).
+
+Derivation rule:
+1. user preference setting,
+2. mode overlay,
+3. explicit per-thread override.
+
+Mode overlay defaults:
+- plan mode → `4`
+- ask mode → `3`
+- agent mode → `2`
+
+Rules:
+- the effective `talkativeness` value is derived after applying the mode overlay and then any explicit per-thread override,
+- `talkativeness` maps to system-prompt instructions that control response length, amount of explanation, and expected detail level,
+- some model families follow terse instructions more reliably than others, so PM MAY adjust the instruction mapping per model family while preserving the same user-visible scale.
+
+`talkativeness` is a Persona instruction-layer control rather than a transport sampling knob.
+
+Canonical implications:
+- `persona_talkativeness` does **not** require its own transport matrix row.
+- it is always expressed through prompt construction and response-style instructions, not through provider-native temperature/top-p semantics.
+
 ### 10.4.3 Canonical capability snapshot source
 
 The Provider Persona Capability Matrix is not prose-only. GUI disclosure and runtime filtering MUST resolve support state from one canonical machine-readable snapshot contract.
@@ -634,10 +782,8 @@ Rules:
 - Every control disclosure shown to the user MUST be derivable from this snapshot without ad hoc UI-only logic.
 - `source` MUST be one of `documented`, `empirical`, or `inferred` so future verification work can distinguish hard facts from provisional assumptions.
 
-`talkativeness` is a Persona instruction-layer control rather than a transport sampling knob.
-
-Canonical rule:
-- `persona_talkativeness` does **not** require its own transport matrix row.
+Bridge note:
+- `talkativeness` remains governed by the derived-control rule in §10.4.2 and therefore only appears in the snapshot when a concrete prompt-construction policy records the effective value for disclosure/debugging.
 - its effective support is derived from `persona_prompt_body`.
 - if a provider path can apply Persona prompt-body instructions, it can apply `talkativeness`.
 - if Persona prompt-body injection is bypassed or unavailable, `talkativeness` MUST be recorded as skipped with the same provider/model disclosure rules as other Persona controls.

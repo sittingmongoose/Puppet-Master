@@ -48,8 +48,8 @@ If the selector returns an invalid/empty plan or fails to respond:
 - **Upstream default branch:** We assume upstream default branch is `main` or `master`; we should detect it (GitHub API: `GET /repos/{owner}/{repo}` → `default_branch`) when opening the PR so we target the correct branch.
   **Resolution:** Before opening PR, call GitHub API `GET /repos/{owner}/{repo}` and use the returned `default_branch` as PR target. Do not hardcode `main` or `master`.
 
-- **Conflict with WorktreeGitImprovement:** Orchestrator may create worktrees and branches for tiers; "Contribute (PR)" uses a single feature branch. Ensure we don't create a worktree that clashes with the user's feature branch.
-  **Resolution:** Contribute (PR) flow uses the main clone's feature branch for user work. Tier/worktree orchestration (if any) uses separate worktrees or branches; document that PR branch is the user-facing branch and is not replaced by orchestrator worktrees. Implementation: PR branch is the checked-out branch in the single clone; worktrees for subtasks (if used) are distinct and do not replace the PR branch ref.
+- **Conflict with WorktreeGitImprovement:** Orchestrator may create worktrees and branches for nodes/packages; "Contribute (PR)" uses a single feature branch. Ensure we don't create a worktree that clashes with the user's feature branch.
+  **Resolution:** Contribute (PR) flow uses the main clone's feature branch for user work. Node/package worktree orchestration (if any) uses separate worktrees or branches; document that PR branch is the user-facing branch and is not replaced by orchestrator worktrees. Implementation: PR branch is the checked-out branch in the single clone; worktrees for subtasks (if used) are distinct and do not replace the PR branch ref.
 
 ### 9.5 GUI and UX
 

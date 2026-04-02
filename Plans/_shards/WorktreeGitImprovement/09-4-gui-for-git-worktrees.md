@@ -28,7 +28,7 @@ Rules:
 - Assistant Chat provides per-thread worktree binding via the chat header worktree button; it does not duplicate Source Control's inventory
 - lane identity survives after a live worktree is archived or removed
 - cleanup posture belongs to Orchestrator for orch-owned worktrees; assistant-owned worktree cleanup is user-initiated via thread delete or chat dropdown
-- the `owner_thread_id` field on `worktree_record.v1` identifies assistant-owned worktrees alongside existing `owner_run_id`/`owner_tier_id`
+- the `owner_thread_id` field on `worktree_record.v1` identifies assistant-owned worktrees alongside existing `owner_run_id`/`owner_node_id`
 
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Decision_Policy.md, ContractName:Plans/FileManager.md, ContractName:Plans/Crosswalk.md
 

@@ -24,23 +24,23 @@ ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/Architecture_Inv
 
 ### 2.2 active_worktrees lost on restart
 
-- **Gap:** `active_worktrees` is in-memory only. After restart it is empty; real worktrees may still exist under `.puppet-master/worktrees/`, but `get_tier_worktree(tier_id)` returns `None`, so iterations use the main repo path.
+- **Gap:** `active_worktrees` is in-memory only. After restart it is empty; real worktrees may still exist under `.puppet-master/worktrees/`, but `get_node_worktree(node_id)` returns `None`, so iterations use the main repo path.
 - **Fix (choose one or combine):**
   - **Option A:** On orchestrator init (or when loading a run), repopulate `active_worktrees` from `worktree_manager.list_worktrees()` for paths under `worktree_base`.
-  - **Option B:** When resolving working directory for a tier, if `active_worktrees` has no entry, fall back to `worktree_manager.get_worktree_path(tier_id)` and verify the path exists and is a valid worktree (e.g. in `list_worktrees()`); if so, use it and optionally re-register.
+  - **Option B:** When resolving working directory for a node, if `active_worktrees` has no entry, fall back to `worktree_manager.get_worktree_path(node_id)` and verify the path exists and is a valid worktree (e.g. in `list_worktrees()`); if so, use it and optionally re-register.
 
 ### 2.3 Merge conflicts: worktree kept but re-run can destroy it
 
-- **Gap:** On merge conflict, `cleanup_subtask_worktree` returns without removing the worktree but removes the tier from `active_worktrees`. Re-running the same subtask calls `create_subtask_worktree` → `create_worktree` → "if path exists remove_worktree", so the conflicting worktree is removed and the conflict state is lost.
+- **Gap:** On merge conflict, `cleanup_subtask_worktree` returns without removing the worktree but removes the node from `active_worktrees`. Re-running the same subtask calls `create_subtask_worktree` → `create_worktree` → "if path exists remove_worktree", so the conflicting worktree is removed and the conflict state is lost.
 - **Fix:**
-  - On conflict, either: (1) surface the worktree path to the user (e.g. toast or status) and avoid reusing that tier_id for a new worktree until the user resolves or discards, or (2) document clearly that re-running will replace the worktree and lose unmerged state.
+  - On conflict, either: (1) surface the worktree path to the user (e.g. toast or status) and avoid reusing that node_id for a new worktree until the user resolves or discards, or (2) document clearly that re-running will replace the worktree and lose unmerged state.
   - Optionally: add a "Resolve worktree conflicts" action that lists worktrees with merge conflicts and offers to open in editor or remove after confirmation.
 
-### 2.4 Tier ID and branch name sanitization
+### 2.4 Node ID and branch name sanitization
 
-- **Gap:** Worktree path is `worktree_base.join(tier_id)` with no sanitization; branch name is `format!("subtask/{}", subtask_id.replace('.', "-"))` with no other sanitization. Risky for path traversal or invalid refs.
+- **Gap:** Worktree path is `worktree_base.join(node_id)` with no sanitization; branch name is `format!("subtask/{}", subtask_id.replace('.', "-"))` with no other sanitization. Risky for path traversal or invalid refs.
 - **Fix:**
-  - Sanitize `tier_id` for use as a single path component (strip or replace `..`, path separators, and other unsafe characters) before `join`.
+  - Sanitize `node_id` for use as a single path component (strip or replace `..`, path separators, and other unsafe characters) before `join`.
   - Sanitize branch name for git refs (e.g. reuse or mirror `BranchStrategyManager::sanitize_id` or a shared helper; disallow spaces and other invalid ref characters).
 
 ### 2.5 Branch already exists when recreating worktree
@@ -56,7 +56,7 @@ ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/Architecture_Inv
 
 ### 2.7 worktree_exists is path-only
 
-- **Gap:** `worktree_exists(tier_id)` is `get_worktree_path(tier_id).exists()`. A non-worktree directory with the same name would be treated as existing; `remove_worktree` could then run `git worktree remove --force` on a non-worktree path.
+- **Gap:** `worktree_exists(node_id)` is `get_worktree_path(node_id).exists()`. A non-worktree directory with the same name would be treated as existing; `remove_worktree` could then run `git worktree remove --force` on a non-worktree path.
 - **Fix:** Consider "exists" only if the path exists and looks like a worktree (e.g. has a `.git` file pointing at the main repo), or rely on `list_worktrees()` and check if the path is in that list.
 
 ### 2.8 Startup recovery uses process CWD
@@ -66,8 +66,8 @@ ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/Architecture_Inv
 
 ### 2.9 PR creation after restart uses main repo branch
 
-- **Gap:** After restart, `get_tier_worktree(tier_id)` is `None`. `create_tier_pr` then uses `git_manager.current_branch()` for head_branch, so the PR is created from the main repo branch, not the worktree branch.
-- **Fix:** When resolving head branch for PR, also consider `worktree_manager`: if a worktree path exists for this tier (e.g. from `list_worktrees()` or path existence + valid worktree), use that worktree's branch even when `active_worktrees` has no entry.
+- **Gap:** After restart, `get_node_worktree(node_id)` is `None`. `create_node_pr` then uses `git_manager.current_branch()` for head_branch, so the PR is created from the main repo branch, not the worktree branch.
+- **Fix:** When resolving head branch for PR, also consider `worktree_manager`: if a worktree path exists for this node (e.g. from `list_worktrees()` or path existence + valid worktree), use that worktree's branch even when `active_worktrees` has no entry.
 
 ### 2.10 merge_worktree assumes target_branch exists
 

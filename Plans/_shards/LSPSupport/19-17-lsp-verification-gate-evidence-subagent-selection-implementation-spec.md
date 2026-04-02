@@ -130,23 +130,24 @@ ContractRef: ContractName:Plans/LSPSupport.md
 
 ### 17.3 Subagent selection from LSP
 
-- **Where in the flow:** When the orchestrator is about to **select a subagent for the next subtask** (or task), it can optionally query LSP diagnostics for **files in scope** for that subtask/task. **Decision:** Default **off**. Config key `orchestrator.lsp_subagent_bias` (bool, default false). When true, call `get_diagnostics_for_paths` and apply bias toward matching-language subagent. If any file has diagnostics (e.g. errors) from a language server X, **prefer** the subagent that matches language X (e.g. rust-analyzer → rust-engineer, pyright → python-pro).
+- **Where in the flow:** When the orchestrator is about to **select a subagent for the next node** (task or subtask), it can optionally query LSP diagnostics for **files in scope** for that node. **Decision:** Default **off**. Config key `orchestrator.lsp_subagent_bias` (bool, default false). When true, call `get_diagnostics_for_paths` and apply bias toward matching-language subagent. If any file has diagnostics (e.g. errors) from a language server X, **prefer** the subagent that matches language X (e.g. rust-analyzer → rust-engineer, pyright → python-pro).
 - **"Files in scope" definition:** One of (configurable or fixed):
   - **Changed in last iteration** -- Files modified in the most recent iteration (same as LSP gate scope `"changed_files"` for consistency).
   - **Open in editor** -- Files currently open in the run/context.
-  - **Task's file list** -- If the task/subtask has an explicit list of files (e.g. from PRD or plan), use that list.
+  - **Node's file list** -- If the node has an explicit list of files (e.g. from PRD or plan), use that list.
   - Default: **changed in last iteration** for consistency with LSP gate.
-- **Documentation:** This behavior is specified in **Plans/orchestrator-subagent-integration.md** (Subagent selection from LSP) and summarized here. Implement in the same place that performs `select_for_tier`: after building tier context, optionally call LSP client `get_diagnostics_for_paths(scope_paths)`; from the returned diagnostics, derive language(s) from `source` or from file extension → server id mapping; then bias subagent selection toward matching language (e.g. add to ProjectContext or TierContext: "prefer_subagents": ["rust-engineer"] when Rust errors present).
+- **Documentation:** This behavior is specified in **Plans/orchestrator-subagent-integration.md** (Subagent selection from LSP) and summarized here. Implement in the same place that performs `select_for_node`: after building node context, optionally call LSP client `get_diagnostics_for_paths(scope_paths)`; from the returned diagnostics, derive language(s) from `source` or from file extension → server id mapping; then bias subagent selection toward matching language (e.g. add to ProjectContext or NodeContext: "prefer_subagents": ["rust-engineer"] when Rust errors present).
+
+ContractRef: ContractName:Plans/LSPSupport.md, ContractName:Plans/orchestrator-subagent-integration.md
 
 Bias rules (canonical):
 - LSP bias is a **tie-breaker / ranking hint**, not an absolute selector.
-- Explicit plan requirements, tier override lists, or hard-coded contract needs (for example `required_subagents`) take precedence over LSP bias.
-- Preferred scope order is: explicit task file list -> changed files in current tier -> open files.
+- Explicit plan requirements, node override lists, or hard-coded contract needs (for example `required_subagents`) take precedence over LSP bias.
+- Preferred scope order is: explicit node file list -> changed files in current node -> open files.
 - Default bias threshold is diagnostics with severity `Error`; implementations MAY optionally include `Warning` when configured.
 - The chosen bias inputs and outcome SHOULD be persisted in run metadata or verification evidence so selection remains explainable.
 
 ContractRef: ContractName:Plans/LSPSupport.md, ContractName:Plans/orchestrator-subagent-integration.md
-
 ### 17.4 Failure modes (LSP gate and diagnostics)
 
 | Failure | Behavior | Evidence / reporting |

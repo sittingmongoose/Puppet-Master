@@ -101,23 +101,23 @@ ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/Architecture_Inv
 
 ### 2.2 active_worktrees lost on restart
 
-- **Gap:** `active_worktrees` is in-memory only. After restart it is empty; real worktrees may still exist under `.puppet-master/worktrees/`, but `get_tier_worktree(tier_id)` returns `None`, so iterations use the main repo path.
+- **Gap:** `active_worktrees` is in-memory only. After restart it is empty; real worktrees may still exist under `.puppet-master/worktrees/`, but `get_node_worktree(node_id)` returns `None`, so iterations use the main repo path.
 - **Fix (choose one or combine):**
   - **Option A:** On orchestrator init (or when loading a run), repopulate `active_worktrees` from `worktree_manager.list_worktrees()` for paths under `worktree_base`.
-  - **Option B:** When resolving working directory for a tier, if `active_worktrees` has no entry, fall back to `worktree_manager.get_worktree_path(tier_id)` and verify the path exists and is a valid worktree (e.g. in `list_worktrees()`); if so, use it and optionally re-register.
+  - **Option B:** When resolving working directory for a node, if `active_worktrees` has no entry, fall back to `worktree_manager.get_worktree_path(node_id)` and verify the path exists and is a valid worktree (e.g. in `list_worktrees()`); if so, use it and optionally re-register.
 
 ### 2.3 Merge conflicts: worktree kept but re-run can destroy it
 
-- **Gap:** On merge conflict, `cleanup_subtask_worktree` returns without removing the worktree but removes the tier from `active_worktrees`. Re-running the same subtask calls `create_subtask_worktree` → `create_worktree` → "if path exists remove_worktree", so the conflicting worktree is removed and the conflict state is lost.
+- **Gap:** On merge conflict, `cleanup_subtask_worktree` returns without removing the worktree but removes the node from `active_worktrees`. Re-running the same subtask calls `create_subtask_worktree` → `create_worktree` → "if path exists remove_worktree", so the conflicting worktree is removed and the conflict state is lost.
 - **Fix:**
-  - On conflict, either: (1) surface the worktree path to the user (e.g. toast or status) and avoid reusing that tier_id for a new worktree until the user resolves or discards, or (2) document clearly that re-running will replace the worktree and lose unmerged state.
+  - On conflict, either: (1) surface the worktree path to the user (e.g. toast or status) and avoid reusing that node_id for a new worktree until the user resolves or discards, or (2) document clearly that re-running will replace the worktree and lose unmerged state.
   - Optionally: add a "Resolve worktree conflicts" action that lists worktrees with merge conflicts and offers to open in editor or remove after confirmation.
 
-### 2.4 Tier ID and branch name sanitization
+### 2.4 Node ID and branch name sanitization
 
-- **Gap:** Worktree path is `worktree_base.join(tier_id)` with no sanitization; branch name is `format!("subtask/{}", subtask_id.replace('.', "-"))` with no other sanitization. Risky for path traversal or invalid refs.
+- **Gap:** Worktree path is `worktree_base.join(node_id)` with no sanitization; branch name is `format!("subtask/{}", subtask_id.replace('.', "-"))` with no other sanitization. Risky for path traversal or invalid refs.
 - **Fix:**
-  - Sanitize `tier_id` for use as a single path component (strip or replace `..`, path separators, and other unsafe characters) before `join`.
+  - Sanitize `node_id` for use as a single path component (strip or replace `..`, path separators, and other unsafe characters) before `join`.
   - Sanitize branch name for git refs (e.g. reuse or mirror `BranchStrategyManager::sanitize_id` or a shared helper; disallow spaces and other invalid ref characters).
 
 ### 2.5 Branch already exists when recreating worktree
@@ -133,7 +133,7 @@ ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/Architecture_Inv
 
 ### 2.7 worktree_exists is path-only
 
-- **Gap:** `worktree_exists(tier_id)` is `get_worktree_path(tier_id).exists()`. A non-worktree directory with the same name would be treated as existing; `remove_worktree` could then run `git worktree remove --force` on a non-worktree path.
+- **Gap:** `worktree_exists(node_id)` is `get_worktree_path(node_id).exists()`. A non-worktree directory with the same name would be treated as existing; `remove_worktree` could then run `git worktree remove --force` on a non-worktree path.
 - **Fix:** Consider "exists" only if the path exists and looks like a worktree (e.g. has a `.git` file pointing at the main repo), or rely on `list_worktrees()` and check if the path is in that list.
 
 ### 2.8 Startup recovery uses process CWD
@@ -143,8 +143,8 @@ ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/Architecture_Inv
 
 ### 2.9 PR creation after restart uses main repo branch
 
-- **Gap:** After restart, `get_tier_worktree(tier_id)` is `None`. `create_tier_pr` then uses `git_manager.current_branch()` for head_branch, so the PR is created from the main repo branch, not the worktree branch.
-- **Fix:** When resolving head branch for PR, also consider `worktree_manager`: if a worktree path exists for this tier (e.g. from `list_worktrees()` or path existence + valid worktree), use that worktree's branch even when `active_worktrees` has no entry.
+- **Gap:** After restart, `get_node_worktree(node_id)` is `None`. `create_node_pr` then uses `git_manager.current_branch()` for head_branch, so the PR is created from the main repo branch, not the worktree branch.
+- **Fix:** When resolving head branch for PR, also consider `worktree_manager`: if a worktree path exists for this node (e.g. from `list_worktrees()` or path existence + valid worktree), use that worktree's branch even when `active_worktrees` has no entry.
 
 ### 2.10 merge_worktree assumes target_branch exists
 
@@ -226,21 +226,21 @@ ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec
 ### 3.5 Branch strategy from config
 
 - **Gap:** Orchestrator hardcodes `BranchStrategy::Feature`. `GitConfig` in types has `branch_strategy`, but the orchestrator never reads it.
-- **Fix:** Add branch strategy to the config the orchestrator loads (e.g. under `branching` or a dedicated `git` section). Map config value to `BranchStrategy` and use it in `create_tier_branch` instead of hardcoding.
+- **Fix:** Add branch strategy to the config the orchestrator loads (e.g. under `branching` or a dedicated `git` section). Map config value to `BranchStrategy` and use it in `create_node_branch` instead of hardcoding.
 
 ### 3.6 Single source of truth for branch naming
 
-- **Gap:** Orchestrator inlines branch name generation in `create_tier_branch`; `BranchStrategyManager::generate_branch_name` implements similar but not identical logic (e.g. iteration: "it-" vs "tk-").
+- **Gap:** Orchestrator inlines branch name generation in `create_node_branch`; `BranchStrategyManager::generate_branch_name` implements similar but not identical logic (e.g. iteration: "it-" vs "tk-").
 - **Fix:** Use one implementation for all branch naming (e.g. `BranchStrategyManager` or a shared function used by both orchestrator and any other callers). Remove duplicate logic from the orchestrator.
 
 ### 3.7 naming_pattern usage
 
 - **Gap:** `BranchingConfig` has `naming_pattern` (and it's in the GUI); orchestrator and branch logic never use it.
-- **Fix:** Either: (1) Wire `naming_pattern` into branch name generation (document format and placeholders, e.g. `{tier}`, `{id}`), or (2) Remove or hide the field until implemented and document that branch names follow the strategy (ph-/tk-/st-/release/...) only.
+- **Fix:** Either: (1) Wire `naming_pattern` into branch name generation (document format and placeholders, e.g. `{node}`, `{id}`), or (2) Remove or hide the field until implemented and document that branch names follow the strategy (ph-/tk-/st-/release/...) only.
 
 ### 3.8 Commit message format
 
-- **Gap:** `commit_tier_progress` uses `format!("tier: {} iteration {} complete", tier_id, iteration)`. AGENTS.md and `CommitFormatter` use the `pm: [ITERATION] ...` convention.
+- **Gap:** `commit_node_progress` uses `format!("node: {} iteration {} complete", node_id, iteration)`. AGENTS.md and `CommitFormatter` use the `pm: [ITERATION] ...` convention.
 - **Fix:** Use `CommitFormatter::format_iteration_commit(subtask_id, iteration, success)` (or equivalent) for iteration commits so they match the documented "pm:" convention.
 
 ### 3.9 git-actions.log path and .gitignore
@@ -290,7 +290,7 @@ Rules:
 - Assistant Chat provides per-thread worktree binding via the chat header worktree button; it does not duplicate Source Control's inventory
 - lane identity survives after a live worktree is archived or removed
 - cleanup posture belongs to Orchestrator for orch-owned worktrees; assistant-owned worktree cleanup is user-initiated via thread delete or chat dropdown
-- the `owner_thread_id` field on `worktree_record.v1` identifies assistant-owned worktrees alongside existing `owner_run_id`/`owner_tier_id`
+- the `owner_thread_id` field on `worktree_record.v1` identifies assistant-owned worktrees alongside existing `owner_run_id`/`owner_node_id`
 
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Decision_Policy.md, ContractName:Plans/FileManager.md, ContractName:Plans/Crosswalk.md
 
@@ -312,7 +312,7 @@ ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-ch
 
 ### 5.1 Problem
 
-- **Config page** loads/saves **GuiConfig** (YAML with `project`, `tiers`, `branching`, `advanced`, ...) to `active_config_path()` (e.g. `puppet-master.yaml`).
+- **Config page** loads/saves **GuiConfig** (YAML with `project`, `nodes`, `branching`, `advanced`, ...) to `active_config_path()` (e.g. `puppet-master.yaml`).
 - **Orchestrator run** uses **PuppetMasterConfig** from `ConfigManager::discover()` (same path). The two YAML shapes differ; many GUI fields (e.g. `advanced.execution.enable_parallel`, `branching.auto_pr`) are not present in the shape the orchestrator expects, so they default.
 - **Result:** "Enable parallel execution" and other such settings have no effect on the run.
 
@@ -331,7 +331,7 @@ Option B remains the canonical run-start config projection path.
 
 Completeness rule:
 - any GUI setting that changes runtime behavior belongs in the run config snapshot built at start
-- interview execution-affecting settings and HITL tier toggles are part of this rule even when their owning feature plans define the detailed semantics
+- interview execution-affecting settings and HITL node toggles are part of this rule even when their owning feature plans define the detailed semantics
 - summaries in this document must reference the owning SSOTs rather than implying that GUI-only execution settings are acceptable
 
 This section extends the minimum-field list with the policy that execution-affecting settings are projected by class, not by ad hoc exception.
@@ -368,7 +368,7 @@ ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractNa
 - [ ] Base branch: ensure worktrees are created from `config.branching.base_branch` (checkout or use as ref).
 - [ ] active_worktrees: repopulate on init from `list_worktrees()` and/or fallback to worktree path when resolving working directory.
 - [ ] Merge conflict: document or surface conflict worktrees; avoid silent overwrite on re-run.
-- [ ] Sanitize tier_id (path) and branch name (ref).
+- [ ] Sanitize node_id (path) and branch name (ref).
 - [ ] Branch already exists: handle existing branch when creating worktree (use existing branch or safe delete).
 - [ ] Detached HEAD: handle empty branch in list_worktrees and merge_worktree.
 - [ ] worktree_exists: require path + worktree validity (e.g. .git file or list_worktrees).
@@ -384,7 +384,7 @@ ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractNa
 - [ ] Ensure PR creation uses GitHub HTTPS API per `Plans/GitHub_API_Auth_and_Flows.md` (no GitHub CLI); Doctor verifies GitHub API auth state and required scopes.
 - [ ] Git configured check: consider global or local config; use project dir when available.
 - [ ] Git repo check (and fix): use project directory when available.
-- [ ] Branch strategy: load from config; use in create_tier_branch.
+- [ ] Branch strategy: load from config; use in create_node_branch.
 - [ ] Single branch naming implementation (remove duplicate logic).
 - [ ] naming_pattern: wire to branch names or hide and document.
 - [ ] Iteration commits: use CommitFormatter (pm: format).
@@ -412,7 +412,7 @@ ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractNa
 | Phase | Acceptance criteria |
 |-------|----------------------|
 | **Phase 1** | (1) With "Enable parallel execution" on and no Save, start run → worktrees are created when applicable. (2) Run started from Dashboard uses `current_project.path` as config hint (e.g. `discover_with_hint` called with it). (3) Branching/base_branch and auto_pr from GUI are present in the config passed to the orchestrator at run start. |
-| **Phase 2** | (1) After restart, `get_tier_worktree(tier_id)` returns the path for tiers that still have worktrees under worktree_base (repopulation or fallback). (2) New worktrees are created from `config.branching.base_branch` (checkout or ref). (3) Doctor "worktrees" check runs when project is a git repo and reports worktree count and/or orphaned suggestion. |
+| **Phase 2** | (1) After restart, `get_node_worktree(node_id)` returns the path for nodes that still have worktrees under worktree_base (repopulation or fallback). (2) New worktrees are created from `config.branching.base_branch` (checkout or ref). (3) Doctor "worktrees" check runs when project is a git repo and reports worktree count and/or orphaned suggestion. |
 | **Phase 3** | (1) GitManager and Doctor git checks use the same resolved `git` binary (e.g. shared `path_utils::resolve_git_executable()`). (2) Iteration commits use CommitFormatter and produce "pm:"-style messages. (3) git-actions.log path matches REQUIREMENTS (`.puppet-master/logs/git-actions.log`) and is documented in .gitignore if runtime-only. |
 | **Phase 4** | (1) Branching tab has Enable Git, Auto PR, Branch strategy wired to run config (run uses current GUI values). (2) Naming pattern is either wired to branch names or hidden and documented. (3) After GUI changes, `scripts/generate-widget-catalog.sh` and `scripts/check-widget-reuse.sh` run and pass. |
 | **Phase 5** | (1) Integration test: parallel run in temp git repo creates worktree dirs and uses them as cwd for subtasks. (2) Integration test: run with Git disabled does not create branches/commits/PRs. (3) AGENTS.md Pre-Completion Verification Checklist completed and Task Status Log updated for any closed tasks. |
@@ -421,7 +421,7 @@ ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractNa
 
 **Phase 2 (Worktrees):** `puppet-master-rs/src/git/worktree_manager.rs` (base branch, repopulation, conflict handling, sanitization, branch exists, detached HEAD, worktree_exists validity, recovery, merge_worktree target_branch); `puppet-master-rs/src/core/orchestrator.rs` (create/cleanup worktree calls, PR head branch resolution, project path for recovery); `puppet-master-rs/src/doctor/checks/git_checks.rs` (new worktrees check); `puppet-master-rs/src/config/config_discovery.rs` (project path discovery); `STATE_FILES.md` (worktrees subsection).
 
-**Phase 3 (Git):** `puppet-master-rs/src/platforms/path_utils.rs` (shared `resolve_git_executable()`; tag DRY:FN); `puppet-master-rs/src/git/git_manager.rs` (use resolved git binary, git-actions.log path); `puppet-master-rs/src/git/pr_manager.rs` (GitHub HTTPS API PR creation; see `Plans/GitHub_API_Auth_and_Flows.md`); `puppet-master-rs/src/git/branch_strategy.rs` (single branch naming); `puppet-master-rs/src/git/commit_formatter.rs` (iteration commits); `puppet-master-rs/src/core/orchestrator.rs` (branch strategy from config, create_tier_branch, commit_tier_progress); `puppet-master-rs/src/doctor/checks/git_checks.rs` (shared git binary, configured/repo checks + GitHub API auth check); `REQUIREMENTS.md` / `.gitignore` (git-actions.log path and ignore rule).
+**Phase 3 (Git):** `puppet-master-rs/src/platforms/path_utils.rs` (shared `resolve_git_executable()`; tag DRY:FN); `puppet-master-rs/src/git/git_manager.rs` (use resolved git binary, git-actions.log path); `puppet-master-rs/src/git/pr_manager.rs` (GitHub HTTPS API PR creation; see `Plans/GitHub_API_Auth_and_Flows.md`); `puppet-master-rs/src/git/branch_strategy.rs` (single branch naming); `puppet-master-rs/src/git/commit_formatter.rs` (iteration commits); `puppet-master-rs/src/core/orchestrator.rs` (branch strategy from config, create_node_branch, commit_node_progress); `puppet-master-rs/src/doctor/checks/git_checks.rs` (shared git binary, configured/repo checks + GitHub API auth check); `REQUIREMENTS.md` / `.gitignore` (git-actions.log path and ignore rule).
 
 ### Required vs optional (checklist items)
 
@@ -477,7 +477,7 @@ pub enum BranchGranularity {
 
 ### 7.4 Merge conflicts: persisting "conflict worktrees"
 
-- To "avoid reusing that tier_id for a new worktree until the user resolves," the app must remember which tier_ids have unresolved merge conflicts. Options: (1) a small state file under `.puppet-master/` (e.g. `worktree-conflicts.json` listing tier_ids), updated when a merge fails and cleared when the user runs "Recover worktrees" or resolves manually; (2) in-memory only (lost on restart, so re-run would still overwrite after restart). The plan should specify which approach or mark as "optional: in-memory set for the session only" to avoid scope creep.
+- To "avoid reusing that node_id for a new worktree until the user resolves," the app must remember which node_ids have unresolved merge conflicts. Options: (1) a small state file under `.puppet-master/` (e.g. `worktree-conflicts.json` listing node_ids), updated when a merge fails and cleared when the user runs "Recover worktrees" or resolves manually; (2) in-memory only (lost on restart, so re-run would still overwrite after restart). The plan should specify which approach or mark as "optional: in-memory set for the session only" to avoid scope creep.
 
 ### 7.5 Binary resolution: exact functions
 
@@ -486,12 +486,12 @@ pub enum BranchGranularity {
 
 ### 7.6 active_worktrees repopulation
 
-- `list_worktrees()` already returns only worktrees under `worktree_base` and only includes entries for which `extract_tier_id(&path)` is `Some` (i.e. path under our base). So repopulating `active_worktrees` from `list_worktrees()` is a matter of iterating the result and doing `active_worktrees.insert(worktree.tier_id, worktree.path)`. No extra filtering needed beyond what's already there.
+- `list_worktrees()` already returns only worktrees under `worktree_base` and only includes entries for which `extract_node_id(&path)` is `Some` (i.e. path under our base). So repopulating `active_worktrees` from `list_worktrees()` is a matter of iterating the result and doing `active_worktrees.insert(worktree.node_id, worktree.path)`. No extra filtering needed beyond what's already there.
 
 ### 7.7 Granularity vs BranchStrategy
 
-- **Orchestrator today:** Creates a branch in `create_tier_branch` per tier (phase/task/subtask/iteration) based only on **BranchStrategy** (MainOnly / Feature / Release). It does **not** read `config.branching.granularity`.
-- **Granularity** in config (Phase / Task / Subtask / Iteration / None) could mean "at which tier level do we create a new branch" (e.g. None = one branch for all; Phase = one branch per phase; Task = one per task). That behavior is not implemented. So either: (1) implement granularity so that branch creation is gated by tier level (e.g. only create branch when tier_type matches granularity), or (2) leave granularity as "future" and only wire BranchStrategy in the GUI (Main only / Feature / Release). The plan should state: "For Phase 4 GUI, decide whether to implement granularity-driven branch creation or only expose BranchStrategy; if only strategy, align granularity UI label with 'informational' or hide until implemented."
+- **Orchestrator today:** Creates a branch in `create_node_branch` per node (phase/task/subtask/iteration) based only on **BranchStrategy** (MainOnly / Feature / Release). It does **not** read `config.branching.granularity`.
+- **Granularity** in config (Phase / Task / Subtask / Iteration / None) could mean "at which node level do we create a new branch" (e.g. None = one branch for all; Phase = one branch per phase; Task = one per task). That behavior is not implemented. So either: (1) implement granularity so that branch creation is gated by node level (e.g. only create branch when node_type matches granularity), or (2) leave granularity as "future" and only wire BranchStrategy in the GUI (Main only / Feature / Release). The plan should state: "For Phase 4 GUI, decide whether to implement granularity-driven branch creation or only expose BranchStrategy; if only strategy, align granularity UI label with 'informational' or hide until implemented."
 
 ### 7.8 Integration test setup
 
@@ -510,7 +510,7 @@ pub enum BranchGranularity {
 
 All gaps from audit are closed with the following decisions. Implementers should follow these so the plan has no ambiguity.
 
-**Worktree (Section 2):** (1) **Base branch:** Use checkout base_branch then add for initial release; create from ref (e.g. `git worktree add -b <branch> <path> <base_branch>`) is optional later. (2) **active_worktrees repopulation:** On first resolve with no entry, if path exists and is in `list_worktrees()`, use it and re-register in `active_worktrees` for that session. (3) **Conflict persistence:** In-memory only for initial release -- `HashSet<tier_id>` of conflict worktrees; optional Phase 6: `.puppet-master/worktree-conflicts.json`. (4) **Detached HEAD merge:** In `merge_worktree`, if source_branch is empty: read HEAD commit from that worktree (`git rev-parse HEAD` in worktree path), then in main repo `git merge --no-ff <commit>`; document in STATE_FILES.md. (5) **Recovery:** If no project path at startup, skip worktree recovery; run recovery when user first selects/opens a project or when a run starts with config hint. (6) **Repopulation failure:** If `list_worktrees()` fails during repopulation, log error and start with empty `active_worktrees`. (7) **Doctor worktrees:** Must run `list_worktrees` and report state; optionally call `detect_orphaned_worktrees()` and include count; Recover remains a separate UI action. (8) **Platform:** Sanitization and path handling must be safe on Windows (use `PathBuf`/`join`; no assumption that `/` is the only separator). (9) **Section 2.12:** Re-validate worktree path before use is Phase 6 / optional.
+**Worktree (Section 2):** (1) **Base branch:** Use checkout base_branch then add for initial release; create from ref (e.g. `git worktree add -b <branch> <path> <base_branch>`) is optional later. (2) **active_worktrees repopulation:** On first resolve with no entry, if path exists and is in `list_worktrees()`, use it and re-register in `active_worktrees` for that session. (3) **Conflict persistence:** In-memory only for initial release -- `HashSet<node_id>` of conflict worktrees; optional Phase 6: `.puppet-master/worktree-conflicts.json`. (4) **Detached HEAD merge:** In `merge_worktree`, if source_branch is empty: read HEAD commit from that worktree (`git rev-parse HEAD` in worktree path), then in main repo `git merge --no-ff <commit>`; document in STATE_FILES.md. (5) **Recovery:** If no project path at startup, skip worktree recovery; run recovery when user first selects/opens a project or when a run starts with config hint. (6) **Repopulation failure:** If `list_worktrees()` fails during repopulation, log error and start with empty `active_worktrees`. (7) **Doctor worktrees:** Must run `list_worktrees` and report state; optionally call `detect_orphaned_worktrees()` and include count; Recover remains a separate UI action. (8) **Platform:** Sanitization and path handling must be safe on Windows (use `PathBuf`/`join`; no assumption that `/` is the only separator). (9) **Section 2.12:** Re-validate worktree path before use is Phase 6 / optional.
 
 **Git (Section 3):** (1) **Git binary:** Add `path_utils::resolve_git_executable() -> Option<PathBuf>` (same logic as `find_tool_executable("git")`); GitManager and GitInstalledCheck both use it; tag `// DRY:FN:resolve_git_executable`. If resolver returns None, GitManager fails the operation; Doctor fails the check. (2) **GitHub PRs:** PR creation uses GitHub HTTPS API only (no GitHub CLI) per `Plans/GitHub_API_Auth_and_Flows.md`. (3) **naming_pattern:** Hide in GUI and document Reserved for future use in initial release; do not wire to branch naming. (4) **git-actions.log:** Move to `.puppet-master/logs/git-actions.log`; add to .gitignore as runtime-only per STATE_FILES.
 
@@ -598,7 +598,7 @@ ContractRef: ContractName:Plans/assistant-memory-subsystem.md, ContractName:Plan
 - **STATE_FILES.md:** State file hierarchy; add worktrees subsection.
 - **REQUIREMENTS.md:** git-actions.log path, Git operations.
 - **Plans/orchestrator-subagent-integration.md:** Worktree isolation for parallel subagents; ensure worktrees and config wiring are in place before or with subagent work.
-- **Code:** `puppet-master-rs/src/git/` (worktree_manager, git_manager, pr_manager, branch_strategy, commit_formatter); `core/orchestrator.rs` (create_tier_branch, commit_tier_progress, create_tier_pr, worktree create/cleanup); `views/config.rs` (tab_branching); `doctor/checks/git_checks.rs`; `config/config_discovery.rs` (discover_config_path); `platforms/path_utils.rs` (resolve_app_local_executable, get_fallback_directories).
+- **Code:** `puppet-master-rs/src/git/` (worktree_manager, git_manager, pr_manager, branch_strategy, commit_formatter); `core/orchestrator.rs` (create_node_branch, commit_node_progress, create_node_pr, worktree create/cleanup); `views/config.rs` (tab_branching); `doctor/checks/git_checks.rs`; `config/config_discovery.rs` (discover_config_path); `platforms/path_utils.rs` (resolve_app_local_executable, get_fallback_directories).
 
 ## Safe-Point and Retry Integration Addendum (2026-03-08)
 

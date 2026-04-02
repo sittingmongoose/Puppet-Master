@@ -93,24 +93,24 @@ Remediation lineage is required for:
 
 ### 7. Retry/backoff matrix (orchestrator consumer contract)
 
-The orchestrator MUST implement the shared class behavior below:
+The orchestrator MUST implement the shared classifier behavior below and MUST preserve the classifier family emitted by the executor rather than coercing blocked reasons into `failure_class`.
 ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Decision_Policy.md, ContractName:Plans/Run_Modes.md
 
-| failure_class | auto retry | backoff | safe-point rollback | remediation child | terminal / escalation |
-|---|---|---|---|---|---|
-| `provider_transient` | yes | `1s, 5s, 15s` | no | no | fail after 3 attempts |
-| `structured_output_invalid` | one format retry | none | no | optional after failed retry | escalate to remediation or `needs_review` |
-| `verification_failed` | no direct blind retry | none | yes | yes | pause after remediation ceiling |
-| `reviewer_findings` | no direct blind retry | none | yes | yes | pause after remediation ceiling |
-| `permission_denied` | no | none | no | no | blocked with exact recovery CTA |
-| `user_declined` | no | none | no | no | blocked with exact recovery CTA |
-| `headless_ask_denied` | no | none | no | no | blocked or denied outcome |
-| `filesafe_blocked` | no | none | no | no | blocked with approve-once / allowlist CTA when allowed |
-| `external_side_effect_blocked` | no | none | no | no | blocked; preserve local work |
-| `auth_expired` | no automatic retry before re-auth | none | no | no | blocked pending re-auth |
-| `storage_io` | no | none | no | no | hard fail |
-| `graph_integrity` | no | none | no | no | hard fail |
-| `replan_required` | no | none | no | no | blocked until patch applied |
+| classifier family | classifier | auto retry | backoff | safe-point rollback | remediation child | terminal / escalation |
+|---|---|---|---|---|---|---|
+| `failure_class` | `provider_transient` | yes | `1s, 2s, 4s` | no | no | fail after 3 attempts |
+| `failure_class` | `structured_output_invalid` | one format retry | none | no | optional after failed retry | escalate to remediation or `needs_review` |
+| `failure_class` | `verification_failed` | no direct blind retry | none | yes | yes | pause after remediation ceiling |
+| `failure_class` | `reviewer_findings` | no direct blind retry | none | yes | yes | pause after remediation ceiling |
+| `blocked_reason_code` | `permission_denied` | no | none | no | no | blocked with exact recovery CTA |
+| `blocked_reason_code` | `user_declined` | no | none | no | no | blocked with exact recovery CTA |
+| `blocked_reason_code` | `headless_ask_denied` | no | none | no | no | blocked or denied outcome |
+| `blocked_reason_code` | `filesafe_blocked` | no | none | no | no | blocked with approve-once / allowlist CTA when allowed |
+| `blocked_reason_code` | `external_side_effect_blocked` | no | none | no | no | blocked; preserve local work |
+| `failure_class` | `auth_expired` | refresh once, then no | immediate after refresh | no | no | block pending re-auth if refresh cannot recover |
+| `failure_class` | `storage_io` | no | none | no | no | hard fail |
+| `failure_class` | `graph_integrity` | no | none | no | no | hard fail |
+| `blocked_reason_code` | `replan_required` | no | none | no | no | blocked until patch applied |
 
 ### 8. Decomposition degradation boundary
 

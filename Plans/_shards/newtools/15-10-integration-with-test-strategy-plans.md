@@ -15,7 +15,7 @@
   - "Obtain/set up &lt;existing tool&gt;" when the user selected that tool.
   - "Plan and implement custom headless GUI tool (headless navigation + full debug log)" when the user selected custom tool.  
   ContractRef: ContractName:Plans/interview-subagent-integration.md#phase-5-document-generation, SchemaID:evidence.schema.json
-- **Acceptance criteria** for testing tiers MUST reference: run Playwright (if web), run selected framework tools, run custom headless tool and check debug log. Prompt builder already loads test strategy; implementation MUST ensure new instructions and paths are included in context so **agents use the tools** during iterations.  
+- **Acceptance criteria** for testing nodes MUST reference: run Playwright (if web), run selected framework tools, run custom headless tool and check debug log. Prompt builder already loads test strategy; implementation MUST ensure new instructions and paths are included in context so **agents use the tools** during iterations.  
   ContractRef: ContractName:Plans/orchestrator-subagent-integration.md#test-strategy-loading, SchemaID:evidence.schema.json
 
 ### 10.3 Prompt and context

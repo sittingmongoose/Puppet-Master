@@ -247,7 +247,7 @@ pub struct ChainWizardState {
 | Field | Type | Purpose |
 |---|---|---|
 | `wizard_id` | string | Stable wizard instance ID used by recovery, Dashboard CtAs, and thread deep links. |
-| `wizard_status` | enum | `setup | requirements | interview | validating | attention_required | ready_to_execute | complete | cancelled`. |
+| `wizard_status` | enum | See canonical `wizard_status` definition below. |
 | `launch_source` | enum | `dashboard | file_menu | assistant | no_wizard_add_existing | no_wizard_new_local | no_wizard_new_github`. |
 | `phase_override_mode` | enum | `selector_plan | run_all | manual_checklist`. |
 | `phase_plan_ref` | path/null | Canonical persisted phase-plan location used by resume and audit. |
@@ -255,6 +255,23 @@ pub struct ChainWizardState {
 | `attention_required_report_path` | path/null | Latest blocking requirements-quality report when clarification is required. |
 | `remote_repo_ref` | object/null | Credential-safe remote reference (`owner`, `repo`, `host`, `clone_transport`, `clone_url_redacted`) for GitHub/fork flows. |
 | `deferred_wizard_payload_ref` | path/null | Preloaded payload created by no-wizard flows for `Run Chain Wizard later`. |
+
+**Canonical `wizard_status` definition (normative):**
+
+```text
+wizard_status: enum {
+  initializing,    // wizard is setting up
+  interviewing,    // interview phase active
+  planning,        // generating plan from interview results  
+  ready,           // plan ready for execution
+  executing,       // plan being executed
+  paused,          // execution paused by user
+  blocked,         // execution blocked (NEW — add this)
+  completed,       // execution finished successfully
+  failed,          // execution finished with errors
+  cancelled,       // user cancelled
+}
+```
 
 **Field usage by intent:**
 
@@ -277,7 +294,7 @@ pub struct ChainWizardState {
 **Invariants:**
 
 - `canonical_requirements_path` is set only after at least one of: uploads (merged) or Builder output (or both merged). For user-project execution, it points to `.puppet-master/project/requirements.md` after canonical promotion from staging (see §4 and §11).
-- For Contribute (PR), `branch_name` is set when the user (or app) creates the feature branch; all work for that flow happens on that branch in the **main clone** (no tier worktrees -- see §7).
+- For Contribute (PR), `branch_name` is set when the user (or app) creates the feature branch; all work for that flow happens on that branch in the **main clone** (no node worktrees -- see §7).
 - Secrets or credential-bearing GitHub URLs MUST NOT be persisted in wizard state; store redacted remote metadata + credential-store account refs only.
 
 ContractRef: ContractName:Plans/Project_Output_Artifacts.md, PolicyRule:no_secrets_in_storage, ContractName:Plans/GitHub_Integration.md
@@ -306,6 +323,23 @@ Rules:
 - No-wizard flows populate the same payload shape via `deferred_wizard_payload_ref`; opening the wizard later must be reconstructible after restart.
 
 ContractRef: ContractName:Plans/Project_Output_Artifacts.md, ContractName:Plans/interview-subagent-integration.md, Primitive:SessionStore
+
+### 2.3 Wizard Cancellation Cleanup
+
+When the wizard is cancelled (user clicks Cancel or closes the wizard), Puppet Master MUST execute the following cleanup sequence:
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md
+
+1. All running subagents are terminated: send cancel signal, wait up to 5 seconds, then force kill any remaining processes.
+2. All pending tool calls are aborted.
+3. Worktree branches created by this wizard run are cleaned up **only if** no commits exist on them; if commits exist, those branches are preserved and tagged with `[cancelled]`.
+4. Interview state is preserved for potential resume; it remains recoverable for 24 hours and is then pruned.
+5. Any partial plan artifacts are moved to a `.cancelled/` directory within the project.
+6. Usage tokens already consumed remain counted against the run budget.
+7. Emit a `wizard.cancelled` event with `{ wizard_id, phase_at_cancel, resources_cleaned[], resources_preserved[], token_usage }`.
+
+**Resume behavior:** Within 24 hours, the user may resume a cancelled wizard from the last completed phase. Resume MUST reuse preserved interview state and preserved artifacts, while also respecting the branch-preservation rules above.
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Project_Output_Artifacts.md
 
 ---
 
@@ -863,6 +897,16 @@ ContractRef: ContractName:Plans/Project_Output_Artifacts.md, SchemaID:contracts_
 
 #### 6.6.2 Contract Unification Pass (deterministic, end-of-interview)
 
+The **wizard pipeline** owns the Contract Unification Pass. It is not owned by the interview loop and it is not a post-processing afterthought: it runs **after the interview phase completes** and **before plan generation begins**.
+
+Trigger and ownership rules:
+
+- **Trigger:** the interview status transitions to `completed`.
+- **Owner:** wizard pipeline.
+- **Primary responsibility:** merge all contract fragments emitted across interview rounds/phases into a single coherent contract.
+- **Required output:** unified contract document plus conflict resolution notes.
+- **Failure mode:** if contract conflicts cannot be resolved deterministically, the wizard transitions to `blocked` with `blocked_reason = contract_conflict`.
+
 At interview completion, a single deterministic **Contract Unification Pass** must run to:
 
 1. Deduplicate overlapping fragments across phases (single canonical statement per contract).
@@ -937,7 +981,7 @@ ContractRef: SchemaID:Spec_Lock.json#locked_decisions.github_operations, Contrac
   1. **Fork** -- Already covered in §7.2 (offer to create or user does it).
   2. **Clone** -- If we created the fork, we clone it to the chosen path. If user provided fork path/URL, we use it (or clone if URL).
   3. **Branch** -- Create a **feature branch** (e.g. `feature/add-x` or `fix/issue-42`). User can name it or we suggest from intent/requirements (e.g. "feature/" + slug from first line of requirements). All work happens on this branch.
-- **Worktree vs feature branch (Contribute PR):** For **Contribute (PR)** we do **not** create tier worktrees (no per-tier worktree branches). All work happens on a **single feature branch** in the **main clone** (the fork clone at `project_path`). Steps: fork → clone to project path → create one feature branch in that clone → run Interview and orchestrator work on that branch. No separate worktrees for subtasks for this intent.
+- **Worktree vs feature branch (Contribute PR):** For **Contribute (PR)** we do **not** create node worktrees (no per-node worktree branches). All work happens on a **single feature branch** in the **main clone** (the fork clone at `project_path`). Steps: fork → clone to project path → create one feature branch in that clone → run Interview and orchestrator work on that branch. No separate worktrees for subtasks for this intent.
 - **UI:** After fork/clone, show "Create feature branch" with optional branch name input; on confirm, run `git checkout -b <branch>` (or equivalent). Then proceed to requirements and Interview.
 
 ### 7.4 PR Flow: Finish (Commit, Push, Open PR)
@@ -1039,8 +1083,8 @@ If the selector returns an invalid/empty plan or fails to respond:
 - **Upstream default branch:** We assume upstream default branch is `main` or `master`; we should detect it (GitHub API: `GET /repos/{owner}/{repo}` → `default_branch`) when opening the PR so we target the correct branch.
   **Resolution:** Before opening PR, call GitHub API `GET /repos/{owner}/{repo}` and use the returned `default_branch` as PR target. Do not hardcode `main` or `master`.
 
-- **Conflict with WorktreeGitImprovement:** Orchestrator may create worktrees and branches for tiers; "Contribute (PR)" uses a single feature branch. Ensure we don't create a worktree that clashes with the user's feature branch.
-  **Resolution:** Contribute (PR) flow uses the main clone's feature branch for user work. Tier/worktree orchestration (if any) uses separate worktrees or branches; document that PR branch is the user-facing branch and is not replaced by orchestrator worktrees. Implementation: PR branch is the checked-out branch in the single clone; worktrees for subtasks (if used) are distinct and do not replace the PR branch ref.
+- **Conflict with WorktreeGitImprovement:** Orchestrator may create worktrees and branches for nodes/packages; "Contribute (PR)" uses a single feature branch. Ensure we don't create a worktree that clashes with the user's feature branch.
+  **Resolution:** Contribute (PR) flow uses the main clone's feature branch for user work. Node/package worktree orchestration (if any) uses separate worktrees or branches; document that PR branch is the user-facing branch and is not replaced by orchestrator worktrees. Implementation: PR branch is the checked-out branch in the single clone; worktrees for subtasks (if used) are distinct and do not replace the PR branch ref.
 
 ### 9.5 GUI and UX
 
@@ -1310,11 +1354,19 @@ ContractRef: ContractName:Plans/Project_Output_Artifacts.md, ContractName:Plans/
 - Passes run **serially** (Pass 1 → Pass 2 → Pass 3); each pass receives the artifact set as corrected by the previous pass.
 - Per-pass provider and model are configurable (see `Plans/assistant-chat-design.md §26`); defaults are deterministic and safe when not explicitly configured.
 - Each `validation_pass_report` MUST include `provider` and `model` values matching resolved app settings keys `validation_sweep.passN.provider` and `validation_sweep.passN.model` for the same pass (see `Plans/assistant-chat-design.md §26` and `Plans/Project_Output_Artifacts.md §10.2`).
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Project_Output_Artifacts.md
 - Exactly three pass reports are emitted per sweep. If a later pass does not execute because an earlier pass blocked progress, emit the later report with `pass_verdict: "skipped"` and a `verdict_reason` explaining which earlier pass blocked it.
 - The **final project artifacts** reflect all post-pass corrections applied by Passes 2 and 3.
 - **If Pass 1 fails:** Pass 2 and Pass 3 are emitted as `skipped`; the workflow surfaces the Pass 1 failure to the user.
-- **If Pass 2 ends with unresolved `needs_user_clarification[]`:** transition the wizard to `attention_required`, emit Pass 3 as `skipped`, and preserve the corrected-but-blocked artifact set for resume.
+- **If Pass 2 ends with non-empty `needs_user_clarification[]`:** transition the wizard to the clarification/resume path, emit Pass 3 as `skipped`, and preserve the corrected-but-blocked artifact set for resume.
 - **If Pass 2 or Pass 3 fails** for other unresolved findings: The failure is surfaced to the user; however, the corrected artifact set (with all resolvable fixes already applied) is still written.
+
+Artifact distinction (normative):
+
+- `needs_user_clarification[]`: questions the wizard needs answered by the user before proceeding. Schema: `{ question_id, question_text, context, priority, category }`
+- `unresolved_findings[]`: issues discovered during analysis that could not be auto-resolved. Schema: `{ finding_id, finding_type, description, severity, suggested_resolution?, blocking: bool }`
+
+These are distinct artifacts. `needs_user_clarification` drives the interview UI; `unresolved_findings` drives the review/resolution UI.
 
 ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Project_Output_Artifacts.md
 
@@ -1598,6 +1650,20 @@ ContractRef: SchemaID:pm.requirements_quality_report.schema.v1, ContractName:Pla
 
 ### 15.5 Clarification round cap
 
+A clarification cycle is one complete sequence of:
+1. a report with non-empty `needs_user_clarification[]`,
+2. user answer submission,
+3. automatic re-run of Pass 1 + Pass 2.
+
+The maximum clarification cycles for one wizard instance is **3**.
+
+- Cycles 1-2: the wizard remains in the active clarification path when follow-up questions remain.
+- After cycle 3 still produces non-empty `needs_user_clarification[]`, wizard state becomes `blocked`.
+- `blocked` disables "Proceed" and "Start Run" exactly like the clarification hold state, but the UI copy MUST explain that repeated clarification attempts did not resolve the requirements set.
+- In `blocked`, Puppet Master MUST preserve the latest canonical quality report and MUST NOT auto-rewrite requirements further without new explicit user input.
+- User override: the UI MUST offer an explicit override to continue with a manual user decision only when the user acknowledges the remaining risk and the downstream gate permits override for that category. That override must be recorded as evidence.
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Contracts_V0.md
+
 ### 15.6 Shared questionnaire alignment
 Clarification flows consume the shared question system used by Assistant Chat and Interview rather than a wizard-only prompt shape.
 
@@ -1609,20 +1675,6 @@ Rules:
 - resume behavior restores the outstanding questionnaire state or the persisted resolved outcome
 
 ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Contracts_V0.md
-
-A clarification cycle is one complete sequence of:
-1. a report with non-empty `needs_user_clarification[]`,
-2. user answer submission,
-3. automatic re-run of Pass 1 + Pass 2.
-
-The maximum clarification cycles for one wizard instance is **3**.
-
-- Cycles 1-2: wizard state remains `attention_required` when follow-up questions remain.
-- After cycle 3 still produces non-empty `needs_user_clarification[]`, wizard state becomes `blocked`.
-- `blocked` disables "Proceed" and "Start Run" exactly like `attention_required`, but the UI copy MUST explain that repeated clarification attempts did not resolve the requirements set.
-- In `blocked`, Puppet Master MUST preserve the latest canonical quality report and MUST NOT auto-rewrite requirements further without new explicit user input.
-
-ContractRef: Gate:GATE-012, SchemaID:pm.requirements_quality_report.schema.v1, ContractName:Plans/assistant-chat-design.md#11-thread-state-lifecycle-attention_required
 
 ## Requirements Builder Persona Strategy Addendum (2026-03-06)
 
@@ -1638,6 +1690,15 @@ Requirements Builder and related wizard generation/review work should distinguis
 - final review / multi-pass review
 
 ### Default stage Personas
+
+Wizard-stage defaults:
+
+- **Interview stage:** uses the interview persona.
+- **Planning stage:** uses the planning / architect persona.
+- **Execution stage:** uses the executor persona.
+- **Review stage:** uses the reviewer persona.
+
+These are the default persona assignments for top-level wizard stages. Builder-specific substage defaults remain defined below for drafting and review internals.
 
 ### Deterministic Builder Persona resolver
 
@@ -1885,18 +1946,7 @@ This pruning logic applies to:
 
 ### 1. Canonical wizard state correction
 
-`blocked` is a canonical wizard state and must be added wherever the canonical `wizard_status` enum is listed.
-
-Canonical enum must include at minimum:
-- `setup`
-- `requirements`
-- `interview`
-- `validating`
-- `attention_required`
-- `blocked`
-- `ready_to_execute`
-- `complete`
-- `cancelled`
+See canonical `wizard_status` definition in §2.1.
 
 ### 2. attention_required vs blocked
 
@@ -1967,7 +2017,7 @@ The wizard must differentiate:
 - degraded but still usable draft structure before lock
 ## Canonical Wizard Blocked-State Reconciliation Addendum (2026-03-09)
 
-`blocked` is a canonical `wizard_status` value everywhere the enum is defined.
+See canonical `wizard_status` definition in §2.1.
 
 ### Escalation rule
 Remain in `attention_required` while the current clarification/review loop can still resolve the issue set inside the current flow.
@@ -1991,16 +2041,7 @@ Persist:
 This section defines canonical Wizard Blocked Lifecycle.
 
 ### Canonical `wizard_status`
-Allowed values:
-- `setup`
-- `requirements`
-- `interview`
-- `validating`
-- `attention_required`
-- `blocked`
-- `ready_to_execute`
-- `complete`
-- `cancelled`
+See canonical `wizard_status` definition in §2.1.
 
 ### Canonical blocked state
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md
@@ -2032,16 +2073,7 @@ Reopening the same blocked wizard without one of those changes does not clear bl
 ## Canonical Wizard Blocked Lifecycle
 
 ### Canonical `wizard_status`
-Allowed values:
-- `setup`
-- `requirements`
-- `interview`
-- `validating`
-- `attention_required`
-- `blocked`
-- `ready_to_execute`
-- `complete`
-- `cancelled`
+See canonical `wizard_status` definition in §2.1.
 
 ### Canonical blocked state
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md
@@ -2072,22 +2104,6 @@ Reopening the same blocked wizard without one of those changes does not clear bl
 
 ### Canonical `wizard_status` enum
 
-The canonical `wizard_status` enum includes all of the following values:
-
-| Value | Meaning |
-|-------|---------|  
-| `setup` | Wizard is initializing. |
-| `requirements` | Wizard is gathering requirements. |
-| `interview` | Wizard is conducting the interview phase. |
-| `validating` | Wizard is validating gathered requirements. |
-| `attention_required` | Wizard needs user input but can still make partial progress. |
-| `ready_to_execute` | Wizard is ready to begin execution. |
-| `blocked` | Wizard cannot continue -- all clarification rounds exhausted or unrecoverable input needed. |
-| `complete` | Wizard finished successfully. |
-| `cancelled` | Wizard was cancelled by the user. |
-
-`attention_required` transitions to `blocked` when the clarification round cap (default 3) is exhausted without resolution.
-
-Every surface where `wizard_status` is canonically enumerated MUST include `blocked`.
+See canonical `wizard_status` definition in §2.1.
 
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/assistant-chat-design.md

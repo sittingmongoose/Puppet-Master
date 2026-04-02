@@ -540,17 +540,28 @@ pub struct FileSafeViolation {
 - Doctor check validates plan file lists
 
 #### Enhancement 5: Guard Configuration Profiles
-**Allow different guard strictness per tier:**
+Allow different guard strictness by **runtime profile**, not by deprecated tier names.
+
 ```rust
-pub struct TierFileSafeConfig {
-    pub phase: FileSafeConfig,
-    pub task: FileSafeConfig,
-    pub subtask: FileSafeConfig,
-    pub iteration: FileSafeConfig,
+pub struct FileSafeProfileSet {
+    pub plan_read_only: FileSafeConfig,
+    pub standard_execution: FileSafeConfig,
+    pub debug_investigation: FileSafeConfig,
+    pub delegated_child: FileSafeConfig,
+    pub maintenance_recovery: FileSafeConfig,
 }
 ```
-- Phase/Task tiers: stricter guards (planning phase)
-- Subtask/Iteration tiers: more permissive (execution phase)
+
+Profile rules:
+- `plan_read_only` is the strictest profile and denies mutation-capable execution except explicitly allowed read-only planning tools.
+- `standard_execution` is the default for normal agent execution.
+- `debug_investigation` allows bounded temporary instrumentation and cleanup-sensitive operations under stronger disclosure/logging rules.
+- `delegated_child` may be narrower than its parent run based on the delegated work package.
+- `maintenance_recovery` is reserved for restore/cleanup/recovery flows and must not silently broaden into general execution.
+
+Profile selection derives from effective run mode, operation class, and target capabilities. It MUST NOT depend on legacy Phase/Task/Subtask/Iteration naming.
+
+ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/Executor_Protocol.md
 
 ### 15.12 Integration Checklist
 

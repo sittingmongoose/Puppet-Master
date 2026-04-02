@@ -159,6 +159,24 @@ Root-selection steps:
 
 ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/Contracts_V0.md
 
+Language-specific root detection rules:
+
+| Language | Root markers | Priority | Notes |
+|---|---|---|---|
+| JavaScript/TypeScript | package.json, tsconfig.json | package.json > tsconfig.json | Monorepo: each package.json is a root |
+| Rust | Cargo.toml | — | Workspace: root Cargo.toml with [workspace] |
+| Go | go.mod | — | Module root |
+| Python | pyproject.toml, setup.py, setup.cfg | pyproject.toml > setup.py | venv detection separate |
+| Java | pom.xml, build.gradle, build.gradle.kts | — | Multi-module: parent pom |
+| C/C++ | CMakeLists.txt, Makefile, compile_commands.json | CMakeLists.txt > Makefile | |
+| C# | *.sln, *.csproj | .sln > .csproj | Solution is workspace root |
+| Ruby | Gemfile | — | |
+| PHP | composer.json | — | |
+| Swift | Package.swift, *.xcodeproj | Package.swift > xcodeproj | |
+
+Fallback rule:
+- if no language-specific marker is found, use the nearest `.git` directory as the root
+
 ### 3.6 Extension conflicts (multiple servers per extension)
 
 Multiple servers may overlap for one language or file kind; overlap is resolved through explicit selection metadata rather than one-off hard-coded exceptions.
@@ -254,6 +272,34 @@ UI integration rules:
 - remote-mode files reuse the same architecture with remote host identity; they are not a second LSP subsystem
 
 ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/storage-plan.md
+
+### 5.1 Chat LSP
+
+Chat LSP provides language intelligence features within the chat and assistant context.
+
+Purpose:
+- provide language intelligence features within the chat and assistant context
+- let the assistant surface code understanding without requiring the user to leave the chat flow
+
+Capabilities:
+- code completion suggestions in chat input
+- symbol resolution in code blocks
+- hover info for code references in messages
+- go-to-definition from chat code blocks
+
+Activation:
+- Chat LSP activates when a chat thread has an associated project with LSP servers running
+- chat messages containing code blocks are analyzed by the appropriate LSP server based on language detection
+
+Limitations:
+- Chat LSP provides read-only intelligence only; no refactoring and no code actions are exposed through this surface
+- it uses the same LSP server instances as the editor rather than spawning a separate chat-only server pool
+
+Integration:
+- code blocks that map to project files use those real file URIs; other code blocks use the virtual-document contract in §14.8
+- when the relevant server is unavailable or degraded, chat surfaces must disclose that reduced state explicitly
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FileManager.md, ContractName:Plans/FinalGUISpec.md
 
 ## 6. Scope and Phasing
 
@@ -492,6 +538,20 @@ ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/sto
 
 ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Executor_Protocol.md
 
+### 14.1.1 Remote LSP over SSH transport
+
+Remote LSP uses SSH as a stdio tunnel instead of a port-forwarded secondary protocol.
+
+Rules:
+- transport is stdio over SSH; the remote LSP server stdin/stdout are tunneled through the SSH connection rather than exposed by port forwarding
+- connection lifecycle is: SSH connection established → remote LSP server spawned → stdio streams connected → initialize handshake → ready
+- multiple LSP servers may share the same SSH connection via multiplexed channels
+- if SSH disconnects, all remote LSP servers on that connection are marked `degraded`, reconnect is attempted, servers are re-initialized, and pending requests are replayed when safe
+- remote LSP has higher latency by design; PM applies a timeout multiplier for remote operations (default `3x`)
+- remote LSP uses the remote filesystem directly; there is no hidden local sync or mirror for LSP operations
+
+ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/FileManager.md, ContractName:Plans/storage-plan.md
+
 
 ### 14.2 Module and crate layout
 
@@ -535,6 +595,27 @@ DocumentBinding {
 ```
 
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/FinalGUISpec.md
+
+LSP server lifecycle state machine:
+
+States: `stopped → starting → initializing → ready → degraded → stopping → crashed`
+
+| From | To | Trigger | Action |
+|---|---|---|---|
+| stopped | starting | file opened matching server's language | spawn server process |
+| starting | initializing | process started, stdio connected | send `initialize` request |
+| initializing | ready | `initialized` notification received | enable capabilities |
+| ready | degraded | server error / timeout / partial failure | reduce capabilities, show warning |
+| degraded | ready | server recovers / error clears | restore full capabilities |
+| ready | stopping | last file of language closed / user request | send `shutdown` + `exit` |
+| stopping | stopped | server process exits | cleanup resources |
+| any | crashed | server process dies unexpectedly | log error, attempt restart |
+| crashed | starting | auto-restart (max 3 attempts, backoff 2s/4s/8s) | respawn |
+| crashed | stopped | restart limit exceeded | show error, require manual restart |
+
+Resource limits:
+- max memory per server is configurable, default `512MB`
+- max CPU time for a single request is `30s`
 
 ### 14.4 Message flow
 
@@ -868,23 +949,24 @@ ContractRef: ContractName:Plans/LSPSupport.md
 
 ### 17.3 Subagent selection from LSP
 
-- **Where in the flow:** When the orchestrator is about to **select a subagent for the next subtask** (or task), it can optionally query LSP diagnostics for **files in scope** for that subtask/task. **Decision:** Default **off**. Config key `orchestrator.lsp_subagent_bias` (bool, default false). When true, call `get_diagnostics_for_paths` and apply bias toward matching-language subagent. If any file has diagnostics (e.g. errors) from a language server X, **prefer** the subagent that matches language X (e.g. rust-analyzer → rust-engineer, pyright → python-pro).
+- **Where in the flow:** When the orchestrator is about to **select a subagent for the next node** (task or subtask), it can optionally query LSP diagnostics for **files in scope** for that node. **Decision:** Default **off**. Config key `orchestrator.lsp_subagent_bias` (bool, default false). When true, call `get_diagnostics_for_paths` and apply bias toward matching-language subagent. If any file has diagnostics (e.g. errors) from a language server X, **prefer** the subagent that matches language X (e.g. rust-analyzer → rust-engineer, pyright → python-pro).
 - **"Files in scope" definition:** One of (configurable or fixed):
   - **Changed in last iteration** -- Files modified in the most recent iteration (same as LSP gate scope `"changed_files"` for consistency).
   - **Open in editor** -- Files currently open in the run/context.
-  - **Task's file list** -- If the task/subtask has an explicit list of files (e.g. from PRD or plan), use that list.
+  - **Node's file list** -- If the node has an explicit list of files (e.g. from PRD or plan), use that list.
   - Default: **changed in last iteration** for consistency with LSP gate.
-- **Documentation:** This behavior is specified in **Plans/orchestrator-subagent-integration.md** (Subagent selection from LSP) and summarized here. Implement in the same place that performs `select_for_tier`: after building tier context, optionally call LSP client `get_diagnostics_for_paths(scope_paths)`; from the returned diagnostics, derive language(s) from `source` or from file extension → server id mapping; then bias subagent selection toward matching language (e.g. add to ProjectContext or TierContext: "prefer_subagents": ["rust-engineer"] when Rust errors present).
+- **Documentation:** This behavior is specified in **Plans/orchestrator-subagent-integration.md** (Subagent selection from LSP) and summarized here. Implement in the same place that performs `select_for_node`: after building node context, optionally call LSP client `get_diagnostics_for_paths(scope_paths)`; from the returned diagnostics, derive language(s) from `source` or from file extension → server id mapping; then bias subagent selection toward matching language (e.g. add to ProjectContext or NodeContext: "prefer_subagents": ["rust-engineer"] when Rust errors present).
+
+ContractRef: ContractName:Plans/LSPSupport.md, ContractName:Plans/orchestrator-subagent-integration.md
 
 Bias rules (canonical):
 - LSP bias is a **tie-breaker / ranking hint**, not an absolute selector.
-- Explicit plan requirements, tier override lists, or hard-coded contract needs (for example `required_subagents`) take precedence over LSP bias.
-- Preferred scope order is: explicit task file list -> changed files in current tier -> open files.
+- Explicit plan requirements, node override lists, or hard-coded contract needs (for example `required_subagents`) take precedence over LSP bias.
+- Preferred scope order is: explicit node file list -> changed files in current node -> open files.
 - Default bias threshold is diagnostics with severity `Error`; implementations MAY optionally include `Warning` when configured.
 - The chosen bias inputs and outcome SHOULD be persisted in run metadata or verification evidence so selection remains explainable.
 
 ContractRef: ContractName:Plans/LSPSupport.md, ContractName:Plans/orchestrator-subagent-integration.md
-
 ### 17.4 Failure modes (LSP gate and diagnostics)
 
 | Failure | Behavior | Evidence / reporting |

@@ -36,7 +36,11 @@ Required families:
 - `cmd.search.*`
 - `cmd.file.*`
 - `cmd.source_control.*`
+- `cmd.actions.*`
+- `cmd.docker.*`
+- `cmd.k8s.*`
 - `cmd.git.*` diff/review commands listed below
+- `cmd.git.worktree.*`
 - `cmd.chat.add_file_reference`
 - `cmd.chat.revert`
 - `cmd.chat.rewind`
@@ -199,6 +203,82 @@ Rules:
 - commands that pivot into Source Control or Usage remain public wrapper commands and normalize internally to canonical route/open contracts
 
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/FinalGUISpec.md
+### 2.5A Operational external-system command families
+
+Source Control (`cmd.source_control.*`), GitHub Actions (`cmd.actions.*`), and Docker Manager (`cmd.docker.*`) form a triple-family block of operational command groups. They share one characteristic: each family manages a live external system boundary (repository state, remote CI workflows, or local container runtime) rather than a purely local layout toggle, so canonical IDs remain stable even when the hosting panel or toolbar evolves.
+
+- Source Control commands manage repository views and git-backed operational workflows.
+- GitHub Actions commands manage workflow runs, jobs, logs, and pinned workflows.
+- Docker Manager commands manage images, containers, compose stacks, and runtime inspection.
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/Wiring_Matrix.md
+
+#### GitHub Actions command family
+
+| Command ID | Label | Description | Keybind | Preconditions |
+|---|---|---|---|---|
+| `cmd.actions.rerun` | Rerun Workflow | Re-triggers the selected workflow run | — | `actions_panel_visible && selected_run` |
+| `cmd.actions.rerun_failed` | Rerun Failed Jobs | Re-triggers only failed jobs in selected run | — | `actions_panel_visible && selected_run && has_failed_jobs` |
+| `cmd.actions.cancel` | Cancel Run | Cancels the in-progress workflow run | — | `actions_panel_visible && selected_run && run_in_progress` |
+| `cmd.actions.pin` | Pin Workflow | Pins a workflow to the actions panel header for quick access | — | `actions_panel_visible && selected_workflow` |
+| `cmd.actions.unpin` | Unpin Workflow | Removes a pinned workflow from header | — | `actions_panel_visible && pinned_workflow_selected` |
+| `cmd.actions.view_logs` | View Logs | Opens full log output for selected job/step | — | `actions_panel_visible && selected_job` |
+| `cmd.actions.open_in_browser` | Open in Browser | Opens the workflow run on GitHub.com | — | `actions_panel_visible && selected_run` |
+
+ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Wiring_Matrix.md
+
+#### Docker Manager command family
+
+| Command ID | Label | Description | Preconditions |
+|---|---|---|---|
+| `cmd.docker.build` | Build Image | Builds a Docker image from selected Dockerfile | `docker_available && dockerfile_selected` |
+| `cmd.docker.run` | Run Container | Starts a container from selected image | `docker_available && image_selected` |
+| `cmd.docker.stop` | Stop Container | Stops a running container | `docker_available && container_running` |
+| `cmd.docker.restart` | Restart Container | Restarts a container | `docker_available && container_selected` |
+| `cmd.docker.remove` | Remove Container | Removes a stopped container | `docker_available && container_stopped` |
+| `cmd.docker.logs` | View Logs | Shows container log output | `docker_available && container_selected` |
+| `cmd.docker.exec` | Exec Shell | Opens interactive shell in container | `docker_available && container_running` |
+| `cmd.docker.compose_up` | Compose Up | Runs docker-compose up for selected compose file | `docker_available && compose_file_selected` |
+| `cmd.docker.compose_down` | Compose Down | Runs docker-compose down | `docker_available && compose_running` |
+| `cmd.docker.inspect` | Inspect | Shows detailed container/image info | `docker_available && resource_selected` |
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/storage-plan.md
+
+### 2.5B Kubernetes command family
+
+| Command ID | Label | Description | Preconditions |
+|---|---|---|---|
+| `cmd.k8s.get_pods` | Get Pods | Lists pods in selected namespace | `k8s_connected` |
+| `cmd.k8s.describe` | Describe Resource | Shows detailed resource description | `k8s_connected && resource_selected` |
+| `cmd.k8s.logs` | View Pod Logs | Shows log output for selected pod | `k8s_connected && pod_selected` |
+| `cmd.k8s.exec` | Exec Shell | Opens shell in selected pod/container | `k8s_connected && pod_running` |
+| `cmd.k8s.apply` | Apply Manifest | Applies a Kubernetes manifest file | `k8s_connected && manifest_selected` |
+| `cmd.k8s.delete` | Delete Resource | Deletes selected Kubernetes resource | `k8s_connected && resource_selected` |
+| `cmd.k8s.scale` | Scale Deployment | Adjusts replica count for deployment | `k8s_connected && deployment_selected` |
+| `cmd.k8s.port_forward` | Port Forward | Sets up port forwarding to selected pod | `k8s_connected && pod_selected` |
+| `cmd.k8s.switch_context` | Switch Context | Changes active Kubernetes context | `k8s_available` |
+| `cmd.k8s.switch_namespace` | Switch Namespace | Changes active namespace | `k8s_connected` |
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/Tools.md
+
+### 2.5C Project-scope git worktree commands
+
+These commands manage repository-level worktree inventory and lifecycle. They complement, but do not replace, the assistant thread-scoped `cmd.chat.worktree.*` family defined in §2.6.1.
+
+| Command ID | Label | Description | Preconditions |
+|---|---|---|---|
+| `cmd.git.worktree.create` | Create Worktree | Creates a new git worktree at specified path | `git_available && !worktree_limit_reached` |
+| `cmd.git.worktree.remove` | Remove Worktree | Removes an existing worktree | `git_available && worktree_selected && worktree_clean` |
+| `cmd.git.worktree.list` | List Worktrees | Shows all worktrees for current repo | `git_available` |
+| `cmd.git.worktree.switch` | Switch to Worktree | Opens/focuses the selected worktree | `git_available && worktree_selected` |
+| `cmd.git.worktree.lock` | Lock Worktree | Prevents accidental removal of worktree | `git_available && worktree_selected` |
+| `cmd.git.worktree.unlock` | Unlock Worktree | Removes lock from worktree | `git_available && worktree_locked` |
+
+Rules:
+- `cmd.git.worktree.*` owns project-scope worktree inventory, lock state, and navigation.
+- `cmd.chat.worktree.*` remains the thread-scoped wrapper family and MAY normalize internally to project-scope worktree operations.
+
+ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Wiring_Matrix.md
 ### 2.6 Chat context usage commands
 
 #### Context Lens commands
@@ -355,10 +435,24 @@ ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Sec
 
 ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FileManager.md, ContractName:Plans/FileSafe.md
 
+Message-level availability and code-block actions:
+
+| Command ID | Label | Description | Preconditions |
+|---|---|---|---|
+| `cmd.chat.edit_last_user_message` | Edit Last Message | Opens the last user message for editing | `chat_active && has_user_messages` |
+| `cmd.chat.resend_last_user_message` | Resend Last Message | Resends the last user message (triggers new response) | `chat_active && has_user_messages` |
+| `cmd.chat.copy_message` | Copy Message | Copies selected message content to clipboard | `chat_active && message_selected` |
+| `cmd.chat.copy_code_block` | Copy Code Block | Copies a specific code block from a message | `chat_active && code_block_selected` |
+| `cmd.chat.insert_code_block` | Insert at Cursor | Inserts code block content at editor cursor position | `chat_active && code_block_selected && editor_active` |
+| `cmd.chat.apply_code_block` | Apply to File | Applies code block as an edit to the relevant file | `chat_active && code_block_selected` |
+| `cmd.chat.toggle_message_details` | Toggle Details | Shows/hides message metadata (model, tokens, timing) | `chat_active && message_selected` |
+
 Revert rules:
 - when the resolved assistant turn touched multiple files, `cmd.chat.revert` reverts the whole turn across all affected files
 - after a successful revert, affected editors refresh from the canonical mutation pipeline
 - `cmd.chat.rewind` MUST NOT be used as a file-restore alias
+- `cmd.chat.resend_last_user_message` is distinct from `cmd.chat.retry_message`; resend replays the latest user-authored input, while retry re-runs a failed or cancelled assistant turn
+- `cmd.chat.copy_code_block`, `cmd.chat.insert_code_block`, and `cmd.chat.apply_code_block` operate on a resolved code-block sub-selection rather than the entire message body
 
 ContractRef: ContractName:Plans/Crosswalk.md, ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md
 
@@ -527,6 +621,25 @@ ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/assistant-ch
 | `cmd.git.conflict_apply_resolution` | `{ project_id, diff_session_id, strategy }` | Apply structured conflict resolution to the result buffer. |
 
 ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/FileManager.md, ContractName:Plans/Wiring_Matrix.md
+
+Source Control operational commands:
+
+| Command ID | Label | Description | Preconditions |
+|---|---|---|---|
+| `cmd.source_control.history` | View History | Opens commit history view | `git_available` |
+| `cmd.source_control.graph` | View Graph | Opens branch/merge graph visualization | `git_available` |
+| `cmd.source_control.blame` | Toggle Blame | Shows/hides inline git blame annotations | `git_available && editor_active` |
+| `cmd.source_control.stash` | Stash Changes | Stashes current working changes | `git_available && has_changes` |
+| `cmd.source_control.stash_pop` | Pop Stash | Restores most recent stash | `git_available && has_stashes` |
+| `cmd.source_control.cherry_pick` | Cherry Pick | Cherry-picks selected commit | `git_available && commit_selected` |
+| `cmd.source_control.rebase` | Interactive Rebase | Opens interactive rebase UI | `git_available && branch_selected` |
+| `cmd.source_control.worktree` | Manage Worktrees | Opens worktree management panel | `git_available` |
+
+Notes:
+- `cmd.source_control.history`, `cmd.source_control.graph`, and `cmd.source_control.worktree` are canonical direct-entry commands even though `cmd.source_control.show` also accepts matching subviews.
+- stash, cherry-pick, rebase, and blame commands remain operational shortcuts within the same Source Control family rather than separate panel namespaces.
+
+ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Wiring_Matrix.md
 
 ## References
 - `Plans/Contracts_V0.md#UICommand`

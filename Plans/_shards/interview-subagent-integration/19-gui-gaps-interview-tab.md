@@ -91,7 +91,7 @@ Canonical fields:
 - reviewer count / number of reviews (default `3` for Interview)
 - `max_subagents_spawn` (default `3`, warning required because token usage can spike)
 - `use_different_models`
-- `model_provider_list` drawn from tier config by default
+- `model_provider_list` drawn from node config by default
 - final approval gate state and findings-summary preview
 
 Persistence:
@@ -111,7 +111,7 @@ The Interview page preview section shows:
 A separate embedded document pane is required for human-readable interview artifacts and is distinct from the activity pane.
 
 ### Interview-phase verification mirror
-Interview phases mirror orchestrator tier verification:
+Interview phases mirror orchestrator node verification:
 - start = config wiring + readiness + sequence validation
 - end = config wiring re-check + acceptance + quality review
 

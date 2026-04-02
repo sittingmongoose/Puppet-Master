@@ -41,8 +41,8 @@ Project-switch rule:
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/usage-feature.md
 ### Canonical keys
 - `scheduler_pass_record`: key = `run_id`, `scheduler_pass_id`
-- `blocked_projection`: key = `run_id`, `node_id`, `blocked_sequence`
-- `attempt_record`: key = `run_id`, `node_id`, `attempt_id`
+- `blocked_projection`: canonical key = `project_id`, `node_id`; older `run_id`, `node_id`, `blocked_sequence` variants are superseded
+- `attempt_record`: canonical key = `project_id`, `node_id`, `attempt_number`; older `run_id`, `node_id`, `attempt_id` variants are superseded
 - `usage_record`: key = `run_id`, `attempt_id?`, `usage_sequence`
 - `evidence_record`: key = `run_id`, `node_id?`, `evidence_id`
 - `wizard_runtime_state`: key = `wizard_id`
@@ -58,7 +58,7 @@ ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Section15_MV
 
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/FinalGUISpec.md
 
-`attempt_id?` and `thread_id?` remain fields on `blocked_projection` and are not primary-key components.
+`attempt_id?` and `thread_id?` remain fields on `blocked_projection` and are not primary-key components. Canonical blocked-projection values include `{ blocked_reason_code, blocked_at, blocked_family, approval_scope_key?, unblock_action_ids[] }`.
 
 Rules:
 - terminal workspace containers use stable terminal section, tab, and pane keys even when their bound sessions are replaced
@@ -84,15 +84,45 @@ Minimum fields:
 - `usage_event_ref?`
 - `created_at_utc`
 
+Receipt extensions by operational domain:
+
+```text
+scm_receipt_ext {
+  commits_created: string[],       // commit SHAs
+  branches_created: string[],
+  files_modified: string[],
+  merge_conflicts: bool,
+}
+
+actions_receipt_ext {
+  workflow_runs_triggered: string[],
+  artifacts_downloaded: string[],
+  logs_fetched: string[],
+}
+
+docker_receipt_ext {
+  images_built: string[],
+  containers_started: string[],
+  containers_stopped: string[],
+  volumes_created: string[],
+}
+
+k8s_receipt_ext {
+  resources_applied: string[],
+  pods_created: string[],
+  deployments_scaled: { name: string, from: u32, to: u32 }[],
+}
+```
+
+These are additive receipt-domain extensions and do not replace the canonical minimum receipt fields.
+
 ContractRef: ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/usage-feature.md, ContractName:Plans/Orchestrator_Page.md
 
 ### Canonical records
 
 Canonical records for this feature set must support rebuild, resume, auditability, and UI reconstruction without hidden side stores.
 
-ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/orchestrator-subagent-integration.md
-
-Required canonical records:
+Required canonical records include:
 - child runs and attempts
 - child batch and subgroup structure
 - crew and crew-board state
@@ -100,17 +130,68 @@ Required canonical records:
 - context-shaping state tied to stable block refs
 - requested/effective runtime snapshots for child launches
 - blocked-episode and awaiting-parent correlation metadata
+- `debug_investigation_record`
+- `permission_snapshot_record`
+- cross-surface receipt records and their domain extensions
+
+**Debug investigation record (superseding earlier thin examples):**
+```text
+debug_investigation_record.v1:{project_id}:{investigation_id} {
+  project_id: string,
+  investigation_id: string,
+  thread_id: string,
+  run_id?: string,
+  debug_target_kind: string,
+  primary_target_summary: string,
+  state: string,
+  investigation_phase: string,
+  verification_state?: string,
+  attention_reason_code?: string,
+  blocked_reason_code?: string,
+  revalidation_reason_code?: string,
+  requested_mode_overlay: "debug",
+  effective_mode_overlay: "debug",
+  worktree_id?: string,
+  target_ref?: string,
+  active_instrumentation_refs: string[],
+  evidence_refs: string[],
+  artifact_bundle_ref?: string,
+  retention_class: "durable" | "session_bounded" | "ephemeral_view",
+  preservation_reason?: "legal_hold" | "user_preserve" | "linked_bundle" | "compliance_export",
+  source_timestamp_utc?: ISO8601,
+  observed_at_utc: ISO8601,
+  persisted_at_utc: ISO8601,
+  last_updated_at_utc: ISO8601,
+  closed_at_utc?: ISO8601
+}
+```
+
+**Retention and preservation classes:**
+- `durable` — retained until the owning cleanup policy or explicit user deletion says otherwise.
+- `session_bounded` — retained for the active session/window plus bounded restart recovery, then eligible for cleanup.
+- `ephemeral_view` — UI convenience state that may be regenerated and may be dropped aggressively.
+- `preservation_reason` freezes ordinary TTL/cardinality cleanup. Legal-hold or export preservation affects canonical records and their derived projections together; cleanup MUST NOT delete a preserved canonical record while leaving only a mirror or index fragment behind.
+ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/Contracts_V0.md
+
+**Canonical time-source precedence:**
+- `source_timestamp_utc` (upstream/authored time) wins for semantic ordering when present and trustworthy.
+- otherwise use `observed_at_utc` (when PM received/observed the event).
+- `persisted_at_utc` is durability metadata and MUST NOT silently replace the authored/observed event time in UI ordering or lineage logic.
+- when source and observed times diverge materially, keep both and mark the record as skewed rather than rewriting one onto the other.
 
 Canonical truth exclusions:
 - `.puppet-master/memory/*` is not canonical child or crew continuity storage.
 - `active-agents.json` and `active-subagents.json` are not canonical live-state stores.
 - provider-native session trees are correlation data, not PM identity.
 
-ContractRef: ContractName:Plans/assistant-memory-subsystem.md, ContractName:Plans/Provider_OpenCode.md, ContractName:Plans/WorktreeGitImprovement.md
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/orchestrator-subagent-integration.md
 ### Counter rule
-- `attempt_count` is the total started attempts for the node in the run
-- `automatic_retry_count`, `prerequisite_resume_count`, `manual_resume_count`, and `remediation_retry_count` remain independent stored counters
-- `retry_count` is derived display data only and MUST NOT drive policy
+- `attempt_count` is the total started-attempt count for the node in the run and is the canonical policy/input counter.
+- `automatic_retry_count`, `prerequisite_resume_count`, `manual_resume_count`, and `remediation_retry_count` remain independent stored attribution counters.
+- `retry_count` is derived convenience/display data only and MUST NOT drive scheduling, permission, or resume policy.
+- canonical model: `attempt_count` starts at `1` for the first attempt and increases only when a new immutable attempt snapshot is created.
+
+ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Permissions_System.md
 
 ### Restart and stale history
 Attempts from older generations, or in-flight attempts that cannot resume after restart, transition to `stale_historical`. They remain queryable but are never resumable.

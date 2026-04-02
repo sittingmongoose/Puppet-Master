@@ -103,7 +103,7 @@ pub struct ChainWizardState {
 | Field | Type | Purpose |
 |---|---|---|
 | `wizard_id` | string | Stable wizard instance ID used by recovery, Dashboard CtAs, and thread deep links. |
-| `wizard_status` | enum | `setup | requirements | interview | validating | attention_required | ready_to_execute | complete | cancelled`. |
+| `wizard_status` | enum | See canonical `wizard_status` definition below. |
 | `launch_source` | enum | `dashboard | file_menu | assistant | no_wizard_add_existing | no_wizard_new_local | no_wizard_new_github`. |
 | `phase_override_mode` | enum | `selector_plan | run_all | manual_checklist`. |
 | `phase_plan_ref` | path/null | Canonical persisted phase-plan location used by resume and audit. |
@@ -111,6 +111,23 @@ pub struct ChainWizardState {
 | `attention_required_report_path` | path/null | Latest blocking requirements-quality report when clarification is required. |
 | `remote_repo_ref` | object/null | Credential-safe remote reference (`owner`, `repo`, `host`, `clone_transport`, `clone_url_redacted`) for GitHub/fork flows. |
 | `deferred_wizard_payload_ref` | path/null | Preloaded payload created by no-wizard flows for `Run Chain Wizard later`. |
+
+**Canonical `wizard_status` definition (normative):**
+
+```text
+wizard_status: enum {
+  initializing,    // wizard is setting up
+  interviewing,    // interview phase active
+  planning,        // generating plan from interview results  
+  ready,           // plan ready for execution
+  executing,       // plan being executed
+  paused,          // execution paused by user
+  blocked,         // execution blocked (NEW — add this)
+  completed,       // execution finished successfully
+  failed,          // execution finished with errors
+  cancelled,       // user cancelled
+}
+```
 
 **Field usage by intent:**
 
@@ -133,7 +150,7 @@ pub struct ChainWizardState {
 **Invariants:**
 
 - `canonical_requirements_path` is set only after at least one of: uploads (merged) or Builder output (or both merged). For user-project execution, it points to `.puppet-master/project/requirements.md` after canonical promotion from staging (see §4 and §11).
-- For Contribute (PR), `branch_name` is set when the user (or app) creates the feature branch; all work for that flow happens on that branch in the **main clone** (no tier worktrees -- see §7).
+- For Contribute (PR), `branch_name` is set when the user (or app) creates the feature branch; all work for that flow happens on that branch in the **main clone** (no node worktrees -- see §7).
 - Secrets or credential-bearing GitHub URLs MUST NOT be persisted in wizard state; store redacted remote metadata + credential-store account refs only.
 
 ContractRef: ContractName:Plans/Project_Output_Artifacts.md, PolicyRule:no_secrets_in_storage, ContractName:Plans/GitHub_Integration.md
@@ -162,6 +179,23 @@ Rules:
 - No-wizard flows populate the same payload shape via `deferred_wizard_payload_ref`; opening the wizard later must be reconstructible after restart.
 
 ContractRef: ContractName:Plans/Project_Output_Artifacts.md, ContractName:Plans/interview-subagent-integration.md, Primitive:SessionStore
+
+### 2.3 Wizard Cancellation Cleanup
+
+When the wizard is cancelled (user clicks Cancel or closes the wizard), Puppet Master MUST execute the following cleanup sequence:
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md
+
+1. All running subagents are terminated: send cancel signal, wait up to 5 seconds, then force kill any remaining processes.
+2. All pending tool calls are aborted.
+3. Worktree branches created by this wizard run are cleaned up **only if** no commits exist on them; if commits exist, those branches are preserved and tagged with `[cancelled]`.
+4. Interview state is preserved for potential resume; it remains recoverable for 24 hours and is then pruned.
+5. Any partial plan artifacts are moved to a `.cancelled/` directory within the project.
+6. Usage tokens already consumed remain counted against the run budget.
+7. Emit a `wizard.cancelled` event with `{ wizard_id, phase_at_cancel, resources_cleaned[], resources_preserved[], token_usage }`.
+
+**Resume behavior:** Within 24 hours, the user may resume a cancelled wizard from the last completed phase. Resume MUST reuse preserved interview state and preserved artifacts, while also respecting the branch-preservation rules above.
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Project_Output_Artifacts.md
 
 ---
 

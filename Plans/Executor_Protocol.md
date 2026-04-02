@@ -129,8 +129,13 @@ Required fields are:
 - requested/effective account-binding fields
 - `operational_identity?`
 - `allowed_action_ids[]?`
+- `investigation_id?`
 
 ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md
+
+`investigation_id` is optional and is present when this execution is part of a debug investigation. Format: `inv_{ulid}`. It links all execution units that belong to the same investigation session and, when set, enables extended logging, breakpoint support, evidence collection, and investigation-scoped tool permissions.
+
+When Debug Mode triggers an investigation, the originating execution unit receives the `investigation_id`, and all execution units spawned as part of that same investigation MUST inherit the same value for correlation and evidence aggregation.
 
 Rules:
 - `TierContext` does not remain the canonical execution context
@@ -138,6 +143,56 @@ Rules:
 - mutation, audit, blocked actions, and routing resolve through runtime identity anchored by run/node/attempt/blocked-sequence lineage
 
 ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Run_Graph_View.md, ContractName:Plans/Orchestrator_Page.md
+
+### 5.1 Unified `DispatchContext` schema
+
+The canonical dispatch view is the unified `DispatchContext` projection over `execution_unit_context`. It unions the overlapping runtime field sets and coexists with the enclosing packet's immutable lineage fields such as `project_id`, `run_id`, `attempt_id`, `safe_point_id`, `worktree_id`, and remediation lineage.
+
+```
+DispatchContext {
+  // Identity
+  node_id: string,
+  package_id: string,
+  lane_id: string?,
+  seam_id: string?,
+
+  // Execution
+  attempt_number: u32,
+  max_attempts: u32,
+  execution_mode: RuntimeMode,
+  mode_overlay: ModeOverlay?,
+
+  // Provider/Model
+  provider_id: string,
+  model_id: string,
+  selected_at_utc: ISO8601,
+  scheduler_score_breakdown: ScoreBreakdown?,
+
+  // Context
+  parent_thread_id: string?,
+  dev_session_id: string,
+  terminal_session_id: string?,
+  investigation_id: string?,
+
+  // Budget
+  budget_remaining: TokenBudget?,
+  cost_ceiling: CostCeiling?,
+
+  // Persona
+  persona_id: string?,
+  persona_snapshot: PersonaSnapshot?,
+}
+```
+
+Normalization rules:
+- `package_id` is the canonical dispatch alias for `work_package_id` when older payloads still carry the longer field name.
+- `seam_id` is the canonical dispatch alias for `feature_seam_id` when older payloads still carry the longer field name.
+- `investigation_id` follows the same `inv_{ulid}` format defined above and is copied from `execution_unit_context` into the dispatch projection when present.
+
+Field provenance:
+- Unioned from one or both prior dispatch field sets and now mandatory in the canonical unified view: `node_id`, `package_id`, `lane_id`, `seam_id`, `attempt_number`, `max_attempts`, `execution_mode`, `mode_overlay`, `provider_id`, `model_id`, `selected_at_utc`, `scheduler_score_breakdown`, `parent_thread_id`, `dev_session_id`, `terminal_session_id`, `budget_remaining`, `cost_ceiling`, `persona_id`, and `persona_snapshot`.
+- Newly added by this Executor Protocol reconciliation pass: `investigation_id`.
+
 ## 6. Overseer dispatch algorithm (deterministic)
 
 1. Evaluate readiness predicate over all queued nodes.
@@ -233,6 +288,7 @@ Selection is global across the ready set, not level-by-level lexical dispatch.
 Queue analysis MUST rerun immediately on:
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Orchestrator_Page.md
 - node completion
+- prerequisite resolution
 - verification completion
 - HITL approval or rejection resolution
 - clarification resolution
@@ -251,25 +307,39 @@ When a dependency completes or a blocking condition clears:
 - direct dependents are reevaluated immediately
 - if now ready, they enter the ready set in the same scheduler wake cycle
 - unrelated blocked or waiting nodes MUST NOT stall runnable work elsewhere in the graph
+
+Canonical prerequisite-resolution event:
+- `node.prerequisite_resolved` — emitted when a prerequisite node completes successfully, is dependency-satisfying via skip policy, or is force-resolved, potentially unblocking dependent nodes
+- payload: `{ source_node_id, resolved_prerequisite_id, target_node_ids[], resolution: "completed" | "skipped" | "force_resolved" }`
+- wake behavior: receiving this event triggers prerequisite re-evaluation on all `target_node_ids`; if all prerequisites are now resolved, the runtime blocked projection clears and the node transitions from `blocked` to `pending` / ready-eligible queue state in the same scheduler wake
 ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Run_Graph_View.md
 
 ### 7. Failure classes and retry entry points
 
-The executor classifies every failed or non-executed attempt into one canonical `failure_class` / `blocked_reason_code` family before deciding the next action.
+The executor classifies every failed or non-executed attempt into exactly one canonical classifier family before deciding the next action: `failure_class` for classified attempt outcomes, or `blocked_reason_code` for unresolved prerequisites and intentionally prevented work.
 
 ContractRef: ContractName:Plans/Decision_Policy.md, ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Contracts_V0.md
 
-### 7.1 Per-class retry matrix
+### 7.1 Classified outcome matrix
 
-| `failure_class` | Max retries | Backoff | Auto-retry? | Notes |
-|---|---|---|---|---|
-| `provider_transient` | 3 | 1s / 2s / 4s | Yes | network errors, 429, transient 5xx |
-| `structured_output_invalid` | 2 | none | Yes | malformed provider structured output |
-| `auth_expired` | 1 | immediate after refresh | Yes | refresh once, rebuild client, retry once |
-| `permission_denied` | 0 | — | No | requires user decision |
-| `filesafe_blocked` | 0 | — | No | never auto-retry |
-| `storage_io` | 1 | brief delay | Yes | single retry on I/O failure |
-| `quota_exceeded` | 0 | — | No | user action or later retry window |
+| `classifier_family` | `classifier` | Max retries | Backoff | Auto-retry? | Notes |
+|---|---|---|---|---|---|
+| `failure_class` | `provider_transient` | 3 | 1s / 2s / 4s | Yes | network errors, 429, transient 5xx |
+| `failure_class` | `structured_output_invalid` | 2 | none | Yes | malformed provider structured output |
+| `failure_class` | `verification_failed` | 0 | — | No | may spawn remediation or review flow; no blind retry |
+| `failure_class` | `reviewer_findings` | 0 | — | No | may spawn remediation or remain pending review |
+| `failure_class` | `auth_expired` | 1 | immediate after refresh | Yes | refresh once, rebuild client, retry once |
+| `blocked_reason_code` | `permission_denied` | 0 | — | No | requires explicit user decision |
+| `blocked_reason_code` | `user_declined` | 0 | — | No | terminal unless the user explicitly changes posture |
+| `blocked_reason_code` | `headless_ask_denied` | 0 | — | No | blocked or denied outcome; never silently retry |
+| `blocked_reason_code` | `filesafe_blocked` | 0 | — | No | never auto-retry; honor FileSafe restore requirements |
+| `blocked_reason_code` | `external_side_effect_blocked` | 0 | — | No | preserve local work and wait for approval/decline |
+| `failure_class` | `storage_io` | 1 | brief delay | Yes | single retry on I/O failure |
+| `failure_class` | `quota_exceeded` | 0 | — | No | user action or later retry window |
+| `failure_class` | `graph_integrity` | 0 | — | No | hard fail; replan path only |
+| `blocked_reason_code` | `replan_required` | 0 | — | No | remain blocked until patch or replan is applied |
+
+For `provider_transient`, retry backoff is exponential with base `1s`, factor `2x`, and cap `4s`: `1s → 2s → 4s`.
 
 ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/GitHub_API_Auth_and_Flows.md
 
@@ -386,14 +456,15 @@ The canonical selection tuple is `(scheduler_lane, manual_priority, transitive_u
 No critical-path term is part of MVP selection.
 
 ### Wakeup triggers
-Queue analysis MUST rerun on node completion, verification completion, approval resolution, clarification resolution, auth recovery, backoff expiry, remediation completion, restore completion, replan application, and capacity change. Polling is watchdog-only.
+Queue analysis MUST rerun on node completion, prerequisite resolution, verification completion, approval resolution, clarification resolution, auth recovery, backoff expiry, remediation completion, restore completion, replan application, and capacity change. Polling is watchdog-only.
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Orchestrator_Page.md
 
 ### Blocked and retry behavior
-The executor MUST classify every non-success outcome before applying policy. Canonical values include `provider_transient`, `structured_output_invalid`, `verification_failed`, `reviewer_findings`, `permission_denied`, `user_declined`, `headless_ask_denied`, `filesafe_blocked`, `external_side_effect_blocked`, `auth_expired`, `storage_io`, `graph_integrity`, and `replan_required`.
+The executor MUST classify every non-success outcome before applying policy. Canonical `failure_class` values include `provider_transient`, `structured_output_invalid`, `verification_failed`, `reviewer_findings`, `auth_expired`, `storage_io`, `quota_exceeded`, and `graph_integrity`. Canonical `blocked_reason_code` values include `permission_denied`, `user_declined`, `headless_ask_denied`, `filesafe_blocked`, `external_side_effect_blocked`, `replan_required`, and the additional blocked-state codes owned by `Plans/Contracts_V0.md` and `Plans/Decision_Policy.md` such as `waiting_approval`, `clarification_blocked`, `worktree_conflict`, `dirty_worktree`, `plugin_hook_blocked`, `validation_blocked`, and `remediation_ceiling_exceeded`.
 ContractRef: ContractName:Plans/Decision_Policy.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/orchestrator-subagent-integration.md
 
-Generic blind retry is forbidden. Retry, backoff, remediation, rollback-to-safe-point, and escalation all flow from the classified outcome.
+Generic blind retry is forbidden. Retry, backoff, remediation, rollback-to-safe-point, and escalation all flow from the classified outcome, and a single decision point MUST NOT treat the same situation as both a `failure_class` and a `blocked_reason_code`.
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Decision_Policy.md
 
 ### Attempt identity and safe points
 Every dispatch creates or reuses a first-class `attempt_id`. Mutation-capable attempts and remediation apply steps MUST create a runtime `safe_point_id` before execution. Safe points are runtime recovery anchors only; they are not restore points.
@@ -493,6 +564,7 @@ ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Decision_Pol
 ### Wake reasons and coalescing
 Canonical `wake_reason` values are:
 - `node_completed`
+- `prerequisite_resolved`
 - `verification_completed`
 - `approval_resolved`
 - `clarification_resolved`
@@ -506,6 +578,13 @@ Canonical `wake_reason` values are:
 - `watchdog_recheck`
 
 If multiple triggers coalesce into one scheduler pass, persist the first as `wake_reason` and the rest as `secondary_wake_reasons[]`.
+
+Canonical wake-trigger event mapping for prerequisite cascades:
+- event name: `node.prerequisite_resolved`
+- emitted when a prerequisite node completes successfully, is skipped in a dependency-satisfying way, or is force-resolved
+- payload: `{ source_node_id, resolved_prerequisite_id, target_node_ids[], resolution: "completed" | "skipped" | "force_resolved" }`
+- scheduler projection: if this is the first trigger in the pass, persist `wake_reason = prerequisite_resolved`
+- wake behavior: re-evaluate prerequisites for every node in `target_node_ids[]`; if all prerequisites are resolved, clear the blocked projection and move the node from `blocked` to `pending` / ready-eligible queue state before dispatch selection
 
 ### Outcome families
 - `failure_class` is only for classified attempt outcomes.
@@ -528,7 +607,7 @@ If multiple triggers coalesce into one scheduler pass, persist the first as `wak
 ### Run-level deferred rule
 - If any node is runnable, the run remains active.
 - If no node is runnable and blocked/backoff/prerequisite-waiting work exists, the run is deferred/waiting rather than terminal.
-- The next prerequisite resolution, backoff expiry, restore completion, remediation completion, or capacity change MUST wake the scheduler.
+- The next prerequisite resolution (including `node.prerequisite_resolved`), backoff expiry, restore completion, remediation completion, or capacity change MUST wake the scheduler.
 
 ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md
 ## Counter Relationships and Event Ordering Addendum

@@ -2,29 +2,20 @@
 
 ### Permission snapshot storage
 
-The `attempt_record` includes a `permission_snapshot` field containing the resolved permission state at attempt start.
+`Plans/storage-plan.md` owns only the durable storage binding for permission snapshots. `Plans/Permissions_System.md` owns the snapshot schema, enums, approval-surface expectations, and blocked-action semantics.
 
-**Schema:**
-```json
-{
-  "snapshot_id": "uuid",
-  "attempt_id": "uuid",
-  "node_id": "uuid",
-  "captured_at": "ISO-8601 timestamp",
-  "resolved_permissions": {
-    "<permission_key>": {
-      "resolution": "allow | deny | ask",
-      "source": "preset | project | user_override | session",
-      "effective_value": true
-    }
-  }
-}
-```
+**Canonical storage binding:**
+- durable family: `permission_snapshot_record.v1:{project_id}:{snapshot_id}`
+- immutable link from attempt state: `attempt_record.permission_snapshot_id`
+- projector/query fields MAY cache `blocked_family`, `approval_scope_key`, `approval_target_ref`, and `revalidation_required` for indexing, but they MUST NOT redefine the nested snapshot schema locally
 
 **Rules:**
-1. Created at `attempt.started` emission, before any tool invocation.
-2. Immutable after creation -- permission changes during the attempt do NOT retroactively modify the snapshot.
-3. Used for audit trail and for determining whether a permission change requires attempt restart.
+1. The snapshot record is written before the corresponding attempt becomes durable/dispatchable.
+2. The snapshot payload is immutable after creation. Later approval or policy changes create a new snapshot and a new attempt lineage entry; they do not rewrite the old one.
+3. Snapshot retention follows attempt lineage and any stronger preservation/hold rule.
+4. storage-plan MUST reference the owner-doc schema instead of embedding a competing schema copy.
+
+ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Executor_Protocol.md
 
 ### Safe-point vs restore-point namespace separation
 

@@ -54,9 +54,9 @@ All events are append-only. Naming uses underscore-separated `chat.thread_worktr
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/assistant-chat-design.md
 
 
-<a id="1.1"></a>
+<a id="1.2"></a>
 <a id="EventRecord"></a>
-### 1.1 EventRecord -- canonical persisted envelope (schema: `pm.event.v0`)
+### 1.2 EventRecord -- canonical persisted envelope (schema: `pm.event.v0`)
 
 The canonical persisted runtime snapshot keeps the historical base field names stable while allowing additive disclosure fields for runtime family, runtime platform, billing/entity attribution, and server-profile routing.
 
@@ -85,7 +85,12 @@ ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Prompt_Pipel
   "effective_project_id": null,
   "account_switch_reason": null,
   "requested_reasoning_effort": "medium",
-  "effective_reasoning_effort": "medium"
+  "effective_reasoning_effort": "medium",
+  "requested_mode_overlay": "plan",
+  "effective_mode_overlay": "plan",
+  "requested_runtime_mode": "plan",
+  "requested_persona": "architect_reviewer",
+  "persona_selection_source": "user_explicit"
 }
 ```
 
@@ -94,15 +99,39 @@ ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/usage-featu
 Rules:
 - `requested_platform` and `effective_platform` remain the canonical persisted provider-entry fields.
 - `provider_family_id`, `requested_runtime_platform_id`, `effective_runtime_platform_id`, `requested_model_provider_id`, and `effective_model_provider_id` are additive disclosure fields; they MUST NOT replace the canonical base field names.
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Multi-Account.md
 - `effective_account_id` identifies the effective account record when the runtime subject is account-backed.
 - `connection_profile_id` identifies the effective server profile when the runtime subject is server-bridged.
 - `requested_billing_entity_id`, `effective_billing_entity_id`, `effective_billing_entity_label`, and `effective_entitlement_class` are REQUIRED when the provider's quota or policy semantics depend on a distinct billing/entity bucket; when the provider has no such concept, these fields MUST be omitted rather than null-padded.
 - `effective_provider_identity` is provider-native descriptive metadata only and MUST NOT become the stable internal account key.
+- `requested_mode_overlay` records the mode overlay requested by the user, project policy, or runtime, while `effective_mode_overlay` records what actually applied after resolution.
+- `requested_runtime_mode` is the canonical requested runtime-mode field when the caller selected a mode directly. Its enum family is `ask | plan | regular | yolo`.
+- `requested_persona` stores the explicit `persona_id` only when a persona was intentionally selected; omission means persona resolution was inherited or derived.
+- `persona_selection_source` records how the effective persona was chosen and MUST use the `PersonaSelectionSource` enum defined below.
 - secrets, bearer tokens, API keys, refresh tokens, and raw credential payloads MUST NOT appear in EventRecord payloads.
 
 ContractRef: PolicyRule:no_secrets_in_storage, ContractName:Plans/storage-plan.md, ContractName:Plans/Architecture_Invariants.md#INV-002
 
-### 1.2 EventEnvelopeV1 -- minimal compatibility envelope
+#### EventRecord additive mode/persona resolution fields
+
+`EventRecord` MAY carry the following additive mode/persona-resolution fields whenever runtime resolution, replay, analytics, or debugging depend on them:
+
+```text
+requested_mode_overlay: ModeOverlay?
+effective_mode_overlay: ModeOverlay?
+requested_runtime_mode: RuntimeMode?        // ask | plan | regular | yolo
+requested_persona: string?                  // persona_id when explicitly selected
+persona_selection_source: PersonaSelectionSource?
+```
+
+```text
+PersonaSelectionSource = user_explicit | project_default | global_default | mode_derived | inherited
+```
+
+These fields are additive disclosure fields in the same sense as provider-family and runtime-platform routing fields: they enrich replay/debugging fidelity but MUST NOT replace the canonical base identity fields already defined by `EventRecord`.
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Personas.md
+
+### 1.3 EventEnvelopeV1 -- minimal compatibility envelope
 `EventEnvelopeV1` is the minimal event envelope used by some plans as an intermediate format.
 
 ```json
@@ -147,7 +176,7 @@ ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Pro
 Providers may use one of these transport classes. The normalized stream contract (§2) applies identically regardless of class:
 - **CLI-bridged:** local CLI subprocess transport (`stream-json`/ACP). Cursor and Claude Code are CLI-bridged only.
 - **Server-bridged:** HTTP REST + SSE to a local server process. OpenCode is server-bridged.
-- **Direct-provider:** direct provider endpoint calls with provider-native auth. Codex, Copilot, and Gemini follow this class.
+- **Direct-provider:** direct provider endpoint calls with provider-native auth. Codex, Copilot, and Gemini Direct follow this class.
 
 Canonical enum contract for implementation:
 ```text
@@ -345,16 +374,19 @@ Rules:
 - Cursor and Claude Code use `CliInteractive` (CLI-bridged only).
 - Codex supports `OAuthBrowser`, `OAuthDeviceCode`, and `ApiKey` for direct-provider auth/calls.
 - GitHub Copilot uses `OAuthDeviceCode` for direct-provider auth/calls.
-- Gemini uses direct-provider auth/calls with `OAuthBrowser`, `ApiKey`, and `GoogleCredentials` where the provider/runtime capability matrix supports them.
+- Gemini Direct (`gemini`) uses direct-provider auth/calls with `ApiKey` only.
+- Gemini CLI (`gemini_cli`) is a CLI-bridged provider entry that may resolve `oauth` requests through `CliInteractive`, `api_key` requests through CLI-managed API-key flows, and `google_credentials` requests through `GoogleCredentials` where the provider/runtime capability matrix supports them.
 - OpenCode uses server credentials for server access plus provider-native auth managed by OpenCode.
 
 ContractRef: ContractName:Plans/GitHub_API_Auth_and_Flows.md, ContractName:Plans/CLI_Bridged_Providers.md, SchemaID:Spec_Lock.json#locked_decisions.auth_model
 
-- Gemini is one provider with mixed OAuth and API-key account pools.
-- Gemini's default `requested_auth_mode` is `auto`, and the provider-default auth-surface preference is OAuth first, then API key, unless project/run policy overrides it.
-- Explicit `oauth` requests MUST filter to OAuth-eligible accounts only.
-- Explicit `api_key` requests MUST filter to API-key-eligible accounts only.
-- There is no silent cross-surface fallback between explicit `oauth` and explicit `api_key` requests.
+- Gemini Direct and Gemini CLI are separate provider entries and MUST NOT be collapsed into one mixed auth pool.
+- `gemini` defaults `requested_auth_mode` to `api_key`.
+- `gemini_cli` defaults `requested_auth_mode` to `auto`, and the provider-default auth-surface preference is OAuth/CLI-interactive first, then API key, then Google credentials, unless project/run policy overrides it.
+- Explicit `oauth` or `cli_interactive` requests MUST filter to Gemini CLI accounts only.
+- Explicit `api_key` requests MUST remain inside the selected provider entry's API-key-capable accounts.
+- Explicit `google_credentials` requests MUST filter to Gemini CLI Google-credential accounts only.
+- There is no silent cross-provider fallback between `gemini` and `gemini_cli`.
 
 ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/rewrite-tie-in-memo.md, ContractName:Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD
 
@@ -365,7 +397,7 @@ ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/rewrite-tie
 
 ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/GitHub_API_Auth_and_Flows.md, ContractName:Plans/FinalGUISpec.md
 ### 4.3 AuthEvent
-Auth flows MUST emit persisted events using `EventRecord` (§1.1), with stable `type` strings owned by the provider's plan.
+Auth flows MUST emit persisted events using `EventRecord` (§1.2), with stable `type` strings owned by the provider's plan.
 
 Example (GitHub):
 - `auth.github.device_code.issued`
@@ -406,6 +438,26 @@ Lifecycle rules:
 - provider-reported cooldown windows remain facts; user actions such as `Temporary Pause`, `Resume Now`, and `Mark Needs Recheck` are PM-imposed overlays and MUST NOT overwrite the provider-reported cooldown metadata.
 
 ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/CLI_Bridged_Providers.md
+
+### 4.5 Provider State Lifecycle Mapping
+
+Provider setup/health projection needs an explicit lifecycle mapping because provider-profile state, Executor Protocol node state, and PM runtime/contract state are related but not identical. The table below is canonical for provider-state reconciliation. It does not replace the canonical child-run lifecycle in §Canonical Runtime Event, Outcome, and Action Contract Reconciliation Addendum; instead, it defines how provider-profile state should be understood when compared across those systems.
+
+| Provider state | EP equivalent | Contracts equivalent | Notes |
+|---|---|---|---|
+| `unknown` | — | — | Pre-registration |
+| `discovered` | `pending` | `created` | Provider found but not configured |
+| `configuring` | `pending` | `initializing` | User entering credentials |
+| `ready` | `pending` | `ready` | Configured, not yet used |
+| `active` | `running` | `active` | Processing requests |
+| `degraded` | `running` (with warning) | `degraded` | Working but with issues |
+| `suspended` | `blocked` | `suspended` | Temporarily unavailable |
+| `expired` | `failed` | `expired` | Credentials expired |
+| `removed` | — | `deleted` | Provider removed |
+
+When provider lifecycle is projected into canonical child execution, only execution-relevant states map through the child-run lifecycle directly: `active`/`degraded` correspond to active execution, `suspended` corresponds to blocked execution, and `expired` corresponds to failure. Discovery/configuration-only states remain provider-profile states and MUST NOT be misreported as in-flight child execution.
+ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/Executor_Protocol.md
+
 ## 5. Context management (instruction scoping + attempt journaling + parent summary + `AGENTS.md` enforcement)
 
 This section defines cross-cutting context assembly and enforcement behaviors for the finished Puppet Master product.
@@ -445,13 +497,15 @@ Required top-level fields are:
 - `debug_target_kind`
 - bounded `primary_target_summary`
 - `current_phase`
-- `state`
+- `investigation_state`
 - `verification_strength?`
 - `attention_reason_code?`
 - `blocked_reason_code?`
 - bounded `items[]`
 
 ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Glossary.md
+
+Canonical prompt-facing investigation context field names are `primary_target_summary` and `investigation_state`. Legacy aliases such as `primary_target`, `final_or_intermediate_state`, and bare `state` are non-canonical for `InvestigationContextAttachment` because they collide with other unrelated state fields. `Plans/assistant-chat-design.md` SHOULD be updated to match this canonical naming, but this document remains authoritative in the meantime.
 
 Required item fields are:
 - `item_id`
@@ -465,6 +519,34 @@ Required item fields are:
 Serialization rules:
 - only items in `active` or `redacted` state may be serialized as successful prompt context
 - `revoked`, `blocked`, `expired`, and `omitted` items remain visible for audit but are not serialized as successful prompt attachments
+
+### 5.1B Persona/Runtime Snapshot Payload Contract
+
+`PersonaSnapshot` is the canonical thread-attached snapshot of the resolved persona and mode overlay in effect at a specific moment. It captures the effective prompt/runtime identity that shaped the thread, without duplicating raw prompt text.
+
+```text
+PersonaSnapshot {
+  persona_active_persona_id: string,           // currently active persona ID
+  persona_display_label: string,               // human-readable persona name
+  persona_display_icon: string?,               // optional icon identifier
+  persona_system_prompt_sha: string,           // SHA-256 of the active system prompt
+  mode_overlay: ModeOverlay,                   // current mode overlay enum value
+  mode_overlay_params: Record<string, any>?,   // mode-specific parameters
+  applied_at: ISO8601,                         // when this snapshot was captured
+}
+```
+
+Capture rules:
+- a new snapshot MUST be captured when a thread is created
+ContractRef: ContractName:Plans/Personas.md, ContractName:Plans/assistant-chat-design.md
+- a new snapshot MUST be captured whenever the effective persona changes
+- a new snapshot MUST be captured whenever the effective mode overlay changes, including parameter changes that alter runtime behavior
+
+Storage and usage rules:
+- the snapshot MUST be attached to the owning thread record as canonical persona/runtime snapshot state
+- implementations MAY retain append-only historical snapshots keyed by `applied_at`, but the thread-attached snapshot remains the canonical current-state attachment
+- snapshots exist to support audit trail reconstruction, deterministic replay of persona/mode decisions, and debugging of prompt-assembly/runtime-resolution issues
+- `persona_system_prompt_sha` is the durable fingerprint used for comparison and audit; raw system prompts MUST remain outside the snapshot payload unless another contract explicitly permits them
 - item order is deterministic and budget-aware; raw artifacts stay outside the instruction bundle
 
 ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Runtime_Artifacts_Panel.md
@@ -773,7 +855,7 @@ ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/Models_Syst
 ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/Models_System.md
 
 This conditional-requirement contract applies uniformly across all PM surfaces:
-- In `EventRecord` (§1.1): billing-entity fields follow this rule. The §1.1 term "additive disclosure fields" describes the extensibility pattern for discovery/routing fields (`provider_family_id`, `runtime_platform_id`, etc.) and does NOT imply that billing-entity fields are unconditionally optional.
+- In `EventRecord` (§1.2): billing-entity fields follow this rule. The §1.2 term "additive disclosure fields" describes the extensibility pattern for discovery/routing fields (`provider_family_id`, `runtime_platform_id`, etc.) and does NOT imply that billing-entity fields are unconditionally optional.
 - In `AuthState` (§4.1): `selected_billing_entity_id` follows the same conditional contract. It is present when the effective quota bucket depends on entity selection; it is omitted when the provider's quota is purely account-scoped. The word "optional" in the AuthState rules refers to structural optionality (the field may be absent), not to a weaker normative requirement.
 - In usage attribution: cost attribution is keyed by `(model_id, provider_id, billing_entity_id)` when billing-entity semantics exist; account-only providers omit the billing-entity dimension.
 
@@ -933,14 +1015,17 @@ ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/storage
 #### `remediation.resolved`
 
 > **Migration note:** `run.remediation_completed` is a deprecated legacy alias for this event. New producers MUST emit `remediation.resolved`.
+ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/storage-plan.md
 
 Minimum payload:
 - `run_id`
 - `node_id`
 - `remediation_root_id`
 - `child_attempt_id`
-- `resolution` (`success` | `failed` | `ceiling_exceeded`)
+- `resolution` (`fixed` | `superseded` | `abandoned` | `replan_required`)
 - `ts`
+
+`remediation_ceiling_exceeded` remains a blocked-state outcome (`blocked_reason_code`), not a `remediation.resolved.resolution` value.
 
 ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/storage-plan.md
 
@@ -1078,7 +1163,9 @@ This section is an exact compatibility mirror of the later canonical runtime con
 - `structured_output_invalid`
 - `verification_failed`
 - `reviewer_findings`
+- `auth_expired`
 - `storage_io`
+- `quota_exceeded`
 - `graph_integrity`
 
 `blocked_reason_code`:
@@ -1087,7 +1174,6 @@ This section is an exact compatibility mirror of the later canonical runtime con
 - `headless_ask_denied`
 - `filesafe_blocked`
 - `external_side_effect_blocked`
-- `auth_expired`
 - `replan_required`
 - `waiting_approval`
 - `clarification_blocked`
@@ -1161,6 +1247,41 @@ ContractRef: Crew-board coordination MUST remain attributable, inspectable, and 
 
 Crew members do not gain new authority through board traffic. Permissions, tools, skills, plugins, MCP access, and provider restrictions remain subject to the same requested/effective capability rules as any other child run.
 ContractRef: Crew coordination messages MUST NOT widen authority, permissions, or capability availability beyond the child's effective runtime envelope. [Source: Permissions_System.md#child-permission-ceiling-and-blocked-vs-awaiting-parent; Skills_System.md#child-capability-subset-clarification]
+
+#### Stable subagent and crew event families
+
+In addition to the effective-context projection events defined below (`subagent.context_shrunk` and `subagent.context_rehydrated`), the following stable runtime event families are canonical for subagent and crew orchestration. These events inherit the child identity and requested/effective runtime descriptors required by §Child-run lifecycle and projection whenever those descriptors are relevant.
+
+| event_type | payload_fields | description |
+|---|---|---|
+| `subagent.spawned` | `agent_id`, `agent_type`, `parent_thread_id`, `model_id` | New subagent created |
+| `subagent.started` | `agent_id`, `prompt_preview` | Subagent begins execution |
+| `subagent.progress` | `agent_id`, `progress_pct?`, `status_text` | Progress update |
+| `subagent.tool_called` | `agent_id`, `tool_name`, `tool_args_preview` | Subagent invoked a tool |
+| `subagent.tool_completed` | `agent_id`, `tool_name`, `success`, `duration_ms` | Tool call finished |
+| `subagent.message_sent` | `agent_id`, `message_preview`, `turn_index` | Follow-up message sent |
+| `subagent.message_received` | `agent_id`, `response_preview`, `turn_index` | Response received |
+| `subagent.completed` | `agent_id`, `result_summary`, `duration_ms`, `token_usage` | Subagent finished successfully |
+| `subagent.failed` | `agent_id`, `error_code`, `error_message`, `duration_ms` | Subagent failed |
+| `subagent.cancelled` | `agent_id`, `reason`, `duration_ms` | Subagent was cancelled |
+| `subagent.timeout` | `agent_id`, `timeout_ms`, `partial_result?` | Subagent exceeded time limit |
+| `subagent.retried` | `agent_id`, `attempt_number`, `retry_reason` | Subagent retry attempt |
+| `subagent.context_warning` | `agent_id`, `context_usage_pct`, `threshold` | Context approaching limit |
+| `subagent.model_switched` | `agent_id`, `from_model`, `to_model`, `reason` | Model changed mid-execution |
+| `subagent.paused` | `agent_id`, `reason` | Subagent paused (waiting for input) |
+| `subagent.resumed` | `agent_id`, `trigger` | Subagent resumed |
+| `subagent.output_truncated` | `agent_id`, `original_length`, `truncated_length` | Output was truncated |
+| `subagent.budget_warning` | `agent_id`, `budget_used_pct`, `budget_limit` | Approaching budget limit |
+| `subagent.escalated` | `agent_id`, `escalation_reason`, `target` | Subagent escalated to parent |
+
+| event_type | payload_fields | description |
+|---|---|---|
+| `crew.formed` | `crew_id`, `member_agent_ids[]`, `purpose` | Crew created |
+| `crew.member_added` | `crew_id`, `agent_id`, `role` | Member joined |
+| `crew.member_removed` | `crew_id`, `agent_id`, `reason` | Member left |
+| `crew.coordination` | `crew_id`, `coordination_type`, `details` | Inter-agent coordination |
+| `crew.completed` | `crew_id`, `result_summary`, `duration_ms` | Crew finished |
+| `crew.disbanded` | `crew_id`, `reason` | Crew dissolved |
 
 ### Dynamic context shrinking and effective-context projection
 

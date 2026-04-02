@@ -144,7 +144,7 @@ ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/storage-plan.md
 | **FileSafe.md** | Command blocklist ≈ bash deny; write scope ≈ edit path allowlist; security filter ≈ read path deny (.env). Central policy engine; permission + FileSafe both apply. |
 | **FileManager.md** | Workspace roots, open paths; external_directory and path rules may affect File Manager/editor exposure. |
 | **assistant-chat-design.md** | YOLO/Regular (§3); approve for session ≈ always; bash audit trail and FileSafe. |
-| **orchestrator-subagent-integration.md** | Run config snapshot includes tool permissions; headless ask → deny or HITL; tier/subagent overrides. |
+| **orchestrator-subagent-integration.md** | Run config snapshot includes tool permissions; headless ask → deny or HITL; node/subagent overrides. |
 | **interview-subagent-integration.md** | Same run config and permission snapshot for interview runs. |
 
 ---
@@ -169,7 +169,7 @@ The following built-in tools are the **target set** for the central tool registr
 | **webfetch** | Fetch web content from a URL | `webfetch` | URL allowlist/denylist (FileSafe); timeout; size cap. Document which domains are contacted. |
 | **websearch** | Search the web (discovery) | `websearch` | When enabled (env or config); may use Exa or cited-search MCP (newtools §8.2.1). |
 | **webextract** | Extract a target page/site | `webextract` | Targeted site/page extraction with audit visibility. |
-| **webresearch** | Run multi-source web research | `webresearch` | Research synthesis with explicit provenance and support-tier disclosure. |
+| **webresearch** | Run multi-source web research | `webresearch` | Research synthesis with explicit provenance and support-lane disclosure. |
 | **webcrawl** | Crawl a site or section | `webcrawl` | Multi-page crawl; bounded by permission and fan-out limits. |
 | **webmap** | Map site structure | `webmap` | Site-structure discovery with bounded traversal. |
 | **question** | Ask the user structured questions during execution | `question` | Supports both single-question and multi-question questionnaire flows. Only meaningful when HITL/UI can show prompts. |
@@ -237,7 +237,7 @@ With **LSP MVP** (Plans/LSPSupport.md), the following tools are **enhanced or ne
 **Rename approval (HITL):** When `operation` is `"rename"`:
 1. Call LSP `textDocument/prepareRename` then `textDocument/rename` to obtain the list of edits.
 2. Return to the agent a result **pending approval**: e.g. `{ "status": "pending_approval", "operation": "rename", "edits": [...], "summary": "Rename 'foo' to 'bar' in N locations" }`.
-3. Assistant approval flow (or HITL at tier boundary in Orchestrator) presents "Apply rename?"; on approve, apply via `workspace/applyEdit` (FileSafe). On reject, return `{ "status": "rejected" }` to the agent.
+3. Assistant approval flow (or HITL at seam boundary in Orchestrator) presents "Apply rename?"; on approve, apply via `workspace/applyEdit` (FileSafe). On reject, return `{ "status": "rejected" }` to the agent.
 
 So: read/navigation operations return results directly; **rename** returns `pending_approval` and actual apply is only after user approval.
 
@@ -246,7 +246,257 @@ So: read/navigation operations return results directly; **rename** returns `pend
 **Optional LSP sub-operations (post-MVP):** `lsp.format` (textDocument/formatting, rangeFormatting) and `lsp.code_action` (textDocument/codeAction → workspace/applyEdit) can be added so agents can "format file X" or "apply quick fix"; both write buffers and should require **ask** (or user approval). See Plans/LSPSupport.md §9.1.
 
 ### 3.5 Per-tool semantics (I/O, errors, limits)
+
+The following contracts define the minimum runtime envelopes for the core built-in tools. Provider-native names may differ, but the registry must normalize them to these contracts before persistence, analytics, or agent-visible result handling.
+
+#### 3.5.1 `bash` contract
+
+**Input parameters**
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `command` | string | yes | Shell command text to execute in the project/workspace environment. |
+| `mode` | enum (`"sync"` \| `"async"`) | no | Execution mode. Default `sync`. `sync` waits through `initial_wait`; `async` returns immediately with a live shell handle. |
+| `initial_wait` | integer seconds | no | Sync-mode wait window before returning partial output and a running shell handle. Default `30`; must stay within the runtime's accepted range. |
+| `shellId` | string | no | Existing shell/session binding to reuse for stateful commands; omitted to create a new shell binding. |
+| `detach` | boolean | no | Async-only. When `true`, the process is fully detached and survives client shutdown; when `false`, it remains attached to the shell session. |
+
+**Successful output**
+
+- Completed sync result: `{ shellId, status: "completed", stdout, stderr, exit_code }`
+- Sync still running after `initial_wait`: `{ shellId, status: "running", stdout, stderr, exit_code: null }`
+- Async launch: `{ shellId, status: "running", detach, pid? }`
+
+`stdout` and `stderr` are strings; `exit_code` is an integer on completion and `null` while still running.
+
+**Error cases**
+
+| Code | Meaning |
+|------|---------|
+| `validation_error` | Invalid parameter combination, such as `detach` without `mode: "async"` or malformed `initial_wait`. |
+| `permission_denied` | Tool blocked by tool policy before execution. |
+| `filesafe_blocked` | Shell command rejected by FileSafe, command blocklist, or path guard. |
+| `shell_not_found` | Referenced `shellId` does not exist or is no longer active. |
+| `spawn_failed` | Runtime could not start the shell or child process. |
+| `output_limit_exceeded` | Output exceeded cap and was truncated or the command was aborted per runtime policy. |
+| `timeout` | Hard execution ceiling expired before process completion. |
+
+**Timeout behavior**
+
+- Default sync wait window: `30s` via `initial_wait`.
+- Recommended hard execution ceiling: `30m` per shell command unless a stricter runner limit is configured.
+- If `initial_wait` expires first, the command remains live and returns `status: "running"` with partial `stdout` / `stderr`.
+- If the hard execution ceiling expires, the runtime terminates the process and returns `{ shellId, status: "timed_out", stdout, stderr, exit_code: null, error: { code: "timeout" } }`.
+
+#### 3.5.2 `edit` contract
+
+**Input parameters**
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `path` | string | yes | Target file path. Must resolve inside an allowed workspace root. |
+| `old_str` | string | yes | Exact text to locate before replacement. |
+| `new_str` | string | yes | Replacement text to write atomically in place of `old_str`. |
+
+**Successful output**
+
+`{ status: "success", path, replacements: [{ start_line, end_line }], line_count_changed, bytes_changed }`
+
+The runtime should report the affected line span(s) so reveal, diff, and audit surfaces can link directly to the mutation.
+
+**Error cases**
+
+| Code | Meaning |
+|------|---------|
+| `validation_error` | Missing parameter, invalid path, or empty replacement contract. |
+| `permission_denied` | `edit` denied by tool policy. |
+| `filesafe_blocked` | Path or write scope rejected by FileSafe. |
+| `path_not_found` | Target file does not exist. |
+| `replace_miss` | `old_str` was not found exactly once as required by the tool contract. |
+| `replace_conflict` | Multiple ambiguous matches or file changed during validation. |
+| `encoding_error` | File content could not be decoded/rewritten under supported encoding rules. |
+| `timeout` | Atomic edit did not complete before the runner ceiling. |
+
+**Timeout behavior**
+
+- Recommended default timeout: `10s` per edit request.
+- On timeout, the operation must fail atomically: no partial file rewrite, and the response is `{ status: "timed_out", path, error: { code: "timeout" } }`.
+
+#### 3.5.3 `view` contract (canonical `read`)
+
+Provider-native `view` maps to the canonical registry tool `read`.
+
+**Input parameters**
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `path` | string | yes | File or directory path to inspect. |
+| `view_range` | array `[start_line, end_line]` | no | Inclusive 1-based line range. `-1` as `end_line` means "to end of file". |
+
+**Successful output**
+
+- File read: `{ path, kind: "file", content, lines: [{ line_number, text }], truncated? }`
+- Directory read: `{ path, kind: "directory", entries: string[] }`
+
+For file reads, `content` preserves line numbering in the agent-visible rendering, and `lines[]` is the structured equivalent used by downstream tooling.
+
+**Error cases**
+
+| Code | Meaning |
+|------|---------|
+| `validation_error` | Invalid path or malformed `view_range`. |
+| `permission_denied` | `read` / `view` denied by tool policy. |
+| `filesafe_blocked` | Sensitive-path or read guard rejected the request. |
+| `path_not_found` | Target path does not exist. |
+| `binary_unsupported` | File is binary and cannot be rendered as numbered text. |
+| `too_large` | File exceeds the read cap without an allowed ranged request. |
+| `timeout` | Read did not complete before the runner ceiling. |
+
+**Timeout behavior**
+
+- Recommended default timeout: `10s` per read request.
+- On timeout, return `{ path, status: "timed_out", error: { code: "timeout" } }`; do not fabricate missing lines.
+
+#### 3.5.4 `grep` contract
+
+**Input parameters**
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `pattern` | string | yes | Regex or literal search expression. |
+| `path` | string | no | Root directory or file to search within. Default = current workspace root. |
+| `glob` | string | no | Optional file-pattern filter such as `*.rs` or `src/**/*.ts`. |
+| `output_mode` | enum (`"content"` \| `"files_with_matches"` \| `"count"`) | no | Result shape selector. Default `files_with_matches`. |
+| `flags` | object | no | Search modifiers such as `case_insensitive`, `multiline`, `line_numbers`, `before_context`, `after_context`, or `head_limit`. |
+
+**Successful output**
+
+`{ pattern, path, output_mode, matches }`
+
+Where `matches` is:
+- `content`: array of `{ path, line_number?, line_text, context_before?, context_after? }`
+- `files_with_matches`: array of `{ path }`
+- `count`: array of `{ path, count }`
+
+**Error cases**
+
+| Code | Meaning |
+|------|---------|
+| `validation_error` | Invalid regex, incompatible flags, or malformed glob. |
+| `permission_denied` | `grep` denied by tool policy. |
+| `filesafe_blocked` | Search scope includes blocked or sensitive paths. |
+| `path_not_found` | Requested search root does not exist. |
+| `backend_unavailable` | Search backend (indexed or raw) could not be initialized. |
+| `result_limit_exceeded` | Match set exceeded the capped response window and was truncated. |
+| `timeout` | Search did not complete before the query ceiling. |
+
+**Timeout behavior**
+
+- Default timeout: `30s`.
+- On timeout, return `{ pattern, path, status: "timed_out", error: { code: "timeout" } }`. Implementations may include `partial: true` only when the runtime can prove returned hits were fully verified.
+
+#### 3.5.5 `glob` contract
+
+**Input parameters**
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `pattern` | string | yes | Glob expression such as `**/*.md`. |
+| `path` | string | no | Search root. Default = current workspace root. |
+
+**Successful output**
+
+`{ pattern, path, paths: string[] }`
+
+The returned `paths` array contains normalized file paths in deterministic order after ignore-rule filtering.
+
+**Error cases**
+
+| Code | Meaning |
+|------|---------|
+| `validation_error` | Malformed glob expression or invalid root path. |
+| `permission_denied` | `glob` denied by tool policy. |
+| `filesafe_blocked` | Requested scope includes blocked paths. |
+| `path_not_found` | Root path does not exist. |
+| `timeout` | Enumeration exceeded the runtime ceiling. |
+
+**Timeout behavior**
+
+- Recommended default timeout: `10s`.
+- On timeout, return `{ pattern, path, status: "timed_out", error: { code: "timeout" } }`.
+
+#### 3.5.6 `create` contract (canonical `write`)
+
+Provider-native `create` maps to the canonical registry tool `write`.
+
+**Input parameters**
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `path` | string | yes | Target file path to create or overwrite, subject to write-scope policy. |
+| `file_text` | string | yes | Full text payload to persist. |
+
+**Successful output**
+
+`{ status: "success", path, created: boolean, bytes_written, line_count }`
+
+`created = true` when the path did not previously exist; `false` when the tool overwrote an existing file under an allowed policy.
+
+**Error cases**
+
+| Code | Meaning |
+|------|---------|
+| `validation_error` | Missing parameters, invalid path, or disallowed text encoding. |
+| `permission_denied` | `write` / `create` denied by tool policy. |
+| `filesafe_blocked` | Write path rejected by FileSafe or out of allowed scope. |
+| `parent_missing` | Parent directory does not exist and auto-create is disabled. |
+| `already_exists` | Policy forbids overwriting an existing file. |
+| `io_error` | Underlying filesystem write failed. |
+| `timeout` | File write did not complete before the runner ceiling. |
+
+**Timeout behavior**
+
+- Recommended default timeout: `10s`.
+- On timeout, the write must fail atomically and return `{ status: "timed_out", path, error: { code: "timeout" } }`.
+
 ### 3.5A `skill` tool runtime contract
+
+The `skill` tool is the canonical on-demand runtime skill access mechanism.
+
+**Input schema**
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `skill` | string | yes | Canonical skill name to invoke, e.g. `frontend-design`, `audit`, or another registered skill id. |
+
+**Capability check**
+
+- Before invocation, the runtime must resolve `skill` against the currently available skill registry (project skills, user-installed skills, or built-in skill manifests exposed to the conversation).
+- Availability check is structural, not fuzzy: exact canonical skill id match first; aliases may be supported only if the registry explicitly defines them.
+- Permission and mode gates still apply after lookup; a present skill may still be denied by policy or by run-mode constraints.
+
+**Sandboxing model**
+
+- Skills run in the main conversation context rather than an isolated child-run context.
+- A skill shares the active conversation history, active tool set, and current permission envelope.
+- Invoking a skill does **not** mint a separate task/agent runtime unless the skill itself chooses to call `task` as part of its implementation.
+
+**Output contract**
+
+- Successful skill execution returns its output as part of the normal conversation flow.
+- Any tool calls made while the skill is active are attributed to the same main conversation/tool stream unless a downstream child agent is explicitly spawned.
+- The registry should expose `{ skill, status: "completed", summary? }` metadata internally for audit and replay, even if the user-facing surface only shows the resulting conversation turn.
+
+**Error semantics**
+
+| Code | Meaning |
+|------|---------|
+| `skill_not_found` | Requested skill name is not present in the available skill registry. |
+| `permission_denied` | Skill invocation blocked by tool policy or run mode. |
+| `already_running` | The same skill is already active and the runtime rejects re-entry. |
+| `skill_failed` | Skill started but failed internally; include causal context and any underlying tool error summary. |
+
+The user-facing error text should be explicit: not found → "skill not found"; already running → rejection without re-entry; internal failure → error plus context sufficient for debugging.
 
 ### 3.5B `question` tool runtime contract
 The simplified single-string `question` contract is superseded by a two-mode contract.
@@ -352,19 +602,15 @@ Write-like operation retained:
 
 ContractRef: ContractName:Plans/LSPSupport.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/FinalGUISpec.md
 
-The `skill` tool is the canonical on-demand runtime skill access mechanism.
-
-Rules:
-- it resolves skills by canonical skill id from the registry
-- permission checks apply before returning skill content
+Additional rules:
 - it complements, but does not replace, context bundling performed by the context compiler
 - it does not require provider-native skill installation to function in MVP
 
 ContractRef: ContractName:Plans/Skills_System.md, ContractName:Plans/FileSafe.md, ContractName:Plans/Prompt_Pipeline.md
 
-#### 3.5.A Additional semantics: chatsearch / logs / repo import and codesearch multi-tier (MVP)
+#### 3.5.A Additional semantics: chatsearch / logs / repo import and codesearch multi-lane (MVP)
 
-This subsection supplements the per-tool table below with required behavior for new MVP tools and multi-tier search backends.
+This subsection supplements the per-tool table below with required behavior for new MVP tools and multi-lane search backends.
 
 **chatsearch (project chat index)**
 - **Input:** `query: string`, optional `filters: { thread_id?, time_range? }`, `k?: number`.
@@ -375,7 +621,7 @@ This subsection supplements the per-tool table below with required behavior for 
 
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Permissions_System.md
 
-**codesearch (project workspace code search; MVP multi-tier)**
+**codesearch (project workspace code search; MVP multi-lane)**
 - **Primary backend:** Tantivy code index (filesystem watcher + chunked documents; see Plans/storage-plan.md).
 - **Secondary backend:** LSP `workspace/symbol` and/or `documentSymbol` for symbol-aware search when LSP is active (Plans/LSPSupport.md).
 - **Fallback backend:** text grep (`grep` tool, index-accelerated when sparse n-gram index is available) when Tantivy index is unavailable or query requires regex semantics.
@@ -433,6 +679,110 @@ ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0
 - **Input:** `{ source: string (URL or owner/repo), dest_path?, mode?: "new_project"|"add_workspace_root"|"temporary_mount" }`.
 
 ### 3.6 Task tool and the 42 subagents (Plans)
+
+The `task` tool launches a specialized agent and returns either an immediate result (`sync`) or a live background handle (`background`).
+
+**Input schema**
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `name` | string | yes | Short agent label used to derive a human-readable runtime handle. |
+| `prompt` | string | yes | Full task instructions delivered to the selected agent. |
+| `agent_type` | enum | yes | Selected agent family from the allowed registry below. |
+| `description` | string | yes | 3-5 word UI/telemetry summary of the launch purpose. |
+| `mode` | enum (`"sync"` \| `"background"`) | no | Execution delivery mode. Default `sync`. |
+| `model` | string | no | Optional model override when the selected agent runtime supports multiple models. |
+
+**Agent type enum**
+
+Built-in agent families:
+- `explore`
+- `task`
+- `general-purpose`
+- `code-review`
+- `configure-copilot`
+
+Custom agent families currently recognized by the runtime:
+- `accessibility-tester`
+- `api-designer`
+- `architect-reviewer`
+- `backend-developer`
+- `code-reviewer`
+- `compliance-auditor`
+- `context-manager`
+- `csharp-developer`
+- `database-administrator`
+- `debugger`
+- `deployment-engineer`
+- `devops-engineer`
+- `frontend-developer`
+- `fullstack-developer`
+- `java-architect`
+- `javascript-pro`
+- `knowledge-synthesizer`
+- `laravel-specialist`
+- `mobile-developer`
+- `nextjs-developer`
+- `performance-engineer`
+- `php-pro`
+- `product-manager`
+- `project-manager`
+- `prompt-engineer`
+- `python-pro`
+- `qa-expert`
+- `react-specialist`
+- `rust-engineer`
+- `security-auditor`
+- `security-engineer`
+- `sql-pro`
+- `swift-expert`
+- `technical-writer`
+- `test-automator`
+- `typescript-pro`
+- `ui-designer`
+- `ux-researcher`
+- `vue-expert`
+- `websocket-engineer`
+
+The runtime may maintain a broader PM persona/subagent registry, but `task.agent_type` must validate against the active agent registry exposed to the launch path. Where PM package/node routing also applies, the runtime must map the chosen agent type into that registry without silently changing the requested role.
+
+**Dispatch contract**
+
+- `task` snapshots the current working directory, relevant conversation context, permission ceiling, and tool availability, then routes the request to the selected agent runtime.
+- The child agent is context-isolated from the parent turn buffer except for the prompt payload and explicit runtime metadata supplied at launch.
+- Child execution cannot mutate the parent conversation state directly; it returns results through the `task` result channel or, in background mode, through `read_agent` / `write_agent`.
+- Sync mode blocks until completion or failure and returns the terminal result in the same tool response.
+- Background mode returns immediately after the child is enqueued or started, then delivers further results through the agent handle.
+
+**Successful output**
+
+- Sync: `{ task_id, status: "completed" | "failed", agent_type, name, result, summary? }`
+- Background launch: `{ task_id, agent_id, status: "running" | "idle", agent_type, name }`
+
+`result` may contain agent-produced text, structured findings, or abbreviated command output depending on agent type.
+
+**`task_id` and `agent_id` contract**
+
+- `task_id` is the unique identifier for a single `task` invocation. It should be generated as an opaque string with per-invocation uniqueness (for example `task-<timestamp>-<nonce>`), persisted in telemetry, and never reused.
+- `agent_id` is the live handle for a background-capable child agent. It should be unique across active agents in the session and treated as opaque even if rendered as a human-readable slug derived from `name`.
+- Use `agent_id` with `read_agent(agent_id, ...)` to fetch status/results and `write_agent(agent_id, message)` to deliver follow-up turns. `task_id` is for audit, correlation, and persistence; `agent_id` is for live interaction.
+
+**Error cases**
+
+| Code | Meaning |
+|------|---------|
+| `validation_error` | Missing required fields or invalid `mode` / `model` combination. |
+| `unknown_agent_type` | `agent_type` is not in the allowed enum for the current runtime. |
+| `permission_denied` | `task` launch blocked by tool policy or child-run ceiling. |
+| `dispatch_failed` | Runtime could not enqueue or start the selected agent. |
+| `model_unavailable` | Requested model override is not supported for the chosen agent. |
+| `timeout` | Sync execution exceeded the runner ceiling before terminal completion. |
+
+**Timeout behavior**
+
+- Recommended default sync timeout: `10m` unless a narrower agent-specific ceiling is configured.
+- On sync timeout, return `{ task_id, status: "timed_out", error: { code: "timeout" } }`.
+- Background mode does not time out at launch; the spawned agent keeps its own lifecycle and may later report `timed_out`, `failed`, `cancelled`, or `completed` through `read_agent`.
 
 ### 3.6A Task runtime addendum
 
@@ -782,7 +1132,7 @@ The following are **optional** improvements. MVP is defined by §3 built-in tool
 |------------|-------------|-------------------|
 | **Per-tool rate limits** | Limit invocations per tool per run/session (e.g. max 100 grep calls). | Reduces runaway tool use; configurable per tool or global. |
 | **Tool usage dashboard** | Dashboard widget: most-used tools, latency p50/p95, error rate by tool (from seglog rollups). | storage-plan + usage-feature; already implied by analytics scan. |
-| **Permission presets** | Presets: "Read-only" (deny edit, bash, webfetch, websearch), "Plan mode" (allow read/grep/glob/list only), "Full" (allow all with ask for bash/edit). | Simplifies config; maps to assistant modes (Ask, Plan, Agent). |
+| **Permission presets** | Presets: "Read-only" (deny edit, bash, webfetch, websearch), "Plan mode" (allow information-gathering tools such as read/grep/glob/list/question/skill/todoread/todowrite/capabilities.get/read-only lsp/webextract/webresearch but deny state mutation), "Full" (allow all with ask for bash/edit). | Simplifies config; maps to assistant modes (Ask, Plan, Agent). Plan mode allows information gathering but not state mutation. |
 | **Custom tool templates** | Project or org templates for common custom tools (e.g. "run tests", "deploy staging") with schema and default permission. | Encourages reuse; catalog in docs or GUI. |
 | **MCP tool allowlist** | Option to allow only specific MCP tools by name (e.g. only `context7_query_docs`) even if server is enabled. | Finer control than server-level enable; complements wildcards. |
 | **Audit log for denied/ask** | Explicit audit event when a tool is denied or when user declines an "ask". | Helps compliance and debugging; store in seglog with tool name, reason, timestamp. |
@@ -817,10 +1167,10 @@ Presets apply batch permission rules. Canonical preset definitions: `Plans/Permi
 | Preset | Effect on tool_permissions |
 |--------|----------------------------|
 | **Read-only** | `edit`, `bash`, `webfetch`, `websearch`, `task`, `repo.import` → deny; all others allow (or leave unset to use defaults). |
-| **Plan mode** | Only `read`, `grep`, `glob`, `list`, `codesearch`, `chatsearch`, `logsearch` → allow; everything else → deny. |
+| **Plan mode** | Allow `read`, `grep`, `glob`, `list`, `codesearch`, `chatsearch`, `logsearch`, `question`, `skill`, `todoread`, `todowrite`, `capabilities.get`, read-only `lsp` operations, `webextract`, and `webresearch`; deny `create` / `write`, `edit`, `patch`, `multiedit`, `repo.import`, deployment-capable tools, and any `bash` invocation classified as write-capable or deployment-oriented (MVP-safe preset: deny `bash` entirely). |
 | **Full** | All tools → allow except `bash`, `edit`, `repo.import` → ask. |
 
-Store as the same TOML config; presets are a GUI shortcut to set multiple keys at once.
+Store as the same TOML config; presets are a GUI shortcut to set multiple keys at once. Plan mode allows information gathering but not state mutation.
 ### 10.5 GUI ↔ config serialization
 
 The Permissions GUI is specified in `Plans/Permissions_System.md` §10 and `Plans/FinalGUISpec.md` §7.4.10. The tool registry supplies the list of known tool names (built-in + MCP-discovered) to populate the GUI's per-tool list.
@@ -863,12 +1213,12 @@ No hardcoded tool names in runner; all names come from registry + policy.
 | **newtools.md** | GUI testing tools catalog, **MCP settings in GUI** (Context7, others), MCP config for all providers, cited web search (MCP option). Tool support here; MCP config/GUI there. |
 | **storage-plan.md** | Tool invocation/completion events in seglog; tool latency/errors in analytics scan → redb; dashboard/usage rollups. |
 | **agent-rules-context.md** | Rules and context injected into every run; tool policy and safe-edit (FileSafe) align with central policy. |
-| **orchestrator-subagent-integration.md** | Run config and tier wiring; **42 subagents** canonical list (§4, subagent_registry); task tool validates subagent_type against this list. MCP and tool flags passed to platform runner from same run-config build. |
+| **orchestrator-subagent-integration.md** | Run config and node/package wiring; **42 subagents** canonical list (§4, subagent_registry); task tool validates subagent_type against this list. MCP and tool flags passed to platform runner from same run-config build. |
 | **interview-subagent-integration.md** | Interview phase assignments use the same **42 subagents**; config (framework tools, MCP enabled) drives test strategy and PRD; same MCP/tool config available to interview runs. |
 | **FileSafe.md** | Safe-edit and path/URL guards; runs in addition to tool permissions; map to central tool policy and patch/apply/verify pipeline. |
 | **usage-feature.md** | Tool usage and cost can be reflected in usage rollups (from seglog/analytics). |
 | **LSPSupport.md** | LSP MVP; lsp tool promoted (§3.4, §3.5); diagnostics in context; §9.1. |
-| **human-in-the-loop.md** | "Ask" permission and tier-boundary approval; orchestrator ask vs HITL behavior. |
+| **human-in-the-loop.md** | "Ask" permission and seam-boundary approval; orchestrator ask vs HITL behavior. |
 | **Media_Generation_and_Capabilities.md** | SSOT for `capabilities.get` and `media.generate` internal tools (§3.1); response shape, disabled reasons, slot extraction grammar, capability picker dropdown, backend routing, and UI copy. This doc registers the tools; that doc defines their full contracts. |
 
 ---

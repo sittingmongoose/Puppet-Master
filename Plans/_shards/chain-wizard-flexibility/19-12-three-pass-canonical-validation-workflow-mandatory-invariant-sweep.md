@@ -116,11 +116,19 @@ ContractRef: ContractName:Plans/Project_Output_Artifacts.md, ContractName:Plans/
 - Passes run **serially** (Pass 1 → Pass 2 → Pass 3); each pass receives the artifact set as corrected by the previous pass.
 - Per-pass provider and model are configurable (see `Plans/assistant-chat-design.md §26`); defaults are deterministic and safe when not explicitly configured.
 - Each `validation_pass_report` MUST include `provider` and `model` values matching resolved app settings keys `validation_sweep.passN.provider` and `validation_sweep.passN.model` for the same pass (see `Plans/assistant-chat-design.md §26` and `Plans/Project_Output_Artifacts.md §10.2`).
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Project_Output_Artifacts.md
 - Exactly three pass reports are emitted per sweep. If a later pass does not execute because an earlier pass blocked progress, emit the later report with `pass_verdict: "skipped"` and a `verdict_reason` explaining which earlier pass blocked it.
 - The **final project artifacts** reflect all post-pass corrections applied by Passes 2 and 3.
 - **If Pass 1 fails:** Pass 2 and Pass 3 are emitted as `skipped`; the workflow surfaces the Pass 1 failure to the user.
-- **If Pass 2 ends with unresolved `needs_user_clarification[]`:** transition the wizard to `attention_required`, emit Pass 3 as `skipped`, and preserve the corrected-but-blocked artifact set for resume.
+- **If Pass 2 ends with non-empty `needs_user_clarification[]`:** transition the wizard to the clarification/resume path, emit Pass 3 as `skipped`, and preserve the corrected-but-blocked artifact set for resume.
 - **If Pass 2 or Pass 3 fails** for other unresolved findings: The failure is surfaced to the user; however, the corrected artifact set (with all resolvable fixes already applied) is still written.
+
+Artifact distinction (normative):
+
+- `needs_user_clarification[]`: questions the wizard needs answered by the user before proceeding. Schema: `{ question_id, question_text, context, priority, category }`
+- `unresolved_findings[]`: issues discovered during analysis that could not be auto-resolved. Schema: `{ finding_id, finding_type, description, severity, suggested_resolution?, blocking: bool }`
+
+These are distinct artifacts. `needs_user_clarification` drives the interview UI; `unresolved_findings` drives the review/resolution UI.
 
 ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Project_Output_Artifacts.md
 

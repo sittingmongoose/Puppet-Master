@@ -1,6 +1,6 @@
 ## Canonical Wizard Blocked-State Reconciliation Addendum (2026-03-09)
 
-`blocked` is a canonical `wizard_status` value everywhere the enum is defined.
+See canonical `wizard_status` definition in §2.1.
 
 ### Escalation rule
 Remain in `attention_required` while the current clarification/review loop can still resolve the issue set inside the current flow.
