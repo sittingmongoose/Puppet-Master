@@ -316,15 +316,15 @@ ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractNa
 
 ### 7. Failure classes and retry entry points
 
-The executor classifies every failed or non-executed attempt into exactly one canonical classifier family before deciding the next action: `failure_class` for classified attempt outcomes, or `blocked_reason_code` for unresolved prerequisites and intentionally prevented work.
+The executor classifies every failed or non-executed attempt into one canonical `failure_class` / `blocked_reason_code` family before deciding the next action.
 
 ContractRef: ContractName:Plans/Decision_Policy.md, ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Contracts_V0.md
 
 ### 7.1 Classified outcome matrix
-
 | `classifier_family` | `classifier` | Max retries | Backoff | Auto-retry? | Notes |
 |---|---|---|---|---|---|
-| `failure_class` | `provider_transient` | 3 | 1s / 2s / 4s | Yes | network errors, 429, transient 5xx |
+| `failure_class` | `provider_transient` | 3 | 1s / 2s / 4s | Yes | network errors and transient 5xx only |
+| `failure_class` | `rate_limited` | 3 | `Retry-After` or 30s fallback before bounded retry continues | Yes | 429 / provider pressure remains distinct from generic transient failure |
 | `failure_class` | `structured_output_invalid` | 2 | none | Yes | malformed provider structured output |
 | `failure_class` | `verification_failed` | 0 | — | No | may spawn remediation or review flow; no blind retry |
 | `failure_class` | `reviewer_findings` | 0 | — | No | may spawn remediation or remain pending review |
@@ -339,13 +339,14 @@ ContractRef: ContractName:Plans/Decision_Policy.md, ContractName:Plans/orchestra
 | `failure_class` | `graph_integrity` | 0 | — | No | hard fail; replan path only |
 | `blocked_reason_code` | `replan_required` | 0 | — | No | remain blocked until patch or replan is applied |
 
-For `provider_transient`, retry backoff is exponential with base `1s`, factor `2x`, and cap `4s`: `1s → 2s → 4s`.
+ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/GitHub_API_Auth_and_Flows.md, ContractName:Plans/Contracts_V0.md
 
-ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/GitHub_API_Auth_and_Flows.md
+Retry rules:
+- `provider_transient` uses exponential backoff with base `1s`, factor `2x`, and cap `4s`: `1s -> 2s -> 4s`
+- `rate_limited` remains distinct from `provider_transient`; executor policy MUST preserve that distinction when deciding backoff, surfacing state, or opening circuit breakers
+- generic retry without prior classification is prohibited
 
-Generic retry without prior classification is prohibited.
-
-ContractRef: ContractName:Plans/Decision_Policy.md, ContractName:Plans/Architecture_Invariants.md
+ContractRef: ContractName:Plans/Decision_Policy.md, ContractName:Plans/Architecture_Invariants.md, ContractName:Plans/CLI_Bridged_Providers.md
 
 ### 7.2 Doom-loop guard
 
@@ -354,10 +355,13 @@ If the same triple `(tool_name, serialized_args_hash, error_message)` is observe
 ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Contracts_V0.md
 
 ### 7.3 Signal handling and process lifecycle
+PM entrypoints establish the canonical shutdown root with `signal.NotifyContext` or an equivalent once-owned signal fan-out before any managed subprocess is started.
+
+ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md
 
 Provider processes receive `SIGTERM` / `SIGINT` with a 5-second grace window. MCP and LSP subprocesses receive a 3-second grace window. `SIGHUP` reloads config. All managed subprocesses run in isolated process groups.
 
-ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/storage-plan.md
+ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Architecture_Invariants.md
 
 ### 8. Safe points
 
@@ -460,11 +464,13 @@ Queue analysis MUST rerun on node completion, prerequisite resolution, verificat
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Orchestrator_Page.md
 
 ### Blocked and retry behavior
-The executor MUST classify every non-success outcome before applying policy. Canonical `failure_class` values include `provider_transient`, `structured_output_invalid`, `verification_failed`, `reviewer_findings`, `auth_expired`, `storage_io`, `quota_exceeded`, and `graph_integrity`. Canonical `blocked_reason_code` values include `permission_denied`, `user_declined`, `headless_ask_denied`, `filesafe_blocked`, `external_side_effect_blocked`, `replan_required`, and the additional blocked-state codes owned by `Plans/Contracts_V0.md` and `Plans/Decision_Policy.md` such as `waiting_approval`, `clarification_blocked`, `worktree_conflict`, `dirty_worktree`, `plugin_hook_blocked`, `validation_blocked`, and `remediation_ceiling_exceeded`.
+The executor MUST classify every non-success outcome before applying policy. Canonical `failure_class` values include `provider_transient`, `rate_limited`, `structured_output_invalid`, `verification_failed`, `reviewer_findings`, `auth_expired`, `storage_io`, `quota_exceeded`, and `graph_integrity`. Canonical `blocked_reason_code` values include `permission_denied`, `user_declined`, `headless_ask_denied`, `filesafe_blocked`, `external_side_effect_blocked`, `replan_required`, and the additional blocked-state codes owned by `Plans/Contracts_V0.md` and `Plans/Decision_Policy.md` such as `waiting_approval`, `clarification_blocked`, `worktree_conflict`, `dirty_worktree`, `plugin_hook_blocked`, `validation_blocked`, and `remediation_ceiling_exceeded`.
+
 ContractRef: ContractName:Plans/Decision_Policy.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/orchestrator-subagent-integration.md
 
 Generic blind retry is forbidden. Retry, backoff, remediation, rollback-to-safe-point, and escalation all flow from the classified outcome, and a single decision point MUST NOT treat the same situation as both a `failure_class` and a `blocked_reason_code`.
-ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Decision_Policy.md
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Decision_Policy.md, ContractName:Plans/CLI_Bridged_Providers.md
 
 ### Attempt identity and safe points
 Every dispatch creates or reuses a first-class `attempt_id`. Mutation-capable attempts and remediation apply steps MUST create a runtime `safe_point_id` before execution. Safe points are runtime recovery anchors only; they are not restore points.

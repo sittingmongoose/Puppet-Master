@@ -1,0 +1,152 @@
+# FIDELITY RECOVERY PLAN
+
+run_id: r-20260328-192850-10
+source_audit: Plans/.pipeline/ledger_fidelity_report.txt
+packet: Plans/.pipeline/research_packet.json
+ledger: Plans/.pipeline/runs/r-20260328-192850-10/working_ledger.md
+
+## 1) RECOVERY SUMMARY
+
+total active fidelity blockers: 8
+
+main recovery themes:
+- expand under-specified owner canon in `Plans/storage-plan.md` and `Plans/FileSafe.md` where the current packet already touched the right file but not the full obligation
+- retire stale same-file residue in checklist/example sections so resolved canon is not re-opened by older wording
+- fix wrong owner routing so `Plans/Run_Modes.md` points context-compilation readers to `Plans/Prompt_Pipeline.md`, not `Plans/FileSafe.md`
+- eliminate same-file contradictory billing/attribution canon inside `Plans/Contracts_V0.md`
+- regenerate the packet: three blockers need fuller content in already-packetized anchors, and five blockers require new anchors not present in the current packet
+
+## 2) BLOCKER-BY-BLOCKER RECOVERY MAP
+
+### FIDELITY-ID: LF-001
+- where: `Plans/storage-plan.md#Naming and migration rules`
+- issue type: owner-doc under-specification + packet drift
+- owner doc: `Plans/storage-plan.md`
+- affected consumer/mirror docs: `Plans/FileSafe.md`, `Plans/Contracts_V0.md`
+- likely heading/section: `### Naming and migration rules`
+- required operation: `replace_section`
+- stale-residue retirement needed: no
+- packet regeneration needed: yes
+- why this exact recovery shape is needed:
+  - the current packet already targets `### Naming and migration rules`, but the emitted section only probes durable-store safety; it does not lock the same-directory atomic rewrite contract for storage-owned rewrites
+  - this is not a small additive note; the section needs a coherent owner-level rule covering seglog segment rewrites, redb sidecars/state files, config/state files, and any non-append rewrite
+  - using `replace_section` prevents another partial patch that leaves the owner rule split across `storage-plan.md` and `FileSafe.md`
+
+### FIDELITY-ID: LF-002
+- where: `Plans/FileSafe.md#11.1.2a Optimistic concurrency for mutable rewrites`
+- issue type: owner-doc under-specification + packet drift
+- owner doc: `Plans/FileSafe.md`
+- affected consumer/mirror docs: `Plans/WorktreeGitImprovement.md`, `Plans/storage-plan.md`
+- likely heading/section: `#### 11.1.2a Optimistic concurrency for mutable rewrites`
+- required operation: `replace_section`
+- stale-residue retirement needed: no
+- packet regeneration needed: yes
+- why this exact recovery shape is needed:
+  - the current packet already replaces this exact heading, but it stops at a generic hard-error note for git/shell subprocesses
+  - the missing canon is command-specific and belongs inside the existing snapshot/undo isolation contract: `git add` / `commit` / `stash` / `checkout` hard-error behavior plus post-`git add` verification via `git status --porcelain`
+  - an `insert_after` would risk leaving the section split between generic and exact rules; `replace_section` keeps the mutation-integrity contract self-contained
+
+### FIDELITY-ID: LF-003
+- where: `Plans/storage-plan.md#Naming and migration rules`
+- issue type: owner-doc under-specification + packet drift
+- owner doc: `Plans/storage-plan.md`
+- affected consumer/mirror docs: `Plans/usage-feature.md`, `Plans/Executor_Protocol.md`
+- likely heading/section: `### Naming and migration rules`
+- required operation: `replace_section`
+- stale-residue retirement needed: no
+- packet regeneration needed: yes
+- why this exact recovery shape is needed:
+  - the ledger requires a concrete bounded-collections matrix, but the live section preserves only the abstract TTL/max-cardinality rule
+  - because LF-001 and LF-003 hit the same owner section, the safe recovery shape is one regenerated `replace_section` that carries both the storage-owned rewrite canon and the concrete bounded-collections list/matrix together
+  - splitting this into separate additive edits would increase the chance of another over-summarized owner section
+
+### FIDELITY-ID: LF-004
+- where: `Plans/Contracts_V0.md#4.1 AuthState`
+- issue type: contradictory canon + stale residue + packet drift
+- owner doc: `Plans/Contracts_V0.md`
+- affected consumer/mirror docs: `Plans/usage-feature.md`, `Plans/Multi-Account.md`, `Plans/CLI_Bridged_Providers.md`
+- likely heading/section: `### 4.1 AuthState`
+- required operation: `replace_section`
+- stale-residue retirement needed: yes
+- packet regeneration needed: yes
+- why this exact recovery shape is needed:
+  - the JSON example still null-pads `selected_billing_entity_id`, which directly contradicts the later conditional-omission rule
+  - this is stale same-file canon, not just a missing sentence; the example itself must be retired
+  - `replace_section` is required because appending a clarifier below the section would leave the contradictory example live and implementation-visible
+
+### FIDELITY-ID: LF-005
+- where: `Plans/FileSafe.md#9 Implementation Checklist`
+- issue type: stale residue + packet drift
+- owner doc: `Plans/FileSafe.md`
+- affected consumer/mirror docs: none outside the same file; this is same-file checklist residue
+- likely heading/section: `## 9. Implementation Checklist`
+- required operation: `replace_section`
+- stale-residue retirement needed: yes
+- packet regeneration needed: yes
+- why this exact recovery shape is needed:
+  - the checklist still presents resolved worktree/realpath/alias handling as open implementation work
+  - this blocker is specifically stale same-file residue; a note added elsewhere would not stop implementers from reading the checklist as current canon
+  - `replace_section` should retire or restate the stale bullets so the checklist becomes aligned with the already-locked owner sections and does not reopen them
+
+### FIDELITY-ID: LF-006
+- where: `Plans/Run_Modes.md#0. Scope and SSOT status`
+- issue type: consumer drift + wrong owner routing + packet drift
+- owner doc: `Plans/Prompt_Pipeline.md`
+- affected consumer/mirror docs: `Plans/Run_Modes.md`
+- likely heading/section: `## 0. Scope and SSOT status` / `### SSOT references (DRY)`
+- required operation: `replace_section`
+- stale-residue retirement needed: yes
+- packet regeneration needed: yes
+- why this exact recovery shape is needed:
+  - the prompt/context owner is already explicit in `Plans/Prompt_Pipeline.md#0. Scope and SSOT status`, so the failure is consumer routing drift in `Run_Modes.md`
+  - the stale FileSafe ownership reference is inside the SSOT routing list itself, so the recovery must replace that routing block rather than append another note beneath it
+  - this is wrong owner routing, and it should be fixed in the consumer doc rather than by broadening `FileSafe.md` again
+
+### FIDELITY-ID: LF-007
+- where: `Plans/Run_Modes.md#7. Mode effects on context management`
+- issue type: consumer drift + wrong owner routing + stale residue + packet drift
+- owner doc: `Plans/Prompt_Pipeline.md`
+- affected consumer/mirror docs: `Plans/Run_Modes.md`
+- likely heading/section: `## 7. Mode effects on context management`
+- required operation: `replace_section`
+- stale-residue retirement needed: yes
+- packet regeneration needed: yes
+- why this exact recovery shape is needed:
+  - the intro text and the mode table both still route detailed context-compilation behavior through `Plans/FileSafe.md`
+  - this is broader than a single line fix; the entire section needs to preserve only mode-specific deltas and point detailed context-compilation/compaction canon to `Plans/Prompt_Pipeline.md`
+  - `replace_section` is the minimum safe operation because both the prose and the table contain the stale routing
+
+### FIDELITY-ID: LF-008
+- where: `Plans/Contracts_V0.md#Billing entity field contract`
+- issue type: contradictory canon + consumer drift + packet drift
+- owner doc: `Plans/Contracts_V0.md`
+- affected consumer/mirror docs: `Plans/usage-feature.md`, `Plans/storage-plan.md`, `Plans/CLI_Bridged_Providers.md`
+- likely heading/section: `### Billing entity field contract`
+- required operation: `replace_section`
+- stale-residue retirement needed: yes
+- packet regeneration needed: yes
+- why this exact recovery shape is needed:
+  - `### Usage attribution contract` was already corrected, but `### Billing entity field contract` still collapses attribution to `(model_id, provider_id, billing_entity_id)` when billing-entity semantics exist
+  - this is same-file contradictory canon: the broken line lives inside the contract doc itself, so it must be retired in place
+  - the current packet only replaces `### Usage attribution contract`; it needs regeneration to add a second anchor for `### Billing entity field contract` so Scribe does not preserve the contradiction
+
+## 3) RERUN RECOMMENDATION
+
+recommended minimum rerun path: full downstream rerun
+
+why:
+- all 8 active blockers require packet regeneration
+- LF-001, LF-002, and LF-003 mean the current packet already targeted the correct owner sections but emitted under-specified content; those anchors must be regenerated, not merely re-scribed
+- LF-004, LF-005, LF-006, LF-007, and LF-008 require new anchors that are not present in the current packet at all
+- because both packet content and packet anchor coverage must change, the safe minimum is:
+  1. reconciliation of the blocked sections
+  2. packet regeneration
+  3. packet shape check
+  4. scribe
+  5. canonicalization / normalization / verifier rerun
+  6. ledger fidelity audit rerun
+
+If upstream operators insist on the named path categories only, this maps to:
+- full downstream rerun
+
+<recovery_plan_ready/>

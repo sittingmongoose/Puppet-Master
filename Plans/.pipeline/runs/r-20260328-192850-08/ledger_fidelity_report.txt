@@ -1,0 +1,197 @@
+1) AUDIT SUMMARY
+
+Overall verdict: the planning docs are **not fidelity-complete for implementation use** for the current packet/run (`r-20260328-192850-08`).
+
+The docs preserve most broad canon, but they do not yet preserve all implementation-grade detail locked in the ledger. The remaining failures are concentrated in owner-doc contradictions, owner-doc thinning of runtime/tool/provider contracts, stale checklist residue, and packet drift that would miss or reopen hardened canon on regeneration.
+
+Main risk themes:
+- runtime stop-reason and timeout taxonomy drift across owner docs
+- child-run authority and timeout inheritance thinner in `Plans/Tools.md` than in orchestrator canon
+- FileSafe/storage safety still lose some locked rewrite/recovery detail
+- usage/storage attribution contracts are thinner than the ledger in a few cross-surface paths
+- provider/MCP adapter specifics were over-summarized in owner docs
+- current packet metadata does not fully reflect post-hardening/post-reconciliation canon
+
+Context note:
+- `Plans/.pipeline/verifier_report.txt` is empty in this run.
+- `Plans/.pipeline/packet_shape_report.txt` passes, so this audit is about semantic carry-through, not anchor mechanics.
+
+2) CHUNKING / DELEGATION SUMMARY
+
+The ledger was split mechanically by heading-owned ranges before semantic review. The lead auditor did not semantically read the full ledger before delegation.
+
+Subauditors used: **7**
+
+Chunk split:
+- Chunk A: ledger lines 1-216
+- Chunk B: ledger lines 217-389
+- Chunk C: ledger lines 390-631
+- Chunk D: ledger lines 632-877
+- Chunk E: ledger lines 878-1049
+- Chunk F: ledger lines 1051-1335
+- Chunk G: ledger lines 1336-1652
+
+Chunk/doc clusters:
+- A -> `Plans/orchestrator-subagent-integration.md`, `Plans/CLI_Bridged_Providers.md`, `Plans/Tools.md`
+- B -> `Plans/Tools.md`, `Plans/FileSafe.md`, `Plans/storage-plan.md`, `Plans/usage-feature.md`, `Plans/Prompt_Pipeline.md`, `Plans/CLI_Bridged_Providers.md`
+- C -> all 8 packet-touched docs
+- D -> all 8 packet-touched docs
+- E -> all 8 packet-touched docs plus packet hardening obligations
+- F -> all 8 packet-touched docs
+- G -> all 8 packet-touched docs
+
+3) LEDGER OBLIGATIONS SUMMARY
+
+Canon-relevant obligations extracted across all chunks: **165**.
+
+Major obligation clusters:
+- PM-native internal orchestration and A2A boundary decisions
+- child-run authority, timeout, teardown, and coordination contracts
+- provider facade, stream normalization, retry, auth, and usage fidelity
+- tool dispatch ordering, truncation handling, MCP lifecycle/schema/OAuth behavior
+- FileSafe atomic rewrite, optimistic concurrency, backups, snapshot isolation, and fail-closed behavior
+- storage durability, projector/checkpoint, lock, migration, and recovery rules
+- usage attribution, budget enforcement, cost-unit, and cross-surface field continuity
+- prompt compaction, cache strategy, reasoning replay, and overflow handling
+- reconciliation/packet hardening directives that determine what future packetization/regeneration will preserve
+
+Clusters most at risk of stubbing or loss:
+- tool/MCP/provider adapter specifics
+- runtime stop-reason taxonomy and child timeout semantics
+- usage/storage cross-surface schema continuity
+- file rewrite and recovery semantics
+- packetized hardening directives that currently survive only partially in packet metadata
+
+4) FINDINGS
+
+FIDELITY-ID: LFA-001
+severity: blocker
+where: `Plans/Run_Modes.md#5.1 Universal kill conditions (all strategies)` and `Plans/Run_Modes.md#6.1 Canonical terminal stop-reason refinements`
+ledger obligation that did not fully survive: timeout canon must distinguish internal timeout kill handling from the terminal timeout outcome, with `done.task_timeout` preserved consistently as the terminal stop reason.
+why the current doc is stubbed / incomplete / over-summarized / mis-owned: `### 5.1` still defines `kill.task_timeout`, while `### 6.1` defines `done.task_timeout`; the owner doc is internally contradictory, and downstream docs already rely on `done.task_timeout`.
+what kind of recovery is needed: reconcile doc set
+
+FIDELITY-ID: LFA-002
+severity: blocker
+where: `Plans/FileSafe.md#15.12 Integration Checklist`
+ledger obligation that did not fully survive: resolved FileSafe integration canon should no longer remain in open checklist/TODO form after the ledger marks it settled.
+why the current doc is stubbed / incomplete / over-summarized / mis-owned: the section still presents unchecked implementation tasks for BaseRunner, Orchestrator, Interview, and GUI integration, which makes blocker-class canon look unresolved and reopenable.
+what kind of recovery is needed: reconcile doc set
+
+FIDELITY-ID: LFA-003
+severity: high
+where: `Plans/Tools.md#3.6 Task tool and the 42 subagents (Plans)` and `Plans/Tools.md#3.6A Task runtime addendum`
+ledger obligation that did not fully survive: child runs are parent-clamped and inherit parent tool policy, write scope, runtime/account restrictions, and remaining budget; child timeout defaults to inherited parent remaining budget.
+why the current doc is stubbed / incomplete / over-summarized / mis-owned: the task runtime contract only says the child inherits the parent permission ceiling and capability universe, and `### 3.6` still recommends a standalone `10m` sync timeout. That conflicts with orchestrator-owned child-authority canon.
+what kind of recovery is needed: update consumer/mirror doc
+
+FIDELITY-ID: LFA-004
+severity: high
+where: `Plans/FileSafe.md#11.1.2a Optimistic concurrency for mutable rewrites`
+ledger obligation that did not fully survive: concurrent rewrite protection should use a true modification-token/revision contract rather than mtime-driven conflict semantics.
+why the current doc is stubbed / incomplete / over-summarized / mis-owned: the section still treats `mtime_ns` as a hard conflict input alongside `content_sha256`, so metadata-only timestamp changes can still trigger conflicts. The ledger locked a stricter modification-token lesson.
+what kind of recovery is needed: reconcile doc set
+
+FIDELITY-ID: LFA-005
+severity: high
+where: `Plans/usage-feature.md#Unified UsageRecord schema expectations`
+ledger obligation that did not fully survive: canonical usage recording must cover tool invocations and helper/background operations even when token counts are unknown, with parent attribution continuity.
+why the current doc is stubbed / incomplete / over-summarized / mis-owned: the rules say every **model-consuming** operation emits a canonical usage record. That is narrower than the ledger requirement for tool-level attribution continuity.
+what kind of recovery is needed: reconcile doc set
+
+FIDELITY-ID: LFA-006
+severity: high
+where: `Plans/.pipeline/research_packet.json` (file-level)
+ledger obligation that did not fully survive: Phase 9 canon-lock hardening added `Plans/Media_Generation_and_Capabilities.md` as a new MUST CHANGE doc.
+why the current doc is stubbed / incomplete / over-summarized / mis-owned: the current packet has no `doc_intents[*].path` entry for that doc, so regeneration driven from the packet would miss the newly hardened owner doc entirely.
+what kind of recovery is needed: packetize fuller section content
+
+FIDELITY-ID: LFA-007
+severity: high
+where: `Plans/.pipeline/research_packet.json` -> `path: "Plans/Prompt_Pipeline.md"` (file-level)
+ledger obligation that did not fully survive: the hardened compaction-overflow algorithm (`max_compaction_immune_pct`, untouchable/truncatable sets, `diag.compaction_immune_overflow`) must be explicitly packetized for `Plans/Prompt_Pipeline.md`.
+why the current doc is stubbed / incomplete / over-summarized / mis-owned: the packet updates several Prompt Pipeline anchors but does not include an anchor for the compaction-overflow section, so this canon survives in the doc but not in the packet metadata used for regeneration.
+what kind of recovery is needed: packetize fuller section content
+
+FIDELITY-ID: LFA-008
+severity: medium
+where: `Plans/storage-plan.md#3. Implementation checklist`
+ledger obligation that did not fully survive: `run.completed.usage` snapshots should carry the hardened usage attribution tuple, including `account_id?` and `entitlement_class?`, not a narrowed subset.
+why the current doc is stubbed / incomplete / over-summarized / mis-owned: the checklist bullet for `run.completed` usage snapshots omits parts of the full attribution tuple already locked in `Plans/usage-feature.md`.
+what kind of recovery is needed: update consumer/mirror doc
+
+FIDELITY-ID: LFA-009
+severity: medium
+where: `Plans/storage-plan.md#2.4 Projector pipeline: consumption, JSONL mirror, Tantivy, checkpoints`
+ledger obligation that did not fully survive: runtime recovery should have canonical seglog checkpoint-marker events / placement rules, not only projector checkpoints and storage-engine resume state.
+why the current doc is stubbed / incomplete / over-summarized / mis-owned: the section defines projector checkpoints, but it does not define the canonical run/task recovery checkpoint marker family the ledger called for.
+what kind of recovery is needed: packetize fuller section content
+
+FIDELITY-ID: LFA-010
+severity: medium
+where: `Plans/CLI_Bridged_Providers.md#Contract shape (facade)` and `Plans/CLI_Bridged_Providers.md#Provider guard rails`
+ledger obligation that did not fully survive: provider adapters must own explicit message normalization, tool-call parsing, schema sanitization, and payload-limit preflight rules, not just capability advertisement and generic guard rails.
+why the current doc is stubbed / incomplete / over-summarized / mis-owned: the owner doc keeps capability flags and generic safety checks, but the concrete adapter-owned normalization/parsing/sanitization pipeline from the ledger is reduced away.
+what kind of recovery is needed: reconcile doc set
+
+FIDELITY-ID: LFA-011
+severity: medium
+where: `Plans/orchestrator-subagent-integration.md` (unheaded block under `**Gap #53: Crew coordination with interview phases**`)
+ledger obligation that did not fully survive: the message-board coordination model should be normative, with explicit direct+broadcast routing, message kinds, priority semantics, 10-messages/agent/minute limit, and orchestrator visibility.
+why the current doc is stubbed / incomplete / over-summarized / mis-owned: the design survives only inside gap/mitigation notes rather than a canonical owner section, and the priority model is not promoted as normative schema/behavior.
+what kind of recovery is needed: move detail to owner doc
+
+FIDELITY-ID: LFA-012
+severity: medium
+where: `Plans/Tools.md#8.2 Policy application order and invocation flow`
+ledger obligation that did not fully survive: the locked provider-normalizer examples before schema validation included concrete cases such as GLM unquoting and Qwen XML stripping.
+why the current doc is stubbed / incomplete / over-summarized / mis-owned: the section preserves ordering but compresses the concrete normalizer canon to a generic phrase, leaving exact implementation-relevant examples only in the ledger.
+what kind of recovery is needed: reconcile doc set
+
+FIDELITY-ID: LFA-013
+severity: medium
+where: `Plans/Tools.md#Schema isolation and OAuth state`
+ledger obligation that did not fully survive: MCP schema adaptation should preserve exact provider rewrite rules such as Gemini `anyOf -> oneOf` and `const` stripping, alongside depth/size bounds.
+why the current doc is stubbed / incomplete / over-summarized / mis-owned: the current wording allows generic sanitizers and keeps only the broad bounds, but the exact provider-specific rewrite canon was reduced away.
+what kind of recovery is needed: reconcile doc set
+
+FIDELITY-ID: LFA-014
+severity: medium
+where: `Plans/Tools.md#Connection model` and `Plans/Tools.md#8.7 MCP server unavailable`
+ledger obligation that did not fully survive: per-tool MCP timeout should be a distinct 30-second default, configurable per server.
+why the current doc is stubbed / incomplete / over-summarized / mis-owned: startup timeout and degraded-state handling are documented, but the run-time per-tool MCP timeout contract is absent.
+what kind of recovery is needed: reconcile doc set
+
+FIDELITY-ID: LFA-015
+severity: medium
+where: `Plans/Run_Modes.md#Signal handling and process lifecycle`
+ledger obligation that did not fully survive: explicit entrypoint `signal.NotifyContext` wiring is part of the runtime lifecycle contract.
+why the current doc is stubbed / incomplete / over-summarized / mis-owned: the owner doc preserves signal semantics, process groups, grace periods, and outcomes, but not the explicit entrypoint wiring requirement.
+what kind of recovery is needed: reconcile doc set
+
+FIDELITY-ID: LFA-016
+severity: medium
+where: `Plans/.pipeline/research_packet.json` (file-level)
+ledger obligation that did not fully survive: cycle-2 reconciliation narrowed the packet to a smaller remaining-work set and marked some earlier docs as false positives or verify-only.
+why the current doc is stubbed / incomplete / over-summarized / mis-owned: the current packet still reflects a broader earlier scope, so downstream packet consumers can reopen settled docs or mis-treat verify-only docs as active change targets.
+what kind of recovery is needed: reconcile doc set
+
+FIDELITY-ID: LFA-017
+severity: medium
+where: `Plans/Tools.md#Schema isolation and OAuth state`
+ledger obligation that did not fully survive: local OAuth callbacks on Windows/local flows should bind `127.0.0.1` only, then fall back to manual copy/paste rather than widening bind scope.
+why the current doc is stubbed / incomplete / over-summarized / mis-owned: the consumer wording broadens bind policy beyond the loopback-only owner rule, creating ownership drift.
+what kind of recovery is needed: move detail to owner doc
+
+FIDELITY-ID: LFA-018
+severity: low
+where: `Plans/storage-plan.md#Active durable-store lock identity`
+ledger obligation that did not fully survive: the ledger preserved a concrete startup lock path at `<project>/.puppet-master/pm.lock`.
+why the current doc is stubbed / incomplete / over-summarized / mis-owned: the storage doc rewrites this into a root-derived active lock path and explicitly avoids hardcoding the project path, so the exact older location no longer survives. This may be an intentional integration rewrite, but it remains unresolved drift relative to the ledger note.
+what kind of recovery is needed: reconcile doc set
+
+5) FINAL VERDICT
+
+The docs are close, but they are not yet fidelity-complete for future implementation agents. The remaining failures are not cosmetic: they include blocker-level contradictions in runtime/FileSafe owner docs, several high-severity owner-doc omissions or over-summaries, and packet metadata drift that would miss or reopen hardened canon during future regeneration.
+
+<ledger_fidelity_blocked/>

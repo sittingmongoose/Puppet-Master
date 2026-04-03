@@ -9,10 +9,18 @@ Define the **Provider facade** used by Puppet Master to run **bridged providers*
 - **Structured request envelopes** (deterministic, replayable runs)
 - **Normalized streaming events** (one consumer; no UI special-casing)
 - **Tool-call correlation + reconciliation** (CLI oddities tolerated)
-- **Authentication / UX-state detection** (logged out, expired/invalid, rate limit, outage)
+- **Authentication / UX-state detection** (logged out, expired or invalid, rate limit, outage)
+- **Stream resilience** (bounded retry, replay safety, and circuit breaking)
 
-This document is architecture/contract focused. It defines *what must be true* at the Provider boundary.
+ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Contracts_V0.md
 
+This document owns bridged-provider transport normalization only. PM-internal child orchestration, crew control, runtime ceilings, and parent/child lineage remain owned by `Plans/orchestrator-subagent-integration.md` and `Plans/Contracts_V0.md`.
+
+ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Contracts_V0.md
+
+Canonical mapping SSOT for upstream external-framework and A2A bridge concepts is `Plans/Provider_Stream_Mapping_External_Reference_A2A.md`. That document is external-reference guidance for adapter implementors. It MUST NOT be interpreted as approval to move PM-internal orchestration or child-run control onto A2A semantics.
+
+ContractRef: ContractName:Plans/Provider_Stream_Mapping_External_Reference_A2A.md, ContractName:Plans/orchestrator-subagent-integration.md
 ## Provider routing policy (locked)
 
 Provider routing must preserve PM child-run canon while making surface-specific behavior explicit.
@@ -96,30 +104,77 @@ ContractRef: ContractName:Plans/Models_System.md, ContractName:Plans/usage-featu
 
 ### Contract shape (facade)
 The Provider facade MUST be expressible as a single logical interface, regardless of Transport.
+
 ContractRef: SchemaID:Spec_Lock.json#locked_decisions.providers, ContractName:Plans/Architecture_Invariants.md#INV-009, Gate:GATE-009
 
 **Interface requirements (conceptual):**
 - **Input:** `ProviderRequestEnvelope` (defined below).
 - **Output:**
-   - A **stream** of normalized provider events (defined below).
-   - A **terminal outcome** represented by exactly one terminal `done` event.
+  - a **stream** of normalized provider events
+  - exactly one terminal `done` event
+- callers MUST NOT branch on transport type (`stream-json`, ACP, HTTP, or future bridged surfaces). They consume the normalized provider stream plus the canonical capability contract below.
 
-**Integration requirement:**
-- Callers MUST NOT branch on transport type (stream-json, ACP, or HTTP). They only consume the normalized provider stream.
-ContractRef: ContractName:Plans/Architecture_Invariants.md#INV-009, SchemaID:Spec_Lock.json#locked_decisions.providers, Gate:GATE-009
+ContractRef: ContractName:Plans/Architecture_Invariants.md#INV-009, ContractName:Plans/Contracts_V0.md, Gate:GATE-009
+
+**Capability advertisement (minimum canonical fields):**
+- `dae_allowed`
+- `cache_with_oauth`
+- `supports_incremental_text`
+- `supports_parallel_tools`
+- `supports_assistant_message_prefill`
+- `supports_reasoning_stream`
+- `supports_resume_cursor`
+- `max_payload_bytes?`
+- `system_role_name?`
+- `requires_developer_role_channel?`
+
+ContractRef: ContractName:Plans/Models_System.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Tools.md
+
+Rules:
+- callers and prompt assembly MUST consume these capability fields instead of branching on provider-family strings
+- absence of a boolean capability means `false`
+- `max_payload_bytes` is the canonical upper bound for rendered request payload before stdin / file indirection / segmentation rules apply
+- `system_role_name` and `requires_developer_role_channel` define how PM maps system and developer instructions on that surface without surface-specific caller logic
+- capability advertisement is immutable for the effective `(provider_id, effective_surface, model family)` during a run attempt
+
+ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Models_System.md, ContractName:Plans/Architecture_Invariants.md
+
+#### Adapter-owned normalization and payload-preflight contract
+
+The facade owns the compatibility pipeline needed to make those capabilities operational:
+- adapters normalize provider-specific message shapes before downstream policy consumes them
+- adapters own tool-call parsing and malformed-tool diagnostics before runtime/tool policy decides whether a call is executable
+- adapters own schema sanitization and payload-limit preflight decisions rather than pushing surface quirks into callers
+- if rendered payload size would exceed `max_payload_bytes`, the adapter chooses the canonical fallback (stdin, file indirection, segmentation, or fail-closed rejection) and emits a structured diagnostic describing the chosen path
+
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Architecture_Invariants.md
+
+Provider-specific compatibility logic is explicit, not implicit. Consumers rely on the normalized facade contract rather than branching on provider-family quirks such as message-role mapping, tool-call wrapper syntax, or payload-shape cleanup.
+
+ContractRef: ContractName:Plans/Models_System.md, ContractName:Plans/Provider_Stream_Mapping_External_Reference_A2A.md, ContractName:Plans/CLI_Bridged_Providers.md
 
 ### Deterministic defaults (autonomous)
 To keep the system autonomous and avoid "ask humans later" drift, Puppet Master MUST adopt the following defaults whenever a caller does not specify a stricter option:
+
 ContractRef: SchemaID:Spec_Lock.json#locked_decisions.testing_and_verification, PolicyRule:Decision_Policy.md§4, Gate:GATE-009
 
 1. **Cursor transports under one facade:** `stream-json` and `acp`.
 2. **Claude Code transport:** `stream-json`.
-3. **Headless approval fallback:** If tool policy resolution is `ask` and HITL is disabled (default for autonomous runs), treat it as `deny` and emit `tool.denied` (persisted) plus a normalized `tool_result(ok=false, error="permission_denied")` before `done`.
-4. **Cursor incremental output:** If the caller requests incremental text, the adapter MUST emit `text_delta` events during the run (not only at the end).
-5. **Large prompt handling (Cursor):** If the fully rendered prompt exceeds 32 KiB (32768) bytes, pass the prompt via stdin (not as a CLI argument) to avoid OS argument-length and quoting drift.
-ContractRef: PolicyRule:Decision_Policy.md§4, SchemaID:Spec_Lock.json#locked_decisions.testing_and_verification, ContractName:Plans/Tools.md§8.2, ContractName:Plans/Contracts_V0.md#EventRecord, CodePath:puppet-master-rs/src/platforms/cursor.rs#LARGE_PROMPT_THRESHOLD
+3. **Headless approval fallback:** If tool policy resolution is `ask` and HITL is disabled, treat it as `deny` and emit `tool.denied` plus a normalized `tool_result(ok=false, error="permission_denied")` before `done`.
+4. **Cursor incremental output:** If the caller requests incremental text, the adapter MUST emit `text_delta` events during the run.
+5. **Large prompt handling (Cursor):** If the fully rendered prompt exceeds 32 KiB, pass the prompt via stdin rather than a CLI argument.
+6. **Developer-role fallback:** If a surface lacks a dedicated developer-role channel, PM maps developer instructions through the advertised `system_role_name` or equivalent system-role path for that surface and records the effective mapping in diagnostics.
 
----
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Contracts_V0.md
+
+### Credential source precedence
+Credential resolution MUST prefer explicit runtime configuration over stored login state:
+- explicit config, environment, or launch-supplied credentials for the requested provider/surface win over stored OAuth state
+- stored OAuth or credential-store state MAY satisfy missing credentials only for the same provider, scope, and account identity
+- interactive login is the fallback only when neither explicit config nor valid stored state can satisfy the request
+- adapters MUST emit diagnostics when explicit config shadows stored state, and they MUST NOT silently replace the requested account with a different stored account
+
+ContractRef: ContractName:Plans/GitHub_API_Auth_and_Flows.md, ContractName:Plans/Multi-Account.md, ContractName:Plans/Architecture_Invariants.md
 
 ## Structured request envelope
 
@@ -219,12 +274,34 @@ ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/hum
 
 ### Common ingestion rules (normative)
 - Treat provider output as untrusted input.
-- Malformed/partial lines MUST NOT crash the run; surface as `diagnostic` events and continue when safe.
-- Output buffering MUST be bounded (see `Plans/newfeatures.md`):
-  - Cap max line length.
-  - Cap total buffered bytes for "unparsed remainder".
-  - Use a ring buffer for stderr diagnostics.
+- Malformed or partial lines MUST NOT crash the run; surface them as `diagnostic` events and continue when safe.
+- Output buffering MUST be bounded:
+  - cap max line length
+  - cap total buffered bytes for unparsed remainder
+  - use a ring buffer for stderr diagnostics
+
 ContractRef: ContractName:Plans/newfeatures.md, PolicyRule:Decision_Policy.md§2, Gate:GATE-009
+
+- Adapters MUST buffer partial provider chunks until a stable parse or text boundary exists; they MUST NOT emit torn UTF-8, torn JSON tokens, or duplicate already committed normalized events.
+- If provider fragments arrive out of order and deterministic reordering is possible within a bounded local buffer, the adapter MAY reorder by provider sequence or part identity before emission.
+- If deterministic reordering is impossible, the adapter MUST emit a diagnostic describing the gap and either preserve arrival order or terminate the attempt when replay safety would otherwise be violated; it MUST NOT invent missing content.
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Architecture_Invariants.md
+
+- Buffer overflow, mixed-mode output, or unparseable tail data MUST surface as diagnostics with enough metadata for replay and debugging.
+- Bounded buffering applies equally to stdout fragments, stderr observations, and reasoning-only substreams.
+- Provider-specific chunk-boundary buffering MAY coalesce partial fragments, but it MUST preserve monotonic event correlation and MUST NOT hide dropped bytes behind success-shaped output.
+
+ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Run_Modes.md
+
+- If a provider stops with `finishReason=length` or an equivalent truncation signal while a correlated tool call is incomplete, the adapter MUST close that tool correlation with a structured truncation failure and MUST NOT dispatch or synthesize the missing invocation.
+- Empty, whitespace-only, or bounds-invalid arguments discovered after truncation remain validation failures; adapters MUST surface them as structured errors instead of retrying malformed input.
+
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Run_Modes.md
+
+- Bridged adapters MUST map provider finish reasons into the normalized stream before retry, compaction, or synthetic-continue logic so downstream runtime policy can distinguish truncation, content filtering, safety stops, auth failures, and normal completion.
+
+ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Contracts_V0.md
 
 ### stream-json ingestion (Cursor + Claude Code)
 When `stream-json` is enabled, stdout MUST be treated as JSONL (one JSON object per line).
@@ -364,9 +441,10 @@ ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/Models_Syst
 | `total_tokens` | MAY be derived, but never as a replacement for the individual buckets |
 | `cost_microdollars` | integer microdollars only |
 | `pricing_version` | include when pricing metadata is versioned |
-| `provider_id`, `model_id`, `billing_entity_id` | preserve attribution identity when known |
+| `provider_id`, `model_id` | preserve provider/model identity when known |
+| `account_id`, `billing_entity_id`, `entitlement_class` | preserve account, billing, and entitlement identity when known; bridge adapters MUST NOT collapse this tuple to billing entity alone |
 
-ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/Models_System.md
+ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/Models_System.md, ContractName:Plans/Contracts_V0.md
 
 ### FinishReason mapping
 
@@ -382,34 +460,58 @@ ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/Models_Syst
 ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Contracts_V0.md
 
 ### HTTP/status to failure-class mapping
+| Condition | Normalized `failure_class` | Retry posture |
+|---|---|---|
+| 401 / expired credential | `auth_expired` | refresh once, rebuild client, retry once |
+| 403 / explicit denial | `permission_denied` | no auto-retry |
+| 402 / quota exceeded | `quota_exceeded` | no auto-retry; surface upgrade or entitlement-remediation guidance |
+| 429 / rate limit | `rate_limited` | retry using `Retry-After` when present; otherwise wait 30 seconds before bounded retry continues |
+| 5xx / transport transient | `provider_transient` | retry per bounded transient matrix |
+| malformed structured output | `structured_output_invalid` | retry up to class limit without mutating request semantics |
 
-HTTP/status and transport outcomes normalize into the **attempt-outcome** taxonomy first. They do not directly mint blocked-state reasons unless the shared runtime/permission layer says the work never became actionable.
+ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/GitHub_API_Auth_and_Flows.md, ContractName:Plans/Run_Modes.md
 
-| Condition | Classification family | Canonical value | Retry posture |
-|---|---|---|---|
-| 401 / expired credential during or immediately after dispatch | `failure_class` | `auth_expired` | refresh/re-auth as allowed, then retry with a new attempt only if policy permits |
-| 403 / explicit provider or host denial after dispatch | `failure_class` | `permission_denied` | no automatic retry |
-| 402 / quota exhausted | `failure_class` | `quota_exceeded` | no automatic retry; surface quota remediation |
-| 429 / retryable rate limit | `failure_class` | `provider_transient` | retry using `Retry-After` or the shared retry matrix |
-| 5xx / transport outage / connection reset / timeout | `failure_class` | `provider_transient` | retry per executor matrix |
-| malformed structured output / schema breakage | `failure_class` | `structured_output_invalid` | bounded retry up to class limit |
+Failure-class rules:
+- `auth_expired` retry is allowed only after token refresh and transport rebuild
+- `rate_limited` remains distinct from `provider_transient`; consumer policy MUST preserve that distinction when deciding backoff, surfacing status, or opening breakers
+- `permission_denied`, `quota_exceeded`, user cancellation, and content-filter outcomes never auto-retry
+- retry posture is keyed from canonical `failure_class`, never from substring matching on raw error text
 
-Rules:
-- `failure_class` describes **how an attempt ended**.
-- `blocked_reason_code` describes **why work cannot proceed before or between attempts**.
-- Provider adapters MUST NOT relabel `auth_expired`, `quota_exceeded`, or `structured_output_invalid` as blocked reasons just to fit a UI card or policy branch.
-- If the shared runtime later decides a prerequisite is unresolved (for example approval or preflight drift), that higher-level blocked outcome is additive and separate from the provider attempt result.
-
-ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Decision_Policy.md, ContractName:Plans/Contracts_V0.md
-
+ContractRef: ContractName:Plans/Architecture_Invariants.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/Contracts_V0.md
 ### Stream cancellation and replay safety
-
-`ctx.Err() != nil` means the context was cancelled or timed out. Cancellation is not retried. Reversing this check causes indefinite retry loops on cancelled streams.
+`ctx.Err() != nil` means the request context was cancelled or timed out. Cancellation is terminal for that attempt and is never retried. Reversing this check creates indefinite retry loops on cancelled streams.
 
 ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Run_Modes.md
 
-### Provider guard rails
+Reconnect and resume contract:
+- automatic reconnect or resume is allowed only for `provider_transient` failures while request budget remains
+- retry count is capped at 3 attempts per request
+- backoff uses `Retry-After` when present; otherwise the default transient schedule is 1s, 2s, then 4s with +/-25% jitter
+- retries caused by `rate_limited` outcomes honor `Retry-After` when present; otherwise they wait 30 seconds before the bounded retry policy continues
+- retry MUST preserve the same `run_id`, `thread_id`, request envelope hash, tool-policy snapshot, and attachment lineage
+- retry MUST NOT silently rewrite the prompt, swap runtime surfaces, or drop previously authorized tool context
+- cancellation emits an explicit structured diagnostic or terminal record that preserves the cancellation reason before teardown
 
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Models_System.md, ContractName:Plans/Architecture_Invariants.md
+
+Replay safety:
+- if the provider exposes a resume cursor or equivalent checkpoint, PM resumes from that cursor instead of resubmitting from the beginning
+- if resume is unavailable, PM may replay only after de-duplicating already committed normalized events by canonical sequence and payload identity
+- terminal `done`, committed `tool_use`, and committed `tool_result` events MUST NOT be emitted twice during replay
+- partial stream fragments that cannot be replayed without duplication escalate to terminal failure instead of silent best-effort merging
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md
+
+Circuit breaker:
+- breaker key is `(provider_id, effective_surface, model_id)`
+- 5 `provider_transient` failures within 120 seconds open the breaker
+- while open, new requests fail fast with an explicit degraded-state diagnostic rather than hammering the provider
+- breaker moves to half-open after 30 seconds and allows one probe request
+- a successful probe closes the breaker; a failed probe reopens it
+- `auth_expired`, `permission_denied`, `quota_exceeded`, `rate_limited`, and explicit user cancellation do not count toward the breaker
+
+ContractRef: ContractName:Plans/Architecture_Invariants.md, ContractName:Plans/GitHub_API_Auth_and_Flows.md, ContractName:Plans/Run_Modes.md
+### Provider guard rails
 Providers and adapters MUST fail safely on malformed or partial input:
 - guard `choices.len() == 0` before indexing provider output
 - fail fast when client construction returns nil / invalid transport handles
@@ -420,11 +522,30 @@ Providers and adapters MUST fail safely on malformed or partial input:
 
 ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Architecture_Invariants.md
 
+Payload and parser safety rules:
+- adapter-owned message normalizers, tool-call parsers, schema sanitizers, and payload-limit preflight checks are part of the owner contract, not optional implementation detail
+- payload preflight MUST fail closed when no canonical fallback keeps the request within the advertised surface limits
+- parser recovery MAY salvage partial output only when causal ordering and replay safety remain intact; otherwise the adapter emits a structured diagnostic and terminates the attempt
+- compatibility rewrites MUST preserve a warning trail describing which provider-specific cleanup path ran and whether semantics changed
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Tools.md
+
 ### Credential refresh and cache markers
 
-After credential refresh, the adapter MUST rebuild the HTTP client or equivalent transport object. When a provider/runtime surface does not support cache markers together with OAuth, the adapter strips or suppresses cache markers based on the capability flag `cache_with_oauth=false` instead of sending a request known to fail.
+Credential refresh and cache-marker behavior is proactive rather than reactive:
+- when a token has 20% or less of its original TTL remaining, or a provider-specific safety window is stricter, the adapter refreshes before the next request rather than waiting for a mid-run auth failure
+- a successful refresh MUST rebuild the HTTP client or equivalent transport object before the next request is sent
+- refresh failure preserves explicit auth diagnostics and MUST NOT silently downgrade to stale-token execution
 
-ContractRef: ContractName:Plans/Models_System.md, ContractName:Plans/GitHub_API_Auth_and_Flows.md
+ContractRef: ContractName:Plans/GitHub_API_Auth_and_Flows.md, ContractName:Plans/Models_System.md, ContractName:Plans/Architecture_Invariants.md
+
+Credential precedence and cache rules:
+- explicit config or environment credentials override stored OAuth state for the same surface
+- stored OAuth state MUST NOT silently override the requested account, provider surface, or credential source
+- when a provider/runtime surface advertises `cache_with_oauth=false`, the adapter strips or suppresses cache markers rather than sending a request known to fail
+- when a provider family requires explicit cache-boundary annotations or cached-content handles to realize prompt caching, the adapter MUST emit the provider-specific marker or handle rather than passively assuming server defaults
+
+ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/GitHub_API_Auth_and_Flows.md, ContractName:Plans/Contracts_V0.md
 
 ## Login/auth UX detection state machine
 
@@ -579,34 +700,6 @@ Acceptance criteria are written to be testable by an agent/verifier that can run
 - `puppet-master-rs/src/platforms/runner.rs`
 - `Plans/Provider_OpenCode.md`
 
-## Runtime Retry/Blocked Integration Addendum (2026-03-08)
-
-### 1. Shared failure taxonomy
-
-Bridged provider runs must emit enough normalized output for the shared runtime taxonomy to classify outcomes.
-
-Required examples:
-- transient transport/server failure -> `provider_transient`
-- headless ask denial -> `headless_ask_denied`
-- auth expiry mid-run -> `auth_expired`
-- malformed structured output -> `structured_output_invalid`
-
-### 2. Retry/replay identity
-
-Duplicate emissions across retries/replays must preserve attempt identity so remediation and retry lineage remain reconstructable.
-
-Required fields when applicable:
-- `attempt_id`
-- `retry_count`
-- `failure_class`
-- `safe_point_id?`
-- `remediation_root_id?`
-
-### 3. Acceptance criteria
-
-- Bridged-provider output is sufficient for runtime classification.
-- Retries/replays remain distinguishable in lineage.
-- Provider-local retry behavior does not bypass the shared runtime matrix.
 ## Bridged Provider Runtime Reconciliation Addendum (2026-03-09)
 
 Bridged providers must preserve canonical runtime identity and taxonomy.
@@ -617,14 +710,18 @@ For every bridged attempt preserve:
 - `thread_id`
 - `node_id`
 - `attempt_id`
+- `retry_count`
 - requested/effective provider-model identifiers
 - `permission_snapshot_id`
+- `failure_class` when classified
 - `safe_point_id?`
-- remediation lineage identifiers when present
+- remediation lineage identifiers when present, including `remediation_root_id?`
 - `replan_generation`
 
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Multi-Account.md, ContractName:Plans/Executor_Protocol.md
+
 ### Required signal mapping
-Bridged providers must preserve canonical runtime identity and taxonomy.
+Bridged providers must emit enough normalized output for the shared runtime taxonomy to classify outcomes while preserving canonical runtime identity.
 
 **Concrete provider/runtime identity:**
 - `requested_platform` / `effective_platform` identify the concrete runtime surface used for the attempt.
@@ -641,10 +738,13 @@ ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Multi-Accoun
 - provider-side malformed structured output -> `failure_class = structured_output_invalid`
 - stale target / drift detected before dispatch -> shared runtime `blocked_reason_code`, not provider failure-class remapping
 
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Run_Modes.md
+
 **Required correlation envelope:**
-- preserve `run_id`, `thread_id`, `node_id`, `attempt_id`, generation/snapshot ids, and remediation lineage across normalized output
+- preserve `run_id`, `thread_id`, `node_id`, `attempt_id`, `retry_count`, generation/snapshot ids, failure classification, and remediation lineage across normalized output
 - transport reconnect logic may reconnect only to observe an already-submitted attempt; it MUST NOT silently resubmit prompts or mutate retry counters
 - provider signals MUST normalize to canonical `failure_class` and `blocked_reason_code` values before orchestration or UI consumes them
 - prerequisite resolution from provider/auth layers MUST surface a canonical scheduler wake rather than staying provider-local
+- bridged-provider output MUST remain sufficient for runtime classification, and provider-local retry behavior MUST NOT bypass the shared runtime matrix
 
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Multi-Account.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Permissions_System.md

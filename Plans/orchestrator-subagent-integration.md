@@ -14,9 +14,17 @@
 - Configuration options
 
 ## Executive Summary
+Internal multi-agent orchestration in Puppet Master is PM-native. Parent and child supervision, timeout propagation, thread and run lineage, shell isolation, cancellation, and crew scheduling are owned by this document together with `Plans/Contracts_V0.md` and `Plans/storage-plan.md`.
 
-This plan integrates Cursor subagent personas into the orchestrator at each tier level (Phase → Task → Subtask → Iteration) to provide specialized expertise dynamically based on project context. Subagent selection adapts to project language, domain, task type, and current needs.
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md
 
+References to external bridge or A2A mapping material are adapter guidance only. They MUST NOT be read as approval for PM-internal child orchestration, child-run control messages, budget propagation, or crew coordination to move onto A2A semantics.
+
+ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Provider_Stream_Mapping_External_Reference_A2A.md
+
+Every child spawn, retry, cancellation, timeout, pause, resume, and completion path MUST preserve PM lineage fields (`run_id`, `thread_id`, `parent_run_id`, `child_run_id`) plus requested/effective runtime descriptors where applicable. Parent oversight and audit visibility are mandatory even when a child is executing through a bridged provider surface.
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Run_Modes.md
 ## Rewrite alignment (2026-02-21)
 
 This plan remains authoritative for tier policy (Phase/Task/Subtask/Iteration), subagent selection policy, and wiring/verification requirements. As the rewrite lands (see `Plans/rewrite-tie-in-memo.md`):
@@ -765,35 +773,48 @@ subagentConfig:
 
 ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Executor_Protocol.md
 
-`executionLimits` is the SSOT for global subagent concurrency and budget defaults. Interview-mode reviewer caps and other surface-specific caps may narrow these values, but MUST NOT widen them.
+`executionLimits` is the SSOT for global subagent concurrency and budget defaults. Surface-specific caps such as interview reviewer limits may narrow these values, but MUST NOT widen them.
 
 ContractRef: ContractName:Plans/interview-subagent-integration.md, ContractName:Plans/Crosswalk.md
 
-#### Task-envelope timeout contract
+PM-native internal orchestration scope:
+- parent-child control, timeout propagation, cancellation, and crew coordination stay under PM runtime contracts
+- bridged-provider or A2A material may inform adapter translation only
+- no external bridge contract may replace PM lineage, requested/effective state, or audit visibility
 
-The task envelope carries a `timeoutMs` field that governs the maximum wall-clock duration for a child task. This contract defines propagation and enforcement semantics.
+ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Contracts_V0.md
 
-ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Run_Modes.md
+#### Child effective authority and timeout contract
 
-Envelope schema (per-task):
+Child execution is parent-clamped at dispatch time:
+- child runs inherit the parent's effective tool policy, write scope, runtime/account surface restrictions, and remaining budget as hard upper bounds
+- child-specific requests MAY narrow those bounds, but they MUST NOT widen them
+- the orchestrator snapshots the effective child authority in spawn/start metadata so audit, cancellation, and budget enforcement operate on the same frozen view
+
+ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/Contracts_V0.md
+
+Envelope schema (per task):
 - `timeoutMs` (u64): maximum wall-clock milliseconds for the child task. Default: `inherit_parent_remaining_budget`.
 - `parentRemainingBudgetMs` (u64): the parent's remaining budget at dispatch time, computed as `parent_timeout - parent_elapsed`.
 
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Architecture_Invariants.md
 
 Propagation rules:
-- `timeoutMs` defaults to the parent's remaining budget (`parentRemainingBudgetMs`).
-- Per-task overrides MAY narrow the timeout (set `timeoutMs < parentRemainingBudgetMs`).
-- Per-task overrides MUST NOT exceed the parent's remaining budget. If a requested `timeoutMs` exceeds `parentRemainingBudgetMs`, the orchestrator clamps it to the parent's remaining budget and emits a diagnostic warning.
-- At each nesting level, `parentRemainingBudgetMs` is recalculated from the dispatching agent's own remaining budget, not from the original root budget.
+- `timeoutMs` defaults to the parent's remaining budget (`parentRemainingBudgetMs`)
+- per-task overrides MAY narrow the timeout (`timeoutMs < parentRemainingBudgetMs`)
+- per-task overrides MUST NOT exceed the parent's remaining budget; if a requested `timeoutMs` exceeds `parentRemainingBudgetMs`, the orchestrator clamps it and emits a diagnostic warning
+- at each nesting level, `parentRemainingBudgetMs` is recalculated from the dispatching agent's own remaining budget, not from the original root budget
+- before child dispatch, budget preflight checks evaluate the estimated request cost against the child-visible remaining run/session budgets; an over-budget request fails closed with `kill.budget_exceeded` and the child is not started
+- after a provider response, actual cost recording MAY terminate the child with `done.budget_exceeded` when cumulative run or session spend crosses budget, but the usage record is durably written before teardown
 
-ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Executor_Protocol.md
+ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/Executor_Protocol.md
 
 Enforcement:
-- When `timeoutMs` expires, the orchestrator sends a cancellation signal to the child task. The child MUST terminate within a 5-second grace period; after that, the orchestrator forcefully terminates the child's process tree.
-- Timeout expiration produces a structured `done.timeout` event with the child's task ID, elapsed time, and the effective timeout value.
+- when `timeoutMs` expires, the orchestrator sends cancellation to the child task
+- provider processes get a 5-second grace period; MCP and LSP helper surfaces get a 3-second grace period before forceful teardown
+- timeout expiration produces a structured `done.task_timeout` terminal record with the child's task identity, elapsed time, and effective timeout value
 
-ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Run_Modes.md
 
 #### Shell and runtime isolation contract
 
@@ -802,18 +823,28 @@ Shell and runtime isolation is enforced at the orchestrator level. These rules a
 ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Permissions_System.md
 
 Scope rules:
-- Each agent tree receives its own shell instance set. Shell instances MUST NOT be shared across agent trees.
-- Environment variables MUST NOT leak across session, agent, or crew boundaries. Each shell instance starts with a clean environment derived from the project configuration, not inherited from a sibling or parent shell's runtime mutations.
-- The orchestrator retains full visibility into child communication and shell/runtime identity for audit, diagnostic, and cancellation purposes.
+- each agent tree receives its own shell instance set; shell instances MUST NOT be shared across agent trees
+- environment variables MUST NOT leak across session, agent, or crew boundaries; each shell instance starts with a clean environment derived from project configuration, not inherited from sibling or parent runtime mutations
+- the orchestrator retains full visibility into child communication and shell/runtime identity for audit, diagnostics, and cancellation
 
 ContractRef: ContractName:Plans/Architecture_Invariants.md, ContractName:Plans/storage-plan.md
 
 Lifecycle rules:
-- Shell instances are created at agent-tree spawn time and destroyed at agent-tree teardown.
-- If a shell instance crashes or becomes unresponsive, the orchestrator MUST NOT silently reuse a sibling's shell. It creates a new isolated shell or fails the task with a structured error.
-- Shell teardown at agent-tree completion MUST clean up all child processes, temporary files, and environment state associated with that shell instance.
+- shell instances are created at agent-tree spawn time and destroyed at agent-tree teardown
+- if a shell instance crashes or becomes unresponsive, the orchestrator MUST NOT silently reuse a sibling shell; it creates a new isolated shell or fails the task with a structured error
+- shell teardown at agent-tree completion MUST clean up child processes, temporary files, and environment state associated with that shell instance
 
 ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Run_Modes.md
+
+#### Child teardown and deallocation
+
+Child lifecycle cleanup is a deterministic owner contract:
+- child sessions, provider processes, MCP clients, LSP sessions, shell instances, and child-owned temporary state MUST be deallocated on successful completion, cancellation, timeout, budget kill, or parent teardown
+- teardown order is deterministic: stop new dispatch, request graceful stop, flush buffered child events, close child-owned helper sessions, then force-terminate any remaining child process groups
+- parent cancellation or terminal cleanup MUST NOT orphan child providers or keep billed helper state alive after the child is done
+- failed teardown emits a structured diagnostic and forces any retry or reroute onto fresh runtime identity rather than reusing leaked state
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Tools.md, ContractName:Plans/orchestrator-subagent-integration.md
 
 ## Benefits
 
@@ -1244,6 +1275,8 @@ ContractRef: ContractName:Plans/Personas.md#PERSONA-INJECTION, ContractName:Plan
 ## DRY Method Compliance
 
 **CRITICAL:** All code in this plan MUST follow DRY principles. This section documents DRY requirements and violations to avoid.
+
+ContractRef: PolicyRule:Plans/DRY_Rules.md#dry-method-compliance
 
 ### DRY Requirements
 
@@ -2235,6 +2268,8 @@ Each row MUST contain:
 
 This table is the source of truth for `validate_config_wiring_for_tier(...)`. Readiness MUST NOT be heuristic prose.
 
+ContractRef: ContractName:Plans/Contracts_V0.md, PolicyRule:Plans/orchestrator-subagent-integration.md#config-wiring-verification
+
 ### Start-of-tier verification
 Start-of-phase, start-of-task, and start-of-subtask verification always run the same categories in this order:
 1. config-wiring validation against the canonical table
@@ -2243,6 +2278,8 @@ Start-of-phase, start-of-task, and start-of-subtask verification always run the 
 4. known-gap detection for execution-affecting unresolved prerequisites
 
 A tier MUST NOT start when a required execution-affecting field is unwired, unavailable, or inconsistent.
+
+ContractRef: ContractName:Plans/Executor_Protocol.md, PolicyRule:Plans/orchestrator-subagent-integration.md#tier-start-preconditions
 
 ### End-of-tier verification
 End-of-phase, end-of-task, and end-of-subtask verification always run the same categories in this order:
@@ -2272,12 +2309,16 @@ The reviewer/quality path is not optional.
 - display-only, observability-only, or deferred non-execution-affecting mismatches may warn when they do not change runtime behavior
 - performance concerns MUST NOT weaken the verification categories; implementation may scope work to changed artifacts, but may not silently skip categories
 
+ContractRef: PolicyRule:Plans/orchestrator-subagent-integration.md#verification-category-invariant
+
 ### Interview-phase mirror
 Interview phases use the same start/end pattern:
 - start = wiring + readiness + sequence
 - end = wiring re-check + acceptance + quality
 
 `interview-subagent-integration.md` is responsible for the interview-phase-specific quality criteria and UI/runtime consequences, but it MUST mirror this contract rather than invent an alternate lifecycle.
+
+ContractRef: ContractName:Plans/interview-subagent-integration.md
 
 ### Unrelated-failure escalation
 When a tier fails because of issues outside its intended scope:
@@ -2927,6 +2968,8 @@ impl Orchestrator {
 - **Missing field failure:** If required field is missing, request retry with field requirement instruction
 - **Invalid severity failure:** If severity is invalid, request retry with valid severity values
 - **Max retries reached:** If max retries reached, proceed with partial output but mark tier as "complete with warnings"
+
+```rust
                     .filter_map(|v| serde_json::from_value(v.clone()).ok())
                     .collect()
             })
@@ -2943,6 +2986,7 @@ impl Orchestrator {
 impl OutputParser for CodexOutputParser {
     // DRY:FN:parse_subagent_output_codex -- Parse Codex subagent output
     // DRY REQUIREMENT: Output format detection MUST use platform_specs -- DO NOT hardcode "JSONL" or output format
+    ContractRef: ContractName:Plans/DRY_Rules.md#7, ContractName:Plans/Executor_Protocol.md
     fn parse_subagent_output(&self, stdout: &str, _stderr: &str) -> Result<SubagentOutput, ValidationError> {
         // DRY: Use platform_specs to determine expected output format -- DO NOT hardcode "Codex outputs JSONL"
         // Codex outputs JSONL (one JSON object per line) -- format from platform_specs
@@ -2995,6 +3039,7 @@ impl OutputParser for CodexOutputParser {
 impl OutputParser for ClaudeOutputParser {
     // DRY:FN:parse_subagent_output_claude -- Parse Claude Code subagent output
     // DRY REQUIREMENT: Output format detection MUST use platform_specs -- DO NOT hardcode "--output-format json"
+    ContractRef: ContractName:Plans/DRY_Rules.md#7, ContractName:Plans/Executor_Protocol.md
     fn parse_subagent_output(&self, stdout: &str, _stderr: &str) -> Result<SubagentOutput, ValidationError> {
         // DRY: Use platform_specs to determine expected output format -- DO NOT hardcode "Claude outputs JSON"
         // Claude outputs JSON with --output-format json -- format from platform_specs
@@ -3042,6 +3087,7 @@ impl OutputParser for ClaudeOutputParser {
 impl OutputParser for GeminiOutputParser {
     // DRY:FN:parse_subagent_output_gemini -- Parse Gemini subagent output
     // DRY REQUIREMENT: Output format detection MUST use platform_specs -- DO NOT hardcode "--output-format json"
+    ContractRef: ContractName:Plans/DRY_Rules.md#7, ContractName:Plans/Executor_Protocol.md
     fn parse_subagent_output(&self, stdout: &str, _stderr: &str) -> Result<SubagentOutput, ValidationError> {
         // DRY: Use platform_specs to determine expected output format -- DO NOT hardcode "Gemini outputs JSON"
         // Gemini outputs JSON with --output-format json -- format from platform_specs
@@ -3072,6 +3118,7 @@ impl OutputParser for GeminiOutputParser {
 impl OutputParser for CopilotOutputParser {
     // DRY:FN:parse_subagent_output_copilot -- Parse Copilot subagent output
     // DRY REQUIREMENT: Output format detection MUST use platform_specs -- DO NOT hardcode "Copilot outputs text"
+    ContractRef: ContractName:Plans/DRY_Rules.md#7, ContractName:Plans/Executor_Protocol.md
     fn parse_subagent_output(&self, stdout: &str, _stderr: &str) -> Result<SubagentOutput, ValidationError> {
         // DRY: Use platform_specs to determine expected output format -- DO NOT hardcode "Copilot outputs text"
         // Copilot outputs text (no JSON) -- format from platform_specs
@@ -3206,6 +3253,7 @@ impl RemediationLoop {
 
     // DRY:FN:run — Run remediation loop for a tier
     // DRY REQUIREMENT: Reviewer subagent name MUST come from subagent_registry — NEVER hardcode "code-reviewer"
+    ContractRef: ContractName:Plans/DRY_Rules.md#7, ContractName:Plans/Contracts_V0.md
     /// Run remediation loop for a tier
     pub async fn run(
         &self,
@@ -3238,6 +3286,7 @@ impl RemediationLoop {
             // DRY REQUIREMENT: Overseer and reviewer subagent names MUST come from subagent_registry — NEVER hardcode names
             // Re-run overseer subagent with remediation prompt
             // Implementation note: re_run_overseer_with_prompt MUST use subagent_registry to get overseer subagent name
+            ContractRef: ContractName:Plans/DRY_Rules.md#7, ContractName:Plans/Contracts_V0.md
             let overseer_result = self.orchestrator
                 .re_run_overseer_with_prompt(tier_id, &remediation_prompt)
                 .await?;
@@ -3245,6 +3294,7 @@ impl RemediationLoop {
             // DRY REQUIREMENT: Reviewer subagent name MUST come from subagent_registry::get_reviewer_subagent_for_tier()
             // Re-run reviewer subagent
             // Implementation note: re_run_reviewer MUST use subagent_registry to get reviewer subagent name
+            ContractRef: ContractName:Plans/DRY_Rules.md#7, ContractName:Plans/Contracts_V0.md
             let reviewer_result = self.orchestrator
                 .re_run_reviewer(tier_id)
                 .await?;
@@ -3798,6 +3848,7 @@ async fn execute_subtasks_parallel(&self, subtask_ids: &[String]) -> Result<Vec<
             let tier_context = self.build_tier_context(&tier_node, &context)?;
 
             // DRY REQUIREMENT: Subagent selection MUST use subagent_selector which uses subagent_registry — NEVER hardcode subagent names
+            ContractRef: ContractName:Plans/DRY_Rules.md#7, ContractName:Plans/Contracts_V0.md
             // Select subagents for THIS subtask (independent of others)
             let subagent_names = self.subagent_selector.select_for_tier(
                 TierType::Subtask,
@@ -3811,6 +3862,7 @@ async fn execute_subtasks_parallel(&self, subtask_ids: &[String]) -> Result<Vec<
             }
 
             // DRY REQUIREMENT: execute_tier_with_subagents MUST use platform_specs for platform-specific invocation
+            ContractRef: ContractName:Plans/DRY_Rules.md#7, ContractName:Plans/Executor_Protocol.md
             // Execute with selected subagents
             self.execute_tier_with_subagents(&tier_node, &tier_context, &subagent_names).await
         })).await;
@@ -3839,6 +3891,7 @@ Subtask A (rust-engineer) → Subtask B (rust-engineer + test-automator)
 impl SubagentSelector {
     // DRY:FN:select_with_dependency_context — Select subagents with dependency context
     // DRY REQUIREMENT: MUST use subagent_registry::get_subagent_for_language() — NEVER hardcode language → subagent mappings
+    ContractRef: ContractName:Plans/DRY_Rules.md#7, ContractName:Plans/Contracts_V0.md
     /// Select subagents with dependency context
     pub fn select_with_dependency_context(
         &self,
@@ -3849,6 +3902,7 @@ impl SubagentSelector {
         let mut subagents = self.select_for_tier(tier_node.tier_type, tier_context);
 
         // DRY REQUIREMENT: language_to_subagent MUST use subagent_registry::get_subagent_for_language()
+        ContractRef: ContractName:Plans/DRY_Rules.md#7, ContractName:Plans/Contracts_V0.md
         // Inherit language/domain from completed dependencies
         for dep in completed_dependencies {
             if let Some(dep_context) = self.get_tier_context(dep) {
@@ -3880,6 +3934,68 @@ impl SubagentSelector {
 
 When multiple agents/subagents run concurrently (parallel subtasks, different tiers, or same tier with multiple subagents), they need **coordination** to avoid conflicts, understand what others are working on, and not "freak out" when code changes around them.
 
+This owner section defines both the canonical live coordination projection and the canonical attributable crew message-board contract used when agents need questions, decisions, warnings, or requests to survive beyond transient status updates.
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md
+
+#### Canonical crew message-board contract
+
+PM-managed multi-agent collaboration uses a canonical file-backed message board at `.puppet-master/state/agent-messages.json` for attributable cross-agent coordination that cannot be reduced to live status projection alone.
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md
+
+The message board complements the active-agent coordination projection:
+- active-agent state answers who is active, what files are in flight, and which operations are currently running
+- the message board answers who asked, warned, decided, or requested something, who it targeted, and whether that exchange was resolved
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Architecture_Invariants.md, ContractName:Plans/Contracts_V0.md
+
+Canonical message schema:
+- `message_id` (UUID)
+- `from_agent_id`
+- `from_platform`
+- `to_agent_id?` for direct routing
+- `to_agent_type?` for role-wide routing
+- `to_tier_id?` for tier-wide routing
+- `message_type` = `Question | Answer | Update | Request | Decision | Warning | Announcement`
+- `priority` = `low | normal | high | urgent`
+- `subject`
+- `content`
+- `context` (files mentioned, operations mentioned, sender tier, related message ids)
+- `thread_id?`
+- `in_reply_to?`
+- `created_at`
+- `read_by[]`
+- `resolved`
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Commands_System.md, ContractName:Plans/Architecture_Invariants.md
+
+Routing rules:
+- direct routing uses `to_agent_id`
+- role-wide routing uses `to_agent_type`
+- tier-wide routing uses `to_tier_id`
+- broadcast routing leaves all three target selectors empty
+- the orchestrator MUST be able to inspect every message regardless of agent-local visibility filters
+- agent-local views MUST be filtered to direct messages, type-matched messages, tier-matched messages, broadcast messages, and file-relevant messages for the agent's active work
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md
+
+Priority and rate limits:
+- `normal` is the default priority
+- `high` and `urgent` are reserved for blockers, conflict warnings, or manager-requested escalations
+- each agent is capped at **10 messages per minute** across all routing modes
+- when an agent hits the cap, PM MUST emit a structured throttling diagnostic and require the sender to coalesce or defer additional messages rather than silently dropping them
+
+ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Architecture_Invariants.md
+
+Threading and lifecycle:
+- `thread_id` groups related coordination exchanges
+- `in_reply_to` links replies to the causal parent message
+- messages move through created, read, replied, resolved, and expired/archive states
+- unresolved blocker threads and unresolved coordination requests MUST remain visible until resolved or explicitly superseded, even when ordinary retention archives stale messages after 24 hours
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Contracts_V0.md
+
 **Benefits of coordination:**
 
 - **Conflict prevention:** Agents know what files/modules others are modifying, avoiding simultaneous edits
@@ -3901,19 +4017,21 @@ When multiple agents/subagents run concurrently (parallel subtasks, different ti
 
    **This projected coordination works across ALL platforms** -- a Codex agent can see what a Claude agent is doing, and vice versa. All platforms consume the same canonical coordination state even if a debug JSON mirror exists.
 
-3. **Provider-bridge coordination (current):**
+3. **Attributable crew message board (canonical):** Use `.puppet-master/state/agent-messages.json` for durable questions, answers, decisions, warnings, requests, and announcements that agents or the orchestrator need to revisit after transient status updates.
+
+4. **Provider-bridge coordination (current):**
 
    - No same-platform shared thread/session coordination path is active.
    - Codex and Copilot follow the same projected coordination contract as Cursor/Claude/Gemini.
    - Cross-platform and same-platform coordination both use canonical coordination state + prompt injection.
 
-4. **Cross-worktree awareness:** Even when agents run in separate worktrees, they can:
+5. **Cross-worktree awareness:** Even when agents run in separate worktrees, they can:
    - Read shared state files from main repo (progress.txt, prd.json)
    - Read the projected active-agent state to see what others are doing (regardless of platform)
    - Write their own status through the same projected coordination path before starting work
    - Update status as they work (file being edited, operation in progress)
 
-5. **Prompt injection:** Inject coordination context into each agent's prompt:
+6. **Prompt injection:** Inject coordination context into each agent's prompt:
    ```
    **Active Agents:**
    - rust-engineer (Codex) is editing src/api.rs (started 2 minutes ago)
@@ -4050,6 +4168,7 @@ impl AgentCoordinator {
 
     // DRY:FN:register_agent — Register an agent as active
     // DRY REQUIREMENT: Agent platform field MUST be from tier_config.platform — NEVER hardcode platform
+    ContractRef: ContractName:Plans/DRY_Rules.md#7, ContractName:Plans/Models_System.md
     /// Register an agent as active
     pub async fn register_agent(&self, agent: ActiveAgent) -> Result<()> {
         // DRY: Validate agent_id format if needed — use subagent_registry::is_valid_subagent_name() for subagent names
@@ -4097,6 +4216,7 @@ impl AgentCoordinator {
             for agent in state.active_agents.values() {
                 let age = Utc::now().signed_duration_since(agent.started_at);
                 // DRY REQUIREMENT: Platform display name MUST use platform_specs::display_name_for() — NEVER hardcode platform names
+                ContractRef: ContractName:Plans/DRY_Rules.md#7, ContractName:Plans/Models_System.md
                 let platform_display = platform_specs::display_name_for(agent.platform);
                 context.push_str(&format!(
                     "- {} ({}) is {} (started {} ago, tier: {})\n",
@@ -4300,470 +4420,41 @@ Crew defaults and confirmation:
 ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/assistant-memory-subsystem.md, ContractName:Plans/CLI_Bridged_Providers.md
 ### Gaps and Potential Issues for Crews Feature
 
-**Gap #37: Platform selection ambiguity for user-initiated crews (Future: Assistant feature)**
+Gap-era crew notes in this section are retired as canonical guidance. The live crew rules now resolve through the orchestrator contracts elsewhere in this document rather than through illustrative fallback numbers, and the superseded gap-era examples that previously followed this heading MUST NOT be implemented as live crew canon.
 
-**Status:** Not applicable to current Crews implementation. This gap will be relevant when the "Assistant" feature is implemented, which will enable user-initiated crew invocations.
+ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Crosswalk.md
 
-**Current state:** With the current system, users cannot directly invoke crews. Only orchestrator-initiated crews are supported (crews created automatically for tiers that need subagents).
+#### Canonical crew-cap and availability rules
 
-**Future consideration (Assistant feature):** Deterministic platform selection for user-initiated crews (resolved):
-- **Priority order:** (1) current tier config platform (if in tier context), (2) Assistant thread/platform selection (if available), (3) fallback = cursor.
-- **Optional override:** users may specify a platform explicitly in the crew command, but the system MUST have a deterministic default even when no override is provided.
+Crew admission MUST use `executionLimits` as the sole live source for:
+- `maxConcurrentCrewsPerPlatform = 4`
+- `maxConcurrentAgentsPerCrew = 8`
+- `maxTotalActiveAgents = 32`
+- `maxNestingDepth = 4`
+- `maxTotalSpawnedAgents = 99`
+- `maxToolRoundsPerAgent = 200`
 
-ContractRef: PolicyRule:Decision_Policy.md§2
+ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/interview-subagent-integration.md, ContractName:Plans/Crosswalk.md
 
-**Gap #38: Crew lifecycle management and cleanup (GUI updates required)**
+Later illustrative examples in this file MUST NOT widen or replace those values. Availability checks MAY narrow admission further based on platform support, current saturation, quota posture, or policy, but they MUST fail closed rather than inventing alternate per-gap ceilings.
 
-**Issue:** What happens when a crew member crashes? What if crew never completes? What if user cancels crew mid-execution? How do we clean up crew state?
+ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Contracts_V0.md
 
-**Mitigation:**
-- **Crew timeout:** Set maximum crew execution time (e.g., 2 hours). If exceeded, mark crew as "timeout" and disband.
-- **Member failure handling:** If crew member fails, either (1) retry with same subagent, (2) replace with alternative subagent, or (3) mark crew as "partial failure" and continue with remaining members
-- **Graceful shutdown:** On user cancel (via GUI), send cancellation message to all crew members, wait for cleanup, then disband crew
-- **Automatic cleanup:** Prune crews older than 24 hours (completed or failed). Archive crew state before deletion.
-- **Crew status tracking:** Track crew status transitions (Forming → Active → Complete/Disbanded). Log all transitions for debugging.
+#### Crew lifecycle, cleanup, and GUI routing
 
-**GUI requirements:**
-- **Crew cancellation button:** Allow users to cancel orchestrator-initiated crews via GUI (with confirmation dialog)
-- **Crew timeout warning:** Show warning in GUI when crew approaches timeout (e.g., "Crew will timeout in 10 minutes")
-- **Member failure indicators:** Show visual indicators in GUI when crew members fail (red status badge, error icon)
-- **Crew status updates:** Update GUI in real-time when crew status changes (Forming → Active → Complete/Disbanded)
-- **Cleanup notifications:** Show notification in GUI when crews are automatically cleaned up ("3 crews archived")
+Crew lifecycle, timeout propagation, cancellation, and cleanup follow the canonical parent/child orchestration and runtime lifecycle contracts. This section no longer defines separate crew-only timeout ceilings, alternate cleanup paths, or stale concurrency examples.
 
-```rust
-impl Crew {
-    pub async fn handle_member_failure(&mut self, failed_agent_id: &str) -> Result<()> {
-        // Mark member as failed
-        if let Some(member) = self.subagents.iter_mut().find(|a| a.agent_id == failed_agent_id) {
-            member.status = SubagentStatus::Blocked;
-        }
+ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md
 
-        // Check if crew can continue
-        let active_members: Vec<_> = self.subagents.iter()
-            .filter(|a| matches!(a.status, SubagentStatus::Active | SubagentStatus::Pending))
-            .collect();
+GUI and future Assistant-surface affordances for crews remain consumer projections. They MUST disclose canonical crew/member state and runtime ceilings, but they do not become the owner of orchestration authority.
 
-        if active_members.is_empty() {
-            // All members failed — disband crew
-            self.status = CrewStatus::Disbanded;
-            self.post_to_crew(AgentMessage {
-                message_type: MessageType::Announcement,
-                subject: "Crew disbanded due to member failures".to_string(),
-                content: "All crew members have failed. Crew is being disbanded.".to_string(),
-                // ...
-            }).await?;
-        } else {
-            // Continue with remaining members
-            self.post_to_crew(AgentMessage {
-                message_type: MessageType::Update,
-                subject: format!("Crew member {} failed", failed_agent_id),
-                content: format!("Crew will continue with {} remaining members", active_members.len()),
-                // ...
-            }).await?;
-        }
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Crosswalk.md
 
-        Ok(())
-    }
+#### Future Assistant-surface note
 
-    pub async fn cancel(&mut self) -> Result<()> {
-        // Send cancellation to all members
-        self.post_to_crew(AgentMessage {
-            message_type: MessageType::Announcement,
-            subject: "Crew cancelled".to_string(),
-            content: "User has cancelled this crew. Please stop work and clean up.".to_string(),
-            // ...
-        }).await?;
+User-initiated crews remain future Assistant functionality. When that surface lands, platform selection, queueing, and subagent admission still resolve through the same orchestrator-owned ceilings and compatibility checks defined here and in `executionLimits`; future UX MUST NOT reintroduce alternative defaults such as "20 total crews" or "3 crews per subagent type".
 
-        // Wait for members to acknowledge (with timeout)
-        tokio::time::sleep(tokio::time::Duration::from_secs(10)).await;
-
-        // Disband crew
-        self.status = CrewStatus::Disbanded;
-        self.save_state().await?;
-
-        Ok(())
-    }
-}
-```
-
-**Gap #39: Message routing and crew scoping**
-
-**Issue:** How do we ensure messages are scoped correctly to crews? What prevents messages from leaking between crews? What if agent is in multiple crews?
-
-**Mitigation:**
-- **Crew ID in messages:** All crew messages must include `crew_id` field. Filter messages by crew_id when retrieving.
-- **Message scoping:** When agent posts message to crew, set `crew_id` and filter recipients to crew members only
-- **Multi-crew agents:** If agent is in multiple crews, show messages from all crews but clearly label which crew each message belongs to
-- **Message isolation:** Crew messages are isolated by default. Cross-crew communication requires explicit broadcast or orchestrator mediation.
-
-```rust
-impl AgentCommunicator {
-    pub async fn get_messages_for_crew(&self, crew_id: &str) -> Result<Vec<AgentMessage>> {
-        let board = self.load_message_board().await?;
-        Ok(board.messages.iter()
-            .filter(|msg| msg.crew_id.as_ref().map(|id| id == crew_id).unwrap_or(false))
-            .cloned()
-            .collect())
-    }
-
-    pub async fn get_messages_for_agent_in_crews(
-        &self,
-        agent_id: &str,
-        crew_ids: &[String],
-    ) -> Result<Vec<AgentMessage>> {
-        let board = self.load_message_board().await?;
-        Ok(board.messages.iter()
-            .filter(|msg| {
-                // Message is to this agent
-                msg.to_agent_id.as_ref().map(|id| id == agent_id).unwrap_or(false) ||
-                // Message is to a crew this agent is in
-                msg.crew_id.as_ref().map(|id| crew_ids.contains(id)).unwrap_or(false) ||
-                // Broadcast message
-                (msg.to_agent_id.is_none() && msg.crew_id.is_none())
-            })
-            .cloned()
-            .collect())
-    }
-}
-```
-
-**Gap #40: Crew size limits and resource management (GUI updates required)**
-
-**Issue:** What's the maximum crew size? What if crew exceeds platform quota? What if too many crews run simultaneously?
-
-**Mitigation:**
-- **Crew size limits:** Maximum 10 subagents per crew (configurable). If user requests more, split into multiple crews or reject with suggestion.
-- **Platform quota checking:** Before creating crew, check platform quota. If insufficient, either (1) wait for quota, (2) use fallback platform, or (3) reject with error.
-- **Concurrent crew limits:** Maximum 5 active crews per platform (configurable). Queue additional crews or reject. Note: this is separate from per-platform agent caps (see "Parallel Execution Configuration" below and `Plans/FinalGUISpec.md` §7.4.7). A crew spawn must satisfy both the crew cap and the per-platform agent cap.
-- **Resource monitoring:** Track platform usage per crew. Alert if crew approaches quota limits.
-
-**GUI requirements:**
-- **Crew size indicator:** Show crew size (e.g., "3/10 members") in crew list/detail view
-- **Platform quota display:** Show platform quota usage in GUI (e.g., "Codex: 2/5 crews active, 45/100 quota remaining")
-- **Limit warnings:** Show warnings in GUI when approaching limits ("Warning: 4/5 crews active for Codex")
-- **Resource usage dashboard:** Add resource usage section showing platform quotas, active crews per platform, crew sizes
-- **Future (Assistant feature):** When user-initiated crews are added, GUI should validate crew size and platform quota before allowing crew creation
-
-```rust
-impl CrewManager {
-    pub async fn can_create_crew(&self, platform: Platform, crew_size: usize) -> Result<bool> {
-        // Check crew size limit
-        if crew_size > self.config.max_crew_size {
-            return Err(anyhow!("Crew size {} exceeds maximum {}", crew_size, self.config.max_crew_size));
-        }
-
-        // Check concurrent crew limit
-        let active_crews = self.get_active_crews_for_platform(platform).await?;
-        if active_crews.len() >= self.config.max_concurrent_crews_per_platform {
-            return Err(anyhow!("Maximum concurrent crews ({}) reached for platform {:?}",
-                self.config.max_concurrent_crews_per_platform, platform));
-        }
-
-        // Check platform quota (if available)
-        if let Some(quota) = self.check_platform_quota(platform).await? {
-            if quota.remaining < crew_size as u64 {
-                return Err(anyhow!("Insufficient platform quota. Need {}, have {}",
-                    crew_size, quota.remaining));
-            }
-        }
-
-        Ok(true)
-    }
-}
-```
-
-**Gap #41: Crew parsing and subagent selection**
-
-**Issue:** How do we parse crew requests from user prompts? What if user requests invalid subagent names? What if requested subagents aren't available for the platform?
-
-**Mitigation:**
-- **Crew request parsing:** Use regex/NLP to extract: (1) subagent names (explicit list or inferred from task), (2) task description, (3) optional crew name, (4) optional platform override
-- **Subagent validation:** Validate requested subagents against canonical subagent list. If invalid, suggest alternatives or reject.
-- **Platform compatibility:** Check if requested subagents are available for selected platform. Some platforms may not support all subagent types.
-- **Auto-selection fallback:** If user doesn't specify subagents, auto-select based on task (use `SubagentSelector`).
-
-```rust
-fn parse_crew_request(prompt: &str) -> Result<CrewRequest> {
-    // Try to extract explicit subagent list
-    // Pattern: "crew with rust-engineer, test-automator, code-reviewer"
-    let subagent_pattern = regex::Regex::new(r"crew\s+with\s+([^,]+(?:,\s*[^,]+)*)")?;
-    let subagents = if let Some(caps) = subagent_pattern.captures(prompt) {
-        caps.get(1).unwrap().as_str()
-            .split(',')
-            .map(|s| s.trim().to_string())
-            .collect()
-    } else {
-        // Auto-select based on task
-        vec![] // Will be filled by SubagentSelector
-    };
-
-    // Extract task
-    // Pattern: "crew to <task>" or "crew: <task>"
-    let task_pattern = regex::Regex::new(r"crew\s+(?:to|:)\s+(.+)")?;
-    let task = task_pattern.captures(prompt)
-        .and_then(|c| c.get(1))
-        .map(|m| m.as_str().to_string())
-        .ok_or_else(|| anyhow!("Could not parse task from crew request"))?;
-
-    // Extract platform override
-    // Pattern: "crew with <platform>"
-    let platform_pattern = regex::Regex::new(r"crew\s+with\s+(codex|copilot|claude|cursor|gemini)")?;
-    let platform_override = platform_pattern.captures(prompt)
-        .and_then(|c| c.get(1))
-        .map(|m| parse_platform(m.as_str()));
-
-    Ok(CrewRequest {
-        subagents,
-        task,
-        platform_override,
-    })
-}
-```
-
-**Gap #42: Crew state persistence and recovery**
-
-**Issue:** What if Puppet Master crashes mid-crew? How do we recover crew state? What if crew state file gets corrupted?
-
-**Mitigation:**
-- **Crew state persistence:** Save crew state to `.puppet-master/state/crews.json` after each significant change (member status, message posted, crew status change)
-- **Recovery on startup:** On Puppet Master startup, load crew state and resume active crews. Check if crew members are still active (via coordination state).
-- **State validation:** Validate crew state on load (check required fields, valid status transitions, member consistency)
-- **Backup and restore:** Backup crew state before major changes. Restore from backup if corruption detected.
-
-```rust
-impl CrewManager {
-    pub async fn recover_crews_on_startup(&self) -> Result<()> {
-        let crews = self.load_crews().await?;
-        let coordination_state = self.coordinator.load_state().await?;
-
-        for mut crew in crews {
-            if matches!(crew.status, CrewStatus::Active | CrewStatus::Forming) {
-                // Check if crew members are still active
-                let active_members: Vec<_> = crew.subagents.iter()
-                    .filter(|member| {
-                        coordination_state.active_agents.contains_key(&member.agent_id)
-                    })
-                    .collect();
-
-                if active_members.is_empty() {
-                    // All members inactive — mark crew as disbanded
-                    crew.status = CrewStatus::Disbanded;
-                    tracing::warn!("Crew {} disbanded on recovery: all members inactive", crew.crew_id);
-                } else if active_members.len() < crew.subagents.len() {
-                    // Some members inactive — update status
-                    for member in &mut crew.subagents {
-                        if !coordination_state.active_agents.contains_key(&member.agent_id) {
-                            member.status = SubagentStatus::Blocked;
-                        }
-                    }
-                    tracing::info!("Crew {} recovered with {} active members", crew.crew_id, active_members.len());
-                }
-
-                self.save_crew(&crew).await?;
-            }
-        }
-
-        Ok(())
-    }
-}
-```
-
-**Gap #43: Crew conflicts and deadlocks (GUI updates required)**
-
-**Issue:** What if crew members have conflicting requirements? What if crew deadlocks (all members waiting for each other)? What if crew members disagree on approach?
-
-**Mitigation:**
-- **Conflict detection:** Monitor crew messages for conflicts (e.g., "I need X" vs "I need Y" where X and Y conflict). Detect deadlocks (all members in "Waiting" status for >5 minutes).
-- **Orchestrator intervention:** If conflict or deadlock detected, orchestrator can (1) mediate via message, (2) assign decision-maker (e.g., architect-reviewer), or (3) disband and re-plan
-- **Decision escalation:** If crew members disagree, escalate to orchestrator or user. Orchestrator can inject decision message to resolve conflict.
-
-**GUI requirements:**
-- **Conflict indicators:** Show visual indicators in GUI when conflicts or deadlocks are detected (warning badge, alert icon)
-- **Deadlock notification:** Show notification/toast when deadlock detected ("Crew 'Authentication Crew' is deadlocked. Orchestrator is resolving...")
-- **Conflict resolution UI:** Show conflict details in GUI (which members disagree, what the conflict is about) with option to manually intervene
-- **Status indicators:** Highlight crews with conflicts/deadlocks in crew list (different color, warning icon)
-
-```rust
-impl Crew {
-    pub async fn detect_deadlock(&self) -> Result<bool> {
-        // Check if all members are waiting
-        let all_waiting = self.subagents.iter()
-            .all(|member| matches!(member.status, SubagentStatus::Waiting));
-
-        if all_waiting {
-            // Check how long they've been waiting
-            let oldest_wait = self.subagents.iter()
-                .filter_map(|m| {
-                    if matches!(m.status, SubagentStatus::Waiting) {
-                        // Get last status change time (would need to track this)
-                        Some(Utc::now() - chrono::Duration::minutes(5)) // Placeholder
-                    } else {
-                        None
-                    }
-                })
-                .min();
-
-            if let Some(wait_time) = oldest_wait {
-                if wait_time.num_minutes() > 5 {
-                    return Ok(true); // Deadlock detected
-                }
-            }
-        }
-
-        Ok(false)
-    }
-
-    pub async fn resolve_deadlock(&mut self, orchestrator: &Orchestrator) -> Result<()> {
-        // Orchestrator injects resolution message
-        orchestrator.post_to_crew(self.crew_id.clone(), AgentMessage {
-            message_type: MessageType::Decision,
-            subject: "Deadlock resolution".to_string(),
-            content: "Orchestrator detected deadlock. Proceeding with approach X. All members should proceed.".to_string(),
-            // ...
-        }).await?;
-
-        // Unblock all members
-        for member in &mut self.subagents {
-            if matches!(member.status, SubagentStatus::Waiting) {
-                member.status = SubagentStatus::Active;
-            }
-        }
-
-        Ok(())
-    }
-}
-```
-
-**Gap #44: Crew visibility and user experience (GUI updates required)**
-
-**Issue:** How do users see orchestrator-initiated crews? How do users monitor crew progress? How do users interact with crews (cancel, modify, etc.)?
-
-**Mitigation:**
-- **GUI crew dashboard:** Add "Crews" tab/section to GUI showing all active crews (orchestrator-initiated for now; user-initiated when Assistant feature is added), crew members, status, messages
-- **Crew status indicators:** Show crew status (Active, Waiting, Complete, Disbanded) with visual indicators. Show member status within crew (Pending, Active, Waiting, Complete, Blocked).
-- **Crew actions:** Allow users to (1) view crew messages, (2) cancel crew (orchestrator-initiated crews), (3) view crew details (platform, tier, task, members), (4) filter/search crews
-- **Crew filtering:** Filter crews by platform, status, creator (orchestrator for now), tier
-- **Crew message viewer:** Show messages within each crew, with threading, timestamps, and read status
-- **Crew creation UI (Future: Assistant feature):** When Assistant feature is added, GUI will need controls for creating user-initiated crews (select platform, subagents, task)
-
-**GUI implementation requirements:**
-
-**New GUI components needed:**
-1. **Crews tab/page:** New view showing all crews
-2. **Crew list widget:** List of crews with status badges, platform icons, member counts
-3. **Crew detail view:** Expandable/collapsible crew details showing members, messages, status
-4. **Crew message viewer:** Message list/thread viewer within crew detail
-5. **Crew status badge:** Visual indicator for crew status (color-coded)
-6. **Crew member status indicator:** Visual indicator for member status within crew
-7. **Crew actions menu:** Context menu or action buttons (view, cancel, etc.)
-8. **Crew filter controls:** Filter by platform, status, tier (dropdowns, checkboxes)
-
-**GUI data sources:**
-- Load crews from `.puppet-master/state/crews.json`
-- Load messages from `.puppet-master/state/agent-messages.json` (filtered by crew_id)
-- Load coordination state from the canonical active-agent projection (optionally mirrored to `.puppet-master/state/active-agents.json` for debugging) for member status
-
-**GUI update frequency:**
-- Crew list: Update on crew status change (event-driven)
-- Crew messages: Poll every 5 seconds or use event-driven updates
-- Member status: Update on coordination state change (event-driven)
-
-**Future GUI requirements (Assistant feature):**
-- When Assistant feature is added, GUI will need:
-  - Crew creation dialog/form (select platform, subagents, task, optional name)
-  - Platform selection widget (for user-initiated crews)
-  - Subagent selection widget (multi-select from canonical list)
-  - Crew name input field
-  - Task description input field
-
-**Gap #45: Crew performance and scalability**
-
-**Issue:** What if there are 50+ active crews? What if crew has 20+ members? Will message board become a bottleneck?
-
-**Mitigation:**
-- **Crew limits:** Enforce maximum concurrent crews (e.g., 20 total). Queue additional crews or reject.
-- **Message board optimization:** Index messages by crew_id, agent_id, tier_id for fast filtering. Archive old messages (>24 hours).
-- **Lazy loading:** Only load messages for active crews. Load full message history on demand.
-- **Message batching:** Batch multiple messages into single file write to reduce I/O.
-
-**Gap #46: Crew integration with existing subagent system**
-
-**Issue:** How do crews integrate with existing tier-level subagent selection? What if tier already has subagents when crew is created? Can crew members be tier subagents?
-
-**Mitigation:**
-- **Crew vs tier subagents:** Crews are separate from tier-level subagents. Tier subagents work independently; crews add communication layer.
-- **Overlap handling:** If crew member is also a tier subagent, agent participates in both (tier work + crew communication)
-- **Coordination:** Crew members coordinate via message board; tier subagents coordinate via coordination state. Both can coexist.
-
-**Gap #47: Crew message spam and rate limiting**
-
-**Issue:** What prevents crew members from spamming messages? What if agent posts 100 messages per minute?
-
-**Mitigation:**
-- **Rate limiting:** Limit messages per agent per minute (e.g., max 10 messages/minute). Reject excess messages with error.
-- **Message importance:** Prioritize important messages (Questions, Warnings) over updates. Filter low-priority messages if message board is full.
-- **Message deduplication:** Detect duplicate messages (same content from same agent within 1 minute). Reject duplicates.
-
-```rust
-impl AgentCommunicator {
-    pub async fn post_message_with_rate_limit(&self, message: AgentMessage) -> Result<()> {
-        // Check rate limit
-        let recent_messages = self.get_recent_messages_for_agent(&message.from_agent_id,
-            chrono::Duration::minutes(1)).await?;
-
-        if recent_messages.len() >= 10 {
-            return Err(anyhow!("Rate limit exceeded: max 10 messages per minute"));
-        }
-
-        // Check for duplicates
-        if self.is_duplicate(&message, &recent_messages)? {
-            return Err(anyhow!("Duplicate message detected"));
-        }
-
-        // Post message
-        self.post_message(message).await
-    }
-}
-```
-
-**Gap #48: Crew task completion and handoff**
-
-**Issue:** How do crews know when their task is complete? How do crews hand off work to the next tier or other crews? What if crew members disagree on completion criteria?
-
-**Mitigation:**
-- **Task completion criteria:** Define clear completion criteria for crew tasks (e.g., "all tests pass", "code review approved", "documentation complete"). Crew members can vote on completion or defer to orchestrator.
-- **Crew handoff:** When crew completes, post completion message to orchestrator and other crews. Include handoff context (files changed, decisions made, blockers resolved).
-- **Completion validation:** Orchestrator validates crew completion against acceptance criteria. If criteria not met, crew continues or escalates.
-- **Handoff messages:** Crews can post handoff messages to other crews (e.g., "Task 1.1 complete, API endpoints ready for testing"). Other crews receive these as coordination context.
-
-**Gap #49: Crew member selection and availability**
-
-**Issue:** What if requested subagent type isn't available for the platform? What if subagent is already busy in another crew? How do we handle subagent unavailability?
-
-**Mitigation:**
-- **Subagent availability check:** Before creating crew, check if requested subagents are available (not already in max crews, platform supports subagent type).
-- **Fallback subagents:** If requested subagent unavailable, suggest alternatives (e.g., "rust-engineer unavailable, use backend-developer instead?").
-- **Subagent capacity:** Track how many crews each subagent type is in. Limit concurrent crews per subagent type (e.g., max 3 crews per subagent type).
-- **Platform compatibility:** Validate subagent type is supported by platform. Some platforms may not support all subagent types.
-
-**Gap #50: Crew coordination with tier execution**
-
-**Issue:** How do crews coordinate with tier-level execution? What if tier completes while crew is still working? What if crew needs to wait for tier completion?
-
-**Mitigation:**
-- **Tier completion awareness:** Crews monitor tier completion status. When tier completes, crew can either (1) continue if task not complete, (2) disband if task complete, or (3) wait for next tier.
-- **Crew-tier synchronization:** Crews can wait for tier completion before starting (e.g., "wait for Task 1.1 to complete before starting Subtask 1.1.1 crew").
-- **Tier context injection:** Crews receive tier context (files, decisions, blockers) as part of coordination context. Crews can reference tier work in their messages.
-
-**Gap #51: Crew debugging and observability**
-
-**Issue:** How do we debug crew communication issues? How do we see what crews are doing? How do we trace crew decision-making?
-
-**Mitigation:**
-- **Crew logs:** Log all crew operations (creation, member status changes, messages posted, completion) to `.puppet-master/logs/crews.log`.
-- **Crew traces:** Generate traces for crew execution (similar to iteration traces). Show crew timeline, member activities, message flow.
-- **Crew metrics:** Track crew metrics (duration, message count, member failures, conflicts detected). Display in GUI.
-- **Debug mode:** Enable verbose logging for crew communication (log all messages, coordination state changes, platform calls).
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Decision_Policy.md, ContractName:Plans/Crosswalk.md
 
 ### Additional Enhancements for Crews
 
@@ -5179,6 +4870,7 @@ impl AgentCommunicator {
 
         for msg in messages.iter().take(10) { // Limit to 10 most recent
             // DRY REQUIREMENT: Platform display name MUST use platform_specs::display_name_for() — NEVER hardcode platform names
+            ContractRef: ContractName:Plans/DRY_Rules.md#7, ContractName:Plans/Models_System.md
             let platform_display = platform_specs::display_name_for(msg.from_platform);
             let from_info = format!("{} ({})", msg.from_agent_id, platform_display);
             let message_type_str = match msg.message_type {
@@ -6573,6 +6265,7 @@ async fn run_enhanced_loop(&self) -> Result<()> {
         // DRY: Validate selected subagent names using subagent_registry::is_valid_subagent_name()
 
         // DRY REQUIREMENT: execute_with_subagents MUST use platform_specs for platform-specific invocation
+        ContractRef: ContractName:Plans/DRY_Rules.md#7, ContractName:Plans/Executor_Protocol.md
         let result = self.execute_with_subagents(
             &next_task.tier_node,
             &subagents,
@@ -6971,21 +6664,6 @@ ContractRef: ContractName:Plans/Run_Graph_View.md, ContractName:Plans/Orchestrat
 ### Draft decomposition fallback boundary
 Interview/planning-stage decomposition fallback may flatten only before graph lock. After graph lock, the orchestrator MUST treat invalid graph structure as integrity failure rather than silently continuing with a degraded execution plan.
 ContractRef: ContractName:Plans/chain-wizard-flexibility.md, ContractName:Plans/interview-subagent-integration.md, ContractName:Plans/Executor_Protocol.md
-## Runtime Scheduler Consumer Reconciliation Addendum (2026-03-09)
-
-The orchestrator is the primary consumer of the canonical runtime scheduler contract.
-
-### Consumer rules
-- consume canonical runtime event names from `Plans/Contracts_V0.md`; do not treat legacy `run.*` names as separate semantics
-- reevaluate directly affected runnable units in the same wake cycle after `node.prerequisite_resolved`
-- shortage of slots is `non_selected_reason = capacity_deferred`, not a blocked outcome
-- worktree merge/conflict or dirty-baseline problems block dispatch using `blocked_reason_code = worktree_conflict` or `dirty_worktree`
-- `allowed_action_ids[]` are the only recovery actions surfaced from blocked outcomes; domain metadata binds the exact command surface
-
-### Retry/remediation integration
-- retries, resume-after-prerequisite, and restore-before-rerun always create new attempts
-- FileSafe may override generic retry policy by setting `requires_safe_point_restore = true`
-- remediation children inherit lineage metadata but not the old attempt identity
 ## Orchestrator Runtime Consumer and Remediation Execution Reconciliation Addendum (2026-03-09)
 
 The orchestrator is the primary consumer of the canonical runtime scheduler contract.
@@ -7012,19 +6690,6 @@ Newly unblocked canonical nodes and remediation children that become runnable in
 ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Orchestrator_Page.md
 
 ## Runtime Enum and Counter Alignment Addendum
-
-The orchestrator is a consumer of canonical runtime contracts and MUST NOT redefine them locally.
-
-Required rules:
-- use `failure_class` only for classified attempt outcomes
-- use `blocked_reason_code` only for unresolved prerequisites or intentionally prevented work
-- preserve ordered `allowed_action_ids[]` exactly as emitted by runtime contracts
-- treat slot shortage as `capacity_deferred`, not blocked
-- create a new `attempt_id` for every retry, prerequisite resume, remediation rerun, or safe-point-restored rerun
-- respect the independent counter-family model; `retry_count` is display-only
-
-ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Decision_Policy.md, ContractName:Plans/Executor_Protocol.md
-## Runtime Consumer Alignment
 
 The orchestrator is a consumer of canonical runtime contracts and MUST NOT redefine them locally.
 

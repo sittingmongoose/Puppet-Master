@@ -1,0 +1,154 @@
+1) AUDIT SUMMARY
+
+Overall verdict: the planning docs are **not fidelity-complete for implementation use**.
+
+Most owner-doc canon from the run-07 ledger now survives into the planning set, and one late reconciliation chunk audited clean. The remaining risk is not broad absence; it is **specific owner-doc drift** where exact runtime taxonomy, auth/listener ownership, FileSafe hardening, and post-filter repair behavior are still thinner or older than the ledger locks.
+
+Main risk themes:
+- kill/stop reason-code drift in runtime owner docs
+- provider failure-class and retry/circuit-breaker drift
+- MCP OAuth identity/listener rules still under-specified in the owner doc
+- resolved FileSafe path/worktree canon still presented as checklist TODOs
+- storage lock-path ownership is inconsistent with root-selection/fallback canon
+- usage attribution fields are thinner in a consumer doc than in the usage owner doc
+
+Context note: `Plans/.pipeline/verifier_report.txt` is empty in this run. `Plans/.pipeline/packet_shape_report.txt` passes, so this audit focuses on semantic carry-through rather than anchor mechanics.
+
+2) CHUNKING / DELEGATION SUMMARY
+
+The ledger was split mechanically by heading-owned ranges before semantic review. The lead auditor did not semantically read the full ledger before delegation.
+
+- Subauditor A: lines 1-216 -> `Plans/orchestrator-subagent-integration.md`, `Plans/CLI_Bridged_Providers.md`, `Plans/Run_Modes.md`, `Plans/Prompt_Pipeline.md`
+- Subauditor B: lines 217-389 -> `Plans/Tools.md`, `Plans/FileSafe.md`, `Plans/storage-plan.md`, `Plans/CLI_Bridged_Providers.md`
+- Subauditor C: lines 390-510 -> all 8 packet-touched owner docs
+- Subauditor D: lines 511-631 -> all 8 packet-touched owner docs
+- Subauditor E: lines 632-921 -> all 8 packet-touched owner docs
+- Subauditor F: lines 922-1483 -> all 8 packet-touched owner docs
+
+Subauditors used: **6**
+
+Chunk/doc clusters covered:
+- early research + A2A/orchestration framing
+- OpenCode category findings for tools/files/storage/providers
+- Phase 3-4 resolved obligation clusters
+- Phase 5 multi-model deep sweep
+- Phase 6-8 reconciliation and canon-lock hardening
+- Phase 9-12 final reconciliation / coverage passes
+
+3) LEDGER OBLIGATIONS SUMMARY
+
+Canon-relevant obligations extracted across all chunks: **135** (sum of subauditor-reported counts).
+
+Major obligation clusters:
+- runtime ceilings, kill taxonomy, timeout and shutdown contracts
+- provider facade, error-class mapping, retry/backoff, circuit-breaker, auth lifecycle
+- MCP schema/OAuth ownership and callback behavior
+- FileSafe path normalization, worktree identity, rewrite safety, checklist retirement
+- storage durability, migration, lock-path, and unsafe-filesystem fallback
+- prompt filtering/compaction integrity and replay safety
+- usage attribution fields and budget/event naming alignment
+
+Clusters most at risk of stubbing or loss:
+- `Plans/Run_Modes.md` reason-code tables
+- `Plans/CLI_Bridged_Providers.md` failure-class / consumer-field sections
+- `Plans/Tools.md` MCP OAuth ownership section
+- `Plans/FileSafe.md` hardening/checklist residue
+- `Plans/storage-plan.md` multi-instance locking language
+
+4) FINDINGS
+
+FIDELITY-ID: LF-001
+severity: high
+where: `Plans/Run_Modes.md#5.1 Universal kill conditions (all strategies)`; `Plans/Run_Modes.md#5.2 HTE-specific kill conditions`
+ledger obligation that did not fully survive:
+- the ledger locks `kill.recursion_depth`, `kill.agent_count`, `kill.tool_round_limit`, and `kill.hte_tool_observed` as the runtime reason-code family for these enforcement paths, with pre-dispatch `kill.budget_exceeded` kept distinct from post-response `done.budget_exceeded`
+why the current doc is stubbed / incomplete / over-summarized / mis-owned:
+- the universal table still uses `stop.recursion_depth`, `stop.agent_count`, `stop.tool_round_limit`, and `stop.hte_tool_observed`
+- the adjacent HTE-specific section uses `kill.hte_tool_observed`, so the owner doc disagrees with itself and with the ledger lock
+- this is implementation-facing taxonomy drift, not harmless wording variation
+what kind of recovery is needed:
+- reconcile doc set
+
+FIDELITY-ID: LF-002
+severity: high
+where: `Plans/CLI_Bridged_Providers.md#HTTP/status to failure-class mapping`; `Plans/CLI_Bridged_Providers.md#Stream cancellation and replay safety`
+ledger obligation that did not fully survive:
+- `429` must remain a distinct `rate_limited` class (separate from `5xx = provider_transient`)
+- `402 = quota_exceeded` carries explicit no-retry / upgrade-posture behavior
+- the transient breaker opens after 5 consecutive failures in **2 minutes**
+why the current doc is stubbed / incomplete / over-summarized / mis-owned:
+- the mapping table currently collapses `429 / rate limit` into `provider_transient`
+- the `402` row preserves no-retry but drops the upgrade-facing handling captured in the ledger
+- the breaker window is documented as **60 seconds**, not the ledger’s **2 minutes**
+- these are live policy constants and failure classes, not optional examples
+what kind of recovery is needed:
+- packetize fuller section content
+
+FIDELITY-ID: LF-003
+severity: high
+where: `Plans/Tools.md#Schema isolation and OAuth state`
+ledger obligation that did not fully survive:
+- MCP OAuth token sharing is keyed by `provider+scope`, not by MCP server identity
+- callback handling uses a shared local HTTP listener
+- stable client identity/listener behavior must not be re-scoped per server
+why the current doc is stubbed / incomplete / over-summarized / mis-owned:
+- the doc keys dynamic client registrations by `(provider_id, scope_set, server_slug?)`
+- it never states the shared-listener ownership rule from the ledger
+- that leaves room for server-scoped client/listener implementations the ledger explicitly ruled out
+what kind of recovery is needed:
+- packetize fuller section content
+
+FIDELITY-ID: LF-004
+severity: high
+where: `Plans/FileSafe.md#15.12 Integration Checklist`
+ledger obligation that did not fully survive:
+- real-worktree-root comparison and fail-closed rejection of unresolved worktree aliases are locked behavior, not open implementation TODOs
+why the current doc is stubbed / incomplete / over-summarized / mis-owned:
+- the checklist still contains unresolved boxes for `Use the real worktree root, not a symlink alias` and `Reject unresolved worktree aliases instead of falling back to unresolved paths`
+- the same document already carries resolved contract language for this behavior earlier, so the owner doc now presents settled canon as still pending
+what kind of recovery is needed:
+- reconcile doc set
+
+FIDELITY-ID: LF-005
+severity: medium
+where: `Plans/storage-plan.md#Naming and migration rules`; `Plans/storage-plan.md#6. Potential problems and solutions`
+ledger obligation that did not fully survive:
+- multi-instance exclusion and lock ownership must follow the selected logical storage root and any safe-local durable-store fallback, not assume project-local storage only
+why the current doc is stubbed / incomplete / over-summarized / mis-owned:
+- the storage-root section allows config/env/project/global roots and a safe-local fallback for durable state
+- the multi-instance row still hardcodes exclusive locking on `<project>/.puppet-master/pm.lock`
+- that leaves lock identity ambiguous when the durable store is intentionally relocated
+what kind of recovery is needed:
+- reconcile doc set
+
+FIDELITY-ID: LF-006
+severity: medium
+where: `Plans/Prompt_Pipeline.md#2.3 Post-filter integrity rules`
+ledger obligation that did not fully survive:
+- after filtering, PM must not only validate alternation; if filtering empties a required message position it must emit a warning and inject a placeholder when needed to preserve replay-safe structure
+why the current doc is stubbed / incomplete / over-summarized / mis-owned:
+- the section currently stops at “validate role alternation and message-boundary correctness”
+- the ledger’s explicit empty-after-filter repair behavior remains ledger-only
+- this weakens the implementation contract for post-filter recovery
+what kind of recovery is needed:
+- packetize fuller section content
+
+FIDELITY-ID: LF-007
+severity: medium
+where: `Plans/CLI_Bridged_Providers.md#Normalized usage event minimum fields`
+ledger obligation that did not fully survive:
+- canonical usage attribution includes `account_id` and `entitlement_class` alongside `provider_id`, `model_id`, and `billing_entity_id` when known
+why the current doc is stubbed / incomplete / over-summarized / mis-owned:
+- the bridge doc’s minimum-field table preserves `provider_id`, `model_id`, and `billing_entity_id`, but omits `account_id` and `entitlement_class`
+- those fields survive in `Plans/usage-feature.md`, so the owner doc is fuller than this consumer-facing bridge contract
+- future adapter work could therefore preserve an incomplete attribution tuple unless implementers reopen the usage owner doc or ledger
+what kind of recovery is needed:
+- update consumer/mirror doc
+
+5) FINAL VERDICT
+
+The current planning set is **not fidelity-complete** for implementation use. A future implementation agent could build from the docs alone and still miss or misread several canonical runtime details, especially around reason-code taxonomy, provider failure classes, MCP OAuth ownership, FileSafe hardening cleanup, storage locking, and post-filter repair behavior.
+
+Balanced note: the late reconciliation chunk covering ledger lines 922-1483 audited clean against the 8 owner docs, so this is no longer a broad packet failure. The remaining gaps are narrower owner-doc fidelity drifts that still matter.
+
+<ledger_fidelity_blocked/>

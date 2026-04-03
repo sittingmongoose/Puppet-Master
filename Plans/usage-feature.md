@@ -292,63 +292,74 @@ The prior Gap 1–7 framing is retired. The following items are resolved and MVP
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md
 
 ### Canonical usage pipeline
-
 PM usage surfaces are projection-driven. The canonical flow is:
-`seglog -> analytics scan jobs -> redb rollups -> UI consumers`.
+`usage.event` + executed-call lineage (`tool.invoked` and canonical `run.completed.usage`) -> analytics scan jobs -> redb rollups -> UI consumers.
 
-`usage.jsonl` may exist as a human-readable mirror or compatibility source, but it is NOT the canonical rollup source for the 5h/7d windows.
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/Contracts_V0.md
 
-ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md
+Compatibility-shim retirement condition:
+- once Usage/dashboard rollups read exclusively from redb projections
+- once thread and current-run summaries read from `usage.event` plus canonical `run.completed.usage` snapshots rather than parsing `usage.jsonl`
+- once no in-product reader treats `usage.jsonl` as authoritative input
 
-### Cost storage and token segregation
-
-- All cost values are stored as integer microdollars (`u64`).
-- The canonical token buckets are `input_tokens`, `output_tokens`, `cache_read_input_tokens`, `cache_creation_input_tokens`, and `reasoning_tokens`.
-- These fields MUST remain separate at the storage layer; aggregation happens only in presentation or rollup logic.
-
-ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Architecture_Invariants.md
-
-### Spending limits and budget enforcement
-### Cost monotonicity and model-switch handling
-
-Cumulative cost for a run or session MUST be monotonically non-decreasing. When a model switch occurs mid-run (e.g., fallback from an expensive model to a cheaper one), the cost counter does not decrease retroactively.
-
-ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Models_System.md
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Contracts_V0.md
 
 Rules:
-- Each provider response adds its actual cost to the cumulative total; cost is never subtracted.
-- If a pre-request cost estimate was higher than the actual post-response cost, the difference is not reclaimed from the cumulative total. The estimate is advisory; the actual is authoritative.
-- Model-switch events are recorded with their own cost attribution. The cumulative total is the sum of all actual costs across all models used within the run or session.
-- If a provider returns a cost of zero (e.g., cached response), the cumulative total remains unchanged.
+- `usage.event` remains canonical for provider/model token and cost accounting
+- executed tool invocations and other helper/background operations that do not expose provider token buckets still emit canonical lineage/attribution through their runtime records and MUST join to the same parent totals via `run_id`, `parent_run_id`, and `thread_id` when present
+- `usage.jsonl` may exist as a human-readable mirror or temporary compatibility source, but it is NOT the canonical rollup source for the 5h/7d windows
+- after the compatibility-shim retirement conditions are met, `usage.jsonl` remains an optional export/debug mirror only. New canonical fields MUST NOT be introduced only in the compatibility path
 
-ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Run_Modes.md
+ContractRef: ContractName:Plans/Architecture_Invariants.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md
 
+### Cost storage and token segregation
+- All cost values are stored as integer microdollars (`cost_microdollars: u64`).
+- The canonical token buckets are `input_tokens`, `output_tokens`, `cache_read_input_tokens`, `cache_creation_input_tokens`, `reasoning_tokens`, and `total_tokens`.
+- These fields MUST remain separate at the storage layer; aggregation happens only in presentation or rollup logic.
+- `cost_usd` is a presentation-only derived field computed from `cost_microdollars`; it is not a second durable source of truth.
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Architecture_Invariants.md
+
+- Raw provider cost anomalies that would produce a negative stored value MUST be clamped to zero before durable write.
+- When a clamp or correction occurs, PM emits a structured diagnostic or correction record that preserves the provider anomaly without storing negative ad-hoc cost deltas.
+- Canonical stored cost values, cumulative session totals, and rollup deltas are non-negative and MUST remain monotonically non-decreasing across model switches, retries, and background/helper activity.
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/storage-plan.md
+### Spending limits and budget enforcement
 Spending limits are enforced at two checkpoints:
-1. **Pre-request estimate:** if the estimated request cost would exceed the remaining budget, PM blocks before dispatch with `stop.budget_exceeded`.
+1. **Pre-request estimate:** if estimated request cost would exceed remaining budget, PM blocks before dispatch with `kill.budget_exceeded`.
 2. **Post-response actual:** after the provider responds, PM records actual cost and terminates with `done.budget_exceeded` if the run or session budget is exceeded.
 
-Warning threshold: PM emits a warning at 80% of the configured remaining budget. Both per-run and per-session budgets are supported.
+ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Contracts_V0.md
 
-ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Executor_Protocol.md
+Warning threshold: PM emits a warning when consumption reaches `warn_budget_pct = 80` of the configured run or session budget. Both per-run and per-session budgets are supported.
 
+ContractRef: ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md
+
+Budget rules:
+- actual cost recording MUST NOT underflow remaining budget calculations
+- estimated preflight cost may be conservative, but it MUST NOT rewrite the actual cost record emitted after provider completion
+- blocked budget checks and terminal budget outcomes preserve the same run and parent attribution lineage as any other usage event
+- hidden/background/helper calls that consume budget (for example tool-driven model calls, title generation, summaries, compaction helpers, or subagent-side model work) MUST obey the same budget policy and roll into the same parent totals
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Prompt_Pipeline.md
 ### Billing identity, attribution, and pricing metadata
 
-Cost attribution is keyed by `(model_id, provider_id, billing_entity_id)` when billing-entity semantics exist. `parent_run_id` is the canonical attribution bridge for tool-level and subagent-level usage rollups.
+Cost attribution is keyed by the canonical runtime identity tuple: `(model_id, provider_id, account_id?, billing_entity_id?, entitlement_class?)` when those fields are known. `billing_entity_id` alone is not a sufficient canonical substitute when account or entitlement context exists. `parent_run_id` is the canonical attribution bridge for tool-level and subagent-level usage rollups.
 
 Pricing metadata is consumed from `Plans/Models_System.md`; this document uses it but does not own provider pricing tables.
 
 ContractRef: ContractName:Plans/Models_System.md, ContractName:Plans/Contracts_V0.md
 
 ### Adaptive display precision
-
 UI cost display rules:
-- amounts below `$1.00`: show 4 decimal places
+- amounts below `$0.01`: show 6 decimal places
+- amounts from `$0.01` up to but not including `$1.00`: show 4 decimal places
 - amounts at or above `$1.00`: show 2 decimal places
 - always show the currency label
 - when pricing is estimated rather than authoritative, label the surface `Estimated Cost`
 
 ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Runtime_Artifacts_Panel.md
-
 ### 5h / 7d aggregation and freshness
 
 The 5h / 7d windows are served from redb rollups. While a background analytics scan is refreshing a window, the UI shows the last committed rollup plus an explicit `Updating...` freshness cue rather than recomputing in the foreground.
@@ -356,100 +367,30 @@ The 5h / 7d windows are served from redb rollups. While a background analytics s
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md
 
 ### Unified `UsageRecord` schema expectations
-
 All usage surfaces derive from the same `UsageRecord` identity. Minimum shared attribution fields are:
 - `run_id`
-- `parent_run_id` when emitted by a child run, tool, or background operation
+- `parent_run_id` when emitted by a child run, executed tool operation, or background/helper operation
+- `thread_id?`
 - `provider_id`
 - `model_id`
+- `account_id?`
 - `billing_entity_id?`
-- token buckets
+- `entitlement_class?`
+- canonical token buckets including `total_tokens`
 - `cost_microdollars`
 - `cache_hit?`
 - `cache_strategy?`
 
-Compatibility shims may ingest older records, but new surfaces MUST NOT invent a second attribution schema.
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Models_System.md
 
-ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md
+Rules:
+- every usage-relevant operation MUST emit canonical attribution. Provider/model calls emit a canonical usage record; executed tool operations and other helper/background activity that do not expose token buckets still emit the same run/provider/account/billing/entitlement lineage and omit only the unknown token counts
+- if a provider cannot supply every token bucket, PM still emits the record with all known attribution fields and omits only the unknown token counts; it MUST NOT skip the usage record entirely
+- bridge adapters, storage snapshots, and UI rollups MUST preserve the full `(provider_id, model_id, account_id?, billing_entity_id?, entitlement_class?)` tuple when known; they MUST NOT collapse attribution to billing entity alone
+- compatibility shims may ingest older records, but new surfaces MUST NOT invent a second attribution schema or add canonical-only fields exclusively to `usage.jsonl`
+- `cost_usd` may be projected for presentation, but the durable record remains `cost_microdollars` plus the canonical attribution fields above
 
-### Canonical enums
-
-Canonical enum values for usage attribution MUST be shared across persistence, projection, and UI layers.
-
-```text
-usage_source_kind: enum {
-  chat,          // direct user chat interaction
-  subagent,      // subagent execution
-  background,    // background task (indexing, analysis)
-  system,        // system-initiated (health check, model probe)
-  tool,          // tool-initiated (tool calling another model)
-}
-```
-
-```text
-effective_auth_mode: enum {
-  api_key,       // authenticated via API key
-  oauth_token,   // authenticated via OAuth access token
-  cli_managed,   // authentication managed by CLI tool
-  env_variable,  // credential from environment variable
-}
-```
-
-`effective_auth_mode` records how the provider was authenticated for a specific usage record so cost and quota analysis can be grouped by auth path rather than only by provider or model.
-
-ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md
-
-### Canonical `UsageRecord` type
-
-All new usage persistence and projection work MUST normalize into the following canonical shape:
-
-```text
-UsageRecord {
-  usage_id: string,              // unique record ID, format: usg_{ulid}
-  timestamp: ISO8601,            // when the usage occurred
-  dev_session_id: string,        // session context
-  thread_id: string?,            // chat thread if applicable
-  provider_id: string,           // which provider
-  model_id: string,              // which model
-  usage_source_kind: UsageSourceKind,
-  effective_auth_mode: EffectiveAuthMode,
-
-  // Token counts
-  input_tokens: u64,
-  output_tokens: u64,
-  cache_read_tokens: u64?,
-  cache_write_tokens: u64?,
-  total_tokens: u64,
-
-  // Cost
-  estimated_cost_usd: f64?,      // estimated cost based on known pricing
-
-  // Context
-  agent_id: string?,             // if from subagent
-  tool_name: string?,            // if from tool
-  persona_id: string?,           // active persona
-
-  // Performance
-  time_to_first_token_ms: u64?,
-  total_duration_ms: u64,
-  tokens_per_second: f64?,
-}
-```
-
-Ownership:
-- `UsageRecord`s are owned by the session and persisted in the usage store as part of the canonical usage pipeline
-- child runs, tools, and background operations still emit records into the same session-owned store using shared identity rules
-
-Consumption:
-- usage data is consumed by the Usage panel, budget enforcement, and billing/attribution flows
-- thread-scoped context detail reads the same canonical records rather than inventing a chat-only side schema
-
-Aggregation:
-- records can be aggregated by provider, model, session, thread, or time period
-- aggregation MUST preserve source-kind and auth-mode dimensions so dashboards and budgets can explain where usage came from
-
-ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Contracts_V0.md
-
+ContractRef: ContractName:Plans/Architecture_Invariants.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Runtime_Artifacts_Panel.md
 ## Potential Problems
 
 ### Problem 1: Platform APIs require secrets
@@ -496,6 +437,7 @@ ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Arti
   - Avoid one generic "5h/7d" column when semantics differ; use platform-specific columns or clearly labeled sections.
 
 ### Problem 5: Ledger file size
+
 - **Risk**
   - Event storage (seglog) grows unbounded over long-running or high-throughput projects. Very large seglogs slow analytics scan jobs and increase startup recovery time.
 - **Impact**
@@ -507,6 +449,7 @@ ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Arti
   - `usage.jsonl` is a human-readable mirror only and MUST NOT be used for aggregation, rollup computation, or 5h/7d window serving. If retained for debugging, it follows the same retention policy as seglog.
 
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md
+
 ### Problem 6: Stale data
 
 - **Risk**

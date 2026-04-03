@@ -23,66 +23,61 @@ ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md
 ---
 
 ## 2. Coverage Matrix
+**Coverage status amendment (r-20260328-192850-06):** The following rows were revisited after the run-05 reconciliation pass. Rows 28, 29, 32, and 34 are `Covered`; row 32 no longer carries a synthetic-continue or loop-prevention gap because `Plans/Prompt_Pipeline.md` now preserves that canon directly.
 
-**Coverage status amendment (r-20260328-192850-01):** The following rows were previously marked `Partial` and are updated to `Covered` by the amendments in this research packet run:
-
-| Row | Topic | Previously | Now | Resolved by |
+| Row | Topic | Prior status | Current status | Basis |
 |---|---|---|---|---|
-| 28 | Provider transform layer | Partial | **Covered** | `CLI_Bridged_Providers.md` §Tool-call correlation now includes complete transform contract with tool ID invariants, FinishReason mapping, and stream cancel semantics |
-| 29 | Provider error classification | Partial | **Covered** | `Executor_Protocol.md` §7.1 per-class retry matrix provides unified error classification with counts and backoff; `CLI_Bridged_Providers.md` adds FinishReasonUnknown handling |
-| 32 | Context handling / compaction / rotation | Partial | **Covered** | `Prompt_Pipeline.md` §2.0 and §2.2.1 now specify compaction thresholds, immune content cap, thinking block preservation, and role alternation validation |
-| 34 | MCP integration | Partial | **Covered** | `Tools.md` §5 now specifies full MCP lifecycle: lazy-load, startup timeout, listTools retry/stale, connection pool, per-tool timeout, Windows MCP, pre-dispatch validation, refresh triggers |
+| 28 | Provider transform layer | Covered | **Covered** | `CLI_Bridged_Providers.md` preserves transform contract, FinishReason mapping, and replay-safe stream handling. |
+| 29 | Provider error classification | Covered | **Covered** | `CLI_Bridged_Providers.md` and `Executor_Protocol.md` jointly preserve bounded failure classification and retry posture. |
+| 32 | Context handling / compaction / rotation | Covered | **Covered** | `Prompt_Pipeline.md` now owns synthetic-continue loop prevention, compaction-immune overflow handling, and the prompt-compaction contract directly; FileSafe remains a safety consumer rather than a second SSOT. |
+| 34 | MCP integration | Covered | **Covered** | `Tools.md` preserves MCP lifecycle and now defines safe `$ref`-cycle truncation behavior. |
 
-ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Executor_Protocol.md
-
+ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Prompt_Pipeline.md
 
 | # | OpenCode Topic Area | Extraction Pointer(s) | Puppet Master SSOT Owner (Doc + Anchor) | Dependent Plans Referencing SSOT | Coverage Status | Notes |
 |---|---|---|---|---|---|---|
-| 1 | **Run modes + enforcement** (plan/ask/regular/yolo, strategy selection, budgets, kill conditions) | §7A.1–§7A.3 | `Plans/Run_Modes.md` #MODE-ask, #MODE-plan, #MODE-regular, #MODE-yolo, #STRATEGY-HTE, #STRATEGY-DAE, #KILL-CONDITIONS, #OUTCOME-TAXONOMY | Tools.md, FileSafe.md, CLI_Bridged_Providers.md, Permissions_System.md, Personas.md, assistant-chat-design.md, human-in-the-loop.md | **Covered** | Full four-mode taxonomy with deterministic selection algorithm, budget table, and kill conditions. |
-| 2 | **Permissions — allow/ask/deny actions** | §7C.1, §7C.5 | `Plans/Permissions_System.md` #PERM-ACTIONS, #ASK-FLOW | Tools.md §2, Run_Modes.md, Personas.md, Commands_System.md, Plugins_System.md | **Covered** | Three actions with once/always/reject semantics. |
-| 3 | **Permissions — granular/wildcard rules** | §7C.2, §7C.3 | `Plans/Permissions_System.md` #GRANULAR-RULES, #WILDCARD-SYNTAX | Tools.md §2.2 | **Covered** | Last-match-wins, `*`/`?` wildcards, home expansion. |
-| 4 | **Permissions — doom_loop guard** | §7C.4 | `Plans/Permissions_System.md` #GUARD-DOOM-LOOP | — | **Covered** | Configurable threshold, default 3. |
-| 5 | **Permissions — external_directory guard** | §7C.4 | `Plans/Permissions_System.md` #GUARD-EXTERNAL-DIR, #HOME-EXPANSION | — | **Covered** | Allowlist support. |
-| 6 | **Permissions — .env deny defaults** | §7C.6 | `Plans/Permissions_System.md` #DEFAULT-ENV-DENY | — | **Covered** | `.env` deny, `.env.example` allow. |
-| 7 | **Permissions — multi-layer precedence** | §7C.1 (flat in OC) | `Plans/Permissions_System.md` #PRECEDENCE-LAYERS | Run_Modes.md, Personas.md, Tools.md | **Covered** | PM delta: six layers instead of OC flat overlay. |
-| 8 | **Commands — discovery paths** | §7D.1 | `Plans/Commands_System.md` #STORAGE-LAYOUT | FinalGUISpec.md §7.4.11, assistant-chat-design.md §5 | **Covered** | `.puppet-master/commands/` + global path. |
-| 9 | **Commands — template syntax ($ARGUMENTS, @path, !`cmd`)** | §7D.3 | `Plans/Commands_System.md` #TEMPLATE-PLACEHOLDERS, #TEMPLATE-FILE-INCLUDE, #TEMPLATE-SHELL-INJECTION | — | **Covered** | Permission-checked shell injection + file includes. |
-| 10 | **Commands — args, file include, shell injection** | §7D.3 | `Plans/Commands_System.md` #TEMPLATE-PLACEHOLDERS, #TEMPLATE-FILE-INCLUDE, #TEMPLATE-SHELL-INJECTION | Permissions_System.md | **Covered** | — |
-| 11 | **Commands — subtask + model override** | §7D.4 | `Plans/Commands_System.md` #SUBTASK, §3.2 | Tools.md, Personas.md | **Covered** | — |
-| 12 | **Formatters — post-write/edit trigger, $FILE** | §7E.1, §7E.3 | `Plans/Formatters_System.md` #LIFECYCLE, #FORMATTER-CONFIG | Run_Modes.md (HTE-only) | **Covered** | HTE-only enforcement is a PM delta. |
-| 13 | **Formatters — disable/override** | §7E.3 | `Plans/Formatters_System.md` #FORMATTER-CONFIG | — | **Covered** | Global disable + per-formatter disable/command override. |
-| 14 | **Formatters — built-in formatter set** | §7E.2 | `Plans/Formatters_System.md` #BUILT-IN-FORMATTERS | — | **Covered** | 21 formatters with auto-detection. |
-| 15 | **Skills — discovery** | §7F.1 | `Plans/Skills_System.md` #DISCOVERY, #SEARCH-ORDER | FinalGUISpec.md (Skills tab), Personas.md (`default_skill_refs`), Tools.md (`skill` tool), Permissions_System.md (`skill` key), FileSafe.md (Skill Bundling), MiscPlan.md (implementation checklist) | **Covered** | Canonical discovery roots + ordering + first-wins shadowing rules are defined in Skills_System.md. |
-| 16 | **Skills — frontmatter/schema** | §7F.2 | `Plans/Skills_System.md` #SKILL-SCHEMA | FinalGUISpec.md, Personas.md, Tools.md | **Covered** | Required frontmatter fields (`name`, `description`) and validation are specified. |
-| 17 | **Skills — agent surface (skill tool, as-command registration)** | §7F.3 | `Plans/Skills_System.md` #RUNTIME-SURFACE, `Plans/Tools.md` (skill tool I/O) | — | **Partial** | The `skill` tool surface is specified; skill-as-command dual-registration is not required for v1 and remains unspecified. |
-| 18 | **Skills — permission gating** | §7F.4 | `Plans/Skills_System.md` #PERMISSIONS, `Plans/Permissions_System.md` #TOOL-KEYS | — | **Covered** | Skill-specific permission patterns and external_directory root handling are owned by Skills_System.md. |
-| 19 | **Skills — per-Persona skill refs** | §7B.1 (agent.skills) | `Plans/Skills_System.md` #RUNTIME-SURFACE, `Plans/Personas.md` §3.2 | — | **Covered** | Persona `default_skill_refs` resolution + warning behavior is specified. |
-| 20 | **Plugins — discovery + load order** | §7G.1 | `Plans/Plugins_System.md` #DISCOVERY, #LOAD-ORDER | — | **Covered** | Four-source priority, lexicographic tiebreak. |
-| 21 | **Plugins — hooks (tool, permission, session, message, compaction, shell.env, system.prompt)** | §7G.3 | `Plans/Plugins_System.md` #HOOK-EVENTS, #HOOK-COMPACTION | — | **Covered** | 10 hook events with typed returns. |
-| 22 | **Plugins — custom tools + collision** | §7G.4 | `Plans/Plugins_System.md` #CUSTOM-TOOLS, #TOOL-COLLISION | Tools.md | **Covered** | Namespaced aliasing default; override opt-in. |
-| 23 | **Plugins — compaction hook** | §7G.3 | `Plans/Plugins_System.md` #HOOK-COMPACTION | — | **Covered** | InjectContext / ReplacePrompt with first-wins. |
-| 24 | **Models — provider/model ID format** | §7H.1 | `Plans/Models_System.md` #MODEL-ID | CLI_Bridged_Providers.md, Provider_OpenCode.md | **Covered** | `provider_id/model_id`, first-`/`-split. |
-| 25 | **Models — selection priority** | §7H.2 | `Plans/Models_System.md` #SELECTION-PRIORITY | Run_Modes.md, Personas.md | **Covered** | 6-level chain. |
-| 26 | **Models — options + variants** | §7H.3 | `Plans/Models_System.md` #MODEL-OPTIONS, #VARIANTS | — | **Covered** | Per-provider/model options, built-in + custom variants. |
-| 27 | **Models — per-Persona override** | §7H.2 (agent.model) | `Plans/Models_System.md` #PERSONA-MODEL-OVERRIDES | Personas.md | **Covered** | `default_model` + `default_variant` in PERSONA.md. |
-| 28 | **Provider transform layer** | §7H.4, §10.3 | `Plans/CLI_Bridged_Providers.md` (§ provider transform), `Plans/Models_System.md` §3.4 | Provider_OpenCode.md | **Covered** | `CLI_Bridged_Providers.md` §Tool-call correlation now includes complete transform contract with tool ID invariants, FinishReason mapping, and stream cancel semantics. |
-| 29 | **Provider error classification (retryable, overflow, auth)** | §7H.5, §10.3 | `Plans/CLI_Bridged_Providers.md` (auth error), `Plans/Executor_Protocol.md` §7.1 | Run_Modes.md §5 kill conditions | **Covered** | `Executor_Protocol.md` §7.1 per-class retry matrix provides unified error classification with counts and backoff; `CLI_Bridged_Providers.md` adds FinishReasonUnknown handling. |
-| 30 | **Tool lifecycle and hook boundaries** | §10.1 | `Plans/Tools.md` (tool semantics), `Plans/Plugins_System.md` #HOOK-TOOL-EXECUTE | — | **Covered** | Tool execution before/after hooks defined in Plugins_System.md; tool semantics in Tools.md. |
-| 31 | **Subagent management** | §7B.1–§7B.3 | `Plans/orchestrator-subagent-integration.md` §4 (registry), `Plans/Personas.md` #DEF-SUBAGENT | interview-subagent-integration.md, Tools.md §3.6 (task tool) | **Covered** | Registry-driven Persona set; task-tool validation. |
-| 32 | **Context handling / compaction / rotation** | §7B.4, §7B.5 | `Plans/Prompt_Pipeline.md` #ASSEMBLY-PIPELINE, #COMPACTION, `Plans/FileSafe.md` Part B (context compilation), `Plans/Run_Modes.md` §7 (mode-specific context deltas) | — | **Covered** | `Prompt_Pipeline.md` §2.0 and §2.2.1 now specify compaction thresholds, immune content cap, thinking block preservation, and role alternation validation. |
-| 33 | **LSP integration** | — (not in extraction §7) | `Plans/LSPSupport.md` (canonical) | FinalGUISpec.md §7.4.2 (Settings > LSP), FileManager.md §10.10 | **Covered** | Not part of extraction scope but has its own SSOT. |
-| 34 | **MCP integration** | §7D.1 (MCP prompts → commands) | `Plans/newtools.md` (MCP config, server list), `Plans/Tools.md` §5 (MCP in registry) | FinalGUISpec.md §7.4 Advanced (MCP config card) | **Covered** | `Tools.md` §5 now specifies full MCP lifecycle: lazy-load, startup timeout, listTools retry/stale, connection pool, per-tool timeout, Windows MCP, pre-dispatch validation, refresh triggers. |
-| 35 | **GitHub API: Auth vs usage/tool** | — (not in extraction §7) | `Plans/GitHub_API_Auth_and_Flows.md` (auth contract), `Plans/GitHub_Integration.md` (Git panel + API usage) | FinalGUISpec.md, Architecture_Invariants.md #INV-002 | **Covered** | OAuth device-code default; no secrets in storage. Not part of OpenCode extraction scope. |
-| 36 | **GUI config wiring — Permissions** | — | `Plans/Permissions_System.md` §10, `Plans/FinalGUISpec.md` §7.4.10 | — | **Covered** | Dedicated tab with all sub-sections. |
-| 37 | **GUI config wiring — Commands** | — | `Plans/Commands_System.md` §6, `Plans/FinalGUISpec.md` §7.4.11 | — | **Covered** | Rules & Commands tab. |
-| 38 | **GUI config wiring — Skills** | — | `Plans/Skills_System.md` #GUI-SKILLS, `Plans/FinalGUISpec.md` §7.4 "Skills" row | — | **Partial** | Skills SSOT now exists; FinalGUISpec sources the Skills row from Skills_System.md. A dedicated numbered §7.4.X Skills subsection is still optional but recommended for symmetry with other subsystem tabs. |
-| 39 | **GUI config wiring — Plugins** | — | `Plans/Plugins_System.md` §9, `Plans/FinalGUISpec.md` §7.4.12 | — | **Covered** | Dedicated tab cross-referencing SSOT. |
-| 40 | **GUI config wiring — Models** | — | `Plans/Models_System.md` §7, `Plans/FinalGUISpec.md` §7.4.14 | — | **Covered** | Model picker + Settings > Models tab. |
-| 41 | **GUI config wiring — Formatters** | — | `Plans/Formatters_System.md` §5, `Plans/FinalGUISpec.md` §7.4.13 | — | **Covered** | Dedicated tab cross-referencing SSOT. |
+| 1 | **Run modes + enforcement** (plan/ask/regular/yolo, strategy selection, budgets, kill conditions) | §7A.1-§7A.3 | `Plans/Run_Modes.md` #MODE-ask, #MODE-plan, #MODE-regular, #MODE-yolo, #STRATEGY-HTE, #STRATEGY-DAE, #KILL-CONDITIONS, #OUTCOME-TAXONOMY | Tools.md, FileSafe.md, CLI_Bridged_Providers.md, Permissions_System.md, Personas.md, assistant-chat-design.md, human-in-the-loop.md | **Covered** | Full four-mode taxonomy with deterministic selection algorithm, budget table, and kill conditions. |
+| 2 | **Permissions - allow/ask/deny actions** | §7C.1, §7C.5 | `Plans/Permissions_System.md` #PERM-ACTIONS, #ASK-FLOW | Tools.md §2, Run_Modes.md, Personas.md, Commands_System.md, Plugins_System.md | **Covered** | Three actions with once/always/reject semantics. |
+| 3 | **Permissions - granular/wildcard rules** | §7C.2, §7C.3 | `Plans/Permissions_System.md` #GRANULAR-RULES, #WILDCARD-SYNTAX | Tools.md §2.2 | **Covered** | Last-match-wins, `*`/`?` wildcards, home expansion, canonical-root case semantics. |
+| 4 | **Permissions - doom_loop guard** | §7C.4 | `Plans/Permissions_System.md` #GUARD-DOOM-LOOP | - | **Covered** | Configurable threshold, default 3. |
+| 5 | **Permissions - external_directory guard** | §7C.4 | `Plans/Permissions_System.md` #GUARD-EXTERNAL-DIR, #HOME-EXPANSION | - | **Covered** | Allowlist support. |
+| 6 | **Permissions - .env deny defaults** | §7C.6 | `Plans/Permissions_System.md` #DEFAULT-ENV-DENY | - | **Covered** | `.env` deny, `.env.example` allow. |
+| 7 | **Permissions - multi-layer precedence** | §7C.1 (flat in OC) | `Plans/Permissions_System.md` #PRECEDENCE-LAYERS | Run_Modes.md, Personas.md, Tools.md | **Covered** | PM delta: layered precedence with requested/effective disclosure. |
+| 8 | **Commands - discovery paths** | §7D.1 | `Plans/Commands_System.md` #STORAGE-LAYOUT | FinalGUISpec.md §7.4.11, assistant-chat-design.md §5 | **Covered** | `.puppet-master/commands/` + global path. |
+| 9 | **Commands - template syntax ($ARGUMENTS, @path, !`cmd`)** | §7D.3 | `Plans/Commands_System.md` #TEMPLATE-PLACEHOLDERS, #TEMPLATE-FILE-INCLUDE, #TEMPLATE-SHELL-INJECTION | - | **Covered** | Permission-checked shell injection + file includes. |
+| 10 | **Commands - args, file include, shell injection** | §7D.3 | `Plans/Commands_System.md` #TEMPLATE-PLACEHOLDERS, #TEMPLATE-FILE-INCLUDE, #TEMPLATE-SHELL-INJECTION | Permissions_System.md | **Covered** | - |
+| 11 | **Commands - subtask + model override** | §7D.4 | `Plans/Commands_System.md` #SUBTASK, §3.2 | Tools.md, Personas.md | **Covered** | - |
+| 12 | **Formatters - post-write/edit trigger, $FILE** | §7E.1, §7E.3 | `Plans/Formatters_System.md` #LIFECYCLE, #FORMATTER-CONFIG | Run_Modes.md (HTE-only) | **Covered** | HTE-only enforcement is a PM delta. |
+| 13 | **Formatters - disable/override** | §7E.3 | `Plans/Formatters_System.md` #FORMATTER-CONFIG | - | **Covered** | Global disable + per-formatter disable/command override. |
+| 14 | **Formatters - built-in formatter set** | §7E.2 | `Plans/Formatters_System.md` #BUILT-IN-FORMATTERS | - | **Covered** | 21 formatters with auto-detection. |
+| 15 | **Skills - discovery** | §7F.1 | `Plans/Skills_System.md` #DISCOVERY, #SEARCH-ORDER | FinalGUISpec.md (Skills tab), Personas.md (`default_skill_refs`), Tools.md (`skill` tool), Permissions_System.md (`skill` key), FileSafe.md (Skill Bundling), MiscPlan.md (implementation checklist) | **Covered** | Canonical discovery roots + ordering + first-wins shadowing rules are defined in Skills_System.md. |
+| 16 | **Skills - frontmatter/schema** | §7F.2 | `Plans/Skills_System.md` #SKILL-SCHEMA | FinalGUISpec.md, Personas.md, Tools.md | **Covered** | Required frontmatter fields (`name`, `description`) and validation are specified. |
+| 17 | **Skills - agent surface (skill tool, as-command registration)** | §7F.3 | `Plans/Skills_System.md` #RUNTIME-SURFACE, `Plans/Tools.md` (skill tool I/O) | - | **Partial** | The `skill` tool surface is specified; skill-as-command dual registration is not required for v1 and remains unspecified. |
+| 18 | **Skills - permission gating** | §7F.4 | `Plans/Skills_System.md` #PERMISSIONS, `Plans/Permissions_System.md` #TOOL-KEYS | - | **Covered** | Skill-specific permission patterns and external_directory root handling are owned by Skills_System.md. |
+| 19 | **Skills - per-Persona skill refs** | §7B.1 (agent.skills) | `Plans/Skills_System.md` #RUNTIME-SURFACE, `Plans/Personas.md` §3.2 | - | **Covered** | Persona `default_skill_refs` resolution + warning behavior is specified. |
+| 20 | **Plugins - discovery + load order** | §7G.1 | `Plans/Plugins_System.md` #DISCOVERY, #LOAD-ORDER | - | **Covered** | Four-source priority, lexicographic tiebreak. |
+| 21 | **Plugins - hooks (tool, permission, session, message, compaction, shell.env, system.prompt)** | §7G.3 | `Plans/Plugins_System.md` #HOOK-EVENTS, #HOOK-COMPACTION | - | **Covered** | 10 hook events with typed returns. |
+| 22 | **Plugins - custom tools + collision** | §7G.4 | `Plans/Plugins_System.md` #CUSTOM-TOOLS, #TOOL-COLLISION | Tools.md | **Covered** | Namespaced aliasing default; override opt-in. |
+| 23 | **Plugins - compaction hook** | §7G.3 | `Plans/Plugins_System.md` #HOOK-COMPACTION | - | **Covered** | InjectContext / ReplacePrompt with first-wins. |
+| 24 | **Models - provider/model ID format** | §7H.1 | `Plans/Models_System.md` #MODEL-ID | CLI_Bridged_Providers.md, Provider_OpenCode.md | **Covered** | `provider_id/model_id`, first-`/`-split. |
+| 25 | **Models - selection priority** | §7H.2 | `Plans/Models_System.md` #SELECTION-PRIORITY | Run_Modes.md, Personas.md | **Covered** | 6-level chain. |
+| 26 | **Models - options + variants** | §7H.3 | `Plans/Models_System.md` #MODEL-OPTIONS, #VARIANTS | - | **Covered** | Per-provider/model options, built-in + custom variants. |
+| 27 | **Models - per-Persona override** | §7H.2 (agent.model) | `Plans/Models_System.md` #PERSONA-MODEL-OVERRIDES | Personas.md | **Covered** | `default_model` + `default_variant` in PERSONA.md. |
+| 28 | **Provider transform layer** | §7H.4, §10.3 | `Plans/CLI_Bridged_Providers.md` (§ provider transform), `Plans/Models_System.md` §3.4 | Provider_OpenCode.md | **Covered** | Bridged-provider transforms preserve lineage, normalized replay safety, and FinishReason handling. |
+| 29 | **Provider error classification (retryable, overflow, auth)** | §7H.5, §10.3 | `Plans/CLI_Bridged_Providers.md` (auth and stream resilience), `Plans/Executor_Protocol.md` §7.1 | Run_Modes.md §5 kill conditions | **Covered** | Failure-class mapping now includes bounded reconnect, refresh-once auth, and circuit-breaker posture. |
+| 30 | **Tool lifecycle and hook boundaries** | §10.1 | `Plans/Tools.md` (tool semantics), `Plans/Plugins_System.md` #HOOK-TOOL-EXECUTE | - | **Covered** | Tool execution before/after hooks defined in Plugins_System.md; tool semantics in Tools.md. |
+| 31 | **Subagent management** | §7B.1-§7B.3 | `Plans/orchestrator-subagent-integration.md` §4 (registry), `Plans/Personas.md` #DEF-SUBAGENT | interview-subagent-integration.md, Tools.md §3.6 (task tool) | **Covered** | Registry-driven Persona set; task-tool validation. |
+| 32 | **Context handling / compaction / rotation** | §7B.4, §7B.5 | `Plans/Prompt_Pipeline.md` #ASSEMBLY-PIPELINE, #COMPACTION, `Plans/Run_Modes.md` §7 (mode-specific context deltas) | - | **Covered** | Prompt_Pipeline.md now preserves synthetic-continue loop prevention, compaction thresholds, immune-content overflow handling, and reasoning-preservation canon directly; FileSafe consumes the compiled output but no longer acts as the SSOT for context-compilation behavior. |
+| 33 | **LSP integration** | - (not in extraction §7) | `Plans/LSPSupport.md` (canonical) | FinalGUISpec.md §7.4.2 (Settings > LSP), FileManager.md §10.10 | **Covered** | Not part of extraction scope but has its own SSOT. |
+| 34 | **MCP integration** | §7D.1 (MCP prompts -> commands) | `Plans/newtools.md` (MCP config, server list), `Plans/Tools.md` §5 (MCP in registry) | FinalGUISpec.md §7.4 Advanced (MCP config card) | **Covered** | Tools.md specifies MCP lifecycle, connection pooling, timeouts, and safe schema-cycle truncation. |
+| 35 | **GitHub API: Auth vs usage/tool** | - (not in extraction §7) | `Plans/GitHub_API_Auth_and_Flows.md` (auth contract), `Plans/GitHub_Integration.md` (Git panel + API usage) | FinalGUISpec.md, Architecture_Invariants.md #INV-002 | **Covered** | OAuth device-code default; no secrets in storage. Not part of OpenCode extraction scope. |
+| 36 | **GUI config wiring - Permissions** | - | `Plans/Permissions_System.md` §10, `Plans/FinalGUISpec.md` §7.4.10 | - | **Covered** | Dedicated tab with all sub-sections. |
+| 37 | **GUI config wiring - Commands** | - | `Plans/Commands_System.md` §6, `Plans/FinalGUISpec.md` §7.4.11 | - | **Covered** | Rules & Commands tab. |
+| 38 | **GUI config wiring - Skills** | - | `Plans/Skills_System.md` #GUI-SKILLS, `Plans/FinalGUISpec.md` §7.4 "Skills" row | - | **Partial** | Skills SSOT exists; a dedicated numbered Skills subsection in FinalGUISpec remains optional but recommended for symmetry. |
+| 39 | **GUI config wiring - Plugins** | - | `Plans/Plugins_System.md` §9, `Plans/FinalGUISpec.md` §7.4.12 | - | **Covered** | Dedicated tab cross-referencing SSOT. |
+| 40 | **GUI config wiring - Models** | - | `Plans/Models_System.md` §7, `Plans/FinalGUISpec.md` §7.4.14 | - | **Covered** | Model picker + Settings > Models tab. |
+| 41 | **GUI config wiring - Formatters** | - | `Plans/Formatters_System.md` §5, `Plans/FinalGUISpec.md` §7.4.13 | - | **Covered** | Dedicated tab cross-referencing SSOT. |
 | 42 | **Prompt assembly pipeline** | §7B.4 | `Plans/Prompt_Pipeline.md` #ASSEMBLY-PIPELINE | FileSafe.md Part B (context compilation details), Personas.md §5.2 (Persona injection), Plugins_System.md (#HOOK-COMPACTION) | **Covered** | Prompt assembly stage ordering and the compaction/rotation contract are owned by Prompt_Pipeline.md; other docs provide subsystem-specific details. |
-
----
-
 ## 3. DRY Authority Audit
 
 ### 3.1 Documents duplicating canonical definitions
@@ -101,7 +96,7 @@ ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Exe
 |---|---|
 | `Plans/CLI_Bridged_Providers.md` | No `#PROVIDER-TRANSFORM` anchor for the transform layer contract; no `#ERROR-CLASSIFICATION` anchor for error categorization. |
 | `Plans/Models_System.md` §4 | No anchor on the "Model availability and error handling" section (needs `#MODEL-ERRORS` — already present on inspection). No anchor on overflow detection or retry policy subsections. |
-| `Plans/FileSafe.md` Part B | No stable anchor for "context compilation" (`#CONTEXT-COMPILATION` needed) or "compaction thresholds." |
+| `Plans/Prompt_Pipeline.md` | No stable anchor on the context-assembly/cache-preservation subsection beneath `#ASSEMBLY-PIPELINE`; compaction-threshold rules should also carry a dedicated stable anchor beneath `#COMPACTION`. |
 | `Plans/Tools.md` | No `#MCP-INTEGRATION` anchor for MCP tool registration flow. |
 | `Plans/FinalGUISpec.md` | No `#SKILLS-TAB` anchor (the Skills row in the settings table has no `§7.4.X` numbered section). |
 
@@ -179,7 +174,7 @@ These are documentation-only edits required to close coverage gaps. They are NOT
 
 3. **`Plans/CLI_Bridged_Providers.md`** needs anchor `#PROVIDER-TRANSFORM` on its provider transform/normalization section and anchor `#ERROR-CLASSIFICATION` on its error categorization section.
 
-4. **`Plans/FileSafe.md`** Part B needs anchor `#CONTEXT-COMPILATION` on the context compilation section and anchor `#COMPACTION-THRESHOLDS` on any compaction threshold/pruning rules.
+4. **`Plans/Prompt_Pipeline.md`** needs a stable anchor on the context-assembly/cache-preservation subsection beneath `#ASSEMBLY-PIPELINE`, and compaction-threshold rules should also carry a dedicated stable anchor beneath `#COMPACTION`.
 
 5. **`Plans/Tools.md`** needs anchor `#MCP-INTEGRATION` on the section describing how MCP-discovered tools enter the central registry.
 
@@ -206,11 +201,10 @@ These are documentation-only edits required to close coverage gaps. They are NOT
 ---
 
 ## 6. Summary
-
 | Coverage Status | Count | Examples |
 |---|---|---|
-| **Covered** | 36 | Run modes, permissions, provider transform/error classification, context compaction, MCP lifecycle, GitHub auth, models, subagents, LSP |
+| **Covered** | 36 | Run modes, permissions, provider transform/error classification, context handling/compaction, MCP lifecycle, GitHub auth, models, subagents, LSP |
 | **Partial** | 3 | Skills agent surface as-commands (#17), GUI Skills tab subsectioning (#38), any future external-only bridge work not yet packetized |
-| **Missing** | 0 | — |
+| **Missing** | 0 | - |
 
-ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Executor_Protocol.md
+ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Prompt_Pipeline.md

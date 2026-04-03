@@ -1,4 +1,4 @@
-# FileSafe, Context Compilation & Token Efficiency -- Implementation Plan
+# FileSafe -- Implementation Plan
 
 > **Compliance:** This document follows `Plans/DRY_Rules.md` and references SSOT contracts in `Plans/Contracts_V0.md`. Naming: “Puppet Master” only. No open questions; deterministic defaults per `Plans/Decision_Policy.md`.
 
@@ -21,43 +21,48 @@
 
 ## Rewrite alignment (2026-02-21)
 
-This plan remains authoritative for safety policy and context-compilation behavior. As the rewrite lands (see `Plans/rewrite-tie-in-memo.md` ("The core reliability plan" + "Storage consistency")), FileSafe should be implemented primarily through:
+This plan remains authoritative for **FileSafe safety policy only**. As the rewrite lands, FileSafe is implemented primarily through:
+- the **central tool registry + policy engine** for permissions, validation, and normalized tool outcomes
+- the **patch/apply/verify/rollback pipeline** rather than ad-hoc guardrails in UI code
+- emitting guard decisions, violations, and remediation into the canonical seglog event stream
 
-- The **central tool registry + policy engine** (permissions/validation/normalized tool results)
-- The **patch/apply/verify/rollback pipeline** (often worktrees/sandboxes) rather than ad-hoc guardrails scattered in UI code
-- Emitting guard decisions, violations, and remediation into the **unified event stream** (seglog ledger) for replayability
-- **Analytics:** Guard blocks and violations in seglog can be consumed by the **analytics scan** (`Plans/storage-plan.md` §2.5 "Analytics scan jobs"): e.g. tool-block rate, error rate by guard type or pattern, and latency of blocked vs allowed commands. Rollups stored in redb support dashboard widgets (e.g. 'FileSafe blocks this week' or 'top blocked patterns'). Ensure FileSafe event payloads include enough structure (guard type, pattern id, timestamp) for analytics scan jobs to aggregate.
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md
 
-Any UI/storage examples in this plan are illustrative; the guard behavior and contracts are the stable requirements.
+Context compilation, delta-context selection, cache heuristics, marker files, skill bundling, and compaction strategy are owned by `Plans/Prompt_Pipeline.md`. FileSafe may reference those flows only to define where safety checks run against compiled output.
 
-**ELI5/Expert copy alignment:** FileSafe-authored tooltip/help copy (including `help_tooltip` keys referenced by this plan) must define both Expert and ELI5 variants and follow `Plans/FinalGUISpec.md` §7.4.0. App-level **Interaction Mode (Expert/ELI5)** selects the shown variant; chat-level **Chat ELI5** does not override FileSafe tooltip copy.
+ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/Architecture_Invariants.md
+
+Any UI or storage examples in this plan are illustrative unless they describe guard behavior, fail-closed execution, canonical logging, or explicit FileSafe-owned payload contracts.
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/Decision_Policy.md
 
 ## Executive Summary
 
-This plan covers **two pillars**: (1) **FileSafe** -- guards that block destructive operations before execution -- and (2) **context compilation and token efficiency** that reduce coordination overhead by compiling role-specific context and related optimizations.
+FileSafe is the canonical guardrail layer that blocks destructive commands before execution, constrains write scope, filters sensitive file access, validates compiled prompt content, and records guard outcomes in the canonical event stream.
+
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md
+
+Prompt/context compilation is adjacent but separately owned. `Plans/Prompt_Pipeline.md` owns role-specific context selection, delta compilation, cache heuristics, skill bundling, and compaction behavior. FileSafe consumes compiled output as an input to safety checks; it does not own those algorithms.
+
+ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/Architecture_Invariants.md
 
 ### Part A -- FileSafe
 
-1. **FileSafe: Command blocklist** -- Blocks destructive CLI commands (e.g. `migrate:fresh`, `db:drop`, `TRUNCATE TABLE`, `git reset --hard`, Docker volume prune) before they run.
-2. **FileSafe: Write scope** -- Restricts writes to files declared in the active plan (no writes outside plan scope).
-3. **FileSafe: Security filter** -- Blocks access to sensitive files (`.env`, credentials, keys).
-4. **Prompt content checking** -- Scans prompts for destructive commands before sending to the platform CLI.
-5. **Verification gate integration** -- Allows legitimate destructive operations when tagged as verification-gate or interview operations.
+1. **FileSafe: Command blocklist** -- Blocks destructive CLI commands before they run.
+2. **FileSafe: Write scope** -- Restricts writes to the canonical allowed-file scope for the execution.
+3. **FileSafe: Security filter** -- Blocks access to sensitive files and secrets.
+4. **Compiled prompt checking** -- Scans the fully assembled prompt before provider dispatch.
+5. **Verification and override integration** -- Allows only explicitly authorized override paths and records them canonically.
 
-**Why critical:** Agents with shell access can accidentally run destructive commands, touch sensitive files, or write outside scope. FileSafe provides deterministic, platform-level protection regardless of agent behavior.
+ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Tools.md, ContractName:Plans/Run_Modes.md
 
-### Part B -- Context Compilation & Token Efficiency
+### Part B -- Compiled-context safety boundary
 
-6. **Role-Specific Context Compiler** -- Builds `.context-{context_role}.md` per runtime role (`planning`, `execution`, `verification`, `debug`, `review`) so each run or node attempt receives only the context it needs.
-7. **Delta Context** -- Adds a `Changed Files (Delta)` section with code slices from recently modified files so agents see what just changed.
-8. **Context Cache** -- Caches the compiled context index so compilation is skipped when project files are unchanged.
-9. **Structured Handoff Schemas** -- Typed JSON schemas for inter-agent progress, blockers, QA results, and similar handoffs.
-10. **Compaction-Aware Re-Reads** -- A deterministic marker indicates when plan/context re-read is needed, avoiding redundant full re-reads every attempt.
-11. **Skill Bundling** -- Bundles skills referenced by the current node/run into compiled context once per relevant scope instead of per child attempt.
+- FileSafe checks the fully compiled prompt **after** Prompt Pipeline assembly and **before** provider dispatch.
+- FileSafe validates structured attachments, forwarded document selections, and file references against security and write-scope policy.
+- FileSafe emits structured allow/block outcomes for these checks into seglog.
 
-**Why critical:** Context compilation and these features reduce token use and improve reliability where coordination and context size matter most (large projects, many delegated runs, debug/review loops).
-
-**DRY compliance:** All reusable code is tagged with `DRY:FN:`, `DRY:DATA:`, `DRY:HELPER:`. Platform data uses `platform_specs::`. Widgets reuse components from `src/widgets/`.
+ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md
 
 ---
 
@@ -66,8 +71,8 @@ This plan covers **two pillars**: (1) **FileSafe** -- guards that block destruct
 **Part A -- FileSafe**  
 1. Architecture Overview - 2. Implementation Details (guards) - 3. Integration with Platform Runner - 4. Pattern File - 5. Configuration - 6. Event Logging - 7. Error Messages - 8. Testing - 9. Implementation Checklist - 10. Relationship to Other Plans - 10a. FileSafe and Assistant YOLO mode - 11. Additional FileSafe Features (Write scope, Security filter, Prompt checking, Verification gates) - 12. Gaps and Potential Issues - 13. Enhancements
 
-**Part B -- Context & Token Efficiency**  
-14. Context Compilation & Token Efficiency (14.1-14.7)
+**Part B -- Historical note on moved context-compilation canon**  
+14. Historical note on moved context-compilation canon
 
 **Integration & References**  
 15. System Integration Analysis - 16. References - **17. Implementation Order and Dependencies**
@@ -109,53 +114,64 @@ if let Err(e) = self.bash_guard.check_command(&full_command_string) {
 **Complete initialization sequence:**
 
 1. **At application startup:**
-   - Load `GuiConfig` from `puppet-master.yaml` (or defaults)
-   - Extract `FileSafeConfig` from `GuiConfig`
-   - Store in app state
+   - load `GuiConfig` (or defaults)
+   - extract `FileSafeConfig`
+   - validate fail-closed guard prerequisites and store the validated config in app state
+
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/Architecture_Invariants.md
 
 2. **When orchestrator starts:**
-   - Build `PuppetMasterConfig` from `GuiConfig` (Option B pattern)
-   - Extract FileSafe config
-   - Pass to `BaseRunner::new()` via orchestrator context
+   - build runtime config from the validated GUI config
+   - resolve FileSafe guard inputs and canonical roots
+   - pass the resulting FileSafe config into runner construction
 
-3. **When BaseRunner is created:**
-   - Initialize command blocklist (`BashGuard`) with pattern file resolution
-   - Initialize write scope (`FileGuard`) with empty allowed files initially
-   - Initialize `SecurityFilter` with sensitive patterns
-   - Store as `Arc<>` for thread-safe sharing
+ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/storage-plan.md
 
-4. **Per ExecutionRequest:**
-   - Update write scope allowed files from request metadata
-   - Run FileSafe checks before spawning process
-   - Log violations to event log
+3. **When `BaseRunner` is created:**
+   - initialize `BashGuard` with canonical destructive-pattern sources
+   - initialize `FileGuard` with an empty allowed-file set until request scope is known
+   - initialize `SecurityFilter` with canonical sensitive-path rules
+   - store guards as shared runtime objects only after initialization succeeds
 
-**Error Handling:**
-- If guard initialization fails: log warning, create disabled guard, continue execution
-- If pattern file missing: log warning, use empty patterns (guard effectively disabled)
-- If config invalid: use safe defaults (guards enabled, strict mode)
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/Contracts_V0.md
+
+4. **Per `ExecutionRequest`:**
+   - bind the request's canonical allowed-file scope
+   - resolve the canonical root and path mode needed for scope/security checks
+   - run FileSafe checks before provider process spawn or tool dispatch
+   - emit structured allow/block outcomes to the canonical event stream
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Tools.md, ContractName:Plans/Runtime_Artifacts_Panel.md
+
+**Fail-closed error handling:**
+- if a guard cannot initialize, PM surfaces a structured startup/runtime error and blocks the affected execution path rather than creating a disabled guard
+- if a configured external pattern source is unreadable, PM may continue only with a bundled canonical baseline; if no trustworthy baseline exists, destructive-command execution remains blocked
+- if canonical-root or scope resolution fails for a request, that request fails closed rather than guessing a case mode or write scope
+- invalid config may normalize only to a stricter safe default; it MUST NOT silently widen authority
+
+ContractRef: ContractName:Plans/Architecture_Invariants.md, ContractName:Plans/Decision_Policy.md, ContractName:Plans/Permissions_System.md
 
 ### 2.1 Module Structure
 
-Create new module: `puppet-master-rs/src/filesafe/`
+Create the FileSafe module under `src-tauri/src/filesafe/`.
 
 ```
-src/filesafe/
-├── mod.rs                    # Module declaration + re-exports
-├── bash_guard.rs            # Main guard implementation
-├── destructive_patterns.rs  # Pattern loading and matching
-├── file_guard.rs            # File write guard (Section 11.1)
-├── security_filter.rs        # Sensitive file access guard (Section 11.2)
-└── config/
-    └── destructive-commands.txt  # Default pattern file (bundled with binary)
+src-tauri/src/filesafe/
+├── mod.rs        # Module declaration + re-exports
+├── types.rs      # Shared FileSafe data types
+├── scope.rs      # Scope and canonical-path enforcement
+├── bash_guard.rs # Command-pattern guard logic
+├── snapshot.rs   # Snapshot and optimistic-concurrency helpers
+└── validator.rs  # Shared validation helpers
 ```
 
 **Pattern File Location:**
-- **Bundled:** `puppet-master-rs/config/destructive-commands.txt` (source)
+- **Bundled:** packaged FileSafe baseline patterns (source-controlled)
 - **Runtime:** Bundled with binary or located relative to executable
 - **Project-specific:** `.puppet-master/destructive-commands.local.txt` (optional override)
-- **Resolution order:** Custom path → Project-specific → Bundled → Disabled (with warning)
+- **Resolution order:** Custom path → Project-specific → Bundled baseline; if no trustworthy baseline exists, fail closed
 
-**Module Declaration (`src/filesafe/mod.rs`):**
+**Module Declaration (`src-tauri/src/filesafe/mod.rs`):**
 ```rust
 //! FileSafe — guards for preventing destructive operations
 //!
@@ -163,19 +179,18 @@ src/filesafe/
 //! and sensitive file access before execution.
 
 pub mod bash_guard;
-pub mod destructive_patterns;
-pub mod file_guard;
-pub mod security_filter;
+pub mod scope;
+pub mod snapshot;
+pub mod types;
+pub mod validator;
 
 pub use bash_guard::{BashGuard, GuardError};
-pub use file_guard::FileGuard;
-pub use security_filter::SecurityFilter;
 ```
 
 ### 2.2 Core Types
 
 ```rust
-// src/filesafe/bash_guard.rs
+// src-tauri/src/filesafe/bash_guard.rs
 
 use regex::Regex;
 use std::path::PathBuf;
@@ -221,7 +236,7 @@ impl BashGuard {
     /// 1. If `config_path` provided and exists: use it
     /// 2. Check project-specific: `.puppet-master/destructive-commands.local.txt`
     /// 3. Check bundled: `puppet-master-rs/config/destructive-commands.txt` (relative to binary/exe)
-    /// 4. Fallback: use empty patterns list (guard disabled) and log warning
+    /// 4. If no trustworthy baseline exists: return initialization error (fail closed)
     pub fn new(config_path: Option<PathBuf>) -> Result<Self> {
         // 1. Check environment variable override
         let allow_destructive = std::env::var("PUPPET_MASTER_ALLOW_DESTRUCTIVE")
@@ -257,8 +272,10 @@ impl BashGuard {
             load_patterns(&pattern_file)
                 .context(format!("Failed to load patterns from {}", pattern_file.display()))?
         } else {
-            warn!("Pattern file not found: {}. Guard will be disabled.", pattern_file.display());
-            Vec::new()
+            return Err(anyhow!(
+                "Pattern file not found: {}. Fail closed until a trustworthy baseline is available.",
+                pattern_file.display()
+            ));
         };
         
         // 4. Check config file for bash_guard setting (if config available)
@@ -303,7 +320,7 @@ impl BashGuard {
     }
     
     // DRY:FN:disabled — Create a disabled guard instance
-    /// Create a disabled guard instance (fallback for initialization failures)
+    /// Create an explicitly disabled guard instance for deliberate config-off states, not init-failure fallback
     pub fn disabled() -> Self {
         Self {
             patterns: Vec::new(),
@@ -351,7 +368,7 @@ fn commands_match(approved: &str, command: &str) -> bool {
 ### 2.3 Pattern Loading
 
 ```rust
-// src/filesafe/destructive_patterns.rs
+// FileSafe pattern-loading helper example
 
 use regex::Regex;
 use std::fs;
@@ -739,71 +756,35 @@ async fn execute(&self, request: &ExecutionRequest) -> Result<ExecutionResult> {
 - Log all blocked operations to event log
 
 ### 3.3 BaseRunner Integration
+`BaseRunner::execute_command()` performs FileSafe validation after request expansion but before spawn. FileSafe-managed path checks are fail-closed: candidate paths are resolved relative to `working_directory`, canonicalized, and denied if canonicalization fails.
 
-**Add guard check in `BaseRunner::execute_command()`:**
+ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/WorktreeGitImprovement.md
 
 ```rust
-// In BaseRunner::execute_command() (src/platforms/runner.rs)
-pub async fn execute_command(
-    &self,
-    request: &ExecutionRequest,
-    args: Vec<String>,
-    stdin_input: Option<String>,
-) -> Result<ExecutionResult> {
-    // ... existing checks (circuit breaker, quota, rate limit) ...
-    
-    // Build full command string for guard check
-    let full_command = format!("{} {}", self.command, args.join(" "));
-    
-    // CHECK COMMAND STRING (before spawning)
-    if let Err(e) = self.bash_guard.check_command(&full_command) {
-        // Check if verification gate operation
-        if self.is_verification_gate_operation(request) {
-            warn!("Destructive command allowed during verification gate: {}", e);
-        } else {
-            // Log blocked command
-            self.log_blocked_command(&full_command, &e, request).await?;
-            
-            return Err(anyhow!(
-                "Destructive command blocked: {}. \
-                Set PUPPET_MASTER_ALLOW_DESTRUCTIVE=1 to override.",
-                e
-            ));
-        }
-    }
-    
-    // CHECK FILE PATHS (write scope + security filter)
-    let allowed_files = FileGuard::load_allowed_files_from_request(request)?;
-    for file_path in self.extract_file_paths_from_request(request)? {
-        // Resolve and normalize path
-        let resolved_path = if file_path.is_absolute() {
-            file_path
-        } else {
-            request.working_directory.join(&file_path)
-        };
-        
-        let normalized_path = resolved_path.canonicalize()
-            .unwrap_or_else(|_| resolved_path);
-        
-        // Check write scope
-        if let Err(e) = self.file_guard.check_file_write(&normalized_path, &request.working_directory, &allowed_files) {
-            return Err(anyhow!("File write blocked: {}", e));
-        }
-        
-        // Check security filter
-        if let Err(e) = self.security_filter.check_file_access(&normalized_path) {
-            if self.is_interview_operation(request) && self.security_filter.allow_during_interview {
-                warn!("Sensitive file access allowed during interview: {}", e);
-            } else {
-                return Err(anyhow!("Sensitive file access blocked: {}", e));
-            }
-        }
-    }
-    
-    // ... continue with existing spawn logic ...
-}
+let candidate_path = if file_path.is_absolute() {
+    file_path.clone()
+} else {
+    request.working_directory.join(&file_path)
+};
+
+let normalized_path = candidate_path
+    .canonicalize()
+    .map_err(|e| anyhow!(
+        "File write blocked: canonical path required for FileSafe scope checks ({}): {}",
+        candidate_path.display(),
+        e
+    ))?;
+
+self.file_guard
+    .check_file_write(&normalized_path, &request.working_directory, &allowed_files)?;
+self.security_filter.check_file_access(&normalized_path)?;
 ```
 
+ContractRef: ContractName:Plans/Architecture_Invariants.md, ContractName:Plans/Executor_Protocol.md
+
+The fallback pattern `canonicalize().unwrap_or_else(|_| resolved_path)` is prohibited in FileSafe-managed write-scope code paths. If PM cannot compute the canonical real path, it denies access instead of comparing against a symlink alias or unresolved relative path.
+
+ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/WorktreeGitImprovement.md
 ### 3.4 Multi-Provider Support
 
 The guard must work across all providers:
@@ -954,30 +935,39 @@ if let Some(local_path) = &config.custom_patterns_path {
 ---
 
 ## 6. Event Logging
+**Contract:** FileSafe emits a structured event for every block or approved override (command blocklist, write scope, security filter, or compiled-prompt safety check) into the canonical event stream.
 
-**Contract:** FileSafe emits a structured event for every block (command blocklist, write scope, security filter). Two phases:
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md
 
-- **Pre-rewrite / current:** Log to `.puppet-master/logs/filesafe-events.jsonl` (append-only, one JSON object per line). Schema below.
-- **Post-rewrite (`Plans/storage-plan.md` §2.5 "Analytics scan jobs"):** Emit FileSafe events into the **unified event stream (seglog)** so analytics scan jobs can aggregate (e.g. tool-block rate, error rate by guard type, latency of blocked vs allowed). Event payload **must** include: `guard_type`, `pattern_id` (or pattern name), `timestamp`, and enough structure for analytics rollups (see rewrite alignment in header). Rollups stored in redb support dashboard widgets (e.g. "FileSafe blocks this week", "top blocked patterns").
+Authoritative logging path:
+- FileSafe events are written to seglog as canonical `EventRecord` entries.
+- Any `filesafe-events.jsonl` surface is a derived projector or diagnostic mirror rebuilt from seglog.
+- PM MUST NOT maintain a second authoritative FileSafe append log alongside seglog, and recovery logic MUST NOT prefer a FileSafe-only mirror over the canonical event stream.
 
-**FileSafeEvent schema (minimum):**
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Architecture_Invariants.md, ContractName:Plans/Runtime_Artifacts_Panel.md
+
+**FileSafeEvent payload (minimum canonical fields):**
 
 ```rust
 pub struct FileSafeEvent {
-    pub event_type: String,       // "bash_guard_block" | "file_guard_block" | "security_filter_block"
-    pub guard_type: String,       // "bash_guard" | "file_guard" | "security_filter" (for analytics)
-    pub pattern_matched: String,  // Pattern or rule that triggered (for analytics aggregation)
-    pub command_preview: String,  // First 40 chars (or path for file guards)
-    pub agent: Option<String>,   // If available from ExecutionRequest
+    pub event_type: String,
+    pub guard_type: String,
+    pub pattern_matched: String,
+    pub command_preview: String,
+    pub agent: Option<String>,
     pub timestamp: DateTime<Utc>,
-    pub allowed: bool,            // True if override/approval was applied (e.g. verification gate, "Approve once")
+    pub allowed: bool,
 }
 ```
 
-**Logging call:** From `BaseRunner` (or platform runner when prompt is blocked): on any guard block, build `FileSafeEvent`, then either (a) append to `filesafe-events.jsonl` or (b) emit to seglog writer, depending on which storage path is active. Do not block execution path on log write (fire-and-forget or bounded queue).
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/Contracts_V0.md
 
----
+Logging call semantics:
+- guard blocks and approved overrides are emitted on the main execution path before the user-facing result is returned
+- event-write failure MUST surface as a structured diagnostic; it is not silently ignored
+- analytics, dashboards, and gate reports read FileSafe history from the canonical event stream or its derived projections
 
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/Decision_Policy.md
 ## 7. Error Messages
 
 User-friendly error messages:
@@ -1108,107 +1098,73 @@ async fn test_runner_blocks_destructive() {
 ---
 
 ## 9. Implementation Checklist
+This checklist tracks implementation work for the already-locked FileSafe canon. Checklist items must implement the owner rules in Sections 11.1.1-11.1.2a and MUST NOT reopen those rules as design questions.
+
+ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/storage-plan.md
 
 - [ ] **Create FileSafe module structure**
-  - [ ] `src/filesafe/mod.rs`
-  - [ ] `src/filesafe/bash_guard.rs`
-  - [ ] `src/filesafe/destructive_patterns.rs`
-  - [ ] `src/filesafe/file_guard.rs` (Section 11.1)
-  - [ ] `src/filesafe/security_filter.rs` (Section 11.2)
-  - [ ] Add `pub mod filesafe;` to `src/lib.rs`
-  - [ ] Tag all reusable items with DRY comments
-
+  - [ ] Create `src-tauri/src/filesafe/mod.rs`
+  - [ ] Create `src-tauri/src/filesafe/types.rs`
+  - [ ] Create `src-tauri/src/filesafe/scope.rs`
+  - [ ] Create `src-tauri/src/filesafe/bash_guard.rs`
+  - [ ] Create `src-tauri/src/filesafe/snapshot.rs`
+  - [ ] Create `src-tauri/src/filesafe/validator.rs`
 - [ ] **Port pattern file**
-  - [ ] Create `config/destructive-commands.txt`
-  - [ ] Verify all 40+ patterns compile as Rust regex
-  - [ ] Test pattern matching
-
+  - [ ] Copy destructive command patterns from OpenCode `backend/src/security/bash.ts`
+  - [ ] Convert JS regex patterns to Rust `regex::Regex`
+  - [ ] Port scope checking logic from OpenCode `backend/src/security/bash.ts`
+  - [ ] Adapt to PM project model and remote-mode path handling
 - [ ] **Implement BashGuard**
-  - [ ] Complete `BashGuard::new()` implementation (pattern file resolution, env var check)
-  - [ ] Implement `BashGuard::find_bundled_patterns_file()` helper
-  - [ ] Implement `BashGuard::disabled()` fallback
-  - [ ] Pattern loading from file (`load_patterns()`)
-  - [ ] Command checking logic (`check_command()`)
-  - [ ] Prompt content checking (`check_prompt()` + `extract_commands_from_prompt()`)
-  - [ ] Environment variable override (`PUPPET_MASTER_ALLOW_DESTRUCTIVE`)
-  - [ ] Config file integration (read from `FileSafeConfig`)
-  - [ ] Project-specific pattern loading (`.puppet-master/destructive-commands.local.txt`)
-  - [ ] Error handling (graceful degradation on init failure)
-
+  - [ ] Port `buildScopeRegex()` logic from OpenCode
+  - [ ] Port `bashCommandBlocks` array from OpenCode
+  - [ ] Port `fileEditBlocks` array from OpenCode
+  - [ ] Implement `check_bash_command()` for shell execution
+  - [ ] Implement `check_file_edit()` for edit operations
+  - [ ] Add PM-specific safe zones and allowlisted temp patterns
 - [ ] **Integrate with BaseRunner**
-  - [ ] Add `bash_guard: Arc<BashGuard>`, `file_guard: Arc<FileGuard>`, `security_filter: Arc<SecurityFilter>` fields to `BaseRunner`
-  - [ ] Initialize all guards in `BaseRunner::new()` (with pattern file resolution)
-  - [ ] Add guard checks in platform runners (e.g., `CursorRunner::execute()`) **after context compilation**:
-    - [ ] Compile context files into prompt (`append_prompt_attachments()`)
-    - [ ] Check **compiled prompt** for destructive commands (`check_prompt()` on compiled prompt)
-    - [ ] Check context files against security filter (`check_file_access()`)
-    - [ ] Check if verification gate/interview operation (allow destructive if tagged)
-  - [ ] Add guard checks in `BaseRunner::execute_command()` before spawn (after quota/rate limit, before permission audit):
-    - [ ] Build command string and check for destructive patterns (`check_command()`)
-    - [ ] Extract file paths from request (`extract_file_paths_from_request()`)
-    - [ ] Resolve and normalize file paths (handle worktree symlinks)
-    - [ ] Check file writes against write scope (`check_file_write()`)
-    - [ ] Check file access against security filter (`check_file_access()`)
-  - [ ] Implement `is_verification_gate_operation()` helper
-  - [ ] Implement `is_interview_operation()` helper
-  - [ ] Implement `extract_file_paths_from_request()` helper
-  - [ ] Integrate with verification gates (allow destructive during QA if tagged)
-  - [ ] Handle guard errors gracefully (return clear error messages, log to event log)
+  - [ ] Add `filesafe: Arc<FileSafe>` field to `BaseRunner`
+  - [ ] Initialize FileSafe in runner construction
+  - [ ] Add guard checks in platform runners after context compilation:
+    - [ ] Compile context files into a prompt view and run compiled-output validation
+    - [ ] Validate referenced context files against scope and safety policy
+    - [ ] Check whether the request is verification-gate exempt before blocking
+  - [ ] Add guard checks in `BaseRunner::execute_command()` before spawn:
+    - [ ] Build the command string and check destructive patterns
+    - [ ] Extract file paths from the request
+    - [ ] Implement the locked realpath-before-scope-check invariant from Section 11.1.1: resolve relative paths against `working_directory`, canonicalize with fail-closed behavior, compare scope/security rules against the canonical real path, and reject unresolved or non-canonical worktree aliases instead of falling back to unresolved paths
+    - [ ] Implement the locked optimistic-concurrency and snapshot-integrity contract from Section 11.1.2a, including hard-error handling for `git add`, `git commit`, `git stash`, and `git checkout`, plus post-`git add` verification via `git status --porcelain`
+  - [ ] Implement helper methods:
+    - [ ] `FileSafe::check_command(context_files, prompt, command, working_directory)`
+    - [ ] `FileSafe::check_edit(file_path, old_content, new_content, working_directory)`
+    - [ ] `FileSafe::should_exempt_verification_gate(task)`
+  - [ ] Integrate with verification gates and plan-apply paths
+  - [ ] Return clear, actionable guard errors to the caller
+
+ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/GitHub_Integration.md
 
 - [ ] **Add configuration**
-  - [ ] Add `FileSafeConfig` to config system
-  - [ ] Wire to GUI config (optional, can be CLI-only initially)
-  - [ ] Document config options
-
+  - [ ] Add `filesafe.enabled` to settings
+  - [ ] Add `filesafe.verification_gate_exemptions` for readonly verification tools
+  - [ ] Add `filesafe.project_scope_overrides` if needed
+  - [ ] Add remote-mode aware scope roots derived from mounted project identity
 - [ ] **Event logging**
-  - [ ] Create `FileSafeEvent` struct
-  - [ ] Integrate with existing event logging system (Section 11.5)
-  - [ ] Log blocked commands, file access violations, security filter blocks
-  - [ ] Include command preview, pattern matched, timestamp, agent context
+  - [ ] Emit structured `filesafe.blocked` events with reason codes, matched rule ids, and resolved path context
+  - [ ] Emit `filesafe.snapshot_created`, `filesafe.snapshot_conflict`, and `filesafe.snapshot_restore` events with stable identifiers
+  - [ ] Ensure logs distinguish dry-run validation from hard blocking
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/FileSafe.md
 
 - [ ] **Testing**
-  - [ ] Unit tests for pattern matching (bash guard)
-  - [ ] Unit tests for write scope (allowed/blocked files)
-  - [ ] Unit tests for security filter (sensitive file patterns)
-  - [ ] Unit tests for prompt content extraction
-  - [ ] Unit tests for override mechanisms
-  - [ ] Integration tests with platform runners
-  - [ ] Test all 40+ destructive command patterns
-  - [ ] Test verification gate integration (allow destructive during QA)
-  - [ ] Test false positive scenarios (documentation, comments)
+  - [ ] Unit tests for destructive command detection
+  - [ ] Unit tests for scope validation
+  - [ ] Unit tests for verification-gate exemptions
+  - [ ] Unit tests for optimistic concurrency conflict detection
+  - [ ] Unit tests for git snapshot error handling and post-stage verification
+  - [ ] Integration tests with real shell commands
+  - [ ] Integration tests for plan apply and rewrite paths
+  - [ ] Remote-mode tests covering mounted project paths and canonicalization failures
 
-- [ ] **Documentation**
-  - [ ] Add to AGENTS.md FileSafe section:
-    - [ ] FileSafe: Command blocklist
-    - [ ] FileSafe: Write scope
-    - [ ] FileSafe: Security filter
-    - [ ] Override mechanisms
-    - [ ] Project-specific patterns
-  - [ ] Document integration with verification gates
-  - [ ] Document prompt content checking behavior
-  - [ ] Add to REQUIREMENTS.md
-  - [ ] Update GUI widget catalog if new widgets added
-
-- [ ] **Pre-completion verification**
-  - [ ] `cargo check` passes
-  - [ ] `cargo test` passes
-  - [ ] No hardcoded platform data
-  - [ ] DRY compliance (tag reusable items)
-
-- [ ] **Context compilation (Part B)**
-  - [ ] Create `src/context/` module: `mod.rs`, `compiler.rs`, `context_role.rs`, `filters.rs`, `skills.rs`
-  - [ ] Implement `compile_context(run_id, node_id, context_role, plan_path, working_directory)` and runtime-role compilers (`planning`, `execution`, `verification`, `debug`, `review`)
-  - [ ] Requirement filtering (node-mapped only); convention extraction from AGENTS.md; decision extraction from state/progress
-  - [ ] Skill bundling: parse referenced skill metadata, resolve paths, append to the relevant compiled context; handle missing skills
-  - [ ] Delta context: git diff since the last relevant base ref, code slices, "Changed Files (Delta)" section; config `context.delta_context`
-  - [ ] Context cache: `context-index.json` with key (paths + mtimes/hashes); skip compile when valid; invalidate on change; config `context.context_cache`
-  - [ ] Structured handoff schemas: define message types and JSON schemas; `HandoffMessage` enum + validation in orchestrator; reference doc in docs/
-  - [ ] Compaction-aware re-reads: `.compaction-marker` lifecycle (clear on session start, set on compaction); consult before including plan in context
-  - [ ] Add `ContextConfig` to GuiConfig and `puppet-master.yaml`; wire to orchestrator (Option B); call compiler in platform runner before building prompt; graceful degradation on failure
-  - [ ] Unit and integration tests for compiler, cache, handoff parsing; document token savings and config in AGENTS.md
-
----
-
+ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/storage-plan.md
 ## 10. Relationship to Other Plans
 
 ### 10.1 Orchestrator Plan
@@ -1282,14 +1238,60 @@ All FileSafe-managed file mutations MUST use the atomic write pattern `temp -> f
 
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Architecture_Invariants.md
 
+Managed overwrite safety:
+- if the target already exists and the mutation is not append-only, PM creates a recoverable pre-write backup or safe point before the atomic rename
+- backup lineage is keyed by session/run/turn and target path so undo and recovery never share snapshot state across unrelated sessions
+- if backup creation or backup-metadata persistence fails, the mutation fails closed before the target path is modified
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/Contracts_V0.md
+
 Temp-file lifecycle rules:
-- temp files live in a per-session temp directory or same-directory temp naming scheme
+- replacement writes MUST use same-directory temp files only: `<target>.tmp.<random>` in the target directory, `fsync(temp)`, then atomic rename over the target; per-session temp directories are valid for scratch artifacts and janitor-managed temp state, but MUST NOT be used for replacement writes that rely on same-filesystem atomic rename
 - boot/startup janitor sweeps stale `.tmp.*` artifacts from incomplete writes
 - stale-temp cleanup emits a structured recovery event when artifacts are removed
+- janitor cleanup MUST NOT delete live session backups or safe-point records that are still referenced by an active session lineage
 
-ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Architecture_Invariants.md
+
+
+
+#### 11.1.2a Optimistic concurrency for mutable rewrites
+
+All mutable FileSafe rewrite paths (plan apply, patch apply, safe auto-fix, context file rewrite, and verification-driven rewrite) MUST follow the same optimistic-concurrency contract.
+
+ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/storage-plan.md
+
+Required behavior:
+- Before any mutable rewrite, the runner captures `read_revision={mtime_ns, content_sha256}` for the target file and records the current head state when a git worktree exists.
+- Immediately before rename/promote, the rewrite attempt re-reads the target state and compares it to the captured `read_revision`.
+- If the current target state no longer matches the captured `read_revision`, the rewrite aborts with `error.concurrent_edit_conflict` rather than silently overwriting newer content.
+- Conflict handling must surface a structured result to the caller so the run can request reconciliation, retry from fresh state, or escalate to the user according to mode/approval policy.
+- Successful rewrites update the tracked post-write state that later verification, undo, and follow-up actions consume.
+
+ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/GitHub_Integration.md
+
+FileSafe uses optimistic concurrency here rather than mandatory file locking for ordinary mutable rewrites. Append-only seglog/event writers remain outside this rewrite path and do not use `error.concurrent_edit_conflict` for ordinary append durability.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FileSafe.md
+
+Snapshot and undo isolation:
+- Snapshot indexes and safe points are scoped to the active run/session lineage. Restoring one safe point must never invalidate or delete other snapshots that were preserved for different sessions or legal-hold reasons.
+- Snapshot identifiers must be unique across the retained set; no restore path may assume a single global scratch snapshot directory.
+- Any git or shell subprocess used to materialize a reversible checkpoint must record enough metadata to tell whether a checkpoint was actually created.
+
+Git subprocess integrity for snapshot materialization:
+- Non-zero exits from `git add`, `git commit`, `git stash`, `git checkout`, or equivalent mutation-sensitive commands are hard errors.
+- After `git add`, PM MUST verify staged state with `git status --porcelain` before snapshot metadata is accepted as durable.
+- The `nothing to commit` case may remain informational for commit-only flows, but it MUST NOT downgrade real staging, stash, or checkout failures into success-shaped state.
+
+ContractRef: ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/FileSafe.md
+
+This contract applies to both local and remote-mode project mutations. Read-only operations and evidence capture do not require snapshot creation, but any path that claims reversibility MUST satisfy the full contract above.
+
+ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/storage-plan.md
 
 #### 11.1.3 Case folding and file-record lifecycle
+
 FileSafe and permission matching MUST use the same filesystem-awareness for case sensitivity.
 
 ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Executor_Protocol.md
@@ -1312,6 +1314,7 @@ ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Tools.
 In-memory file records are bounded by an LRU cap of 10,000 entries. Eviction rebuilds from canonical event state on next access; it does not silently lose guard correctness.
 
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Architecture_Invariants.md
+
 ### 11.2 Security Filter (CRITICAL)
 
 **Problem:** Agents may access sensitive files (`.env`, credentials, keys) during execution.
@@ -1355,7 +1358,7 @@ impl SecurityFilter {
 - `id_rsa`, `id_ed25519`, `\.pub$` (SSH keys)
 - `config/secrets\.`, `secrets/` (secrets dir or config secrets files)
 
-**Implementation:** In `security_filter.rs`, define `fn default_sensitive_patterns() -> Vec<Regex>` that returns the compiled list; allow optional project override file (e.g. `.puppet-master/security-filter.local.txt`) for additive patterns only. Document in AGENTS.md.
+**Implementation:** In the FileSafe validation layer, define `fn default_sensitive_patterns() -> Vec<Regex>` that returns the compiled list; allow optional project override file (e.g. `.puppet-master/security-filter.local.txt`) for additive patterns only. Document in AGENTS.md.
 
 ### 11.3 Prompt Content Checking & Context Compilation
 
@@ -1769,214 +1772,27 @@ FileSafe settings must be **configurable in the GUI** and **easy to turn on or o
 
 ---
 
-## 14. Context Compilation & Token Efficiency
+## 14. Historical note on moved context-compilation canon
 
-### 14.1 Role-Specific Context Compiler
+The context-compilation and token-efficiency material that previously lived in this section is no longer canonical here.
 
-**Problem:** Every agent currently receives the same context files regardless of the current runtime role. Planning, execution, verification, and debug attempts should not all load identical context blobs.
+`Plans/Prompt_Pipeline.md` is now the canonical owner for:
+- context compilation algorithms
+- delta context selection
+- cache heuristics
+- marker-file / compaction-aware reread behavior
+- skill bundling and prompt-compaction policy
 
-**Solution:** A deterministic **context compiler** produces one compiled context file per runtime role. Filtering is structural/pattern-based, not LLM-based.
+FileSafe remains responsible only for safety checks over the fully compiled prompt and related attachments after Prompt Pipeline assembly and before provider dispatch.
 
-**Module:** `src/context/` (or `src/prompt/context_compiler.rs`).
-
-**Output files:** `.puppet-master/runs/{run_id}/nodes/{node_id}/.context-{context_role}.md`.
-
-**Compiler contract:**
-```rust
-pub fn compile_context(
-    run_id: &str,
-    node_id: &str,
-    context_role: ContextRole,
-    plan_path: Option<&Path>,
-    working_directory: &Path,
-) -> Result<PathBuf>;
-```
-
-**Context role -> content mapping:**
-
-| Context role | Contents |
-|---|---|
-| `planning` | Node goal, success criteria, filtered requirements, active decisions, repo/project rules |
-| `execution` | Node goal, conventions, concrete input files, skills referenced by the node, most recent relevant receipts |
-| `verification` | Node goal, expected acceptance criteria, changed-files delta, verification evidence/history |
-| `debug` | Bound target summary, Investigation Context snapshot, relevant artifacts, current revalidation reason if any |
-| `review` | Compare/review identity, affected files, reviewer comments/annotations, blocking concerns |
-
-Rules:
-- selection is driven by runtime posture and node intent, not by deprecated phase/task/subtask/iteration names
-- requirement filtering is deterministic over known formats; no LLM is used for compiler selection
-- when compilation fails or the feature is disabled, PM falls back to the existing direct-file behavior
-- the compiled artifact is a convenience context surface, not a new canonical storage source
-
-ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Prompt_Pipeline.md
-
----
-
-### 14.2 Delta Context
-
-**Purpose:** When iterating on existing code, agents benefit more from *what just changed* than from the full codebase. Delta context adds a "Changed Files (Delta)" section to the compiled context.
-
-**Behavior:**
-
-- **Input:** Git diff since the last relevant base ref (or since last commit / tag -- configurable). Optionally restrict to certain dirs (e.g. `src/`).
-- **Content:** For each changed file: path, optional short code slices (e.g. first/last N lines or hunks), and a brief summary (e.g. "modified", "added"). Total size capped (e.g. ~225-375 tokens per compiled context).
-- **Output:** Appended to the compiled `.context-{context_role}.md` when `context.delta_context` is true (e.g. only for the relevant execution/verification/review roles if desired).
-
-**Implementation sketch:**
-
-- Run `git diff` (or `git log -p` with limits) from a configured ref (e.g. `HEAD~1`, or the last relevant checkpoint tag).
-- Parse diff; for each file, optionally read file and take slices (e.g. 20 lines before/after changed regions).
-- Write a "## Changed Files (Delta)" section with path, summary, and slices; enforce token/line limit.
-
-**Config:** `context.delta_context` (default false). Enable for iterative development.
-
----
-
-### 14.3 Context Cache
-
-**Purpose:** Avoid recomputing compiled context when project files have not changed (e.g. multiple spawns in the same run, or repeated node attempts).
-
-**Behavior:**
-
-- **Cache key:** Directory or file set that affects context (e.g. `.puppet-master/`, `REQUIREMENTS.md`, `prd.json`, `AGENTS.md`, run/node state). Represent as a list of paths + mtimes or content hashes.
-- **Cache store:** Single index file, e.g. `.puppet-master/context-index.json`, containing: `run_id`, `node_id`, `context_role`, list of `(path, mtime_or_hash)`, and path to last compiled output (or hash of its content).
-- **Lookup:** Before calling the compiler, compute current key; if it matches cache and cached output path exists and is readable, skip compilation and return cached path.
-- **Invalidation:** On any change to the key (e.g. file under `.puppet-master/` or requirements/prd/AGENTS), delete or invalidate the cache entry for that run/node/context-role tuple and recompute on next request.
-
-**Config:** `context.context_cache` (default true for large-repo use cases). When false, always run the compiler.
-
----
-
-### 14.4 Structured Handoff Schemas
-
-**Purpose:** Make inter-agent communication parseable and type-safe so orchestrator and downstream agents do not rely on free-form markdown.
-
-**Behavior:**
-
-- **Schema registry:** Define a small set of message types, e.g. `run_progress`, `work_package_blocker`, `node_result`, `qa_result`, `attempt_complete`. Each has a fixed JSON schema (required fields, types).
-- **Wire format:** Agents (or the runner wrapping them) send handoff payloads as JSON (e.g. in a well-known field of the execution result or in a side-channel file). Example:
-
-```json
-{
-  "type": "node_progress",
-  "run_id": "RUN-002",
-  "node_id": "NODE-002",
-  "status": "complete",
-  "files_changed": ["src/context/compiler.rs"],
-  "commit": "abc123"
-}
-```
-
-- **Validation:** Orchestrator (or a small Rust module) parses and validates against the schema; on failure, log and optionally retry or escalate. Unknown `type` can be rejected or treated as legacy plain text per policy.
-- **Docs:** Single reference doc (e.g. in `docs/` or `references/`) lists all types and their schemas; agents are instructed to emit one of these shapes.
-
-**Implementation:** Add `HandoffMessage` enum in Rust with serde; implement `TryFrom` from JSON string; use in orchestrator when processing agent output.
-
----
-
-### 14.5 Compaction-Aware Re-Reads
-
-**Purpose:** Avoid re-reading the full plan (or other large context) before every task when the plan has not been compacted or changed.
-
-**Behavior:**
-
-- **Marker file:** A deterministic marker file (e.g. `.puppet-master/.compaction-marker`) with a timestamp. Written only when a "compaction" or context-reset event occurs (e.g. session compaction, or explicit "context was trimmed" signal from the platform).
-- **Protocol:** Before spawning an attempt, check for the marker. If absent, assume plan/context is still valid from a previous load -- skip re-read. If present, re-read plan (and any other context that might have been trimmed), then clear or update the marker so the next attempt does not re-read unnecessarily.
-- **Conservative rule:** On any doubt (e.g. marker present, or read failure), do the re-read. Prefer redundant reads over missing updates.
-
-**Saving:** Typically 1-2 full plan re-reads per run (~500-1,600 tokens per plan depending on plan size).
-
-**Integration:** Orchestrator or platform runner consults the marker when building `ExecutionRequest.context_files` (or when deciding whether to include plan path again). Lifecycle: clear marker on session start; set marker when compaction is detected or signaled.
-
----
-
-### 14.6 Skill Bundling
-Skill bundling is the canonical MVP runtime delivery path for skills during context compilation.
-
-Rules:
-- selected skills are resolved from the canonical skill registry
-- the context compiler decides which resolved skills to inline into the compiled context for the active run/context role
-- bundled skill content remains traceable to skill ids and registry metadata
-- on-demand lookup continues to use the `skill` tool; bundling does not eliminate tool-based access
-- provider-native directories or file formats remain import/export/interoperability inputs only
-
-Bundling order:
-1. resolve allowed skill refs
-2. apply permissions and deny/allow filtering
-3. de-duplicate by canonical skill id
-4. bundle deterministic content in context-compiler order
-5. emit enough metadata for evidence/debugging to show which skills were injected
-
-This section intentionally makes runtime bundling, not provider-native file placement, the MVP execution truth.
-
-ContractRef: ContractName:Plans/Skills_System.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Tools.md
-### 14.7 Token Savings and Context Configuration
-
-**Projected savings (illustrative):**
-
-| Scale   | Nodes | Requirements | Coordination overhead (no compiler) | With compiler | Reduction |
-|---------|--------|--------------|-------------------------------------|----------------|-----------|
-| Small   | 3      | 10           | ~65k tokens                          | ~32k           | ~51%      |
-| Medium  | 5      | 20           | ~150k tokens                         | ~60k           | ~60%      |
-| Large   | 8      | 30           | ~300k tokens                         | ~125k          | ~58%      |
-
-**Unified context config (add to `GuiConfig` / `puppet-master.yaml`):**
-
-```yaml
-context:
-  compiler_enabled: true
-  delta_context: false
-  context_cache: true
-  skill_bundling: true
-```
-
-```rust
-#[derive(Debug, Clone, Serialize, Deserialize, Default)]
-#[serde(rename_all = "camelCase")]
-pub struct ContextConfig {
-    #[serde(default = "default_true")]
-    pub compiler_enabled: bool,
-    #[serde(default)]
-    pub delta_context: bool,
-    #[serde(default = "default_true")]
-    pub context_cache: bool,
-    #[serde(default = "default_true")]
-    pub skill_bundling: bool,
-}
-```
-
-**ContextRole enum (for compiler):**
-
-```rust
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
-pub enum ContextRole {
-    Planning,
-    Execution,
-    Verification,
-    Debug,
-    Review,
-}
-
-impl ContextRole {
-    pub fn as_str(&self) -> &'static str {
-        match self {
-            Self::Planning => "planning",
-            Self::Execution => "execution",
-            Self::Verification => "verification",
-            Self::Debug => "debug",
-            Self::Review => "review",
-        }
-    }
-}
-```
-
-**Integration with platform runner:** Before building the prompt, if `context.compiler_enabled`, call `context_compiler::compile_context(run_id, node_id, context_role, plan_path, working_directory)`. On success, add the returned path to the request's context files (or replace a subset). On failure, log and proceed with existing behavior (no compiled context).
+ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Tools.md
 
 ---
 
 ## 15. System Integration Analysis
 
 ### 15.1 Integration with BaseRunner
+
 **Current Architecture:**
 - `BaseRunner::execute_command()` spawns platform CLI processes
 - Already has circuit breaker, quota manager, rate limiter, permission audit
@@ -2048,11 +1864,12 @@ ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Archit
 - Guards are initialized in `BaseRunner::new()` alongside other components
 - All guards use `Arc<>` for thread-safe sharing
 - Guard errors are logged via existing logging infrastructure
-- Guard violations are logged to event log (if available) or filesafe-events.jsonl
+- Guard violations are logged to the canonical event stream; any `filesafe-events.jsonl` output is a derived mirror only
 - Path resolution follows §11.1.1: `canonicalize()` failure produces `GuardError::SymlinkResolution`, never a silent fallback to the unresolved path
 - The fallback pattern `canonicalize().unwrap_or_else(|_| original_path)` is prohibited in all FileSafe-managed code paths
 
 ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Executor_Protocol.md
+
 ### 15.2 Integration with Orchestrator
 
 **Current Architecture:**
@@ -2344,29 +2161,33 @@ pub struct GateOverrideConfig {
    - Helps track FileSafe violations during verification
 
 ### 15.7 Integration with State Management
-
 **Current Architecture:**
-- State is managed via `prd.json`, `progress.txt`, `AGENTS.md`
-- Orchestrator tracks tier state, iterations, gate results
-- State persists across sessions
+- State is managed via `prd.json`, `progress.txt`, `AGENTS.md`, and rewrite-owned runtime stores.
+- Orchestrator tracks tier state, iterations, gate results, and child lineage.
+- State persists across sessions.
 
 **Integration Points:**
 
-1. **FileSafe event state:**
-   - FileSafe events are logged to `.puppet-master/logs/filesafe-events.jsonl`
-   - Should be included in state snapshots for debugging
-   - Consider adding to `prd.json` metadata or separate FileSafe state file
+1. **FileSafe event state**
+   - FileSafe history is canonical in seglog.
+   - State snapshots, dashboards, or diagnostic mirrors derive from seglog or its projector state.
+   - A standalone `filesafe-events.jsonl` file may exist only as a rebuildable mirror, not as an owner store.
 
-2. **Guard Configuration State:**
-   - Guard config is part of `GuiConfig` → `puppet-master.yaml`
-   - Must persist across sessions
-   - Default values should be safe (guards enabled by default)
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md
 
-3. **Plan metadata for write scope:**
-   - Write scope needs current plan's allowed files list
-   - Plan metadata should be accessible to `BaseRunner`
-   - Consider adding to `ExecutionRequest` or passing via context
+2. **Guard configuration state**
+   - Guard config is part of `GuiConfig` -> `puppet-master.yaml`.
+   - Guard settings persist across sessions.
+   - Default values remain safe (guards enabled by default).
 
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Permissions_System.md
+
+3. **Plan metadata for write scope**
+   - Write scope needs the current plan's allowed-files list.
+   - Plan metadata must be accessible to `BaseRunner` through canonical request context.
+   - Scope checks compare only canonical real paths rooted in the active worktree or project root.
+
+ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/WorktreeGitImprovement.md
 ### 15.8 Integration with Cleanup (MiscPlan)
 
 **Current Architecture:**
@@ -2540,68 +2361,41 @@ Profile selection derives from effective run mode, operation class, and target c
 ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/Executor_Protocol.md
 
 ### 15.12 Integration Checklist
+This section is a resolved integration map for implementers. It does not reopen design questions; the owner sections above define the canonical FileSafe behavior.
 
-Resolve **§12.6 Implementation-Ready Clarifications** before or during implementation (ExecutionRequest convention, get_allowed_files_for_current_subtask, BaseRunner/BashGuard config, SecurityFilter/FileGuard fields, edge cases).
+ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/storage-plan.md, ContractName:Plans/WorktreeGitImprovement.md
 
-- [ ] **ExecutionRequest Updates**
-  - [ ] Use `env_vars` for operation metadata (`PUPPET_MASTER_OPERATION_TYPE`) and write scope (`PUPPET_MASTER_ALLOWED_FILES`); do not add new fields
-  - [ ] Update all `ExecutionRequest::new()` call sites
+**ExecutionRequest integration**
+- operation metadata continues to travel through `env_vars`, using `PUPPET_MASTER_OPERATION_TYPE` for operation classification and `PUPPET_MASTER_ALLOWED_FILES` for write-scope declarations
+- FileSafe does not require new `ExecutionRequest` fields; every launch path that constructs an `ExecutionRequest` MUST populate those canonical env vars before BaseRunner executes the request
 
-- [ ] **BaseRunner Integration**
-  - [ ] Add guard fields to `BaseRunner` struct
-  - [ ] Initialize guards in `BaseRunner::new()`
-  - [ ] Add guard checks in `execute_command()` before spawn
-  - [ ] Add `is_verification_gate_operation()` helper
-  - [ ] Add `is_interview_operation()` helper
-  - [ ] Add `extract_file_paths_from_request()` helper
+ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/interview-subagent-integration.md, ContractName:Plans/storage-plan.md
 
-- [ ] **Orchestrator Integration**
-  - [ ] Tag verification gate operations in `ExecutionRequest`
-  - [ ] Pass plan metadata (allowed files) to `ExecutionRequest`
-  - [ ] Integrate FileSafe violations into gate reports
-  - [ ] Update gate execution to handle guard overrides
+**BaseRunner integration**
+- `BaseRunner` owns guard initialization, full rendered-command validation, write-scope checks, and security-filter checks before any managed spawn path executes
+- helper functions such as `is_verification_gate_operation`, `is_interview_operation`, and `extract_file_paths_from_request` remain implementation obligations, not open design questions
+- any FileSafe denial in BaseRunner surfaces a canonical blocked outcome and does not silently downgrade to a best-effort retry path
 
-- [ ] **Interview Integration**
-  - [ ] Tag interview operations in `ExecutionRequest`
-  - [ ] Add FileSafe config to `InterviewGuiConfig`
-  - [ ] Relax security filter during interview phases (if configured)
+ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Executor_Protocol.md
 
-- [ ] **Worktree Integration**
-  - [ ] Update write scope to handle worktree paths correctly
-  - [ ] Normalize paths relative to `working_directory`
-  - [ ] Handle worktree symlinks in path resolution
+**Orchestrator and interview integration**
+- orchestrator-owned verification-gate operations tag their operation type, pass allowed-file metadata, and integrate FileSafe violations into gate reporting rather than inventing a parallel error channel
+- interview-owned operations tag interview context explicitly; any security-filter relaxation during interview phases requires explicit configuration and remains scoped to the interview flow that requested it
 
-- [ ] **GUI Integration**
-  - [ ] Add `FileSafeConfig` to `GuiConfig`
-  - [ ] Add FileSafe tab to Config view (or add to Advanced tab)
-  - [ ] Add FileSafe-related messages to `Message` enum
-  - [ ] Wire FileSafe config to orchestrator config (Option B)
-  - [ ] Add FileSafe event log viewer (optional)
+ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/interview-subagent-integration.md, ContractName:Plans/Permissions_System.md
 
-- [ ] **Config Wiring**
-  - [ ] Wire `GuiConfig::filesafe` to `PuppetMasterConfig` (orchestrator config)
-  - [ ] Ensure FileSafe settings available to `BaseRunner` initialization
-  - [ ] Test config persistence across sessions
+**Worktree integration**
+- canonical path/worktree guard behavior is already locked by this owner doc and `Plans/WorktreeGitImprovement.md`; implementers consume that canon rather than reopening it as checklist uncertainty
+- candidate paths are normalized relative to `working_directory`, canonicalized with fail-closed behavior, compared against the real worktree root rather than a symlink alias, and rejected when unresolved aliases remain
 
-- [ ] **Cleanup Integration**
-  - [ ] Add security filter patterns to cleanup allowlist
-  - [ ] Coordinate write-scope allowed files with cleanup allowlist
-  - [ ] Ensure cleanup never deletes sensitive files
+ContractRef: ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Architecture_Invariants.md
 
-- [ ] **State Management**
-  - [ ] Include FileSafe events in state snapshots
-  - [ ] Persist guard configuration in config file
-  - [ ] Add FileSafe state to `prd.json` metadata (optional)
+**GUI and derived projections**
+- `GuiConfig` carries FileSafe configuration, the Config surface owns FileSafe controls, and orchestrator startup consumes that config without inventing a second configuration path
+- FileSafe-related UI messages remain projections over canonical runtime/FileSafe state
+- any FileSafe event-log viewer is a derived projection only; seglog remains the canonical event source
 
-- [ ] **Testing Integration**
-  - [ ] Test guards with verification gate operations
-  - [ ] Test guards with interview operations
-  - [ ] Test guards with worktree execution
-  - [ ] Test guards with cleanup operations
-  - [ ] Test config wiring end-to-end
-
----
-
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Permissions_System.md
 ## 16. References
 
 - **AGENTS.md:** DRY Method, platform_specs, Pre-Completion Verification Checklist
@@ -2626,18 +2420,18 @@ Resolve **§12.6 Implementation-Ready Clarifications** before or during implemen
 Use this section to derive a phased implementation plan. Dependencies are stated so an agent can order tasks and avoid gaps.
 
 **Phase 1 -- Core guards (no GUI, no Assistant)**  
-1. Create `src/filesafe/` module (mod, bash_guard, destructive_patterns, file_guard, security_filter).  
+1. Create the `src-tauri/src/filesafe/` module files listed in §9 Implementation Checklist.  
 2. Implement pattern loading (§2.3), bundled + project-local resolution (§2.2).  
 3. Implement `BashGuard` (new, disabled, check_command, **commands_match** §2.2, approved_commands from config).  
 4. Implement **check_prompt** and **extract_commands_from_prompt** (§11.3).  
-5. Implement `FileGuard` (allowed set, **per-request update** §11.1, check_file_write).  
-6. Implement `SecurityFilter` (**default_sensitive_patterns** §11.2, check_file_access).  
+5. Implement write-scope enforcement (**per-request update** §11.1, check-file-write behavior).  
+6. Implement sensitive-file filtering (**default_sensitive_patterns** §11.2, check-file-access behavior).  
 7. Add `FileSafeConfig` to `GuiConfig` and YAML (§2.4, §5.2); config load/save only (no UI yet).  
 8. Integrate into **BaseRunner**: add guard fields, init in `new()` (with config from orchestrator when wired), in **execute_command()** call check_command (after building full command string), then compute `allowed_files` from request (§11.1), then check_file_write and check_file_access for extracted file paths.  
 9. **ExecutionRequest:** ensure allowed files and operation type are passed via env_vars (`PUPPET_MASTER_ALLOWED_FILES`, `PUPPET_MASTER_OPERATION_TYPE`).  
 10. Implement **extract_file_paths_from_request** (§15.2), **is_verification_gate_operation**, **is_interview_operation** (§15.2).  
 11. In **platform runners** (e.g. Cursor): after **append_prompt_attachments**, call **check_prompt** on compiled prompt and **security_filter** on context files; respect `PUPPET_MASTER_OPERATION_TYPE` (`verification_gate`/`interview`).  
-12. Event logging: **FileSafeEvent** struct (§6), write to `filesafe-events.jsonl` (or seglog when available).  
+12. Event logging: **FileSafeEvent** struct (§6), write to seglog; any `filesafe-events.jsonl` surface is rebuildable mirror output only.  
 13. Pattern file: create `config/destructive-commands.txt` (§4); verify regexes.  
 14. Unit tests: pattern match, commands_match, check_prompt extraction, FileGuard allowed/blocked, SecurityFilter, disabled/override behavior.
 
@@ -2654,8 +2448,8 @@ Use this section to derive a phased implementation plan. Dependencies are stated
 22. Terminal: on block, output RED with "[BLOCKED] Blocked by FileSafe".  
 23. Optional: Dashboard FileSafe status card with link to Settings > Advanced.
 
-**Phase 4 -- Context compilation (Part B)**  
-24. Implement context compiler (§14), delta context, cache, handoff schemas, compaction marker, skill bundling; wire to platform runner and config. (Can be a separate implementation plan from Part A.)
+**Phase 4 -- Prompt Pipeline-owned context compilation follow-up**  
+24. Implement context compiler, delta context, cache, handoff schemas, compaction marker, and skill bundling from `Plans/Prompt_Pipeline.md`; FileSafe participates only through compiled-prompt safety checks and event logging integration.
 
 **Risks and mitigations:**  
 - **Gap -- plan metadata:** Orchestrator must set allowed files on each ExecutionRequest for write scope; implement **get_allowed_files_for_current_subtask** and pass via env or request field (§15.9 Gap 2).  
@@ -2721,15 +2515,6 @@ FileSafe denials that stop execution are blocked outcomes, not generic execution
 - require safe-point restore before retry when policy says the workspace must be rolled back to a known baseline
 
 FileSafe must not silently convert a denial into a retryable transient error.
-## FileSafe Restore-Before-Rerun Reconciliation Addendum (2026-03-09)
-
-`filesafe_blocked` is not retryable by default.
-
-If a mutation-capable attempt performed local changes before the FileSafe block was finalized, the blocked projection MUST expose:
-- `preserved_local_work = true`
-- `requires_safe_point_restore = true`
-
-When `requires_safe_point_restore = true`, runtime recovery MUST require `restore_safe_point_then_retry` before any rerun, even if a broader retry matrix would otherwise say rollback is not normally required for `filesafe_blocked`.
 ## FileSafe Runtime Blocked and Restore Override Consolidation Addendum (2026-03-09)
 
 This section defines fileSafe Action Mapping and Persistence.
@@ -2742,25 +2527,28 @@ FileSafe blocked payloads MUST use the canonical blocked payload:
 - `requires_safe_point_restore?`
 - `detail_ref?`
 
+ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md
+
 ### Shared vs local actions
 Shared runtime action IDs remain the canonical recovery families. Labels such as `Approve and add to allowlist` and `Edit and retry` are FileSafe-local affordances layered on top of shared actions and metadata. They are not new shared runtime action IDs unless the global action enum explicitly adopts them.
 
+Required rules:
+- runtime-facing FileSafe blocks use canonical `blocked_reason_code` plus ordered `allowed_action_ids[]`
+- `recovery_options[]` and `allowed_actions[]` are not canonical shared runtime fields
+- child runs blocked by FileSafe remain child runs with canonical lineage and status history
+- rerun and restore behavior must preserve canonical child/run/worktree identities
+
 ### Restore override
+`filesafe_blocked` is not retryable by default.
+
+If a mutation-capable attempt performed local changes before the FileSafe block was finalized, the blocked projection MUST expose:
+- `preserved_local_work = true`
+- `requires_safe_point_restore = true`
+
 When `requires_safe_point_restore = true`, the only legal rerun path is `restore_safe_point_then_retry`.
 
 ### Persistence
 A FileSafe block is a persistent blocked runtime episode until resolved or superseded.
-## FileSafe Action Mapping and Persistence
-
-FileSafe outcomes must align with the shared runtime blocked taxonomy and the child-run storage model.
-
-ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md
-
-Required rules:
-- runtime-facing FileSafe blocks use canonical `blocked_reason_code` plus ordered `allowed_action_ids[]`.
-- `recovery_options[]` and `allowed_actions[]` are not canonical shared runtime fields.
-- child runs blocked by FileSafe remain child runs with canonical lineage and status history.
-- rerun and restore behavior must preserve canonical child/run/worktree identities.
 
 Context-shaping and handoff rule:
 - FileSafe does not define alternate child continuity or alternate memory behavior.

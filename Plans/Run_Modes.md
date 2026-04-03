@@ -4,7 +4,7 @@
 
 ## 0. Scope and SSOT status
 
-This document is the **single canonical source of truth** for Puppet Master run modes. All other plan documents MUST reference this document by anchor (e.g., `Plans/Run_Modes.md#MODE-ask`) rather than restating mode definitions, strategy selection rules, budgets, or kill conditions.
+This document is the **single canonical source of truth** for Puppet Master run modes. All other plan documents MUST reference this document by anchor (for example `Plans/Run_Modes.md#MODE-ask`) rather than restating mode definitions, strategy selection rules, budgets, or kill conditions.
 
 ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md
 
@@ -17,11 +17,14 @@ ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md
 - Provider facade + normalized stream: `Plans/CLI_Bridged_Providers.md`
 - Tool permissions + tool events: `Plans/Tools.md`
 - FileSafe guards and blocking: `Plans/FileSafe.md`
-- Context compilation + compaction: `Plans/FileSafe.md` (Part B)
+- Context compilation + compaction owner: `Plans/Prompt_Pipeline.md`
+- FileSafe safety checks over compiled output: `Plans/FileSafe.md`
 - HITL tier-boundary approvals: `Plans/human-in-the-loop.md`
-- OpenCode baseline patterns: `Plans/OpenCode_Deep_Extraction.md` (§7A)
-- Assistant chat modes: `Plans/assistant-chat-design.md` (§3)
+- OpenCode baseline patterns: `Plans/OpenCode_Deep_Extraction.md` (Section 7A)
+- Assistant chat modes: `Plans/assistant-chat-design.md` (Section 3)
 - Cross-cutting invariants: `Plans/Architecture_Invariants.md`
+
+ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/FileSafe.md, ContractName:Plans/Architecture_Invariants.md
 
 ---
 
@@ -180,9 +183,9 @@ ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Contrac
 
 | Budget key | Default | Applies to | Meaning |
 |---|---|---|---|
-| `max_nesting_depth` | 4 | All modes | Maximum orchestrator -> crew -> agent -> child nesting depth before `stop.recursion_depth`. |
-| `max_total_spawned_agents` | 99 | All modes | Hard cap on total spawned agents before `stop.agent_count`. |
-| `max_tool_rounds` | 200 | All modes | Same-level tool-call round ceiling per agent before `stop.tool_round_limit`. |
+| `max_nesting_depth` | 4 | All modes | Maximum orchestrator -> crew -> agent -> child nesting depth before `kill.recursion_depth`. |
+| `max_total_spawned_agents` | 99 | All modes | Hard cap on total spawned agents before `kill.agent_count`. |
+| `max_tool_rounds` | 200 | All modes | Same-level tool-call round ceiling per agent before `kill.tool_round_limit`. |
 | `max_wall_ms` | 1200000 | All modes | Maximum wall-clock duration for the run. |
 | `max_estimated_tokens` | 80000 | All modes | Estimated token ceiling for the run budget. |
 | `max_same_shell_failure` | 3 | DAE / host-managed shell surfaces | Consecutive failures of the same canonical shell fingerprint before stop. |
@@ -209,50 +212,91 @@ ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/CLI_Bridged_Prov
 
 ### 5.1 Universal kill conditions (all strategies)
 
-The following stop conditions apply in all run strategies. When any condition is met, the run is terminated immediately and a canonical `run.killed` seglog event is emitted with `stop_condition`, `stop_threshold`, and `observed_value` fields.
+Universal termination conditions resolve to canonical stop reasons before the run is finalized.
 
-ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Contracts_V0.md
+ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/Contracts_V0.md
 
-| Stop condition | Trigger | Default threshold | Configurable |
-|---|---|---|---|
-| `stop.recursion_depth` | Nesting depth exceeds `max_nesting_depth` | 4 | Yes |
-| `stop.agent_count` | Total spawned agents exceed `max_total_spawned_agents` | 99 | Yes |
-| `stop.tool_round_limit` | Tool-call rounds exceed `max_tool_rounds` | 200 | Yes |
-| `stop.task_timeout` | Individual task exceeds `task_timeout_ms` or inherited remaining budget | Per envelope | Yes |
-| `stop.budget_exceeded` | Pre-request estimate or post-response actual exceeds remaining budget | Per run/session budget | Yes |
-| `stop.identical_failure` | Same `(tool_name, args_hash, error_message)` triple observed twice consecutively | exact-match | No |
-| `stop.user_cancel` | User explicitly cancels the run | — | No |
-| `stop.hte_tool_observed` | Provider-originated tool call appears during HTE | 0 observed | No |
+| Condition | Trigger | Default threshold | Configurable | Terminal stop reason |
+|---|---|---|---|---|
+| `kill.recursion_depth` | Nesting depth exceeds `max_nesting_depth` | 4 | Yes | `kill.recursion_depth` |
+| `kill.agent_count` | Total spawned agents exceed `max_total_spawned_agents` | 99 | Yes | `kill.agent_count` |
+| `kill.tool_round_limit` | Tool-call rounds exceed `max_tool_rounds` | 200 | Yes | `kill.tool_round_limit` |
+| `done.task_timeout` | Individual task exhausts `task_timeout_ms` or inherited remaining budget and the grace-period shutdown path completes | Per envelope | Yes | `done.task_timeout` |
+| `kill.budget_exceeded` | Pre-request estimate exceeds the remaining run or session budget before dispatch | Per run/session budget | Yes | `kill.budget_exceeded` |
+| `stop.identical_failure` | Same `(tool_name, args_hash, error_message)` triple observed twice consecutively | exact-match | No | `stop.identical_failure` |
+| `stop.user_cancel` | User explicitly cancels the run | - | No | `stop.user_cancel` plus `done.cancelled` outcome |
+| `kill.hte_tool_observed` | Provider-originated tool call appears during HTE | 0 observed | No | `kill.hte_tool_observed` |
 
-ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Permissions_System.md
+Rules:
+- `done.task_timeout` is the canonical terminal stop reason for elapsed-budget exhaustion after graceful teardown. Internal supervisor bookkeeping may classify the pre-terminal trigger as timeout exhaustion, but consumers MUST persist and inspect `done.task_timeout`; `kill.task_timeout` is retired as a consumer-facing terminal alias.
+ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Executor_Protocol.md
+- `kill.budget_exceeded` remains pre-dispatch only. Post-response budget overruns use terminal `done.budget_exceeded` after usage has been durably recorded and MUST NOT be folded back into the pre-dispatch row above.
+ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md
 
 #### Exact-match doom-loop guard
 
-The doom-loop guard is exact-match only. PM MUST compare the same `(tool_name, serialized_args_hash, error_message)` triple at the same nesting level across consecutive attempts. Fuzzy matching, substring matching, and "looks similar" heuristics are prohibited for this stop condition.
+The doom-loop guard is exact-match only. PM MUST compare the same `(tool_name, serialized_args_hash, error_message)` triple at the same nesting level across consecutive attempts. Fuzzy matching, substring matching, and `looks similar` heuristics are prohibited for this terminal stop condition.
 
-ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Architecture_Invariants.md
+Broader retry suppression for substantially equivalent failures is owned by `Plans/Tools.md` and does not rename or replace this exact-match stop condition.
+
+ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Architecture_Invariants.md, ContractName:Plans/Tools.md
 
 #### Signal handling and process lifecycle
 
-`SIGTERM` / `SIGINT` request graceful shutdown. `SIGHUP` triggers config reload, not shutdown. Every managed provider, MCP, terminal, and LSP subprocess MUST run in its own process group (`setsid` on Unix; `CREATE_NEW_PROCESS_GROUP` on Windows) so signal delivery stays scoped.
+PM entrypoints MUST establish the canonical shutdown root with `signal.NotifyContext` or an equivalent once-owned signal fan-out before provider, MCP, terminal, or LSP helpers are started.
 
-ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Contracts_V0.md
+ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md
+
+`SIGTERM` and `SIGINT` request graceful shutdown. `SIGHUP` triggers config reload, not shutdown. Every managed provider, MCP, terminal, and LSP subprocess MUST run in its own process group (`setsid` on Unix; `CREATE_NEW_PROCESS_GROUP` on Windows) so signal delivery stays scoped.
 
 Grace periods:
-- Provider processes: 5 seconds, then force terminate.
-- MCP and LSP subprocesses: 3 seconds, then force terminate.
-- Shutdown entrypoints MUST be guarded by a `Once`/idempotent primitive; re-entrant shutdown is a safe no-op.
+- provider processes: 5 seconds, then force terminate
+- MCP and LSP subprocesses: 3 seconds, then force terminate
+- shutdown entrypoints MUST be guarded by an idempotent `Once`-style primitive; re-entrant shutdown is a safe no-op
 
-ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/LSPSupport.md
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/LSPSupport.md, ContractName:Plans/Executor_Protocol.md
 
+Shutdown durability rules:
+- before force termination or final outcome emission, PM flushes buffered normalized events and seglog writers
+- if durability flush fails, PM emits a structured diagnostic and the terminal outcome escalates to `done.crashed` rather than claiming a clean shutdown
+- user-driven or parent-driven cancellation produces `done.cancelled`, not `done.failed`, even if force termination is needed after the grace window
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Architecture_Invariants.md, ContractName:Plans/Contracts_V0.md
+
+Startup recovery:
+- if PM starts and finds an unfinished run with no canonical terminal `done` event, it performs crash recovery against the last durable seglog state
+- recovered crash cases synthesize terminal metadata with `done.crashed` and `stop_reason = crash_recovered`
+- PM MUST NOT silently drop an incomplete run or rewrite it as `done.failed` without the crash marker
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Architecture_Invariants.md
+
+##### Resource disposal and health monitoring
+
+Runtime teardown is an owned lifecycle contract, not best-effort cleanup:
+- PM closes DB handles, MCP sessions, terminal shells, temporary files, and owned subprocess groups in a deterministic teardown order
+- a failed teardown step emits a structured diagnostic; PM MUST NOT silently reuse poisoned process state or abandoned shell/session state
+- helper restarts mint new helper/runtime identity for the restarted process instead of pretending continuity through a crashed or leaked subprocess
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Tools.md, ContractName:Plans/orchestrator-subagent-integration.md
+
+Long-lived helper health monitoring is mandatory:
+- PM tracks resident-set growth or equivalent memory-pressure signals for provider, MCP, terminal, and LSP helpers
+- sustained growth beyond configured restart thresholds emits `diagnostic(category="resource_pressure")` or equivalent structured telemetry
+- when a restart is required, PM performs controlled teardown or failover rather than silently leaving the degraded helper attached to future runs
+
+ContractRef: ContractName:Plans/Architecture_Invariants.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Executor_Protocol.md
 ### 5.2 HTE-specific kill conditions
 | Condition | Reason code | Description |
 |-----------|-------------|-------------|
 | Provider tool-call observed | `kill.hte_tool_observed` | Any `tool_use` event observed in the provider stream. HTE MUST NOT allow delegated tool execution. |
 
+ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Architecture_Invariants.md
+
 `kill.hte_tool_observed` contract:
 - The **first** provider-originated `tool_use` observed during HTE MUST terminate the run immediately.
 - The terminal normalized `done` event MUST set `stop_reason = "kill.hte_tool_observed"`, and persisted `run.completed` MUST carry the same `stop_reason`.
+
+ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Tools.md
 
 ### 5.3 DAE-specific kill conditions
 | Condition | Reason code | Description |
@@ -291,41 +335,60 @@ ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/CLI_Bridged_Prov
 ---
 
 ## 6. Run outcome taxonomy
-<a id="OUTCOME-TAXONOMY"></a>
 
-Every run terminates with exactly one outcome value.
+Every run terminates with exactly one canonical coarse outcome value.
 
 ContractRef: ContractName:Plans/Contracts_V0.md#EventRecord, PolicyRule:Decision_Policy.md§2
 
 | Outcome | Meaning |
 |---------|---------|
 | `done.ok` | Run completed successfully; all objectives met. |
-| `done.failed` | Run terminated due to error, kill condition, or scan failure. |
-| `done.deferred` | Run paused; work remains but requires external input (for example HITL approval). |
-| `done.rotated` | Run terminated and a follow-up run was spawned (context rotation). |
+| `done.failed` | Run terminated due to a handled error, kill condition, or post-run scan failure. |
+| `done.deferred` | Run paused; work remains but requires external input such as HITL approval. |
+| `done.rotated` | Run terminated and a follow-up run was spawned for continuation. |
 | `done.gutter` | Run terminated without meaningful progress; provider produced no actionable output. |
+| `done.cancelled` | Run was explicitly cancelled by the user, parent, or canonical timeout or stop path. |
+| `done.crashed` | PM or a managed runtime crashed or lost durability before clean terminal finalization. |
 
-ContractRef: ContractName:Plans/Contracts_V0.md#EventRecord, ContractName:Plans/Tools.md, ContractName:Plans/storage-plan.md
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/storage-plan.md
 
 Rules:
 - the outcome MUST be recorded in the terminal `done` event of the normalized provider stream and persisted via `EventRecord` to seglog
-- the normalized provider `done.payload.status` remains a coarse transport-facing terminal status (`success | cancelled | failed`), while `done.payload.outcome` carries the canonical taxonomy above
+- normalized `done.payload.status` remains a coarse transport-facing status (`success | cancelled | failed`), while `done.payload.outcome` carries the canonical taxonomy above
+- `done.cancelled` is for explicit cancellation semantics; `done.failed` is not a catch-all for stop paths that were intentionally requested
+- `done.crashed` is reserved for crash or durability-loss scenarios, including startup crash recovery
 - user-driven terminal restart or replacement mints a new runtime identity instead of mutating the prior run outcome in place
 - clearing scrollback or revealing an existing terminal session does not mint a new run outcome
 
-ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md
+ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/storage-plan.md
+
+### 6.1 Canonical terminal stop-reason refinements
+
+The coarse outcome taxonomy above is paired with stable terminal stop reasons when the runtime needs more precision:
+- `kill.budget_exceeded` = a pre-dispatch estimate prevented the request from starting
+ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md
+- `done.budget_exceeded` = post-response actual cost crossed the run or session budget after usage was durably recorded
+ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md
+- `done.task_timeout` = timeout expired, grace-period shutdown ran, and the run or child task terminated for elapsed budget exhaustion
+ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Executor_Protocol.md
+
+Rules:
+- `done.task_timeout` is the canonical terminal stop reason after timeout exhaustion completes the grace-period shutdown path. `kill.task_timeout` may exist as internal supervisor bookkeeping, but it MUST NOT be emitted as the consumer-facing terminal alias.
+ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Contracts_V0.md
+- These terminal stop reasons MUST be preserved in the terminal `done` payload and persisted `run.completed` metadata. Consumers MUST NOT collapse post-response budget overruns back into pre-dispatch naming, and `done.timeout` is retired as a synonym.
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/Architecture_Invariants.md
 ## 7. Mode effects on context management
 
-Mode influences context compilation, compaction, and rotation behavior. Detailed context-compilation contracts are in `Plans/FileSafe.md` (Part B); this section defines only the mode-specific deltas.
+Mode influences context compilation, compaction, and rotation behavior. Detailed context-compilation and compaction contracts are owned by `Plans/Prompt_Pipeline.md`; `Plans/FileSafe.md` owns safety checks over compiled output only. This section defines only the mode-specific deltas.
 
-ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/Run_Modes.md
+ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/FileSafe.md, ContractName:Plans/Run_Modes.md
 
 | Mode | Context compilation | Compaction | Rotation |
 |------|---------------------|------------|----------|
 | `ask` | Read-only context only (no plan/write-scope metadata injected). | Standard compaction thresholds apply. | No rotation (single-turn expected). |
 | `plan` | Read-only context + plan-output scaffold. | Standard compaction thresholds apply. | No rotation (planning is bounded). |
-| `regular` | Full role-specific context (`Plans/FileSafe.md` §14). | Standard compaction thresholds apply. | Rotation allowed; triggers `done.rotated` outcome. |
-| `yolo` | Full role-specific context. | Standard compaction thresholds apply. | Rotation allowed; triggers `done.rotated` outcome. |
+| `regular` | Full execution context assembled per `Plans/Prompt_Pipeline.md`; FileSafe applies compiled-output safety checks before execution. | Standard compaction thresholds apply. | Rotation allowed; triggers `done.rotated` outcome. |
+| `yolo` | Full execution context assembled per `Plans/Prompt_Pipeline.md`; FileSafe applies compiled-output safety checks before execution. | Standard compaction thresholds apply. | Rotation allowed; triggers `done.rotated` outcome. |
 
 Canonical context overlays:
 - `ask` -> `read_only`
@@ -334,10 +397,14 @@ Canonical context overlays:
 
 `read_only` excludes mutation-authority metadata (write scopes, DAE reconciliation metadata, and execution affordances). `plan_output_scaffold_v1` adds a deterministic plan/todo scaffold only. The overlay is applied during prompt/context compilation before attachments and the Injected Context breakdown are emitted. Child/subagent/rotated follow-up runs inherit the parent effective overlay and may narrow but MUST NOT widen a read-only overlay into `full_execution`.
 
+ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md
+
 Rotation decision boundary:
 - Compaction/pruning is attempted first against the final assembled payload.
 - `ask` and `plan` are rotation-ineligible; if the payload still cannot fit after deterministic compaction, the run terminates under the normal failure/budget taxonomy rather than spawning a follow-up run.
 - `regular` and `yolo` are rotation-eligible; a rotated follow-up run inherits `thread_id`, `mode`, `strategy`, effective runtime state, and a narrowed-or-equal tool-policy snapshot.
+
+ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Permissions_System.md
 
 ---
 
@@ -548,22 +615,6 @@ Rules:
 ## Runtime Mode Interaction with Blocked Recovery Consolidation Addendum (2026-03-09)
 
 This section defines deferred / Waiting Run Mode Semantics.
-
-### Run-level state
-- A run remains active if any node is runnable.
-- If no node is runnable and blocked/backoff/prerequisite-waiting work exists, the run is deferred/waiting rather than terminal.
-- Terminal completion requires no runnable, no blocked, no backoff, and no unresolved prerequisite work.
-
-### Headless blocked discovery
-When `headless_ask_denied` blocks work in a non-interactive mode:
-- emit a blocked notice with `blocked_reason_code: headless_ask_denied`
-- surface blocked node count in CLI/log status summaries
-- surface a dashboard badge if a UI session is attached
-- include the exact permission or approval that could not be presented interactively
-
-### Safe-point applicability
-Run modes do not redefine `mutation_capable`. They only determine whether mutation-capable attempts may occur and therefore whether safe points are relevant in that mode.
-## Deferred / Waiting Run Mode Semantics
 
 ### Run-level state
 - A run remains active if any node is runnable.

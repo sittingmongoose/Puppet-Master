@@ -1,7 +1,7 @@
 {
   "schema_id": "pm.evidence.schema.v1",
   "evidence_id": "plan-sharding-2026-04-02",
-  "created_at_utc": "2026-04-02T04:44:41.930776+00:00",
+  "created_at_utc": "2026-04-02T23:15:17.811096+00:00",
   "node": {
     "node_id": "plan-sharding"
   },
@@ -541,15 +541,19 @@
     },
     {
       "path": "Plans/_shards/FileSafe/26-filesafe-restore-before-rerun-reconciliation-addendum-2026-03-09.md",
-      "change_type": "modified"
+      "change_type": "deleted"
+    },
+    {
+      "path": "Plans/_shards/FileSafe/26-filesafe-runtime-blocked-and-restore-override-consolidation-addendum-2026-03-09.md",
+      "change_type": "added"
     },
     {
       "path": "Plans/_shards/FileSafe/27-filesafe-runtime-blocked-and-restore-override-consolidation-addendum-2026-03-09.md",
-      "change_type": "modified"
+      "change_type": "deleted"
     },
     {
       "path": "Plans/_shards/FileSafe/28-filesafe-action-mapping-and-persistence.md",
-      "change_type": "modified"
+      "change_type": "deleted"
     },
     {
       "path": "Plans/_shards/FileSafe/manifest.json",
@@ -1349,23 +1353,31 @@
     },
     {
       "path": "Plans/_shards/assistant-chat-design/35-blocked-thread-state-and-recovery-addendum-2026-03-08.md",
-      "change_type": "modified"
+      "change_type": "deleted"
+    },
+    {
+      "path": "Plans/_shards/assistant-chat-design/35-unified-thread-blocked-state-lifecycle.md",
+      "change_type": "added"
     },
     {
       "path": "Plans/_shards/assistant-chat-design/36-runtime-blocked-recovery-thread-state-addendum-2026-03-09.md",
-      "change_type": "modified"
+      "change_type": "deleted"
+    },
+    {
+      "path": "Plans/_shards/assistant-chat-design/36-worktrees-in-assistant.md",
+      "change_type": "added"
     },
     {
       "path": "Plans/_shards/assistant-chat-design/37-blocked-thread-message-and-persistence-reconciliation-addendum-2026-03-09.md",
-      "change_type": "modified"
+      "change_type": "deleted"
     },
     {
       "path": "Plans/_shards/assistant-chat-design/38-unified-thread-blocked-state-lifecycle.md",
-      "change_type": "modified"
+      "change_type": "deleted"
     },
     {
       "path": "Plans/_shards/assistant-chat-design/39-worktrees-in-assistant.md",
-      "change_type": "modified"
+      "change_type": "deleted"
     },
     {
       "path": "Plans/_shards/assistant-chat-design/manifest.json",
@@ -1940,20 +1952,28 @@
       "change_type": "modified"
     },
     {
+      "path": "Plans/_shards/orchestrator-subagent-integration/36-orchestrator-runtime-consumer-and-remediation-execution-reconciliation-addendum-2026-03-09.md",
+      "change_type": "added"
+    },
+    {
       "path": "Plans/_shards/orchestrator-subagent-integration/36-runtime-scheduler-consumer-reconciliation-addendum-2026-03-09.md",
-      "change_type": "modified"
+      "change_type": "deleted"
     },
     {
       "path": "Plans/_shards/orchestrator-subagent-integration/37-orchestrator-runtime-consumer-and-remediation-execution-reconciliation-addendum-2026-03-09.md",
-      "change_type": "modified"
+      "change_type": "deleted"
+    },
+    {
+      "path": "Plans/_shards/orchestrator-subagent-integration/37-runtime-enum-and-counter-alignment-addendum.md",
+      "change_type": "added"
     },
     {
       "path": "Plans/_shards/orchestrator-subagent-integration/38-runtime-enum-and-counter-alignment-addendum.md",
-      "change_type": "modified"
+      "change_type": "deleted"
     },
     {
       "path": "Plans/_shards/orchestrator-subagent-integration/39-runtime-consumer-alignment.md",
-      "change_type": "modified"
+      "change_type": "deleted"
     },
     {
       "path": "Plans/_shards/orchestrator-subagent-integration/manifest.json",

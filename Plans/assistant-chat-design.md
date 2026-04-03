@@ -956,6 +956,38 @@ ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Multi-Acc
 - blocked, queued, and background states must remain visible through badges and attention surfaces even when the thread is not active
 ## 12. Context usage display
 
+### 12.0 Normal thread context usage
+
+Every Assistant or Interview thread exposes a visible context-usage summary and a drill-down Context Detail Pane for the context actually consumed by that thread.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/usage-feature.md, ContractName:Plans/Prompt_Pipeline.md
+
+**Required visible thread-level signals:**
+- current context usage against the effective model window
+- the last compaction / truncation reason when compaction changed what remained in prompt
+- whether displayed cost/token figures are provider-authoritative or estimated
+- whether additional hidden/background usage contributed to the thread total
+
+ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Contracts_V0.md
+
+**Required Context Detail Pane breakdown:**
+- system and instruction blocks
+- user and assistant messages
+- compiled context attachments and forwarded document selections
+- tool-derived or activity-derived context when the thread uses it
+- run-level or message-level usage snapshots derived from canonical `usage.event` and `run.completed.usage`
+- debug-only Investigation Context items when the thread is an active debug thread
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Runtime_Artifacts_Panel.md
+
+Rules:
+- the thread surface MUST derive usage from canonical runtime records; it MUST NOT invent a second chat-local cost model
+- hidden/background helper calls MAY roll into thread totals, but their source class MUST remain inspectable in raw/detail views
+- truncation, redaction, and context-serialization state remain visible per item; the UI MUST NOT silently present omitted context as if it were still serialized
+
+ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md
+
+
 ### 12.0A Investigation Context for Debug threads
 
 Debug threads expose a visible **Investigation Context** alongside the normal context-usage affordances.
@@ -1433,18 +1465,17 @@ Context assembly rules:
 
 ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/assistant-memory-subsystem.md, ContractName:Plans/storage-plan.md
 ## 18. BrainStorm Mode
-
 - **Flow:** BrainStorm runs a **plan-style flow** (questions, research, debugging as needed) to form a **single plan**. Questions are **not** asked multiple times by multiple subagents; one coordinated Q&A/research phase, then the plan is formed.
+ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/interview-subagent-integration.md, ContractName:Plans/Run_Modes.md
 - **Execution:** When the user **starts or executes** the plan, the **chat must switch to Agent mode** (execution mode), because Plan mode is read-only and execution requires write/execute permissions.
 - **Who executes:** The plan can be executed by:
   - A **regular agent**,  
   - A **crew**, or  
   - **Agent + subagents**.  
   The **manager** (orchestrator) automatically decides, or the **user can request** which option.
-- **Subagent collaboration:** During BrainStorm, subagents are **not** only handed the same static context. They must be able to **talk to each other** via the crew message board so they can debate, refine, and synthesize before the manager merges results.
-- **Reference:** Align with Plans/orchestrator-subagent-integration.md (crews, subagent communication) and Plans/interview-subagent-integration.md where interview/plan flows are defined.
-
----
+- **Subagent collaboration:** During BrainStorm, subagents collaborate through the canonical crew message board owned by `Plans/orchestrator-subagent-integration.md`. This chat document may describe the user-facing behavior, but the schema, routing rules, priority model, rate limit, and orchestrator-visibility contract live in the orchestrator owner doc.
+ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Contracts_V0.md
+- **Reference:** Align with `Plans/orchestrator-subagent-integration.md` (crews, subagent communication) and `Plans/interview-subagent-integration.md` where interview/plan flows are defined.
 
 ## 19. Documentation Audience (AI Overseer)
 
@@ -1585,36 +1616,36 @@ ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/FinalGUISpec.
 **Summary:** All listed features are now in scope: steer/queue (§4), context display (§12), permissions (§3), MCP (§7), @ mention (§9), **LSP-aware chat/editor integration (§9, Plans/LSPSupport.md §5)**, activity transparency (§13), multi-agent (§14-§15), slash commands (§5), export (§6), thinking toggle (§13), model switch (§1), user compact (§17), resume/rewind (§11), revert edit (§9), session share (§11). **LSP is MVP** (editor + Chat). Inbox-per-agent and real-time collaboration are out of scope for the initial desktop MVP (see glossary in table above).
 
 ### 23.4 Adopted enhancements (all MVP)
-
 All of the following are **MVP requirements** and are already reflected in the main body (§1-§22):
 
-1. **Thinking/reasoning toggle** -- §13: show/hide extended thinking when the stream provides it.
-2. **Slash commands (app/project-wide, customizable)** -- §5: `/` commands near Rules, user can customize.
+1. **Thinking/reasoning toggle** -- §13: show or hide extended thinking when the stream provides it.
+2. **Slash commands (app/project-wide, customizable)** -- §5: `/` commands near Rules; user can customize.
 3. **Export conversation** -- §6: export current thread to Markdown or JSON.
-4. **Up to 2 queued messages, FIFO** -- §4: ordered list above composer, each with edit and "Send now."
-5. **Interrupt ≠ Stop** -- §4: Stop cancels run (no message); "Send now" = steer (inject message).
-6. **Model/platform change UI** -- §1: chat header or thread settings; applies to next turn.
+4. **Up to 2 queued messages, FIFO** -- §4: ordered list above composer, each with edit and `Send now`.
+5. **Interrupt != Stop** -- §4: Stop cancels run (no message); `Send now` steers by injecting a message.
+6. **Model/platform change UI** -- §1: chat header or thread settings; applies to the next turn.
 7. **User-triggered Compact session** -- §17: user can run compaction from chat.
-8. **Resume / rewind** -- §11: resume thread, rewind/restore to message (branch/rollback).
+8. **Resume / rewind** -- §11: resume thread, rewind or restore to message.
 9. **Revert last agent edit** -- §9: revert from thread via the canonical file-restore pipeline.
-10. **Session share** -- §11: produce shareable bundle (messages + metadata, no secrets).
+10. **Session share** -- §11: produce a shareable bundle (messages + metadata, no secrets).
 11. **HITL: new thread spawned** -- §21: CtA on Dashboard; a **new thread** is spawned with an appropriate name for the HITL prompt.
 12. **No project selected** -- §1: many chat features do not work when no project is selected; only application rules apply.
 13. **Clear queue** -- §4: user can clear the entire queue.
-14. **Keyboard shortcuts** -- §4: chat actions reachable via shortcuts and command palette (newfeatures.md §11).
+14. **Keyboard shortcuts** -- §4: chat actions reachable via shortcuts and command palette (`newfeatures.md` §11).
 15. **Streaming** -- §12: response streams when platform supports it; normalized stream; fallback to batch.
 16. **Paste / drag-drop** -- §7: paste and drag-drop into composer supported.
 17. **Rate limit hit** -- §12: option to switch platform or model.
-18. **"Task running"** -- §4: active agent run in **this thread** (per-thread).
+18. **Task running** -- §4: active agent run in **this thread** (per-thread).
 19. **Delete thread** -- §11: delete permanently with confirmation.
 20. **Copy message** -- §11: selectable content and/or Copy action.
 21. **Run-complete notification** -- §11: notify when run completes in another thread; **setting** to turn off.
-22. **Concurrent threads** -- §11: setting, **default 10** max concurrent runs. Per-platform concurrency caps also apply (see `Plans/FinalGUISpec.md` §7.4.7); the more restrictive limit wins.
+22. **Concurrent threads** -- §11: user-facing setting, **default 10** max concurrent thread runs in Assistant UI. This is a thread-level Assistant concurrency setting, not the global runtime subagent ceiling. Global orchestration caps remain SSOT in `Plans/orchestrator-subagent-integration.md`, and interview reviewer narrowing remains in `Plans/interview-subagent-integration.md`; the more restrictive applicable limit wins.
 23. **Custom vs built-in commands** -- §5: no conflicting names; UI explains why if user tries.
 24. **Plan panel scope** -- §11: plan panel **per thread**. **Accessibility** is **not MVP**.
-25. **Error and failure UX** -- §4: clear error state, Resend/Cancel, queue unchanged unless user resends; suggest switch platform/model when appropriate.
-26. **Orchestrator to Assistant handoff** -- §21: Dashboard offers "Continue in Assistant" with run summary and context when orchestrator completes or pauses.
+25. **Error and failure UX** -- §4: clear error state, Resend or Cancel, queue unchanged unless user resends; suggest switch platform or model when appropriate.
+26. **Orchestrator to Assistant handoff** -- §21: Dashboard offers `Continue in Assistant` with run summary and context when orchestrator completes or pauses.
 
+ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/interview-subagent-integration.md
 ### 23.5 Previously open gaps (now closed)
 
 The following were the last open gaps; they are now specified in the main body. This table is kept for traceability.
@@ -2243,120 +2274,6 @@ The interviewer must not start cold:
 - Accepting the recommendation opens the Chain Wizard / Interview flow with imported assistant context and, when present, the plan artifact reference/content.
 - The imported handoff remains visible/auditable and does not silently create a repo file.
 
-## blocked Thread State and Recovery Addendum (2026-03-08)
-
-> **Superseded** — see [Unified Thread Blocked-State Lifecycle](#unified-thread-blocked-state-lifecycle).
-
-### 1. Canonical thread-state expansion
-
-Assistant thread lifecycle must support both:
-- `attention_required`
-- `blocked`
-
-`blocked` is not out of scope.
-
-### 2. blocked state definition
-
-A thread enters `blocked` when a governing upstream flow has exhausted automatic clarification/remediation progress and requires new explicit user input before more automation can continue.
-
-Initial required use case:
-- wizard clarification rounds exhausted
-
-Additional allowed uses when later wired:
-- explicit remediation dead-end requiring user decision
-- replan-required state with no auto-applicable patch
-
-### 3. blocked thread UI
-
-Required thread-list behavior:
-- distinct badge/state for `blocked`
-- copy different from `attention_required`
-- `blocked` badge must not imply that answering the current inline form alone will necessarily resume automation
-
-Required message behavior:
-- post a system message for the blocking condition
-- preserve links to the relevant report / findings / resume target
-- archive prior clarification messages rather than silently replacing lineage
-
-### 4. Recovery actions
-
-Recovery actions are rendered from canonical `allowed_action_id` values rather than ad hoc labels.
-
-| action_id | Label | Behavior |
-|---|---|---|
-| `resume` | Resume | Resume the blocked runtime or wizard flow through the canonical scheduler-owned resume path. |
-| `retry` | Retry | Re-run the most recent eligible blocked step or operation when prerequisites are already satisfied. |
-| `abort` | Abort | Stop the blocked flow and mark the current blocked episode intentionally terminated. |
-| `escalate` | Escalate | Hand the blocked episode to a higher-order workflow, parent agent, or explicit user-decision surface. |
-| `provide_input` | Provide new input | Open the clarification/input path required to continue with new user-supplied data. |
-| `view_report` | View report | Open the relevant findings, validation, or failure report associated with the blocked state. |
-| `open_in_chat` | Open in Chat | Focus the relevant thread/context so the user can inspect or continue from the blocked episode. |
-| `replan` | Replan | Start the canonical replanning path when blocked work cannot continue without a new plan. |
-
-Only applicable action ids may appear in `allowed_action_ids[]`; visible labels are projections of the canonical ids above.
-
-### 5. Acceptance criteria
-
-- Assistant thread lifecycle formally includes `blocked`.
-- blocked and attention_required have distinct copy and badges.
-- blocking reports/links remain visible and auditable.
-- blocked state recovery actions are explicit rather than implied.
-## Runtime Blocked / Recovery Thread-State Addendum (2026-03-09)
-
-> **Superseded** — see [Unified Thread Blocked-State Lifecycle](#unified-thread-blocked-state-lifecycle).
-
-Chat thread state must align with runtime execution state.
-
-### Canonical thread states
-- `active`
-- `attention_required`
-- `blocked`
-- `completed`
-- `failed`
-
-`attention_required` means clarification or review can proceed inside the current flow. `blocked` means execution cannot continue automatically until a prerequisite changes.
-
-### Escalation rule
-Repeated unresolved clarification or a user action that the current mode cannot complete may escalate from `attention_required` to `blocked`. The system MUST record why that escalation happened.
-
-### Thread banner contract
-When blocked, the chat thread MUST show:
-- the exact `blocked_reason_code`
-- a human-readable explanation
-- the current attempt or node reference when available
-- allowed recovery actions only
-- whether local work was preserved
-
-### Resume semantics
-Resume/retry buttons in chat MUST map to canonical runtime actions. Chat MUST NOT invent thread-local resume paths that bypass scheduler classification, safe-point restore requirements, or external approval checks.
-## Blocked Thread Message and Persistence Reconciliation Addendum (2026-03-09)
-
-> **Superseded** — see [Unified Thread Blocked-State Lifecycle](#unified-thread-blocked-state-lifecycle).
-
-Add a dedicated blocked-state system message contract.
-
-### `blocked_notice` message
-Required fields:
-- `type = blocked_notice`
-- `thread_id`
-- `node_id?`
-- `attempt_id?`
-- `blocked_reason_code`
-- `explanation`
-- `allowed_action_ids[]`
-- `preserved_local_work`
-- `detail_ref?`
-- `resume_url?`
-
-### Persistence rules
-A blocked thread MUST persist:
-- latest `blocked_reason_code`
-- latest blocked message id
-- current attempt/node reference when available
-- `allowed_action_ids[]`
-- preserved-local-work flag
-
-Resume/retry controls in chat MUST map to canonical runtime actions rather than thread-local shortcuts.
 ## Unified Thread Blocked-State Lifecycle
 Canonical thread states:
 - `active`
