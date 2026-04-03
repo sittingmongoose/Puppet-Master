@@ -346,35 +346,48 @@ subagentConfig:
 
 ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Executor_Protocol.md
 
-`executionLimits` is the SSOT for global subagent concurrency and budget defaults. Interview-mode reviewer caps and other surface-specific caps may narrow these values, but MUST NOT widen them.
+`executionLimits` is the SSOT for global subagent concurrency and budget defaults. Surface-specific caps such as interview reviewer limits may narrow these values, but MUST NOT widen them.
 
 ContractRef: ContractName:Plans/interview-subagent-integration.md, ContractName:Plans/Crosswalk.md
 
-#### Task-envelope timeout contract
+PM-native internal orchestration scope:
+- parent-child control, timeout propagation, cancellation, and crew coordination stay under PM runtime contracts
+- bridged-provider or A2A material may inform adapter translation only
+- no external bridge contract may replace PM lineage, requested/effective state, or audit visibility
 
-The task envelope carries a `timeoutMs` field that governs the maximum wall-clock duration for a child task. This contract defines propagation and enforcement semantics.
+ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Contracts_V0.md
 
-ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Run_Modes.md
+#### Child effective authority and timeout contract
 
-Envelope schema (per-task):
+Child execution is parent-clamped at dispatch time:
+- child runs inherit the parent's effective tool policy, write scope, runtime/account surface restrictions, and remaining budget as hard upper bounds
+- child-specific requests MAY narrow those bounds, but they MUST NOT widen them
+- the orchestrator snapshots the effective child authority in spawn/start metadata so audit, cancellation, and budget enforcement operate on the same frozen view
+
+ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/Contracts_V0.md
+
+Envelope schema (per task):
 - `timeoutMs` (u64): maximum wall-clock milliseconds for the child task. Default: `inherit_parent_remaining_budget`.
 - `parentRemainingBudgetMs` (u64): the parent's remaining budget at dispatch time, computed as `parent_timeout - parent_elapsed`.
 
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Architecture_Invariants.md
 
 Propagation rules:
-- `timeoutMs` defaults to the parent's remaining budget (`parentRemainingBudgetMs`).
-- Per-task overrides MAY narrow the timeout (set `timeoutMs < parentRemainingBudgetMs`).
-- Per-task overrides MUST NOT exceed the parent's remaining budget. If a requested `timeoutMs` exceeds `parentRemainingBudgetMs`, the orchestrator clamps it to the parent's remaining budget and emits a diagnostic warning.
-- At each nesting level, `parentRemainingBudgetMs` is recalculated from the dispatching agent's own remaining budget, not from the original root budget.
+- `timeoutMs` defaults to the parent's remaining budget (`parentRemainingBudgetMs`)
+- per-task overrides MAY narrow the timeout (`timeoutMs < parentRemainingBudgetMs`)
+- per-task overrides MUST NOT exceed the parent's remaining budget; if a requested `timeoutMs` exceeds `parentRemainingBudgetMs`, the orchestrator clamps it and emits a diagnostic warning
+- at each nesting level, `parentRemainingBudgetMs` is recalculated from the dispatching agent's own remaining budget, not from the original root budget
+- before child dispatch, budget preflight checks evaluate the estimated request cost against the child-visible remaining run/session budgets; an over-budget request fails closed with `kill.budget_exceeded` and the child is not started
+- after a provider response, actual cost recording MAY terminate the child with `done.budget_exceeded` when cumulative run or session spend crosses budget, but the usage record is durably written before teardown
 
-ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Executor_Protocol.md
+ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/Executor_Protocol.md
 
 Enforcement:
-- When `timeoutMs` expires, the orchestrator sends a cancellation signal to the child task. The child MUST terminate within a 5-second grace period; after that, the orchestrator forcefully terminates the child's process tree.
-- Timeout expiration produces a structured `done.timeout` event with the child's task ID, elapsed time, and the effective timeout value.
+- when `timeoutMs` expires, the orchestrator sends cancellation to the child task
+- provider processes get a 5-second grace period; MCP and LSP helper surfaces get a 3-second grace period before forceful teardown
+- timeout expiration produces a structured `done.task_timeout` terminal record with the child's task identity, elapsed time, and effective timeout value
 
-ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Run_Modes.md
 
 #### Shell and runtime isolation contract
 
@@ -383,16 +396,26 @@ Shell and runtime isolation is enforced at the orchestrator level. These rules a
 ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Permissions_System.md
 
 Scope rules:
-- Each agent tree receives its own shell instance set. Shell instances MUST NOT be shared across agent trees.
-- Environment variables MUST NOT leak across session, agent, or crew boundaries. Each shell instance starts with a clean environment derived from the project configuration, not inherited from a sibling or parent shell's runtime mutations.
-- The orchestrator retains full visibility into child communication and shell/runtime identity for audit, diagnostic, and cancellation purposes.
+- each agent tree receives its own shell instance set; shell instances MUST NOT be shared across agent trees
+- environment variables MUST NOT leak across session, agent, or crew boundaries; each shell instance starts with a clean environment derived from project configuration, not inherited from sibling or parent runtime mutations
+- the orchestrator retains full visibility into child communication and shell/runtime identity for audit, diagnostics, and cancellation
 
 ContractRef: ContractName:Plans/Architecture_Invariants.md, ContractName:Plans/storage-plan.md
 
 Lifecycle rules:
-- Shell instances are created at agent-tree spawn time and destroyed at agent-tree teardown.
-- If a shell instance crashes or becomes unresponsive, the orchestrator MUST NOT silently reuse a sibling's shell. It creates a new isolated shell or fails the task with a structured error.
-- Shell teardown at agent-tree completion MUST clean up all child processes, temporary files, and environment state associated with that shell instance.
+- shell instances are created at agent-tree spawn time and destroyed at agent-tree teardown
+- if a shell instance crashes or becomes unresponsive, the orchestrator MUST NOT silently reuse a sibling shell; it creates a new isolated shell or fails the task with a structured error
+- shell teardown at agent-tree completion MUST clean up child processes, temporary files, and environment state associated with that shell instance
 
 ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Run_Modes.md
+
+#### Child teardown and deallocation
+
+Child lifecycle cleanup is a deterministic owner contract:
+- child sessions, provider processes, MCP clients, LSP sessions, shell instances, and child-owned temporary state MUST be deallocated on successful completion, cancellation, timeout, budget kill, or parent teardown
+- teardown order is deterministic: stop new dispatch, request graceful stop, flush buffered child events, close child-owned helper sessions, then force-terminate any remaining child process groups
+- parent cancellation or terminal cleanup MUST NOT orphan child providers or keep billed helper state alive after the child is done
+- failed teardown emits a structured diagnostic and forces any retry or reroute onto fresh runtime identity rather than reusing leaked state
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Tools.md, ContractName:Plans/orchestrator-subagent-integration.md
 

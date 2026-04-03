@@ -1,5 +1,37 @@
 ## 12. Context usage display
 
+### 12.0 Normal thread context usage
+
+Every Assistant or Interview thread exposes a visible context-usage summary and a drill-down Context Detail Pane for the context actually consumed by that thread.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/usage-feature.md, ContractName:Plans/Prompt_Pipeline.md
+
+**Required visible thread-level signals:**
+- current context usage against the effective model window
+- the last compaction / truncation reason when compaction changed what remained in prompt
+- whether displayed cost/token figures are provider-authoritative or estimated
+- whether additional hidden/background usage contributed to the thread total
+
+ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Contracts_V0.md
+
+**Required Context Detail Pane breakdown:**
+- system and instruction blocks
+- user and assistant messages
+- compiled context attachments and forwarded document selections
+- tool-derived or activity-derived context when the thread uses it
+- run-level or message-level usage snapshots derived from canonical `usage.event` and `run.completed.usage`
+- debug-only Investigation Context items when the thread is an active debug thread
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Runtime_Artifacts_Panel.md
+
+Rules:
+- the thread surface MUST derive usage from canonical runtime records; it MUST NOT invent a second chat-local cost model
+- hidden/background helper calls MAY roll into thread totals, but their source class MUST remain inspectable in raw/detail views
+- truncation, redaction, and context-serialization state remain visible per item; the UI MUST NOT silently present omitted context as if it were still serialized
+
+ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md
+
+
 ### 12.0A Investigation Context for Debug threads
 
 Debug threads expose a visible **Investigation Context** alongside the normal context-usage affordances.

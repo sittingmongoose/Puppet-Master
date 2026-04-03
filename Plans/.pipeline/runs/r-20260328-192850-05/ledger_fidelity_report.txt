@@ -1,0 +1,193 @@
+AUDIT SUMMARY
+=============
+
+Overall verdict: blocked.
+
+The planning docs are not fidelity-complete for implementation use. The owner docs now carry much of the canon, but several implementation-critical rules are still either ledger-only, split across the wrong owners, or contradicted by stale consumer text.
+
+Main risk themes:
+- usage/cost canon is still incomplete across owner and consumer docs
+- FileSafe and prompt/context ownership still mix hardened canon with older fallback text
+- orchestration/runtime sections still contain stale or conflicting numeric/state details
+- consumer and mirror docs still overstate coverage after owner docs changed
+- provider normalization remains under-specified in a few places that matter for adapters
+
+
+CHUNKING / DELEGATION SUMMARY
+============================
+
+The lead audit did not semantically read the full ledger first. It split `Plans/.pipeline/runs/r-20260328-192850-05/working_ledger.md` mechanically by heading-owned ranges, then delegated each bounded chunk to a fresh subauditor.
+
+Six subauditors were used:
+1. C1 `1-216` — Phase 1 foundations: A2A boundaries, orchestration, provider facade, usage, prompt caching.
+2. C2 `217-389` — Phase 2 deep dive: streaming, billing, auth, orchestration, tools, MCP, FileSafe, storage.
+3. C3 `390-625` — Phases 3-5: resolved gap clusters, second-pass sweep, newly impacted docs.
+4. C4 `626-761` — Phase 6 reconciliation / coverage pass.
+5. C5 `762-921` — Phases 7-8: second reconciliation plus canon locks / hardening.
+6. C6 `922-1193` — Phases 9-10: cycle-3 and post-fidelity reconciliation.
+
+Chunk/doc clusters:
+1. C1 audited `orchestrator-subagent-integration.md`, `CLI_Bridged_Providers.md`, `Provider_Stream_Mapping_External_Reference_A2A.md`, `Contracts_V0.md`, `Prompt_Pipeline.md`, `usage-feature.md`.
+2. C2 audited `Run_Modes.md`, `Tools.md`, `FileSafe.md`, `Permissions_System.md`, `storage-plan.md`, `Prompt_Pipeline.md`, `CLI_Bridged_Providers.md`, `usage-feature.md`.
+3. C3 audited the full packet-touched doc set, including owner docs plus `OpenCode_Coverage_Matrix.md`, `assistant-chat-design.md`, and `Provider_Stream_Mapping_External_Reference_A2A.md`.
+4. C4 audited the reconciliation/coverage pass against the full packet-touched doc set.
+5. C5 audited canon-lock and hardening sections against the focused owner/consumer set around orchestration, FileSafe, prompt, usage, storage, permissions, and nearby mirrors.
+6. C6 audited the final reconciliation sections against the full packet-touched doc set.
+
+
+LEDGER OBLIGATIONS SUMMARY
+==========================
+
+Canon-relevant obligations extracted across all chunk reports: 67 raw obligations (with expected overlap across the later reconciliation chunks).
+
+Major obligation clusters:
+- PM-native orchestration scope, lineage, concurrency ceilings, and timeout outcomes
+- bridged-provider normalization, replay safety, retry posture, capability signaling, and role mapping
+- usage accounting, billing attribution, token segregation, budget enforcement, and display precision
+- FileSafe atomicity, optimistic concurrency, fail-closed path handling, and seglog ownership
+- prompt compaction, synthetic continue, cache strategy, and context-usage transparency
+- permissions inheritance, executable-surface governance, and shell/tool safety
+- storage durability, lifecycle cleanup, and long-lived collection bounds
+- consumer/mirror alignment for coverage and chat-facing summaries
+
+Clusters most at risk of stubbing or loss:
+- usage/cost canon, because owner and consumer docs still omit parts of the hardened contract
+- FileSafe/prompt ownership, because legacy and hardened canon still coexist
+- consumer drift, especially in `OpenCode_Coverage_Matrix.md`
+- provider adapter behavior, because some bridge-facing contracts remain too thin for implementation
+
+
+FINDINGS
+========
+
+FIDELITY-ID: LF-001
+severity: high
+where: `Plans/usage-feature.md#Unified UsageRecord schema expectations`; `Plans/CLI_Bridged_Providers.md#Normalized usage event minimum fields`; `Plans/storage-plan.md#4.1 Shared runtime identity consumption`
+ledger obligation that did not fully survive:
+- Usage canon required all LLM/tool/helper calls, including hidden or background work, to emit canonical usage records, aggregate upward to the parent run, and preserve billing attribution fields beyond `billing_entity_id`.
+why the current doc is stubbed / incomplete / over-summarized / mis-owned:
+- The docs preserve token buckets and `parent_run_id`, but they do not lock the rule that non-user-visible helper calls must emit usage records and roll into parent totals. They also leave `account_id` / `entitlement_class` attribution under-specified across the shared usage-facing contracts.
+what kind of recovery is needed:
+- packetize fuller section content
+- update consumer/mirror doc
+
+FIDELITY-ID: LF-002
+severity: high
+where: `Plans/usage-feature.md#Cost storage and token segregation`; `Plans/usage-feature.md#Unified UsageRecord schema expectations`; `Plans/storage-plan.md#3. Implementation checklist`; `Plans/storage-plan.md#8.1 Phased implementation order`
+ledger obligation that did not fully survive:
+- Hardened cost canon required `cost_microdollars` as the canonical persisted value, `cost_usd` as derived-only display/export output, segregated token buckets including `total_tokens`, negative raw provider cost clamped to zero with diagnostics, and cumulative session cost that never decreases across model switches.
+why the current doc is stubbed / incomplete / over-summarized / mis-owned:
+- `usage-feature.md` carries only part of that contract. It omits `total_tokens`, the explicit raw-cost clamp rule, and the monotonic cumulative-session rule. `storage-plan.md` still describes legacy/generic usage snapshot fields instead of the hardened usage schema.
+what kind of recovery is needed:
+- packetize fuller section content
+- update consumer/mirror doc
+
+FIDELITY-ID: LF-003
+severity: medium
+where: `Plans/OpenCode_Coverage_Matrix.md#2. Coverage Matrix`; `Plans/OpenCode_Coverage_Matrix.md#6. Summary`
+ledger obligation that did not fully survive:
+- Once owner docs were updated, the coverage matrix had to retire stale partial statuses and reflect the resolved prompt/loop-prevention canon.
+why the current doc is stubbed / incomplete / over-summarized / mis-owned:
+- Row 32 still reports `Prompt_Pipeline.md` as partial because synthetic-continue / loop-prevention canon is supposedly missing, but that canon now exists in `Plans/Prompt_Pipeline.md`. The summary section therefore remains misleading after the owner update.
+what kind of recovery is needed:
+- update consumer/mirror doc
+
+FIDELITY-ID: LF-004
+severity: high
+where: `Plans/FileSafe.md#2.0 Initialization Flow`; `Plans/FileSafe.md#6. Event Logging`; `Plans/FileSafe.md#9. Implementation Checklist`
+ledger obligation that did not fully survive:
+- Reconciliation locked FileSafe to fail-closed initialization/path handling and seglog-owned logging, with older fallback/dual-log canon retired.
+why the current doc is stubbed / incomplete / over-summarized / mis-owned:
+- `FileSafe.md` still contains text that disables the guard on init/pattern failures, still treats `filesafe-events.jsonl` as normative alongside seglog, and still retains checklist text that reads like unresolved symlink/path TODO canon. The owner doc therefore carries contradictory live canon.
+what kind of recovery is needed:
+- reconcile doc set
+- packetize fuller section content
+
+FIDELITY-ID: LF-005
+severity: medium
+where: `Plans/Prompt_Pipeline.md#0. Scope and SSOT status`; `Plans/FileSafe.md#Rewrite alignment (2026-02-21)`; `Plans/FileSafe.md#Part B -- Context Compilation & Token Efficiency`
+ledger obligation that did not fully survive:
+- The reconciliation pass promoted `Prompt_Pipeline.md` as the owner for role-specific context compilation, compaction-aware rereads, skill bundling, cache strategy, and low-context warnings.
+why the current doc is stubbed / incomplete / over-summarized / mis-owned:
+- `Prompt_Pipeline.md` still says detailed context-compilation algorithms remain owned by `FileSafe.md`, while `FileSafe.md` still claims that ownership and repeats the same behavior set. The canon is therefore split across the wrong owner and consumer.
+what kind of recovery is needed:
+- move detail to owner doc
+- reconcile doc set
+
+FIDELITY-ID: LF-006
+severity: high
+where: `Plans/orchestrator-subagent-integration.md#Gap #45: Crew performance and scalability`; `Plans/orchestrator-subagent-integration.md#Gap #49: Crew member selection and availability`; `Plans/orchestrator-subagent-integration.md#Parallel Execution Configuration`
+ledger obligation that did not fully survive:
+- Canonical subagent concurrency limits were hardened to `4 crews/platform`, `8 agents/crew`, and `32 total active agents`, with `executionLimits` as SSOT.
+why the current doc is stubbed / incomplete / over-summarized / mis-owned:
+- The doc still contains stale numeric text such as `20 total` and `max 3 crews per subagent type`, which contradicts the hardened 4/8/32 canon already present elsewhere in the same file.
+what kind of recovery is needed:
+- reconcile doc set
+
+FIDELITY-ID: LF-007
+severity: medium
+where: `Plans/CLI_Bridged_Providers.md#Provider facade`; `Plans/CLI_Bridged_Providers.md#Contract shape (facade)`
+ledger obligation that did not fully survive:
+- The provider facade needed a canonical capability contract for adapter-facing behavior, including capability declarations and reasoning-surface role mapping such as `system_role_name` / developer-role handling.
+why the current doc is stubbed / incomplete / over-summarized / mis-owned:
+- The file defines a unified facade and a few specialized flags, but no explicit capability matrix/schema for downstream normalization, and no surviving consumer-facing rule for developer/system role remapping on reasoning-model surfaces.
+what kind of recovery is needed:
+- packetize fuller section content
+
+FIDELITY-ID: LF-008
+severity: medium
+where: `Plans/CLI_Bridged_Providers.md#Transport ingestion + mapping rules`; `Plans/CLI_Bridged_Providers.md#Common ingestion rules (normative)`
+ledger obligation that did not fully survive:
+- Bridged-provider streaming canon required smart buffering and tolerance for out-of-order/reordered stream parts, not just bounded retry and replay safety.
+why the current doc is stubbed / incomplete / over-summarized / mis-owned:
+- The current owner text covers bounded buffers and replay/de-duplication, but it does not specify provider-specific chunk-boundary buffering or reordered reasoning/stream-part handling strongly enough for implementation.
+what kind of recovery is needed:
+- packetize fuller section content
+
+FIDELITY-ID: LF-009
+severity: medium
+where: `Plans/Run_Modes.md#Signal handling and process lifecycle`; `Plans/storage-plan.md#6. Potential problems and solutions`; `Plans/CLI_Bridged_Providers.md#Common ingestion rules (normative)`
+ledger obligation that did not fully survive:
+- The deep-dive and later reconciliations required a clearly owned resource-disposal contract, including lifecycle cleanup discipline and RSS-growth monitoring/alerting.
+why the current doc is stubbed / incomplete / over-summarized / mis-owned:
+- Pieces of the behavior survived in multiple docs, but no owner doc now carries the full contract. The result is ledger-only detail plus split ownership for implementation-critical cleanup behavior.
+what kind of recovery is needed:
+- move detail to owner doc
+
+FIDELITY-ID: LF-010
+severity: medium
+where: `Plans/Tools.md#8.2 Policy application order and invocation flow`; `Plans/Tools.md#Shell-runtime rules`
+ledger obligation that did not fully survive:
+- Shell-runtime safety canon required concrete full-command validation across metacharacters and a one-interpretation-layer / no-`eval` execution rule.
+why the current doc is stubbed / incomplete / over-summarized / mis-owned:
+- `Tools.md` bans `eval` and calls for full-command scanning, but it does not preserve the concrete metacharacter coverage or the explicit one-interpretation-layer rule from the ledger hardening.
+what kind of recovery is needed:
+- packetize fuller section content
+
+FIDELITY-ID: LF-011
+severity: medium
+where: `Plans/assistant-chat-design.md#12. Context usage display`
+ledger obligation that did not fully survive:
+- Chat-facing context-usage canon had to remain implementation-grade for normal threads: per-thread token counts, context-usage bar, truncation reason, and injected-context breakdown.
+why the current doc is stubbed / incomplete / over-summarized / mis-owned:
+- The owner heading now collapses to debug-thread investigation context and no longer carries the normal thread-usage contract that later notes still point back to. This is a stubbed owner section / heading-ownership drift.
+what kind of recovery is needed:
+- move detail to owner doc
+
+FIDELITY-ID: LF-012
+severity: low
+where: `Plans/Tools.md#Schema isolation and OAuth state`
+ledger obligation that did not fully survive:
+- MCP OAuth canon included a configurable callback bind-address for WSL/containerized or non-default local networking contexts.
+why the current doc is stubbed / incomplete / over-summarized / mis-owned:
+- The section covers cycle detection and OAuth state persistence, but not the bind-address configuration detail that survives only in the ledger notes.
+what kind of recovery is needed:
+- packetize fuller section content
+
+
+FINAL VERDICT
+=============
+
+The current planning docs are not fidelity-complete for implementation use. The biggest remaining risks are incomplete usage/cost canon, stale FileSafe and orchestration text, under-specified provider adapter behavior, split prompt/context ownership, and stale consumer coverage summaries.
+
+<ledger_fidelity_blocked/>

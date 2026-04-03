@@ -52,36 +52,36 @@ ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/FinalGUISpec.
 **Summary:** All listed features are now in scope: steer/queue (§4), context display (§12), permissions (§3), MCP (§7), @ mention (§9), **LSP-aware chat/editor integration (§9, Plans/LSPSupport.md §5)**, activity transparency (§13), multi-agent (§14-§15), slash commands (§5), export (§6), thinking toggle (§13), model switch (§1), user compact (§17), resume/rewind (§11), revert edit (§9), session share (§11). **LSP is MVP** (editor + Chat). Inbox-per-agent and real-time collaboration are out of scope for the initial desktop MVP (see glossary in table above).
 
 ### 23.4 Adopted enhancements (all MVP)
-
 All of the following are **MVP requirements** and are already reflected in the main body (§1-§22):
 
-1. **Thinking/reasoning toggle** -- §13: show/hide extended thinking when the stream provides it.
-2. **Slash commands (app/project-wide, customizable)** -- §5: `/` commands near Rules, user can customize.
+1. **Thinking/reasoning toggle** -- §13: show or hide extended thinking when the stream provides it.
+2. **Slash commands (app/project-wide, customizable)** -- §5: `/` commands near Rules; user can customize.
 3. **Export conversation** -- §6: export current thread to Markdown or JSON.
-4. **Up to 2 queued messages, FIFO** -- §4: ordered list above composer, each with edit and "Send now."
-5. **Interrupt ≠ Stop** -- §4: Stop cancels run (no message); "Send now" = steer (inject message).
-6. **Model/platform change UI** -- §1: chat header or thread settings; applies to next turn.
+4. **Up to 2 queued messages, FIFO** -- §4: ordered list above composer, each with edit and `Send now`.
+5. **Interrupt != Stop** -- §4: Stop cancels run (no message); `Send now` steers by injecting a message.
+6. **Model/platform change UI** -- §1: chat header or thread settings; applies to the next turn.
 7. **User-triggered Compact session** -- §17: user can run compaction from chat.
-8. **Resume / rewind** -- §11: resume thread, rewind/restore to message (branch/rollback).
+8. **Resume / rewind** -- §11: resume thread, rewind or restore to message.
 9. **Revert last agent edit** -- §9: revert from thread via the canonical file-restore pipeline.
-10. **Session share** -- §11: produce shareable bundle (messages + metadata, no secrets).
+10. **Session share** -- §11: produce a shareable bundle (messages + metadata, no secrets).
 11. **HITL: new thread spawned** -- §21: CtA on Dashboard; a **new thread** is spawned with an appropriate name for the HITL prompt.
 12. **No project selected** -- §1: many chat features do not work when no project is selected; only application rules apply.
 13. **Clear queue** -- §4: user can clear the entire queue.
-14. **Keyboard shortcuts** -- §4: chat actions reachable via shortcuts and command palette (newfeatures.md §11).
+14. **Keyboard shortcuts** -- §4: chat actions reachable via shortcuts and command palette (`newfeatures.md` §11).
 15. **Streaming** -- §12: response streams when platform supports it; normalized stream; fallback to batch.
 16. **Paste / drag-drop** -- §7: paste and drag-drop into composer supported.
 17. **Rate limit hit** -- §12: option to switch platform or model.
-18. **"Task running"** -- §4: active agent run in **this thread** (per-thread).
+18. **Task running** -- §4: active agent run in **this thread** (per-thread).
 19. **Delete thread** -- §11: delete permanently with confirmation.
 20. **Copy message** -- §11: selectable content and/or Copy action.
 21. **Run-complete notification** -- §11: notify when run completes in another thread; **setting** to turn off.
-22. **Concurrent threads** -- §11: setting, **default 10** max concurrent runs. Per-platform concurrency caps also apply (see `Plans/FinalGUISpec.md` §7.4.7); the more restrictive limit wins.
+22. **Concurrent threads** -- §11: user-facing setting, **default 10** max concurrent thread runs in Assistant UI. This is a thread-level Assistant concurrency setting, not the global runtime subagent ceiling. Global orchestration caps remain SSOT in `Plans/orchestrator-subagent-integration.md`, and interview reviewer narrowing remains in `Plans/interview-subagent-integration.md`; the more restrictive applicable limit wins.
 23. **Custom vs built-in commands** -- §5: no conflicting names; UI explains why if user tries.
 24. **Plan panel scope** -- §11: plan panel **per thread**. **Accessibility** is **not MVP**.
-25. **Error and failure UX** -- §4: clear error state, Resend/Cancel, queue unchanged unless user resends; suggest switch platform/model when appropriate.
-26. **Orchestrator to Assistant handoff** -- §21: Dashboard offers "Continue in Assistant" with run summary and context when orchestrator completes or pauses.
+25. **Error and failure UX** -- §4: clear error state, Resend or Cancel, queue unchanged unless user resends; suggest switch platform or model when appropriate.
+26. **Orchestrator to Assistant handoff** -- §21: Dashboard offers `Continue in Assistant` with run summary and context when orchestrator completes or pauses.
 
+ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/interview-subagent-integration.md
 ### 23.5 Previously open gaps (now closed)
 
 The following were the last open gaps; they are now specified in the main body. This table is kept for traceability.

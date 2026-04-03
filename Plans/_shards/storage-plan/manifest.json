@@ -1,6 +1,6 @@
 {
   "source_path": "Plans/storage-plan.md",
-  "source_sha256": "1c4de53245d5f43e4088cd73b99f8cc970fcb628a97685a5323f7e0239cb1013",
+  "source_sha256": "7896b5f87c804f6c652abc0f2e8dfc8c4d6d42a20e4793b4508ebad1934d9774",
   "split_rule": {
     "primary": "## outside fences",
     "fallback": "line-count-200",
@@ -38,98 +38,98 @@
     {
       "dest_path": "Plans/_shards/storage-plan/05-2-how-were-going-to-do-it.md",
       "start_line": 68,
-      "end_line": 620,
-      "segment_sha256": "1e544249b4bc0a378cf429961b33a8b3c3ed2c095024ceb83600e21b9ba39257",
+      "end_line": 658,
+      "segment_sha256": "4ad0458b9fb21adf238d66ac6ff8d41c2ee48e68c2ebd5309b46d9d836fcf2a2",
       "heading": "## 2. How we're going to do it"
     },
     {
       "dest_path": "Plans/_shards/storage-plan/06-3-implementation-checklist.md",
-      "start_line": 621,
-      "end_line": 638,
-      "segment_sha256": "550258ad962b2203ed6e5bb2e0aa3e0ce0b973c5490c8114b4bf2a10bc5b51a4",
+      "start_line": 659,
+      "end_line": 675,
+      "segment_sha256": "a1273f11d7ad4c03a7177d0a4cc29013259bb718cfdc2cb8acf58198b56973da",
       "heading": "## 3. Implementation checklist"
     },
     {
       "dest_path": "Plans/_shards/storage-plan/07-4-impact-on-chat-assistant-interview.md",
-      "start_line": 639,
-      "end_line": 719,
-      "segment_sha256": "c11734b6f7df089e279e90a16b26e4f9c47899fa7e39bf31e0f4c737871118d7",
+      "start_line": 676,
+      "end_line": 759,
+      "segment_sha256": "add411ea8be6000e9e2c9234ed22894a4eff6b3b196c9ff4d0759bd5c4fa7c24",
       "heading": "## 4. Impact on chat (Assistant / Interview)"
     },
     {
       "dest_path": "Plans/_shards/storage-plan/08-5-gaps-and-how-we-address-them.md",
-      "start_line": 720,
-      "end_line": 784,
+      "start_line": 760,
+      "end_line": 824,
       "segment_sha256": "24a2dd27bbd23a194b1b0b012f6a66a537179f5d885547b35088149339c4453f",
       "heading": "## 5. Gaps and how we address them"
     },
     {
       "dest_path": "Plans/_shards/storage-plan/09-6-potential-problems-and-solutions.md",
-      "start_line": 785,
-      "end_line": 809,
-      "segment_sha256": "56cbaf5da9d73eee238f939530c474b20d24590d708423cf123d2def0aa89ac0",
+      "start_line": 825,
+      "end_line": 849,
+      "segment_sha256": "ef968275d9af7a3c3de9cfbc85510727a4344dee6983841fcf2e49450a31f466",
       "heading": "## 6. Potential problems and solutions"
     },
     {
       "dest_path": "Plans/_shards/storage-plan/10-7-enhancements.md",
-      "start_line": 810,
-      "end_line": 821,
+      "start_line": 850,
+      "end_line": 861,
       "segment_sha256": "92c1ffef86a16c514248ef6eca0491192f57c7b295ca6e1a1eebcb141f91a9e9",
       "heading": "## 7. Enhancements"
     },
     {
       "dest_path": "Plans/_shards/storage-plan/11-8-implementation-order-and-testing.md",
-      "start_line": 822,
-      "end_line": 919,
-      "segment_sha256": "3d6574d88b29f05e39e956ad35e7d45f7eabb8ce1ab56cf06ea62a8e1bc2f694",
+      "start_line": 862,
+      "end_line": 979,
+      "segment_sha256": "b1e24d9cf55a4a262f9b2d9e585de9287455773adadc525d20a0edcd43b2b3e8",
       "heading": "## 8. Implementation order and testing"
     },
     {
       "dest_path": "Plans/_shards/storage-plan/12-version-history.md",
-      "start_line": 920,
-      "end_line": 928,
+      "start_line": 980,
+      "end_line": 988,
       "segment_sha256": "9f2e57dcc8c9b8dfdfd7342f94feb4fa79c4b10de1df24e963b2a002deaea16c",
       "heading": "## Version history"
     },
     {
       "dest_path": "Plans/_shards/storage-plan/13-scheduler-runtime-safe-point-and-remediation-storage-addendum-2026-03-08.md",
-      "start_line": 929,
-      "end_line": 965,
+      "start_line": 989,
+      "end_line": 1025,
       "segment_sha256": "f3068787703dd9e3cf450bdb0007ab7f9d43ac6f59f2b3bc15894a06a3e6a461",
       "heading": "## Scheduler Runtime, Safe-Point, and Remediation Storage Addendum (2026-03-08)"
     },
     {
       "dest_path": "Plans/_shards/storage-plan/14-runtime-attempt-safe-point-queue-analysis-storage-addendum-2026-03-09.md",
-      "start_line": 966,
-      "end_line": 979,
+      "start_line": 1026,
+      "end_line": 1039,
       "segment_sha256": "5b1fc0a01e54f33674f209829361014b4c3713fa9ad54a2fb3c06955bb300073",
       "heading": "## Runtime Attempt / Safe Point / Queue Analysis Storage Addendum (2026-03-09)"
     },
     {
       "dest_path": "Plans/_shards/storage-plan/15-runtime-attempt-safe-point-queue-analysis-reconciliation-addendum-2026-03-09.md",
-      "start_line": 980,
-      "end_line": 1001,
+      "start_line": 1040,
+      "end_line": 1061,
       "segment_sha256": "173743f44acb2ebe390a7116c25a9b06c278b0492ad20bd2883305e1ec86abeb",
       "heading": "## Runtime Attempt / Safe Point / Queue Analysis Reconciliation Addendum (2026-03-09)"
     },
     {
       "dest_path": "Plans/_shards/storage-plan/16-runtime-recovery-persistence-and-restart-reconciliation-addendum-2026-03-09.md",
-      "start_line": 1002,
-      "end_line": 1219,
+      "start_line": 1062,
+      "end_line": 1279,
       "segment_sha256": "1f32a6c721e18c1b762cd981ef917b069069da035aa7c6d54fdf73d62271505f",
       "heading": "## Runtime Recovery Persistence and Restart Reconciliation Addendum (2026-03-09)"
     },
     {
       "dest_path": "Plans/_shards/storage-plan/17-permission-snapshot-storage-and-safe-point-namespace-addendum.md",
-      "start_line": 1220,
-      "end_line": 1251,
+      "start_line": 1280,
+      "end_line": 1311,
       "segment_sha256": "73caac25312e4cc01a7f986dd35bdf49a2b9f77368339f91aea3752d53f1eb0c",
       "heading": "## Permission Snapshot Storage and Safe-Point Namespace Addendum"
     },
     {
       "dest_path": "Plans/_shards/storage-plan/18-assistant-worktree-binding-storage-addendum.md",
-      "start_line": 1252,
-      "end_line": 1277,
+      "start_line": 1312,
+      "end_line": 1337,
       "segment_sha256": "7be308a7aa9c0b4e03c72cde8db343f4b9be8002aa588007504423132e54c22b",
       "heading": "## Assistant Worktree Binding Storage Addendum"
     }

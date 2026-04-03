@@ -25,7 +25,6 @@ ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md
 ---
 
 ## 1. Definitions and scope
-
 ### 1.1 Path normalization invariants
 
 Before any permission match, path comparison, or scope check, paths MUST be normalized in this order:
@@ -38,7 +37,7 @@ ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/Executor_Protoco
 
 Required behavior:
 - `realpath()` failure is fail-closed. Broken symlink, permission error, or missing target means deny.
-- PM MUST NOT compare against the unresolved path as a fallback.
+- PM MUST NOT compare against an unresolved path as fallback.
 - Unexpanded `~` in a runtime path comparison is always a bug.
 
 ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/Architecture_Invariants.md
@@ -56,24 +55,11 @@ Permission rules apply in both execution strategies. In HTE, Puppet Master is th
 
 ContractRef: ContractName:Plans/Run_Modes.md#STRATEGY-HTE, ContractName:Plans/Run_Modes.md#STRATEGY-DAE, ContractName:Plans/Tools.md
 
-Universal invariant: `policy.may_execute_tool()` MUST be applied before every tool dispatch regardless of nesting depth, child-run path, execution strategy, or provider surface. Child/subagent/crew context is not a bypass.
+Universal invariant: `policy.may_execute_tool()` MUST be applied before every tool dispatch regardless of nesting depth, child-run path, execution strategy, or provider surface. Child, subagent, or crew context is not a bypass.
 
 ContractRef: ContractName:Plans/Architecture_Invariants.md, ContractName:Plans/orchestrator-subagent-integration.md
 
 ### 1.4 Permission-state mutation and hook safety
-### 1.5 Executable-code auto-load prohibition
-
-MCP servers, custom tool definitions, executable configuration scripts, and plugin-provided hooks MUST NOT auto-load or auto-execute without explicit user approval or a verified trust signal.
-
-ContractRef: ContractName:Plans/Plugins_System.md, ContractName:Plans/Tools.md
-
-Required rules:
-- New or modified MCP server configurations discovered at project load time MUST be presented to the user for approval before the server process is spawned.
-- Custom tools defined in project configuration (e.g., `.puppet-master/tools/`) MUST NOT be registered into the tool registry until the user explicitly approves them or the tool definition carries a valid trust signature.
-- Plugin hooks that modify tool arguments or inject executable behavior MUST be governed by the same approval flow. Unsigned or unapproved hooks are blocked from registration.
-- The default permission for any unknown or newly-discovered executable-code source is `ask` (require explicit user confirmation).
-
-ContractRef: ContractName:Plans/Architecture_Invariants.md, ContractName:Plans/Executor_Protocol.md
 
 Any mutable permission state shared across threads or async tasks MUST be protected by an `RwLock` / read-write lock. Unguarded mutation of allowlists, deny rules, session approvals, or cached effective policy state is prohibited.
 
@@ -83,6 +69,28 @@ Hooks that modify tool arguments or effective invocation context MUST trigger a 
 
 ContractRef: ContractName:Plans/Plugins_System.md, ContractName:Plans/Tools.md
 
+### 1.5 Executable capability surfaces and trust posture
+
+Discovery is not execution approval. Any auto-discovered executable surface must clear the permission system before PM loads or runs it.
+
+ContractRef: ContractName:Plans/Plugins_System.md, ContractName:Plans/Tools.md
+
+The following are executable capability surfaces:
+- plugin code and hook handlers
+- custom tool executables or wrappers
+- MCP server binaries or entry commands
+- command templates that expand to shell execution
+- formatter binaries and other post-write executables
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/FileSafe.md
+
+Trust rules:
+- first load or first execution requires explicit user approval on the owning surface
+- config presence, package discovery, or catalog availability does not imply execution approval
+- arg-touching hooks and other execution-modifying surfaces require signed artifacts or an explicitly elevated approval posture stronger than read-only plugins
+- source or version change invalidates prior approval and requires a new decision
+
+ContractRef: ContractName:Plans/Plugins_System.md, ContractName:Plans/Architecture_Invariants.md
 ## 2. Permission actions
 
 <a id="PERM-ACTIONS"></a>
@@ -175,7 +183,6 @@ A permission rule MAY be a simple action string (`"allow"`, `"ask"`, `"deny"`) o
 ContractRef: ContractName:Plans/OpenCode_Deep_Extraction.md, PolicyRule:Decision_Policy.md§2
 
 ### 3.1 Wildcard syntax and matching
-
 <a id="WILDCARD-SYNTAX"></a>
 
 Pattern matching uses the following syntax:
@@ -187,21 +194,28 @@ Pattern matching uses the following syntax:
 
 **Special case:** A pattern ending with ` *` (space + wildcard) makes the trailing portion optional. Example: `"git *"` matches both `"git"` and `"git status"`.
 
-**Ordering:** Within a single ruleset (object syntax), rules are evaluated in **definition order**; the **last matching rule wins**. This allows broad patterns followed by narrow exceptions:
+**Ordering:** Within a single ruleset (object syntax), rules are evaluated in definition order; the last matching rule wins. This allows broad patterns followed by narrow exceptions.
 
 ```toml
 [bash]
-"*" = "ask"        # default: ask for all bash commands
-"git *" = "allow"  # override: allow git commands
-"rm *" = "deny"    # override: deny rm commands
+"*" = "ask"
+"git *" = "allow"
+"rm *" = "deny"
 ```
 
-In the above, `git status` matches both `"*"` and `"git *"`; last-match-wins yields `"allow"` only if `"git *"` appears after `"*"`.
+ContractRef: ContractName:Plans/OpenCode_Deep_Extraction.md, PolicyRule:Decision_Policy.md§2
 
-**Case sensitivity:** Matching is case-sensitive on Unix-like systems, case-insensitive on Windows.
+**Case sensitivity:**
+- path-based matching follows the canonical filesystem semantics of the resolved root after `realpath()`
+- a project on a case-sensitive filesystem uses case-sensitive matching even if the host OS can also mount case-insensitive volumes
+- a project on a case-insensitive filesystem uses case-insensitive path matching for path-based permission keys
+- non-path tokens such as tool names, URL origins, and bash command prefixes remain bytewise case-sensitive unless their owning subsystem defines a narrower rule
 
-ContractRef: ContractName:Plans/OpenCode_Deep_Extraction.md
+ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/WorktreeGitImprovement.md
 
+If PM cannot determine a stable canonical root for a path comparison, it fails closed rather than guessing a case mode from the OS or current shell.
+
+ContractRef: ContractName:Plans/Architecture_Invariants.md, ContractName:Plans/Executor_Protocol.md
 ### 3.2 Home expansion
 
 <a id="HOME-EXPANSION"></a>
@@ -530,33 +544,6 @@ These defaults apply at the lowest precedence layer. Any explicit rule at a high
 ContractRef: ContractName:Plans/FileSafe.md, PolicyRule:no_secrets_in_storage
 
 ## 8. Resolution algorithm
-
-### 8.0 Parent→child narrowing and effective-set construction
-
-Before a child context begins running, the runtime constructs its inherited effective permission set with a deterministic seven-step narrowing flow:
-
-1. Start from the global durable permission set.
-2. Overlay the active project durable permission set.
-3. Overlay any active `package:{package_id}` scope.
-4. Overlay any active `seam:{seam_id}` scope.
-5. Overlay any active `lane:{lane_id}` scope.
-6. Apply parent/run action ceilings inherited from ancestor contexts.
-7. Apply inherited restrictive argument-pattern rules and freeze the resulting narrowed set for the new context snapshot.
-
-This narrowing flow runs at context-creation boundaries such as thread start, package entry, seam transition, lane activation, or child-run spawn. It produces the context baseline that later real-time checks consume; it is not itself the final per-invocation allow/deny decision.
-
-### 8.0A Composition with per-invocation checks
-
-The narrowing flow in §8.0 and the real-time precedence evaluation in §2.4 are complementary, not competing, algorithms:
-
-- §8.0 determines the effective permission set inherited by a given context (thread, package, seam, lane, child run).
-- §2.4 evaluates each individual tool invocation against that effective set together with real-time layers such as mode override, session-cache approvals, Persona overrides, and defaults.
-
-Operational flow:
-- Parent→child narrowing runs when the context is created or when execution crosses a scope boundary that changes inheritance.
-- The §2.4 per-invocation check runs for every tool call made inside that already-created context.
-
-Conflict rule: if §8.0 narrowing produces a denial but a durable rule says `allow`, the durable rule wins only when it was authored at the same level that introduced the denial or at an enclosing level above it. A narrower child-created rule MUST NOT punch through an ancestor narrowing ceiling.
 
 ### 8.1 Banned-command full-string check
 

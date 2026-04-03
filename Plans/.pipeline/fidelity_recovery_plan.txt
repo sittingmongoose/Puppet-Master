@@ -1,0 +1,76 @@
+RECOVERY SUMMARY
+- work_id used: `w-20260328-192850`
+- run_id used: `r-20260328-192850-11`
+- total active fidelity blockers: 2
+- main recovery themes:
+  - replace stale same-section `AuthState` example residue so `### 4.1 AuthState` no longer teaches null-padding that contradicts its own omission rules
+  - replace generic optimistic-concurrency wording in `#### 11.1.2a Optimistic concurrency for mutable rewrites` with the exact locked identifiers `read_revision={mtime_ns, content_sha256}` and `error.concurrent_edit_conflict`
+  - regenerate the current packet because its existing `replace_section` bodies already carry both live fidelity defects
+
+BLOCKER-BY-BLOCKER RECOVERY MAP
+
+FIDELITY-ID: LFA-001
+- where: `Plans/Contracts_V0.md#4.1 AuthState`
+- owner doc: `Plans/Contracts_V0.md`
+- affected consumer/mirror docs:
+  - `Plans/Contracts_V0.md#Billing entity field contract` (adjacent same-file contract; verify alignment after owner rewrite)
+  - `Plans/Multi-Account.md` (verify-only consumer for provider-specific `subject_kind` / `account_id` semantics)
+  - `Plans/CLI_Bridged_Providers.md` (verify-only consumer for provider-owned identity/auth-surface language)
+  - `Plans/usage-feature.md` (verify-only consumer for billing-entity omission and attribution references)
+- likely heading/section: `### 4.1 AuthState`
+- required operation: `replace_section`
+- stale-residue retirement needed: yes
+- packet regeneration needed: yes
+- issue type:
+  - contradictory canon
+  - stale residue
+  - packet drift
+- exact obligation(s) that must survive:
+  - `AuthState` examples must not teach null-padding for provider-owned optional dimensions that are omitted when unused.
+  - The replacement body must retire the stale example residue `auth_realm = null` and `auth_surface = null`.
+  - The replacement body must re-check `account_id = null` in the example row and keep it only if the provider-specific `subject_kind = server_profile` contract explicitly requires null rather than omission.
+  - `selected_billing_entity_id` must remain conditionally required: present when the effective quota bucket depends on entity selection; omitted otherwise.
+  - The example and rules in `### 4.1 AuthState` must not imply that omitted optional fields are canonically represented as `null`.
+- why this exact recovery shape is needed:
+  - The live owner section contains the contradiction in the same heading, so additive follow-up text would leave the stale example teaching the wrong canon.
+  - The current packet already uses `replace_section` for `### 4.1 AuthState`, but its replacement body reproduces the null-padded example residue. The packet must be regenerated with a corrected body, not patched with an additive note.
+  - Consumer cleanup should remain verify-only unless the owner rewrite exposes a real downstream contradiction; the authoritative tail recorded no active MUST RECONCILE docs for this blocker set.
+
+FIDELITY-ID: LFA-002
+- where: `Plans/FileSafe.md#11.1.2a Optimistic concurrency for mutable rewrites`
+- owner doc: `Plans/FileSafe.md`
+- affected consumer/mirror docs:
+  - `Plans/FileSafe.md#9. Implementation Checklist` (same-file implementation mirror; verify whether the exact identifiers should be echoed after owner rewrite)
+  - `Plans/storage-plan.md#Naming and migration rules` (verify-only neighboring owner for the rewrite/durability split)
+  - `Plans/WorktreeGitImprovement.md` (verify-only consumer for git snapshot materialization integrity)
+  - `Plans/GitHub_Integration.md` (verify-only consumer for local/remote mutation application)
+- likely heading/section: `#### 11.1.2a Optimistic concurrency for mutable rewrites`
+- required operation: `replace_section`
+- stale-residue retirement needed: yes
+- packet regeneration needed: yes
+- issue type:
+  - owner-doc under-specification
+  - packet drift
+- exact obligation(s) that must survive:
+  - The owner section must name the exact optimistic-concurrency revision token `read_revision={mtime_ns, content_sha256}`.
+  - The mismatch outcome must use the exact identifier `error.concurrent_edit_conflict`.
+  - The pre-rename/pre-promote recheck must compare the current target state against the previously captured `read_revision`.
+  - The section must keep the already-carried exact git integrity rules without regression: hard errors for non-zero exits from `git add`, `git commit`, `git stash`, and `git checkout`, plus post-`git add` verification via `git status --porcelain`.
+- why this exact recovery shape is needed:
+  - The live owner section preserves the safety idea but softens the locked identifiers into generic phrases such as “content hash plus monotonic stat tuple” and “conflict result.” That leaves room for result-code, telemetry, and cross-doc naming drift.
+  - The current packet already targets this heading with `replace_section`, but its replacement body repeats the generic wording instead of the locked identifiers. The packet must be regenerated so the owner section itself carries the exact tokens.
+  - Additive text would leave two competing formulations in the same owner section; owner replacement must happen first, and consumer/mirror docs should only be revisited afterward if the owner rewrite reveals drift.
+
+RECOVERY EXECUTION NOTES
+
+FIDELITY-ID: LFA-001
+- packet regeneration needed: yes
+- stale same-file canon must be retired: yes
+- owner-doc correction required before consumer cleanup: yes
+
+FIDELITY-ID: LFA-002
+- packet regeneration needed: yes
+- stale same-file canon must be retired: yes
+- owner-doc correction required before consumer cleanup: yes
+
+<recovery_plan_ready/>

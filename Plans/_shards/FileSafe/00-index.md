@@ -25,12 +25,10 @@ Canonical source: [Plans/FileSafe.md](../../FileSafe.md)
 - [17-11-additional-filesafe-features.md](17-11-additional-filesafe-features.md) — ## 11. Additional FileSafe Features
 - [18-12-gaps-and-potential-issues.md](18-12-gaps-and-potential-issues.md) — ## 12. Gaps and Potential Issues
 - [19-13-enhancements.md](19-13-enhancements.md) — ## 13. Enhancements
-- [20-14-context-compilation-token-efficiency.md](20-14-context-compilation-token-efficiency.md) — ## 14. Context Compilation & Token Efficiency
+- [20-14-historical-note-on-moved-context-compilation-canon.md](20-14-historical-note-on-moved-context-compilation-canon.md) — ## 14. Historical note on moved context-compilation canon
 - [21-15-system-integration-analysis.md](21-15-system-integration-analysis.md) — ## 15. System Integration Analysis
 - [22-16-references.md](22-16-references.md) — ## 16. References
 - [23-17-implementation-order-and-dependencies.md](23-17-implementation-order-and-dependencies.md) — ## 17. Implementation Order and Dependencies
 - [24-runtime-blocked-state-integration-addendum-2026-03-08.md](24-runtime-blocked-state-integration-addendum-2026-03-08.md) — ## Runtime Blocked-State Integration Addendum (2026-03-08)
 - [25-filesafe-blocked-outcome-alignment-addendum-2026-03-09.md](25-filesafe-blocked-outcome-alignment-addendum-2026-03-09.md) — ## FileSafe Blocked Outcome Alignment Addendum (2026-03-09)
-- [26-filesafe-restore-before-rerun-reconciliation-addendum-2026-03-09.md](26-filesafe-restore-before-rerun-reconciliation-addendum-2026-03-09.md) — ## FileSafe Restore-Before-Rerun Reconciliation Addendum (2026-03-09)
-- [27-filesafe-runtime-blocked-and-restore-override-consolidation-addendum-2026-03-09.md](27-filesafe-runtime-blocked-and-restore-override-consolidation-addendum-2026-03-09.md) — ## FileSafe Runtime Blocked and Restore Override Consolidation Addendum (2026-03-09)
-- [28-filesafe-action-mapping-and-persistence.md](28-filesafe-action-mapping-and-persistence.md) — ## FileSafe Action Mapping and Persistence
+- [26-filesafe-runtime-blocked-and-restore-override-consolidation-addendum-2026-03-09.md](26-filesafe-runtime-blocked-and-restore-override-consolidation-addendum-2026-03-09.md) — ## FileSafe Runtime Blocked and Restore Override Consolidation Addendum (2026-03-09)

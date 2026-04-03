@@ -67,6 +67,7 @@ ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/FileManager.
 ### 7.4 Settings and inspectors
 
 #### 7.4.0A Runtime usage, lock, and MCP readiness alignment
+
 Usage, storage-lock, and MCP readiness disclosures in Settings/inspectors must align with their owner docs rather than invent local semantics.
 
 ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/storage-plan.md
@@ -86,6 +87,7 @@ ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Contracts_V0.md
 **Global agent concurrency limits are NOT defined in this section.** The authoritative source for `maxConcurrentCrewsPerPlatform`, `maxConcurrentAgentsPerCrew`, `maxTotalActiveAgents`, `maxNestingDepth`, and related execution limits is `Plans/orchestrator-subagent-integration.md` §Subagent Configuration `executionLimits`.
 
 ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Run_Modes.md
+
 #### 7.4.1 Assistant Worktrees settings subsection
 
 Settings > Branching tab includes a new subsection `Assistant Worktrees` below existing branching controls. It contains 10 project-level settings organized in three visual sub-groups:

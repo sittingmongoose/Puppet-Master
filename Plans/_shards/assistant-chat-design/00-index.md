@@ -40,8 +40,5 @@ Canonical source: [Plans/assistant-chat-design.md](../../assistant-chat-design.m
 - [32-27-persona-control-in-assistant-chat-2026-03-06.md](32-27-persona-control-in-assistant-chat-2026-03-06.md) — ## 27. Persona Control in Assistant Chat (2026-03-06)
 - [33-28-markdown-and-mermaid-rendering-in-chat-and-planning-surfaces-2026-03-07.md](33-28-markdown-and-mermaid-rendering-in-chat-and-planning-surfaces-2026-03-07.md) — ## 28. Markdown and Mermaid Rendering in Chat and Planning Surfaces (2026-03-07)
 - [34-29-natural-language-mode-invocation-and-wizard-escalation-2026-03-08.md](34-29-natural-language-mode-invocation-and-wizard-escalation-2026-03-08.md) — ## 29. Natural-language Mode Invocation and Wizard Escalation (2026-03-08)
-- [35-blocked-thread-state-and-recovery-addendum-2026-03-08.md](35-blocked-thread-state-and-recovery-addendum-2026-03-08.md) — ## blocked Thread State and Recovery Addendum (2026-03-08)
-- [36-runtime-blocked-recovery-thread-state-addendum-2026-03-09.md](36-runtime-blocked-recovery-thread-state-addendum-2026-03-09.md) — ## Runtime Blocked / Recovery Thread-State Addendum (2026-03-09)
-- [37-blocked-thread-message-and-persistence-reconciliation-addendum-2026-03-09.md](37-blocked-thread-message-and-persistence-reconciliation-addendum-2026-03-09.md) — ## Blocked Thread Message and Persistence Reconciliation Addendum (2026-03-09)
-- [38-unified-thread-blocked-state-lifecycle.md](38-unified-thread-blocked-state-lifecycle.md) — ## Unified Thread Blocked-State Lifecycle
-- [39-worktrees-in-assistant.md](39-worktrees-in-assistant.md) — ## Worktrees in Assistant
+- [35-unified-thread-blocked-state-lifecycle.md](35-unified-thread-blocked-state-lifecycle.md) — ## Unified Thread Blocked-State Lifecycle
+- [36-worktrees-in-assistant.md](36-worktrees-in-assistant.md) — ## Worktrees in Assistant

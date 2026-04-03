@@ -748,11 +748,13 @@ The runtime may maintain a broader PM persona/subagent registry, but `task.agent
 
 **Dispatch contract**
 
-- `task` snapshots the current working directory, relevant conversation context, permission ceiling, and tool availability, then routes the request to the selected agent runtime.
+- `task` snapshots the current working directory, relevant conversation context, permission ceiling, write scope, requested/effective runtime and account restrictions, remaining-budget snapshot, and tool availability, then routes the request to the selected agent runtime.
 - The child agent is context-isolated from the parent turn buffer except for the prompt payload and explicit runtime metadata supplied at launch.
 - Child execution cannot mutate the parent conversation state directly; it returns results through the `task` result channel or, in background mode, through `read_agent` / `write_agent`.
 - Sync mode blocks until completion or failure and returns the terminal result in the same tool response.
 - Background mode returns immediately after the child is enqueued or started, then delivers further results through the agent handle.
+
+ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/storage-plan.md
 
 **Successful output**
 
@@ -780,9 +782,12 @@ The runtime may maintain a broader PM persona/subagent registry, but `task.agent
 
 **Timeout behavior**
 
-- Recommended default sync timeout: `10m` unless a narrower agent-specific ceiling is configured.
+- Resolved child timeout defaults to the parent run's remaining budget. A caller-supplied or agent-specific ceiling MAY narrow that timeout, but it MUST NOT exceed the inherited remaining-budget snapshot for the child launch.
+- If the parent has no finite remaining-budget snapshot, the runtime resolves `task_timeout_ms` from the canonical child-run envelope and persists the resolved value in child metadata.
 - On sync timeout, return `{ task_id, status: "timed_out", error: { code: "timeout" } }`.
 - Background mode does not time out at launch; the spawned agent keeps its own lifecycle and may later report `timed_out`, `failed`, `cancelled`, or `completed` through `read_agent`.
+
+ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/Contracts_V0.md
 
 ### 3.6A Task runtime addendum
 
@@ -794,8 +799,9 @@ Required task-tool launch contract:
 - validate the requested child against `subagent_registry` when the launch path names a subagent type.
 - resolve requested and effective Persona separately from requested and effective runtime surface.
 - classify each child as `required` or `optional` for parent progress.
-- inherit the parent permission ceiling and compatible capability universe, then narrow as needed.
-- preserve requested versus effective runtime surface, effort, and capability state in metadata.
+- inherit the parent permission ceiling, write scope, requested/effective runtime and account restrictions, and remaining budget as hard upper bounds; the child MAY narrow them further but MUST NOT widen them.
+- preserve requested versus effective runtime surface, effective account/billing context, effort, capability state, write scope, and resolved `task_timeout_ms` in metadata.
+- when the caller omits an explicit child timeout, default to the inherited parent remaining budget; when the caller requests a broader timeout, clamp it to the parent's remaining budget and emit a structured diagnostic.
 
 No-silent-fallback rules:
 - explicit user or command requests for child runtime surface must fail clearly or ask for a new choice if unavailable.
@@ -906,20 +912,35 @@ Each stdio server uses one persistent subprocess connection pool per configured 
 ContractRef: ContractName:Plans/Architecture_Invariants.md, ContractName:Plans/Executor_Protocol.md
 
 ### Schema isolation and OAuth state
-
 MCP schema handling is fail-safe:
-- Detect `$ref` cycles with a visited-set.
-- Maximum traversal depth: 32.
-- Reject resolved schemas above 64 KiB.
-- Provider-specific sanitizers MAY rewrite unsupported forms (for example Gemini-family `anyOf -> oneOf`, stripping unsupported `const` or encoding metadata) before presentation.
-- Malformed schema output becomes a structured `mcp_schema_mismatch` diagnostic; it MUST NOT crash the registry.
+- detect `$ref` cycles with a visited-set
+- when a cycle edge is encountered, substitute `{}` at that edge, emit a structured warning that includes the ref path, and continue loading the registry entry
+- maximum traversal depth: 32
+- reject resolved schemas above 64 KiB
+- provider-specific rewrites are deterministic and explicit. At minimum, compatibility bridges rewrite Gemini-family `anyOf` unions to `oneOf` when the target dialect rejects `anyOf`, strip `const` when the target surface does not permit it, and emit a structured warning that records each rewrite path and rewrite class.
+- malformed or rejected schema output becomes a structured `mcp_schema_mismatch` diagnostic; it MUST NOT crash the registry
 
-ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Architecture_Invariants.md
+ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Architecture_Invariants.md, ContractName:Plans/storage-plan.md
 
-OAuth/client state is keyed by provider + scope, not by a transient per-call server instance. Refresh and token-write paths use compare-and-swap / atomic update semantics so successful callbacks are not immediately clobbered by a second writer.
+Cycle handling is intentionally lossy-but-safe: PM preserves registry availability and explicit warning visibility rather than recursing indefinitely or silently omitting the affected tool.
 
-ContractRef: ContractName:Plans/GitHub_API_Auth_and_Flows.md, ContractName:Plans/storage-plan.md
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Decision_Policy.md
 
+OAuth and client state is keyed by provider plus scope, not by a transient per-call or per-server instance. Refresh and token-write paths use compare-and-swap or other atomic update semantics so successful callbacks are not immediately clobbered by a second writer.
+
+ContractRef: ContractName:Plans/GitHub_API_Auth_and_Flows.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Architecture_Invariants.md
+
+OAuth callback listeners for MCP and other local callback flows bind only to `127.0.0.1`. If the configured callback port is unavailable, PM retries with an ephemeral loopback port. If loopback binding cannot be started, PM falls back to manual copy-paste or device-code flow rather than widening the bind host.
+
+ContractRef: ContractName:Plans/GitHub_API_Auth_and_Flows.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Run_Modes.md
+
+Stable OAuth client identity is mandatory for MCP and other locally registered callback flows:
+- dynamic client registrations or local OAuth client identifiers are keyed by `(provider_id, scope_set)` and reused across refresh/login attempts for that logical provider surface
+- one shared local HTTP listener services callback flows for the same local auth environment; MCP servers that use the same provider/scope tuple MUST reuse that listener instead of minting parallel per-server listeners
+- concurrent auth attempts share the same stored registration under file locking or equivalent compare-and-swap protection; PM MUST NOT mint a new client identifier on every callback attempt
+- callback listeners may rebind ports when necessary, but listener replacement MUST NOT change client identity, token ownership, or provider/scope keying
+
+ContractRef: ContractName:Plans/GitHub_API_Auth_and_Flows.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Architecture_Invariants.md
 ### Windows MCP subprocess behavior
 
 Windows stdio MCP processes MUST be started with `CREATE_NEW_PROCESS_GROUP`. Graceful stop uses `CTRL_BREAK_EVENT`; if the process does not exit within 3 seconds, PM escalates to force termination.
@@ -1033,30 +1054,57 @@ Required order:
 1. Normalize the invocation context and expand relevant paths.
 2. Evaluate `policy.may_execute_tool()` on the invocation.
 3. For file-affecting tools, run FileSafe/write-scope checks on the normalized path arguments.
-4. Apply provider-specific argument normalizers (for example malformed JSON repair, XML-wrapper stripping, or schema-family coercions) where the tool surface explicitly allows them.
+4. Apply provider-specific argument normalizers where the tool surface explicitly allows them, including concrete compatibility fixes such as GLM quoted-JSON unquoting and Qwen XML-wrapper stripping before schema validation.
 5. Run `schema.validate_tool_args()` on the post-normalization argument set.
 6. Run arg-touching hooks.
 7. Re-run permission and schema validation if hook output changed arguments.
 8. Dispatch only if all checks pass.
 
-ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/Plugins_System.md
+ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/Plugins_System.md, ContractName:Plans/Contracts_V0.md
 
 Failure behavior:
-- Invalid arguments MUST produce a structured tool result with `is_error=true`; PM MUST NOT execute the tool and then "best effort" repair the failure afterwards.
-- Provider-specific retry decisions MUST use structured error classes or status codes, never substring matching on error text.
+- invalid arguments MUST produce a structured tool result with `is_error=true`; PM MUST NOT execute the tool and then "best effort" repair the failure afterwards
+- provider-specific retry decisions MUST use structured error classes or status codes, never substring matching on error text
 
-ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Contracts_V0.md
+ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/CLI_Bridged_Providers.md
+
+Truncation gate:
+- if upstream provider output ends with `finishReason=length` or equivalent truncation while a tool invocation is incomplete, PM closes the invocation with a structured truncation error and MUST NOT dispatch the tool
+- PM MUST reject empty or structurally incomplete tool arguments produced by truncation before any permission or execution path is reached
+
+ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/Contracts_V0.md
+
+#### Retry classification and bounded recovery
+
+Automatic retries are classed and capped per invocation:
+- transient transport, server-warming, and recoverable bootstrap failures MAY retry automatically, but the total automatic attempts are capped at 3 per invocation
+- default backoff is `1000ms`, `2000ms`, then `4000ms` with `+/-25%` jitter unless a stricter `Retry-After` or provider minimum delay applies
+- helper/client recreation is allowed only for failures explicitly classified as recoverable, and the recreated attempt still counts toward the same retry cap
+- auth-required, permission-denied, schema-mismatch, validation-failed, content-filter, and safety-stop classes are terminal for that invocation and MUST NOT be retried automatically
+
+ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Contracts_V0.md
+
+#### Deadline propagation and loop suppression
+
+Nested tool work inherits a parent deadline rather than minting a fresh timeout window:
+- every tool/helper invocation receives the parent's current absolute deadline or remaining-budget snapshot
+- retries, helper restarts, and nested tool work MUST clamp to the remaining budget and MUST NOT extend the parent deadline
+- if the remaining budget is exhausted before a retry starts, PM emits a structured timeout or budget result without dispatching the new attempt
+- automatic retry suppression compares normalized tool fingerprint, canonical target, error class/status, and near-match argument or stderr signatures; same or substantially equivalent failures without progress MUST stop further retries and emit a diagnostic instead of looping indefinitely
+
+ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/storage-plan.md
 
 #### Shell-runtime rules
 
 Shell-dispatch rules are part of the canonical tool flow:
-- Banned-command checks scan the full command string.
-- `eval` is prohibited.
-- Shell selection is platform-aware (`/bin/bash` or equivalent on Unix; `cmd.exe` / PowerShell family on Windows based on configured tool semantics).
-- Shell instances are isolated per agent tree so environment variables do not leak across session/agent boundaries.
-- Shell lifecycle is mutex-guarded. Work queues MUST be non-blocking; writes to a dead shell return a structured error instead of hanging forever.
+- banned-command checks scan the full rendered command string, including metacharacter and control forms such as `;`, `&&`, `||`, `|`, subshell/grouping constructs, command substitution (`$()` and backticks), and redirection operators where relevant to the shell family
+- implementations SHOULD prefer structured parsing or AST-aware validation where the shell family makes it practical; fallback scanning still MUST evaluate the full rendered command rather than only the first token
+- dispatch occurs through exactly one shell interpretation layer; `eval` and equivalent second-pass command construction are prohibited
+- shell selection is platform-aware (`/bin/bash` or equivalent on Unix; `cmd.exe` / PowerShell family on Windows based on configured tool semantics)
+- shell instances are isolated per agent tree so environment variables do not leak across session/agent boundaries
+- shell lifecycle is mutex-guarded; work queues MUST be non-blocking, and writes to a dead shell return a structured error instead of hanging forever
 
-ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/orchestrator-subagent-integration.md
+ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Permissions_System.md
 
 ### 8.3 Registry → platform CLI flag derivation
 
@@ -1096,6 +1144,7 @@ ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Contrac
 Required behavior:
 - Tools from that server are marked `unavailable` in the registry.
 - Calls to those tools fail immediately with a structured error and `failure_class=provider_transient` (or a stricter class when the error is known-fatal).
+- Per-tool MCP invocation timeout defaults to 30 seconds and MAY be overridden per server with a configured timeout. This timeout is independent of startup-timeout and reconnect cool-down settings.
 - PM emits a structured diagnostic containing `server_id`, `reason`, `last_healthy_at`, and whether a stale list is still available.
 - One automatic reconnect attempt MAY occur after the configured cool-down (default 60 seconds); after that, recovery requires user action or config change.
 - User surfaces show the server as `degraded` or `unavailable`; PM MUST NOT silently hide the server after a single transient failure.

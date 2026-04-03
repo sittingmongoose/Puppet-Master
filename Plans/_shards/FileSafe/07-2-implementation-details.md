@@ -5,53 +5,64 @@
 **Complete initialization sequence:**
 
 1. **At application startup:**
-   - Load `GuiConfig` from `puppet-master.yaml` (or defaults)
-   - Extract `FileSafeConfig` from `GuiConfig`
-   - Store in app state
+   - load `GuiConfig` (or defaults)
+   - extract `FileSafeConfig`
+   - validate fail-closed guard prerequisites and store the validated config in app state
+
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/Architecture_Invariants.md
 
 2. **When orchestrator starts:**
-   - Build `PuppetMasterConfig` from `GuiConfig` (Option B pattern)
-   - Extract FileSafe config
-   - Pass to `BaseRunner::new()` via orchestrator context
+   - build runtime config from the validated GUI config
+   - resolve FileSafe guard inputs and canonical roots
+   - pass the resulting FileSafe config into runner construction
 
-3. **When BaseRunner is created:**
-   - Initialize command blocklist (`BashGuard`) with pattern file resolution
-   - Initialize write scope (`FileGuard`) with empty allowed files initially
-   - Initialize `SecurityFilter` with sensitive patterns
-   - Store as `Arc<>` for thread-safe sharing
+ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/storage-plan.md
 
-4. **Per ExecutionRequest:**
-   - Update write scope allowed files from request metadata
-   - Run FileSafe checks before spawning process
-   - Log violations to event log
+3. **When `BaseRunner` is created:**
+   - initialize `BashGuard` with canonical destructive-pattern sources
+   - initialize `FileGuard` with an empty allowed-file set until request scope is known
+   - initialize `SecurityFilter` with canonical sensitive-path rules
+   - store guards as shared runtime objects only after initialization succeeds
 
-**Error Handling:**
-- If guard initialization fails: log warning, create disabled guard, continue execution
-- If pattern file missing: log warning, use empty patterns (guard effectively disabled)
-- If config invalid: use safe defaults (guards enabled, strict mode)
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/Contracts_V0.md
+
+4. **Per `ExecutionRequest`:**
+   - bind the request's canonical allowed-file scope
+   - resolve the canonical root and path mode needed for scope/security checks
+   - run FileSafe checks before provider process spawn or tool dispatch
+   - emit structured allow/block outcomes to the canonical event stream
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Tools.md, ContractName:Plans/Runtime_Artifacts_Panel.md
+
+**Fail-closed error handling:**
+- if a guard cannot initialize, PM surfaces a structured startup/runtime error and blocks the affected execution path rather than creating a disabled guard
+- if a configured external pattern source is unreadable, PM may continue only with a bundled canonical baseline; if no trustworthy baseline exists, destructive-command execution remains blocked
+- if canonical-root or scope resolution fails for a request, that request fails closed rather than guessing a case mode or write scope
+- invalid config may normalize only to a stricter safe default; it MUST NOT silently widen authority
+
+ContractRef: ContractName:Plans/Architecture_Invariants.md, ContractName:Plans/Decision_Policy.md, ContractName:Plans/Permissions_System.md
 
 ### 2.1 Module Structure
 
-Create new module: `puppet-master-rs/src/filesafe/`
+Create the FileSafe module under `src-tauri/src/filesafe/`.
 
 ```
-src/filesafe/
-├── mod.rs                    # Module declaration + re-exports
-├── bash_guard.rs            # Main guard implementation
-├── destructive_patterns.rs  # Pattern loading and matching
-├── file_guard.rs            # File write guard (Section 11.1)
-├── security_filter.rs        # Sensitive file access guard (Section 11.2)
-└── config/
-    └── destructive-commands.txt  # Default pattern file (bundled with binary)
+src-tauri/src/filesafe/
+├── mod.rs        # Module declaration + re-exports
+├── types.rs      # Shared FileSafe data types
+├── scope.rs      # Scope and canonical-path enforcement
+├── bash_guard.rs # Command-pattern guard logic
+├── snapshot.rs   # Snapshot and optimistic-concurrency helpers
+└── validator.rs  # Shared validation helpers
 ```
 
 **Pattern File Location:**
-- **Bundled:** `puppet-master-rs/config/destructive-commands.txt` (source)
+- **Bundled:** packaged FileSafe baseline patterns (source-controlled)
 - **Runtime:** Bundled with binary or located relative to executable
 - **Project-specific:** `.puppet-master/destructive-commands.local.txt` (optional override)
-- **Resolution order:** Custom path → Project-specific → Bundled → Disabled (with warning)
+- **Resolution order:** Custom path → Project-specific → Bundled baseline; if no trustworthy baseline exists, fail closed
 
-**Module Declaration (`src/filesafe/mod.rs`):**
+**Module Declaration (`src-tauri/src/filesafe/mod.rs`):**
 ```rust
 //! FileSafe — guards for preventing destructive operations
 //!
@@ -59,19 +70,18 @@ src/filesafe/
 //! and sensitive file access before execution.
 
 pub mod bash_guard;
-pub mod destructive_patterns;
-pub mod file_guard;
-pub mod security_filter;
+pub mod scope;
+pub mod snapshot;
+pub mod types;
+pub mod validator;
 
 pub use bash_guard::{BashGuard, GuardError};
-pub use file_guard::FileGuard;
-pub use security_filter::SecurityFilter;
 ```
 
 ### 2.2 Core Types
 
 ```rust
-// src/filesafe/bash_guard.rs
+// src-tauri/src/filesafe/bash_guard.rs
 
 use regex::Regex;
 use std::path::PathBuf;
@@ -117,7 +127,7 @@ impl BashGuard {
     /// 1. If `config_path` provided and exists: use it
     /// 2. Check project-specific: `.puppet-master/destructive-commands.local.txt`
     /// 3. Check bundled: `puppet-master-rs/config/destructive-commands.txt` (relative to binary/exe)
-    /// 4. Fallback: use empty patterns list (guard disabled) and log warning
+    /// 4. If no trustworthy baseline exists: return initialization error (fail closed)
     pub fn new(config_path: Option<PathBuf>) -> Result<Self> {
         // 1. Check environment variable override
         let allow_destructive = std::env::var("PUPPET_MASTER_ALLOW_DESTRUCTIVE")
@@ -153,8 +163,10 @@ impl BashGuard {
             load_patterns(&pattern_file)
                 .context(format!("Failed to load patterns from {}", pattern_file.display()))?
         } else {
-            warn!("Pattern file not found: {}. Guard will be disabled.", pattern_file.display());
-            Vec::new()
+            return Err(anyhow!(
+                "Pattern file not found: {}. Fail closed until a trustworthy baseline is available.",
+                pattern_file.display()
+            ));
         };
         
         // 4. Check config file for bash_guard setting (if config available)
@@ -199,7 +211,7 @@ impl BashGuard {
     }
     
     // DRY:FN:disabled — Create a disabled guard instance
-    /// Create a disabled guard instance (fallback for initialization failures)
+    /// Create an explicitly disabled guard instance for deliberate config-off states, not init-failure fallback
     pub fn disabled() -> Self {
         Self {
             patterns: Vec::new(),
@@ -247,7 +259,7 @@ fn commands_match(approved: &str, command: &str) -> bool {
 ### 2.3 Pattern Loading
 
 ```rust
-// src/filesafe/destructive_patterns.rs
+// FileSafe pattern-loading helper example
 
 use regex::Regex;
 use std::fs;

@@ -1,0 +1,32 @@
+Packet Shape Report
+===================
+run_id: r-20260328-192850-07
+checked_at_utc: 2026-04-03T01:46:44Z
+
+VERDICT: PASS
+
+Checked packet:
+- Plans/.pipeline/research_packet.json
+
+Scope inspected:
+- 8 doc_intents
+- 20 heading replace_section anchors
+- current source docs named by the packet
+- scripts/pm-plans-verify.py ContractRef lint behavior (exact marker/lookahead/fence logic)
+
+Results:
+1) NON-INSERTABLE CONTENT: PASS
+2) REPLACE_SECTION BODY START: PASS
+3) MISSING HEADING ANCHOR IN SOURCE: PASS
+4) OVERLAPPING ANCHOR APPLICATION: PASS
+5) STRUCTURED CONTAINER PLACEMENT: PASS
+6) CANONICALIZATION STABILITY: PASS
+7) CONTRACTREF LOCALITY: PASS
+
+Notes:
+- All heading anchors exist exactly once in the current source files.
+- No same-file anchor ordering would invalidate a later anchor before application.
+- No file_end append or other non-owner placements were used.
+- ContractRef locality passes verifier-exact emulation on packet content.
+
+No packet-shape blockers found for the current packet.

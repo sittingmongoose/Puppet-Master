@@ -289,6 +289,7 @@ async fn run_enhanced_loop(&self) -> Result<()> {
         // DRY: Validate selected subagent names using subagent_registry::is_valid_subagent_name()
 
         // DRY REQUIREMENT: execute_with_subagents MUST use platform_specs for platform-specific invocation
+        ContractRef: ContractName:Plans/DRY_Rules.md#7, ContractName:Plans/Executor_Protocol.md
         let result = self.execute_with_subagents(
             &next_task.tier_node,
             &subagents,

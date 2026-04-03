@@ -3,18 +3,18 @@
 Use this section to derive a phased implementation plan. Dependencies are stated so an agent can order tasks and avoid gaps.
 
 **Phase 1 -- Core guards (no GUI, no Assistant)**  
-1. Create `src/filesafe/` module (mod, bash_guard, destructive_patterns, file_guard, security_filter).  
+1. Create the `src-tauri/src/filesafe/` module files listed in §9 Implementation Checklist.  
 2. Implement pattern loading (§2.3), bundled + project-local resolution (§2.2).  
 3. Implement `BashGuard` (new, disabled, check_command, **commands_match** §2.2, approved_commands from config).  
 4. Implement **check_prompt** and **extract_commands_from_prompt** (§11.3).  
-5. Implement `FileGuard` (allowed set, **per-request update** §11.1, check_file_write).  
-6. Implement `SecurityFilter` (**default_sensitive_patterns** §11.2, check_file_access).  
+5. Implement write-scope enforcement (**per-request update** §11.1, check-file-write behavior).  
+6. Implement sensitive-file filtering (**default_sensitive_patterns** §11.2, check-file-access behavior).  
 7. Add `FileSafeConfig` to `GuiConfig` and YAML (§2.4, §5.2); config load/save only (no UI yet).  
 8. Integrate into **BaseRunner**: add guard fields, init in `new()` (with config from orchestrator when wired), in **execute_command()** call check_command (after building full command string), then compute `allowed_files` from request (§11.1), then check_file_write and check_file_access for extracted file paths.  
 9. **ExecutionRequest:** ensure allowed files and operation type are passed via env_vars (`PUPPET_MASTER_ALLOWED_FILES`, `PUPPET_MASTER_OPERATION_TYPE`).  
 10. Implement **extract_file_paths_from_request** (§15.2), **is_verification_gate_operation**, **is_interview_operation** (§15.2).  
 11. In **platform runners** (e.g. Cursor): after **append_prompt_attachments**, call **check_prompt** on compiled prompt and **security_filter** on context files; respect `PUPPET_MASTER_OPERATION_TYPE` (`verification_gate`/`interview`).  
-12. Event logging: **FileSafeEvent** struct (§6), write to `filesafe-events.jsonl` (or seglog when available).  
+12. Event logging: **FileSafeEvent** struct (§6), write to seglog; any `filesafe-events.jsonl` surface is rebuildable mirror output only.  
 13. Pattern file: create `config/destructive-commands.txt` (§4); verify regexes.  
 14. Unit tests: pattern match, commands_match, check_prompt extraction, FileGuard allowed/blocked, SecurityFilter, disabled/override behavior.
 
@@ -31,8 +31,8 @@ Use this section to derive a phased implementation plan. Dependencies are stated
 22. Terminal: on block, output RED with "[BLOCKED] Blocked by FileSafe".  
 23. Optional: Dashboard FileSafe status card with link to Settings > Advanced.
 
-**Phase 4 -- Context compilation (Part B)**  
-24. Implement context compiler (§14), delta context, cache, handoff schemas, compaction marker, skill bundling; wire to platform runner and config. (Can be a separate implementation plan from Part A.)
+**Phase 4 -- Prompt Pipeline-owned context compilation follow-up**  
+24. Implement context compiler, delta context, cache, handoff schemas, compaction marker, and skill bundling from `Plans/Prompt_Pipeline.md`; FileSafe participates only through compiled-prompt safety checks and event logging integration.
 
 **Risks and mitigations:**  
 - **Gap -- plan metadata:** Orchestrator must set allowed files on each ExecutionRequest for write scope; implement **get_allowed_files_for_current_subtask** and pass via env or request field (§15.9 Gap 2).  

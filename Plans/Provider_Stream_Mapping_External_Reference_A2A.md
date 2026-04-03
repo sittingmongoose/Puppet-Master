@@ -4,19 +4,22 @@
 
 
 ## 1. Purpose
+This document maps upstream external-framework native events and A2A bridge concepts to Puppet Master V0 normalized stream events defined in `Plans/CLI_Bridged_Providers.md`. It is the canonical external-reference guide for adapter implementors building provider bridges against the upstream external agent framework and its A2A interop layer.
 
-This document maps upstream external-framework native events and A2A bridge concepts to Puppet Master V0 normalized stream events defined in `Plans/CLI_Bridged_Providers.md`. It provides the canonical reference for adapter implementors building Provider bridges against the upstream external agent framework and its A2A interop layer.
+ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Contracts_V0.md
 
+This document is **not** the SSOT for Puppet Master internal orchestration. Internal child-run supervision, crew coordination, timeout propagation, requested/effective runtime state, and PM-native lineage remain owned by `Plans/orchestrator-subagent-integration.md`, `Plans/Contracts_V0.md`, and `Plans/storage-plan.md`.
+
+ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/storage-plan.md
 ## 2. Non-goals
-
 - Redefining the V0 event envelope or event types table (SSOT: `Plans/CLI_Bridged_Providers.md`).
 - Defining persistent storage semantics (SSOT: `Plans/storage-plan.md`).
 - Defining tool schemas, permissions, or policy (SSOT: `Plans/Tools.md`, `Plans/FileSafe.md`).
 - Defining UI/UX behavior or widget rendering.
-- Specifying transport mechanics (stream-json, ACP); those are in `Plans/CLI_Bridged_Providers.md`.
+- Specifying transport mechanics beyond the external bridge mapping surface.
+- Defining or approving PM-internal orchestration, child-run control messages, crew scheduling, or runtime ceilings.
 
----
-
+ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/orchestrator-subagent-integration.md
 ## 3. References (DRY)
 
 | Reference | Canonical location |
@@ -314,14 +317,6 @@ Provider/A2A stream normalization MUST preserve canonical wake reasons and attem
 
 ### Continuity rule
 Normalized streams MUST preserve `attempt_id` across reconnect/observe-only flows and MUST NOT create provider-local retry identity separate from runtime identity.
-
-## Stream Mapping / Wake Reason Alignment Addendum (2026-03-09)
-
-> **Superseded** — see canonical wake-reason definition above.
-
-## Stream Mapping / Wake Reconciliation Addendum (2026-03-09)
-
-> **Superseded** — see canonical wake-reason definition above.
 
 ## Runtime Attempt Identity vs Provider Continuity (2026-03-09)
 

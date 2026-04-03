@@ -597,11 +597,13 @@ The runtime may maintain a broader PM persona/subagent registry, but `task.agent
 
 **Dispatch contract**
 
-- `task` snapshots the current working directory, relevant conversation context, permission ceiling, and tool availability, then routes the request to the selected agent runtime.
+- `task` snapshots the current working directory, relevant conversation context, permission ceiling, write scope, requested/effective runtime and account restrictions, remaining-budget snapshot, and tool availability, then routes the request to the selected agent runtime.
 - The child agent is context-isolated from the parent turn buffer except for the prompt payload and explicit runtime metadata supplied at launch.
 - Child execution cannot mutate the parent conversation state directly; it returns results through the `task` result channel or, in background mode, through `read_agent` / `write_agent`.
 - Sync mode blocks until completion or failure and returns the terminal result in the same tool response.
 - Background mode returns immediately after the child is enqueued or started, then delivers further results through the agent handle.
+
+ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/storage-plan.md
 
 **Successful output**
 
@@ -629,9 +631,12 @@ The runtime may maintain a broader PM persona/subagent registry, but `task.agent
 
 **Timeout behavior**
 
-- Recommended default sync timeout: `10m` unless a narrower agent-specific ceiling is configured.
+- Resolved child timeout defaults to the parent run's remaining budget. A caller-supplied or agent-specific ceiling MAY narrow that timeout, but it MUST NOT exceed the inherited remaining-budget snapshot for the child launch.
+- If the parent has no finite remaining-budget snapshot, the runtime resolves `task_timeout_ms` from the canonical child-run envelope and persists the resolved value in child metadata.
 - On sync timeout, return `{ task_id, status: "timed_out", error: { code: "timeout" } }`.
 - Background mode does not time out at launch; the spawned agent keeps its own lifecycle and may later report `timed_out`, `failed`, `cancelled`, or `completed` through `read_agent`.
+
+ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/Contracts_V0.md
 
 ### 3.6A Task runtime addendum
 
@@ -643,8 +648,9 @@ Required task-tool launch contract:
 - validate the requested child against `subagent_registry` when the launch path names a subagent type.
 - resolve requested and effective Persona separately from requested and effective runtime surface.
 - classify each child as `required` or `optional` for parent progress.
-- inherit the parent permission ceiling and compatible capability universe, then narrow as needed.
-- preserve requested versus effective runtime surface, effort, and capability state in metadata.
+- inherit the parent permission ceiling, write scope, requested/effective runtime and account restrictions, and remaining budget as hard upper bounds; the child MAY narrow them further but MUST NOT widen them.
+- preserve requested versus effective runtime surface, effective account/billing context, effort, capability state, write scope, and resolved `task_timeout_ms` in metadata.
+- when the caller omits an explicit child timeout, default to the inherited parent remaining budget; when the caller requests a broader timeout, clamp it to the parent's remaining budget and emit a structured diagnostic.
 
 No-silent-fallback rules:
 - explicit user or command requests for child runtime surface must fail clearly or ask for a new choice if unavailable.

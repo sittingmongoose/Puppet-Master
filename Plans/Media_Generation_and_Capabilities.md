@@ -278,7 +278,8 @@ ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/Prompt_Pipe
     }
   ],
   "usage": {
-    "estimated_cost_usd": 0.003,
+    "cost_microdollars": 3000,
+    "cost_is_estimate": true,
     "input_tokens": 42,
     "output_tokens": 0,
     "media_units": 1
@@ -298,8 +299,15 @@ Response fields:
   - `sha256` (string): hex-encoded SHA-256 of the artifact bytes.
   - `bytes` (integer): artifact file size in bytes.
   - `meta` (object): kind-specific metadata — `w`/`h` for images/video, `duration` for video/audio, `sample_rate` for audio, plus `model_used`, `seed`, `generation_time_ms`.
-- `usage` (object, required): `estimated_cost_usd` (f64, explicitly an estimate), plus optional local counters (`input_tokens`, `output_tokens`, `media_units`).
+- `usage` (object, required):
+  - `cost_microdollars` (u64): canonical persisted cost in microdollars (1 USD = 1,000,000 microdollars). This is the SSOT cost field per Architecture_Invariants.md INV-015.
+  - `cost_is_estimate` (bool): `true` when the cost is a provider-reported estimate rather than an authoritative actual. Media generation costs are typically estimates.
+  - `input_tokens` (u64, optional): input token count if applicable.
+  - `output_tokens` (u64, optional): output token count if applicable.
+  - `media_units` (u64, optional): provider-specific media generation unit count.
 - `error` (object | null): present on failure (see §2.6).
+
+ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/Architecture_Invariants.md
 
 **Deterministic artifact layout:** Generated artifacts are written to `.puppet-master/artifacts/media/<request_id>/output_000.<ext>` (zero-padded index). A `manifest.json` is co-located alongside artifacts in the same directory, containing the full `artifacts[]` array plus `request_id` and generation metadata, enabling offline re-verification. No inline `data_uri` is returned.
 

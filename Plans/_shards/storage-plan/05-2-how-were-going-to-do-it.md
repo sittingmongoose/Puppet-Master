@@ -99,14 +99,16 @@ ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/GitHub_Integration.
 
 #### 2.2.1 Mandatory CRC32 per record
 
-Every seglog record MUST include a CRC32 checksum computed over the stored payload bytes. This is a mandatory correctness requirement, not an optional enhancement.
+Every seglog record MUST include a CRC32 checksum computed over the record payload. This is a mandatory correctness requirement, not an optional enhancement.
+
+ContractRef: ContractName:Plans/Architecture_Invariants.md, ContractName:Plans/Executor_Protocol.md
 
 On read, CRC32 MUST be validated before the record is processed. If validation fails:
-- the corrupt record is treated as a tail-corruption or integrity fault, not as a silently skipped success path
-- PM emits an integrity/recovery event including segment identity, byte offset, and expected vs observed checksum
-- projectors resume from the last durable checkpoint that predates the corrupt record
+- the corrupt record is skipped
+- PM emits a recovery/integrity event including record offset and expected vs observed CRC
+- projectors resume from the last known-good checkpoint rather than replaying the corrupt record
 
-ContractRef: ContractName:Plans/Architecture_Invariants.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Runtime_Artifacts_Panel.md
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Runtime_Artifacts_Panel.md
 
 #### 2.2.2 Concrete wire format
 
@@ -478,38 +480,69 @@ FinalGUISpec §15.1 references `terminal_state:v1` as a subset alias. The canoni
 
 ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/FileManager.md
 ### Naming and migration rules
-
 Storage migrations are forward-only and monotonic.
 
-**Schema/migration rules:**
-- the active storage schema generation is persisted in durable metadata before any destructive migration step runs
-- migrations run only forward; downgrade migrations are unsupported
-- backup happens before any destructive migration step
-- migration failure leaves the previous durable state intact and prevents opening a half-migrated store
-- superseded key families remain migration-read aliases only until the migration window is closed; new writes use the canonical family immediately
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md
 
-**Generative key grammar:**
-- canonical family form: `{record_family}.v{version}:{scope_components...}`
-- scope components use stable identifiers (`project_id`, `thread_id`, `run_id`, `node_id`, `attempt_id`, `snapshot_id`, etc.), never user-facing labels
-- key families name the durable object (`attempt_record`, `debug_investigation_record`, `permission_snapshot_record`), not a UI projection label
-- every new family MUST declare its owner doc, source-of-truth producer, default retention class, and migration/read-alias posture
-ContractRef: ContractName:Plans/Architecture_Invariants.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Permissions_System.md
+Required rules:
+- New fields must be additive first; destructive renames require a migration note in the same section that introduces them.
+- Keys MUST keep stable semantic names across runtime, persistence, and events unless this plan explicitly defines a translation layer.
+- `session_id`, `thread_id`, `run_id`, `message_id`, `step_id`, `tool_call_id`, `approval_id`, `provider_session_id`, `terminal_session_id`, and `dev_session_id` keep their existing meanings everywhere they appear.
+- If two subsystems need different terminology, the owner doc must define the mapping explicitly rather than silently overloading a shared field name.
 
-Examples:
-- `attempt_record.v1:{project_id}:{node_id}:{attempt_number}`
-- `blocked_projection.v1:{project_id}:{node_id}`
-- `debug_investigation_record.v1:{project_id}:{investigation_id}`
-- `permission_snapshot_record.v1:{project_id}:{snapshot_id}`
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md
 
-**Resource-bounding contract:**
-- every persistent or long-lived collection MUST declare either a TTL, a max cardinality, or both
-- every durable family MUST also declare a default `retention_class` so cleanup, preservation, and export rules can reason about it deterministically
-- caches, mirrors, rollups, and rebuildable projections may not grow without a declared bound
+#### Storage-owned rewrite contract
+All non-append durable-store rewrites MUST use same-directory temporary files and atomic promotion.
+- Replacement writes for state files, manifests, checkpoints, segment rewrites, or similar durable storage artifacts MUST create `<target>.tmp.<random>` in the target directory, write the full replacement payload there, `fsync` the temp file, and then rename/promote it into place.
+- Append-only seglog/event writers are exempt from temp-rename promotion, but they remain subject to durable flush and corruption-detection rules.
+- Per-session temp directories MAY hold scratch artifacts or janitor-managed work files, but they MUST NOT be used for replacement writes that rely on same-filesystem atomic rename.
+- Failure to create the temp file, `fsync` it, or rename/promote it is a hard error; PM MUST NOT silently fall back to direct overwrite.
 
-ContractRef: ContractName:Plans/Architecture_Invariants.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/Runtime_Artifacts_Panel.md
+ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/GitHub_Integration.md
+
+Storage root selection order:
+1. Explicit user-configured storage root (if valid and permitted).
+2. Project-scoped durable root when the feature is project-owned.
+3. App-level durable root for cross-project state.
+4. Session temp root only for explicitly temporary data.
+
+Selection rules:
+- A feature may write to a session temp root only if its contract explicitly classifies the artifact as temporary or disposable.
+- Durable state MUST survive process restart unless the owning contract explicitly says otherwise.
+- Remote-mode projects keep durable storage colocated with the owning authority defined by `Plans/GitHub_Integration.md`; temp mirrors are not durable ownership transfers.
+
+Durable-store safety rules:
+- Never rewrite durable files via cross-filesystem temp paths when the final correctness contract depends on atomic rename.
+- Janitor cleanup MAY remove abandoned temp files, but it MUST NOT touch active durable targets or preserved checkpoints.
+- When a durable store is unavailable, writers fail closed and surface a structured error instead of downgrading silently to temp-only persistence.
+
+ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/storage-plan.md
+
+#### Active durable-store lock identity
+The active durable-store lock is keyed by `(storage_root, authority_scope, store_family)`.
+- Session or run ids are not sufficient durable-store lock identities by themselves.
+- Store families that require independent recovery or retention policies must not share a lock identity merely because they live under the same root.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Run_Modes.md
+
+#### Concrete bounded collections
+Live storage-managed collections MUST have explicit bounds or retention contracts.
+
+ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/LSPSupport.md
+
+| Collection / family | Bound type | Bound source | Notes |
+|---|---|---|---|
+| Active assistant and child-session state maps | Max cardinality | Active run envelope plus `max_total_active_agents` | Historical data moves to durable history/checkpoints instead of staying in live maps. |
+| MCP connection and auth-handle caches | Max cardinality | Registered server count x active auth scopes | Superseded or idle handles are evicted instead of accumulating indefinitely. |
+| LSP session and host/root attachment maps | Max cardinality | Open project/worktree roots x configured servers | Restart/rebind replaces prior attachments instead of widening the map. |
+| Projector and analytics work queues | Max queue depth | Per-projector batch limits plus checkpoint/resume contract | Excess work spills via checkpointed resume rather than unbounded in-memory growth. |
+| Safe points, snapshot metadata, and undo indexes | TTL + cardinality | Session/run lineage plus configured retention window | Preserved or legal-hold items opt out explicitly; ordinary session artifacts age out. |
+| Temp artifacts and stale rewrite remnants | TTL | Janitor sweep plus configured max age | `.tmp.*` rewrite remnants and abandoned scratch artifacts are cleaned deterministically. |
+
+ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/LSPSupport.md
 
 ### 2.4 Projector pipeline: consumption, JSONL mirror, Tantivy, checkpoints
-
 **Consumption model:** Each projector advances in canonical seglog order:
 
 1. Read checkpoint from redb (`segment_generation`, `segment_name`, `byte_offset`, `last_seq`).
@@ -522,20 +555,25 @@ ContractRef: ContractName:Plans/Architecture_Invariants.md, ContractName:Plans/C
 - The mirror preserves the canonical event envelope in sequence order; projector-local metadata may exist in file naming or side metadata, but not as a semantic fork of the event payload.
 - Mirror files rotate deterministically with seglog generations/segments so replay, diffing, and corruption recovery stay explainable.
 - A missing or stale mirror file is repaired by replaying the corresponding seglog range; PM MUST NOT backfill seglog from JSONL.
-ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Tools.md, ContractName:Plans/FileSafe.md
 - Mirror retention follows the source seglog retention/preservation decision. A preserved or legal-hold seglog range keeps its mirror unless the mirror is explicitly regenerated in place from the same source range.
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Tools.md, ContractName:Plans/FileSafe.md
 
 **Tantivy/index rebuild rules:**
 - Tantivy indices, analytics rollups, and other projections rebuild from seglog or the canonical source range chosen by the owning projector.
 - Projector checkpoints are durable ownership boundaries; partial projection writes do not advance checkpoints.
 - Rebuild after schema-version change clears only the derived projection state being regenerated; the canonical seglog and unrelated redb families remain untouched.
 
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Tools.md, ContractName:Plans/storage-plan.md
+
 **Checkpoint guarantees:**
 - checkpoints encode enough information to resume without duplicate semantic writes
 - sequence order, not file mtime, is the source of truth for replay ordering
 - checkpoint advancement is atomic with projector durability, not with UI refresh timing
+- projector checkpoints are not a substitute for runtime recovery checkpoint markers. Runtime/executor-owned checkpoint marker events and safe-point lineage records MUST be durably emitted to seglog before mutation-capable execution resumes or restore flows continue.
+- recovery resume logic uses the canonical runtime checkpoint marker stream plus projector checkpoints; projector checkpoints alone are insufficient for mutation/recovery replay.
 
-ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Tools.md, ContractName:Plans/FileSafe.md, ContractName:Plans/Runtime_Artifacts_Panel.md
+ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Runtime_Artifacts_Panel.md
 
 ### 2.5 Analytics scan jobs
 

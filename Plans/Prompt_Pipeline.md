@@ -5,14 +5,17 @@
 ## 0. Scope and SSOT status
 
 This document is the **single canonical source of truth** for:
-- Prompt assembly stages (system + instructions + compiled context + conversation + tools)
-- How the context compiler output is incorporated into the final prompt
-- Compaction/pruning and rotation boundaries as they relate to prompt construction
-- Plugin hook points that can inject/replace prompt content
+- prompt assembly stages (system + instructions + compiled context + conversation + tools)
+- how the context compiler output is incorporated into the final prompt
+- detailed context compilation algorithms (role-specific selection, delta context, cache heuristics, marker files, skill bundling)
+- compaction/pruning and rotation boundaries as they relate to prompt construction
+- plugin hook points that can inject or replace prompt content
 
-Detailed context compilation algorithms (role-specific file selection, delta context, cache, marker files, skill bundling) remain owned by `Plans/FileSafe.md` Part B; this SSOT defines the **pipeline ordering and contracts**.
+ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md, ContractName:Plans/Contracts_V0.md
 
-ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md
+Other plans MAY describe how they consume compiled output, but they MUST NOT redefine context-selection, delta-context, cache, marker-file, skill-bundling, or compaction algorithms as separate SSOTs. `Plans/FileSafe.md` owns safety checks over compiled output; it does not own prompt/context compilation policy.
+
+ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/Architecture_Invariants.md
 
 ### SSOT references (DRY)
 - Locked decisions: `Plans/Spec_Lock.json`
@@ -20,12 +23,12 @@ ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md
 - DRY + ContractRef rule: `Plans/DRY_Rules.md`
 - Canonical terms: `Plans/Glossary.md`
 - Deterministic ambiguity handling: `Plans/Decision_Policy.md` + `Plans/auto_decisions.jsonl`
-- Context compilation + compaction marker + skill bundling: `Plans/FileSafe.md` Part B
+- FileSafe safety checks over compiled output: `Plans/FileSafe.md`
 - Run-mode context deltas + rotation outcome: `Plans/Run_Modes.md`
 - Persona injection semantics: `Plans/Personas.md#PERSONA-INJECTION`
 - Tool registry shapes (tool schema injection): `Plans/Tools.md`
-- Plugins prompt hooks: `Plans/Plugins_System.md` (prompt transform hooks)
-- GUI: `Plans/FinalGUISpec.md` (Injected Context breakdown; prompt preview UX)
+- Plugins prompt hooks: `Plans/Plugins_System.md`
+- GUI/context detail consumers: `Plans/FinalGUISpec.md`, `Plans/assistant-chat-design.md`
 - OpenCode baseline (assembly + compaction): `Plans/OpenCode_Deep_Extraction.md` §7B
 
 ---
@@ -43,7 +46,7 @@ The prompt pipeline consumes the following deterministic inputs:
 - Discovered Skills registry (`Plans/Skills_System.md`) and any Persona `default_skill_refs`
 - Tool registry definitions (`Plans/Tools.md`) and permission state (`Plans/Permissions_System.md`)
 - Conversation history + evidence context (`Plans/storage-plan.md` projections)
-- Context compiler outputs (`Plans/FileSafe.md` Part B)
+- Compiled context artifacts produced by the prompt pipeline context compiler
 
 Canonical run envelope fields:
 - `session_id`
@@ -60,7 +63,7 @@ Canonical run envelope fields:
 
 Node/package/lane/seam identity is the canonical execution context; any surviving tier labels are derived grouping metadata only.
 
-ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/FileSafe.md
+ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Contracts_V0.md
 
 ### 1.2 Stage ordering (canonical)
 
@@ -192,11 +195,13 @@ Rules:
 - Debug investigations include bounded header fields and bounded item summaries only
 - revoked, blocked, expired, and omitted investigation items remain visible in UI history but do not serialize as successful prompt inputs
 - imported bundles use the same structured Investigation Context shape as live investigations, with provenance indicating imported origin
+- external instruction files and policy documents (for example `AGENTS.md` or `CLAUDE.md`-style sources) are compiled under a bounded instruction-source budget instead of being injected in full by default
+- when an instruction source would exceed the current budget, PM includes a bounded excerpt plus provenance (`path`, byte count, truncation reason) and loads additional segments only on demand through context selection or explicit reads
+- system prompt, persona instructions, and active tool schemas remain in the untouchable set even when oversized instruction sources are clipped
 
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/Contracts_V0.md
 
 ## 2. Compaction and pruning
-
 ### 2.0 Compaction-immune content
 
 The following content MUST survive compaction unchanged unless the user explicitly removes it:
@@ -204,30 +209,102 @@ The following content MUST survive compaction unchanged unless the user explicit
 - active tool schemas
 - user-pinned context
 - blocks tagged `compaction_immune: true`
-- current/recent reasoning blocks required for correct continuation
+- current and recent reasoning blocks required for correct continuation
 
 ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Contracts_V0.md
 
-The total immune set MUST NOT exceed 30% of the effective context window. If the immune set would exceed that cap, PM must surface an explicit sizing problem rather than silently dropping required context.
+The total immune set MUST NOT exceed `max_compaction_immune_pct` (default: 30, overridable per model metadata) percent of the effective context window.
 
 ContractRef: ContractName:Plans/Models_System.md, ContractName:Plans/Architecture_Invariants.md
 
+#### 2.0.1 Compaction overflow algorithm
+
+The compaction-immune set is partitioned into two tiers with distinct truncation rules:
+
+**Untouchable set** (never truncated under any circumstances):
+- system prompt
+- persona instructions
+- active tool schemas
+
+ContractRef: ContractName:Plans/Architecture_Invariants.md, ContractName:Plans/Contracts_V0.md
+
+**Truncatable set** (trimmed only when total immune content exceeds `max_compaction_immune_pct`):
+- user-pinned context
+- blocks tagged `compaction_immune: true`
+- current and recent reasoning blocks required for correct continuation
+- ordered lowest-priority first and FIFO within each priority tier
+
+ContractRef: ContractName:Plans/Models_System.md, ContractName:Plans/Architecture_Invariants.md
+
+Overflow handling:
+1. If the total immune set exceeds `max_compaction_immune_pct`, trim only the truncatable set until the total is within cap.
+2. If the untouchable set alone exceeds the cap, keep it intact, emit `diag.compaction_immune_overflow`, and continue execution.
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Executor_Protocol.md
+
 ### 2.1 Context assembly and cache preservation
+
 Prompt assembly preserves cache-friendly stable prefixes. PM keeps role-specific context compilation, compaction-aware re-reads, and once-per-phase skill bundling so repeated turns do not re-inject the same bulky context unnecessarily.
 
 ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/Tools.md
 
 Provider-specific cache strategy is explicit:
 - **Anthropic:** ephemeral/cache-control marker strategy. PM emits `cache_control: { type: "ephemeral" }` on eligible message blocks. Anthropic's server-side cache handles TTL and invalidation transparently; PM does not manage Anthropic cache state.
-- **Google/Gemini family:** provider-native `cachedContent` strategy. PM creates a `cachedContent` resource via the Gemini Caching API with a configurable TTL (default: 5 minutes). The returned `cachedContent` resource name is passed in subsequent `generateContent` requests via the `cachedContent` field. PM tracks the resource TTL and proactively refreshes the cached content before expiry when the underlying context has not changed. Token savings are calculated as the difference between the full context token count and the `cachedContentTokenCount` reported in the provider's usage metadata. When `cache_with_oauth` is `false` for the active Gemini surface, cache-marker emission is suppressed entirely.
-- **OpenAI family:** metadata/adapter-controlled cache-control strategy. PM sets cache-hint headers or metadata per the OpenAI API conventions. Server-side cache behavior is provider-managed; PM does not track cache state for OpenAI surfaces.
+- **Google/Gemini family:** provider-native `cachedContent` strategy. PM creates a `cachedContent` resource via the Gemini Caching API with a configurable TTL (default: 5 minutes). The returned `cachedContent` resource name is passed in subsequent `generateContent` requests via the `cachedContent` field. PM tracks the resource TTL and proactively refreshes cached content before expiry when the underlying context has not changed. Token savings are calculated as the difference between the full context token count and `cachedContentTokenCount` reported in provider usage metadata. When `cache_with_oauth` is `false` for the active Gemini surface, cache-marker emission is suppressed entirely.
+- **OpenAI family:** metadata or adapter-controlled cache-hint strategy. PM sets cache-hint headers or metadata per OpenAI conventions. Server-side cache behavior is provider-managed; PM does not track cache state for OpenAI surfaces.
 - **Unsupported surfaces:** disable cache-marker emission and fall back safely. No cache-related fields are emitted in the request.
 
 ContractRef: ContractName:Plans/Models_System.md, ContractName:Plans/CLI_Bridged_Providers.md
 
-Reasoning blocks MUST be preserved through replay and compaction. PM MAY summarize them when the provider surface cannot replay them verbatim, but MUST NOT silently strip them.
+Reasoning blocks MUST be preserved through replay and compaction. PM MUST first prefer provider-compatible replay or conversion of reasoning/assistant state; lossy summarization is allowed only when the target surface cannot accept the original form, and the summary MUST remain explicit about being synthesized from prior reasoning.
 
-ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/Contracts_V0.md
+ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Architecture_Invariants.md
+
+Historical assistant serialization rules:
+- historical turns serialize the final user-visible assistant answer plus any tool/result or lineage metadata needed for causal replay
+- transient progress/status chatter, partial streaming fragments, and superseded intermediate assistant states are omitted unless they remain unresolved or are explicitly pinned
+- message boundaries remain explicit across user, assistant, system, and synthetic-continue turns so replay cannot merge stale assistant progress into a new request
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Run_Modes.md
+
+#### 2.1.1 Synthetic-continue state machine and loop prevention
+
+Synthetic continue is the bounded fallback used when a provider stops because of length or context pressure but PM still has an incomplete answer that should continue within the same run segment.
+
+ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/storage-plan.md
+
+Eligibility rules:
+- only `regular` and `yolo` runs may auto-inject synthetic continue
+- PM considers synthetic continue only after normal compaction and cache-preserving reassembly have already run
+- synthetic continue is prohibited once a terminal `done` outcome, explicit user cancellation, HITL pause, or parent-mediated defer decision exists
+
+ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/assistant-chat-design.md
+
+State tracked per run segment:
+- `synthetic_continue_count`
+- `last_assistant_tail_hash`
+- `last_continue_prompt_hash`
+- `last_continue_reason`
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md
+
+State machine:
+1. **Idle** -> default state while no continuation is needed.
+2. **Eligible** -> provider stopped for `length` or equivalent incomplete-output condition and PM still needs continuation.
+3. **ContinueInjected** -> PM injects one canonical continuation turn using the prior assistant tail and current run lineage.
+4. **ContinueObserved** -> provider emits new assistant content after the synthetic continue.
+5. **Suppressed** -> PM blocks further synthetic continue because loop-prevention rules fired.
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Run_Modes.md
+
+Loop-prevention rules:
+- automatic synthetic continue is capped at 2 attempts per run segment
+- PM MUST compare the latest assistant tail hash against `last_assistant_tail_hash`; if the tail is unchanged after a synthetic continue, PM suppresses further auto-continue
+- PM suppresses further auto-continue if the provider returns effectively empty continuation output or repeats the same continuation prompt hash without net new content
+- suppression emits `diag.synthetic_continue_loop_prevented` with the reason and leaves the run to normal failure or rotation handling instead of silently retrying forever
+
+ContractRef: ContractName:Plans/Architecture_Invariants.md, ContractName:Plans/Executor_Protocol.md
+
 ### 2.2 Dynamic context shrinking
 
 Thresholds are model-owned metadata:
@@ -241,12 +318,26 @@ Low-context warning rule: if remaining context falls below 15% of the effective 
 
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Executor_Protocol.md
 
+Agent-visible context budget contract:
+- the instruction bundle or equivalent runtime metadata exposes the effective context window, latest estimated used tokens/bytes, remaining percent, current pressure state, and whether compaction ran on the previous turn
+- after large tool output or injected context, PM updates this snapshot before the next provider turn so the agent can choose shorter replies, narrower reads, or earlier summarization
+- the budget snapshot is advisory rather than a perfect preflight predictor, but it MUST reflect the latest post-assembly estimate rather than a stale earlier value
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Architecture_Invariants.md
+
 ### 2.3 Post-filter integrity rules
 
-After filtering, pruning, or compaction, PM MUST validate role alternation and message-boundary correctness. Plugin transforms MUST NOT delete system/persona content, reorder messages in a way that breaks alternation, or modify immune content.
+After filtering, pruning, or compaction, PM MUST validate role alternation and message-boundary correctness. Plugin transforms MUST NOT delete system or persona content, reorder messages in a way that breaks alternation, or modify immune content.
 
 ContractRef: ContractName:Plans/Plugins_System.md, ContractName:Plans/Architecture_Invariants.md
 
+Repair behavior when filtering would leave malformed history:
+- if filtering, pruning, or transform output empties a required message position, PM emits an explicit warning diagnostic before serialization continues
+- PM then injects the smallest placeholder or structural no-op needed to preserve canonical role alternation and replay-safe message boundaries
+- placeholder repair preserves structure only; it MUST NOT invent substantive user intent, assistant claims, tool calls, or hidden policy content
+- if no safe placeholder exists for the target surface, PM aborts serialization and surfaces a structured error instead of emitting malformed history
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Architecture_Invariants.md
 ## 3. Rotation (follow-up run spawning)
 
 <a id="ROTATION"></a>
@@ -458,37 +549,15 @@ Rules:
 Acceptance criteria:
 - remediation/retry runs receive the lineage metadata needed to continue coherently
 - prompt assembly does not become the hidden source of truth; canonical truth remains in event/storage contracts
-## Attempt Snapshot / Runtime Correlation Addendum (2026-03-09)
-
-Prompt assembly and provider invocation handoff must preserve runtime correlation state.
-
-### Required handoff bundle
-Before provider invocation, the pipeline MUST assemble and retain:
-- requested/effective persona and runtime state already defined elsewhere
-- requested/effective model identifiers
-- effective permission snapshot identifier
-- `run_id`, `thread_id`, `node_id`, `attempt_id`
-- `replan_generation`
-- `safe_point_id` when present
-- remediation lineage fields when present
-
-### Stability rule
-Once an attempt starts, the persisted handoff bundle for that attempt is immutable. A later retry or resumed blocked attempt creates a new attempt snapshot rather than mutating the old one in place.
-## Attempt Snapshot Reconciliation Addendum (2026-03-09)
-
-Prompt assembly and provider handoff MUST preserve runtime attempt identity without mutating prior attempts.
-
-Rules:
-- once an attempt starts, its handoff bundle is immutable
-- retry, prerequisite-resumed work, and safe-point-restored reruns create new handoff bundles keyed by new `attempt_id` values
-- new bundles MUST preserve lineage references (`safe_point_id`, remediation lineage, generation, requested/effective snapshots)
-- prompt assembly MUST NOT become an alternate source of truth for blocked or retry state; canonical truth remains in events/projections
 ## Runtime Attempt Snapshot and Handoff Consolidation Addendum (2026-03-09)
 
 The prompt pipeline MUST emit the same immutable runtime handoff bundle used by the provider envelope.
 
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md
+
 Required fields:
 - `run_id`
+- `thread_id`
 - `node_id`
 - `attempt_id`
 - `scheduler_pass_id`
@@ -499,10 +568,16 @@ Required fields:
 - `safe_point_id?`
 - remediation lineage refs when present
 
+ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/storage-plan.md
+
 Rules:
 - snapshots are captured at attempt start and are immutable for that attempt
 - retry/resume/rerun flows always create a new handoff bundle with a new `attempt_id`
+- new bundles MUST preserve lineage references needed for safe-point restore, remediation, and generation tracking
+- prompt assembly MUST NOT become an alternate source of truth for blocked or retry state; canonical truth remains in events/projections
 - downstream providers and consumers MUST NOT infer missing runtime identity from prompt text alone
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/assistant-memory-subsystem.md
 ## Runtime Attempt Snapshot and Handoff Bundle
 
 The runtime handoff bundle is the continuity contract for child runs, retries, reroutes, and resumes.

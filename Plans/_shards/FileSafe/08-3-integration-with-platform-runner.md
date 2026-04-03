@@ -158,71 +158,35 @@ async fn execute(&self, request: &ExecutionRequest) -> Result<ExecutionResult> {
 - Log all blocked operations to event log
 
 ### 3.3 BaseRunner Integration
+`BaseRunner::execute_command()` performs FileSafe validation after request expansion but before spawn. FileSafe-managed path checks are fail-closed: candidate paths are resolved relative to `working_directory`, canonicalized, and denied if canonicalization fails.
 
-**Add guard check in `BaseRunner::execute_command()`:**
+ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/WorktreeGitImprovement.md
 
 ```rust
-// In BaseRunner::execute_command() (src/platforms/runner.rs)
-pub async fn execute_command(
-    &self,
-    request: &ExecutionRequest,
-    args: Vec<String>,
-    stdin_input: Option<String>,
-) -> Result<ExecutionResult> {
-    // ... existing checks (circuit breaker, quota, rate limit) ...
-    
-    // Build full command string for guard check
-    let full_command = format!("{} {}", self.command, args.join(" "));
-    
-    // CHECK COMMAND STRING (before spawning)
-    if let Err(e) = self.bash_guard.check_command(&full_command) {
-        // Check if verification gate operation
-        if self.is_verification_gate_operation(request) {
-            warn!("Destructive command allowed during verification gate: {}", e);
-        } else {
-            // Log blocked command
-            self.log_blocked_command(&full_command, &e, request).await?;
-            
-            return Err(anyhow!(
-                "Destructive command blocked: {}. \
-                Set PUPPET_MASTER_ALLOW_DESTRUCTIVE=1 to override.",
-                e
-            ));
-        }
-    }
-    
-    // CHECK FILE PATHS (write scope + security filter)
-    let allowed_files = FileGuard::load_allowed_files_from_request(request)?;
-    for file_path in self.extract_file_paths_from_request(request)? {
-        // Resolve and normalize path
-        let resolved_path = if file_path.is_absolute() {
-            file_path
-        } else {
-            request.working_directory.join(&file_path)
-        };
-        
-        let normalized_path = resolved_path.canonicalize()
-            .unwrap_or_else(|_| resolved_path);
-        
-        // Check write scope
-        if let Err(e) = self.file_guard.check_file_write(&normalized_path, &request.working_directory, &allowed_files) {
-            return Err(anyhow!("File write blocked: {}", e));
-        }
-        
-        // Check security filter
-        if let Err(e) = self.security_filter.check_file_access(&normalized_path) {
-            if self.is_interview_operation(request) && self.security_filter.allow_during_interview {
-                warn!("Sensitive file access allowed during interview: {}", e);
-            } else {
-                return Err(anyhow!("Sensitive file access blocked: {}", e));
-            }
-        }
-    }
-    
-    // ... continue with existing spawn logic ...
-}
+let candidate_path = if file_path.is_absolute() {
+    file_path.clone()
+} else {
+    request.working_directory.join(&file_path)
+};
+
+let normalized_path = candidate_path
+    .canonicalize()
+    .map_err(|e| anyhow!(
+        "File write blocked: canonical path required for FileSafe scope checks ({}): {}",
+        candidate_path.display(),
+        e
+    ))?;
+
+self.file_guard
+    .check_file_write(&normalized_path, &request.working_directory, &allowed_files)?;
+self.security_filter.check_file_access(&normalized_path)?;
 ```
 
+ContractRef: ContractName:Plans/Architecture_Invariants.md, ContractName:Plans/Executor_Protocol.md
+
+The fallback pattern `canonicalize().unwrap_or_else(|_| resolved_path)` is prohibited in FileSafe-managed write-scope code paths. If PM cannot compute the canonical real path, it denies access instead of comparing against a symlink alias or unresolved relative path.
+
+ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/WorktreeGitImprovement.md
 ### 3.4 Multi-Provider Support
 
 The guard must work across all providers:

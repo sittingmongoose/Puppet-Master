@@ -1,6 +1,7 @@
 ## 15. System Integration Analysis
 
 ### 15.1 Integration with BaseRunner
+
 **Current Architecture:**
 - `BaseRunner::execute_command()` spawns platform CLI processes
 - Already has circuit breaker, quota manager, rate limiter, permission audit
@@ -72,11 +73,12 @@ ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Archit
 - Guards are initialized in `BaseRunner::new()` alongside other components
 - All guards use `Arc<>` for thread-safe sharing
 - Guard errors are logged via existing logging infrastructure
-- Guard violations are logged to event log (if available) or filesafe-events.jsonl
+- Guard violations are logged to the canonical event stream; any `filesafe-events.jsonl` output is a derived mirror only
 - Path resolution follows §11.1.1: `canonicalize()` failure produces `GuardError::SymlinkResolution`, never a silent fallback to the unresolved path
 - The fallback pattern `canonicalize().unwrap_or_else(|_| original_path)` is prohibited in all FileSafe-managed code paths
 
 ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Executor_Protocol.md
+
 ### 15.2 Integration with Orchestrator
 
 **Current Architecture:**
@@ -368,29 +370,33 @@ pub struct GateOverrideConfig {
    - Helps track FileSafe violations during verification
 
 ### 15.7 Integration with State Management
-
 **Current Architecture:**
-- State is managed via `prd.json`, `progress.txt`, `AGENTS.md`
-- Orchestrator tracks tier state, iterations, gate results
-- State persists across sessions
+- State is managed via `prd.json`, `progress.txt`, `AGENTS.md`, and rewrite-owned runtime stores.
+- Orchestrator tracks tier state, iterations, gate results, and child lineage.
+- State persists across sessions.
 
 **Integration Points:**
 
-1. **FileSafe event state:**
-   - FileSafe events are logged to `.puppet-master/logs/filesafe-events.jsonl`
-   - Should be included in state snapshots for debugging
-   - Consider adding to `prd.json` metadata or separate FileSafe state file
+1. **FileSafe event state**
+   - FileSafe history is canonical in seglog.
+   - State snapshots, dashboards, or diagnostic mirrors derive from seglog or its projector state.
+   - A standalone `filesafe-events.jsonl` file may exist only as a rebuildable mirror, not as an owner store.
 
-2. **Guard Configuration State:**
-   - Guard config is part of `GuiConfig` → `puppet-master.yaml`
-   - Must persist across sessions
-   - Default values should be safe (guards enabled by default)
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md
 
-3. **Plan metadata for write scope:**
-   - Write scope needs current plan's allowed files list
-   - Plan metadata should be accessible to `BaseRunner`
-   - Consider adding to `ExecutionRequest` or passing via context
+2. **Guard configuration state**
+   - Guard config is part of `GuiConfig` -> `puppet-master.yaml`.
+   - Guard settings persist across sessions.
+   - Default values remain safe (guards enabled by default).
 
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Permissions_System.md
+
+3. **Plan metadata for write scope**
+   - Write scope needs the current plan's allowed-files list.
+   - Plan metadata must be accessible to `BaseRunner` through canonical request context.
+   - Scope checks compare only canonical real paths rooted in the active worktree or project root.
+
+ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/WorktreeGitImprovement.md
 ### 15.8 Integration with Cleanup (MiscPlan)
 
 **Current Architecture:**
@@ -564,65 +570,38 @@ Profile selection derives from effective run mode, operation class, and target c
 ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/Executor_Protocol.md
 
 ### 15.12 Integration Checklist
+This section is a resolved integration map for implementers. It does not reopen design questions; the owner sections above define the canonical FileSafe behavior.
 
-Resolve **§12.6 Implementation-Ready Clarifications** before or during implementation (ExecutionRequest convention, get_allowed_files_for_current_subtask, BaseRunner/BashGuard config, SecurityFilter/FileGuard fields, edge cases).
+ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/storage-plan.md, ContractName:Plans/WorktreeGitImprovement.md
 
-- [ ] **ExecutionRequest Updates**
-  - [ ] Use `env_vars` for operation metadata (`PUPPET_MASTER_OPERATION_TYPE`) and write scope (`PUPPET_MASTER_ALLOWED_FILES`); do not add new fields
-  - [ ] Update all `ExecutionRequest::new()` call sites
+**ExecutionRequest integration**
+- operation metadata continues to travel through `env_vars`, using `PUPPET_MASTER_OPERATION_TYPE` for operation classification and `PUPPET_MASTER_ALLOWED_FILES` for write-scope declarations
+- FileSafe does not require new `ExecutionRequest` fields; every launch path that constructs an `ExecutionRequest` MUST populate those canonical env vars before BaseRunner executes the request
 
-- [ ] **BaseRunner Integration**
-  - [ ] Add guard fields to `BaseRunner` struct
-  - [ ] Initialize guards in `BaseRunner::new()`
-  - [ ] Add guard checks in `execute_command()` before spawn
-  - [ ] Add `is_verification_gate_operation()` helper
-  - [ ] Add `is_interview_operation()` helper
-  - [ ] Add `extract_file_paths_from_request()` helper
+ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/interview-subagent-integration.md, ContractName:Plans/storage-plan.md
 
-- [ ] **Orchestrator Integration**
-  - [ ] Tag verification gate operations in `ExecutionRequest`
-  - [ ] Pass plan metadata (allowed files) to `ExecutionRequest`
-  - [ ] Integrate FileSafe violations into gate reports
-  - [ ] Update gate execution to handle guard overrides
+**BaseRunner integration**
+- `BaseRunner` owns guard initialization, full rendered-command validation, write-scope checks, and security-filter checks before any managed spawn path executes
+- helper functions such as `is_verification_gate_operation`, `is_interview_operation`, and `extract_file_paths_from_request` remain implementation obligations, not open design questions
+- any FileSafe denial in BaseRunner surfaces a canonical blocked outcome and does not silently downgrade to a best-effort retry path
 
-- [ ] **Interview Integration**
-  - [ ] Tag interview operations in `ExecutionRequest`
-  - [ ] Add FileSafe config to `InterviewGuiConfig`
-  - [ ] Relax security filter during interview phases (if configured)
+ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Executor_Protocol.md
 
-- [ ] **Worktree Integration**
-  - [ ] Update write scope to handle worktree paths correctly
-  - [ ] Normalize paths relative to `working_directory`
-  - [ ] Handle worktree symlinks in path resolution
+**Orchestrator and interview integration**
+- orchestrator-owned verification-gate operations tag their operation type, pass allowed-file metadata, and integrate FileSafe violations into gate reporting rather than inventing a parallel error channel
+- interview-owned operations tag interview context explicitly; any security-filter relaxation during interview phases requires explicit configuration and remains scoped to the interview flow that requested it
 
-- [ ] **GUI Integration**
-  - [ ] Add `FileSafeConfig` to `GuiConfig`
-  - [ ] Add FileSafe tab to Config view (or add to Advanced tab)
-  - [ ] Add FileSafe-related messages to `Message` enum
-  - [ ] Wire FileSafe config to orchestrator config (Option B)
-  - [ ] Add FileSafe event log viewer (optional)
+ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/interview-subagent-integration.md, ContractName:Plans/Permissions_System.md
 
-- [ ] **Config Wiring**
-  - [ ] Wire `GuiConfig::filesafe` to `PuppetMasterConfig` (orchestrator config)
-  - [ ] Ensure FileSafe settings available to `BaseRunner` initialization
-  - [ ] Test config persistence across sessions
+**Worktree integration**
+- canonical path/worktree guard behavior is already locked by this owner doc and `Plans/WorktreeGitImprovement.md`; implementers consume that canon rather than reopening it as checklist uncertainty
+- candidate paths are normalized relative to `working_directory`, canonicalized with fail-closed behavior, compared against the real worktree root rather than a symlink alias, and rejected when unresolved aliases remain
 
-- [ ] **Cleanup Integration**
-  - [ ] Add security filter patterns to cleanup allowlist
-  - [ ] Coordinate write-scope allowed files with cleanup allowlist
-  - [ ] Ensure cleanup never deletes sensitive files
+ContractRef: ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Architecture_Invariants.md
 
-- [ ] **State Management**
-  - [ ] Include FileSafe events in state snapshots
-  - [ ] Persist guard configuration in config file
-  - [ ] Add FileSafe state to `prd.json` metadata (optional)
+**GUI and derived projections**
+- `GuiConfig` carries FileSafe configuration, the Config surface owns FileSafe controls, and orchestrator startup consumes that config without inventing a second configuration path
+- FileSafe-related UI messages remain projections over canonical runtime/FileSafe state
+- any FileSafe event-log viewer is a derived projection only; seglog remains the canonical event source
 
-- [ ] **Testing Integration**
-  - [ ] Test guards with verification gate operations
-  - [ ] Test guards with interview operations
-  - [ ] Test guards with worktree execution
-  - [ ] Test guards with cleanup operations
-  - [ ] Test config wiring end-to-end
-
----
-
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Permissions_System.md

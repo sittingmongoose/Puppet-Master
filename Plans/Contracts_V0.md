@@ -85,12 +85,7 @@ ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Prompt_Pipel
   "effective_project_id": null,
   "account_switch_reason": null,
   "requested_reasoning_effort": "medium",
-  "effective_reasoning_effort": "medium",
-  "requested_mode_overlay": "plan",
-  "effective_mode_overlay": "plan",
-  "requested_runtime_mode": "plan",
-  "requested_persona": "architect_reviewer",
-  "persona_selection_source": "user_explicit"
+  "effective_reasoning_effort": "medium"
 }
 ```
 
@@ -99,37 +94,13 @@ ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/usage-featu
 Rules:
 - `requested_platform` and `effective_platform` remain the canonical persisted provider-entry fields.
 - `provider_family_id`, `requested_runtime_platform_id`, `effective_runtime_platform_id`, `requested_model_provider_id`, and `effective_model_provider_id` are additive disclosure fields; they MUST NOT replace the canonical base field names.
-ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Multi-Account.md
 - `effective_account_id` identifies the effective account record when the runtime subject is account-backed.
 - `connection_profile_id` identifies the effective server profile when the runtime subject is server-bridged.
 - `requested_billing_entity_id`, `effective_billing_entity_id`, `effective_billing_entity_label`, and `effective_entitlement_class` are REQUIRED when the provider's quota or policy semantics depend on a distinct billing/entity bucket; when the provider has no such concept, these fields MUST be omitted rather than null-padded.
 - `effective_provider_identity` is provider-native descriptive metadata only and MUST NOT become the stable internal account key.
-- `requested_mode_overlay` records the mode overlay requested by the user, project policy, or runtime, while `effective_mode_overlay` records what actually applied after resolution.
-- `requested_runtime_mode` is the canonical requested runtime-mode field when the caller selected a mode directly. Its enum family is `ask | plan | regular | yolo`.
-- `requested_persona` stores the explicit `persona_id` only when a persona was intentionally selected; omission means persona resolution was inherited or derived.
-- `persona_selection_source` records how the effective persona was chosen and MUST use the `PersonaSelectionSource` enum defined below.
 - secrets, bearer tokens, API keys, refresh tokens, and raw credential payloads MUST NOT appear in EventRecord payloads.
 
 ContractRef: PolicyRule:no_secrets_in_storage, ContractName:Plans/storage-plan.md, ContractName:Plans/Architecture_Invariants.md#INV-002
-
-#### EventRecord additive mode/persona resolution fields
-
-`EventRecord` MAY carry the following additive mode/persona-resolution fields whenever runtime resolution, replay, analytics, or debugging depend on them:
-
-```text
-requested_mode_overlay: ModeOverlay?
-effective_mode_overlay: ModeOverlay?
-requested_runtime_mode: RuntimeMode?        // ask | plan | regular | yolo
-requested_persona: string?                  // persona_id when explicitly selected
-persona_selection_source: PersonaSelectionSource?
-```
-
-```text
-PersonaSelectionSource = user_explicit | project_default | global_default | mode_derived | inherited
-```
-
-These fields are additive disclosure fields in the same sense as provider-family and runtime-platform routing fields: they enrich replay/debugging fidelity but MUST NOT replace the canonical base identity fields already defined by `EventRecord`.
-ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Personas.md
 
 ### 1.3 EventEnvelopeV1 -- minimal compatibility envelope
 `EventEnvelopeV1` is the minimal event envelope used by some plans as an intermediate format.
@@ -325,42 +296,36 @@ ContractRef: PolicyRule:no_secrets_in_storage, ContractName:Plans/Runtime_Artifa
 
 <a id="AuthState"></a>
 ### 4.1 AuthState
-AuthState is the canonical persisted and streamed view for provider account rows and server-profile rows shown in Setup, Health, Agent-Config, and Usage inspectors.
+`AuthState` is the canonical persisted and evented auth snapshot for a provider subject. It records the selected identity, readiness state, and any provider-owned optional dimensions without forcing null-padding for dimensions that do not apply.
 
-ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md
+Example persisted row for a server-bridged OpenCode profile where the effective subject is a server profile and no billing-entity selection exists:
+- `provider = opencode`
+- `subject_kind = server_profile`
+- `connection_profile_id = opencode-main`
+- `provider_identity = http://127.0.0.1:4096`
+- `auth_job_state = LoggedIn`
+- `readiness_state = Ready`
+- `credential_state = present`
+- `configuration_state = ready`
+- `availability_state = eligible`
+- `updated_at = 2026-03-23T00:00:00Z`
 
-```json
-{
-  "provider": "opencode",
-  "subject_kind": "server_profile",
-  "account_id": null,
-  "connection_profile_id": "opencode-main",
-  "auth_realm": null,
-  "auth_surface": null,
-  "provider_identity": "http://127.0.0.1:4096",
-  "selected_billing_entity_id": null,
-  "auth_job_state": "LoggedIn",
-  "readiness_state": "Ready",
-  "credential_state": "present",
-  "configuration_state": "ready",
-  "availability_state": "eligible",
-  "updated_at": "2026-03-23T00:00:00Z"
-}
-```
+The omitted fields in this example are intentional: `account_id`, `selected_billing_entity_id`, `auth_realm`, and `auth_surface` are absent because they do not apply to this server-profile-backed subject.
 
-ContractRef: ContractName:Plans/Provider_OpenCode.md, ContractName:Plans/Multi-Account.md, ContractName:Plans/usage-feature.md
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Multi-Account.md
 
 Rules:
-- `subject_kind` is `account` for direct and CLI-backed account rows and `server_profile` for server-bridged rows such as OpenCode.
-- `auth_job_state` is the canonical authentication chip state and remains distinct from readiness.
-- `readiness_state` is the canonical execution-readiness state and MUST support at least `NeedsSetup`, `Validating`, `Ready`, `Degraded`, and `ExternalNotManaged`.
-- `LoggedIn` is not the same as `Ready`. Billing-entity selection, entitlement validation, trust checks, project/location configuration, or server discovery may keep the row out of `Ready` after login succeeds.
-- `selected_billing_entity_id` is conditionally required: it MUST be present when the effective quota bucket depends on entity selection and MUST be omitted when the provider's quota is purely account-scoped (see §Billing entity field contract).
-- provider-level summary cards MAY aggregate multiple AuthState rows, but the underlying row distinctions MUST remain visible whenever they affect routing, quota semantics, or recovery behavior.
-- GitHub auth used for GitHub API operations and GitHub auth used for GitHub Copilot provider execution remain isolated auth realms.
-- attached external OpenCode servers may surface `readiness_state = ExternalNotManaged`; PM may reflect their state but MUST NOT overstate configuration ownership.
+- `subject_kind`, `account_id`, and `connection_profile_id` follow the provider-specific rules in this document and in `Plans/Multi-Account.md`.
+- `account_id` is present only when the selected runtime subject is account-backed; server-profile-backed rows omit `account_id` rather than null-padding it.
+- `provider_identity` is provider-owned and may be an email, URL, local account label, or server profile id.
+- `selected_billing_entity_id` is conditionally required: it MUST be present when the effective quota bucket depends on entity selection and MUST be omitted when the provider quota is purely account-scoped. Null-padding is not canonical.
+- `auth_realm` and `auth_surface` remain provider-owned optional fields; they are omitted when unused rather than backfilled with placeholder values.
 
-ContractRef: ContractName:Plans/GitHub_API_Auth_and_Flows.md, ContractName:Plans/Provider_OpenCode.md, ContractName:Plans/CLI_Bridged_Providers.md
+ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/usage-feature.md
+
+Attached external OpenCode providers use `provider = opencode-external`, `subject_kind = external_server`, and a stable `provider_identity` derived from the attached server profile. They omit `account_id`, `selected_billing_entity_id`, `auth_realm`, and `auth_surface` unless a provider-specific runtime contract explicitly requires one of those fields.
+
+ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Multi-Account.md
 ### 4.2 AuthPolicy
 Defines deterministic defaults for auth method selection per provider.
 
@@ -838,28 +803,38 @@ ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/Architectur
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md
 
 ### Usage attribution contract
-
 Usage records and normalized usage events MUST preserve:
 - `provider_id`
 - `model_id`
+- `account_id` when the provider/runtime surface is account-backed
 - `parent_run_id` when usage is emitted by a child run, tool, title-generation pass, summary pass, or other background operation
 - `billing_entity_id` when quota semantics depend on it
+- `entitlement_class` when provider routing, quota, or pricing semantics depend on it
 - `cache_hit?`
 - `cache_strategy?`
 
-ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/Models_System.md
+ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/Models_System.md, ContractName:Plans/storage-plan.md
+
+Rules:
+- usage attribution is keyed by the canonical tuple `(provider_id, model_id, account_id?, billing_entity_id?, entitlement_class?)` when those fields are known
+- bridge adapters, storage snapshots, analytics rollups, and UI projections MUST NOT collapse that tuple to `billing_entity_id` alone when account or entitlement context exists
+- background/helper usage keeps the same attribution tuple and lineage through `parent_run_id` rather than inventing a second attribution model
+
+ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/Architecture_Invariants.md
 
 ### Billing entity field contract
-`requested_billing_entity_id` and `effective_billing_entity_id` are conditionally required: they MUST be present whenever the provider's quota or policy semantics depend on a billing/entity bucket distinct from the auth identity. When the provider does not use a billing-entity concept, these fields MUST be omitted rather than null-padded.
 
-ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/Models_System.md
+`requested_billing_entity_id` and `effective_billing_entity_id` are conditionally required fields. A provider includes them only when billing entity selection exists for that provider and when the field is meaningful in the current flow.
 
-This conditional-requirement contract applies uniformly across all PM surfaces:
-- In `EventRecord` (§1.2): billing-entity fields follow this rule. The §1.2 term "additive disclosure fields" describes the extensibility pattern for discovery/routing fields (`provider_family_id`, `runtime_platform_id`, etc.) and does NOT imply that billing-entity fields are unconditionally optional.
-- In `AuthState` (§4.1): `selected_billing_entity_id` follows the same conditional contract. It is present when the effective quota bucket depends on entity selection; it is omitted when the provider's quota is purely account-scoped. The word "optional" in the AuthState rules refers to structural optionality (the field may be absent), not to a weaker normative requirement.
-- In usage attribution: cost attribution is keyed by `(model_id, provider_id, billing_entity_id)` when billing-entity semantics exist; account-only providers omit the billing-entity dimension.
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Multi-Account.md
 
-ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/CLI_Bridged_Providers.md
+This conditional-requirement contract applies uniformly wherever billing entity selection is surfaced:
+- In `EventRecord.payload`, fields are present only for provider flows that expose billing entity selection.
+- In `AuthState`, the persisted selection field is present only when the effective quota bucket depends on entity selection; otherwise the field is omitted.
+- In usage attribution, canonical attribution is keyed by `(provider_id, model_id, account_id?, billing_entity_id?, entitlement_class?)` when those dimensions are known. `billing_entity_id` alone is never a sufficient canonical substitute when account or entitlement context exists.
+
+ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/CLI_Bridged_Providers.md
+
 ## Scheduler, Safe-Point, and Remediation Events Addendum (2026-03-08)
 
 Add the following event families to the canonical contract set.
@@ -1249,40 +1224,65 @@ Crew members do not gain new authority through board traffic. Permissions, tools
 ContractRef: Crew coordination messages MUST NOT widen authority, permissions, or capability availability beyond the child's effective runtime envelope. [Source: Permissions_System.md#child-permission-ceiling-and-blocked-vs-awaiting-parent; Skills_System.md#child-capability-subset-clarification]
 
 #### Stable subagent and crew event families
+In addition to the effective-context projection events defined below (`subagent.context_shrunk` and `subagent.context_rehydrated`), the following stable runtime event families are canonical for subagent and crew orchestration. Child identity and lineage are not optional metadata: they are part of the event contract.
 
-In addition to the effective-context projection events defined below (`subagent.context_shrunk` and `subagent.context_rehydrated`), the following stable runtime event families are canonical for subagent and crew orchestration. These events inherit the child identity and requested/effective runtime descriptors required by §Child-run lifecycle and projection whenever those descriptors are relevant.
+ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/storage-plan.md
 
-| event_type | payload_fields | description |
-|---|---|---|
-| `subagent.spawned` | `agent_id`, `agent_type`, `parent_thread_id`, `model_id` | New subagent created |
-| `subagent.started` | `agent_id`, `prompt_preview` | Subagent begins execution |
-| `subagent.progress` | `agent_id`, `progress_pct?`, `status_text` | Progress update |
-| `subagent.tool_called` | `agent_id`, `tool_name`, `tool_args_preview` | Subagent invoked a tool |
-| `subagent.tool_completed` | `agent_id`, `tool_name`, `success`, `duration_ms` | Tool call finished |
-| `subagent.message_sent` | `agent_id`, `message_preview`, `turn_index` | Follow-up message sent |
-| `subagent.message_received` | `agent_id`, `response_preview`, `turn_index` | Response received |
-| `subagent.completed` | `agent_id`, `result_summary`, `duration_ms`, `token_usage` | Subagent finished successfully |
-| `subagent.failed` | `agent_id`, `error_code`, `error_message`, `duration_ms` | Subagent failed |
-| `subagent.cancelled` | `agent_id`, `reason`, `duration_ms` | Subagent was cancelled |
-| `subagent.timeout` | `agent_id`, `timeout_ms`, `partial_result?` | Subagent exceeded time limit |
-| `subagent.retried` | `agent_id`, `attempt_number`, `retry_reason` | Subagent retry attempt |
-| `subagent.context_warning` | `agent_id`, `context_usage_pct`, `threshold` | Context approaching limit |
-| `subagent.model_switched` | `agent_id`, `from_model`, `to_model`, `reason` | Model changed mid-execution |
-| `subagent.paused` | `agent_id`, `reason` | Subagent paused (waiting for input) |
-| `subagent.resumed` | `agent_id`, `trigger` | Subagent resumed |
-| `subagent.output_truncated` | `agent_id`, `original_length`, `truncated_length` | Output was truncated |
-| `subagent.budget_warning` | `agent_id`, `budget_used_pct`, `budget_limit` | Approaching budget limit |
-| `subagent.escalated` | `agent_id`, `escalation_reason`, `target` | Subagent escalated to parent |
+For every `subagent.*` event below, the payload MUST preserve the PM lineage envelope:
+- `run_id`
+- `thread_id`
+- `agent_id`
+- `parent_run_id?`
+- `child_run_id?`
+- `parent_thread_id?`
+- requested and effective runtime descriptors when they differ
+
+ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Run_Modes.md
 
 | event_type | payload_fields | description |
 |---|---|---|
-| `crew.formed` | `crew_id`, `member_agent_ids[]`, `purpose` | Crew created |
-| `crew.member_added` | `crew_id`, `agent_id`, `role` | Member joined |
-| `crew.member_removed` | `crew_id`, `agent_id`, `reason` | Member left |
-| `crew.coordination` | `crew_id`, `coordination_type`, `details` | Inter-agent coordination |
-| `crew.completed` | `crew_id`, `result_summary`, `duration_ms` | Crew finished |
-| `crew.disbanded` | `crew_id`, `reason` | Crew dissolved |
+| `subagent.spawned` | `run_id`, `thread_id`, `agent_id`, `agent_type`, `parent_run_id`, `child_run_id`, `parent_thread_id`, `model_id` | New subagent created and linked to parent lineage. |
+| `subagent.started` | `run_id`, `thread_id`, `agent_id`, `parent_run_id`, `child_run_id`, `prompt_preview` | Subagent begins execution. |
+| `subagent.progress` | `run_id`, `thread_id`, `agent_id`, `parent_run_id`, `child_run_id`, `progress_pct?`, `status_text` | Progress update. |
+| `subagent.tool_called` | `run_id`, `thread_id`, `agent_id`, `parent_run_id`, `child_run_id`, `tool_name`, `tool_args_preview` | Subagent invoked a tool. |
+| `subagent.tool_completed` | `run_id`, `thread_id`, `agent_id`, `parent_run_id`, `child_run_id`, `tool_name`, `success`, `duration_ms` | Tool call finished. |
+| `subagent.message_sent` | `run_id`, `thread_id`, `agent_id`, `parent_run_id`, `child_run_id`, `message_preview`, `turn_index` | Follow-up message sent. |
+| `subagent.message_received` | `run_id`, `thread_id`, `agent_id`, `parent_run_id`, `child_run_id`, `response_preview`, `turn_index` | Response received. |
+| `subagent.completed` | `run_id`, `thread_id`, `agent_id`, `parent_run_id`, `child_run_id`, `result_summary`, `duration_ms`, `token_usage` | Subagent finished successfully. |
+| `subagent.failed` | `run_id`, `thread_id`, `agent_id`, `parent_run_id`, `child_run_id`, `error_code`, `error_message`, `duration_ms` | Subagent failed. |
+| `subagent.cancelled` | `run_id`, `thread_id`, `agent_id`, `parent_run_id`, `child_run_id`, `reason`, `duration_ms` | Subagent was cancelled. |
+| `subagent.timeout` | `run_id`, `thread_id`, `agent_id`, `parent_run_id`, `child_run_id`, `timeout_ms`, `partial_result?` | Subagent exceeded time limit. |
+| `subagent.retried` | `run_id`, `thread_id`, `agent_id`, `parent_run_id`, `child_run_id`, `attempt_number`, `retry_reason` | Subagent retry attempt. |
+| `subagent.context_warning` | `run_id`, `thread_id`, `agent_id`, `parent_run_id`, `child_run_id`, `context_usage_pct`, `threshold` | Context approaching limit. |
+| `subagent.model_switched` | `run_id`, `thread_id`, `agent_id`, `parent_run_id`, `child_run_id`, `from_model`, `to_model`, `reason` | Model changed mid-execution. |
+| `subagent.paused` | `run_id`, `thread_id`, `agent_id`, `parent_run_id`, `child_run_id`, `reason` | Subagent paused. |
+| `subagent.resumed` | `run_id`, `thread_id`, `agent_id`, `parent_run_id`, `child_run_id`, `trigger` | Subagent resumed. |
+| `subagent.output_truncated` | `run_id`, `thread_id`, `agent_id`, `parent_run_id`, `child_run_id`, `original_length`, `truncated_length` | Output was truncated. |
+| `subagent.budget_warning` | `run_id`, `thread_id`, `agent_id`, `parent_run_id`, `child_run_id`, `budget_used_pct`, `budget_limit` | Approaching budget limit. |
+| `subagent.escalated` | `run_id`, `thread_id`, `agent_id`, `parent_run_id`, `child_run_id`, `escalation_reason`, `target` | Subagent escalated to parent. |
 
+ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/storage-plan.md
+
+For every `crew.*` event below, the payload MUST preserve crew and child lineage together:
+- `run_id`
+- `thread_id`
+- `crew_id`
+- `parent_run_id?`
+- `child_run_id?`
+- `member_agent_ids[]` where membership matters
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/orchestrator-subagent-integration.md
+
+| event_type | payload_fields | description |
+|---|---|---|
+| `crew.formed` | `run_id`, `thread_id`, `crew_id`, `parent_run_id`, `child_run_id`, `member_agent_ids[]`, `purpose` | Crew created. |
+| `crew.member_added` | `run_id`, `thread_id`, `crew_id`, `parent_run_id`, `child_run_id`, `agent_id`, `role` | Member joined. |
+| `crew.member_removed` | `run_id`, `thread_id`, `crew_id`, `parent_run_id`, `child_run_id`, `agent_id`, `reason` | Member left. |
+| `crew.coordination` | `run_id`, `thread_id`, `crew_id`, `parent_run_id`, `child_run_id`, `coordination_type`, `details` | Inter-agent coordination. |
+| `crew.completed` | `run_id`, `thread_id`, `crew_id`, `parent_run_id`, `child_run_id`, `result_summary`, `duration_ms` | Crew finished. |
+| `crew.disbanded` | `run_id`, `thread_id`, `crew_id`, `parent_run_id`, `child_run_id`, `reason` | Crew dissolved. |
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Run_Modes.md
 ### Dynamic context shrinking and effective-context projection
 
 Dynamic context shrinking is a canonical effective-context mechanism distinct from compaction, retrieval injection, rotation, and Assistant memory. It operates during ordinary tool-driven work and may replace stale effective-context blocks with shorter summaries while preserving canonical source state and rehydration references.

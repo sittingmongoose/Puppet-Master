@@ -1,29 +1,30 @@
 ## Executive Summary
 
-This plan covers **two pillars**: (1) **FileSafe** -- guards that block destructive operations before execution -- and (2) **context compilation and token efficiency** that reduce coordination overhead by compiling role-specific context and related optimizations.
+FileSafe is the canonical guardrail layer that blocks destructive commands before execution, constrains write scope, filters sensitive file access, validates compiled prompt content, and records guard outcomes in the canonical event stream.
+
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md
+
+Prompt/context compilation is adjacent but separately owned. `Plans/Prompt_Pipeline.md` owns role-specific context selection, delta compilation, cache heuristics, skill bundling, and compaction behavior. FileSafe consumes compiled output as an input to safety checks; it does not own those algorithms.
+
+ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/Architecture_Invariants.md
 
 ### Part A -- FileSafe
 
-1. **FileSafe: Command blocklist** -- Blocks destructive CLI commands (e.g. `migrate:fresh`, `db:drop`, `TRUNCATE TABLE`, `git reset --hard`, Docker volume prune) before they run.
-2. **FileSafe: Write scope** -- Restricts writes to files declared in the active plan (no writes outside plan scope).
-3. **FileSafe: Security filter** -- Blocks access to sensitive files (`.env`, credentials, keys).
-4. **Prompt content checking** -- Scans prompts for destructive commands before sending to the platform CLI.
-5. **Verification gate integration** -- Allows legitimate destructive operations when tagged as verification-gate or interview operations.
+1. **FileSafe: Command blocklist** -- Blocks destructive CLI commands before they run.
+2. **FileSafe: Write scope** -- Restricts writes to the canonical allowed-file scope for the execution.
+3. **FileSafe: Security filter** -- Blocks access to sensitive files and secrets.
+4. **Compiled prompt checking** -- Scans the fully assembled prompt before provider dispatch.
+5. **Verification and override integration** -- Allows only explicitly authorized override paths and records them canonically.
 
-**Why critical:** Agents with shell access can accidentally run destructive commands, touch sensitive files, or write outside scope. FileSafe provides deterministic, platform-level protection regardless of agent behavior.
+ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Tools.md, ContractName:Plans/Run_Modes.md
 
-### Part B -- Context Compilation & Token Efficiency
+### Part B -- Compiled-context safety boundary
 
-6. **Role-Specific Context Compiler** -- Builds `.context-{context_role}.md` per runtime role (`planning`, `execution`, `verification`, `debug`, `review`) so each run or node attempt receives only the context it needs.
-7. **Delta Context** -- Adds a `Changed Files (Delta)` section with code slices from recently modified files so agents see what just changed.
-8. **Context Cache** -- Caches the compiled context index so compilation is skipped when project files are unchanged.
-9. **Structured Handoff Schemas** -- Typed JSON schemas for inter-agent progress, blockers, QA results, and similar handoffs.
-10. **Compaction-Aware Re-Reads** -- A deterministic marker indicates when plan/context re-read is needed, avoiding redundant full re-reads every attempt.
-11. **Skill Bundling** -- Bundles skills referenced by the current node/run into compiled context once per relevant scope instead of per child attempt.
+- FileSafe checks the fully compiled prompt **after** Prompt Pipeline assembly and **before** provider dispatch.
+- FileSafe validates structured attachments, forwarded document selections, and file references against security and write-scope policy.
+- FileSafe emits structured allow/block outcomes for these checks into seglog.
 
-**Why critical:** Context compilation and these features reduce token use and improve reliability where coordination and context size matter most (large projects, many delegated runs, debug/review loops).
-
-**DRY compliance:** All reusable code is tagged with `DRY:FN:`, `DRY:DATA:`, `DRY:HELPER:`. Platform data uses `platform_specs::`. Widgets reuse components from `src/widgets/`.
+ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md
 
 ---
 

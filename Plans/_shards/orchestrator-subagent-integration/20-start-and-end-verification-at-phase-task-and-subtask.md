@@ -692,6 +692,8 @@ Each row MUST contain:
 
 This table is the source of truth for `validate_config_wiring_for_tier(...)`. Readiness MUST NOT be heuristic prose.
 
+ContractRef: ContractName:Plans/Contracts_V0.md, PolicyRule:Plans/orchestrator-subagent-integration.md#config-wiring-verification
+
 ### Start-of-tier verification
 Start-of-phase, start-of-task, and start-of-subtask verification always run the same categories in this order:
 1. config-wiring validation against the canonical table
@@ -700,6 +702,8 @@ Start-of-phase, start-of-task, and start-of-subtask verification always run the 
 4. known-gap detection for execution-affecting unresolved prerequisites
 
 A tier MUST NOT start when a required execution-affecting field is unwired, unavailable, or inconsistent.
+
+ContractRef: ContractName:Plans/Executor_Protocol.md, PolicyRule:Plans/orchestrator-subagent-integration.md#tier-start-preconditions
 
 ### End-of-tier verification
 End-of-phase, end-of-task, and end-of-subtask verification always run the same categories in this order:
@@ -729,12 +733,16 @@ The reviewer/quality path is not optional.
 - display-only, observability-only, or deferred non-execution-affecting mismatches may warn when they do not change runtime behavior
 - performance concerns MUST NOT weaken the verification categories; implementation may scope work to changed artifacts, but may not silently skip categories
 
+ContractRef: PolicyRule:Plans/orchestrator-subagent-integration.md#verification-category-invariant
+
 ### Interview-phase mirror
 Interview phases use the same start/end pattern:
 - start = wiring + readiness + sequence
 - end = wiring re-check + acceptance + quality
 
 `interview-subagent-integration.md` is responsible for the interview-phase-specific quality criteria and UI/runtime consequences, but it MUST mirror this contract rather than invent an alternate lifecycle.
+
+ContractRef: ContractName:Plans/interview-subagent-integration.md
 
 ### Unrelated-failure escalation
 When a tier fails because of issues outside its intended scope:
@@ -1384,6 +1392,8 @@ impl Orchestrator {
 - **Missing field failure:** If required field is missing, request retry with field requirement instruction
 - **Invalid severity failure:** If severity is invalid, request retry with valid severity values
 - **Max retries reached:** If max retries reached, proceed with partial output but mark tier as "complete with warnings"
+
+```rust
                     .filter_map(|v| serde_json::from_value(v.clone()).ok())
                     .collect()
             })
@@ -1400,6 +1410,7 @@ impl Orchestrator {
 impl OutputParser for CodexOutputParser {
     // DRY:FN:parse_subagent_output_codex -- Parse Codex subagent output
     // DRY REQUIREMENT: Output format detection MUST use platform_specs -- DO NOT hardcode "JSONL" or output format
+    ContractRef: ContractName:Plans/DRY_Rules.md#7, ContractName:Plans/Executor_Protocol.md
     fn parse_subagent_output(&self, stdout: &str, _stderr: &str) -> Result<SubagentOutput, ValidationError> {
         // DRY: Use platform_specs to determine expected output format -- DO NOT hardcode "Codex outputs JSONL"
         // Codex outputs JSONL (one JSON object per line) -- format from platform_specs
@@ -1452,6 +1463,7 @@ impl OutputParser for CodexOutputParser {
 impl OutputParser for ClaudeOutputParser {
     // DRY:FN:parse_subagent_output_claude -- Parse Claude Code subagent output
     // DRY REQUIREMENT: Output format detection MUST use platform_specs -- DO NOT hardcode "--output-format json"
+    ContractRef: ContractName:Plans/DRY_Rules.md#7, ContractName:Plans/Executor_Protocol.md
     fn parse_subagent_output(&self, stdout: &str, _stderr: &str) -> Result<SubagentOutput, ValidationError> {
         // DRY: Use platform_specs to determine expected output format -- DO NOT hardcode "Claude outputs JSON"
         // Claude outputs JSON with --output-format json -- format from platform_specs
@@ -1499,6 +1511,7 @@ impl OutputParser for ClaudeOutputParser {
 impl OutputParser for GeminiOutputParser {
     // DRY:FN:parse_subagent_output_gemini -- Parse Gemini subagent output
     // DRY REQUIREMENT: Output format detection MUST use platform_specs -- DO NOT hardcode "--output-format json"
+    ContractRef: ContractName:Plans/DRY_Rules.md#7, ContractName:Plans/Executor_Protocol.md
     fn parse_subagent_output(&self, stdout: &str, _stderr: &str) -> Result<SubagentOutput, ValidationError> {
         // DRY: Use platform_specs to determine expected output format -- DO NOT hardcode "Gemini outputs JSON"
         // Gemini outputs JSON with --output-format json -- format from platform_specs
@@ -1529,6 +1542,7 @@ impl OutputParser for GeminiOutputParser {
 impl OutputParser for CopilotOutputParser {
     // DRY:FN:parse_subagent_output_copilot -- Parse Copilot subagent output
     // DRY REQUIREMENT: Output format detection MUST use platform_specs -- DO NOT hardcode "Copilot outputs text"
+    ContractRef: ContractName:Plans/DRY_Rules.md#7, ContractName:Plans/Executor_Protocol.md
     fn parse_subagent_output(&self, stdout: &str, _stderr: &str) -> Result<SubagentOutput, ValidationError> {
         // DRY: Use platform_specs to determine expected output format -- DO NOT hardcode "Copilot outputs text"
         // Copilot outputs text (no JSON) -- format from platform_specs
@@ -1663,6 +1677,7 @@ impl RemediationLoop {
 
     // DRY:FN:run — Run remediation loop for a tier
     // DRY REQUIREMENT: Reviewer subagent name MUST come from subagent_registry — NEVER hardcode "code-reviewer"
+    ContractRef: ContractName:Plans/DRY_Rules.md#7, ContractName:Plans/Contracts_V0.md
     /// Run remediation loop for a tier
     pub async fn run(
         &self,
@@ -1695,6 +1710,7 @@ impl RemediationLoop {
             // DRY REQUIREMENT: Overseer and reviewer subagent names MUST come from subagent_registry — NEVER hardcode names
             // Re-run overseer subagent with remediation prompt
             // Implementation note: re_run_overseer_with_prompt MUST use subagent_registry to get overseer subagent name
+            ContractRef: ContractName:Plans/DRY_Rules.md#7, ContractName:Plans/Contracts_V0.md
             let overseer_result = self.orchestrator
                 .re_run_overseer_with_prompt(tier_id, &remediation_prompt)
                 .await?;
@@ -1702,6 +1718,7 @@ impl RemediationLoop {
             // DRY REQUIREMENT: Reviewer subagent name MUST come from subagent_registry::get_reviewer_subagent_for_tier()
             // Re-run reviewer subagent
             // Implementation note: re_run_reviewer MUST use subagent_registry to get reviewer subagent name
+            ContractRef: ContractName:Plans/DRY_Rules.md#7, ContractName:Plans/Contracts_V0.md
             let reviewer_result = self.orchestrator
                 .re_run_reviewer(tier_id)
                 .await?;

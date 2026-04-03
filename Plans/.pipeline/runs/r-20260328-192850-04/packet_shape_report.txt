@@ -1,0 +1,48 @@
+Packet Shape Report
+===================
+run_id: r-20260328-192850-04
+checked_at_utc: 2026-04-02T13:47:18Z
+
+VERDICT: PASS
+
+All 7 shape checks passed:
+
+1) NON-INSERTABLE CONTENT:            PASS (0 blockers)
+2) REPLACE_SECTION BODY START:        PASS (0 blockers)
+3) MISSING HEADING ANCHOR IN SOURCE:  PASS (0 blockers)
+4) OVERLAPPING ANCHOR APPLICATION:    PASS (0 blockers)
+5) STRUCTURED CONTAINER PLACEMENT:    PASS (0 blockers)
+6) CANONICALIZATION STABILITY:        PASS (0 blockers)
+7) CONTRACTREF LOCALITY:              PASS (0 blockers)
+
+Fixes applied during check:
+- Plans/Contracts_V0.md :: ### 1.1 → ### 1.2 EventRecord
+  Corrected heading number mismatch — source file has section at ### 1.2, not ### 1.1.
+  The heading was renumbered after a prior Scribe pass added ### 1.1 Assistant worktree seglog events.
+
+- Plans/Prompt_Pipeline.md :: #### 2.0.1 Compaction overflow algorithm
+  Added local ContractRef after the "Untouchable set (NEVER truncated)" operational line.
+  The NEVER marker triggered verifier lint; the nearest ContractRef was 11 lines away (> 10 lookahead).
+
+- Removed 5 vestigial insert_after anchors that would create duplicate headings:
+  - Plans/Permissions_System.md :: insert_after ### 1.4 → creates ### 1.5 (already exists)
+  - Plans/usage-feature.md :: insert_after ### Spending limits → creates ### Cost monotonicity (already exists)
+  - Plans/WorktreeGitImprovement.md :: insert_after ## 3. → creates ### 3.0 (already exists)
+  - Plans/WorktreeGitImprovement.md :: insert_after ### 3.0 → creates #### 3.0.1 (already exists)
+  - Plans/FinalGUISpec.md :: insert_after ### 7.4 → creates #### 7.4.0A (already exists; separate replace_section handles it)
+  All 5 headings were originally created by prior Scribe runs from earlier packets.
+  Source content is a superset in all cases; insert_after would have created duplicate sections.
+
+- Plans/WorktreeGitImprovement.md :: restored with replace_section anchors
+  After removing the 2 vestigial insert_after anchors, WorktreeGitImprovement.md had 0 anchors.
+  Restored with replace_section operations targeting ### 3.0 and #### 3.0.1 using current
+  source content to maintain packet coverage for this MUST RECONCILE doc.
+
+Packet stats:
+- 22 doc_intents, 40 anchors
+- All heading anchors verified present in source files
+- No file_end or non-owner placements
+- No insert_after anchors remain (all converted or removed)
+- ContractRef locality passes verifier-exact emulation for all anchors
+
+No active blockers for current packet.

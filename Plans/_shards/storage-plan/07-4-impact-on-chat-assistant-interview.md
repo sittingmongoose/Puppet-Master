@@ -7,7 +7,7 @@ Chat, activity, question, todo, and thread-context-detail projections may displa
 
 Rules:
 - thread and activity projections consume frozen requested/effective runtime snapshots captured for the execution
-- the shared snapshot now includes workflow-overlay and runtime-posture fields rather than forcing chat to reconstruct planning identity from local heuristics
+- the shared snapshot includes workflow-overlay and runtime-posture fields rather than forcing chat to reconstruct planning identity from local heuristics
 - chat and thread-context-detail projections must not recompute historical runtime state from current settings
 - assistant/chat-local state may reference runtime snapshots, but it must not rename or re-own the shared schema
 - earlier references in this document to a `thread Usage tab` or equivalent per-thread usage tab now refer to the thread-scoped Context Detail Pane/editor-tab surface
@@ -17,15 +17,18 @@ ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Prompt_Pipel
 Thread Context Detail Pane projections consume at minimum:
 - `chat.message` records and any stored message usage snapshots
 - `usage.event` records with `thread_id`
-- `run.completed.usage` snapshots when present
+- `run.completed.usage` snapshots when present, using the canonical usage buckets and attribution fields rather than legacy `(tokens_in, tokens_out, cost)` aliases
 - persisted tool or activity payloads needed for per-message inspection and raw views
+
+ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/assistant-chat-design.md
 
 Rules:
 - compact chat surfaces may derive display labels such as `Ask`, `Agent`, `Plan`, and `Deep Plan`, but only from frozen shared fields
 - thread-scoped cost remains an estimated or provider-authoritative value according to the canonical usage pipeline; the detail pane does not invent a second cost model
+- hidden/background usage that rolls into a thread total remains inspectable by source class in raw/detail views
 - raw per-message views may expose provider/runtime metadata needed for audit and debugging without reclassifying those fields as chat-facing compact copy
 
-ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/assistant-chat-design.md
+ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/FinalGUISpec.md
 ### 4.2 Question and clarification state
 Structured question flows may span one or many questions.
 

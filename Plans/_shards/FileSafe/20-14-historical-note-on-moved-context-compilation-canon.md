@@ -1,0 +1,17 @@
+## 14. Historical note on moved context-compilation canon
+
+The context-compilation and token-efficiency material that previously lived in this section is no longer canonical here.
+
+`Plans/Prompt_Pipeline.md` is now the canonical owner for:
+- context compilation algorithms
+- delta context selection
+- cache heuristics
+- marker-file / compaction-aware reread behavior
+- skill bundling and prompt-compaction policy
+
+FileSafe remains responsible only for safety checks over the fully compiled prompt and related attachments after Prompt Pipeline assembly and before provider dispatch.
+
+ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Tools.md
+
+---
+

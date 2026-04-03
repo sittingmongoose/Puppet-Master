@@ -1,102 +1,68 @@
 ## 9. Implementation Checklist
+This checklist tracks implementation work for the already-locked FileSafe canon. Checklist items must implement the owner rules in Sections 11.1.1-11.1.2a and MUST NOT reopen those rules as design questions.
+
+ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/storage-plan.md
 
 - [ ] **Create FileSafe module structure**
-  - [ ] `src/filesafe/mod.rs`
-  - [ ] `src/filesafe/bash_guard.rs`
-  - [ ] `src/filesafe/destructive_patterns.rs`
-  - [ ] `src/filesafe/file_guard.rs` (Section 11.1)
-  - [ ] `src/filesafe/security_filter.rs` (Section 11.2)
-  - [ ] Add `pub mod filesafe;` to `src/lib.rs`
-  - [ ] Tag all reusable items with DRY comments
-
+  - [ ] Create `src-tauri/src/filesafe/mod.rs`
+  - [ ] Create `src-tauri/src/filesafe/types.rs`
+  - [ ] Create `src-tauri/src/filesafe/scope.rs`
+  - [ ] Create `src-tauri/src/filesafe/bash_guard.rs`
+  - [ ] Create `src-tauri/src/filesafe/snapshot.rs`
+  - [ ] Create `src-tauri/src/filesafe/validator.rs`
 - [ ] **Port pattern file**
-  - [ ] Create `config/destructive-commands.txt`
-  - [ ] Verify all 40+ patterns compile as Rust regex
-  - [ ] Test pattern matching
-
+  - [ ] Copy destructive command patterns from OpenCode `backend/src/security/bash.ts`
+  - [ ] Convert JS regex patterns to Rust `regex::Regex`
+  - [ ] Port scope checking logic from OpenCode `backend/src/security/bash.ts`
+  - [ ] Adapt to PM project model and remote-mode path handling
 - [ ] **Implement BashGuard**
-  - [ ] Complete `BashGuard::new()` implementation (pattern file resolution, env var check)
-  - [ ] Implement `BashGuard::find_bundled_patterns_file()` helper
-  - [ ] Implement `BashGuard::disabled()` fallback
-  - [ ] Pattern loading from file (`load_patterns()`)
-  - [ ] Command checking logic (`check_command()`)
-  - [ ] Prompt content checking (`check_prompt()` + `extract_commands_from_prompt()`)
-  - [ ] Environment variable override (`PUPPET_MASTER_ALLOW_DESTRUCTIVE`)
-  - [ ] Config file integration (read from `FileSafeConfig`)
-  - [ ] Project-specific pattern loading (`.puppet-master/destructive-commands.local.txt`)
-  - [ ] Error handling (graceful degradation on init failure)
-
+  - [ ] Port `buildScopeRegex()` logic from OpenCode
+  - [ ] Port `bashCommandBlocks` array from OpenCode
+  - [ ] Port `fileEditBlocks` array from OpenCode
+  - [ ] Implement `check_bash_command()` for shell execution
+  - [ ] Implement `check_file_edit()` for edit operations
+  - [ ] Add PM-specific safe zones and allowlisted temp patterns
 - [ ] **Integrate with BaseRunner**
-  - [ ] Add `bash_guard: Arc<BashGuard>`, `file_guard: Arc<FileGuard>`, `security_filter: Arc<SecurityFilter>` fields to `BaseRunner`
-  - [ ] Initialize all guards in `BaseRunner::new()` (with pattern file resolution)
-  - [ ] Add guard checks in platform runners (e.g., `CursorRunner::execute()`) **after context compilation**:
-    - [ ] Compile context files into prompt (`append_prompt_attachments()`)
-    - [ ] Check **compiled prompt** for destructive commands (`check_prompt()` on compiled prompt)
-    - [ ] Check context files against security filter (`check_file_access()`)
-    - [ ] Check if verification gate/interview operation (allow destructive if tagged)
-  - [ ] Add guard checks in `BaseRunner::execute_command()` before spawn (after quota/rate limit, before permission audit):
-    - [ ] Build command string and check for destructive patterns (`check_command()`)
-    - [ ] Extract file paths from request (`extract_file_paths_from_request()`)
-    - [ ] Resolve and normalize file paths (handle worktree symlinks)
-    - [ ] Check file writes against write scope (`check_file_write()`)
-    - [ ] Check file access against security filter (`check_file_access()`)
-  - [ ] Implement `is_verification_gate_operation()` helper
-  - [ ] Implement `is_interview_operation()` helper
-  - [ ] Implement `extract_file_paths_from_request()` helper
-  - [ ] Integrate with verification gates (allow destructive during QA if tagged)
-  - [ ] Handle guard errors gracefully (return clear error messages, log to event log)
+  - [ ] Add `filesafe: Arc<FileSafe>` field to `BaseRunner`
+  - [ ] Initialize FileSafe in runner construction
+  - [ ] Add guard checks in platform runners after context compilation:
+    - [ ] Compile context files into a prompt view and run compiled-output validation
+    - [ ] Validate referenced context files against scope and safety policy
+    - [ ] Check whether the request is verification-gate exempt before blocking
+  - [ ] Add guard checks in `BaseRunner::execute_command()` before spawn:
+    - [ ] Build the command string and check destructive patterns
+    - [ ] Extract file paths from the request
+    - [ ] Implement the locked realpath-before-scope-check invariant from Section 11.1.1: resolve relative paths against `working_directory`, canonicalize with fail-closed behavior, compare scope/security rules against the canonical real path, and reject unresolved or non-canonical worktree aliases instead of falling back to unresolved paths
+    - [ ] Implement the locked optimistic-concurrency and snapshot-integrity contract from Section 11.1.2a, including hard-error handling for `git add`, `git commit`, `git stash`, and `git checkout`, plus post-`git add` verification via `git status --porcelain`
+  - [ ] Implement helper methods:
+    - [ ] `FileSafe::check_command(context_files, prompt, command, working_directory)`
+    - [ ] `FileSafe::check_edit(file_path, old_content, new_content, working_directory)`
+    - [ ] `FileSafe::should_exempt_verification_gate(task)`
+  - [ ] Integrate with verification gates and plan-apply paths
+  - [ ] Return clear, actionable guard errors to the caller
+
+ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/GitHub_Integration.md
 
 - [ ] **Add configuration**
-  - [ ] Add `FileSafeConfig` to config system
-  - [ ] Wire to GUI config (optional, can be CLI-only initially)
-  - [ ] Document config options
-
+  - [ ] Add `filesafe.enabled` to settings
+  - [ ] Add `filesafe.verification_gate_exemptions` for readonly verification tools
+  - [ ] Add `filesafe.project_scope_overrides` if needed
+  - [ ] Add remote-mode aware scope roots derived from mounted project identity
 - [ ] **Event logging**
-  - [ ] Create `FileSafeEvent` struct
-  - [ ] Integrate with existing event logging system (Section 11.5)
-  - [ ] Log blocked commands, file access violations, security filter blocks
-  - [ ] Include command preview, pattern matched, timestamp, agent context
+  - [ ] Emit structured `filesafe.blocked` events with reason codes, matched rule ids, and resolved path context
+  - [ ] Emit `filesafe.snapshot_created`, `filesafe.snapshot_conflict`, and `filesafe.snapshot_restore` events with stable identifiers
+  - [ ] Ensure logs distinguish dry-run validation from hard blocking
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/FileSafe.md
 
 - [ ] **Testing**
-  - [ ] Unit tests for pattern matching (bash guard)
-  - [ ] Unit tests for write scope (allowed/blocked files)
-  - [ ] Unit tests for security filter (sensitive file patterns)
-  - [ ] Unit tests for prompt content extraction
-  - [ ] Unit tests for override mechanisms
-  - [ ] Integration tests with platform runners
-  - [ ] Test all 40+ destructive command patterns
-  - [ ] Test verification gate integration (allow destructive during QA)
-  - [ ] Test false positive scenarios (documentation, comments)
+  - [ ] Unit tests for destructive command detection
+  - [ ] Unit tests for scope validation
+  - [ ] Unit tests for verification-gate exemptions
+  - [ ] Unit tests for optimistic concurrency conflict detection
+  - [ ] Unit tests for git snapshot error handling and post-stage verification
+  - [ ] Integration tests with real shell commands
+  - [ ] Integration tests for plan apply and rewrite paths
+  - [ ] Remote-mode tests covering mounted project paths and canonicalization failures
 
-- [ ] **Documentation**
-  - [ ] Add to AGENTS.md FileSafe section:
-    - [ ] FileSafe: Command blocklist
-    - [ ] FileSafe: Write scope
-    - [ ] FileSafe: Security filter
-    - [ ] Override mechanisms
-    - [ ] Project-specific patterns
-  - [ ] Document integration with verification gates
-  - [ ] Document prompt content checking behavior
-  - [ ] Add to REQUIREMENTS.md
-  - [ ] Update GUI widget catalog if new widgets added
-
-- [ ] **Pre-completion verification**
-  - [ ] `cargo check` passes
-  - [ ] `cargo test` passes
-  - [ ] No hardcoded platform data
-  - [ ] DRY compliance (tag reusable items)
-
-- [ ] **Context compilation (Part B)**
-  - [ ] Create `src/context/` module: `mod.rs`, `compiler.rs`, `context_role.rs`, `filters.rs`, `skills.rs`
-  - [ ] Implement `compile_context(run_id, node_id, context_role, plan_path, working_directory)` and runtime-role compilers (`planning`, `execution`, `verification`, `debug`, `review`)
-  - [ ] Requirement filtering (node-mapped only); convention extraction from AGENTS.md; decision extraction from state/progress
-  - [ ] Skill bundling: parse referenced skill metadata, resolve paths, append to the relevant compiled context; handle missing skills
-  - [ ] Delta context: git diff since the last relevant base ref, code slices, "Changed Files (Delta)" section; config `context.delta_context`
-  - [ ] Context cache: `context-index.json` with key (paths + mtimes/hashes); skip compile when valid; invalidate on change; config `context.context_cache`
-  - [ ] Structured handoff schemas: define message types and JSON schemas; `HandoffMessage` enum + validation in orchestrator; reference doc in docs/
-  - [ ] Compaction-aware re-reads: `.compaction-marker` lifecycle (clear on session start, set on compaction); consult before including plan in context
-  - [ ] Add `ContextConfig` to GuiConfig and `puppet-master.yaml`; wire to orchestrator (Option B); call compiler in platform runner before building prompt; graceful degradation on failure
-  - [ ] Unit and integration tests for compiler, cache, handoff parsing; document token savings and config in AGENTS.md
-
----
-
+ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/storage-plan.md

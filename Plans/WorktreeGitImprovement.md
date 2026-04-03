@@ -165,6 +165,7 @@ ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/Architecture_Inv
 ## 3. Git Improvements
 
 ### 3.0 Git subprocess integrity invariant
+
 #### 3.0.1 Exit-code classification and recovery
 
 Git subprocess exit codes are classified into three recovery categories:

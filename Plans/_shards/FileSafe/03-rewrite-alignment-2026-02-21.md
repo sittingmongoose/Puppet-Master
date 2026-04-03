@@ -1,13 +1,17 @@
 ## Rewrite alignment (2026-02-21)
 
-This plan remains authoritative for safety policy and context-compilation behavior. As the rewrite lands (see `Plans/rewrite-tie-in-memo.md` ("The core reliability plan" + "Storage consistency")), FileSafe should be implemented primarily through:
+This plan remains authoritative for **FileSafe safety policy only**. As the rewrite lands, FileSafe is implemented primarily through:
+- the **central tool registry + policy engine** for permissions, validation, and normalized tool outcomes
+- the **patch/apply/verify/rollback pipeline** rather than ad-hoc guardrails in UI code
+- emitting guard decisions, violations, and remediation into the canonical seglog event stream
 
-- The **central tool registry + policy engine** (permissions/validation/normalized tool results)
-- The **patch/apply/verify/rollback pipeline** (often worktrees/sandboxes) rather than ad-hoc guardrails scattered in UI code
-- Emitting guard decisions, violations, and remediation into the **unified event stream** (seglog ledger) for replayability
-- **Analytics:** Guard blocks and violations in seglog can be consumed by the **analytics scan** (`Plans/storage-plan.md` §2.5 "Analytics scan jobs"): e.g. tool-block rate, error rate by guard type or pattern, and latency of blocked vs allowed commands. Rollups stored in redb support dashboard widgets (e.g. 'FileSafe blocks this week' or 'top blocked patterns'). Ensure FileSafe event payloads include enough structure (guard type, pattern id, timestamp) for analytics scan jobs to aggregate.
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md
 
-Any UI/storage examples in this plan are illustrative; the guard behavior and contracts are the stable requirements.
+Context compilation, delta-context selection, cache heuristics, marker files, skill bundling, and compaction strategy are owned by `Plans/Prompt_Pipeline.md`. FileSafe may reference those flows only to define where safety checks run against compiled output.
 
-**ELI5/Expert copy alignment:** FileSafe-authored tooltip/help copy (including `help_tooltip` keys referenced by this plan) must define both Expert and ELI5 variants and follow `Plans/FinalGUISpec.md` §7.4.0. App-level **Interaction Mode (Expert/ELI5)** selects the shown variant; chat-level **Chat ELI5** does not override FileSafe tooltip copy.
+ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/Architecture_Invariants.md
+
+Any UI or storage examples in this plan are illustrative unless they describe guard behavior, fail-closed execution, canonical logging, or explicit FileSafe-owned payload contracts.
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/Decision_Policy.md
 

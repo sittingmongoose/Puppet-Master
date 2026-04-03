@@ -44,6 +44,7 @@
   - Avoid one generic "5h/7d" column when semantics differ; use platform-specific columns or clearly labeled sections.
 
 ### Problem 5: Ledger file size
+
 - **Risk**
   - Event storage (seglog) grows unbounded over long-running or high-throughput projects. Very large seglogs slow analytics scan jobs and increase startup recovery time.
 - **Impact**
@@ -55,6 +56,7 @@
   - `usage.jsonl` is a human-readable mirror only and MUST NOT be used for aggregation, rollup computation, or 5h/7d window serving. If retained for debugging, it follows the same retention policy as seglog.
 
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md
+
 ### Problem 6: Stale data
 
 - **Risk**

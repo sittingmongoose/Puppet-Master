@@ -2,6 +2,8 @@
 
 **CRITICAL:** All code in this plan MUST follow DRY principles. This section documents DRY requirements and violations to avoid.
 
+ContractRef: PolicyRule:Plans/DRY_Rules.md#dry-method-compliance
+
 ### DRY Requirements
 
 1. **Platform Data -- ALWAYS use platform_specs:**

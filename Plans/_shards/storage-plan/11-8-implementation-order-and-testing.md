@@ -40,7 +40,19 @@
 
 ### 8.3 Startup and shutdown
 
-**Startup order:** (1) Resolve app data root (env override optional). (2) Create `storage/seglog`, `storage/redb`, `storage/jsonl`, `storage/tantivy` if missing. (3) Open redb and run migrations. (4) Open the seglog writer. (5) Start projectors that tail seglog and write JSONL/Tantivy/checkpoints. (6) Start optional analytics schedulers and per-project index services.
+**Startup order:**
+1. Resolve the app data root (environment override optional).
+2. Probe the selected storage root for durable-store safety and establish any required safe local fallback before durable stores are opened.
+3. Derive the active durable-store root and its lock path, then acquire exclusive lock ownership before any writer opens durable state. If the lock is already held, PM enters read-only/viewer mode and stops before writer startup.
+4. Create `storage/seglog`, `storage/redb`, `storage/jsonl`, `storage/tantivy` if missing.
+5. Open redb and run migrations.
+6. Open the seglog writer.
+7. Start projectors that tail seglog and write JSONL/Tantivy/checkpoints.
+8. Start optional analytics schedulers and per-project index services.
+
+If durable-store fallback is active, PM routes lock files, durable DB state, and session snapshot metadata to the safe local fallback while preserving the selected logical storage root for lineage and user-visible diagnostics.
+
+ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Architecture_Invariants.md
 
 **Regex-index startup recovery:** After a project context is known and before the first indexed `grep` or Search-panel regex query for that project:
 1. Scan the relevant `regex_index/` directory.
@@ -50,9 +62,17 @@
 5. If a valid snapshot exists, create `IndexSnapshot`, mmap `lookup.bin`, and mark the project `ready`.
 6. If no valid snapshot exists, mark the project `no_index` and transparently serve raw ripgrep until the background full build completes.
 7. Delete orphaned or partial generations opportunistically during this recovery path.
+
 ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/Architecture_Invariants.md
 
-**Shutdown:** (1) Signal projectors to stop and flush outputs. (2) Cancel in-flight regex builds and wait briefly for partial-generation cleanup. (3) Flush and close the seglog writer. (4) Close redb. (5) Leave the last valid regex snapshot and any reusable remote cache state in place; ordinary shutdown does not evict caches.
+**Shutdown:**
+1. Signal projectors to stop and flush outputs.
+2. Cancel in-flight regex builds and wait briefly for partial-generation cleanup.
+3. Flush and close the seglog writer.
+4. Close redb.
+5. Release the active durable-store lock after the final writer flush completes.
+6. Leave the last valid regex snapshot and any reusable remote cache state in place; ordinary shutdown does not evict caches.
+
 ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md
 
 **Concurrency and single-writer rules:** Seglog remains a single-writer stream. Regex-index publication is likewise single-writer per project: one build path publishes snapshots, while readers use lock-free `ArcSwap` snapshots and never observe partially-written generations.

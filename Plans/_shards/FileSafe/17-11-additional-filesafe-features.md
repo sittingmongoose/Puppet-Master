@@ -26,14 +26,60 @@ All FileSafe-managed file mutations MUST use the atomic write pattern `temp -> f
 
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Architecture_Invariants.md
 
+Managed overwrite safety:
+- if the target already exists and the mutation is not append-only, PM creates a recoverable pre-write backup or safe point before the atomic rename
+- backup lineage is keyed by session/run/turn and target path so undo and recovery never share snapshot state across unrelated sessions
+- if backup creation or backup-metadata persistence fails, the mutation fails closed before the target path is modified
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/Contracts_V0.md
+
 Temp-file lifecycle rules:
-- temp files live in a per-session temp directory or same-directory temp naming scheme
+- replacement writes MUST use same-directory temp files only: `<target>.tmp.<random>` in the target directory, `fsync(temp)`, then atomic rename over the target; per-session temp directories are valid for scratch artifacts and janitor-managed temp state, but MUST NOT be used for replacement writes that rely on same-filesystem atomic rename
 - boot/startup janitor sweeps stale `.tmp.*` artifacts from incomplete writes
 - stale-temp cleanup emits a structured recovery event when artifacts are removed
+- janitor cleanup MUST NOT delete live session backups or safe-point records that are still referenced by an active session lineage
 
-ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Architecture_Invariants.md
+
+
+
+#### 11.1.2a Optimistic concurrency for mutable rewrites
+
+All mutable FileSafe rewrite paths (plan apply, patch apply, safe auto-fix, context file rewrite, and verification-driven rewrite) MUST follow the same optimistic-concurrency contract.
+
+ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/storage-plan.md
+
+Required behavior:
+- Before any mutable rewrite, the runner captures `read_revision={mtime_ns, content_sha256}` for the target file and records the current head state when a git worktree exists.
+- Immediately before rename/promote, the rewrite attempt re-reads the target state and compares it to the captured `read_revision`.
+- If the current target state no longer matches the captured `read_revision`, the rewrite aborts with `error.concurrent_edit_conflict` rather than silently overwriting newer content.
+- Conflict handling must surface a structured result to the caller so the run can request reconciliation, retry from fresh state, or escalate to the user according to mode/approval policy.
+- Successful rewrites update the tracked post-write state that later verification, undo, and follow-up actions consume.
+
+ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/GitHub_Integration.md
+
+FileSafe uses optimistic concurrency here rather than mandatory file locking for ordinary mutable rewrites. Append-only seglog/event writers remain outside this rewrite path and do not use `error.concurrent_edit_conflict` for ordinary append durability.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FileSafe.md
+
+Snapshot and undo isolation:
+- Snapshot indexes and safe points are scoped to the active run/session lineage. Restoring one safe point must never invalidate or delete other snapshots that were preserved for different sessions or legal-hold reasons.
+- Snapshot identifiers must be unique across the retained set; no restore path may assume a single global scratch snapshot directory.
+- Any git or shell subprocess used to materialize a reversible checkpoint must record enough metadata to tell whether a checkpoint was actually created.
+
+Git subprocess integrity for snapshot materialization:
+- Non-zero exits from `git add`, `git commit`, `git stash`, `git checkout`, or equivalent mutation-sensitive commands are hard errors.
+- After `git add`, PM MUST verify staged state with `git status --porcelain` before snapshot metadata is accepted as durable.
+- The `nothing to commit` case may remain informational for commit-only flows, but it MUST NOT downgrade real staging, stash, or checkout failures into success-shaped state.
+
+ContractRef: ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/FileSafe.md
+
+This contract applies to both local and remote-mode project mutations. Read-only operations and evidence capture do not require snapshot creation, but any path that claims reversibility MUST satisfy the full contract above.
+
+ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/storage-plan.md
 
 #### 11.1.3 Case folding and file-record lifecycle
+
 FileSafe and permission matching MUST use the same filesystem-awareness for case sensitivity.
 
 ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Executor_Protocol.md
@@ -56,6 +102,7 @@ ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Tools.
 In-memory file records are bounded by an LRU cap of 10,000 entries. Eviction rebuilds from canonical event state on next access; it does not silently lose guard correctness.
 
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Architecture_Invariants.md
+
 ### 11.2 Security Filter (CRITICAL)
 
 **Problem:** Agents may access sensitive files (`.env`, credentials, keys) during execution.
@@ -99,7 +146,7 @@ impl SecurityFilter {
 - `id_rsa`, `id_ed25519`, `\.pub$` (SSH keys)
 - `config/secrets\.`, `secrets/` (secrets dir or config secrets files)
 
-**Implementation:** In `security_filter.rs`, define `fn default_sensitive_patterns() -> Vec<Regex>` that returns the compiled list; allow optional project override file (e.g. `.puppet-master/security-filter.local.txt`) for additive patterns only. Document in AGENTS.md.
+**Implementation:** In the FileSafe validation layer, define `fn default_sensitive_patterns() -> Vec<Regex>` that returns the compiled list; allow optional project override file (e.g. `.puppet-master/security-filter.local.txt`) for additive patterns only. Document in AGENTS.md.
 
 ### 11.3 Prompt Content Checking & Context Compilation
 
