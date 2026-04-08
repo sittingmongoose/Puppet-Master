@@ -1,7 +1,7 @@
 {
   "schema_id": "pm.coverage_collection.v1",
   "work_id": "w-20260329-235630",
-  "created_at_utc": "2026-04-07T19:16:01.668Z",
+  "created_at_utc": "2026-04-08T02:40:03.151Z",
   "topic_or_scope": "Firecrawl Gap Analysis + Lost-Spec Recovery",
   "collected_sections": [
     {
@@ -82,6 +82,7 @@
           "Reading Site",
           "provider-routed fetch must not reuse the reserved native Site Reader identity",
           "blocked_reason_code",
+          "adapter_unavailable",
           "allowed_action_ids[]",
           "status: \"unavailable\""
         ],
@@ -118,7 +119,8 @@
         "required_behavioral_edges": [
           "chat may shortlist with search but must read chosen pages before citing them as final evidence",
           "blocked and denied web episodes bind to the shared event family instead of a chat-local recovery shape",
-          "changeTracking must not silently disappear from surfaced web results"
+          "changeTracking must not silently disappear from surfaced web results",
+          "canonical blocked classes use `adapter_unavailable`; headless/HITL-unavailable uses `status: \"unavailable\"` instead of a separate blocked class"
         ],
         "required_permission_carrythrough": [
           "headless/HITL-unavailable uses status unavailable instead of GUI-only recovery prose"
@@ -129,6 +131,7 @@
       },
       "stale_residue_to_retire": [
         "ContractName:Plans/storage-plan.md#44-activity-transparency-payloads",
+        "exact blocked_reason_code values: `permission_denied`, `network_error`, `provider_unavailable`, `headless_unavailable`, `timeout`",
         "unblock_action_ids[]",
         "change_status: 'new' | 'same' | 'changed' | 'removed'",
         "pages[].change_status",
@@ -547,8 +550,8 @@
         "required_obligation:obl-060: own requested/effective adapter and projection state carry-through",
         "required_obligation:obl-067: mirror cache bypass and cache_state rules into persistence",
         "unresolved_fidelity:FIDELITY-STORAGE-WEBPAYLOAD-001",
-        "unresolved_fidelity:FIDELITY-STORAGE-RESIDUE-001",
         "fidelity_recovery_plan:FIDELITY-STORAGE-WEBPAYLOAD-001",
+        "unresolved_fidelity:FIDELITY-STORAGE-RESIDUE-001",
         "fidelity_recovery_plan:FIDELITY-STORAGE-RESIDUE-001"
       ],
       "exact_items_that_must_survive": {
@@ -587,7 +590,6 @@
           "error_code",
           "projection_freshness",
           "projection_health",
-          "adapter_id",
           "blocked_reason_code",
           "allowed_action_ids[]",
           "denial_reason_code",
@@ -610,6 +612,11 @@
         ]
       },
       "stale_residue_to_retire": [
+        "permission_denied",
+        "network_error",
+        "provider_unavailable",
+        "headless_unavailable",
+        "status: \"unavailable\"",
         "unblock_action_ids[]",
         "change_status: 'new' | 'same' | 'changed' | 'removed'",
         "pages[].change_status",
@@ -617,7 +624,8 @@
         "`Open in Terminal` and `Show Terminal` must focus the same live session",
         "after promotion, chat stops owning the full transcript",
         "inline cards persist across thread reload and re-render from persisted metadata",
-        "search and diff do not stream progressively"
+        "search and diff do not stream progressively",
+        "adapter_id"
       ],
       "status": "active"
     },
@@ -743,6 +751,7 @@
           "for session",
           "always",
           "blocked_reason_code",
+          "adapter_unavailable",
           "allowed_action_ids[]",
           "status: \"unavailable\"",
           "websearch summary shows tool name + query preview",
@@ -756,8 +765,8 @@
           "allowed_action_ids[]"
         ],
         "required_behavioral_edges": [
-          "canonical blocked classes remain permission_denied, network_error, provider_unavailable, headless_unavailable, and timeout",
-          "headless unavailable renders as unavailable state rather than GUI-only recovery text"
+          "canonical blocked classes remain permission_denied, network_error, adapter_unavailable, and timeout",
+          "headless/HITL-unavailable uses `status: \"unavailable\"` instead of a separate blocked class"
         ],
         "required_permission_carrythrough": [
           "question default allow only when HITL is available",
@@ -771,6 +780,7 @@
       },
       "stale_residue_to_retire": [
         "unblock_action_ids[]",
+        "canonical blocked classes remain permission_denied, network_error, provider_unavailable, headless_unavailable, and timeout",
         "reject"
       ],
       "status": "active"
@@ -2943,7 +2953,7 @@
       "exact_missing_tokens": "`query`",
       "why_unresolved": "`workspaceSymbol` survives in the canonical operation list, but the owner parameter carry-through only defines `path + position` and `rename` with `newName`. `query` appears only as a stray rules bullet, not as owned parameter shape, so the owner section is over-summarized at the interface-definition point.",
       "recovery_needed": "other",
-      "owner_doc": "Plans/LSPSupport.md",
+      "owner_doc": "`Plans/LSPSupport.md`",
       "affected_consumer_or_mirror_docs": [
         "Plans/Tools.md#3.4.1 LSP tool (MVP) -- parameters, permission, rename approval",
         "Plans/FinalGUISpec.md#10.10 LSP-informed affordances",
@@ -2963,7 +2973,7 @@
       "exact_missing_tokens": "none; stale token still present twice: `Plans/Tools.md#10.7 Ask UI contract`",
       "why_unresolved": "the section still carries the stale ContractRef and even leaves a rewrite note telling a future pass to replace it. The rewrite did not land in the live section, so the canonical cross-reference carry-through is incomplete.",
       "recovery_needed": "retire stale residue",
-      "owner_doc": "Plans/Permissions_System.md",
+      "owner_doc": "`Plans/Permissions_System.md`",
       "affected_consumer_or_mirror_docs": [
         "Plans/FinalGUISpec.md#15.7 Permission approval card widget"
       ],
@@ -2981,7 +2991,7 @@
       "exact_missing_tokens": "missing from the live reserved-set list: `/skill`; stale reserved-set tokens still present: `/rewind`, `/revert`, `/share`, `/settings`, `/doctor`, `/help`, `/worktree`",
       "why_unresolved": "the declared reserved-set list still reflects older canon even though the follow-on bullets describe `/skill`, `/cancel`, and `/clear` correctly. The section therefore contradicts its own live behavior notes and leaves stale reserved-set residue in the owner section.",
       "recovery_needed": "retire stale residue",
-      "owner_doc": "Plans/Commands_System.md",
+      "owner_doc": "`Plans/Commands_System.md`",
       "affected_consumer_or_mirror_docs": [
         "Plans/UI_Command_Catalog.md#2.7 Chat slash commands (reserved)",
         "Plans/assistant-chat-design.md#5.1 Reserved built-ins",
@@ -3001,7 +3011,7 @@
       "exact_missing_tokens": "missing from the live `Reserved set:` list: `/skill`; stale reserved-set tokens still present: `/rewind`, `/revert`, `/share`, `/settings`, `/doctor`, `/help`, `/worktree`",
       "why_unresolved": "the catalog consumer still mirrors the outdated reserved membership instead of the locked baseline, so catalog non-editability and deprecation semantics would be applied to the wrong command set.",
       "recovery_needed": "update consumer section",
-      "owner_doc": "Plans/Commands_System.md",
+      "owner_doc": "`Plans/Commands_System.md`",
       "affected_consumer_or_mirror_docs": [
         "Plans/UI_Command_Catalog.md#2.7 Chat slash commands (reserved)",
         "Plans/assistant-chat-design.md#5.1 Reserved built-ins",
@@ -3021,7 +3031,7 @@
       "exact_missing_tokens": "`deny`",
       "why_unresolved": "the widget section preserves `once`, `for session`, and `always` but omits `deny`, so the permission-card consumer no longer mirrors the full approval ladder required by permission canon.",
       "recovery_needed": "update consumer section",
-      "owner_doc": "Plans/Permissions_System.md",
+      "owner_doc": "`Plans/Permissions_System.md`",
       "affected_consumer_or_mirror_docs": [
         "Plans/FinalGUISpec.md#15.7 Permission approval card widget",
         "Plans/assistant-chat-design.md#4. Message submission (Steer vs Queue), queued editing, interrupt, and stop"
@@ -3040,7 +3050,7 @@
       "exact_missing_tokens": "missing in the live ContractRef set: `ContractName:Plans/storage-plan.md#4.4 Activity transparency payloads`, `ContractName:Plans/Contracts_V0.md#3.4 Tool-specific payload extensions`, `ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md#3.18 Built-in Browser and Click-to-Context`; stale remaining: `ContractName:Plans/storage-plan.md#44-activity-transparency-payloads`",
       "why_unresolved": "the section contains a rewrite note, but the live ContractRef is still malformed and generic instead of carrying the required anchor-level linkage.",
       "recovery_needed": "retire stale residue",
-      "owner_doc": "Plans/assistant-chat-design.md",
+      "owner_doc": "`Plans/assistant-chat-design.md`",
       "affected_consumer_or_mirror_docs": [
         "Plans/storage-plan.md#4.4 Activity transparency payloads",
         "Plans/Contracts_V0.md#3.4 Tool-specific payload extensions",
@@ -3061,7 +3071,7 @@
       "exact_missing_tokens": "missing: `Plans/assistant-chat-design.md#28.2 Inline visualizer bridge`; stale remaining: `Plans/assistant-chat-design.md#282-inline-visualizer-bridge`",
       "why_unresolved": "both prose and ContractRef still use the malformed anchor, so the bridge source reference never fully survived into the consumer widget section.",
       "recovery_needed": "retire stale residue",
-      "owner_doc": "Plans/assistant-chat-design.md",
+      "owner_doc": "`Plans/assistant-chat-design.md`",
       "affected_consumer_or_mirror_docs": [
         "Plans/FinalGUISpec.md#15.6 Mermaid and inline visualizer widgets"
       ],
@@ -3079,7 +3089,7 @@
       "exact_missing_tokens": "`blocked_reason_code` is missing from the owned `#### Web-operation child payload` key table",
       "why_unresolved": "`blocked_reason_code` survives only later in carry-through prose while sibling blocked/denied fields (`allowed_action_ids[]`, `denial_reason_code`, `denial_source`, `suggested_recovery_action`) are present in the payload table. The interface-definition point is therefore incomplete.",
       "recovery_needed": "packetize fuller section content",
-      "owner_doc": "Plans/storage-plan.md",
+      "owner_doc": "`Plans/storage-plan.md`",
       "affected_consumer_or_mirror_docs": [
         "Plans/assistant-chat-design.md#13.2 Web activity and provenance",
         "Plans/FinalGUISpec.md#15.3 Web and diff operation card widget",
@@ -3099,7 +3109,7 @@
       "exact_missing_tokens": "none; stale contradictory residue still present: `permission_denied`, `network_error`, `provider_unavailable`, `headless_unavailable`, `status: \"unavailable\"`, ``Open in Terminal` and `Show Terminal` must focus the same live session``, `after promotion, chat stops owning the full transcript`, `inline cards persist across thread reload and re-render from persisted metadata`, `search and diff do not stream progressively`, `adapter_id`",
       "why_unresolved": "this stray block sits after the cache ContractRef and is not part of the 4.4 owner payload schema. `provider_unavailable` also contradicts canonical error canon, which uses `adapter_unavailable`, and the terminal/chat/card bullets belong to unrelated sections.",
       "recovery_needed": "retire stale residue",
-      "owner_doc": "Plans/storage-plan.md",
+      "owner_doc": "`Plans/storage-plan.md`",
       "affected_consumer_or_mirror_docs": [
         "Plans/assistant-chat-design.md#13.2 Web activity and provenance",
         "Plans/FinalGUISpec.md#15.3 Web and diff operation card widget",
@@ -3119,7 +3129,7 @@
       "exact_missing_tokens": "none; stale contradictory enum member still present: `todoread`",
       "why_unresolved": "`chat.plan_todo_updated` is explicitly defined for durable TODO mutations, while audited tool canon defines `todoread` as read-only (`todoread returns current normalized list for active thread/run`). Keeping `todoread` in the mutation-source enum leaves contradictory residue in the owner event contract.",
       "recovery_needed": "retire stale residue",
-      "owner_doc": "Plans/Contracts_V0.md",
+      "owner_doc": "`Plans/Contracts_V0.md`",
       "affected_consumer_or_mirror_docs": [
         "Plans/storage-plan.md#4.3 Plan and TODO state",
         "Plans/assistant-chat-design.md#8.6 Normalized TODO contract for planning outputs",

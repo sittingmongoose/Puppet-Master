@@ -81,7 +81,7 @@ Thread-visible fields:
 - `sources_ref`, `content_ref`, `map_ref`, `answer_summary_ref`
 
 Blocked and denied web attempts still bind to the shared event families and display `blocked_reason_code`, `allowed_action_ids[]`, `denial_reason_code`, `denial_source`, and `suggested_recovery_action` where present. Headless/HITL-unavailable uses `status: "unavailable"` rather than GUI-only recovery text.
-- exact blocked_reason_code values: `permission_denied`, `network_error`, `provider_unavailable`, `headless_unavailable`, `timeout`
+- exact blocked_reason_code values: `permission_denied`, `network_error`, `adapter_unavailable`, `timeout`
 
 Additional canonical rules:
 - chat may shortlist with search but must read chosen pages before citing them as final evidence

@@ -1,0 +1,30 @@
+CANONICAL CLEANUP PLAN
+run_id: r-20260329-235630-14
+packet_touched_doc_count: 13
+
+SUMMARY
+- duplicate applied content: none detected
+- owner-section split: none detected
+- cleanup issues: 2
+
+1) path: Plans/assistant-chat-design.md
+   section: ### 13.2 Web activity and provenance
+   issue_class: stale-canon residue
+   exact_problem:
+   - the local bullet `exact blocked_reason_code values: permission_denied, network_error, provider_unavailable, headless_unavailable, timeout` is stale against the same-file/current web canon that now uses `adapter_unavailable` and keeps headless/HITL-unavailable on `status: "unavailable"`
+   cleanup_instruction:
+   - retire the stale blocked_reason_code vocabulary in this section and align the exact code list to the current taxonomy without broad prose rewrite
+   canonicalization_note:
+   - packet_not_canonicalizable_as_emitted
+   - the emitted packet currently carries this stale bullet, so cleaning the section would break verifier substring expectations unless the packet is re-emitted from the cleaned source
+
+2) path: Plans/Contracts_V0.md
+   section: ### 3.4 Tool-specific payload extensions
+   issue_class: stale-canon residue
+   exact_problem:
+   - local ContractRef lines still point to `ContractName:Plans/storage-plan.md#44-activity-transparency-payloads` instead of the current `ContractName:Plans/storage-plan.md#4.4 Activity transparency payloads`
+   cleanup_instruction:
+   - rewrite the stale same-file ContractRef targets in this section to the current storage-plan anchor without changing unrelated prose
+   canonicalization_note:
+   - packet_not_canonicalizable_as_emitted
+   - the emitted packet currently carries the stale cross-reference, so cleaning the section would break verifier substring expectations unless the packet is re-emitted from the cleaned source
