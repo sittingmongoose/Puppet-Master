@@ -1,7 +1,7 @@
 {
   "schema_id": "pm.bucket_plan.v2",
   "work_id": "w-20260329-235630",
-  "created_at_utc": "2026-04-08T01:38:23.915Z",
+  "created_at_utc": "2026-04-08T02:42:47.977Z",
   "topic_or_scope": "Firecrawl Gap Analysis + Lost-Spec Recovery",
   "must_change": [
     {
@@ -44,102 +44,6 @@
       "stale_residue_to_retire": [],
       "status": "active",
       "bucket_reason": "active owner section in the collected impact set; upstream packet must refresh SSOT content"
-    },
-    {
-      "path": "Plans/assistant-chat-design.md",
-      "heading": "### 13.2 Web activity and provenance",
-      "doc_role": "owner",
-      "section_role": "owner_section",
-      "source_reasons": [
-        "section_obligation_map",
-        "required_obligation:obl-008: carry the Site Reader identity boundary into chat provenance",
-        "required_obligation:obl-009: own search-then-read and citation locality",
-        "required_obligation:obl-013: carry explicit changeTracking survival or retirement wording",
-        "required_obligation:obl-035: expose blocked recovery payload instead of GUI-local substitutes",
-        "required_obligation:obl-056: surface shared web output fields in-thread",
-        "required_obligation:obl-059: surface blocked/denied recovery fields from storage",
-        "required_obligation:obl-060: surface adapter-selection and projection disclosure fields from storage",
-        "unresolved_fidelity:FIDELITY-XREF-13.2-01",
-        "fidelity_recovery_plan:FIDELITY-XREF-13.2-01"
-      ],
-      "exact_items_that_must_survive": {
-        "required_obligations": [
-          "obl-008: carry the Site Reader identity boundary into chat provenance",
-          "obl-009: own search-then-read and citation locality",
-          "obl-013: carry explicit changeTracking survival or retirement wording",
-          "obl-035: expose blocked recovery payload instead of GUI-local substitutes",
-          "obl-056: surface shared web output fields in-thread",
-          "obl-059: surface blocked/denied recovery fields from storage",
-          "obl-060: surface adapter-selection and projection disclosure fields from storage"
-        ],
-        "required_exact_tokens": [
-          "search-then-read behavior",
-          "final citations come from the actual read path",
-          "raw search snippets alone are not enough provenance for the final answer",
-          "ContractName:Plans/storage-plan.md#4.4 Activity transparency payloads",
-          "ContractName:Plans/Contracts_V0.md#3.4 Tool-specific payload extensions",
-          "ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md#3.18 Built-in Browser and Click-to-Context",
-          "Site Reader v1 requires real browser-interaction capability, not static HTTP fetch only",
-          "Reading Site",
-          "provider-routed fetch must not reuse the reserved native Site Reader identity",
-          "blocked_reason_code",
-          "allowed_action_ids[]",
-          "status: \"unavailable\""
-        ],
-        "required_labels": [
-          "Searching Web",
-          "Reading Site"
-        ],
-        "required_interface_shape_fields": [
-          "tool_use_id",
-          "adapter_id",
-          "requested_adapter_id",
-          "effective_adapter_id",
-          "adapter_selection_reason",
-          "warnings_count",
-          "duration_ms",
-          "error_code?",
-          "error_message?",
-          "warnings?",
-          "timestamp",
-          "cached",
-          "provenance_badge?",
-          "projection_freshness",
-          "projection_health",
-          "sources_ref",
-          "content_ref",
-          "map_ref",
-          "answer_summary_ref",
-          "blocked_reason_code",
-          "allowed_action_ids[]",
-          "denial_reason_code",
-          "denial_source",
-          "suggested_recovery_action"
-        ],
-        "required_behavioral_edges": [
-          "chat may shortlist with search but must read chosen pages before citing them as final evidence",
-          "blocked and denied web episodes bind to the shared event family instead of a chat-local recovery shape",
-          "changeTracking must not silently disappear from surfaced web results"
-        ],
-        "required_permission_carrythrough": [
-          "headless/HITL-unavailable uses status unavailable instead of GUI-only recovery prose"
-        ],
-        "cross_reference_rewrites": [
-          "Point ContractRef set at ContractName:Plans/storage-plan.md#4.4 Activity transparency payloads, ContractName:Plans/Contracts_V0.md#3.4 Tool-specific payload extensions, and ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md#3.18 Built-in Browser and Click-to-Context"
-        ]
-      },
-      "stale_residue_to_retire": [
-        "ContractName:Plans/storage-plan.md#44-activity-transparency-payloads",
-        "unblock_action_ids[]",
-        "change_status: 'new' | 'same' | 'changed' | 'removed'",
-        "pages[].change_status",
-        "change_summary"
-      ],
-      "status": "active",
-      "unresolved_fidelity_ids": [
-        "FIDELITY-XREF-13.2-01"
-      ],
-      "bucket_reason": "contains unresolved owner-side fidelity gap(s); stale residue/xref/interface gaps are not verify-only"
     },
     {
       "path": "Plans/Tools.md",
@@ -348,99 +252,6 @@
     },
     {
       "path": "Plans/storage-plan.md",
-      "heading": "### 4.4 Activity transparency payloads",
-      "doc_role": "owner",
-      "section_role": "owner_section",
-      "source_reasons": [
-        "section_obligation_map",
-        "required_obligation:obl-013: retain structured changeTracking carry-through",
-        "required_obligation:obl-035: preserve canonical blocked classes in the payload SSOT",
-        "required_obligation:obl-056: own shared web output field persistence",
-        "required_obligation:obl-059: own blocked/denied recovery persistence",
-        "required_obligation:obl-060: own requested/effective adapter and projection state carry-through",
-        "required_obligation:obl-067: mirror cache bypass and cache_state rules into persistence",
-        "unresolved_fidelity:FIDELITY-STORAGE-WEBPAYLOAD-001",
-        "unresolved_fidelity:FIDELITY-STORAGE-RESIDUE-001",
-        "fidelity_recovery_plan:FIDELITY-STORAGE-WEBPAYLOAD-001",
-        "fidelity_recovery_plan:FIDELITY-STORAGE-RESIDUE-001"
-      ],
-      "exact_items_that_must_survive": {
-        "required_obligations": [
-          "obl-013: retain structured changeTracking carry-through",
-          "obl-035: preserve canonical blocked classes in the payload SSOT",
-          "obl-056: own shared web output field persistence",
-          "obl-059: own blocked/denied recovery persistence",
-          "obl-060: own requested/effective adapter and projection state carry-through",
-          "obl-067: mirror cache bypass and cache_state rules into persistence"
-        ],
-        "required_exact_tokens": [
-          "requested_adapter_id",
-          "effective_adapter_id",
-          "adapter_selection_reason",
-          "provider_fallback_summary",
-          "warnings_count",
-          "error_code",
-          "projection_freshness",
-          "projection_health",
-          "adapter_unavailable",
-          "blocked_reason_code",
-          "allowed_action_ids[]",
-          "denial_reason_code",
-          "denial_source",
-          "suggested_recovery_action",
-          "cache_state: \"hit\" | \"miss\" | \"bypassed\" | \"expired_used_for_diff\""
-        ],
-        "required_labels": [],
-        "required_interface_shape_fields": [
-          "requested_adapter_id",
-          "effective_adapter_id",
-          "adapter_selection_reason",
-          "provider_fallback_summary",
-          "warnings_count",
-          "error_code",
-          "projection_freshness",
-          "projection_health",
-          "adapter_id",
-          "blocked_reason_code",
-          "allowed_action_ids[]",
-          "denial_reason_code",
-          "denial_source",
-          "suggested_recovery_action",
-          "changeTracking",
-          "cache_state"
-        ],
-        "required_behavioral_edges": [
-          "freshness and health are independent dimensions",
-          "denied or blocked web episodes persist the shared blocked-recovery fields without GUI-local replacements",
-          "if request includes actions, cache serving is bypassed but the final post-action result may still be stored",
-          "error naming aligns to `adapter_unavailable`"
-        ],
-        "required_permission_carrythrough": [
-          "blocked episodes keep the recovery actions and denial source needed by approval UI"
-        ],
-        "cross_reference_rewrites": [
-          "Keep this owner section feeding Plans/assistant-chat-design.md#13.2 Web activity and provenance and Plans/FinalGUISpec.md#15.3 Web and diff operation card widget"
-        ]
-      },
-      "stale_residue_to_retire": [
-        "unblock_action_ids[]",
-        "change_status: 'new' | 'same' | 'changed' | 'removed'",
-        "pages[].change_status",
-        "change_summary",
-        "`Open in Terminal` and `Show Terminal` must focus the same live session",
-        "after promotion, chat stops owning the full transcript",
-        "inline cards persist across thread reload and re-render from persisted metadata",
-        "search and diff do not stream progressively"
-      ],
-      "status": "active",
-      "unresolved_fidelity_ids": [
-        "FIDELITY-STORAGE-WEBPAYLOAD-001",
-        "FIDELITY-STORAGE-RESIDUE-001"
-      ],
-      "bucket_reason": "contains unresolved owner-side fidelity gap(s); stale residue/xref/interface gaps are not verify-only"
-    },
-    {
-      "path": "Plans/storage-plan.md",
       "heading": "#### Long-running `progress_event` payload",
       "doc_role": "owner",
       "section_role": "owner_section",
@@ -487,59 +298,6 @@
       "stale_residue_to_retire": [],
       "status": "active",
       "bucket_reason": "active owner section in the collected impact set; upstream packet must refresh SSOT content"
-    },
-    {
-      "path": "Plans/Permissions_System.md",
-      "heading": "### 3.4A Web-operation permission-key derivation",
-      "doc_role": "owner",
-      "section_role": "owner_section",
-      "source_reasons": [
-        "section_obligation_map",
-        "required_obligation:obl-029: own approval-card summaries and web session-approval semantics",
-        "unresolved_fidelity:FIDELITY-PERM-XREF-001",
-        "fidelity_recovery_plan:FIDELITY-PERM-XREF-001"
-      ],
-      "exact_items_that_must_survive": {
-        "required_obligations": [
-          "obl-029: own approval-card summaries and web session-approval semantics"
-        ],
-        "required_exact_tokens": [
-          "websearch summary shows tool name + query preview",
-          "webfetch/webextract summary shows tool name + target host/URL",
-          "webresearch summary shows tool name + task summary + estimated source count when available",
-          "webcrawl/webmap summary shows tool name + root URL + page/depth caps",
-          "Approving webcrawl For Session auto-approves crawl/map/extract/fetch for the same host pattern",
-          "Approving webresearch For Session does NOT create broad allow for unrelated tools",
-          "MVP uses wildcard session approval for search/research; advanced query-pattern support is future only",
-          "Plans/FinalGUISpec.md#15.7 Permission approval card widget"
-        ],
-        "required_labels": [],
-        "required_interface_shape_fields": [
-          "webextract:{domain}",
-          "webresearch:{query_category}",
-          "webcrawl:{domain}",
-          "webmap:{domain}"
-        ],
-        "required_behavioral_edges": [
-          "URL-derived web keys normalize to registrable domain",
-          "summary templates are part of permission canon, not GUI-local prose"
-        ],
-        "required_permission_carrythrough": [
-          "For Session approval for webcrawl expands to crawl/map/extract/fetch on the same host pattern",
-          "search/research use wildcard session approval only in MVP"
-        ],
-        "cross_reference_rewrites": [
-          "Replace stale `Plans/Tools.md#10.7 Ask UI contract` references with Plans/FinalGUISpec.md#15.7 Permission approval card widget and the actual consumer sections that render the summaries"
-        ]
-      },
-      "stale_residue_to_retire": [
-        "Plans/Tools.md#10.7 Ask UI contract"
-      ],
-      "status": "active",
-      "unresolved_fidelity_ids": [
-        "FIDELITY-PERM-XREF-001"
-      ],
-      "bucket_reason": "contains unresolved owner-side fidelity gap(s); stale residue/xref/interface gaps are not verify-only"
     },
     {
       "path": "Plans/Contracts_V0.md",
@@ -668,53 +426,6 @@
       "stale_residue_to_retire": [],
       "status": "active",
       "bucket_reason": "active owner section in the collected impact set; upstream packet must refresh SSOT content"
-    },
-    {
-      "path": "Plans/Contracts_V0.md",
-      "heading": "### 1.1 Assistant worktree seglog events",
-      "doc_role": "owner",
-      "section_role": "owner_section",
-      "source_reasons": [
-        "section_obligation_map",
-        "required_obligation:obl-040: define plan/TODO mutation event coupling in the event owner",
-        "required_obligation:obl-068: add the explicit chat.plan_todo_updated event contract",
-        "unresolved_fidelity:FIDELITY-CONTRACTS-PLANTODO-001",
-        "fidelity_recovery_plan:FIDELITY-CONTRACTS-PLANTODO-001"
-      ],
-      "exact_items_that_must_survive": {
-        "required_obligations": [
-          "obl-040: define plan/TODO mutation event coupling in the event owner",
-          "obl-068: add the explicit chat.plan_todo_updated event contract"
-        ],
-        "required_exact_tokens": [
-          "chat.plan_todo_updated",
-          "source_surface",
-          "todoread"
-        ],
-        "required_labels": [
-          "chat.plan_todo_updated"
-        ],
-        "required_interface_shape_fields": [
-          "chat.plan_todo_updated",
-          "source_surface"
-        ],
-        "required_behavioral_edges": [
-          "durable plan/TODO mutations emit the event without inventing a chat-local alias",
-          "durable mutation framing belongs to `chat.plan_todo_updated` only"
-        ],
-        "required_permission_carrythrough": [],
-        "cross_reference_rewrites": [
-          "Point planning/TODO consumer sections at this event owner instead of leaving the event undefined"
-        ]
-      },
-      "stale_residue_to_retire": [
-        "todoread as a `source_surface` mutation source"
-      ],
-      "status": "active",
-      "unresolved_fidelity_ids": [
-        "FIDELITY-CONTRACTS-PLANTODO-001"
-      ],
-      "bucket_reason": "contains unresolved owner-side fidelity gap(s); stale residue/xref/interface gaps are not verify-only"
     },
     {
       "path": "Plans/storage-plan.md",
@@ -1226,76 +937,6 @@
       "bucket_reason": "active owner section in the collected impact set; upstream packet must refresh SSOT content"
     },
     {
-      "path": "Plans/Commands_System.md",
-      "heading": "## 7. Reserved built-in slash commands",
-      "doc_role": "owner",
-      "section_role": "owner_section",
-      "source_reasons": [
-        "section_obligation_map",
-        "required_obligation:obl-046: own the reserved built-in slash set, /cancel alias semantics, and /clear retirement",
-        "required_obligation:obl-047: mirror the canonical /web family IDs and bare-/web help behavior",
-        "unresolved_fidelity:FIDELITY-COMMANDS-SLASH-001",
-        "fidelity_recovery_plan:FIDELITY-COMMANDS-SLASH-001"
-      ],
-      "exact_items_that_must_survive": {
-        "required_obligations": [
-          "obl-046: own the reserved built-in slash set, /cancel alias semantics, and /clear retirement",
-          "obl-047: mirror the canonical /web family IDs and bare-/web help behavior"
-        ],
-        "required_exact_tokens": [
-          "/new",
-          "/model",
-          "/effort",
-          "/mode",
-          "/export",
-          "/compact",
-          "/stop",
-          "/resume",
-          "/web",
-          "/skill",
-          "/cancel",
-          "/clear"
-        ],
-        "required_labels": [
-          "/cancel",
-          "/clear",
-          "/web",
-          "/skill"
-        ],
-        "required_interface_shape_fields": [
-          "reserved slash command",
-          "alias/deprecation state",
-          "catalog editability"
-        ],
-        "required_behavioral_edges": [
-          "/cancel resolves internally to cmd.chat.stop",
-          "/clear is removed from live canon, not merely hidden",
-          "bare /web opens help/autocomplete and has no default operation",
-          "bare /skill is a discovery or invocation affordance, not panel-open shorthand"
-        ],
-        "required_permission_carrythrough": [],
-        "cross_reference_rewrites": [
-          "Keep slash-command consumers anchored to Plans/UI_Command_Catalog.md#2.7 Chat slash commands (reserved) and Plans/assistant-chat-design.md#5.1 Reserved built-ins"
-        ]
-      },
-      "stale_residue_to_retire": [
-        "/clear in the reserved live set",
-        "panel-open alias semantics for bare /skill",
-        "/rewind",
-        "/revert",
-        "/share",
-        "/settings",
-        "/doctor",
-        "/help",
-        "/worktree"
-      ],
-      "status": "active",
-      "unresolved_fidelity_ids": [
-        "FIDELITY-COMMANDS-SLASH-001"
-      ],
-      "bucket_reason": "contains unresolved owner-side fidelity gap(s); stale residue/xref/interface gaps are not verify-only"
-    },
-    {
       "path": "Plans/assistant-chat-design.md",
       "heading": "### 5.5 Dispatcher parity",
       "doc_role": "owner",
@@ -1404,71 +1045,108 @@
       ],
       "status": "active",
       "bucket_reason": "active owner section in the collected impact set; upstream packet must refresh SSOT content"
-    },
+    }
+  ],
+  "must_reconcile": [
     {
-      "path": "Plans/LSPSupport.md",
-      "heading": "## 9. MVP LSP features (summary)",
+      "path": "Plans/assistant-chat-design.md",
+      "heading": "### 13.2 Web activity and provenance",
       "doc_role": "owner",
       "section_role": "owner_section",
       "source_reasons": [
         "section_obligation_map",
-        "required_obligation:obl-064: own the canonical operation inventory, envelope, parameters, and rename approval edge",
-        "unresolved_fidelity:FIDELITY-LSP-064-01",
-        "fidelity_recovery_plan:FIDELITY-LSP-064-01"
+        "required_obligation:obl-008: carry the Site Reader identity boundary into chat provenance",
+        "required_obligation:obl-009: own search-then-read and citation locality",
+        "required_obligation:obl-013: carry explicit changeTracking survival or retirement wording",
+        "required_obligation:obl-035: expose blocked recovery payload instead of GUI-local substitutes",
+        "required_obligation:obl-056: surface shared web output fields in-thread",
+        "required_obligation:obl-059: surface blocked/denied recovery fields from storage",
+        "required_obligation:obl-060: surface adapter-selection and projection disclosure fields from storage",
+        "unresolved_fidelity:FIDELITY-XREF-13.2-01",
+        "fidelity_recovery_plan:FIDELITY-XREF-13.2-01"
       ],
       "exact_items_that_must_survive": {
         "required_obligations": [
-          "obl-064: own the canonical operation inventory, envelope, parameters, and rename approval edge"
+          "obl-008: carry the Site Reader identity boundary into chat provenance",
+          "obl-009: own search-then-read and citation locality",
+          "obl-013: carry explicit changeTracking survival or retirement wording",
+          "obl-035: expose blocked recovery payload instead of GUI-local substitutes",
+          "obl-056: surface shared web output fields in-thread",
+          "obl-059: surface blocked/denied recovery fields from storage",
+          "obl-060: surface adapter-selection and projection disclosure fields from storage"
         ],
         "required_exact_tokens": [
-          "goToDefinition",
-          "findReferences",
-          "hover",
-          "documentSymbol",
-          "workspaceSymbol",
-          "goToImplementation",
-          "prepareCallHierarchy",
-          "incomingCalls",
-          "outgoingCalls",
-          "rename",
-          "query",
-          "path",
-          "position",
-          "newName",
-          "ok | partial | unavailable | error"
+          "search-then-read behavior",
+          "final citations come from the actual read path",
+          "raw search snippets alone are not enough provenance for the final answer",
+          "ContractName:Plans/storage-plan.md#4.4 Activity transparency payloads",
+          "ContractName:Plans/Contracts_V0.md#3.4 Tool-specific payload extensions",
+          "ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md#3.18 Built-in Browser and Click-to-Context",
+          "Site Reader v1 requires real browser-interaction capability, not static HTTP fetch only",
+          "Reading Site",
+          "provider-routed fetch must not reuse the reserved native Site Reader identity",
+          "blocked_reason_code",
+          "adapter_unavailable",
+          "allowed_action_ids[]",
+          "status: \"unavailable\""
         ],
         "required_labels": [
-          "rename"
+          "Searching Web",
+          "Reading Site"
         ],
         "required_interface_shape_fields": [
-          "operation",
-          "path",
-          "position",
-          "query",
-          "newName",
-          "status"
+          "tool_use_id",
+          "adapter_id",
+          "requested_adapter_id",
+          "effective_adapter_id",
+          "adapter_selection_reason",
+          "warnings_count",
+          "duration_ms",
+          "error_code?",
+          "error_message?",
+          "warnings?",
+          "timestamp",
+          "cached",
+          "provenance_badge?",
+          "projection_freshness",
+          "projection_health",
+          "sources_ref",
+          "content_ref",
+          "map_ref",
+          "answer_summary_ref",
+          "blocked_reason_code",
+          "allowed_action_ids[]",
+          "denial_reason_code",
+          "denial_source",
+          "suggested_recovery_action"
         ],
         "required_behavioral_edges": [
-          "`workspaceSymbol` requires `query`",
-          "`rename` is approval-gated because it applies edits.",
-          "PM intentionally keeps `rename` as an extension."
+          "chat may shortlist with search but must read chosen pages before citing them as final evidence",
+          "blocked and denied web episodes bind to the shared event family instead of a chat-local recovery shape",
+          "changeTracking must not silently disappear from surfaced web results",
+          "canonical blocked classes use `adapter_unavailable`; headless/HITL-unavailable uses `status: \"unavailable\"` instead of a separate blocked class"
         ],
         "required_permission_carrythrough": [
-          "read/navigation operations stay read-only while rename keeps approval gating"
+          "headless/HITL-unavailable uses status unavailable instead of GUI-only recovery prose"
         ],
         "cross_reference_rewrites": [
-          "Keep LSP consumers anchored to this summary section for canonical operation names and parameter carry-through"
+          "Point ContractRef set at ContractName:Plans/storage-plan.md#4.4 Activity transparency payloads, ContractName:Plans/Contracts_V0.md#3.4 Tool-specific payload extensions, and ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md#3.18 Built-in Browser and Click-to-Context"
         ]
       },
-      "stale_residue_to_retire": [],
+      "stale_residue_to_retire": [
+        "ContractName:Plans/storage-plan.md#44-activity-transparency-payloads",
+        "exact blocked_reason_code values: `permission_denied`, `network_error`, `provider_unavailable`, `headless_unavailable`, `timeout`",
+        "unblock_action_ids[]",
+        "change_status: 'new' | 'same' | 'changed' | 'removed'",
+        "pages[].change_status",
+        "change_summary"
+      ],
       "status": "active",
       "unresolved_fidelity_ids": [
-        "FIDELITY-LSP-064-01"
+        "FIDELITY-XREF-13.2-01"
       ],
-      "bucket_reason": "contains unresolved owner-side fidelity gap(s); stale residue/xref/interface gaps are not verify-only"
-    }
-  ],
-  "must_reconcile": [
+      "bucket_reason": "contains unresolved consumer-or-mirror fidelity gap(s) owned by another section"
+    },
     {
       "path": "Plans/Tools.md",
       "heading": "## 12. Web tool routing algorithm",
@@ -1669,6 +1347,157 @@
       "bucket_reason": "active consumer/mirror section in the collected impact set; reconcile with owner canon during packeting"
     },
     {
+      "path": "Plans/storage-plan.md",
+      "heading": "### 4.4 Activity transparency payloads",
+      "doc_role": "owner",
+      "section_role": "owner_section",
+      "source_reasons": [
+        "section_obligation_map",
+        "required_obligation:obl-013: retain structured changeTracking carry-through",
+        "required_obligation:obl-035: preserve canonical blocked classes in the payload SSOT",
+        "required_obligation:obl-056: own shared web output field persistence",
+        "required_obligation:obl-059: own blocked/denied recovery persistence",
+        "required_obligation:obl-060: own requested/effective adapter and projection state carry-through",
+        "required_obligation:obl-067: mirror cache bypass and cache_state rules into persistence",
+        "unresolved_fidelity:FIDELITY-STORAGE-WEBPAYLOAD-001",
+        "fidelity_recovery_plan:FIDELITY-STORAGE-WEBPAYLOAD-001",
+        "unresolved_fidelity:FIDELITY-STORAGE-RESIDUE-001",
+        "fidelity_recovery_plan:FIDELITY-STORAGE-RESIDUE-001"
+      ],
+      "exact_items_that_must_survive": {
+        "required_obligations": [
+          "obl-013: retain structured changeTracking carry-through",
+          "obl-035: preserve canonical blocked classes in the payload SSOT",
+          "obl-056: own shared web output field persistence",
+          "obl-059: own blocked/denied recovery persistence",
+          "obl-060: own requested/effective adapter and projection state carry-through",
+          "obl-067: mirror cache bypass and cache_state rules into persistence"
+        ],
+        "required_exact_tokens": [
+          "requested_adapter_id",
+          "effective_adapter_id",
+          "adapter_selection_reason",
+          "provider_fallback_summary",
+          "warnings_count",
+          "error_code",
+          "projection_freshness",
+          "projection_health",
+          "adapter_unavailable",
+          "blocked_reason_code",
+          "allowed_action_ids[]",
+          "denial_reason_code",
+          "denial_source",
+          "suggested_recovery_action",
+          "cache_state: \"hit\" | \"miss\" | \"bypassed\" | \"expired_used_for_diff\""
+        ],
+        "required_labels": [],
+        "required_interface_shape_fields": [
+          "requested_adapter_id",
+          "effective_adapter_id",
+          "adapter_selection_reason",
+          "provider_fallback_summary",
+          "warnings_count",
+          "error_code",
+          "projection_freshness",
+          "projection_health",
+          "blocked_reason_code",
+          "allowed_action_ids[]",
+          "denial_reason_code",
+          "denial_source",
+          "suggested_recovery_action",
+          "changeTracking",
+          "cache_state"
+        ],
+        "required_behavioral_edges": [
+          "freshness and health are independent dimensions",
+          "denied or blocked web episodes persist the shared blocked-recovery fields without GUI-local replacements",
+          "if request includes actions, cache serving is bypassed but the final post-action result may still be stored",
+          "error naming aligns to `adapter_unavailable`"
+        ],
+        "required_permission_carrythrough": [
+          "blocked episodes keep the recovery actions and denial source needed by approval UI"
+        ],
+        "cross_reference_rewrites": [
+          "Keep this owner section feeding Plans/assistant-chat-design.md#13.2 Web activity and provenance and Plans/FinalGUISpec.md#15.3 Web and diff operation card widget"
+        ]
+      },
+      "stale_residue_to_retire": [
+        "permission_denied",
+        "network_error",
+        "provider_unavailable",
+        "headless_unavailable",
+        "status: \"unavailable\"",
+        "unblock_action_ids[]",
+        "change_status: 'new' | 'same' | 'changed' | 'removed'",
+        "pages[].change_status",
+        "change_summary",
+        "`Open in Terminal` and `Show Terminal` must focus the same live session",
+        "after promotion, chat stops owning the full transcript",
+        "inline cards persist across thread reload and re-render from persisted metadata",
+        "search and diff do not stream progressively",
+        "adapter_id"
+      ],
+      "status": "active",
+      "unresolved_fidelity_ids": [
+        "FIDELITY-STORAGE-WEBPAYLOAD-001",
+        "FIDELITY-STORAGE-RESIDUE-001"
+      ],
+      "bucket_reason": "contains unresolved consumer-or-mirror fidelity gap(s) owned by another section"
+    },
+    {
+      "path": "Plans/Permissions_System.md",
+      "heading": "### 3.4A Web-operation permission-key derivation",
+      "doc_role": "owner",
+      "section_role": "owner_section",
+      "source_reasons": [
+        "section_obligation_map",
+        "required_obligation:obl-029: own approval-card summaries and web session-approval semantics",
+        "unresolved_fidelity:FIDELITY-PERM-XREF-001",
+        "fidelity_recovery_plan:FIDELITY-PERM-XREF-001"
+      ],
+      "exact_items_that_must_survive": {
+        "required_obligations": [
+          "obl-029: own approval-card summaries and web session-approval semantics"
+        ],
+        "required_exact_tokens": [
+          "websearch summary shows tool name + query preview",
+          "webfetch/webextract summary shows tool name + target host/URL",
+          "webresearch summary shows tool name + task summary + estimated source count when available",
+          "webcrawl/webmap summary shows tool name + root URL + page/depth caps",
+          "Approving webcrawl For Session auto-approves crawl/map/extract/fetch for the same host pattern",
+          "Approving webresearch For Session does NOT create broad allow for unrelated tools",
+          "MVP uses wildcard session approval for search/research; advanced query-pattern support is future only",
+          "Plans/FinalGUISpec.md#15.7 Permission approval card widget"
+        ],
+        "required_labels": [],
+        "required_interface_shape_fields": [
+          "webextract:{domain}",
+          "webresearch:{query_category}",
+          "webcrawl:{domain}",
+          "webmap:{domain}"
+        ],
+        "required_behavioral_edges": [
+          "URL-derived web keys normalize to registrable domain",
+          "summary templates are part of permission canon, not GUI-local prose"
+        ],
+        "required_permission_carrythrough": [
+          "For Session approval for webcrawl expands to crawl/map/extract/fetch on the same host pattern",
+          "search/research use wildcard session approval only in MVP"
+        ],
+        "cross_reference_rewrites": [
+          "Replace stale `Plans/Tools.md#10.7 Ask UI contract` references with Plans/FinalGUISpec.md#15.7 Permission approval card widget and the actual consumer sections that render the summaries"
+        ]
+      },
+      "stale_residue_to_retire": [
+        "Plans/Tools.md#10.7 Ask UI contract"
+      ],
+      "status": "active",
+      "unresolved_fidelity_ids": [
+        "FIDELITY-PERM-XREF-001"
+      ],
+      "bucket_reason": "contains unresolved consumer-or-mirror fidelity gap(s) owned by another section"
+    },
+    {
       "path": "Plans/FinalGUISpec.md",
       "heading": "### 15.7 Permission approval card widget",
       "doc_role": "consumer",
@@ -1693,6 +1522,7 @@
           "for session",
           "always",
           "blocked_reason_code",
+          "adapter_unavailable",
           "allowed_action_ids[]",
           "status: \"unavailable\"",
           "websearch summary shows tool name + query preview",
@@ -1706,8 +1536,8 @@
           "allowed_action_ids[]"
         ],
         "required_behavioral_edges": [
-          "canonical blocked classes remain permission_denied, network_error, provider_unavailable, headless_unavailable, and timeout",
-          "headless unavailable renders as unavailable state rather than GUI-only recovery text"
+          "canonical blocked classes remain permission_denied, network_error, adapter_unavailable, and timeout",
+          "headless/HITL-unavailable uses `status: \"unavailable\"` instead of a separate blocked class"
         ],
         "required_permission_carrythrough": [
           "question default allow only when HITL is available",
@@ -1721,6 +1551,7 @@
       },
       "stale_residue_to_retire": [
         "unblock_action_ids[]",
+        "canonical blocked classes remain permission_denied, network_error, provider_unavailable, headless_unavailable, and timeout",
         "reject"
       ],
       "status": "active",
@@ -1939,6 +1770,53 @@
       "stale_residue_to_retire": [],
       "status": "active",
       "bucket_reason": "active consumer/mirror section in the collected impact set; reconcile with owner canon during packeting"
+    },
+    {
+      "path": "Plans/Contracts_V0.md",
+      "heading": "### 1.1 Assistant worktree seglog events",
+      "doc_role": "owner",
+      "section_role": "owner_section",
+      "source_reasons": [
+        "section_obligation_map",
+        "required_obligation:obl-040: define plan/TODO mutation event coupling in the event owner",
+        "required_obligation:obl-068: add the explicit chat.plan_todo_updated event contract",
+        "unresolved_fidelity:FIDELITY-CONTRACTS-PLANTODO-001",
+        "fidelity_recovery_plan:FIDELITY-CONTRACTS-PLANTODO-001"
+      ],
+      "exact_items_that_must_survive": {
+        "required_obligations": [
+          "obl-040: define plan/TODO mutation event coupling in the event owner",
+          "obl-068: add the explicit chat.plan_todo_updated event contract"
+        ],
+        "required_exact_tokens": [
+          "chat.plan_todo_updated",
+          "source_surface",
+          "todoread"
+        ],
+        "required_labels": [
+          "chat.plan_todo_updated"
+        ],
+        "required_interface_shape_fields": [
+          "chat.plan_todo_updated",
+          "source_surface"
+        ],
+        "required_behavioral_edges": [
+          "durable plan/TODO mutations emit the event without inventing a chat-local alias",
+          "durable mutation framing belongs to `chat.plan_todo_updated` only"
+        ],
+        "required_permission_carrythrough": [],
+        "cross_reference_rewrites": [
+          "Point planning/TODO consumer sections at this event owner instead of leaving the event undefined"
+        ]
+      },
+      "stale_residue_to_retire": [
+        "todoread as a `source_surface` mutation source"
+      ],
+      "status": "active",
+      "unresolved_fidelity_ids": [
+        "FIDELITY-CONTRACTS-PLANTODO-001"
+      ],
+      "bucket_reason": "contains unresolved consumer-or-mirror fidelity gap(s) owned by another section"
     },
     {
       "path": "Plans/assistant-chat-design.md",
@@ -2428,6 +2306,76 @@
       "bucket_reason": "active consumer/mirror section in the collected impact set; reconcile with owner canon during packeting"
     },
     {
+      "path": "Plans/Commands_System.md",
+      "heading": "## 7. Reserved built-in slash commands",
+      "doc_role": "owner",
+      "section_role": "owner_section",
+      "source_reasons": [
+        "section_obligation_map",
+        "required_obligation:obl-046: own the reserved built-in slash set, /cancel alias semantics, and /clear retirement",
+        "required_obligation:obl-047: mirror the canonical /web family IDs and bare-/web help behavior",
+        "unresolved_fidelity:FIDELITY-COMMANDS-SLASH-001",
+        "fidelity_recovery_plan:FIDELITY-COMMANDS-SLASH-001"
+      ],
+      "exact_items_that_must_survive": {
+        "required_obligations": [
+          "obl-046: own the reserved built-in slash set, /cancel alias semantics, and /clear retirement",
+          "obl-047: mirror the canonical /web family IDs and bare-/web help behavior"
+        ],
+        "required_exact_tokens": [
+          "/new",
+          "/model",
+          "/effort",
+          "/mode",
+          "/export",
+          "/compact",
+          "/stop",
+          "/resume",
+          "/web",
+          "/skill",
+          "/cancel",
+          "/clear"
+        ],
+        "required_labels": [
+          "/cancel",
+          "/clear",
+          "/web",
+          "/skill"
+        ],
+        "required_interface_shape_fields": [
+          "reserved slash command",
+          "alias/deprecation state",
+          "catalog editability"
+        ],
+        "required_behavioral_edges": [
+          "/cancel resolves internally to cmd.chat.stop",
+          "/clear is removed from live canon, not merely hidden",
+          "bare /web opens help/autocomplete and has no default operation",
+          "bare /skill is a discovery or invocation affordance, not panel-open shorthand"
+        ],
+        "required_permission_carrythrough": [],
+        "cross_reference_rewrites": [
+          "Keep slash-command consumers anchored to Plans/UI_Command_Catalog.md#2.7 Chat slash commands (reserved) and Plans/assistant-chat-design.md#5.1 Reserved built-ins"
+        ]
+      },
+      "stale_residue_to_retire": [
+        "/clear in the reserved live set",
+        "panel-open alias semantics for bare /skill",
+        "/rewind",
+        "/revert",
+        "/share",
+        "/settings",
+        "/doctor",
+        "/help",
+        "/worktree"
+      ],
+      "status": "active",
+      "unresolved_fidelity_ids": [
+        "FIDELITY-COMMANDS-SLASH-001"
+      ],
+      "bucket_reason": "contains unresolved consumer-or-mirror fidelity gap(s) owned by another section"
+    },
+    {
       "path": "Plans/assistant-chat-design.md",
       "heading": "### 5.1 Reserved built-ins",
       "doc_role": "consumer",
@@ -2870,6 +2818,68 @@
       ],
       "status": "active",
       "bucket_reason": "active consumer/mirror section in the collected impact set; reconcile with owner canon during packeting"
+    },
+    {
+      "path": "Plans/LSPSupport.md",
+      "heading": "## 9. MVP LSP features (summary)",
+      "doc_role": "owner",
+      "section_role": "owner_section",
+      "source_reasons": [
+        "section_obligation_map",
+        "required_obligation:obl-064: own the canonical operation inventory, envelope, parameters, and rename approval edge",
+        "unresolved_fidelity:FIDELITY-LSP-064-01",
+        "fidelity_recovery_plan:FIDELITY-LSP-064-01"
+      ],
+      "exact_items_that_must_survive": {
+        "required_obligations": [
+          "obl-064: own the canonical operation inventory, envelope, parameters, and rename approval edge"
+        ],
+        "required_exact_tokens": [
+          "goToDefinition",
+          "findReferences",
+          "hover",
+          "documentSymbol",
+          "workspaceSymbol",
+          "goToImplementation",
+          "prepareCallHierarchy",
+          "incomingCalls",
+          "outgoingCalls",
+          "rename",
+          "query",
+          "path",
+          "position",
+          "newName",
+          "ok | partial | unavailable | error"
+        ],
+        "required_labels": [
+          "rename"
+        ],
+        "required_interface_shape_fields": [
+          "operation",
+          "path",
+          "position",
+          "query",
+          "newName",
+          "status"
+        ],
+        "required_behavioral_edges": [
+          "`workspaceSymbol` requires `query`",
+          "`rename` is approval-gated because it applies edits.",
+          "PM intentionally keeps `rename` as an extension."
+        ],
+        "required_permission_carrythrough": [
+          "read/navigation operations stay read-only while rename keeps approval gating"
+        ],
+        "cross_reference_rewrites": [
+          "Keep LSP consumers anchored to this summary section for canonical operation names and parameter carry-through"
+        ]
+      },
+      "stale_residue_to_retire": [],
+      "status": "active",
+      "unresolved_fidelity_ids": [
+        "FIDELITY-LSP-064-01"
+      ],
+      "bucket_reason": "contains unresolved consumer-or-mirror fidelity gap(s) owned by another section"
     },
     {
       "path": "Plans/Tools.md",

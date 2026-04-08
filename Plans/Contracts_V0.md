@@ -261,7 +261,7 @@ ContractRef: ContractName:Plans/Contracts_V0.md#EventRecord, SchemaID:pm.require
 
 Firecrawl provider executions may extend the shared web-operation payload with exact provider-owned fields without changing the base event envelope.
 
-ContractRef: ContractName:Plans/Tools.md#10-firecrawl-provider-integration, ContractName:Plans/storage-plan.md#44-activity-transparency-payloads
+ContractRef: ContractName:Plans/Tools.md#10-firecrawl-provider-integration, ContractName:Plans/storage-plan.md#4.4 Activity transparency payloads
 
 | Field | Type | Meaning |
 |---|---|---|
@@ -273,13 +273,13 @@ Rules:
 - these fields are contract-owned extensions and MUST NOT be redefined ad hoc in Tools, storage, or chat consumers
 - self-hosted Firecrawl may omit `firecrawl_credits_used`, but the field name remains canonical when hosted billing applies
 
-ContractRef: ContractName:Plans/Tools.md#10-firecrawl-provider-integration, ContractName:Plans/storage-plan.md#44-activity-transparency-payloads
+ContractRef: ContractName:Plans/Tools.md#10-firecrawl-provider-integration, ContractName:Plans/storage-plan.md#4.4 Activity transparency payloads
 
 #### Batch web audit hierarchy
 
 Batch web operations preserve one parent audit event for the batch plus child audit events per URL.
 
-ContractRef: ContractName:Plans/Tools.md#13-batch-operations, ContractName:Plans/storage-plan.md#44-activity-transparency-payloads
+ContractRef: ContractName:Plans/Tools.md#13-batch-operations, ContractName:Plans/storage-plan.md#4.4 Activity transparency payloads
 
 Rules:
 - the parent audit event records the requested tool, batch size, unique domains, `continue_on_error`, and aggregate completion state
