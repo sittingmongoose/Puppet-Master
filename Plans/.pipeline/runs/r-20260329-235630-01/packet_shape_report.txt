@@ -1,0 +1,43 @@
+Packet Shape Report
+===================
+run_id: r-20260329-235630-01
+checked_at_utc: 2026-04-04T00:32:50Z
+packet_file: Plans/.pipeline/research_packet.json
+
+Result: PASS — no packet-shape blockers found
+
+Checks performed
+----------------
+1) NON-INSERTABLE PACKET CONTENT: PASS
+   No editor/applier instruction phrases found in any content_markdown.
+
+2) MALFORMED REPLACE_SECTION BODY: PASS
+   All 17 replace_section anchors have content starting with body text or
+   deeper child headings (level > anchor level). No same-or-higher heading
+   violations.
+
+3) MISSING HEADING ANCHOR IN SOURCE: PASS
+   All 29 heading anchors verified present in their target source files.
+
+4) OVERLAPPING ANCHOR APPLICATION ORDER: PASS
+   Multi-anchor files checked (Tools.md 2, assistant-chat-design.md 6,
+   Permissions_System.md 3, storage-plan.md 4, Skills_System.md 2).
+   No replace_section would consume a later anchor.
+
+5) STRUCTURED-CONTAINER MISPACKETIZATION: PASS
+   All 5 file_end appends introduce new headed sections (##). No table rows
+   or registry entries misplaced outside their owning container.
+
+6) CANONICALIZATION-DESTABILIZING SHAPE: PASS
+   One reconciliation note in 00-plans-index.md — appropriate for that file.
+   No temporary addenda that would require canonicalization relocation.
+
+7) CONTRACTREF LOCALITY COMPATIBILITY: PASS
+   0 uppercase operational markers (MUST/SHALL/REQUIRED/NEVER) found in
+   packet content_markdown. The content uses lowercase prose style, which
+   the verifier does not flag. No ContractRef locality defects.
+
+Summary
+-------
+22 doc_intents checked, 39 anchors total.
+0 blockers. Packet is in verifier-survivable shape.

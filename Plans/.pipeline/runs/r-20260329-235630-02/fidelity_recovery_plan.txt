@@ -1,0 +1,165 @@
+RECOVERY SUMMARY
+----------------
+- **total active fidelity blockers:** 7
+- **main recovery themes:**
+  1. **Packet drift on already-targeted owner sections**: `Plans/Tools.md`, `Plans/storage-plan.md`, `Plans/LSPSupport.md`, and `Plans/UI_Command_Catalog.md` already have packet anchors, but the packet content is still summary-grade and must be regenerated as fuller `replace_section` content.
+  2. **Owner-doc under-specification in web canon**: the blocked web stack spans exact request fields, output keys, provider-specific audit fields, `progress_event` payload keys, TTL defaults, and routing/cache sequencing that cannot remain as compressed tables or bullets.
+  3. **Owner-first recovery before consumer cleanup**: downstream consumer docs should keep deferring to repaired owner sections; do not patch mirrors first.
+  4. **One packet-shape correction**: `Plans/MCP_Integration.md` is currently packetized as a whole-file `append`; recovery should shift to heading-owned owner updates so missing auth/state canon lands in the right sections.
+
+BLOCKER-BY-BLOCKER RECOVERY MAP
+-------------------------------
+
+### FIDELITY-01
+- **where:** `Plans/Tools.md#3.5D Web operation family runtime contract`
+- **owner doc:** `Plans/Tools.md`
+- **affected consumer/mirror docs:** `Plans/assistant-chat-design.md#13.2 Web activity and provenance`; `Plans/storage-plan.md#4.4 Activity transparency payloads`; `Plans/Section15_MVP_Promoted_Features_Spec.md#1.3A Research session alignment`; `Plans/CLI_Bridged_Providers.md#Firecrawl provider entry`; `Plans/Models_System.md#4.5 Web tool provider capability alignment`
+- **likely heading/section:** `### 3.5D Web operation family runtime contract`
+- **required operation:** `replace_section`
+- **stale-residue retirement needed:** yes
+- **issue class:** owner-doc under-specification; packet drift
+- **packet regeneration needed:** yes
+- **exact obligation(s) that must survive:**
+  - `webfetch` must not remain a one-row summary; it must carry exact request/output canon including `url`, `formats`, `actions`, `cache_policy`, `change_tracking`, `pdf_mode`, `max_content_length`, `formats_returned`, `summary`, `links`, `images`, `pdf_artifact`, `action_results`, `provenance_badge`, and `execution_path`.
+  - `webextract` must carry `schema`, `schema_mode`, `prompt`, `schema_conformance`, `schema_violations`, and the strict-vs-lenient validation behavior tied to `extraction_schema_mismatch`.
+  - `webresearch` must carry `autonomous`, `auto_read_cap`, `starting_urls`, `research_steps`, `iterations_used`, and the soft-error rule for `autonomous_budget_exceeded`.
+  - `webcrawl` must carry `change_tracking`, `dedup`, `include_paths`, `exclude_paths`, `respect_robots`, `formats`, `cache_policy`, `pages`, `change_summary`, and `dedup_skipped`.
+  - `webmap` must carry `include_paths`, `exclude_paths`, `search`, `use_sitemap`, `links`, `sitemap_used`, `provenance_badge`, and `execution_path`.
+  - `WebAction` must carry `timeout_ms` plus the 30s total wall-clock cap; do not leave the action family as enum-only.
+- **why this exact recovery shape is needed:** the packet already owns this heading with `replace_section`, so appending more bullets elsewhere would leave the current compressed summary table live as same-file residue. Recovery must replace the whole owner section with exact per-tool subsections, tables, and output keys.
+
+### FIDELITY-02
+- **where:** `Plans/Tools.md#10 Firecrawl provider integration`
+- **owner doc:** `Plans/Tools.md`
+- **affected consumer/mirror docs:** `Plans/CLI_Bridged_Providers.md#Firecrawl provider entry`; `Plans/Models_System.md#4.5 Web tool provider capability alignment`; `Plans/storage-plan.md#4.4 Activity transparency payloads`; `Plans/Section15_MVP_Promoted_Features_Spec.md#1.3A Research session alignment`; `Plans/FinalGUISpec.md#7.4.4 Settings (Unified) panel specification`
+- **likely heading/section:** `## 10. Firecrawl provider integration`
+- **required operation:** `replace_section`
+- **stale-residue retirement needed:** yes
+- **issue class:** owner-doc under-specification; contradictory canon; packet drift
+- **packet regeneration needed:** yes
+- **exact obligation(s) that must survive:**
+  - `proxy_mode?: "basic" | "enhanced" | "auto"` must replace the current `direct | pm_proxy | provider_managed` summary enum.
+  - Async polling must preserve the exact interval ladder `2s, 4s, 8s, 15s, 30s` and the Firecrawl job-status family `scraping | processing | completed | failed | cancelled`.
+  - The endpoint inventory must remain `/v2/scrape`, `/v2/crawl`, `/v2/map`, `/v2/search`, `/v2/extract`, `/v2/batch/scrape`, `/v2/agent`.
+  - The Firecrawl credit/audit canon must preserve `firecrawl_credits_used`, `firecrawl_cache_state`, and `firecrawl_scrape_id`.
+  - The interact-session canon must preserve `/v2/scrape/{scrapeId}/interact`, `liveViewUrl`, `interactiveLiveViewUrl`, prompt-based vs code-based interaction, and the session-flow rules.
+  - Credit/cost disclosure must preserve the credit threshold `>100 credits` and the operation-level credit table rather than a vague cost warning.
+- **why this exact recovery shape is needed:** the current packet already replaces the owner heading, but it collapses exact provider canon into short bullets and even leaves a conflicting `proxy_mode` enum in place. A full heading-owned replacement is required so stale same-file residue is retired with the corrected Firecrawl contract.
+
+### FIDELITY-03
+- **where:** `Plans/Tools.md#12 Web tool routing algorithm`; `Plans/Tools.md#13 Batch operations`; `Plans/Tools.md#14 Web content caching layer`
+- **owner doc:** `Plans/Tools.md`
+- **affected consumer/mirror docs:** `Plans/storage-plan.md#4.4 Activity transparency payloads`; `Plans/storage-plan.md#8. Web content caching persistence`; `Plans/assistant-chat-design.md#13.2 Web activity and provenance`; `Plans/Permissions_System.md` (web permission/cancel semantics consume these owner contracts)
+- **likely heading/section:** `## 12. Web tool routing algorithm`; `## 13. Batch operations`; `## 14. Web content caching layer`
+- **required operation:** `replace_section` on all three owner headings
+- **stale-residue retirement needed:** yes
+- **issue class:** owner-doc under-specification; packet drift
+- **packet regeneration needed:** yes
+- **exact obligation(s) that must survive:**
+  - `progress_event` must expand from counts-only into `tool_use_id`, `operation`, `phase`, `detail`, `pages_completed?`, `pages_total?`, `elapsed_ms`, and `estimated_remaining_ms?`, with `phase` preserving `starting | in_progress | completing | done | failed | cancelled`.
+  - Batch per-URL result carry-through must preserve `provenance_badge`, `execution_path`, `summary`, `links`, `images`, and `pdf_artifact`; do not leave the batch result as only `items[]`, `succeeded_count`, `failed_count`, `partial_results`, and `provider_summary`.
+  - TTL defaults must preserve the exact table: `webfetch = 4 hours`, `webextract = 4 hours`, `webcrawl = 24 hours`, `webmap = 24 hours`, `websearch = 1 hour`, `webresearch = Not cached`.
+  - Two-phase cache lookup must preserve `Step 4 checks (url, formats_hash)` and the post-selection validation rule that `adapter_id` is checked only after provider selection; mismatched provider entries are discarded.
+- **why this exact recovery shape is needed:** these are already packetized as owner `replace_section` targets, so the fix is not to add consumer prose; it is to regenerate the owner sections with the exact payload keys, TTL table, and sequencing rules that the current packet compressed away.
+
+### FIDELITY-04
+- **where:** `Plans/storage-plan.md#4.2 Question and clarification state`
+- **owner doc:** `Plans/storage-plan.md`
+- **affected consumer/mirror docs:** `Plans/Tools.md#3.5B question tool runtime contract`; `Plans/assistant-chat-design.md#7.4 Question card and questionnaire system`; `Plans/interview-subagent-integration.md#Question system alignment`; `Plans/chain-wizard-flexibility.md#15.6 Shared questionnaire alignment`
+- **likely heading/section:** `### 4.2 Question and clarification state`
+- **required operation:** `replace_section`
+- **stale-residue retirement needed:** yes
+- **issue class:** owner-doc under-specification; packet drift
+- **packet regeneration needed:** yes
+- **exact obligation(s) that must survive:**
+  - Thread-scoped questionnaire draft state must be explicit, not implied: drafts are bound to the thread that presented the questionnaire and restore on thread reload/navigation-return.
+  - The owner section must distinguish `default_values` from `draft_value`; they are not aliases.
+  - Stored draft/resume canon must preserve `question_id`, `response_kind`, `validation_state`, and request outcomes `answered | submitted | dismissed | timed_out | unavailable`.
+  - The owner section must preserve the paused/dismissed semantics: dismiss returns `status: "dismissed"` and does not fabricate submission; `paused` is UI-state, not a fabricated tool result.
+  - The lifecycle split must remain explicit enough that UI-state (`draft | incomplete | ready_to_submit | submitted | paused`) and tool-result outcomes do not collapse into one thin bullet.
+- **why this exact recovery shape is needed:** the current packet already replaces this section, but only with field lists plus the vague line `draft and resume metadata for paused questionnaires`. Because the ledger explicitly named `storage-plan.md` as the landing zone for `draft_value` and thread-scoped resume semantics, the owner section must be replaced wholesale rather than patched via consumer docs.
+
+### FIDELITY-05
+- **where:** `Plans/MCP_Integration.md#2 Requested versus effective availability`; `Plans/MCP_Integration.md#3 Credential binding and invalidation`
+- **owner doc:** `Plans/MCP_Integration.md`
+- **affected consumer/mirror docs:** `Plans/Tools.md#5 MCP integration (in scope)`; `Plans/storage-plan.md` (availability/audit projection consumers); `Plans/Permissions_System.md` (permission-key consumer); `Plans/newtools.md` / GUI summary surfaces that refer to MCP availability
+- **likely heading/section:** `## 2. Requested versus effective availability`; `## 3. Credential binding and invalidation`
+- **required operation:** `replace_section` on both headings (owner-first); do not keep this as file-wide append-only packet content
+- **stale-residue retirement needed:** no
+- **issue class:** owner-doc under-specification; packet drift
+- **packet regeneration needed:** yes
+- **exact obligation(s) that must survive:**
+  - The auth-state enum must be explicit: `authenticated | expired | not_authenticated`.
+  - The effective/connection-state family must be explicit: `connected | disabled | needs_auth | needs_client_registration | failed`.
+  - The owner doc must document mapping/alignment against provider auth vocabulary `LoggedIn | LoggedOut | AuthExpired | AuthFailed` instead of leaving the overlap implicit.
+  - Credential invalidation must remain tied to effective availability until revalidation.
+- **why this exact recovery shape is needed:** the current packet creates `Plans/MCP_Integration.md` via whole-file `append`, and the emitted owner file never lands the exact auth-state canon. Recovery should move to section-level owner replacements so the missing enum/mapping becomes durable owner canon instead of staying absent or drifting into consumers.
+
+### FIDELITY-06
+- **where:** `Plans/LSPSupport.md#9 MVP LSP features (summary)`
+- **owner doc:** `Plans/LSPSupport.md`
+- **affected consumer/mirror docs:** `Plans/Tools.md` (LSP tool surface consumer); chat/editor LSP consumers that rely on the same owner contract
+- **likely heading/section:** `## 9. MVP LSP features (summary)`
+- **required operation:** `replace_section`
+- **stale-residue retirement needed:** no
+- **issue class:** owner-doc under-specification; packet drift
+- **packet regeneration needed:** yes
+- **exact obligation(s) that must survive:**
+  - The operation set must remain `goToDefinition`, `findReferences`, `hover`, `documentSymbol`, `workspaceSymbol`, `goToImplementation`, `prepareCallHierarchy`, `incomingCalls`, `outgoingCalls`, and write-gated `rename`.
+  - The owner section must no longer stop at the operation list; it must add the unresolved result/error envelope for promoted LSP tool use.
+  - The recovery packet must not guess away the envelope by aliasing everything back to short names; it must keep the long-name canonical surface and add the missing tool-result schema.
+- **why this exact recovery shape is needed:** the packet already targets the correct owner heading with `replace_section`; the recovery is to expand that replacement so the owner doc contains both the op surface and the missing response/error contract instead of leaving future implementation to infer it.
+
+### FIDELITY-07
+- **where:** `Plans/UI_Command_Catalog.md#Terminal session and layout commands`
+- **owner doc:** `Plans/UI_Command_Catalog.md`
+- **affected consumer/mirror docs:** `Plans/assistant-chat-design.md` terminal-promotion / handoff rules; `Plans/FinalGUISpec.md` terminal surface consumers; `Plans/storage-plan.md` terminal-identity consumers
+- **likely heading/section:** `#### Terminal session and layout commands`
+- **required operation:** `replace_section`
+- **stale-residue retirement needed:** yes
+- **issue class:** owner-doc under-specification; packet drift
+- **packet regeneration needed:** yes
+- **exact obligation(s) that must survive:**
+  - `Rerun in Terminal` must stop being prose-only and receive the same command-table ownership shape as adjacent terminal/dev actions.
+  - The recovered owner section must preserve the structural fields `Command ID`, `Payload`, `Domain event(s)`, and `UI surface(s)` for `Rerun in Terminal`.
+  - The action semantics must remain exact: `Rerun in Terminal` creates a fresh execution from the current command context and must remain distinct from `Open in Terminal` and `Show Terminal`.
+- **why this exact recovery shape is needed:** the current packet already replaces the heading, but it only emits prose bullets. Because the blocker is specifically about missing command identity ownership, the recovery must replace the whole owner section with a command-table form that retires the prose-only treatment.
+
+RECOVERY EXECUTION NOTES
+------------------------
+- **FIDELITY-01**
+  - packet regeneration needed: yes
+  - stale same-file canon must be retired: yes
+  - owner-doc correction required before consumer cleanup: yes
+
+- **FIDELITY-02**
+  - packet regeneration needed: yes
+  - stale same-file canon must be retired: yes
+  - owner-doc correction required before consumer cleanup: yes
+
+- **FIDELITY-03**
+  - packet regeneration needed: yes
+  - stale same-file canon must be retired: yes
+  - owner-doc correction required before consumer cleanup: yes
+
+- **FIDELITY-04**
+  - packet regeneration needed: yes
+  - stale same-file canon must be retired: yes
+  - owner-doc correction required before consumer cleanup: yes
+
+- **FIDELITY-05**
+  - packet regeneration needed: yes
+  - stale same-file canon must be retired: no
+  - owner-doc correction required before consumer cleanup: yes
+
+- **FIDELITY-06**
+  - packet regeneration needed: yes
+  - stale same-file canon must be retired: no
+  - owner-doc correction required before consumer cleanup: yes
+
+- **FIDELITY-07**
+  - packet regeneration needed: yes
+  - stale same-file canon must be retired: yes
+  - owner-doc correction required before consumer cleanup: yes
+
+<recovery_plan_ready/>

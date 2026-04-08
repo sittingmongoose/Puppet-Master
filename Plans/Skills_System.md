@@ -150,24 +150,43 @@ The skill registry remains the discovery and validation source for available ski
 `default_skill_refs` are resolved against the canonical registry during prompt/context assembly. They do not imply provider-native skill file installation at runtime.
 
 ### 4.3 `skill` tool
-The `skill` tool is the canonical on-demand runtime access path.
-- agents can request a specific skill by id
-- permission and policy checks still apply
-- tool responses are normal Puppet Master runtime artifacts, not provider-private hidden injections
+The canonical runtime surface for skill invocation is shared with `Plans/Tools.md`.
 
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/FinalGUISpec.md
+
+#### Input
+
+`skill_id`, `arguments?`, `context?`
+
+#### Output envelope
+
+`skill_id`, `title`, `content`, `source_type`, `resource_base_dir?`, `resource_entries_sample?`, `metadata?`
+
+Runtime rules:
+- discovery lists `ready` and `ready_with_warnings`
+- auto-invoke is limited to `ready`
+- FileSafe-constrained resource disclosure remains explicit; skills do not expose raw filesystem listings outside that boundary
+Discovery/invocation convergence:
+- `/skill <skill_name> [args]`, the Skills panel, and Natural language all converge on `invoke_skill`.
+- `/skill with no args lists available skills` or opens discovery/help.
+- No subcommand family for MVP.
+
+ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/assistant-chat-design.md
+
+Rules:
+- GUI panel, /skill, and Natural language converge on the same runtime contract
+- ready_with_warnings remains discoverable but is not auto-invoked
+- Keep this skill runtime section consuming Plans/UI_Command_Catalog.md#2.7 Chat slash commands (reserved) for slash dispatch identity
 ### 4.4 Canonical MVP delivery path
-MVP runtime skill delivery is:
-1. resolve referenced skills from the registry
-2. bundle selected skill content into compiled context when the context compiler decides it is needed
-3. allow on-demand access through the `skill` tool for additional lookups
 
-Provider-native skill directories, agent files, or external packaging formats are:
-- discovery sources
-- import/export formats
-- interoperability inputs
+MVP skill delivery uses one on-disk format: a single `SKILL.md` per skill.
 
-They are not the canonical MVP runtime contract.
+ContractRef: ContractName:Plans/Tools.md
 
+Delivery rules:
+- a skill package resolves to one canonical `SKILL.md`
+- import and install preserve the same `skill_id` and readiness semantics used at runtime
+- archive format or multi-file package details are implementation concerns and are not the public doc contract
 ### 4.5 Non-goal for MVP
 MVP does not require a per-provider native runtime skill-loading matrix. If provider-native loading is added later, it is an optimization or interoperability layer above the canonical registry + bundling + tool path.
 
@@ -211,39 +230,44 @@ ContractRef: ContractName:Plans/Permissions_System.md
 Skill management lives in `Agent Config > Skills`.
 
 ### 6.1 Management surface
-The Skills tab is the canonical management surface for installed, bundled, and imported skills.
 
-Required capabilities:
-- show a browseable catalog of currently available skills
-- distinguish bundled PM skills, imported skills, and catalog-installed skills
-- show readiness / validation state and missing-runtime requirements
-- expose management actions in the catalog itself
+Agent Config owns Personas and Skills. Settings does not re-own skill management.
 
-ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Tools.md, ContractName:Plans/Permissions_System.md
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Personas.md
+
+Required surfaces:
+- skill discovery by `skill_id`, title, and readiness
+- source vocabulary `bundled`, `pm_enhanced`, `catalog_installed`, `manual_import`, `project_local`, `global_local`, `shadowed`
+- readiness vocabulary `ready`, `ready_with_warnings`, `invalid`, `shadowed`, `disabled`
+- visible source/readiness badges in the management table rather than a hidden inspector-only view
+- store/discovery surfaces remain separate from the management list used for enablement and review
 
 ### 6.2 Import and install flows
-Required import/install flows:
-- drag/drop skill folder or file import
-- file-picker import
-- Skill Store launcher for browse/install-only flows
 
-Rules:
-- imported metadata populates the catalog entry
-- validation runs immediately on import
-- simple single-file imports may be wrapped into a generated enclosing folder when needed by the runtime
+Import and install flows preserve the one-`SKILL.md` model and the runtime readiness contract.
 
-ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FileSafe.md, ContractName:Plans/storage-plan.md
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/FinalGUISpec.md
+
+Flow rules:
+- imports register a canonical `skill_id`
+- readiness is evaluated after install and surfaced as `ready`, `ready_with_warnings`, `invalid`, `shadowed`, or `disabled`
+- file-browser import and drag-and-drop skill folders/files are supported MVP entry points into the same canonical install flow
+- No remote URL/git import in v1
+- imported resources stay within FileSafe-constrained disclosure rules
 
 ### 6.3 Slash and runtime boundary
-`/skill` is a lightweight invocation helper only.
 
-Rules:
-- skill management MUST NOT move into a `/skills` management family
-- runtime skill access remains the `skill` tool and the skill registry
-- the GUI must preserve the distinction between “discovered” and “actually runnable on PM”
+`/skill` is a discovery or invocation affordance that lands on the same runtime contract as tool-based skill invocation.
 
-ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Commands_System.md, ContractName:Plans/UI_Command_Catalog.md
+ContractRef: ContractName:Plans/Commands_System.md, ContractName:Plans/assistant-chat-design.md
 
+Boundary rules:
+- `/skill <skill_name> [args]` resolves directly to the shared runtime contract
+- `/skill with no args lists available skills` or opens discovery/invocation help
+- slash and Natural language invocation both resolve to the same `invoke_skill` / `skill_id / arguments? / context?` runtime contract
+- No subcommand family for MVP
+- the Skills panel surfaces the same discovery and help posture
+- `ready_with_warnings` remains discoverable but is not auto-invoked
 ## 7. Baseline alignment (OpenCode)
 
 <a id="BASELINE-DELTAS"></a>

@@ -2,7 +2,6 @@
 
 > **Compliance:** This document follows `Plans/DRY_Rules.md` and references SSOT contracts in `Plans/Contracts_V0.md`. Naming: “Puppet Master” only. No open questions; deterministic defaults per `Plans/Decision_Policy.md`.
 
-
 ## Change Summary
 
 - 2026-02-26: Added media generation and capability introspection requirements (§7): image attachment nuance (all platforms accept image attachments; image *generation* is Cursor-native or Google-key-backed), `capabilities.get` introspection rule, natural-language model override semantics (per-message only), and media-generation invocation model. SSOT: `Plans/Media_Generation_and_Capabilities.md`.
@@ -13,8 +12,8 @@
 - 2026-02-24: Aligned Interview/Assistant output surfacing with **canonical sharded plan graphs** under `.puppet-master/project/plan_graph/` (**index + node shards**). Outputs are **persisted canonically in seglog** and projected into `.puppet-master/project/...` for file-based review; `.puppet-master/project/plan.md` remains the human-readable plan view.
 - 2026-02-23: Added Interview chat UX cross-reference to Contract Layer outputs and required `.puppet-master/project/*` artifact pack so interview completion is maximally AI-executable and verifiable (SSOT: `Plans/Project_Output_Artifacts.md`, `Plans/chain-wizard-flexibility.md` §5.7/§11).
 
-**Date:** 2026-02-20  
-**Status:** Plan document only  
+**Date:** 2026-02-20
+**Status:** Plan document only
 **Cross-references:** Plans/FileManager.md (File Manager, IDE-style editor, click-to-open), Plans/storage-plan.md (seglog/redb/Tantivy, chat persistence and search), Plans/interview-subagent-integration.md, Plans/orchestrator-subagent-integration.md, AGENTS.md (DRY Method)
 **SSOT references (DRY):** `Plans/Spec_Lock.json`, `Plans/Contracts_V0.md`, `Plans/DRY_Rules.md`, `Plans/Glossary.md`, `Plans/Decision_Policy.md`, `Plans/Progression_Gates.md`, `Plans/UI_Command_Catalog.md`.
 
@@ -43,36 +42,36 @@ The **Assistant** is the third major surface alongside **Interview** and **Orche
 
 ## Table of Contents
 
-1. [Modes Overview](#1-modes-overview)  
-2. [ELI5 Mode](#2-eli5-mode)  
-3. [Permissions: YOLO vs Regular](#3-permissions-yolo-vs-regular)  
-4. [Message submission (Steer vs Queue), queued editing, interrupt, and stop](#4-message-submission-steer-vs-queue-queued-editing-interrupt-and-stop)  
-   - [4.1 Chat footer, queue UI, and files touched -- implementation detail](#41-chat-footer-queue-ui-and-files-touched--implementation-detail)  
-5. [Commands (slash commands and custom commands)](#5-commands-slash-commands-and-custom-commands)  
-   - [5.1 Git & GitHub Slash Commands](#51-git--github-slash-commands)  
-6. [Teach](#6-teach)  
-7. [Attachments, Web Search, and Extensibility](#7-attachments-web-search-and-extensibility)  
-8. [Plan Mode Depth & Rules](#8-plan-mode-depth--rules)  
-9. [File Manager, IDE-style editor, and @ Mention](#9-file-manager-ide-style-editor-and--mention)  
-   - [9.1 LSP support in Chat (MVP)](#91-lsp-support-in-chat-mvp)  
-10. [Chat History Search](#10-chat-history-search)  
-11. [Threads and chat management](#11-threads-and-chat-management)  
-   - [11.1 Thread State: `attention_required`](#111-thread-state-attention_required)  
-   - [11.2 System Message Type: `clarification_request`](#112-system-message-type-clarification_request)  
-   - [11.3 Thread State Lifecycle: `attention_required`](#113-thread-state-lifecycle-attention_required)  
-12. [Context usage display](#12-context-usage-display)  
-13. [Activity transparency: search, bash, and file activity](#13-activity-transparency-search-bash-and-file-activity)  
-14. [Subagents & Crew](#14-subagents--crew)  
-   - [14.1 Subagent visibility in thread -- implementation detail](#141-subagent-visibility-in-thread--implementation-detail)  
-15. [Plan Mode + Crew Mode](#15-plan-mode--crew-mode)  
-16. [Interview Phase UX (Chat Surface)](#16-interview-phase-ux-chat-surface)  
-17. [Context & Truncation](#17-context--truncation)  
-18. [BrainStorm Mode](#18-brainstorm-mode)  
-19. [Documentation Audience (AI Overseer)](#19-documentation-audience-ai-overseer)  
-20. [References](#20-references)  
-21. [Dashboard Warnings and Calls to Action](#21-dashboard-warnings-and-calls-to-action)  
-22. [Live Testing Tools and Hot Reload](#22-live-testing-tools-and-hot-reload)  
-23. [Gaps, Competitive Comparison, and Enhancements](#23-gaps-competitive-comparison-and-enhancements)  
+1. [Modes Overview](#1-modes-overview)
+2. [ELI5 Mode](#2-eli5-mode)
+3. [Permissions: YOLO vs Regular](#3-permissions-yolo-vs-regular)
+4. [Message submission (Steer vs Queue), queued editing, interrupt, and stop](#4-message-submission-steer-vs-queue-queued-editing-interrupt-and-stop)
+   - [4.1 Chat footer, queue UI, and files touched -- implementation detail](#41-chat-footer-queue-ui-and-files-touched--implementation-detail)
+5. [Commands (slash commands and custom commands)](#5-commands-slash-commands-and-custom-commands)
+   - [5.1 Git & GitHub Slash Commands](#51-git--github-slash-commands)
+6. [Teach](#6-teach)
+7. [Attachments, Web Search, and Extensibility](#7-attachments-web-search-and-extensibility)
+8. [Plan Mode Depth & Rules](#8-plan-mode-depth--rules)
+9. [File Manager, IDE-style editor, and @ Mention](#9-file-manager-ide-style-editor-and--mention)
+   - [9.1 LSP support in Chat (MVP)](#91-lsp-support-in-chat-mvp)
+10. [Chat History Search](#10-chat-history-search)
+11. [Threads and chat management](#11-threads-and-chat-management)
+   - [11.1 Thread State: `attention_required`](#111-thread-state-attention_required)
+   - [11.2 System Message Type: `clarification_request`](#112-system-message-type-clarification_request)
+   - [11.3 Thread State Lifecycle: `attention_required`](#113-thread-state-lifecycle-attention_required)
+12. [Context usage display](#12-context-usage-display)
+13. [Activity transparency: search, bash, and file activity](#13-activity-transparency-search-bash-and-file-activity)
+14. [Subagents & Crew](#14-subagents--crew)
+   - [14.1 Subagent visibility in thread -- implementation detail](#141-subagent-visibility-in-thread--implementation-detail)
+15. [Plan Mode + Crew Mode](#15-plan-mode--crew-mode)
+16. [Interview Phase UX (Chat Surface)](#16-interview-phase-ux-chat-surface)
+17. [Context & Truncation](#17-context--truncation)
+18. [BrainStorm Mode](#18-brainstorm-mode)
+19. [Documentation Audience (AI Overseer)](#19-documentation-audience-ai-overseer)
+20. [References](#20-references)
+21. [Dashboard Warnings and Calls to Action](#21-dashboard-warnings-and-calls-to-action)
+22. [Live Testing Tools and Hot Reload](#22-live-testing-tools-and-hot-reload)
+23. [Gaps, Competitive Comparison, and Enhancements](#23-gaps-competitive-comparison-and-enhancements)
 24. [Chat thread performance, virtualization, and flicker avoidance](#24-chat-thread-performance-virtualization-and-flicker-avoidance)
 25. [Context Circle Enhancements (Addendum -- 2026-02-23)](#25-context-circle-enhancements-addendum----2026-02-23)
 26. [Per-Pass Validation Model/Provider Settings (Invariant Sweep)](#26-per-pass-validation-modelprovider-settings-invariant-sweep)
@@ -204,15 +203,12 @@ There are **two separate ELI5 toggles**; they are independent and must not be co
 ## 3. Permissions: YOLO vs Regular
 
 - **YOLO mode:** Chat runs with maximum permissions; no permission prompts. Agent can execute, edit, and run tools without asking. User accepts full automation for that session.
-- **Regular mode:** Agent asks for permission before executing or editing. User can:
-  - **Approve once** (single action), or  
-  - **Approve for entire chat session** (all subsequent actions in that session auto-approved).
-- **Persistence:** Mode is a per-session or per-chat setting (configurable in chat UI or settings). Do not persist "approve for session" across app restarts; it applies only to the current session.
+- **Regular mode:** Agent asks for permission before executing or editing. User-facing approval follows the canonical ladder: `deny`, `once`, `for session`, `always`.
+- **Persistence:** Mode is a per-session or per-chat setting (configurable in chat UI or settings). `for session` does not persist across app restarts; durable approval/default behavior is owned by `Plans/Permissions_System.md`.
 
 ---
 
 ## 4. Message submission (Steer vs Queue), queued editing, interrupt, and stop
-
 - **Steer mode vs Queue mode:** The user can send messages in **Steer mode** or **Queue mode** (configurable in chat or settings), similar to [Codex's Steer feature](https://github.com/openai/codex/pull/10690):
   - **Steer mode (steer enabled):** **Enter** submits the message **immediately**, even when a task is running (the new message is sent right away and can steer or interrupt the flow). **Tab** (or a dedicated "Queue" action) **queues** the message when a task is running, so the user can build up a queue of follow-up messages.
   - **Queue mode (steer disabled):** **Enter** **queues** the message when a task is running (preserves "queue while a task is running" behavior). When no task is running, Enter submits as usual.
@@ -230,10 +226,9 @@ There are **two separate ELI5 toggles**; they are independent and must not be co
   - **Send now (steer)** -- send that message immediately (steer). Once sent, it is no longer shown as queued.
   - **Cancel** -- remove that message from the queue (do not send).
   If the queue is full (2 messages), the UI must prevent adding another until one is sent or removed (or show a clear "queue full" state).
-- **Keyboard shortcuts:** Chat actions (Send, New thread, Stop, focus composer, Clear queue, etc.) must be reachable via **keyboard shortcuts** and/or the **command palette**. See Plans/newfeatures.md §11.
-- **Clear queue:** The user can **clear the entire queue** (e.g. "Clear queue" action when one or more messages are queued), removing all queued messages at once.
-- **Stop the agent:** The user must be able to **stop** the agent at any time (e.g. a "Stop" button or shortcut). Stop **cancels** the current run and does **not** send any message. Stopping does not remove queued messages; the next queued message can be processed after stop, or the user can edit/remove queued messages or clear the queue.
-- **Error and failure UX:** When the CLI fails, times out, or returns an error, the thread must show a **clear error state**: the error message (or a user-friendly summary) and, where applicable, **Resend** and **Cancel** (or Dismiss) actions. `Resend` replays the latest eligible user message using the canonical history-aware resend path; Cancel dismisses the error and leaves the queue unchanged. Failed runs do not consume a queued message unless the user explicitly resends; the queue remains so the user can edit, send now, or clear. If the failure was due to a platform or network issue, the UI can suggest switching platform or model (see §12 rate limit hit).
+- **Keyboard shortcuts:** Chat actions (Send, New thread, Stop, focus composer, queue edit/cancel controls, etc.) must be reachable via **keyboard shortcuts** and/or the **command palette**. See Plans/newfeatures.md §11.
+- **Stop the agent:** The user must be able to **stop** the agent at any time (e.g. a "Stop" button or shortcut). Stop **cancels** the current run and does **not** send any message. Stopping does not remove queued messages; the next queued message can be processed after stop, or the user can edit/remove queued messages individually.
+- **Error and failure UX:** When the CLI fails, times out, or returns an error, the thread must show a **clear error state**: the error message (or a user-friendly summary) and, where applicable, **Resend** and **Cancel** (or Dismiss) actions. `Resend` replays the latest eligible user message using the canonical history-aware resend path; Cancel dismisses the error and leaves the queue unchanged. Failed runs do not consume a queued message unless the user explicitly resends; the queue remains so the user can edit, send now, or cancel queued items individually. If the failure was due to a platform or network issue, the UI can suggest switching platform or model (see §12 rate limit hit).
 
 ### 4.0A Composer Behavior
 
@@ -252,55 +247,18 @@ Required rules:
 ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md
 
 ### 4.1 Chat footer, queue UI, and files touched -- implementation detail
-**GUI updates**
+Message sending supports a small per-conversation queue so the user can stage one follow-up while a response is already in flight.
 
-- **Footer container:** Add a **chat footer** region at the bottom of the chat view that hosts, in order (top to bottom): (1) pending queued messages strip, (2) composer (text entry), (3) status line for active subagent count, (4) files-touched strip. The footer is **per thread** -- when the user switches threads, it shows that thread's queue, count, and files. Use existing widget patterns (e.g. selectable labels for file paths, styled buttons for Edit / Send now / Cancel) per `docs/gui-widget-catalog.md`; tag new reusable pieces with `// DRY:WIDGET:...`.
-- **Queued messages strip:** When the queue is non-empty, render one row per queued message (max 2). Each row: **preview of message text** (truncate with tooltip or expand on click), plus three actions: **Edit** (opens inline edit or small modal), **Send now (steer)**, **Cancel** (remove from queue). Order: first queued at top. When queue is full, show a "Queue full (2 messages)" hint and disable or warn on further queue attempts. **Empty state:** when queue is empty, this strip can be hidden or show a minimal "No queued messages" so the composer is not pushed down unnecessarily.
-- **Active subagent count line:** A single line below the composer, e.g. "0 active subagents" or "2 active subagents". Style as secondary/muted text; optional: make it a control that expands to list active personas (if we have that data) or links to the thread's run state. **Empty state:** "0 active subagents" when none.
-- **Files touched strip:** A compact list of **file paths** with **diff counts** (additions, deletions). Example: `src/main.rs` (+12 −3) - `docs/readme.md` (+2 −0). Paths should be **selectable/copyable** (e.g. `selectable_label_mono`). **Click opens the file in the in-app IDE-style editor** (Plans/FileManager.md); when the entry has line/range info, the editor opens at that location. **Empty state:** "No files changed in this thread" or hide the strip when empty. If many files (e.g. >10), show a fixed number (e.g. 5) with "+ N more" and expand on click or hover.
-- **Scrolling and layout:** Message area scrolls independently; footer stays fixed at bottom. Ensure keyboard focus (e.g. Tab order) goes: composer → queue actions → other footer controls, and that "focus composer" shortcut is available.
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md
 
-**Backend updates**
+Queue rules:
+- queued sends are FIFO
+- queue max is exactly `2`
+- queue state is transient per conversation and is not restored across reload or restart
+- when the queue is full, further sends are blocked until a slot opens
+- stale affordances `Clear queue` and `Send now — replace first` are retired from canonical UI behavior
 
-- **Thread state:** Each thread must expose (or the chat view must subscribe to):
-  - **Queued messages:** Ordered list (max 2) of `{ id, text }`. Actions: add (when queueing), remove (Cancel or Send now), edit (update text), reorder not required (FIFO only).
-  - **Active subagent count:** Integer -- number of subagents currently "active" for this thread. Define "active" as: subagent run started and not yet completed for this thread (e.g. has an in-flight tool call or turn). Backend or execution layer must emit this (e.g. from orchestrator/crew runtime or from normalized event stream).
-  - **Files touched:** List of `{ path, additions, deletions }` (or `path` + `diff_summary`) for this thread. Source: accumulate from **edit/tool events** in the thread (e.g. `file_edit`, `write`, or platform tool results). Diff counts come from **git diff** (e.g. `git diff --numstat` for the path since thread start or since last commit) or from the **event stream** if the platform reports line-level changes. Prefer a single source of truth (e.g. "files changed in this thread" maintained by the run/thread state).
-- **Events:** The unified event model (Plans/rewrite-tie-in-memo.md) must support (or be extended with):
-  - **Queue events:** `queue_add`, `queue_remove`, `queue_edit`, `queue_clear`; and a way to read current queue per thread.
-  - **Subagent lifecycle:** Events (or state) that indicate "subagent X started for thread T" and "subagent X finished for thread T" so the UI can compute active count and show persona/task in the thread (see §14.1).
-  - **File change events:** Per-thread accumulation of file edits (path + optional add/delete counts) so the footer can show files touched without re-scanning the filesystem on every paint.
-- **Persistence:** Queue state is per-thread and must be persisted (e.g. with thread list and messages) so after app restart the user sees the same queued messages if the run was not active. Active count and files touched are derived from run state; if the run is not persisted mid-flight, on restart show 0 active and last known files touched (or empty).
-
-ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/FileManager.md
-
-**Examples (unchanged)**
-
-- Queued strip: first message "Add tests for login"; second "Then update the README." Buttons: [Edit] [Send now] [Cancel] for each.
-- Active count: "2 active subagents".
-- Files touched: `src/auth.rs` (+12 −3) - `src/lib.rs` (+2 −2) - `README.md` (+5 −0).
-
-**Gaps and missing details**
-
-| Gap | Description | Recommendation |
-|-----|-------------|----------------|
-| **Definition of "active" subagent** | When does a subagent count as active? (e.g. from first tool call until turn end.) | **Resolved:** A subagent is **active** from the moment its Provider process is spawned until it emits a final result event (`run.completed`, `run.failed`, or `run.cancelled`) in the seglog. A spawned subagent that has not yet emitted a final result is active. The "what they're working on" label comes from the `task_label` field in the `run.started` seglog event. |
-| **Source of "what they're working on"** | §14 says persona + task; task can come from "current step or first message." | Backend must expose a short **task label** per active subagent (e.g. from plan step title, or first user/tool message). If missing, show only persona name. |
-| **Diff count source** | Git vs event stream vs both. | Prefer **event stream** for consistency (what the agent reported). Fallback: `git diff --numstat` for listed paths since thread start (or since last clean state). Define in backend so GUI only displays. |
-| **Files touched scope** | "This thread" -- do we include only edits in this thread's run, or all edits in the project since thread start? | Scope to **edits made during this thread's runs** (agent-originated edits in this conversation). Exclude user edits outside chat. |
-| **Queue Full Behavior (Resolved)** | What exactly happens when user tries to queue a third message? | When the queue is full (2 messages): (1) Show a **"Queue full"** label above the input area. (2) Offer two actions (in this order): **[Clear queue]** (removes all queued messages) and **[Send now — replace first]** (discards the oldest queued message, sends new message immediately). (3) Further typing in queue mode is **disabled** until queue space is available (either via Clear, Send now, or a queued message being consumed by the agent). |
-
-**Potential issues**
-
-| Issue | Risk | Mitigation |
-|-------|------|------------|
-| **Many files touched** | Long list pushes footer or scrolls. | Display up to **5** files touched, then show '+ N more' as a clickable expander. Config: `ui.chat.files_touched_display_cap`, default `5`, stored in redb. |
-| **Stale Diff Counts — Files Touched (Resolved)** | User or another process edits file after agent; diff no longer matches "agent's edit." | The chat footer shows "last known" file counts from the most recent agent turn. Counts are recomputed automatically when the user **switches to the thread** (focus event). No manual "Refresh" button — event-based counts (from seglog `file.edited` events) are preferred; focus-triggered recompute is the fallback for stale data. Diff source: `git diff --numstat` scoped to agent-originated edits in this thread's runs. |
-| **Multiple threads with runs** | Active count is per-thread, but runs might be concurrent. | Backend must attribute each subagent run to a thread id; count only subagents for the **current** thread in the footer. |
-| **Edit queued message (Resolved)** | Inline expand. | Clicking "Edit" on a queued message expands the row in-place into an editable text field pre-filled with the original message. Below the field: [Save] and [Cancel] buttons. No modal, no popover. While editing, the message remains in queue position. Saving replaces the queued message content; cancelling restores the original. |
-| **Accessibility** | Footer has many interactive elements. | Ensure focus order, keyboard activation for Edit/Send now/Cancel, and screen-reader-friendly labels (e.g. "Edit queued message 1", "Send now (steer)", "Remove from queue"). |
-
-ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/assistant-chat-design.md
+Files-touched and footer state remain lightweight per-thread UI state; they do not become a second persistence layer for queued messages.
 
 #### Message-level hover actions and resend contract
 
@@ -334,64 +292,72 @@ Compact runtime summary rules:
 - the info icon opens the message runtime popover
 
 ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/FinalGUISpec.md
+
+Additional canonical rules:
+- Stop/Edit/Resend attach ONLY to most recent user-sent message
+- discards all later history/work
+- FIFO, max 2 queued messages
+- Stop does NOT clear the queue
+- always-visible copy affordance on fenced code blocks
+- queue state is transient and is not restored across reload or restart
+- Stop becomes disabled when a run completes and no next message is queued
+- Keep recovery and restore surfaces pointed at this owner section for queue semantics
 ## 5. Commands (slash commands and custom commands)
 
 The reserved slash-command surface is canonical and non-overridable.
 
 ### 5.1 Reserved built-ins
+Reserved built-in slash commands are owned by `Plans/Commands_System.md` and consumed here without local drift.
 
-#### `/mode debug`
+ContractRef: ContractName:Plans/Commands_System.md, ContractName:Plans/UI_Command_Catalog.md
 
-`/mode debug` remains a reserved built-in routed through `cmd.chat.mode` with payload `{ mode: "debug" }`.
+Reserved set:
+`/new`, `/model`, `/effort`, `/mode`, `/export`, `/compact`, `/stop`, `/resume`, `/rewind`, `/revert`, `/share`, `/settings`, `/doctor`, `/help`, `/worktree`, `/web`
 
-Required behavior:
-- invoking `/mode debug` switches the thread into the Debug overlay and either resumes the active investigation or opens the canonical target-discovery flow
-- `/mode debug` does not create a hidden secondary thread or hidden background mode state
-- entering Debug from `Plan` or `Deep Plan` leaves planning and creates an execution-capable thread posture; existing plan artifacts remain visible as ordinary context, not as an active planning lock
-- leaving Debug does not silently discard Investigation Context; completed or superseded investigations remain historically visible until explicitly closed or revoked
+Catalog rules:
+- reserved commands shown as non-editable in catalog
+- deprecated aliases shown distinctly from active commands
+- /web remains discoverable in catalog
 
-ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Commands_System.md, ContractName:Plans/Run_Modes.md
-
-Reserved built-ins for Assistant Chat are:
-- `/new`
-- `/model`
-- `/effort`
-- `/mode`
-- `/export`
-- `/compact`
-- `/stop`
-- `/resume`
-- `/rewind`
-- `/revert`
-- `/share`
-- `/settings`
-- `/doctor`
-- `/help`
-- `/web`
-- `/skill`
+Chat rules:
+- `/cancel` is accepted only as a deprecation alias to `/stop`
+- `/clear` is removed from the reserved built-in set
+- `/web` is a family entry-point rather than a default-to-search helper
+- `/skill` remains a discovery/invocation helper, not a reserved built-in
 
 Rules:
-- Reserved built-ins MUST be visible in the slash-command catalog and settings surfaces.
-- Reserved built-ins MUST NOT be overridden by User Commands.
-- `/cancel` is a deprecated alias of `/stop` and MUST NOT carry separate semantics.
-- `/clear` is not part of the canonical reserved Assistant Chat set and MUST NOT remain a default built-in unless a later packet explicitly reintroduces it.
-
-ContractRef: ContractName:Plans/Commands_System.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Permissions_System.md
-
+- reserved slash command
+- alias/deprecation state
+- /cancel is accepted only as a deprecation alias to /stop
+- /clear is removed from the reserved built-in set
+- /web is a family entry-point rather than a default-to-search helper
+- /skill remains a discovery/invocation helper, not a reserved built-in
+- Keep this chat consumer pointed at Plans/Commands_System.md#7. Reserved built-in slash commands
 ### 5.2 `/web` and `/skill`
-`/web` is one canonical command family with these subcommands:
-- `/web search <query>`
-- `/web extract <url>`
-- `/web research <task>`
-- `/web crawl <url>`
-- `/web map <url>`
+Slash and natural-language web dispatch share the same underlying dispatcher and provider-routing rules.
 
-Natural-language requests for searching, extracting, researching, crawling, or mapping the web MUST route through the same internal dispatcher as `/web`, not a parallel feature-local path.
+ContractRef: ContractName:Plans/Commands_System.md, ContractName:Plans/Tools.md
 
-`/skill` is a lightweight invocation helper for loading or invoking an installed skill. Skill management remains in `Agent Config > Skills` and MUST NOT move into a `/skills` management family.
+`/web` family identities:
+- `/web search` → `websearch`
+- `/web fetch` → `webfetch`
+- `/web extract` → `webextract`
+- `/web research` → `webresearch`
+- `/web crawl` → `webcrawl`
+- `/web map` → `webmap`
 
-ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Skills_System.md, ContractName:Plans/FinalGUISpec.md
+Family rules:
+- bare `/web` opens help/autocomplete and has no default operation
+- slash routing and NL routing land on the same tool contracts, permission gates, and audit payloads
+- bare `/skill` opens discovery or direct invocation using the `skill_id / arguments? / context?` contract rather than acting as a panel alias
 
+Rules:
+- /skill <skill_name> [args]
+- No subcommand family for MVP
+- invoke_skill
+- bare /web opens help/autocomplete and has no default operation
+- bare /skill opens discovery or direct invocation help rather than a panel alias
+- Keep this surface consuming Plans/UI_Command_Catalog.md#2.7 Chat slash commands (reserved) and Plans/Commands_System.md#7. Reserved built-in slash commands
 ### 5.3 Git & GitHub command boundary
 Git and GitHub prefixes remain reserved and route into the canonical source-control and GitHub command surfaces rather than to user-defined command overrides.
 
@@ -410,7 +376,38 @@ ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Comman
 User Commands may complement built-ins, but they do not replace or suppress the canonical Assistant Chat command set. PM-native Ask and Plan behavior remains authoritative even when an upstream reference product handles modes or permissions differently.
 
 ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Commands_System.md, ContractName:Plans/OpenCode_Deep_Extraction.md
+### 5.5 Dispatcher parity
+- NL intents and slash commands hit the same dispatcher.
+- "search the web for X" → `websearch`.
+- "extract this page" → `webextract`.
+- "read this URL" → `webfetch`.
+- "research topic" → `webresearch`.
+- Reading intents MUST resolve to `webfetch`, not `websearch`.
+- `/skill <skill_name> [args]`, the Skills panel, and Natural language all converge on the same `invoke_skill` runtime contract.
 
+LSP note:
+- `workspaceSymbol` requires `query`.
+- Position-based operations use `path` + `position`.
+- `rename` requires `path` + `position` + `newName`.
+- `read_only` keeps web exploration ask-gated rather than silently denying it, and question default `allow` only when HITL is available.
+- approval ladder tokens include `deny`, `once`, `for session`, and `always`.
+
+ContractRef: ContractName:Plans/Commands_System.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Skills_System.md
+- subcommand is required for execution
+- URL normalization applies
+- parse failure shows usage
+
+Rules:
+- /web
+- intent phrase
+- resolved tool key
+- query
+- site/page reading is not search
+- dispatcher parity applies to slash and NL paths
+- read_only keeps web exploration ask-gated rather than silently denying it
+- approval ladder tokens include deny/once/for session/always
+- question default allow only when HITL is available
+- Keep this dispatcher note aligned with Plans/Tools.md#12. Web tool routing algorithm, Plans/UI_Command_Catalog.md#2.7 Chat slash commands (reserved), and Plans/LSPSupport.md#9. MVP LSP features (summary)
 ## 6. Teach
 
 Teach defines how users deliberately teach Puppet Master durable codebase knowledge, preferences, and workflow constraints from within chat.
@@ -491,34 +488,64 @@ Required rules:
 
 ### 7.3 Extensibility surface
 
-Assistant chat can surface extensibility points that are callable or inspectable from the thread when policy allows.
+### 7.4 Question card and questionnaire system
+Assistant Chat consumes the shared `question` runtime contract rather than defining a chat-local payload shape.
 
-Supported extensibility families:
-- skills
-- plugins
-- MCP tools / servers
+ContractRef: ContractName:Plans/Contracts_V0.md#3.4 Tool-specific payload extensions, ContractName:Plans/Tools.md, ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md
 
-Required rules:
-- skills, plugins, and MCP-backed tools surface through canonical tool-call, tool-result, and operation-card patterns rather than bespoke invisible integrations
-- when an extensibility point is invoked, chat shows the capability identity, status, and resulting output or failure
-- capability discovery may depend on installation/provider state, but unavailable integrations must not be presented as callable
-- extensibility integrations follow the same permissions, provenance, and audit-trail rules as built-in tools
-- chat should disclose whether an action came from a built-in tool, a skill, a plugin, or an MCP server-backed tool
+#### Card structure
 
-ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/Contracts_V0.md
+The chat surface renders one shared request shape with `mode`, `header`, `prompt`, `questions`, and optional `visual_ref?`. `mode: "single_question" | "questionnaire"` is the canonical mode set.
 
+Each `questions[]` entry uses the canonical `QuestionItem{question_id, question, options[], required, multi_select, allow_freeform, default_values?}` contract. Option rows remain `Array<{id, label, description?}>`.
+
+Question item preservation rules:
+- `allow_other is a deprecated alias`; chat normalizes it to `allow_freeform` before persisting drafts or rendering resume state
+- `default_values?: string[]` remain caller-supplied initial option ids
+- `draft_value?: string` remains PM-managed freeform draft state
+- `response_kind?: "selection" | "freeform" | "mixed"` and `validation_state?: "valid" | "invalid" | "pending"` remain optional preserved fields when the request surface uses them
+
+#### Answer and draft behavior
+
+- Always-visible options remain visible while the question is open; the card does not collapse into a freeform-only mode when options exist
+- `Something else` is the canonical visible label for the explicit other/freeform affordance when options and freeform coexist
+- chat writes all question progress into PM-managed draft state and NOT via `sendPrompt`
+- Drafts auto-save until submit
+- Thread-scoped draft state is restored on resume by `question_id`
+- the optional answer field `source?: "option" | "other" | "freeform"` stays visible to chat and storage consumers
+- `response_kind` and `validation_state` stay attached to the normalized question/answer state when the caller preserves them
+- question cards may include a visual, but visuals remain PM-managed payloads rather than ad hoc embedded HTML
+- users can answer out of order and revise before submit
+- required questions gate final submit until locally valid
+- Exiting/dismissing does NOT auto-submit
+- dismiss returns status: `dismissed` and restores the same outstanding questionnaire on resume
+- Headless/HITL-unavailable = `status = "unavailable"`
+- Subagent question tool access is DENIED by default
+
+#### Parent-mediated clarification rule
+
+Child agents do not question the user directly. If a delegated flow needs clarification, the parent session surfaces the `question` request, stores the draft state, and resumes the child only after the user responds or dismisses.
+
+ContractRef: ContractName:Plans/interview-subagent-integration.md, ContractName:Plans/chain-wizard-flexibility.md
+
+Rules:
+- status: 'dismissed'
+- allow_other?
+- answers
+- answer_text?
+- required questions block final submit
+- Headless/HITL-unavailable maps to status unavailable
+- Subagent question tool access is denied by default
+- Keep this chat surface anchored to Plans/Contracts_V0.md#3.4 Tool-specific payload extensions, Plans/Tools.md#3.5B `question` tool runtime contract, and Plans/storage-plan.md#4.2 Question and clarification state
 ## 8. Plan Mode, Deep Plan Mode, and Plan Thoroughness (PT)
 
 ### 8.1 Canonical planning model
 
-- **Plan** and **Deep Plan** are Assistant Chat workflow overlays.
-- While planning is in progress, both overlays normalize to canonical runtime mode **`plan`**.
-- Planning-time behavior is read-only with the `read_only + plan_output_scaffold_v1` overlay semantics from `Plans/Run_Modes.md`.
-- Planning runs may research the repo, ask clarifying questions, inspect documents, and perform cited web research when allowed, but they MUST NOT mutate project files or execute side-effecting implementation actions.
-- Planning artifacts are Puppet Master-owned drafts by default; they are not normal repo files unless the user explicitly saves them into the workspace.
-- Approving execution exits the planning overlay and starts a new execution run using canonical runtime `regular` or `yolo` depending on the chosen execution posture.
-- The approved planning artifact and TODO list remain the source of truth for the follow-on execution run.
+Chat planning canon separates plan lifecycle from item lifecycle. Plans may be proposed, revised, approved, superseded, or archived, while TODO items use the normalized item-status contract.
 
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Tools.md
+
+Planning surfaces consume the same normalized TODO projection used by `todoread`/`todowrite`, sticky execution tracking, and delegated work summaries. Chat does not publish a competing item-state vocabulary.
 ### 8.2 Plan Thoroughness (PT)
 
 **Plan Thoroughness (PT)** replaces the old planning-depth control.
@@ -612,49 +639,41 @@ Optional but allowed sections:
 - `Rollout / Migration Notes`
 
 ### 8.6 Normalized TODO contract for planning outputs
+Planning outputs that drive execution project into one normalized TODO model shared by chat, tools, storage, and widgets.
 
-Both Plan and Deep Plan MUST emit a normalized TODO list even when the visible artifact is markdown-first.
+ContractRef: ContractName:Plans/Tools.md#3.5C `todowrite` and `todoread` runtime contract, ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md
 
-ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md
+#### Item schema
 
-Required TODO fields per item:
-- `todo_id`
-- `title`
-- `summary`
-- `dependencies[]`
-- `owner_hint` (`main_agent`, `subagent`, `crew`, or `unspecified`)
-- `verification_hint`
-- `status`
+`todo_id`, `title`, `summary`, `notes?`, `status`, `dependencies[]`, `owner_hint`, `verification_hint`
 
-Optional but recommended execution-tracking fields carried by the same canonical TODO identity:
-- `notes?`
-- `order_index?`
-- `blocked_reason_code?`
-- `superseded_by_todo_id?`
+Item status is exactly `pending | in_progress | completed | blocked | skipped`.
 
-**Closed TODO lifecycle:**
-- `draft` — proposed during planning; not yet approved for execution.
-- `approved` — user accepted the item as part of the execution handoff.
-- `queued` — approved but waiting for execution to begin.
-- `ready` — execution has begun and the item has no unmet dependency.
-- `in_progress` — actively being executed.
-- `blocked` — paused behind a real dependency, approval, or prerequisite issue.
-- `completed` — finished with the required verification.
-- `dropped` — intentionally removed from the plan without replacement.
-- `superseded` — replaced by a newer TODO item or plan revision.
+`superseded` is plan-level only and does not appear as an item status.
+
+#### Sticky tracker behavior
+
+- the planning panel is a real execution tracker rather than a static summary block
+- `todoread` returns current normalized list for active thread/run
+- `todowrite` can create, reorder, update statuses/notes
+- Remove `todowrite` from blanket `ask/plan` mode auto-deny; PM-managed planning-state mutation stays available under planning approval rules
+- Structural edits = adding / removing / reordering TODO items
+- structural edits are gated once the plan is approved and execution has started; status and note updates remain available
+- item focus follows the active execution step without rewriting completed history
+- durable plan/TODO mutations emit `chat.plan_todo_updated` as defined by `Plans/Contracts_V0.md#1.1 Assistant worktree seglog events`
+- revision and history views show plan-level changes separately from item-level status changes
+- Deep Plan stays in a Q&A loop before execution begins; approval or resubmission resolves the planning review state before the tracker transitions into live execution
+- plan-level review state uses `draft`, `approved`, `executing`, `completed`, `blocked`, and `superseded`; item-level status stays separate
+- editing Deep Plan markdown (the rich artifact) MUST update the normalized TODO projection BEFORE execution begins
+
+ContractRef: ContractName:Plans/Contracts_V0.md#1.1 Assistant worktree seglog events, ContractName:Plans/storage-plan.md
 
 Rules:
-- TODO order is the default execution order unless dependencies require otherwise.
-- Dependencies may further constrain order.
-- TODO items keep the same `todo_id` across approval, queueing, execution, and completion unless a deliberate supersession occurs.
-- Replans create a new plan revision, but surviving TODOs keep identity where the work item is materially the same.
-- This TODO lifecycle is a planning/chat contract. It MUST NOT be treated as a synonym for orchestrator node lifecycle or run-graph state.
-- `todowrite` and `todoread` MUST use this same normalized schema instead of a separate checklist-only shape.
-
-**Plan-level status** remains distinct from per-item status and is closed to `draft`, `approved`, `executing`, `completed`, `blocked`, and `superseded`.
-
-ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/Prompt_Pipeline.md
-
+- todoread returns current normalized list for active thread/run
+- todowrite can create, reorder, update statuses/notes
+- Deep Plan stays in Q&A before execution begins
+- revision/history views show plan-level changes separately from item-level status changes
+- Keep this planning consumer anchored to Plans/Tools.md#3.5C `todowrite` and `todoread` runtime contract and Plans/Contracts_V0.md#1.1 Assistant worktree seglog events
 ### 8.7 Review loop for planning artifacts
 
 Standard Plan review:
@@ -987,7 +1006,6 @@ Rules:
 
 ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md
 
-
 ### 12.0A Investigation Context for Debug threads
 
 Debug threads expose a visible **Investigation Context** alongside the normal context-usage affordances.
@@ -1044,65 +1062,124 @@ ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Permissions_
 Activity transparency uses a shared inline operation-card family rather than isolated one-off widgets.
 
 ### 13.1 Operation-card family
-Activity transparency uses a shared inline operation-card family rather than isolated one-off widgets.
+Operation cards provide a shared anatomy for terminal, web, diff, search, and other lifecycle-bearing runtime activities.
 
-**Closed card taxonomy:**
-- `command_activity`
-- `web_activity`
-- `files_explored`
-- `files_changed`
-- `code_diff`
-- `subagent_activity`
-- `blocked_notice`
-- `approval_request`
-- `clarification_request`
-- `investigation_context`
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/UI_Command_Catalog.md
 
-**Shared card rules:**
-- Every card has a stable `card_id`, card type, status badge, created/updated timestamps, and a primary focus/open action appropriate to the card type.
-- Cards are inline with the assistant narrative, not a parallel navigation system.
-- Compact summaries may be terse, but every card expands into structured details instead of free-form prose only.
-- Cards link to owner surfaces through canonical route/open contracts rather than feature-local payloads.
+Shared state model:
+- one card exists per command or operation invocation
+- retry creates a new card rather than mutating the prior card in place
+- the card-level state machine is `pending`, `running`, `completed`, `failed`, `cancelled`, or `blocked`
+- underlying process/session taxonomies may still emit `starting` and `exited`; card consumers normalize those into the card-level state machine
+- `blocked` is a card-level state entered from `running` and returned to `running` on unblock
+- `disconnected` and `restoring` are agent-session states and surface as card-level `blocked` with `blocked_reason_code`
+- simple read/grep/glob results remain inline text, not cards
+- badge is always visible
+- running output may promote out of inline comfort based on heuristic thresholds
 
-**Family-specific rules:**
-- `blocked_notice` surfaces blocked-family identity, `blocked_reason_code`, and canonical `allowed_action_ids[]`; it does not invent chat-local recovery enums.
-- `approval_request` renders a pending permission decision with direct actions that map to the canonical approval semantics (for example `Allow Once`, allowed scope/session reuse when policy permits, and `Deny`). Permission resolution logic stays owned by `Plans/Permissions_System.md`.
-- `clarification_request` is the structured card form of a question or missing-input requirement; it must not be hidden as ordinary assistant narration.
-- `investigation_context` cards summarize investigation phase, target, verification/revalidation state, and primary pivots into the full Investigation Context and Runtime Artifacts surfaces; they are summaries, not raw artifact dumps.
-- Existing command/web/file/subagent cards continue to use the same skeleton and must not fork the family contract.
+Preview and copy rules:
+- preview caps stay aligned at `5` collapsed, `15` expanded, and `50` hard cap where applicable
+- search, web, and diff cards keep no-copy behavior for the rendered result block
+- fenced code blocks and explicit command fields keep their own always-visible copy affordances
+- family-specific secondary actions may appear, but they do not erase the shared card skeleton
 
-ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/FileManager.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/Tools.md
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Tools.md
 
+Rules:
+- status_badge_state
+- card-level blocked is entered from running and returned to running on unblock
+- Keep terminal/web/diff card consumers pointed at this shared card-family owner section
 ### 13.2 Web activity and provenance
-Assistant Chat uses distinct web activity labels:
-- `Searching Web`
-- `Extracting Site`
-- `Researching Web`
-- `Crawling Site`
-- `Mapping Site`
-- `Reading Site`
+#### Answer construction and citation locality
+
+When the assistant answers from web-derived material, it follows search-then-read behavior rather than answering from raw search snippets alone.
+
+ContractRef: ContractName:Plans/storage-plan.md#4.4 Activity transparency payloads, ContractName:Plans/Contracts_V0.md#3.4 Tool-specific payload extensions, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md#3.18 Built-in Browser and Click-to-Context
 
 Rules:
-- `Reading Site` is reserved for PM-native Site Reader work.
-- Search/result provenance MUST distinguish search snippets, extracts, site-reader output, research synthesis, crawl results, and map results.
-- The final Sources block MUST deduplicate repeated URLs while preserving the strongest provenance badge per source.
-- Provider fallback or support-tier changes MUST be visible in the related activity card.
+- search may shortlist candidate sources, but the assistant reads the chosen result before using it as final-answer evidence
+- final citations come from the actual read path rather than raw search snippets alone
+- raw search snippets alone are not enough provenance for the final answer
+- Site Reader v1 requires real browser-interaction capability, not static HTTP fetch only
+- `Reading Site` is reserved for the PM-native Site Reader path
+- provider-routed fetch must not reuse the reserved native Site Reader identity
+- provider-routed fetch or read still keeps requested/effective adapter disclosure so provenance, routing, and answer quality remain separately inspectable
+- if no candidate provider can execute the requested operation, chat surfaces the capability-unavailable branch explicitly instead of implying silent fallback
+- cost-aware selection remains visible when routing prefers a lower-cost viable path
+- PM MUST NOT silently switch between self-hosted Firecrawl and hosted/cloud Firecrawl
+- hosted/provider-native research paths surface explicit credit/billing disclosure, including `>100 credits` research warnings and `500 credits` deep-research warnings where those paths apply
+- self-hosted Firecrawl remains visibly disclosed as non-hosted billing
+- `changeTracking` must not silently disappear from surfaced web results; if PM retires it from MVP, the owner docs must say so explicitly
 
-ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Permissions_System.md
+In-thread web transparency is lightweight and complements, but does not replace, the dedicated audit/log surface.
 
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md
+
+Activity labeling rules:
+- `Searching Web` is the generic search family label
+- `Reading Site` is reserved for the PM-native Site Reader path
+- provider-routed or provider-fallback activity includes requested/effective adapter disclosure plus `provider_fallback_summary` when fallback occurred
+
+Thread-visible fields:
+- `tool_use_id`
+- `adapter_id`
+- `web_operation`
+- `requested_adapter_id`
+- `effective_adapter_id`
+- `adapter_selection_reason`
+- `warnings_count`
+- `duration_ms`
+- `error_code?`
+- `error_message?`
+- `warnings?`
+- `timestamp`
+- `cached`
+- `provenance_badge?`
+- `projection_freshness`
+- `projection_health`
+- `sources_ref`, `content_ref`, `map_ref`, `answer_summary_ref`
+
+Blocked and denied web attempts still bind to the shared event families and display `blocked_reason_code`, `allowed_action_ids[]`, `denial_reason_code`, `denial_source`, and `suggested_recovery_action` where present. Headless/HITL-unavailable uses `status: "unavailable"` rather than GUI-only recovery text.
+- exact blocked_reason_code values: `permission_denied`, `network_error`, `provider_unavailable`, `headless_unavailable`, `timeout`
+
+Additional canonical rules:
+- chat may shortlist with search but must read chosen pages before citing them as final evidence
+- blocked and denied web episodes bind to the shared event family instead of a chat-local recovery shape
+- changeTracking must not silently disappear from surfaced web results
+- headless/HITL-unavailable uses status unavailable instead of GUI-only recovery prose
+- Point ContractRef set at ContractName:Plans/storage-plan.md#4.4 Activity transparency payloads, ContractName:Plans/Contracts_V0.md#3.4 Tool-specific payload extensions, and ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md#3.18 Built-in Browser and Click-to-Context
 ### 13.3 Bash and terminal ownership
-Assistant Chat may preview shell-backed work inline, but the canonical interactive runtime remains the terminal workspace.
+Chat embeds a lightweight terminal preview but does not become a second interactive terminal surface.
 
-ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Run_Modes.md
+ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md
+
+Ownership rules:
+- Shell owns interactive state; chat owns preview+audit.
+- Commands requiring stdin/TTY start Terminal immediately.
+- Background/watch/server actions create terminal-owned session identity.
+- One-shot commands remain chat-inline by default, but non-interactive work may still promote if it becomes long-running.
+- Every promoted command card binds to stable terminal session identity.
+- Large payloads store full data behind refs/blobs.
+
+Command-card model:
+- the mini terminal preview is read-only and non-interactive inside chat
+- `Open in Terminal`, `Show Terminal`, `Rerun in Terminal`, and `Detach/Pop-Out` remain the canonical terminal actions
+- `Open in Terminal` and `Show Terminal` must focus the same live session
+- `Rerun in Terminal` launches a fresh terminal execution and therefore binds to a new `terminal_session_id`
+- after promotion, chat stops owning the full transcript
+- inline cards persist across thread reload and re-render from persisted metadata
+- search and diff do not stream progressively
+
+Reveal and focus behavior:
+- if the referenced terminal session is already visible, `Open in Terminal` and `Show Terminal` simply focus it
+- if the session is hidden inside another pane, tab, or section, the shell reveals the existing pane or tab before creating anything new
+- if only historical state remains, the card opens that historical shell receipt and presents explicit recovery actions instead of silently creating a replacement session
+- attach failure recovery differs for live process, ended process, and inline-only completed command
+
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/Tools.md, ContractName:Plans/storage-plan.md
 
 Rules:
-- one inline command card still corresponds to one observed command invocation or session reference.
-- `Open in Terminal` and `Show Terminal` resolve to the exact referenced terminal session, workgroup, and leaf pane when that linkage exists.
-- chat owns compact audit and preview receipts; the bottom runtime terminal workspace owns the canonical PTY layout and interaction state.
-- the bottom runtime workspace uses workgroups and subtabs rather than one flat strip of unrelated tabs.
-- editor-embedded terminal panels are secondary presentations of existing terminal leaf panes and do not become independent chat-owned runtimes.
-
-ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Wiring_Matrix.md
+- Keep terminal command consumers anchored to Plans/UI_Command_Catalog.md#Terminal session and layout commands and Plans/FinalGUISpec.md#15.1 Terminal operation card widget
 ### Command-card model
 Command cards are transcript-adjacent summaries rather than a second shell implementation.
 
@@ -1250,14 +1327,16 @@ Parallel child spawning is a first-class behavior. The thread must not assume on
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/FinalGUISpec.md
 
 Rules:
-- small fan-out may render as separate child cards.
-- large fan-out renders as one top-level batch card.
-- expanding a large batch card opens intermediate subgroups of 10 children each.
-- expanding a subgroup opens the 10 inline child cards for that subgroup.
-- only one subgroup is expanded by default unless the user explicitly opens more.
-- canonical child order remains launch order; status changes do not reorder the child list.
-- subgroup and batch summaries surface blocked, awaiting-parent, and failed counts so the user knows where attention is needed.
-
+- small fan-out may render as separate child cards
+- large fan-out renders as one top-level batch card
+- expanding a large batch card opens intermediate subgroups of 10 children each
+- expanding a subgroup opens the 10 inline child cards for that subgroup
+- only one subgroup is expanded by default unless the user explicitly opens more
+- canonical child order remains launch order; status changes do not reorder the child list
+- subgroup and batch summaries surface blocked, awaiting-parent, and failed counts so the user knows where attention is needed
+- when `continue_on_error` is `false`, the first failure closes the batch, preserves already completed child results, and marks later unstarted children as not run rather than successful
+- batch cards link the failing subgroup and failing child instead of flattening strict-stop runs into one generic failure summary
+- parent and child audit identity remain inspectable from the batch card rather than being hidden in a storage-only projection
 ### Parent-mediated clarification and escalation
 
 Children do not question the user directly by default. A child escalates to the parent; the parent decides whether to answer from existing context, send more context, ask the user, reroute, or cancel the child.
@@ -1355,9 +1434,9 @@ ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Prompt_Pipel
 
 - **Goal:** Do our best **not to truncate** important context. Long conversations and large plans should remain usable.
 - **Approach:** Use strategies similar to those used by mature AI-coding systems:
-  - **VBW (Vibe Better With Claude Code):** Context compilation, role-specific context, compaction awareness, token efficiency. See [VBW manifesto](https://github.com/yidakee/vibe-better-with-claude-code-vbw/tree/main?tab=readme-ov-file#manifesto).  
-  - **Get Shit Done (GSD):** Context engineering, sized context files, fresh context per plan. See [GSD](https://github.com/gsd-build/get-shit-done).  
-  - **yume:** Session recovery, checkpoints, persistent state. See [yume](https://github.com/aofp/yume).  
+  - **VBW (Vibe Better With Claude Code):** Context compilation, role-specific context, compaction awareness, token efficiency. See [VBW manifesto](https://github.com/yidakee/vibe-better-with-claude-code-vbw/tree/main?tab=readme-ov-file#manifesto).
+  - **Get Shit Done (GSD):** Context engineering, sized context files, fresh context per plan. See [GSD](https://github.com/gsd-build/get-shit-done).
+  - **yume:** Session recovery, checkpoints, persistent state. See [yume](https://github.com/aofp/yume).
 - **Application:** Where applicable, implement or plan for: context compilation for chat (e.g. conversation summary + recent turns + plan), compaction-aware re-reads, and clear boundaries so the agent knows what is "current" vs "summarized".
 - **User-triggered "Compact session":** The user can trigger **"Compact session"** (or "Summarize and continue") in chat -- e.g. via slash command or menu -- which runs the same compaction pipeline as auto-compact (Plans/newfeatures.md §10), with clear UI feedback (e.g. "Compacting...").
 
@@ -1469,9 +1548,9 @@ ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/assistant
 ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/interview-subagent-integration.md, ContractName:Plans/Run_Modes.md
 - **Execution:** When the user **starts or executes** the plan, the **chat must switch to Agent mode** (execution mode), because Plan mode is read-only and execution requires write/execute permissions.
 - **Who executes:** The plan can be executed by:
-  - A **regular agent**,  
-  - A **crew**, or  
-  - **Agent + subagents**.  
+  - A **regular agent**,
+  - A **crew**, or
+  - **Agent + subagents**.
   The **manager** (orchestrator) automatically decides, or the **user can request** which option.
 - **Subagent collaboration:** During BrainStorm, subagents collaborate through the canonical crew message board owned by `Plans/orchestrator-subagent-integration.md`. This chat document may describe the user-facing behavior, but the schema, routing rules, priority model, rate limit, and orchestrator-visibility contract live in the orchestrator owner doc.
 ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Contracts_V0.md
@@ -1490,26 +1569,26 @@ ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractNa
 
 ## 20. References
 
-- **AGENTS.md:** DRY Method, platform_specs, subagent_registry, Pre-Completion Verification Checklist.  
-- **Plans/interview-subagent-integration.md:** Interview phases, document generation, AGENTS.md/DRY for target projects, §5.2 AI-Overseer and wiring/completeness.  
-- **Plans/orchestrator-subagent-integration.md:** Subagent selection, crews, execution engine, Plan/Crew execution.  
-- **Plans/human-in-the-loop.md:** HITL mode (phase/task/subtask approval gates), GUI settings, Dashboard CtAs.  
-- **Plans/agent-rules-context.md:** Application-level rules (Puppet Master) and project-level rules; fed into every agent (orchestrator, interview, Assistant). When building Assistant context, include the shared rules pipeline output (application + project when a project is selected).  
-- **Plans/FileSafe.md:** Context compilation (orchestrator/iteration); chat uses separate conversation context.  
-- **Plans/Tools.md:** Central tool registry and permission model (allow/deny/ask); YOLO = no ask prompts, Regular = ask (once / approve for session ≈ [OpenCode "always"](https://opencode.ai/docs/permissions/#what-ask-does)); §2.5 cross-plan alignment with FileSafe, FileManager, orchestrator, interview.  
-- **Plans/newtools.md:** MCP, web search (cited), GUI tool catalog; **§8.2.1** cited web search (full spec, architecture, provider/auth, errors, security, per-platform, **gaps and potential problems**).
-- **Cited web search (references):** Adapt one or combine approaches so Assistant, Interview, and Orchestrator share one implementation. [opencode-websearch-cited](https://github.com/ghoulr/opencode-websearch-cited) -- LLM cited search, inline citations + Sources list (Google/OpenAI/OpenRouter). [opencode-websearch](https://www.npmjs.com/package/opencode-websearch) -- Anthropic/OpenAI provider wiring, model selection. [Opencode-Google-AI-Search-Plugin](https://github.com/IgorWarzocha/Opencode-Google-AI-Search-Plugin) -- Google AI Mode via Playwright, markdown + sources. See Plans/newtools.md §8 for full list.  
-- **Plans/newfeatures.md §15.15-15.16:** IDE-style terminal and panes (Terminal, Problems, Output, Debug Console, Ports); hot reload, live reload, fast iteration; Assistant can call up live testing tools.  
-- **Plans/newfeatures.md §3, §7:** Persistent rate limit and analytics (5h/7d visibility, "know where your tokens go"); use for usage/context display in chat header or status area.  
-- **VBW:** https://github.com/yidakee/vibe-better-with-claude-code-vbw (token efficiency, context compilation).  
-- **GSD:** https://github.com/gsd-build/get-shit-done (spec-driven development, context engineering).  
+- **AGENTS.md:** DRY Method, platform_specs, subagent_registry, Pre-Completion Verification Checklist.
+- **Plans/interview-subagent-integration.md:** Interview phases, document generation, AGENTS.md/DRY for target projects, §5.2 AI-Overseer and wiring/completeness.
+- **Plans/orchestrator-subagent-integration.md:** Subagent selection, crews, execution engine, Plan/Crew execution.
+- **Plans/human-in-the-loop.md:** HITL mode (phase/task/subtask approval gates), GUI settings, Dashboard CtAs.
+- **Plans/agent-rules-context.md:** Application-level rules (Puppet Master) and project-level rules; fed into every agent (orchestrator, interview, Assistant). When building Assistant context, include the shared rules pipeline output (application + project when a project is selected).
+- **Plans/FileSafe.md:** Context compilation (orchestrator/iteration); chat uses separate conversation context.
+- **Plans/Tools.md:** Central tool registry, tool permission keys, and ask-flow alignment; YOLO = no ask prompts, and Regular uses the canonical approval ladder from `Plans/Permissions_System.md`; §2.5 cross-plan alignment with FileSafe, FileManager, orchestrator, interview.
+- **Plans/MCP_Integration.md:** MCP naming, requested/effective availability, auth-state and connection-state vocabulary, credential binding, and invalidation; chat/search consumers reference this owner doc instead of re-owning MCP state terms.
+- **Plans/newtools.md:** GUI/settings alignment note only; older cited-search framing is non-normative and does not own live provider, routing, provenance, or billing canon.
+- **Cited web search (historical background only):** Adapt one or combine approaches so Assistant, Interview, and Orchestrator share one implementation. [opencode-websearch-cited](https://github.com/ghoulr/opencode-websearch-cited) -- LLM cited search, inline citations + Sources list (Google/OpenAI/OpenRouter). [opencode-websearch](https://www.npmjs.com/package/opencode-websearch) -- Anthropic/OpenAI provider wiring, model selection. [Opencode-Google-AI-Search-Plugin](https://github.com/IgorWarzocha/Opencode-Google-AI-Search-Plugin) -- Google AI Mode via Playwright, markdown + sources. These references do not replace the owner canon in `Plans/Tools.md`, `Plans/FinalGUISpec.md`, or `Plans/MCP_Integration.md`.
+- **Plans/newfeatures.md §15.15-15.16:** IDE-style terminal and panes (Terminal, Problems, Output, Debug Console, Ports); hot reload, live reload, fast iteration; Assistant can call up live testing tools.
+- **Plans/newfeatures.md §3, §7:** Persistent rate limit and analytics (5h/7d visibility, "know where your tokens go"); use for usage/context display in chat header or status area.
+- **VBW:** https://github.com/yidakee/vibe-better-with-claude-code-vbw (token efficiency, context compilation).
+- **GSD:** https://github.com/gsd-build/get-shit-done (spec-driven development, context engineering).
 - **yume:** https://github.com/aofp/yume (session recovery, native UI for Claude Code).
 - **Plans/assistant-chat-design.md §23:** Gaps, competitive comparison (OpenCode, Claude Code, Codex, Gemini, Antigravity, Cursor), and recommended enhancements.
 - **Plans/assistant-chat-design.md §24:** Chat thread performance, virtualization, and flicker avoidance (long threads, Slint, virtualized list, stable IDs, incremental stream updates).
 - **Plans/newfeatures.md §15.11:** Virtualization for long lists (messages, iterations, logs); overscan, visible slice, placeholder height. **Plans/FinalGUISpec.md**, **Plans/feature-list.md:** Slint + winit, virtualized file tree, backend (Skia).
 
 ---
-
 ## 21. Dashboard Warnings and Calls to Action
 
 The **Dashboard** displays **warnings** and **Calls to Action (CtAs)** that require or benefit from user attention. These are not only informational: the user is expected to **answer or address** them.
@@ -1630,7 +1709,7 @@ All of the following are **MVP requirements** and are already reflected in the m
 10. **Session share** -- §11: produce a shareable bundle (messages + metadata, no secrets).
 11. **HITL: new thread spawned** -- §21: CtA on Dashboard; a **new thread** is spawned with an appropriate name for the HITL prompt.
 12. **No project selected** -- §1: many chat features do not work when no project is selected; only application rules apply.
-13. **Clear queue** -- §4: user can clear the entire queue.
+13. **Queued messages** -- §4: two-slot FIFO queue with edit/send-now/cancel controls; no clear-queue action.
 14. **Keyboard shortcuts** -- §4: chat actions reachable via shortcuts and command palette (`newfeatures.md` §11).
 15. **Streaming** -- §12: response streams when platform supports it; normalized stream; fallback to batch.
 16. **Paste / drag-drop** -- §7: paste and drag-drop into composer supported.
@@ -1847,16 +1926,19 @@ Definitions:
 - **hybrid:** auto selects by default, but the user may temporarily or persistently override it.
 
 ### 27.2 Current Persona display (required)
-
 Chat UI MUST display the effective Persona even when auto mode is active.
 
-ContractRef: ContractName:Plans/Personas.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/FinalGUISpec.md
+ContractRef: ContractName:Plans/Contracts_V0.md#5.1B Persona/Runtime Snapshot Payload Contract, ContractName:Plans/Personas.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/FinalGUISpec.md
 
 Required display content (imported from shared runtime/Persona fields rather than redefined locally):
-- `requested_persona?`
+- `requested_persona`
 - `effective_persona`
+- `requested_account_binding`
+- `operational_identity`
+- `effective_account_label`
+- `effective_provider_identity`
+- `effective_project_id`
 - `persona_selection_source`
-- `persona_override_owner_id?`
 - `effective_platform`
 - `effective_model`
 - `effective_talkativeness` when not `model_default`
@@ -1865,17 +1947,25 @@ Required display content (imported from shared runtime/Persona fields rather tha
 
 Example:
 - `Persona: Rust Engineer (Auto: repo detected as Rust + code task)`
+- `Account: Work Org / user@example.com`
 - `Model: Codex GPT-5.3 (Persona preferred)`
 - `Platform: Codex (Available)`
 
 Rules:
 - Auto mode MUST NOT display only `Auto` with no resolved Persona.
-- Assistant Chat consumes the field names owned by `Plans/Personas.md`; it MUST NOT create parallel names such as chat-local selection-source or override-owner aliases.
+- Requested and effective values stay distinct whenever routing, policy, provider availability, or project binding changes what actually runs.
 - Inline subagent cards, child-run receipts, and any persona chip in the chat header use the same imported runtime field set so the user sees one consistent requested/effective Persona story across the thread.
 - Reserved Personas remain defined in `Plans/Personas.md`; chat acknowledges them only by reference.
 
-ContractRef: ContractName:Plans/Personas.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/orchestrator-subagent-integration.md
+ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Contracts_V0.md#5.1B Persona/Runtime Snapshot Payload Contract
 
+Additional canonical rules:
+- auto mode must not display only Auto with no resolved persona
+- inline subagent cards and header chips use the same imported runtime field set
+- Keep this chat display section consuming Plans/Contracts_V0.md#5.1B Persona/Runtime Snapshot Payload Contract
+
+Rules:
+- never `requested_persona_id`
 ### 27.3 Natural-language Persona invocation in chat
 
 The Assistant must support user requests such as:
@@ -1966,205 +2056,42 @@ ContractRef: ContractName:Plans/Models_System.md, ContractName:Plans/FinalGUISpe
 
 ## 28. Markdown and Mermaid Rendering in Chat and Planning Surfaces (2026-03-07)
 
-This section defines how rendered Markdown and Mermaid appear in chat, plan-mode outputs, and other assistant-driven document surfaces.
+Chat and planning surfaces support both Mermaid and the broader inline visualizer, but they are distinct contracts.
 
-### 28.1 Scope
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md
 
-Applies to:
+### 28.1 Canonical split
 
-- normal assistant/user/system chat messages
-- assistant-created documents opened from chat
-- planning documents opened or generated through chat workflows
-- future Deep Plan Mode documents and previews
+- Mermaid remains the fenced-diagram rendering path
+- the inline visualizer is a separate sandboxed HTML/SVG module
+- neither path owns hidden mutable state outside durable source or metadata refs
 
-### 28.2 Canonical model
+### 28.2 Inline visualizer bridge
+The inline visualizer is a PM-managed renderer distinct from Mermaid. It is not a generic HTML sandbox or a shortcut around PM state.
 
-### 28.2A Chat/planning artifact source model (2026-03-08)
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md
 
-Chat/planning rendering needs one explicit source model for non-file content.
+Bridge contract:
+- bridge messages include at least `requestThemeTokens`, `reportSize`, `emitSelection`, `sendPrompt(text)`, and `openLink(url)`
+- theme-token injection is PM-owned so visuals stay aligned with the active theme and accessibility settings
+- the renderer reports auto-height and resize events back to PM; chat does not guess iframe height blindly
+- question-flow visuals never bypass PM draft state or submit directly to the model
 
-**Artifact classes**
-- `chat_message_block` — renderable Markdown/Mermaid originating from a chat message
-- `assistant_draft_document` — assistant-created document not yet saved to a workspace path
-- `planning_draft` — planning document content created before first persist
-- `persisted_planning_document` — planning content with a real workspace file path
-
-**Planning surfaces in scope**
-- plan-mode output previews shown in chat/document workflows
-- assistant-created documents opened from chat
-- planning drafts and persisted planning documents shown in preview-capable document panes
-- future Deep Plan Mode previews, when present, following the same canonical-source rules
-
-**Source behavior**
-- `persisted_planning_document` opens its real workspace file on `open_source`.
-- Non-file artifact classes open a transient `generated://<artifact_id>` source buffer on `open_source`.
-- Transient source buffers MUST show provenance (`from chat message`, `from planning draft`, etc.).
-- Exporting or opening source from chat/planning content MUST NOT silently create workspace files.
-- Explicit user actions such as `Save As` or `Insert into file` create the first workspace-backed document for a non-file artifact.
-
-**Mutation scope**
-- Chat/planning render surfaces remain non-destructive until they are wired to the same validated preview-action pipeline used by File Editor and Embedded Document Pane.
-
-- Chat and planning surfaces may render Markdown richly, but canonical saved/editable artifacts remain source text.
-- Mermaid remains canonical as fenced `mermaid` code blocks or `.mmd` text.
-- The assistant may create Mermaid diagrams, but it creates text artifacts, not hidden binary/graph models.
-
-### 28.3 Mermaid detection and rendering rules
-
-- Detect Mermaid primarily from fenced `mermaid` code blocks and Mermaid documents.
-- When detected, render Mermaid natively as a diagram card/surface in chat and planning previews.
-- When not detected or when parse fails, show the source block plus a visible render error state rather than silently dropping the content.
-- Mermaid preview in chat/planning surfaces uses the restricted generated-preview trust tier.
-
-### 28.4 Allowed user actions on rendered chat/planning content
-
-### 28.4A Element-context attachment contract
-
-Rendered selection capture uses three canonical typed attachments:
-- `attachment_type = browser_element_context` for browser / HTML element capture
-- `attachment_type = browser_selection_context` for browser text selection capture
-- `attachment_type = document_selection_context` for native document selections forwarded into chat
-
-ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/FileManager.md, ContractName:Plans/storage-plan.md
-
-`browser_element_context` required fields:
-- `attachment_id`
-- `schema_version`
-- `browser_session_id`
-- `session_class`
-- `page_url`
-- `tag_name`
-- `element_ref?`
-- bounded `text_content?`
-- `role?`
-- `rect`
-- `parent_path?`
-- `html_excerpt?`
-- `requested_target`
-- `effective_target?`
-- `captured_at`
-- `truncation_state`
-
-ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Permissions_System.md
-
-`browser_selection_context` required fields:
-- `attachment_id`
-- `schema_version`
-- `origin_kind`
-- `source_surface`
-- `browser_session_id`
-- `session_class`
-- `page_url`
-- bounded `selected_text`
-- `selection_anchor?`
-- `requested_target`
-- `effective_target?`
-- `captured_at`
-- `truncation_state`
-
-ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md
-
-`document_selection_context` required fields:
-- `attachment_id`
-- `schema_version`
-- `origin_kind` (`assistant_deep_plan`, `wizard_document_review`, `interview_document_review`, `document_review_surface`, `workspace_preview`)
-- `source_surface`
-- `bundle_id?`
-- `doc_id`
-- `doc_path` or equivalent bounded provenance
-- `display_name?`
-- `captured_at`
-- `selected_text` (bounded)
-- `anchor` (`text_position?`, `text_quote`, or stable semantic anchor id)
-- `requested_target`
-- `effective_target?`
-- `sensitivity_state`
-- `truncation_state`
-
-ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FileSafe.md, ContractName:Plans/Permissions_System.md
-
-Composer behavior:
-- capture creates a visible pending composer chip/card immediately visible to the user
-- chips are stored in composer-prep state keyed by `thread_id`, never as global chat state
-- the chip is attached to the next submitted user message by default and the user may remove it before send
-- capturing browser context MUST NOT silently inject a hidden message into the thread
-- hidden chat panels do not auto-open by default; the owning chat surface may pulse/badge and show a toast instead
-- if the owning thread is terminal or non-writable, create a new thread in the same owning surface and record both `requested_target` and `effective_target`
-
-ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Permissions_System.md
-
-Browser capture actions exposed to users are:
-- `Add Selection to Chat`
-- `Add Selection + Screenshot`
-- `Add Selection + Full Screenshot`
-- `Pick Element for Chat`
-- `Pick Element + Screenshot`
-- `Pick Element + Full Screenshot`
-- `Add Screenshot to Chat`
-- `Add Full Screenshot to Chat`
-
-The default combined capture is context plus clipped screenshot.
-
-ContractRef: ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md
-
-Prompt assembly:
-- all three structured attachment types are serialized before the user's freeform message text
-- `document_selection_context` serializes bounded provenance, anchor, and excerpt fields first; it MUST NOT inject raw unbounded document bodies
-- `browser_element_context` and `browser_selection_context` serialize bounded provenance first and MUST NOT inject raw unbounded DOM/page bodies
-- blocked or expired chips MUST NOT be serialized as successful user attachments
-
-ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/FileSafe.md, ContractName:Plans/storage-plan.md
-
-Persistence and audit:
-- submitted attachments persist as part of the submitted user message record
-- pending composer chips may persist across restart per thread until sent or removed; if they cannot be restored safely they return as blocked/expired, not silently dropped
-- search/indexing stores bounded summary fields only; do not index unbounded raw document text or unbounded browser DOM dumps
-- captures and blocks must be visible in thread history or audit views as user-supplied context, including source provenance and requested/effective target
-
-ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Permissions_System.md
-
-### 28.5 Structured editing rules
-
-Chat/planning preview surfaces may support a constrained set of structured interactions, but they are not freeform WYSIWYG editors.
+Sandbox and persistence rules:
+- the iframe sandbox stays at `sandbox="allow-scripts"`
+- `allow-same-origin`, `allow-forms`, `allow-popups`, and `allow-top-navigation` stay denied
+- must NOT execute arbitrary HTML
+- allowlisted tags/attributes only
+- arbitrary runtime network fetches are not part of the MVP visualizer contract
+- persisted state is limited to PM-managed source fragments, metadata, and PM-owned outputs; arbitrary JS heap state is not durable
+- visible fallback and error rendering remain mandatory when the visualizer cannot execute or render safely
+- Copy source
+- Open in editor
+- Open detached preview
+- Export diagram
 
 Rules:
-
-- structured edits must target known source spans/nodes
-- stale or ambiguous actions must fall back to source focus/open
-- raw HTML/unknown syntax regions remain source-only for editing
-- preview DOM state must never become the authority
-
-### 28.6 Safety and trust boundaries
-
-- Rendered chat/planning Markdown does not gain arbitrary browser privilege.
-- Arbitrary HTML from messages is not executed as a full-trust page.
-- Mermaid preview runs with a strict/restricted posture by default.
-- Full HTML/browser mode is a separate surface and is not implied by rich chat Markdown rendering.
-
-### 28.7 Planning-document support
-
-Planning documents, including future Deep Plan Mode documents, use the same rendering pipeline and canonical-source rules as normal Markdown files.
-
-Required consequence:
-
-- if a planning doc contains Mermaid, it renders natively
-- if the user edits the planning doc, the saved artifact remains Markdown/Mermaid text
-- preview/edit behavior follows the same source-preview contract as editor Markdown documents
-
-### 28.8 UX expectations
-
-- Rendered Markdown in chat should feel significantly better than plain monospace message dumps.
-- Mermaid cards should feel first-class rather than like pasted screenshots.
-- Export/open-source/open-detached actions should be obvious and low-friction.
-- Error states should tell the user whether the issue is syntax, runtime, or trust/sanitization related.
-
-### 28.9 Acceptance criteria
-
-- Assistant output containing fenced Mermaid renders as a native diagram card in chat.
-- The same Mermaid content can be opened in source form and exported as SVG/PNG.
-- Planning documents with Mermaid render using the same rules as normal Markdown docs.
-- If inline rendered editing is not safe, the UI moves the user to source rather than corrupting content.
-
+- Keep this bridge section consuming Plans/FinalGUISpec.md#15.6 Mermaid and inline visualizer widgets
 ## 29. Natural-language Mode Invocation and Wizard Escalation (2026-03-08)
 
 ### 29.1 Natural-language mode invocation
@@ -2361,7 +2288,6 @@ ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/WorktreeGitImpr
 ### W.2 Thread-to-worktree binding data model
 
 Thread-to-worktree binding is durable, explicit, and identity-bearing.
-
 
 **New redb key family:**
 - Key: `thread_state:{thread_id}:worktree_binding`

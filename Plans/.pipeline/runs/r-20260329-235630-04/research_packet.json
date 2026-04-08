@@ -1,0 +1,599 @@
+{
+  "schema_id": "pm.research_packet.v0",
+  "run_id": "r-20260329-235630-04",
+  "created_at_utc": "2026-04-06T14:35:49.407Z",
+  "topic": "Firecrawl Gap Analysis + Lost-Spec Recovery",
+  "objective": "Emit the 2026-04-06 fidelity-recovery-aligned packet for the Firecrawl / web-tools / question / planning / permissions / skills / MCP / runtime-identity repair set, with owner-first replace-section targeting and no missing MUST CHANGE or MUST RECONCILE docs.",
+  "decisions": [
+    {
+      "id": "PKT-01",
+      "title": "Emit the full reconciled 21-doc set",
+      "locked": true,
+      "detail": "The packet includes every MUST CHANGE and MUST RECONCILE document from the authoritative 2026-04-06 reconciliation register. MUST VERIFY docs are excluded because this emission confirmed they do not need edits."
+    },
+    {
+      "id": "PKT-02",
+      "title": "Use section-owned repair shapes",
+      "locked": true,
+      "detail": "Where stale same-file canon survived, the packet uses heading-owned replace_section content or heading-owned insert_after content instead of file-end addenda or note-style repair instructions."
+    },
+    {
+      "id": "PKT-03",
+      "title": "Preserve exact blocker tokens in packet content",
+      "locked": true,
+      "detail": "Exact fields, enums, commands, statuses, payload keys, and error codes from the fidelity report and recovery plan remain in doc_intents content_markdown rather than being collapsed into packet-level summaries."
+    },
+    {
+      "id": "PKT-04",
+      "title": "Archive prior latest packet before overwrite",
+      "locked": true,
+      "detail": "The existing research_packet.json is preserved byte-for-byte under its prior run-history path before the new packet overwrites the latest pointer."
+    }
+  ],
+  "doc_intents": [
+    {
+      "path": "Plans/Tools.md",
+      "intent": "update",
+      "anchors": [
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "### 3.5A `skill` tool runtime contract",
+          "content_markdown": "The `skill` tool is the runtime consumer of `Plans/Skills_System.md`. Public invocation stays structured and does not expose archive-format or source-local implementation details.\n\nContractRef: ContractName:Plans/Skills_System.md, ContractName:Plans/FinalGUISpec.md\n\n#### Input\n\n| Field | Type | Required | Notes |\n|---|---|---|---|\n| `skill_id` | `string` | yes | Canonical skill identifier. |\n| `arguments?` | `object` | no | Structured user or agent arguments passed to the skill. |\n| `context?` | `object` | no | Additional runtime context such as refs, selection, or thread-local data. |\n\n#### Output\n\n| Field | Type | Notes |\n|---|---|---|\n| `skill_id` | `string` | Echoed canonical id. |\n| `title` | `string` | User-facing result title. |\n| `content` | `string` | Primary markdown or text payload. |\n| `source_type` | `bundled | pm_enhanced | catalog_installed | manual_import | project_local | global_local | shadowed` | Discovery/source vocabulary. |\n| `resource_base_dir?` | `string` | FileSafe-scoped base path for disclosed resources. |\n| `resource_entries_sample?` | `array` | FileSafe-safe sample entries only. |\n| `metadata?` | `object` | Additional structured result metadata. |\n\nRuntime rules:\n- discovery lists `ready` and `ready_with_warnings` skills; auto-invoke is limited to `ready`\n- resource disclosure stays FileSafe-constrained and never exposes unrestricted directory traversal\n- import and install shape are owned by `Plans/Skills_System.md`; this section consumes that owner contract instead of redefining it locally\n\nContractRef: ContractName:Plans/Skills_System.md, ContractName:Plans/storage-plan.md\n"
+        },
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "### 3.5B `question` tool runtime contract",
+          "content_markdown": "The `question` tool is the shared runtime contract for clarification requests, questionnaires, and pause/resume answer collection. Assistant Chat, Interview, wizard clarification, and approval-adjacent follow-up flows consume this contract rather than inventing surface-local payloads.\n\nContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md, ContractName:Plans/interview-subagent-integration.md\n\n#### Request shape\n\n| Field | Type | Required | Notes |\n|---|---|---|---|\n| `mode` | `single_question | questionnaire` | yes | Presentation hint for one prompt or a multi-question flow. |\n| `header` | `string` | no | Short UI title for the card or modal. |\n| `prompt` | `string` | yes | Shared explanatory copy for the whole request. |\n| `questions[]` | `QuestionItem[]` | yes | Ordered question set. One entry still uses the same schema. |\n| `context_ref?` | `string` | no | Optional evidence or artifact reference shown alongside the questionnaire. |\n| `visual_ref?` | `string` | no | Optional PM-managed visual payload shown on the card. |\n\n#### `QuestionItem`\n\n`QuestionItem{question_id, question, options[], required, multi_select, allow_freeform, default_values}`\n\n| Field | Type | Required | Notes |\n|---|---|---|---|\n| `question_id` | `string` | yes | Stable identifier used across chat, storage, and resumption. |\n| `question` | `string` | yes | User-facing question text. |\n| `options[]` | `Array<{id, label, description?}>` | no | Canonical option shape. `string[]` input is expanded at ingestion and is not the runtime contract. |\n| `required` | `boolean` | no | Defaults to `false`. |\n| `multi_select` | `boolean` | no | Defaults to `false`. |\n| `allow_freeform` | `boolean` | no | Allows typed input in addition to or instead of options. |\n| `default_values` | `string[]` | no | Caller-supplied initial option ids or freeform seed values. |\n\nContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/chain-wizard-flexibility.md\n\n#### Runtime answer, draft, and outcome shape\n\n| Field | Type | Notes |\n|---|---|---|\n| `question_id` | `string` | Stable question identifier. |\n| `selected_option_ids[]?` | `string[]` | Present for selection or mixed responses. |\n| `freeform_text?` | `string` | Present for freeform or mixed responses. |\n| `draft_value?` | `string` | PM-managed in-progress freeform draft restored on resume. Distinct from caller-supplied `default_values`. |\n| `response_kind` | `selection | freeform | mixed` | Canonical answer discriminator. |\n| `source?` | `option | other | freeform` | Optional answer-source tag used by chat and storage. |\n| `validation_state` | `valid | invalid | pending` | Validation result at save or submit time. |\n| `answered_at_utc?` | `string` | Durable timestamp for completed answers. |\n\nRequest-level outcomes are `answered`, `submitted`, `dismissed`, `timed_out`, and `unavailable`.\n\nRuntime rules:\n- visuals on question cards bind to PM-managed state and never bypass the draft/save path through `sendPrompt`\n- navigation may move out of order; the runtime does not force one-card-at-a-time sequencing\n- `default_values` seeds the initial UI state only; later unsent user edits live in `draft_value`\n- required questions gate final submit until all required items are complete and locally valid\n- dismiss returns the request outcome `dismissed`; it does not fabricate a submitted result\n- subagent-direct questioning remains parent-mediated; child agents do not independently prompt the user\n\nContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md\n"
+        },
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "### 3.5C `todowrite` and `todoread` runtime contract",
+          "content_markdown": "`todoread` and `todowrite` expose one normalized planning/TODO schema shared by Assistant Chat, planning widgets, storage, and delegated execution.\n\nContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Run_Modes.md\n\n#### Canonical TODO item\n\n| Field | Type | Required | Notes |\n|---|---|---|---|\n| `todo_id` | `string` | yes | Stable identifier. |\n| `title` | `string` | yes | Short actionable label. |\n| `summary` | `string` | no | Optional user-facing detail. |\n| `status` | `pending | in_progress | completed | blocked | skipped` | yes | Canonical status set. |\n| `dependencies[]` | `string[]` | no | Upstream `todo_id` values. |\n| `owner_hint` | `string` | no | Optional surface or worker hint. |\n| `verification_hint` | `string` | no | Optional verification reminder. |\n\n#### Operation rules\n\n- `todoread` returns the ordered normalized list plus dependency metadata\n- `todowrite` applies item-level upsert, reorder, dependency, and status updates against the same schema\n- markdown planning artifacts that drive execution must update the normalized TODO projection before execution begins\n- every durable mutation emits `chat.plan_todo_updated`\n\nContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md\n"
+        },
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "### 3.5D Web operation family runtime contract",
+          "content_markdown": "The canonical web tool family comprises six first-class built-in tools: `websearch`, `webfetch`, `webextract`, `webresearch`, `webcrawl`, and `webmap`. All six share provider routing, provenance disclosure, blocked-payload projection, and audit storage.\n\nContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Contracts_V0.md\n\nCommon request families such as `adapter_hint`, `include_domains[]`, `exclude_domains[]`, and `cache_policy` apply only where the individual tool contract below says they do. `provenance_badge` and `execution_path` are shared output fields across the web family whenever evidence is returned.\n\n#### Shared output and audit fields\n\n| Field | Notes |\n|---|---|\n| `provider_id` | Effective provider used for the operation. |\n| `effective_provider_mode` | One of the capability/routing modes defined in the provider matrix. |\n| `web_operation` | Canonical operation name. |\n| `web_input` | Structured normalized request snapshot. |\n| `cache_state` | `hit`, `miss`, `bypassed`, or `expired_used_for_diff` where caching applies. |\n| `sources_ref?` / `content_ref?` / `map_ref?` / `answer_summary_ref?` | Durable evidence references projected by storage. |\n| `provenance_badge?` | Citation/source-quality badge consumed by chat and storage. |\n| `execution_path?` | Discloses the effective runtime path such as `pm_site_reader`, `provider_firecrawl_scrape`, or `pm_research_composed`. |\n\nContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Tools.md#11-provider-capability-matrix\n\n#### `WebAction`\n\n`WebAction{type, selector?, text?, url?, key?, timeout_ms?}` where `type` is one of `click | scroll | type | press_key | wait_for | navigate | screenshot | set_viewport | fill_form | select_option | back | reload | snapshot | console | network`.\n\nRuntime rules:\n- actions execute in order\n- one request may carry at most 10 actions\n- `WebAction.timeout_ms` is a per-action wait cap; the full action list still shares a 30s wall-clock ceiling\n- failure stops later actions for that request, but `action_results[]` still records the partial outcome\n\nContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/storage-plan.md\n\n#### `websearch`\n\n**Input**\n- `query: string` (required)\n- `max_results?: number` (default `8`)\n- `adapter_hint?: string`\n- `include_domains?: string[]`\n- `exclude_domains?: string[]`\n- `time_range?: string`\n- `sources?: string[]` (default `['web']`; options `web`, `news`, `images`, `code`, `academic`)\n- `categories?: string[]` (optional; options `github`, `research`, `pdf`)\n- `cache_policy?: { max_age_seconds?: number, store?: boolean }` (default `{ max_age_seconds: 3600, store: true }`)\n\n**Behavior**\n- `sources` controls which result families are requested; provider support remains per-source and per-category\n- `categories` is an additional filter applied during search when supported or post-search when not\n- when multiple sources are requested, each result is tagged with `source_type`\n- the global search-then-read heuristic still applies: PM reads the top candidate pages before final synthesis whenever later steps need grounded citations\n\nContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Tools.md#12-web-tool-routing-algorithm\n\n**Output**\n- `results: Array<{ title, url, snippet?, score?, source_type?: string }>`\n- `provenance_badge?`\n- `execution_path?`\n- `cache_state?: 'hit' | 'miss' | 'bypassed'`\n\n**Error additions**\n- `unsupported_source`\n\n#### `webfetch`\n\n**Input**\n- `url: string` (required)\n- URL validation rejects non-HTTP(S) schemes, normalizes bare domains to `https://`, and rejects malformed URLs as `invalid_input`\n- `formats?: string[]` (default `['markdown']`; allowed values `markdown`, `html`, `rawHtml`, `screenshot`, `pdf`, `summary`, `links`, `images`)\n- `actions?: WebAction[]`\n- `cache_policy?: { max_age_seconds?: number, store?: boolean }` (default `{ max_age_seconds: 14400, store: true }`)\n- `change_tracking?: boolean` (default `false`)\n- `pdf_mode?: 'fast' | 'auto' | 'ocr'` (default `'auto'`)\n- `max_content_length?: number` (default `5 MB`)\n\n**Behavior**\n- Site Reader is the default and primary `webfetch` path; provider fetch paths are fallback or explicitly selected alternatives\n- actions run before content capture so the final extraction sees the interacted page state\n- `screenshot` and `pdf` formats require browser runtime and elevated approval consistent with the browser-action model\n- `change_tracking` compares the normalized URL against the most recent cached version and returns `change_status: 'new' | 'same' | 'changed' | 'removed'`\n- binary image responses are returned as attachments instead of being forced through HTML-to-Markdown conversion\n\nContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/storage-plan.md\n\n**Output**\n- `content: string`\n- `status?: number`\n- `formats_returned: string[]`\n- `summary?: string`\n- `links?: Array<{ url: string, text?: string, rel?: string }>`\n- `images?: Array<{ url: string, alt?: string, dimensions?: { width: number, height: number } }>`\n- `pdf_artifact?: { ref: string, page_count: number }`\n- `action_results?: Array<{ action: string, status: 'success' | 'error', error?: string }>`\n- `provenance_badge?`\n- `execution_path?`\n- `cache_state?: 'hit' | 'miss' | 'bypassed'`\n- `change_summary?: string`\n\n**Error additions**\n- `content_too_large`\n- `content_blocked`\n- `content_not_found`\n- `no_previous_version` is a warning-style informational code when change tracking has no prior fetch\n\n#### `webextract`\n\n**Input**\n- `url: string` (required; one URL per invocation)\n- `adapter_hint?: string`\n- `detail_hint?: 'fast' | 'balanced' | 'deep'`\n- `schema?: object`\n- `schema_mode?: 'strict' | 'lenient'` (default `'lenient'`)\n- `actions?: WebAction[]`\n- `prompt?: string`\n- `cache_policy?: { max_age_seconds?: number, store?: boolean }` (default `{ max_age_seconds: 14400, store: true }`)\n\n**Behavior**\n- `schema` is validated as JSON Schema draft-07 before execution\n- strict mode returns `extraction_schema_mismatch` when required fields are missing or the output cannot conform\n- lenient mode preserves best-effort extraction, returns `schema_conformance`, and lists `schema_violations[]` instead of failing outright\n- `prompt` complements `schema`: the prompt explains what to extract while `schema` defines the shape\n- provider-native schema support is used when available; otherwise PM post-validates the extraction result\n\nContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/CLI_Bridged_Providers.md\n\n**Output**\n- `content_ref?`\n- `content_preview?`\n- `content_format?: 'text' | 'markdown' | 'structured'`\n- `extracted_data?: object`\n- `schema_conformance?: 'full' | 'partial' | 'none'`\n- `schema_violations?: Array<{ path: string, message: string }>`\n- `action_results?: Array<{ action: string, status: 'success' | 'error', error?: string }>`\n- `provenance_badge?`\n- `execution_path?`\n- `cache_state?: 'hit' | 'miss' | 'bypassed'`\n\n**Error additions**\n- `extraction_schema_mismatch`\n- `schema_too_large`\n- `schema_invalid`\n- `extraction_empty`\n- `content_not_found`\n\n#### `webresearch`\n\n**Input**\n- `task: string` (required)\n- `max_sources?: number` (default `6`)\n- `adapter_hint?: string`\n- `depth_hint?: 'fast' | 'balanced' | 'deep'`\n- `autonomous?: boolean` (default `false`)\n- `auto_read_cap?: number` (default `4`)\n- `schema?: object`\n- `schema_mode?: 'strict' | 'lenient'`\n- `starting_urls?: string[]` (max `5`)\n\n**Behavior**\n- default behavior is PM-composed: search, read top pages, then synthesize with citations from the read path\n- autonomous mode may delegate to a provider-native agent when supported or use an enhanced PM-composed search/read/refine loop\n- autonomous execution is bounded to three search iterations, a finite page-read budget, and a 120s wall-clock ceiling\n- `starting_urls` seeds the first read phase before new search queries are issued\n- research results are not cached; `webresearch` remains task-specific and the TTL table treats it as `Not cached`\n\nContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/storage-plan.md\n\n**Output**\n- `answer_summary?`\n- `evidence_refs?: string[]`\n- `sources_used_count?: number`\n- `research_steps?: Array<{ step: 'search' | 'read' | 'refine', detail: string, timestamp: string }>`\n- `extracted_data?: object`\n- `iterations_used?: number`\n- `provenance_badge?`\n- `execution_path?`\n\n**Error additions**\n- `autonomous_budget_exceeded` is a soft error: the tool still returns partial `answer_summary`, `sources_used_count`, and `research_steps` when the budget is exhausted\n- `autonomous_unavailable`\n\n#### `webcrawl`\n\n**Input**\n- `root_url: string` (required)\n- `max_pages?: number` (default `25`)\n- `max_depth?: number` (default `2`)\n- `same_origin_only?: boolean` (default `true`)\n- `adapter_hint?: string`\n- `change_tracking?: boolean` (default `false`)\n- `dedup?: boolean` (default `true`)\n- `include_paths?: string[]`\n- `exclude_paths?: string[]`\n- `respect_robots?: boolean` (default `true`)\n- `formats?: string[]` (default `['markdown']`)\n- `cache_policy?: { max_age_seconds?: number, store?: boolean }` (default `{ max_age_seconds: 86400, store: true }`)\n\n**Behavior**\n- per-page change tracking compares the crawl against the previous crawl of the same root\n- `dedup` skips already-seen content-equivalent pages within the same crawl run\n- `include_paths[]` is applied before `exclude_paths[]`\n- host-scoped approval and same-operation routing still apply even when the crawl fans out to many pages\n\nContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Permissions_System.md\n\n**Output**\n- `pages_visited_count?`\n- `pages_returned_count?`\n- `scope_summary?`\n- `pages: Array<{ url: string, title?: string, content_ref?: string, change_status?: string }>`\n- `change_summary?: { new: number, changed: number, same: number, removed: number }`\n- `dedup_skipped?: number`\n- `provenance_badge?`\n- `execution_path?`\n- `cache_state?: 'hit' | 'miss' | 'bypassed'`\n\n**Error additions**\n- `crawl_depth_exceeded`\n- `crawl_timeout`\n- `crawl_robots_blocked`\n- `crawl_rate_limited`\n\n#### `webmap`\n\n**Input**\n- `root_url: string` (required)\n- `max_pages?: number` (default `50`)\n- `max_depth?: number` (default `3`)\n- `same_origin_only?: boolean` (default `true`)\n- `adapter_hint?: string`\n- `include_paths?: string[]`\n- `exclude_paths?: string[]`\n- `search?: string`\n- `use_sitemap?: 'include' | 'only' | 'skip'` (default `'include'`)\n- `cache_policy?: { max_age_seconds?: number, store?: boolean }` (default `{ max_age_seconds: 86400, store: true }`)\n\n**Behavior**\n- `use_sitemap` controls whether sitemap discovery is included, required, or skipped\n- `search` filters discovered URLs by path or title after discovery\n- map discovery remains bounded and same-origin by default\n\nContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md\n\n**Output**\n- `nodes_count?`\n- `edges_count?`\n- `scope_summary?`\n- `map_ref?`\n- `links: Array<{ url: string, title?: string, description?: string }>`\n- `sitemap_used?: boolean`\n- `provenance_badge?`\n- `execution_path?`\n- `cache_state?: 'hit' | 'miss' | 'bypassed'`\n\n**Error additions**\n- `map_timeout`\n- `map_no_sitemap`\n- `map_robots_blocked`\n- `sitemap_parse_error`\n\n#### Error ownership\n\nThe canonical web error taxonomy lives in `Plans/Contracts_V0.md`. This section consumes that taxonomy and keeps the exact web-facing codes visible to implementers: `adapter_unavailable`, `unsupported_operation`, `content_blocked`, `content_not_found`, `unsupported_source`, `extraction_schema_mismatch`, `autonomous_budget_exceeded`, and `no_previous_version`.\n\nContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md\n"
+        },
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "### 3.6 Task tool and the 42 subagents (Plans)",
+          "content_markdown": "The public `task` contract describes delegated work, not a user-curated agent catalog. Hidden, unavailable, or policy-blocked subagents stay out of public discovery and out of runtime success-shaped fallbacks.\n\nContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Permissions_System.md\n\n#### Request shape\n\n| Field | Type | Required | Notes |\n|---|---|---|---|\n| `goal` | `string` | yes | The delegated work to perform. |\n| `context?` | `object` | no | Structured supporting context, refs, or constraints. |\n| `owner_hint?` | `string` | no | Exact-match hint against `crew.roles`; on no match the current session remains the owner. |\n| `resume?` | `{ delegated_session_id: string }` | no | Resume token for an existing delegated run. |\n| `timeout_s?` | `number` | no | Caller-selected ceiling when policy allows. |\n\n#### Runtime result shape\n\n| Field | Type | Notes |\n|---|---|---|\n| `delegated_session_id` | `string` | Stable identity reused on resume. |\n| `status` | `pending | running | completed | failed | cancelled | timed_out` | Child lifecycle. |\n| `summary?` | `string` | Short user-facing result. |\n| `artifacts[]?` | `array` | Optional refs emitted by the delegated run. |\n| `failure_detail?` | `object` | Structured failure disclosure when not completed. |\n\nRuntime rules:\n- resume reuses the same `delegated_session_id`; it does not mint a fresh child identity\n- nested `task` remains default-denied unless an explicit future policy opens it\n- `owner_hint` maps to an exact available role or falls back to the current session; unavailable providers surface an error instead of silent rerouting\n- the public contract does not expose `agent_type`, `name`, or optional `agent_id` as canonical user-facing inputs\n\nContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md\n"
+        },
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "## 5. MCP integration (in scope)",
+          "content_markdown": "MCP canon is owned by `Plans/MCP_Integration.md`. This section is a consumer cross-reference for tool-registry and permission integration only.\n\nContractRef: ContractName:Plans/MCP_Integration.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/storage-plan.md\n\nConsumer rules:\n- requested versus effective MCP availability is resolved through the owner document; this section does not redefine it\n- credential binding and invalidation semantics are owner-defined in `Plans/MCP_Integration.md`\n- tool names use the underscore-only form `{server_slug}_{tool_name}`\n- slash-separated aliases are not canonical and must not remain live examples\n"
+        },
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "### 8.6 MCP tool name format and wildcard rule",
+          "content_markdown": "MCP tool names use the owner-defined underscore-only format `{server_slug}_{tool_name}`.\n\nContractRef: ContractName:Plans/MCP_Integration.md\n\nRules:\n- wildcard rules match the underscore form, for example `context7_*`\n- slash variants and mixed `_` / `/` examples are retired\n- server-level permission rules still apply before per-tool wildcard expansion\n"
+        },
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "### 10.2 Default policy table",
+          "content_markdown": "Canonical defaults are owned by `Plans/Permissions_System.md` §7. This consumer summary keeps the tool-registry view aligned to that owner table.\n\nContractRef: ContractName:Plans/Permissions_System.md\n\n| Tool family | Default |\n|---|---|\n| `skill` | `allow` |\n| `question` | `allow` only when HITL is available; otherwise `ask` |\n| `websearch`, `webfetch`, `webextract`, `webresearch`, `webcrawl`, `webmap` | `ask` |\n| `batch_webfetch`, `batch_webextract` | `ask` |\n| `todoread`, `todowrite` | `allow` |\n| child-agent `question` | `deny` |\n"
+        },
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "### 10.3 PM-to-Firecrawl mapping",
+          "content_markdown": "PM operation names remain canonical. Firecrawl endpoints are provider-specific implementation targets, not alternate PM tool names.\n\nContractRef: ContractName:Plans/Tools.md#13-batch-operations, ContractName:Plans/Contracts_V0.md\n\n| PM operation | Firecrawl path | Notes |\n|---|---|---|\n| `websearch` | `POST /v2/search` | Keyword-oriented provider path; different result profile from Exa semantic search. |\n| `webfetch` | `POST /v2/scrape` or provider interact-session capture | Provider fetch path is fallback only; Site Reader remains the primary PM path. |\n| `webextract` | `POST /v2/extract` | Single-URL extraction; PM may post-validate against schema. |\n| `webresearch` | `POST /v2/agent` | Used only for autonomous/provider-native research when selected and approved. |\n| `webcrawl` | `POST /v2/crawl` | Page-by-page crawl with PM-owned audit projection. |\n| `webmap` | `POST /v2/map` | URL discovery and sitemap-oriented mapping. |\n| `batch_webfetch` | `POST /v2/batch/scrape` | Bulk URL fetch path. |\n| `batch_webextract` | `POST /v2/extract` with `urls[]` | Native multi-URL extract mapping; do not rewrite this as scrape-plus-PM extraction. |\n\nAdditional mapping rules:\n- Firecrawl actions for `webfetch` route through the provider interact-session model when browser interaction is required\n- PM remains responsible for requested/effective provider disclosure, credit warnings, and canonical error-code projection\n- provider endpoint names never replace the PM tool names in UI, storage, or permission policy\n\nContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md\n"
+        },
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "### 10.4 Presets → config mapping",
+          "content_markdown": "Preset semantics are owned by `Plans/Permissions_System.md` §10.4. This section preserves the tool-registry mapping without restating conflicting policy.\n\nContractRef: ContractName:Plans/Permissions_System.md\n\n| Preset | Tool-facing effect |\n|---|---|\n| `read_only` | read/search/list style tools stay available; mutation stays denied |\n| `plan` | planning helpers stay available, read-only web tools remain `ask`, and no preset silently auto-denies the whole web family |\n| `full` | broad availability with explicit asks on mutation-capable tools |\n\nChild-agent denial of `question` is architectural and remains in force even when the parent preset is broader.\n"
+        },
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "### 10.7 Audit, error, and self-hosted rules",
+          "content_markdown": "Firecrawl-specific execution still projects through PM-owned audit and error contracts.\n\nContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/MCP_Integration.md\n\nAudit and routing rules:\n- requested and effective provider routing remain visible through `requested_adapter_id`, `effective_adapter_id`, `adapter_selection_reason`, and `provider_fallback_summary`\n- fallback is user-visible; no silent fallback is allowed when a provider is skipped, rate-limited, or fails over\n- denied-web episodes project through the shared `tool.denied` and `tool.invoked` payload families rather than ad hoc provider-local fields\n- self-hosted Firecrawl still reports the canonical PM error codes and audit payload shape; self-hosting changes deployment, not the public contract\n\nFirecrawl-specific notes:\n- Firecrawl is disabled by default until explicitly enabled in Settings\n- provider credit warnings surface before large-cost operations such as autonomous research or large batch fetches\n- HTTP/provider failures map through `Plans/Contracts_V0.md#3.4A Web error taxonomy and applicability`; provider-local status strings are not exposed as standalone canon\n\nContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Permissions_System.md\n"
+        },
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "## 10. Firecrawl provider integration",
+          "content_markdown": "Firecrawl is a distinct provider in PM's web stack. This owner section covers configuration, endpoint mapping, async behavior, interact-session flow, credit disclosure, and Firecrawl-specific audit fields. Consumer summaries in other docs defer to this section.\n\nContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Models_System.md, ContractName:Plans/storage-plan.md\n\n### 10.1 Provider configuration\n\n| Field | Type | Notes |\n|---|---|---|\n| `enabled` | `bool` | Provider availability flag. |\n| `api_key` | `secret_ref?` | Required for cloud-hosted Firecrawl. |\n| `base_url` | `string` | Defaults to `https://api.firecrawl.dev`; may point to self-hosted deployments. |\n| `timeout_ms` | `integer` | Defaults to `60000`; applies to Firecrawl requests and polling ceilings. |\n| `proxy_mode` | `'basic' | 'enhanced' | 'auto'` | Defaults to `'auto'`; cloud only. Self-hosted deployments ignore it. |\n| `cache_enabled` | `bool` | Defaults to `true`; controls Firecrawl provider-cache hints beneath PM cache precedence. |\n\nContractRef: ContractName:Plans/Tools.md#14-web-content-caching-layer, ContractName:Plans/FinalGUISpec.md\n\n### 10.2 Endpoint inventory\n\nFirecrawl-native endpoints that PM maps to are:\n- `/v2/scrape`\n- `/v2/crawl`\n- `/v2/map`\n- `/v2/search`\n- `/v2/extract`\n- `/v2/batch/scrape`\n- `/v2/agent`\n\n### 10.3 PM-to-Firecrawl mapping\n\n| PM operation | Firecrawl endpoint | Notes |\n|---|---|---|\n| `websearch` | `/v2/search` | Supports Firecrawl-native `sources` and `categories` where available. |\n| `webfetch` | `/v2/scrape` | Site Reader still remains the default fetch path; Firecrawl is a provider path. |\n| `webextract` | `/v2/extract` | Canonical extraction target; not `/v2/scrape`. |\n| `webresearch` | `/v2/agent` | Used only when routing selects provider-native autonomous research. |\n| `webcrawl` | `/v2/crawl` | Native crawl job flow. |\n| `webmap` | `/v2/map` | Native URL discovery flow. |\n| `batch_webfetch` | `/v2/batch/scrape` | Native batch scrape path. |\n| `batch_webextract` | `/v2/batch/scrape` plus PM extraction pass | Batch scrape followed by extraction when a separate provider-native batch extract surface is not present. |\n\nContractRef: ContractName:Plans/Tools.md#12-web-tool-routing-algorithm, ContractName:Plans/Tools.md#13-batch-operations\n\n### 10.4 Async jobs and status contract\n\nAsync Firecrawl operations return a job id and are polled with the exact interval ladder `2s, 4s, 8s, 15s, 30s`.\n\nSupported async families in MVP:\n- `/v2/crawl`\n- `/v2/extract`\n- `/v2/batch/scrape`\n- `/v2/agent`\n\nPolling rules:\n- initial request returns `{ success: true, id: '<job_id>' }`\n- PM polls `GET /v2/<operation>/<job_id>` using the interval ladder above\n- job status remains in the Firecrawl family `scraping | processing | completed | failed | cancelled`\n- `completed` returns full results, `failed` maps to PM error ownership, and `cancelled` preserves partial results when any were already materialized\n- webhook delivery is a future path, not the MVP contract\n\nContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md\n\n### 10.5 Credit and cost contract\n\n| PM operation | Firecrawl endpoint | Base credit cost | Notes |\n|---|---|---|---|\n| `websearch` | `/v2/search` | `2` per 10 results | Scrape options add their own cost. |\n| `webfetch` | `/v2/scrape` | `1` per page | Enhanced proxy and JSON modes increase per-page cost. |\n| `webfetch` interact mode | `/v2/scrape/{scrapeId}/interact` | `2/min` code or `7/min` prompt | Session-time based. |\n| `webextract` | `/v2/extract` | `~15 tokens/credit` | JSON-heavy extraction increases cost. |\n| `webresearch` | `/v2/agent` | `20-2500` | Spark-1-mini is cheaper than Spark-1-pro. |\n| `webcrawl` | `/v2/crawl` | `1` per page crawled | Enhanced proxy and JSON modes add modifiers. |\n| `webmap` | `/v2/map` | `~1` | Exact hosted billing is lightly documented; PM treats this as approximate. |\n| `batch_webfetch` | `/v2/batch/scrape` | `1` per URL | Same modifiers as `webfetch`. |\n\nRouting and disclosure rules:\n- PM shows a credit warning before Firecrawl execution when the estimate is `>100 credits`\n- PM enforces a default hard cap of `500 credits` for one research/batch session unless the user raises it in settings\n- self-hosted Firecrawl does not use credit billing, so hosted-credit warnings do not apply there\n\nContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Tools.md#12-web-tool-routing-algorithm\n\n### 10.6 Interact-session contract\n\nFirecrawl supports a stateful browser session built on `/v2/scrape/{scrapeId}/interact`.\n\nSession flow:\n1. `POST /v2/scrape { url }` returns a `scrapeId` in metadata.\n2. `POST /v2/scrape/{scrapeId}/interact { prompt | code }` resumes the same browser session.\n3. Multiple interact calls reuse session state including DOM, cookies, and scroll position.\n4. `DELETE /v2/scrape/{scrapeId}/interact` terminates the session and releases provider resources.\n\nInteraction modes and session properties:\n- prompt-based interaction is natural-language driven and maps well to PM's higher-level action intent\n- code-based interaction is an adapter-internal precision path; PM does not expose raw provider code execution as a first-class user tool surface\n- sessions default to a 10-minute TTL with a 5-minute inactivity timeout\n- responses may include `liveViewUrl` and `interactiveLiveViewUrl`\n- PM does not surface those URLs as first-class MVP UI because PM owns the browser surface directly\n\nContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/Tools.md#3.5D-web-operation-family-runtime-contract\n\n### 10.7 Audit, error, and self-hosted rules\n\nFirecrawl-specific audit fields are:\n- `firecrawl_credits_used?: number`\n- `firecrawl_cache_state?: 'hit' | 'miss'`\n- `firecrawl_scrape_id?: string`\n\nAdditional provider rules:\n- hosted Fire Engine anti-bot behavior is not present in self-hosted deployments\n- self-hosted deployments may advertise fewer effective capabilities; the provider matrix must disclose the resulting support tier instead of overstating parity\n- provider cache hints such as `storeInCache` or `minAge` remain subordinate to PM cache ownership\n- provider failures map back into PM error ownership rather than leaking provider-only error codes as the canonical surface\n\nContractRef: ContractName:Plans/Tools.md#11-provider-capability-matrix, ContractName:Plans/storage-plan.md\n"
+        },
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "## 11. Provider capability matrix",
+          "content_markdown": "The matrix below describes effective support tier per provider and per PM web operation. Support tiers are `native`, `near-native`, `pm-composed`, `fallback-only`, and `unsupported`.\n\nContractRef: ContractName:Plans/Models_System.md, ContractName:Plans/FinalGUISpec.md\n\n| Operation | Exa | Tavily | Firecrawl | Anthropic / OpenAI | Google-compatible | DuckDuckGo |\n|---|---|---|---|---|---|---|\n| `websearch` | `native` | `native` | `native` | `pm-composed` via model-native auth reuse when available | `native` | `fallback-only` |\n| `webfetch` | `fallback-only` | `fallback-only` | `fallback-only` | `fallback-only` | `unsupported` | `unsupported` |\n| `webextract` | `near-native` | `native` | `native` | `pm-composed` | `unsupported` | `unsupported` |\n| `webresearch` | `near-native` | `native` | `native` or `pm-composed` | `pm-composed` | `pm-composed` | `unsupported` |\n| `webcrawl` | `native` | `native` | `native` | `unsupported` | `unsupported` | `unsupported` |\n| `webmap` | `unsupported` | `native` | `native` | `unsupported` | `unsupported` | `unsupported` |\n\nMatrix interpretation:\n- `webfetch` remains Site Reader primary for every provider row; provider fetch paths are fallback alternatives\n- `near-native` means the provider has a close equivalent but PM still normalizes or post-validates the result\n- model-native rows reuse the already-selected model account/auth when that provider exposes search or browse capability; PM does not create a second auth silo for the same model account\n\nContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md\n"
+        },
+        {
+          "anchor_type": "heading",
+          "operation": "insert_after",
+          "anchor": "## 11. Provider capability matrix",
+          "content_markdown": "### 11.1 Provider classes, defaults, and fallback disclosure\n\nProvider classes are displayed as:\n- `account-backed` — model providers that reuse existing PM account auth for web capabilities\n- `API-backed` — Exa, Tavily, Google-compatible, and Firecrawl providers with their own API-key or endpoint settings\n- `no-key` — DuckDuckGo fallback, always available without setup\n\nDefaults and routing posture:\n- Exa is the primary/default search provider and works on the free tier without an API key; adding an API key raises rate-limit ceilings\n- Tavily is optional premium and keeps advanced knobs behind an **Advanced** section; defaults stay light-weight (`search_depth: basic|fast`, `include_raw_content: false`)\n- Firecrawl is available but disabled by default until enabled\n- DuckDuckGo remains enabled as the no-key fallback\n- global MVP provider priority is `Exa > Tavily > Firecrawl > Anthropic/OpenAI > Google > DuckDuckGo`; PM does not expose per-operation priority reordering in MVP\n\nFallback disclosure:\n- `provider_fallback_summary` stays visible in chat and audit logs whenever a fallback occurs\n- provider fallback is explanatory rather than silent; rate-limit and health failures include a user-facing recovery hint\n- stale cited-search framing and old `newtools §8.2.1` normative language are retired in favor of this owner section plus `Plans/MCP_Integration.md`\n\nContractRef: ContractName:Plans/newtools.md, ContractName:Plans/FinalGUISpec.md\n"
+        },
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "## 12. Web tool routing algorithm",
+          "content_markdown": "Routing is global and deterministic. PM uses one provider-priority stack plus tool-specific capability checks; MVP does not expose per-operation priority reordering.\n\nContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/Models_System.md\n\n1. Validate the request shape and normalize URLs, schemas, and source/category filters.\n2. Check permissions and blocked-state requirements before any provider selection.\n3. Honor `adapter_hint` when the hinted provider is enabled and supports the requested operation/parameters; otherwise record why the hint could not be used.\n4. Check the cache when the operation is cacheable.\n5. For `webfetch`, try the PM-native Site Reader path first; provider fetch paths are fallback-only.\n6. Evaluate the provider matrix against the global priority order and the request's required capabilities.\n7. Execute with the chosen provider and record `requested_adapter_id`, `effective_adapter_id`, and `adapter_selection_reason`.\n8. If execution falls back, emit a user-visible explanation and populate `provider_fallback_summary`.\n9. Persist the shared audit payload, refs, warnings, and projected freshness/health state.\n\nAdditional rules:\n- no silent fallback is allowed\n- `provider_fallback_summary` is emitted only when a real fallback occurred\n- `webresearch` may stay PM-composed even when a provider-native research path exists, depending on approval, budget, and availability\n- `webfetch` never bypasses Site Reader primacy just because a provider ranks higher for search or extract\n\nContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Contracts_V0.md\n"
+        },
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "## 13. Batch operations",
+          "content_markdown": "PM supports two batch web tools: `batch_webfetch` and `batch_webextract`. Batch contracts reuse the single-item routing, permission, audit, and cache model per URL.\n\nContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/assistant-chat-design.md\n\n| Tool | Input limit | Concurrency | Failure model | Provider note |\n|---|---|---|---|---|\n| `batch_webfetch` | `urls[]` min 1, max 50 | default `3`, max `10` | `continue_on_error` defaults to `true`; batch succeeds when at least one URL succeeds | Firecrawl uses `POST /v2/batch/scrape` when selected |\n| `batch_webextract` | `urls[]` min 1, max 10 | default `3`, max `5` | `continue_on_error` defaults to `true`; same partial-failure model as fetch | Firecrawl native multi-URL extract remains `/v2/extract` with `urls[]` |\n\nShared behavior:\n- one approval prompt covers the full batch and lists all unique domains in scope\n- `For Session` grants the listed domains for that session; batch permission is not re-prompted per URL\n- batch timeout is `individual_timeout × min(url_count, 5)` capped at `600s`\n- progress surfaces through `progress_event` and user-facing labels such as `Fetching sites: 5/20 complete`\n- cache entries, provider selection, warnings, and refs remain per-URL even when the batch has one parent activity card\n\nPer-URL result carry-through:\n- every URL result preserves `success`, `error_code?`, `content_ref?`, `map_ref?`, `answer_summary_ref?`, `provenance_badge?`, and `execution_path?` where applicable\n- `summary`, `links`, `images`, and `pdf_artifact` carry over when the corresponding formats were requested\n- `actions` are not part of batch operations\n\nContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Contracts_V0.md\n"
+        },
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "## 14. Web content caching layer",
+          "content_markdown": "Web caching is PM-owned and storage-backed. Provider caches are subordinate hints beneath this contract.\n\nContractRef: ContractName:Plans/storage-plan.md\n\n#### Canonical cache identity\n\nThe durable cache record stores `(normalized_url, formats_hash, adapter_id)`, but lookup is intentionally two-phase.\n\nTwo-phase lookup rules:\n- Step 4 of routing checks `(normalized_url, formats_hash)` only\n- after provider selection, PM validates `adapter_id` against the chosen provider\n- mismatched provider entries are discarded rather than served under the wrong effective provider\n- action-bearing fetches bypass lookup because interactive state is not cache-safe\n\n#### TTL defaults\n\n| Operation | Default TTL |\n|---|---|\n| `webfetch` | `4 hours` |\n| `webextract` | `4 hours` |\n| `webcrawl` | `24 hours` |\n| `webmap` | `24 hours` |\n| `websearch` | `1 hour` |\n| `webresearch` | `Not cached` |\n\nContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Tools.md#12-web-tool-routing-algorithm\n\n#### State vocabulary and invalidation\n\nState vocabulary:\n- `hit`\n- `miss`\n- `bypassed`\n- `expired_used_for_diff`\n\nRules:\n- PM cache precedence remains above provider-local cache hints\n- invalidation is available by URL, domain, and project scope\n- expired entries may still be retained for change detection and surfaced as `expired_used_for_diff`\n- per-project storage survives restart and defaults to a `500 MB` footprint ceiling\n- provider hints such as Firecrawl `storeInCache` and `minAge` do not replace PM cache identity, TTL ownership, or invalidation behavior\n\nContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md\n"
+        }
+      ]
+    },
+    {
+      "path": "Plans/assistant-chat-design.md",
+      "intent": "update",
+      "anchors": [
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "### 4.1 Chat footer, queue UI, and files touched -- implementation detail",
+          "content_markdown": "Message sending supports a small per-conversation queue so the user can stage one follow-up while a response is already in flight.\n\nContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md\n\nQueue rules:\n- queued sends are FIFO\n- queue max is exactly `2`\n- queue state is transient per conversation and is not restored across reload or restart\n- when the queue is full, further sends are blocked until a slot opens\n- stale affordances `Clear queue` and `Send now — replace first` are retired from canonical UI behavior\n\nFiles-touched and footer state remain lightweight per-thread UI state; they do not become a second persistence layer for queued messages.\n"
+        },
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "### 5.1 Reserved built-ins",
+          "content_markdown": "Reserved built-in slash commands are owned by `Plans/Commands_System.md` and consumed here without local drift.\n\nContractRef: ContractName:Plans/Commands_System.md, ContractName:Plans/UI_Command_Catalog.md\n\nReserved set:\n`/new`, `/model`, `/effort`, `/mode`, `/export`, `/compact`, `/stop`, `/resume`, `/rewind`, `/revert`, `/share`, `/settings`, `/doctor`, `/help`, `/worktree`, `/web`\n\nChat rules:\n- `/cancel` is accepted only as a deprecation alias to `/stop`\n- `/clear` is removed from the reserved built-in set\n- `/web` is a family entry-point rather than a default-to-search helper\n- `/skill` remains a discovery/invocation helper, not a reserved built-in\n"
+        },
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "### 5.2 `/web` and `/skill`",
+          "content_markdown": "Slash and natural-language web dispatch share the same underlying dispatcher and provider-routing rules.\n\nContractRef: ContractName:Plans/Commands_System.md, ContractName:Plans/Tools.md\n\n`/web` family identities:\n- `/web search` → `websearch`\n- `/web fetch` → `webfetch`\n- `/web extract` → `webextract`\n- `/web research` → `webresearch`\n- `/web crawl` → `webcrawl`\n- `/web map` → `webmap`\n\nFamily rules:\n- bare `/web` opens help/autocomplete and has no default operation\n- slash routing and NL routing land on the same tool contracts, permission gates, and audit payloads\n- bare `/skill` opens discovery or direct invocation using the `skill_id / arguments? / context?` contract rather than acting as a panel alias\n"
+        },
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "### 7.4 Question card and questionnaire system",
+          "content_markdown": "Assistant Chat consumes the shared `question` runtime contract rather than defining a chat-local payload shape.\n\nContractRef: ContractName:Plans/Tools.md, ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md\n\n#### Card structure\n\nThe chat surface renders one shared request shape with `mode`, `header`, `prompt`, `questions[]`, and optional `visual_ref?`.\n\nEach `questions[]` entry uses the canonical `QuestionItem{question_id, question, options[], required, multi_select, allow_freeform, default_values}` contract. Option rows remain `Array<{id, label, description?}>`.\n\n#### Answer and draft behavior\n\n- chat writes all question progress into PM-managed draft state and never treats `sendPrompt` as the answer store\n- the optional answer field `source?: \"option\" | \"other\" | \"freeform\"` stays visible to chat and storage consumers\n- visuals may appear on question cards, but they remain PM-managed payloads rather than ad hoc embedded HTML\n- required questions gate final submit until locally valid\n- dismiss returns the canonical `dismissed` outcome and restores the same outstanding questionnaire on resume\n\n#### Parent-mediated clarification rule\n\nChild agents do not question the user directly. If a delegated flow needs clarification, the parent session surfaces the `question` request, stores the draft state, and resumes the child only after the user responds or dismisses.\n\nContractRef: ContractName:Plans/interview-subagent-integration.md, ContractName:Plans/chain-wizard-flexibility.md\n"
+        },
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "### 8.1 Canonical planning model",
+          "content_markdown": "Chat planning canon separates plan lifecycle from item lifecycle. Plans may be proposed, revised, approved, superseded, or archived, while TODO items use the normalized item-status contract.\n\nContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Tools.md\n\nPlanning surfaces consume the same normalized TODO projection used by `todoread`/`todowrite`, sticky execution tracking, and delegated work summaries. Chat does not publish a competing item-state vocabulary.\n"
+        },
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "### 8.6 Normalized TODO contract for planning outputs",
+          "content_markdown": "Planning outputs that drive execution project into one normalized TODO model shared by chat, tools, storage, and widgets.\n\nContractRef: ContractName:Plans/Tools.md, ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md\n\n#### Item schema\n\n`todo_id`, `title`, `summary`, `status`, `dependencies[]`, `owner_hint`, `verification_hint`\n\nItem status is exactly `pending | in_progress | completed | blocked | skipped`.\n\n`superseded` is plan-level only and does not appear as an item status.\n\n#### Sticky tracker behavior\n\n- the planning panel is a real execution tracker rather than a static summary block\n- structural edits are gated once execution has started; status and note updates remain available\n- item focus follows the active execution step without rewriting completed history\n- durable plan/TODO mutations emit `chat.plan_todo_updated`\n- revision and history views show plan-level changes separately from item-level status changes\n"
+        },
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "### 13.1 Operation-card family",
+          "content_markdown": "Operation cards provide a shared anatomy for terminal, search, web, diff, and related runtime activities.\n\nContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/UI_Command_Catalog.md\n\nShared state model:\n- one card exists per command or operation invocation\n- retry creates a new card rather than mutating the prior card in place\n- states remain explicit: `pending`, `running`, `completed`, `failed`, `cancelled`, `blocked`, `timed_out`\n- blocked-action recovery and background-status badges remain visible instead of being collapsed into generic failure text\n\nPreview and copy rules:\n- preview caps stay aligned at `5` collapsed, `15` expanded, and `50` hard cap where applicable\n- search and diff cards keep no-copy behavior for the rendered result block\n- family-specific secondary actions may appear, but they do not erase the shared card skeleton\n\nContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Tools.md\n"
+        },
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "### 13.2 Web activity and provenance",
+          "content_markdown": "In-thread web transparency is lightweight and complements, but does not replace, the dedicated audit/log surface.\n\nContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Contracts_V0.md\n\nActivity labeling rules:\n- `Searching Web` is the generic search family label\n- `Reading Site` is reserved for the PM-native Site Reader path\n- provider-routed or provider-fallback activity includes requested/effective adapter disclosure plus `provider_fallback_summary` when fallback occurred\n\nThread-visible fields:\n- `web_operation`\n- `requested_adapter_id`\n- `effective_adapter_id`\n- `adapter_selection_reason`\n- `warnings_count`\n- `error_code`\n- `projection_freshness`\n- `projection_health`\n- `sources_ref`, `content_ref`, `map_ref`, `answer_summary_ref`\n\nDenied or blocked web attempts still bind to the shared event families and display `denial_reason_code`, `denial_source`, and `suggested_recovery_action` where present.\n"
+        },
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "### 13.3 Bash and terminal ownership",
+          "content_markdown": "Chat embeds a lightweight terminal preview but does not become a second interactive terminal surface.\n\nContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md\n\nTerminal rules:\n- the mini terminal preview is read-only and non-interactive inside chat\n- `Open in Terminal`, `Show Terminal`, `Rerun in Terminal`, and `Detach/Pop-Out` remain the canonical terminal actions\n- `Rerun in Terminal` launches a fresh terminal execution and therefore binds to a new `terminal_session_id`\n- command cards and terminal cards share runtime identity disclosure instead of inventing card-local ids\n"
+        },
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "### 28.2 Inline visualizer bridge",
+          "content_markdown": "The inline visualizer is a PM-managed renderer distinct from Mermaid. It is not a generic HTML sandbox or a shortcut around PM state.\n\nContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md\n\nBridge contract:\n- bridge messages include at least `requestThemeTokens`, `reportSize`, `emitSelection`, `sendPrompt`, and `openLink`\n- theme-token injection is PM-owned so visuals stay aligned with the active theme and accessibility settings\n- the renderer reports auto-height and resize events back to PM; chat does not guess iframe height blindly\n- question-flow visuals never bypass PM draft state or submit directly to the model\n\nSandbox and persistence rules:\n- the iframe sandbox stays at `sandbox=\"allow-scripts\"`\n- `allow-same-origin`, `allow-forms`, `allow-popups`, and `allow-top-navigation` stay denied\n- arbitrary HTML execution and runtime network fetches are not part of the MVP visualizer contract\n- persisted state is limited to PM-managed source fragments, metadata, and PM-owned outputs; arbitrary JS heap state is not durable\n- visible fallback and error rendering remain mandatory when the visualizer cannot execute or render safely\n"
+        }
+      ]
+    },
+    {
+      "path": "Plans/FinalGUISpec.md",
+      "intent": "update",
+      "anchors": [
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "#### 7.4.4 Settings (Unified) panel specification",
+          "content_markdown": "The unified Settings panel owns provider, account, model, and permission configuration. It does not re-own Personas or Skills.\n\nContractRef: ContractName:Plans/Skills_System.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/Models_System.md\n\nRequired surfaces:\n- provider class disclosure: `account-backed`, `API-backed`, `no-key`\n- requested versus effective account / provider state\n- support-tier and health / last-failure disclosure for web-capable providers\n- credit/cost warning UI for high-cost provider-native research paths\n"
+        },
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "#### 7.4.7 Agent-Config panel specification",
+          "content_markdown": "Agent Config owns Personas and Skills. Settings owns providers/accounts/models/permissions.\n\nContractRef: ContractName:Plans/Skills_System.md, ContractName:Plans/Personas.md\n\nRequired Agent Config surfaces:\n- Persona selection and editing\n- skill registry with source vocabulary `bundled`, `pm_enhanced`, `catalog_installed`, `manual_import`, `project_local`, `global_local`, `shadowed`\n- readiness vocabulary `ready`, `ready_with_warnings`, `invalid`, `shadowed`, `disabled`\n- invocation/help affordances that align with `/skill`\n\nV1 import rules:\n- Git URL import is not part of MVP\n- import/install flows stay within the supported skill surfaces defined by `Plans/Skills_System.md`\n"
+        },
+        {
+          "anchor_type": "heading",
+          "operation": "insert_after",
+          "anchor": "### 7.19 Agent Activity",
+          "content_markdown": "### 7.19A Dedicated log and audit inspector\n\nPM ships two complementary audit surfaces: lightweight in-thread transparency and a dedicated searchable log/audit inspector.\n\nContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md\n\nInspector requirements:\n- summary rows use a 5-item compact format: operation label, short query/url/task preview, success/failure status, fallback note when present, and source/page counts when present\n- full payload dereference is on-demand only; the inspector does not eagerly expand large refs or blobs\n- supported interactions include filter by event family, search by tool or operation, time-range queries, drill-down, and export\n- `logsearch` and `logread` have explicit GUI surfacing rather than remaining CLI-only affordances\n\nContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Tools.md\n"
+        },
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "## 15. Promoted widget catalog (web tools, planning, question, operation cards)",
+          "content_markdown": "The promoted widget catalog mirrors the shared runtime contracts. Widget entries below replace the older mixed status taxonomy and Mermaid-only collapse.\n\nContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Tools.md, ContractName:Plans/storage-plan.md\n\n### 15.1 Terminal operation card widget\n\nStates: `pending`, `running`, `completed`, `failed`, `cancelled`, `blocked`, `timed_out`\n\nActions:\n- `Open in Terminal`\n- `Show Terminal`\n- `Rerun in Terminal`\n- `Detach/Pop-Out`\n\nThe inline mini terminal is read-only and non-interactive.\n\n### 15.2 Search result card widget\n\nSearch cards show routed provider disclosure, `provider_fallback_summary` when present, and evidence refs without collapsing the underlying requested operation.\n\nSearch cards do not inherit generic copy affordances for the rendered results block.\n\n### 15.3 Web and diff operation card widget\n\nWeb and diff cards display `web_operation`, requested/effective provider, cache state, blocked recovery fields, and the aligned preview caps used by chat.\n\nRetry creates a new card instead of rewriting the prior card's history.\n\n### 15.4 Planning panel widget (sticky sidebar)\n\nThe planning panel is a real sticky execution tracker consuming `todo_id`, `title`, `summary`, `status`, `dependencies[]`, `owner_hint`, and `verification_hint`.\n\nIt preserves revision/history views, structural-edit gating after execution starts, and focused-progress behavior.\n\n### 15.5 Question card widget\n\nQuestion cards render the shared `QuestionItem` contract, permit visuals on the card, preserve PM-managed drafts, and support the outcomes `answered`, `submitted`, `dismissed`, `timed_out`, and `unavailable`.\n\n### 15.6 Mermaid and inline visualizer widgets\n\nMermaid and inline visualizer remain separate widgets.\n\nMermaid widget secondary actions:\n- `Copy source`\n- `Open in editor`\n- `Open detached preview`\n- `Export diagram`\n\nThe inline visualizer uses the PM-managed bridge, theme-token injection, auto-resize reporting, visible fallback, and the tighter sandbox described by `Plans/assistant-chat-design.md#28.2 Inline visualizer bridge`.\n"
+        }
+      ]
+    },
+    {
+      "path": "Plans/Permissions_System.md",
+      "intent": "update",
+      "anchors": [
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "## 5. Tool permission keys",
+          "content_markdown": "Tool permission ownership lives here. The keys below are the canonical permission surface for the web, question, skill, task, and MCP families touched by this packet.\n\nContractRef: ContractName:Plans/Tools.md, ContractName:Plans/MCP_Integration.md\n\n| Permission key | Applies to | Default |\n|---|---|---|\n| `skill` | structured skill invocation | `allow` |\n| `question` | shared questionnaire / clarification contract | `allow` when HITL is available; otherwise `ask` |\n| `websearch`, `webfetch`, `webextract`, `webresearch`, `webcrawl`, `webmap` | canonical web family | `ask` |\n| `batch_webfetch`, `batch_webextract` | canonical batch web family | `ask` |\n| `task` | delegated child runs | `ask` |\n| `research_session` | tier-2 browser/session actions under a parent-approved web flow | governed by the ladder below |\n\nChild-agent rule: delegated child runs default `question` to `deny` unless an owning parent flow explicitly surfaces the question to the user.\n"
+        },
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "## 6. Ask flow semantics",
+          "content_markdown": "Ask flow semantics are PM-owned and use one approval ladder across tools, browser escalation, and blocked recovery.\n\nContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Tools.md, ContractName:Plans/FinalGUISpec.md\n\nApproval ladder:\n- `deny`\n- `once`\n- `for session`\n- `always`\n\nLadder rules:\n- `reject` is retired from live canon and from acceptance examples\n- the current blocked episode is answered by the selected ladder outcome; broader effect is controlled by `approval_scope_key`\n- read-only and plan-mode web behavior remains ask-gated rather than silently collapsing to deny\n- research-session escalation to full `automation_session` uses the same ladder rather than a browser-local variant\n"
+        },
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "## 7. Deterministic defaults",
+          "content_markdown": "Deterministic defaults keep read-only exploration usable without making mutation implicit.\n\nContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/Skills_System.md\n\n| Family | Default |\n|---|---|\n| `skill` | `allow` |\n| `question` | `allow` only when HITL is available; otherwise `ask` |\n| read-only web tools in `ask` / `plan` | `ask` |\n| delegated child `question` | `deny` |\n\n`plan` does not auto-deny the web family. It preserves read-only web exploration behind explicit asks.\n"
+        },
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "### 10.4 Presets",
+          "content_markdown": "Presets are expressed as explicit allow / ask / deny matrices rather than narrative summaries.\n\nContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Run_Modes.md\n\n| Tool family | `read_only` | `plan` | `full` |\n|---|---|---|---|\n| `read`, `grep`, `glob`, `list`, `codesearch`, `chatsearch`, `logsearch`, `capabilities.get` | allow | allow | allow |\n| `skill` | allow | allow | allow |\n| `lsp` | allow (read-only ops) | allow (read-only ops) | allow |\n| `question` | allow | allow | allow |\n| `todoread`, `todowrite` | allow | allow | allow |\n| `websearch`, `webfetch`, `webextract`, `webresearch`, `webcrawl`, `webmap` | ask | ask | ask |\n| `batch_webfetch`, `batch_webextract` | ask | ask | ask |\n| `logread` | ask | ask | ask |\n| `task` | ask | ask | ask |\n| `edit`, `bash`, `repo.import`, `media.generate` | deny | deny | ask |\n\nPreset notes:\n- `read_only` and `plan` explicitly keep the six web tools ask-gated\n- `full` does not silently allow nested `task`; nested delegation remains denied by the task contract until a future policy opens it\n- provider or mode changes do not redefine the preset matrix locally\n"
+        },
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "## 11. OpenCode baseline and Puppet Master deltas",
+          "content_markdown": "External OpenCode behavior is reference-only. Puppet Master permission canon is defined here.\n\nContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Tools.md\n\n### 11.1 Baseline status\n\nExternal examples may inform terminology, but they do not override PM's approval ladder, preset matrix, or batch permission behavior.\n\n### 11.2 Puppet Master deltas\n\n- PM uses `deny | once | for session | always`\n- PM keeps read-only and plan web operations at `ask`\n- batch web approvals list all unique domains in scope and treat `For Session` as a grant for those domains for the session\n\n### 11.3 Acceptance alignment\n\n<a id=\"AC-PM07\"></a>\n**AC-PM07:** The `deny` response rejects the current blocked episode and may reject other pending asks only when their `approval_scope_key` exactly matches.\n"
+        }
+      ]
+    },
+    {
+      "path": "Plans/storage-plan.md",
+      "intent": "update",
+      "anchors": [
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "### 4.1 Shared runtime identity consumption",
+          "content_markdown": "Shared runtime identity projection is consumed across chat, widgets, audit, and delegated execution. Storage keeps the canonical field names and their meanings aligned.\n\nContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Multi-Account.md, ContractName:Plans/Personas.md\n\n| Field | Meaning |\n|---|---|\n| `requested_persona` | Persona requested for the run. |\n| `effective_persona` | Persona actually in effect. |\n| `requested_account_binding` | Requested account or provider binding before routing and policy resolution. |\n| `operational_identity` | Stable runtime identity used for execution and audit. |\n| `effective_account_label` | Human-readable effective account label shown to the user. |\n| `effective_provider_identity` | Effective provider/account pair used after routing. |\n| `effective_project_id` | Project identity bound to the execution context. |\n\nStorage rules:\n- these fields are additive and do not replace the existing requested/effective vocabulary\n- `_id` aliases such as `requested_persona_id` are not canonical runtime snapshot fields\n- chat and GUI surfaces consume the same stored field names rather than projecting local variants\n"
+        },
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "### 4.2 Question and clarification state",
+          "content_markdown": "Question and clarification state persists the shared `question` runtime contract rather than a chat-local form model.\n\nContractRef: ContractName:Plans/Tools.md, ContractName:Plans/assistant-chat-design.md\n\nStored request fields:\n- `mode`, `header`, `prompt`, `questions[]`, `context_ref?`, `visual_ref?`\n- each `questions[]` item keeps `question_id`, `question`, `options[]`, `required`, `multi_select`, `allow_freeform`, `default_values`\n\nStored answer fields:\n- `selected_option_ids[]?`\n- `freeform_text?`\n- `draft_value?`\n- `response_kind`\n- `source?`\n- `validation_state`\n- `answered_at_utc?`\n\nPersistence rules:\n- PM-managed drafts restore by `question_id` on resume\n- `default_values` remains caller-supplied seed state; user edits persist in `draft_value`\n- outcomes remain `answered`, `submitted`, `dismissed`, `timed_out`, and `unavailable`\n- child-agent clarification remains parent-mediated even when the stored request originated from delegated work\n"
+        },
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "### 4.3 Plan and TODO state",
+          "content_markdown": "Plan and TODO persistence keeps plan lifecycle and item lifecycle separate.\n\nContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Tools.md\n\nStored TODO item schema:\n- `todo_id`\n- `title`\n- `summary`\n- `status`\n- `dependencies[]`\n- `owner_hint`\n- `verification_hint`\n\nItem status is exactly `pending | in_progress | completed | blocked | skipped`.\n\nPlan-level states such as `superseded` are stored on the plan artifact or revision record, not in the item `status` field.\n\nProjection rules:\n- plan/TODO mutations emit `chat.plan_todo_updated`\n- revision/history persistence distinguishes structural plan revisions from item status updates\n- sticky execution tracking restores against the same normalized TODO projection used by `todoread` and `todowrite`\n"
+        },
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "### 4.4 Activity transparency payloads",
+          "content_markdown": "Activity transparency stores one shared payload family for chat transparency, operation cards, audit history, and later drill-down surfaces.\n\nContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Tools.md\n\n#### Web-operation child payload\n\n| Key | Type | Notes |\n|---|---|---|\n| `web_operation` | `string` | One of `websearch`, `webfetch`, `webextract`, `webresearch`, `webcrawl`, `webmap`, `batch_webfetch`, `batch_webextract` where applicable. |\n| `web_input` | `object` | Structured normalized request snapshot. Never a preview string. |\n| `requested_adapter_id` | `string?` | Requested provider or adapter id. |\n| `effective_adapter_id` | `string?` | Provider or adapter actually used. |\n| `adapter_selection_reason` | `string?` | Why the effective provider/path was selected. |\n| `provider_fallback_summary?` | `string` | User-visible fallback explanation when fallback occurred. |\n| `warnings_count` | `number` | Count of surfaced warnings. |\n| `error_code?` | `string` | Canonical PM error code when the operation failed or degraded. |\n| `projection_freshness` | `current | refreshing | stale` | Freshness state. |\n| `projection_health` | `healthy | degraded | unavailable` | Health state. |\n| `sources_ref?` / `content_ref?` / `map_ref?` / `answer_summary_ref?` | `string` | Durable refs for large payloads or synthesized answers. |\n| `denial_reason_code?` | `string` | Present for denied or blocked web execution. |\n| `denial_source?` | `string` | Source of the denial decision. |\n| `suggested_recovery_action?` | `string` | User-facing recovery hint. |\n| `progress_event?` | `object` | Structured long-running progress payload. |\n\nStorage rules:\n- denied or blocked web events still use the same payload family\n- ref dereference remains on-demand in history and audit views\n- freshness and health are independent dimensions and are not collapsed into a single status field\n"
+        },
+        {
+          "anchor_type": "heading",
+          "operation": "insert_after",
+          "anchor": "### 4.4 Activity transparency payloads",
+          "content_markdown": "### 4.5 Inline visualizer persistence\n\nInline visualizer persistence stores only PM-managed source, metadata, and PM-owned outputs.\n\nContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FinalGUISpec.md\n\nPersistence rules:\n- persisted fields include source fragment, title, kind, version, and PM-managed output or draft values\n- arbitrary JS heap state is not persisted\n- replay or reload re-renders from the persisted source plus metadata\n- visible fallback and error state are persisted as PM-owned display state, not as arbitrary client script state\n"
+        },
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "## 8. Web content caching persistence",
+          "content_markdown": "Storage owns the durable cache record, TTL defaults, and state vocabulary for the web family.\n\nContractRef: ContractName:Plans/Tools.md\n\n### 8.1 Durable record shape\n\nEach cache record stores:\n- `normalized_url`\n- `formats_hash`\n- `adapter_id`\n- `content_ref`\n- `content_hash`\n- `fetched_at_utc`\n- `expires_at_utc`\n- `last_accessed_at_utc`\n- lightweight metadata needed for change detection and LRU eviction\n\n### 8.2 Two-phase lookup\n\nStorage persists the full `(normalized_url, formats_hash, adapter_id)` identity, but runtime lookup is intentionally split:\n- pre-selection lookup checks `(normalized_url, formats_hash)` only\n- after routing resolves the effective provider, the cached `adapter_id` is validated against that provider\n- mismatched provider entries are discarded and replaced with a fresh fetch\n\nContractRef: ContractName:Plans/Tools.md#12-web-tool-routing-algorithm, ContractName:Plans/Tools.md#14-web-content-caching-layer\n\n### 8.3 TTL defaults and state vocabulary\n\n| Operation | Default TTL |\n|---|---|\n| `webfetch` | `4 hours` |\n| `webextract` | `4 hours` |\n| `webcrawl` | `24 hours` |\n| `webmap` | `24 hours` |\n| `websearch` | `1 hour` |\n| `webresearch` | `Not cached` |\n\nState vocabulary:\n- `hit`\n- `miss`\n- `bypassed`\n- `expired_used_for_diff`\n\n### 8.4 Invalidation and retention\n\n- invalidation scopes are URL, domain, and project\n- expired records may still retain hashes and metadata for diff/change detection\n- action-bearing fetches bypass lookup and are never keyed as if the page were static\n- the per-project default storage ceiling remains `500 MB`\n- provider-local cache hints remain subordinate to this PM-owned persistence contract\n\nContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Tools.md\n"
+        }
+      ]
+    },
+    {
+      "path": "Plans/Commands_System.md",
+      "intent": "update",
+      "anchors": [
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "### 2.4 Name collision rules",
+          "content_markdown": "Reserved built-ins and their families cannot be overridden by provider, skill, or extension naming.\n\nContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/assistant-chat-design.md\n\nCollision rules:\n- `/web` reserves the family namespace for `/web search`, `/web fetch`, `/web extract`, `/web research`, `/web crawl`, and `/web map`\n- `/worktree` is reserved and cannot be re-bound by a custom command\n- `/skill` remains a built-in helper surface even though it is not part of the reserved built-in set owned here\n- natural-language and slash dispatch share the same underlying dispatcher, so collision handling is consistent across both entry points\n"
+        },
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "## 7. Reserved built-in slash commands",
+          "content_markdown": "The reserved built-in slash-command set is:\n\n`/new`, `/model`, `/effort`, `/mode`, `/export`, `/compact`, `/stop`, `/resume`, `/rewind`, `/revert`, `/share`, `/settings`, `/doctor`, `/help`, `/worktree`, `/web`\n\nContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/UI_Command_Catalog.md\n\nAdditional rules:\n- `/cancel` is a deprecated compatibility alias to `/stop`\n- `/clear` is removed from live canon\n- bare `/web` opens help/autocomplete and has no default operation\n- the stable `/web` family identities are `/web search`, `/web fetch`, `/web extract`, `/web research`, `/web crawl`, and `/web map`\n- bare `/skill` is a discovery or invocation affordance and is not equivalent to “open panel”\n"
+        }
+      ]
+    },
+    {
+      "path": "Plans/UI_Command_Catalog.md",
+      "intent": "update",
+      "anchors": [
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "#### Terminal session and layout commands",
+          "content_markdown": "Terminal command identities remain distinct even when they target the same session.\n\nContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FinalGUISpec.md\n\n| Command ID | Payload | Domain event(s) | UI surface(s) |\n|---|---|---|---|\n| `cmd.terminal.show` | `{ terminal_session_id?, command_context_ref?, create_if_missing?: boolean }` | layout/UI state only | Chat, inline operation cards, terminal tabs |\n| `cmd.terminal.restart_session` | `{ command_context_ref, terminal_session_id? }` | `terminal.session.restarting`, `terminal.session.started` | Chat, inline operation cards, terminal tabs |\n| `cmd.terminal.detach_session` | `{ terminal_session_id }` | `terminal.session.detached` | Chat, terminal tabs, detached terminal surface |\n\nRules:\n- `Open in Terminal` and `Show Terminal` both resolve to `cmd.terminal.show`; they differ only by launching surface and whether a terminal must be created or merely revealed\n- `Rerun in Terminal` resolves to `cmd.terminal.restart_session` and creates a fresh execution with a new `terminal_session_id`\n- `Detach/Pop-Out` moves the bound terminal session into a detached surface without rerunning the command\n\nContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Wiring_Matrix.md\n"
+        },
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "### 2.7 Chat slash commands (reserved)",
+          "content_markdown": "The chat consumer catalog mirrors the reserved built-in slash-command set owned by `Plans/Commands_System.md`.\n\nContractRef: ContractName:Plans/Commands_System.md\n\nReserved set:\n`/new`, `/model`, `/effort`, `/mode`, `/export`, `/compact`, `/stop`, `/resume`, `/rewind`, `/revert`, `/share`, `/settings`, `/doctor`, `/help`, `/worktree`, `/web`\n\nWeb family command identities:\n- `/web search` → `cmd.web.search`\n- `/web fetch` → `cmd.web.fetch`\n- `/web extract` → `cmd.web.extract`\n- `/web research` → `cmd.web.research`\n- `/web crawl` → `cmd.web.crawl`\n- `/web map` → `cmd.web.map`\n\nConsumer alignment:\n- retire `cmd.chat.delete_message`\n- retire the older bare-`/web` default-to-search behavior\n- keep `/cancel` only as a deprecation alias to `/stop`\n- keep `/skill` as discovery or invocation behavior rather than a panel-open alias\n"
+        }
+      ]
+    },
+    {
+      "path": "Plans/Skills_System.md",
+      "intent": "update",
+      "anchors": [
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "### 4.3 `skill` tool",
+          "content_markdown": "The canonical runtime surface for skill invocation is shared with `Plans/Tools.md`.\n\nContractRef: ContractName:Plans/Tools.md, ContractName:Plans/FinalGUISpec.md\n\n#### Input\n\n`skill_id`, `arguments?`, `context?`\n\n#### Output envelope\n\n`skill_id`, `title`, `content`, `source_type`, `resource_base_dir?`, `resource_entries_sample?`, `metadata?`\n\nRuntime rules:\n- discovery lists `ready` and `ready_with_warnings`\n- auto-invoke is limited to `ready`\n- FileSafe-constrained resource disclosure remains explicit; skills do not expose raw filesystem listings outside that boundary\n"
+        },
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "### 4.4 Canonical MVP delivery path",
+          "content_markdown": "MVP skill delivery uses one on-disk format: a single `SKILL.md` per skill.\n\nContractRef: ContractName:Plans/Tools.md\n\nDelivery rules:\n- a skill package resolves to one canonical `SKILL.md`\n- import and install preserve the same `skill_id` and readiness semantics used at runtime\n- archive format or multi-file package details are implementation concerns and are not the public doc contract\n"
+        },
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "### 6.1 Management surface",
+          "content_markdown": "Agent Config owns Personas and Skills. Settings does not re-own skill management.\n\nContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Personas.md\n\nRequired surfaces:\n- skill discovery by `skill_id`, title, and readiness\n- source vocabulary `bundled`, `pm_enhanced`, `catalog_installed`, `manual_import`, `project_local`, `global_local`, `shadowed`\n- readiness vocabulary `ready`, `ready_with_warnings`, `invalid`, `shadowed`, `disabled`\n"
+        },
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "### 6.2 Import and install flows",
+          "content_markdown": "Import and install flows preserve the one-`SKILL.md` model and the runtime readiness contract.\n\nContractRef: ContractName:Plans/Tools.md, ContractName:Plans/FinalGUISpec.md\n\nFlow rules:\n- imports register a canonical `skill_id`\n- readiness is evaluated after install and surfaced as `ready`, `ready_with_warnings`, `invalid`, `shadowed`, or `disabled`\n- imported resources stay within FileSafe-constrained disclosure rules\n"
+        },
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "### 6.3 Slash and runtime boundary",
+          "content_markdown": "`/skill` is a discovery or invocation affordance that lands on the same runtime contract as tool-based skill invocation.\n\nContractRef: ContractName:Plans/Commands_System.md, ContractName:Plans/assistant-chat-design.md\n\nBoundary rules:\n- bare `/skill` opens discovery or invocation help\n- slash and natural-language invocation both resolve to the same `skill_id / arguments? / context?` runtime contract\n- `ready_with_warnings` remains discoverable but is not auto-invoked\n"
+        }
+      ]
+    },
+    {
+      "path": "Plans/Contracts_V0.md",
+      "intent": "update",
+      "anchors": [
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "### 3.4 Tool-specific payload extensions",
+          "content_markdown": "Tool-specific payloads are allowed to extend the base event and result contracts, but the owner contract for each extension must stay singular.\n\nContractRef: ContractName:Plans/Tools.md, ContractName:Plans/storage-plan.md\n\nExisting tool families continue to use owner-defined payload sections rather than publishing duplicated inline schemas in every consumer plan.\n"
+        },
+        {
+          "anchor_type": "heading",
+          "operation": "insert_after",
+          "anchor": "### 3.4 Tool-specific payload extensions",
+          "content_markdown": "### 3.4A Web error taxonomy and applicability\n\nThe canonical PM web error codes remain visible and applicability stays per-tool rather than flattened into one undifferentiated list.\n\nContractRef: ContractName:Plans/Tools.md, ContractName:Plans/storage-plan.md\n\n| Code | Applies to | Meaning |\n|---|---|---|\n| `adapter_unavailable` | all web tools and batch web tools | Selected or candidate provider could not execute the request because of health, auth, or service availability. |\n| `unsupported_operation` | all web tools and batch web tools | Effective provider does not support the requested operation or parameter family. |\n| `content_blocked` | `webfetch`, `webextract`, `webcrawl`, `batch_webfetch`, `batch_webextract` | Content exists but is blocked by auth, policy, or anti-bot controls. |\n| `content_not_found` | `webfetch`, `webextract`, `webcrawl`, `webmap`, `batch_webfetch`, `batch_webextract` | The target content or page could not be found. |\n| `unsupported_source` | `websearch` | Requested `sources[]` family is not supported by the selected provider/path. |\n| `extraction_schema_mismatch` | `webextract`, `batch_webextract` | Extraction could not satisfy strict schema requirements. |\n| `autonomous_budget_exceeded` | `webresearch` | Autonomous research exhausted time, page, or credit budget before completion. |\n| `no_previous_version` | `webfetch`, `webcrawl` with change tracking | Informational warning when no prior version exists for comparison. |\n\nFirecrawl mapping examples:\n- HTTP `403` or `451` provider failures map to `content_blocked`\n- HTTP `404` maps to `content_not_found`\n- provider rate-limit, auth, or service-unavailable failures map to `adapter_unavailable`\n- provider-side or PM post-validation schema failures map to `extraction_schema_mismatch`\n\nContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/assistant-chat-design.md\n"
+        },
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "### 5.1B Persona/Runtime Snapshot Payload Contract",
+          "content_markdown": "Runtime snapshot payloads use one shared requested/effective identity vocabulary across chat, storage, providers, and delegated work.\n\nContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Multi-Account.md, ContractName:Plans/Personas.md\n\n| Field | Meaning |\n|---|---|\n| `requested_persona` | Persona requested by the initiating surface or user. |\n| `effective_persona` | Persona actually applied at execution time. |\n| `requested_account_binding` | Requested account/provider binding before routing and policy resolution. |\n| `operational_identity` | Stable runtime identity used for execution and audit correlation. |\n| `effective_account_label` | Human-readable account label surfaced to the user. |\n| `effective_provider_identity` | Effective provider/account combination after routing. |\n| `effective_project_id` | Project identity bound to the run. |\n\n`_id` aliases such as `requested_persona_id` and `effective_persona_id` are retired from canonical runtime snapshot examples.\n"
+        }
+      ]
+    },
+    {
+      "path": "Plans/newtools.md",
+      "intent": "update",
+      "anchors": [
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "## 8. MCP Support and GUI Settings",
+          "content_markdown": "This section is a consumer guide only. `Plans/MCP_Integration.md` is the current MCP SSOT.\n\nContractRef: ContractName:Plans/MCP_Integration.md, ContractName:Plans/FinalGUISpec.md\n\n### 8.1 Owner document\n\n- `Plans/MCP_Integration.md` is live canon now; it is not future-tense planned work\n- naming, availability, credential binding, config schema, and supported flows defer to that owner\n\n### 8.2 GUI/settings alignment\n\nGUI settings disclose requested versus effective MCP availability, server status, debug affordances, and underscore-only tool naming.\n\n### 8.2.1 Cited-search and search-provider note\n\nOlder cited-search framing is not normative. MCP-backed search surfaces defer to the MCP owner doc and the web/provider owner docs; this section no longer acts as an owner landing for search-provider canon.\n\n### 8.3 Research session variant reference\n\nResearch-session behavior references the shared `research_session` contract in `Plans/Section15_MVP_Promoted_Features_Spec.md`; MCP settings do not redefine it.\n"
+        }
+      ]
+    },
+    {
+      "path": "Plans/Run_Modes.md",
+      "intent": "update",
+      "anchors": [
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "## 8. OpenCode baseline",
+          "content_markdown": "OpenCode material is reference-only background. Puppet Master run-mode semantics are PM-owned canon.\n\nContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/assistant-chat-design.md\n\nInterpretation rules:\n- PM is not “based on” OpenCode in a normative sense\n- external examples may inform terminology or contrast, but they do not define PM mode behavior\n- PM mode, approval, TODO, and web-tool semantics are resolved by PM owner docs when any external baseline conflicts\n"
+        },
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "### 9.2 `plan`",
+          "content_markdown": "`plan` remains a read-first mode with explicit planning artifacts and TODO projection, not a silent auto-deny shell around web tools.\n\nContractRef: ContractName:Plans/Tools.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Permissions_System.md\n\nRules:\n- read-only delegated child runs remain allowed when they stay within the parent mode ceiling\n- `websearch`, `webfetch`, `webextract`, `webresearch`, `webcrawl`, and `webmap` remain ask-gated rather than auto-denied\n- Deep Plan's question-driven loop feeds the same normalized TODO projection used by execution\n"
+        }
+      ]
+    },
+    {
+      "path": "Plans/orchestrator-subagent-integration.md",
+      "intent": "update",
+      "anchors": [
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "#### Task tool contract alignment",
+          "content_markdown": "Orchestrator delegation uses the shared `task` contract rather than an orchestration-local lifecycle.\n\nContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Permissions_System.md\n\nChild lifecycle:\n`pending → running → completed | failed | cancelled | timed_out`\n\nAlignment rules:\n- resume reuses the same `delegated_session_id`\n- `owner_hint` resolves by exact match against `crew.roles`; on no match the current session remains the owner\n- hidden or unavailable subagents are not advertised as choices\n- nested `task` remains denied by default\n- retries are parent-owned policy rather than child self-retry behavior\n"
+        }
+      ]
+    },
+    {
+      "path": "Plans/interview-subagent-integration.md",
+      "intent": "update",
+      "anchors": [
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "### Question system alignment",
+          "content_markdown": "Interview consumes the shared `question` runtime contract.\n\nContractRef: ContractName:Plans/Tools.md, ContractName:Plans/storage-plan.md\n\nRequired alignment:\n- `questions[]` uses `QuestionItem`\n- `options[]` uses `Array<{id, label, description?}>`\n- answers preserve `response_kind`, `source?`, and `validation_state`\n- clarification remains parent-mediated rather than direct child prompting\n"
+        },
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "### Runtime identity visibility",
+          "content_markdown": "Interview-visible runtime identity preserves the shared owner fields and does not create local aliases.\n\nContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Personas.md\n\nRequired fields:\n- `requested_persona`\n- `effective_persona`\n- `requested_account_binding`\n- `operational_identity`\n- `effective_account_label`\n- `effective_provider_identity`\n"
+        },
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "### Requested/effective Interview contract",
+          "content_markdown": "Requested/effective Interview payloads consume the runtime snapshot owner contract directly.\n\nContractRef: ContractName:Plans/Contracts_V0.md\n\n`_id` variants such as `requested_persona_id` and `effective_persona_id` are retired from canonical Interview payload examples.\n"
+        }
+      ]
+    },
+    {
+      "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "intent": "update",
+      "anchors": [
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "#### 1.3A Research session alignment",
+          "content_markdown": "`research_session` is a restricted `automation_session`: it reuses the same browser/runtime infrastructure but exposes a smaller action set, tighter lifecycle, and explicit escalation rules.\n\nContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/assistant-chat-design.md\n\n#### Action tiers\n\n**Tier 1 — always allowed**\n`navigate`, `back`, `reload`, `snapshot`, `screenshot`, `console`, `network`\n\n**Tier 2 — session granted**\n`click`, `scroll`, `type`, `press_key`, `wait_for`, `set_viewport`\n\n**Tier 3 — ask/deny**\n`fill_form`, `select_option`\n\nExcluded categories remain explicit: tab management, hover/drag, file upload, dialog handling, verify actions, trace/video capture, storage/cookie mutation, network simulation, and locator-generation/testing tooling.\n\nLifecycle rules:\n- creation is implicit when `webfetch` or `webextract` uses `actions`, or when autonomous `webresearch` needs browser fallback\n- the session is transient and tears down after the tool invocation completes\n- no user takeover or promotion-to-browsing flow exists inside `research_session`\n- escalation to full `automation_session` requires explicit confirmation and is disclosed in activity transparency\n- telemetry may use the distinct session class value `research_session` even though infrastructure is shared with `automation_session`\n"
+        }
+      ]
+    },
+    {
+      "path": "Plans/CLI_Bridged_Providers.md",
+      "intent": "update",
+      "anchors": [
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "## Firecrawl provider entry",
+          "content_markdown": "Firecrawl is a first-class web provider entry. Consumer summaries here defer to the owner contracts in `Plans/Tools.md`.\n\nContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Models_System.md\n\nRequired consumer points:\n- provider id is `firecrawl`\n- Firecrawl is disabled by default until explicitly enabled\n- support tier is disclosed per operation rather than flattened into one “native for all” label\n- requested/effective runtime identity and routing disclosure remain visible when Firecrawl is selected\n- native multi-URL extract remains the `/v2/extract` with `urls[]` path rather than a scrape-plus-PM-extract rewrite\n"
+        }
+      ]
+    },
+    {
+      "path": "Plans/Models_System.md",
+      "intent": "update",
+      "anchors": [
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "### 4.5 Web tool provider capability alignment",
+          "content_markdown": "Model and provider disclosure for web tools consumes the owner capability matrix from `Plans/Tools.md`.\n\nContractRef: ContractName:Plans/Tools.md, ContractName:Plans/FinalGUISpec.md\n\nRequired disclosure:\n- support tier remains per provider × operation\n- model-native auth reuse stays visible for account-backed providers that expose web capabilities\n- no per-operation priority override exists in MVP; routing consumes the global provider priority stack\n- health, last-failure, and effective-provider surfacing align with the shared routing contract\n"
+        }
+      ]
+    },
+    {
+      "path": "Plans/Multi-Account.md",
+      "intent": "update",
+      "anchors": [
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "### 4.6 Owner/consumer boundary alignment",
+          "content_markdown": "Multi-account consumer sections use the shared runtime snapshot fields and do not redefine them locally.\n\nContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Models_System.md\n\nRequired fields:\n- `requested_account_binding`\n- `operational_identity`\n- `effective_account_label`\n- `effective_provider_identity`\n- `effective_project_id`\n\nLocal substitute field families are not canonical.\n"
+        }
+      ]
+    },
+    {
+      "path": "Plans/Personas.md",
+      "intent": "update",
+      "anchors": [
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "### 3.3A Field naming alignment with runtime identity",
+          "content_markdown": "Persona-related runtime identity fields align to the shared owner contract:\n- `requested_persona`\n- `effective_persona`\n\nContractRef: ContractName:Plans/Contracts_V0.md\n\n`_id` variants are retired from canonical runtime payload examples.\n"
+        }
+      ]
+    },
+    {
+      "path": "Plans/MCP_Integration.md",
+      "intent": "update",
+      "anchors": [
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "## 1. Canonical naming",
+          "content_markdown": "MCP tools use the underscore-only form `{server_slug}_{tool_name}`.\n\nRules:\n- slash-separated aliases are not canonical\n- wildcard rules match the underscore form\n- consumer docs refer back to this document for naming, auth-state, and availability vocabulary instead of restating their own variants\n\nContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Permissions_System.md\n"
+        },
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "## 2. Requested versus effective availability",
+          "content_markdown": "MCP state is disclosed in both requested and effective form.\n\nContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/newtools.md\n\nRequested fields:\n- requested server enablement\n- requested tool access\n- requested client registration binding when a server requires it\n\nEffective auth-state enum:\n- `authenticated`\n- `expired`\n- `not_authenticated`\n\nEffective connection-state enum:\n- `connected`\n- `disabled`\n- `needs_auth`\n- `needs_client_registration`\n- `failed`\n\nMapping and alignment rules:\n- provider-style `LoggedIn` maps to MCP `authenticated`\n- provider-style `LoggedOut` maps to MCP `not_authenticated`\n- provider-style `AuthExpired` maps to MCP `expired`\n- provider-style `AuthFailed` maps to MCP effective `failed`\n- `needs_auth` is the effective state when the server is requested-on but auth is missing or expired\n- `needs_client_registration` is the effective state when auth is present but the client registration handshake is incomplete\n"
+        },
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "## 3. Credential binding and invalidation",
+          "content_markdown": "Credential state is part of the effective MCP contract rather than an implementation footnote.\n\nContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Tools.md\n\nRules:\n- server credentials bind to the server identity that used them\n- invalid, rotated, or revoked credentials move the auth state to `expired` or `not_authenticated` and the effective state to `needs_auth` until revalidation succeeds\n- client-registration loss moves the effective state to `needs_client_registration` even when stored credentials remain present\n- repeated connection or handshake failures move the effective state to `failed` and preserve the last failure detail for disclosure\n- consumer docs cross-reference this owner contract rather than publishing their own credential or invalidation vocabulary\n"
+        },
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "## 4. Cross-surface responsibilities",
+          "content_markdown": "- `Plans/Tools.md` consumes MCP naming and tool-registry behavior.\n- `Plans/storage-plan.md` consumes requested/effective availability and audit projection fields.\n- `Plans/Permissions_System.md` consumes permission-key behavior, not a competing auth-state taxonomy.\n- `Plans/newtools.md` and GUI summary surfaces reference this document as the live SSOT for MCP availability and credential vocabulary.\n\nContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Models_System.md\n"
+        },
+        {
+          "anchor_type": "heading",
+          "operation": "insert_after",
+          "anchor": "## 4. Cross-surface responsibilities",
+          "content_markdown": "## 5. Server config schema\n\nMCP server config is implementation-facing canon, not a GUI-only convenience shape.\n\nContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md\n\nCanonical config fields include:\n- `server_id`\n- `enabled`\n- `timeout_ms`\n- local launch fields (`command`, `args[]`, `env?`, `working_directory?`)\n- remote launch fields (`host_id`, `remote_command`, `remote_args[]`, `remote_env?`)\n- auth binding fields, including OAuth-disabled / auth-state semantics\n- per-tool enable/disable entries independent of connection state\n\n## 6. Supported flows\n\nSupported owner-level flows are exactly `auth`, `list/status`, `logout`, and `debug`.\n\nContractRef: ContractName:Plans/Tools.md, ContractName:Plans/newtools.md\n\nFlow rules:\n- `auth` resolves missing or expired auth without redefining tool permissions\n- `list/status` surfaces requested/effective availability plus last-failure disclosure\n- `logout` revokes the effective auth binding without deleting the server definition\n- `debug` surfaces connection, handshake, and tool-registration diagnostics without minting a second status vocabulary\n\n## 7. Effective tool availability and GUI surfacing\n\nEffective tool availability remains independent of raw server connection state.\n\nContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/FinalGUISpec.md\n\nRules:\n- a connected server may still have individual tools disabled\n- a requested-on server may still surface `needs_auth`, `needs_client_registration`, or `failed`\n- GUI surfaces show requested/effective state, auth state, debug entry points, and underscore-only tool naming without becoming a second owner document\n"
+        }
+      ]
+    },
+    {
+      "path": "Plans/chain-wizard-flexibility.md",
+      "intent": "update",
+      "anchors": [
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "### 15.6 Shared questionnaire alignment",
+          "content_markdown": "Wizard clarification uses the shared `question` contract rather than a wizard-local prompt schema.\n\nContractRef: ContractName:Plans/Tools.md, ContractName:Plans/assistant-chat-design.md\n\nAlignment rules:\n- one clarification request may hold one question or many\n- `question_id` remains stable across thread, wizard, and stored report state\n- `source?` may preserve `option`, `other`, or `freeform`\n- required questions gate submit\n- dismiss pauses and resume restores the outstanding questionnaire from PM-managed draft state\n"
+        }
+      ]
+    },
+    {
+      "path": "Plans/00-plans-index.md",
+      "intent": "update",
+      "anchors": [
+        {
+          "anchor_type": "heading",
+          "operation": "replace_section",
+          "anchor": "## Web Tools + Firecrawl + Lost-Spec Recovery reconciliation note (2026-03-30)",
+          "content_markdown": "The reconciled owner and consumer set for web tools, Firecrawl, questions, planning/TODO, permissions, runtime identity, and MCP now spans:\n- `Plans/Tools.md`\n- `Plans/assistant-chat-design.md`\n- `Plans/FinalGUISpec.md`\n- `Plans/Permissions_System.md`\n- `Plans/storage-plan.md`\n- `Plans/Commands_System.md`\n- `Plans/UI_Command_Catalog.md`\n- `Plans/Skills_System.md`\n- `Plans/Contracts_V0.md`\n- `Plans/Run_Modes.md`\n- `Plans/Section15_MVP_Promoted_Features_Spec.md`\n- `Plans/MCP_Integration.md`\n\nContractRef: ContractName:Plans/MCP_Integration.md, ContractName:Plans/Tools.md\n\nConsumer summaries in orchestration, interview, provider, account, and index surfaces defer to those repaired owner sections instead of keeping competing canon. Verify-only docs were checked during reconciliation and are intentionally out of packet scope because no edits were required.\n"
+        }
+      ]
+    }
+  ]
+}

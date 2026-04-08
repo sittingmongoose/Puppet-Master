@@ -31,13 +31,16 @@ ContractRef: ContractName:Plans/Contracts_V0.md#21-provider-transport-taxonomy, 
 
 ## 2. Non-goals
 
-- Replacing or deprecating any existing provider integration mode (CLI-bridged, direct-provider, or server-bridged).
-- Bundling or auto-installing OpenCode (user must install it themselves).
-- Importing OpenCode's internal architecture into Puppet Master (OpenCode is an external dependency).
-- Introducing SDK-driven runtime launch or install flows; Puppet Master uses OpenCode HTTP endpoints directly.
 
----
+### 2.1 PM-native vs OpenCode terminology boundary
 
+PM keeps PM-native terminology for tools, runtime identity, and provider routing even when OpenCode exposes related concepts.
+
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Contracts_V0.md
+
+Rules:
+- PM terms such as `websearch`, `webfetch`, `requested_persona`, and `effective_persona` remain canonical
+- OpenCode terms may be referenced for alignment, adoption notes, or external context, but not as PM's canonical owner vocabulary
 ## 3. SSOT References (DRY)
 
 - **Provider facade contract:** `Plans/CLI_Bridged_Providers.md` (extended for server transport)

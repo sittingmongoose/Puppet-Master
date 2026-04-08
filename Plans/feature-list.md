@@ -169,3 +169,15 @@ Remove or revise older summary phrasing that implies lexical dispatch, node-cent
 **Detailed spec:** `Plans/Executor_Protocol.md`, `Plans/Run_Graph_View.md`, [storage-plan](#storage-plan-ref)
 
 **Artifacts panel and panels (from GUI/Artifacts/Usage scope):** Artifacts panel (runtime artifacts, 19 types, cost_usage, Show in Ledger/Usage); side-panel toggling for Git, Docker, Unraid, Artifacts, Chat, Files (single slot, last-click wins); layout save per project; OpenCode-style usage-on-message reference; AI in Git; multi-repo source control (or explicit deferral).
+
+## Web tools, skills, planning, and approval reconciliation note (2026-04-04)
+
+Rewrite-era feature summaries must align to the owner docs updated by the Firecrawl / lost-spec recovery packet.
+
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/Skills_System.md
+
+Summary:
+- PM owns a six-tool web family plus `batch_webfetch` and `batch_webextract`
+- slash-command canon uses the reconciled built-in set with bare `/web` help/autocomplete and `/skill` discovery/invocation behavior
+- Agent Config owns Personas + Skills while Settings owns providers/accounts/models/permissions
+- planning/TODO, question, operation-card, and visualizer summaries defer to their repaired owner sections

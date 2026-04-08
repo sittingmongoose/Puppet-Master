@@ -92,34 +92,15 @@ When resolving a command by name:
 
 ### 2.4 Name collision rules
 
-Reserved Assistant Chat slash-command names are canonical and non-overridable.
+Reserved built-ins and their families cannot be overridden by provider, skill, or extension naming.
 
-Reserved names:
-- `new`
-- `model`
-- `effort`
-- `mode`
-- `export`
-- `compact`
-- `stop`
-- `resume`
-- `rewind`
-- `revert`
-- `share`
-- `settings`
-- `doctor`
-- `help`
-- `web`
-- `skill`
+ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/assistant-chat-design.md
 
-Rules:
-- User Commands MUST NOT use any reserved Assistant Chat slash-command name.
-- `override_builtin` MUST NOT be used to replace or suppress reserved Assistant Chat built-ins.
-- `/cancel` is treated as an alias/deprecation path for `/stop`, not as a separate reserved command with independent semantics.
-- `/clear` is not part of the canonical reserved set and MUST NOT be treated as a built-in shadow target.
-- Reserved git/GitHub prefixes remain unconditionally reserved and cannot be overridden.
-
-ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Permissions_System.md
+Collision rules:
+- `/web` reserves the family namespace for `/web search`, `/web fetch`, `/web extract`, `/web research`, `/web crawl`, and `/web map`
+- `/worktree` is reserved and cannot be re-bound by a custom command
+- `/skill` remains a built-in helper surface even though it is not part of the reserved built-in set owned here
+- natural-language and slash dispatch share the same underlying dispatcher, so collision handling is consistent across both entry points
 
 ### 2.5 Name validation
 
@@ -200,7 +181,7 @@ ContractRef: ContractName:Plans/Permissions_System.md#TOOL-KEYS
 
 The pattern `` !`shell-command` `` in the template body executes the shell command and injects its stdout at that position during template resolution.
 
-**Permission guard:** Shell injection is checked against the `bash` permission key (`Plans/Permissions_System.md` §5). If the active permission resolves to `deny`, the injection is blocked and an error message is substituted. If `ask`, the approval UI is shown and the user's response (`once`/`always`/`reject`) is respected per `Plans/Permissions_System.md` §6.
+**Permission guard:** Shell injection is checked against the `bash` permission key (`Plans/Permissions_System.md` §5). If the active permission resolves to `deny`, the injection is blocked and an error message is substituted. If `ask`, the approval UI is shown and the user's response (`deny`/`once`/`for session`/`always`) is respected per `Plans/Permissions_System.md` §6.
 
 ContractRef: ContractName:Plans/Permissions_System.md#TOOL-KEYS, ContractName:Plans/Permissions_System.md#ASK-FLOW
 
@@ -283,8 +264,9 @@ Shell injection (`` !`command` ``) is evaluated against the `bash` permission ke
 
 If the resolution yields `ask`, the approval UI is shown with the full shell command displayed. The user's response follows `Plans/Permissions_System.md` §6 semantics:
 - `once`: Execute this injection only.
-- `always`: Insert a session-scoped allow rule for the command pattern.
-- `reject`: Block this injection; reject all pending ask requests in the session.
+- `for session`: Insert a session-scoped allow rule for the command pattern.
+- `always`: Create the durable allow defined by `Plans/Permissions_System.md` §6.
+- `deny`: Block this injection for the current blocked episode.
 
 ContractRef: ContractName:Plans/Permissions_System.md#ASK-FLOW, ContractName:Plans/Permissions_System.md#RESOLUTION
 
@@ -386,23 +368,33 @@ The preview does NOT execute any run. Shell injections in preview mode execute t
 
 ### 6.3 Shortcut binding
 
-Each command row in the list has an optional "Bind shortcut" action that opens the shortcut capture UI (same as Settings > Shortcuts). The binding is stored in the shortcut registry (DRY:DATA) and appears in Settings > Shortcuts as "Run command: \<name\>".
+## 7. Reserved built-in slash commands
+The reserved built-in slash-command set is:
 
-### 6.4 Command palette exposure
+`/new`, `/model`, `/effort`, `/mode`, `/export`, `/compact`, `/stop`, `/resume`, `/web`, `/skill`
 
-All User Commands are automatically listed in the command palette (`Plans/FinalGUISpec.md` §4.2) as "Run command: \<name\> — \<description\>". The user can opt out per-command by setting a future `hide_from_palette` frontmatter field (not in MVP; all commands are exposed by default).
+ContractRef: ContractName:Plans/UI_Command_Catalog.md#2.7 Chat slash commands (reserved), ContractName:Plans/assistant-chat-design.md#5.1 Reserved built-ins
 
-### 6.5 ELI5/Expert copy
+Additional rules:
+- `/cancel` is a deprecated compatibility alias to `/stop`
+- `/clear` is removed from live canon
+- bare `/web` opens help/autocomplete and has no default operation
+- the stable `/web` family identities are `/web search`, `/web fetch`, `/web extract`, `/web research`, `/web crawl`, and `/web map`
+- bare `/skill` is a discovery or invocation affordance and is not equivalent to “open panel”
+- reserved commands shown as non-editable in catalog
+- deprecated aliases shown distinctly from active commands
+- `/web` remains discoverable in catalog
+- subcommand is required for execution, URL normalization applies, and parse failure shows usage for `/web` execution paths
 
-Commands management UI elements follow the app-level Interaction Mode (Expert/ELI5) toggle per `Plans/FinalGUISpec.md` §7.4.0.
-
-- **ELI5:** Simplified view showing command name, description, and a "Run" button. Template editor, Persona/mode/model overrides, and permissions profile are hidden. Preview is available.
-- **Expert:** Full view with all fields, template editor, and dry-run preview.
-
-Tooltip keys: `tooltip.commands.*` prefix.
-
----
-
+Rules:
+- reserved slash command
+- alias/deprecation state
+- catalog editability
+- /cancel resolves internally to cmd.chat.stop
+- /clear is removed from live canon, not merely hidden
+- bare /web opens help/autocomplete and has no default operation
+- bare /skill is a discovery or invocation affordance, not panel-open shorthand
+- Keep slash-command consumers anchored to Plans/UI_Command_Catalog.md#2.7 Chat slash commands (reserved) and Plans/assistant-chat-design.md#5.1 Reserved built-ins
 ## 7. UICommand catalog entry
 
 <a id="UICOMMAND-ENTRY"></a>

@@ -1,0 +1,202 @@
+RECOVERY SUMMARY
+================
+total active fidelity blockers: 11
+main recovery themes:
+- replace stale owner sections where the current packet itself reintroduces contradictory canon (`changeTracking`, question alias semantics, TODO tool behavior)
+- expand packet scope to omitted owner/consumer sections that the blocked audit proved are still missing (`Permissions_System` §3.4A, `Contracts_V0` event/runtime-identity sections, `FinalGUISpec` search/session/persona surfaces)
+- propagate exact routing/provenance/progress/interface fields into consumer docs instead of leaving them only in owner docs or the ledger
+
+
+BLOCKER-BY-BLOCKER RECOVERY MAP
+===============================
+FIDELITY-ID: FID-013
+finding_classification: contradictory_canon, interface_shape_missing, stale_residue
+where: Plans/Tools.md file-level
+owner doc: Plans/Tools.md
+affected consumer/mirror docs: Plans/storage-plan.md#4.4 Activity transparency payloads (verification mirror); Plans/assistant-chat-design.md#13.2 Web activity and provenance (verification mirror)
+likely heading/section: Plans/Tools.md#3.5D Web operation family runtime contract (`#### webfetch`, `#### webcrawl`) and Plans/Tools.md#10 Firecrawl provider integration (`#### Change-tracking behavior`)
+required operation: replace_section
+stale-residue retirement needed: yes
+packet regeneration needed: yes
+exact obligation(s) that must survive: `changeTracking { status: changed | unchanged | no_previous_version, previous_content_ref?, diff_summary_ref?, checked_at_utc }`; `explicit out-of-scope retirement if \`changeTracking\` is not MVP`; `no silent disappearance of the capability`; retire stale `change_status: 'new' | 'same' | 'changed' | 'removed'`, `pages[].change_status`, and `change_summary`
+why this exact recovery shape is needed: the current packet still carries the stale `change_status` / `change_summary` shape in `### 3.5D` while the later Firecrawl owner section carries the structured `changeTracking` object. Upstream must replace both sections together so the same file stops reintroducing contradictory change-tracking canon.
+
+FIDELITY-ID: FID-029
+finding_classification: owner_under_specified, interface_shape_missing
+where: Plans/Permissions_System.md#3.4A Web-operation permission-key derivation
+owner doc: Plans/Permissions_System.md
+affected consumer/mirror docs: Plans/Tools.md#10.7 Ask UI contract; Plans/FinalGUISpec.md#15.7 Permission approval card widget
+likely heading/section: Plans/Permissions_System.md#3.4A Web-operation permission-key derivation
+required operation: replace_section
+stale-residue retirement needed: no
+packet regeneration needed: yes
+exact obligation(s) that must survive: `websearch summary shows tool name + query preview`; `webfetch/webextract summary shows tool name + target host/URL`; `webresearch summary shows tool name + task summary + estimated source count when available`; `webcrawl/webmap summary shows tool name + root URL + page/depth caps`; `Approving webcrawl For Session auto-approves crawl/map/extract/fetch for the same host pattern`; `Approving webresearch For Session does NOT create broad allow for unrelated tools`; `MVP uses wildcard session approval for search/research; advanced query-pattern support is future only`
+why this exact recovery shape is needed: the heading already exists, but the current section only derives normalized keys. The missing summary-template and session-approval semantics belong in the owner doc, so the packet must regenerate this exact section before consumer surfaces can mirror it safely.
+
+FIDELITY-ID: FID-008
+finding_classification: consumer_propagation_missing, routing_edge_missing
+where: Plans/assistant-chat-design.md#13.2 Web activity and provenance; Plans/FinalGUISpec.md#15.2 Search result card widget; Plans/FinalGUISpec.md#15.3 Web and diff operation card widget
+owner doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+affected consumer/mirror docs: Plans/assistant-chat-design.md#13.2 Web activity and provenance; Plans/FinalGUISpec.md#15.2 Search result card widget; Plans/FinalGUISpec.md#15.3 Web and diff operation card widget
+likely heading/section: Plans/assistant-chat-design.md#13.2 Web activity and provenance; Plans/FinalGUISpec.md#15.2 Search result card widget; Plans/FinalGUISpec.md#15.3 Web and diff operation card widget
+required operation: replace_section
+stale-residue retirement needed: no
+packet regeneration needed: yes
+exact obligation(s) that must survive: `Site Reader v1 requires real browser-interaction capability, not static HTTP fetch only`; `Reading Site`; `provider-routed fetch must not reuse the reserved native Site Reader identity`
+why this exact recovery shape is needed: the owner doc already preserves the routing rule, but the current packet does not carry the exact browser-capability gate into the affected chat/GUI consumer sections, and `FinalGUISpec` §15.2 is not packet-scoped at all. Regeneration must expand the packet and replace the consumer sections with the exact routing edge.
+
+FIDELITY-ID: FID-009
+finding_classification: consumer_propagation_missing
+where: Plans/Contracts_V0.md#Common web output fields; Plans/FinalGUISpec.md#15.2 Search result card widget; Plans/FinalGUISpec.md#15.3 Web and diff operation card widget
+owner doc: Plans/assistant-chat-design.md#13.2 Web activity and provenance
+affected consumer/mirror docs: Plans/Contracts_V0.md#Common web output fields; Plans/FinalGUISpec.md#15.2 Search result card widget; Plans/FinalGUISpec.md#15.3 Web and diff operation card widget
+likely heading/section: Plans/Contracts_V0.md#3.4 Tool-specific payload extensions (`#### Common web output fields`); Plans/FinalGUISpec.md#15.2 Search result card widget; Plans/FinalGUISpec.md#15.3 Web and diff operation card widget
+required operation: replace_section
+stale-residue retirement needed: no
+packet regeneration needed: yes
+exact obligation(s) that must survive: `search-then-read behavior`; `final citations come from the actual read path`; `raw search snippets alone are not enough provenance for the final answer`
+why this exact recovery shape is needed: the current packet carries the citation-locality rule in routing text, but not in the contract/UI sections that govern evidence presentation. Upstream must regenerate those exact consumer sections so the provenance rule survives outside the owner chat doc.
+
+FIDELITY-ID: FID-021
+finding_classification: consumer_propagation_missing, interface_shape_missing
+where: Plans/Contracts_V0.md#Common web output fields; Plans/FinalGUISpec.md#15.3 Web and diff operation card widget
+owner doc: Plans/storage-plan.md#4.4 Activity transparency payloads (`#### Long-running \`progress_event\` payload`)
+affected consumer/mirror docs: Plans/Contracts_V0.md#Common web output fields; Plans/FinalGUISpec.md#15.3 Web and diff operation card widget
+likely heading/section: Plans/Contracts_V0.md#3.4 Tool-specific payload extensions (`#### Common web output fields`); Plans/FinalGUISpec.md#15.3 Web and diff operation card widget
+required operation: replace_section
+stale-residue retirement needed: no
+packet regeneration needed: yes
+exact obligation(s) that must survive: `progress_event`; `tool_use_id`; `operation`; `phase`; `detail`; `pages_completed`; `pages_total`; `elapsed_ms`; `estimated_remaining_ms`; `cancelled: true`
+why this exact recovery shape is needed: the current packet preserves the full `progress_event` payload only in storage and batch-owner text. Consumer contracts still lack the exact structured progress family, so packet regeneration must replace those consumer sections with the full payload carry-through.
+
+FIDELITY-ID: FID-041
+finding_classification: owner_under_specified, persistence_coupling_missing
+where: Plans/Tools.md#3.5C `todowrite` and `todoread` runtime contract
+owner doc: Plans/Tools.md
+affected consumer/mirror docs: Plans/assistant-chat-design.md#8.6 Normalized TODO contract for planning outputs; Plans/storage-plan.md#4.3 Plan and TODO state; Plans/Permissions_System.md#10.4 Presets (verification mirror for `todoread`/`todowrite` allow posture)
+likely heading/section: Plans/Tools.md#3.5C `todowrite` and `todoread` runtime contract
+required operation: replace_section
+stale-residue retirement needed: no
+packet regeneration needed: yes
+exact obligation(s) that must survive: `todowrite can create, reorder, update statuses/notes`; `todoread returns current normalized list for active thread/run`; `editing Deep Plan markdown (the rich artifact) MUST update the normalized TODO projection BEFORE execution begins`
+why this exact recovery shape is needed: the current packet itself rewrites §3.5C without `statuses/notes` and without the active thread/run scope. The owner section must be replaced first so later consumer checks do not normalize around the incomplete packet wording.
+
+FIDELITY-ID: FID-043
+finding_classification: interface_shape_missing
+where: Plans/Contracts_V0.md#Question schema and tool contract; Plans/Tools.md#3.5B `question` tool runtime contract; Plans/storage-plan.md#4.2 Question and clarification state; Plans/assistant-chat-design.md#7.4 Question card and questionnaire system
+owner doc: Plans/Contracts_V0.md
+affected consumer/mirror docs: Plans/Tools.md#3.5B `question` tool runtime contract; Plans/storage-plan.md#4.2 Question and clarification state; Plans/assistant-chat-design.md#7.4 Question card and questionnaire system
+likely heading/section: Plans/Contracts_V0.md#3.4 Tool-specific payload extensions (`#### Question schema and tool contract`); Plans/Tools.md#3.5B `question` tool runtime contract; Plans/storage-plan.md#4.2 Question and clarification state; Plans/assistant-chat-design.md#7.4 Question card and questionnaire system
+required operation: replace_section
+stale-residue retirement needed: no
+packet regeneration needed: yes
+exact obligation(s) that must survive: `response_kind`; `validation_state`; keep the surrounding question schema fields `question_id`, `question`, `allow_freeform`, `multi_select`, `default_values?: string[]`, `draft_value?: string`
+why this exact recovery shape is needed: the current packet omits `response_kind` and `validation_state` everywhere, so any replay of the packet would keep deleting them. Owner and consumer sections must be regenerated together with the full interface shape.
+
+FIDELITY-ID: FID-040
+finding_classification: other
+where: Plans/Contracts_V0.md file-level
+owner doc: Plans/Contracts_V0.md
+affected consumer/mirror docs: Plans/storage-plan.md#4.3 Plan and TODO state; Plans/Tools.md#3.5C `todowrite` and `todoread` runtime contract; Plans/assistant-chat-design.md#8.6 Normalized TODO contract for planning outputs
+likely heading/section: Plans/Contracts_V0.md#1.1 Assistant worktree seglog events
+required operation: insert_after
+stale-residue retirement needed: no
+packet regeneration needed: yes
+exact obligation(s) that must survive: `chat.plan_todo_updated` with explicit owner-contract definition and minimal payload ownership
+why this exact recovery shape is needed: the packet only rewrites `Contracts_V0` §3.4 / §3.4A and never adds the missing event definition. Upstream stages need an owner-doc insertion into the event catalog before downstream references stop pointing at an undefined canonical event.
+
+FIDELITY-ID: FID-043B
+finding_classification: contradictory_canon, stale_residue
+where: Plans/Contracts_V0.md#Question schema and tool contract
+owner doc: Plans/Contracts_V0.md
+affected consumer/mirror docs: Plans/Tools.md#3.5B `question` tool runtime contract; Plans/storage-plan.md#4.2 Question and clarification state; Plans/assistant-chat-design.md#7.4 Question card and questionnaire system
+likely heading/section: Plans/Contracts_V0.md#3.4 Tool-specific payload extensions (`#### Question schema and tool contract`)
+required operation: replace_section
+stale-residue retirement needed: yes
+packet regeneration needed: yes
+exact obligation(s) that must survive: `allow_other is a deprecated alias`
+why this exact recovery shape is needed: the current packet/owner text says ``allow_other` is retired from live canon`, which is stronger than the required alias-preservation rule. This must be retired in the same replaced owner section that restores the missing question fields, or the packet will keep reintroducing the wrong alias semantics.
+
+FIDELITY-ID: FID-038
+finding_classification: stale_residue, contradictory_canon, consumer_propagation_missing
+where: Plans/FinalGUISpec.md#15.5 Session Recovery
+owner doc: Plans/assistant-chat-design.md
+affected consumer/mirror docs: Plans/FinalGUISpec.md#15.5 Session Recovery
+likely heading/section: Plans/FinalGUISpec.md#15.5 Session Recovery
+required operation: replace_section
+stale-residue retirement needed: yes
+packet regeneration needed: yes
+exact obligation(s) that must survive: `Stop/Edit/Resend attach ONLY to most recent user-sent message`; `discards all later history/work`; `FIFO, max 2 queued messages`; `Stop does NOT clear the queue`; `always-visible copy affordance on fenced code blocks`; queue state is transient and is not restored across reload or restart
+why this exact recovery shape is needed: the current packet never touches the owner queue-control section or the `FinalGUISpec` session-recovery section, so stale `chat_state:v1` queue restore text survives. This is a same-file contradiction and must be replaced in place rather than layered with an addendum.
+
+FIDELITY-ID: FID-061
+finding_classification: consumer_propagation_missing, interface_shape_missing
+where: Plans/assistant-chat-design.md#27.2 Current Persona display (required); Plans/FinalGUISpec.md#19.4 Surface-level Persona controls
+owner doc: Plans/Contracts_V0.md#5.1B Persona/Runtime Snapshot Payload Contract
+affected consumer/mirror docs: Plans/assistant-chat-design.md#27.2 Current Persona display (required); Plans/FinalGUISpec.md#19.4 Surface-level Persona controls
+likely heading/section: Plans/assistant-chat-design.md#27.2 Current Persona display (required); Plans/FinalGUISpec.md#19.4 Surface-level Persona controls
+required operation: replace_section
+stale-residue retirement needed: no
+packet regeneration needed: yes
+exact obligation(s) that must survive: `requested_persona`; `effective_persona`; `requested_account_binding`; `operational_identity`; `effective_account_label`; `effective_provider_identity`; `effective_project_id`; `never \`requested_persona_id\``
+why this exact recovery shape is needed: the current packet scope never touched the runtime-identity cluster, so the owner vocabulary in `Contracts_V0` never propagated to the chat and GUI persona surfaces. Packet regeneration must add these consumer sections explicitly.
+
+
+RECOVERY EXECUTION NOTES
+========================
+FIDELITY-ID: FID-013
+- packet regeneration needed: yes
+- stale same-file canon must be retired: yes
+- owner-doc correction required before consumer cleanup: yes
+
+FIDELITY-ID: FID-029
+- packet regeneration needed: yes
+- stale same-file canon must be retired: no
+- owner-doc correction required before consumer cleanup: yes
+
+FIDELITY-ID: FID-008
+- packet regeneration needed: yes
+- stale same-file canon must be retired: no
+- owner-doc correction required before consumer cleanup: no
+
+FIDELITY-ID: FID-009
+- packet regeneration needed: yes
+- stale same-file canon must be retired: no
+- owner-doc correction required before consumer cleanup: no
+
+FIDELITY-ID: FID-021
+- packet regeneration needed: yes
+- stale same-file canon must be retired: no
+- owner-doc correction required before consumer cleanup: no
+
+FIDELITY-ID: FID-041
+- packet regeneration needed: yes
+- stale same-file canon must be retired: no
+- owner-doc correction required before consumer cleanup: yes
+
+FIDELITY-ID: FID-043
+- packet regeneration needed: yes
+- stale same-file canon must be retired: no
+- owner-doc correction required before consumer cleanup: yes
+
+FIDELITY-ID: FID-040
+- packet regeneration needed: yes
+- stale same-file canon must be retired: no
+- owner-doc correction required before consumer cleanup: yes
+
+FIDELITY-ID: FID-043B
+- packet regeneration needed: yes
+- stale same-file canon must be retired: yes
+- owner-doc correction required before consumer cleanup: yes
+
+FIDELITY-ID: FID-038
+- packet regeneration needed: yes
+- stale same-file canon must be retired: yes
+- owner-doc correction required before consumer cleanup: no
+
+FIDELITY-ID: FID-061
+- packet regeneration needed: yes
+- stale same-file canon must be retired: no
+- owner-doc correction required before consumer cleanup: no
+
+<recovery_plan_ready/>

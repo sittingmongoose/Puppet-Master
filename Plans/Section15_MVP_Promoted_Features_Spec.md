@@ -62,57 +62,32 @@ ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Wiring_Matri
 
 ### 1.3 Browser surface classes
 
-The browser model is split into four session classes.
 
-| Session class | Canonical purpose | Canonical entry points | Profile scope | Restore policy |
-|---|---|---|---|---|
-| `workspace_preview` | project-linked in-shell browser tab for local HTML preview and trusted normal browsing | `Open in Browser`, browser-tab focus/open flows | project-scoped persistent browser profile | restore by project and workspace tab |
-| `detached_preview` | detached browser/preview window linked to the same logical browser subject as normal browsing | `Open in Detached Browser`, explicit detach from normal browsing | shares originating normal-browsing state unless the user explicitly creates a separate detached profile | restore with the originating normal browsing session when supported |
-| `automation_session` | watchable agent-driven browser session for testing, verification, debugging, and other live automation | agent/tool-launched visible browser runs, browser testing flows | separate ephemeral profile by default | never silently resumes active work; if reopened after restart or crash it returns as stopped / attention-required |
-| `auth_session` | PM-owned provider/auth/device/login browser flow | provider sign-in and auth/device flows | separate isolated auth profile/store | never auto-restores as a normal browser tab and never auto-completes |
+#### 1.3A Research session alignment
 
-ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/FinalGUISpec.md
+`research_session` is a restricted `automation_session`: it reuses the same browser/runtime infrastructure but exposes a smaller action set, tighter lifecycle, and explicit escalation rules.
 
-Rules:
-- browser tab capacity applies only to in-shell `workspace_preview` tabs
-- detached preview windows are outside the in-shell browser-tab cap
-- `automation_session` and `auth_session` are not counted as in-shell browser tabs and are never silently promoted into them
-- `detached_preview` shares the originating normal browsing state unless the user explicitly requests separate detached state
-- no browser session class may silently bleed storage, cookies, local storage, or session storage into another profile scope
-- `auth_session` is for PM-owned auth/provider flows, must not auto-close on presumed success, must not auto-complete, and does not impose extra select/copy/paste restrictions
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/assistant-chat-design.md
 
-ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/FileManager.md
+#### Action tiers
 
-Takeover and promotion rules:
-- direct user interaction with an `automation_session` presents `Take over and pause agent`, `Let agent continue`, and `Stop agent and keep browser`
-- the default takeover path is `Take over and pause agent`
-- a paused automation browser remains `automation_session`
-- only `Promote to Normal Browsing` reclassifies a session into normal browsing and copies/promotes eligible state into a normal browser profile
+**Tier 1 — always allowed**
+`navigate`, `back`, `reload`, `snapshot`, `screenshot`, `console`, `network`
 
-ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md
+**Tier 2 — session granted**
+`click`, `scroll`, `type`, `press_key`, `wait_for`, `set_viewport`
 
-Every browser session must persist and disclose:
-- `session_class`
-- `requested_browser_runtime`
-- `effective_browser_runtime`
-- `requested_capabilities`
-- `effective_capabilities`
-- `capability_degradations`
-- `blocked_actions`
-- `permission_tier`
-- `profile_scope`
-- `restore_policy`
-- `takeover_state`
+**Tier 3 — ask/deny**
+`fill_form`, `select_option`
 
-Each degraded or blocked browser capability uses explicit reasons such as:
-- `platform_unsupported`
-- `runtime_unavailable`
-- `permission_not_granted`
-- `session_class_restricted`
-- `temporarily_unavailable_after_recovery`
+Excluded categories remain explicit: tab management, hover/drag, file upload, dialog handling, verify actions, trace/video capture, storage/cookie mutation, network simulation, and locator-generation/testing tooling.
 
-ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md
-
+Lifecycle rules:
+- creation is implicit when `webfetch` or `webextract` uses `actions`, or when autonomous `webresearch` needs browser fallback
+- the session is transient and tears down after the tool invocation completes
+- no user takeover or promotion-to-browsing flow exists inside `research_session`
+- escalation to full `automation_session` requires explicit confirmation and is disclosed in activity transparency
+- telemetry may use the distinct session class value `research_session` even though infrastructure is shared with `automation_session`
 ### 1.4 Thread and session navigation
 
 Thread/session navigation is persistent, not overlay-first.
@@ -521,6 +496,18 @@ ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Wiring_Matri
 - missing-path, duplicate-path, and in-flight-run behavior are deterministic and user-visible
 
 ### 3.18 Built-in Browser and Click-to-Context
+#### Site Reader identity and provider-routed fetch boundary
+
+Site Reader v1 requires real browser-interaction capability, not static HTTP fetch only. `Reading Site` is reserved for the PM-native Site Reader path, and provider-routed fetch must not reuse the reserved native Site Reader identity.
+
+Promoted browser guidance still follows search-then-read behavior: final citations come from the actual read path, raw search snippets alone are not enough provenance for the final answer, and promoted-browser guidance must not collapse final-answer provenance back to raw search snippets.
+
+ContractRef: ContractName:Plans/Tools.md#12. Web tool routing algorithm, ContractName:Plans/assistant-chat-design.md#13.2 Web activity and provenance
+
+Rules:
+- PM-native Site Reader owns browsing/interaction semantics, live DOM state, click or scroll behavior, form submission behavior, and visible browser provenance.
+- provider-routed fetch may return page content, extracted data, or provider-native browsing results, but it is labeled by the effective provider and not as `Reading Site`.
+- when routing falls back from Site Reader to a provider fetch path, chat and audit surfaces keep requested/effective adapter disclosure and the provider label remains visible.
 
 The built-in browser is a real PM-controlled browser surface. It is separate from `web_search`, `web_fetch`, and Site Reader / Reading Site behavior, and it supports direct user browsing, watchable live automation, screenshots, structured snapshots, DevTools, PM-owned auth/device flows, and deterministic capture into chat.
 
@@ -745,6 +732,10 @@ ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Runtim
 
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/assistant-chat-design.md
 
+Additional canonical rules:
+- PM-native Site Reader owns browsing and interaction semantics
+- provider-routed fetch fallback keeps requested/effective adapter disclosure visible
+- Keep this section pointed at Plans/Tools.md#12. Web tool routing algorithm and Plans/assistant-chat-design.md#13.2 Web activity and provenance
 ## 4. Command families required by the promoted features
 The UI command catalog must expose stable commands for:
 - project switch and project open-in-new-workspace-tab

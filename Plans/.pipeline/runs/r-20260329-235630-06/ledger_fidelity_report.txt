@@ -1,0 +1,162 @@
+AUDIT SUMMARY
+=============
+overall verdict: blocked
+implementation-use verdict: The owner docs now preserve most of the restored Firecrawl/provider canon, but the doc set is not fidelity-complete for implementation use. The remaining losses are concentrated in consumer carry-through: Settings/chat docs still omit exact routing and provider-order behavior, batch UI docs omit strict failure semantics, storage omits one batch audit hierarchy detail, and stale references still point cited-search/provider canon at the wrong owner.
+main risk themes:
+- Settings consumer drift around provider-order configurability and hosted-vs-self-hosted Firecrawl disclosure
+- routing consumer drift around the no-capability terminal branch and cost-aware thresholds
+- batch consumer/persistence drift around `continue_on_error: false` and parent/child audit hierarchy
+- stale cross-reference residue that still routes readers toward older `newtools` cited-search ownership
+
+context notes:
+- audited run: `r-20260329-235630-06`
+- primary baseline: `Plans/.pipeline/runs/r-20260329-235630-06/canonical_obligations.json`
+- verifier context: `Plans/.pipeline/verifier_report.txt`
+- packet-shape context was consulted only as optional background; this was not a packet-shape audit
+
+
+OBLIGATIONS / DELEGATION SUMMARY
+================================
+chunking method: The lead auditor chunked from `canonical_obligations.json` and packet doc ownership before any full-ledger semantic read. The working ledger was reserved for ambiguity only.
+subauditors used: 5
+
+clusters:
+1. provider matrix / defaults / stale ownership residue
+   - obligations: `obl-002` through `obl-006`
+   - docs: `Plans/Tools.md`, `Plans/Models_System.md`, `Plans/FinalGUISpec.md`, `Plans/assistant-chat-design.md`, `Plans/newtools.md`
+2. Firecrawl owner section and consumer mirrors
+   - obligations: `obl-010` through `obl-018`, `obl-023` through `obl-028`
+   - docs: `Plans/Tools.md`, `Plans/Contracts_V0.md`, `Plans/storage-plan.md`, `Plans/Section15_MVP_Promoted_Features_Spec.md`, `Plans/assistant-chat-design.md`, `Plans/FinalGUISpec.md`, `Plans/Models_System.md`
+3. routing / batch / cache / permissions
+   - obligations: `obl-007`, `obl-017`, `obl-019`, `obl-029` through `obl-032`
+   - docs: `Plans/Tools.md`, `Plans/Contracts_V0.md`, `Plans/storage-plan.md`, `Plans/assistant-chat-design.md`, `Plans/FinalGUISpec.md`, `Plans/Permissions_System.md`
+4. owner/consumer payload, provenance, Site Reader, and Settings disclosure
+   - obligations: `obl-001`, `obl-008`, `obl-009`, `obl-020`, `obl-021`, `obl-022`
+   - docs: `Plans/Tools.md`, `Plans/Contracts_V0.md`, `Plans/storage-plan.md`, `Plans/Section15_MVP_Promoted_Features_Spec.md`, `Plans/assistant-chat-design.md`, `Plans/FinalGUISpec.md`, `Plans/newtools.md`
+5. replacement conservative arbiter for cluster 4
+   - purpose: verify that owner/consumer findings were truly meaningful carry-through failures rather than acceptable deference to owner docs
+
+merge note:
+- retained findings below are only the gaps that remained meaningful after deduplication and conservative review
+- no meaningful owner-doc loss remained in `Plans/Tools.md` sections 10-14, `Plans/Contracts_V0.md` section 3.4, `Plans/Section15_MVP_Promoted_Features_Spec.md` section 3.18, `Plans/assistant-chat-design.md` section 13.2, `Plans/Models_System.md` section 4.5, `Plans/newtools.md` sections 8.2/8.2.1, or `Plans/Permissions_System.md` section 3.4A
+
+
+FINDINGS
+========
+FIDELITY-ID: LF-001
+severity: medium
+where: `Plans/FinalGUISpec.md#7.4.4 Settings (Unified) panel specification`
+exact obligation that did not fully survive:
+- The global provider stack is user-changeable in Settings, while per-operation priority reordering is not MVP and the MVP priority order must not be treated as immutable product policy.
+exact missing token(s):
+- `global provider stack is user-changeable in Settings`
+- `per-operation priority reordering is NOT MVP`
+- `global MVP provider priority is not immutable product policy`
+why the current doc is stubbed / incomplete / over-summarized / mis-owned / contradictory:
+- `Plans/Tools.md#11.1 Provider classes, defaults, and fallback disclosure`, `Plans/Models_System.md#4.5 Web tool provider capability alignment`, and `Plans/newtools.md#8.2 GUI/settings alignment` preserve this rule.
+- `Plans/FinalGUISpec.md#7.4.4 Settings (Unified) panel specification` only describes availability/support-tier disclosure; it never states that Settings owns a user-changeable global provider order or that per-operation reordering is explicitly out of MVP.
+- That leaves the actual Settings control and constraint under-specified and makes it too easy to treat the default order as fixed policy.
+what kind of recovery is needed:
+- update consumer/mirror doc
+
+FIDELITY-ID: LF-002
+severity: medium
+where: `Plans/FinalGUISpec.md#7.4.4 Settings (Unified) panel specification`; `Plans/assistant-chat-design.md#13.2 Web activity and provenance`
+exact obligation that did not fully survive:
+- The web routing algorithm must include a capability-unavailable terminal branch with clear setup guidance when no provider supports the requested operation.
+exact missing token(s):
+- `capability-unavailable terminal branch`
+- `clear setup guidance when no provider supports the requested operation`
+why the current doc is stubbed / incomplete / over-summarized / mis-owned / contradictory:
+- `Plans/Tools.md#12.1 Routing sequence` preserves the exact no-capability branch at step 7.
+- The GUI/chat consumer docs preserve availability, fallback, and provenance language, but not the explicit user-visible outcome when no provider can satisfy the request.
+- That means the owner routing canon survived, but the consumer behavior that should surface it is still underspecified.
+what kind of recovery is needed:
+- update consumer/mirror doc
+
+FIDELITY-ID: LF-003
+severity: medium
+where: `Plans/FinalGUISpec.md#7.4.4 Settings (Unified) panel specification`; `Plans/assistant-chat-design.md#13.2 Web activity and provenance`
+exact obligation that did not fully survive:
+- Routing must remain cost-aware when multiple providers offer similar capability; static priority alone is insufficient, and the `>100 credits` warning plus `500 credits` cap must remain aligned with routing.
+exact missing token(s):
+- `cost-aware selection`
+- `>100 credits`
+- `500 credits`
+why the current doc is stubbed / incomplete / over-summarized / mis-owned / contradictory:
+- `Plans/Tools.md#10.5 Credit and cost contract` and `Plans/Tools.md#12.1 Routing sequence` preserve the tie-break rule and exact thresholds.
+- `Plans/FinalGUISpec.md#7.4.4 Settings (Unified) panel specification` reduces this to generic high-cost warning UI, and `Plans/assistant-chat-design.md#13.2 Web activity and provenance` does not carry the thresholds or routing rationale forward.
+- The result is consumer drift: the user-facing docs no longer preserve the exact budget-trigger behavior that the owner routing section restored.
+what kind of recovery is needed:
+- update consumer/mirror doc
+
+FIDELITY-ID: LF-004
+severity: medium
+where: `Plans/FinalGUISpec.md#7.4.4 Settings (Unified) panel specification`
+exact obligation that did not fully survive:
+- PM must not silently switch between self-hosted Firecrawl and hosted/cloud Firecrawl, and deployment-mode disclosure must remain visible.
+exact missing token(s):
+- `PM MUST NOT silently switch between self-hosted Firecrawl and hosted/cloud Firecrawl`
+- `deployment-mode disclosure remains visible`
+- `self-hosted Firecrawl does not use hosted credit billing`
+why the current doc is stubbed / incomplete / over-summarized / mis-owned / contradictory:
+- `Plans/Tools.md#10.5 Credit and cost contract` and `Plans/Tools.md#10.7 Audit, error, and self-hosted rules` preserve the hosted-vs-self-hosted distinction, visible deployment-mode disclosure, and the no-silent-switch rule.
+- The Settings consumer spec only mentions generic auth/setup/cost help and high-cost warning UI.
+- Because Settings is the surface where provider mode is configured, this omission leaves a meaningful implementation gap in the hosted/self-hosted Firecrawl contract.
+what kind of recovery is needed:
+- update consumer/mirror doc
+
+FIDELITY-ID: LF-005
+severity: medium
+where: `Plans/assistant-chat-design.md#Parallel fan-out, batch cards, and subgroup inspection`; `Plans/FinalGUISpec.md#15.3 Web and diff operation card widget`
+exact obligation that did not fully survive:
+- Batch semantics must preserve the explicit false branch for `continue_on_error`.
+exact missing token(s):
+- `continue_on_error: false`
+- `stop on the first failure`
+- `return completed results plus failure detail`
+why the current doc is stubbed / incomplete / over-summarized / mis-owned / contradictory:
+- `Plans/Tools.md#13.2 Failure and cancellation behavior` preserves the strict false-branch semantics.
+- The chat and GUI batch/card sections preserve grouping, counts, and provider disclosure, but not the strict-mode behavior or the result shape it produces.
+- That is a real user-facing loss because strict-batch mode changes both execution flow and what the user should expect to see after the first failure.
+what kind of recovery is needed:
+- update consumer/mirror doc
+
+FIDELITY-ID: LF-006
+severity: medium
+where: `Plans/storage-plan.md#4.4 Activity transparency payloads`
+exact obligation that did not fully survive:
+- Batch audit/event canon must preserve a parent audit event for the batch plus child audit events per URL.
+exact missing token(s):
+- `parent audit event for the batch`
+- `child audit events per URL`
+why the current doc is stubbed / incomplete / over-summarized / mis-owned / contradictory:
+- `Plans/Contracts_V0.md#3.4 Tool-specific payload extensions` preserves the batch audit hierarchy, and `Plans/Tools.md#13.1 Shared batch behavior` mirrors it at the owner-flow level.
+- `Plans/storage-plan.md#4.4 Activity transparency payloads` defines the shared web child payload and `progress_event`, but it never carries the batch parent/child audit hierarchy into persistence-facing canon.
+- That leaves the storage/audit history model under-specified for batch runs and makes it easier to flatten batch history into one record.
+what kind of recovery is needed:
+- update consumer/mirror doc
+
+FIDELITY-ID: LF-007
+severity: low
+where: `Plans/FinalGUISpec.md#Appendix A: Cross-References`; `Plans/assistant-chat-design.md#20. References`
+exact obligation that did not fully survive:
+- Provider-capability and web-routing canon now lives in `Plans/Tools.md` sections 11-12, while `Plans/newtools.md` is only a consumer note for GUI/settings alignment and older cited-search framing is explicitly non-normative.
+exact missing token(s):
+- stale residue present instead of missing tokens:
+  - `cited web search contract`
+  - `§8.2.1 cited web search`
+  - `See Plans/newtools.md §8 for full list`
+why the current doc is stubbed / incomplete / over-summarized / mis-owned / contradictory:
+- `Plans/newtools.md#8.2.1 Cited-search and search-provider note` explicitly says older cited-search framing is not normative.
+- The reference sections in `Plans/FinalGUISpec.md` and `Plans/assistant-chat-design.md` still route readers toward `Plans/newtools.md` as though cited-search/provider canon lives there.
+- This is stale contradictory residue: the owner docs are correct, but the cross-reference map still points implementers at an obsolete owner.
+what kind of recovery is needed:
+- retire stale residue
+
+
+FINAL VERDICT
+=============
+The planning docs are materially improved and the owner canon is no longer stubbed, but the doc set is still missing a small set of exact consumer-facing behaviors and one persistence detail that the obligations artifact marks as canonical. The remaining losses are narrow, but they are specific enough to affect implementation fidelity, especially in Settings, routing failure UI, batch strict-mode behavior, and batch audit persistence.
+
+<ledger_fidelity_blocked/>

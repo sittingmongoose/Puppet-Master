@@ -410,21 +410,14 @@ ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Contracts
 
 ## 8. OpenCode baseline
 
-This section documents the OpenCode patterns that Puppet Master's run-mode system is based on, per `Plans/OpenCode_Deep_Extraction.md` §7A.
+OpenCode material is reference-only background. Puppet Master run-mode semantics are PM-owned canon.
 
-ContractRef: ContractName:Plans/OpenCode_Deep_Extraction.md
+ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/assistant-chat-design.md
 
-### 8.1 Plan mode enforcement (baseline)
-OpenCode enforces plan mode via a `<system-reminder>` injection declaring "STRICTLY FORBIDDEN: ANY file edits, modifications, or system changes." The plan agent's permission ruleset denies all edit tools except plan-file writes. A `PlanExitTool` offers the user a switch to the build agent.
-— Source: `Plans/OpenCode_Deep_Extraction.md` §7A.1
-
-### 8.2 Ask/approval semantics (baseline)
-OpenCode's `Question.ask()` blocks tool execution until user response. Permission evaluation uses `PermissionNext.evaluate()` with wildcard matching; unmatched permissions default to `ask`. A `reject` reply cascades to all pending permissions in the session.
-— Source: `Plans/OpenCode_Deep_Extraction.md` §7A.3, §7C.1
-
-### 8.3 Compaction (baseline)
-Overflow detection triggers when total tokens exceed the model's usable context window minus a 20,000-token reserve. Pruning erases old tool-call outputs beyond a 40,000-token protection window. Protected tools (e.g., `skill`) are never pruned.
-— Source: `Plans/OpenCode_Deep_Extraction.md` §7B.5
+Interpretation rules:
+- PM is not “based on” OpenCode in a normative sense
+- external examples may inform terminology or contrast, but they do not define PM mode behavior
+- PM mode, approval, TODO, and web-tool semantics are resolved by PM owner docs when any external baseline conflicts
 
 ---
 
@@ -438,10 +431,14 @@ ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Permissions_System.
 
 ### 9.2 `plan`
 
-`plan` is read-only planning posture. It may launch delegated read-only research children, including required planning dependencies, but it may not widen into implementation authority.
+`plan` remains a read-first mode with explicit planning artifacts and TODO projection, not a silent auto-deny shell around web tools.
 
-ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/assistant-chat-design.md
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Permissions_System.md
 
+Rules:
+- read-only delegated child runs remain allowed when they stay within the parent mode ceiling
+- `websearch`, `webfetch`, `webextract`, `webresearch`, `webcrawl`, and `webmap` remain ask-gated rather than auto-denied
+- Deep Plan's question-driven loop feeds the same normalized TODO projection used by execution
 ### 9.3 `regular`
 
 `regular` allows full child-run behavior subject to permission, provider, and capability rules.

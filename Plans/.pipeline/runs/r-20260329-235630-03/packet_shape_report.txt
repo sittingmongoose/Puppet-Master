@@ -1,0 +1,46 @@
+Packet Shape Report
+===================
+run_id: r-20260329-235630-03
+checked_at_utc: 2026-04-04T03:40:17.531Z
+packet_file: Plans/.pipeline/research_packet.json
+
+Result: PASS — no packet-shape blockers found
+
+Checks performed
+----------------
+1) NON-INSERTABLE PACKET CONTENT: PASS
+   No editor/applier instruction phrases found in packet content_markdown.
+
+2) MALFORMED REPLACE_SECTION BODY: PASS
+   All replace_section anchors begin with body text or deeper child headings.
+   No replacement body repeats its anchor heading or starts at the same/higher
+   heading level.
+
+3) MISSING HEADING ANCHOR IN SOURCE: PASS
+   All heading anchors verified present in their current target files.
+
+4) OVERLAPPING ANCHOR APPLICATION ORDER: PASS
+   Packet order was simulated per target file using the current Scribe
+   section-boundary rule (replace_section through the next heading of the same
+   or higher level). No earlier anchor would remove or invalidate a later
+   anchor in the same file.
+
+5) STRUCTURED-CONTAINER MISPACKETIZATION: PASS
+   The file-end appends are final end-of-file sections rather than attempts to
+   mutate an existing table, registry, command list, or other headed container.
+
+6) CANONICALIZATION-DESTABILIZING SHAPE: PASS
+   The packet is expressed as final owner/consumer section content rather than
+   fold-later edit instructions or temporary relocation notes.
+
+7) CONTRACTREF LOCALITY COMPATIBILITY: PASS
+   Packet content was checked using the current verifier logic from
+   scripts/pm-plans-verify.py: operational markers limited to MUST NOT / MUST /
+   SHALL / REQUIRED / NEVER, fenced blocks skipped, lookahead limited to 10
+   subsequent lines and terminated by the next heading or fence. No locality
+   failures were found.
+
+Summary
+-------
+26 doc_intents checked, 64 anchors total.
+0 blockers.

@@ -170,30 +170,16 @@ aliases: []
 
 ### 3.3 Validation rules
 
-<a id="PERSONA-VALIDATION"></a>
 
-**`id` regex:** `^[a-z][a-z0-9-]{1,48}[a-z0-9]$`
-- Starts with a lowercase letter.
-- Contains only lowercase letters, digits, and hyphens.
-- Ends with a lowercase letter or digit.
-- Length: 3–50 characters.
+### 3.3A Field naming alignment with runtime identity
 
-**`name` length:** 1–100 characters (non-empty, trimmed).
+Persona-related runtime identity fields align to the shared owner contract:
+- `requested_persona`
+- `effective_persona`
 
-**`description` length:** 1–500 characters (non-empty, trimmed).
+ContractRef: ContractName:Plans/Contracts_V0.md
 
-**Folder-name match:** The enclosing folder name MUST equal the `id` value.
-
-**Reserved IDs (§6):** The IDs listed in §6 MUST NOT be used for user-created Personas until the corresponding Persona files are officially provided.
-
-**`default_mode` enum:** If present, MUST be one of `ask`, `plan`, `regular`, `yolo` (per `Plans/Run_Modes.md#MODE-ask` et al.).
-
-**`talkativeness` enum:** If present, MUST be one of `talk_a_lot_more`, `talk_more`, `talk_a_little_more`, `model_default`, `talk_a_little_less`, `talk_less`.
-
-**`default_skill_refs` items:** Each entry MUST be a valid skill ID (validated at load time against the skill registry; unresolvable refs produce a warning, not a hard error).
-
-ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Personas.md#RESERVED-PERSONAS
-
+`_id` variants are retired from canonical runtime payload examples.
 ### 3.4 Markdown body
 
 The Markdown body following the frontmatter contains the Persona's system instructions. This content is injected into the Agent's compiled context (see §5). There are no structural constraints on the body beyond valid Markdown. Recommended sections: expertise areas, behavioral guidelines, output format preferences.

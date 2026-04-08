@@ -197,15 +197,31 @@ ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Arc
 
 ### 4.4 Two Gemini providers
 
-Gemini is registered as two distinct providers and MUST stay distinct in capability, auth, caching, and billing logic.
+### 4.5 Web tool provider capability alignment
+Model and provider disclosure for web tools consumes the owner capability matrix from `Plans/Tools.md`.
 
-| Provider ID | Auth method | Transport | Cache posture | Notes |
-|---|---|---|---|---|
-| `gemini_direct` | API key | Direct HTTP | provider-native API strategy | API-only; no CLI dependency |
-| `gemini_cli` | OAuth and/or API key via CLI | CLI-wrapped | depends on CLI/runtime surface; `cache_with_oauth` may differ | CLI installation required |
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/FinalGUISpec.md
 
-ContractRef: ContractName:Plans/GitHub_API_Auth_and_Flows.md, ContractName:Plans/CLI_Bridged_Providers.md
+Consumer alignment rules:
+- support tier remains per provider x operation.
+- routing posture such as Site Reader primacy for `webfetch` does not erase true provider capability.
+- Anthropic/OpenAI `websearch` stays labeled `native (model)`.
+- Firecrawl, Tavily, and Exa retain real `webfetch` capability rather than being flattened to `fallback-only`.
+- DuckDuckGo keeps `native-ish` search, `pm-composed` research/fetch/extract, and `partial` crawl behavior.
+- the display label is `Google`; it is a pluggable adapter slot rather than a strategic baseline backend, and its `webfetch` posture remains `pm-composed`.
+- no per-operation priority override exists in MVP; routing consumes the global provider stack, and that global stack is user-changeable in Settings.
+- health, last-failure, and effective-provider surfacing align with the shared routing contract.
+Firecrawl-specific alignment:
+- Provider ID `firecrawl`; Display name `Firecrawl`.
+- Default priority: Firecrawl is below Exa, Tavily; above DDG (user-adjustable).
+- Default state: disabled (requires API key or self-hosted URL).
+- Firecrawl configuration preserves `proxy_mode` with `basic`, `enhanced`, and `auto`, and self-hosted capability disclosure includes the Fire Engine limitation note.
 
+ContractRef: ContractName:Plans/Tools.md#10-firecrawl-provider-integration, ContractName:Plans/FinalGUISpec.md
+
+Rules:
+- routing posture does not erase true provider capability
+- Keep this consumer section anchored to Plans/Tools.md#10. Firecrawl provider integration and Plans/FinalGUISpec.md#7.4.4 Settings (Unified) panel specification
 ## 5. Per-Persona runtime preferences
 
 <a id="PERSONA-MODEL-OVERRIDES"></a>
