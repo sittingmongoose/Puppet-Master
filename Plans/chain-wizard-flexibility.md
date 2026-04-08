@@ -419,6 +419,26 @@ ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/chain-wizard
 
 ### 3.5 Agent activity and progress visibility
 
+
+### 3.6 Plan/Deep Plan/TODO integration with wizard flow
+
+When the wizard flow produces a plan or deep plan, the resulting TODO items use the normalized TODO schema defined in `Plans/assistant-chat-design.md` §8.1 and persisted per `Plans/storage-plan.md` §4.3.
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md
+
+**Wizard → planning handoff:**
+- Standard Plan and Deep Plan are workflow overlays over the `plan` runtime mode. The distinction is degree and intensity, not categorical.
+- Deep Plan may spawn read-only research subagents (including web research) — this is permitted because plan mode allows web tools through the normal permission stack.
+- The TODO auto-use heuristic (3+ actionable steps) applies to wizard-generated plans as well.
+- Plan artifacts produced by the wizard use the same normalized TODO schema as agent-initiated plans.
+
+**Tool access in wizard-generated plan mode:**
+- Web tools resolve through the normal permission stack (default `ask`), consistent with `Plans/Run_Modes.md` §9.2 and `Plans/Permissions_System.md` §7.
+- Mutating tools remain denied in plan mode regardless of wizard context.
+
+ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Permissions_System.md
+
+
 When the **Requirements Doc Builder** or **Multi-Pass Review** is running, the user should **see the agents working** (similar to Assistant chat), not just a spinner or "Working..." label.
 
 **Agent activity view (embedded, non-interactive):**
@@ -1665,17 +1685,17 @@ The maximum clarification cycles for one wizard instance is **3**.
 ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Contracts_V0.md
 
 ### 15.6 Shared questionnaire alignment
-Clarification flows consume the shared question system used by Assistant Chat and Interview rather than a wizard-only prompt shape.
 
-Rules:
-- a clarification request may represent one question or a multi-question questionnaire
-- `question_ids[]` remain the canonical stable identifiers for clarification items across report, wizard, and thread surfaces
-- required questions block final submit
-- dismiss pauses the clarification flow rather than fabricating a successful answer set
-- resume behavior restores the outstanding questionnaire state or the persisted resolved outcome
+Wizard clarification uses the shared `question` contract rather than a wizard-local prompt schema.
 
-ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Contracts_V0.md
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/assistant-chat-design.md
 
+Alignment rules:
+- one clarification request may hold one question or many
+- `question_id` remains stable across thread, wizard, and stored report state
+- `source?` may preserve `option`, `other`, or `freeform`
+- required questions gate submit
+- dismiss pauses and resume restores the outstanding questionnaire from PM-managed draft state
 ## Requirements Builder Persona Strategy Addendum (2026-03-06)
 
 This addendum defines Persona behavior for the Requirements Builder / chain wizard flow.

@@ -203,16 +203,21 @@ ContractRef: ContractName:Plans/Provider_OpenCode.md, ContractName:Plans/Contrac
 
 ### 4.5 Selectable unit and runtime resolution
 
-The scheduler resolves one selectable unit per attempt boundary.
 
-Selectable-unit rules:
-- account-backed providers select one effective account row and, when required, one effective billing/entity context.
-- server-bridged providers select one effective server profile.
-- the selected unit freezes into requested/effective runtime disclosure before provider handoff.
-- the same auth identity with multiple billing/entity contexts does not become multiple fake top-level accounts.
-- account rows and server-profile rows share one runtime ontology in Agent-Config and Usage, but their stored identities remain distinct.
+### 4.6 Owner/consumer boundary alignment
 
-ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/usage-feature.md
+Multi-account consumer sections use the shared runtime snapshot fields and do not redefine them locally.
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Models_System.md
+
+Required fields:
+- `requested_account_binding`
+- `operational_identity`
+- `effective_account_label`
+- `effective_provider_identity`
+- `effective_project_id`
+
+Local substitute field families are not canonical.
 ## 5. Auto-rotation
 - **Switch boundary:** Switching happens only at attempt/message boundaries. Never switch mid-attempt.
 - **Completed ownership rule:** A completed message/attempt always belongs to the account it actually used. The next message/attempt re-resolves and may switch immediately.

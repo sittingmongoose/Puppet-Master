@@ -3,9 +3,9 @@
 ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/interview-subagent-integration.md, ContractName:Plans/Run_Modes.md
 - **Execution:** When the user **starts or executes** the plan, the **chat must switch to Agent mode** (execution mode), because Plan mode is read-only and execution requires write/execute permissions.
 - **Who executes:** The plan can be executed by:
-  - A **regular agent**,  
-  - A **crew**, or  
-  - **Agent + subagents**.  
+  - A **regular agent**,
+  - A **crew**, or
+  - **Agent + subagents**.
   The **manager** (orchestrator) automatically decides, or the **user can request** which option.
 - **Subagent collaboration:** During BrainStorm, subagents collaborate through the canonical crew message board owned by `Plans/orchestrator-subagent-integration.md`. This chat document may describe the user-facing behavior, but the schema, routing rules, priority model, rate limit, and orchestrator-visibility contract live in the orchestrator owner doc.
 ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Contracts_V0.md

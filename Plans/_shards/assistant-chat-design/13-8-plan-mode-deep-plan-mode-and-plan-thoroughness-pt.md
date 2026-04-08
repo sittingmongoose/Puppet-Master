@@ -2,14 +2,11 @@
 
 ### 8.1 Canonical planning model
 
-- **Plan** and **Deep Plan** are Assistant Chat workflow overlays.
-- While planning is in progress, both overlays normalize to canonical runtime mode **`plan`**.
-- Planning-time behavior is read-only with the `read_only + plan_output_scaffold_v1` overlay semantics from `Plans/Run_Modes.md`.
-- Planning runs may research the repo, ask clarifying questions, inspect documents, and perform cited web research when allowed, but they MUST NOT mutate project files or execute side-effecting implementation actions.
-- Planning artifacts are Puppet Master-owned drafts by default; they are not normal repo files unless the user explicitly saves them into the workspace.
-- Approving execution exits the planning overlay and starts a new execution run using canonical runtime `regular` or `yolo` depending on the chosen execution posture.
-- The approved planning artifact and TODO list remain the source of truth for the follow-on execution run.
+Chat planning canon separates plan lifecycle from item lifecycle. Plans may be proposed, revised, approved, superseded, or archived, while TODO items use the normalized item-status contract.
 
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Tools.md
+
+Planning surfaces consume the same normalized TODO projection used by `todoread`/`todowrite`, sticky execution tracking, and delegated work summaries. Chat does not publish a competing item-state vocabulary.
 ### 8.2 Plan Thoroughness (PT)
 
 **Plan Thoroughness (PT)** replaces the old planning-depth control.
@@ -103,49 +100,41 @@ Optional but allowed sections:
 - `Rollout / Migration Notes`
 
 ### 8.6 Normalized TODO contract for planning outputs
+Planning outputs that drive execution project into one normalized TODO model shared by chat, tools, storage, and widgets.
 
-Both Plan and Deep Plan MUST emit a normalized TODO list even when the visible artifact is markdown-first.
+ContractRef: ContractName:Plans/Tools.md#3.5C `todowrite` and `todoread` runtime contract, ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md
 
-ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md
+#### Item schema
 
-Required TODO fields per item:
-- `todo_id`
-- `title`
-- `summary`
-- `dependencies[]`
-- `owner_hint` (`main_agent`, `subagent`, `crew`, or `unspecified`)
-- `verification_hint`
-- `status`
+`todo_id`, `title`, `summary`, `notes?`, `status`, `dependencies[]`, `owner_hint`, `verification_hint`
 
-Optional but recommended execution-tracking fields carried by the same canonical TODO identity:
-- `notes?`
-- `order_index?`
-- `blocked_reason_code?`
-- `superseded_by_todo_id?`
+Item status is exactly `pending | in_progress | completed | blocked | skipped`.
 
-**Closed TODO lifecycle:**
-- `draft` — proposed during planning; not yet approved for execution.
-- `approved` — user accepted the item as part of the execution handoff.
-- `queued` — approved but waiting for execution to begin.
-- `ready` — execution has begun and the item has no unmet dependency.
-- `in_progress` — actively being executed.
-- `blocked` — paused behind a real dependency, approval, or prerequisite issue.
-- `completed` — finished with the required verification.
-- `dropped` — intentionally removed from the plan without replacement.
-- `superseded` — replaced by a newer TODO item or plan revision.
+`superseded` is plan-level only and does not appear as an item status.
+
+#### Sticky tracker behavior
+
+- the planning panel is a real execution tracker rather than a static summary block
+- `todoread` returns current normalized list for active thread/run
+- `todowrite` can create, reorder, update statuses/notes
+- Remove `todowrite` from blanket `ask/plan` mode auto-deny; PM-managed planning-state mutation stays available under planning approval rules
+- Structural edits = adding / removing / reordering TODO items
+- structural edits are gated once the plan is approved and execution has started; status and note updates remain available
+- item focus follows the active execution step without rewriting completed history
+- durable plan/TODO mutations emit `chat.plan_todo_updated` as defined by `Plans/Contracts_V0.md#1.1 Assistant worktree seglog events`
+- revision and history views show plan-level changes separately from item-level status changes
+- Deep Plan stays in a Q&A loop before execution begins; approval or resubmission resolves the planning review state before the tracker transitions into live execution
+- plan-level review state uses `draft`, `approved`, `executing`, `completed`, `blocked`, and `superseded`; item-level status stays separate
+- editing Deep Plan markdown (the rich artifact) MUST update the normalized TODO projection BEFORE execution begins
+
+ContractRef: ContractName:Plans/Contracts_V0.md#1.1 Assistant worktree seglog events, ContractName:Plans/storage-plan.md
 
 Rules:
-- TODO order is the default execution order unless dependencies require otherwise.
-- Dependencies may further constrain order.
-- TODO items keep the same `todo_id` across approval, queueing, execution, and completion unless a deliberate supersession occurs.
-- Replans create a new plan revision, but surviving TODOs keep identity where the work item is materially the same.
-- This TODO lifecycle is a planning/chat contract. It MUST NOT be treated as a synonym for orchestrator node lifecycle or run-graph state.
-- `todowrite` and `todoread` MUST use this same normalized schema instead of a separate checklist-only shape.
-
-**Plan-level status** remains distinct from per-item status and is closed to `draft`, `approved`, `executing`, `completed`, `blocked`, and `superseded`.
-
-ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/Prompt_Pipeline.md
-
+- todoread returns current normalized list for active thread/run
+- todowrite can create, reorder, update statuses/notes
+- Deep Plan stays in Q&A before execution begins
+- revision/history views show plan-level changes separately from item-level status changes
+- Keep this planning consumer anchored to Plans/Tools.md#3.5C `todowrite` and `todoread` runtime contract and Plans/Contracts_V0.md#1.1 Assistant worktree seglog events
 ### 8.7 Review loop for planning artifacts
 
 Standard Plan review:

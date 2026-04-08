@@ -1,6 +1,6 @@
 {
   "source_path": "Plans/interview-subagent-integration.md",
-  "source_sha256": "d4c35ac7a00a19b4eb11eae3543760a508e698ba15a888cb6684fc44f2ecdbc5",
+  "source_sha256": "8ebd462ce4b39fe8011076afe08d5dc67b41d8509363cd85380590f1df0d9fec",
   "split_rule": {
     "primary": "## outside fences",
     "fallback": "line-count-200",
@@ -52,168 +52,168 @@
     {
       "dest_path": "Plans/_shards/interview-subagent-integration/07-subagent-phase-assignments.md",
       "start_line": 65,
-      "end_line": 182,
-      "segment_sha256": "8e78a0d1b0369746e51d541dedc859b64c5712c59ca561d93cf6905047d496db",
+      "end_line": 185,
+      "segment_sha256": "f38ce3ca4a864b88cc8467278a1a7357684cb083d9c2ad70ebd93ec333325db8",
       "heading": "## Subagent Phase Assignments"
     },
     {
       "dest_path": "Plans/_shards/interview-subagent-integration/08-capability-introspection-and-media-generation-gating.md",
-      "start_line": 183,
-      "end_line": 196,
+      "start_line": 186,
+      "end_line": 199,
       "segment_sha256": "739b9382fb682f53175c6bae3a2c79d00516231fd261c7d62808cb026d05daad",
       "heading": "## Capability Introspection and Media-Generation Gating"
     },
     {
       "dest_path": "Plans/_shards/interview-subagent-integration/09-adaptive-interview-phases-contract-layer-outputs-cross-plan-alignment.md",
-      "start_line": 197,
-      "end_line": 241,
+      "start_line": 200,
+      "end_line": 244,
       "segment_sha256": "af0b9c071db66b60c0d7f9967e9e3c38c403d4d8497c683676cc0eaf91ce3625",
       "heading": "## Adaptive Interview Phases + Contract Layer Outputs (Cross-Plan Alignment)"
     },
     {
       "dest_path": "Plans/_shards/interview-subagent-integration/10-integration-architecture.md",
-      "start_line": 242,
-      "end_line": 1120,
-      "segment_sha256": "815d7dcb0138e71f4f877d42f136ac154ed57c5fac6f893ec0e5a8317515120b",
+      "start_line": 245,
+      "end_line": 1123,
+      "segment_sha256": "c1dc62ddf6fb4b3c2af9c618cbb63568380f5234768bdc92445ea6d12e3a278e",
       "heading": "## Integration Architecture"
     },
     {
       "dest_path": "Plans/_shards/interview-subagent-integration/11-dry-method-compliance-dry-compliance.md",
-      "start_line": 1121,
-      "end_line": 1162,
+      "start_line": 1124,
+      "end_line": 1165,
       "segment_sha256": "fafc4c46e5f5ff2bb742ba7fe3cec0ee25b76733593cb2c1d3e4b940a858106f",
       "heading": "## DRY Method Compliance {#dry-compliance}"
     },
     {
       "dest_path": "Plans/_shards/interview-subagent-integration/12-implementation-phases.md",
-      "start_line": 1163,
-      "end_line": 1241,
+      "start_line": 1166,
+      "end_line": 1244,
       "segment_sha256": "4e01ed396d0bde4d95a81f76f0050caface9b283ffd906efeeff397489f72f59",
       "heading": "## Implementation Phases"
     },
     {
       "dest_path": "Plans/_shards/interview-subagent-integration/13-configuration-example.md",
-      "start_line": 1242,
-      "end_line": 1264,
+      "start_line": 1245,
+      "end_line": 1267,
       "segment_sha256": "c5efaf28fb60e531ecc95d55ac9f0a125c35903f241386aa912d4c61b367dec8",
       "heading": "## Configuration Example"
     },
     {
       "dest_path": "Plans/_shards/interview-subagent-integration/14-benefits.md",
-      "start_line": 1265,
-      "end_line": 1272,
+      "start_line": 1268,
+      "end_line": 1275,
       "segment_sha256": "07448e2bac75759790858aeff6ff779c06271d53bc406221a1fcce20da254c06",
       "heading": "## Benefits"
     },
     {
       "dest_path": "Plans/_shards/interview-subagent-integration/15-considerations.md",
-      "start_line": 1273,
-      "end_line": 1280,
+      "start_line": 1276,
+      "end_line": 1283,
       "segment_sha256": "2ef676fc090f7efefc1c8bf51690c6d0bd50d9db699638a9e2564933eed5cbc2",
       "heading": "## Considerations"
     },
     {
       "dest_path": "Plans/_shards/interview-subagent-integration/16-crews-and-subagent-communication-enhancements-for-interview-flow.md",
-      "start_line": 1281,
-      "end_line": 1299,
+      "start_line": 1284,
+      "end_line": 1302,
       "segment_sha256": "fc07bbaa130f3357643abd01328060a9667595f0a398e1e317f85d36552bb8a1",
       "heading": "## Crews and Subagent Communication Enhancements for Interview Flow"
     },
     {
       "dest_path": "Plans/_shards/interview-subagent-integration/17-lifecycle-and-quality-enhancements-for-interview-flow.md",
-      "start_line": 1300,
-      "end_line": 1622,
-      "segment_sha256": "a93ba86f7efcac3c9d8ba75136c58f63e8e254f3bc99a6723abd2f0873b2fafe",
+      "start_line": 1303,
+      "end_line": 1625,
+      "segment_sha256": "68c740d2e91d90c644b2071ccac74e1a43b9e07254e3ed79262a66654764e9a2",
       "heading": "## Lifecycle and Quality Enhancements for Interview Flow"
     },
     {
       "dest_path": "Plans/_shards/interview-subagent-integration/18-next-steps.md",
-      "start_line": 1623,
-      "end_line": 1631,
+      "start_line": 1626,
+      "end_line": 1634,
       "segment_sha256": "253dda25dc7f5dbb0a8dfb39aca5850ab8a1667bad61e87c594bc71a384989d2",
       "heading": "## Next Steps"
     },
     {
       "dest_path": "Plans/_shards/interview-subagent-integration/19-gui-gaps-interview-tab.md",
-      "start_line": 1632,
-      "end_line": 1763,
-      "segment_sha256": "efe42a39ce1722566624794411efbef2175cdfc1574ca77d35ad98f871f10fcc",
+      "start_line": 1635,
+      "end_line": 1765,
+      "segment_sha256": "805601462bf93083270273d2a601620349ffc945004f40b431becb009a5ab750",
       "heading": "## GUI gaps: Interview tab"
     },
     {
       "dest_path": "Plans/_shards/interview-subagent-integration/20-subagent-file-management.md",
-      "start_line": 1764,
-      "end_line": 1878,
+      "start_line": 1766,
+      "end_line": 1880,
       "segment_sha256": "c1c8d776feb5a014d8cac111ce5f6a85867d1bb2a50cdf2c0f10c43eb8e1c54a",
       "heading": "## Subagent File Management"
     },
     {
       "dest_path": "Plans/_shards/interview-subagent-integration/21-platform-specific-subagent-invocation.md",
-      "start_line": 1879,
-      "end_line": 1944,
-      "segment_sha256": "8465fb80e74aa1c65a1b93716c90a6c6a7976b60cb43ebe9da2313c96b5784c0",
+      "start_line": 1881,
+      "end_line": 1922,
+      "segment_sha256": "84db31c3aef35f0a174c54a0b03e5ad868fb78a95dd591a582a50e43e991db93",
       "heading": "## Platform-Specific Subagent Invocation"
     },
     {
       "dest_path": "Plans/_shards/interview-subagent-integration/22-platform-specific-limitations-workarounds.md",
-      "start_line": 1945,
-      "end_line": 1962,
+      "start_line": 1923,
+      "end_line": 1940,
       "segment_sha256": "9068f74cbd6bcb6970b97974d3cf06daeda00ff36a074b87ef7f95c98f832a00",
       "heading": "## Platform-Specific Limitations & Workarounds"
     },
     {
       "dest_path": "Plans/_shards/interview-subagent-integration/23-testing-strategy.md",
-      "start_line": 1963,
-      "end_line": 1992,
+      "start_line": 1941,
+      "end_line": 1970,
       "segment_sha256": "13bf0212aa135ed9efb93dd4943b7fc00ec01c3fe7ffea5106567d9ea0bd0242",
       "heading": "## Testing Strategy"
     },
     {
       "dest_path": "Plans/_shards/interview-subagent-integration/24-user-project-output-contract-sharded-plan-graph-canonical.md",
-      "start_line": 1993,
-      "end_line": 2080,
+      "start_line": 1971,
+      "end_line": 2058,
       "segment_sha256": "4ccf120cdfc25cf76d37499ea21951def6ccaeccd226433de07b97d97404a44c",
       "heading": "## User-Project Output Contract (Sharded plan_graph/ canonical)"
     },
     {
       "dest_path": "Plans/_shards/interview-subagent-integration/25-change-summary-2.md",
-      "start_line": 2081,
-      "end_line": 2090,
+      "start_line": 2059,
+      "end_line": 2068,
       "segment_sha256": "de1da05716ff4392edb74ff0eaedaec9aff673caaeec00d664fe90da5eb38242",
       "heading": "## Change Summary"
     },
     {
       "dest_path": "Plans/_shards/interview-subagent-integration/26-persona-stage-strategy-addendum-2026-03-06.md",
-      "start_line": 2091,
-      "end_line": 2184,
-      "segment_sha256": "ab7bb0eb1290476acf758c05f6938869249bf78137bc83bb62c5c3b60c118fde",
+      "start_line": 2069,
+      "end_line": 2162,
+      "segment_sha256": "b23f8ddc2075b8cd9899f283fa86285d77e5f6d047e807d6765ce7694203271d",
       "heading": "## Persona Stage Strategy Addendum (2026-03-06)"
     },
     {
       "dest_path": "Plans/_shards/interview-subagent-integration/27-interview-validation-remediation-and-blocked-state-addendum-2026-03-08.md",
-      "start_line": 2185,
-      "end_line": 2235,
+      "start_line": 2163,
+      "end_line": 2213,
       "segment_sha256": "2b2f3c136ee71498c237ee88da8df218f881486dc3edd6c9c741b69264a42672",
       "heading": "## Interview Validation, Remediation, and Blocked-State Addendum (2026-03-08)"
     },
     {
       "dest_path": "Plans/_shards/interview-subagent-integration/28-interview-planning-recovery-alignment-addendum-2026-03-09.md",
-      "start_line": 2236,
-      "end_line": 2249,
+      "start_line": 2214,
+      "end_line": 2227,
       "segment_sha256": "573cfc0a580d52588d96e97d146d81027214920fcbf829a4bc31361a318f50af",
       "heading": "## Interview / Planning Recovery Alignment Addendum (2026-03-09)"
     },
     {
       "dest_path": "Plans/_shards/interview-subagent-integration/29-interview-blocked-degradation-handoff-reconciliation-addendum-2026-03-09.md",
-      "start_line": 2250,
-      "end_line": 2265,
+      "start_line": 2228,
+      "end_line": 2243,
       "segment_sha256": "4b1ef6c96e279116e54a665ef5a158f7e5e8a0c0afc668c41fae8815b6c367cc",
       "heading": "## Interview Blocked / Degradation Handoff Reconciliation Addendum (2026-03-09)"
     },
     {
       "dest_path": "Plans/_shards/interview-subagent-integration/30-planning-to-runtime-blocked-and-degraded-handoff-consolidation-addendum-2026-03-09.md",
-      "start_line": 2266,
-      "end_line": 2274,
+      "start_line": 2244,
+      "end_line": 2252,
       "segment_sha256": "fb6cc7773983164c74284ac885a4b641428cc9e5d42ba33cadc28acd5a85d8be",
       "heading": "## Planning-to-Runtime Blocked and Degraded Handoff Consolidation Addendum (2026-03-09)"
     }

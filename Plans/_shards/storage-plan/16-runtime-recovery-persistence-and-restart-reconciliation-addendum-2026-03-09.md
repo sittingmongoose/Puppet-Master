@@ -58,7 +58,7 @@ ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Section15_MV
 
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/FinalGUISpec.md
 
-`attempt_id?` and `thread_id?` remain fields on `blocked_projection` and are not primary-key components. Canonical blocked-projection values include `{ blocked_reason_code, blocked_at, blocked_family, approval_scope_key?, unblock_action_ids[] }`.
+`attempt_id?` and `thread_id?` remain fields on `blocked_projection` and are not primary-key components. Canonical blocked-projection values include `{ blocked_reason_code, blocked_at, blocked_family, approval_scope_key?, allowed_action_ids[] }`.
 
 Rules:
 - terminal workspace containers use stable terminal section, tab, and pane keys even when their bound sessions are replaced

@@ -3,59 +3,57 @@
 The reserved slash-command surface is canonical and non-overridable.
 
 ### 5.1 Reserved built-ins
+Reserved built-in slash commands are owned by `Plans/Commands_System.md` and consumed here without local drift.
 
-#### `/mode debug`
+ContractRef: ContractName:Plans/Commands_System.md, ContractName:Plans/UI_Command_Catalog.md
 
-`/mode debug` remains a reserved built-in routed through `cmd.chat.mode` with payload `{ mode: "debug" }`.
+Reserved set:
+`/new`, `/model`, `/effort`, `/mode`, `/export`, `/compact`, `/stop`, `/resume`, `/rewind`, `/revert`, `/share`, `/settings`, `/doctor`, `/help`, `/worktree`, `/web`
 
-Required behavior:
-- invoking `/mode debug` switches the thread into the Debug overlay and either resumes the active investigation or opens the canonical target-discovery flow
-- `/mode debug` does not create a hidden secondary thread or hidden background mode state
-- entering Debug from `Plan` or `Deep Plan` leaves planning and creates an execution-capable thread posture; existing plan artifacts remain visible as ordinary context, not as an active planning lock
-- leaving Debug does not silently discard Investigation Context; completed or superseded investigations remain historically visible until explicitly closed or revoked
+Catalog rules:
+- reserved commands shown as non-editable in catalog
+- deprecated aliases shown distinctly from active commands
+- /web remains discoverable in catalog
 
-ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Commands_System.md, ContractName:Plans/Run_Modes.md
-
-Reserved built-ins for Assistant Chat are:
-- `/new`
-- `/model`
-- `/effort`
-- `/mode`
-- `/export`
-- `/compact`
-- `/stop`
-- `/resume`
-- `/rewind`
-- `/revert`
-- `/share`
-- `/settings`
-- `/doctor`
-- `/help`
-- `/web`
-- `/skill`
+Chat rules:
+- `/cancel` is accepted only as a deprecation alias to `/stop`
+- `/clear` is removed from the reserved built-in set
+- `/web` is a family entry-point rather than a default-to-search helper
+- `/skill` remains a discovery/invocation helper, not a reserved built-in
 
 Rules:
-- Reserved built-ins MUST be visible in the slash-command catalog and settings surfaces.
-- Reserved built-ins MUST NOT be overridden by User Commands.
-- `/cancel` is a deprecated alias of `/stop` and MUST NOT carry separate semantics.
-- `/clear` is not part of the canonical reserved Assistant Chat set and MUST NOT remain a default built-in unless a later packet explicitly reintroduces it.
-
-ContractRef: ContractName:Plans/Commands_System.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Permissions_System.md
-
+- reserved slash command
+- alias/deprecation state
+- /cancel is accepted only as a deprecation alias to /stop
+- /clear is removed from the reserved built-in set
+- /web is a family entry-point rather than a default-to-search helper
+- /skill remains a discovery/invocation helper, not a reserved built-in
+- Keep this chat consumer pointed at Plans/Commands_System.md#7. Reserved built-in slash commands
 ### 5.2 `/web` and `/skill`
-`/web` is one canonical command family with these subcommands:
-- `/web search <query>`
-- `/web extract <url>`
-- `/web research <task>`
-- `/web crawl <url>`
-- `/web map <url>`
+Slash and natural-language web dispatch share the same underlying dispatcher and provider-routing rules.
 
-Natural-language requests for searching, extracting, researching, crawling, or mapping the web MUST route through the same internal dispatcher as `/web`, not a parallel feature-local path.
+ContractRef: ContractName:Plans/Commands_System.md, ContractName:Plans/Tools.md
 
-`/skill` is a lightweight invocation helper for loading or invoking an installed skill. Skill management remains in `Agent Config > Skills` and MUST NOT move into a `/skills` management family.
+`/web` family identities:
+- `/web search` → `websearch`
+- `/web fetch` → `webfetch`
+- `/web extract` → `webextract`
+- `/web research` → `webresearch`
+- `/web crawl` → `webcrawl`
+- `/web map` → `webmap`
 
-ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Skills_System.md, ContractName:Plans/FinalGUISpec.md
+Family rules:
+- bare `/web` opens help/autocomplete and has no default operation
+- slash routing and NL routing land on the same tool contracts, permission gates, and audit payloads
+- bare `/skill` opens discovery or direct invocation using the `skill_id / arguments? / context?` contract rather than acting as a panel alias
 
+Rules:
+- /skill <skill_name> [args]
+- No subcommand family for MVP
+- invoke_skill
+- bare /web opens help/autocomplete and has no default operation
+- bare /skill opens discovery or direct invocation help rather than a panel alias
+- Keep this surface consuming Plans/UI_Command_Catalog.md#2.7 Chat slash commands (reserved) and Plans/Commands_System.md#7. Reserved built-in slash commands
 ### 5.3 Git & GitHub command boundary
 Git and GitHub prefixes remain reserved and route into the canonical source-control and GitHub command surfaces rather than to user-defined command overrides.
 
@@ -74,4 +72,35 @@ ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Comman
 User Commands may complement built-ins, but they do not replace or suppress the canonical Assistant Chat command set. PM-native Ask and Plan behavior remains authoritative even when an upstream reference product handles modes or permissions differently.
 
 ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Commands_System.md, ContractName:Plans/OpenCode_Deep_Extraction.md
+### 5.5 Dispatcher parity
+- NL intents and slash commands hit the same dispatcher.
+- "search the web for X" → `websearch`.
+- "extract this page" → `webextract`.
+- "read this URL" → `webfetch`.
+- "research topic" → `webresearch`.
+- Reading intents MUST resolve to `webfetch`, not `websearch`.
+- `/skill <skill_name> [args]`, the Skills panel, and Natural language all converge on the same `invoke_skill` runtime contract.
 
+LSP note:
+- `workspaceSymbol` requires `query`.
+- Position-based operations use `path` + `position`.
+- `rename` requires `path` + `position` + `newName`.
+- `read_only` keeps web exploration ask-gated rather than silently denying it, and question default `allow` only when HITL is available.
+- approval ladder tokens include `deny`, `once`, `for session`, and `always`.
+
+ContractRef: ContractName:Plans/Commands_System.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Skills_System.md
+- subcommand is required for execution
+- URL normalization applies
+- parse failure shows usage
+
+Rules:
+- /web
+- intent phrase
+- resolved tool key
+- query
+- site/page reading is not search
+- dispatcher parity applies to slash and NL paths
+- read_only keeps web exploration ask-gated rather than silently denying it
+- approval ladder tokens include deny/once/for session/always
+- question default allow only when HITL is available
+- Keep this dispatcher note aligned with Plans/Tools.md#12. Web tool routing algorithm, Plans/UI_Command_Catalog.md#2.7 Chat slash commands (reserved), and Plans/LSPSupport.md#9. MVP LSP features (summary)

@@ -24,3 +24,4 @@ ContractRef: ContractName:Plans/Crosswalk.md, ContractName:Plans/DRY_Rules.md
 - Existing key: `worktree_record.v1:{project_id}:{worktree_id}`
 - New optional field: `owner_thread_id?` alongside existing `owner_run_id?` and `owner_node_id?`
 - Owner semantics: exactly one of `owner_thread_id`, `owner_run_id/owner_node_id`, or neither (manual) is set
+

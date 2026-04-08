@@ -2,7 +2,13 @@
   "permissions": {
     "allow": [
       "Bash(/tmp/audit_findings.txt:*)",
-      "Read(//tmp/**)"
+      "Read(//tmp/**)",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:api.github.com)",
+      "Bash(curl -L -o sunlight_shimmer-slang.zip \"https://github.com/mattakins/Pixel_Transparency/releases/download/2.0/sunlight_shimmer-slang.zip\")",
+      "Bash(unzip -o sunlight_shimmer-slang.zip -d sunlight_shimmer)",
+      "Bash(grep -n -o '.\\\\{0,80\\\\}Est\\\\. Cost.\\\\{0,80\\\\}' Concepts/PMConcept.html)",
+      "Bash(python3)"
     ]
   }
 }

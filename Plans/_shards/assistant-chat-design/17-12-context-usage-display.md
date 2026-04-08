@@ -31,7 +31,6 @@ Rules:
 
 ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md
 
-
 ### 12.0A Investigation Context for Debug threads
 
 Debug threads expose a visible **Investigation Context** alongside the normal context-usage affordances.

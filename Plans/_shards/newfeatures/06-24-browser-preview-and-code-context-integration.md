@@ -12,3 +12,4 @@ Integration points:
 - browser DevTools ↔ debug mode (`DOM inspection as evidence`)
 
 ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Glossary.md
+

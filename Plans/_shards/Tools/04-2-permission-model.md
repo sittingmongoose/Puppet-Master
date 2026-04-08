@@ -8,7 +8,7 @@ ContractRef: ContractName:Plans/Permissions_System.md, Primitive:DRYRules
 
 - **allow** — Tool may run without prompting. FileSafe guards still apply after permission.
 - **deny** — Tool is blocked; `tool.denied` event emitted.
-- **ask** — User must approve (`once` / `always` / `reject`). In headless runs, maps to `deny` unless HITL is enabled.
+- **ask** — User must approve (`deny` / `once` / `for session` / `always`). In headless runs, maps to `deny` unless HITL is enabled.
 
 Full definitions: `Plans/Permissions_System.md` §2.
 
@@ -53,7 +53,6 @@ FileSafe runs **in addition to** tool permissions. A tool may be **allowed** by 
 ### 2.4.1 Central policy engine contract
 Every agent-usable tool attempt MUST pass through one canonical policy engine that resolves permission, approval/HITL, FileSafe, execution, terminal binding when relevant, and result normalization.
 ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md
-
 
 Canonical order:
 1. resolve tool identity and permission
@@ -100,7 +99,7 @@ ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/storage-plan.md
 | **Permissions_System.md** | Canonical SSOT for allow/ask/deny semantics, precedence, granular rules, defaults, resolution algorithm, GUI, and persistence. |
 | **FileSafe.md** | Command blocklist ≈ bash deny; write scope ≈ edit path allowlist; security filter ≈ read path deny (.env). Central policy engine; permission + FileSafe both apply. |
 | **FileManager.md** | Workspace roots, open paths; external_directory and path rules may affect File Manager/editor exposure. |
-| **assistant-chat-design.md** | YOLO/Regular (§3); approve for session ≈ always; bash audit trail and FileSafe. |
+| **assistant-chat-design.md** | YOLO/Regular (§3); canonical approval ladder alignment; bash audit trail and FileSafe. |
 | **orchestrator-subagent-integration.md** | Run config snapshot includes tool permissions; headless ask → deny or HITL; node/subagent overrides. |
 | **interview-subagent-integration.md** | Same run config and permission snapshot for interview runs. |
 

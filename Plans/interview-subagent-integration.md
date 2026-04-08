@@ -155,16 +155,19 @@ This document covers the **interview flow** (multi-phase interview: Scope, Archi
   - Validate CI/CD integration for tests
 
 ### Cross-Phase Subagents
-Cross-phase subagents continue to serve document generation, answer validation, quality review, and research operations, but they now inherit the reconciled PM-native tool and skill model.
 
-ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Skills_System.md, ContractName:Plans/Tools.md
 
-Cross-phase rules:
-- cited web search, PM-native skills, and PM-native MCP availability are resolved by PM before provider execution rather than delegated to provider-native wiring.
-- skill readiness for interview helpers is determined from `required_tool_refs` and `optional_tool_refs`, not by heuristics or provider-specific assumptions.
-- interview subagents inherit the same requested/effective runtime disclosure fields and provider-entry vocabulary used elsewhere.
+### Question system alignment
 
-ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/FinalGUISpec.md
+Interview consumes the shared `question` runtime contract.
+
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/storage-plan.md
+
+Required alignment:
+- `questions[]` uses `QuestionItem`
+- `options[]` uses `Array<{id, label, description?}>`
+- answers preserve `response_kind`, `source?`, and `validation_state`
+- clarification remains parent-mediated rather than direct child prompting
 ### Debug-capable validation and remediation
 
 Interview may use shared debug-capable tools during testing, verification, and environment validation phases, but it does not become the owner of Assistant Debug Mode.
@@ -567,7 +570,7 @@ Add validation methods to orchestrator with detailed error handling, retry logic
 **Normative validation lifecycle:**
 
 - Validation runs after each user answer that changes phase-completion state and again once before a phase is marked complete.
-- The validator used is stage-resolved (see Persona Stage Strategy Addendum) and MUST record `requested_persona_id` and `effective_persona_id` when overrides/capability filtering change the actual runner.
+- The validator used is stage-resolved (see Persona Stage Strategy Addendum) and MUST record `requested_persona` and `effective_persona` when overrides/capability filtering change the actual runner.
 - Findings are persisted as structured artifacts/events with stable IDs so the remediation loop can reopen the same issue set instead of inventing new prose-only feedback each retry.
 - Critical/Major findings block phase completion. Minor/Info findings are attached to the phase summary and downstream drafting context but do not block.
 - If retries are exhausted, Interview transitions the phase to `needs_review` and persists a resume checkpoint; it MUST NOT silently mark the phase complete.
@@ -1398,7 +1401,7 @@ ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/orchestrator
 **Concept:** Track which subagent is currently active at each interview phase. Store in interview state and expose for logging, debugging, and audit trails.
 
 **Canonical visibility rule:**
-- The Interview surface, shared Agent Activity Pane, and any audit projection must display/request the same fields: `requested_persona_id`, `effective_persona_id`, `selection_reason`, `provider`, `model`, and skipped unsupported controls if any. This aligns Interview-specific visibility with the shared runtime-display rules added in `Plans/assistant-chat-design.md`, `Plans/FinalGUISpec.md`, and `Plans/Models_System.md`.
+- The Interview surface, shared Agent Activity Pane, and any audit projection must display/request the same fields: `requested_persona`, `effective_persona`, `selection_reason`, `provider`, `model`, and skipped unsupported controls if any. This aligns Interview-specific visibility with the shared runtime-display rules added in `Plans/assistant-chat-design.md`, `Plans/FinalGUISpec.md`, and `Plans/Models_System.md`.
 
 **BeforePhase tracking responsibilities:**
 
@@ -1681,19 +1684,18 @@ Button order is `[Resume] [Pause] [Cancel]`.
 - interrupted runs restore the same CTA set so the user can resume from checkpoint or start over
 
 ### Runtime identity visibility
-For each interview stage, the UI MUST display:
-- `requested_persona_id`
-- `effective_persona_id`
-- `selection_reason`
-- `provider`
-- `model`
 
-ContractRef: ContractName:Plans/Personas.md, ContractName:Plans/Prompt_Pipeline.md
+Interview-visible runtime identity preserves the shared owner fields and does not create local aliases.
 
-If a requested control becomes unavailable after capability filtering, the UI shows it as skipped or disabled with a reason; Interview MUST NOT hide runtime substitutions that would be visible on Builder or Assistant surfaces.
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Personas.md
 
-ContractRef: ContractName:Plans/Personas.md, ContractName:Plans/assistant-chat-design.md
-
+Required fields:
+- `requested_persona`
+- `effective_persona`
+- `requested_account_binding`
+- `operational_identity`
+- `effective_account_label`
+- `effective_provider_identity`
 ### Interview execution-affecting config wiring
 `InterviewGuiConfig` and `InterviewOrchestratorConfig` MUST expose and use the following execution-affecting fields:
 
@@ -1907,35 +1909,11 @@ Rules:
 ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Contracts_V0.md
 ### Requested/effective Interview contract
 
-Inputs:
-- `requested_persona` (canonical Persona ID or `null`)
-- `stage`
-- `phase_id`
-- `provider/platform preferences`
-- `capability constraints`
+Requested/effective Interview payloads consume the runtime snapshot owner contract directly.
 
-Outputs:
-- `effective_persona`
-- `persona_selection_source`
-- `selection_reason`
-- `persona_override_scope`
-- `persona_override_owner_id`
-- `effective_platform`
-- `effective_model`
-- `effective_variant` (when present)
-- `effective_reasoning_effort` (when present)
-- `effective_talkativeness` (when not `model_default`)
-- `applied_persona_controls[]`
-- `skipped_persona_controls[]`
-- `invocation_mode`
+ContractRef: ContractName:Plans/Contracts_V0.md
 
-Persist these values in runtime telemetry and expose them in the Interview UI/activity pane.
-
-Migration rule:
-- Older names such as `requested_persona_id` and `effective_persona_id` are backward-compatibility aliases only. They MUST be normalized to `requested_persona` and `effective_persona` before persistence, event emission, or UI binding.
-
-ContractRef: ContractName:Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD, ContractName:Plans/Personas.md, ContractName:Plans/orchestrator-subagent-integration.md
-
+`_id` variants such as `requested_persona_id` and `effective_persona_id` are retired from canonical Interview payload examples.
 ### Interoperability note for provider-native formats
 
 Provider-native agent exports or prompt syntaxes MAY exist as optional interoperability layers only. They MUST be generated from the canonical effective Persona/runtime selection after resolution, and they MUST NOT become a second source of truth for Interview selection behavior.
@@ -2148,7 +2126,7 @@ ContractRef: ContractName:Plans/Personas.md, ContractName:Plans/orchestrator-sub
 
 Additional rules:
 - Automatic resolution may return only registry-valid IDs from `Plans/orchestrator-subagent-integration.md`.
-- Requested IDs that are unavailable after capability/provider filtering must record `requested_persona_id`, `effective_persona_id`, and `selection_reason`.
+- Requested IDs that are unavailable after capability/provider filtering must record `requested_persona`, `effective_persona`, and `selection_reason`.
 - Questioning MUST bias toward `collaborator` even when a technical phase Persona exists; technical Personas inform questioning context but do not replace the conversational default unless the user explicitly overrides it.
 - Review / validation stages MUST NOT silently reuse the drafting Persona as their effective reviewer when a reviewer Persona is available.
 

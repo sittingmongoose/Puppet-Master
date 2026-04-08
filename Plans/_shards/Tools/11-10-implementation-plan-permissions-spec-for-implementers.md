@@ -12,22 +12,35 @@ For backward compatibility, the merged permission set is also projected to redb 
 
 ### 10.2 Default policy table
 
-Canonical default table: `Plans/Permissions_System.md` §7. Tool-to-default mapping includes `read` → allow (with §7.1 `.env` deny), `edit`/`bash`/`media.generate` → ask, `glob`/`grep`/`list`/`codesearch`/`chatsearch`/`logsearch`/`skill`/`lsp`/`capabilities.get` → allow, `webfetch`/`websearch`/`task`/`logread`/`repo.import` → ask, `todoread`/`todowrite` → allow (subagent: deny), `external_directory`/`doom_loop` → ask, unknown tools → ask.
+Canonical defaults are owned by `Plans/Permissions_System.md` §7. This consumer summary keeps the tool-registry view aligned to that owner table.
+
+ContractRef: ContractName:Plans/Permissions_System.md
+
+| Tool family | Default |
+|---|---|
+| `skill` | `allow` |
+| `question` | `allow` only when HITL is available; otherwise `ask` |
+| `websearch`, `webfetch`, `webextract`, `webresearch`, `webcrawl`, `webmap` | `ask` |
+| `batch_webfetch`, `batch_webextract` | `ask` |
+| `todoread`, `todowrite` | `allow` |
+| child-agent `question` | `deny` |
 ### 10.3 Resolution algorithm
 
 Canonical algorithm: `Plans/Permissions_System.md` §8. Summary: Mode override → Session cache → Persona overrides → Project rules → Global rules → Defaults → Special guards. Post-resolution, FileSafe applies (§10.6).
 
 ### 10.4 Presets → config mapping
 
-Presets apply batch permission rules. Canonical preset definitions: `Plans/Permissions_System.md` §10.4.
+Preset semantics are owned by `Plans/Permissions_System.md` §10.4. This section preserves the tool-registry mapping without restating conflicting policy.
 
-| Preset | Effect on tool_permissions |
-|--------|----------------------------|
-| **Read-only** | `edit`, `bash`, `webfetch`, `websearch`, `task`, `repo.import` → deny; all others allow (or leave unset to use defaults). |
-| **Plan mode** | Allow `read`, `grep`, `glob`, `list`, `codesearch`, `chatsearch`, `logsearch`, `question`, `skill`, `todoread`, `todowrite`, `capabilities.get`, read-only `lsp` operations, `webextract`, and `webresearch`; deny `create` / `write`, `edit`, `patch`, `multiedit`, `repo.import`, deployment-capable tools, and any `bash` invocation classified as write-capable or deployment-oriented (MVP-safe preset: deny `bash` entirely). |
-| **Full** | All tools → allow except `bash`, `edit`, `repo.import` → ask. |
+ContractRef: ContractName:Plans/Permissions_System.md
 
-Store as the same TOML config; presets are a GUI shortcut to set multiple keys at once. Plan mode allows information gathering but not state mutation.
+| Preset | Tool-facing effect |
+|---|---|
+| `read_only` | read/search/list style tools stay available; mutation stays denied |
+| `plan` | planning helpers stay available, read-only web tools remain `ask`, and no preset silently auto-denies the whole web family |
+| `full` | broad availability with explicit asks on mutation-capable tools |
+
+Child-agent denial of `question` is architectural and remains in force even when the parent preset is broader.
 ### 10.5 GUI ↔ config serialization
 
 The Permissions GUI is specified in `Plans/Permissions_System.md` §10 and `Plans/FinalGUISpec.md` §7.4.10. The tool registry supplies the list of known tool names (built-in + MCP-discovered) to populate the GUI's per-tool list.
@@ -35,15 +48,30 @@ The Permissions GUI is specified in `Plans/Permissions_System.md` §10 and `Plan
 ### 10.6 FileSafe integration order and API
 
 - **Canonical order owner:** `§8.2` is the authoritative dispatch sequence. This subsection is an API summary only and MUST NOT be read as a competing order definition.
+ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/FileSafe.md, ContractName:Plans/Executor_Protocol.md
 - **Single API (recommended):** `policy.may_execute_tool(tool_name, invocation_context) -> Result<Allow | Deny(reason) | Ask, Error>` remains the permission entrypoint within that sequence. Runner code calls it before any underlying tool implementation is invoked.
 - **FileSafe contract:** FileSafe exposes e.g. `check_bash_command(cmd)`, `check_write_path(path)`, `check_read_path(path)`. For file-affecting or shell-affecting tools, FileSafe runs on normalized arguments inside the canonical `§8.2` flow; hook-mutated arguments trigger the required re-checks before dispatch.
 
 ### 10.7 Ask UI contract
 
-Ask-flow semantics (`once`/`always`/`reject`) are defined in `Plans/Permissions_System.md` §6. Implementation notes for the runner:
+Ask-flow semantics (`deny`/`once`/`for session`/`always`) are defined in `Plans/Permissions_System.md` §6. Implementation notes for the runner:
 
-- **Assistant (interactive):** When policy returns **ask**, surface a **pending approval** to the UI with `{ tool_name, invocation_summary, options: once | always | reject }`. See `Plans/Permissions_System.md` §6 for response semantics.
+- **Assistant (interactive):** When policy returns **ask**, surface a **pending approval** to the UI with `{ tool_name, invocation_summary, options: deny | once | for session | always }`. See `Plans/Permissions_System.md` §6 for response semantics.
 - **Orchestrator / Interview (headless):** Map `ask` → `deny`, or to **pending-HITL** if HITL is enabled (`Plans/human-in-the-loop.md`).
+
+### 10.7A Web-operation approval summary rules
+
+Runner and UI integrations MUST preserve the owner semantics from `Plans/Permissions_System.md#3.4A Web-operation permission-key derivation`.
+
+- `websearch summary shows tool name + query preview`
+- `webfetch/webextract summary shows tool name + target host/URL`
+- `webresearch summary shows tool name + task summary + estimated source count when available`
+- `webcrawl/webmap summary shows tool name + root URL + page/depth caps`
+- `Approving webcrawl For Session auto-approves crawl/map/extract/fetch for the same host pattern`
+- `Approving webresearch For Session does NOT create broad allow for unrelated tools`
+- `MVP uses wildcard session approval for search/research; advanced query-pattern support is future only`
+
+ContractRef: ContractName:Plans/Permissions_System.md#3.4A Web-operation permission-key derivation, ContractName:Plans/FinalGUISpec.md
 
 ### 10.8 Registry → CLI derivation (per platform)
 
@@ -61,4 +89,6 @@ HTE / DAE split (canonical): the "before forwarding" wording above applies to **
 No hardcoded tool names in runner; all names come from registry + policy.
 
 ---
+- question default `allow` only when HITL is available
 
+ContractRef: ContractName:Plans/Permissions_System.md

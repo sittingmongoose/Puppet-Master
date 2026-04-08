@@ -233,3 +233,24 @@ ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Executor_Pro
 - `Plans/Contracts_V0.md`, `Plans/storage-plan.md`, `Plans/Permissions_System.md`, and `Plans/usage-feature.md` are required anti-drift companions for this packet.
 
 ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/Containers_Registry_and_Unraid.md, ContractName:Plans/newtools.md, ContractName:Plans/storage-plan.md
+
+
+## Web Tools + Firecrawl + Lost-Spec Recovery reconciliation note (2026-03-30)
+
+The reconciled owner and consumer set for web tools, Firecrawl, questions, planning/TODO, permissions, runtime identity, and MCP now spans:
+- `Plans/Tools.md`
+- `Plans/assistant-chat-design.md`
+- `Plans/FinalGUISpec.md`
+- `Plans/Permissions_System.md`
+- `Plans/storage-plan.md`
+- `Plans/Commands_System.md`
+- `Plans/UI_Command_Catalog.md`
+- `Plans/Skills_System.md`
+- `Plans/Contracts_V0.md`
+- `Plans/Run_Modes.md`
+- `Plans/Section15_MVP_Promoted_Features_Spec.md`
+- `Plans/MCP_Integration.md`
+
+ContractRef: ContractName:Plans/MCP_Integration.md, ContractName:Plans/Tools.md
+
+Consumer summaries in orchestration, interview, provider, account, and index surfaces defer to those repaired owner sections instead of keeping competing canon. Verify-only docs were checked during reconciliation and are intentionally out of packet scope because no edits were required.

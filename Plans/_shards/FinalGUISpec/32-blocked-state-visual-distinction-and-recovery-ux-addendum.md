@@ -5,7 +5,7 @@
 ### Blocked-state visual distinction
 
 | State | Badge Color | Icon | Label Text | Tooltip |
-|-------|-------------|------|------------|---------|  
+|-------|-------------|------|------------|---------|
 | `attention_required` | Amber | Warning triangle | "Needs input" | "This step needs your input to continue. The system can still make progress on other steps." |
 | `blocked` | Red | Stop circle | "Blocked" | "This step is blocked and cannot continue until you take action. All automatic retries are exhausted." |
 | `waiting_approval` | Blue | User badge | "Awaiting approval" | "This step is waiting for your approval before proceeding with a sensitive operation." |
@@ -65,3 +65,4 @@ Canonical rule:
 3. Polling intervals are acceptable only for external systems without push delivery (for example GitHub Actions status refresh every 30s) and must be documented as freshness aids rather than canonical correctness logic.
 
 ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Run_Modes.md
+

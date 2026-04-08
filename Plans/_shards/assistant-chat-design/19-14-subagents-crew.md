@@ -78,14 +78,16 @@ Parallel child spawning is a first-class behavior. The thread must not assume on
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/FinalGUISpec.md
 
 Rules:
-- small fan-out may render as separate child cards.
-- large fan-out renders as one top-level batch card.
-- expanding a large batch card opens intermediate subgroups of 10 children each.
-- expanding a subgroup opens the 10 inline child cards for that subgroup.
-- only one subgroup is expanded by default unless the user explicitly opens more.
-- canonical child order remains launch order; status changes do not reorder the child list.
-- subgroup and batch summaries surface blocked, awaiting-parent, and failed counts so the user knows where attention is needed.
-
+- small fan-out may render as separate child cards
+- large fan-out renders as one top-level batch card
+- expanding a large batch card opens intermediate subgroups of 10 children each
+- expanding a subgroup opens the 10 inline child cards for that subgroup
+- only one subgroup is expanded by default unless the user explicitly opens more
+- canonical child order remains launch order; status changes do not reorder the child list
+- subgroup and batch summaries surface blocked, awaiting-parent, and failed counts so the user knows where attention is needed
+- when `continue_on_error` is `false`, the first failure closes the batch, preserves already completed child results, and marks later unstarted children as not run rather than successful
+- batch cards link the failing subgroup and failing child instead of flattening strict-stop runs into one generic failure summary
+- parent and child audit identity remain inspectable from the batch card rather than being hidden in a storage-only projection
 ### Parent-mediated clarification and escalation
 
 Children do not question the user directly by default. A child escalates to the parent; the parent decides whether to answer from existing context, send more context, ask the user, reroute, or cancel the child.

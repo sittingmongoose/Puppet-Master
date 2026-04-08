@@ -18,7 +18,6 @@ Source Control uses a vertically stacked collapsible accordion layout instead of
 
 ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/Wiring_Matrix.md
 
-
 Source Control is the side-panel owner for Git-native repository work in the rewrite shell.
 
 ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/FileManager.md, ContractName:Plans/UI_Command_Catalog.md
@@ -143,29 +142,46 @@ Settings > Storage includes a global **Remote Cache Administration** subsection 
 ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/storage-plan.md, ContractName:Plans/UI_Command_Catalog.md
 
 #### 7.4.4 Settings (Unified) panel specification
+Settings and `/web` help/autocomplete expose provider availability and support information without making the user infer it from the owner matrix alone.
 
-Settings is the authoritative unified configuration surface formed by merging the former Config, Settings, Login, and Doctor pages into a single routed experience.
+ContractRef: ContractName:Plans/Tools.md#11-provider-capability-matrix, ContractName:Plans/newtools.md#82-guisettings-alignment
 
-Layout contract:
-- **Left sidebar:** settings-group navigation with collapsible category headers, persistent tab selection, and a global settings search field at the top.
-- **Main pane:** selected tab content with section anchors, inline validation, reset actions, and contextual status banners.
-- **Inspector rail (optional on wide layouts):** requested vs effective runtime state, inheritance source, sync status, and health disclosures for the active tab.
+Required web-provider disclosure surfaces:
+- row-level availability badge for each web-capable provider
+- row-level support-tier disclosure using the same vocabulary consumed from the owner capability matrix
+- row-level health/error disclosure and last-failure messaging when the provider is degraded, unauthenticated, rate-limited, or otherwise unavailable
+- contextual help text for auth/setup/cost implications, including when a provider is disabled by default or requires hosted billing
+- requested versus effective provider state remains separate in Settings and inspectors
+- the global provider stack is user-changeable in Settings
+- per-operation priority reordering is NOT MVP
+- global MVP provider priority is not immutable product policy
+- availability plus support-tier visibility in `/web` help/autocomplete remains visible so users can predict whether `websearch`, `webfetch`, `webextract`, `webresearch`, `webcrawl`, and `webmap` are currently runnable
+- if the requested operation is currently unrunnable, the UI shows the capability-unavailable branch explicitly instead of implying silent fallback
 
-Required top-level settings categories:
-- **Appearance:** General, Themes, Layout, window chrome, density, sound effects, accessibility presentation.
-- **Editor:** Editor, File Manager, LSP, Keybindings, Shortcuts, diff/review defaults, preview behaviors.
-- **Workspace:** Project, Branching, Storage, Git, Docker, Kubernetes, Run & Debug, Interview, Memory.
-- **AI / Models:** Providers, Accounts, Agent-Config, Models, Personas, Skills, Plugins, Budget.
-- **Security:** Permissions, Privacy, Rules, FileSafe, approvals, remote host trust.
-- **Advanced:** Updates, Extensions, Advanced, Health, diagnostics, migration tools, reset tools.
+Consumer disclosure rules:
+- cost-aware selection remains visible when routing prefers a lower-cost viable path
+- hosted/provider-native research paths surface explicit credit/billing copy, including `>100 credits` warnings for `research` and `500 credits` warnings for deep research where those paths apply
+- PM MUST NOT silently switch between self-hosted Firecrawl and hosted/cloud Firecrawl
+- deployment-mode disclosure remains visible whenever Firecrawl is selected, suggested, or used as the effective provider
+- self-hosted Firecrawl does not use hosted credit billing
 
-Required global capabilities:
-- **Global search:** searches tab names, section headings, labels, and help text; results deep-link to the exact control and scroll it into view.
-- **Settings sync:** optional device-to-device sync for durable user preferences, shortcuts, themes, provider/model preferences, and eligible workspace defaults. Project-local secrets and machine-specific paths remain excluded.
-- **Import / export:** export current settings to a versioned bundle; import with merge preview, conflict handling, and scope selection.
-- **Reset controls:** each tab exposes `Reset tab to defaults`; the root Settings toolbar exposes `Reset all settings` behind a destructive confirmation.
-- **Change provenance:** every editable control can disclose whether the current value is inherited, defaulted, synced, imported, or locally overridden.
+The unified Settings panel owns provider, account, model, and permission configuration. It does not re-own Personas or Skills.
 
+ContractRef: ContractName:Plans/Skills_System.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/Models_System.md
+
+Required surfaces:
+- provider class disclosure: `account-backed`, `API-backed`, `no-key`
+- requested versus effective account/provider state
+- support-tier and health/last-failure disclosure for web-capable providers
+- credit/cost warning UI for high-cost provider-native research paths
+- Firecrawl disclosure includes Provider ID `firecrawl`, Display name `Firecrawl`, Default priority below Exa, Tavily; above DDG (user-adjustable), and Default state disabled (requires API key or self-hosted URL).
+- Firecrawl configuration surfaces preserve `proxy_mode` with `basic`, `enhanced`, and `auto`, and disclose the self-hosted Fire Engine limitation note.
+
+ContractRef: ContractName:Plans/Tools.md#10-firecrawl-provider-integration, ContractName:Plans/Models_System.md
+
+Rules:
+- requested versus effective provider state stays separate in Settings and inspectors
+- Keep this subsection tied to Plans/Tools.md#10. Firecrawl provider integration and Plans/Tools.md#11.1 Provider classes, defaults, and fallback disclosure
 #### 7.4.5 Workspace, editor, and remote-host settings
 
 Settings MUST expose durable configuration for workspace behavior, editor policies, and remote editing.
@@ -186,31 +202,43 @@ This subsection owns:
 - runtime-output routing preferences for Problems, Output, Ports, and Debug Console
 
 #### 7.4.7 Agent-Config panel specification
+Agent Config owns Personas and Skills. Settings owns system-level dependencies such as authentication, models, permissions, rules, and health.
 
-The **Agent-Config** panel is the primary surface for provider, model, and account configuration across the application.
+ContractRef: ContractName:Plans/Skills_System.md, ContractName:Plans/Personas.md
 
-Purpose:
-- centralize provider onboarding, account selection, model defaults, quota visibility, and connection validation
-- make requested vs effective runtime configuration inspectable without opening multiple unrelated tabs
+Owner-routing rules:
+- Agent Config owns: agent-behavior artifacts (personas, skills)
+- Settings keeps: system-level dependencies (authentication, models, permissions, rules, health)
+- Agent Config is NOT replacement for Settings
 
-Layout:
-- **Left sidebar:** provider list with badges for health, default-provider marker, and quick-add provider action
-- **Main area:** selected provider detail view containing accounts, model defaults, connection controls, and usage information
+Required Agent Config surfaces:
+- Persona selection and editing
+- a dedicated Skills tab inside Agent Config rather than a Settings-owned management surface
+- skill registry with source vocabulary `bundled`, `pm_enhanced`, `catalog_installed`, `manual_import`, `project_local`, `global_local`, `shadowed`
+- readiness vocabulary `ready`, `ready_with_warnings`, `invalid`, `shadowed`, `disabled`
+- visible source/readiness badges, including `pm_enhanced`, in the management table
+- invocation/help affordances that align with `/skill`
 
-Required sections in order:
-1. **Provider List** — all configured providers, enabled/disabled state, account count, connection-health badge
-2. **Account Details** — add/remove account, account nickname, entitlement/billing context, credential rotation entrypoint, last validation result
-3. **Model Selection** — default model, per-role model assignments, context-limit disclosure, fallback model chain
-4. **Usage Summary** — recent token/cost usage, quota bucket, rate-limit episodes, billing/entity attribution summary
-5. **Connection Health** — test connection action, last successful validation time, degraded reason, retry guidance, capability summary
+V1 import rules:
+- file-browser import is supported in MVP
+- drag-and-drop skill folders/files is supported in MVP
+- No remote URL/git import in v1
+- import/install flows stay within the supported skill surfaces defined by `Plans/Skills_System.md`
+Additional invocation rules:
+- `/skill <skill_name> [args]`, `/skill with no args lists available skills`, the Skills panel, and Natural language all converge on the same `invoke_skill` contract.
+- No subcommand family for MVP.
+- `deny`, `once`, `for session`, and `always` remain the approval ladder where skill or web actions require approval.
+- question default `allow` only when HITL is available.
+- `read_only` and `plan` keep read-only web tools ask-gated rather than silently denying them.
 
-Required features:
-- add/remove account
-- set default model
-- view usage
-- test connection
-- configure rate limits and request-concurrency preferences
+ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Skills_System.md
 
+Rules:
+- Skills panel, /skill, and Natural language converge on the same invoke_skill contract
+- deny/once/for session/always remain the approval ladder where skill or web actions require approval
+- question default allow only when HITL is available
+- read_only and plan keep read-only web tools ask-gated
+- Keep this panel anchored to Plans/Skills_System.md#4.3 `skill` tool and Plans/UI_Command_Catalog.md#2.7 Chat slash commands (reserved)
 #### 7.4.8 Container, Docker, and Kubernetes settings
 
 Settings MUST expose a dedicated container/runtime settings area for Docker and Kubernetes-related defaults.
@@ -268,8 +296,6 @@ The unified Settings surface uses a two-level navigation model: category headers
 | Docker | Docker connection, default registry, resource limits |
 | Kubernetes | Cluster configuration, context management |
 | Budget | Token budget, cost limits, alerts |
-| Personas | Persona management, defaults per mode |
-| Skills | Skill management, enable/disable |
 | Plugins | Plugin management, marketplace |
 | Interview | Interview preferences, round caps, detail level |
 | Memory | Memory/context management, retention policies |
@@ -530,6 +556,20 @@ Required behavior summary:
 - active and historical child-run / subagent activity list with status, owning thread, target, and outcome
 - clear distinction between running, queued, blocked, remediation, and completed activity
 - direct links to related chat messages, artifacts, investigation records, and review bundles
+
+### 7.19A Dedicated log and audit inspector
+
+PM ships two complementary audit surfaces: lightweight in-thread transparency and a dedicated searchable log/audit inspector.
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md
+
+Inspector requirements:
+- summary rows use a 5-item compact format: operation label, short query/url/task preview, success/failure status, fallback note when present, and source/page counts when present
+- full payload dereference is on-demand only; the inspector does not eagerly expand large refs or blobs
+- supported interactions include filter by event family, search by tool or operation, time-range queries, drill-down, and export
+- `logsearch` and `logread` have explicit GUI surfacing rather than remaining CLI-only affordances
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Tools.md
 
 #### 7.19.1 Embedded document pane
 

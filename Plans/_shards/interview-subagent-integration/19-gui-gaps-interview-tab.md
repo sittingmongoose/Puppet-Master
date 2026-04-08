@@ -50,19 +50,18 @@ Button order is `[Resume] [Pause] [Cancel]`.
 - interrupted runs restore the same CTA set so the user can resume from checkpoint or start over
 
 ### Runtime identity visibility
-For each interview stage, the UI MUST display:
-- `requested_persona_id`
-- `effective_persona_id`
-- `selection_reason`
-- `provider`
-- `model`
 
-ContractRef: ContractName:Plans/Personas.md, ContractName:Plans/Prompt_Pipeline.md
+Interview-visible runtime identity preserves the shared owner fields and does not create local aliases.
 
-If a requested control becomes unavailable after capability filtering, the UI shows it as skipped or disabled with a reason; Interview MUST NOT hide runtime substitutions that would be visible on Builder or Assistant surfaces.
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Personas.md
 
-ContractRef: ContractName:Plans/Personas.md, ContractName:Plans/assistant-chat-design.md
-
+Required fields:
+- `requested_persona`
+- `effective_persona`
+- `requested_account_binding`
+- `operational_identity`
+- `effective_account_label`
+- `effective_provider_identity`
 ### Interview execution-affecting config wiring
 `InterviewGuiConfig` and `InterviewOrchestratorConfig` MUST expose and use the following execution-affecting fields:
 

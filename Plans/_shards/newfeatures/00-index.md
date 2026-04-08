@@ -12,3 +12,4 @@ Canonical source: [Plans/newfeatures.md](../../newfeatures.md)
 - [04-executive-summary.md](04-executive-summary.md) — ## Executive Summary
 - [05-high-level-feature-themes.md](05-high-level-feature-themes.md) — ## High-level feature themes
 - [06-24-browser-preview-and-code-context-integration.md](06-24-browser-preview-and-code-context-integration.md) — ## 24. Browser preview and code-context integration
+- [07-web-tools-provider-routing-and-shared-ui-alignment-addendum-2026-04-04.md](07-web-tools-provider-routing-and-shared-ui-alignment-addendum-2026-04-04.md) — ## Web tools, provider routing, and shared UI alignment addendum (2026-04-04)

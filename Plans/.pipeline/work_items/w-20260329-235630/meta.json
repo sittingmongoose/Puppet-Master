@@ -1,11 +1,19 @@
 {
   "work_id": "w-20260329-235630",
   "title": "Firecrawl Gap Analysis + Lost-Spec Recovery",
-  "status": "active",
+  "status": "packetized",
   "mode": "research",
   "created_at_utc": "2026-03-29T23:56:30Z",
-  "updated_at_utc": "2026-03-30T20:34:00Z",
-  "tags": ["web-tools", "firecrawl", "lost-spec-recovery", "cross-validation"],
+  "updated_at_utc": "2026-04-07T20:49:23.753Z",
+  "tags": [
+    "web-tools",
+    "firecrawl",
+    "lost-spec-recovery",
+    "cross-validation"
+  ],
   "depends_on": [],
-  "notes": "Third audit complete. All 51 AUDIT3-FIX patches applied. 55 AUDIT3-FIX markers total."
+  "notes": "Reconciliation/Coverage pass for run r-20260329-235630-08 consumed canonical_obligations.v3, doc_obligation_map.v1, the blocked ledger fidelity report, and the fidelity recovery plan into a 12-doc packet target set: 9 MUST CHANGE (Commands_System, Contracts_V0, FinalGUISpec, LSPSupport, Permissions_System, Tools, UI_Command_Catalog, assistant-chat-design, storage-plan) and 3 MUST RECONCILE (Models_System, Skills_System, newtools). 2 docs are verify-only and stay out of the primary packet (Section15_MVP_Promoted_Features_Spec, MCP_Integration). The current research_packet.json covers all 12 active impacted docs but is over-scoped by stale extra Plans/Section15_MVP_Promoted_Features_Spec.md; Plans/MCP_Integration.md is not missing and should remain verify-only unless intentionally retained as a no-op check.",
+  "run_id": "r-20260329-235630-13",
+  "run_prefix": "r-20260329-235630",
+  "next_run_seq": 14
 }

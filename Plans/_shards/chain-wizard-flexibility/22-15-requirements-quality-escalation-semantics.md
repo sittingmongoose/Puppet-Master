@@ -91,14 +91,14 @@ The maximum clarification cycles for one wizard instance is **3**.
 ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Contracts_V0.md
 
 ### 15.6 Shared questionnaire alignment
-Clarification flows consume the shared question system used by Assistant Chat and Interview rather than a wizard-only prompt shape.
 
-Rules:
-- a clarification request may represent one question or a multi-question questionnaire
-- `question_ids[]` remain the canonical stable identifiers for clarification items across report, wizard, and thread surfaces
-- required questions block final submit
-- dismiss pauses the clarification flow rather than fabricating a successful answer set
-- resume behavior restores the outstanding questionnaire state or the persisted resolved outcome
+Wizard clarification uses the shared `question` contract rather than a wizard-local prompt schema.
 
-ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Contracts_V0.md
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/assistant-chat-design.md
 
+Alignment rules:
+- one clarification request may hold one question or many
+- `question_id` remains stable across thread, wizard, and stored report state
+- `source?` may preserve `option`, `other`, or `freeform`
+- required questions gate submit
+- dismiss pauses and resume restores the outstanding questionnaire from PM-managed draft state

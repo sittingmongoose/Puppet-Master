@@ -3,65 +3,124 @@
 Activity transparency uses a shared inline operation-card family rather than isolated one-off widgets.
 
 ### 13.1 Operation-card family
-Activity transparency uses a shared inline operation-card family rather than isolated one-off widgets.
+Operation cards provide a shared anatomy for terminal, web, diff, search, and other lifecycle-bearing runtime activities.
 
-**Closed card taxonomy:**
-- `command_activity`
-- `web_activity`
-- `files_explored`
-- `files_changed`
-- `code_diff`
-- `subagent_activity`
-- `blocked_notice`
-- `approval_request`
-- `clarification_request`
-- `investigation_context`
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/UI_Command_Catalog.md
 
-**Shared card rules:**
-- Every card has a stable `card_id`, card type, status badge, created/updated timestamps, and a primary focus/open action appropriate to the card type.
-- Cards are inline with the assistant narrative, not a parallel navigation system.
-- Compact summaries may be terse, but every card expands into structured details instead of free-form prose only.
-- Cards link to owner surfaces through canonical route/open contracts rather than feature-local payloads.
+Shared state model:
+- one card exists per command or operation invocation
+- retry creates a new card rather than mutating the prior card in place
+- the card-level state machine is `pending`, `running`, `completed`, `failed`, `cancelled`, or `blocked`
+- underlying process/session taxonomies may still emit `starting` and `exited`; card consumers normalize those into the card-level state machine
+- `blocked` is a card-level state entered from `running` and returned to `running` on unblock
+- `disconnected` and `restoring` are agent-session states and surface as card-level `blocked` with `blocked_reason_code`
+- simple read/grep/glob results remain inline text, not cards
+- badge is always visible
+- running output may promote out of inline comfort based on heuristic thresholds
 
-**Family-specific rules:**
-- `blocked_notice` surfaces blocked-family identity, `blocked_reason_code`, and canonical `allowed_action_ids[]`; it does not invent chat-local recovery enums.
-- `approval_request` renders a pending permission decision with direct actions that map to the canonical approval semantics (for example `Allow Once`, allowed scope/session reuse when policy permits, and `Deny`). Permission resolution logic stays owned by `Plans/Permissions_System.md`.
-- `clarification_request` is the structured card form of a question or missing-input requirement; it must not be hidden as ordinary assistant narration.
-- `investigation_context` cards summarize investigation phase, target, verification/revalidation state, and primary pivots into the full Investigation Context and Runtime Artifacts surfaces; they are summaries, not raw artifact dumps.
-- Existing command/web/file/subagent cards continue to use the same skeleton and must not fork the family contract.
+Preview and copy rules:
+- preview caps stay aligned at `5` collapsed, `15` expanded, and `50` hard cap where applicable
+- search, web, and diff cards keep no-copy behavior for the rendered result block
+- fenced code blocks and explicit command fields keep their own always-visible copy affordances
+- family-specific secondary actions may appear, but they do not erase the shared card skeleton
 
-ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/FileManager.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/Tools.md
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Tools.md
 
+Rules:
+- status_badge_state
+- card-level blocked is entered from running and returned to running on unblock
+- Keep terminal/web/diff card consumers pointed at this shared card-family owner section
 ### 13.2 Web activity and provenance
-Assistant Chat uses distinct web activity labels:
-- `Searching Web`
-- `Extracting Site`
-- `Researching Web`
-- `Crawling Site`
-- `Mapping Site`
-- `Reading Site`
+#### Answer construction and citation locality
+
+When the assistant answers from web-derived material, it follows search-then-read behavior rather than answering from raw search snippets alone.
+
+ContractRef: ContractName:Plans/storage-plan.md#4.4 Activity transparency payloads, ContractName:Plans/Contracts_V0.md#3.4 Tool-specific payload extensions, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md#3.18 Built-in Browser and Click-to-Context
 
 Rules:
-- `Reading Site` is reserved for PM-native Site Reader work.
-- Search/result provenance MUST distinguish search snippets, extracts, site-reader output, research synthesis, crawl results, and map results.
-- The final Sources block MUST deduplicate repeated URLs while preserving the strongest provenance badge per source.
-- Provider fallback or support-tier changes MUST be visible in the related activity card.
+- search may shortlist candidate sources, but the assistant reads the chosen result before using it as final-answer evidence
+- final citations come from the actual read path rather than raw search snippets alone
+- raw search snippets alone are not enough provenance for the final answer
+- Site Reader v1 requires real browser-interaction capability, not static HTTP fetch only
+- `Reading Site` is reserved for the PM-native Site Reader path
+- provider-routed fetch must not reuse the reserved native Site Reader identity
+- provider-routed fetch or read still keeps requested/effective adapter disclosure so provenance, routing, and answer quality remain separately inspectable
+- if no candidate provider can execute the requested operation, chat surfaces the capability-unavailable branch explicitly instead of implying silent fallback
+- cost-aware selection remains visible when routing prefers a lower-cost viable path
+- PM MUST NOT silently switch between self-hosted Firecrawl and hosted/cloud Firecrawl
+- hosted/provider-native research paths surface explicit credit/billing disclosure, including `>100 credits` research warnings and `500 credits` deep-research warnings where those paths apply
+- self-hosted Firecrawl remains visibly disclosed as non-hosted billing
+- `changeTracking` must not silently disappear from surfaced web results; if PM retires it from MVP, the owner docs must say so explicitly
 
-ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Permissions_System.md
+In-thread web transparency is lightweight and complements, but does not replace, the dedicated audit/log surface.
 
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md
+
+Activity labeling rules:
+- `Searching Web` is the generic search family label
+- `Reading Site` is reserved for the PM-native Site Reader path
+- provider-routed or provider-fallback activity includes requested/effective adapter disclosure plus `provider_fallback_summary` when fallback occurred
+
+Thread-visible fields:
+- `tool_use_id`
+- `adapter_id`
+- `web_operation`
+- `requested_adapter_id`
+- `effective_adapter_id`
+- `adapter_selection_reason`
+- `warnings_count`
+- `duration_ms`
+- `error_code?`
+- `error_message?`
+- `warnings?`
+- `timestamp`
+- `cached`
+- `provenance_badge?`
+- `projection_freshness`
+- `projection_health`
+- `sources_ref`, `content_ref`, `map_ref`, `answer_summary_ref`
+
+Blocked and denied web attempts still bind to the shared event families and display `blocked_reason_code`, `allowed_action_ids[]`, `denial_reason_code`, `denial_source`, and `suggested_recovery_action` where present. Headless/HITL-unavailable uses `status: "unavailable"` rather than GUI-only recovery text.
+- exact blocked_reason_code values: `permission_denied`, `network_error`, `provider_unavailable`, `headless_unavailable`, `timeout`
+
+Additional canonical rules:
+- chat may shortlist with search but must read chosen pages before citing them as final evidence
+- blocked and denied web episodes bind to the shared event family instead of a chat-local recovery shape
+- changeTracking must not silently disappear from surfaced web results
+- headless/HITL-unavailable uses status unavailable instead of GUI-only recovery prose
+- Point ContractRef set at ContractName:Plans/storage-plan.md#4.4 Activity transparency payloads, ContractName:Plans/Contracts_V0.md#3.4 Tool-specific payload extensions, and ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md#3.18 Built-in Browser and Click-to-Context
 ### 13.3 Bash and terminal ownership
-Assistant Chat may preview shell-backed work inline, but the canonical interactive runtime remains the terminal workspace.
+Chat embeds a lightweight terminal preview but does not become a second interactive terminal surface.
 
-ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Run_Modes.md
+ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md
+
+Ownership rules:
+- Shell owns interactive state; chat owns preview+audit.
+- Commands requiring stdin/TTY start Terminal immediately.
+- Background/watch/server actions create terminal-owned session identity.
+- One-shot commands remain chat-inline by default, but non-interactive work may still promote if it becomes long-running.
+- Every promoted command card binds to stable terminal session identity.
+- Large payloads store full data behind refs/blobs.
+
+Command-card model:
+- the mini terminal preview is read-only and non-interactive inside chat
+- `Open in Terminal`, `Show Terminal`, `Rerun in Terminal`, and `Detach/Pop-Out` remain the canonical terminal actions
+- `Open in Terminal` and `Show Terminal` must focus the same live session
+- `Rerun in Terminal` launches a fresh terminal execution and therefore binds to a new `terminal_session_id`
+- after promotion, chat stops owning the full transcript
+- inline cards persist across thread reload and re-render from persisted metadata
+- search and diff do not stream progressively
+
+Reveal and focus behavior:
+- if the referenced terminal session is already visible, `Open in Terminal` and `Show Terminal` simply focus it
+- if the session is hidden inside another pane, tab, or section, the shell reveals the existing pane or tab before creating anything new
+- if only historical state remains, the card opens that historical shell receipt and presents explicit recovery actions instead of silently creating a replacement session
+- attach failure recovery differs for live process, ended process, and inline-only completed command
+
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/Tools.md, ContractName:Plans/storage-plan.md
 
 Rules:
-- one inline command card still corresponds to one observed command invocation or session reference.
-- `Open in Terminal` and `Show Terminal` resolve to the exact referenced terminal session, workgroup, and leaf pane when that linkage exists.
-- chat owns compact audit and preview receipts; the bottom runtime terminal workspace owns the canonical PTY layout and interaction state.
-- the bottom runtime workspace uses workgroups and subtabs rather than one flat strip of unrelated tabs.
-- editor-embedded terminal panels are secondary presentations of existing terminal leaf panes and do not become independent chat-owned runtimes.
-
-ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Wiring_Matrix.md
+- Keep terminal command consumers anchored to Plans/UI_Command_Catalog.md#Terminal session and layout commands and Plans/FinalGUISpec.md#15.1 Terminal operation card widget
 ### Command-card model
 Command cards are transcript-adjacent summaries rather than a second shell implementation.
 

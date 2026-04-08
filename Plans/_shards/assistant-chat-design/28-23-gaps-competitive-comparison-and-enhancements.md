@@ -66,7 +66,7 @@ All of the following are **MVP requirements** and are already reflected in the m
 10. **Session share** -- §11: produce a shareable bundle (messages + metadata, no secrets).
 11. **HITL: new thread spawned** -- §21: CtA on Dashboard; a **new thread** is spawned with an appropriate name for the HITL prompt.
 12. **No project selected** -- §1: many chat features do not work when no project is selected; only application rules apply.
-13. **Clear queue** -- §4: user can clear the entire queue.
+13. **Queued messages** -- §4: two-slot FIFO queue with edit/send-now/cancel controls; no clear-queue action.
 14. **Keyboard shortcuts** -- §4: chat actions reachable via shortcuts and command palette (`newfeatures.md` §11).
 15. **Streaming** -- §12: response streams when platform supports it; normalized stream; fallback to batch.
 16. **Paste / drag-drop** -- §7: paste and drag-drop into composer supported.

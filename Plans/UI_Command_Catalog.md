@@ -2,7 +2,6 @@
 
 > **Compliance:** This document follows `Plans/DRY_Rules.md` and references SSOT contracts in `Plans/Contracts_V0.md`. Naming: “Puppet Master” only. No open questions; deterministic defaults per `Plans/Decision_Policy.md`.
 
-
 <!--
 PUPPET MASTER -- UI COMMAND SSOT
 
@@ -81,9 +80,9 @@ ContractRef: ContractName:Plans/UI_Wiring_Rules.md, SchemaID:Wiring_Matrix.schem
 #### `cmd.github.connect`
 Start GitHub OAuth device-code flow.
 
-- **Args schema:** `{}` (no args; host/scope are locked by Spec Lock).  
+- **Args schema:** `{}` (no args; host/scope are locked by Spec Lock).
   ContractRef: SchemaID:Spec_Lock.json#locked_decisions.github_operations, SchemaID:Spec_Lock.json#locked_decisions.auth_model
-- **Expected events:** `auth.github.device_code.issued`, `auth.github.token.polling`, terminal: `auth.github.authenticated` or `auth.github.failed`.  
+- **Expected events:** `auth.github.device_code.issued`, `auth.github.token.polling`, terminal: `auth.github.authenticated` or `auth.github.failed`.
   ContractRef: ContractName:Plans/GitHub_API_Auth_and_Flows.md
 - **Affected surfaces:** Settings > GitHub/Auth, Setup flow, Dashboard auth status.
 
@@ -92,9 +91,9 @@ ContractRef: UICommand:cmd.github.connect
 #### `cmd.github.disconnect`
 Disconnect and delete token (credential store).
 
-- **Args schema:** `{}`  
+- **Args schema:** `{}`
   ContractRef: ContractName:Contracts_V0.md#AuthState
-- **Expected events:** `auth.github.disconnected`.  
+- **Expected events:** `auth.github.disconnected`.
   ContractRef: ContractName:Plans/GitHub_API_Auth_and_Flows.md
 - **Affected surfaces:** Settings > GitHub/Auth, Dashboard auth status.
 
@@ -129,7 +128,7 @@ These IDs are required by `Plans/LSPSupport.md`.
 ContractRef: ContractName:Plans/Tools.md
 
 **Expected events (minimum):**
-- `tool.invoked` (tool_name = `lsp`) or `tool.denied` (if policy blocks).  
+- `tool.invoked` (tool_name = `lsp`) or `tool.denied` (if policy blocks).
   ContractRef: ContractName:Contracts_V0.md
 
 **Affected surfaces (minimum):** File editor, Problems panel, Chat (when LSP-in-chat is enabled).
@@ -365,33 +364,33 @@ Browser, terminal, and dev-session commands share one shell/runtime interaction 
 ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/storage-plan.md
 
 #### Terminal session and layout commands
+Terminal command identities remain distinct even when they target the same session.
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FinalGUISpec.md
+
 | Command ID | Payload | Domain event(s) | UI surface(s) |
 |---|---|---|---|
-| `cmd.terminal.show` | `{ project_id, workspace_tab_id?, terminal_session_id?, terminal_workgroup_id?, terminal_leaf_pane_id?, terminal_section_id?, editor_terminal_panel_id? }` | layout/UI state only | chat command cards, command palette, output/problems/ports linkbacks |
-| `cmd.terminal.new_tab` | `{ project_id, workspace_tab_id, terminal_section_id?, cwd?, shell_profile?, title? }` | `terminal.session.created`, `terminal.layout.changed` | terminal header, command palette, toolbar |
-| `cmd.terminal.activate_workgroup` | `{ terminal_workgroup_id }` | layout/UI state only | bottom workgroup strip |
-| `cmd.terminal.activate_subtab` | `{ terminal_workgroup_id, terminal_leaf_pane_id }` | layout/UI state only | subtab row |
-| `cmd.terminal.reorder_workgroup` | `{ terminal_section_id, from_index, to_index }` | `terminal.layout.changed` | bottom workgroup strip |
-| `cmd.terminal.reorder_subtab` | `{ terminal_workgroup_id, source_leaf_pane_id, target_leaf_pane_id }` | `terminal.layout.changed` | subtab row |
-| `cmd.terminal.split_pane` | `{ terminal_workgroup_id, source_leaf_pane_id, split:'horizontal'|'vertical', cwd?, shell_profile?, title? }` | `terminal.session.created`, `terminal.layout.changed` | terminal pane chrome |
-| `cmd.terminal.add_leaf` | `{ terminal_workgroup_id, cwd?, shell_profile?, title? }` | `terminal.session.created`, `terminal.layout.changed` | bottom strip action cluster |
-| `cmd.terminal.embed_in_editor` | `{ terminal_workgroup_id, terminal_leaf_pane_id, editor_target_id? }` | `terminal.layout.changed` | editor drop host, command palette |
-| `cmd.terminal.remove_from_editor` | `{ editor_terminal_panel_id }` | `terminal.layout.changed` | editor terminal panel chrome |
-| `cmd.terminal.undock_all_from_editor` | `{ project_id, workspace_tab_id }` | `terminal.layout.changed` | editor terminal stack chrome |
-| `cmd.terminal.focus_session` | `{ terminal_session_id }` | layout/UI state only | command cards, output/problems/ports linkbacks |
-| `cmd.terminal.move_tab_to_section` | `{ terminal_tab_id, target_section_id }` | `terminal.layout.changed` | terminal tab context menu |
-| `cmd.terminal.rename_tab` | `{ terminal_tab_id, title }` | `terminal.layout.changed` | terminal tab chrome |
-| `cmd.terminal.pin_tab` | `{ terminal_tab_id, pinned }` | `terminal.layout.changed` | terminal tab chrome |
-| `cmd.terminal.close_pane` | `{ terminal_leaf_pane_id, termination_policy? }` | `terminal.layout.changed`, `terminal.session.state_changed` | terminal pane chrome |
-| `cmd.terminal.close_tab` | `{ terminal_tab_id, termination_policy? }` | `terminal.layout.changed`, `terminal.session.state_changed` | terminal tab chrome |
-| `cmd.terminal.clear_scrollback` | `{ terminal_session_id }` | `terminal.session.state_changed` | terminal chrome, command palette |
-| `cmd.terminal.restart_session` | `{ terminal_session_id }` | `terminal.session.restarting`, `terminal.session.created` | terminal chrome, recovery banner |
-| `cmd.terminal.terminate_session` | `{ terminal_session_id }` | `terminal.session.terminating`, `terminal.session.exited` | terminal chrome |
-| `cmd.terminal.kill_session` | `{ terminal_session_id }` | `terminal.session.killed` | terminal chrome, recovery banner |
-| `cmd.terminal.detach_section` | `{ terminal_section_id }` | `terminal.layout.changed` | terminal section chrome, command palette |
-| `cmd.terminal.reattach_section` | `{ terminal_section_id, dock_target? }` | `terminal.layout.changed` | detached terminal window, command palette |
+| `cmd.terminal.show` | `{ terminal_session_id?, command_context_ref?, create_if_missing?: boolean }` | layout/UI state only | Chat, inline operation cards, terminal tabs |
+| `cmd.terminal.restart_session` | `{ command_context_ref, terminal_session_id? }` | `terminal.session.restarting`, `terminal.session.started` | Chat, inline operation cards, terminal tabs |
+| `cmd.terminal.detach_session` | `{ terminal_session_id }` | `terminal.session.detached` | Chat, terminal tabs, detached terminal surface |
 
-ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/storage-plan.md
+Rules:
+- `Open in Terminal` and `Show Terminal` both resolve to `cmd.terminal.show`; they differ only by launching surface and whether a terminal must be created or merely revealed
+- `Rerun in Terminal` resolves to `cmd.terminal.restart_session` and creates a fresh execution with a new `terminal_session_id`
+- `Detach/Pop-Out` moves the bound terminal session into a detached surface without rerunning the command
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Wiring_Matrix.md
+Additional continuity rules:
+- `Open in Terminal` and `Show Terminal` must focus the same live session.
+- after promotion, chat stops owning the full transcript.
+- inline cards persist across thread reload and re-render from persisted metadata.
+- search and diff do not stream progressively.
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md
+
+Additional canonical rules:
+- Open in Terminal and Show Terminal normalize to reveal the existing live session rather than creating a new runtime identity
+- Keep terminal command catalog behavior anchored to Plans/assistant-chat-design.md#13.3 Bash and terminal ownership
 #### Dev-session commands
 | Command ID | Payload | Domain event(s) | UI surface(s) |
 |---|---|---|---|
@@ -414,8 +413,6 @@ ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Wir
 ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/storage-plan.md
 
 Rules:
-- `Open in Terminal` and `Show Terminal` normalize to `cmd.terminal.show`; they do not imply `cmd.terminal.new_tab`
-- `cmd.terminal.restart_session` replaces runtime identity and rebinds the chosen pane or tab to a new `terminal_session_id`
 - `cmd.terminal.clear_scrollback` preserves runtime identity
 - close commands are layout actions unless `termination_policy` requests runtime shutdown
 - `cmd.dev.show_output`, `cmd.dev.show_problems`, and `cmd.dev.show_ports` reveal surfaces linked to the owning `dev_session_id`
@@ -427,7 +424,6 @@ ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Sec
 | Command ID | Parameters | Behavior |
 |---|---|---|
 | `cmd.chat.copy_message` | `{ thread_id, message_id }` | Copy the rendered message content. |
-| `cmd.chat.delete_message` | `{ thread_id, message_id }` | Delete a user-authored message where allowed by policy. |
 | `cmd.chat.retry_message` | `{ thread_id, message_id }` | Re-run the selected failed/cancelled assistant turn. |
 | `cmd.chat.rewind` | `{ thread_id, target_message_id }` | Rewind conversation history only; does not restore files. |
 | `cmd.chat.revert` | `{ thread_id, target_message_id? }` | Restore persisted file mutations from one assistant turn; omitted `target_message_id` resolves to the latest assistant turn in the thread with persisted file mutations. |
@@ -457,77 +453,54 @@ Revert rules:
 ContractRef: ContractName:Plans/Crosswalk.md, ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md
 
 ### 2.7 Chat slash commands (reserved)
+The chat consumer catalog mirrors the reserved built-in slash-command set owned by `Plans/Commands_System.md`.
 
-#### 2.7.1 Worktree slash command aliases
+ContractRef: ContractName:Plans/Commands_System.md#7. Reserved built-in slash commands, ContractName:Plans/assistant-chat-design.md#5.2 `/web` and `/skill`, ContractName:Plans/Skills_System.md#4.3 `skill` tool
 
-These slash commands map directly to the `cmd.chat.worktree.*` commands above, providing keyboard-accessible entry points from the chat input.
+Reserved set:
+`/new`, `/model`, `/effort`, `/mode`, `/export`, `/compact`, `/stop`, `/resume`, `/web`, `/skill`
 
-| Slash command | Maps to | Notes |
-|---|---|---|
-| `/worktree create` | `cmd.chat.worktree.create` | Same when clause |
-| `/worktree remove` | `cmd.chat.worktree.remove` | Same when clause |
-| `/worktree bind` | `cmd.chat.worktree.bind_existing` | Same when clause |
-| `/worktree merge` | `cmd.chat.worktree.merge` | Same when clause |
-| `/worktree pr` | `cmd.chat.worktree.create_pr` | Same when clause |
-| `/worktree open` | `cmd.chat.worktree.open_files` | Same when clause |
+Web family command identities:
+- `/web search <query>` -> `cmd.chat.web.search`
+- `/web fetch <url>` -> `cmd.chat.web.fetch`
+- `/web extract <url>` -> `cmd.chat.web.extract`
+- `/web research <task>` -> `cmd.chat.web.research`
+- `/web crawl <url>` -> `cmd.chat.web.crawl`
+- `/web map <url>` -> `cmd.chat.web.map`
 
-Slash command autocompletion shows available subcommands filtered by current when-clause state. Unavailable commands appear grayed with tooltip explaining why (e.g., "No worktree bound to this thread").
+Dispatcher parity:
+- "search the web for X" → `websearch`
+- "extract this page" → `webextract`
+- "read this URL" → `webfetch`
+- "research topic" → `webresearch`
+- Reading intents MUST resolve to `webfetch`, not `websearch`
 
-ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Commands_System.md
+ContractRef: ContractName:Plans/Tools.md#12. Web tool routing algorithm, ContractName:Plans/assistant-chat-design.md#5.5 Dispatcher parity
 
+Consumer alignment:
+- keep `/cancel` only as a deprecation alias to `/stop`
+- keep `/clear` as removed legacy shorthand rather than a live reserved command
+- keep `/skill` as discovery or invocation behavior rather than a panel-open alias
+- reserved commands shown as non-editable in catalog
+- deprecated aliases shown distinctly from active commands
+- `/web` remains discoverable in catalog
+- subcommand is required for execution, URL normalization applies, and parse failure shows usage
 
-Reserved Assistant Chat slash commands use stable canonical UI command IDs.
-
-| Canonical UI command ID | Slash syntax | Payload | Primary outcome | Surface |
-|---|---|---|---|---|
-| `cmd.chat.new` | `/new` | `{}` | `chat.thread.created` | Assistant chat |
-| `cmd.chat.model` | `/model` | `{ model_id }` | session model state update | Assistant chat |
-| `cmd.chat.effort` | `/effort` | `{ level }` | session effort state update | Assistant chat |
-| `cmd.chat.mode` | `/mode` | `{ mode }` | session mode state update | Assistant chat |
-| `cmd.chat.export` | `/export` | `{ format? }` | `chat.thread.exported` | Assistant chat |
-| `cmd.chat.compact_context` | `/compact` | `{ thread_id }` | `context.compaction.started`, `context.compaction.completed` | Assistant chat |
-| `cmd.chat.stop` | `/stop` | `{ thread_id? }` | stream stop / run stop behavior | Assistant chat |
-| `cmd.chat.resume` | `/resume` | `{ thread_id? }` | runtime recovery or resume action | Assistant chat |
-| `cmd.chat.rewind` | `/rewind` | `{ thread_id, target_message_id }` | thread rewind UI / runtime action | Assistant chat |
-| `cmd.chat.revert` | `/revert` | `{ thread_id, target_message_id? }` | restore/revert workflow | Assistant chat |
-| `cmd.chat.share` | `/share` | `{ thread_id, format? }` | share/export flow | Assistant chat |
-| `cmd.chat.settings` | `/settings` | `{}` | navigation only | Settings panel |
-| `cmd.chat.doctor` | `/doctor` | `{}` | `doctor.run.started` | Doctor page |
-| `cmd.chat.help` | `/help` | `{}` | UI help display | Assistant chat |
-| `cmd.chat.web.search` | `/web search` | `{ query }` | web search activity | Assistant chat |
-| `cmd.chat.web.extract` | `/web extract` | `{ url }` | site extraction activity | Assistant chat |
-| `cmd.chat.web.research` | `/web research` | `{ task }` | research activity | Assistant chat |
-| `cmd.chat.web.crawl` | `/web crawl` | `{ url }` | crawl activity | Assistant chat |
-| `cmd.chat.web.map` | `/web map` | `{ url }` | map activity | Assistant chat |
-| `cmd.chat.skill.invoke` | `/skill` | `{ skill_ref, arguments? }` | skill invocation/load | Assistant chat |
-
-ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Commands_System.md, ContractName:Plans/Tools.md
-
-Mode rules:
-- `cmd.chat.mode.payload.mode` uses the canonical Assistant workflow values `ask | agent | debug | plan | deep_plan`
-- `/mode debug` is the canonical slash-path into Debug Mode; there is no separate `/debug` slash family in MVP
-- `/resume` remains the canonical resume path for blocked or recoverable Debug investigations; PM must not invent a parallel debug-only resume slash command
-- `/cancel` is an alias path to `cmd.chat.stop`; it does not own a separate canonical command ID
-- `/clear` is not part of the canonical reserved Assistant Chat command set
-- reserved slash commands MUST remain aligned with `Plans/assistant-chat-design.md` and MUST NOT be treated as user-overridable commands
-
-ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Commands_System.md
-
-#### Debug investigation action commands
-
-| Command ID | Payload | Domain event(s) | UI surface(s) |
-|---|---|---|---|
-| `cmd.chat.open_debug_target_picker` | `{ thread_id, project_id? }` | layout/UI state only | Assistant chat, command palette |
-| `cmd.chat.export_investigation_bundle` | `{ investigation_id, redaction_profile? }` | `debug.investigation.exported` | Assistant chat, Context Detail Pane, Artifacts |
-| `cmd.chat.revoke_investigation_item` | `{ investigation_id, item_id }` | `debug.investigation.context_item_state_changed` | Assistant chat, Context Detail Pane |
+Skill discovery and invocation paths:
+- `/skill <skill_name> [args]` routes to `invoke_skill`
+- /skill with no args lists available skills and exposes the same discovery and guidance surface as the Skills panel
+- No subcommand family for MVP
+- Skills panel, `/skill`, and Natural language converge on the same runtime contract
 
 Rules:
-- `cmd.chat.export` continues to export the thread; `cmd.chat.export_investigation_bundle` exports only the active or selected investigation bundle
-- `cmd.chat.revoke_investigation_item` changes Investigation Context visibility state and future prompt eligibility; it does not delete historical runtime artifacts
-- `cmd.chat.open_debug_target_picker` reveals the canonical target-binding flow rather than inventing a thread-local freeform attach path
-
-ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/Wiring_Matrix.md
-
+- slash prototype
+- stable command ID
+- subcommand-required parsing
+- invoke_skill
+- bare /web shows help/autocomplete only
+- do not flatten /web into separate top-level slash families
+- /skill remains discovery/invocation rather than a panel-open alias
+- Keep command IDs aligned with Plans/Commands_System.md#7. Reserved built-in slash commands, Plans/assistant-chat-design.md#5.2 `/web` and `/skill`, and Plans/Skills_System.md#4.3 `skill` tool
 ### 2.8 Assistant memory (Gist Review) commands
 These IDs are required by `Plans/assistant-memory-subsystem.md` sections 5 and 7.
 
@@ -601,7 +574,7 @@ ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/GitHub_Integr
 File-tree rules:
 - the workspace-node clipboard is distinct from the system text clipboard
 - cross-authority paste is blocked rather than silently converted into export/import
-- `cmd.terminal.show` remains the canonical `Open in Terminal` target and is not redefined under `cmd.file.*`
+- file-tree terminal pivots preserve the distinction between `Open in Terminal` and `Show Terminal`; they are not collapsed into one canonical command target under `cmd.file.*`
 - `cmd.file.open_with` MUST NOT expose `system_default` in MVP
 
 ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md

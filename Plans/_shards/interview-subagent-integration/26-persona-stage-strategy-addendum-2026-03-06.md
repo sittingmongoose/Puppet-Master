@@ -58,7 +58,7 @@ ContractRef: ContractName:Plans/Personas.md, ContractName:Plans/orchestrator-sub
 
 Additional rules:
 - Automatic resolution may return only registry-valid IDs from `Plans/orchestrator-subagent-integration.md`.
-- Requested IDs that are unavailable after capability/provider filtering must record `requested_persona_id`, `effective_persona_id`, and `selection_reason`.
+- Requested IDs that are unavailable after capability/provider filtering must record `requested_persona`, `effective_persona`, and `selection_reason`.
 - Questioning MUST bias toward `collaborator` even when a technical phase Persona exists; technical Personas inform questioning context but do not replace the conversational default unless the user explicitly overrides it.
 - Review / validation stages MUST NOT silently reuse the drafting Persona as their effective reviewer when a reviewer Persona is available.
 

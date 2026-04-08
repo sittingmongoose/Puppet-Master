@@ -1,0 +1,68 @@
+REPAIR SCOPE
+run_id: r-20260329-235630-13
+source: Plans/.pipeline/verifier_report.txt
+status: scoped
+
+1. ACTIVE BLOCKER SUMMARY
+
+- Verifier Task 1 packet-applied preflight failed before run-gates.
+- Active failures are limited to exactly three anchors named in Plans/.pipeline/verifier_report.txt.
+- Two failures are packet-content mismatches in packet-touched planning docs:
+  - Plans/Tools.md :: ### 10.7 Audit, error, and self-hosted rules
+  - Plans/FinalGUISpec.md :: ### 15.7 Permission approval card widget
+- One failure is tied to the packet anchor:
+  - Plans/Tools.md :: ## 14. Web content caching layer
+- That third anchor is `verify_only` in Plans/.pipeline/research_packet.json, so it should not require applied-content presence. The currently observed preflight behavior that flagged it is not materially implemented in an editable repository file discovered under the current repo search.
+
+2. DOC REPAIRS
+
+doc_repairs_required_to_clear_active_blocker: yes
+
+- file: Plans/Tools.md
+  section: ### 10.7 Audit, error, and self-hosted rules
+  issue_class: packet_applied_content_mismatch_after_local_cleanup
+  allowed_repair_type: restore only the exact packet-applied prose/substrings required by Plans/.pipeline/research_packet.json for this anchor
+  packeted_prose_must_remain_unchanged: yes
+  required_to_clear_active_blocker: yes
+
+- file: Plans/FinalGUISpec.md
+  section: ### 15.7 Permission approval card widget
+  issue_class: packet_applied_content_mismatch_after_local_cleanup
+  allowed_repair_type: restore only the exact packet-applied prose/substrings required by Plans/.pipeline/research_packet.json for this anchor
+  packeted_prose_must_remain_unchanged: yes
+  required_to_clear_active_blocker: yes
+
+3. REPO GOVERNANCE REPAIRS
+
+repo_governance_repairs_required_to_clear_active_blocker: no
+
+- none
+- reason: no explicit repository file with a concrete materialized implementation surface was found for the failing packet-applied preflight behavior that flagged the `verify_only` anchor.
+
+4. PROMPT-LAYER BLOCKS
+
+prompt_layer_blocks_required_to_clear_active_blocker: yes
+
+- prompt_or_stage_surface: Verifier Task 1 packet-applied preflight behavior
+  related_anchor: Plans/Tools.md## 14. Web content caching layer
+  issue_class: verify_only_anchor_preflight_compatibility
+  allowed_repair_type: revise the prompt-layer/stage-boundary preflight logic so `verify_only` anchors are excluded from required applied-content matching
+  packeted_prose_must_remain_unchanged: yes
+  required_to_clear_active_blocker: yes
+
+5. DEPENDENCIES / ORDERING
+
+- multiple_buckets_required_together: yes
+- required_buckets: doc_repairs + prompt_layer_blocks
+- dependency_direction: neither required bucket depends on the other for correctness
+- order_matters: no strict order
+- verifier_rerun_rule: rerun Verifier only after both doc_repairs and prompt_layer_blocks are resolved
+
+6. OUT OF SCOPE
+
+- any repo_governance_repair that requires guessing an implementation file
+- any rewrite of Plans/Tools.md## 14. Web content caching layer prose
+- any planning-doc cleanup beyond the two exact sections listed in DOC REPAIRS
+- any stale-residue retirement not required to restore verifier-matchable packet substrings for those two sections
+- any packet re-emission, packet-plan rewrite, or changes under Plans/.pipeline/work_items/**
+- any broad same-file duplicate-collapse, owner-section merging, or unrelated governance cleanup

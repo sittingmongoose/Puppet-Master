@@ -1,0 +1,22 @@
+Packet Shape Report
+===================
+run_id: r-20260329-235630-05
+checked_at_utc: 2026-04-06T15:57:48.727529Z
+packet_file: Plans/.pipeline/research_packet.json
+
+Result: PASS — no packet-shape blockers found for the current packet.
+
+Checks performed
+----------------
+1) NON-INSERTABLE PACKET CONTENT: PASS
+2) MALFORMED REPLACE_SECTION BODY: PASS
+3) MISSING HEADING ANCHOR IN SOURCE: PASS
+4) OVERLAPPING ANCHOR APPLICATION ORDER: PASS
+5) STRUCTURED-CONTAINER MISPACKETIZATION: PASS
+6) CANONICALIZATION-DESTABILIZING SHAPE: PASS
+7) CONTRACTREF LOCALITY COMPATIBILITY: PASS
+
+Summary
+-------
+1 doc_intents checked, 1 anchors total.
+0 blockers.

@@ -326,7 +326,7 @@ Add validation methods to orchestrator with detailed error handling, retry logic
 **Normative validation lifecycle:**
 
 - Validation runs after each user answer that changes phase-completion state and again once before a phase is marked complete.
-- The validator used is stage-resolved (see Persona Stage Strategy Addendum) and MUST record `requested_persona_id` and `effective_persona_id` when overrides/capability filtering change the actual runner.
+- The validator used is stage-resolved (see Persona Stage Strategy Addendum) and MUST record `requested_persona` and `effective_persona` when overrides/capability filtering change the actual runner.
 - Findings are persisted as structured artifacts/events with stable IDs so the remediation loop can reopen the same issue set instead of inventing new prose-only feedback each retry.
 - Critical/Major findings block phase completion. Minor/Info findings are attached to the phase summary and downstream drafting context but do not block.
 - If retries are exhausted, Interview transitions the phase to `needs_review` and persists a resume checkpoint; it MUST NOT silently mark the phase complete.

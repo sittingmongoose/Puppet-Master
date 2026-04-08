@@ -329,3 +329,15 @@ After decline/reject, the surface MUST choose among:
 - `Start fresh attempt` when no valid safe point exists or policy forbids restore
 - `Replan` when the canonical classification is `replan_required`
 - `Skip node` only when the node contract explicitly allows skip without violating graph integrity
+
+## Shared approval-ladder alignment (2026-04-04)
+
+HITL-specific affordances consume the shared permission ladder instead of defining a shorter local approval menu.
+
+ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Tools.md
+
+Required alignment:
+- approval choices are `deny`, `once`, `for session`, `always`
+- batch web review may present one domain-grouped approval surface
+- `question` defaults to `allow` only when HITL is available; otherwise it remains ask-gated
+- HITL surfaces do not create a competing approval vocabulary

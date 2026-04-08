@@ -17,3 +17,4 @@ Tool-originated blocked paths:
 - MUST carry prerequisite metadata needed to bind the exact recovery command
 
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/FileSafe.md
+

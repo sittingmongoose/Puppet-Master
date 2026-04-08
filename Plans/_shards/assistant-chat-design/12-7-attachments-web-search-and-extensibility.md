@@ -41,19 +41,52 @@ Required rules:
 
 ### 7.3 Extensibility surface
 
-Assistant chat can surface extensibility points that are callable or inspectable from the thread when policy allows.
+### 7.4 Question card and questionnaire system
+Assistant Chat consumes the shared `question` runtime contract rather than defining a chat-local payload shape.
 
-Supported extensibility families:
-- skills
-- plugins
-- MCP tools / servers
+ContractRef: ContractName:Plans/Contracts_V0.md#3.4 Tool-specific payload extensions, ContractName:Plans/Tools.md, ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md
 
-Required rules:
-- skills, plugins, and MCP-backed tools surface through canonical tool-call, tool-result, and operation-card patterns rather than bespoke invisible integrations
-- when an extensibility point is invoked, chat shows the capability identity, status, and resulting output or failure
-- capability discovery may depend on installation/provider state, but unavailable integrations must not be presented as callable
-- extensibility integrations follow the same permissions, provenance, and audit-trail rules as built-in tools
-- chat should disclose whether an action came from a built-in tool, a skill, a plugin, or an MCP server-backed tool
+#### Card structure
 
-ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/Contracts_V0.md
+The chat surface renders one shared request shape with `mode`, `header`, `prompt`, `questions`, and optional `visual_ref?`. `mode: "single_question" | "questionnaire"` is the canonical mode set.
 
+Each `questions[]` entry uses the canonical `QuestionItem{question_id, question, options[], required, multi_select, allow_freeform, default_values?}` contract. Option rows remain `Array<{id, label, description?}>`.
+
+Question item preservation rules:
+- `allow_other is a deprecated alias`; chat normalizes it to `allow_freeform` before persisting drafts or rendering resume state
+- `default_values?: string[]` remain caller-supplied initial option ids
+- `draft_value?: string` remains PM-managed freeform draft state
+- `response_kind?: "selection" | "freeform" | "mixed"` and `validation_state?: "valid" | "invalid" | "pending"` remain optional preserved fields when the request surface uses them
+
+#### Answer and draft behavior
+
+- Always-visible options remain visible while the question is open; the card does not collapse into a freeform-only mode when options exist
+- `Something else` is the canonical visible label for the explicit other/freeform affordance when options and freeform coexist
+- chat writes all question progress into PM-managed draft state and NOT via `sendPrompt`
+- Drafts auto-save until submit
+- Thread-scoped draft state is restored on resume by `question_id`
+- the optional answer field `source?: "option" | "other" | "freeform"` stays visible to chat and storage consumers
+- `response_kind` and `validation_state` stay attached to the normalized question/answer state when the caller preserves them
+- question cards may include a visual, but visuals remain PM-managed payloads rather than ad hoc embedded HTML
+- users can answer out of order and revise before submit
+- required questions gate final submit until locally valid
+- Exiting/dismissing does NOT auto-submit
+- dismiss returns status: `dismissed` and restores the same outstanding questionnaire on resume
+- Headless/HITL-unavailable = `status = "unavailable"`
+- Subagent question tool access is DENIED by default
+
+#### Parent-mediated clarification rule
+
+Child agents do not question the user directly. If a delegated flow needs clarification, the parent session surfaces the `question` request, stores the draft state, and resumes the child only after the user responds or dismisses.
+
+ContractRef: ContractName:Plans/interview-subagent-integration.md, ContractName:Plans/chain-wizard-flexibility.md
+
+Rules:
+- status: 'dismissed'
+- allow_other?
+- answers
+- answer_text?
+- required questions block final submit
+- Headless/HITL-unavailable maps to status unavailable
+- Subagent question tool access is denied by default
+- Keep this chat surface anchored to Plans/Contracts_V0.md#3.4 Tool-specific payload extensions, Plans/Tools.md#3.5B `question` tool runtime contract, and Plans/storage-plan.md#4.2 Question and clarification state

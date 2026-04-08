@@ -1,0 +1,23 @@
+CANONICAL CLEANUP PLAN
+run_id: r-20260329-235630-13
+status: cleanup_required
+
+Checked only packet-touched docs named by Plans/.pipeline/research_packet.json.
+
+Summary:
+- duplicate applied content: none detected
+- owner-section split: none detected
+- packet_not_canonicalizable_as_emitted: not triggered
+
+Cleanup instructions:
+
+1. stale-canon residue
+   where: Plans/Tools.md#10.7 Audit, error, and self-hosted rules
+   issue: The applied section still contains a cleanup-note sentence rather than final canon:
+   `Retire stale refs to Plans/Tools.md#10.7 Ask UI contract; point summary-template ownership back to Plans/Permissions_System.md#3.4A Web-operation permission-key derivation and UI rendering to Plans/FinalGUISpec.md#15.7 Permission approval card widget`
+   cleanup: Remove that sentence and leave only document-ready canon about permission-summary ownership/UI rendering.
+
+2. stale-canon residue
+   where: Plans/FinalGUISpec.md#15.7 Permission approval card widget
+   issue: The section still carries the older blocked-class vocabulary `provider_unavailable` / `headless_unavailable` even though the same file already treats headless or HITL-unavailable flows as `status: "unavailable"` display state and the web-error canon now uses `adapter_unavailable`.
+   cleanup: Update the blocked-class lines in this section so they no longer name `provider_unavailable` or `headless_unavailable`; keep `blocked_reason_code`, `allowed_action_ids[]`, and `status: "unavailable"` carry-through aligned with the current shared web-result canon.

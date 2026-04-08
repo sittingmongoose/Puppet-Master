@@ -38,3 +38,4 @@ Canonical source: [Plans/FinalGUISpec.md](../../FinalGUISpec.md)
 - [30-runtime-scheduler-recovery-gui-consolidation-addendum-2026-03-09.md](30-runtime-scheduler-recovery-gui-consolidation-addendum-2026-03-09.md) — ## Runtime Scheduler Recovery GUI Consolidation Addendum (2026-03-09)
 - [31-canonical-blockedrecovery-behavior.md](31-canonical-blockedrecovery-behavior.md) — ## Canonical Blocked/Recovery Behavior
 - [32-blocked-state-visual-distinction-and-recovery-ux-addendum.md](32-blocked-state-visual-distinction-and-recovery-ux-addendum.md) — ## Blocked-State Visual Distinction and Recovery UX Addendum
+- [33-15-promoted-widget-catalog-web-tools-planning-question-operation-cards.md](33-15-promoted-widget-catalog-web-tools-planning-question-operation-cards.md) — ## 15. Promoted widget catalog (web tools, planning, question, operation cards)

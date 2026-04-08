@@ -12,16 +12,16 @@ This section adds concrete, command-level defaults for iOS, Android, and Expo/Re
 
 ### 14.5.2 Recommended path + fallback per stack
 
-1. **Swift/iOS**  
-   - **Default:** SwiftUI previews (`#Preview`, `@Previewable`) + XCTest/XCUITest on iOS Simulator.  
+1. **Swift/iOS**
+   - **Default:** SwiftUI previews (`#Preview`, `@Previewable`) + XCTest/XCUITest on iOS Simulator.
    - **Fallback:** Appium XCUITest driver where cross-platform automation parity is required.
 
-2. **Kotlin/Android**  
-   - **Default:** Compose UI tests + Espresso for instrumentation + targeted UIAutomator flows for system-level interactions.  
+2. **Kotlin/Android**
+   - **Default:** Compose UI tests + Espresso for instrumentation + targeted UIAutomator flows for system-level interactions.
    - **Fallback:** Appium UiAutomator2 for teams standardizing on WebDriver tooling.
 
-3. **Expo/React Native**  
-   - **Default:** Expo CLI dev flow + Detox for E2E on simulator/emulator with artifacts enabled.  
+3. **Expo/React Native**
+   - **Default:** Expo CLI dev flow + Detox for E2E on simulator/emulator with artifacts enabled.
    - **Fallback:** Maestro for fast, declarative smoke flows; Appium for multi-platform automation parity.
 
 ### 14.5.3 Concrete workflow snippets to include in generated plans

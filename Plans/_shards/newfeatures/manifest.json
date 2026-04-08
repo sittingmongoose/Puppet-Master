@@ -1,6 +1,6 @@
 {
   "source_path": "Plans/newfeatures.md",
-  "source_sha256": "263a3d9fdaac728f6349e1c92cfb133ce50086863ff729fd81c15a7d606e34ba",
+  "source_sha256": "a759bd3c17cf3d4dd9eac682a700f3696e8bca5f5e56a5044289936048fd2c42",
   "split_rule": {
     "primary": "## outside fences",
     "fallback": "line-count-200",
@@ -45,9 +45,16 @@
     {
       "dest_path": "Plans/_shards/newfeatures/06-24-browser-preview-and-code-context-integration.md",
       "start_line": 42,
-      "end_line": 55,
-      "segment_sha256": "94b153af385679ccd945467e400834c6214841e338a10a4c203556655a4cd892",
+      "end_line": 56,
+      "segment_sha256": "d0fd597b41d4bc48f912cf2772b9630967a206d830ad0f4633c1b22ba8527df6",
       "heading": "## 24. Browser preview and code-context integration"
+    },
+    {
+      "dest_path": "Plans/_shards/newfeatures/07-web-tools-provider-routing-and-shared-ui-alignment-addendum-2026-04-04.md",
+      "start_line": 57,
+      "end_line": 68,
+      "segment_sha256": "4d532b4a325d91cf1b77c1d20c0153c9071f82baf82e47182e0d3bad88872d51",
+      "heading": "## Web tools, provider routing, and shared UI alignment addendum (2026-04-04)"
     }
   ]
 }

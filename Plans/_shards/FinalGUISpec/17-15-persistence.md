@@ -25,7 +25,7 @@ ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FileManager.
 |-----|---------|----------------|
 | `settings:v1` | Durable app settings and preferences | On save |
 | `config:v1` | Full app config struct (all Settings values including permissions, shortcuts, LSP registry settings, Search defaults, and file-manager behavior) | On change (debounced 200ms) |
-| `chat_state:v1` | Unsent input text, queued messages, active thread selection | On change (debounced 200ms) |
+| `chat_state:v1` | Unsent input text and active thread selection | On change (debounced 200ms) |
 | `wizard_state:v1:{project_id}` | Current wizard step and form data | On change (debounced 300ms) |
 | `document_pane_state:v1:{project_id}:{page_context}` | Embedded document-pane state: selected document, selected view, scroll/cursor state, history selection, and approval stage | On change (debounced 200ms) |
 | `document_checkpoints:v1:{project_id}` | Checkpoint metadata for restorable document states | On checkpoint create/restore |
@@ -110,13 +110,15 @@ Restore rules:
 
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/UI_Command_Catalog.md
 ### 15.5 Session Recovery
-On crash or unexpected shutdown, restore as much state as possible:
-- **Chat state:** unsent input text, queued messages, and active thread selection are restored from `chat_state:v1`.
-- **Wizard state:** current wizard step and form data resume from `wizard_state:v1:{project_id}`.
-- **Document pane state:** embedded document-pane selection and view (`document` or `plan_graph`) restore from `document_pane_state:v1:{project_id}:{page_context}`.
-- **Document checkpoints:** checkpoint list and selected checkpoint context restore so the user can continue restore or approval workflows.
-- **Review findings and approval state:** findings summary and approval state restore so interrupted review runs return to the correct approval surface.
-- **Active project:** the last active project is restored automatically.
+On crash or unexpected shutdown, restore as much state as possible without inventing continuity that PM cannot prove.
+
+Recoverable state:
+- **Chat state:** unsent input text and active thread selection may restore from `chat_state:v1`; queue state is transient and is not restored across reload or restart
+- **Wizard state:** current wizard step and form data resume from `wizard_state:v1:{project_id}`
+- **Document pane state:** embedded document-pane selection and view (`document` or `plan_graph`) restore from `document_pane_state:v1:{project_id}:{page_context}`
+- **Document checkpoints:** checkpoint list and selected checkpoint context restore so the user can continue restore or approval workflows
+- **Review findings and approval state:** findings summary and approval state restore so interrupted review runs return to the correct approval surface
+- **Active project:** the last active project is restored automatically
 
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FileManager.md
 
@@ -127,10 +129,24 @@ Terminal and dev-session recovery rules:
 - dev sessions restore as workflow records tied to their last-known output, problems, ports, and linked terminal refs
 - restored historical terminals show explicit banners and recovery controls such as restart, replace, or close historical tab
 
-ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/UI_Command_Catalog.md
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/UI_Command_Catalog.md
+
+Composer and queue rules after restore:
+- Stop/Edit/Resend attach ONLY to most recent user-sent message
+- Edit restores content into composer and discards all later history/work
+- Resend retries the most recent message and discards all later history/work
+- FIFO, max 2 queued messages
+- Stop does NOT clear the queue
+- Stop becomes disabled when a run completes and no next message is queued
+- queue state is transient and is not restored across reload or restart
+- always-visible copy affordance on fenced code blocks remains available after restore
 
 Browser and runtime recovery rules remain aligned:
 - browser sessions preserve their own restore policy and never silently become terminal-owned shells
 - attention surfaces, command cards, and linked runtime panes must pivot back to the restored canonical identity rather than inventing replacement containers
 
-ContractRef: ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/Contracts_V0.md
+ContractRef: ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/assistant-chat-design.md
+
+Rules:
+- restore does not invent queue continuity
+- Keep this recovery section consuming Plans/assistant-chat-design.md#4. Message submission (Steer vs Queue), queued editing, interrupt, and stop

@@ -55,7 +55,6 @@ ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/WorktreeGitImpr
 
 Thread-to-worktree binding is durable, explicit, and identity-bearing.
 
-
 **New redb key family:**
 - Key: `thread_state:{thread_id}:worktree_binding`
 - Value (JSON):

@@ -1,52 +1,66 @@
 ## 9. MVP LSP features (summary)
+The MVP LSP surface is one canonical read/navigation set plus approval-gated rename. The long-name operation set below is canonical; short-name aliases do not replace it.
 
-All of the following are **MVP** (in scope when LSP is phased in). They are specified in §1 (Purpose) and §5 (Integration); this section is a short summary.
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Permissions_System.md
 
-| Feature | LSP / behavior |
-|--------|-----------------|
-| Inlay hints | `textDocument/inlayHint` -- parameter names, type hints; render as inline decorations |
-| Semantic highlighting | `textDocument/semanticTokens` when supported; fall back to syntax-only |
-| Code actions | `textDocument/codeAction`; show in context menu/lightbulb; apply via `workspace/applyEdit` (FileSafe) |
-| Code lens | `textDocument/codeLens`; render and invoke actionable links above symbols |
-| Signature help | `textDocument/signatureHelp` when cursor in a call |
-| Request timeout/cancellation | Configurable timeouts; send LSP cancellation to avoid stale results |
-| LSP status in UI | Status bar or indicator (server name, Initializing/Ready/Error) |
-| Per-server enable/disable | `lsp.<id>.disabled`, `lsp: false` (OpenCode-style) |
-| Fallback when LSP unavailable | Heuristic symbol search, no diagnostics; optional install hint |
-| Diagnostics for LLM/Assistant | Feed current diagnostics into Assistant/Interview context (OpenCode-style) |
-| **LSP in the Chat Window** | **§5.1:** Diagnostics in Assistant context; @ symbol with LSP workspace/symbol; code blocks in chat with hover and go-to-definition; Problems link from Chat; optional inline diagnostics hint for @'d files |
+### 9.1 Canonical operations
 
-*(Content fully specified in §1, §5, and §5.1.)*
+| Operation | Kind | Normalized success payload |
+|---|---|---|
+| `goToDefinition` | read/navigation | `locations[]` |
+| `findReferences` | read/navigation | `locations[]` |
+| `hover` | read/inspect | `hover_markdown`, optional `range` |
+| `documentSymbol` | read/inspect | `symbols[]` |
+| `workspaceSymbol` | read/inspect | `symbols[]` |
+| `goToImplementation` | read/navigation | `locations[]` |
+| `prepareCallHierarchy` | read/inspect | `call_hierarchy_items[]` |
+| `incomingCalls` | read/inspect | `call_edges[]` |
+| `outgoingCalls` | read/inspect | `call_edges[]` |
+| `rename` | write-gated | `workspace_edit`, `change_count`, `file_count` |
 
-### 9.1 Additional enhancements enabled by LSP
+Normalization rules:
+- single-location and multi-location LSP responses are normalized to `locations[]`
+- symbol-returning operations normalize to `{ name, kind, uri, range, selection_range? }`
+- call-hierarchy results normalize to stable items and edges rather than exposing server-specific wire shapes
+- `rename` remains approval-gated and returns the normalized workspace edit summary instead of a provider-specific patch object
 
-The canonical `lsp` tool surface extends beyond the minimal MVP trio of definition/hover/references.
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/FileManager.md
 
-Recommended read operations:
-- `goToDefinition`
-- `findReferences`
-- `hover`
-- `documentSymbol`
-- `workspaceSymbol`
-- `goToImplementation`
-- `prepareCallHierarchy`
-- `incomingCalls`
-- `outgoingCalls`
+### 9.2 Normalized tool-result envelope
 
-Write-like operation retained for MVP with approval boundary:
-- `rename`
+| Field | Type | Notes |
+|---|---|---|
+| `operation` | `string` | One canonical operation name from the table above. |
+| `status` | `ok | partial | unavailable | error` | Normalized result status. |
+| `server_id?` | `string` | Effective language-server identifier. |
+| `root_identity?` | `string` | Effective root binding used for the request. |
+| `locations[]?` | `array` | Used by navigation operations. |
+| `symbols[]?` | `array` | Used by symbol operations. |
+| `hover_markdown?` | `string` | Markdown-safe hover payload. |
+| `call_hierarchy_items[]?` | `array` | Output of `prepareCallHierarchy`. |
+| `call_edges[]?` | `array` | Output of `incomingCalls` or `outgoingCalls`. |
+| `workspace_edit?` | `object` | Normalized rename edit set. |
+| `warnings[]?` | `array` | Non-fatal issues or downgraded capabilities. |
+| `error?` | `{ code, message, retryable? }` | Normalized failure envelope. |
+
+Error rules:
+- an operation with zero hits returns `status: 'ok'` and an empty payload family, not a synthetic error
+- server missing or disabled returns `status: 'unavailable'` with `error.code: 'lsp_unavailable'`
+- request timeout returns `status: 'error'` with `error.code: 'timeout'`
+- stale document or root mismatch returns `status: 'error'` with `error.code: 'stale_document'`
+- rename denied by approval or FileSafe returns `status: 'error'` with `error.code: 'rename_rejected'`
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md
+Parameter carry-through:
+- `workspaceSymbol` requires `query`.
+- Position-based operations use `path` + `position`.
+- `rename` requires `path` + `position` + `newName`.
+
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/FinalGUISpec.md
 
 Rules:
-- read operations remain available when the language server is active and the provider surface can support them
-- `rename` remains approval-gated before any apply-edit path mutates workspace files
-- Chat, editor, and command surfaces must all refer to the same canonical operation names rather than inventing per-surface aliases
-
-ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/FinalGUISpec.md
-
-Chat-facing expectations:
-- Chat can ask where a symbol is used, what it resolves to, what implements it, or which calls flow into/out of it
-- symbol-aware search may route through LSP-backed workspace/document symbol calls when available
-- LSP diagnostics and navigation remain shared editor/chat infrastructure rather than separate assistant-only logic
-
-ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FileManager.md, ContractName:Plans/storage-plan.md
-
+- query
+- `rename` is approval-gated because it applies edits.
+- PM intentionally keeps `rename` as an extension.
+- read/navigation operations stay read-only while rename keeps approval gating
+- Keep LSP consumers anchored to this summary section for canonical operation names and parameter carry-through

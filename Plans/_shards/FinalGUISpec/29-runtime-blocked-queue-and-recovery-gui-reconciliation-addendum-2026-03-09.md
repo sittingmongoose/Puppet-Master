@@ -20,22 +20,9 @@ Required UI behavior:
 - secondary action: `View report`
 - auto-dismiss only when the wizard leaves `blocked`
 - priority order: `wizard_blocked > HITL approval > wizard_attention_required > interrupted > rate limit > warnings`
-
-### Runtime state presentation
-Scheduler surfaces MUST visually distinguish:
-- blocked waiting for prerequisite or approval
-- retrying/backoff
-- remediation in progress
-- terminal failure
-
 ### Thread/status surfaces
 Thread and run status surfaces MUST include distinct presentations for:
 - `attention_required`
 - `blocked`
 - `retrying/backoff`
 - `remediation`
-
-### Recovery UX rules
-- safe points are runtime recovery anchors and MUST NOT be presented as user-facing restore points
-- retry controls MUST distinguish `Retry from safe point` from `Start fresh attempt`
-- if no valid safe point exists, `Retry from safe point` is disabled with an explanation

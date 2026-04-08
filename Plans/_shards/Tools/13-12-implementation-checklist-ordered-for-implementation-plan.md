@@ -18,6 +18,5 @@ Use this list in order to derive a step-by-step implementation plan. Dependencie
 14. **Doctor and docs** -- MCP/LSP checks; document default table and resolution.
 15. **Subagent tool overrides** -- Document `subagent_tool_overrides` schema (e.g. `{ "todowrite": "allow" }`) and config location in orchestrator-subagent-integration.md so run config can override todowrite/todoread for subagent runs.
 
-
 ---
 

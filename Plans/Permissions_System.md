@@ -105,7 +105,7 @@ The tool invocation proceeds without user approval. FileSafe guards (`Plans/File
 
 ### 2.2 `ask`
 
-The tool invocation is paused pending user approval. The user is presented with the invocation details and MUST choose one of three responses: `once`, `always`, or `reject` (see §6). If no user is available (headless/Orchestrator run), `ask` maps to `deny` unless HITL is enabled at the current tier boundary (`Plans/human-in-the-loop.md`).
+The tool invocation is paused pending user approval. The user is presented with the invocation details and MUST choose one of the canonical resolution options: `deny`, `once`, `for session`, or `always` (see §6). If no user is available (headless/Orchestrator run), `ask` maps to `deny` unless HITL is enabled at the current tier boundary (`Plans/human-in-the-loop.md`).
 
 ### 2.3 `deny`
 
@@ -254,7 +254,6 @@ When a user responds `always` to an `ask` prompt (§6.2), the system derives a s
 The suggested pattern is displayed to the user during approval confirmation. The user MAY edit the pattern before a durable project/global rule is created, but the canonical approval anchor remains `approval_scope_key` plus blocked-episode identity rather than a UI session id.
 
 ### 3.4A Web-operation permission-key derivation
-
 For canonical permission-key derivation, web operations use normalized suffixes rather than raw user-entered URLs:
 
 - `webextract:{domain}` — extraction from a specific domain
@@ -266,8 +265,26 @@ For any URL-derived web key, the runtime MUST extract the host, normalize it to 
 
 Wildcard matching for preset and policy authoring MAY use `web*:*` to represent all web-operation permission keys as a family. This wildcard is valid for preset definitions and other broad-scope policy surfaces but does not change the requirement that concrete approvals resolve to normalized derived keys.
 
----
+ContractRef: ContractName:Plans/FinalGUISpec.md#15.7 Permission approval card widget
 
+Approval-card summary rules:
+- `websearch summary shows tool name + query preview`
+- `webfetch/webextract summary shows tool name + target host/URL`
+- `webresearch summary shows tool name + task summary + estimated source count when available`
+- `webcrawl/webmap summary shows tool name + root URL + page/depth caps`
+
+Session-approval rules:
+- `Approving webcrawl For Session auto-approves crawl/map/extract/fetch for the same host pattern`
+- `Approving webresearch For Session does NOT create broad allow for unrelated tools`
+- `MVP uses wildcard session approval for search/research; advanced query-pattern support is future only`
+
+The approval summaries are rendered by `Plans/FinalGUISpec.md#15.7 Permission approval card widget` and the actual consumer sections that display the summaries.
+
+Rules:
+- URL-derived web keys normalize to registrable domain
+- summary templates are part of permission canon, not GUI-local prose
+- For Session approval for webcrawl expands to crawl/map/extract/fetch on the same host pattern
+- search/research use wildcard session approval only in MVP
 ## 4. Special guards
 
 <a id="SPECIAL-GUARDS"></a>
@@ -284,7 +301,7 @@ ContractRef: PolicyRule:Decision_Policy.md§2
 
 **Default action:** `ask`.
 
-**Behavior:** When triggered, the policy engine pauses execution (or denies in headless mode) and surfaces a warning: "Tool `{name}` called 3× with identical input — possible loop." The user may approve (continue), reject (deny this call), or abort the run.
+**Behavior:** When triggered, the policy engine pauses execution (or denies in headless mode) and surfaces a warning: "Tool `{name}` called 3× with identical input — possible loop." The user may approve (continue via `once`, `for session`, or `always`), deny this call, or abort the run.
 
 **Configurable:** The repeat threshold (default 3) and the action (`allow`, `ask`, `deny`) are configurable via the `doom_loop` permission key.
 
@@ -319,230 +336,70 @@ Covered operations:
 ---
 
 ## 5. Tool permission keys
+Tool permission ownership lives here. The keys below are the canonical permission surface for the web, question, skill, task, and MCP families touched by this packet.
 
-The permission engine resolves canonical tool keys, not provider-native names.
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/MCP_Integration.md
 
-| Key | Category | Meaning | Notes |
-|---|---|---|---|
-| `read` | Read | Read file content | Granular: path patterns; `.env` deny defaults apply |
-| `edit` | Write | Modify or create project files | Shared with write/patch/multiedit |
-| `glob` | Search | File-name pattern matching | Granular: path patterns |
-| `grep` | Search | Content search | Granular: path patterns |
-| `list` | Search | Directory listing | Granular: path patterns |
-| `bash` | Execution | Shell command execution | Granular: command patterns; FileSafe applies after policy |
-| `task` | Execution | Launch delegated/subagent work | Granular: subagent type patterns |
-| `question` | Interaction | Ask the user for structured input | Interactive-surface tool; may resolve to `unavailable` when HITL is absent |
-| `skill` | Context | Load or invoke skill content | Granular: skill ID patterns |
-| `lsp` | IDE | Language-server operations | Read operations default allow; write-like rename requires separate approval |
-| `webfetch` | Network | Fetch URL content | Granular: URL patterns |
-| `websearch` | Network | Search the web | Granular: query patterns |
-| `webextract` | Network | Extract a target page/site | Granular: URL / host patterns |
-| `webresearch` | Network | Multi-source research synthesis | Granular: query/task patterns |
-| `webcrawl` | Network | Multi-page crawl | Granular: URL / host patterns |
-| `webmap` | Network | Site map / structure extraction | Granular: URL / host patterns |
-| `codesearch` | Search | Project code/symbol search | Low risk; read-only |
-| `chatsearch` | Search | Project chat history search | Read-only |
-| `logsearch` | Search | Log summary search | Read-only |
-| `logread` | Logs | Full log payload read by ref | May expose large or sensitive payloads |
-| `repo.import` | Workspace | Import external repo into workspace | Network + filesystem impact |
-| `capabilities.get` | Introspection | Capability listing | Read-only |
-| `media.generate` | Generation | Image/video/tts/music generation | Quota/cost bearing operation |
-| `todoread` | State | Read plan/todo tracker state | Subagent default: `deny` |
-| `todowrite` | State | Write plan/todo tracker state | Subagent default: `deny` |
-| `external_directory` | Guard | Access outside working roots | See §4.2 |
-| `doom_loop` | Guard | Identical repeated calls | See §4.1 |
-| `external_publish_side_effect` | Guard | Remote publication / remote repo mutation | Non-bypassable special guard |
-
-ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/FileSafe.md
-
-## 6. Ask flow semantics
-
-<a id="ASK-FLOW"></a>
-
-When the policy engine resolves a tool invocation to `ask`, the user is presented with the invocation details and three response options.
-
-ContractRef: ContractName:Plans/OpenCode_Deep_Extraction.md, PolicyRule:Decision_Policy.md§2
-
-### 6.1 `once`
-
-Approves this single invocation. No persistent rule is created. The tool executes immediately. Future invocations of the same tool still require approval.
-
-### 6.2 `always`
-
-<a id="ASK-ALWAYS"></a>
-
-Approves this invocation using the canonical blocked-episode anchor. The system MAY additionally authorize future equivalent asks only when the user explicitly chooses a scope-bound or durable approval path defined in §6.4.
-
-The approval UI may label this action as "Always for this scope", but its behavior is never "always for this session". Reuse depends on the exact `approval_scope_key`, not on sharing a tab, panel, or UI session.
-
-Direct approval of the current blocked episode does not itself create a durable project/global rule and does not mutate Persona permission profiles.
-
-### 6.3 `reject`
-
-Denies this invocation. The policy engine emits `tool.denied` and returns a rejection error to the agent. If the user provides feedback text, the error includes the feedback (corrected error); otherwise a bare rejection error is returned.
-
-Rule: a `reject` response MUST reject the current blocked episode and MAY reject other still-pending asks only when their `approval_scope_key` exactly matches. A session-wide blast radius is forbidden.
-
-ContractRef: ContractName:Plans/OpenCode_Deep_Extraction.md
-
-### 6.4 Approval scope and durable rule authoring
-
-Every `ask` outcome MUST compute two distinct identifiers before approval UI is shown:
-1. `blocked_episode_ref = { run_id, node_id, blocked_sequence, attempt_id? }`
-2. `approval_scope_key`, a deterministic key derived from the canonical target and runtime context
-
-`approval_scope_key` MUST include, when present: `permission_key`, `operation_family`, `project_id`, `repo_id?`, `workspace_root_id?`, `worktree_id?`, `lane_id?`, `package_id?`, `seam_id?`, `child_run_id?`, `execution_role?`, `actor_role?`, `effective_account_id?`, and the normalized `approval_target_ref` when one exists. A UI session id, panel id, or thread tab id MUST NOT be used as the primary approval scope.
-
-Canonical approval choices are:
-- `once`: approve only the current `blocked_episode_ref`
-- `for_scope`: approve the current blocked episode plus future asks whose `approval_scope_key` exactly matches
-- `create_project_rule`: open explicit durable-rule creation seeded from the suggested pattern; writes only to the project permissions file after a second confirmation
-- `create_global_rule`: same as above, but writes only to the global permissions file
-- `reject`: deny the current blocked episode and any still-pending asks whose `approval_scope_key` exactly matches
-
-Runtime prompts MUST NOT mutate Persona permission profiles. Persona profiles are edited only in Persona/Permissions settings, never as a side effect of an in-chat approval prompt.
-
-When approval is granted for backgrounded or queued work, the decision binds to the exact `{ blocked_episode_ref, approval_scope_key }` pair that was presented. Resuming after approval MUST re-enter preflight; it MUST NOT jump directly into dispatch.
-
-ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/human-in-the-loop.md, ContractName:Plans/FinalGUISpec.md
-
-### 6.4A Durable approval persistence, revocation, and migration
-
-The durable approval paths in §6.4 create explicit records rather than implicit session flags:
-
-- `create_project_rule` persists to the project-level permission configuration, survives session restart, and applies to all threads operating in that project subject to the normal scope model.
-- `create_global_rule` persists to the user-level global permission configuration, survives session restart, and applies across all projects subject to more specific overrides.
-
-The canonical stored record format for a durable approval is `{ tool_pattern, action, scope_key?, created_at, created_by_thread_id }`. `scope_key?` MAY be omitted only when the rule is intentionally unscoped beyond its owning layer; otherwise it records the exact package/seam/lane/project/global selector that the user approved.
-
-Revocation MUST be available from Settings → Permissions and from the explicit `cmd.permissions.revoke` command. Revoking a durable rule removes its future effect without rewriting the historical blocked-episode audit trail that recorded the original approval.
-
-If a tool pattern later becomes stale because a tool is renamed or a canonical pattern derivation changes, the runtime MUST flag the rule as stale in the Permissions UI and audit surfaces. Stale durable rules are not auto-deleted; user review or explicit migration tooling is required before removal.
-
----
-
-## 7. Deterministic defaults
-
-### 7A. Preview/browser trust-tier capability matrix (2026-03-08)
-
-Preview/browser policy combines preview-runtime boundary rules with browser action permissions. Generated Markdown/Mermaid previews remain restricted preview surfaces; browser-capable sessions use the explicit browser permission-layer model and requested/effective disclosure.
-
-ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/Tools.md, ContractName:Plans/storage-plan.md
-
-| Capability or behavior | `generated_restricted` preview surfaces | browser-capable sessions (`workspace_preview`, `detached_preview`, `automation_session`, `auth_session`) | Notes |
-|---|---|---|---|
-| App-bundled JS required for rendering | allow | allow | preview and browser surfaces may use app-bundled support assets |
-| Arbitrary remote network fetches from page content | deny | allow only when the active browser session/runtime policy permits the navigation and the resulting capability set | preview restrictions remain narrower than browser navigation permissions |
-| Local asset loading from active workspace preview root | deny except app-controlled preview assets | allow for workspace-backed HTML/browser subjects under the browser runtime contract | workspace-backed HTML preview is a browser-capable surface, not a generated preview |
-| Cookies / local storage reuse | deny | allow or deny based on `profile_scope` and session class; no silent bleed across profile scopes | auth and automation remain isolated by default |
-| Preview mutation bridge (`request_edit`) | allow only through the narrow preview bridge when deterministic source mapping exists | deny by default on browser surfaces; browser capture does not imply mutation privileges | source mutation and browser interaction remain separate privileges |
-| Durable document annotations from rendered selection | allow only when runtime can map the selection to canonical source text or a stable semantic anchor | allow only for workspace-backed docs with the same mapping guarantee | browser capture alone does not create annotations |
-| Forward bounded browser text selection to chat | n/a | allow only through explicit `browser_selection_context` capture actions | browser text selection does not use `document_selection_context` |
-| Inspect / capture element context | deny | allow through explicit user action and within resolved permission state | element capture remains explicit and user-visible |
-| DevTools | deny | allow when the user explicitly opens DevTools | docked vs detached is a layout choice, not a capability tier |
-| Arbitrary host/file API access | deny | deny unless separately authorized through explicit tool/permission surfaces | browser surfaces do not implicitly gain host/file APIs |
-
-ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Prompt_Pipeline.md
-
-Browser action permission layers:
-
-| Browser action family | Effective layer | Default behavior | Notes |
-|---|---|---|---|
-| navigation / readback (`navigate`, `back`, `reload`, `snapshot`, `screenshot`, `console`, `network`) | always_allowed | allow when the browser runtime is healthy | still blocked by `runtime_unavailable` or recovery state |
-| explicit share/capture actions | always_allowed | allow | capture is user-triggered and does not auto-send hidden chat messages |
-| interaction, tab management, viewport, upload, dialog, trace, and video control | session_granted | ask/allow based on the resolved session permission snapshot | applies to agent/tool-driven interaction, not ordinary local user clicks |
-| auth-flow mutation, storage import/export, cookie/storage mutation, offline/mock routing, download execution, and promotion into normal browsing | explicit_confirmation | deny until explicitly confirmed | treated as high-risk state mutation |
-
-ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/assistant-chat-design.md
-
-Requested versus effective browser disclosure requirements:
-- every browser session must disclose `requested_browser_runtime` and `effective_browser_runtime`
-- every browser session must disclose `requested_capabilities`, `effective_capabilities`, `capability_degradations`, and `blocked_actions`
-- every browser session must disclose `session_class`, `permission_tier`, `profile_scope`, `restore_policy`, and `takeover_state`
-- browser degradation reasons use explicit values such as `platform_unsupported`, `runtime_unavailable`, `permission_not_granted`, `session_class_restricted`, and `temporarily_unavailable_after_recovery`
-
-ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md
-
-### 7B. Debug Automation Profile
-
-The **Debug Automation Profile** is a run-scoped permission overlay for active investigations. It is not a new global permissions-profile family.
-
-Required rules:
-- the profile is bound to `investigation_id` plus the owning project/worktree and any bound runtime identities
-- the profile may be activated from Assistant Debug Mode or from another PM surface that launches a shared investigation under the same contracts
-- the profile records requested versus effective grant state and may degrade when a requested capability is unavailable, unsupported, or denied by higher-priority policy
-- finishing, cancelling, superseding, or manually revoking the investigation also revokes the profile grant
-
-ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/human-in-the-loop.md
-
-Front-door grant scope:
-- repeated low-risk evidence reads may be pre-approved for the life of the investigation
-- bounded browser evidence capture, console/network read, screenshot/snapshot capture, trace start/stop, DAP inspect actions, project-scoped log reads, and declared-scope temporary instrumentation writes/removals may participate when policy allows
-- the profile does not bypass FileSafe scope, remote authority rules, or higher-priority deny rules
-
-ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/GitHub_Integration.md
-
-Non-bypassable actions that always require explicit confirmation remain:
-- auth-flow mutation and credential import/export
-- cookie or storage mutation outside previously approved isolated flows
-- offline mode, route mocking, or network interception that changes external behavior
-- package or tracer install outside the declared project/host scope
-- destructive process termination or broad repo mutation outside the declared debug scope
-- external publish or remote repo mutation side effects
-
-ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/Tools.md, ContractName:Plans/FileSafe.md
-
-When no rule matches at any precedence layer, the following tool defaults apply.
-
-| Key | Default | Rationale |
+| Permission key | Applies to | Default |
 |---|---|---|
-| `read` | `allow` | Read-only; `.env` deny via §7.1 |
-| `edit` | `ask` | File mutations require approval |
-| `glob` | `allow` | Read-only search |
-| `grep` | `allow` | Read-only search |
-| `list` | `allow` | Read-only listing |
-| `bash` | `ask` | Shell execution; high risk |
-| `task` | `ask` | Delegated/subagent launch; resource cost |
-| `question` | `allow` | Interactive clarification tool; runtime may still return `unavailable` when HITL is absent |
-| `skill` | `allow` | Context injection; low risk |
-| `lsp` | `allow` | Read-only IDE operations |
-| `webfetch` | `ask` | Network access |
-| `websearch` | `ask` | Network access |
-| `webextract` | `ask` | Network access over concrete targets |
-| `webresearch` | `ask` | Networked multi-source research |
-| `webcrawl` | `ask` | Potential fan-out crawl |
-| `webmap` | `ask` | Potential fan-out site mapping |
-| `codesearch` | `allow` | Read-only project code search |
-| `chatsearch` | `allow` | Read-only project chat index search |
-| `logsearch` | `allow` | Read-only log-summary search |
-| `logread` | `ask` | Full log payload may contain sensitive data |
-| `repo.import` | `ask` | External code import + network impact |
-| `capabilities.get` | `allow` | Read-only introspection |
-| `media.generate` | `ask` | External API generation; quota/cost impact |
-| `todoread` | `allow` | State read (subagent: `deny`) |
-| `todowrite` | `allow` | State write for plan/todo tracking (subagent: `deny`) |
-| `external_directory` | `ask` | Paths outside project roots |
-| `doom_loop` | `ask` | Identical repeated calls |
-| `external_publish_side_effect` | `ask` | Remote publication and remote repo mutation require explicit approval |
-| *(any unknown tool)* | `ask` | Safe default for new/MCP tools |
+| `skill` | structured skill invocation | `allow` |
+| `question` | shared questionnaire / clarification contract | question default `allow` only when HITL is available |
+| `websearch`, `webfetch`, `webextract`, `webresearch`, `webcrawl`, `webmap` | canonical web family | `ask` |
+| `batch_webfetch`, `batch_webextract` | canonical batch web family | `ask` |
+| `task` | delegated child runs | `ask` |
+| `research_session` | tier-2 browser/session actions under a parent-approved web flow | governed by the ladder below |
 
-ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/storage-plan.md
+Child-agent rule: delegated child runs default `question` to `deny` unless an owning parent flow explicitly surfaces the question to the user.
 
-### 7.1 Default `.env` deny rules
-The `read` tool has built-in granular defaults that protect sensitive environment files:
+Rules:
+- delegated child runs default question to deny unless the parent explicitly surfaces the question
+- question default allow only when HITL is available
+- canonical web family defaults to ask
+- Keep tool permission ownership here and do not let Tools/chat/GUI surfaces redefine defaults
+## 6. Ask flow semantics
+Ask flow semantics are PM-owned and use one approval ladder across tools, browser escalation, and blocked recovery.
 
-```toml
-[read]
-"*" = "allow"
-"*.env" = "deny"
-"*.env.*" = "deny"
-"*.env.example" = "allow"
-```
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Tools.md, ContractName:Plans/FinalGUISpec.md
 
-These defaults apply at the lowest precedence layer. Any explicit rule at a higher layer overrides them. The `.env.example` allowance is intentional because example files contain no secrets.
+Approval ladder:
+- `deny`
+- `once`
+- `for session`
+- `always`
 
-ContractRef: ContractName:Plans/FileSafe.md, PolicyRule:no_secrets_in_storage
+Ladder rules:
+- the current blocked episode is answered by the selected ladder outcome; broader effect is controlled by `approval_scope_key`
+- read-only and plan-mode web behavior remains ask-gated rather than silently collapsing to deny
+- research-session escalation to full `automation_session` uses the same ladder rather than a browser-local variant
 
+Rules:
+- one approval ladder applies across tools, browser escalation, and blocked recovery
+- Keep chat/tool/widget approval consumers pointed here for ladder semantics
+## 7. Deterministic defaults
+Deterministic defaults keep read-only exploration usable without making mutation implicit.
+
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/Skills_System.md
+
+| Family | Default |
+|---|---|
+| `skill` | `allow` |
+| `question` | question default `allow` only when HITL is available |
+| read-only web tools in `ask` / `plan` | `ask` |
+| delegated child `question` | `deny` |
+
+`plan` does not auto-deny the web family. It preserves read-only web exploration behind explicit asks.
+Preset note:
+- `workspaceSymbol` requires `query`.
+- `read_only` and `plan` keep the six read-only web tools (`websearch`, `webfetch`, `webextract`, `webresearch`, `webcrawl`, `webmap`) ask-gated rather than auto-denied.
+- Position-based operations use `path` + `position`.
+- `rename` requires `path` + `position` + `newName`.
+
+Rules:
+- plan does not auto-deny the web family
+- rename remains approval-gated because it applies edits
+- read_only and plan keep the six read-only web tools ask-gated
+- question default allow only when HITL is available
+- Keep LSP parameter/approval notes aligned with Plans/LSPSupport.md#9. MVP LSP features (summary)
 ## 8. Resolution algorithm
 
 ### 8.1 Banned-command full-string check
@@ -711,18 +568,33 @@ When a tool row is expanded (§10.2), the granular rule editor appears:
 - Pattern input supports wildcard syntax (§3.1); inline help tooltip shows `*` and `?` semantics.
 
 ### 10.4 Presets
+Presets are expressed as explicit allow / ask / deny matrices rather than narrative summaries.
 
-**Presets** apply a batch of permission rules. Preset buttons:
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Run_Modes.md
 
-| Preset | Effect |
-|--------|--------|
-| **Read-only** | `edit`, `bash`, `webfetch`, `websearch`, `task`, `repo.import` → `deny`; all others → `allow`. |
-| **Plan mode** | `read`, `grep`, `glob`, `list`, `codesearch`, `chatsearch`, `logsearch`, `capabilities.get`, `question`, `skill`, `todoread`, and `todowrite` → `allow`; read-only `lsp` navigation operations → `allow`; `webfetch`, `websearch`, `webextract`, `webresearch`, `webcrawl`, and `webmap` stay external-read operations and resolve through the normal permission stack (default `ask` unless a higher layer already allows them); `edit`, `bash`, `repo.import`, mutating `lsp`, mutation-capable `task`, and all other write-capable operations → `deny`. |
-| **Full** | All tools → `allow` except `bash`, `edit`, `repo.import` → `ask`. |
+| Tool family | `read_only` | `plan` | `full` |
+|---|---|---|---|
+| `read`, `grep`, `glob`, `list`, `codesearch`, `chatsearch`, `logsearch`, `capabilities.get` | allow | allow | allow |
+| `skill` | allow | allow | allow |
+| `lsp` | allow (read-only ops) | allow (read-only ops) | allow |
+| `question` | allow | allow | allow |
+| `todoread`, `todowrite` | allow | allow | allow |
+| `websearch`, `webfetch`, `webextract`, `webresearch`, `webcrawl`, `webmap` | ask | ask | ask |
+| `batch_webfetch`, `batch_webextract` | ask | ask | ask |
+| `logread` | ask | ask | ask |
+| `task` | ask | ask | ask |
+| `edit`, `bash`, `repo.import`, `media.generate` | deny | deny | ask |
 
-Applying a preset overwrites the current ruleset with a confirmation dialog: "This will replace your current permissions. Continue?"
+Preset notes:
+- `read_only` and `plan` explicitly keep the six web tools ask-gated
+- `full` does not silently allow nested `task`; nested delegation remains denied by the task contract until a future policy opens it
+- provider or mode changes do not redefine the preset matrix locally
 
-Presets apply to **tool** keys; special guards (`external_directory`, `doom_loop`) remain unchanged (defaults apply unless the user edits them explicitly).
+Rules:
+- presets are expressed as explicit allow/ask/deny matrices rather than narrative summaries
+- todowrite is not blanket auto-denied in ask/plan
+- read_only and plan explicitly keep the six web tools ask-gated
+- Keep preset mirrors in Plans/Tools.md#3.5C `todowrite` and `todoread` runtime contract, Plans/FinalGUISpec.md#7.4.7 Agent-Config panel specification, and other consumers pointed back here
 ### 10.5 External directory allowlist manager
 
 A dedicated card for managing the external directory allowlist (§3.3):
@@ -803,23 +675,24 @@ Every permission outcome that matters operationally — grant, deny, or prompt �
 
 ## 11. OpenCode baseline and Puppet Master deltas
 
-<a id="BASELINE-DELTAS"></a>
+External OpenCode behavior is reference-only. Puppet Master permission canon is defined here.
 
-Per `Plans/OpenCode_Deep_Extraction.md` §7C:
+ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Tools.md
 
-### 11.1 Baseline
+### 11.1 Baseline status
 
-OpenCode's permission system uses a `Ruleset` (array of `{permission, pattern, action}` rules) with `fromConfig()` converting config to rules. Wildcard matching via `wildcard.ts`. Ask flow: `once`/`always`/`reject` with reject-all cascade. Default `.env` deny rules. `external_directory` and `doom_loop` as special guards.
+External examples may inform terminology, but they do not override PM's approval ladder, preset matrix, or batch permission behavior.
 
 ### 11.2 Puppet Master deltas
 
-1. **Multi-layer precedence:** OpenCode uses a flat config + session overlay. Puppet Master adds Persona overrides, project-level, and global-level as distinct precedence layers (§2.4).
-2. **TOML persistence:** OpenCode stores permissions in JSON config. Puppet Master uses TOML files at deterministic paths (§9), enabling version-control-friendly project permissions.
-3. **Named permission profiles:** OpenCode has per-agent permission overrides. Puppet Master formalizes these as named profiles referenced by Personas (§9, §10.7).
-4. **Mode integration:** OpenCode has no formal mode system. Puppet Master's mode layer (§2.4 priority 1) provides unconditional overrides from `yolo`/`ask`/`plan` modes.
-5. **Dedicated GUI:** OpenCode has no GUI. Puppet Master provides a full permissions settings screen (§10).
+- PM uses `deny | once | for session | always`
+- PM keeps read-only and plan web operations at `ask`
+- batch web approvals list all unique domains in scope and treat `For Session` as a grant for those domains for the session
 
-ContractRef: ContractName:Plans/OpenCode_Deep_Extraction.md
+### 11.3 Acceptance alignment
+
+<a id="AC-PM07"></a>
+**AC-PM07:** The `deny` response rejects the current blocked episode and may reject other pending asks only when their `approval_scope_key` exactly matches.
 
 ---
 
@@ -848,9 +721,6 @@ ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Progre
 
 <a id="AC-PM06"></a>
 **AC-PM06:** The `always` response (§6.2) MUST bind approval to the canonical blocked episode and MAY reuse it only through an exact `approval_scope_key` match or explicit durable project/global rule creation. It MUST NOT create a blind session-wide allow.
-
-<a id="AC-PM07"></a>
-**AC-PM07:** The `reject` response (§6.3) MUST reject the current blocked episode and MAY reject other pending asks only when their `approval_scope_key` exactly matches.
 
 <a id="AC-PM08"></a>
 **AC-PM08:** Default `.env` deny rules (§7.1) MUST deny reading `.env` and `.env.*` files while allowing `.env.example`.

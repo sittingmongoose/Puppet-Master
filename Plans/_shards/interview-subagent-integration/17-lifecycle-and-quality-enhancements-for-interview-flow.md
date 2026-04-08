@@ -99,7 +99,7 @@ ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/orchestrator
 **Concept:** Track which subagent is currently active at each interview phase. Store in interview state and expose for logging, debugging, and audit trails.
 
 **Canonical visibility rule:**
-- The Interview surface, shared Agent Activity Pane, and any audit projection must display/request the same fields: `requested_persona_id`, `effective_persona_id`, `selection_reason`, `provider`, `model`, and skipped unsupported controls if any. This aligns Interview-specific visibility with the shared runtime-display rules added in `Plans/assistant-chat-design.md`, `Plans/FinalGUISpec.md`, and `Plans/Models_System.md`.
+- The Interview surface, shared Agent Activity Pane, and any audit projection must display/request the same fields: `requested_persona`, `effective_persona`, `selection_reason`, `provider`, `model`, and skipped unsupported controls if any. This aligns Interview-specific visibility with the shared runtime-display rules added in `Plans/assistant-chat-design.md`, `Plans/FinalGUISpec.md`, and `Plans/Models_System.md`.
 
 **BeforePhase tracking responsibilities:**
 

@@ -748,3 +748,17 @@ ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Run_Modes.md
 - bridged-provider output MUST remain sufficient for runtime classification, and provider-local retry behavior MUST NOT bypass the shared runtime matrix
 
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Multi-Account.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Permissions_System.md
+
+
+## Firecrawl provider entry
+
+Firecrawl is a first-class web provider entry. Consumer summaries here defer to the owner contracts in `Plans/Tools.md`.
+
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Models_System.md
+
+Required consumer points:
+- provider id is `firecrawl`
+- Firecrawl is disabled by default until explicitly enabled
+- support tier is disclosed per operation rather than flattened into one “native for all” label
+- requested/effective runtime identity and routing disclosure remain visible when Firecrawl is selected
+- native multi-URL extract remains the `/v2/extract` with `urls[]` path rather than a scrape-plus-PM-extract rewrite

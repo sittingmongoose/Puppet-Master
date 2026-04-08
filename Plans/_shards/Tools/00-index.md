@@ -25,3 +25,8 @@ Canonical source: [Plans/Tools.md](../../Tools.md)
 - [17-tool-denial-and-runtime-action-reconciliation-addendum-2026-03-09.md](17-tool-denial-and-runtime-action-reconciliation-addendum-2026-03-09.md) — ## Tool Denial and Runtime Action Reconciliation Addendum (2026-03-09)
 - [18-tool-denial-runtime-blocked-payload-consolidation-addendum-2026-03-09.md](18-tool-denial-runtime-blocked-payload-consolidation-addendum-2026-03-09.md) — ## Tool Denial Runtime Blocked Payload Consolidation Addendum (2026-03-09)
 - [19-tool-field-name-and-taxonomy-alignment.md](19-tool-field-name-and-taxonomy-alignment.md) — ## Tool Field Name and Taxonomy Alignment
+- [20-10-firecrawl-provider-integration.md](20-10-firecrawl-provider-integration.md) — ## 10. Firecrawl provider integration
+- [21-11-provider-capability-matrix.md](21-11-provider-capability-matrix.md) — ## 11. Provider capability matrix
+- [22-12-web-tool-routing-algorithm.md](22-12-web-tool-routing-algorithm.md) — ## 12. Web tool routing algorithm
+- [23-13-batch-operations.md](23-13-batch-operations.md) — ## 13. Batch operations
+- [24-14-web-content-caching-layer.md](24-14-web-content-caching-layer.md) — ## 14. Web content caching layer

@@ -1,0 +1,20 @@
+PACKET SHAPE REPORT
+run_id: r-20260329-235630-11
+status: COMPLETE
+
+No packet-shape issues found in the checked categories:
+- non-insertable packet content
+- malformed replace_section body
+- missing heading anchor in source
+- overlapping anchor application order
+- structured-container mispacketization
+- canonicalization-destabilizing shape
+- ContractRef locality compatibility
+
+Verifier-survivable shape notes:
+- every heading anchor in the packet exists verbatim in the current source doc
+- every `replace_section` body starts below the anchor heading level and does not begin with a same-level or higher heading
+- no overlapping source-section replacements were detected
+- every packet target is heading-anchored `replace_section`, avoiding append-based structured-container mutations
+- the emitted `Contracts_V0` `### 1.1 Assistant worktree seglog events` anchor remains replace-scoped against the existing headed source section
+- ContractRef locality is compatible with the verifier's bounded lookahead

@@ -838,14 +838,22 @@ ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Run_Modes.md
 
 #### Child teardown and deallocation
 
-Child lifecycle cleanup is a deterministic owner contract:
-- child sessions, provider processes, MCP clients, LSP sessions, shell instances, and child-owned temporary state MUST be deallocated on successful completion, cancellation, timeout, budget kill, or parent teardown
-- teardown order is deterministic: stop new dispatch, request graceful stop, flush buffered child events, close child-owned helper sessions, then force-terminate any remaining child process groups
-- parent cancellation or terminal cleanup MUST NOT orphan child providers or keep billed helper state alive after the child is done
-- failed teardown emits a structured diagnostic and forces any retry or reroute onto fresh runtime identity rather than reusing leaked state
 
-ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Tools.md, ContractName:Plans/orchestrator-subagent-integration.md
+#### Task tool contract alignment
 
+Orchestrator delegation uses the shared `task` contract rather than an orchestration-local lifecycle.
+
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Permissions_System.md
+
+Child lifecycle:
+`pending → running → completed | failed | cancelled | timed_out`
+
+Alignment rules:
+- resume reuses the same `delegated_session_id`
+- `owner_hint` resolves by exact match against `crew.roles`; on no match the current session remains the owner
+- hidden or unavailable subagents are not advertised as choices
+- nested `task` remains denied by default
+- retries are parent-owned policy rather than child self-retry behavior
 ## Benefits
 
 1. **Dynamic Adaptation:** Automatically selects appropriate subagents based on project context

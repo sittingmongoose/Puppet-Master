@@ -299,7 +299,7 @@ ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Tools.md, Co
 
 Canonical key reconciliation notes:
 - `attempt_record.v1:{project_id}:{node_id}:{attempt_number}` is the canonical attempt key. `project_id` is required for cross-project queries, retention, and cleanup; `run_id` and `attempt_id` remain stored fields on the record but are not key components.
-- `blocked_projection.v1:{project_id}:{node_id}` is the canonical blocked-state key. The value includes `{ blocked_reason_code, blocked_at, blocked_family, approval_scope_key?, unblock_action_ids[] }`.
+- `blocked_projection.v1:{project_id}:{node_id}` is the canonical blocked-state key. The value includes `{ blocked_reason_code, blocked_at, blocked_family, approval_scope_key?, allowed_action_ids[] }`.
 - older 3-component or run-scoped variants are superseded by the canonical forms above and remain migration-read aliases only.
 
 GitHub Actions panel state:
