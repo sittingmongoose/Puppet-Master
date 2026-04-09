@@ -1463,7 +1463,7 @@ ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/FileSa
 - **Single API (recommended):** `policy.may_execute_tool(tool_name, invocation_context) -> Result<Allow | Deny(reason) | Ask, Error>` remains the permission entrypoint within that sequence. Runner code calls it before any underlying tool implementation is invoked.
 - **FileSafe contract:** FileSafe exposes e.g. `check_bash_command(cmd)`, `check_write_path(path)`, `check_read_path(path)`. For file-affecting or shell-affecting tools, FileSafe runs on normalized arguments inside the canonical `§8.2` flow; hook-mutated arguments trigger the required re-checks before dispatch.
 
-### 10.7 Ask UI contract
+### 10.7 Ask-flow runner notes
 
 Ask-flow semantics (`deny`/`once`/`for session`/`always`) are defined in `Plans/Permissions_System.md` §6. Implementation notes for the runner:
 
@@ -1852,7 +1852,6 @@ Defaults and ordering:
 Fallback disclosure:
 - `provider_fallback_summary` stays visible in chat and audit logs whenever a fallback occurs.
 - provider fallback is explanatory rather than silent; rate-limit and health failures include a user-facing recovery hint.
-- stale cited-search framing and older `newtools` wording are retired in favor of this owner section plus the consumer disclosures in `Plans/FinalGUISpec.md` and `Plans/newtools.md`.
 
 ContractRef: ContractName:Plans/newtools.md, ContractName:Plans/FinalGUISpec.md
 

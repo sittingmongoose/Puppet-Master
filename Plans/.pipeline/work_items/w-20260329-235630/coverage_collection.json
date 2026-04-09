@@ -1,7 +1,7 @@
 {
   "schema_id": "pm.coverage_collection.v1",
   "work_id": "w-20260329-235630",
-  "created_at_utc": "2026-04-08T02:40:03.151Z",
+  "created_at_utc": "2026-04-09T03:04:17.841Z",
   "topic_or_scope": "Firecrawl Gap Analysis + Lost-Spec Recovery",
   "collected_sections": [
     {
@@ -57,9 +57,7 @@
         "required_obligation:obl-035: expose blocked recovery payload instead of GUI-local substitutes",
         "required_obligation:obl-056: surface shared web output fields in-thread",
         "required_obligation:obl-059: surface blocked/denied recovery fields from storage",
-        "required_obligation:obl-060: surface adapter-selection and projection disclosure fields from storage",
-        "unresolved_fidelity:FIDELITY-XREF-13.2-01",
-        "fidelity_recovery_plan:FIDELITY-XREF-13.2-01"
+        "required_obligation:obl-060: surface adapter-selection and projection disclosure fields from storage"
       ],
       "exact_items_that_must_survive": {
         "required_obligations": [
@@ -498,11 +496,13 @@
       "section_role": "owner_section",
       "source_reasons": [
         "section_obligation_map",
-        "required_obligation:obl-053: own Firecrawl provider identity, default ordering, and disabled-by-default posture"
+        "required_obligation:obl-053: own Firecrawl provider identity, default ordering, disabled-by-default posture, and retire stale cited-search/newtools migration residue",
+        "unresolved_fidelity:FIDELITY-R15-002",
+        "fidelity_recovery_plan:FIDELITY-R15-002"
       ],
       "exact_items_that_must_survive": {
         "required_obligations": [
-          "obl-053: own Firecrawl provider identity, default ordering, and disabled-by-default posture"
+          "obl-053: own Firecrawl provider identity, default ordering, disabled-by-default posture, and retire stale cited-search/newtools migration residue"
         ],
         "required_exact_tokens": [
           "Provider ID",
@@ -532,7 +532,7 @@
         ]
       },
       "stale_residue_to_retire": [
-        "stale cited-search framing and older newtools wording"
+        "stale cited-search framing and older `newtools` wording"
       ],
       "status": "active"
     },
@@ -548,11 +548,7 @@
         "required_obligation:obl-056: own shared web output field persistence",
         "required_obligation:obl-059: own blocked/denied recovery persistence",
         "required_obligation:obl-060: own requested/effective adapter and projection state carry-through",
-        "required_obligation:obl-067: mirror cache bypass and cache_state rules into persistence",
-        "unresolved_fidelity:FIDELITY-STORAGE-WEBPAYLOAD-001",
-        "fidelity_recovery_plan:FIDELITY-STORAGE-WEBPAYLOAD-001",
-        "unresolved_fidelity:FIDELITY-STORAGE-RESIDUE-001",
-        "fidelity_recovery_plan:FIDELITY-STORAGE-RESIDUE-001"
+        "required_obligation:obl-067: mirror cache bypass and cache_state rules into persistence"
       ],
       "exact_items_that_must_survive": {
         "required_obligations": [
@@ -684,9 +680,7 @@
       "section_role": "owner_section",
       "source_reasons": [
         "section_obligation_map",
-        "required_obligation:obl-029: own approval-card summaries and web session-approval semantics",
-        "unresolved_fidelity:FIDELITY-PERM-XREF-001",
-        "fidelity_recovery_plan:FIDELITY-PERM-XREF-001"
+        "required_obligation:obl-029: own approval-card summaries and web session-approval semantics"
       ],
       "exact_items_that_must_survive": {
         "required_obligations": [
@@ -736,8 +730,8 @@
         "required_obligation:obl-029: mirror summary-template and session-approval semantics",
         "required_obligation:obl-035: carry canonical blocked classes and unavailable status",
         "required_obligation:obl-062: carry the approval ladder and ask-gated web/question posture",
-        "unresolved_fidelity:FIDELITY-062-15.7-01",
-        "fidelity_recovery_plan:FIDELITY-062-15.7-01"
+        "unresolved_fidelity:FIDELITY-R15-001",
+        "fidelity_recovery_plan:FIDELITY-R15-001"
       ],
       "exact_items_that_must_survive": {
         "required_obligations": [
@@ -793,7 +787,8 @@
       "source_reasons": [
         "section_obligation_map",
         "required_obligation:obl-014: mirror Firecrawl configuration vocabulary",
-        "required_obligation:obl-053: mirror Firecrawl provider identity/default ordering"
+        "required_obligation:obl-053: mirror Firecrawl provider identity/default ordering",
+        "fidelity_recovery_plan:affected_by:FIDELITY-R15-002"
       ],
       "exact_items_that_must_survive": {
         "required_obligations": [
@@ -839,7 +834,8 @@
       "source_reasons": [
         "section_obligation_map",
         "required_obligation:obl-014: mirror Firecrawl proxy/deployment vocabulary",
-        "required_obligation:obl-053: mirror Firecrawl provider identity/default ordering"
+        "required_obligation:obl-053: mirror Firecrawl provider identity/default ordering",
+        "fidelity_recovery_plan:affected_by:FIDELITY-R15-002"
       ],
       "exact_items_that_must_survive": {
         "required_obligations": [
@@ -884,7 +880,8 @@
       "section_role": "consumer_section",
       "source_reasons": [
         "section_obligation_map",
-        "required_obligation:obl-053: mirror Firecrawl provider identity/default ordering in the older GUI/settings consumer note"
+        "required_obligation:obl-053: mirror Firecrawl provider identity/default ordering in the older GUI/settings consumer note",
+        "fidelity_recovery_plan:affected_by:FIDELITY-R15-002"
       ],
       "exact_items_that_must_survive": {
         "required_obligations": [
@@ -1160,9 +1157,7 @@
       "source_reasons": [
         "section_obligation_map",
         "required_obligation:obl-040: define plan/TODO mutation event coupling in the event owner",
-        "required_obligation:obl-068: add the explicit chat.plan_todo_updated event contract",
-        "unresolved_fidelity:FIDELITY-CONTRACTS-PLANTODO-001",
-        "fidelity_recovery_plan:FIDELITY-CONTRACTS-PLANTODO-001"
+        "required_obligation:obl-068: add the explicit chat.plan_todo_updated event contract"
       ],
       "exact_items_that_must_survive": {
         "required_obligations": [
@@ -2180,9 +2175,7 @@
       "source_reasons": [
         "section_obligation_map",
         "required_obligation:obl-046: own the reserved built-in slash set, /cancel alias semantics, and /clear retirement",
-        "required_obligation:obl-047: mirror the canonical /web family IDs and bare-/web help behavior",
-        "unresolved_fidelity:FIDELITY-COMMANDS-SLASH-001",
-        "fidelity_recovery_plan:FIDELITY-COMMANDS-SLASH-001"
+        "required_obligation:obl-047: mirror the canonical /web family IDs and bare-/web help behavior"
       ],
       "exact_items_that_must_survive": {
         "required_obligations": [
@@ -2291,9 +2284,7 @@
         "required_obligation:obl-046: mirror the reserved built-in slash set and deprecation state",
         "required_obligation:obl-047: own the /web family identities and parsing behavior",
         "required_obligation:obl-048: mirror NL-to-web dispatcher parity in the command catalog",
-        "required_obligation:obl-051: own /skill discovery and invocation convergence",
-        "unresolved_fidelity:FIDELITY-UICATALOG-SLASH-001",
-        "fidelity_recovery_plan:FIDELITY-UICATALOG-SLASH-001"
+        "required_obligation:obl-051: own /skill discovery and invocation convergence"
       ],
       "exact_items_that_must_survive": {
         "required_obligations": [
@@ -2532,9 +2523,7 @@
       "section_role": "owner_section",
       "source_reasons": [
         "section_obligation_map",
-        "required_obligation:obl-045: own widget-side Mermaid and inline visualizer actions plus sandbox rules",
-        "unresolved_fidelity:FIDELITY-XREF-15.6-01",
-        "fidelity_recovery_plan:FIDELITY-XREF-15.6-01"
+        "required_obligation:obl-045: own widget-side Mermaid and inline visualizer actions plus sandbox rules"
       ],
       "exact_items_that_must_survive": {
         "required_obligations": [
@@ -2783,9 +2772,7 @@
       "section_role": "owner_section",
       "source_reasons": [
         "section_obligation_map",
-        "required_obligation:obl-064: own the canonical operation inventory, envelope, parameters, and rename approval edge",
-        "unresolved_fidelity:FIDELITY-LSP-064-01",
-        "fidelity_recovery_plan:FIDELITY-LSP-064-01"
+        "required_obligation:obl-064: own the canonical operation inventory, envelope, parameters, and rename approval edge"
       ],
       "exact_items_that_must_survive": {
         "required_obligations": [
@@ -2945,200 +2932,35 @@
   ],
   "unresolved_findings": [
     {
-      "fidelity_id": "FIDELITY-LSP-064-01",
-      "severity": "medium",
-      "finding_classification": "interface shape missing",
-      "where": "Plans/LSPSupport.md#9. MVP LSP features (summary)",
-      "exact_obligation": "`obl-064: own the canonical operation inventory, envelope, parameters, and rename approval edge`",
-      "exact_missing_tokens": "`query`",
-      "why_unresolved": "`workspaceSymbol` survives in the canonical operation list, but the owner parameter carry-through only defines `path + position` and `rename` with `newName`. `query` appears only as a stray rules bullet, not as owned parameter shape, so the owner section is over-summarized at the interface-definition point.",
-      "recovery_needed": "other",
-      "owner_doc": "`Plans/LSPSupport.md`",
-      "affected_consumer_or_mirror_docs": [
-        "Plans/Tools.md#3.4.1 LSP tool (MVP) -- parameters, permission, rename approval",
-        "Plans/FinalGUISpec.md#10.10 LSP-informed affordances",
-        "Plans/FinalGUISpec.md#15.7 Permission approval card widget"
-      ],
-      "likely_heading_or_section": "## 9. MVP LSP features (summary)",
-      "required_operation": "replace_section",
-      "stale_residue_retirement_needed": "no",
-      "packet_regeneration_needed": "yes"
-    },
-    {
-      "fidelity_id": "FIDELITY-PERM-XREF-001",
-      "severity": "medium",
-      "finding_classification": "cross-reference stale",
-      "where": "Plans/Permissions_System.md#3.4A Web-operation permission-key derivation",
-      "exact_obligation": "replace stale `Plans/Tools.md#10.7 Ask UI contract` references with `Plans/FinalGUISpec.md#15.7 Permission approval card widget` and the actual consumer sections that render the summaries",
-      "exact_missing_tokens": "none; stale token still present twice: `Plans/Tools.md#10.7 Ask UI contract`",
-      "why_unresolved": "the section still carries the stale ContractRef and even leaves a rewrite note telling a future pass to replace it. The rewrite did not land in the live section, so the canonical cross-reference carry-through is incomplete.",
-      "recovery_needed": "retire stale residue",
-      "owner_doc": "`Plans/Permissions_System.md`",
-      "affected_consumer_or_mirror_docs": [
-        "Plans/FinalGUISpec.md#15.7 Permission approval card widget"
-      ],
-      "likely_heading_or_section": "### 3.4A Web-operation permission-key derivation",
-      "required_operation": "replace_section",
-      "stale_residue_retirement_needed": "yes",
-      "packet_regeneration_needed": "yes"
-    },
-    {
-      "fidelity_id": "FIDELITY-COMMANDS-SLASH-001",
-      "severity": "high",
-      "finding_classification": "stale contradictory residue",
-      "where": "Plans/Commands_System.md#7. Reserved built-in slash commands",
-      "exact_obligation": "the reserved built-in slash-command set is locked and non-overridable; bare `/web` has no default action, bare `/skill` is discovery or invocation only, `/cancel` remains a deprecated alias to `/stop`, and `/clear` stays removed",
-      "exact_missing_tokens": "missing from the live reserved-set list: `/skill`; stale reserved-set tokens still present: `/rewind`, `/revert`, `/share`, `/settings`, `/doctor`, `/help`, `/worktree`",
-      "why_unresolved": "the declared reserved-set list still reflects older canon even though the follow-on bullets describe `/skill`, `/cancel`, and `/clear` correctly. The section therefore contradicts its own live behavior notes and leaves stale reserved-set residue in the owner section.",
-      "recovery_needed": "retire stale residue",
-      "owner_doc": "`Plans/Commands_System.md`",
-      "affected_consumer_or_mirror_docs": [
-        "Plans/UI_Command_Catalog.md#2.7 Chat slash commands (reserved)",
-        "Plans/assistant-chat-design.md#5.1 Reserved built-ins",
-        "Plans/assistant-chat-design.md#5.2 /web and /skill"
-      ],
-      "likely_heading_or_section": "## 7. Reserved built-in slash commands",
-      "required_operation": "replace_section",
-      "stale_residue_retirement_needed": "yes",
-      "packet_regeneration_needed": "yes"
-    },
-    {
-      "fidelity_id": "FIDELITY-UICATALOG-SLASH-001",
-      "severity": "high",
-      "finding_classification": "consumer propagation missing",
-      "where": "Plans/UI_Command_Catalog.md#2.7 Chat slash commands (reserved)",
-      "exact_obligation": "mirror the reserved built-in slash set and deprecation state from the owner slash-command section",
-      "exact_missing_tokens": "missing from the live `Reserved set:` list: `/skill`; stale reserved-set tokens still present: `/rewind`, `/revert`, `/share`, `/settings`, `/doctor`, `/help`, `/worktree`",
-      "why_unresolved": "the catalog consumer still mirrors the outdated reserved membership instead of the locked baseline, so catalog non-editability and deprecation semantics would be applied to the wrong command set.",
-      "recovery_needed": "update consumer section",
-      "owner_doc": "`Plans/Commands_System.md`",
-      "affected_consumer_or_mirror_docs": [
-        "Plans/UI_Command_Catalog.md#2.7 Chat slash commands (reserved)",
-        "Plans/assistant-chat-design.md#5.1 Reserved built-ins",
-        "Plans/assistant-chat-design.md#5.2 /web and /skill"
-      ],
-      "likely_heading_or_section": "### 2.7 Chat slash commands (reserved)",
-      "required_operation": "replace_section",
-      "stale_residue_retirement_needed": "yes",
-      "packet_regeneration_needed": "yes"
-    },
-    {
-      "fidelity_id": "FIDELITY-062-15.7-01",
-      "severity": "high",
+      "fidelity_id": "FIDELITY-R15-001",
       "finding_classification": "consumer propagation missing",
       "where": "Plans/FinalGUISpec.md#15.7 Permission approval card widget",
-      "exact_obligation": "the four-step approval ladder must survive in the permission card consumer: `deny`, `once`, `for session`, `always`",
-      "exact_missing_tokens": "`deny`",
-      "why_unresolved": "the widget section preserves `once`, `for session`, and `always` but omits `deny`, so the permission-card consumer no longer mirrors the full approval ladder required by permission canon.",
-      "recovery_needed": "update consumer section",
-      "owner_doc": "`Plans/Permissions_System.md`",
-      "affected_consumer_or_mirror_docs": [
-        "Plans/FinalGUISpec.md#15.7 Permission approval card widget",
-        "Plans/assistant-chat-design.md#4. Message submission (Steer vs Queue), queued editing, interrupt, and stop"
+      "exact_obligation_that_did_not_fully_survive": "obl-062 requires the approval-card consumer to carry the full four-step approval ladder and ask-gated web/question posture.",
+      "exact_missing_tokens": [
+        "deny"
       ],
-      "likely_heading_or_section": "### 15.7 Permission approval card widget",
-      "required_operation": "replace_section",
-      "stale_residue_retirement_needed": "no",
-      "packet_regeneration_needed": "yes"
+      "stale_residue_to_retire": [],
+      "affected_sections": [
+        "Plans/FinalGUISpec.md#15.7 Permission approval card widget"
+      ],
+      "recovery_needed": "update consumer section"
     },
     {
-      "fidelity_id": "FIDELITY-XREF-13.2-01",
-      "severity": "medium",
-      "finding_classification": "cross-reference stale",
-      "where": "Plans/assistant-chat-design.md#13.2 Web activity and provenance",
-      "exact_obligation": "the ContractRef set should point at `Plans/storage-plan.md#4.4 Activity transparency payloads`, `Plans/Contracts_V0.md#3.4 Tool-specific payload extensions`, and `Plans/Section15_MVP_Promoted_Features_Spec.md#3.18 Built-in Browser and Click-to-Context`",
-      "exact_missing_tokens": "missing in the live ContractRef set: `ContractName:Plans/storage-plan.md#4.4 Activity transparency payloads`, `ContractName:Plans/Contracts_V0.md#3.4 Tool-specific payload extensions`, `ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md#3.18 Built-in Browser and Click-to-Context`; stale remaining: `ContractName:Plans/storage-plan.md#44-activity-transparency-payloads`",
-      "why_unresolved": "the section contains a rewrite note, but the live ContractRef is still malformed and generic instead of carrying the required anchor-level linkage.",
-      "recovery_needed": "retire stale residue",
-      "owner_doc": "`Plans/assistant-chat-design.md`",
-      "affected_consumer_or_mirror_docs": [
-        "Plans/storage-plan.md#4.4 Activity transparency payloads",
-        "Plans/Contracts_V0.md#3.4 Tool-specific payload extensions",
-        "Plans/Section15_MVP_Promoted_Features_Spec.md#3.18 Built-in Browser and Click-to-Context",
-        "Plans/Tools.md#12. Web tool routing algorithm"
-      ],
-      "likely_heading_or_section": "### 13.2 Web activity and provenance",
-      "required_operation": "replace_section",
-      "stale_residue_retirement_needed": "yes",
-      "packet_regeneration_needed": "yes"
-    },
-    {
-      "fidelity_id": "FIDELITY-XREF-15.6-01",
-      "severity": "medium",
-      "finding_classification": "cross-reference stale",
-      "where": "Plans/FinalGUISpec.md#15.6 Mermaid and inline visualizer widgets",
-      "exact_obligation": "the widget bridge reference must consume `Plans/assistant-chat-design.md#28.2 Inline visualizer bridge`",
-      "exact_missing_tokens": "missing: `Plans/assistant-chat-design.md#28.2 Inline visualizer bridge`; stale remaining: `Plans/assistant-chat-design.md#282-inline-visualizer-bridge`",
-      "why_unresolved": "both prose and ContractRef still use the malformed anchor, so the bridge source reference never fully survived into the consumer widget section.",
-      "recovery_needed": "retire stale residue",
-      "owner_doc": "`Plans/assistant-chat-design.md`",
-      "affected_consumer_or_mirror_docs": [
-        "Plans/FinalGUISpec.md#15.6 Mermaid and inline visualizer widgets"
-      ],
-      "likely_heading_or_section": "### 15.6 Mermaid and inline visualizer widgets",
-      "required_operation": "replace_section",
-      "stale_residue_retirement_needed": "yes",
-      "packet_regeneration_needed": "yes"
-    },
-    {
-      "fidelity_id": "FIDELITY-STORAGE-WEBPAYLOAD-001",
-      "severity": "high",
-      "finding_classification": "interface shape missing",
-      "where": "Plans/storage-plan.md#4.4 Activity transparency payloads",
-      "exact_obligation": "blocked and denied activity payloads must preserve the exact blocked and denial payload keys, and stale `unblock_action_ids[]`-style residue must stay retired",
-      "exact_missing_tokens": "`blocked_reason_code` is missing from the owned `#### Web-operation child payload` key table",
-      "why_unresolved": "`blocked_reason_code` survives only later in carry-through prose while sibling blocked/denied fields (`allowed_action_ids[]`, `denial_reason_code`, `denial_source`, `suggested_recovery_action`) are present in the payload table. The interface-definition point is therefore incomplete.",
-      "recovery_needed": "packetize fuller section content",
-      "owner_doc": "`Plans/storage-plan.md`",
-      "affected_consumer_or_mirror_docs": [
-        "Plans/assistant-chat-design.md#13.2 Web activity and provenance",
-        "Plans/FinalGUISpec.md#15.3 Web and diff operation card widget",
-        "Plans/Contracts_V0.md#3.4 Tool-specific payload extensions"
-      ],
-      "likely_heading_or_section": "### 4.4 Activity transparency payloads",
-      "required_operation": "replace_section",
-      "stale_residue_retirement_needed": "yes",
-      "packet_regeneration_needed": "yes"
-    },
-    {
-      "fidelity_id": "FIDELITY-STORAGE-RESIDUE-001",
-      "severity": "high",
+      "fidelity_id": "FIDELITY-R15-002",
       "finding_classification": "stale contradictory residue",
-      "where": "Plans/storage-plan.md#4.4 Activity transparency payloads",
-      "exact_obligation": "the per-contract web error applicability and shared activity payload canon must remain aligned and must not leave unrelated or contradictory residue in the owner section",
-      "exact_missing_tokens": "none; stale contradictory residue still present: `permission_denied`, `network_error`, `provider_unavailable`, `headless_unavailable`, `status: \"unavailable\"`, ``Open in Terminal` and `Show Terminal` must focus the same live session``, `after promotion, chat stops owning the full transcript`, `inline cards persist across thread reload and re-render from persisted metadata`, `search and diff do not stream progressively`, `adapter_id`",
-      "why_unresolved": "this stray block sits after the cache ContractRef and is not part of the 4.4 owner payload schema. `provider_unavailable` also contradicts canonical error canon, which uses `adapter_unavailable`, and the terminal/chat/card bullets belong to unrelated sections.",
-      "recovery_needed": "retire stale residue",
-      "owner_doc": "`Plans/storage-plan.md`",
-      "affected_consumer_or_mirror_docs": [
-        "Plans/assistant-chat-design.md#13.2 Web activity and provenance",
-        "Plans/FinalGUISpec.md#15.3 Web and diff operation card widget",
-        "Plans/Contracts_V0.md#3.4 Tool-specific payload extensions"
+      "where": "Plans/Tools.md#11.1 Provider classes, defaults, and fallback disclosure",
+      "exact_obligation_that_did_not_fully_survive": "obl-053 requires Firecrawl provider identity/default-ordering canon to survive without stale migration prose; the exact residue `stale cited-search framing and older `newtools` wording` must not remain.",
+      "exact_missing_tokens": [],
+      "stale_residue_to_retire": [
+        "stale cited-search framing and older `newtools` wording"
       ],
-      "likely_heading_or_section": "### 4.4 Activity transparency payloads",
-      "required_operation": "replace_section",
-      "stale_residue_retirement_needed": "yes",
-      "packet_regeneration_needed": "yes"
-    },
-    {
-      "fidelity_id": "FIDELITY-CONTRACTS-PLANTODO-001",
-      "severity": "medium",
-      "finding_classification": "stale contradictory residue",
-      "where": "Plans/Contracts_V0.md#1.1 Assistant worktree seglog events",
-      "exact_obligation": "`chat.plan_todo_updated` must have an explicit owner-contract definition for durable plan/TODO mutations, without inventing a contradictory mutation-source enum",
-      "exact_missing_tokens": "none; stale contradictory enum member still present: `todoread`",
-      "why_unresolved": "`chat.plan_todo_updated` is explicitly defined for durable TODO mutations, while audited tool canon defines `todoread` as read-only (`todoread returns current normalized list for active thread/run`). Keeping `todoread` in the mutation-source enum leaves contradictory residue in the owner event contract.",
-      "recovery_needed": "retire stale residue",
-      "owner_doc": "`Plans/Contracts_V0.md`",
-      "affected_consumer_or_mirror_docs": [
-        "Plans/storage-plan.md#4.3 Plan and TODO state",
-        "Plans/assistant-chat-design.md#8.6 Normalized TODO contract for planning outputs",
-        "Plans/Tools.md#3.5C todowrite and todoread runtime contract"
+      "affected_sections": [
+        "Plans/Tools.md#11.1 Provider classes, defaults, and fallback disclosure",
+        "Plans/FinalGUISpec.md#7.4.4 Settings (Unified) panel specification",
+        "Plans/Models_System.md#4.5 Web tool provider capability alignment",
+        "Plans/newtools.md#8.2 GUI/settings alignment"
       ],
-      "likely_heading_or_section": "### 1.1 Assistant worktree seglog events",
-      "required_operation": "replace_section",
-      "stale_residue_retirement_needed": "yes",
-      "packet_regeneration_needed": "yes"
+      "recovery_needed": "retire stale residue"
     }
   ]
 }

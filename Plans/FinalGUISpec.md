@@ -2995,6 +2995,7 @@ Behavior rules:
 ContractRef: ContractName:Plans/Permissions_System.md#3.4A Web-operation permission-key derivation, ContractName:Plans/LSPSupport.md, ContractName:Plans/assistant-chat-design.md
 
 Rules:
+- deny
 - once
 - for session
 - always
