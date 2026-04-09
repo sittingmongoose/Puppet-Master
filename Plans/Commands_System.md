@@ -369,32 +369,55 @@ The preview does NOT execute any run. Shell injections in preview mode execute t
 ### 6.3 Shortcut binding
 
 ## 7. Reserved built-in slash commands
-The reserved built-in slash-command set is:
 
-`/new`, `/model`, `/effort`, `/mode`, `/export`, `/compact`, `/stop`, `/resume`, `/web`, `/skill`
+This section defines the canonical contract for this surface.
 
-ContractRef: ContractName:Plans/UI_Command_Catalog.md#2.7 Chat slash commands (reserved), ContractName:Plans/assistant-chat-design.md#5.1 Reserved built-ins
+Core rules:
+- The reserved built-in slash-command set is locked and non-overridable; bare /web has no default action, bare /skill is discovery or invocation only, /cancel remains a deprecated alias to /stop, and /clear stays removed.
+- The /web family is locked as one slash-command family with stable command IDs, bare /web help behavior, and no flattening into separate top-level families.
 
-Additional rules:
-- `/cancel` is a deprecated compatibility alias to `/stop`
-- `/clear` is removed from live canon
-- bare `/web` opens help/autocomplete and has no default operation
-- the stable `/web` family identities are `/web search`, `/web fetch`, `/web extract`, `/web research`, `/web crawl`, and `/web map`
-- bare `/skill` is a discovery or invocation affordance and is not equivalent to “open panel”
-- reserved commands shown as non-editable in catalog
-- deprecated aliases shown distinctly from active commands
-- `/web` remains discoverable in catalog
-- subcommand is required for execution, URL normalization applies, and parse failure shows usage for `/web` execution paths
+Fields:
+- slash prototype
+- stable command ID
+- subcommand-required parsing
+
+Labels and values:
+- /new
+- /model
+- /effort
+- /mode
+- /export
+- /compact
+- /stop
+- /resume
+- /web
+- /skill
+- /cancel
+- reserved built-ins
 
 Rules:
-- reserved slash command
-- alias/deprecation state
-- catalog editability
+- /web search <query>
+- /web extract <url>
+- /web research <task>
+- /web crawl <url>
+- /web map <url>
+- cmd.chat.web.search
+- cmd.chat.web.extract
+- cmd.chat.web.research
+- /web fetch <url>
+- cmd.chat.web.fetch
+- cmd.chat.web.crawl
+- cmd.chat.web.map
+- bare /web shows help/autocomplete only
+- do not flatten /web into separate slash families
+- subcommand is required for execution
+- URL normalization applies
+- parse failure shows usage
 - /cancel resolves internally to cmd.chat.stop
-- /clear is removed from live canon, not merely hidden
-- bare /web opens help/autocomplete and has no default operation
-- bare /skill is a discovery or invocation affordance, not panel-open shorthand
-- Keep slash-command consumers anchored to Plans/UI_Command_Catalog.md#2.7 Chat slash commands (reserved) and Plans/assistant-chat-design.md#5.1 Reserved built-ins
+- /web remains discoverable in catalog
+- deprecated aliases shown distinctly from active commands
+- reserved commands shown as non-editable in catalog
+
 ## 7. UICommand catalog entry
 
 <a id="UICOMMAND-ENTRY"></a>

@@ -31,32 +31,26 @@ ContractRef: ContractName:Plans/Contracts_V0.md
 ## 1. Events (persisted)
 
 ### 1.1 Assistant worktree seglog events
-Twelve events for assistant thread-level worktree binding, merge, PR, pre-merge testing, and planning/TODO projection lifecycle.
 
-| Event type | Fields | Seglog stream |
-|---|---|---|
-| `chat.thread_worktree_bound` | `thread_id`, `worktree_id`, `branch_name`, `worktree_path`, `binding_origin` (`manual`\|`auto_create`) | `chat` |
-| `chat.thread_worktree_unbound` | `thread_id`, `worktree_id`, `reason` (`user_unbind`\|`user_remove`\|`thread_delete`\|`path_missing`) | `chat` |
-| `chat.thread_worktree_renamed` | `thread_id`, `worktree_id`, `old_branch_name`, `new_branch_name` | `chat` |
-| `chat.thread_worktree_create_failed` | `thread_id`, `error`, `binding_origin` | `chat` |
-| `chat.thread_worktree_merged` | `thread_id`, `worktree_id`, `branch_name`, `target_branch`, `strategy` (`squash`\|`merge`\|`rebase`), `result_commit_sha` | `chat` |
-| `chat.thread_worktree_merge_failed` | `thread_id`, `worktree_id`, `branch_name`, `target_branch`, `strategy`, `error`, `has_conflicts` (bool) | `chat` |
-| `chat.thread_worktree_pr_created` | `thread_id`, `worktree_id`, `branch_name`, `target_branch`, `pr_url`, `pr_number` | `chat` |
-| `chat.thread_worktree_pr_failed` | `thread_id`, `worktree_id`, `branch_name`, `error`, `phase` (`push`\|`api`) | `chat` |
-| `chat.thread_worktree_pre_merge_test_started` | `thread_id`, `worktree_id`, `command`, `test_target` (`merged_result`\|`branch_only`\|`both`), `strategy` | `chat` |
-| `chat.thread_worktree_pre_merge_test_passed` | `thread_id`, `worktree_id`, `command`, `duration_ms`, `strategy` | `chat` |
-| `chat.thread_worktree_pre_merge_test_failed` | `thread_id`, `worktree_id`, `command`, `exit_code`, `duration_ms`, `strategy`, `user_override` (bool) | `chat` |
-| `chat.plan_todo_updated` | `thread_id`, `plan_id`, `plan_revision_id?`, `todo_ids[]`, `change_kind` (`structure`\|`item_state`\|`item_notes`\|`approval_state`\|`projection_sync`), `plan_lifecycle_state` (`draft`\|`approved`\|`executing`\|`completed`\|`blocked`\|`superseded`), `active_run_id?`, `source_surface` (`deep_plan`\|`planning_panel`\|`todowrite`\|`execution_runtime`), `structural_edit` (bool) | `chat` |
+This section defines the canonical contract for this surface.
 
-`chat.plan_todo_updated` is emitted for every durable normalized TODO mutation. `structural_edit = true` only for adding / removing / reordering TODO items; status or notes changes keep `structural_edit = false`. durable mutation framing belongs to `chat.plan_todo_updated` only. `todoread` may consume or display the normalized TODO state, but it is not a `source_surface` mutation source for `chat.plan_todo_updated`.
+Core rules:
+- Plan/TODO persistence is locked to explicit revision states, structural-edit gating after approval, bounded revision history, and emission of `chat.plan_todo_updated` for durable TODO mutations.
+- `chat.plan_todo_updated` must have an explicit owner-contract definition for durable normalized TODO mutation, and `todoread` must not survive as a `source_surface` mutation source.
 
-All events are append-only. Naming uses underscore-separated `chat.thread_worktree_*` to match existing `chat.thread_created` convention, and `chat.plan_todo_updated` follows the same seglog family. All events include standard seglog envelope fields (`event_id`, `timestamp_utc`, etc.) per the base event contract.
-
-ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Tools.md
+Fields:
+- draft
+- approved
+- executing
+- completed
+- blocked
+- superseded
+- Structural edits = adding / removing / reordering TODO items
+- chat.plan_todo_updated
 
 Rules:
-- durable plan/TODO mutations emit the event without inventing a chat-local alias
-- Point planning/TODO consumer sections at this event owner instead of leaving the event undefined
+- source_surface
+
 ### 1.2 EventRecord -- canonical persisted envelope (schema: `pm.event.v0`)
 
 The canonical persisted runtime snapshot keeps the historical base field names stable while allowing additive disclosure fields for runtime family, runtime platform, billing/entity attribution, and server-profile routing.
@@ -257,205 +251,195 @@ ContractRef: ContractName:Plans/Contracts_V0.md#EventRecord, SchemaID:pm.require
 
 ### 3.4 Tool-specific payload extensions
 
-#### Firecrawl provider payload fields
+This section defines the canonical contract for this surface.
 
-Firecrawl provider executions may extend the shared web-operation payload with exact provider-owned fields without changing the base event envelope.
+ContractRef: ContractName:Plans/storage-plan.md#4.4 Activity transparency payloads, ContractName:Plans/Contracts_V0.md#3.4 Tool-specific payload extensions, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md#3.18 Built-in Browser and Click-to-Context
 
-ContractRef: ContractName:Plans/Tools.md#10-firecrawl-provider-integration, ContractName:Plans/storage-plan.md#4.4 Activity transparency payloads
+Core rules:
+- Preserve the Firecrawl-specific audit payload keys as exact contract-owned fields.
+- Answer construction must preserve search-then-read behavior, final citations must come from the actual read path rather than raw search snippets alone, and web activity/provenance docs must use the exact storage/contracts/browser ContractRef targets instead of malformed generic anchors.
+- The Firecrawl async contract must preserve timeout behavior tied to timeout_ms and partial-result survival on timeout.
+- Batch audit/event canon must preserve a parent audit event for the batch plus child audit events per URL.
+- Long-running web operations must preserve the structured progress_event payload and cancellation-with-partial-results contract.
+- The Firecrawl mapping table must preserve all PM operation rows, including the exact batch_webextract mapping POST /v2/extract with urls[].
+- Firecrawl search responses must be transformed into PM's unified search result shape by flattening source-partitioned results into one results array and tagging each item with source_type in a fixed merge order.
+- Blocked and denied activity payloads must preserve the exact blocked and denial payload keys in the owned web-operation child payload, include `blocked_reason_code` alongside `allowed_action_ids[]`, `denial_reason_code`, `denial_source`, and `suggested_recovery_action`, keep `projection_freshness` and `projection_health`, align canonical error naming to `adapter_unavailable`, and retire exact stale residue such as `unblock_action_ids[]`, `provider_unavailable`, `headless_unavailable`, and unrelated terminal/chat/card carry-through that contradicts the owner payload schema.
 
-| Field | Type | Meaning |
-|---|---|---|
-| `firecrawl_credits_used` | `number?` | Credits charged or estimated for the provider-native operation when hosted/cloud billing applies. |
-| `firecrawl_cache_state` | `hit | miss | bypassed | expired_used_for_diff` | Provider/cache interaction projected through PM cache vocabulary. |
-| `firecrawl_scrape_id` | `string?` | Stable Firecrawl scrape/session identifier used for async polling or interact-session follow-up. |
+Fields:
+- firecrawl_credits_used
+- firecrawl_cache_state
+- firecrawl_scrape_id
+- timeout_ms
+- timeout when polling exceeds `timeout_ms`
+- partial results survive timeout if already materialized
+- parent audit event for the batch
+- child audit events per URL
+- tool.invoked
+- continue_on_error
+- progress_event
+- tool_use_id
+- operation
+- phase
+- detail
+- pages_completed
+- pages_total
+- elapsed_ms
+- estimated_remaining_ms
+- cancelled: true
+- Response transformation
+- Adapter MUST flatten into PM's unified `results` array
+- tagging each item with `source_type`
+- Merge order: web results first, then news, then images
+
+Labels and values:
+- Firecrawl
+- websearch
+- webfetch
+- webextract
+- webresearch
+- webcrawl
+- webmap
 
 Rules:
-- these fields are contract-owned extensions and MUST NOT be redefined ad hoc in Tools, storage, or chat consumers
-- self-hosted Firecrawl may omit `firecrawl_credits_used`, but the field name remains canonical when hosted billing applies
-
-ContractRef: ContractName:Plans/Tools.md#10-firecrawl-provider-integration, ContractName:Plans/storage-plan.md#4.4 Activity transparency payloads
-
-#### Batch web audit hierarchy
-
-Batch web operations preserve one parent audit event for the batch plus child audit events per URL.
-
-ContractRef: ContractName:Plans/Tools.md#13-batch-operations, ContractName:Plans/storage-plan.md#4.4 Activity transparency payloads
-
-Rules:
-- the parent audit event records the requested tool, batch size, unique domains, `continue_on_error`, and aggregate completion state
-- each URL emits a child audit event linked to the parent and keeps the per-URL outcome, refs, provider selection, and error code
-- parent and child events use the same canonical `tool.invoked` / result families rather than inventing a batch-only envelope
+- search-then-read behavior
+- final citations come from the actual read path
+- raw search snippets alone are not enough provenance for the final answer
+- batch_webfetch
+- batch_webextract
+- POST /v2/extract
+- urls[]
+- blocked_reason_code
+- allowed_action_ids[]
+- denial_reason_code
+- denial_source
+- suggested_recovery_action
+- projection_freshness
+- projection_health
+- adapter_id
+- adapter_unavailable
+- chat may shortlist with search but must read chosen pages before citing them as final evidence
+- blocked responses must be machine-actionable through `allowed_action_ids[]`
+- error naming aligns to `adapter_unavailable`
 
 #### Question schema and tool contract
-Question-driven payloads preserve canonical field names and outcomes across chat, storage, and delegated work.
 
-ContractRef: ContractName:Plans/Tools.md#35b-question-tool-runtime-contract, ContractName:Plans/storage-plan.md#42-question-and-clarification-state
+This section defines the canonical contract for this surface.
 
-Canonical runtime item shape:
-`QuestionItem{question_id, question, options[], required, multi_select, allow_freeform, default_values?}`
+Core rules:
+- Question flows are locked to PM-managed draft state, required visible options plus a freeform path, resumable multi-question drafts, and explicit dismissed or paused behavior instead of fabricated answers.
+- Question schema canonical names and enums are locked, including QuestionItem fields, canonical freeform and multi-select field names, and answer source metadata.
+- The question tool contract is locked to a multi-question envelope, normalized output statuses, object-array options, included answer source, and top-level orchestrator ownership of user questioning.
 
-Naming and enum rules:
-- `allow_freeform` is canonical; `allow_other` is a deprecated alias that MUST be normalized to `allow_freeform` before persistence or consumer display
-- `mode: "single_question" | "questionnaire"` is the canonical request mode set
-- `status: "answered" | "submitted" | "dismissed" | "timed_out" | "unavailable"` is the canonical outcome set
-- `answers: Array<{question_id, values: string[]}>` is the normalized answer envelope
-- `answer_text?` is the freeform answer field when present
-- `source?: "option" | "other" | "freeform"` records how the answer was entered
-- `response_kind?: "selection" | "freeform" | "mixed"` records the expected or actual answer modality when the caller needs it preserved
-ContractRef: ContractName:Plans/Tools.md#35b-question-tool-runtime-contract, ContractName:Plans/storage-plan.md#42-question-and-clarification-state
-- `validation_state?: "valid" | "invalid" | "pending"` records local validation state when the caller persists in-progress answer state
+Fields:
+- mode: "single_question" | "questionnaire"
+- questions: Array<QuestionItem>
+- status: "answered" | "submitted" | "dismissed" | "timed_out" | "unavailable"
+- answers: Array<{question_id, values: string[]}>
+- answer_text?
+- source?: "option" | "other" | "freeform"
 - Headless/HITL-unavailable = `status = "unavailable"`
 - Subagent question tool access is DENIED by default
 
-##### Request shape
-
-| Field | Type | Required | Notes |
-|---|---|---|---|
-| `mode` | `single_question | questionnaire` | yes | Presentation hint for one prompt or a multi-question flow. |
-| `header` | `string` | no | Short UI title for the card or modal. |
-| `prompt` | `string` | yes | Shared explanatory copy for the whole request. |
-| `questions` | `Array<QuestionItem>` | yes | Ordered question set. `questions: Array<QuestionItem>` is the canonical field spelling. |
-| `context_ref?` | `string` | no | Optional evidence or artifact reference shown alongside the questionnaire. |
-| `visual_ref?` | `string` | no | Optional PM-managed visual payload shown on the card; question cards may include a visual. |
-
-##### `QuestionItem`
-
-| Field | Type | Required | Notes |
-|---|---|---|---|
-| `question_id` | `string` | yes | Stable identifier used across chat, storage, and resumption. |
-| `question` | `string` | yes | User-facing question text. |
-| `options[]` | `Array<{id, label, description?}>` | no | Canonical option shape. |
-| `required` | `boolean` | no | Defaults to `false`. |
-| `multi_select` | `boolean` | no | Defaults to `false`. |
-| `allow_freeform` | `boolean` | no | Allows typed input in addition to or instead of options. |
-| `allow_other?` | `boolean` | no | Deprecated compatibility alias; normalize to `allow_freeform` before persistence or rendering. |
-| `default_values?` | `string[]` | no | Caller-supplied initial seed values. |
-| `response_kind?` | `selection | freeform | mixed` | no | Optional modality hint preserved for UI and downstream consumers. |
-| `validation_state?` | `valid | invalid | pending` | no | Optional local validation state when the request surface needs to persist it. |
-
-`default_values?: string[]` are caller-supplied initial option ids. `draft_value?: string` is PM-managed freeform draft state restored on resume. They are distinct fields, not aliases.
-
-##### Answer and draft shape
-
-| Field | Type | Notes |
-|---|---|---|
-| `status` | `answered | submitted | dismissed | timed_out | unavailable` | Request-level status. |
-| `answers` | `Array<{question_id, values: string[]}>` | Canonical answer list. |
-| `answer_text?` | `string` | Optional freeform answer text. |
-| `source?` | `option | other | freeform` | Optional answer-source tag used by chat and storage. |
-| `response_kind?` | `selection | freeform | mixed` | Actual submitted answer modality after normalization. |
-| `validation_state?` | `valid | invalid | pending` | Validation state for draft or submitted answers when the caller preserves it. |
-| `draft_value?` | `string` | PM-managed draft restored on resume. |
-| `unanswered_question_ids[]?` | `string[]` | Present when a questionnaire remains incomplete. |
+Labels and values:
+- questionnaire
+- single_question
+- unavailable
+- dismissed
 
 Rules:
+- NOT via `sendPrompt`
+- Something else
+- Always-visible options
+- Drafts auto-save until submit
+- Exiting/dismissing does NOT auto-submit
+- Thread-scoped draft state
+- status: 'dismissed'
+- draft
+- question_id
+- question
+- allow_freeform
+- multi_select
+- default_values?: string[]
+- draft_value?: string
+- response_kind
+- validation_state
+- drafts auto-save continuously
+- required questions block final submit
+- question cards may include a visual
 - users can answer out of order and revise before submit
 - dismissing pauses conversation until resume
-- question cards may include a visual
-- exiting/dismissing does NOT auto-submit
 
-Additional canonical rules:
-- allow_other is a deprecated alias
-- Something else
-- exiting or dismissing does not auto-submit
-- question default allow only when HITL is available
-- subagent question access stays denied by default
-- Keep all question consumers anchored to this owner section instead of inventing chat-local or storage-local payload variants
 #### Common web output fields
-Shared web results preserve one output vocabulary across chat, storage, and tool contracts.
 
-Response transformation: Adapter MUST flatten into PM's unified `results` array, tagging each item with `source_type`. Merge order: web results first, then news, then images.
-ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md
+This section defines the canonical contract for this surface.
 
-| Field | Notes |
-|---|---|
-| `tool_use_id` | Stable correlation id for the web invocation. |
-| `adapter_id` | Effective provider used for the operation. |
-| `adapter_selection_reason` | Why the effective provider/path was selected. |
-| `requested_adapter_id?` | Requested provider or adapter id. |
-| `effective_adapter_id?` | Effective provider or adapter after routing. |
-| `provider_fallback_summary?` | User-visible fallback explanation when fallback occurred. |
-| `web_operation` | Canonical operation name. |
-| `web_input` | Structured normalized request snapshot. |
-| `duration_ms` | Elapsed time for the operation. |
-| `timestamp` | Canonical event timestamp. |
-| `cached` | Whether the served result came from cache. |
-| `warnings?` | Canonical warnings array when present. |
-| `error_code?` | Canonical PM error code. |
-| `error_message?` | Canonical user-visible failure text. |
-| `provenance_badge?` | Citation/source-quality badge consumed by chat and storage. |
-| `sources_ref?` / `content_ref?` / `map_ref?` / `answer_summary_ref?` | Durable evidence references projected by storage. |
-| `progress_event?` | Structured long-running progress payload: `tool_use_id`, `operation`, `phase`, `detail`, `pages_completed`, `pages_total`, `elapsed_ms`, `estimated_remaining_ms`, and `cancelled: true` when cancellation occurs. |
-| `blocked_reason_code?` | Canonical blocked or unavailable class for denied or blocked web execution. |
-| `allowed_action_ids[]?` | Explicit recovery actions available to the user or approval ladder. |
-| `denial_reason_code?` | Denial reason emitted by the shared blocked/denied payload family. |
-| `denial_source?` | Source of the denial decision. |
-| `suggested_recovery_action?` | User-facing recovery hint. |
+Core rules:
+- The Firecrawl async contract must preserve the exact poll ladder and status family already restored in the owner section.
+- All web tools share a common output field set that includes provider identity, routing reason, timing, cache status, and standard error or warning fields.
 
-Web-derived answer rules:
-- search-then-read behavior applies whenever final answers cite web-derived material
-- final citations come from the actual read path rather than raw search snippets alone
-- raw search snippets alone are not enough provenance for the final answer
+Fields:
+- 2s, 4s, 8s, 15s, 30s
+- scraping
+- processing
+- completed
+- failed
+- cancelled
+- `tool_use_id`
+- `adapter_id`
+- `adapter_selection_reason`
+- `duration_ms`
+- `timestamp`
+- `cached`
+- `error_code?`
+- `error_message?`
+- `warnings?`
+- `provenance_badge?`
 
-Rules:
-- shared web results preserve one output vocabulary across chat, storage, and tool contracts
-- Keep this owner section feeding Plans/storage-plan.md#4.4 Activity transparency payloads and Plans/FinalGUISpec.md#15.3 Web and diff operation card widget
+Labels and values:
+- Firecrawl
+- websearch
+- webfetch
+- webextract
+- webresearch
+- webcrawl
+- webmap
 
-Blocked and denied web episodes may also include `blocked_reason_code`, `allowed_action_ids[]`, `denial_reason_code`, `denial_source`, `suggested_recovery_action`, and `status: "unavailable"`. Error naming aligns to `adapter_unavailable`.
-
-- blocked and denied web episodes keep the machine-actionable recovery fields defined by storage
 #### `WebAction`
-```ts
-{
-  type: "click" | "scroll" | "type" | "press_key" | "wait_for" | "navigate" | "screenshot" | "set_viewport" | "fill_form" | "select_option" | "back" | "reload" | "snapshot" | "console" | "network";
-  selector?: string;
-  value?: string;
-  timeout_ms?: number;
-  description?: string;
-}
-```
 
-Runtime rules:
+This section defines the canonical contract for this surface.
+
+Core rules:
+- WebAction is a locked typed interface with an exact action enum, required and optional fields, hard timing limits, sequential execution, and invalid_input on unknown action types.
+- webfetch URL handling is locked: reject non-HTTP(S) schemes, normalize before routing, default bare domains to https://, reject malformed URLs with invalid_input, and enforce a default 5 MB max_content_length unless configured otherwise.
+
+Fields:
 - `type: "click" | "scroll" | "type" | "press_key" | "wait_for" | "navigate" | "screenshot" | "set_viewport" | "fill_form" | "select_option" | "back" | "reload" | "snapshot" | "console" | "network";`
 - `selector?: string`
 - `value?: string`
 - `timeout_ms?: number`
 - `description?: string`
-- Actions are executed sequentially in array order.
-- `timeout_ms` defaults to 5000ms; max 30000ms; total across all actions capped at 30s.
-- Unknown `type` values → `invalid_input` error.
-- one request may carry at most 10 actions.
-- failure stops later actions for that request, but `action_results[]` still records the partial outcome.
-
-Tool-specific payloads are allowed to extend the base event and result contracts, but the owner contract for each extension must stay singular.
-
-ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/storage-plan.md
+- `timeout_ms` defaults to 5000ms; max 30000ms; total across all actions capped at 30s
+- Unknown `type` values → `invalid_input` error
+- Actions are executed sequentially in array order
 
 Rules:
-- failure stops later actions for that request while action_results[] preserves partial outcome
-- Keep Tools.md webfetch/webextract input sections consuming this owner interface instead of redefining action enums locally
+- reject non-HTTP(S) schemes
+- invalid_input
+- normalize URL before routing
+- default to `https://` if bare domain
+- reject malformed URLs
+- `max_content_length`
+- 5 MB default
+
 ### 3.4A Web error taxonomy and applicability
-The canonical PM web error codes remain visible and applicability stays per-tool rather than flattened into one undifferentiated list.
 
-ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/storage-plan.md
+This section defines the canonical contract for this surface.
 
-| Code | Applies to | Meaning |
-|---|---|---|
-| `adapter_unavailable` | all web tools and batch web tools | Selected or candidate provider could not execute the request because of health, auth, or service availability. |
-| `rate_limited` | all web tools and batch web tools | Provider or billing path throttled or refused the request because of quota/rate state. |
-| `unsupported_operation` | all web tools and batch web tools | Effective provider does not support the requested operation or parameter family. |
-| `content_blocked` | `webfetch`, `webextract`, `webcrawl`, `batch_webfetch`, `batch_webextract` | Content exists but is blocked by auth, policy, anti-bot controls, or robots policy when that maps to the generic blocked branch. |
-| `crawl_robots_blocked` | `webcrawl`, `webmap` | The provider or PM crawl path was blocked by robots policy. |
-| `content_not_found` | `webfetch`, `webextract`, `webcrawl`, `webmap`, `batch_webfetch`, `batch_webextract` | The target content or page could not be found. |
-| `content_too_large` | `webfetch`, `webextract`, `webcrawl`, `batch_webfetch`, `batch_webextract` | Content exceeded the permitted capture size. |
-| `unsupported_source` | `websearch` | Requested `sources[]` family is not supported by the selected provider/path. |
-| `extraction_schema_mismatch` | `webextract`, `batch_webextract` | Extraction could not satisfy strict schema requirements. |
-| `autonomous_budget_exceeded` | `webresearch` | Autonomous research exhausted time, page, or credit budget before completion. |
-| `no_previous_version` | `webfetch`, `webcrawl` with changeTracking | Informational warning when no prior version exists for comparison. |
-| `invalid_input` | all web tools and batch web tools | Request shape or normalized parameters were invalid. |
-| `timeout` | all web tools and batch web tools | Execution exceeded the allowed runtime ceiling. |
+Core rules:
+- The per-contract web error applicability table remains required canon and must stay aligned with provider-to-PM error mapping.
+- Firecrawl-specific HTTP and provider errors must map to PM canonical error codes exactly as specified.
 
-Firecrawl mapping examples:
+Fields:
 - HTTP 401/403 → `adapter_unavailable`
 - HTTP 429 → `rate_limited`
 - HTTP 402 → `rate_limited`
@@ -466,13 +450,16 @@ Firecrawl mapping examples:
 - "Blocked by robots.txt" → `crawl_robots_blocked` or `content_blocked`
 - "Content too large" → `content_too_large`
 
-ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/assistant-chat-design.md
-
 Rules:
-- applies_to
-- meaning
-- applicability stays per-tool rather than flattened into one undifferentiated provider list
-- Keep this taxonomy consuming Plans/Tools.md#10.7 Audit, error, and self-hosted rules as the Firecrawl owner
+- adapter_unavailable
+- unsupported_operation
+- content_blocked
+- content_not_found
+- unsupported_source
+- extraction_schema_mismatch
+- autonomous_budget_exceeded
+- no_previous_version
+
 ### 3.5 Debug investigation events
 
 Debug investigations use persisted `EventRecord` envelopes with the following stable `type` values.
@@ -694,26 +681,21 @@ Serialization rules:
 - `revoked`, `blocked`, `expired`, and `omitted` items remain visible for audit but are not serialized as successful prompt attachments
 
 ### 5.1B Persona/Runtime Snapshot Payload Contract
-Runtime snapshot payloads use one shared requested/effective identity vocabulary across chat, storage, providers, and delegated work.
 
-ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Multi-Account.md, ContractName:Plans/Personas.md
+This section defines the canonical contract for this surface.
 
-| Field | Meaning |
-|---|---|
-| `requested_persona` | Persona requested by the initiating surface or user. |
-| `effective_persona` | Persona actually applied at execution time. |
-| `requested_account_binding` | Requested account/provider binding before routing and policy resolution. |
-| `operational_identity` | Stable runtime identity used for execution and audit correlation. |
-| `effective_account_label` | Human-readable account label surfaced to the user. |
-| `effective_provider_identity` | Effective provider/account combination after routing. |
-| `effective_project_id` | Project identity bound to the run. |
+Core rules:
+- Runtime identity canon must preserve requested and effective naming and the account/provider identity fields, and must retire local _id substitutes.
 
 Rules:
-- requested and effective values stay distinct whenever runtime routing changes what actually runs
-- Keep persona display consumers anchored to this payload owner rather than inventing *_id aliases
+- requested_persona
+- effective_persona
+- requested_account_binding
+- operational_identity
+- effective_account_label
+- effective_provider_identity
+- effective_project_id
 
-Rules:
-- never `requested_persona_id`
 ### 5.2 AttemptJournal
 
 **Definition:** `attempt_journal` is the per-Subtask, per-Iteration ephemeral artifact used to prevent repeated failed attempts.

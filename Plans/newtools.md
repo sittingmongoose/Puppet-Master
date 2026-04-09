@@ -258,25 +258,54 @@ ContractRef: ContractName:Plans/MCP_Integration.md, ContractName:Plans/FinalGUIS
 - naming, availability, credential binding, config schema, and supported flows defer to that owner
 
 ### 8.2 GUI/settings alignment
-GUI settings disclose requested versus effective MCP availability, server status, debug affordances, underscore-only tool naming, and the current web-provider stack used by `/web` surfaces.
 
-ContractRef: ContractName:Plans/FinalGUISpec.md#744-settings-unified-panel-specification, ContractName:Plans/Tools.md#11-provider-capability-matrix
+This section mirrors the linked owner contract and stays aligned with it.
 
-Alignment rules:
-- the global provider stack is user-changeable in Settings.
-- per-operation priority reordering is NOT MVP.
-- Settings rows for web-capable providers show availability, support tier, health/error state, and last-failure disclosure.
-- help/autocomplete for `/web` exposes the same availability plus support-tier visibility so users can predict whether `websearch`, `webfetch`, `webextract`, `webresearch`, `webcrawl`, and `webmap` are currently runnable.
-Firecrawl alignment note:
-- Provider ID `firecrawl`; Display name `Firecrawl`.
-- Default priority is below Exa, Tavily; above DDG (user-adjustable).
-- Default state is disabled (requires API key or self-hosted URL).
+ContractRef: Plans/Tools.md#11.1 Provider classes, defaults, and fallback disclosure, Plans/Tools.md#12. Web tool routing algorithm, Plans/MCP_Integration.md#2. Requested versus effective availability, Plans/MCP_Integration.md#7. Effective tool availability and GUI surfacing
 
-ContractRef: ContractName:Plans/Tools.md#11-provider-capability-matrix, ContractName:Plans/FinalGUISpec.md
+Core rules:
+- The global provider stack is user-changeable in Settings, while per-operation priority reordering is not MVP and the MVP priority order must not be treated as immutable product policy.
+- Google must remain a pluggable adapter slot with display label Google, and its ledger support semantics must not be collapsed away.
+- Retire stale stealth as a proxy_mode enum value; current canon preserves only basic, enhanced, and auto.
+- GUI/help canon must preserve row-level health/error disclosure, last-failure messaging, inline contextual help, and availability/support-tier visibility in Settings and /web help/autocomplete.
+- Retire stale cited-search ownership residue from reference sections; provider-capability and web-routing canon is owned by Plans/Tools.md sections 11-12, while Plans/newtools.md#8.2.1 is non-normative consumer guidance only.
+- MCP owner canon must preserve the exact auth and effective-state enums, canonical naming, and credential binding or invalidation behavior.
+
+Fields:
+- authenticated | expired | not_authenticated
+- connected | disabled | needs_auth | needs_client_registration | failed
+- LoggedIn | LoggedOut | AuthExpired | AuthFailed
+- {server_slug}_{tool_name}
+
+Labels and values:
+- GUI/settings alignment
+- requested/effective availability
+- requested availability
+- effective availability
+- credential binding
 
 Rules:
-- provider order shown here mirrors the user-configurable global provider stack
-- Keep this consumer note pointed at Plans/Tools.md#11. Provider capability matrix and Plans/FinalGUISpec.md#7.4.4 Settings (Unified) panel specification
+- global provider stack is user-changeable in Settings
+- per-operation priority reordering is NOT MVP
+- global MVP provider priority is not immutable product policy
+- display label `Google`
+- Google is a pluggable adapter slot
+- Google official search is not a strategic backend
+- Google `webfetch` keeps the pm-composed support semantics from the ledger
+- row-level health/error disclosure
+- last-failure messaging
+- contextual help text
+- availability plus support-tier visibility in Settings
+- availability plus support-tier visibility in `/web` help/autocomplete
+- Provider ID
+- `firecrawl`
+- Display name
+- `Firecrawl`
+- Default priority
+- below Exa, Tavily; above DDG (user-adjustable)
+- Default state
+- disabled (requires API key or self-hosted URL)
+
 ### 8.2.1 Cited-search and search-provider note
 
 Older cited-search framing is not normative. MCP-backed search surfaces defer to the MCP owner doc and the web/provider owner docs; this section no longer acts as an owner landing for search-provider canon.

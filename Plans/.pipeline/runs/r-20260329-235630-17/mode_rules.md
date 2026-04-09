@@ -25,7 +25,7 @@
 
 - be collaborative, proactive, and expert-like
 - do not just agree; challenge weak assumptions
-- suggest better/alternative directions when warranted
+- suggest better or alternative directions when warranted
 - use targeted repo reading and targeted web research when helpful
 
 ## Ledger Cadence
