@@ -56,3 +56,52 @@ FINAL VERDICT
 - Live fidelity findings counted in final merged report: 4
 - Forced verdict rule applied: count > 0 -> blocked
 <ledger_fidelity_blocked/>
+AUDIT SUMMARY
+
+- Run audited: `r-20260329-235630-15`
+- Work item: `w-20260329-235630`
+- Primary baseline present: `Plans/.pipeline/runs/r-20260329-235630-15/section_obligation_map.json`
+- Secondary support used: `canonical_obligations.json`, targeted `working_ledger.md` snippets, current source docs, and `Plans/.pipeline/verifier_report.txt` (empty)
+- Live fidelity findings after merge and direct validation: `2`
+
+SECTION MAP / DELEGATION SUMMARY
+
+- Section map size: `55` mapped sections across `13` docs.
+- Delegation clusters used:
+  - web/provenance cluster
+  - planning/question/permissions cluster
+  - command/session/persona cluster
+  - LSP cluster
+- Direct validation overrode false-positive command-cluster claims. The section map explicitly marks `/rewind`, `/revert`, `/share`, `/settings`, `/doctor`, `/help`, and `/worktree` as stale residue that must not remain in the reserved slash-command owner section, and it explicitly requires `/skill` to remain a discovery/invocation helper rather than a reserved built-in in `Plans/assistant-chat-design.md#5.1 Reserved built-ins`.
+- Final merged result by cluster:
+  - web/provenance: `2` live gaps
+  - planning/question/permissions: `0`
+  - command/session/persona: `0`
+  - LSP: `0`
+
+FINDINGS
+
+1. FIDELITY-ID: FIDELITY-R15-001
+   severity: medium
+   finding_classification: consumer propagation missing
+   where: `Plans/FinalGUISpec.md#15.7 Permission approval card widget`
+   exact obligation that did not fully survive: `obl-062` requires the approval-card consumer to carry the full four-step approval ladder and ask-gated web/question posture.
+   exact missing token(s): `deny`
+   why the current section is incomplete / contradictory / misallocated: the widget section carries `once`, `for session`, and `always`, but omits `deny`, so the canonical ladder defined by the section map and permission canon does not fully survive into the GUI consumer.
+   what kind of recovery is needed: update consumer section
+
+2. FIDELITY-ID: FIDELITY-R15-002
+   severity: low
+   finding_classification: stale contradictory residue
+   where: `Plans/Tools.md#11.1 Provider classes, defaults, and fallback disclosure`
+   exact obligation that did not fully survive: `obl-053` requires Firecrawl provider identity/default-ordering canon to survive without stale migration prose; the section map marks `stale cited-search framing and older newtools wording` as residue that must not remain.
+   exact missing token(s): none
+   why the current section is incomplete / contradictory / misallocated: the live owner section still says `stale cited-search framing and older \`newtools\` wording are retired...`, leaving cleanup/migration prose inside owner canon instead of purely carrying the stable provider/default/fallback contract.
+   what kind of recovery is needed: retire stale residue
+
+FINAL VERDICT
+
+- Live fidelity findings counted in final merged report: `2`
+- Forced verdict per sanity rule: findings count > 0
+
+<ledger_fidelity_blocked/>

@@ -16,7 +16,6 @@ Defaults and ordering:
 Fallback disclosure:
 - `provider_fallback_summary` stays visible in chat and audit logs whenever a fallback occurs.
 - provider fallback is explanatory rather than silent; rate-limit and health failures include a user-facing recovery hint.
-- stale cited-search framing and older `newtools` wording are retired in favor of this owner section plus the consumer disclosures in `Plans/FinalGUISpec.md` and `Plans/newtools.md`.
 
 ContractRef: ContractName:Plans/newtools.md, ContractName:Plans/FinalGUISpec.md
 
