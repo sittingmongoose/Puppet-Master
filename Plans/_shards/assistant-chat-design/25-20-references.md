@@ -1,4 +1,8 @@
 ## 20. References
+References inventory.
+
+Reference lists must defer to live owner docs instead of stale section-number citations.
+
 
 - **AGENTS.md:** DRY Method, platform_specs, subagent_registry, Pre-Completion Verification Checklist.
 - **Plans/interview-subagent-integration.md:** Interview phases, document generation, AGENTS.md/DRY for target projects, §5.2 AI-Overseer and wiring/completeness.
@@ -6,7 +10,11 @@
 - **Plans/human-in-the-loop.md:** HITL mode (phase/task/subtask approval gates), GUI settings, Dashboard CtAs.
 - **Plans/agent-rules-context.md:** Application-level rules (Puppet Master) and project-level rules; fed into every agent (orchestrator, interview, Assistant). When building Assistant context, include the shared rules pipeline output (application + project when a project is selected).
 - **Plans/FileSafe.md:** Context compilation (orchestrator/iteration); chat uses separate conversation context.
-- **Plans/Tools.md:** Central tool registry, tool permission keys, and ask-flow alignment; YOLO = no ask prompts, and Regular uses the canonical approval ladder from `Plans/Permissions_System.md`; §2.5 cross-plan alignment with FileSafe, FileManager, orchestrator, interview.
+- **Plans/Tools.md:** Central tool registry, tool permission keys, and ask-flow alignment; YOLO = no ask prompts, and Regular uses the canonical approval ladder from `Plans/Permissions_System.md`; the live web/provider owner sections remain `Plans/Tools.md#11.1 Provider classes, defaults, and fallback disclosure` and `Plans/Tools.md#12. Web tool routing algorithm`; §2.5 cross-plan alignment with FileSafe, FileManager, orchestrator, interview.
+- **Plans/Commands_System.md:** Reserved built-in slash-command set for chat surfaces; see `Plans/Commands_System.md#7. Reserved built-in slash commands` for the canonical `/web` family behavior and deprecated aliases.
+- **Plans/UI_Command_Catalog.md:** Canonical chat slash-command catalog and reveal identities; see `Plans/UI_Command_Catalog.md#2.7 Chat slash commands (reserved)` for the reserved slash-command surface.
+- **Plans/Permissions_System.md:** Approval ladder, blocked-recovery defaults, deterministic ask/plan behavior, and web permission derivation at `Plans/Permissions_System.md#3.4A Web-operation permission-key derivation`.
+- **Plans/Skills_System.md:** Skill discovery/invocation boundary and runtime ownership; see `Plans/Skills_System.md#6.3 Slash and runtime boundary`.
 - **Plans/MCP_Integration.md:** MCP naming, requested/effective availability, auth-state and connection-state vocabulary, credential binding, and invalidation; chat/search consumers reference this owner doc instead of re-owning MCP state terms.
 - **Plans/newtools.md:** GUI/settings alignment note only; older cited-search framing is non-normative and does not own live provider, routing, provenance, or billing canon.
 - **Cited web search (historical background only):** Adapt one or combine approaches so Assistant, Interview, and Orchestrator share one implementation. [opencode-websearch-cited](https://github.com/ghoulr/opencode-websearch-cited) -- LLM cited search, inline citations + Sources list (Google/OpenAI/OpenRouter). [opencode-websearch](https://www.npmjs.com/package/opencode-websearch) -- Anthropic/OpenAI provider wiring, model selection. [Opencode-Google-AI-Search-Plugin](https://github.com/IgorWarzocha/Opencode-Google-AI-Search-Plugin) -- Google AI Mode via Playwright, markdown + sources. These references do not replace the owner canon in `Plans/Tools.md`, `Plans/FinalGUISpec.md`, or `Plans/MCP_Integration.md`.

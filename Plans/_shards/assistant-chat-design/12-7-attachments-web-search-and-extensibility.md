@@ -42,51 +42,49 @@ Required rules:
 ### 7.3 Extensibility surface
 
 ### 7.4 Question card and questionnaire system
-Assistant Chat consumes the shared `question` runtime contract rather than defining a chat-local payload shape.
 
-ContractRef: ContractName:Plans/Contracts_V0.md#3.4 Tool-specific payload extensions, ContractName:Plans/Tools.md, ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md
+This section defines the canonical contract for this surface.
 
-#### Card structure
+Core rules:
+- Question flows are locked to PM-managed draft state, required visible options plus a freeform path, resumable multi-question drafts, and explicit dismissed or paused behavior instead of fabricated answers.
+- Question schema canonical names and enums are locked, including QuestionItem fields, canonical freeform and multi-select field names, and answer source metadata.
+- The question tool contract is locked to a multi-question envelope, normalized output statuses, object-array options, included answer source, and top-level orchestrator ownership of user questioning.
 
-The chat surface renders one shared request shape with `mode`, `header`, `prompt`, `questions`, and optional `visual_ref?`. `mode: "single_question" | "questionnaire"` is the canonical mode set.
-
-Each `questions[]` entry uses the canonical `QuestionItem{question_id, question, options[], required, multi_select, allow_freeform, default_values?}` contract. Option rows remain `Array<{id, label, description?}>`.
-
-Question item preservation rules:
-- `allow_other is a deprecated alias`; chat normalizes it to `allow_freeform` before persisting drafts or rendering resume state
-- `default_values?: string[]` remain caller-supplied initial option ids
-- `draft_value?: string` remains PM-managed freeform draft state
-- `response_kind?: "selection" | "freeform" | "mixed"` and `validation_state?: "valid" | "invalid" | "pending"` remain optional preserved fields when the request surface uses them
-
-#### Answer and draft behavior
-
-- Always-visible options remain visible while the question is open; the card does not collapse into a freeform-only mode when options exist
-- `Something else` is the canonical visible label for the explicit other/freeform affordance when options and freeform coexist
-- chat writes all question progress into PM-managed draft state and NOT via `sendPrompt`
-- Drafts auto-save until submit
-- Thread-scoped draft state is restored on resume by `question_id`
-- the optional answer field `source?: "option" | "other" | "freeform"` stays visible to chat and storage consumers
-- `response_kind` and `validation_state` stay attached to the normalized question/answer state when the caller preserves them
-- question cards may include a visual, but visuals remain PM-managed payloads rather than ad hoc embedded HTML
-- users can answer out of order and revise before submit
-- required questions gate final submit until locally valid
-- Exiting/dismissing does NOT auto-submit
-- dismiss returns status: `dismissed` and restores the same outstanding questionnaire on resume
+Fields:
+- mode: "single_question" | "questionnaire"
+- questions: Array<QuestionItem>
+- status: "answered" | "submitted" | "dismissed" | "timed_out" | "unavailable"
+- answers: Array<{question_id, values: string[]}>
+- answer_text?
+- source?: "option" | "other" | "freeform"
 - Headless/HITL-unavailable = `status = "unavailable"`
 - Subagent question tool access is DENIED by default
 
-#### Parent-mediated clarification rule
-
-Child agents do not question the user directly. If a delegated flow needs clarification, the parent session surfaces the `question` request, stores the draft state, and resumes the child only after the user responds or dismisses.
-
-ContractRef: ContractName:Plans/interview-subagent-integration.md, ContractName:Plans/chain-wizard-flexibility.md
+Labels and values:
+- questionnaire
+- single_question
+- unavailable
+- dismissed
 
 Rules:
+- NOT via `sendPrompt`
+- Something else
+- Always-visible options
+- Drafts auto-save until submit
+- Exiting/dismissing does NOT auto-submit
+- Thread-scoped draft state
 - status: 'dismissed'
-- allow_other?
-- answers
-- answer_text?
+- draft
+- question_id
+- question
+- allow_freeform
+- multi_select
+- default_values?: string[]
+- draft_value?: string
+- response_kind
+- validation_state
+- drafts auto-save continuously
 - required questions block final submit
-- Headless/HITL-unavailable maps to status unavailable
-- Subagent question tool access is denied by default
-- Keep this chat surface anchored to Plans/Contracts_V0.md#3.4 Tool-specific payload extensions, Plans/Tools.md#3.5B `question` tool runtime contract, and Plans/storage-plan.md#4.2 Question and clarification state
+- question cards may include a visual
+- users can answer out of order and revise before submit
+- dismissing pauses conversation until resume

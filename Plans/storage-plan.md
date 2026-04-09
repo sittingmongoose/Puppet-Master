@@ -718,7 +718,6 @@ Rules:
 - draft_value?: string
 - response_kind
 - validation_state
-
 ### 4.3 Plan and TODO state
 
 This section defines the canonical contract for this surface.
@@ -757,7 +756,6 @@ Fields:
 Labels and values:
 - Plan
 - Deep Plan
-
 ### 4.4 Activity transparency payloads
 
 This section defines the canonical contract for this surface.
@@ -871,7 +869,6 @@ Fields:
 - completed
 - failed
 - cancelled
-
 ### 4.5 Inline visualizer persistence
 
 Inline visualizer persistence stores only PM-managed source, metadata, and PM-owned outputs.
@@ -1486,4 +1483,3 @@ Rules:
 - PM cache takes precedence for serving cached content
 - Firecrawl cache serves as provider-side optimization only
 - `cache_state: "hit" | "miss" | "bypassed" | "expired_used_for_diff"`
-

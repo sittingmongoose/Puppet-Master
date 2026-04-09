@@ -55,60 +55,16 @@ The editor should be able to communicate states like:
 - `Direct/API providers: strongest support for exact runtime controls.`
 
 ### 19.4 Surface-level Persona controls
-Persona controls are required on the following surfaces:
-- Chat
-- Interview
-- Requirements Builder
-- Orchestrator
-- Multi-Pass Review
 
-Each surface should expose, at minimum:
-- Persona mode (`Auto` / `Manual` / `Hybrid`)
-- current effective Persona display
-- `requested_persona`
-- `effective_persona`
-- `requested_account_binding`
-- `operational_identity`
-- `effective_account_label`
-- `effective_provider_identity`
-- `effective_project_id`
-- platform/model display
-- selection reason
-- manual override control or lock/unlock affordance
-- skipped unsupported Persona controls when relevant
+This section consumes the linked owner contract and stays aligned with it.
 
-Interview/Builder visibility rule:
-- The Interview chat surface, Interview activity pane, and Builder activity pane MUST display the same effective-runtime fields for the active run block, even if one surface uses a more compact layout than another.
-
-ContractRef: ContractName:Plans/Contracts_V0.md#5.1B Persona/Runtime Snapshot Payload Contract, ContractName:Plans/assistant-chat-design.md
-
-#### 19.4.1 Persona mode semantics
-
-- **Auto:** Resolver selects the Persona from surface defaults, mappings, and runtime context. User sees the chosen Persona and reason string but does not pin a manual choice.
-- **Manual:** User explicitly selects a Persona for the next eligible run/turn on that surface. Manual selection overrides Auto resolution until cleared or replaced.
-- **Hybrid:** Resolver proposes a Persona, but the user may override it before execution while still seeing the automatic recommendation and reason text.
-- Mode changes apply only to the next eligible run/turn or queued execution on that surface; they do not retroactively change an active run already in progress.
-
-#### 19.4.2 Selection reason and override behavior
-
-- The **effective Persona display** must show the resolved Persona name plus a one-line reason string such as `User requested`, `Stage default`, `Provider fallback`, or `Mapped from Interview phase`.
-- Every surface needs a compact **Override Persona** affordance (dropdown, popover, or button+menu) with `Set override`, `Clear override`, and `Return to Auto` actions.
-- When overrides are unavailable for the current provider or run state, the control remains visible but locked/disabled with a tooltip explaining why.
-- Requested and effective values remain distinct whenever routing or runtime constraints change what actually executes.
-
-#### 19.4.3 Platform/model display scope
-
-- The `platform/model display` requirement may reuse the existing status-bar/footer platform and model controls where those already exist; the surface must not introduce conflicting duplicate controls.
-- If a user overrides model/platform independently from the Persona, the UI must show both the requested Persona and the effective platform/model outcome.
-
-ContractRef: ContractName:Plans/Contracts_V0.md#5.1B Persona/Runtime Snapshot Payload Contract, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Personas.md
+Core rules:
+- Runtime identity canon must preserve requested and effective naming and the account/provider identity fields, and must retire local _id substitutes.
 
 Rules:
-- every listed surface exposes at minimum the shared effective-runtime fields plus selection reason and lock/unlock control
-- Keep this GUI consumer anchored to Plans/Contracts_V0.md#5.1B Persona/Runtime Snapshot Payload Contract
-
-Rules:
-- never `requested_persona_id`
+- requested_persona
+- effective_persona
+- effective_account_label
 ### 19.5 Runtime display requirements
 
 When a run is active, the UI must display:

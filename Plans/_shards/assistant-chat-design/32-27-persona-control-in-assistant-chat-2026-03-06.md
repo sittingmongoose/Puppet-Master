@@ -15,46 +15,16 @@ Definitions:
 - **hybrid:** auto selects by default, but the user may temporarily or persistently override it.
 
 ### 27.2 Current Persona display (required)
-Chat UI MUST display the effective Persona even when auto mode is active.
 
-ContractRef: ContractName:Plans/Contracts_V0.md#5.1B Persona/Runtime Snapshot Payload Contract, ContractName:Plans/Personas.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/FinalGUISpec.md
+This section consumes the linked owner contract and stays aligned with it.
 
-Required display content (imported from shared runtime/Persona fields rather than redefined locally):
-- `requested_persona`
-- `effective_persona`
-- `requested_account_binding`
-- `operational_identity`
-- `effective_account_label`
-- `effective_provider_identity`
-- `effective_project_id`
-- `persona_selection_source`
-- `effective_platform`
-- `effective_model`
-- `effective_talkativeness` when not `model_default`
-- optional `effective_variant?` / `effective_effort?`
-- skipped Persona controls when relevant
-
-Example:
-- `Persona: Rust Engineer (Auto: repo detected as Rust + code task)`
-- `Account: Work Org / user@example.com`
-- `Model: Codex GPT-5.3 (Persona preferred)`
-- `Platform: Codex (Available)`
+Core rules:
+- Runtime identity canon must preserve requested and effective naming and the account/provider identity fields, and must retire local _id substitutes.
 
 Rules:
-- Auto mode MUST NOT display only `Auto` with no resolved Persona.
-- Requested and effective values stay distinct whenever routing, policy, provider availability, or project binding changes what actually runs.
-- Inline subagent cards, child-run receipts, and any persona chip in the chat header use the same imported runtime field set so the user sees one consistent requested/effective Persona story across the thread.
-- Reserved Personas remain defined in `Plans/Personas.md`; chat acknowledges them only by reference.
-
-ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Contracts_V0.md#5.1B Persona/Runtime Snapshot Payload Contract
-
-Additional canonical rules:
-- auto mode must not display only Auto with no resolved persona
-- inline subagent cards and header chips use the same imported runtime field set
-- Keep this chat display section consuming Plans/Contracts_V0.md#5.1B Persona/Runtime Snapshot Payload Contract
-
-Rules:
-- never `requested_persona_id`
+- requested_persona
+- effective_persona
+- effective_account_label
 ### 27.3 Natural-language Persona invocation in chat
 
 The Assistant must support user requests such as:

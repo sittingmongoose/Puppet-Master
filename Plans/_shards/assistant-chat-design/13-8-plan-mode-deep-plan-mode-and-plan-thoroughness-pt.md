@@ -2,11 +2,37 @@
 
 ### 8.1 Canonical planning model
 
-Chat planning canon separates plan lifecycle from item lifecycle. Plans may be proposed, revised, approved, superseded, or archived, while TODO items use the normalized item-status contract.
+This section defines the canonical contract for this surface.
 
-ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Tools.md
+ContractRef: Plans/FinalGUISpec.md#15.4 Planning panel widget (sticky sidebar)
 
-Planning surfaces consume the same normalized TODO projection used by `todoread`/`todowrite`, sticky execution tracking, and delegated work summaries. Chat does not publish a competing item-state vocabulary.
+Core rules:
+- Plan and Deep Plan must both project to a normalized TODO list, with a named Q&A loop before Deep Plan execution and a locked TODO item schema/status set.
+- Plan/TODO persistence is locked to explicit revision states, structural-edit gating after approval, bounded revision history, and emission of `chat.plan_todo_updated` for durable TODO mutations.
+- `chat.plan_todo_updated` must have an explicit owner-contract definition for durable normalized TODO mutation, and `todoread` must not survive as a `source_surface` mutation source.
+
+Fields:
+- Q&A loop
+- todo_id
+- title
+- summary
+- status
+- dependencies[]
+- owner_hint
+- verification_hint
+- pending | in_progress | completed | blocked | skipped
+- superseded
+- draft
+- approved
+- executing
+- completed
+- blocked
+- Structural edits = adding / removing / reordering TODO items
+- chat.plan_todo_updated
+
+Labels and values:
+- Plan
+- Deep Plan
 ### 8.2 Plan Thoroughness (PT)
 
 **Plan Thoroughness (PT)** replaces the old planning-depth control.
@@ -100,41 +126,36 @@ Optional but allowed sections:
 - `Rollout / Migration Notes`
 
 ### 8.6 Normalized TODO contract for planning outputs
-Planning outputs that drive execution project into one normalized TODO model shared by chat, tools, storage, and widgets.
 
-ContractRef: ContractName:Plans/Tools.md#3.5C `todowrite` and `todoread` runtime contract, ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md
+This section consumes the linked owner contract and stays aligned with it.
 
-#### Item schema
+Core rules:
+- Plan and Deep Plan must both project to a normalized TODO list, with a named Q&A loop before Deep Plan execution and a locked TODO item schema/status set.
+- TODO tool behavior is locked so todowrite and todoread use the normalized TODO schema, todowrite is not blanket auto-denied in ask/plan mode, and Deep Plan edits must resync the TODO projection before execution.
+- `chat.plan_todo_updated` must have an explicit owner-contract definition for durable normalized TODO mutation, and `todoread` must not survive as a `source_surface` mutation source.
 
-`todo_id`, `title`, `summary`, `notes?`, `status`, `dependencies[]`, `owner_hint`, `verification_hint`
-
-Item status is exactly `pending | in_progress | completed | blocked | skipped`.
-
-`superseded` is plan-level only and does not appear as an item status.
-
-#### Sticky tracker behavior
-
-- the planning panel is a real execution tracker rather than a static summary block
-- `todoread` returns current normalized list for active thread/run
-- `todowrite` can create, reorder, update statuses/notes
-- Remove `todowrite` from blanket `ask/plan` mode auto-deny; PM-managed planning-state mutation stays available under planning approval rules
-- Structural edits = adding / removing / reordering TODO items
-- structural edits are gated once the plan is approved and execution has started; status and note updates remain available
-- item focus follows the active execution step without rewriting completed history
-- durable plan/TODO mutations emit `chat.plan_todo_updated` as defined by `Plans/Contracts_V0.md#1.1 Assistant worktree seglog events`
-- revision and history views show plan-level changes separately from item-level status changes
-- Deep Plan stays in a Q&A loop before execution begins; approval or resubmission resolves the planning review state before the tracker transitions into live execution
-- plan-level review state uses `draft`, `approved`, `executing`, `completed`, `blocked`, and `superseded`; item-level status stays separate
+Fields:
+- Q&A loop
+- todo_id
+- title
+- summary
+- status
+- dependencies[]
+- owner_hint
+- verification_hint
+- pending | in_progress | completed | blocked | skipped
+- superseded
+- todowrite
+- todoread
+- todowrite can create, reorder, update statuses/notes
+- todoread returns current normalized list for active thread/run
+- Remove `todowrite` from blanket `ask/plan` mode auto-deny
 - editing Deep Plan markdown (the rich artifact) MUST update the normalized TODO projection BEFORE execution begins
 
-ContractRef: ContractName:Plans/Contracts_V0.md#1.1 Assistant worktree seglog events, ContractName:Plans/storage-plan.md
-
-Rules:
-- todoread returns current normalized list for active thread/run
-- todowrite can create, reorder, update statuses/notes
-- Deep Plan stays in Q&A before execution begins
-- revision/history views show plan-level changes separately from item-level status changes
-- Keep this planning consumer anchored to Plans/Tools.md#3.5C `todowrite` and `todoread` runtime contract and Plans/Contracts_V0.md#1.1 Assistant worktree seglog events
+Labels and values:
+- Plan
+- Deep Plan
+- chat.plan_todo_updated
 ### 8.7 Review loop for planning artifacts
 
 Standard Plan review:

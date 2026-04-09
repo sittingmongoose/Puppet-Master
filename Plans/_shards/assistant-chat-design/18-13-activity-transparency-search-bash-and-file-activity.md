@@ -3,124 +3,213 @@
 Activity transparency uses a shared inline operation-card family rather than isolated one-off widgets.
 
 ### 13.1 Operation-card family
-Operation cards provide a shared anatomy for terminal, web, diff, search, and other lifecycle-bearing runtime activities.
 
-ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/UI_Command_Catalog.md
+This section defines the canonical contract for this surface.
 
-Shared state model:
-- one card exists per command or operation invocation
-- retry creates a new card rather than mutating the prior card in place
-- the card-level state machine is `pending`, `running`, `completed`, `failed`, `cancelled`, or `blocked`
-- underlying process/session taxonomies may still emit `starting` and `exited`; card consumers normalize those into the card-level state machine
+Core rules:
+- Batch semantics must preserve the explicit false branch for continue_on_error.
+- Inline mini-terminal and operation cards are locked to bounded inline previews, persistent per-command cards, narrative-order placement, and shared card anatomy.
+- Operation cards are restricted to lifecycle-bearing operations, exclude other widget families, and use a locked card-level state machine reconciled against the 8-state agent/process taxonomy.
+- Permission canon must preserve the four-tier approval ladder, question default allow only when HITL is available, keep the six web tools ask-gated in read_only and plan presets, and carry the blocked/unavailable payload fields through to permission-card consumers.
+
+Fields:
+- continue_on_error: false
+- stop on the first failure
+- return completed results plus failure detail
+- status_badge_state
+
+Permission rules:
+- deny
+- once
+- for session
+- always
+- blocked_reason_code
+- allowed_action_ids[]
+- status: "unavailable"
+
+Rules:
+- Collapsed preview: 5 lines
+- Expanded preview: 15 lines
+- Persists after completion
+- status, cwd, command summary, elapsed time, exit code / truncation indicator
+- READ-ONLY and non-interactive
+- One card per command
+- Retries create a new terminal and therefore a new mini terminal card
+- Open in Terminal
+- pending
+- running
+- completed
+- failed
+- cancelled
+- blocked
+- starting
+- exited
+- denial_reason_code
+- denial_source
+- suggested_recovery_action
+- projection_freshness
+- projection_health
+- adapter_id
+- adapter_unavailable
+- question default `allow` only when HITL is available
+- read_only
+- plan
+- websearch
+- webfetch
+- webextract
+- webresearch
+- webcrawl
+- webmap
+- badge is always visible
+- running output may promote out of inline comfort based on heuristic thresholds
 - `blocked` is a card-level state entered from `running` and returned to `running` on unblock
 - `disconnected` and `restoring` are agent-session states and surface as card-level `blocked` with `blocked_reason_code`
 - simple read/grep/glob results remain inline text, not cards
-- badge is always visible
-- running output may promote out of inline comfort based on heuristic thresholds
-
-Preview and copy rules:
-- preview caps stay aligned at `5` collapsed, `15` expanded, and `50` hard cap where applicable
-- search, web, and diff cards keep no-copy behavior for the rendered result block
-- fenced code blocks and explicit command fields keep their own always-visible copy affordances
-- family-specific secondary actions may appear, but they do not erase the shared card skeleton
-
-ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Tools.md
-
-Rules:
-- status_badge_state
-- card-level blocked is entered from running and returned to running on unblock
-- Keep terminal/web/diff card consumers pointed at this shared card-family owner section
+- blocked responses must be machine-actionable through `allowed_action_ids[]`
+- error naming aligns to `adapter_unavailable`
 ### 13.2 Web activity and provenance
-#### Answer construction and citation locality
 
-When the assistant answers from web-derived material, it follows search-then-read behavior rather than answering from raw search snippets alone.
+This section consumes the linked owner contract and stays aligned with it.
 
-ContractRef: ContractName:Plans/storage-plan.md#4.4 Activity transparency payloads, ContractName:Plans/Contracts_V0.md#3.4 Tool-specific payload extensions, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md#3.18 Built-in Browser and Click-to-Context
+ContractRef: Plans/storage-plan.md#4.4 Activity transparency payloads, Plans/Contracts_V0.md#3.4 Tool-specific payload extensions, Plans/Section15_MVP_Promoted_Features_Spec.md#3.18 Built-in Browser and Click-to-Context, ContractName:Plans/storage-plan.md#4.4 Activity transparency payloads, ContractName:Plans/Contracts_V0.md#3.4 Tool-specific payload extensions, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md#3.18 Built-in Browser and Click-to-Context, Plans/Contracts_V0.md#3.4A Web error taxonomy and applicability
 
-Rules:
-- search may shortlist candidate sources, but the assistant reads the chosen result before using it as final-answer evidence
-- final citations come from the actual read path rather than raw search snippets alone
-- raw search snippets alone are not enough provenance for the final answer
-- Site Reader v1 requires real browser-interaction capability, not static HTTP fetch only
-- `Reading Site` is reserved for the PM-native Site Reader path
-- provider-routed fetch must not reuse the reserved native Site Reader identity
-- provider-routed fetch or read still keeps requested/effective adapter disclosure so provenance, routing, and answer quality remain separately inspectable
-- if no candidate provider can execute the requested operation, chat surfaces the capability-unavailable branch explicitly instead of implying silent fallback
-- cost-aware selection remains visible when routing prefers a lower-cost viable path
-- PM MUST NOT silently switch between self-hosted Firecrawl and hosted/cloud Firecrawl
-- hosted/provider-native research paths surface explicit credit/billing disclosure, including `>100 credits` research warnings and `500 credits` deep-research warnings where those paths apply
-- self-hosted Firecrawl remains visibly disclosed as non-hosted billing
-- `changeTracking` must not silently disappear from surfaced web results; if PM retires it from MVP, the owner docs must say so explicitly
+Core rules:
+- Preserve the Firecrawl-specific audit payload keys as exact contract-owned fields.
+- The provider capability matrix must preserve capability tier separately from routing posture: Firecrawl, Tavily, and Exa retain real webfetch capability and must not be flattened to fallback-only merely because Site Reader is preferred.
+- Anthropic and OpenAI websearch support must remain labeled native (model) / model-native, not pm-composed.
+- The web routing algorithm must include a capability-unavailable terminal branch with clear setup guidance when no provider supports the requested operation.
+- Site Reader canon must require real browser interaction, reserve `Reading Site` for the PM-native Site Reader path, and prevent provider-routed fetch from reusing that reserved identity.
+- Answer construction must preserve search-then-read behavior, final citations must come from the actual read path rather than raw search snippets alone, and web activity/provenance docs must use the exact storage/contracts/browser ContractRef targets instead of malformed generic anchors.
+- The Firecrawl webresearch mapping must preserve provider-native no-URL research behavior, navigation/forms/pagination capability, and structured extraction during agent-led research.
+- The Firecrawl websearch mapping must preserve provider-specific search behavior and option surface.
+- The Firecrawl owner section must either preserve `changeTracking` with its structured output shape or explicitly retire it as out of scope; it must not disappear silently.
+- Routing must remain cost-aware when multiple providers offer similar capability; static priority alone is insufficient, and the >100 credits warning plus 500 credits cap must remain aligned with routing.
+- The Firecrawl owner section must preserve shared routing/audit disclosure for requested/effective provider selection, fallback visibility, denied-web projection, and canonical web error taxonomy linkage.
+- The per-contract web error applicability table remains required canon and must stay aligned with provider-to-PM error mapping.
+- Retire stale cited-search ownership residue from reference sections; provider-capability and web-routing canon is owned by Plans/Tools.md sections 11-12, while Plans/newtools.md#8.2.1 is non-normative consumer guidance only.
+- All web tools share a common output field set that includes provider identity, routing reason, timing, cache status, and standard error or warning fields.
+- Batch webfetch canon includes exact batch inputs, concurrency limits, shared-host permission flow, and the locked batch timeout formula.
+- Activity transparency payloads must preserve adapter-selection and projection fields used for routing and audit disclosure.
 
-In-thread web transparency is lightweight and complements, but does not replace, the dedicated audit/log surface.
-
-ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md
-
-Activity labeling rules:
-- `Searching Web` is the generic search family label
-- `Reading Site` is reserved for the PM-native Site Reader path
-- provider-routed or provider-fallback activity includes requested/effective adapter disclosure plus `provider_fallback_summary` when fallback occurred
-
-Thread-visible fields:
+Fields:
+- firecrawl_credits_used
+- firecrawl_cache_state
+- firecrawl_scrape_id
+- webresearch
+- no-URL natural-language research
+- navigation/forms/pagination capability
+- structured extraction behavior during provider-native research
+- Serper-backed Google-result behavior
+- sources
+- categories
+- optional result scraping behavior in Firecrawl `websearch`
+- changeTracking.status
+- changeTracking.previous_content_ref
+- changeTracking.diff_summary_ref
+- changeTracking.checked_at_utc
 - `tool_use_id`
 - `adapter_id`
-- `web_operation`
-- `requested_adapter_id`
-- `effective_adapter_id`
 - `adapter_selection_reason`
-- `warnings_count`
 - `duration_ms`
+- `timestamp`
+- `cached`
 - `error_code?`
 - `error_message?`
 - `warnings?`
-- `timestamp`
-- `cached`
 - `provenance_badge?`
-- `projection_freshness`
-- `projection_health`
-- `sources_ref`, `content_ref`, `map_ref`, `answer_summary_ref`
+- requested_adapter_id
+- effective_adapter_id
+- adapter_selection_reason
+- provider_fallback_summary
+- warnings_count
+- error_code
+- projection_freshness
+- projection_health
 
-Blocked and denied web attempts still bind to the shared event families and display `blocked_reason_code`, `allowed_action_ids[]`, `denial_reason_code`, `denial_source`, and `suggested_recovery_action` where present. Headless/HITL-unavailable uses `status: "unavailable"` rather than GUI-only recovery text.
-- exact blocked_reason_code values: `permission_denied`, `network_error`, `adapter_unavailable`, `timeout`
+Permission rules:
+- single confirmation prompt showing all unique domains in the batch
+- For Session grants all listed domains for that session
 
-Additional canonical rules:
+Rules:
+- Firecrawl `webfetch` capability is not erased by Site Reader primacy
+- Tavily `webfetch` capability is not erased by Site Reader primacy
+- Exa `webfetch` capability is not erased by Site Reader primacy
+- fallback-only
+- webfetch
+- Anthropic/OpenAI `websearch` support is `native (model)` / model-native, not `pm-composed`
+- native (model)
+- pm-composed
+- capability-unavailable terminal branch
+- clear setup guidance when no provider supports the requested operation
+- Site Reader v1 requires real browser-interaction capability, not static HTTP fetch only
+- Reading Site
+- provider-routed fetch must not reuse the reserved native Site Reader identity
+- search-then-read behavior
+- final citations come from the actual read path
+- raw search snippets alone are not enough provenance for the final answer
+- changeTracking { status: changed | unchanged | no_previous_version, previous_content_ref?, diff_summary_ref?, checked_at_utc }
+- change_status: 'new' | 'same' | 'changed' | 'removed'
+- pages[].change_status
+- change_summary
+- explicit out-of-scope retirement if `changeTracking` is not MVP
+- no silent disappearance of the capability
+- cost-aware selection when providers offer similar capability
+- >100 credits
+- 500 credits
+- cost-aware selection
+- static priority alone is insufficient
+- tool.denied
+- tool.invoked
+- adapter_unavailable
+- unsupported_operation
+- content_blocked
+- content_not_found
+- unsupported_source
+- extraction_schema_mismatch
+- autonomous_budget_exceeded
+- no_previous_version
+- `urls: string[]` (required; min 1, max 50)
+- `concurrency?: number` (default 3; max 10
+- `continue_on_error?: boolean` (default true
+- "For Session" grants all listed domains for that session
+- Batch-level timeout is LOCKED as `individual_timeout × min(url_count, 5)`, cap 600s (10 min)
 - chat may shortlist with search but must read chosen pages before citing them as final evidence
-- blocked and denied web episodes bind to the shared event family instead of a chat-local recovery shape
-- changeTracking must not silently disappear from surfaced web results
-- headless/HITL-unavailable uses status unavailable instead of GUI-only recovery prose
-- Point ContractRef set at ContractName:Plans/storage-plan.md#4.4 Activity transparency payloads, ContractName:Plans/Contracts_V0.md#3.4 Tool-specific payload extensions, and ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md#3.18 Built-in Browser and Click-to-Context
 ### 13.3 Bash and terminal ownership
-Chat embeds a lightweight terminal preview but does not become a second interactive terminal surface.
 
-ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md
+This section defines the canonical contract for this surface.
 
-Ownership rules:
-- Shell owns interactive state; chat owns preview+audit.
-- Commands requiring stdin/TTY start Terminal immediately.
-- Background/watch/server actions create terminal-owned session identity.
-- One-shot commands remain chat-inline by default, but non-interactive work may still promote if it becomes long-running.
-- Every promoted command card binds to stable terminal session identity.
-- Large payloads store full data behind refs/blobs.
+Core rules:
+- Inline mini-terminal and operation cards are locked to bounded inline previews, persistent per-command cards, narrative-order placement, and shared card anatomy.
+- Terminal promotion and handoff are locked so interactive or long-running work binds to a stable terminal session while chat retains only bounded preview and audit ownership.
+- Terminal action canon must preserve the distinct terminal actions and give Rerun in Terminal owned command-table treatment rather than collapsing actions into one normalized target.
 
-Command-card model:
-- the mini terminal preview is read-only and non-interactive inside chat
-- `Open in Terminal`, `Show Terminal`, `Rerun in Terminal`, and `Detach/Pop-Out` remain the canonical terminal actions
+Fields:
+- terminal_session_id
+- Open in Terminal
+- Show Terminal
+- Rerun in Terminal
+- Detach/Pop-Out
+
+Rules:
+- Collapsed preview: 5 lines
+- Expanded preview: 15 lines
+- Persists after completion
+- status, cwd, command summary, elapsed time, exit code / truncation indicator
+- READ-ONLY and non-interactive
+- One card per command
+- Retries create a new terminal and therefore a new mini terminal card
+- Shell owns interactive state; chat owns preview+audit
+- Commands requiring stdin/TTY start Terminal immediately
+- Background/watch/server actions create terminal-owned session
+- One-shot commands remain chat-inline by default
+- Every promoted command card binds to stable terminal session identity
+- Large payloads store full data behind refs/blobs
+- non-interactive work may promote if it becomes long-running
+- attach failure recovery differs for live process, ended process, and inline-only completed command
 - `Open in Terminal` and `Show Terminal` must focus the same live session
-- `Rerun in Terminal` launches a fresh terminal execution and therefore binds to a new `terminal_session_id`
 - after promotion, chat stops owning the full transcript
 - inline cards persist across thread reload and re-render from persisted metadata
 - search and diff do not stream progressively
-
-Reveal and focus behavior:
-- if the referenced terminal session is already visible, `Open in Terminal` and `Show Terminal` simply focus it
-- if the session is hidden inside another pane, tab, or section, the shell reveals the existing pane or tab before creating anything new
-- if only historical state remains, the card opens that historical shell receipt and presents explicit recovery actions instead of silently creating a replacement session
-- attach failure recovery differs for live process, ended process, and inline-only completed command
-
-ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/Tools.md, ContractName:Plans/storage-plan.md
-
-Rules:
-- Keep terminal command consumers anchored to Plans/UI_Command_Catalog.md#Terminal session and layout commands and Plans/FinalGUISpec.md#15.1 Terminal operation card widget
 ### Command-card model
 Command cards are transcript-adjacent summaries rather than a second shell implementation.
 

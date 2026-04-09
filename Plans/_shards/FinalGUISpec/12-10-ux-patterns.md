@@ -64,37 +64,38 @@ Read-only text, code blocks, logs, and labels must remain selectable and copyabl
 Clipboard actions should provide lightweight success feedback for non-obvious values and must never copy redacted or hidden-secret placeholders as though they were the real value.
 
 ### 10.10 LSP-informed affordances
-Hover cards, go-to-definition, diagnostics links, and code-aware affordances must feel native to the editor/chat workflow and clearly disclose when they are unavailable, stale, or remote-degraded.
 
-Supported affordance inventory:
-- `goToDefinition`
-- `findReferences`
-- `hover`
-- `documentSymbol`
-- `workspaceSymbol`
-- `goToImplementation`
-- `prepareCallHierarchy`
-- `incomingCalls`
-- `outgoingCalls`
-- `rename`
+This section consumes the linked owner contract and stays aligned with it.
 
-Parameter and status cues:
-- `workspaceSymbol` requires `query`.
-- Position-based operations use `path` + `position`.
-- `rename` requires `path` + `position` + `newName`.
-- GUI affordances surface normalized `status` values `ok | partial | unavailable | error`.
+Core rules:
+- LSP canon must preserve the exact MVP operation inventory, normalized parameter shapes, and result envelope; `workspaceSymbol` must carry `query`, position-based operations use `path` + `position`, and `rename` requires `path` + `position` + `newName` with approval gating.
 
-Rules:
+Fields:
+- operation
 - query
 - path
 - position
 - newName
 - status
-- GUI affordances clearly disclose when LSP data is unavailable, stale, or remote-degraded
+
+Labels and values:
+- goToDefinition
+- findReferences
+- hover
+- documentSymbol
+- workspaceSymbol
+- rename
+
+Rules:
+- goToImplementation
+- prepareCallHierarchy
+- incomingCalls
+- outgoingCalls
+- ok | partial | unavailable | error
 - `workspaceSymbol` requires `query`
-- rename stays approval-gated even when presented as a GUI affordance
-- rename remains approval-gated because it applies edits
-- Keep this GUI affordance section consuming Plans/LSPSupport.md#9. MVP LSP features (summary) and Plans/Tools.md#3.4.1 LSP tool (MVP) -- parameters, permission, rename approval
+- Position-based operations use `path` + `position`.
+- `rename` requires `path` + `position` + `newName`.
+- `rename` is approval-gated because it applies edits.
 ### 10.11 Loading-to-live transitions
 
 When moving from placeholder to real data, preserve layout footprint and focus so the interface does not jump unexpectedly.

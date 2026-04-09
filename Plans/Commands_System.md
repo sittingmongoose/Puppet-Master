@@ -417,7 +417,6 @@ Rules:
 - /web remains discoverable in catalog
 - deprecated aliases shown distinctly from active commands
 - reserved commands shown as non-editable in catalog
-
 ## 7. UICommand catalog entry
 
 <a id="UICOMMAND-ENTRY"></a>

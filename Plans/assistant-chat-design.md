@@ -225,7 +225,6 @@ Rules:
 - Stop becomes disabled when a run completes and no next message is queued
 - Edit restores content into composer and discards later history/work
 - Resend retries the most recent message and discards later history/work
-
 ## 5. Commands (slash commands and custom commands)
 
 The reserved slash-command surface is canonical and non-overridable.
@@ -253,7 +252,6 @@ Rules:
 - /web remains discoverable in catalog
 - deprecated aliases shown distinctly from active commands
 - reserved commands shown as non-editable in catalog
-
 ### 5.2 `/web` and `/skill`
 
 This section consumes the linked owner contract and stays aligned with it.
@@ -300,7 +298,6 @@ Rules:
 - subcommand is required for execution
 - URL normalization applies
 - parse failure shows usage
-
 ### 5.3 Git & GitHub command boundary
 Git and GitHub prefixes remain reserved and route into the canonical source-control and GitHub command surfaces rather than to user-defined command overrides.
 
@@ -340,7 +337,6 @@ Rules:
 - site/page reading is not search
 - dispatcher parity applies to slash and NL paths
 - command tables and routing docs must mirror the same mappings
-
 ## 6. Teach
 
 Teach defines how users deliberately teach Puppet Master durable codebase knowledge, preferences, and workflow constraints from within chat.
@@ -468,7 +464,6 @@ Rules:
 - question cards may include a visual
 - users can answer out of order and revise before submit
 - dismissing pauses conversation until resume
-
 ## 8. Plan Mode, Deep Plan Mode, and Plan Thoroughness (PT)
 
 ### 8.1 Canonical planning model
@@ -504,7 +499,6 @@ Fields:
 Labels and values:
 - Plan
 - Deep Plan
-
 ### 8.2 Plan Thoroughness (PT)
 
 **Plan Thoroughness (PT)** replaces the old planning-depth control.
@@ -628,7 +622,6 @@ Labels and values:
 - Plan
 - Deep Plan
 - chat.plan_todo_updated
-
 ### 8.7 Review loop for planning artifacts
 
 Standard Plan review:
@@ -1081,7 +1074,6 @@ Rules:
 - simple read/grep/glob results remain inline text, not cards
 - blocked responses must be machine-actionable through `allowed_action_ids[]`
 - error naming aligns to `adapter_unavailable`
-
 ### 13.2 Web activity and provenance
 
 This section consumes the linked owner contract and stays aligned with it.
@@ -1189,7 +1181,6 @@ Rules:
 - "For Session" grants all listed domains for that session
 - Batch-level timeout is LOCKED as `individual_timeout × min(url_count, 5)`, cap 600s (10 min)
 - chat may shortlist with search but must read chosen pages before citing them as final evidence
-
 ### 13.3 Bash and terminal ownership
 
 This section defines the canonical contract for this surface.
@@ -1226,7 +1217,6 @@ Rules:
 - after promotion, chat stops owning the full transcript
 - inline cards persist across thread reload and re-render from persisted metadata
 - search and diff do not stream progressively
-
 ### Command-card model
 Command cards are transcript-adjacent summaries rather than a second shell implementation.
 
@@ -1615,6 +1605,10 @@ ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractNa
 ---
 
 ## 20. References
+References inventory.
+
+Reference lists must defer to live owner docs instead of stale section-number citations.
+
 
 - **AGENTS.md:** DRY Method, platform_specs, subagent_registry, Pre-Completion Verification Checklist.
 - **Plans/interview-subagent-integration.md:** Interview phases, document generation, AGENTS.md/DRY for target projects, §5.2 AI-Overseer and wiring/completeness.
@@ -1622,7 +1616,11 @@ ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractNa
 - **Plans/human-in-the-loop.md:** HITL mode (phase/task/subtask approval gates), GUI settings, Dashboard CtAs.
 - **Plans/agent-rules-context.md:** Application-level rules (Puppet Master) and project-level rules; fed into every agent (orchestrator, interview, Assistant). When building Assistant context, include the shared rules pipeline output (application + project when a project is selected).
 - **Plans/FileSafe.md:** Context compilation (orchestrator/iteration); chat uses separate conversation context.
-- **Plans/Tools.md:** Central tool registry, tool permission keys, and ask-flow alignment; YOLO = no ask prompts, and Regular uses the canonical approval ladder from `Plans/Permissions_System.md`; §2.5 cross-plan alignment with FileSafe, FileManager, orchestrator, interview.
+- **Plans/Tools.md:** Central tool registry, tool permission keys, and ask-flow alignment; YOLO = no ask prompts, and Regular uses the canonical approval ladder from `Plans/Permissions_System.md`; the live web/provider owner sections remain `Plans/Tools.md#11.1 Provider classes, defaults, and fallback disclosure` and `Plans/Tools.md#12. Web tool routing algorithm`; §2.5 cross-plan alignment with FileSafe, FileManager, orchestrator, interview.
+- **Plans/Commands_System.md:** Reserved built-in slash-command set for chat surfaces; see `Plans/Commands_System.md#7. Reserved built-in slash commands` for the canonical `/web` family behavior and deprecated aliases.
+- **Plans/UI_Command_Catalog.md:** Canonical chat slash-command catalog and reveal identities; see `Plans/UI_Command_Catalog.md#2.7 Chat slash commands (reserved)` for the reserved slash-command surface.
+- **Plans/Permissions_System.md:** Approval ladder, blocked-recovery defaults, deterministic ask/plan behavior, and web permission derivation at `Plans/Permissions_System.md#3.4A Web-operation permission-key derivation`.
+- **Plans/Skills_System.md:** Skill discovery/invocation boundary and runtime ownership; see `Plans/Skills_System.md#6.3 Slash and runtime boundary`.
 - **Plans/MCP_Integration.md:** MCP naming, requested/effective availability, auth-state and connection-state vocabulary, credential binding, and invalidation; chat/search consumers reference this owner doc instead of re-owning MCP state terms.
 - **Plans/newtools.md:** GUI/settings alignment note only; older cited-search framing is non-normative and does not own live provider, routing, provenance, or billing canon.
 - **Cited web search (historical background only):** Adapt one or combine approaches so Assistant, Interview, and Orchestrator share one implementation. [opencode-websearch-cited](https://github.com/ghoulr/opencode-websearch-cited) -- LLM cited search, inline citations + Sources list (Google/OpenAI/OpenRouter). [opencode-websearch](https://www.npmjs.com/package/opencode-websearch) -- Anthropic/OpenAI provider wiring, model selection. [Opencode-Google-AI-Search-Plugin](https://github.com/IgorWarzocha/Opencode-Google-AI-Search-Plugin) -- Google AI Mode via Playwright, markdown + sources. These references do not replace the owner canon in `Plans/Tools.md`, `Plans/FinalGUISpec.md`, or `Plans/MCP_Integration.md`.
@@ -1983,7 +1981,6 @@ Rules:
 - requested_persona
 - effective_persona
 - effective_account_label
-
 ### 27.3 Natural-language Persona invocation in chat
 
 The Assistant must support user requests such as:
@@ -2090,7 +2087,6 @@ This section consumes the linked owner contract and stays aligned with it.
 
 Core rules:
 - Mermaid and inline visualizer behavior is locked to native card rendering, explicit error and fallback disclosure, sandboxing without arbitrary HTML execution, bounded persistence, injected theme tokens, and the exact inline visualizer bridge cross-reference target.
-
 ## 29. Natural-language Mode Invocation and Wizard Escalation (2026-03-08)
 
 ### 29.1 Natural-language mode invocation

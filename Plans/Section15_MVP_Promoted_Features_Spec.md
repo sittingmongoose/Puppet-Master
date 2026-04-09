@@ -496,32 +496,33 @@ ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Wiring_Matri
 - missing-path, duplicate-path, and in-flight-run behavior are deterministic and user-visible
 
 ### 3.18 Built-in Browser and Click-to-Context
+This section consumes the linked owner contract and stays aligned with it.
 
-This section defines the canonical contract for this surface.
-
-ContractRef: ContractName:Plans/storage-plan.md#4.4 Activity transparency payloads, ContractName:Plans/Contracts_V0.md#3.4 Tool-specific payload extensions, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md#3.18 Built-in Browser and Click-to-Context
+ContractRef: Plans/Contracts_V0.md#3.4 Tool-specific payload extensions, Plans/Tools.md#3.5D Web operation family runtime contract
 
 Core rules:
-- Site Reader canon must require real browser interaction, reserve `Reading Site` for the PM-native Site Reader path, and prevent provider-routed fetch from reusing that reserved identity.
-- Answer construction must preserve search-then-read behavior, final citations must come from the actual read path rather than raw search snippets alone, and web activity/provenance docs must use the exact storage/contracts/browser ContractRef targets instead of malformed generic anchors.
-- The Firecrawl webextract mapping must preserve structured extraction modes and option surface, not a thin single-URL summary.
+- Site Reader v1 requires real browser-interaction capability, not static HTTP fetch only.
+- Reading Site remains reserved for the PM-native Site Reader path.
+- provider-routed fetch must not reuse the reserved native Site Reader identity.
 
 Fields:
-- webextract
-- JSON Schema support
-- prompt-driven extraction behavior
-- URL wildcards
-- enableWebSearch
+- value?: string
+- description?: string
+- timeout_ms
+- type: "click" | "scroll" | "type" | "press_key" | "wait_for" | "navigate" | "screenshot" | "set_viewport" | "fill_form" | "select_option" | "back" | "reload" | "snapshot" | "console" | "network"
+
+Labels and values:
+- Reading Site
 
 Rules:
-- Site Reader v1 requires real browser-interaction capability, not static HTTP fetch only
-- Reading Site
-- provider-routed fetch must not reuse the reserved native Site Reader identity
-- search-then-read behavior
-- final citations come from the actual read path
-- raw search snippets alone are not enough provenance for the final answer
-- chat may shortlist with search but must read chosen pages before citing them as final evidence
-
+- invalid_input
+- 5 MB default
+- timeout_ms defaults to 5000ms; max 30000ms; total across all actions capped at 30s
+- Unknown `type` values → `invalid_input` error
+- Actions are executed sequentially in array order
+- reject non-HTTP(S) schemes
+- default to `https://` if bare domain
+- reject malformed URLs
 ## 4. Command families required by the promoted features
 The UI command catalog must expose stable commands for:
 - project switch and project open-in-new-workspace-tab

@@ -142,46 +142,92 @@ Settings > Storage includes a global **Remote Cache Administration** subsection 
 ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/storage-plan.md, ContractName:Plans/UI_Command_Catalog.md
 
 #### 7.4.4 Settings (Unified) panel specification
-Settings and `/web` help/autocomplete expose provider availability and support information without making the user infer it from the owner matrix alone.
 
-ContractRef: ContractName:Plans/Tools.md#11-provider-capability-matrix, ContractName:Plans/newtools.md#82-guisettings-alignment
+This section consumes the linked owner contract and stays aligned with it.
 
-Required web-provider disclosure surfaces:
-- row-level availability badge for each web-capable provider
-- row-level support-tier disclosure using the same vocabulary consumed from the owner capability matrix
-- row-level health/error disclosure and last-failure messaging when the provider is degraded, unauthenticated, rate-limited, or otherwise unavailable
-- contextual help text for auth/setup/cost implications, including when a provider is disabled by default or requires hosted billing
-- requested versus effective provider state remains separate in Settings and inspectors
-- the global provider stack is user-changeable in Settings
-- per-operation priority reordering is NOT MVP
-- global MVP provider priority is not immutable product policy
-- availability plus support-tier visibility in `/web` help/autocomplete remains visible so users can predict whether `websearch`, `webfetch`, `webextract`, `webresearch`, `webcrawl`, and `webmap` are currently runnable
-- if the requested operation is currently unrunnable, the UI shows the capability-unavailable branch explicitly instead of implying silent fallback
+Core rules:
+- The global provider stack is user-changeable in Settings, while per-operation priority reordering is not MVP and the MVP priority order must not be treated as immutable product policy.
+- The provider capability matrix must preserve capability tier separately from routing posture: Firecrawl, Tavily, and Exa retain real webfetch capability and must not be flattened to fallback-only merely because Site Reader is preferred.
+- DuckDuckGo capability rows must preserve native-ish search, PM-composed research/fetch/extract, and partial crawl behavior instead of flattening those cells to unsupported.
+- Google must remain a pluggable adapter slot with display label Google, and its ledger support semantics must not be collapsed away.
+- The Firecrawl configuration field set must preserve proxy_mode with the exact supported enum values and the self-hosted Fire Engine limitation note.
+- Routing must remain cost-aware when multiple providers offer similar capability; static priority alone is insufficient, and the >100 credits warning plus 500 credits cap must remain aligned with routing.
+- PM must not silently switch between self-hosted Firecrawl and hosted/cloud Firecrawl, and deployment-mode disclosure must remain visible.
+- GUI/help canon must preserve row-level health/error disclosure, last-failure messaging, inline contextual help, and availability/support-tier visibility in Settings and /web help/autocomplete.
+- The Firecrawl owner section must preserve the base configuration fields and default-disabled state already restored in the live owner doc.
+- The Firecrawl credit and disclosure contract must preserve the warning threshold, hard cap, and self-hosted billing exception already restored in the owner section.
+- Retire stale cited-search ownership residue from reference sections; provider-capability and web-routing canon is owned by Plans/Tools.md sections 11-12, while Plans/newtools.md#8.2.1 is non-normative consumer guidance only.
+- Firecrawl provider identity canon includes exact provider ID firecrawl, display name Firecrawl, default priority below Exa and Tavily and above DuckDuckGo, user-adjustable ordering, default-disabled state until API key or self-hosted URL is configured, and retirement of exact stale residue "stale cited-search framing and older `newtools` wording" from owner/provider canon.
+- MCP owner canon must preserve the exact auth and effective-state enums, canonical naming, and credential binding or invalidation behavior.
 
-Consumer disclosure rules:
-- cost-aware selection remains visible when routing prefers a lower-cost viable path
-- hosted/provider-native research paths surface explicit credit/billing copy, including `>100 credits` warnings for `research` and `500 credits` warnings for deep research where those paths apply
-- PM MUST NOT silently switch between self-hosted Firecrawl and hosted/cloud Firecrawl
-- deployment-mode disclosure remains visible whenever Firecrawl is selected, suggested, or used as the effective provider
-- self-hosted Firecrawl does not use hosted credit billing
+Fields:
+- proxy_mode
+- basic
+- enhanced
+- auto
+- Fire Engine
+- enabled
+- api_key
+- base_url
+- timeout_ms
+- cache_enabled
+- Firecrawl is disabled by default until explicitly enabled in Settings
+- authenticated | expired | not_authenticated
+- connected | disabled | needs_auth | needs_client_registration | failed
+- LoggedIn | LoggedOut | AuthExpired | AuthFailed
+- {server_slug}_{tool_name}
 
-The unified Settings panel owns provider, account, model, and permission configuration. It does not re-own Personas or Skills.
-
-ContractRef: ContractName:Plans/Skills_System.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/Models_System.md
-
-Required surfaces:
-- provider class disclosure: `account-backed`, `API-backed`, `no-key`
-- requested versus effective account/provider state
-- support-tier and health/last-failure disclosure for web-capable providers
-- credit/cost warning UI for high-cost provider-native research paths
-- Firecrawl disclosure includes Provider ID `firecrawl`, Display name `Firecrawl`, Default priority below Exa, Tavily; above DDG (user-adjustable), and Default state disabled (requires API key or self-hosted URL).
-- Firecrawl configuration surfaces preserve `proxy_mode` with `basic`, `enhanced`, and `auto`, and disclose the self-hosted Fire Engine limitation note.
-
-ContractRef: ContractName:Plans/Tools.md#10-firecrawl-provider-integration, ContractName:Plans/Models_System.md
+Labels and values:
+- Firecrawl
+- Google
+- DuckDuckGo
+- Anthropic
+- OpenAI
+- Settings
+- requested availability
+- effective availability
+- credential binding
 
 Rules:
-- requested versus effective provider state stays separate in Settings and inspectors
-- Keep this subsection tied to Plans/Tools.md#10. Firecrawl provider integration and Plans/Tools.md#11.1 Provider classes, defaults, and fallback disclosure
+- global provider stack is user-changeable in Settings
+- per-operation priority reordering is NOT MVP
+- global MVP provider priority is not immutable product policy
+- Firecrawl `webfetch` capability is not erased by Site Reader primacy
+- Tavily `webfetch` capability is not erased by Site Reader primacy
+- Exa `webfetch` capability is not erased by Site Reader primacy
+- fallback-only
+- webfetch
+- DuckDuckGo `websearch` is `native-ish`
+- DuckDuckGo `webresearch` is `pm-composed`
+- DuckDuckGo `webfetch` / `webextract` remain PM-composed or partial rather than flattened to `unsupported`
+- DuckDuckGo partial crawl behavior must not disappear
+- display label `Google`
+- Google is a pluggable adapter slot
+- Google official search is not a strategic backend
+- Google `webfetch` keeps the pm-composed support semantics from the ledger
+- cost-aware selection when providers offer similar capability
+- >100 credits
+- 500 credits
+- cost-aware selection
+- static priority alone is insufficient
+- PM MUST NOT silently switch between self-hosted Firecrawl and hosted/cloud Firecrawl
+- no silent switch between self-hosted Firecrawl and hosted/cloud Firecrawl
+- deployment-mode disclosure remains visible
+- self-hosted Firecrawl does not use hosted credit billing
+- row-level health/error disclosure
+- last-failure messaging
+- contextual help text
+- availability plus support-tier visibility in Settings
+- availability plus support-tier visibility in `/web` help/autocomplete
+- self-hosted Firecrawl does not use credit billing
+- Provider ID
+- `firecrawl`
+- Display name
+- `Firecrawl`
+- Default priority
+- below Exa, Tavily; above DDG (user-adjustable)
+- Default state
+- disabled (requires API key or self-hosted URL)
 #### 7.4.5 Workspace, editor, and remote-host settings
 
 Settings MUST expose durable configuration for workspace behavior, editor policies, and remote editing.
@@ -202,43 +248,33 @@ This subsection owns:
 - runtime-output routing preferences for Problems, Output, Ports, and Debug Console
 
 #### 7.4.7 Agent-Config panel specification
-Agent Config owns Personas and Skills. Settings owns system-level dependencies such as authentication, models, permissions, rules, and health.
+This section defines the canonical contract for this surface.
 
-ContractRef: ContractName:Plans/Skills_System.md, ContractName:Plans/Personas.md
+Core rules:
+- Agent behavior management is locked under Agent Config, with Skills as a tab inside it, while Settings retains system-level dependencies and rules.
+- Skills management is locked to explicit catalog and import UX, fixed source and readiness vocabularies, store-vs-management separation, and visible source/readiness badges including pm_enhanced.
 
-Owner-routing rules:
+Fields:
+- bundled
+- catalog_installed
+- manual_import
+- project_local
+- global_local
+- pm_enhanced
+- ready_with_warnings
+
+Labels and values:
+- Agent Config
+- Skills
+- Personas
+
+Rules:
 - Agent Config owns: agent-behavior artifacts (personas, skills)
 - Settings keeps: system-level dependencies (authentication, models, permissions, rules, health)
 - Agent Config is NOT replacement for Settings
-
-Required Agent Config surfaces:
-- Persona selection and editing
-- a dedicated Skills tab inside Agent Config rather than a Settings-owned management surface
-- skill registry with source vocabulary `bundled`, `pm_enhanced`, `catalog_installed`, `manual_import`, `project_local`, `global_local`, `shadowed`
-- readiness vocabulary `ready`, `ready_with_warnings`, `invalid`, `shadowed`, `disabled`
-- visible source/readiness badges, including `pm_enhanced`, in the management table
-- invocation/help affordances that align with `/skill`
-
-V1 import rules:
-- file-browser import is supported in MVP
-- drag-and-drop skill folders/files is supported in MVP
+- drag-and-drop skill folders/files
+- file-browser import
 - No remote URL/git import in v1
-- import/install flows stay within the supported skill surfaces defined by `Plans/Skills_System.md`
-Additional invocation rules:
-- `/skill <skill_name> [args]`, `/skill with no args lists available skills`, the Skills panel, and Natural language all converge on the same `invoke_skill` contract.
-- No subcommand family for MVP.
-- `deny`, `once`, `for session`, and `always` remain the approval ladder where skill or web actions require approval.
-- question default `allow` only when HITL is available.
-- `read_only` and `plan` keep read-only web tools ask-gated rather than silently denying them.
-
-ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Skills_System.md
-
-Rules:
-- Skills panel, /skill, and Natural language converge on the same invoke_skill contract
-- deny/once/for session/always remain the approval ladder where skill or web actions require approval
-- question default allow only when HITL is available
-- read_only and plan keep read-only web tools ask-gated
-- Keep this panel anchored to Plans/Skills_System.md#4.3 `skill` tool and Plans/UI_Command_Catalog.md#2.7 Chat slash commands (reserved)
 #### 7.4.8 Container, Docker, and Kubernetes settings
 
 Settings MUST expose a dedicated container/runtime settings area for Docker and Kubernetes-related defaults.

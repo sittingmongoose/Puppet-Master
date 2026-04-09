@@ -11,28 +11,8 @@ ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan
 - neither path owns hidden mutable state outside durable source or metadata refs
 
 ### 28.2 Inline visualizer bridge
-The inline visualizer is a PM-managed renderer distinct from Mermaid. It is not a generic HTML sandbox or a shortcut around PM state.
 
-ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md
+This section consumes the linked owner contract and stays aligned with it.
 
-Bridge contract:
-- bridge messages include at least `requestThemeTokens`, `reportSize`, `emitSelection`, `sendPrompt(text)`, and `openLink(url)`
-- theme-token injection is PM-owned so visuals stay aligned with the active theme and accessibility settings
-- the renderer reports auto-height and resize events back to PM; chat does not guess iframe height blindly
-- question-flow visuals never bypass PM draft state or submit directly to the model
-
-Sandbox and persistence rules:
-- the iframe sandbox stays at `sandbox="allow-scripts"`
-- `allow-same-origin`, `allow-forms`, `allow-popups`, and `allow-top-navigation` stay denied
-- must NOT execute arbitrary HTML
-- allowlisted tags/attributes only
-- arbitrary runtime network fetches are not part of the MVP visualizer contract
-- persisted state is limited to PM-managed source fragments, metadata, and PM-owned outputs; arbitrary JS heap state is not durable
-- visible fallback and error rendering remain mandatory when the visualizer cannot execute or render safely
-- Copy source
-- Open in editor
-- Open detached preview
-- Export diagram
-
-Rules:
-- Keep this bridge section consuming Plans/FinalGUISpec.md#15.6 Mermaid and inline visualizer widgets
+Core rules:
+- Mermaid and inline visualizer behavior is locked to native card rendering, explicit error and fallback disclosure, sandboxing without arbitrary HTML execution, bounded persistence, injected theme tokens, and the exact inline visualizer bridge cross-reference target.

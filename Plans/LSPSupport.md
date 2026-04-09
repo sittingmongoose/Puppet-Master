@@ -380,7 +380,6 @@ Rules:
 - Position-based operations use `path` + `position`.
 - `rename` requires `path` + `position` + `newName`.
 - `rename` is approval-gated because it applies edits.
-
 ## 10. Transport alternatives and bridge pattern
 
 Most LSP servers use **stdio** (spawn process, stdin/stdout = JSON-RPC). Some use **TCP** (e.g. Godot's GDScript LSP on port 6005). Tools like OpenCode and Cursor typically expect stdio only, so TCP-only servers don't work without a bridge.

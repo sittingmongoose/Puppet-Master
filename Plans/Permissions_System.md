@@ -336,52 +336,22 @@ Covered operations:
 ---
 
 ## 5. Tool permission keys
-
-This section defines the canonical contract for this surface.
+This section defines the canonical contract for tool permission keys.
 
 ContractRef: Plans/FinalGUISpec.md#15.7 Permission approval card widget
 
 Core rules:
 - Web tool permission keys, approval-card summary templates, session-approval semantics, and their exact approval-card cross-reference target remain canonical in Permissions_System and must not be re-invented from thin tool descriptions or stale Ask UI links.
 - Permission canon must preserve the four-tier approval ladder, question default allow only when HITL is available, keep the six web tools ask-gated in read_only and plan presets, and carry the blocked/unavailable payload fields through to permission-card consumers.
-- LSP canon must preserve the exact MVP operation inventory, normalized parameter shapes, and result envelope; `workspaceSymbol` must carry `query`, position-based operations use `path` + `position`, and `rename` requires `path` + `position` + `newName` with approval gating.
 
-Fields:
-- operation
-- query
-- path
-- position
-- newName
-- status
+Labels and values:
+- tool permission keys
 
 Permission rules:
 - deny
 - once
 - for session
 - always
-- blocked_reason_code
-- allowed_action_ids[]
-- status: "unavailable"
-
-Rules:
-- websearch summary shows tool name + query preview
-- webfetch/webextract summary shows tool name + target host/URL
-- webresearch summary shows tool name + task summary + estimated source count when available
-- webcrawl/webmap summary shows tool name + root URL + page/depth caps
-- Approving webcrawl For Session auto-approves crawl/map/extract/fetch for the same host pattern
-- Approving webresearch For Session does NOT create broad allow for unrelated tools
-- MVP uses wildcard session approval for search/research; advanced query-pattern support is future only
-- goToDefinition
-- findReferences
-- hover
-- documentSymbol
-- workspaceSymbol
-- goToImplementation
-- prepareCallHierarchy
-- incomingCalls
-- outgoingCalls
-- rename
-- ok | partial | unavailable | error
 - question default `allow` only when HITL is available
 - read_only
 - plan
@@ -391,11 +361,21 @@ Rules:
 - webresearch
 - webcrawl
 - webmap
-- `workspaceSymbol` requires `query`
-- Position-based operations use `path` + `position`.
-- `rename` requires `path` + `position` + `newName`.
-- `rename` is approval-gated because it applies edits.
+- blocked_reason_code
+- allowed_action_ids[]
+- status: "unavailable"
 
+Rules:
+- summary templates are part of permission canon, not GUI-local prose
+- websearch summary shows tool name + query preview
+- webfetch/webextract summary shows tool name + target host/URL
+- webresearch summary shows tool name + task summary + estimated source count when available
+- webcrawl/webmap summary shows tool name + root URL + page/depth caps
+- Approving webcrawl For Session auto-approves crawl/map/extract/fetch for the same host pattern
+- For Session approval for webcrawl expands to crawl/map/extract/fetch on the same host pattern
+- Approving webresearch For Session does NOT create broad allow for unrelated tools
+- MVP uses wildcard session approval for search/research; advanced query-pattern support is future only
+- search/research use wildcard session approval only in MVP
 ## 6. Ask flow semantics
 
 This section defines the canonical contract for this surface.
@@ -449,7 +429,6 @@ Rules:
 - webresearch
 - webcrawl
 - webmap
-
 ## 7. Deterministic defaults
 
 This section defines the canonical contract for this surface.
@@ -485,7 +464,6 @@ Rules:
 - webresearch
 - webcrawl
 - webmap
-
 ## 8. Resolution algorithm
 
 ### 8.1 Banned-command full-string check
@@ -679,7 +657,6 @@ Rules:
 - webresearch
 - webcrawl
 - webmap
-
 ### 10.5 External directory allowlist manager
 
 A dedicated card for managing the external directory allowlist (§3.3):

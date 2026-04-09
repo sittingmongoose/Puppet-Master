@@ -50,7 +50,6 @@ Fields:
 
 Rules:
 - source_surface
-
 ### 1.2 EventRecord -- canonical persisted envelope (schema: `pm.event.v0`)
 
 The canonical persisted runtime snapshot keeps the historical base field names stable while allowing additive disclosure fields for runtime family, runtime platform, billing/entity attribution, and server-profile routing.
@@ -291,6 +290,8 @@ Fields:
 - tagging each item with `source_type`
 - Merge order: web results first, then news, then images
 
+ContractRef: ContractName:Plans/Tools.md#10.7 Audit, error, and self-hosted rules, ContractName:Plans/storage-plan.md#4.4 Activity transparency payloads
+
 Labels and values:
 - Firecrawl
 - websearch
@@ -430,7 +431,6 @@ Rules:
 - reject malformed URLs
 - `max_content_length`
 - 5 MB default
-
 ### 3.4A Web error taxonomy and applicability
 
 This section defines the canonical contract for this surface.
@@ -459,7 +459,6 @@ Rules:
 - extraction_schema_mismatch
 - autonomous_budget_exceeded
 - no_previous_version
-
 ### 3.5 Debug investigation events
 
 Debug investigations use persisted `EventRecord` envelopes with the following stable `type` values.
@@ -695,7 +694,6 @@ Rules:
 - effective_account_label
 - effective_provider_identity
 - effective_project_id
-
 ### 5.2 AttemptJournal
 
 **Definition:** `attempt_journal` is the per-Subtask, per-Iteration ephemeral artifact used to prevent repeated failed attempts.
