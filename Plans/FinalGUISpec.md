@@ -913,7 +913,6 @@ Rules:
 - below Exa, Tavily; above DDG (user-adjustable)
 - Default state
 - disabled (requires API key or self-hosted URL)
-
 #### 7.4.5 Workspace, editor, and remote-host settings
 
 Settings MUST expose durable configuration for workspace behavior, editor policies, and remote editing.
@@ -934,52 +933,33 @@ This subsection owns:
 - runtime-output routing preferences for Problems, Output, Ports, and Debug Console
 
 #### 7.4.7 Agent-Config panel specification
-
 This section defines the canonical contract for this surface.
 
 Core rules:
 - Agent behavior management is locked under Agent Config, with Skills as a tab inside it, while Settings retains system-level dependencies and rules.
 - Skills management is locked to explicit catalog and import UX, fixed source and readiness vocabularies, store-vs-management separation, and visible source/readiness badges including pm_enhanced.
-- Skill discovery and invocation are locked to three paths—GUI panel, /skill, and natural language—without an MVP subcommand family, all converging on the same invoke_skill contract.
-- Skill runtime and permission behavior is locked to a structured skill tool envelope, discovery versus auto-invoke readiness rules, dynamic runtime tool descriptions, FileSafe-constrained resource access, and Agent Config ownership.
 
 Fields:
-- /skill <skill_name> [args]
-- /skill with no args lists available skills
-- invoke_skill
-- No subcommand family for MVP
-- Skills panel
-- Natural language
-- skill_id
-- arguments?
-- context?
-- content
-- source_type
-- resource_base_dir?
-- resource_entries_sample?
-- metadata?
-- ready_with_warnings
-
-Labels and values:
-- /skill
-
-Rules:
-- Agent Config
-- Skills
-- Personas
-- Agent Config owns: agent-behavior artifacts (personas, skills)
-- Settings keeps: system-level dependencies (authentication, models, permissions, rules, health)
-- Agent Config is NOT replacement for Settings
-- drag-and-drop skill folders/files
-- file-browser import
-- No remote URL/git import in v1
 - bundled
 - catalog_installed
 - manual_import
 - project_local
 - global_local
 - pm_enhanced
+- ready_with_warnings
 
+Labels and values:
+- Agent Config
+- Skills
+- Personas
+
+Rules:
+- Agent Config owns: agent-behavior artifacts (personas, skills)
+- Settings keeps: system-level dependencies (authentication, models, permissions, rules, health)
+- Agent Config is NOT replacement for Settings
+- drag-and-drop skill folders/files
+- file-browser import
+- No remote URL/git import in v1
 #### 7.4.8 Container, Docker, and Kubernetes settings
 
 Settings MUST expose a dedicated container/runtime settings area for Docker and Kubernetes-related defaults.
@@ -1533,7 +1513,6 @@ Rules:
 - Position-based operations use `path` + `position`.
 - `rename` requires `path` + `position` + `newName`.
 - `rename` is approval-gated because it applies edits.
-
 ### 10.11 Loading-to-live transitions
 
 When moving from placeholder to real data, preserve layout footprint and focus so the interface does not jump unexpectedly.
@@ -2093,6 +2072,10 @@ ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/GitHub_Integr
 No features in this specification are deferred.
 
 ## Appendix A: Cross-References
+Cross-References inventory.
+
+Reference rows must point at live owner documents or live section anchors, not nonexistent section numbers.
+
 
 | Plan Document | Sections Incorporated |
 |--------------|----------------------|
@@ -2110,14 +2093,14 @@ No features in this specification are deferred.
 | `Plans/WorktreeGitImprovement.md` | Branching tab in Settings (§7.4), worktree recovery in Health tab |
 | `Plans/FileSafe.md` | Advanced tab in Settings (§7.4), command blocklist, write scope, security filter |
 | `Plans/MiscPlan.md` | Health tab "Clean workspace" button (§7.4), cleanup config in Advanced tab, Shortcuts tab (§7.4) |
-| `Plans/Skills_System.md` | Agent Config panel (§7.4.7) |
-| `Plans/feature-list.md` | Master feature reference: chat modes (§7.16), thread management, slash commands (§7.16.2), ELI5/YOLO, attachments, Teach, context management (§9.6), editor detach (§7.18), **storage and cache admin UI (§7.4.3)**, **unified settings/search/import/export (§7.4.4)** |
+| `Plans/Skills_System.md` | Agent Config panel (§7.4.7) and slash/runtime boundary at `Plans/Skills_System.md#6.3 Slash and runtime boundary` |
+| `Plans/feature-list.md` | Master feature reference: chat modes (§7.16), thread management, slash commands (see `Plans/Commands_System.md#7. Reserved built-in slash commands` and `Plans/UI_Command_Catalog.md#2.7 Chat slash commands (reserved)`), ELI5/YOLO, attachments, Teach, context management (§9.6), editor detach (§7.18), **storage and cache admin UI (§7.4.3)**, **unified settings/search/import/export (§7.4.4)** |
 | `Plans/newtools.md` | MCP/settings alignment note and non-owning cited-search guidance; live provider/routing/billing canon stays in the owner docs. |
 
-| `Plans/Commands_System.md` | Reserved built-in slash-command set for chat surfaces, including `/web` family behavior and deprecated aliases. |
-| `Plans/UI_Command_Catalog.md` | Terminal reveal identities and canonical `cmd.chat.web.*` command ids consumed by chat and command surfaces. |
-| `Plans/Permissions_System.md` | Tool permission keys, approval ladder, blocked-recovery defaults, and deterministic ask/plan behavior. |
-| `Plans/MCP_Integration.md` | Requested/effective MCP availability, auth-state and connection-state enums, credential binding, and invalidation vocabulary. |
+| `Plans/Commands_System.md` | Reserved built-in slash-command set for chat surfaces; see `Plans/Commands_System.md#7. Reserved built-in slash commands` for `/web` family behavior and deprecated aliases. |
+| `Plans/UI_Command_Catalog.md` | Terminal reveal identities and canonical `cmd.chat.web.*` command ids consumed by chat and command surfaces; see `Plans/UI_Command_Catalog.md#2.7 Chat slash commands (reserved)`. |
+| `Plans/Permissions_System.md` | Tool permission keys, approval ladder, blocked-recovery defaults, deterministic ask/plan behavior, and web-operation derivation at `Plans/Permissions_System.md#3.4A Web-operation permission-key derivation`. |
+| `Plans/MCP_Integration.md` | Requested/effective MCP availability at `Plans/MCP_Integration.md#2. Requested versus effective availability`; GUI surfacing at `Plans/MCP_Integration.md#7. Effective tool availability and GUI surfacing`; plus auth-state and connection-state enums, credential binding, and invalidation vocabulary. |
 | `Plans/Tools.md` | Tool permissions in Permissions tab (§7.4.9), tool permission keys, presets, central tool registry, canonical approval ladder, web-provider matrix, routing algorithm, Firecrawl integration, and batch-operation contracts; tool usage widget on Usage page (§7.8); tool approval dialog in Chat (§7.16) |
 | `Plans/LSPSupport.md` | LSP tab in Settings (§7.4.9), editor LSP features (§7.18: diagnostics, hover, completion, signature help, inlay hints, code actions, code lens, semantic highlighting, go-to-definition), **Chat Window LSP (§7.16: diagnostics in context, @ symbol with LSP, code-block hover/go-to-definition, Problems link)**, Problems tab (§7.20.2), status bar LSP indicator |
 | `Plans/rewrite-tie-in-memo.md` | Rewrite scope alignment; ensures GUI migration ties into broader rewrite plan |
@@ -2294,7 +2277,6 @@ Rules:
 - requested_persona
 - effective_persona
 - effective_account_label
-
 ### 19.5 Runtime display requirements
 
 When a run is active, the UI must display:
@@ -2866,7 +2848,6 @@ Rules:
 - after promotion, chat stops owning the full transcript
 - inline cards persist across thread reload and re-render from persisted metadata
 - search and diff do not stream progressively
-
 ### 15.2 Search result card widget
 
 This section consumes the linked owner contract and stays aligned with it.
@@ -2888,7 +2869,6 @@ Rules:
 - final citations come from the actual read path
 - raw search snippets alone are not enough provenance for the final answer
 - chat may shortlist with search but must read chosen pages before citing them as final evidence
-
 ### 15.3 Web and diff operation card widget
 
 This section consumes the linked owner contract and stays aligned with it.
@@ -2988,7 +2968,6 @@ Rules:
 - Resend retries the most recent message and discards later history/work
 - blocked responses must be machine-actionable through `allowed_action_ids[]`
 - error naming aligns to `adapter_unavailable`
-
 ### 15.4 Planning panel widget (sticky sidebar)
 
 This section consumes the linked owner contract and stays aligned with it.
@@ -3014,7 +2993,6 @@ Labels and values:
 - Plan
 - Deep Plan
 - chat.plan_todo_updated
-
 ### 15.5 Question card widget
 
 This section consumes the linked owner contract and stays aligned with it.
@@ -3042,7 +3020,6 @@ Rules:
 - question cards may include a visual
 - users can answer out of order and revise before submit
 - dismissing pauses conversation until resume
-
 ### 15.6 Mermaid and inline visualizer widgets
 
 This section defines the canonical contract for this surface.
@@ -3059,7 +3036,6 @@ Rules:
 - Export diagram
 - sendPrompt(text)
 - openLink(url)
-
 ### 15.7 Permission approval card widget
 
 This section consumes the linked owner contract and stays aligned with it.
@@ -3096,4 +3072,3 @@ Rules:
 - webresearch
 - webcrawl
 - webmap
-

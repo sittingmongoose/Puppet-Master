@@ -391,7 +391,6 @@ Rules:
 - after promotion, chat stops owning the full transcript
 - inline cards persist across thread reload and re-render from persisted metadata
 - search and diff do not stream progressively
-
 #### Dev-session commands
 | Command ID | Payload | Domain event(s) | UI surface(s) |
 |---|---|---|---|
@@ -508,6 +507,7 @@ Rules:
 - "read this URL" → `webfetch`
 - "research topic" → `webresearch`
 - Reading intents MUST resolve to `webfetch`, not `websearch`
+ContractRef: ContractName:Plans/Commands_System.md#7. Reserved built-in slash commands, ContractName:Plans/assistant-chat-design.md#5.2 `/web` and `/skill`
 - bare /web shows help/autocomplete only
 - do not flatten /web into separate slash families
 - subcommand is required for execution
@@ -520,7 +520,6 @@ Rules:
 - /web remains discoverable in catalog
 - deprecated aliases shown distinctly from active commands
 - reserved commands shown as non-editable in catalog
-
 ### 2.8 Assistant memory (Gist Review) commands
 These IDs are required by `Plans/assistant-memory-subsystem.md` sections 5 and 7.
 

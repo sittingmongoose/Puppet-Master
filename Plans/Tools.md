@@ -248,7 +248,6 @@ Rules:
 - Position-based operations use `path` + `position`.
 - `rename` requires `path` + `position` + `newName`.
 - `rename` is approval-gated because it applies edits.
-
 ### 3.5 Per-tool semantics (I/O, errors, limits)
 
 The following contracts define the minimum runtime envelopes for the core built-in tools. Provider-native names may differ, but the registry must normalize them to these contracts before persistence, analytics, or agent-visible result handling.
@@ -480,7 +479,6 @@ Fields:
 - resource_entries_sample?
 - metadata?
 - ready_with_warnings
-
 ### 3.5B `question` tool runtime contract
 
 This section consumes the linked owner contract and stays aligned with it.
@@ -514,7 +512,6 @@ Rules:
 - draft_value?: string
 - response_kind
 - validation_state
-
 ### 3.5C `todowrite` and `todoread` runtime contract
 
 This section defines the canonical contract for this surface.
@@ -553,7 +550,6 @@ Fields:
 Labels and values:
 - Plan
 - Deep Plan
-
 ### 3.5D Web operation family runtime contract
 
 This section defines the canonical contract for this surface.
@@ -595,7 +591,6 @@ Rules:
 - reject malformed URLs
 - `max_content_length`
 - 5 MB default
-
 ### 3.5E LSP tool runtime reconciliation
 The `lsp` tool surface is widened beyond the minimal MVP read trio.
 
@@ -1374,7 +1369,6 @@ Rules:
 - below Exa, Tavily; above DDG (user-adjustable)
 - Default state
 - disabled (requires API key or self-hosted URL)
-
 ### 10.2 Endpoint inventory
 
 This section defines the canonical contract for this surface.
@@ -1453,7 +1447,6 @@ Rules:
 - batch_webextract
 - POST /v2/extract
 - urls[]
-
 ### 10.4 Async jobs and status contract
 
 This section defines the canonical contract for this surface.
@@ -1492,7 +1485,6 @@ Labels and values:
 - webresearch
 - webcrawl
 - webmap
-
 ### 10.5 Credit and cost contract
 
 This section defines the canonical contract for this surface.
@@ -1517,7 +1509,6 @@ Rules:
 - cost-aware selection
 - static priority alone is insufficient
 - self-hosted Firecrawl does not use credit billing
-
 ### 10.6 Interact-session contract
 
 Firecrawl supports a stateful browser session built on `/v2/scrape/{scrapeId}/interact`.
@@ -1616,7 +1607,6 @@ Rules:
 - blocked_reason_code
 - allowed_action_ids[]
 - status: "unavailable"
-
 ## 11. Provider capability matrix
 
 ### 11.1 Provider classes, defaults, and fallback disclosure
@@ -1674,7 +1664,6 @@ Rules:
 - below Exa, Tavily; above DDG (user-adjustable)
 - Default state
 - disabled (requires API key or self-hosted URL)
-
 ### 11.2 Support-tier vocabulary
 
 Support tiers are:
@@ -1763,7 +1752,6 @@ Rules:
 - site/page reading is not search
 - dispatcher parity applies to slash and NL paths
 - command tables and routing docs must mirror the same mappings
-
 ## 13. Batch operations
 
 This section defines the canonical contract for this surface.
@@ -1806,7 +1794,6 @@ Rules:
 - `continue_on_error?: boolean` (default true
 - "For Session" grants all listed domains for that session
 - Batch-level timeout is LOCKED as `individual_timeout × min(url_count, 5)`, cap 600s (10 min)
-
 ## 14. Web content caching layer
 
 This section defines the canonical contract for this surface.
@@ -1842,4 +1829,3 @@ Rules:
 - PM cache takes precedence for serving cached content
 - Firecrawl cache serves as provider-side optimization only
 - `cache_state: "hit" | "miss" | "bypassed" | "expired_used_for_diff"`
-

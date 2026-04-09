@@ -195,7 +195,6 @@ Rules:
 - project_local
 - global_local
 - pm_enhanced
-
 ### 4.4 Canonical MVP delivery path
 
 MVP skill delivery uses one on-disk format: a single `SKILL.md` per skill.
@@ -275,17 +274,25 @@ Flow rules:
 - imported resources stay within FileSafe-constrained disclosure rules
 
 ### 6.3 Slash and runtime boundary
-
 `/skill` is a discovery or invocation affordance that lands on the same runtime contract as tool-based skill invocation.
 
-ContractRef: ContractName:Plans/Commands_System.md, ContractName:Plans/assistant-chat-design.md
+ContractRef: Plans/Commands_System.md#7. Reserved built-in slash commands, Plans/assistant-chat-design.md#5.2 `/web` and `/skill`
 
-Boundary rules:
-- `/skill <skill_name> [args]` resolves directly to the shared runtime contract
-- `/skill with no args lists available skills` or opens discovery/invocation help
+Labels and values:
+- /skill
+- Skills panel
+- Natural language
+
+Fields:
+- /skill <skill_name> [args]
+- /skill with no args lists available skills
+- invoke_skill
+
+Flow rules:
+- /skill <skill_name> [args] resolves directly to the shared runtime contract
 - slash and Natural language invocation both resolve to the same `invoke_skill` / `skill_id / arguments? / context?` runtime contract
+- Skills panel launches the same shared runtime contract
 - No subcommand family for MVP
-- the Skills panel surfaces the same discovery and help posture
 - `ready_with_warnings` remains discoverable but is not auto-invoked
 ## 7. Baseline alignment (OpenCode)
 

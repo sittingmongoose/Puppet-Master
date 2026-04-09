@@ -255,7 +255,6 @@ Rules:
 - below Exa, Tavily; above DDG (user-adjustable)
 - Default state
 - disabled (requires API key or self-hosted URL)
-
 ## 5. Per-Persona runtime preferences
 
 <a id="PERSONA-MODEL-OVERRIDES"></a>
