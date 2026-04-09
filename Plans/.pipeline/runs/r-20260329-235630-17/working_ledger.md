@@ -5712,12 +5712,12 @@ Ignore the older 8-doc / 14-doc packet summaries above. The authoritative reconc
 
 ## WORK ITEM STEWARD REFRESH — 2026-04-09
 
-- Preserved packetized work item state for `w-20260329-235630` and current run lineage `r-20260329-235630-17`.
-- Refreshed `meta.json`, `mode_rules.md`, and `mode_status.md` in place so a fresh agent can resume without inventing new work-item state or resetting packetized status.
+- Preserved packetized work item state for `w-20260329-235630` and run lineage `r-20260329-235630-15`.
+- Backfilled missing `mode_rules.md` and `mode_status.md` so a fresh agent can resume without inventing new work-item state.
 - Latest downstream packet state before this steward refresh:
   - `packet_plan.json` refreshed to `pm.packet_plan.v6`
   - `53` packet targets remain active
   - `Plans/storage-plan.md#4.4 Activity transparency payloads` owns the folded `#### Long-running \`progress_event\` payload` target to avoid overlap
   - verify-only `Plans/Tools.md#14. Web content caching layer` stays out of packet emission
-- This steward refresh preserves substantive ledger history and packet lineage; it does not reopen pre-packetize research.
-- Resume point after this refresh: continue the downstream packetized recovery flow, rerun Packet Emitter as needed, then continue to Packet Shape Check.
+- Packet emission was blocked only because the work item was missing the required mode-contract files.
+- Resume point after this refresh: rerun Packet Emitter, then continue to Packet Shape Check.

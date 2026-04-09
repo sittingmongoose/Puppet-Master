@@ -336,70 +336,156 @@ Covered operations:
 ---
 
 ## 5. Tool permission keys
-Tool permission ownership lives here. The keys below are the canonical permission surface for the web, question, skill, task, and MCP families touched by this packet.
 
-ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/MCP_Integration.md
+This section defines the canonical contract for this surface.
 
-| Permission key | Applies to | Default |
-|---|---|---|
-| `skill` | structured skill invocation | `allow` |
-| `question` | shared questionnaire / clarification contract | question default `allow` only when HITL is available |
-| `websearch`, `webfetch`, `webextract`, `webresearch`, `webcrawl`, `webmap` | canonical web family | `ask` |
-| `batch_webfetch`, `batch_webextract` | canonical batch web family | `ask` |
-| `task` | delegated child runs | `ask` |
-| `research_session` | tier-2 browser/session actions under a parent-approved web flow | governed by the ladder below |
+ContractRef: Plans/FinalGUISpec.md#15.7 Permission approval card widget
 
-Child-agent rule: delegated child runs default `question` to `deny` unless an owning parent flow explicitly surfaces the question to the user.
+Core rules:
+- Web tool permission keys, approval-card summary templates, session-approval semantics, and their exact approval-card cross-reference target remain canonical in Permissions_System and must not be re-invented from thin tool descriptions or stale Ask UI links.
+- Permission canon must preserve the four-tier approval ladder, question default allow only when HITL is available, keep the six web tools ask-gated in read_only and plan presets, and carry the blocked/unavailable payload fields through to permission-card consumers.
+- LSP canon must preserve the exact MVP operation inventory, normalized parameter shapes, and result envelope; `workspaceSymbol` must carry `query`, position-based operations use `path` + `position`, and `rename` requires `path` + `position` + `newName` with approval gating.
 
-Rules:
-- delegated child runs default question to deny unless the parent explicitly surfaces the question
-- question default allow only when HITL is available
-- canonical web family defaults to ask
-- Keep tool permission ownership here and do not let Tools/chat/GUI surfaces redefine defaults
-## 6. Ask flow semantics
-Ask flow semantics are PM-owned and use one approval ladder across tools, browser escalation, and blocked recovery.
+Fields:
+- operation
+- query
+- path
+- position
+- newName
+- status
 
-ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Tools.md, ContractName:Plans/FinalGUISpec.md
-
-Approval ladder:
-- `deny`
-- `once`
-- `for session`
-- `always`
-
-Ladder rules:
-- the current blocked episode is answered by the selected ladder outcome; broader effect is controlled by `approval_scope_key`
-- read-only and plan-mode web behavior remains ask-gated rather than silently collapsing to deny
-- research-session escalation to full `automation_session` uses the same ladder rather than a browser-local variant
+Permission rules:
+- deny
+- once
+- for session
+- always
+- blocked_reason_code
+- allowed_action_ids[]
+- status: "unavailable"
 
 Rules:
-- one approval ladder applies across tools, browser escalation, and blocked recovery
-- Keep chat/tool/widget approval consumers pointed here for ladder semantics
-## 7. Deterministic defaults
-Deterministic defaults keep read-only exploration usable without making mutation implicit.
-
-ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/Skills_System.md
-
-| Family | Default |
-|---|---|
-| `skill` | `allow` |
-| `question` | question default `allow` only when HITL is available |
-| read-only web tools in `ask` / `plan` | `ask` |
-| delegated child `question` | `deny` |
-
-`plan` does not auto-deny the web family. It preserves read-only web exploration behind explicit asks.
-Preset note:
-- `workspaceSymbol` requires `query`.
-- `read_only` and `plan` keep the six read-only web tools (`websearch`, `webfetch`, `webextract`, `webresearch`, `webcrawl`, `webmap`) ask-gated rather than auto-denied.
+- websearch summary shows tool name + query preview
+- webfetch/webextract summary shows tool name + target host/URL
+- webresearch summary shows tool name + task summary + estimated source count when available
+- webcrawl/webmap summary shows tool name + root URL + page/depth caps
+- Approving webcrawl For Session auto-approves crawl/map/extract/fetch for the same host pattern
+- Approving webresearch For Session does NOT create broad allow for unrelated tools
+- MVP uses wildcard session approval for search/research; advanced query-pattern support is future only
+- goToDefinition
+- findReferences
+- hover
+- documentSymbol
+- workspaceSymbol
+- goToImplementation
+- prepareCallHierarchy
+- incomingCalls
+- outgoingCalls
+- rename
+- ok | partial | unavailable | error
+- question default `allow` only when HITL is available
+- read_only
+- plan
+- websearch
+- webfetch
+- webextract
+- webresearch
+- webcrawl
+- webmap
+- `workspaceSymbol` requires `query`
 - Position-based operations use `path` + `position`.
 - `rename` requires `path` + `position` + `newName`.
+- `rename` is approval-gated because it applies edits.
+
+## 6. Ask flow semantics
+
+This section defines the canonical contract for this surface.
+
+ContractRef: Plans/FinalGUISpec.md#15.7 Permission approval card widget
+
+Core rules:
+- Web tool permission keys, approval-card summary templates, session-approval semantics, and their exact approval-card cross-reference target remain canonical in Permissions_System and must not be re-invented from thin tool descriptions or stale Ask UI links.
+- TODO tool behavior is locked so todowrite and todoread use the normalized TODO schema, todowrite is not blanket auto-denied in ask/plan mode, and Deep Plan edits must resync the TODO projection before execution.
+- Batch webfetch canon includes exact batch inputs, concurrency limits, shared-host permission flow, and the locked batch timeout formula.
+- Permission canon must preserve the four-tier approval ladder, question default allow only when HITL is available, keep the six web tools ask-gated in read_only and plan presets, and carry the blocked/unavailable payload fields through to permission-card consumers.
+
+Fields:
+- todowrite
+- todoread
+- todowrite can create, reorder, update statuses/notes
+- todoread returns current normalized list for active thread/run
+- Remove `todowrite` from blanket `ask/plan` mode auto-deny
+- editing Deep Plan markdown (the rich artifact) MUST update the normalized TODO projection BEFORE execution begins
+
+Permission rules:
+- deny
+- once
+- for session
+- always
+- blocked_reason_code
+- allowed_action_ids[]
+- status: "unavailable"
+- single confirmation prompt showing all unique domains in the batch
+- For Session grants all listed domains for that session
 
 Rules:
-- plan does not auto-deny the web family
-- rename remains approval-gated because it applies edits
-- read_only and plan keep the six read-only web tools ask-gated
-- question default allow only when HITL is available
-- Keep LSP parameter/approval notes aligned with Plans/LSPSupport.md#9. MVP LSP features (summary)
+- websearch summary shows tool name + query preview
+- webfetch/webextract summary shows tool name + target host/URL
+- webresearch summary shows tool name + task summary + estimated source count when available
+- webcrawl/webmap summary shows tool name + root URL + page/depth caps
+- Approving webcrawl For Session auto-approves crawl/map/extract/fetch for the same host pattern
+- Approving webresearch For Session does NOT create broad allow for unrelated tools
+- MVP uses wildcard session approval for search/research; advanced query-pattern support is future only
+- `urls: string[]` (required; min 1, max 50)
+- `concurrency?: number` (default 3; max 10
+- `continue_on_error?: boolean` (default true
+- "For Session" grants all listed domains for that session
+- Batch-level timeout is LOCKED as `individual_timeout × min(url_count, 5)`, cap 600s (10 min)
+- question default `allow` only when HITL is available
+- read_only
+- plan
+- websearch
+- webfetch
+- webextract
+- webresearch
+- webcrawl
+- webmap
+
+## 7. Deterministic defaults
+
+This section defines the canonical contract for this surface.
+
+Core rules:
+- TODO tool behavior is locked so todowrite and todoread use the normalized TODO schema, todowrite is not blanket auto-denied in ask/plan mode, and Deep Plan edits must resync the TODO projection before execution.
+- Permission canon must preserve the four-tier approval ladder, question default allow only when HITL is available, keep the six web tools ask-gated in read_only and plan presets, and carry the blocked/unavailable payload fields through to permission-card consumers.
+
+Fields:
+- todowrite
+- todoread
+- todowrite can create, reorder, update statuses/notes
+- todoread returns current normalized list for active thread/run
+- Remove `todowrite` from blanket `ask/plan` mode auto-deny
+- editing Deep Plan markdown (the rich artifact) MUST update the normalized TODO projection BEFORE execution begins
+
+Permission rules:
+- deny
+- once
+- for session
+- always
+- blocked_reason_code
+- allowed_action_ids[]
+- status: "unavailable"
+
+Rules:
+- question default `allow` only when HITL is available
+- read_only
+- plan
+- websearch
+- webfetch
+- webextract
+- webresearch
+- webcrawl
+- webmap
+
 ## 8. Resolution algorithm
 
 ### 8.1 Banned-command full-string check
@@ -568,33 +654,32 @@ When a tool row is expanded (§10.2), the granular rule editor appears:
 - Pattern input supports wildcard syntax (§3.1); inline help tooltip shows `*` and `?` semantics.
 
 ### 10.4 Presets
-Presets are expressed as explicit allow / ask / deny matrices rather than narrative summaries.
 
-ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Run_Modes.md
+This section defines the canonical contract for this surface.
 
-| Tool family | `read_only` | `plan` | `full` |
-|---|---|---|---|
-| `read`, `grep`, `glob`, `list`, `codesearch`, `chatsearch`, `logsearch`, `capabilities.get` | allow | allow | allow |
-| `skill` | allow | allow | allow |
-| `lsp` | allow (read-only ops) | allow (read-only ops) | allow |
-| `question` | allow | allow | allow |
-| `todoread`, `todowrite` | allow | allow | allow |
-| `websearch`, `webfetch`, `webextract`, `webresearch`, `webcrawl`, `webmap` | ask | ask | ask |
-| `batch_webfetch`, `batch_webextract` | ask | ask | ask |
-| `logread` | ask | ask | ask |
-| `task` | ask | ask | ask |
-| `edit`, `bash`, `repo.import`, `media.generate` | deny | deny | ask |
+Core rules:
+- Permission canon must preserve the four-tier approval ladder, question default allow only when HITL is available, keep the six web tools ask-gated in read_only and plan presets, and carry the blocked/unavailable payload fields through to permission-card consumers.
 
-Preset notes:
-- `read_only` and `plan` explicitly keep the six web tools ask-gated
-- `full` does not silently allow nested `task`; nested delegation remains denied by the task contract until a future policy opens it
-- provider or mode changes do not redefine the preset matrix locally
+Permission rules:
+- deny
+- once
+- for session
+- always
+- blocked_reason_code
+- allowed_action_ids[]
+- status: "unavailable"
 
 Rules:
-- presets are expressed as explicit allow/ask/deny matrices rather than narrative summaries
-- todowrite is not blanket auto-denied in ask/plan
-- read_only and plan explicitly keep the six web tools ask-gated
-- Keep preset mirrors in Plans/Tools.md#3.5C `todowrite` and `todoread` runtime contract, Plans/FinalGUISpec.md#7.4.7 Agent-Config panel specification, and other consumers pointed back here
+- question default `allow` only when HITL is available
+- read_only
+- plan
+- websearch
+- webfetch
+- webextract
+- webresearch
+- webcrawl
+- webmap
+
 ### 10.5 External directory allowlist manager
 
 A dedicated card for managing the external directory allowlist (§3.3):

@@ -1,10 +1,9 @@
-run_id: r-20260329-235630-18
-packet_path: Plans/.pipeline/research_packet.json
+run_id: r-20260329-235630-17
 status: cleanup_required
 
 summary:
 - Local cleanup is required in one packet-touched doc.
-- Remaining packet-touched docs do not show a local stale-canon residue, duplicate-applied-content, or owner-section-split issue that this cleanup stage needs to handle.
+- Remaining packet-touched docs do not show a local stale-canon residue, duplicate-applied-content, or owner-section-split issue that can be addressed by this cleanup stage alone.
 
 findings:
 - type: packet_not_canonicalizable_as_emitted
@@ -15,14 +14,15 @@ findings:
     - "## 3. Credential binding and invalidation"
     - "## 7. Effective tool availability and GUI surfacing"
   problem:
-    - The four packet-touched sibling sections now carry the same applied body.
-    - This leaves duplicate applied content inside one file and splits distinct MCP owner-section responsibilities across repeated local canon.
-    - A local cleanup-only pass cannot make the file canonical by simple deletion or dedupe without redistributing or paraphrasing packet-applied text, which would break packet substring expectations.
+    - The four applied owner sections now contain the same replacement body.
+    - This creates duplicate applied content and splits distinct MCP owner canon across sibling sections inside the same file.
+    - A local cleanup-only pass cannot fix this by deleting residue or merging duplicate lines without rewriting section-specific canon and changing packet substring expectations.
   cleanup_instruction:
-    - Do not mechanically deduplicate these four sections in-place.
-    - Re-plan or re-emit the MCP packet so each heading receives section-specific content instead of the same shared body.
+    - Do not mechanically deduplicate these four sections.
+    - Re-plan or re-emit packet content so each heading owns only its section-local canon.
     - Preserve section-local ownership boundaries:
       - "## 1. Canonical naming" owns canonical naming and `{server_slug}_{tool_name}` shape.
       - "## 2. Requested versus effective availability" owns requested/effective availability semantics and disclosure.
       - "## 3. Credential binding and invalidation" owns credential binding, auth-state ladder, and invalidation behavior.
       - "## 7. Effective tool availability and GUI surfacing" owns GUI-facing effective tool availability surfacing and consumer carry-through.
+

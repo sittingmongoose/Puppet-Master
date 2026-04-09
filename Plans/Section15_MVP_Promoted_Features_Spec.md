@@ -496,246 +496,32 @@ ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Wiring_Matri
 - missing-path, duplicate-path, and in-flight-run behavior are deterministic and user-visible
 
 ### 3.18 Built-in Browser and Click-to-Context
-#### Site Reader identity and provider-routed fetch boundary
 
-Site Reader v1 requires real browser-interaction capability, not static HTTP fetch only. `Reading Site` is reserved for the PM-native Site Reader path, and provider-routed fetch must not reuse the reserved native Site Reader identity.
+This section defines the canonical contract for this surface.
 
-Promoted browser guidance still follows search-then-read behavior: final citations come from the actual read path, raw search snippets alone are not enough provenance for the final answer, and promoted-browser guidance must not collapse final-answer provenance back to raw search snippets.
+ContractRef: ContractName:Plans/storage-plan.md#4.4 Activity transparency payloads, ContractName:Plans/Contracts_V0.md#3.4 Tool-specific payload extensions, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md#3.18 Built-in Browser and Click-to-Context
 
-ContractRef: ContractName:Plans/Tools.md#12. Web tool routing algorithm, ContractName:Plans/assistant-chat-design.md#13.2 Web activity and provenance
+Core rules:
+- Site Reader canon must require real browser interaction, reserve `Reading Site` for the PM-native Site Reader path, and prevent provider-routed fetch from reusing that reserved identity.
+- Answer construction must preserve search-then-read behavior, final citations must come from the actual read path rather than raw search snippets alone, and web activity/provenance docs must use the exact storage/contracts/browser ContractRef targets instead of malformed generic anchors.
+- The Firecrawl webextract mapping must preserve structured extraction modes and option surface, not a thin single-URL summary.
+
+Fields:
+- webextract
+- JSON Schema support
+- prompt-driven extraction behavior
+- URL wildcards
+- enableWebSearch
 
 Rules:
-- PM-native Site Reader owns browsing/interaction semantics, live DOM state, click or scroll behavior, form submission behavior, and visible browser provenance.
-- provider-routed fetch may return page content, extracted data, or provider-native browsing results, but it is labeled by the effective provider and not as `Reading Site`.
-- when routing falls back from Site Reader to a provider fetch path, chat and audit surfaces keep requested/effective adapter disclosure and the provider label remains visible.
+- Site Reader v1 requires real browser-interaction capability, not static HTTP fetch only
+- Reading Site
+- provider-routed fetch must not reuse the reserved native Site Reader identity
+- search-then-read behavior
+- final citations come from the actual read path
+- raw search snippets alone are not enough provenance for the final answer
+- chat may shortlist with search but must read chosen pages before citing them as final evidence
 
-The built-in browser is a real PM-controlled browser surface. It is separate from `web_search`, `web_fetch`, and Site Reader / Reading Site behavior, and it supports direct user browsing, watchable live automation, screenshots, structured snapshots, DevTools, PM-owned auth/device flows, and deterministic capture into chat.
-
-ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/FileManager.md, ContractName:Plans/assistant-chat-design.md
-
-#### Canonical browser runtime and host model
-
-- the canonical browser runtime is CEF-class embedded Chromium
-- Puppet Master ships a PM-managed pinned bundled runtime and updates it atomically as a matched set
-- lower-level bindings plus a PM-owned shim/bridge are preferred over making an experimental wrapper the architectural linchpin
-- native child-window embedding is the baseline host path
-- offscreen rendering is secondary and not the primary browser-host contract
-- runtime damage, version mismatch, or absence surfaces as `runtime_unavailable`
-- the UI must not silently fall through to an unrelated legacy system-webview browser model
-
-ContractRef: ContractName:Plans/rewrite-tie-in-memo.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Permissions_System.md
-
-#### Entry points and normal browsing behavior
-
-- `Open` keeps HTML in source/editor mode
-- `Open in Browser` opens the subject in a `workspace_preview`
-- `Open in Detached Browser` opens the subject in a `detached_preview`
-- split browser layout is a second-step layout action after opening, not a separate first-class open command
-- the editor/workspace tab surface is the canonical in-shell browser host
-- the bottom panel may expose browser-adjacent activity, evidence, or DevTools-linked panes, but it is not the primary browser host
-
-ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/UI_Command_Catalog.md
-
-#### Capture to chat and evidence behavior
-
-Capture into chat remains explicit and user-triggered for ordinary browsing.
-
-Required ordinary capture rules:
-- text selection uses `browser_selection_context`
-- element pick uses `browser_element_context`
-- native document selection continues to use `document_selection_context`
-- explicit capture creates removable composer chips and MUST NOT silently send a hidden message
-- if there is no writable active composer or thread, PM opens a new thread and records requested versus effective target
-- ordinary browsing clicks MUST NOT unexpectedly create or send chat context
-
-ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/storage-plan.md
-
-Accepted explicit browser capture actions and labels remain:
-- `Add Selection to Chat`
-- `Add Selection + Screenshot`
-- `Add Selection + Full Screenshot`
-- `Pick Element for Chat`
-- `Pick Element + Screenshot`
-- `Pick Element + Full Screenshot`
-- `Add Screenshot to Chat`
-- `Add Full Screenshot to Chat`
-
-ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Runtime_Artifacts_Panel.md
-
-Debug-investigation auto-ingestion is a separate visible contract.
-
-Rules for active investigations:
-- when a browser session is bound to an active investigation, bounded evidence may be added automatically to the visible Investigation Context
-- investigation auto-ingestion must create visible context items with provenance, timestamp, redaction/truncation state, and revoke controls
-- investigation auto-ingestion does not create hidden user messages, hidden composer chips, or invisible prompt-only payloads
-- the default combined manual capture remains context plus clipped screenshot; full-page combined capture remains explicit even during Debug Mode
-
-ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Prompt_Pipeline.md
-
-#### DevTools and watchable automation
-
-- docked DevTools is the default mode and lives inside the currently focused browser session surface
-- there is only one focused-browser docked DevTools instance at a time
-- detached DevTools is an alternate layout, not a more powerful capability tier
-- PM chrome exposes DevTools entry and bridge actions only; deep inspection tools live inside DevTools itself
-- users must be able to watch live automation browse and test in a visible `automation_session`
-
-ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/newtools.md
-
-#### Named browser action contract
-
-Strong named actions are the guaranteed browser contract.
-
-Guaranteed everyday actions:
-- `navigate`
-- `back`
-- `reload`
-- `open_tab`
-- `select_tab`
-- `close_tab`
-- `click`
-- `type`
-- `fill_form`
-- `select_option`
-- `hover`
-- `drag`
-- `press_key`
-- `upload_file`
-- `handle_dialog`
-- `wait_for`
-- `verify_text`
-- `verify_element`
-- `verify_value`
-- `snapshot`
-- `screenshot`
-- `console`
-- `network`
-- `set_viewport`
-
-Advanced debug/testing actions:
-- `trace_start`
-- `trace_stop`
-- `video_start`
-- `video_stop`
-- `export_pdf`
-- `storage_import`
-- `storage_export`
-- `cookie_*`
-- `local_storage_*`
-- `session_storage_*`
-- `network_offline`
-- `network_online`
-- `route_mock`
-- `generate_locator`
-
-Raw CDP or arbitrary browser-code execution may exist as implementation detail or escape hatch, but it is not the guaranteed core browser contract and must not be reopened as the primary product model.
-
-ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/newtools.md, ContractName:Plans/Runtime_Artifacts_Panel.md
-
-#### Browser action table
-
-| action_id | bucket | tier | permission_layer | allowed_session_classes | requested_capabilities | artifacts_emitted | degradation_or_blocking_behavior | user_visible_entry_points |
-|---|---|---|---|---|---|---|---|---|
-| `navigate` | Navigation/tabs | guaranteed_everyday | always_allowed | `workspace_preview`, `detached_preview`, `automation_session`, `auth_session` | `navigation` | none | block when runtime is unavailable or session is recovering | browser chrome, agent tool invocation |
-| `back` | Navigation/tabs | guaranteed_everyday | always_allowed | `workspace_preview`, `detached_preview`, `automation_session`, `auth_session` | `navigation_history` | none | block when no history entry exists | browser chrome, agent tool invocation |
-| `reload` | Navigation/tabs | guaranteed_everyday | always_allowed | `workspace_preview`, `detached_preview`, `automation_session`, `auth_session` | `reload` | none | block when runtime is unavailable or session is recovering | browser chrome, hot-reload UI, agent tool invocation |
-| `open_tab` | Navigation/tabs | guaranteed_everyday | session_granted | `workspace_preview`, `detached_preview`, `automation_session` | `tab_management` | none | block when session class or tab-cap policy rejects the request | browser chrome, command palette, agent tool invocation |
-| `select_tab` | Navigation/tabs | guaranteed_everyday | session_granted | `workspace_preview`, `detached_preview`, `automation_session` | `tab_management` | none | block when the target tab is unavailable or session is recovering | browser chrome, command palette, agent tool invocation |
-| `close_tab` | Navigation/tabs | guaranteed_everyday | session_granted | `workspace_preview`, `detached_preview`, `automation_session` | `tab_management` | none | block when closing would strand a protected flow or when the tab no longer exists | browser chrome, command palette, agent tool invocation |
-| `click` | Interaction | guaranteed_everyday | session_granted | `workspace_preview`, `detached_preview`, `automation_session`, `auth_session` | `interaction` | none | block when permission is not granted or the session is paused after recovery | agent tool invocation, explicit browser takeover choice |
-| `type` | Interaction | guaranteed_everyday | session_granted | `workspace_preview`, `detached_preview`, `automation_session`, `auth_session` | `interaction`, `text_input` | none | block when permission is not granted | agent tool invocation |
-| `fill_form` | Interaction | guaranteed_everyday | session_granted | `workspace_preview`, `detached_preview`, `automation_session`, `auth_session` | `interaction`, `form_fill` | none | block when permission is not granted | agent tool invocation |
-| `select_option` | Interaction | guaranteed_everyday | session_granted | `workspace_preview`, `detached_preview`, `automation_session`, `auth_session` | `interaction`, `form_fill` | none | block when permission is not granted or the control is unavailable | agent tool invocation |
-| `hover` | Interaction | guaranteed_everyday | session_granted | `workspace_preview`, `detached_preview`, `automation_session` | `interaction` | none | block when permission is not granted | agent tool invocation |
-| `drag` | Interaction | guaranteed_everyday | session_granted | `workspace_preview`, `detached_preview`, `automation_session` | `interaction` | none | block when permission is not granted | agent tool invocation |
-| `press_key` | Interaction | guaranteed_everyday | session_granted | `workspace_preview`, `detached_preview`, `automation_session`, `auth_session` | `interaction`, `keyboard_input` | none | block when permission is not granted | agent tool invocation |
-| `upload_file` | Interaction | guaranteed_everyday | session_granted | `workspace_preview`, `detached_preview`, `automation_session`, `auth_session` | `upload` | optional runtime receipt | block when upload permission or file/path policy denies access | agent tool invocation |
-| `handle_dialog` | Interaction | guaranteed_everyday | session_granted | `workspace_preview`, `detached_preview`, `automation_session`, `auth_session` | `dialog_control` | optional dialog evidence | block when dialog state is absent or permission is not granted | browser chrome, agent tool invocation |
-| `wait_for` | Wait/assert | guaranteed_everyday | session_granted | `workspace_preview`, `detached_preview`, `automation_session`, `auth_session` | `wait` | optional trace marker | degrade with timeout or recovery pause details | agent tool invocation |
-| `verify_text` | Wait/assert | guaranteed_everyday | session_granted | `workspace_preview`, `detached_preview`, `automation_session`, `auth_session` | `assertion` | optional verification receipt | block or fail on timeout / missing permission | agent tool invocation |
-| `verify_element` | Wait/assert | guaranteed_everyday | session_granted | `workspace_preview`, `detached_preview`, `automation_session`, `auth_session` | `assertion` | optional verification receipt | block or fail on timeout / missing permission | agent tool invocation |
-| `verify_value` | Wait/assert | guaranteed_everyday | session_granted | `workspace_preview`, `detached_preview`, `automation_session`, `auth_session` | `assertion` | optional verification receipt | block or fail on timeout / missing permission | agent tool invocation |
-| `snapshot` | Debug/evidence | guaranteed_everyday | always_allowed | `workspace_preview`, `detached_preview`, `automation_session`, `auth_session` | `snapshot_read` | structured page snapshot | degrade when runtime snapshot support is temporarily unavailable | browser chrome, agent tool invocation |
-| `screenshot` | Debug/evidence | guaranteed_everyday | always_allowed | `workspace_preview`, `detached_preview`, `automation_session`, `auth_session` | `screenshot_capture` | screenshot artifact | degrade when runtime capture support is temporarily unavailable | browser chrome, capture actions, agent tool invocation |
-| `console` | Debug/evidence | guaranteed_everyday | always_allowed | `workspace_preview`, `detached_preview`, `automation_session`, `auth_session` | `console_read` | console evidence | degrade when console stream is unavailable after recovery | browser chrome, DevTools bridge, agent tool invocation |
-| `network` | Debug/evidence | guaranteed_everyday | always_allowed | `workspace_preview`, `detached_preview`, `automation_session`, `auth_session` | `network_read` | network evidence | degrade when network stream is unavailable after recovery | browser chrome, DevTools bridge, agent tool invocation |
-| `set_viewport` | Environment | guaranteed_everyday | session_granted | `workspace_preview`, `detached_preview`, `automation_session` | `viewport_control` | optional screenshot evidence | block when permission is not granted | browser chrome, agent tool invocation |
-| `trace_start` | Debug/evidence | advanced | session_granted | `workspace_preview`, `detached_preview`, `automation_session`, `auth_session` | `trace_control` | trace artifact | block when trace capture support is unavailable or permission is not granted | browser chrome, agent tool invocation |
-| `trace_stop` | Debug/evidence | advanced | session_granted | `workspace_preview`, `detached_preview`, `automation_session`, `auth_session` | `trace_control` | trace artifact | block when no trace is active | browser chrome, agent tool invocation |
-| `video_start` | Debug/evidence | advanced | session_granted | `workspace_preview`, `detached_preview`, `automation_session`, `auth_session` | `video_capture` | video artifact | block when recording support is unavailable or permission is not granted | browser chrome, agent tool invocation |
-| `video_stop` | Debug/evidence | advanced | session_granted | `workspace_preview`, `detached_preview`, `automation_session`, `auth_session` | `video_capture` | video artifact | block when no recording is active | browser chrome, agent tool invocation |
-| `export_pdf` | Debug/evidence | advanced | session_granted | `workspace_preview`, `detached_preview`, `automation_session` | `pdf_export` | PDF artifact | block when export is unavailable | browser chrome, agent tool invocation |
-| `storage_import` | Environment | advanced | explicit_confirmation | `workspace_preview`, `detached_preview`, `automation_session`, `auth_session` | `storage_import` | import receipt, optional trace | block until explicit confirmation is granted | agent tool invocation, browser settings flows |
-| `storage_export` | Environment | advanced | explicit_confirmation | `workspace_preview`, `detached_preview`, `automation_session`, `auth_session` | `storage_export` | export artifact | block until explicit confirmation is granted | agent tool invocation, browser settings flows |
-| `cookie_*` | Environment | advanced | explicit_confirmation | `workspace_preview`, `detached_preview`, `automation_session`, `auth_session` | `cookie_mutation` | optional receipt/trace | block until explicit confirmation is granted | agent tool invocation |
-| `local_storage_*` | Environment | advanced | explicit_confirmation | `workspace_preview`, `detached_preview`, `automation_session`, `auth_session` | `local_storage_mutation` | optional receipt/trace | block until explicit confirmation is granted | agent tool invocation |
-| `session_storage_*` | Environment | advanced | explicit_confirmation | `workspace_preview`, `detached_preview`, `automation_session`, `auth_session` | `session_storage_mutation` | optional receipt/trace | block until explicit confirmation is granted | agent tool invocation |
-| `network_offline` | Environment | advanced | explicit_confirmation | `workspace_preview`, `detached_preview`, `automation_session` | `network_mode_control` | optional trace/evidence | block until explicit confirmation is granted | agent tool invocation |
-| `network_online` | Environment | advanced | explicit_confirmation | `workspace_preview`, `detached_preview`, `automation_session` | `network_mode_control` | optional trace/evidence | block until explicit confirmation is granted | agent tool invocation |
-| `route_mock` | Environment | advanced | explicit_confirmation | `workspace_preview`, `detached_preview`, `automation_session` | `network_mocking` | optional trace/evidence | block until explicit confirmation is granted | agent tool invocation |
-| `generate_locator` | Debug/evidence | advanced | session_granted | `workspace_preview`, `detached_preview`, `automation_session` | `locator_generation` | locator receipt | block when DOM inspection is unavailable | DevTools bridge, agent tool invocation |
-
-ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/newtools.md
-
-#### Scenario and acceptance matrix
-
-| scenario_id | session_class | preconditions | user_or_agent_action | expected_visible_behavior | expected_artifacts_or_context | recovery_expectation | platform_notes |
-|---|---|---|---|---|---|---|---|
-| `html_open_workspace` | `workspace_preview` | local HTML file exists in the workspace and the browser runtime is healthy | user chooses `Open in Browser` | HTML opens in an editor/workspace browser tab and remains linked to the project/workspace tab | browser session state only | normal browser session restores on restart | same PM browser model on Windows, macOS, and Linux |
-| `html_open_detached` | `detached_preview` | local HTML file exists and the user requests a detached view | user chooses `Open in Detached Browser` | detached browser window opens while keeping the link to the originating subject | detached browser session state only | detached normal session may restore when platform support allows | detached is first-class, not a degraded fallback wording |
-| `normal_browsing_workspace` | `workspace_preview` | user is already in a normal browser tab | user navigates, opens tabs, captures screenshots, or opens DevTools | normal browsing remains in the editor/workspace tab browser surface | snapshots, screenshots, console/network evidence as requested | normal browser session restores | platform-specific embedding details do not change the PM browser model |
-| `watchable_automation_run` | `automation_session` | automation action is launched and the browser runtime is healthy | agent drives the browser through named actions | user can watch live browsing/testing in a visible PM browser surface | optional snapshots, screenshots, traces, videos | no silent auto-resume; reopened run is stopped / attention-required | browser runtime health is surfaced consistently across platforms |
-| `automation_takeover_pause` | `automation_session` | live automation browser is visible | user interacts and chooses `Take over and pause agent` | the browser remains visible and becomes paused/manual without reclassification | optional paused-state audit record | paused session can later resume or be promoted; it is never stranded | same takeover model across platforms |
-| `automation_stop_keep_browser` | `automation_session` | live automation browser is visible | user chooses `Stop agent and keep browser` | automation work stops while the browser remains open | stop receipt and any completed evidence remain available | stopped browser may later be promoted or closed normally | same takeover model across platforms |
-| `automation_promote` | `automation_session` | paused/manual automation browser exists | user chooses `Promote to Normal Browsing` | visible browser converts into normal browsing with promoted state | state-promotion receipt and any already completed evidence | promoted session restores as normal browsing, not as automation | promotion requires explicit confirmation |
-| `auth_flow_browser` | `auth_session` | PM-owned provider/auth/device flow requires browser interaction | user or PM opens auth browser session | auth browser stays open until explicitly completed or closed | optional auth-flow receipt, optional screenshots | auth session never auto-closes or silently restores as normal browsing | same isolated-session semantics across platforms |
-| `capture_existing_thread` | `workspace_preview` | active writable thread/composer exists | user chooses any capture-to-chat action | removable chip is added to the active composer and nothing is auto-sent | `browser_selection_context`, `browser_element_context`, and/or screenshot artifact | blocked/expired chips restore visibly instead of being dropped | same UX regardless of platform |
-| `capture_new_thread` | `workspace_preview` | no writable active thread/composer exists | user chooses any capture-to-chat action | PM opens a new thread and places the chips there | requested/effective target metadata plus capture chips and optional screenshot artifact | blocked/expired chips restore visibly instead of being dropped | same UX regardless of platform |
-| `browser_evidence_capture` | any browser session class | runtime is healthy and evidence action is allowed | user or agent captures screenshot, trace, or video | capture completes without changing the browser session class | runtime artifact records for screenshot/trace/video/recording | completed artifacts survive crash/recovery when possible | capture scope must behave the same across desktop platforms |
-| `browser_crash_recovery` | any browser session class | browser runtime or subprocess crashes | user chooses `Reopen`, `Retry`, or `Keep Closed` | PM shows recoverable state instead of silently losing the browser | preserved metadata and any completed artifacts | no silent resumption of live automation/auth work | `runtime_unavailable` copy is platform-aware but product-consistent |
-
-ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Runtime_Artifacts_Panel.md
-
-#### Permission, recovery, and promotion rules
-
-- always-allowed browser capabilities cover navigation/readback operations, snapshots, screenshots, console/network read, explicit DevTools open, and explicit share/capture actions
-- session-granted browser capabilities cover click/type/fill/tab-management/upload/dialog/viewport changes and trace/video control
-- high-risk explicit-confirmation capabilities cover auth-flow mutation, storage import/export, cookie/storage mutation, offline/mock routing, download execution, and promotion of automation state into normal browsing
-- normal browser sessions restore by project/workspace identity
-- live automation and auth sessions never silently resume active work after restart
-- browser or subprocess crash preserves recoverable metadata and offers `Reopen`, `Retry`, and `Keep Closed`
-- completed screenshots, traces, and videos are preserved when possible
-
-ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md
-
-#### Debug investigation browser automation rules
-
-Active Debug investigations may bind a browser target and drive it through the canonical browser session model.
-
-Required rules:
-- browser-led reproduction and evidence capture run in a visible `automation_session` when PM is driving the browser
-- manual takeover is a pause/resume handoff, not simultaneous mixed human-and-agent control of the same active automation step
-- auth handoff continues to use isolated `auth_session` behavior and must not silently promote credentials or state into normal browsing
-- completed traces, recordings, screenshots, console summaries, and network summaries route into Runtime Artifacts and visible Investigation Context summaries
-- browser-target debugging for remote-mode projects is limited to PM-managed project targets such as forwarded URLs or project-owned web entrypoints; arbitrary remote attach remains out of scope for MVP
-
-ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/GitHub_Integration.md
-
-#### Debug investigation browser scenario matrix
-
-| scenario_id | preconditions | action | expected visible behavior | expected persistence |
-|---|---|---|---|---|
-| `debug_browser_auto_ingest_visible` | active investigation bound to a browser target | agent captures screenshot / console / network evidence | evidence appears as visible Investigation Context items and linked artifacts | `debug.investigation.context_item_added`, `runtime_artifact.*`, and any related `browser.context_captured` or browser-session refs |
-| `debug_browser_takeover_pause_resume` | visible automation session exists | user takes over or later resumes | browser remains visible, automation is paused/resumed without silent session reclassification | takeover state changes persist on the owning browser session and investigation |
-| `debug_browser_auth_handoff` | auth step is required mid-investigation | PM opens isolated auth session | auth work is isolated and explicit; normal browsing state is not silently mutated | auth session and investigation linkage persist with explicit scope and cleanup state |
-| `debug_browser_remote_project_target` | remote-mode project exposes a PM-managed URL or forwarded port | agent debugs browser target | UI stays bound to remote project authority; no silent local fallback or ad-hoc remote attach language | investigation and browser evidence retain remote project and browser identity refs |
-
-ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/assistant-chat-design.md
-
-Additional canonical rules:
-- PM-native Site Reader owns browsing and interaction semantics
-- provider-routed fetch fallback keeps requested/effective adapter disclosure visible
-- Keep this section pointed at Plans/Tools.md#12. Web tool routing algorithm and Plans/assistant-chat-design.md#13.2 Web activity and provenance
 ## 4. Command families required by the promoted features
 The UI command catalog must expose stable commands for:
 - project switch and project open-in-new-workspace-tab

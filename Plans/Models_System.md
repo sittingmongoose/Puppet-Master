@@ -198,30 +198,64 @@ ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Arc
 ### 4.4 Two Gemini providers
 
 ### 4.5 Web tool provider capability alignment
-Model and provider disclosure for web tools consumes the owner capability matrix from `Plans/Tools.md`.
 
-ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/FinalGUISpec.md
+This section mirrors the linked owner contract and stays aligned with it.
 
-Consumer alignment rules:
-- support tier remains per provider x operation.
-- routing posture such as Site Reader primacy for `webfetch` does not erase true provider capability.
-- Anthropic/OpenAI `websearch` stays labeled `native (model)`.
-- Firecrawl, Tavily, and Exa retain real `webfetch` capability rather than being flattened to `fallback-only`.
-- DuckDuckGo keeps `native-ish` search, `pm-composed` research/fetch/extract, and `partial` crawl behavior.
-- the display label is `Google`; it is a pluggable adapter slot rather than a strategic baseline backend, and its `webfetch` posture remains `pm-composed`.
-- no per-operation priority override exists in MVP; routing consumes the global provider stack, and that global stack is user-changeable in Settings.
-- health, last-failure, and effective-provider surfacing align with the shared routing contract.
-Firecrawl-specific alignment:
-- Provider ID `firecrawl`; Display name `Firecrawl`.
-- Default priority: Firecrawl is below Exa, Tavily; above DDG (user-adjustable).
-- Default state: disabled (requires API key or self-hosted URL).
-- Firecrawl configuration preserves `proxy_mode` with `basic`, `enhanced`, and `auto`, and self-hosted capability disclosure includes the Fire Engine limitation note.
+Core rules:
+- The provider capability matrix must preserve capability tier separately from routing posture: Firecrawl, Tavily, and Exa retain real webfetch capability and must not be flattened to fallback-only merely because Site Reader is preferred.
+- Anthropic and OpenAI websearch support must remain labeled native (model) / model-native, not pm-composed.
+- DuckDuckGo capability rows must preserve native-ish search, PM-composed research/fetch/extract, and partial crawl behavior instead of flattening those cells to unsupported.
+- Google must remain a pluggable adapter slot with display label Google, and its ledger support semantics must not be collapsed away.
+- The Firecrawl configuration field set must preserve proxy_mode with the exact supported enum values and the self-hosted Fire Engine limitation note.
+- The Firecrawl owner section must preserve the base configuration fields and default-disabled state already restored in the live owner doc.
+- Firecrawl provider identity canon includes exact provider ID firecrawl, display name Firecrawl, default priority below Exa and Tavily and above DuckDuckGo, user-adjustable ordering, default-disabled state until API key or self-hosted URL is configured, and retirement of exact stale residue "stale cited-search framing and older `newtools` wording" from owner/provider canon.
 
-ContractRef: ContractName:Plans/Tools.md#10-firecrawl-provider-integration, ContractName:Plans/FinalGUISpec.md
+Fields:
+- proxy_mode
+- basic
+- enhanced
+- auto
+- Fire Engine
+- enabled
+- api_key
+- base_url
+- timeout_ms
+- cache_enabled
+- Firecrawl is disabled by default until explicitly enabled in Settings
+
+Labels and values:
+- websearch
+- webfetch
+- webextract
+- webresearch
+- webcrawl
+- webmap
 
 Rules:
-- routing posture does not erase true provider capability
-- Keep this consumer section anchored to Plans/Tools.md#10. Firecrawl provider integration and Plans/FinalGUISpec.md#7.4.4 Settings (Unified) panel specification
+- Firecrawl `webfetch` capability is not erased by Site Reader primacy
+- Tavily `webfetch` capability is not erased by Site Reader primacy
+- Exa `webfetch` capability is not erased by Site Reader primacy
+- fallback-only
+- Anthropic/OpenAI `websearch` support is `native (model)` / model-native, not `pm-composed`
+- native (model)
+- pm-composed
+- DuckDuckGo `websearch` is `native-ish`
+- DuckDuckGo `webresearch` is `pm-composed`
+- DuckDuckGo `webfetch` / `webextract` remain PM-composed or partial rather than flattened to `unsupported`
+- DuckDuckGo partial crawl behavior must not disappear
+- display label `Google`
+- Google is a pluggable adapter slot
+- Google official search is not a strategic backend
+- Google `webfetch` keeps the pm-composed support semantics from the ledger
+- Provider ID
+- `firecrawl`
+- Display name
+- `Firecrawl`
+- Default priority
+- below Exa, Tavily; above DDG (user-adjustable)
+- Default state
+- disabled (requires API key or self-hosted URL)
+
 ## 5. Per-Persona runtime preferences
 
 <a id="PERSONA-MODEL-OVERRIDES"></a>

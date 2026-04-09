@@ -364,33 +364,34 @@ Browser, terminal, and dev-session commands share one shell/runtime interaction 
 ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/storage-plan.md
 
 #### Terminal session and layout commands
-Terminal command identities remain distinct even when they target the same session.
 
-ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FinalGUISpec.md
+This section defines the canonical contract for this surface.
 
-| Command ID | Payload | Domain event(s) | UI surface(s) |
-|---|---|---|---|
-| `cmd.terminal.show` | `{ terminal_session_id?, command_context_ref?, create_if_missing?: boolean }` | layout/UI state only | Chat, inline operation cards, terminal tabs |
-| `cmd.terminal.restart_session` | `{ command_context_ref, terminal_session_id? }` | `terminal.session.restarting`, `terminal.session.started` | Chat, inline operation cards, terminal tabs |
-| `cmd.terminal.detach_session` | `{ terminal_session_id }` | `terminal.session.detached` | Chat, terminal tabs, detached terminal surface |
+Core rules:
+- Terminal promotion and handoff are locked so interactive or long-running work binds to a stable terminal session while chat retains only bounded preview and audit ownership.
+- Terminal action canon must preserve the distinct terminal actions and give Rerun in Terminal owned command-table treatment rather than collapsing actions into one normalized target.
+
+Fields:
+- terminal_session_id
+- Open in Terminal
+- Show Terminal
+- Rerun in Terminal
+- Detach/Pop-Out
 
 Rules:
-- `Open in Terminal` and `Show Terminal` both resolve to `cmd.terminal.show`; they differ only by launching surface and whether a terminal must be created or merely revealed
-- `Rerun in Terminal` resolves to `cmd.terminal.restart_session` and creates a fresh execution with a new `terminal_session_id`
-- `Detach/Pop-Out` moves the bound terminal session into a detached surface without rerunning the command
+- Shell owns interactive state; chat owns preview+audit
+- Commands requiring stdin/TTY start Terminal immediately
+- Background/watch/server actions create terminal-owned session
+- One-shot commands remain chat-inline by default
+- Every promoted command card binds to stable terminal session identity
+- Large payloads store full data behind refs/blobs
+- non-interactive work may promote if it becomes long-running
+- attach failure recovery differs for live process, ended process, and inline-only completed command
+- `Open in Terminal` and `Show Terminal` must focus the same live session
+- after promotion, chat stops owning the full transcript
+- inline cards persist across thread reload and re-render from persisted metadata
+- search and diff do not stream progressively
 
-ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Wiring_Matrix.md
-Additional continuity rules:
-- `Open in Terminal` and `Show Terminal` must focus the same live session.
-- after promotion, chat stops owning the full transcript.
-- inline cards persist across thread reload and re-render from persisted metadata.
-- search and diff do not stream progressively.
-
-ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md
-
-Additional canonical rules:
-- Open in Terminal and Show Terminal normalize to reveal the existing live session rather than creating a new runtime identity
-- Keep terminal command catalog behavior anchored to Plans/assistant-chat-design.md#13.3 Bash and terminal ownership
 #### Dev-session commands
 | Command ID | Payload | Domain event(s) | UI surface(s) |
 |---|---|---|---|
@@ -453,54 +454,73 @@ Revert rules:
 ContractRef: ContractName:Plans/Crosswalk.md, ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md
 
 ### 2.7 Chat slash commands (reserved)
-The chat consumer catalog mirrors the reserved built-in slash-command set owned by `Plans/Commands_System.md`.
 
-ContractRef: ContractName:Plans/Commands_System.md#7. Reserved built-in slash commands, ContractName:Plans/assistant-chat-design.md#5.2 `/web` and `/skill`, ContractName:Plans/Skills_System.md#4.3 `skill` tool
+This section consumes the linked owner contract and stays aligned with it.
 
-Reserved set:
-`/new`, `/model`, `/effort`, `/mode`, `/export`, `/compact`, `/stop`, `/resume`, `/web`, `/skill`
+Core rules:
+- The /web family is locked as one slash-command family with stable command IDs, bare /web help behavior, and no flattening into separate top-level families.
+- Natural-language web intents must hit the same dispatcher as slash commands, and site or page reading intents must resolve to webfetch rather than websearch or provider extract.
+- Skill discovery and invocation are locked to three paths—GUI panel, /skill, and natural language—without an MVP subcommand family, all converging on the same invoke_skill contract.
 
-Web family command identities:
-- `/web search <query>` -> `cmd.chat.web.search`
-- `/web fetch <url>` -> `cmd.chat.web.fetch`
-- `/web extract <url>` -> `cmd.chat.web.extract`
-- `/web research <task>` -> `cmd.chat.web.research`
-- `/web crawl <url>` -> `cmd.chat.web.crawl`
-- `/web map <url>` -> `cmd.chat.web.map`
+Fields:
+- slash prototype
+- stable command ID
+- subcommand-required parsing
+- intent phrase
+- resolved tool key
+- /skill <skill_name> [args]
+- /skill with no args lists available skills
+- invoke_skill
+- No subcommand family for MVP
+- Skills panel
+- Natural language
 
-Dispatcher parity:
+Labels and values:
+- /new
+- /model
+- /effort
+- /mode
+- /export
+- /compact
+- /stop
+- /resume
+- /web
+- /skill
+- /cancel
+- reserved built-ins
+
+Rules:
+- /web search <query>
+- /web extract <url>
+- /web research <task>
+- /web crawl <url>
+- /web map <url>
+- cmd.chat.web.search
+- cmd.chat.web.extract
+- cmd.chat.web.research
+- /web fetch <url>
+- cmd.chat.web.fetch
+- cmd.chat.web.crawl
+- cmd.chat.web.map
+- NL intents and slash commands hit the same dispatcher
 - "search the web for X" → `websearch`
 - "extract this page" → `webextract`
 - "read this URL" → `webfetch`
 - "research topic" → `webresearch`
 - Reading intents MUST resolve to `webfetch`, not `websearch`
-
-ContractRef: ContractName:Plans/Tools.md#12. Web tool routing algorithm, ContractName:Plans/assistant-chat-design.md#5.5 Dispatcher parity
-
-Consumer alignment:
-- keep `/cancel` only as a deprecation alias to `/stop`
-- keep `/clear` as removed legacy shorthand rather than a live reserved command
-- keep `/skill` as discovery or invocation behavior rather than a panel-open alias
-- reserved commands shown as non-editable in catalog
-- deprecated aliases shown distinctly from active commands
-- `/web` remains discoverable in catalog
-- subcommand is required for execution, URL normalization applies, and parse failure shows usage
-
-Skill discovery and invocation paths:
-- `/skill <skill_name> [args]` routes to `invoke_skill`
-- /skill with no args lists available skills and exposes the same discovery and guidance surface as the Skills panel
-- No subcommand family for MVP
-- Skills panel, `/skill`, and Natural language converge on the same runtime contract
-
-Rules:
-- slash prototype
-- stable command ID
-- subcommand-required parsing
-- invoke_skill
 - bare /web shows help/autocomplete only
-- do not flatten /web into separate top-level slash families
-- /skill remains discovery/invocation rather than a panel-open alias
-- Keep command IDs aligned with Plans/Commands_System.md#7. Reserved built-in slash commands, Plans/assistant-chat-design.md#5.2 `/web` and `/skill`, and Plans/Skills_System.md#4.3 `skill` tool
+- do not flatten /web into separate slash families
+- subcommand is required for execution
+- URL normalization applies
+- parse failure shows usage
+- site/page reading is not search
+- dispatcher parity applies to slash and NL paths
+- command tables and routing docs must mirror the same mappings
+- /cancel resolves internally to cmd.chat.stop
+- /web remains discoverable in catalog
+- deprecated aliases shown distinctly from active commands
+- reserved commands shown as non-editable in catalog
+
 ### 2.8 Assistant memory (Gist Review) commands
 These IDs are required by `Plans/assistant-memory-subsystem.md` sections 5 and 7.
 

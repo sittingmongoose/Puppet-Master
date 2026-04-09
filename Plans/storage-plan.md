@@ -697,188 +697,181 @@ Storage rules:
 - `_id` aliases such as `requested_persona_id` are not canonical runtime snapshot fields
 - chat and GUI surfaces consume the same stored field names rather than projecting local variants
 ### 4.2 Question and clarification state
-Question and clarification state persists the shared `question` runtime contract rather than a chat-local form model.
 
-ContractRef: ContractName:Plans/Contracts_V0.md#3.4 Tool-specific payload extensions, ContractName:Plans/Tools.md, ContractName:Plans/assistant-chat-design.md
+This section consumes the linked owner contract and stays aligned with it.
 
-Stored request fields:
-- `mode`, `header`, `prompt`, `questions`, `context_ref?`, `visual_ref?`
-- each `questions` item keeps `question_id`, `question`, `options[]`, `required`, `multi_select`, `allow_freeform`, `allow_other?`, `default_values?`, `response_kind?`, and `validation_state?`
+Core rules:
+- Question schema canonical names and enums are locked, including QuestionItem fields, canonical freeform and multi-select field names, and answer source metadata.
 
-Stored answer fields:
-- `status`
-- `answers: Array<{question_id, values: string[]}>`
-- `answer_text?`
-- `source?`
-- `response_kind?`
-- `validation_state?`
-- `draft_value?`
-- `unanswered_question_ids[]?`
-- `answered_at_utc?`
-
-Persistence rules:
-- `allow_other is a deprecated alias`; persistence normalizes it to `allow_freeform` before storage or resume rendering
-- `default_values?: string[]` are caller-supplied initial option ids; `draft_value?: string` is PM-managed freeform draft state restored on resume
-- `response_kind?: "selection" | "freeform" | "mixed"` and `validation_state?: "valid" | "invalid" | "pending"` are optional preserved fields when the request surface needs them
-- PM-managed drafts restore by `question_id`
-- outcomes remain `answered`, `submitted`, `dismissed`, `timed_out`, and `unavailable`
-- question cards may include a visual
-- users can answer out of order and revise before submit
-- dismissing pauses conversation until resume
-- child-agent clarification remains parent-mediated even when the stored request originated from delegated work
-
-ContractRef: ContractName:Plans/Contracts_V0.md#3.4 Tool-specific payload extensions, ContractName:Plans/FinalGUISpec.md
+Labels and values:
+- questionnaire
+- single_question
+- unavailable
+- dismissed
 
 Rules:
-- drafts restore by question_id
-- child-agent clarification remains parent-mediated even when delegated work originated the request
-- Keep this persistence section consuming Plans/Contracts_V0.md#3.4 Tool-specific payload extensions and Plans/Tools.md#3.5B `question` tool runtime contract
+- question_id
+- question
+- allow_freeform
+- multi_select
+- default_values?: string[]
+- draft_value?: string
+- response_kind
+- validation_state
+
 ### 4.3 Plan and TODO state
-Plan and TODO persistence keeps plan lifecycle and item lifecycle separate.
 
-ContractRef: ContractName:Plans/Tools.md#3.5C `todowrite` and `todoread` runtime contract, ContractName:Plans/assistant-chat-design.md
+This section defines the canonical contract for this surface.
 
-Stored TODO item schema:
-- `todo_id`
-- `title`
-- `summary`
-- `notes?`
-- `status`
-- `dependencies[]`
-- `owner_hint`
-- `verification_hint`
+Core rules:
+- Plan and Deep Plan must both project to a normalized TODO list, with a named Q&A loop before Deep Plan execution and a locked TODO item schema/status set.
+- Plan/TODO persistence is locked to explicit revision states, structural-edit gating after approval, bounded revision history, and emission of `chat.plan_todo_updated` for durable TODO mutations.
+- TODO tool behavior is locked so todowrite and todoread use the normalized TODO schema, todowrite is not blanket auto-denied in ask/plan mode, and Deep Plan edits must resync the TODO projection before execution.
+- `chat.plan_todo_updated` must have an explicit owner-contract definition for durable normalized TODO mutation, and `todoread` must not survive as a `source_surface` mutation source.
 
-Item status is exactly `pending | in_progress | completed | blocked | skipped`.
+Fields:
+- Q&A loop
+- todo_id
+- title
+- summary
+- status
+- dependencies[]
+- owner_hint
+- verification_hint
+- pending | in_progress | completed | blocked | skipped
+- superseded
+- draft
+- approved
+- executing
+- completed
+- blocked
+- Structural edits = adding / removing / reordering TODO items
+- chat.plan_todo_updated
+- todowrite
+- todoread
+- todowrite can create, reorder, update statuses/notes
+- todoread returns current normalized list for active thread/run
+- Remove `todowrite` from blanket `ask/plan` mode auto-deny
+- editing Deep Plan markdown (the rich artifact) MUST update the normalized TODO projection BEFORE execution begins
 
-Plan artifact lifecycle states:
-- `draft`
-- `approved`
-- `executing`
-- `completed`
-- `blocked`
-- `superseded`
+Labels and values:
+- Plan
+- Deep Plan
+
+### 4.4 Activity transparency payloads
+
+This section defines the canonical contract for this surface.
+
+ContractRef: Plans/Contracts_V0.md#3.4A Web error taxonomy and applicability
+
+Core rules:
+- Preserve the Firecrawl-specific audit payload keys as exact contract-owned fields.
+- The Firecrawl webextract mapping must preserve structured extraction modes and option surface, not a thin single-URL summary.
+- The Firecrawl owner section must either preserve `changeTracking` with its structured output shape or explicitly retire it as out of scope; it must not disappear silently.
+- PM must not silently switch between self-hosted Firecrawl and hosted/cloud Firecrawl, and deployment-mode disclosure must remain visible.
+- Batch audit/event canon must preserve a parent audit event for the batch plus child audit events per URL.
+- The Firecrawl owner section must preserve shared routing/audit disclosure for requested/effective provider selection, fallback visibility, denied-web projection, and canonical web error taxonomy linkage.
+- The per-contract web error applicability table remains required canon and must stay aligned with provider-to-PM error mapping.
+- All web tools share a common output field set that includes provider identity, routing reason, timing, cache status, and standard error or warning fields.
+- Activity transparency payloads must preserve adapter-selection and projection fields used for routing and audit disclosure.
+
+Fields:
+- firecrawl_credits_used
+- firecrawl_cache_state
+- firecrawl_scrape_id
+- webextract
+- JSON Schema support
+- prompt-driven extraction behavior
+- URL wildcards
+- enableWebSearch
+- changeTracking.status
+- changeTracking.previous_content_ref
+- changeTracking.diff_summary_ref
+- changeTracking.checked_at_utc
+- parent audit event for the batch
+- child audit events per URL
+- tool.invoked
+- continue_on_error
+- `tool_use_id`
+- `adapter_id`
+- `adapter_selection_reason`
+- `duration_ms`
+- `timestamp`
+- `cached`
+- `error_code?`
+- `error_message?`
+- `warnings?`
+- `provenance_badge?`
+- requested_adapter_id
+- effective_adapter_id
+- adapter_selection_reason
+- provider_fallback_summary
+- warnings_count
+- error_code
+- projection_freshness
+- projection_health
 
 Rules:
-- todoread returns current normalized list for active thread/run
-- `todoread` returns current normalized list for active thread/run
-- `todowrite` can create, reorder, update statuses/notes
-- Remove `todowrite` from blanket `ask/plan` mode auto-deny; normalized planning-state mutation follows planning approval rules instead
-- editing Deep Plan markdown (the rich artifact) MUST update the normalized TODO projection BEFORE execution begins
-- plan-level states live on the plan artifact or revision record, not in the item `status` field
-- Deep Plan remains in the Q&A loop until the user approves or resubmits the plan; execution does not begin before the plan reaches `approved`
-- Structural edits = adding / removing / reordering TODO items
-- once execution starts, structural edits are gated while status and note updates remain allowed against the normalized TODO projection
-
-ContractRef: ContractName:Plans/Tools.md#3.5C `todowrite` and `todoread` runtime contract, ContractName:Plans/Contracts_V0.md#1.1 Assistant worktree seglog events
-
-Projection rules:
-- plan/TODO mutations emit `chat.plan_todo_updated` as defined by `Plans/Contracts_V0.md#1.1 Assistant worktree seglog events`
-- revision/history persistence distinguishes structural plan revisions from item status updates
-- sticky execution tracking restores against the same normalized TODO projection used by `todoread` and `todowrite`
-
-ContractRef: ContractName:Plans/Contracts_V0.md#1.1 Assistant worktree seglog events, ContractName:Plans/FinalGUISpec.md
-
-Additional canonical rules:
-- durable TODO state stays synchronized with the normalized todowrite/todoread contract
-- plan artifact lifecycle stays separate from item lifecycle
-- planning-state mutation follows planning approval rules rather than generic read-only web posture
-- Keep plan/TODO mutation refs anchored to Plans/Contracts_V0.md#1.1 Assistant worktree seglog events
-### 4.4 Activity transparency payloads
-Activity transparency stores one shared payload family for chat transparency, operation cards, audit history, and later drill-down surfaces.
-
-ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Tools.md
-
-#### Web-operation child payload
-
-| Key | Type | Notes |
-|---|---|---|
-| `web_operation` | `string` | One of `websearch`, `webfetch`, `webextract`, `webresearch`, `webcrawl`, `webmap`, `batch_webfetch`, `batch_webextract` where applicable. |
-| `web_input` | `object` | Structured normalized request snapshot. Never a preview string. |
-| `requested_adapter_id` | `string?` | Requested provider or adapter id. |
-| `effective_adapter_id` | `string?` | Provider or adapter actually used. |
-| `adapter_selection_reason` | `string?` | Why the effective provider/path was selected. |
-| `provider_fallback_summary?` | `string` | User-visible fallback explanation when fallback occurred. |
-| `warnings_count` | `number` | Count of surfaced warnings. |
-| `error_code?` | `string` | Canonical PM error code when the operation failed or degraded. |
-| `error_message?` | `string?` | Canonical user-visible failure text when present. |
-| `warnings?` | `string[]?` | Canonical warnings array when present. |
-| `provenance_badge?` | `string?` | User-visible provenance/source badge. |
-| `tool_use_id` | `string` | Stable correlation id for the specific web invocation. |
-| `duration_ms` | `integer` | Elapsed execution duration. |
-| `timestamp` | `string` | Stable event timestamp. |
-| `cached` | `boolean` | Whether the served result came from cache. |
-| `projection_freshness` | `current | refreshing | stale` | Freshness state. |
-| `projection_health` | `healthy | degraded | unavailable` | Health state. |
-| `sources_ref?` / `content_ref?` / `map_ref?` / `answer_summary_ref?` | `string` | Durable refs for large payloads or synthesized answers. |
-| `blocked_reason_code?` | `string` | Canonical blocked or unavailable class for denied or blocked web execution. |
-| `denial_reason_code?` | `string` | Present for denied or blocked web execution. |
-| `denial_source?` | `string` | Source of the denial decision. |
-| `suggested_recovery_action?` | `string` | User-facing recovery hint. |
-| `allowed_action_ids[]?` | `string[]` | Explicit recovery actions available to the user or approval ladder. |
-| `progress_event?` | `object` | Structured long-running progress payload. |
-
-Contract-owned extensions may add `firecrawl_credits_used`, `firecrawl_cache_state`, and `firecrawl_scrape_id`; those names remain owned by `Plans/Contracts_V0.md` rather than this storage plan.
-
-#### Batch parent payload
-
-| Key | Type | Notes |
-|---|---|---|
-| `requested_tool` | `string` | Batch family tool requested by the caller. |
-| `batch_size` | `integer` | Total URLs/items requested. |
-| `unique_domains` | `integer?` | Count of distinct domains in the batch when known. |
-| `continue_on_error` | `boolean` | Canonical strict-vs-continue execution switch. |
-| `completed_children` | `integer` | Number of child operations completed before batch end. |
-| `failed_children` | `integer` | Number of child operations that failed. |
-| `blocked_children` | `integer` | Number of child operations blocked or denied. |
-| `parent_ref` | `string` | Stable parent audit/event reference. |
-
-Batch rules:
-- batch web operations persist one parent audit event for the batch plus child audit events per URL
-- parent and child events use the canonical `tool.invoked` and result families rather than a batch-only envelope
-- when `continue_on_error` is `false`, the first failure closes the batch, preserves already completed child results, and marks later unstarted children as not run rather than successful
-- child payloads keep per-URL provider selection, refs, and error code, and remain linked to the parent event
+- changeTracking { status: changed | unchanged | no_previous_version, previous_content_ref?, diff_summary_ref?, checked_at_utc }
+- change_status: 'new' | 'same' | 'changed' | 'removed'
+- pages[].change_status
+- change_summary
+- explicit out-of-scope retirement if `changeTracking` is not MVP
+- no silent disappearance of the capability
+- PM MUST NOT silently switch between self-hosted Firecrawl and hosted/cloud Firecrawl
+- no silent switch between self-hosted Firecrawl and hosted/cloud Firecrawl
+- deployment-mode disclosure remains visible
+- self-hosted Firecrawl does not use hosted credit billing
+- tool.denied
+- adapter_unavailable
+- unsupported_operation
+- content_blocked
+- content_not_found
+- unsupported_source
+- extraction_schema_mismatch
+- autonomous_budget_exceeded
+- no_previous_version
+- blocked_reason_code
+- allowed_action_ids[]
+- denial_reason_code
+- denial_source
+- suggested_recovery_action
+- adapter_id
+- blocked responses must be machine-actionable through `allowed_action_ids[]`
+- error naming aligns to `adapter_unavailable`
 
 #### Long-running `progress_event` payload
 
-| Key | Type | Notes |
-|---|---|---|
-| `tool_use_id` | `string` | Stable correlation id for the long-running operation. |
-| `operation` | `string` | The active operation family, including batch tools where applicable. |
-| `phase` | `string` | Current phase such as `queued`, `fetching`, `extracting`, `polling`, `completed`, or `cancelled`. |
-| `detail` | `string?` | User-visible progress detail. |
-| `pages_completed` | `integer?` | Count of completed pages/URLs/items. |
-| `pages_total` | `integer?` | Total expected pages/URLs/items when known. |
-| `elapsed_ms` | `integer?` | Elapsed time in milliseconds. |
-| `estimated_remaining_ms` | `integer?` | Best-effort remaining time estimate when known. |
-| `cancelled` | `bool?` | Set to `true` when the operation was cancelled after work started. |
+This section defines the canonical contract for this surface.
 
-Progress and cancellation rules:
-- denied or blocked web events still use the same payload family
-- ref dereference remains on-demand in history and audit views
-- freshness and health are independent dimensions and are not collapsed into a single status field
-- if cancellation occurs after some work completed, the persisted payload keeps completed partial results plus `cancelled: true` rather than discarding the finished work
-- timeout or provider interruption may still preserve partial results when the provider already materialized them before the failure boundary
-- partial completed work survives cancellation and timeout boundaries when already materialized
+ContractRef: Plans/Contracts_V0.md#3.4 Tool-specific payload extensions, Plans/FinalGUISpec.md#15.3 Web and diff operation card widget
 
-#### Carry-through rules
+Core rules:
+- The Firecrawl async contract must preserve timeout behavior tied to timeout_ms and partial-result survival on timeout.
+- Long-running web operations must preserve the structured progress_event payload and cancellation-with-partial-results contract.
+- The Firecrawl async contract must preserve the exact poll ladder and status family already restored in the owner section.
 
-- denied or blocked web episodes persist `blocked_reason_code`, `allowed_action_ids[]`, `denial_reason_code`, `denial_source`, and `suggested_recovery_action` without inventing GUI-local replacements.
-- if `changeTracking` is part of the request/result, persistence carries the structured field rather than dropping it; if PM retires it from MVP, the owner docs must state explicit out-of-scope retirement if `changeTracking` is not MVP and no silent disappearance of the capability is allowed.
-- If request includes `actions`, skip cache entirely (always fresh-execute); Cache STORE still applies to the final result after actions execute.
-- PM cache takes precedence for serving cached content.
-- Firecrawl cache serves as provider-side optimization only.
-- `cache_state: "hit" | "miss" | "bypassed" | "expired_used_for_diff"` remains the canonical cache-state vocabulary.
+Fields:
+- timeout_ms
+- timeout when polling exceeds `timeout_ms`
+- partial results survive timeout if already materialized
+- progress_event
+- tool_use_id
+- operation
+- phase
+- detail
+- pages_completed
+- pages_total
+- elapsed_ms
+- estimated_remaining_ms
+- cancelled: true
+- 2s, 4s, 8s, 15s, 30s
+- scraping
+- processing
+- completed
+- failed
+- cancelled
 
-ContractRef: ContractName:Plans/Tools.md#14-web-content-caching-layer, ContractName:Plans/Contracts_V0.md
-
-Rules:
-- denied or blocked web episodes persist the shared blocked-recovery fields without GUI-local replacements
-- if request includes actions, cache serving is bypassed but the final post-action result may still be stored
-- blocked episodes keep the recovery actions and denial source needed by approval UI
-- error naming aligns to `adapter_unavailable`
-- Keep this owner section feeding Plans/assistant-chat-design.md#13.2 Web activity and provenance and Plans/FinalGUISpec.md#15.3 Web and diff operation card widget
-- partial completed work survives cancellation and timeout boundaries when already materialized
-- Keep this sub-section mirrored into Plans/Contracts_V0.md#3.4 Tool-specific payload extensions and Plans/FinalGUISpec.md#15.3 Web and diff operation card widget
 ### 4.5 Inline visualizer persistence
 
 Inline visualizer persistence stores only PM-managed source, metadata, and PM-owned outputs.
@@ -1471,55 +1464,26 @@ ContractRef: ContractName:Plans/Crosswalk.md, ContractName:Plans/DRY_Rules.md
 
 ## 8. Web content caching persistence
 
-Storage owns the durable cache record, TTL defaults, and state vocabulary for the web family.
+This section consumes the linked owner contract and stays aligned with it.
 
-ContractRef: ContractName:Plans/Tools.md
+Core rules:
+- The PM-owned web cache contract must preserve two-phase lookup, state vocabulary, and per-project cache sizing.
+- Cache routing must skip read-time cache for requests with actions, may still store the post-action result, and must preserve PM-cache precedence over Firecrawl cache with diff-reuse audit states.
 
-### 8.1 Durable record shape
+Fields:
+- hit
+- miss
+- bypassed
+- expired_used_for_diff
+- normalized_url
+- formats_hash
+- adapter_id
+- 500 MB
 
-Each cache record stores:
-- `normalized_url`
-- `formats_hash`
-- `adapter_id`
-- `content_ref`
-- `content_hash`
-- `fetched_at_utc`
-- `expires_at_utc`
-- `last_accessed_at_utc`
-- lightweight metadata needed for change detection and LRU eviction
+Rules:
+- If request includes `actions`, skip cache entirely (always fresh-execute)
+- Cache STORE still applies to the final result after actions execute
+- PM cache takes precedence for serving cached content
+- Firecrawl cache serves as provider-side optimization only
+- `cache_state: "hit" | "miss" | "bypassed" | "expired_used_for_diff"`
 
-### 8.2 Two-phase lookup
-
-Storage persists the full `(normalized_url, formats_hash, adapter_id)` identity, but runtime lookup is intentionally split:
-- pre-selection lookup checks `(normalized_url, formats_hash)` only
-- after routing resolves the effective provider, the cached `adapter_id` is validated against that provider
-- mismatched provider entries are discarded and replaced with a fresh fetch
-
-ContractRef: ContractName:Plans/Tools.md#12-web-tool-routing-algorithm, ContractName:Plans/Tools.md#14-web-content-caching-layer
-
-### 8.3 TTL defaults and state vocabulary
-
-| Operation | Default TTL |
-|---|---|
-| `webfetch` | `4 hours` |
-| `webextract` | `4 hours` |
-| `webcrawl` | `24 hours` |
-| `webmap` | `24 hours` |
-| `websearch` | `1 hour` |
-| `webresearch` | `Not cached` |
-
-State vocabulary:
-- `hit`
-- `miss`
-- `bypassed`
-- `expired_used_for_diff`
-
-### 8.4 Invalidation and retention
-
-- invalidation scopes are URL, domain, and project
-- expired records may still retain hashes and metadata for diff/change detection
-- action-bearing fetches bypass lookup and are never keyed as if the page were static
-- the per-project default storage ceiling remains `500 MB`
-- provider-local cache hints remain subordinate to this PM-owned persistence contract
-
-ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Tools.md

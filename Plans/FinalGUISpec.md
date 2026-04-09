@@ -827,46 +827,93 @@ Settings > Storage includes a global **Remote Cache Administration** subsection 
 ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/storage-plan.md, ContractName:Plans/UI_Command_Catalog.md
 
 #### 7.4.4 Settings (Unified) panel specification
-Settings and `/web` help/autocomplete expose provider availability and support information without making the user infer it from the owner matrix alone.
 
-ContractRef: ContractName:Plans/Tools.md#11-provider-capability-matrix, ContractName:Plans/newtools.md#82-guisettings-alignment
+This section consumes the linked owner contract and stays aligned with it.
 
-Required web-provider disclosure surfaces:
-- row-level availability badge for each web-capable provider
-- row-level support-tier disclosure using the same vocabulary consumed from the owner capability matrix
-- row-level health/error disclosure and last-failure messaging when the provider is degraded, unauthenticated, rate-limited, or otherwise unavailable
-- contextual help text for auth/setup/cost implications, including when a provider is disabled by default or requires hosted billing
-- requested versus effective provider state remains separate in Settings and inspectors
-- the global provider stack is user-changeable in Settings
-- per-operation priority reordering is NOT MVP
-- global MVP provider priority is not immutable product policy
-- availability plus support-tier visibility in `/web` help/autocomplete remains visible so users can predict whether `websearch`, `webfetch`, `webextract`, `webresearch`, `webcrawl`, and `webmap` are currently runnable
-- if the requested operation is currently unrunnable, the UI shows the capability-unavailable branch explicitly instead of implying silent fallback
+Core rules:
+- The global provider stack is user-changeable in Settings, while per-operation priority reordering is not MVP and the MVP priority order must not be treated as immutable product policy.
+- The provider capability matrix must preserve capability tier separately from routing posture: Firecrawl, Tavily, and Exa retain real webfetch capability and must not be flattened to fallback-only merely because Site Reader is preferred.
+- DuckDuckGo capability rows must preserve native-ish search, PM-composed research/fetch/extract, and partial crawl behavior instead of flattening those cells to unsupported.
+- Google must remain a pluggable adapter slot with display label Google, and its ledger support semantics must not be collapsed away.
+- The Firecrawl configuration field set must preserve proxy_mode with the exact supported enum values and the self-hosted Fire Engine limitation note.
+- Routing must remain cost-aware when multiple providers offer similar capability; static priority alone is insufficient, and the >100 credits warning plus 500 credits cap must remain aligned with routing.
+- PM must not silently switch between self-hosted Firecrawl and hosted/cloud Firecrawl, and deployment-mode disclosure must remain visible.
+- GUI/help canon must preserve row-level health/error disclosure, last-failure messaging, inline contextual help, and availability/support-tier visibility in Settings and /web help/autocomplete.
+- The Firecrawl owner section must preserve the base configuration fields and default-disabled state already restored in the live owner doc.
+- The Firecrawl credit and disclosure contract must preserve the warning threshold, hard cap, and self-hosted billing exception already restored in the owner section.
+- Retire stale cited-search ownership residue from reference sections; provider-capability and web-routing canon is owned by Plans/Tools.md sections 11-12, while Plans/newtools.md#8.2.1 is non-normative consumer guidance only.
+- Firecrawl provider identity canon includes exact provider ID firecrawl, display name Firecrawl, default priority below Exa and Tavily and above DuckDuckGo, user-adjustable ordering, default-disabled state until API key or self-hosted URL is configured, and retirement of exact stale residue "stale cited-search framing and older `newtools` wording" from owner/provider canon.
+- MCP owner canon must preserve the exact auth and effective-state enums, canonical naming, and credential binding or invalidation behavior.
 
-Consumer disclosure rules:
-- cost-aware selection remains visible when routing prefers a lower-cost viable path
-- hosted/provider-native research paths surface explicit credit/billing copy, including `>100 credits` warnings for `research` and `500 credits` warnings for deep research where those paths apply
-- PM MUST NOT silently switch between self-hosted Firecrawl and hosted/cloud Firecrawl
-- deployment-mode disclosure remains visible whenever Firecrawl is selected, suggested, or used as the effective provider
-- self-hosted Firecrawl does not use hosted credit billing
+Fields:
+- proxy_mode
+- basic
+- enhanced
+- auto
+- Fire Engine
+- enabled
+- api_key
+- base_url
+- timeout_ms
+- cache_enabled
+- Firecrawl is disabled by default until explicitly enabled in Settings
+- authenticated | expired | not_authenticated
+- connected | disabled | needs_auth | needs_client_registration | failed
+- LoggedIn | LoggedOut | AuthExpired | AuthFailed
+- {server_slug}_{tool_name}
 
-The unified Settings panel owns provider, account, model, and permission configuration. It does not re-own Personas or Skills.
-
-ContractRef: ContractName:Plans/Skills_System.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/Models_System.md
-
-Required surfaces:
-- provider class disclosure: `account-backed`, `API-backed`, `no-key`
-- requested versus effective account/provider state
-- support-tier and health/last-failure disclosure for web-capable providers
-- credit/cost warning UI for high-cost provider-native research paths
-- Firecrawl disclosure includes Provider ID `firecrawl`, Display name `Firecrawl`, Default priority below Exa, Tavily; above DDG (user-adjustable), and Default state disabled (requires API key or self-hosted URL).
-- Firecrawl configuration surfaces preserve `proxy_mode` with `basic`, `enhanced`, and `auto`, and disclose the self-hosted Fire Engine limitation note.
-
-ContractRef: ContractName:Plans/Tools.md#10-firecrawl-provider-integration, ContractName:Plans/Models_System.md
+Labels and values:
+- Firecrawl
+- Google
+- DuckDuckGo
+- Anthropic
+- OpenAI
+- Settings
+- requested availability
+- effective availability
+- credential binding
 
 Rules:
-- requested versus effective provider state stays separate in Settings and inspectors
-- Keep this subsection tied to Plans/Tools.md#10. Firecrawl provider integration and Plans/Tools.md#11.1 Provider classes, defaults, and fallback disclosure
+- global provider stack is user-changeable in Settings
+- per-operation priority reordering is NOT MVP
+- global MVP provider priority is not immutable product policy
+- Firecrawl `webfetch` capability is not erased by Site Reader primacy
+- Tavily `webfetch` capability is not erased by Site Reader primacy
+- Exa `webfetch` capability is not erased by Site Reader primacy
+- fallback-only
+- webfetch
+- DuckDuckGo `websearch` is `native-ish`
+- DuckDuckGo `webresearch` is `pm-composed`
+- DuckDuckGo `webfetch` / `webextract` remain PM-composed or partial rather than flattened to `unsupported`
+- DuckDuckGo partial crawl behavior must not disappear
+- display label `Google`
+- Google is a pluggable adapter slot
+- Google official search is not a strategic backend
+- Google `webfetch` keeps the pm-composed support semantics from the ledger
+- cost-aware selection when providers offer similar capability
+- >100 credits
+- 500 credits
+- cost-aware selection
+- static priority alone is insufficient
+- PM MUST NOT silently switch between self-hosted Firecrawl and hosted/cloud Firecrawl
+- no silent switch between self-hosted Firecrawl and hosted/cloud Firecrawl
+- deployment-mode disclosure remains visible
+- self-hosted Firecrawl does not use hosted credit billing
+- row-level health/error disclosure
+- last-failure messaging
+- contextual help text
+- availability plus support-tier visibility in Settings
+- availability plus support-tier visibility in `/web` help/autocomplete
+- self-hosted Firecrawl does not use credit billing
+- Provider ID
+- `firecrawl`
+- Display name
+- `Firecrawl`
+- Default priority
+- below Exa, Tavily; above DDG (user-adjustable)
+- Default state
+- disabled (requires API key or self-hosted URL)
+
 #### 7.4.5 Workspace, editor, and remote-host settings
 
 Settings MUST expose durable configuration for workspace behavior, editor policies, and remote editing.
@@ -887,43 +934,52 @@ This subsection owns:
 - runtime-output routing preferences for Problems, Output, Ports, and Debug Console
 
 #### 7.4.7 Agent-Config panel specification
-Agent Config owns Personas and Skills. Settings owns system-level dependencies such as authentication, models, permissions, rules, and health.
 
-ContractRef: ContractName:Plans/Skills_System.md, ContractName:Plans/Personas.md
+This section defines the canonical contract for this surface.
 
-Owner-routing rules:
+Core rules:
+- Agent behavior management is locked under Agent Config, with Skills as a tab inside it, while Settings retains system-level dependencies and rules.
+- Skills management is locked to explicit catalog and import UX, fixed source and readiness vocabularies, store-vs-management separation, and visible source/readiness badges including pm_enhanced.
+- Skill discovery and invocation are locked to three paths—GUI panel, /skill, and natural language—without an MVP subcommand family, all converging on the same invoke_skill contract.
+- Skill runtime and permission behavior is locked to a structured skill tool envelope, discovery versus auto-invoke readiness rules, dynamic runtime tool descriptions, FileSafe-constrained resource access, and Agent Config ownership.
+
+Fields:
+- /skill <skill_name> [args]
+- /skill with no args lists available skills
+- invoke_skill
+- No subcommand family for MVP
+- Skills panel
+- Natural language
+- skill_id
+- arguments?
+- context?
+- content
+- source_type
+- resource_base_dir?
+- resource_entries_sample?
+- metadata?
+- ready_with_warnings
+
+Labels and values:
+- /skill
+
+Rules:
+- Agent Config
+- Skills
+- Personas
 - Agent Config owns: agent-behavior artifacts (personas, skills)
 - Settings keeps: system-level dependencies (authentication, models, permissions, rules, health)
 - Agent Config is NOT replacement for Settings
-
-Required Agent Config surfaces:
-- Persona selection and editing
-- a dedicated Skills tab inside Agent Config rather than a Settings-owned management surface
-- skill registry with source vocabulary `bundled`, `pm_enhanced`, `catalog_installed`, `manual_import`, `project_local`, `global_local`, `shadowed`
-- readiness vocabulary `ready`, `ready_with_warnings`, `invalid`, `shadowed`, `disabled`
-- visible source/readiness badges, including `pm_enhanced`, in the management table
-- invocation/help affordances that align with `/skill`
-
-V1 import rules:
-- file-browser import is supported in MVP
-- drag-and-drop skill folders/files is supported in MVP
+- drag-and-drop skill folders/files
+- file-browser import
 - No remote URL/git import in v1
-- import/install flows stay within the supported skill surfaces defined by `Plans/Skills_System.md`
-Additional invocation rules:
-- `/skill <skill_name> [args]`, `/skill with no args lists available skills`, the Skills panel, and Natural language all converge on the same `invoke_skill` contract.
-- No subcommand family for MVP.
-- `deny`, `once`, `for session`, and `always` remain the approval ladder where skill or web actions require approval.
-- question default `allow` only when HITL is available.
-- `read_only` and `plan` keep read-only web tools ask-gated rather than silently denying them.
+- bundled
+- catalog_installed
+- manual_import
+- project_local
+- global_local
+- pm_enhanced
 
-ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Skills_System.md
-
-Rules:
-- Skills panel, /skill, and Natural language converge on the same invoke_skill contract
-- deny/once/for session/always remain the approval ladder where skill or web actions require approval
-- question default allow only when HITL is available
-- read_only and plan keep read-only web tools ask-gated
-- Keep this panel anchored to Plans/Skills_System.md#4.3 `skill` tool and Plans/UI_Command_Catalog.md#2.7 Chat slash commands (reserved)
 #### 7.4.8 Container, Docker, and Kubernetes settings
 
 Settings MUST expose a dedicated container/runtime settings area for Docker and Kubernetes-related defaults.
@@ -1445,37 +1501,39 @@ Read-only text, code blocks, logs, and labels must remain selectable and copyabl
 Clipboard actions should provide lightweight success feedback for non-obvious values and must never copy redacted or hidden-secret placeholders as though they were the real value.
 
 ### 10.10 LSP-informed affordances
-Hover cards, go-to-definition, diagnostics links, and code-aware affordances must feel native to the editor/chat workflow and clearly disclose when they are unavailable, stale, or remote-degraded.
 
-Supported affordance inventory:
-- `goToDefinition`
-- `findReferences`
-- `hover`
-- `documentSymbol`
-- `workspaceSymbol`
-- `goToImplementation`
-- `prepareCallHierarchy`
-- `incomingCalls`
-- `outgoingCalls`
-- `rename`
+This section consumes the linked owner contract and stays aligned with it.
 
-Parameter and status cues:
-- `workspaceSymbol` requires `query`.
-- Position-based operations use `path` + `position`.
-- `rename` requires `path` + `position` + `newName`.
-- GUI affordances surface normalized `status` values `ok | partial | unavailable | error`.
+Core rules:
+- LSP canon must preserve the exact MVP operation inventory, normalized parameter shapes, and result envelope; `workspaceSymbol` must carry `query`, position-based operations use `path` + `position`, and `rename` requires `path` + `position` + `newName` with approval gating.
 
-Rules:
+Fields:
+- operation
 - query
 - path
 - position
 - newName
 - status
-- GUI affordances clearly disclose when LSP data is unavailable, stale, or remote-degraded
+
+Labels and values:
+- goToDefinition
+- findReferences
+- hover
+- documentSymbol
+- workspaceSymbol
+- rename
+
+Rules:
+- goToImplementation
+- prepareCallHierarchy
+- incomingCalls
+- outgoingCalls
+- ok | partial | unavailable | error
 - `workspaceSymbol` requires `query`
-- rename stays approval-gated even when presented as a GUI affordance
-- rename remains approval-gated because it applies edits
-- Keep this GUI affordance section consuming Plans/LSPSupport.md#9. MVP LSP features (summary) and Plans/Tools.md#3.4.1 LSP tool (MVP) -- parameters, permission, rename approval
+- Position-based operations use `path` + `position`.
+- `rename` requires `path` + `position` + `newName`.
+- `rename` is approval-gated because it applies edits.
+
 ### 10.11 Loading-to-live transitions
 
 When moving from placeholder to real data, preserve layout footprint and focus so the interface does not jump unexpectedly.
@@ -2226,60 +2284,17 @@ The editor should be able to communicate states like:
 - `Direct/API providers: strongest support for exact runtime controls.`
 
 ### 19.4 Surface-level Persona controls
-Persona controls are required on the following surfaces:
-- Chat
-- Interview
-- Requirements Builder
-- Orchestrator
-- Multi-Pass Review
 
-Each surface should expose, at minimum:
-- Persona mode (`Auto` / `Manual` / `Hybrid`)
-- current effective Persona display
-- `requested_persona`
-- `effective_persona`
-- `requested_account_binding`
-- `operational_identity`
-- `effective_account_label`
-- `effective_provider_identity`
-- `effective_project_id`
-- platform/model display
-- selection reason
-- manual override control or lock/unlock affordance
-- skipped unsupported Persona controls when relevant
+This section consumes the linked owner contract and stays aligned with it.
 
-Interview/Builder visibility rule:
-- The Interview chat surface, Interview activity pane, and Builder activity pane MUST display the same effective-runtime fields for the active run block, even if one surface uses a more compact layout than another.
-
-ContractRef: ContractName:Plans/Contracts_V0.md#5.1B Persona/Runtime Snapshot Payload Contract, ContractName:Plans/assistant-chat-design.md
-
-#### 19.4.1 Persona mode semantics
-
-- **Auto:** Resolver selects the Persona from surface defaults, mappings, and runtime context. User sees the chosen Persona and reason string but does not pin a manual choice.
-- **Manual:** User explicitly selects a Persona for the next eligible run/turn on that surface. Manual selection overrides Auto resolution until cleared or replaced.
-- **Hybrid:** Resolver proposes a Persona, but the user may override it before execution while still seeing the automatic recommendation and reason text.
-- Mode changes apply only to the next eligible run/turn or queued execution on that surface; they do not retroactively change an active run already in progress.
-
-#### 19.4.2 Selection reason and override behavior
-
-- The **effective Persona display** must show the resolved Persona name plus a one-line reason string such as `User requested`, `Stage default`, `Provider fallback`, or `Mapped from Interview phase`.
-- Every surface needs a compact **Override Persona** affordance (dropdown, popover, or button+menu) with `Set override`, `Clear override`, and `Return to Auto` actions.
-- When overrides are unavailable for the current provider or run state, the control remains visible but locked/disabled with a tooltip explaining why.
-- Requested and effective values remain distinct whenever routing or runtime constraints change what actually executes.
-
-#### 19.4.3 Platform/model display scope
-
-- The `platform/model display` requirement may reuse the existing status-bar/footer platform and model controls where those already exist; the surface must not introduce conflicting duplicate controls.
-- If a user overrides model/platform independently from the Persona, the UI must show both the requested Persona and the effective platform/model outcome.
-
-ContractRef: ContractName:Plans/Contracts_V0.md#5.1B Persona/Runtime Snapshot Payload Contract, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Personas.md
+Core rules:
+- Runtime identity canon must preserve requested and effective naming and the account/provider identity fields, and must retire local _id substitutes.
 
 Rules:
-- every listed surface exposes at minimum the shared effective-runtime fields plus selection reason and lock/unlock control
-- Keep this GUI consumer anchored to Plans/Contracts_V0.md#5.1B Persona/Runtime Snapshot Payload Contract
+- requested_persona
+- effective_persona
+- effective_account_label
 
-Rules:
-- never `requested_persona_id`
 ### 19.5 Runtime display requirements
 
 When a run is active, the UI must display:
@@ -2816,185 +2831,246 @@ The promoted widget catalog mirrors the shared runtime contracts. Widget entries
 ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Tools.md, ContractName:Plans/storage-plan.md
 
 ### 15.1 Terminal operation card widget
-Terminal operation cards render lifecycle-bearing command and terminal activity without pretending to be a second shell.
 
-Card states: `pending`, `running`, `completed`, `failed`, `cancelled`, `blocked`
+This section consumes the linked owner contract and stays aligned with it.
 
-Card anatomy:
-- command label plus cwd/runtime identity summary
-- status badge, duration/timestamp, and exit-code disclosure when known
-- a read-only transcript preview using aligned caps: `5` collapsed, `15` expanded, `50` hard cap
-- explicit command/code copy affordances where supported, without turning the preview into an editor
+Core rules:
+- Inline mini-terminal and operation cards are locked to bounded inline previews, persistent per-command cards, narrative-order placement, and shared card anatomy.
+- Terminal promotion and handoff are locked so interactive or long-running work binds to a stable terminal session while chat retains only bounded preview and audit ownership.
+- Terminal action canon must preserve the distinct terminal actions and give Rerun in Terminal owned command-table treatment rather than collapsing actions into one normalized target.
 
-Actions:
-- `Open in Terminal`
-- `Show Terminal`
-- `Rerun in Terminal`
-- `Detach/Pop-Out`
+Fields:
+- terminal_session_id
+- Open in Terminal
+- Show Terminal
+- Rerun in Terminal
+- Detach/Pop-Out
 
-Behavior rules:
-- the inline mini terminal is read-only and non-interactive
+Rules:
+- Collapsed preview: 5 lines
+- Expanded preview: 15 lines
+- Persists after completion
+- status, cwd, command summary, elapsed time, exit code / truncation indicator
+- READ-ONLY and non-interactive
+- One card per command
+- Retries create a new terminal and therefore a new mini terminal card
+- Shell owns interactive state; chat owns preview+audit
+- Commands requiring stdin/TTY start Terminal immediately
+- Background/watch/server actions create terminal-owned session
+- One-shot commands remain chat-inline by default
+- Every promoted command card binds to stable terminal session identity
+- Large payloads store full data behind refs/blobs
+- non-interactive work may promote if it becomes long-running
+- attach failure recovery differs for live process, ended process, and inline-only completed command
 - `Open in Terminal` and `Show Terminal` must focus the same live session
-- `Rerun in Terminal` launches a fresh execution and therefore binds to a new `terminal_session_id`
-- retry/re-run creates a new card instead of mutating prior history
-- the card persists after completion or failure as transcript history rather than auto-removing itself
-- `blocked` is a card-level state entered from `running` and returned to `running` on unblock
-- `disconnected` and `restoring` are agent-session states and surface as card-level `blocked` with `blocked_reason_code`
-- if only historical state remains, the reveal action opens the historical receipt and explicit recovery controls instead of silently creating a replacement session
 - after promotion, chat stops owning the full transcript
 - inline cards persist across thread reload and re-render from persisted metadata
 - search and diff do not stream progressively
-- simple read/grep/glob results remain inline text, not cards
 
-ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/storage-plan.md
-
-Rules:
-- Open in Terminal and Show Terminal focus the same live session
-- Keep this widget consuming Plans/assistant-chat-design.md#13.1 Operation-card family and Plans/assistant-chat-design.md#13.3 Bash and terminal ownership
 ### 15.2 Search result card widget
-Search cards show routed provider disclosure, `provider_fallback_summary` when present, and evidence refs without collapsing the underlying requested operation.
 
-ContractRef: ContractName:Plans/assistant-chat-design.md#13.2 Web activity and provenance, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/storage-plan.md
+This section consumes the linked owner contract and stays aligned with it.
 
-Search-card rules:
-- cards distinguish shortlist results from the later read path used for final answer construction
-- search-then-read behavior remains visible: final citations come from the actual read path, and raw search snippets alone are not enough provenance for the final answer
-- if a result opens through the PM-native Site Reader path, the card may show `Reading Site`; provider-routed fetch must not reuse the reserved native Site Reader identity
-- Site Reader v1 requires real browser-interaction capability, not static HTTP fetch only
-- requested/effective provider disclosure stays visible whenever routing changes the execution path
-- search cards do not inherit generic copy affordances for the rendered results block
+ContractRef: ContractName:Plans/storage-plan.md#4.4 Activity transparency payloads, ContractName:Plans/Contracts_V0.md#3.4 Tool-specific payload extensions, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md#3.18 Built-in Browser and Click-to-Context
+
+Core rules:
+- Answer construction must preserve search-then-read behavior, final citations must come from the actual read path rather than raw search snippets alone, and web activity/provenance docs must use the exact storage/contracts/browser ContractRef targets instead of malformed generic anchors.
+- The Firecrawl websearch mapping must preserve provider-specific search behavior and option surface.
+
+Fields:
+- Serper-backed Google-result behavior
+- sources
+- categories
+- optional result scraping behavior in Firecrawl `websearch`
 
 Rules:
-- cards distinguish shortlist results from the later read path used for final-answer construction
-- search cards do not inherit generic copy affordances for rendered result blocks
-- Keep this widget pointed at Plans/assistant-chat-design.md#13.2 Web activity and provenance and Plans/Section15_MVP_Promoted_Features_Spec.md#3.18 Built-in Browser and Click-to-Context
-### 15.3 Web and diff operation card widget
-Web and diff cards consume the shared operation-card family while preserving the web-specific routing, preview, and blocked-recovery contract.
+- search-then-read behavior
+- final citations come from the actual read path
+- raw search snippets alone are not enough provenance for the final answer
+- chat may shortlist with search but must read chosen pages before citing them as final evidence
 
-Common fields:
+### 15.3 Web and diff operation card widget
+
+This section consumes the linked owner contract and stays aligned with it.
+
+Core rules:
+- The web routing algorithm must include a capability-unavailable terminal branch with clear setup guidance when no provider supports the requested operation.
+- Site Reader canon must require real browser interaction, reserve `Reading Site` for the PM-native Site Reader path, and prevent provider-routed fetch from reusing that reserved identity.
+- The Firecrawl webresearch mapping must preserve provider-native no-URL research behavior, navigation/forms/pagination capability, and structured extraction during agent-led research.
+- Batch semantics must preserve the explicit false branch for continue_on_error.
+- Long-running web operations must preserve the structured progress_event payload and cancellation-with-partial-results contract.
+- Inline mini-terminal and operation cards are locked to bounded inline previews, persistent per-command cards, narrative-order placement, and shared card anatomy.
+- Operation cards are restricted to lifecycle-bearing operations, exclude other widget families, and use a locked card-level state machine reconciled against the 8-state agent/process taxonomy.
+- Message controls are locked to most-recent-user scope, queued-message FIFO semantics, explicit rewind/discard behavior, always-visible code-block copy, mandatory subagent disclosure, and transient queue state that is not restored across reload or restart.
+- All web tools share a common output field set that includes provider identity, routing reason, timing, cache status, and standard error or warning fields.
+- Activity transparency payloads must preserve adapter-selection and projection fields used for routing and audit disclosure.
+
+Fields:
+- webresearch
+- no-URL natural-language research
+- navigation/forms/pagination capability
+- structured extraction behavior during provider-native research
+- continue_on_error: false
+- stop on the first failure
+- return completed results plus failure detail
+- progress_event
+- tool_use_id
+- operation
+- phase
+- detail
+- pages_completed
+- pages_total
+- elapsed_ms
+- estimated_remaining_ms
+- cancelled: true
+- status_badge_state
 - `tool_use_id`
-- `web_operation`
-- `requested_adapter_id`
-- `effective_adapter_id`
-- `adapter_selection_reason`
-- `provider_fallback_summary`
 - `adapter_id`
+- `adapter_selection_reason`
 - `duration_ms`
 - `timestamp`
 - `cached`
-- `warnings_count`
 - `error_code?`
 - `error_message?`
 - `warnings?`
 - `provenance_badge?`
-- `projection_freshness`
-- `projection_health`
-- `cache_state`
-- `sources_ref`, `content_ref`, `map_ref`, and `answer_summary_ref`
-- `progress_event { tool_use_id, operation, phase, detail, pages_completed, pages_total, elapsed_ms, estimated_remaining_ms, cancelled: true }`
-- aligned preview caps: `5` collapsed, `15` expanded, `50` hard cap
+- requested_adapter_id
+- effective_adapter_id
+- adapter_selection_reason
+- provider_fallback_summary
+- warnings_count
+- error_code
+- projection_freshness
+- projection_health
 
-Blocked and denied recovery fields:
-- `blocked_reason_code`
-- `allowed_action_ids[]`
-- `denial_reason_code`
-- `denial_source`
-- `suggested_recovery_action`
-- `status: "unavailable"` for headless unavailable or HITL-unavailable branches
-
-Behavior rules:
-- retry creates a new card instead of rewriting the prior card's history
-- rendered result blocks stay non-editable and do not become generic copy targets
-- provider fallback, cache posture, and blocked recovery remain visible instead of collapsing into one summary string
-- batch cards preserve the parent/child audit relationship instead of flattening the run into one opaque result
-- when `continue_on_error: false`, the batch stops on the first failure, keeps already completed child results, shows the failing child plus recovery context, and does not pretend later URLs ran successfully
-- `Reading Site` remains reserved for the PM-native Site Reader path; provider-routed fetch must not reuse the reserved native Site Reader identity
+Rules:
+- capability-unavailable terminal branch
+- clear setup guidance when no provider supports the requested operation
 - Site Reader v1 requires real browser-interaction capability, not static HTTP fetch only
+- Reading Site
+- provider-routed fetch must not reuse the reserved native Site Reader identity
+- Collapsed preview: 5 lines
+- Expanded preview: 15 lines
+- Persists after completion
+- status, cwd, command summary, elapsed time, exit code / truncation indicator
+- READ-ONLY and non-interactive
+- One card per command
+- Retries create a new terminal and therefore a new mini terminal card
+- Open in Terminal
+- pending
+- running
+- completed
+- failed
+- cancelled
+- blocked
+- starting
+- exited
+- Stop/Edit/Resend attach ONLY to most recent user-sent message
+- discards all later history/work
+- FIFO, max 2 queued messages
+- Stop does NOT clear the queue
+- always-visible copy affordance on fenced code blocks
+- queue state is transient and is not restored across reload or restart
+- blocked_reason_code
+- allowed_action_ids[]
+- denial_reason_code
+- denial_source
+- suggested_recovery_action
+- adapter_id
+- adapter_unavailable
+- badge is always visible
+- running output may promote out of inline comfort based on heuristic thresholds
+- `blocked` is a card-level state entered from `running` and returned to `running` on unblock
+- `disconnected` and `restoring` are agent-session states and surface as card-level `blocked` with `blocked_reason_code`
+- simple read/grep/glob results remain inline text, not cards
+- Stop becomes disabled when a run completes and no next message is queued
+- Edit restores content into composer and discards later history/work
+- Resend retries the most recent message and discards later history/work
+- blocked responses must be machine-actionable through `allowed_action_ids[]`
+- error naming aligns to `adapter_unavailable`
 
-ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/assistant-chat-design.md#13.2 Web activity and provenance, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md
-
-Rules:
-- provider fallback, cache posture, freshness, and health remain visible instead of collapsing into one summary string
-- batch cards preserve parent/child audit relationship
-- retry creates a new card instead of rewriting history
-- headless/HITL-unavailable uses status unavailable
-- blocked recovery consumes allowed_action_ids[] rather than GUI-local fields
-- Keep this widget pointed at Plans/storage-plan.md#4.4 Activity transparency payloads, Plans/Contracts_V0.md#3.4 Tool-specific payload extensions, and Plans/assistant-chat-design.md#13.2 Web activity and provenance
 ### 15.4 Planning panel widget (sticky sidebar)
-The planning panel is a real sticky execution tracker consuming `todo_id`, `title`, `summary`, `status`, `dependencies[]`, `owner_hint`, and `verification_hint`.
 
-It preserves revision/history views, focused-progress behavior, and plan-level lifecycle `draft`, `approved`, `executing`, `completed`, `blocked`, `superseded`.
+This section consumes the linked owner contract and stays aligned with it.
 
-Structural edits = adding / removing / reordering TODO items.
-Structural edits are gated once the plan is approved and execution has started; status and note updates remain available.
+ContractRef: Plans/assistant-chat-design.md#8.1 Canonical planning model
 
-ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md
+Core rules:
+- Plan and Deep Plan must both project to a normalized TODO list, with a named Q&A loop before Deep Plan execution and a locked TODO item schema/status set.
+
+Fields:
+- Q&A loop
+- todo_id
+- title
+- summary
+- status
+- dependencies[]
+- owner_hint
+- verification_hint
+- pending | in_progress | completed | blocked | skipped
+- superseded
+
+Labels and values:
+- Plan
+- Deep Plan
+- chat.plan_todo_updated
+
 ### 15.5 Question card widget
-Question cards render the shared `QuestionItem` contract and the normalized request envelope `mode: "single_question" | "questionnaire"` with `questions: Array<QuestionItem>`.
 
-Behavior rules:
-- question cards may include a visual
-- options remain visible while the question is open
-- users can answer out of order and revise before submit
-- PM-managed drafts auto-save until submit and restore on resume
-- dismissing pauses conversation until resume
-- outcomes remain `answered`, `submitted`, `dismissed`, `timed_out`, and `unavailable`
-- headless/HITL-unavailable uses `status: "unavailable"`
+This section consumes the linked owner contract and stays aligned with it.
 
-ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Tools.md, ContractName:Plans/storage-plan.md
+Core rules:
+- Question flows are locked to PM-managed draft state, required visible options plus a freeform path, resumable multi-question drafts, and explicit dismissed or paused behavior instead of fabricated answers.
+
+Labels and values:
+- questionnaire
+- single_question
+- unavailable
+- dismissed
 
 Rules:
-- status: "answered" | "submitted" | "dismissed" | "timed_out" | "unavailable"
+- NOT via `sendPrompt`
 - Something else
-- headless/HITL-unavailable uses status unavailable
-- Keep this widget pointed at Plans/assistant-chat-design.md#7.4 Question card and questionnaire system and Plans/storage-plan.md#4.2 Question and clarification state
+- Always-visible options
+- Drafts auto-save until submit
+- Exiting/dismissing does NOT auto-submit
+- Thread-scoped draft state
+- status: 'dismissed'
+- draft
+- drafts auto-save continuously
+- required questions block final submit
+- question cards may include a visual
+- users can answer out of order and revise before submit
+- dismissing pauses conversation until resume
+
 ### 15.6 Mermaid and inline visualizer widgets
-Mermaid and inline visualizer widgets remain separate widgets.
 
-Mermaid widget secondary actions:
-- `Copy source`
-- `Open in editor`
-- `Open detached preview`
-- `Export diagram`
+This section defines the canonical contract for this surface.
 
-Inline visualizer secondary actions:
-- `sendPrompt(text)`
-- `openLink(url)`
-- `Copy source`
-- `Open in editor`
-- `Open detached preview`
+ContractRef: Plans/assistant-chat-design.md#28.2 Inline visualizer bridge
 
-Sandbox and bridge rules:
-- the inline visualizer uses the PM-managed bridge, theme-token injection, auto-resize reporting, and visible fallback described by `Plans/assistant-chat-design.md#28.2 Inline visualizer bridge`
-- PM must NOT execute arbitrary HTML or arbitrary host script from model output
-- only allowlisted tags/attributes render inside the visualizer sandbox
-- visible fallback and error state remain PM-owned display state rather than arbitrary client state
-
-- allowlisted tags/attributes only
-
-ContractRef: ContractName:Plans/assistant-chat-design.md#28.2 Inline visualizer bridge, ContractName:Plans/FinalGUISpec.md
+Core rules:
+- Mermaid and inline visualizer behavior is locked to native card rendering, explicit error and fallback disclosure, sandboxing without arbitrary HTML execution, bounded persistence, injected theme tokens, and the exact inline visualizer bridge cross-reference target.
 
 Rules:
-- Mermaid and inline visualizer remain separate widgets
-- bridge actions are explicit typed callbacks
-- Keep widget behavior aligned with Plans/assistant-chat-design.md#28.2 Inline visualizer bridge
+- Copy source
+- Open in editor
+- Open detached preview
+- Export diagram
+- sendPrompt(text)
+- openLink(url)
+
 ### 15.7 Permission approval card widget
-Behavior rules:
-- canonical blocked classes include `permission_denied`, `network_error`, `adapter_unavailable`, and `timeout`
-- question default `allow` only when HITL is available
-- `read_only` and `plan` keep read-only web tools ask-gated rather than silently denying them
-- websearch summary shows tool name + query preview
-- webfetch/webextract summary shows tool name + target host/URL
-- webresearch summary shows tool name + task summary + estimated source count when available
-- webcrawl/webmap summary shows tool name + root URL + page/depth caps
-- Approving webcrawl For Session auto-approves crawl/map/extract/fetch for the same host pattern
-- Approving webresearch For Session does NOT create broad allow for unrelated tools
-- MVP uses wildcard session approval for search/research; advanced query-pattern support is future only
-- LSP consumers preserve: Position-based operations use `path` + `position`. `rename` requires `path` + `position` + `newName`.
 
-ContractRef: ContractName:Plans/Permissions_System.md#3.4A Web-operation permission-key derivation, ContractName:Plans/LSPSupport.md, ContractName:Plans/assistant-chat-design.md
+This section consumes the linked owner contract and stays aligned with it.
 
-Rules:
+ContractRef: Plans/FinalGUISpec.md#15.7 Permission approval card widget
+
+Core rules:
+- Web tool permission keys, approval-card summary templates, session-approval semantics, and their exact approval-card cross-reference target remain canonical in Permissions_System and must not be re-invented from thin tool descriptions or stale Ask UI links.
+- Permission canon must preserve the four-tier approval ladder, question default allow only when HITL is available, keep the six web tools ask-gated in read_only and plan presets, and carry the blocked/unavailable payload fields through to permission-card consumers.
+
+Permission rules:
 - deny
 - once
 - for session
@@ -3002,9 +3078,22 @@ Rules:
 - blocked_reason_code
 - allowed_action_ids[]
 - status: "unavailable"
-- canonical blocked classes remain permission_denied, network_error, adapter_unavailable, and timeout
-- headless or HITL-unavailable renders as unavailable state rather than GUI-only recovery text
-- question default allow only when HITL is available
-- read_only and plan keep read-only web tools ask-gated
-- Approving webresearch For Session does not create a broad allow for unrelated tools
-- Keep this card pointed at Plans/Permissions_System.md#3.4A Web-operation permission-key derivation and Plans/storage-plan.md#4.4 Activity transparency payloads
+
+Rules:
+- websearch summary shows tool name + query preview
+- webfetch/webextract summary shows tool name + target host/URL
+- webresearch summary shows tool name + task summary + estimated source count when available
+- webcrawl/webmap summary shows tool name + root URL + page/depth caps
+- Approving webcrawl For Session auto-approves crawl/map/extract/fetch for the same host pattern
+- Approving webresearch For Session does NOT create broad allow for unrelated tools
+- MVP uses wildcard session approval for search/research; advanced query-pattern support is future only
+- question default `allow` only when HITL is available
+- read_only
+- plan
+- websearch
+- webfetch
+- webextract
+- webresearch
+- webcrawl
+- webmap
+

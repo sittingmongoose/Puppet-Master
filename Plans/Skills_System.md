@@ -150,33 +150,52 @@ The skill registry remains the discovery and validation source for available ski
 `default_skill_refs` are resolved against the canonical registry during prompt/context assembly. They do not imply provider-native skill file installation at runtime.
 
 ### 4.3 `skill` tool
-The canonical runtime surface for skill invocation is shared with `Plans/Tools.md`.
 
-ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/FinalGUISpec.md
+This section defines the canonical contract for this surface.
 
-#### Input
+Core rules:
+- Agent behavior management is locked under Agent Config, with Skills as a tab inside it, while Settings retains system-level dependencies and rules.
+- Skills management is locked to explicit catalog and import UX, fixed source and readiness vocabularies, store-vs-management separation, and visible source/readiness badges including pm_enhanced.
+- Skill discovery and invocation are locked to three paths—GUI panel, /skill, and natural language—without an MVP subcommand family, all converging on the same invoke_skill contract.
+- Skill runtime and permission behavior is locked to a structured skill tool envelope, discovery versus auto-invoke readiness rules, dynamic runtime tool descriptions, FileSafe-constrained resource access, and Agent Config ownership.
 
-`skill_id`, `arguments?`, `context?`
+Fields:
+- /skill <skill_name> [args]
+- /skill with no args lists available skills
+- invoke_skill
+- No subcommand family for MVP
+- Skills panel
+- Natural language
+- skill_id
+- arguments?
+- context?
+- content
+- source_type
+- resource_base_dir?
+- resource_entries_sample?
+- metadata?
+- ready_with_warnings
 
-#### Output envelope
-
-`skill_id`, `title`, `content`, `source_type`, `resource_base_dir?`, `resource_entries_sample?`, `metadata?`
-
-Runtime rules:
-- discovery lists `ready` and `ready_with_warnings`
-- auto-invoke is limited to `ready`
-- FileSafe-constrained resource disclosure remains explicit; skills do not expose raw filesystem listings outside that boundary
-Discovery/invocation convergence:
-- `/skill <skill_name> [args]`, the Skills panel, and Natural language all converge on `invoke_skill`.
-- `/skill with no args lists available skills` or opens discovery/help.
-- No subcommand family for MVP.
-
-ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/assistant-chat-design.md
+Labels and values:
+- /skill
 
 Rules:
-- GUI panel, /skill, and Natural language converge on the same runtime contract
-- ready_with_warnings remains discoverable but is not auto-invoked
-- Keep this skill runtime section consuming Plans/UI_Command_Catalog.md#2.7 Chat slash commands (reserved) for slash dispatch identity
+- Agent Config
+- Skills
+- Personas
+- Agent Config owns: agent-behavior artifacts (personas, skills)
+- Settings keeps: system-level dependencies (authentication, models, permissions, rules, health)
+- Agent Config is NOT replacement for Settings
+- drag-and-drop skill folders/files
+- file-browser import
+- No remote URL/git import in v1
+- bundled
+- catalog_installed
+- manual_import
+- project_local
+- global_local
+- pm_enhanced
+
 ### 4.4 Canonical MVP delivery path
 
 MVP skill delivery uses one on-disk format: a single `SKILL.md` per skill.
