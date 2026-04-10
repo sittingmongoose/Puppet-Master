@@ -4,22 +4,26 @@
 - `w-20260312-203855`
 
 ## Mode
-- `research`
+- `audit`
 
 ## Topic / Scope
-- Orchestrator rewrite planning research.
-- Topic came from the user explicitly: "I want to talk about Orchestrator."
+- Orchestrator rewrite transfer-fidelity audit, legacy-canon cleanup readiness, and reconciliation prep.
+- Scope now includes:
+  - ledger-to-plan transfer fidelity
+  - detailed missed-transfer inventory
+  - legacy canon / same-file supersession risk
+  - readiness for canon-collapse reconciliation
 
 ## Objective
-- Create a durable execution-memory ledger before deeper Orchestrator research or audit work starts.
-- Preserve the currently known topic so later research can accumulate findings without losing scope continuity.
-- Continue collaborative Orchestrator research in-thread; do not treat the work as ready for reconciliation yet.
+- Preserve durable execution memory for the completed audit and late-session handoffs.
+- Keep the missed-transfer findings, legacy-canon hotspots, and reconciliation posture recoverable without relying on chat history.
+- Support owner-first canon-collapse reconciliation from a stable pre-packetize work item.
 
 ## Constraints / Non-Goals
 - Ledger is execution memory only; it is not canonical and must not be cited in planning docs.
-- Do not write planning-doc changes during this initialization step.
-- Current chat context establishes the topic, but no targeted repo reading or design research has been done yet for Orchestrator in this work item.
-- Keep future repo reading targeted first; avoid a broad sweep unless the discussion clearly requires it.
+- Do not write planning-doc changes during work-item stewardship.
+- Do not treat this file as packet content, reconciliation text, or canonical cleanup output.
+- Preserve established work-item status and run metadata while backfilling mode-contract durability files.
 
 ## Key Facts and Findings
 - Orchestrator page shell direction clarified by user:
@@ -1101,20 +1105,27 @@
     - precedence between provider/account/execution-role rules
 
 ## Packetization Notes
-- No packetization work has been done.
-- `run_id` remains `null`.
-- `next_run_seq` remains `1` until a later packetize step creates a run.
+- Work item is currently `ready_for_reconciliation`, not ready for light packetization.
+- Packetization has not superseded the audit; the durable next phase is owner-first canon-collapse reconciliation.
+- This work item was backfilled on 2026-04-10 with `mode_rules.md` and `mode_status.md` so future long sessions can reload durable operating context without depending on prior chat history.
 
 ## Do-Not-Forget Details
 - Later GUI help/tooltip generation will need:
   - stable canonical terminology
   - clear object vs state vs action distinctions
   - enough explicit “why this exists” language in the planning model to support Simple/Expert/ELI5 derivation
-- Reuse this `work_id` for continued Orchestrator research in this chat unless scope changes into a separate work item.
-- Keep `meta.json` status as `active` during research.
+- Reuse this `work_id` for continued Orchestrator audit / reconciliation-prep work unless scope changes into a separate work item.
+- Do not downgrade `meta.json` from `ready_for_reconciliation` during stewardship backfills.
 - Update this ledger after meaningful discovery clusters, design decisions, or contradictions are found.
 - Track requested vs effective runtime identity if persona/provider/model fallback becomes part of the Orchestrator discussion.
 - Watch for event-name drift, local shadow schemas, and UI-layer redefinitions of runtime semantics.
+- Treat the highest-risk same-file supersession hotspots as canon-collapse targets:
+  - `Plans/orchestrator-subagent-integration.md`
+  - `Plans/human-in-the-loop.md`
+  - `Plans/usage-feature.md`
+  - `Plans/FinalGUISpec.md`
+  - `Plans/Contracts_V0.md`
+  - `Plans/storage-plan.md`
 
 ## Gemini Sweep Findings
 
