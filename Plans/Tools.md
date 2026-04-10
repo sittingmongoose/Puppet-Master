@@ -546,6 +546,7 @@ Fields:
 - todoread returns current normalized list for active thread/run
 - Remove `todowrite` from blanket `ask/plan` mode auto-deny
 - editing Deep Plan markdown (the rich artifact) MUST update the normalized TODO projection BEFORE execution begins
+ContractRef: ContractName:Plans/assistant-chat-design.md#8.1 Canonical planning model, ContractName:Plans/storage-plan.md#4.3 Plan and TODO state, ContractName:Plans/Contracts_V0.md#1.1 Assistant worktree seglog events
 
 Labels and values:
 - Plan
@@ -1426,6 +1427,7 @@ Fields:
 - changeTracking.checked_at_utc
 - Response transformation
 - Adapter MUST flatten into PM's unified `results` array
+ContractRef: ContractName:Plans/Contracts_V0.md#3.4 Tool-specific payload extensions, ContractName:Plans/storage-plan.md#4.4 Activity transparency payloads
 - tagging each item with `source_type`
 - Merge order: web results first, then news, then images
 
@@ -1577,6 +1579,7 @@ Labels and values:
 
 Rules:
 - PM MUST NOT silently switch between self-hosted Firecrawl and hosted/cloud Firecrawl
+ContractRef: ContractName:Plans/FinalGUISpec.md#15.7 Permission approval card widget, ContractName:Plans/Contracts_V0.md#3.4 Tool-specific payload extensions, ContractName:Plans/storage-plan.md#4.4 Activity transparency payloads, ContractName:Plans/Contracts_V0.md#3.4A Web error taxonomy and applicability
 - no silent switch between self-hosted Firecrawl and hosted/cloud Firecrawl
 - deployment-mode disclosure remains visible
 - self-hosted Firecrawl does not use hosted credit billing
@@ -1748,6 +1751,7 @@ Rules:
 - "read this URL" → `webfetch`
 - "research topic" → `webresearch`
 - Reading intents MUST resolve to `webfetch`, not `websearch`
+ContractRef: ContractName:Plans/storage-plan.md#4.4 Activity transparency payloads, ContractName:Plans/Contracts_V0.md#3.4 Tool-specific payload extensions, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md#3.18 Built-in Browser and Click-to-Context
 - chat may shortlist with search but must read chosen pages before citing them as final evidence
 - site/page reading is not search
 - dispatcher parity applies to slash and NL paths

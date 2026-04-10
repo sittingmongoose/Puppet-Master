@@ -99,16 +99,17 @@ Flow rules:
 This section defines the canonical contract for this surface.
 
 Core rules:
-- MCP owner canon must preserve the exact auth and effective-state enums, canonical naming, and credential binding or invalidation behavior.
+- The GUI-facing MCP owner contract preserves the auth-state and effective-availability enums used by downstream GUI consumers.
 
 Fields:
 - authenticated | expired | not_authenticated
 - connected | disabled | needs_auth | needs_client_registration | failed
-- LoggedIn | LoggedOut | AuthExpired | AuthFailed
-- {server_slug}_{tool_name}
 
 Labels and values:
-- requested availability
-- effective availability
-- credential binding
+- effective tool availability
+- GUI surfacing
 
+Rules:
+- GUI summary surfaces reference the MCP SSOT instead of re-owning connection-state vocabulary
+- Plans/FinalGUISpec.md#7.4.4 Settings (Unified) panel specification
+- Plans/newtools.md#8.2 GUI/settings alignment

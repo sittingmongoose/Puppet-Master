@@ -1,7 +1,7 @@
 {
-  "schema_id": "pm.bucket_plan.v2",
+  "schema_id": "pm.bucket_plan.v3",
   "work_id": "w-20260329-235630",
-  "created_at_utc": "2026-04-09T17:41:24.901Z",
+  "created_at_utc": "2026-04-09T20:33:55.166Z",
   "topic_or_scope": "Firecrawl Gap Analysis + Lost-Spec Recovery",
   "must_change": [
     {
@@ -1681,6 +1681,28 @@
       "stale_residue_to_retire": [],
       "status": "active",
       "bucket_reason": "active owner section in collected impact set; packet planning may target this SSOT section directly"
+    },
+    {
+      "path": "Plans/MCP_Integration.md",
+      "heading": "## 7. Effective tool availability and GUI surfacing",
+      "doc_role": "owner",
+      "section_role": "owner_section",
+      "source_reasons": [
+        "obl-065: MCP owner canon must preserve the exact auth and effective-state enums, canonical naming, credential binding or invalidation behavior, and the GUI-facing SSOT rewrite anchors for downstream consumers.",
+        "LF-001: this owner section still has a live cross-reference stale gap because the exact GUI consumer rewrites to FinalGUISpec and newtools are not yet explicit here."
+      ],
+      "exact_items_that_must_survive": [
+        "connected | disabled | needs_auth | needs_client_registration | failed",
+        "authenticated | expired | not_authenticated",
+        "effective tool availability",
+        "GUI surfacing",
+        "GUI summary surfaces reference the MCP SSOT instead of re-owning connection-state vocabulary",
+        "Plans/FinalGUISpec.md#7.4.4 Settings (Unified) panel specification",
+        "Plans/newtools.md#8.2 GUI/settings alignment"
+      ],
+      "stale_residue_to_retire": [],
+      "status": "active",
+      "bucket_reason": "active owner section in collected impact set; packet planning may target this SSOT section directly"
     }
   ],
   "must_reconcile": [
@@ -2924,27 +2946,6 @@
       "bucket_reason": "verify-only section in collected impact set; excluded from packet mutation flow and retained for consistency checks only"
     },
     {
-      "path": "Plans/MCP_Integration.md",
-      "heading": "## 7. Effective tool availability and GUI surfacing",
-      "doc_role": "owner",
-      "section_role": "owner_section",
-      "source_reasons": [
-        "obl-065: MCP owner canon must preserve the exact auth and effective-state enums, canonical naming, and credential binding or invalidation behavior."
-      ],
-      "exact_items_that_must_survive": [
-        "connected | disabled | needs_auth | needs_client_registration | failed",
-        "authenticated | expired | not_authenticated",
-        "effective tool availability",
-        "GUI surfacing",
-        "GUI summary surfaces reference the MCP SSOT instead of re-owning connection-state vocabulary",
-        "Plans/FinalGUISpec.md#7.4.4 Settings (Unified) panel specification",
-        "Plans/newtools.md#8.2 GUI/settings alignment"
-      ],
-      "stale_residue_to_retire": [],
-      "status": "verify_only",
-      "bucket_reason": "verify-only section in collected impact set; excluded from packet mutation flow and retained for consistency checks only"
-    },
-    {
       "path": "Plans/Tools.md",
       "heading": "### 10.2 Endpoint inventory",
       "doc_role": "owner",
@@ -2973,39 +2974,17 @@
       "bucket_reason": "already-resolved section in collected impact set; excluded from packet mutation flow and retained for consistency checks only"
     }
   ],
-  "missing_coverage_warnings": [],
-  "derived_regen_only_checks": [
+  "missing_coverage_warnings": [
     {
-      "fidelity_id": "LF-001",
-      "where": "Plans/assistant-chat-design.md#5.1 Reserved built-ins",
-      "required_operation": "replace_section",
-      "packet_regeneration_needed": "no",
-      "stale_same_file_canon_must_be_retired": "yes",
-      "owner_doc_correction_required_before_consumer_cleanup": "no"
-    },
-    {
-      "fidelity_id": "LF-002",
-      "where": "Plans/Tools.md#10.7 Audit, error, and self-hosted rules",
-      "required_operation": "replace_section",
-      "packet_regeneration_needed": "no",
-      "stale_same_file_canon_must_be_retired": "no",
-      "owner_doc_correction_required_before_consumer_cleanup": "no"
-    },
-    {
-      "fidelity_id": "LF-003",
-      "where": "Plans/Tools.md#14. Web content caching layer",
-      "required_operation": "replace_section",
-      "packet_regeneration_needed": "no",
-      "stale_same_file_canon_must_be_retired": "no",
-      "owner_doc_correction_required_before_consumer_cleanup": "no"
-    },
-    {
-      "fidelity_id": "LF-004",
-      "where": "Plans/storage-plan.md#Long-running progress_event payload",
-      "required_operation": "replace_section",
-      "packet_regeneration_needed": "no",
-      "stale_same_file_canon_must_be_retired": "no",
-      "owner_doc_correction_required_before_consumer_cleanup": "yes"
+      "warning_type": "recovery_plan_out_of_sync",
+      "detail": "fidelity_recovery_plan.txt has no entry matching one or more live unresolved findings by exact `where`; bucket derivation ignored stale recovery-plan IDs and used coverage_collection.json as the packet-planning source of truth.",
+      "live_findings_without_recovery_entry": [
+        {
+          "fidelity_id": "LF-001",
+          "where": "Plans/MCP_Integration.md#7. Effective tool availability and GUI surfacing"
+        }
+      ]
     }
-  ]
+  ],
+  "derived_regen_only_checks": []
 }
