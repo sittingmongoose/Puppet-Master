@@ -507,7 +507,7 @@ Rules:
 - "read this URL" → `webfetch`
 - "research topic" → `webresearch`
 - Reading intents MUST resolve to `webfetch`, not `websearch`
-ContractRef: ContractName:Plans/Commands_System.md#7. Reserved built-in slash commands, ContractName:Plans/assistant-chat-design.md#5.2 `/web` and `/skill`
+ContractRef: ContractName:Plans/Commands_System.md#7. Reserved built-in slash commands, ContractName:Plans/assistant-chat-design.md#5.2 `/web` and `/skill`, ContractName:Plans/Tools.md#12. Web tool routing algorithm
 - bare /web shows help/autocomplete only
 - do not flatten /web into separate slash families
 - subcommand is required for execution

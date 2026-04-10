@@ -287,10 +287,9 @@ Fields:
 - cancelled: true
 - Response transformation
 - Adapter MUST flatten into PM's unified `results` array
+ContractRef: ContractName:Plans/Tools.md#10.7 Audit, error, and self-hosted rules, ContractName:Plans/storage-plan.md#4.4 Activity transparency payloads
 - tagging each item with `source_type`
 - Merge order: web results first, then news, then images
-
-ContractRef: ContractName:Plans/Tools.md#10.7 Audit, error, and self-hosted rules, ContractName:Plans/storage-plan.md#4.4 Activity transparency payloads
 
 Labels and values:
 - Firecrawl

@@ -107,6 +107,7 @@ Rules:
 - "read this URL" → `webfetch`
 - "research topic" → `webresearch`
 - Reading intents MUST resolve to `webfetch`, not `websearch`
+ContractRef: ContractName:Plans/Tools.md#12. Web tool routing algorithm, ContractName:Plans/UI_Command_Catalog.md#2.7 Chat slash commands (reserved)
 - site/page reading is not search
 - dispatcher parity applies to slash and NL paths
 - command tables and routing docs must mirror the same mappings

@@ -151,6 +151,7 @@ Fields:
 - todoread returns current normalized list for active thread/run
 - Remove `todowrite` from blanket `ask/plan` mode auto-deny
 - editing Deep Plan markdown (the rich artifact) MUST update the normalized TODO projection BEFORE execution begins
+ContractRef: ContractName:Plans/assistant-chat-design.md#8.1 Canonical planning model, ContractName:Plans/storage-plan.md#4.3 Plan and TODO state, ContractName:Plans/Contracts_V0.md#1.1 Assistant worktree seglog events
 
 Labels and values:
 - Plan

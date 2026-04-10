@@ -282,9 +282,6 @@ The approval summaries are rendered by `Plans/FinalGUISpec.md#15.7 Permission ap
 
 Rules:
 - URL-derived web keys normalize to registrable domain
-- summary templates are part of permission canon, not GUI-local prose
-- For Session approval for webcrawl expands to crawl/map/extract/fetch on the same host pattern
-- search/research use wildcard session approval only in MVP
 ## 4. Special guards
 
 <a id="SPECIAL-GUARDS"></a>
@@ -395,6 +392,7 @@ Fields:
 - todoread returns current normalized list for active thread/run
 - Remove `todowrite` from blanket `ask/plan` mode auto-deny
 - editing Deep Plan markdown (the rich artifact) MUST update the normalized TODO projection BEFORE execution begins
+ContractRef: ContractName:Plans/assistant-chat-design.md#8.1 Canonical planning model, ContractName:Plans/storage-plan.md#4.3 Plan and TODO state, ContractName:Plans/Contracts_V0.md#1.1 Assistant worktree seglog events
 
 Permission rules:
 - deny
@@ -444,6 +442,7 @@ Fields:
 - todoread returns current normalized list for active thread/run
 - Remove `todowrite` from blanket `ask/plan` mode auto-deny
 - editing Deep Plan markdown (the rich artifact) MUST update the normalized TODO projection BEFORE execution begins
+ContractRef: ContractName:Plans/assistant-chat-design.md#8.1 Canonical planning model, ContractName:Plans/storage-plan.md#4.3 Plan and TODO state, ContractName:Plans/Contracts_V0.md#1.1 Assistant worktree seglog events
 
 Permission rules:
 - deny

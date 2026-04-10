@@ -45,6 +45,7 @@ Rules:
 - "read this URL" → `webfetch`
 - "research topic" → `webresearch`
 - Reading intents MUST resolve to `webfetch`, not `websearch`
+ContractRef: ContractName:Plans/storage-plan.md#4.4 Activity transparency payloads, ContractName:Plans/Contracts_V0.md#3.4 Tool-specific payload extensions, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md#3.18 Built-in Browser and Click-to-Context
 - chat may shortlist with search but must read chosen pages before citing them as final evidence
 - site/page reading is not search
 - dispatcher parity applies to slash and NL paths

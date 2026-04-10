@@ -211,6 +211,7 @@ Rules:
 - cost-aware selection
 - static priority alone is insufficient
 - PM MUST NOT silently switch between self-hosted Firecrawl and hosted/cloud Firecrawl
+ContractRef: ContractName:Plans/Tools.md#10.1 Provider configuration, ContractName:Plans/Tools.md#10.7 Audit, error, and self-hosted rules, ContractName:Plans/MCP_Integration.md#7. Effective tool availability and GUI surfacing
 - no silent switch between self-hosted Firecrawl and hosted/cloud Firecrawl
 - deployment-mode disclosure remains visible
 - self-hosted Firecrawl does not use hosted credit billing

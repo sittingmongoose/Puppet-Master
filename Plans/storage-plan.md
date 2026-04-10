@@ -752,6 +752,7 @@ Fields:
 - todoread returns current normalized list for active thread/run
 - Remove `todowrite` from blanket `ask/plan` mode auto-deny
 - editing Deep Plan markdown (the rich artifact) MUST update the normalized TODO projection BEFORE execution begins
+ContractRef: ContractName:Plans/assistant-chat-design.md#8.1 Canonical planning model, ContractName:Plans/storage-plan.md#4.3 Plan and TODO state, ContractName:Plans/Contracts_V0.md#1.1 Assistant worktree seglog events
 
 Labels and values:
 - Plan
@@ -817,6 +818,7 @@ Rules:
 - explicit out-of-scope retirement if `changeTracking` is not MVP
 - no silent disappearance of the capability
 - PM MUST NOT silently switch between self-hosted Firecrawl and hosted/cloud Firecrawl
+ContractRef: ContractName:Plans/Contracts_V0.md#3.4A Web error taxonomy and applicability, ContractName:Plans/Contracts_V0.md#3.4 Tool-specific payload extensions, ContractName:Plans/FinalGUISpec.md#15.3 Web and diff operation card widget
 - no silent switch between self-hosted Firecrawl and hosted/cloud Firecrawl
 - deployment-mode disclosure remains visible
 - self-hosted Firecrawl does not use hosted credit billing

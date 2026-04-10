@@ -101,6 +101,7 @@ Fields:
 - changeTracking.checked_at_utc
 - Response transformation
 - Adapter MUST flatten into PM's unified `results` array
+ContractRef: ContractName:Plans/Contracts_V0.md#3.4 Tool-specific payload extensions, ContractName:Plans/storage-plan.md#4.4 Activity transparency payloads
 - tagging each item with `source_type`
 - Merge order: web results first, then news, then images
 
@@ -252,6 +253,7 @@ Labels and values:
 
 Rules:
 - PM MUST NOT silently switch between self-hosted Firecrawl and hosted/cloud Firecrawl
+ContractRef: ContractName:Plans/FinalGUISpec.md#15.7 Permission approval card widget, ContractName:Plans/Contracts_V0.md#3.4 Tool-specific payload extensions, ContractName:Plans/storage-plan.md#4.4 Activity transparency payloads, ContractName:Plans/Contracts_V0.md#3.4A Web error taxonomy and applicability
 - no silent switch between self-hosted Firecrawl and hosted/cloud Firecrawl
 - deployment-mode disclosure remains visible
 - self-hosted Firecrawl does not use hosted credit billing
