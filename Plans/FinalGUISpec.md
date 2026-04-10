@@ -827,6 +827,7 @@ Settings > Storage includes a global **Remote Cache Administration** subsection 
 ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/storage-plan.md, ContractName:Plans/UI_Command_Catalog.md
 
 #### 7.4.4 Settings (Unified) panel specification
+
 This section consumes the linked owner contract and stays aligned with it.
 
 Core rules:
@@ -933,6 +934,7 @@ This subsection owns:
 - runtime-output routing preferences for Problems, Output, Ports, and Debug Console
 
 #### 7.4.7 Agent-Config panel specification
+
 This section defines the canonical contract for this surface.
 
 Core rules:
@@ -1481,6 +1483,7 @@ Read-only text, code blocks, logs, and labels must remain selectable and copyabl
 Clipboard actions should provide lightweight success feedback for non-obvious values and must never copy redacted or hidden-secret placeholders as though they were the real value.
 
 ### 10.10 LSP-informed affordances
+
 This section consumes the linked owner contract and stays aligned with it.
 
 Core rules:
@@ -2071,39 +2074,38 @@ ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/GitHub_Integr
 No features in this specification are deferred.
 
 ## Appendix A: Cross-References
+
 Cross-References inventory.
 
 Reference rows must point at live owner documents or live section anchors, not nonexistent section numbers.
 
-
 | Plan Document | Sections Incorporated |
-|--------------|----------------------|
-| `Plans/assistant-chat-design.md` | Chat panel (§7.16), modes, threads, steer/queue submission, subagent inline blocks, commands, activity transparency, plan panel, context usage, HITL-to-chat handoff |
-| `Plans/FileManager.md` | File Manager (§7.17), File Editor (§7.18), embedded document pane shared-buffer contract (§7.19.1), click-to-open, @ mention, preview, external drag-and-drop, HTML preview/hot reload, click-to-context, open-file contract, shared buffer model, editor diff view, **SSH remote editing (§7.4.5 and §7.18)**, **run/debug configurations (§7.4.6 and §7.20.2)**, **terminal/browser tab management (§7.20.1)** |
-| `Plans/usage-feature.md` | Usage page (§7.8), per-thread usage, ledger, analytics, 5h/7d visibility, alerts |
-| `Plans/human-in-the-loop.md` | HITL settings (§7.4 Settings/HITL tab), HITL approval UI (§10.8) |
-| `Plans/chain-wizard-flexibility.md` | Wizard redesign (section 7.5), intent selection, intent-specific fields, file upload limits, Builder opener + turn semantics, checklist status UI, findings preview, single final approval gate, tri-location chat pointers, embedded document pane + agent activity separation, pause/cancel/resume controls, recovery state, adaptive interview phases |
-| `Plans/storage-plan.md` | Persistence (§15), seglog projections, redb schema, Tantivy |
-| `Plans/agent-rules-context.md` | Settings/Rules tab (§7.4), application + project rules |
-| `Plans/Glossary.md` | Product name "Puppet Master" throughout |
-| `Plans/newfeatures.md` | Bottom panel/terminal (§7.20), thinking display, streaming, keyboard shortcuts, stream event visualization, duration timers, background runs, restore points, config migration dialog, rate-limit banner, version update banner, **instant project switch (§3.4)**, **sound effects (§10.13)**, **hot reload controls (§7.20 Ports)**, **instructions editor (§7.18)**, **language auto-detection (§7.3)** |
-| `Plans/interview-subagent-integration.md` | Interview config tab (§7.4), agent activity (§7.19), embedded document pane (§7.19.1), findings summary preview, single final approval gate, multi-pass review |
-| `Plans/orchestrator-subagent-integration.md` | Orchestrator (§7.1), orchestrator controls, node/package/lane/seam display |
-| `Plans/WorktreeGitImprovement.md` | Branching tab in Settings (§7.4), worktree recovery in Health tab |
-| `Plans/FileSafe.md` | Advanced tab in Settings (§7.4), command blocklist, write scope, security filter |
-| `Plans/MiscPlan.md` | Health tab "Clean workspace" button (§7.4), cleanup config in Advanced tab, Shortcuts tab (§7.4) |
-| `Plans/Skills_System.md` | Agent Config panel (§7.4.7) and slash/runtime boundary at `Plans/Skills_System.md#6.3 Slash and runtime boundary` |
-| `Plans/feature-list.md` | Master feature reference: chat modes (§7.16), thread management, slash commands (see `Plans/Commands_System.md#7. Reserved built-in slash commands` and `Plans/UI_Command_Catalog.md#2.7 Chat slash commands (reserved)`), ELI5/YOLO, attachments, Teach, context management (§9.6), editor detach (§7.18), **storage and cache admin UI (§7.4.3)**, **unified settings/search/import/export (§7.4.4)** |
-| `Plans/newtools.md` | MCP/settings alignment note and non-owning cited-search guidance; live provider/routing/billing canon stays in the owner docs. |
-
+| --- | --- |
+| `Plans/assistant-chat-design.md` | Chat panel, modes, threads, steer/queue submission, subagent inline blocks, commands, activity transparency, plan panel, context usage, and HITL-to-chat handoff. |
+| `Plans/FileManager.md` | File Manager, File Editor, embedded document pane shared-buffer contract, click-to-open, @ mention, preview, external drag-and-drop, HTML preview/hot reload, click-to-context, open-file contract, shared buffer model, editor diff view, SSH remote editing, run/debug configurations, and terminal/browser tab management. |
+| `Plans/usage-feature.md` | Usage page, per-thread usage, ledger, analytics, visibility windows, and alerts. |
+| `Plans/human-in-the-loop.md` | HITL settings, approval UI, and dashboard calls to action. |
+| `Plans/chain-wizard-flexibility.md` | Wizard redesign, intent selection, intent-specific fields, file upload limits, Builder opener and turn semantics, checklist status UI, findings preview, single final approval gate, tri-location chat pointers, embedded document pane separation, pause/cancel/resume controls, recovery state, and adaptive interview phases. |
+| `Plans/storage-plan.md` | Persistence, seglog projections, redb schema, and Tantivy. |
+| `Plans/agent-rules-context.md` | Application-level rules, project-level rules, and shared rules-pipeline context for orchestrator, interview, and Assistant. |
+| `Plans/Glossary.md` | Product name "Puppet Master" throughout. |
+| `Plans/newfeatures.md` | Bottom panel and terminal, thinking display, streaming, keyboard shortcuts, stream event visualization, duration timers, background runs, restore points, config migration dialog, rate-limit banner, version update banner, instant project switch, sound effects, hot reload controls, instructions editor, and language auto-detection. |
+| `Plans/interview-subagent-integration.md` | Interview config tab, agent activity, embedded document pane, findings summary preview, single final approval gate, and multi-pass review. |
+| `Plans/orchestrator-subagent-integration.md` | Orchestrator, orchestrator controls, and node/package/lane/seam display. |
+| `Plans/WorktreeGitImprovement.md` | Branching tab in Settings and worktree recovery in Health. |
+| `Plans/FileSafe.md` | Advanced tab in Settings, command blocklist, write scope, and security filter. |
+| `Plans/MiscPlan.md` | Health tab clean-workspace button, cleanup config in Advanced, and Shortcuts tab. |
+| `Plans/Skills_System.md` | Agent Config panel and slash/runtime boundary at `Plans/Skills_System.md#6.3 Slash and runtime boundary`. |
+| `Plans/feature-list.md` | Master feature reference for chat modes, thread management, slash commands, ELI5/YOLO, attachments, Teach, context management, editor detach, storage and cache admin UI, and unified settings/search/import/export. |
+| `Plans/newtools.md` | MCP/settings alignment note and non-owning cited-search guidance; live provider, routing, provenance, and billing canon stays in owner docs. |
 | `Plans/Commands_System.md` | Reserved built-in slash-command set for chat surfaces; see `Plans/Commands_System.md#7. Reserved built-in slash commands` for `/web` family behavior and deprecated aliases. |
 | `Plans/UI_Command_Catalog.md` | Terminal reveal identities and canonical `cmd.chat.web.*` command ids consumed by chat and command surfaces; see `Plans/UI_Command_Catalog.md#2.7 Chat slash commands (reserved)`. |
 | `Plans/Permissions_System.md` | Tool permission keys, approval ladder, blocked-recovery defaults, deterministic ask/plan behavior, and web-operation derivation at `Plans/Permissions_System.md#3.4A Web-operation permission-key derivation`. |
-| `Plans/MCP_Integration.md` | Requested/effective MCP availability at `Plans/MCP_Integration.md#2. Requested versus effective availability`; GUI surfacing at `Plans/MCP_Integration.md#7. Effective tool availability and GUI surfacing`; plus auth-state and connection-state enums, credential binding, and invalidation vocabulary. |
-| `Plans/Tools.md` | Tool permissions in Permissions tab (§7.4.9), tool permission keys, presets, central tool registry, canonical approval ladder, web-provider matrix, routing algorithm, Firecrawl integration, and batch-operation contracts; tool usage widget on Usage page (§7.8); tool approval dialog in Chat (§7.16) |
-| `Plans/LSPSupport.md` | LSP tab in Settings (§7.4.9), editor LSP features (§7.18: diagnostics, hover, completion, signature help, inlay hints, code actions, code lens, semantic highlighting, go-to-definition), **Chat Window LSP (§7.16: diagnostics in context, @ symbol with LSP, code-block hover/go-to-definition, Problems link)**, Problems tab (§7.20.2), status bar LSP indicator |
-| `Plans/rewrite-tie-in-memo.md` | Rewrite scope alignment; ensures GUI migration ties into broader rewrite plan |
-| `Plans/FinalGUISpec.md` (internal clipboard contract) | Clipboard migration requirements and verification map: SelectableText contract (§8.1), context-menu clipboard contract (§10.9, §10.9.1-§10.9.3), migration gate (§16.4) |
+| `Plans/MCP_Integration.md` | Requested versus effective MCP availability at `Plans/MCP_Integration.md#2. Requested versus effective availability`; GUI surfacing at `Plans/MCP_Integration.md#7. Effective tool availability and GUI surfacing`; plus auth-state and connection-state enums, credential binding, and invalidation vocabulary. |
+| `Plans/Tools.md` | Tool permissions in Permissions tab, tool permission keys, presets, central tool registry, canonical approval ladder, web-provider matrix, routing algorithm, Firecrawl integration, batch-operation contracts, tool usage widget on Usage page, and tool approval dialog in Chat. |
+| `Plans/LSPSupport.md` | LSP tab in Settings, editor LSP features, chat-window LSP affordances, Problems tab, and status-bar LSP indicator. |
+| `Plans/rewrite-tie-in-memo.md` | Rewrite scope alignment so GUI migration stays tied into the broader rewrite plan. |
+| `Plans/FinalGUISpec.md` | Internal clipboard contract, clipboard migration requirements, SelectableText contract, context-menu clipboard contract, and migration gate. |
 ## Appendix B: Locked Decisions Summary
 
 These decisions are final and must not be revisited during implementation:
@@ -2266,6 +2268,7 @@ The editor should be able to communicate states like:
 - `Direct/API providers: strongest support for exact runtime controls.`
 
 ### 19.4 Surface-level Persona controls
+
 This section consumes the linked owner contract and stays aligned with it.
 
 Core rules:
@@ -2811,6 +2814,7 @@ The promoted widget catalog mirrors the shared runtime contracts. Widget entries
 ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Tools.md, ContractName:Plans/storage-plan.md
 
 ### 15.1 Terminal operation card widget
+
 This section consumes the linked owner contract and stays aligned with it.
 
 Core rules:
@@ -2846,6 +2850,7 @@ Rules:
 - inline cards persist across thread reload and re-render from persisted metadata
 - search and diff do not stream progressively
 ### 15.2 Search result card widget
+
 This section consumes the linked owner contract and stays aligned with it.
 
 ContractRef: ContractName:Plans/storage-plan.md#4.4 Activity transparency payloads, ContractName:Plans/Contracts_V0.md#3.4 Tool-specific payload extensions, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md#3.18 Built-in Browser and Click-to-Context
@@ -2866,6 +2871,7 @@ Rules:
 - raw search snippets alone are not enough provenance for the final answer
 - chat may shortlist with search but must read chosen pages before citing them as final evidence
 ### 15.3 Web and diff operation card widget
+
 This section consumes the linked owner contract and stays aligned with it.
 
 Core rules:
@@ -2964,6 +2970,7 @@ Rules:
 - blocked responses must be machine-actionable through `allowed_action_ids[]`
 - error naming aligns to `adapter_unavailable`
 ### 15.4 Planning panel widget (sticky sidebar)
+
 This section consumes the linked owner contract and stays aligned with it.
 
 ContractRef: Plans/assistant-chat-design.md#8.1 Canonical planning model
@@ -2988,6 +2995,7 @@ Labels and values:
 - Deep Plan
 - chat.plan_todo_updated
 ### 15.5 Question card widget
+
 This section consumes the linked owner contract and stays aligned with it.
 
 Core rules:
@@ -3014,6 +3022,7 @@ Rules:
 - users can answer out of order and revise before submit
 - dismissing pauses conversation until resume
 ### 15.6 Mermaid and inline visualizer widgets
+
 This section defines the canonical contract for this surface.
 
 ContractRef: Plans/assistant-chat-design.md#28.2 Inline visualizer bridge
@@ -3026,9 +3035,12 @@ Rules:
 - Open in editor
 - Open detached preview
 - Export diagram
+- must NOT execute arbitrary HTML
+- allowlisted tags/attributes only
 - sendPrompt(text)
 - openLink(url)
 ### 15.7 Permission approval card widget
+
 This section consumes the linked owner contract and stays aligned with it.
 
 ContractRef: Plans/FinalGUISpec.md#15.7 Permission approval card widget

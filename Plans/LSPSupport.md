@@ -348,6 +348,7 @@ ContractRef: ContractName:Plans/LSPSupport.md, ContractName:Plans/FileManager.md
 ---
 
 ## 9. MVP LSP features (summary)
+
 This section defines the canonical contract for this surface.
 
 Core rules:

@@ -364,11 +364,19 @@ Browser, terminal, and dev-session commands share one shell/runtime interaction 
 ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/storage-plan.md
 
 #### Terminal session and layout commands
+
 This section defines the canonical contract for this surface.
 
 Core rules:
 - Terminal promotion and handoff are locked so interactive or long-running work binds to a stable terminal session while chat retains only bounded preview and audit ownership.
-- Terminal action canon must preserve the distinct terminal actions and give Rerun in Terminal owned command-table treatment rather than collapsing actions into one normalized target.
+- Terminal action canon must preserve the distinct terminal actions in owned command-table rows. Distinct terminal actions must keep owned command-table rows and do not collapse terminal actions into one normalized target.
+
+| Command ID | Payload | Domain event(s) | UI surface(s) |
+| --- | --- | --- | --- |
+| Open in Terminal | `terminal_session_id`; reveal existing session context | terminal session reveal/focus | command cards, terminal surfaces |
+| Show Terminal | `terminal_session_id`; focus the same live session already associated with the card | terminal session reveal/focus | command cards, terminal surfaces |
+| Rerun in Terminal | command replay payload plus terminal session launch context | new terminal launch; command replay | command cards, terminal surfaces |
+| Detach/Pop-Out | `terminal_session_id`; detach target | terminal detach/pop-out | command cards, terminal surfaces |
 
 Fields:
 - terminal_session_id
@@ -376,6 +384,10 @@ Fields:
 - Show Terminal
 - Rerun in Terminal
 - Detach/Pop-Out
+- Command ID
+- Payload
+- Domain event(s)
+- UI surface(s)
 
 Rules:
 - Shell owns interactive state; chat owns preview+audit
@@ -390,6 +402,8 @@ Rules:
 - after promotion, chat stops owning the full transcript
 - inline cards persist across thread reload and re-render from persisted metadata
 - search and diff do not stream progressively
+- distinct terminal actions must keep owned command-table rows
+- do not collapse terminal actions into one normalized target
 #### Dev-session commands
 | Command ID | Payload | Domain event(s) | UI surface(s) |
 |---|---|---|---|
@@ -452,6 +466,7 @@ Revert rules:
 ContractRef: ContractName:Plans/Crosswalk.md, ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md
 
 ### 2.7 Chat slash commands (reserved)
+
 This section consumes the linked owner contract and stays aligned with it.
 
 Core rules:

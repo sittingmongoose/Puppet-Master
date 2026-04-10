@@ -14,8 +14,7 @@
 
 - `Plans/*.md`
 - `Plans/.pipeline/research_packet.json`
-- run artifacts under `Plans/.pipeline/runs/**`
-- generated packet/run outputs, including `packet_shape_report.txt`, `ledger_fidelity_report.txt`, `fidelity_recovery_plan.txt`, `repair_scope.txt`, and `canonical_cleanup_plan.txt`
+- run artifacts under `Plans/.pipeline/runs/**` and other generated packet/run outputs, including packet shape, fidelity, and repair artifacts
 
 ## Reload Ritual
 
