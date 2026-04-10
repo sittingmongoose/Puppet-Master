@@ -42,7 +42,6 @@ Required rules:
 ### 7.3 Extensibility surface
 
 ### 7.4 Question card and questionnaire system
-
 This section defines the canonical contract for this surface.
 
 Core rules:

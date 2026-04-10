@@ -5,7 +5,6 @@ The promoted widget catalog mirrors the shared runtime contracts. Widget entries
 ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Tools.md, ContractName:Plans/storage-plan.md
 
 ### 15.1 Terminal operation card widget
-
 This section consumes the linked owner contract and stays aligned with it.
 
 Core rules:
@@ -41,7 +40,6 @@ Rules:
 - inline cards persist across thread reload and re-render from persisted metadata
 - search and diff do not stream progressively
 ### 15.2 Search result card widget
-
 This section consumes the linked owner contract and stays aligned with it.
 
 ContractRef: ContractName:Plans/storage-plan.md#4.4 Activity transparency payloads, ContractName:Plans/Contracts_V0.md#3.4 Tool-specific payload extensions, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md#3.18 Built-in Browser and Click-to-Context
@@ -62,7 +60,6 @@ Rules:
 - raw search snippets alone are not enough provenance for the final answer
 - chat may shortlist with search but must read chosen pages before citing them as final evidence
 ### 15.3 Web and diff operation card widget
-
 This section consumes the linked owner contract and stays aligned with it.
 
 Core rules:
@@ -161,7 +158,6 @@ Rules:
 - blocked responses must be machine-actionable through `allowed_action_ids[]`
 - error naming aligns to `adapter_unavailable`
 ### 15.4 Planning panel widget (sticky sidebar)
-
 This section consumes the linked owner contract and stays aligned with it.
 
 ContractRef: Plans/assistant-chat-design.md#8.1 Canonical planning model
@@ -186,7 +182,6 @@ Labels and values:
 - Deep Plan
 - chat.plan_todo_updated
 ### 15.5 Question card widget
-
 This section consumes the linked owner contract and stays aligned with it.
 
 Core rules:
@@ -213,7 +208,6 @@ Rules:
 - users can answer out of order and revise before submit
 - dismissing pauses conversation until resume
 ### 15.6 Mermaid and inline visualizer widgets
-
 This section defines the canonical contract for this surface.
 
 ContractRef: Plans/assistant-chat-design.md#28.2 Inline visualizer bridge
@@ -229,7 +223,6 @@ Rules:
 - sendPrompt(text)
 - openLink(url)
 ### 15.7 Permission approval card widget
-
 This section consumes the linked owner contract and stays aligned with it.
 
 ContractRef: Plans/FinalGUISpec.md#15.7 Permission approval card widget

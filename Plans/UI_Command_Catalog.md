@@ -364,7 +364,6 @@ Browser, terminal, and dev-session commands share one shell/runtime interaction 
 ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/storage-plan.md
 
 #### Terminal session and layout commands
-
 This section defines the canonical contract for this surface.
 
 Core rules:
@@ -453,7 +452,6 @@ Revert rules:
 ContractRef: ContractName:Plans/Crosswalk.md, ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md
 
 ### 2.7 Chat slash commands (reserved)
-
 This section consumes the linked owner contract and stays aligned with it.
 
 Core rules:

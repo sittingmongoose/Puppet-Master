@@ -1,5 +1,4 @@
 ## 14. Web content caching layer
-
 This section defines the canonical contract for this surface.
 
 ContractRef: Plans/storage-plan.md#4.4 Activity transparency payloads, Plans/storage-plan.md#8. Web content caching persistence

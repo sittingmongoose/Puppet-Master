@@ -11,7 +11,6 @@ ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan
 - neither path owns hidden mutable state outside durable source or metadata refs
 
 ### 28.2 Inline visualizer bridge
-
 This section consumes the linked owner contract and stays aligned with it.
 
 Core rules:

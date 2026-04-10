@@ -23,7 +23,6 @@ Storage rules:
 - `_id` aliases such as `requested_persona_id` are not canonical runtime snapshot fields
 - chat and GUI surfaces consume the same stored field names rather than projecting local variants
 ### 4.2 Question and clarification state
-
 This section consumes the linked owner contract and stays aligned with it.
 
 Core rules:
@@ -45,7 +44,6 @@ Rules:
 - response_kind
 - validation_state
 ### 4.3 Plan and TODO state
-
 This section defines the canonical contract for this surface.
 
 Core rules:
@@ -84,7 +82,6 @@ Labels and values:
 - Plan
 - Deep Plan
 ### 4.4 Activity transparency payloads
-
 This section defines the canonical contract for this surface.
 
 ContractRef: Plans/Contracts_V0.md#3.4A Web error taxonomy and applicability

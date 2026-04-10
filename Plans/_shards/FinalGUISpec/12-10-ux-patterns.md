@@ -64,7 +64,6 @@ Read-only text, code blocks, logs, and labels must remain selectable and copyabl
 Clipboard actions should provide lightweight success feedback for non-obvious values and must never copy redacted or hidden-secret placeholders as though they were the real value.
 
 ### 10.10 LSP-informed affordances
-
 This section consumes the linked owner contract and stays aligned with it.
 
 Core rules:

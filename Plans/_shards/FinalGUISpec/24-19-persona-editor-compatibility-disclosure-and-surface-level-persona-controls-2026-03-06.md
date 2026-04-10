@@ -55,7 +55,6 @@ The editor should be able to communicate states like:
 - `Direct/API providers: strongest support for exact runtime controls.`
 
 ### 19.4 Surface-level Persona controls
-
 This section consumes the linked owner contract and stays aligned with it.
 
 Core rules:

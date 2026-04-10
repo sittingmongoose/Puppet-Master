@@ -1,5 +1,4 @@
 ## 13. Batch operations
-
 This section defines the canonical contract for this surface.
 
 Core rules:

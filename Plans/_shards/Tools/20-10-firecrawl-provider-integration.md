@@ -5,7 +5,6 @@ Firecrawl is a distinct provider in PM's web stack. This owner section covers co
 ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Models_System.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md
 
 ### 10.1 Provider configuration
-
 This section defines the canonical contract for this surface.
 
 Core rules:
@@ -70,7 +69,6 @@ Rules:
 - /v2/agent
 
 ### 10.3 PM-to-Firecrawl mapping
-
 This section defines the canonical contract for this surface.
 
 Core rules:
@@ -124,7 +122,6 @@ Rules:
 - POST /v2/extract
 - urls[]
 ### 10.4 Async jobs and status contract
-
 This section defines the canonical contract for this surface.
 
 Core rules:
@@ -162,7 +159,6 @@ Labels and values:
 - webcrawl
 - webmap
 ### 10.5 Credit and cost contract
-
 This section defines the canonical contract for this surface.
 
 Core rules:
@@ -205,7 +201,6 @@ Interaction modes and session properties:
 ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/Tools.md#3.5D-web-operation-family-runtime-contract
 
 ### 10.7 Audit, error, and self-hosted rules
-
 This section defines the canonical contract for this surface.
 
 ContractRef: Plans/FinalGUISpec.md#15.7 Permission approval card widget, Plans/Contracts_V0.md#3.4 Tool-specific payload extensions, Plans/storage-plan.md#4.4 Activity transparency payloads, Plans/Contracts_V0.md#3.4A Web error taxonomy and applicability

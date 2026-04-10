@@ -142,7 +142,6 @@ Settings > Storage includes a global **Remote Cache Administration** subsection 
 ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/storage-plan.md, ContractName:Plans/UI_Command_Catalog.md
 
 #### 7.4.4 Settings (Unified) panel specification
-
 This section consumes the linked owner contract and stays aligned with it.
 
 Core rules:

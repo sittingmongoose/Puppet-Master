@@ -1,7 +1,6 @@
 ## 11. Provider capability matrix
 
 ### 11.1 Provider classes, defaults, and fallback disclosure
-
 This section defines the canonical contract for this surface.
 
 Core rules:

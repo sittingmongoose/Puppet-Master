@@ -1,7 +1,6 @@
 ## 8. Plan Mode, Deep Plan Mode, and Plan Thoroughness (PT)
 
 ### 8.1 Canonical planning model
-
 This section defines the canonical contract for this surface.
 
 ContractRef: Plans/FinalGUISpec.md#15.4 Planning panel widget (sticky sidebar)
@@ -126,7 +125,6 @@ Optional but allowed sections:
 - `Rollout / Migration Notes`
 
 ### 8.6 Normalized TODO contract for planning outputs
-
 This section consumes the linked owner contract and stays aligned with it.
 
 Core rules:

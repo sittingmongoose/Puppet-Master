@@ -369,7 +369,6 @@ The preview does NOT execute any run. Shell injections in preview mode execute t
 ### 6.3 Shortcut binding
 
 ## 7. Reserved built-in slash commands
-
 This section defines the canonical contract for this surface.
 
 Core rules:
