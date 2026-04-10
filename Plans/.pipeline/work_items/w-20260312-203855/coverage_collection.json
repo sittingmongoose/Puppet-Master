@@ -1,0 +1,1200 @@
+{
+  "schema_id": "pm.coverage_collection.v2",
+  "work_id": "w-20260312-203855",
+  "created_at_utc": "2026-04-10T20:37:06.448Z",
+  "topic_or_scope": "Orchestrator rewrite transfer-fidelity audit, legacy-canon cleanup readiness, and reconciliation prep",
+  "collected_sections": [
+    {
+      "path": "Plans/Contracts_V0.md",
+      "heading": "## 4. Auth contracts",
+      "doc_role": "owner",
+      "section_role": "owner_section",
+      "source_reasons": ["OBL-007", "OBL-008"],
+      "exact_items_that_must_survive": ["requested_account_id", "requested_account_binding", "requested_account_policy", "effective_account_id", "effective_provider_identity", "provider_account_id", "requested/effective execution identity", "provider-native metadata", "requested_account_id", "requested_account_binding", "requested_account_policy", "effective_account_id", "effective_provider_identity", "provider_account_id", "execution_role", "operational_identity", "Requested state must remain recoverable in historical snapshots.", "Binding distinguishes preference from requirement.", "`provider_account_id` must be retired or explicitly governed as provider-native metadata subordinate to stable internal identity.", "effective-account-scoped permission resolution must read `requested_account_binding` rather than a policy-only route", "`effective_account_id` must remain available to approval and permission snapshots", "Plans/Prompt_Pipeline.md#6.4 Effective resolution record", "Plans/Multi-Account.md#4.5 Selectable unit and runtime resolution"],
+      "stale_residue_to_retire": ["policy-only account routing without selected-account anchor", "identity bundles that stop at `effective_account_id` only", "ambiguous `provider_account_id` status"],
+      "status": "active"
+    },
+    {
+      "path": "Plans/Contracts_V0.md",
+      "heading": "### 5.1B Persona/Runtime Snapshot Payload Contract",
+      "doc_role": "owner",
+      "section_role": "owner_section",
+      "source_reasons": ["OBL-031", "OBL-033"],
+      "exact_items_that_must_survive": ["execution_unit_context", "run_id", "node_id", "attempt_id", "lane_id", "package_id", "seam_id", "worktree_id", "execution_role", "requested_account_id", "effective_account_id", "operational_identity", "execution unit context", "runtime snapshot", "run_id", "node_id", "attempt_id", "lane_id", "package_id", "seam_id", "worktree_id", "execution_role", "requested_account_id", "effective_account_id", "operational_identity", "tool_use_id", "Tier-rooted execution context must be replaced by lossless execution-unit context.", "Downstream consumers must be able to join runtime, attempt, worktree, and approval records without guessing.", "`execution_role` and `effective_account_id` must survive into runtime and approval surfaces", "Plans/Executor_Protocol.md#Worktree-aware execution unit context", "Plans/orchestrator-subagent-integration.md#Tier Context"],
+      "stale_residue_to_retire": ["`TierContext` as canonical execution scope", "`tier_id` as canonical execution scope", "pseudo-tier execution keys"],
+      "status": "active"
+    },
+    {
+      "path": "Plans/Contracts_V0.md",
+      "heading": "## 3. Tool events (persisted)",
+      "doc_role": "owner",
+      "section_role": "owner_section",
+      "source_reasons": ["OBL-033", "OBL-034"],
+      "exact_items_that_must_survive": ["tool.invoked", "tool.denied", "node_id", "attempt_id", "lane_id", "package_id", "execution_role", "effective_account_id", "operational_identity", "tool_use_id", "provider_attempt_ref", "usage_event_ref", "tool event contract", "runtime/tool/artifact attribution", "node_id", "attempt_id", "lane_id", "package_id", "execution_role", "effective_account_id", "operational_identity", "tool_use_id", "provider_attempt_ref", "usage_event_ref", "Analytics-thin tool events are no longer sufficient.", "`attempt_id` is the canonical local runtime anchor; bridge refs stay subordinate but explicit.", "permission and denial surfaces must still expose effective actor and account identity", "Plans/Tools.md#8.0 Event payloads (seglog)", "Plans/Runtime_Artifacts_Panel.md#Cross-Surface Operation Receipt Linkage Addendum (2026-03-12)"],
+      "stale_residue_to_retire": ["analytics-thin tool events", "implicit bridge precedence", "artifact attribution without attempt identity"],
+      "status": "active"
+    },
+    {
+      "path": "Plans/Contracts_V0.md",
+      "heading": "### 3.3 Requirements quality events",
+      "doc_role": "owner",
+      "section_role": "owner_section",
+      "source_reasons": ["OBL-036"],
+      "exact_items_that_must_survive": ["validation_pass_report", "workflow_run_id", "pass_number", "pass_name", "pass_verdict", "verdict_reason", "provider", "model", "wizard_id", "project_id", "thread_id", "phase_plan_ref", "staged_bundle_ref", "requirements_quality_report_ref", "execution_role", "effective_account_id", "run_id", "skipped", "validation pass report", "launch handoff lineage", "workflow_run_id", "pass_number", "pass_name", "pass_verdict", "verdict_reason", "provider", "model", "wizard_id", "project_id", "thread_id", "phase_plan_ref", "staged_bundle_ref", "requirements_quality_report_ref", "execution_role", "effective_account_id", "run_id", "Pass reports must stay upstream artifacts rather than masquerading as runtime attempts.", "`pass_verdict` must support `skipped` where the flow needs it.", "Accepted/final pass output must bridge into launched execution.", "effective runtime identity must survive from validation into launch handoff", "Plans/Project_Output_Artifacts.md#10. Validation Pass Report Artifacts", "Plans/chain-wizard-flexibility.md#12. Three-Pass Canonical Validation Workflow (Mandatory Invariant Sweep)"],
+      "stale_residue_to_retire": ["provider/model-only identity on pass reports", "`workflow_run_id` as the only lineage bridge", "pass/fail-only assumptions where `skipped` is required"],
+      "status": "active"
+    },
+    {
+      "path": "Plans/Contracts_V0.md",
+      "heading": "### 3.4 Tool-specific payload extensions",
+      "doc_role": "owner",
+      "section_role": "owner_section",
+      "source_reasons": ["OBL-028"],
+      "exact_items_that_must_survive": ["detail_ref", "report_ref", "evidence_ref", "usage_event_ref", "workflow_refs", "docker_refs", "kubernetes_refs", "resume_url", "inspection refs", "navigation transport", "detail_ref", "report_ref", "evidence_ref", "usage_event_ref", "workflow_refs", "docker_refs", "kubernetes_refs", "resume_url", "Inspection/provenance refs stay in event and record payloads.", "Route/open contracts own navigation identity.", "`resume_url` remains transport-only.", "Plans/storage-plan.md#4.4 Activity transparency payloads", "Plans/Contracts_V0.md#7.3 `route_target`"],
+      "stale_residue_to_retire": ["treating `detail_ref`, `report_ref`, and `resume_url` as interchangeable open-this-thing fields", "treating ref families as route payload surrogates"],
+      "status": "active"
+    },
+    {
+      "path": "Plans/Contracts_V0.md",
+      "heading": "### 6.1 Canonical blocked-episode approval anchor",
+      "doc_role": "owner",
+      "section_role": "owner_section",
+      "source_reasons": ["OBL-029", "OBL-032"],
+      "exact_items_that_must_survive": ["blocked_sequence", "blocked_reason_code", "allowed_action_ids", "detail_ref", "report_ref", "approval_scope_key", "startup_recovered", "Blocked", "Waiting approval", "Action Required", "blocked_sequence", "blocked_reason_code", "allowed_action_ids", "detail_ref", "report_ref", "approval_scope_key", "startup_recovered", "attempt_id", "failure_class", "`blocked_sequence` is the canonical approval anchor.", "Pre-attempt blocked episodes must not invent `attempt_id`.", "Chat and GUI action buttons derive from ordered `allowed_action_ids[]`.", "approval scope remains blocked-episode-scoped rather than session-global", "ordered `allowed_action_ids[]` must survive into approval UI", "Plans/human-in-the-loop.md#Canonical HITL request contract", "Plans/Executor_Protocol.md#Worktree-aware execution unit context"],
+      "stale_residue_to_retire": ["`request_id`-centered HITL identity", "tier-bound HITL anchoring", "`approve_continue`"],
+      "status": "active"
+    },
+    {
+      "path": "Plans/Contracts_V0.md",
+      "heading": "### 7.3 `route_target`",
+      "doc_role": "owner",
+      "section_role": "owner_section",
+      "source_reasons": ["OBL-020", "OBL-021", "OBL-022", "OBL-023", "OBL-024", "OBL-025", "OBL-027"],
+      "exact_items_that_must_survive": ["route_target", "target_kind", "project_id", "focused_run_id", "thread_id", "tab_id", "subject_id", "object_kind", "object_id", "inspector_target", "primary_view", "side_panel", "bottom_panel", "embedded_surface", "page_tab", "resume_url", "route target", "target kind", "object kind", "inspector target", "target_kind", "project_id", "focused_run_id", "thread_id", "tab_id", "subject_id", "object_kind", "object_id", "inspector_target", "resume_url", "Exactly one canonical primary selector is permitted.", "`project_id` is required.", "`target_kind` is destination class only, and `inspector_target` is focus refinement only after selector identity is established.", "`resume_url` is serialized transport of `route_target`, not a second routing ontology.", "Plans/FinalGUISpec.md#7.3 Shared route and open behavior", "Plans/Crosswalk.md#3.3 Navigation and source-open ownership"],
+      "stale_residue_to_retire": ["`usage_event_ref` as a top-level route field", "`wizard_id` or `wizard_step` as primary route fields", "`artifact_id` and `document_id` as direct route fields instead of `subject_id`", "`docked` or `floating` as `target_kind` values", "`widget slot` as a `target_kind` value", "multiple competing selectors in the same route payload", "`resume_url` acting as a shadow routing primitive"],
+      "status": "active"
+    },
+    {
+      "path": "Plans/Contracts_V0.md",
+      "heading": "### 7.4 `OpenSubject`",
+      "doc_role": "owner",
+      "section_role": "owner_section",
+      "source_reasons": ["OBL-026"],
+      "exact_items_that_must_survive": ["OpenSubject", "subject_id", "doc:<document_id>", "artifact:<artifact_id>", "Everything else routes through object_kind + object_id", "open subject", "subject identity", "subject_id", "`subject_id` is bounded to canonical renderable/openable content only.", "Everything outside document/artifact families routes through `object_kind + object_id`.", "Plans/FileManager.md#OpenSubject"],
+      "stale_residue_to_retire": ["`document_id` and `artifact_id` appearing in navigation prose instead of `subject_id`", "wizard or message flows treated as special deep-link payload families instead of object routes"],
+      "status": "active"
+    },
+    {
+      "path": "Plans/Contracts_V0.md",
+      "heading": "### 1.2 EventRecord -- canonical persisted envelope (schema: `pm.event.v0`)",
+      "doc_role": "owner",
+      "section_role": "owner_section",
+      "source_reasons": ["OBL-016", "OBL-018", "OBL-019"],
+      "exact_items_that_must_survive": ["record_id", "record_kind", "schema_version", "project_id", "run_id", "status", "created_at_utc", "historical", "stale_historical", "superseded", "revoked", "reopened", "archived", "removed", "concern_id", "owner_kind", "resolution_kind", "record envelope", "historical state", "concern", "record_id", "record_kind", "schema_version", "project_id", "run_id", "scope_type", "scope_id", "status", "created_at_utc", "lineage_refs", "source_refs", "artifact_refs", "concern_id", "owner_kind", "resolution_kind", "A shared envelope must exist without flattening family-specific semantics.", "Historical vocabulary must stay shared while family-local lifecycles stay distinct.", "Concern identity and lineage must remain distinct from review, blocked, and annotation objects.", "Plans/storage-plan.md#Canonical records", "Plans/Orchestrator_Page.md#12. Concern and notification model"],
+      "stale_residue_to_retire": ["ad hoc one-off record shapes for each new object family", "overloaded `resolved` semantics", "concerns treated as badges or review leftovers without durable identity"],
+      "status": "active"
+    },
+    {
+      "path": "Plans/storage-plan.md",
+      "heading": "### Required redb keys",
+      "doc_role": "owner",
+      "section_role": "owner_section",
+      "source_reasons": ["OBL-037", "OBL-038"],
+      "exact_items_that_must_survive": ["artifacts_index.v1:{project_id}:{artifact_id}", "artifacts_project_state.v1:{project_id}", "projector.checkpoint.runtime_artifacts:{project_id}", "worktree_record.v1:{project_id}:{worktree_id}", "lane_record.v1:{project_id}:{lane_id}", "worktree_projection.v1:{project_id}:{worktree_id}", "lane_projection.v1:{project_id}:{lane_id}", "runtime artifact index", "worktree record", "lane record", "artifact_id", "artifact_type", "project_id", "run_id", "thread_id", "node_id", "attempt_id", "worktree_id", "lane_id", "repo_id", "path_ref", "branch_ref", "baseline_ref", "projection_freshness", "projection_health", "Runtime-artifact indexing and durable worktree/lane identity are storage-owned families.", "Projection state and projector checkpoints must be first-class rather than panel-owned leftovers.", "Plans/Runtime_Artifacts_Panel.md#4. redb key and projector", "Plans/WorktreeGitImprovement.md#4.1 Assistant-created worktree lifecycle"],
+      "stale_residue_to_retire": ["`artifacts_index:v1:{project_id}` as a sole underspecified canonical contract", "panel-only ownership of runtime-artifact projector semantics", "tier-keyed worktree identity"],
+      "status": "active"
+    },
+    {
+      "path": "Plans/storage-plan.md",
+      "heading": "### Canonical records",
+      "doc_role": "owner",
+      "section_role": "owner_section",
+      "source_reasons": ["OBL-016", "OBL-017", "OBL-018", "OBL-019"],
+      "exact_items_that_must_survive": ["record_id", "record_kind", "schema_version", "project_id", "run_id", "status", "created_at_utc", "lineage_refs", "source_refs", "artifact_refs", "historical", "stale_historical", "superseded", "revoked", "reopened", "archived", "removed", "concern_id", "owner_kind", "resolution_kind", "record export", "bundle export", "view export", "record family", "export taxonomy", "historical vocabulary", "concern", "record_id", "record_kind", "schema_version", "project_id", "run_id", "scope_type", "scope_id", "status", "created_at_utc", "lineage_refs", "source_refs", "artifact_refs", "concern_id", "owner_kind", "resolution_kind", "export_kind", "trust_state_at_export", "Record export, bundle export, and view export must remain distinct.", "Shared historical vocabulary must not erase family-local semantics.", "Concern lineage must be queryable across merge, split, supersession, reopen, and revoke flows.", "Plans/Project_Output_Artifacts.md#8. Seglog canonical persistence contract (artifact events)", "Plans/Orchestrator_Page.md#12. Concern and notification model"],
+      "stale_residue_to_retire": ["conflating record exports, artifact exports, and view exports", "overloaded `resolved` state", "concerns treated as transient notes"],
+      "status": "active"
+    },
+    {
+      "path": "Plans/storage-plan.md",
+      "heading": "### Projection rules (reconciled)",
+      "doc_role": "owner",
+      "section_role": "owner_section",
+      "source_reasons": ["OBL-010", "OBL-037"],
+      "exact_items_that_must_survive": ["projection_freshness", "projection_health", "last_projected_at_utc", "projector_lag", "degraded_reason_code", "fallback_policy", "runtime_artifact.*", "projection freshness", "projection health", "fallback", "projection_freshness", "projection_health", "last_projected_at_utc", "projector_lag", "degraded_reason_code", "fallback_policy", "Projection freshness is not the same thing as action authority.", "Projection-backed surfaces must degrade to direct-record views when trust drops.", "Runtime-artifact projections must be rebuildable from canonical seglog events.", "action gating must respect projection trust before surfacing mutation actions", "Plans/Widget_System.md#2. Hostability and data contracts", "Plans/FinalGUISpec.md#10.6 Blocked and recovery surfaces"],
+      "stale_residue_to_retire": ["implicit freshness assumptions", "generic `projection_trust` wording that collides with other trust vocabularies"],
+      "status": "active"
+    },
+    {
+      "path": "Plans/storage-plan.md",
+      "heading": "### Restart and stale history",
+      "doc_role": "owner",
+      "section_role": "owner_section",
+      "source_reasons": ["OBL-003", "OBL-004", "OBL-038"],
+      "exact_items_that_must_survive": ["historical", "archived", "removed", "baseline", "active", "suspect", "restoring", "retained", "cleanup_eligible", "worktree_id", "lane_id", "historical_lineage_refs[]", "historical", "archived", "removed", "cleanup eligible", "worktree_id", "lane_id", "lifecycle_state", "historical_flag", "archived_flag", "removed_flag", "cleanup_eligible_flag", "historical_lineage_refs[]", "Historical references must survive after live worktree cleanup.", "`cleanup_eligible` is queue state, not removal.", "Filesystem rediscovery must not be the only restart authority.", "Plans/WorktreeGitImprovement.md#4.1 Assistant-created worktree lifecycle", "Plans/GitHub_Integration.md#A.4 Worktrees"],
+      "stale_residue_to_retire": ["cleanup wipes history model", "action-verb-only cleanup model", "filesystem rediscovery as sole restart authority"],
+      "status": "active"
+    },
+    {
+      "path": "Plans/storage-plan.md",
+      "heading": "### 4.1 Shared runtime identity consumption",
+      "doc_role": "owner",
+      "section_role": "owner_section",
+      "source_reasons": ["OBL-007", "OBL-033", "OBL-035"],
+      "exact_items_that_must_survive": ["requested_account_id", "requested_account_binding", "requested_account_policy", "effective_account_id", "operational_identity", "execution_role", "account_id", "credential_ref", "login", "auth_realm", "requested account", "effective account", "operational identity", "requested_account_id", "requested_account_binding", "requested_account_policy", "effective_account_id", "execution_role", "operational_identity", "account_id", "credential_ref", "login", "auth_realm", "Requested/effective identity must survive in storage snapshots.", "GitHub durable identity uses stable internal account keys while login remains display metadata.", "permission snapshots and usage surfaces must preserve `effective_account_id` and `execution_role`", "Plans/Multi-Account.md#4. Data model", "Plans/GitHub_API_Auth_and_Flows.md#Token handling and storage (hard rules)"],
+      "stale_residue_to_retire": ["login-keyed durable identity", "policy-only account routing without requested-account anchor"],
+      "status": "active"
+    },
+    {
+      "path": "Plans/storage-plan.md",
+      "heading": "### 4.4 Activity transparency payloads",
+      "doc_role": "owner",
+      "section_role": "owner_section",
+      "source_reasons": ["OBL-033", "OBL-034"],
+      "exact_items_that_must_survive": ["node_id", "attempt_id", "lane_id", "package_id", "execution_role", "effective_account_id", "operational_identity", "provider_attempt_ref", "usage_event_ref", "detail_ref", "report_ref", "receipt refs", "activity payload", "bridge fields", "node_id", "attempt_id", "lane_id", "package_id", "execution_role", "effective_account_id", "operational_identity", "provider_attempt_ref", "usage_event_ref", "detail_ref", "report_ref", "Inspection refs remain inspection/provenance refs; route/open contracts remain route/open contracts.", "Bridge-field precedence must be explicit rather than inferred.", "effective actor and account identity must survive into activity payloads", "Plans/Tools.md#8.0 Event payloads (seglog)", "Plans/Runtime_Artifacts_Panel.md#Cross-Surface Operation Receipt Linkage Addendum (2026-03-12)"],
+      "stale_residue_to_retire": ["treating `detail_ref`, `report_ref`, and `resume_url` as interchangeable open-this-thing fields", "cost/usage linkage resting on optional undeclared semantics"],
+      "status": "active"
+    },
+    {
+      "path": "Plans/storage-plan.md",
+      "heading": "### Cross-surface receipt record",
+      "doc_role": "owner",
+      "section_role": "owner_section",
+      "source_reasons": ["OBL-034", "OBL-036"],
+      "exact_items_that_must_survive": ["attempt_id", "provider_attempt_ref", "usage_event_ref", "workflow_refs", "docker_refs", "kubernetes_refs", "validation_pass_report", "workflow_run_id", "run_id", "receipt record", "validation lineage", "attempt_id", "provider_attempt_ref", "usage_event_ref", "workflow_refs", "docker_refs", "kubernetes_refs", "workflow_run_id", "run_id", "Receipts bridge external side-effect lineage without replacing local runtime identity.", "Validation outputs must bridge into launch through a receipt or promoted package reference.", "Plans/Project_Output_Artifacts.md#10. Validation Pass Report Artifacts", "Plans/Runtime_Artifacts_Panel.md#Cross-Surface Operation Receipt Linkage Addendum (2026-03-12)"],
+      "stale_residue_to_retire": ["`workflow_run_id` as the only lineage bridge", "timestamp/thread fallback treated as primary attribution"],
+      "status": "active"
+    },
+    {
+      "path": "Plans/WorktreeGitImprovement.md",
+      "heading": "### 4.1 Assistant-created worktree lifecycle",
+      "doc_role": "owner",
+      "section_role": "owner_section",
+      "source_reasons": ["OBL-004", "OBL-006", "OBL-038"],
+      "exact_items_that_must_survive": ["baseline", "active", "suspect", "restoring", "retained", "cleanup_eligible", "archived", "removed", "worktree_id", "lane_id", "selected_worktree_id", "worktree lifecycle", "cleanup eligible", "archived", "removed", "worktree_id", "lane_id", "lifecycle_state", "selected_worktree_id", "dirty_state", "conflict_state", "blocked_reason_code", "projection_freshness", "projection_health", "Cleaning files inside a worktree is not the same thing as removing the worktree.", "`lane_id` remains operational lineage while `worktree_id` remains durable identity.", "Plans/storage-plan.md#Required redb keys", "Plans/GitHub_Integration.md#A.4 Worktrees"],
+      "stale_residue_to_retire": ["unified cleanup action model", "tier-keyed worktree identity", "hidden `extract_tier_id()` migration behavior"],
+      "status": "active"
+    },
+    {
+      "path": "Plans/WorktreeGitImprovement.md",
+      "heading": "### 2.8 Startup recovery uses process CWD",
+      "doc_role": "owner",
+      "section_role": "owner_section",
+      "source_reasons": ["OBL-003", "OBL-038"],
+      "exact_items_that_must_survive": ["historical", "archived", "removed", "last_seen_at_utc", "owner_run_id", "owner_attempt_id", "orchestrator.receipt.{run_id}.{attempt_id}", "startup recovery", "historical lineage", "worktree_id", "lane_id", "last_seen_at_utc", "owner_run_id", "owner_attempt_id", "historical_lineage_refs[]", "Startup restore must recover historical lineage from durable records, not just CWD discovery.", "Missing live worktrees must render as historical/archived/removed rather than disappearing.", "Plans/storage-plan.md#Restart and stale history"],
+      "stale_residue_to_retire": ["filesystem rediscovery as sole restart authority", "cleanup wipes history model"],
+      "status": "active"
+    },
+    {
+      "path": "Plans/WorktreeGitImprovement.md",
+      "heading": "## Worktree Conflict and Dirty-Worktree Runtime Alignment",
+      "doc_role": "owner",
+      "section_role": "owner_section",
+      "source_reasons": ["OBL-005", "OBL-006"],
+      "exact_items_that_must_survive": ["dirty_worktree", "worktree_conflict", "blocked_reason_code", "remediation_actions_allowed", "dirty worktree", "worktree conflict", "blocked_reason_code", "blocked_reason_detail", "remediation_actions_allowed", "dirty_state", "conflict_state", "`dirty_worktree` and `worktree_conflict` stay canonical blocked reasons instead of generic SCM failures.", "Conflict and cleanup semantics must remain distinct.", "remediation actions must surface only through the allowed-action set", "Plans/Orchestrator_Page.md#11. Source Control boundary"],
+      "stale_residue_to_retire": ["generic SCM error framing", "cleanup equals removal assumptions"],
+      "status": "active"
+    },
+    {
+      "path": "Plans/Runtime_Artifacts_Panel.md",
+      "heading": "## 4. redb key and projector",
+      "doc_role": "consumer",
+      "section_role": "consumer_section",
+      "source_reasons": ["OBL-037"],
+      "exact_items_that_must_survive": ["artifacts_index.v1:{project_id}:{artifact_id}", "artifacts_project_state.v1:{project_id}", "projector.checkpoint.runtime_artifacts:{project_id}", "artifact_id", "artifact_type", "node_id", "attempt_id", "projection_freshness", "projection_health", "artifact index", "projector checkpoint", "artifact_id", "artifact_type", "project_id", "run_id", "thread_id", "node_id", "attempt_id", "summary", "linked_artifact_id", "usage_event_ref", "projection_freshness", "projection_health", "The panel consumes a storage-owned projection rather than defining projector truth locally.", "Missing/corrupt index rows must degrade to record-backed views.", "Plans/storage-plan.md#Required redb keys", "Plans/storage-plan.md#Projection rules (reconciled)"],
+      "stale_residue_to_retire": ["panel-only ownership of projector/checkpoint semantics", "artifact indexing that omits `attempt_id` and `node_id`"],
+      "status": "active"
+    },
+    {
+      "path": "Plans/Runtime_Artifacts_Panel.md",
+      "heading": "## Cross-Surface Operation Receipt Linkage Addendum (2026-03-12)",
+      "doc_role": "consumer",
+      "section_role": "consumer_section",
+      "source_reasons": ["OBL-034", "OBL-036"],
+      "exact_items_that_must_survive": ["attempt_id", "provider_attempt_ref", "usage_event_ref", "receipt refs", "validation_pass_report", "workflow_run_id", "receipt linkage", "validation lineage", "attempt_id", "provider_attempt_ref", "usage_event_ref", "workflow_refs", "docker_refs", "kubernetes_refs", "workflow_run_id", "run_id", "Artifacts need explicit bridge-field precedence.", "Validation outputs and external receipts must stay linked without replacing canonical local runtime identity.", "Plans/storage-plan.md#Cross-surface receipt record", "Plans/Project_Output_Artifacts.md#10. Validation Pass Report Artifacts"],
+      "stale_residue_to_retire": ["artifact envelopes that omit `attempt_id`", "provider/model-only validation lineage"],
+      "status": "active"
+    },
+    {
+      "path": "Plans/Project_Output_Artifacts.md",
+      "heading": "## 10. Validation Pass Report Artifacts",
+      "doc_role": "owner",
+      "section_role": "owner_section",
+      "source_reasons": ["OBL-036"],
+      "exact_items_that_must_survive": ["validation_pass_report", "workflow_run_id", "pass_number", "pass_name", "pass_verdict", "verdict_reason", "provider", "model", "wizard_id", "project_id", "thread_id", "phase_plan_ref", "staged_bundle_ref", "requirements_quality_report_ref", "execution_role", "effective_account_id", "run_id", "skipped", "validation pass report", "workflow_run_id", "pass_number", "pass_name", "pass_verdict", "verdict_reason", "provider", "model", "wizard_id", "project_id", "thread_id", "phase_plan_ref", "staged_bundle_ref", "requirements_quality_report_ref", "execution_role", "effective_account_id", "run_id", "Validation pass reports remain upstream artifacts.", "Pass reports must bridge into launchable execution through explicit lineage fields.", "effective runtime/account identity must survive from pass report into downstream execution handoff", "Plans/Contracts_V0.md#3.3 Requirements quality events", "Plans/chain-wizard-flexibility.md#12. Three-Pass Canonical Validation Workflow (Mandatory Invariant Sweep)"],
+      "stale_residue_to_retire": ["isolated pass reports that do not name the wizard/session/bundle they came from", "pass/fail-only assumptions where `skipped` is required"],
+      "status": "active"
+    },
+    {
+      "path": "Plans/Run_Graph_View.md",
+      "heading": "## 4. Data model and identity",
+      "doc_role": "consumer",
+      "section_role": "consumer_section",
+      "source_reasons": ["OBL-002", "OBL-003", "OBL-018", "OBL-023", "OBL-024", "OBL-038"],
+      "exact_items_that_must_survive": ["lane", "worktree", "historical", "stale_historical", "archived", "removed", "object_kind", "inspector_target", "worktree_id", "lane_id", "lane", "worktree", "historical", "lineage", "lane_id", "worktree_id", "package_id", "node_id", "object_kind", "inspector_target", "historical_state", "lineage_refs", "Lane remains the primary operational object while worktree remains concrete backing.", "Historical/archived/removed semantics remain visible after cleanup.", "Plans/storage-plan.md#Restart and stale history", "Plans/Contracts_V0.md#7.3 `route_target`"],
+      "stale_residue_to_retire": ["tier-era object stack", "historical implied by missing live state", "`tier_id` as a primary graph action key"],
+      "status": "active"
+    },
+    {
+      "path": "Plans/Run_Graph_View.md",
+      "heading": "## 2. Layout",
+      "doc_role": "consumer",
+      "section_role": "consumer_section",
+      "source_reasons": ["OBL-014"],
+      "exact_items_that_must_survive": ["virtualization", "lazy expansion", "paging", "demand-loaded inspectors", "layout", "performance", "initial_slice_size", "virtualization_strategy", "lazy_expansion_trigger", "inspector_loading_strategy", "projection_fallback", "Run Graph layout must explicitly consume the Orchestrator-wide scale contract rather than relying on tab-local performance intuition.", "Plans/Orchestrator_Page.md#2. Page layout", "Plans/FinalGUISpec.md#7.1 Orchestrator"],
+      "stale_residue_to_retire": ["per-tab performance guidance without shared Orchestrator scale contract"],
+      "status": "active"
+    },
+    {
+      "path": "Plans/Run_Graph_View.md",
+      "heading": "## 3. Node detail inspector",
+      "doc_role": "consumer",
+      "section_role": "consumer_section",
+      "source_reasons": ["OBL-013", "OBL-020", "OBL-034", "OBL-036"],
+      "exact_items_that_must_survive": ["attempt_id", "provider_attempt_ref", "usage_event_ref", "validation_pass_report", "workflow_run_id", "lineage", "info", "warning", "attention_required", "blocked", "system_notification", "route_target", "details", "artifacts", "lineage", "Attention Required", "Blocked", "attempt_id", "provider_attempt_ref", "usage_event_ref", "workflow_run_id", "run_id", "inspector_target", "project_id", "target_kind", "subject_id", "object_kind", "object_id", "Inspector detail pivots must respect bridge-field precedence.", "Validation reports must open as artifacts with lineage rather than as runtime records.", "Inspector escalations and pivots must preserve the shared routing payload and escalation ladder rather than tier-era/request-era special cases.", "Plans/Runtime_Artifacts_Panel.md#Cross-Surface Operation Receipt Linkage Addendum (2026-03-12)", "Plans/Contracts_V0.md#7.3 `route_target`", "Plans/Orchestrator_Page.md#12. Concern and notification model"],
+      "stale_residue_to_retire": ["artifact attribution without attempt identity", "`workflow_run_id` as the only lineage bridge", "`request_id` and `tier_id` as primary graph action keys"],
+      "status": "active"
+    },
+    {
+      "path": "Plans/Orchestrator_Page.md",
+      "heading": "## 2. Page layout",
+      "doc_role": "owner",
+      "section_role": "owner_section",
+      "source_reasons": ["OBL-014"],
+      "exact_items_that_must_survive": ["Orchestrator-wide scale contract", "virtualization", "lazy expansion", "paging", "demand-loaded inspectors", "layout", "scale contract", "initial_slice_size", "virtualization_strategy", "lazy_expansion_trigger", "inspector_loading_strategy", "projection_fallback", "Shared scale behavior must be defined at page-layout level so every dense tab inherits the same contract.", "Plans/FinalGUISpec.md#7.1 Orchestrator", "Plans/Run_Graph_View.md## 2. Layout"],
+      "stale_residue_to_retire": ["per-tab performance guidance without shared Orchestrator scale contract"],
+      "status": "active"
+    },
+    {
+      "path": "Plans/Orchestrator_Page.md",
+      "heading": "## 1. Scope and canonical model",
+      "doc_role": "owner",
+      "section_role": "owner_section",
+      "source_reasons": ["OBL-001", "OBL-002", "OBL-014"],
+      "exact_items_that_must_survive": ["Source Control", "worktree-first", "Orchestrator", "Lane", "primary operational object in Orchestrator", "Worktree", "concrete filesystem/Git backing", "Orchestrator-wide scale contract", "Source Control", "Orchestrator", "Lane", "Worktree", "lane_id", "worktree_id", "package_id", "node_id", "seam_id", "virtualization_strategy", "lazy_expansion_trigger", "inspector_loading_strategy", "Source Control remains the primary operational surface for concrete Git/worktree actions.", "Orchestrator remains the surface for why those actions matter.", "Scale behavior must be defined above individual tab prose.", "Plans/GitHub_Integration.md#A.1 Source Control information architecture", "Plans/FinalGUISpec.md#7.1 Orchestrator"],
+      "stale_residue_to_retire": ["tier-era worktree ownership model", "run/tier-centric framing of Source Control", "per-tab performance guidance without shared Orchestrator scale contract"],
+      "status": "active"
+    },
+    {
+      "path": "Plans/Orchestrator_Page.md",
+      "heading": "## 7. History tab",
+      "doc_role": "owner",
+      "section_role": "owner_section",
+      "source_reasons": ["OBL-018"],
+      "exact_items_that_must_survive": ["historical", "stale_historical", "superseded", "revoked", "reopened", "archived", "removed", "historical", "archived", "removed", "historical_state", "lineage_refs", "supersession_refs", "revocation_refs", "archive_status", "History surfaces must render the shared historical vocabulary explicitly instead of implying history through absence of live state.", "Plans/storage-plan.md#Canonical records", "Plans/Glossary.md#Orchestrator rewrite terms"],
+      "stale_residue_to_retire": ["historical implied by missing live state", "overloaded `resolved` keyword"],
+      "status": "active"
+    },
+    {
+      "path": "Plans/Orchestrator_Page.md",
+      "heading": "## 8. Ledger tab",
+      "doc_role": "owner",
+      "section_role": "owner_section",
+      "source_reasons": ["OBL-017"],
+      "exact_items_that_must_survive": ["record export", "bundle export", "view export", "manifest", "trust_state_at_export", "record export", "bundle export", "view export", "export_id", "export_kind", "source_surface", "focused_run_id", "filter_summary", "included_record_ids", "included_artifact_ids", "included_file_paths", "lineage_notes", "trust_state_at_export", "Ledger export affordances must distinguish canonical record exports from derived view exports and bundles.", "Plans/storage-plan.md#Canonical records", "Plans/FinalGUISpec.md#7.19A Dedicated log and audit inspector"],
+      "stale_residue_to_retire": ["conflating record exports, artifact exports, and view exports into one unclear family"],
+      "status": "active"
+    },
+    {
+      "path": "Plans/Orchestrator_Page.md",
+      "heading": "## 6. Evidence tab",
+      "doc_role": "owner",
+      "section_role": "owner_section",
+      "source_reasons": ["OBL-017", "OBL-036"],
+      "exact_items_that_must_survive": ["record export", "bundle export", "view export", "manifest", "trust_state_at_export", "validation_pass_report", "record export", "bundle export", "view export", "export_id", "export_kind", "focused_run_id", "filter_summary", "included_record_ids", "included_artifact_ids", "included_file_paths", "trust_state_at_export", "workflow_run_id", "Filtered JSON is not automatically canonical record export.", "Validation pass reports must remain visibly upstream artifacts even when shown in Evidence.", "Plans/storage-plan.md#Canonical records", "Plans/Project_Output_Artifacts.md#10. Validation Pass Report Artifacts"],
+      "stale_residue_to_retire": ["conflating record exports, artifact exports, and view exports", "validation artifacts presented as runtime records"],
+      "status": "active"
+    },
+    {
+      "path": "Plans/Orchestrator_Page.md",
+      "heading": "## 9. Current vs historical run behavior",
+      "doc_role": "owner",
+      "section_role": "owner_section",
+      "source_reasons": ["OBL-003", "OBL-004", "OBL-018"],
+      "exact_items_that_must_survive": ["historical", "archived", "removed", "baseline", "active", "suspect", "restoring", "retained", "cleanup_eligible", "stale_historical", "superseded", "revoked", "reopened", "historical", "archived", "removed", "cleanup eligible", "lifecycle_state", "historical_state", "archive_status", "lineage_refs", "Historical truth must not disappear when live worktrees are gone.", "`historical` is record truth and is distinct from cleanup state.", "Plans/storage-plan.md#Restart and stale history"],
+      "stale_residue_to_retire": ["cleanup wipes history model", "historical implied by missing live state"],
+      "status": "active"
+    },
+    {
+      "path": "Plans/Orchestrator_Page.md",
+      "heading": "## 10. Search, routing, and action policy",
+      "doc_role": "owner",
+      "section_role": "owner_section",
+      "source_reasons": ["OBL-015", "OBL-020"],
+      "exact_items_that_must_survive": ["navigation vs mutation", "single-target vs multi-target", "shortcut eligibility", "palette visibility", "confirmation", "reversibility", "shared routing payload contract", "navigation", "mutation", "confirmation", "action_type", "target_scope", "palette_visible", "shortcut_eligible", "confirmation_strength", "reversibility", "project_id", "target_kind", "subject_id", "object_kind", "object_id", "tab_id", "inspector_target", "Command/palette exposure must not silently downgrade confirmation strength.", "Cross-surface pivots restore context through canonical route payloads rather than ad hoc payloads.", "mutation actions must preserve confirmation and gating semantics across palette, shortcut, and context-menu entry points", "Plans/UI_Command_Catalog.md#2.0 Command entry contract (doc-level)", "Plans/Contracts_V0.md#7.3 `route_target`"],
+      "stale_residue_to_retire": ["blanket command exposure for dangerous runtime mutations", "separate ad hoc payloads per surface"],
+      "status": "active"
+    },
+    {
+      "path": "Plans/Orchestrator_Page.md",
+      "heading": "## 11. Source Control boundary",
+      "doc_role": "owner",
+      "section_role": "owner_section",
+      "source_reasons": ["OBL-001", "OBL-005", "OBL-006", "OBL-038"],
+      "exact_items_that_must_survive": ["Source Control", "worktree-first", "dirty_worktree", "worktree_conflict", "worktree_id", "lane_id", "cleanup_eligible", "archived", "removed", "Source Control", "dirty worktree", "worktree conflict", "worktree_id", "lane_id", "blocked_reason_code", "remediation_actions_allowed", "dirty_state", "conflict_state", "selected_worktree_id", "Destructive Git/worktree actions resolve through Source Control semantics even when launched from Orchestrator.", "Files cleanup must remain distinct from worktree removal.", "remediation actions surface only through the allowed-action set", "Plans/GitHub_Integration.md#A.4 Worktrees", "Plans/WorktreeGitImprovement.md#Worktree Conflict and Dirty-Worktree Runtime Alignment"],
+      "stale_residue_to_retire": ["Orchestrator direct Git mutation without Source Control execution semantics", "generic SCM error framing", "cleanup equals removal assumptions"],
+      "status": "active"
+    },
+    {
+      "path": "Plans/Orchestrator_Page.md",
+      "heading": "## 12. Concern and notification model",
+      "doc_role": "owner",
+      "section_role": "owner_section",
+      "source_reasons": ["OBL-012", "OBL-013", "OBL-019"],
+      "exact_items_that_must_survive": ["project health", "project activity", "project attention", "blocked_owner", "primary_attention_reason", "info", "warning", "attention_required", "blocked", "system_notification", "concern", "concern_id", "owner_kind", "resolution_kind", "info", "warning", "Attention Required", "Blocked", "System notification", "activity_state", "attention_state", "health_indicator", "blocked_owner", "primary_attention_reason", "escalation_level", "concern_id", "owner_kind", "resolution_kind", "lineage_refs", "Health, activity, and attention must not collapse into one indicator.", "`attention_required` and `blocked` must remain distinct across concern and notification flows.", "Concern owner and blocked owner remain different concepts.", "Plans/Glossary.md#Orchestrator rewrite terms", "Plans/human-in-the-loop.md#Shared approval-ladder alignment (2026-04-04)"],
+      "stale_residue_to_retire": ["conflated single health indicator", "case-by-case local attention behavior without shared ladder", "concerns treated as badges or notes without durable identity"],
+      "status": "active"
+    },
+    {
+      "path": "Plans/GitHub_Integration.md",
+      "heading": "### A.4 Worktrees",
+      "doc_role": "owner",
+      "section_role": "owner_section",
+      "source_reasons": ["OBL-003", "OBL-004", "OBL-038"],
+      "exact_items_that_must_survive": ["worktree_id", "lane_id", "historical", "archived", "removed", "cleanup_eligible", "selected_worktree_id", "worktrees", "historical", "archived", "removed", "worktree_id", "lane_id", "path_ref", "branch_ref", "baseline_ref", "lifecycle_state", "selected_worktree_id", "GitHub surface worktree rows must respect durable worktree/lane identity and historical rendering semantics.", "Plans/storage-plan.md#Required redb keys", "Plans/WorktreeGitImprovement.md#4.1 Assistant-created worktree lifecycle"],
+      "stale_residue_to_retire": ["worktrees disappearing on cleanup", "tier-keyed worktree identity"],
+      "status": "active"
+    },
+    {
+      "path": "Plans/GitHub_Integration.md",
+      "heading": "## Deferred GitHub Recovery Binding (2026-03-09)",
+      "doc_role": "owner",
+      "section_role": "owner_section",
+      "source_reasons": ["OBL-027", "OBL-035"],
+      "exact_items_that_must_survive": ["resume_url", "route_target", "account_id", "credential_ref", "login", "recovery binding", "resume_url", "project_id", "focused_run_id", "thread_id", "account_id", "credential_ref", "login", "Deep-link recovery must serialize canonical route identity rather than inventing a second routing model.", "GitHub reconnect context must use stable internal account identity rather than login-keyed recovery.", "Plans/Contracts_V0.md#7.3 `route_target`", "Plans/GitHub_API_Auth_and_Flows.md#Token handling and storage (hard rules)"],
+      "stale_residue_to_retire": ["`resume_url` acting as shadow routing primitive", "login-keyed durable recovery identity"],
+      "status": "active"
+    },
+    {
+      "path": "Plans/FinalGUISpec.md",
+      "heading": "### 4.2 Command Palette",
+      "doc_role": "consumer",
+      "section_role": "consumer_section",
+      "source_reasons": ["OBL-015", "OBL-020"],
+      "exact_items_that_must_survive": ["navigation vs mutation", "shortcut eligibility", "palette visibility", "confirmation", "reversibility", "route_target", "Command Palette", "Open", "Review", "Resolve", "action_type", "target_scope", "palette_visible", "shortcut_eligible", "confirmation_strength", "reversibility", "project_id", "target_kind", "subject_id", "object_kind", "object_id", "tab_id", "inspector_target", "Palette-visible actions must preserve confirmation strength and canonical route payload structure.", "mutation affordances must respect the same gating and confirmation rules as context menus and page commands", "Plans/Orchestrator_Page.md#10. Search, routing, and action policy", "Plans/UI_Command_Catalog.md#2.5 Orchestrator page commands"],
+      "stale_residue_to_retire": ["blanket command exposure for dangerous runtime mutations", "separate ad hoc payloads per surface"],
+      "status": "active"
+    },
+    {
+      "path": "Plans/FinalGUISpec.md",
+      "heading": "### 4.4 Keyboard Shortcuts",
+      "doc_role": "consumer",
+      "section_role": "consumer_section",
+      "source_reasons": ["OBL-015"],
+      "exact_items_that_must_survive": ["shortcut eligibility", "confirmation", "reversibility", "Keyboard shortcuts", "shortcut_eligible", "confirmation_strength", "reversibility", "target_scope", "Shortcut eligibility must remain narrower than general command visibility for dangerous mutations.", "mutation shortcuts must retain confirmation and safety class", "Plans/Orchestrator_Page.md#10. Search, routing, and action policy"],
+      "stale_residue_to_retire": ["blanket shortcut exposure for dangerous runtime mutations"],
+      "status": "active"
+    },
+    {
+      "path": "Plans/FinalGUISpec.md",
+      "heading": "### 7.3 Shared route and open behavior",
+      "doc_role": "consumer",
+      "section_role": "consumer_section",
+      "source_reasons": ["OBL-020", "OBL-021", "OBL-022", "OBL-023", "OBL-024", "OBL-025", "OBL-026", "OBL-027"],
+      "exact_items_that_must_survive": ["route_target", "target_kind", "subject_id", "object_kind", "object_id", "inspector_target", "primary_view", "side_panel", "bottom_panel", "embedded_surface", "page_tab", "doc:<document_id>", "artifact:<artifact_id>", "resume_url", "Open", "Route", "Details", "History", "Lineage", "project_id", "focused_run_id", "thread_id", "target_kind", "subject_id", "object_kind", "object_id", "tab_id", "inspector_target", "resume_url", "GUI routing must restore canonical context rather than just switching tabs.", "Open-by-identity surfaces must respect the `subject_id` boundary and selector precedence.", "`resume_url` remains transport-only.", "Plans/Contracts_V0.md#7.3 `route_target`", "Plans/FileManager.md#OpenSubject"],
+      "stale_residue_to_retire": ["`usage_event_ref` as a route selector", "`artifact_id` or `document_id` as direct route fields", "`resume_url` as a first-class routing ontology"],
+      "status": "active"
+    },
+    {
+      "path": "Plans/FinalGUISpec.md",
+      "heading": "#### 7.4.4 Settings (Unified) panel specification",
+      "doc_role": "consumer",
+      "section_role": "consumer_section",
+      "source_reasons": ["OBL-011"],
+      "exact_items_that_must_survive": ["canonical term system", "contextual help system", "dedicated help-entry contract", "related_concepts", "why it matters", "what it is not", "related concepts", "canonical_name", "short_definition", "why_it_matters", "what_it_is_not", "common_related_states", "related_concepts", "surface_examples", "Settings/help surfaces must reuse canonical help-entry structure instead of drifting into tooltip-only explanations.", "Plans/Glossary.md#Orchestrator rewrite terms"],
+      "stale_residue_to_retire": ["tooltip-only help approach for complex rewrite concepts"],
+      "status": "active"
+    },
+    {
+      "path": "Plans/FinalGUISpec.md",
+      "heading": "### 7.19A Dedicated log and audit inspector",
+      "doc_role": "consumer",
+      "section_role": "consumer_section",
+      "source_reasons": ["OBL-017"],
+      "exact_items_that_must_survive": ["record export", "bundle export", "view export", "manifest", "trust_state_at_export", "record export", "bundle export", "view export", "export_id", "export_kind", "source_surface", "focused_run_id", "filter_summary", "included_record_ids", "included_artifact_ids", "included_file_paths", "lineage_notes", "trust_state_at_export", "Audit/log inspector export controls must preserve the shared export taxonomy rather than flattening everything into one export affordance.", "Plans/Orchestrator_Page.md#8. Ledger tab", "Plans/storage-plan.md#Canonical records"],
+      "stale_residue_to_retire": ["conflating record exports, artifact exports, and view exports into one unclear family"],
+      "status": "active"
+    },
+    {
+      "path": "Plans/FinalGUISpec.md",
+      "heading": "### 7.5 Project and attention surfaces",
+      "doc_role": "consumer",
+      "section_role": "consumer_section",
+      "source_reasons": ["OBL-011", "OBL-012", "OBL-013"],
+      "exact_items_that_must_survive": ["project health", "project activity", "project attention", "blocked_owner", "primary_attention_reason", "info", "warning", "attention_required", "blocked", "system_notification", "related_concepts", "Attention Required", "Blocked", "System notification", "activity_state", "attention_state", "health_indicator", "blocked_owner", "primary_attention_reason", "escalation_level", "related_concepts", "Project health and attention must remain separate visible dimensions.", "Escalation ladder rendering must preserve `attention_required` vs `blocked`.", "Plans/Orchestrator_Page.md#12. Concern and notification model", "Plans/Glossary.md#Orchestrator rewrite terms"],
+      "stale_residue_to_retire": ["conflated single health indicator", "tooltip-only help for complex rewrite concepts"],
+      "status": "active"
+    },
+    {
+      "path": "Plans/FinalGUISpec.md",
+      "heading": "### 10.1 Confirmation dialogs",
+      "doc_role": "consumer",
+      "section_role": "consumer_section",
+      "source_reasons": ["OBL-015"],
+      "exact_items_that_must_survive": ["confirmation", "reversibility", "single-target vs multi-target", "navigation vs mutation", "Confirmation", "confirmation_strength", "reversibility", "action_type", "target_scope", "Confirmation copy must classify action safety correctly, especially for external side effects and destructive runtime mutations.", "mutation confirmations must remain aligned with command/action safety classes", "Plans/Orchestrator_Page.md#10. Search, routing, and action policy"],
+      "stale_residue_to_retire": ["editor undo language for external side effects"],
+      "status": "active"
+    },
+    {
+      "path": "Plans/FinalGUISpec.md",
+      "heading": "## Canonical Blocked/Recovery Behavior",
+      "doc_role": "consumer",
+      "section_role": "consumer_section",
+      "source_reasons": ["OBL-013"],
+      "exact_items_that_must_survive": ["info", "warning", "attention_required", "blocked", "system_notification", "Info", "Warning", "Attention Required", "Blocked", "System notification", "escalation_level", "severity", "blocked_owner", "persistence_duration", "action_available", "Blocked/recovery GUI behavior must preserve the shared escalation ladder and keep `attention_required` distinct from `blocked`.", "Plans/Orchestrator_Page.md#12. Concern and notification model"],
+      "stale_residue_to_retire": ["attention_required and blocked collapsed into one generic state"],
+      "status": "active"
+    },
+    {
+      "path": "Plans/FinalGUISpec.md",
+      "heading": "### 10.6 Blocked and recovery surfaces",
+      "doc_role": "consumer",
+      "section_role": "consumer_section",
+      "source_reasons": ["OBL-029", "OBL-032"],
+      "exact_items_that_must_survive": ["blocked_sequence", "blocked_reason_code", "allowed_action_ids", "detail_ref", "report_ref", "startup_recovered", "Blocked", "Waiting approval", "Action Required", "blocked_sequence", "blocked_reason_code", "allowed_action_ids", "detail_ref", "report_ref", "approval_scope_key", "startup_recovered", "Blocked UI must treat blocked episodes as first-class durable objects.", "Pre-attempt blocked episodes must not invent `attempt_id`.", "approval affordances must stay aligned to `approval_scope_key` and ordered `allowed_action_ids[]`", "Plans/Contracts_V0.md#6.1 Canonical blocked-episode approval anchor"],
+      "stale_residue_to_retire": ["`approve_continue`", "tier-bound approval identity"],
+      "status": "active"
+    },
+    {
+      "path": "Plans/FinalGUISpec.md",
+      "heading": "### 10.8 Human-in-the-loop approvals",
+      "doc_role": "consumer",
+      "section_role": "consumer_section",
+      "source_reasons": ["OBL-009", "OBL-032"],
+      "exact_items_that_must_survive": ["execution_entity_id", "lane_id", "package_id", "account_id", "permission_scope", "approval_carryover_scope", "blocked_sequence", "approval_scope_key", "Allow", "Ask", "Deny", "Waiting approval", "execution_entity_id", "lane_id", "package_id", "account_id", "permission_scope", "approval_carryover_scope", "blocked_sequence", "approval_scope_key", "Approval scope must remain multi-lane and account-aware.", "Session-wide approval policy must stay distinct from blocked-episode approval.", "lane/package/account-scoped approval dimensions must remain visible", "blocked-episode approval identity must not collapse to session scope", "Plans/Permissions_System.md#2.4B Scope specificity across package, seam, lane, project, and global contexts", "Plans/Contracts_V0.md#6.1 Canonical blocked-episode approval anchor"],
+      "stale_residue_to_retire": ["single-session approval assumption", "`request_id`-centered approval identity"],
+      "status": "active"
+    },
+    {
+      "path": "Plans/FinalGUISpec.md",
+      "heading": "### 15.7 Permission approval card widget",
+      "doc_role": "consumer",
+      "section_role": "consumer_section",
+      "source_reasons": ["OBL-009", "OBL-032"],
+      "exact_items_that_must_survive": ["execution_entity_id", "lane_id", "package_id", "account_id", "approval_scope_key", "allowed_action_ids", "blocked_sequence", "Allow", "Ask", "Deny", "Blocked", "Attention Required", "execution_entity_id", "lane_id", "package_id", "account_id", "approval_scope_key", "allowed_action_ids", "blocked_sequence", "The card must render blocked-episode identity, ordered action set, and scoped approval dimensions together.", "UI rendering remains distinct from permission-key ownership.", "lane/package/account scope", "`approval_scope_key`", "ordered `allowed_action_ids[]`", "Plans/Permissions_System.md#3.4A Web-operation permission-key derivation", "Plans/Tools.md#10.7A Web-operation approval summary rules"],
+      "stale_residue_to_retire": ["session-only approval summary", "`approve_continue`"],
+      "status": "active"
+    },
+    {
+      "path": "Plans/Glossary.md",
+      "heading": "### Orchestrator rewrite terms",
+      "doc_role": "owner",
+      "section_role": "owner_section",
+      "source_reasons": ["OBL-011", "OBL-012", "OBL-018"],
+      "exact_items_that_must_survive": ["canonical term system", "contextual help system", "dedicated help-entry contract", "related_concepts", "project health", "project activity", "project attention", "historical", "stale_historical", "superseded", "revoked", "reopened", "archived", "removed", "why it matters", "what it is not", "related concepts", "canonical_name", "short_definition", "why_it_matters", "what_it_is_not", "common_related_states", "related_concepts", "surface_examples", "Canonical term names must stay stable across expert and simplified help surfaces.", "Historical vocabulary must be shared without collapsing family-local state.", "Plans/FinalGUISpec.md#7.5 Project and attention surfaces"],
+      "stale_residue_to_retire": ["empty Orchestrator rewrite terms section", "parallel friendly names that drift from contracts"],
+      "status": "active"
+    },
+    {
+      "path": "Plans/Glossary.md",
+      "heading": "### Runtime and routing terms",
+      "doc_role": "owner",
+      "section_role": "owner_section",
+      "source_reasons": ["OBL-011", "OBL-020", "OBL-022", "OBL-023", "OBL-024", "OBL-026", "OBL-027"],
+      "exact_items_that_must_survive": ["route_target", "target_kind", "object_kind", "inspector_target", "subject_id", "doc:<document_id>", "artifact:<artifact_id>", "resume_url", "why it matters", "what it is not", "related concepts", "canonical_name", "short_definition", "why_it_matters", "what_it_is_not", "related_concepts", "surface_examples", "Glossary routing definitions must mirror canonical contracts instead of inventing consumer-local interpretations.", "`resume_url` must be defined as transport-only.", "Plans/Contracts_V0.md#7.3 `route_target`", "Plans/FileManager.md#OpenSubject"],
+      "stale_residue_to_retire": ["routing prose that treats `resume_url` as primary ontology", "special-case route families outside `subject_id` or `object_kind + object_id`"],
+      "status": "active"
+    },
+    {
+      "path": "Plans/Widget_System.md",
+      "heading": "## 2. Hostability and data contracts",
+      "doc_role": "consumer",
+      "section_role": "consumer_section",
+      "source_reasons": ["OBL-010", "OBL-020"],
+      "exact_items_that_must_survive": ["projection_freshness", "projection_health", "fallback_policy", "route_target", "project_id", "target_kind", "subject_id", "object_kind", "object_id", "inspector_target", "stale", "degraded", "unavailable", "projection_freshness", "projection_health", "last_projected_at_utc", "projector_lag", "degraded_reason_code", "fallback_policy", "project_id", "target_kind", "subject_id", "object_kind", "object_id", "tab_id", "inspector_target", "Widgets must consume the shared projection-health contract rather than inventing local trust semantics.", "Projection-backed widgets must degrade to record-backed fallback views when trust drops.", "Widget drill-downs must route through the shared routing payload rather than widget-local payload variants.", "action widgets must respect projection trust before exposing mutation affordances", "Plans/storage-plan.md#Projection rules (reconciled)", "Plans/Contracts_V0.md#7.3 `route_target`"],
+      "stale_residue_to_retire": ["implicit freshness assumptions", "generic `projection_trust` phrasing", "separate ad hoc payloads per surface"],
+      "status": "active"
+    },
+    {
+      "path": "Plans/UI_Command_Catalog.md",
+      "heading": "### 2.5 Orchestrator page commands",
+      "doc_role": "owner",
+      "section_role": "owner_section",
+      "source_reasons": ["OBL-015", "OBL-020"],
+      "exact_items_that_must_survive": ["navigation vs mutation", "single-target vs multi-target", "shortcut eligibility", "palette visibility", "confirmation", "reversibility", "route_target", "Open", "Review", "Resolve", "Export", "action_type", "target_scope", "palette_visible", "shortcut_eligible", "confirmation_strength", "reversibility", "project_id", "target_kind", "subject_id", "object_kind", "object_id", "tab_id", "inspector_target", "Orchestrator commands must encode the action-surface policy and route through the shared route payload when navigating.", "mutation commands must retain confirmation and safety class", "Plans/Orchestrator_Page.md#10. Search, routing, and action policy", "Plans/Contracts_V0.md#7.3 `route_target`"],
+      "stale_residue_to_retire": ["blanket command exposure for dangerous runtime mutations", "separate ad hoc payloads per surface"],
+      "status": "active"
+    },
+    {
+      "path": "Plans/UI_Command_Catalog.md",
+      "heading": "### 2.0 Command entry contract (doc-level)",
+      "doc_role": "owner",
+      "section_role": "owner_section",
+      "source_reasons": ["OBL-030"],
+      "exact_items_that_must_survive": ["command_kind", "normalization", "kind", "normalizes_to_contract", "alias_of_command_id", "shell_view", "navigation_wrapper", "domain_action", "wrapper", "deprecated_alias", "command kind", "normalization", "command_kind", "normalization.kind", "normalizes_to_contract", "alias_of_command_id", "Wrapper metadata must remain narrow and contract-level.", "Command metadata must not restate route payload structure.", "Plans/Wiring_Matrix.md#UI command handler rule", "Plans/Progression_Gates.md#GATE-010 -- Wiring matrix validation"],
+      "stale_residue_to_retire": ["prose-only command meaning without wrapper-vs-alias slots", "thin command envelope lacking normalization metadata"],
+      "status": "active"
+    },
+    {
+      "path": "Plans/UI_Command_Catalog.md",
+      "heading": "#### Search commands",
+      "doc_role": "owner",
+      "section_role": "consumer_section",
+      "source_reasons": ["OBL-020", "OBL-021", "OBL-026"],
+      "exact_items_that_must_survive": ["route_target", "project_id", "target_kind", "subject_id", "object_kind", "object_id", "inspector_target", "Open", "Details", "Artifacts", "History", "project_id", "target_kind", "subject_id", "object_kind", "object_id", "tab_id", "inspector_target", "Search commands must route through the shared route payload rather than bespoke search payloads.", "`subject_id` remains bounded to document/artifact open-by-identity.", "Plans/Contracts_V0.md#7.3 `route_target`", "Plans/FileManager.md#OpenSubject"],
+      "stale_residue_to_retire": ["ad hoc search result route payloads", "`artifact_id` and `document_id` as direct route fields"],
+      "status": "active"
+    },
+    {
+      "path": "Plans/UI_Command_Catalog.md",
+      "heading": "### Recovery command definitions",
+      "doc_role": "owner",
+      "section_role": "consumer_section",
+      "source_reasons": ["OBL-030", "OBL-032"],
+      "exact_items_that_must_survive": ["command_kind", "normalization", "blocked_sequence", "approval_scope_key", "allowed_action_ids", "Blocked", "Retry", "Review", "Resolve", "command_kind", "normalization.kind", "normalizes_to_contract", "alias_of_command_id", "blocked_sequence", "approval_scope_key", "allowed_action_ids", "Recovery commands must bind to blocked-episode identity rather than request-level or tier-level surrogates.", "Normalization metadata must survive for wrappers and deprecated aliases.", "ordered `allowed_action_ids[]` drive visible recovery command affordances", "Plans/Contracts_V0.md#6.1 Canonical blocked-episode approval anchor", "Plans/Wiring_Matrix.md#UI command handler rule"],
+      "stale_residue_to_retire": ["`approve_continue`", "request-level recovery identity"],
+      "status": "active"
+    },
+    {
+      "path": "Plans/Crosswalk.md",
+      "heading": "### 3.3 Navigation and source-open ownership",
+      "doc_role": "mirror",
+      "section_role": "mirror_section",
+      "source_reasons": ["OBL-020", "OBL-026", "OBL-027"],
+      "exact_items_that_must_survive": ["route_target", "OpenSubject", "subject_id", "resume_url", "navigation ownership", "source-open ownership", "project_id", "target_kind", "subject_id", "object_kind", "object_id", "tab_id", "inspector_target", "resume_url", "Crosswalk must mirror that routing identity is owned by `route_target` while open-by-identity is owned by `OpenSubject`.", "`resume_url` is transport-only.", "Plans/Contracts_V0.md#7.3 `route_target`", "Plans/FileManager.md#OpenSubject"],
+      "stale_residue_to_retire": ["document-level references that omit the exact owner anchor", "routing prose that treats `resume_url` as primary canon"],
+      "status": "active"
+    },
+    {
+      "path": "Plans/Crosswalk.md",
+      "heading": "### 3.10 Permission and approval-scope ownership",
+      "doc_role": "mirror",
+      "section_role": "mirror_section",
+      "source_reasons": ["OBL-009", "OBL-032"],
+      "exact_items_that_must_survive": ["execution_entity_id", "lane_id", "package_id", "account_id", "approval_scope_key", "blocked_sequence", "permission scope", "approval scope", "execution_entity_id", "lane_id", "package_id", "account_id", "approval_scope_key", "blocked_sequence", "Crosswalk must mirror that permission scope and blocked-episode approval scope are separate but connected ownership surfaces.", "lane/package/account dimensions", "`approval_scope_key`", "Plans/Permissions_System.md#2.4B Scope specificity across package, seam, lane, project, and global contexts", "Plans/Contracts_V0.md#6.1 Canonical blocked-episode approval anchor"],
+      "stale_residue_to_retire": ["single-session approval assumption", "tier-bound approval scope wording"],
+      "status": "active"
+    },
+    {
+      "path": "Plans/Crosswalk.md",
+      "heading": "### 3.12 Provider and account-selection ownership",
+      "doc_role": "mirror",
+      "section_role": "mirror_section",
+      "source_reasons": ["OBL-007", "OBL-008", "OBL-035"],
+      "exact_items_that_must_survive": ["requested_account_id", "requested_account_binding", "requested_account_policy", "effective_account_id", "provider_account_id", "account_id", "credential_ref", "login", "requested account", "effective account", "requested_account_id", "requested_account_binding", "requested_account_policy", "effective_account_id", "provider_account_id", "account_id", "credential_ref", "login", "Crosswalk must mirror that stable internal account identity outranks provider-native display metadata.", "Requested/effective account state remains explicit.", "effective account identity must remain available to permission and usage consumers", "Plans/Contracts_V0.md#4. Auth contracts", "Plans/Multi-Account.md#4. Data model", "Plans/GitHub_API_Auth_and_Flows.md#Token handling and storage (hard rules)"],
+      "stale_residue_to_retire": ["login-keyed durable identity", "ambiguous `provider_account_id` ownership"],
+      "status": "active"
+    },
+    {
+      "path": "Plans/Wiring_Matrix.md",
+      "heading": "### UI command handler rule",
+      "doc_role": "mirror",
+      "section_role": "mirror_section",
+      "source_reasons": ["OBL-030"],
+      "exact_items_that_must_survive": ["command_kind", "normalization", "normalizes_to_contract", "alias_of_command_id", "command normalization", "command_kind", "normalization.kind", "normalizes_to_contract", "alias_of_command_id", "Wiring rows must preserve normalization metadata rather than flattening wrappers and aliases into prose-only handler notes.", "Plans/UI_Command_Catalog.md#2.0 Command entry contract (doc-level)"],
+      "stale_residue_to_retire": ["thin handler rows that omit wrapper-vs-alias semantics"],
+      "status": "active"
+    },
+    {
+      "path": "Plans/Progression_Gates.md",
+      "heading": "## GATE-010 -- Wiring matrix validation",
+      "doc_role": "mirror",
+      "section_role": "mirror_section",
+      "source_reasons": ["OBL-030"],
+      "exact_items_that_must_survive": ["command_kind", "normalization", "normalizes_to_contract", "alias_of_command_id", "wiring validation", "command_kind", "normalization.kind", "normalizes_to_contract", "alias_of_command_id", "GATE-010 must validate command normalization metadata rather than only presence of handlers.", "Plans/UI_Command_Catalog.md#2.0 Command entry contract (doc-level)", "Plans/Wiring_Matrix.md#UI command handler rule"],
+      "stale_residue_to_retire": ["validation rules that ignore wrapper-vs-alias metadata"],
+      "status": "active"
+    },
+    {
+      "path": "Plans/Prompt_Pipeline.md",
+      "heading": "### 6.4 Effective resolution record",
+      "doc_role": "owner",
+      "section_role": "owner_section",
+      "source_reasons": ["OBL-007"],
+      "exact_items_that_must_survive": ["requested_account_id", "requested_account_binding", "requested_account_policy", "effective_account_id", "effective_provider_identity", "execution_role", "operational_identity", "requested account", "effective account", "effective resolution", "requested_account_id", "requested_account_binding", "requested_account_policy", "effective_account_id", "effective_provider_identity", "execution_role", "operational_identity", "Prompt assembly must preserve both requested and effective execution identity.", "Binding must distinguish preference from requirement so fallback behavior stays deterministic.", "effective identity must remain available to downstream permission and approval flows", "Plans/Contracts_V0.md#4. Auth contracts", "Plans/Multi-Account.md#4.5 Selectable unit and runtime resolution"],
+      "stale_residue_to_retire": ["policy-only account routing without selected-account anchor"],
+      "status": "active"
+    },
+    {
+      "path": "Plans/Prompt_Pipeline.md",
+      "heading": "## Runtime Attempt Snapshot and Handoff Bundle",
+      "doc_role": "owner",
+      "section_role": "owner_section",
+      "source_reasons": ["OBL-031", "OBL-033"],
+      "exact_items_that_must_survive": ["execution_unit_context", "run_id", "node_id", "attempt_id", "lane_id", "package_id", "seam_id", "worktree_id", "execution_role", "requested_account_id", "effective_account_id", "operational_identity", "attempt snapshot", "handoff bundle", "run_id", "node_id", "attempt_id", "lane_id", "package_id", "seam_id", "worktree_id", "execution_role", "requested_account_id", "effective_account_id", "operational_identity", "tool_use_id", "Handoff bundles must carry lossless runtime identity rather than tier-era scope.", "Downstream consumers must be able to reconcile tool, attempt, artifact, and account identity from the bundle.", "effective account and execution role must survive the handoff bundle", "Plans/Executor_Protocol.md#Worktree-aware execution unit context", "Plans/orchestrator-subagent-integration.md#Tier Context"],
+      "stale_residue_to_retire": ["`TierContext`", "`tier_id` as canonical scope"],
+      "status": "active"
+    },
+    {
+      "path": "Plans/orchestrator-subagent-integration.md",
+      "heading": "### Tier Context",
+      "doc_role": "owner",
+      "section_role": "owner_section",
+      "source_reasons": ["OBL-031"],
+      "exact_items_that_must_survive": ["execution_unit_context", "run_id", "node_id", "attempt_id", "lane_id", "package_id", "seam_id", "worktree_id", "execution_role", "requested_account_id", "effective_account_id", "operational_identity", "execution unit context", "run_id", "node_id", "attempt_id", "lane_id", "package_id", "seam_id", "worktree_id", "execution_role", "requested_account_id", "effective_account_id", "operational_identity", "Tier context must be replaced by execution-unit context so subagent orchestration can join losslessly to runtime lineage and permissions.", "execution role and effective account must remain in subagent orchestration context", "Plans/Executor_Protocol.md#Worktree-aware execution unit context", "Plans/Prompt_Pipeline.md#Runtime Attempt Snapshot and Handoff Bundle"],
+      "stale_residue_to_retire": ["`TierContext`", "`tier_id`", "pseudo-tier execution keys"],
+      "status": "active"
+    },
+    {
+      "path": "Plans/Executor_Protocol.md",
+      "heading": "### Worktree-aware execution unit context",
+      "doc_role": "owner",
+      "section_role": "owner_section",
+      "source_reasons": ["OBL-031", "OBL-032"],
+      "exact_items_that_must_survive": ["execution_unit_context", "run_id", "node_id", "attempt_id", "lane_id", "package_id", "seam_id", "worktree_id", "execution_role", "requested_account_id", "effective_account_id", "operational_identity", "blocked_sequence", "approval_scope_key", "execution unit context", "blocked episode", "run_id", "node_id", "attempt_id", "lane_id", "package_id", "seam_id", "worktree_id", "execution_role", "requested_account_id", "effective_account_id", "operational_identity", "blocked_sequence", "approval_scope_key", "Execution protocol must define runtime scope through execution-unit context rather than tier roots.", "Blocked-episode identity must remain explicit in execution-relevant recovery paths.", "effective account, execution role, and blocked-episode approval scope must survive execution handoff", "Plans/Contracts_V0.md#6.1 Canonical blocked-episode approval anchor"],
+      "stale_residue_to_retire": ["`TierContext`", "`tier_id` as canonical execution scope", "request-level blocked identity"],
+      "status": "active"
+    },
+    {
+      "path": "Plans/FileManager.md",
+      "heading": "### OpenSubject",
+      "doc_role": "owner",
+      "section_role": "consumer_section",
+      "source_reasons": ["OBL-026"],
+      "exact_items_that_must_survive": ["OpenSubject", "subject_id", "doc:<document_id>", "artifact:<artifact_id>", "Open Subject", "subject_id", "File/open surfaces must use `subject_id` only for canonical openable content families.", "Plans/Contracts_V0.md#7.4 `OpenSubject`"],
+      "stale_residue_to_retire": ["document/artifact navigation prose that bypasses `subject_id`"],
+      "status": "active"
+    },
+    {
+      "path": "Plans/assistant-chat-design.md",
+      "heading": "### 13.4 Shared runtime identity display",
+      "doc_role": "consumer",
+      "section_role": "consumer_section",
+      "source_reasons": ["OBL-033"],
+      "exact_items_that_must_survive": ["node_id", "attempt_id", "lane_id", "package_id", "execution_role", "effective_account_id", "operational_identity", "runtime identity", "effective account", "node_id", "attempt_id", "lane_id", "package_id", "execution_role", "effective_account_id", "operational_identity", "tool_use_id", "Chat activity surfaces must explain which effective account/actor produced the action or artifact.", "Runtime identity display must stay lossless enough to bridge to usage and artifact surfaces.", "effective account and execution role must remain visible in activity cards", "Plans/Contracts_V0.md#3. Tool events (persisted)", "Plans/usage-feature.md#Canonical usage pipeline"],
+      "stale_residue_to_retire": ["identity-thin validation or handoff payload displays", "artifact attribution without attempt identity"],
+      "status": "active"
+    },
+    {
+      "path": "Plans/assistant-chat-design.md",
+      "heading": "## Unified Thread Blocked-State Lifecycle",
+      "doc_role": "consumer",
+      "section_role": "consumer_section",
+      "source_reasons": ["OBL-029", "OBL-032"],
+      "exact_items_that_must_survive": ["blocked_sequence", "blocked_reason_code", "allowed_action_ids", "detail_ref", "report_ref", "approval_scope_key", "startup_recovered", "Blocked", "Waiting approval", "Action Required", "blocked_sequence", "blocked_reason_code", "allowed_action_ids", "detail_ref", "report_ref", "approval_scope_key", "startup_recovered", "Thread blocked-state lifecycle must mirror blocked-episode identity instead of request-level or tier-level surrogates.", "Visible thread actions derive from ordered `allowed_action_ids[]`.", "blocked-episode approval scope and visible action set must remain explicit", "Plans/Contracts_V0.md#6.1 Canonical blocked-episode approval anchor", "Plans/human-in-the-loop.md#Canonical HITL request contract"],
+      "stale_residue_to_retire": ["`approve_continue`", "request-level blocked identity", "tier-bound approval language"],
+      "status": "active"
+    },
+    {
+      "path": "Plans/chain-wizard-flexibility.md",
+      "heading": "## 12. Three-Pass Canonical Validation Workflow (Mandatory Invariant Sweep)",
+      "doc_role": "owner",
+      "section_role": "owner_section",
+      "source_reasons": ["OBL-036"],
+      "exact_items_that_must_survive": ["validation_pass_report", "workflow_run_id", "pass_number", "pass_name", "pass_verdict", "verdict_reason", "phase_plan_ref", "staged_bundle_ref", "requirements_quality_report_ref", "run_id", "skipped", "Pass 1", "Pass 2", "Pass 3", "validation pass report", "workflow_run_id", "pass_number", "pass_name", "pass_verdict", "verdict_reason", "phase_plan_ref", "staged_bundle_ref", "requirements_quality_report_ref", "run_id", "Validation passes must emit lineage-rich pass reports that can explain what was evaluated and what execution was seeded.", "`pass_verdict` must support `skipped`.", "effective runtime identity must survive validation into launch handoff", "Plans/Project_Output_Artifacts.md#10. Validation Pass Report Artifacts"],
+      "stale_residue_to_retire": ["pass/fail-only assumptions", "`workflow_run_id` as the only lineage bridge"],
+      "status": "active"
+    },
+    {
+      "path": "Plans/chain-wizard-flexibility.md",
+      "heading": "### 17.4 Assistant-to-wizard handoff payload",
+      "doc_role": "owner",
+      "section_role": "owner_section",
+      "source_reasons": ["OBL-033", "OBL-036"],
+      "exact_items_that_must_survive": ["node_id", "attempt_id", "lane_id", "package_id", "execution_role", "effective_account_id", "operational_identity", "validation_pass_report", "workflow_run_id", "run_id", "handoff payload", "validation lineage", "node_id", "attempt_id", "lane_id", "package_id", "execution_role", "effective_account_id", "operational_identity", "workflow_run_id", "run_id", "Wizard handoff must carry runtime attribution and validation lineage explicitly rather than by implication.", "effective account and execution role must survive wizard handoff payloads", "Plans/assistant-chat-design.md#29.4 Accepting the recommendation: handoff to Chain Wizard / Interview"],
+      "stale_residue_to_retire": ["identity-thin handoff payloads", "validation lineage that depends on provider/model only"],
+      "status": "active"
+    },
+    {
+      "path": "Plans/Permissions_System.md",
+      "heading": "### 2.4B Scope specificity across package, seam, lane, project, and global contexts",
+      "doc_role": "owner",
+      "section_role": "owner_section",
+      "source_reasons": ["OBL-009"],
+      "exact_items_that_must_survive": ["execution_entity_id", "lane_id", "package_id", "account_id", "permission_scope", "approval_carryover_scope", "global", "project", "package", "lane", "account", "execution_entity_id", "lane_id", "package_id", "account_id", "permission_scope", "approval_carryover_scope", "Permission resolution and approval carryover must be multi-lane and account-aware rather than session-only.", "execution-entity", "lane", "package", "effective-account", "Plans/FinalGUISpec.md#10.8 Human-in-the-loop approvals", "Plans/Tools.md#10.7A Web-operation approval summary rules"],
+      "stale_residue_to_retire": ["single-session approval assumption", "tool/context/mode-only permission resolution"],
+      "status": "active"
+    },
+    {
+      "path": "Plans/Permissions_System.md",
+      "heading": "### Permission snapshot contract",
+      "doc_role": "owner",
+      "section_role": "owner_section",
+      "source_reasons": ["OBL-009", "OBL-032"],
+      "exact_items_that_must_survive": ["blocked_sequence", "approval_scope_key", "execution_entity_id", "lane_id", "package_id", "account_id", "allowed_action_ids", "permission snapshot", "blocked_sequence", "approval_scope_key", "execution_entity_id", "lane_id", "package_id", "account_id", "allowed_action_ids", "Permission snapshots must preserve blocked-episode identity and scoped approval dimensions together.", "lane/package/account scope", "`approval_scope_key`", "ordered `allowed_action_ids[]`", "Plans/Contracts_V0.md#6.1 Canonical blocked-episode approval anchor"],
+      "stale_residue_to_retire": ["session-global approval snapshots that omit blocked-episode identity"],
+      "status": "active"
+    },
+    {
+      "path": "Plans/human-in-the-loop.md",
+      "heading": "### Canonical HITL request contract",
+      "doc_role": "consumer",
+      "section_role": "consumer_section",
+      "source_reasons": ["OBL-029", "OBL-032"],
+      "exact_items_that_must_survive": ["blocked_sequence", "blocked_reason_code", "allowed_action_ids", "detail_ref", "report_ref", "approval_scope_key", "startup_recovered", "Blocked", "Waiting approval", "Action Required", "blocked_sequence", "blocked_reason_code", "allowed_action_ids", "detail_ref", "report_ref", "approval_scope_key", "startup_recovered", "HITL requests must mirror blocked-episode identity rather than tier-local or request-id-local surrogates.", "Visible action options come from ordered `allowed_action_ids[]`.", "blocked-episode approval scope and visible actions must remain explicit", "Plans/Contracts_V0.md#6.1 Canonical blocked-episode approval anchor"],
+      "stale_residue_to_retire": ["approvals bound to `tier_id` as canonical execution scope", "`approve_continue`"],
+      "status": "active"
+    },
+    {
+      "path": "Plans/human-in-the-loop.md",
+      "heading": "## Shared approval-ladder alignment (2026-04-04)",
+      "doc_role": "consumer",
+      "section_role": "consumer_section",
+      "source_reasons": ["OBL-013", "OBL-032"],
+      "exact_items_that_must_survive": ["info", "warning", "attention_required", "blocked", "system_notification", "blocked_sequence", "Info", "Warning", "Attention Required", "Blocked", "System notification", "escalation_level", "blocked_sequence", "action_available", "Shared ladder rendering must preserve `attention_required` vs `blocked` across approval flows.", "Persistent blocked episodes must not downgrade into generic attention.", "approval escalation must retain blocked-episode scope and action availability", "Plans/Orchestrator_Page.md#12. Concern and notification model"],
+      "stale_residue_to_retire": ["case-by-case local attention behavior without shared ladder"],
+      "status": "active"
+    },
+    {
+      "path": "Plans/Tools.md",
+      "heading": "### 8.0 Event payloads (seglog)",
+      "doc_role": "consumer",
+      "section_role": "consumer_section",
+      "source_reasons": ["OBL-033"],
+      "exact_items_that_must_survive": ["tool.invoked", "tool.denied", "node_id", "attempt_id", "lane_id", "package_id", "execution_role", "effective_account_id", "operational_identity", "tool_use_id", "tool event payload", "node_id", "attempt_id", "lane_id", "package_id", "execution_role", "effective_account_id", "operational_identity", "tool_use_id", "Tool runtime docs must consume the unified runtime/tool/artifact attribution packet rather than analytics-thin event shapes.", "effective account and execution role must remain visible in tool audit payloads", "Plans/Contracts_V0.md#3. Tool events (persisted)"],
+      "stale_residue_to_retire": ["analytics-thin tool events"],
+      "status": "active"
+    },
+    {
+      "path": "Plans/Tools.md",
+      "heading": "### 10.7A Web-operation approval summary rules",
+      "doc_role": "consumer",
+      "section_role": "consumer_section",
+      "source_reasons": ["OBL-009"],
+      "exact_items_that_must_survive": ["execution_entity_id", "lane_id", "package_id", "account_id", "permission_scope", "approval_carryover_scope", "Allow", "Ask", "Deny", "execution_entity_id", "lane_id", "package_id", "account_id", "permission_scope", "approval_carryover_scope", "Tool-side approval summaries must surface the same scope dimensions owned by Permissions System.", "lane/package/account scope", "effective-account dimension", "Plans/Permissions_System.md#2.4B Scope specificity across package, seam, lane, project, and global contexts", "Plans/FinalGUISpec.md#15.7 Permission approval card widget"],
+      "stale_residue_to_retire": ["session-only approval summaries", "document-generic permission references that omit the exact owner anchor"],
+      "status": "active"
+    },
+    {
+      "path": "Plans/GitHub_API_Auth_and_Flows.md",
+      "heading": "## Token handling and storage (hard rules)",
+      "doc_role": "owner",
+      "section_role": "owner_section",
+      "source_reasons": ["OBL-035"],
+      "exact_items_that_must_survive": ["account_id", "credential_ref", "login", "auth_realm", "display-only", "account id", "credential ref", "account_id", "credential_ref", "login", "auth_realm", "GitHub durable account identity must use stable internal account keys while login remains display-only/provider-native metadata.", "Plans/Multi-Account.md#4. Data model", "Plans/storage-plan.md#4.1 Shared runtime identity consumption"],
+      "stale_residue_to_retire": ["`github_api:github.com/<login>` as durable identity", "login-keyed durable identity"],
+      "status": "active"
+    },
+    {
+      "path": "Plans/GitHub_API_Auth_and_Flows.md",
+      "heading": "## Runtime Auth-Blocked Recovery Addendum (2026-03-09)",
+      "doc_role": "owner",
+      "section_role": "owner_section",
+      "source_reasons": ["OBL-035"],
+      "exact_items_that_must_survive": ["account_id", "credential_ref", "login", "resume_url", "auth blocked recovery", "account_id", "credential_ref", "login", "resume_url", "Reconnect/recovery payloads must carry canonical recovery context rather than login-keyed identity.", "Plans/GitHub_Integration.md#Deferred GitHub Recovery Binding (2026-03-09)", "Plans/Contracts_V0.md#7.3 `route_target`"],
+      "stale_residue_to_retire": ["arg-less login-keyed recovery flows"],
+      "status": "active"
+    },
+    {
+      "path": "Plans/Multi-Account.md",
+      "heading": "## 4. Data model",
+      "doc_role": "owner",
+      "section_role": "owner_section",
+      "source_reasons": ["OBL-007", "OBL-008", "OBL-035"],
+      "exact_items_that_must_survive": ["requested_account_id", "requested_account_binding", "requested_account_policy", "effective_account_id", "provider_account_id", "account_id", "credential_ref", "login", "requested account", "effective account", "account record", "requested_account_id", "requested_account_binding", "requested_account_policy", "effective_account_id", "provider_account_id", "account_id", "credential_ref", "login", "auth_realm", "Stable internal account identity outranks provider-native display metadata.", "Requested/effective account state remains explicit across runtime resolution.", "effective account identity must remain available to permission and approval consumers", "Plans/Contracts_V0.md#4. Auth contracts", "Plans/GitHub_API_Auth_and_Flows.md#Token handling and storage (hard rules)"],
+      "stale_residue_to_retire": ["login-keyed durable identity", "ambiguous `provider_account_id` status", "policy-only account routing without selected-account anchor"],
+      "status": "active"
+    },
+    {
+      "path": "Plans/usage-feature.md",
+      "heading": "## Rewrite alignment (2026-02-21)",
+      "doc_role": "consumer",
+      "section_role": "consumer_section",
+      "source_reasons": ["OBL-011"],
+      "exact_items_that_must_survive": ["canonical term system", "contextual help system", "dedicated help-entry contract", "related_concepts", "why it matters", "what it is not", "related concepts", "canonical_name", "short_definition", "why_it_matters", "what_it_is_not", "common_related_states", "related_concepts", "surface_examples", "Usage rewrite alignment text must preserve canonical terminology instead of renaming terms for ELI5/consumer prose.", "Plans/Glossary.md#Orchestrator rewrite terms"],
+      "stale_residue_to_retire": ["ELI5/Expert copy that renames canonical terms"],
+      "status": "active"
+    },
+    {
+      "path": "Plans/usage-feature.md",
+      "heading": "### Canonical usage pipeline",
+      "doc_role": "consumer",
+      "section_role": "consumer_section",
+      "source_reasons": ["OBL-017", "OBL-033"],
+      "exact_items_that_must_survive": ["node_id", "attempt_id", "lane_id", "package_id", "execution_role", "effective_account_id", "operational_identity", "record export", "bundle export", "view export", "Show in Ledger", "Show in Usage", "node_id", "attempt_id", "lane_id", "package_id", "execution_role", "effective_account_id", "operational_identity", "export_kind", "trust_state_at_export", "Usage views must consume unified attribution rather than infer identity from coarse session or provider data.", "Usage exports must respect the shared export taxonomy.", "effective account identity must survive into usage views", "Plans/Contracts_V0.md#3. Tool events (persisted)", "Plans/storage-plan.md#Canonical records"],
+      "stale_residue_to_retire": ["session-only or tier-only usage correlation", "unclear export family boundaries"],
+      "status": "active"
+    },
+    {
+      "path": "Plans/usage-feature.md",
+      "heading": "## Runtime Scheduler / Recovery Observability Addendum (2026-03-09)",
+      "doc_role": "consumer",
+      "section_role": "consumer_section",
+      "source_reasons": ["OBL-013"],
+      "exact_items_that_must_survive": ["info", "warning", "attention_required", "blocked", "system_notification", "Info", "Warning", "Attention Required", "Blocked", "System notification", "escalation_level", "severity", "blocked_owner", "persistence_duration", "action_available", "Usage/recovery observability must preserve the shared escalation ladder instead of flattening blocked outcomes into generic failures.", "Plans/Orchestrator_Page.md#12. Concern and notification model"],
+      "stale_residue_to_retire": ["blocked outcomes flattened into generic failures"],
+      "status": "active"
+    },
+    {
+      "path": "Plans/usage-feature.md",
+      "heading": "### Billing identity, attribution, and pricing metadata",
+      "doc_role": "consumer",
+      "section_role": "consumer_section",
+      "source_reasons": ["OBL-007", "OBL-033", "OBL-035"],
+      "exact_items_that_must_survive": ["requested_account_id", "requested_account_binding", "effective_account_id", "account_id", "credential_ref", "login", "execution_role", "operational_identity", "requested account", "effective account", "billing identity", "requested_account_id", "requested_account_binding", "effective_account_id", "account_id", "credential_ref", "login", "execution_role", "operational_identity", "Usage and billing surfaces must attribute cost through stable internal account identity and runtime attribution rather than login or provider-thin surrogates.", "effective account identity must remain visible in billing/usage summaries", "Plans/Multi-Account.md#4. Data model", "Plans/GitHub_API_Auth_and_Flows.md#Token handling and storage (hard rules)"],
+      "stale_residue_to_retire": ["login-keyed durable identity", "policy-only account routing", "identity-thin usage attribution"],
+      "status": "active"
+    },
+    {
+      "path": "Plans/usage-feature.md",
+      "heading": "### Cost_usage runtime artifact and Show in Ledger / Show in Usage",
+      "doc_role": "consumer",
+      "section_role": "consumer_section",
+      "source_reasons": ["OBL-034", "OBL-037"],
+      "exact_items_that_must_survive": ["attempt_id", "usage_event_ref", "provider_attempt_ref", "artifact_id", "artifact_type", "projection_freshness", "projection_health", "Show in Ledger", "Show in Usage", "attempt_id", "usage_event_ref", "provider_attempt_ref", "artifact_id", "artifact_type", "projection_freshness", "projection_health", "Usage artifact drill-through must preserve bridge-field precedence.", "Artifact availability must degrade through projection-health semantics rather than implying artifact loss.", "Plans/Runtime_Artifacts_Panel.md#4. redb key and projector", "Plans/storage-plan.md#Projection rules (reconciled)"],
+      "stale_residue_to_retire": ["artifact attribution without attempt identity", "implicit projection freshness assumptions"],
+      "status": "active"
+    },
+    {
+      "path": "Plans/interview-subagent-integration.md",
+      "heading": "### Requested/effective Interview contract",
+      "doc_role": "consumer",
+      "section_role": "consumer_section",
+      "source_reasons": ["OBL-007", "OBL-033"],
+      "exact_items_that_must_survive": ["requested_account_id", "requested_account_binding", "requested_account_policy", "effective_account_id", "execution_role", "operational_identity", "node_id", "attempt_id", "lane_id", "package_id", "requested account", "effective account", "runtime identity", "requested_account_id", "requested_account_binding", "requested_account_policy", "effective_account_id", "execution_role", "operational_identity", "node_id", "attempt_id", "lane_id", "package_id", "Interview/runtime surfaces must preserve both requested/effective identity and runtime attribution through interview execution and review flows.", "effective account and execution role must survive interview visibility surfaces", "Plans/Prompt_Pipeline.md#6.4 Effective resolution record", "Plans/Contracts_V0.md#3. Tool events (persisted)"],
+      "stale_residue_to_retire": ["policy-only account routing", "identity-thin interview runtime display"],
+      "status": "active"
+    },
+    {
+      "path": "Plans/interview-subagent-integration.md",
+      "heading": "### Execution-Critical Validation References",
+      "doc_role": "consumer",
+      "section_role": "consumer_section",
+      "source_reasons": ["OBL-036"],
+      "exact_items_that_must_survive": ["validation_pass_report", "workflow_run_id", "pass_verdict", "phase_plan_ref", "requirements_quality_report_ref", "run_id", "validation pass report", "workflow_run_id", "pass_verdict", "phase_plan_ref", "requirements_quality_report_ref", "run_id", "Interview validation references must point to lineage-rich pass reports rather than opaque validation blobs.", "effective runtime identity must survive validation references when they seed execution", "Plans/Project_Output_Artifacts.md#10. Validation Pass Report Artifacts"],
+      "stale_residue_to_retire": ["validation lineage that depends on provider/model only"],
+      "status": "active"
+    },
+    {
+      "path": "Plans/storage-plan.md",
+      "heading": "### New redb key families",
+      "doc_role": "owner",
+      "section_role": "owner_section",
+      "source_reasons": ["OBL-038"],
+      "exact_items_that_must_survive": ["thread_state:{thread_id}:worktree_binding", "worktree_binding_reverse:{worktree_id}", "worktree_record.v1:{project_id}:{worktree_id}", "owner_thread_id", "owner_run_id", "owner_node_id", "selected_worktree_id", "worktree binding", "worktree record", "worktree_record.v1:{project_id}:{worktree_id}", "owner_thread_id", "owner_run_id", "owner_node_id", "selected_worktree_id", "worktree_id", "lane_id", "`selected_worktree_id` remains UI state and must not replace durable worktree identity.", "Thread binding keys do not replace lane/worktree lifecycle records or historical lineage.", "Plans/WorktreeGitImprovement.md#4. GUI for Git & Worktrees", "Plans/Orchestrator_Page.md#11. Source Control boundary"],
+      "stale_residue_to_retire": ["thread worktree binding as the only durable worktree contract"],
+      "status": "active"
+    },
+    {
+      "path": "Plans/WorktreeGitImprovement.md",
+      "heading": "## 4. GUI for Git & Worktrees",
+      "doc_role": "consumer",
+      "section_role": "consumer_section",
+      "source_reasons": ["OBL-001", "OBL-002", "OBL-006", "OBL-038"],
+      "exact_items_that_must_survive": ["worktree-first", "unified worktree inventory", "lane/package/seam operational", "lane identity survives after a live worktree is archived or removed", "cleanup posture", "owner_thread_id", "Source Control", "Lane", "Worktree", "worktree_id", "lane_id", "owner_thread_id", "selected_worktree_id", "lifecycle_state", "cleanup_scope", "Source Control rows remain concrete worktrees, branches, and paths.", "Orchestrator shows lane/worktree summary rather than duplicating raw worktree inventory.", "Cleanup of files inside a worktree is not the same thing as removing the worktree itself.", "Lane/worktree identity survives archive/remove across ownership categories.", "Plans/Orchestrator_Page.md#11. Source Control boundary", "Plans/GitHub_Integration.md#A.4 Worktrees", "Plans/storage-plan.md#New redb key families"],
+      "stale_residue_to_retire": [],
+      "status": "active"
+    },
+    {
+      "path": "Plans/GitHub_Integration.md",
+      "heading": "### A.5 Surface boundary rule",
+      "doc_role": "owner",
+      "section_role": "owner_section",
+      "source_reasons": ["OBL-001"],
+      "exact_items_that_must_survive": ["Source Control owns Git-native worktree inspection and mutation actions", "Orchestrator owns lane/package/seam operational context, lineage, and governance state", "cross-surface opens route through canonical route/open contracts rather than feature-local payloads", "Source Control", "Orchestrator", "initiator_surface", "executor_surface", "worktree_id", "lane_id", "package_id", "run_reference", "Source Control owns Git-native worktree inspection and mutation actions.", "Orchestrator owns lane/package/seam operational context and lineage.", "Remote-operation receipts retain both local runtime identity and remote workflow identity.", "Plans/Orchestrator_Page.md#11. Source Control boundary", "Plans/FinalGUISpec.md#7.2 Source Control"],
+      "stale_residue_to_retire": [],
+      "status": "active"
+    },
+    {
+      "path": "Plans/Runtime_Artifacts_Panel.md",
+      "heading": "## 2. Two artifact families (no conflation)",
+      "doc_role": "owner",
+      "section_role": "owner_section",
+      "source_reasons": ["OBL-037"],
+      "exact_items_that_must_survive": ["Project Plan Package", "Runtime Artifacts", "seglog `runtime_artifact.*`", "artifacts_index.v1:{project_id}:{artifact_id}", "Project Plan Package", "Runtime Artifacts", "artifact_id", "artifact_type", "project_id", "run_id", "attempt_id", "projection_freshness", "projection_health", "Project Plan Package and Runtime Artifacts remain distinct families.", "Runtime artifact lookup/indexing remains a projection concern rather than canonical artifact truth.", "Plans/Project_Output_Artifacts.md#Runtime Artifacts (GUI panel) — distinct from this document", "Plans/storage-plan.md#Required redb keys"],
+      "stale_residue_to_retire": ["redb `artifacts_index:v1:{project_id}`"],
+      "status": "active"
+    },
+    {
+      "path": "Plans/Runtime_Artifacts_Panel.md",
+      "heading": "## 5. Canonical IDs and task_id rule",
+      "doc_role": "owner",
+      "section_role": "owner_section",
+      "source_reasons": ["OBL-034"],
+      "exact_items_that_must_survive": ["attempt_id", "provider_attempt_ref", "usage_event_ref", "workflow_refs", "docker_refs", "kubernetes_refs", "runtime-artifact envelope", "artifact_id", "logical_artifact_id", "linked_artifact_id", "created_at_utc", "summary", "artifact id", "attempt id", "attempt_id", "provider_attempt_ref", "usage_event_ref", "workflow_refs", "docker_refs", "kubernetes_refs", "artifact_id", "logical_artifact_id", "linked_artifact_id", "created_at_utc", "summary", "`attempt_id` is the canonical local execution anchor.", "Bridge refs remain joins rather than replacement primary keys.", "Timestamp/run/thread fallback is compatibility-only when bridge refs are absent.", "Artifact open flows resolve through identity plus route/open contracts rather than feature-local path guessing.", "Plans/storage-plan.md#Cross-surface receipt record", "Plans/usage-feature.md#Cost_usage runtime artifact and Show in Ledger / Show in Usage", "Plans/Project_Output_Artifacts.md#10. Validation Pass Report Artifacts"],
+      "stale_residue_to_retire": ["task_id rule", "`task_id`"],
+      "status": "active"
+    },
+    {
+      "path": "Plans/Runtime_Artifacts_Panel.md",
+      "heading": "## 5A. Debug investigation grouping, manifests, and exports",
+      "doc_role": "consumer",
+      "section_role": "consumer_section",
+      "source_reasons": ["OBL-017"],
+      "exact_items_that_must_survive": ["record export", "bundle export", "view export", "manifest", "trust_state_at_export", "record export", "bundle export", "view export", "export_id", "export_kind", "focused_run_id", "filter_summary", "included_record_ids", "included_artifact_ids", "included_file_paths", "trust_state_at_export", "Filtered JSON is not automatically canonical record export.", "Derived exports stay visibly derived.", "Export correctness depends on projection-trust validation.", "Plans/storage-plan.md#Canonical records", "Plans/Orchestrator_Page.md#8. Ledger tab"],
+      "stale_residue_to_retire": [],
+      "status": "active"
+    },
+    {
+      "path": "Plans/Project_Output_Artifacts.md",
+      "heading": "### Runtime Artifacts (GUI panel) — distinct from this document",
+      "doc_role": "mirror",
+      "section_role": "mirror_section",
+      "source_reasons": ["OBL-037"],
+      "exact_items_that_must_survive": ["Runtime Artifacts", "seglog `runtime_artifact.*` event types", "artifacts_index.v1:{project_id}:{artifact_id}", "attempt_id", "safe_point_id", "remediation_root_id", "Runtime Artifacts", "artifact_id", "artifact_type", "attempt_id", "safe_point_id", "remediation_root_id", "Optional runtime-analysis exports remain projections of canonical runtime data.", "Materialized runtime-analysis exports must not invent separate artifact-local identity.", "Plans/Runtime_Artifacts_Panel.md#2. Two artifact families (no conflation)", "Plans/storage-plan.md#Required redb keys"],
+      "stale_residue_to_retire": ["redb `artifacts_index:v1:{project_id}`"],
+      "status": "active"
+    },
+    {
+      "path": "Plans/FinalGUISpec.md",
+      "heading": "### 7.2 Source Control",
+      "doc_role": "consumer",
+      "section_role": "consumer_section",
+      "source_reasons": ["OBL-001", "OBL-002"],
+      "exact_items_that_must_survive": ["Source Control", "Git-native repository work", "Worktrees", "History", "Graph", "Package, lane, run, or remediation lineage appear as metadata", "worktree-first", "Source Control", "Worktrees", "History", "Graph", "worktree_id", "lane_id", "package_id", "run_reference", "lifecycle_state", "Source Control is the side-panel owner for Git-native repo work.", "Package/lane/run lineage appears as metadata rather than the primary grouping axis.", "Git-native actions remain Source Control owned while Orchestrator explains why they matter.", "Plans/GitHub_Integration.md#A.4 Worktrees", "Plans/Orchestrator_Page.md#11. Source Control boundary"],
+      "stale_residue_to_retire": [],
+      "status": "active"
+    },
+    {
+      "path": "Plans/FinalGUISpec.md",
+      "heading": "#### Artifacts side-panel owner",
+      "doc_role": "consumer",
+      "section_role": "consumer_section",
+      "source_reasons": ["OBL-037"],
+      "exact_items_that_must_survive": ["artifact_panel_state.v1:{project_id}", "artifacts_index.v1:{project_id}:{artifact_id}", "artifact_id", "run_id", "attempt_id", "projection_freshness", "projection_health", "Artifacts", "artifact_panel_state.v1:{project_id}", "artifact_id", "run_id", "attempt_id", "projection_freshness", "projection_health", "Panel UI state remains separate from canonical artifact identity and lineage.", "Artifact inspection must degrade to record-backed views when projection rows are stale or corrupt.", "Selection and preview resolve through per-artifact row identity rather than a per-project blob.", "Plans/Runtime_Artifacts_Panel.md#4. redb key and projector", "Plans/storage-plan.md#Required redb keys"],
+      "stale_residue_to_retire": ["per-project blob artifact selection state that replaces per-artifact row identity"],
+      "status": "active"
+    },
+    {
+      "path": "Plans/Permissions_System.md",
+      "heading": "## 6. Ask flow semantics",
+      "doc_role": "owner",
+      "section_role": "owner_section",
+      "source_reasons": ["OBL-009", "OBL-029", "OBL-032"],
+      "exact_items_that_must_survive": ["deny", "once", "for session", "always", "blocked_reason_code", "allowed_action_ids[]", "approval_scope_key", "blocked_sequence", "question default `allow` only when HITL is available", "Deny", "Once", "For session", "Always", "blocked_reason_code", "allowed_action_ids", "approval_scope_key", "blocked_sequence", "execution_entity_id", "lane_id", "package_id", "account_id", "Approval scope must not silently become same-session if lanes are parallel.", "Chat blocked action buttons derive from ordered `allowed_action_ids[]`.", "Session-wide approval policy must remain distinct from blocked-episode approval.", "lane/package/account scope", "`approval_scope_key`", "ordered `allowed_action_ids[]`", "Plans/FinalGUISpec.md#15.7 Permission approval card widget", "Plans/human-in-the-loop.md#Shared approval-ladder alignment (2026-04-04)"],
+      "stale_residue_to_retire": ["single-session approval assumption", "approve_continue"],
+      "status": "active"
+    },
+    {
+      "path": "Plans/Tools.md",
+      "heading": "### 10.7 Ask-flow runner notes",
+      "doc_role": "consumer",
+      "section_role": "consumer_section",
+      "source_reasons": ["OBL-009", "OBL-032"],
+      "exact_items_that_must_survive": ["approval_scope_key", "blocked_sequence", "deny", "once", "for session", "always", "execution_entity_id", "lane_id", "package_id", "account_id", "Deny", "Once", "For session", "Always", "approval_scope_key", "blocked_sequence", "execution_entity_id", "lane_id", "package_id", "account_id", "Approval scope must not silently become same-session if lanes are parallel.", "Headless and HITL paths must preserve blocked-episode identity rather than a thin options array.", "lane/package/account scope", "`approval_scope_key`", "Plans/Permissions_System.md#6. Ask flow semantics", "Plans/human-in-the-loop.md#Canonical HITL request contract"],
+      "stale_residue_to_retire": ["{ tool_name, invocation_summary, options: deny | once | for session | always }"],
+      "status": "active"
+    },
+    {
+      "path": "Plans/Tools.md",
+      "heading": "### `tool.denied` requirements",
+      "doc_role": "consumer",
+      "section_role": "consumer_section",
+      "source_reasons": ["OBL-029", "OBL-032"],
+      "exact_items_that_must_survive": ["blocked_reason_code", "allowed_action_ids[]", "blocked_sequence", "approval_scope_key", "detail_ref", "report_ref", "executed_at_all", "Blocked", "blocked_reason_code", "allowed_action_ids", "blocked_sequence", "approval_scope_key", "detail_ref", "report_ref", "executed_at_all", "Tool-originated blocked payloads use ordered `allowed_action_ids[]` only.", "Pre-attempt blocked episodes must not invent an `attempt_id`.", "Tool denial must remain inspectable as a blocked outcome rather than a success-shaped fallback.", "ordered `allowed_action_ids[]`", "`approval_scope_key`", "Plans/Contracts_V0.md#6.1 Canonical blocked-episode approval anchor", "Plans/assistant-chat-design.md#Persistence and restore rule"],
+      "stale_residue_to_retire": ["recovery_options[]", "approve_continue"],
+      "status": "active"
+    },
+    {
+      "path": "Plans/GitHub_API_Auth_and_Flows.md",
+      "heading": "### Credential store keying (canonical)",
+      "doc_role": "owner",
+      "section_role": "owner_section",
+      "source_reasons": ["OBL-035"],
+      "exact_items_that_must_survive": ["account_id", "credential_ref", "login", "display-only", "auth_realm", "github_api:github.com/<login>", "account id", "credential ref", "account_id", "credential_ref", "login", "auth_realm", "Username rename must not break identity or reconnect behavior.", "Reconnect payloads must carry canonical recovery context rather than an arg-less login-keyed flow.", "Plans/Multi-Account.md#4.2 Account record (canonical)", "Plans/Prompt_Pipeline.md#6.4 Effective resolution record"],
+      "stale_residue_to_retire": ["github_api:github.com/<login>", "login-keyed durable identity"],
+      "status": "active"
+    },
+    {
+      "path": "Plans/GitHub_API_Auth_and_Flows.md",
+      "heading": "### 2. Event and wakeup integration",
+      "doc_role": "owner",
+      "section_role": "owner_section",
+      "source_reasons": ["OBL-035"],
+      "exact_items_that_must_survive": ["originating blocked attempt or blocked node episode", "new attempt snapshot", "local work remains preserved", "Auth recovery MUST NOT auto-resubmit a blocked remote side effect without the canonical runtime resume/retry action", "auth recovery", "account_id", "credential_ref", "blocked_sequence", "run_id", "attempt_id", "A successful reconnect, re-auth, or scope upgrade binds back to the originating blocked attempt or blocked node episode.", "Previously blocked attempts remain immutable history after auth recovery.", "Completed local preparation survives auth blocking.", "blocked-episode identity must survive auth recovery", "Plans/Contracts_V0.md#6.1 Canonical blocked-episode approval anchor"],
+      "stale_residue_to_retire": [],
+      "status": "active"
+    },
+    {
+      "path": "Plans/Multi-Account.md",
+      "heading": "### 4.2 Account record (canonical)",
+      "doc_role": "owner",
+      "section_role": "owner_section",
+      "source_reasons": ["OBL-035"],
+      "exact_items_that_must_survive": ["account_id", "credential_ref", "account_id is the internal stable key.", "provider_identity is descriptive metadata only.", "the canonical account-registration shape is { account_id: ulid, provider_id, display_name, auth_method, credential_ref, created_at, last_used_at, status }", "account record", "account_id", "credential_ref", "provider_id", "display_name", "auth_method", "created_at", "last_used_at", "status", "Stable internal account identity is separate from provider-native display metadata.", "Secrets remain outside config and state stores.", "Plans/GitHub_API_Auth_and_Flows.md#Credential store keying (canonical)"],
+      "stale_residue_to_retire": [],
+      "status": "active"
+    },
+    {
+      "path": "Plans/Multi-Account.md",
+      "heading": "### 4.5 Selectable unit and runtime resolution",
+      "doc_role": "owner",
+      "section_role": "owner_section",
+      "source_reasons": ["OBL-007"],
+      "exact_items_that_must_survive": ["requested/effective execution identity", "requested_account_policy", "effective_account_id", "effective_provider_identity", "requested_account_id", "requested_account_binding", "execution_role", "operational_identity", "requested account", "effective account", "requested_account_id", "requested_account_binding", "requested_account_policy", "effective_account_id", "effective_provider_identity", "execution_role", "operational_identity", "Requested state must remain recoverable in historical snapshots.", "Binding distinguishes preference from requirement.", "Fallback behavior depends on binding rather than ad hoc UI or provider policy.", "effective account identity must remain available to permission and approval consumers", "Plans/Prompt_Pipeline.md#6.4 Effective resolution record", "Plans/assistant-chat-design.md#Canonical navigation model"],
+      "stale_residue_to_retire": ["policy-only account routing without selected-account anchor", "identity bundles that stop at effective_account_id only"],
+      "status": "active"
+    },
+    {
+      "path": "Plans/chain-wizard-flexibility.md",
+      "heading": "### 2.2 Downstream Handoff Contract",
+      "doc_role": "owner",
+      "section_role": "owner_section",
+      "source_reasons": ["OBL-036"],
+      "exact_items_that_must_survive": ["validation_pass_report", "workflow_run_id", "phase_plan_ref", "staged_bundle_ref", "requirements_quality_report_ref", "execution_role", "effective_account_id", "run_id", "launch receipt", "promoted package ref", "handoff contract", "workflow_run_id", "phase_plan_ref", "staged_bundle_ref", "requirements_quality_report_ref", "execution_role", "effective_account_id", "run_id", "Accepted or final sweep output must bridge into launched execution through a launch receipt or promoted package ref.", "Pass reports must not masquerade as run, node, or attempt records.", "effective runtime identity must survive downstream handoff", "Plans/Project_Output_Artifacts.md#10. Validation Pass Report Artifacts", "Plans/Project_Output_Artifacts.md#11.1 `traceability/requirements_quality_report.json` (machine-readable)", "Plans/Prompt_Pipeline.md#6.4 Effective resolution record"],
+      "stale_residue_to_retire": ["isolated pass reports that do not name the wizard, session, or bundle they came from"],
+      "status": "active"
+    },
+    {
+      "path": "Plans/chain-wizard-flexibility.md",
+      "heading": "### 3. Dashboard / thread / resume behavior",
+      "doc_role": "consumer",
+      "section_role": "consumer_section",
+      "source_reasons": ["OBL-027", "OBL-029"],
+      "exact_items_that_must_survive": ["route_target", "resume_url", "serialized transport", "canonical identity", "does not define a second routing ontology", "blocked reason", "allowed_action_ids", "detail_ref", "report_ref", "resume", "Blocked", "route_target", "resume_url", "blocked_reason_code", "allowed_action_ids", "detail_ref", "report_ref", "`resume_url` is serialized transport only; `route_target` is canonical identity.", "Chat action buttons derive from ordered `allowed_action_ids[]`.", "Blocked surfaces preserve report and detail inspection refs.", "ordered `allowed_action_ids[]`", "Plans/Contracts_V0.md#7.3 `route_target`", "Plans/Contracts_V0.md#6.1 Canonical blocked-episode approval anchor"],
+      "stale_residue_to_retire": ["resume_url acting as shadow routing primitive", "resume_url-centered blocked-card payload canon"],
+      "status": "active"
+    },
+    {
+      "path": "Plans/assistant-chat-design.md",
+      "heading": "### Canonical navigation model",
+      "doc_role": "consumer",
+      "section_role": "consumer_section",
+      "source_reasons": ["OBL-027", "OBL-007"],
+      "exact_items_that_must_survive": ["route_target", "resume_url", "serialized transport only", "requested/effective runtime identity", "historical thread/activity views use frozen requested/effective runtime snapshots captured for the execution", "navigation model", "route_target", "resume_url", "requested_account_id", "requested_account_binding", "requested_account_policy", "effective_account_id", "execution_role", "operational_identity", "`route_target` is canonical identity; `resume_url` is serialized transport only.", "Chat must not define assistant-local replacements for the owner-doc requested/effective field set.", "effective account identity must remain available in restored chat/runtime views", "Plans/Contracts_V0.md#7.3 `route_target`", "Plans/Prompt_Pipeline.md#6.4 Effective resolution record"],
+      "stale_residue_to_retire": [],
+      "status": "active"
+    },
+    {
+      "path": "Plans/assistant-chat-design.md",
+      "heading": "### 26.5 Storage",
+      "doc_role": "consumer",
+      "section_role": "consumer_section",
+      "source_reasons": ["OBL-036"],
+      "exact_items_that_must_survive": ["validation_pass_report", "provider", "model", "Per-pass selections are stored in app settings only.", "not stored in project artifacts", "not included in project exports", "storage", "validation_pass_report", "provider", "model", "Per-pass provider and model settings remain app-settings-only while resolved values are mirrored into `validation_pass_report` payload fields.", "Plans/chain-wizard-flexibility.md#12. Three-Pass Canonical Validation Workflow (Mandatory Invariant Sweep)", "Plans/Project_Output_Artifacts.md#10. Validation Pass Report Artifacts"],
+      "stale_residue_to_retire": [],
+      "status": "active"
+    },
+    {
+      "path": "Plans/assistant-chat-design.md",
+      "heading": "### 29.4 Accepting the recommendation: handoff to Chain Wizard / Interview",
+      "doc_role": "consumer",
+      "section_role": "consumer_section",
+      "source_reasons": ["OBL-033"],
+      "exact_items_that_must_survive": ["origin_thread_id", "origin_message_id", "project_id", "project_path", "plan_artifact_ref", "chat_excerpt_refs[]", "requirements_quality_report_ref", "execution_role", "effective_account_id", "operational_identity", "handoff", "origin_thread_id", "origin_message_id", "project_id", "project_path", "plan_artifact_ref", "chat_excerpt_refs[]", "requirements_quality_report_ref", "execution_role", "effective_account_id", "operational_identity", "The handoff preserves the audit trail that the wizard was launched from Assistant Chat or Deep Plan.", "Wizard handoff carries project and report lineage plus runtime identity.", "effective account identity must survive handoff payloads", "Plans/chain-wizard-flexibility.md#17.4 Assistant-to-wizard handoff payload", "Plans/Project_Output_Artifacts.md#10. Validation Pass Report Artifacts"],
+      "stale_residue_to_retire": ["identity-thin validation or handoff payloads"],
+      "status": "active"
+    },
+    {
+      "path": "Plans/assistant-chat-design.md",
+      "heading": "### Persistence and restore rule",
+      "doc_role": "consumer",
+      "section_role": "consumer_section",
+      "source_reasons": ["OBL-029", "OBL-032"],
+      "exact_items_that_must_survive": ["blocked_sequence", "approval_scope_key", "allowed_action_ids[]", "blocked_reason_code", "detail_ref", "report_ref", "persistence", "restore", "blocked_sequence", "approval_scope_key", "allowed_action_ids", "blocked_reason_code", "detail_ref", "report_ref", "Blocked notices persist enough identity to restore the same blocked surfaces and action set after restart or resume.", "Blocked episodes remain distinct episodes and are not collapsed into one mutable thread flag.", "Session-wide approval policy remains distinct from blocked-episode approval.", "blocked-episode approval scope and action set must survive restore", "Plans/Contracts_V0.md#6.1 Canonical blocked-episode approval anchor", "Plans/human-in-the-loop.md#Canonical HITL request contract"],
+      "stale_residue_to_retire": ["generic paused state", "thread-local recovery semantics"],
+      "status": "active"
+    },
+    {
+      "path": "Plans/Contracts_V0.md",
+      "heading": "### `scheduler.pass` (minimum addendum fields)",
+      "doc_role": "owner",
+      "section_role": "owner_section",
+      "source_reasons": ["OBL-032"],
+      "exact_items_that_must_survive": ["scheduler.pass", "wake_reason", "startup_recovered", "scheduler pass", "wake_reason", "startup_recovered", "The first scheduler pass after startup recovery persists `wake_reason = startup_recovered`.", "Blocked and recovery wake ownership is carried by `scheduler.pass` rather than inferred from prompt text.", "Plans/Executor_Protocol.md#Wake reasons and coalescing"],
+      "stale_residue_to_retire": [],
+      "status": "active"
+    },
+    {
+      "path": "Plans/Contracts_V0.md",
+      "heading": "### 7.2 UICommand envelope",
+      "doc_role": "owner",
+      "section_role": "owner_section",
+      "source_reasons": ["OBL-030"],
+      "exact_items_that_must_survive": ["command_kind", "normalization", "normalization.kind", "normalizes_to_contract", "alias_of_command_id", "shell_view", "navigation_wrapper", "domain_action", "wrapper", "deprecated_alias", "command envelope", "normalization", "command_kind", "normalization.kind", "normalizes_to_contract", "alias_of_command_id", "Wrapper metadata stays narrow and contract-level.", "Wrappers point to canonical primitive families only.", "Route payload structure is not restated inside command metadata.", "Plans/UI_Command_Catalog.md#2.0 Command entry contract (doc-level)", "Plans/Crosswalk.md#3.1 Runtime orchestration ownership"],
+      "stale_residue_to_retire": ["cmd.nav.*"],
+      "status": "active"
+    },
+    {
+      "path": "Plans/Crosswalk.md",
+      "heading": "### 3.1 Runtime orchestration ownership",
+      "doc_role": "mirror",
+      "section_role": "mirror_section",
+      "source_reasons": ["OBL-007", "OBL-030", "OBL-031", "OBL-032"],
+      "exact_items_that_must_survive": ["`Executor_Protocol.md` owns dispatch-time execution context and runtime role boundaries", "`Contracts_V0.md` owns persisted contract shapes, blocked-episode identity, command envelopes, `route_target`, and `OpenSubject`", "`Prompt_Pipeline.md` owns requested/effective runtime identity resolution semantics", "ownership", "requested_account_id", "requested_account_binding", "requested_account_policy", "effective_account_id", "execution_role", "operational_identity", "command_kind", "normalization.kind", "blocked_sequence", "approval_scope_key", "run_id", "node_id", "attempt_id", "lane_id", "worktree_id", "Ownership boundaries are explicit so downstream docs cannot re-own orchestration canon accidentally.", "Execution context and runtime role boundaries stay Executor-owned.", "Requested/effective runtime identity semantics stay Prompt-Pipeline-owned.", "Persisted blocked-episode identity and command-envelope shape stay Contracts-owned.", "blocked-episode approval identity", "requested/effective runtime identity", "command normalization ownership", "Plans/Executor_Protocol.md#5. Node execution fields", "Plans/Contracts_V0.md#6.1 Canonical blocked-episode approval anchor", "Plans/Contracts_V0.md#7.2 UICommand envelope", "Plans/Prompt_Pipeline.md#6.4 Effective resolution record"],
+      "stale_residue_to_retire": [],
+      "status": "active"
+    },
+    {
+      "path": "Plans/Executor_Protocol.md",
+      "heading": "## 5. Node execution fields",
+      "doc_role": "owner",
+      "section_role": "owner_section",
+      "source_reasons": ["OBL-007", "OBL-031", "OBL-032"],
+      "exact_items_that_must_survive": ["execution_unit_context", "run_id", "node_id", "attempt_id", "lane_id", "package_id", "seam_id", "worktree_id", "execution_role", "requested_account_id", "requested_account_binding", "requested_account_policy", "effective_account_id", "operational_identity", "blocked_sequence", "allowed_action_ids[]", "TierContext", "tier_id", "node execution fields", "run_id", "node_id", "attempt_id", "lane_id", "package_id", "seam_id", "worktree_id", "execution_role", "requested_account_id", "requested_account_binding", "requested_account_policy", "effective_account_id", "operational_identity", "blocked_sequence", "allowed_action_ids", "`TierContext` and `tier_id` stop acting as canonical execution scope.", "Downstream consumers join losslessly to attempt, worktree, permission, and runtime records.", "Blocked-action carrythrough stays anchored to blocked-sequence lineage rather than ad hoc view context.", "requested/effective runtime identity", "blocked action carrythrough", "Plans/Prompt_Pipeline.md#6.4 Effective resolution record", "Plans/Contracts_V0.md#6.1 Canonical blocked-episode approval anchor", "Plans/Crosswalk.md#3.1 Runtime orchestration ownership"],
+      "stale_residue_to_retire": ["feature_seam_id?", "work_package_id?", "TierContext", "tier_id"],
+      "status": "active"
+    },
+    {
+      "path": "Plans/Executor_Protocol.md",
+      "heading": "### Wake reasons and coalescing",
+      "doc_role": "owner",
+      "section_role": "owner_section",
+      "source_reasons": ["OBL-032"],
+      "exact_items_that_must_survive": ["scheduler.pass", "wake_reason", "secondary_wake_reasons[]", "startup_recovered", "wake reasons", "wake_reason", "secondary_wake_reasons[]", "startup_recovered", "Startup recovery hands off explicitly into the first `scheduler.pass`.", "If multiple triggers coalesce into one scheduler pass, persist the first as `wake_reason` and the rest as `secondary_wake_reasons[]`.", "Plans/Contracts_V0.md#`scheduler.pass` (minimum addendum fields)", "Plans/UI_Command_Catalog.md#Canonical Runtime Recovery Command Consolidation (2026-03-09)"],
+      "stale_residue_to_retire": [],
+      "status": "active"
+    },
+    {
+      "path": "Plans/FileManager.md",
+      "heading": "### 4.1 Open-file contract",
+      "doc_role": "consumer",
+      "section_role": "consumer_section",
+      "source_reasons": ["OBL-026", "OBL-027", "OBL-028"],
+      "exact_items_that_must_survive": ["OpenSubject", "OpenFile", "subject_id", "doc:<document_id>", "artifact:<artifact_id>", "route_target", "resume_url", "Open File", "Open Subject", "subject_id", "route_target", "resume_url", "`OpenSubject` resolves to the best source realization, including `OpenFile` or a transient generated artifact buffer.", "Shell navigation uses `route_target`; source realization uses `OpenSubject` or `OpenFile`.", "`resume_url` is serialized transport only and does not replace the canonical route/open split.", "Plans/Contracts_V0.md#7.3 `route_target`", "Plans/Crosswalk.md#3.3 Navigation and source-open ownership"],
+      "stale_residue_to_retire": [],
+      "status": "active"
+    },
+    {
+      "path": "Plans/UI_Command_Catalog.md",
+      "heading": "## Canonical Runtime Recovery Command Consolidation (2026-03-09)",
+      "doc_role": "owner",
+      "section_role": "owner_section",
+      "source_reasons": ["OBL-032"],
+      "exact_items_that_must_survive": ["allowed_action_id", "blocked_sequence", "attempt_id?", "cmd.runtime.approve", "cmd.runtime.decline", "cmd.runtime.resume_after_prerequisite", "allowed_action_ids[]", "approve_continue", "Approve", "Decline", "Resume after prerequisite", "allowed_action_id", "blocked_sequence", "attempt_id", "allowed_action_ids", "When a blocked episode exists before any attempt is created, the recovery target is `blocked_sequence` and MUST NOT fabricate an `attempt_id`.", "Blocked-state recovery buttons and menu entries map from `allowed_action_ids[]` to canonical `cmd.runtime.*` commands.", "No surface may introduce a thread-local, graph-local, or provider-local recovery command family for the same action semantics.", "ordered `allowed_action_ids[]`", "Plans/Contracts_V0.md#6.1 Canonical blocked-episode approval anchor", "Plans/Executor_Protocol.md#Wake reasons and coalescing", "Plans/Contracts_V0.md#`scheduler.pass` (minimum addendum fields)"],
+      "stale_residue_to_retire": ["approve_continue"],
+      "status": "active"
+    },
+    {
+      "path": "Plans/interview-subagent-integration.md",
+      "heading": "### Runtime identity visibility",
+      "doc_role": "consumer",
+      "section_role": "consumer_section",
+      "source_reasons": ["OBL-007"],
+      "exact_items_that_must_survive": ["requested_account_id", "requested_account_binding", "requested_account_policy", "effective_account_id", "effective_provider_identity", "operational_identity", "requested account", "effective account", "runtime identity", "requested_account_id", "requested_account_binding", "requested_account_policy", "effective_account_id", "effective_provider_identity", "operational_identity", "Interview-visible runtime identity preserves the shared owner fields and does not create local aliases.", "Requested/effective runtime fields remain visible for Interview child launches.", "Interview display does not collapse requested concrete-account state into effective-only disclosure.", "requested/effective runtime identity", "Plans/Prompt_Pipeline.md#6.4 Effective resolution record", "Plans/Contracts_V0.md#5.1B Persona/Runtime Snapshot Payload Contract"],
+      "stale_residue_to_retire": [],
+      "status": "active"
+    },
+    {
+      "path": "Plans/orchestrator-subagent-integration.md",
+      "heading": "## Tier-Level Subagent Strategy",
+      "doc_role": "consumer",
+      "section_role": "consumer_section",
+      "source_reasons": ["OBL-007", "OBL-031"],
+      "exact_items_that_must_survive": ["execution_unit_context", "run_id", "node_id", "attempt_id", "lane_id", "package_id", "seam_id", "worktree_id", "execution_role", "requested_account_id", "requested_account_binding", "requested_account_policy", "effective_account_id", "operational_identity", "tier_id", "execution unit context", "runtime identity", "run_id", "node_id", "attempt_id", "lane_id", "package_id", "seam_id", "worktree_id", "execution_role", "requested_account_id", "requested_account_binding", "requested_account_policy", "effective_account_id", "operational_identity", "Node execution uses the same requested/effective runtime identity model as the rest of the system.", "Execution identity aligns to run/node/attempt/lane/worktree scope rather than tier-rooted scope.", "Conversational and interview actors may share runtime identity semantics without becoming graph objects.", "requested/effective runtime identity", "Plans/Executor_Protocol.md#5. Node execution fields", "Plans/Prompt_Pipeline.md#6.4 Effective resolution record", "Plans/Crosswalk.md#3.1 Runtime orchestration ownership"],
+      "stale_residue_to_retire": ["TierContext", "tier_id"],
+      "status": "active"
+    }
+  ],
+  "unresolved_findings": [
+    {
+      "finding_id": "LF-001",
+      "finding_classification": "stale contradictory residue",
+      "where": "Plans/assistant-chat-design.md#5.1 Reserved built-ins",
+      "owner_doc": "Plans/Commands_System.md#7. Reserved built-in slash commands",
+      "affected_sections": ["Plans/assistant-chat-design.md#5.1 Reserved built-ins", "Plans/UI_Command_Catalog.md#2.7 Chat slash commands (reserved)"],
+      "required_operation": "replace_section",
+      "exact_items_that_must_survive": ["consumer mirror of the corrected reserved built-in slash-command set and alias/deprecation rules", "live reserved set remains `/new`, `/model`, `/effort`, `/mode`, `/export`, `/compact`, `/stop`, `/resume`, `/web`, `/skill`", "`/cancel` stays a deprecated compatibility alias to `/stop`", "`/clear` stays removed from live canon", "`/web` stays a family entry-point rather than a default-to-search helper", "`/skill` stays a discovery/invocation helper rather than a reserved built-in"],
+      "stale_residue_to_retire": ["`/rewind`", "`/revert`", "`/share`", "`/settings`", "`/doctor`", "`/help`", "`/worktree`"]
+    },
+    {
+      "finding_id": "LF-002",
+      "finding_classification": "cross-reference stale",
+      "where": "Plans/Tools.md#10.7 Audit, error, and self-hosted rules",
+      "owner_doc": "Plans/Permissions_System.md#3.4A Web-operation permission-key derivation",
+      "affected_sections": ["Plans/Tools.md#10.7 Audit, error, and self-hosted rules", "Plans/FinalGUISpec.md#15.7 Permission approval card widget"],
+      "required_operation": "replace_section",
+      "exact_items_that_must_survive": ["web operation approvals must surface the same summaries defined by Plans/Permissions_System.md#3.4A Web-operation permission-key derivation", "keep summary-template ownership pointed at `Plans/Permissions_System.md#3.4A Web-operation permission-key derivation`", "keep UI rendering explicitly pointed at `Plans/FinalGUISpec.md#15.7 Permission approval card widget`", "preserve the rest of the section’s surviving audit/error canon, including `progress_event`, `tool_use_id`, `operation`, `phase`, `detail`, `pages_completed`, `pages_total`, `elapsed_ms`, `estimated_remaining_ms`, `cancelled: true`, and the Firecrawl HTTP/provider to PM error-code mapping"],
+      "stale_residue_to_retire": []
+    },
+    {
+      "finding_id": "LF-003",
+      "finding_classification": "persistence coupling missing",
+      "where": "Plans/Tools.md#14. Web content caching layer",
+      "owner_doc": "Plans/storage-plan.md#4.4 Activity transparency payloads",
+      "affected_sections": ["Plans/Tools.md#14. Web content caching layer", "Plans/storage-plan.md#4.4 Activity transparency payloads"],
+      "required_operation": "replace_section",
+      "exact_items_that_must_survive": ["keep cache-state and activity-payload persistence handoff anchored to `Plans/storage-plan.md#4.4 Activity transparency payloads`", "preserve the section’s surviving cache canon: `(normalized_url, formats_hash, adapter_id)` durable identity, two-phase lookup, action-triggered cache bypass, `cache_state: \"hit\" | \"miss\" | \"bypassed\" | \"expired_used_for_diff\"`, PM cache precedence, and provider-cache subordination", "make the persistence handoff section-specific rather than document-generic"],
+      "stale_residue_to_retire": []
+    },
+    {
+      "finding_id": "LF-004",
+      "finding_classification": "wrong section allocation",
+      "where": "Plans/storage-plan.md#Long-running `progress_event` payload",
+      "owner_doc": "Plans/storage-plan.md#Long-running `progress_event` payload",
+      "affected_sections": ["Plans/Contracts_V0.md#3.4 Tool-specific payload extensions", "Plans/FinalGUISpec.md#15.3 Web and diff operation card widget"],
+      "required_operation": "replace_section",
+      "exact_items_that_must_survive": ["keep this exact subsection mirrored into `Plans/Contracts_V0.md#3.4 Tool-specific payload extensions` and `Plans/FinalGUISpec.md#15.3 Web and diff operation card widget`", "preserve the subsection-owned shape fields: `progress_event`, `tool_use_id`, `operation`, `phase`, `detail`, `pages_completed`, `pages_total`, `elapsed_ms`, `estimated_remaining_ms`, `cancelled: true`", "preserve the behavioral edge: partial completed work survives cancellation and timeout boundaries when already materialized"],
+      "stale_residue_to_retire": []
+    }
+  ]
+}
