@@ -3,6 +3,7 @@
 The reserved slash-command surface is canonical and non-overridable.
 
 ### 5.1 Reserved built-ins
+
 This section consumes the linked owner contract and stays aligned with it.
 
 Labels and values:
@@ -25,6 +26,7 @@ Rules:
 - deprecated aliases shown distinctly from active commands
 - reserved commands shown as non-editable in catalog
 ### 5.2 `/web` and `/skill`
+
 This section consumes the linked owner contract and stays aligned with it.
 
 Core rules:
@@ -88,6 +90,7 @@ User Commands may complement built-ins, but they do not replace or suppress the 
 
 ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Commands_System.md, ContractName:Plans/OpenCode_Deep_Extraction.md
 ### 5.5 Dispatcher parity
+
 This section defines the canonical contract for this surface.
 
 Core rules:

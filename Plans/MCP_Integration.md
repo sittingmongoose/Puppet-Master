@@ -5,6 +5,7 @@ This document is the single SSOT for PM MCP configuration, naming, availability,
 ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Permissions_System.md
 
 ## 1. Canonical naming
+
 This section defines the canonical contract for this surface.
 
 Core rules:
@@ -18,6 +19,7 @@ Fields:
 Labels and values:
 - canonical naming
 ## 2. Requested versus effective availability
+
 This section defines the canonical contract for this surface.
 
 Core rules:
@@ -33,6 +35,7 @@ Labels and values:
 - requested availability
 - effective availability
 ## 3. Credential binding and invalidation
+
 This section defines the canonical contract for this surface.
 
 Core rules:
@@ -81,6 +84,7 @@ Flow rules:
 - `debug` surfaces connection, handshake, and tool-registration diagnostics without minting a second status vocabulary
 
 ## 7. Effective tool availability and GUI surfacing
+
 This section defines the canonical contract for this surface.
 
 Core rules:

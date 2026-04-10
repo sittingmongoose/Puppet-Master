@@ -67,6 +67,7 @@ With **LSP MVP** (Plans/LSPSupport.md), the following tools are **enhanced or ne
 **Implementation note:** The lsp tool should be implemented to call the same LSP client used by the editor and Chat (diagnostics, hover, definition, references, symbols, implementation, call hierarchy, rename). Permission for `lsp` follows the same allow/deny/ask model; default allow for read/navigation operations, with separate approval for `lsp.rename`.
 
 #### 3.4.1 LSP tool (MVP) -- parameters, permission, rename approval
+
 This section consumes the linked owner contract and stays aligned with it.
 
 Core rules:
@@ -313,6 +314,7 @@ Provider-native `create` maps to the canonical registry tool `write`.
 - On timeout, the write must fail atomically and return `{ status: "timed_out", path, error: { code: "timeout" } }`.
 
 ### 3.5A `skill` tool runtime contract
+
 This section consumes the linked owner contract and stays aligned with it.
 
 Core rules:
@@ -329,6 +331,7 @@ Fields:
 - metadata?
 - ready_with_warnings
 ### 3.5B `question` tool runtime contract
+
 This section consumes the linked owner contract and stays aligned with it.
 
 Core rules:
@@ -361,6 +364,7 @@ Rules:
 - response_kind
 - validation_state
 ### 3.5C `todowrite` and `todoread` runtime contract
+
 This section defines the canonical contract for this surface.
 
 Core rules:
@@ -399,6 +403,7 @@ Labels and values:
 - Plan
 - Deep Plan
 ### 3.5D Web operation family runtime contract
+
 This section defines the canonical contract for this surface.
 
 Core rules:

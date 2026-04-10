@@ -150,6 +150,7 @@ The skill registry remains the discovery and validation source for available ski
 `default_skill_refs` are resolved against the canonical registry during prompt/context assembly. They do not imply provider-native skill file installation at runtime.
 
 ### 4.3 `skill` tool
+
 This section defines the canonical contract for this surface.
 
 Core rules:
@@ -273,6 +274,7 @@ Flow rules:
 - imported resources stay within FileSafe-constrained disclosure rules
 
 ### 6.3 Slash and runtime boundary
+
 `/skill` is a discovery or invocation affordance that lands on the same runtime contract as tool-based skill invocation.
 
 ContractRef: Plans/Commands_System.md#7. Reserved built-in slash commands, Plans/assistant-chat-design.md#5.2 `/web` and `/skill`

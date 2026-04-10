@@ -11,7 +11,20 @@ ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan
 - neither path owns hidden mutable state outside durable source or metadata refs
 
 ### 28.2 Inline visualizer bridge
+
 This section consumes the linked owner contract and stays aligned with it.
 
 Core rules:
 - Mermaid and inline visualizer behavior is locked to native card rendering, explicit error and fallback disclosure, sandboxing without arbitrary HTML execution, bounded persistence, injected theme tokens, and the exact inline visualizer bridge cross-reference target.
+
+ContractRef: Plans/FinalGUISpec.md#15.6 Mermaid and inline visualizer widgets
+
+Rules:
+- Copy source
+- Open in editor
+- Open detached preview
+- Export diagram
+- must NOT execute arbitrary HTML
+- allowlisted tags/attributes only
+- sendPrompt(text)
+- openLink(url)

@@ -496,6 +496,7 @@ ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Wiring_Matri
 - missing-path, duplicate-path, and in-flight-run behavior are deterministic and user-visible
 
 ### 3.18 Built-in Browser and Click-to-Context
+
 This section consumes the linked owner contract and stays aligned with it.
 
 ContractRef: Plans/Contracts_V0.md#3.4 Tool-specific payload extensions, Plans/Tools.md#3.5D Web operation family runtime contract

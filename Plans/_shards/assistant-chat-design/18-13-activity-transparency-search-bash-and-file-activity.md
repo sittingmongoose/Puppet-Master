@@ -3,6 +3,7 @@
 Activity transparency uses a shared inline operation-card family rather than isolated one-off widgets.
 
 ### 13.1 Operation-card family
+
 This section defines the canonical contract for this surface.
 
 Core rules:
@@ -67,9 +68,10 @@ Rules:
 - blocked responses must be machine-actionable through `allowed_action_ids[]`
 - error naming aligns to `adapter_unavailable`
 ### 13.2 Web activity and provenance
+
 This section consumes the linked owner contract and stays aligned with it.
 
-ContractRef: Plans/storage-plan.md#4.4 Activity transparency payloads, Plans/Contracts_V0.md#3.4 Tool-specific payload extensions, Plans/Section15_MVP_Promoted_Features_Spec.md#3.18 Built-in Browser and Click-to-Context, ContractName:Plans/storage-plan.md#4.4 Activity transparency payloads, ContractName:Plans/Contracts_V0.md#3.4 Tool-specific payload extensions, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md#3.18 Built-in Browser and Click-to-Context, Plans/Contracts_V0.md#3.4A Web error taxonomy and applicability
+ContractRef: Plans/storage-plan.md#4.4 Activity transparency payloads, Plans/Contracts_V0.md#3.4 Tool-specific payload extensions, Plans/Section15_MVP_Promoted_Features_Spec.md#3.18 Built-in Browser and Click-to-Context, ContractName:Plans/storage-plan.md#4.4 Activity transparency payloads, ContractName:Plans/Contracts_V0.md#3.4 Tool-specific payload extensions, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md#3.18 Built-in Browser and Click-to-Context, Plans/Permissions_System.md#3.4A Web-operation permission-key derivation, Plans/Contracts_V0.md#3.4A Web error taxonomy and applicability
 
 Core rules:
 - Preserve the Firecrawl-specific audit payload keys as exact contract-owned fields.
@@ -173,6 +175,7 @@ Rules:
 - Batch-level timeout is LOCKED as `individual_timeout × min(url_count, 5)`, cap 600s (10 min)
 - chat may shortlist with search but must read chosen pages before citing them as final evidence
 ### 13.3 Bash and terminal ownership
+
 This section defines the canonical contract for this surface.
 
 Core rules:

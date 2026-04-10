@@ -258,6 +258,7 @@ ContractRef: ContractName:Plans/MCP_Integration.md, ContractName:Plans/FinalGUIS
 - naming, availability, credential binding, config schema, and supported flows defer to that owner
 
 ### 8.2 GUI/settings alignment
+
 This GUI/settings alignment section mirrors the linked owner contract and stays aligned with it.
 
 ContractRef: Plans/Tools.md#11.1 Provider classes, defaults, and fallback disclosure, Plans/Tools.md#12. Web tool routing algorithm, Plans/MCP_Integration.md#2. Requested versus effective availability, Plans/MCP_Integration.md#7. Effective tool availability and GUI surfacing
@@ -292,6 +293,7 @@ Rules:
 - Default state
 - disabled (requires API key or self-hosted URL)
 ### 8.2.1 Cited-search and search-provider note
+
 This cited-search and search-provider note is non-normative consumer guidance.
 
 ContractRef: Plans/Tools.md#11.1 Provider classes, defaults, and fallback disclosure, Plans/Tools.md#12. Web tool routing algorithm, Plans/MCP_Integration.md#2. Requested versus effective availability, Plans/Section15_MVP_Promoted_Features_Spec.md#3.18 Built-in Browser and Click-to-Context

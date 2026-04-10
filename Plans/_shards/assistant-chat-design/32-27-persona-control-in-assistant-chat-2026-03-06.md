@@ -15,6 +15,7 @@ Definitions:
 - **hybrid:** auto selects by default, but the user may temporarily or persistently override it.
 
 ### 27.2 Current Persona display (required)
+
 This section consumes the linked owner contract and stays aligned with it.
 
 Core rules:

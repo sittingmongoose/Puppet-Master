@@ -1,4 +1,5 @@
 ## 4. Message submission (Steer vs Queue), queued editing, interrupt, and stop
+
 This section defines the canonical contract for this surface.
 
 Core rules:

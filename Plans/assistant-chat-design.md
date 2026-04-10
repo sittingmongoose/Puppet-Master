@@ -209,6 +209,7 @@ There are **two separate ELI5 toggles**; they are independent and must not be co
 ---
 
 ## 4. Message submission (Steer vs Queue), queued editing, interrupt, and stop
+
 This section defines the canonical contract for this surface.
 
 Core rules:
@@ -229,6 +230,7 @@ Rules:
 The reserved slash-command surface is canonical and non-overridable.
 
 ### 5.1 Reserved built-ins
+
 This section consumes the linked owner contract and stays aligned with it.
 
 Labels and values:
@@ -251,6 +253,7 @@ Rules:
 - deprecated aliases shown distinctly from active commands
 - reserved commands shown as non-editable in catalog
 ### 5.2 `/web` and `/skill`
+
 This section consumes the linked owner contract and stays aligned with it.
 
 Core rules:
@@ -314,6 +317,7 @@ User Commands may complement built-ins, but they do not replace or suppress the 
 
 ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Commands_System.md, ContractName:Plans/OpenCode_Deep_Extraction.md
 ### 5.5 Dispatcher parity
+
 This section defines the canonical contract for this surface.
 
 Core rules:
@@ -415,6 +419,7 @@ Required rules:
 ### 7.3 Extensibility surface
 
 ### 7.4 Question card and questionnaire system
+
 This section defines the canonical contract for this surface.
 
 Core rules:
@@ -463,6 +468,7 @@ Rules:
 ## 8. Plan Mode, Deep Plan Mode, and Plan Thoroughness (PT)
 
 ### 8.1 Canonical planning model
+
 This section defines the canonical contract for this surface.
 
 ContractRef: Plans/FinalGUISpec.md#15.4 Planning panel widget (sticky sidebar)
@@ -587,6 +593,7 @@ Optional but allowed sections:
 - `Rollout / Migration Notes`
 
 ### 8.6 Normalized TODO contract for planning outputs
+
 This section consumes the linked owner contract and stays aligned with it.
 
 Core rules:
@@ -1005,6 +1012,7 @@ ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Permissions_
 Activity transparency uses a shared inline operation-card family rather than isolated one-off widgets.
 
 ### 13.1 Operation-card family
+
 This section defines the canonical contract for this surface.
 
 Core rules:
@@ -1069,9 +1077,10 @@ Rules:
 - blocked responses must be machine-actionable through `allowed_action_ids[]`
 - error naming aligns to `adapter_unavailable`
 ### 13.2 Web activity and provenance
+
 This section consumes the linked owner contract and stays aligned with it.
 
-ContractRef: Plans/storage-plan.md#4.4 Activity transparency payloads, Plans/Contracts_V0.md#3.4 Tool-specific payload extensions, Plans/Section15_MVP_Promoted_Features_Spec.md#3.18 Built-in Browser and Click-to-Context, ContractName:Plans/storage-plan.md#4.4 Activity transparency payloads, ContractName:Plans/Contracts_V0.md#3.4 Tool-specific payload extensions, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md#3.18 Built-in Browser and Click-to-Context, Plans/Contracts_V0.md#3.4A Web error taxonomy and applicability
+ContractRef: Plans/storage-plan.md#4.4 Activity transparency payloads, Plans/Contracts_V0.md#3.4 Tool-specific payload extensions, Plans/Section15_MVP_Promoted_Features_Spec.md#3.18 Built-in Browser and Click-to-Context, ContractName:Plans/storage-plan.md#4.4 Activity transparency payloads, ContractName:Plans/Contracts_V0.md#3.4 Tool-specific payload extensions, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md#3.18 Built-in Browser and Click-to-Context, Plans/Permissions_System.md#3.4A Web-operation permission-key derivation, Plans/Contracts_V0.md#3.4A Web error taxonomy and applicability
 
 Core rules:
 - Preserve the Firecrawl-specific audit payload keys as exact contract-owned fields.
@@ -1175,6 +1184,7 @@ Rules:
 - Batch-level timeout is LOCKED as `individual_timeout × min(url_count, 5)`, cap 600s (10 min)
 - chat may shortlist with search but must read chosen pages before citing them as final evidence
 ### 13.3 Bash and terminal ownership
+
 This section defines the canonical contract for this surface.
 
 Core rules:
@@ -1963,6 +1973,7 @@ Definitions:
 - **hybrid:** auto selects by default, but the user may temporarily or persistently override it.
 
 ### 27.2 Current Persona display (required)
+
 This section consumes the linked owner contract and stays aligned with it.
 
 Core rules:
@@ -2073,10 +2084,23 @@ ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan
 - neither path owns hidden mutable state outside durable source or metadata refs
 
 ### 28.2 Inline visualizer bridge
+
 This section consumes the linked owner contract and stays aligned with it.
 
 Core rules:
 - Mermaid and inline visualizer behavior is locked to native card rendering, explicit error and fallback disclosure, sandboxing without arbitrary HTML execution, bounded persistence, injected theme tokens, and the exact inline visualizer bridge cross-reference target.
+
+ContractRef: Plans/FinalGUISpec.md#15.6 Mermaid and inline visualizer widgets
+
+Rules:
+- Copy source
+- Open in editor
+- Open detached preview
+- Export diagram
+- must NOT execute arbitrary HTML
+- allowlisted tags/attributes only
+- sendPrompt(text)
+- openLink(url)
 ## 29. Natural-language Mode Invocation and Wizard Escalation (2026-03-08)
 
 ### 29.1 Natural-language mode invocation

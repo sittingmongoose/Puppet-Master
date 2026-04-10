@@ -1,4 +1,5 @@
 ## 12. Web tool routing algorithm
+
 This section defines the canonical contract for this surface.
 
 ContractRef: ContractName:Plans/storage-plan.md#4.4 Activity transparency payloads, ContractName:Plans/Contracts_V0.md#3.4 Tool-specific payload extensions, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md#3.18 Built-in Browser and Click-to-Context

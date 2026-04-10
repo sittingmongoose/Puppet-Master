@@ -216,6 +216,7 @@ With **LSP MVP** (Plans/LSPSupport.md), the following tools are **enhanced or ne
 **Implementation note:** The lsp tool should be implemented to call the same LSP client used by the editor and Chat (diagnostics, hover, definition, references, symbols, implementation, call hierarchy, rename). Permission for `lsp` follows the same allow/deny/ask model; default allow for read/navigation operations, with separate approval for `lsp.rename`.
 
 #### 3.4.1 LSP tool (MVP) -- parameters, permission, rename approval
+
 This section consumes the linked owner contract and stays aligned with it.
 
 Core rules:
@@ -462,6 +463,7 @@ Provider-native `create` maps to the canonical registry tool `write`.
 - On timeout, the write must fail atomically and return `{ status: "timed_out", path, error: { code: "timeout" } }`.
 
 ### 3.5A `skill` tool runtime contract
+
 This section consumes the linked owner contract and stays aligned with it.
 
 Core rules:
@@ -478,6 +480,7 @@ Fields:
 - metadata?
 - ready_with_warnings
 ### 3.5B `question` tool runtime contract
+
 This section consumes the linked owner contract and stays aligned with it.
 
 Core rules:
@@ -510,6 +513,7 @@ Rules:
 - response_kind
 - validation_state
 ### 3.5C `todowrite` and `todoread` runtime contract
+
 This section defines the canonical contract for this surface.
 
 Core rules:
@@ -548,6 +552,7 @@ Labels and values:
 - Plan
 - Deep Plan
 ### 3.5D Web operation family runtime contract
+
 This section defines the canonical contract for this surface.
 
 Core rules:
@@ -1326,6 +1331,7 @@ Firecrawl is a distinct provider in PM's web stack. This owner section covers co
 ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Models_System.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md
 
 ### 10.1 Provider configuration
+
 This section defines the canonical contract for this surface.
 
 Core rules:
@@ -1390,6 +1396,7 @@ Rules:
 - /v2/agent
 
 ### 10.3 PM-to-Firecrawl mapping
+
 This section defines the canonical contract for this surface.
 
 Core rules:
@@ -1443,6 +1450,7 @@ Rules:
 - POST /v2/extract
 - urls[]
 ### 10.4 Async jobs and status contract
+
 This section defines the canonical contract for this surface.
 
 Core rules:
@@ -1480,6 +1488,7 @@ Labels and values:
 - webcrawl
 - webmap
 ### 10.5 Credit and cost contract
+
 This section defines the canonical contract for this surface.
 
 Core rules:
@@ -1522,9 +1531,10 @@ Interaction modes and session properties:
 ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/Tools.md#3.5D-web-operation-family-runtime-contract
 
 ### 10.7 Audit, error, and self-hosted rules
+
 This section defines the canonical contract for this surface.
 
-ContractRef: Plans/FinalGUISpec.md#15.7 Permission approval card widget, Plans/Contracts_V0.md#3.4 Tool-specific payload extensions, Plans/storage-plan.md#4.4 Activity transparency payloads, Plans/Contracts_V0.md#3.4A Web error taxonomy and applicability
+ContractRef: Plans/FinalGUISpec.md#15.7 Permission approval card widget, Plans/Contracts_V0.md#3.4 Tool-specific payload extensions, Plans/storage-plan.md#4.4 Activity transparency payloads, Plans/Permissions_System.md#3.4A Web-operation permission-key derivation, Plans/Contracts_V0.md#3.4A Web error taxonomy and applicability
 
 Core rules:
 - Preserve the Firecrawl-specific audit payload keys as exact contract-owned fields.
@@ -1569,6 +1579,7 @@ Labels and values:
 
 Rules:
 - PM MUST NOT silently switch between self-hosted Firecrawl and hosted/cloud Firecrawl
+ContractRef: Plans/Permissions_System.md#3.4A Web-operation permission-key derivation
 ContractRef: ContractName:Plans/FinalGUISpec.md#15.7 Permission approval card widget, ContractName:Plans/Contracts_V0.md#3.4 Tool-specific payload extensions, ContractName:Plans/storage-plan.md#4.4 Activity transparency payloads, ContractName:Plans/Contracts_V0.md#3.4A Web error taxonomy and applicability
 - no silent switch between self-hosted Firecrawl and hosted/cloud Firecrawl
 - deployment-mode disclosure remains visible
@@ -1603,6 +1614,7 @@ ContractRef: ContractName:Plans/FinalGUISpec.md#15.7 Permission approval card wi
 ## 11. Provider capability matrix
 
 ### 11.1 Provider classes, defaults, and fallback disclosure
+
 This section defines the canonical contract for this surface.
 
 Core rules:
@@ -1694,6 +1706,7 @@ Matrix interpretation:
 
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md
 ## 12. Web tool routing algorithm
+
 This section defines the canonical contract for this surface.
 
 ContractRef: ContractName:Plans/storage-plan.md#4.4 Activity transparency payloads, ContractName:Plans/Contracts_V0.md#3.4 Tool-specific payload extensions, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md#3.18 Built-in Browser and Click-to-Context
@@ -1745,6 +1758,7 @@ ContractRef: ContractName:Plans/storage-plan.md#4.4 Activity transparency payloa
 - dispatcher parity applies to slash and NL paths
 - command tables and routing docs must mirror the same mappings
 ## 13. Batch operations
+
 This section defines the canonical contract for this surface.
 
 Core rules:
@@ -1786,6 +1800,7 @@ Rules:
 - "For Session" grants all listed domains for that session
 - Batch-level timeout is LOCKED as `individual_timeout × min(url_count, 5)`, cap 600s (10 min)
 ## 14. Web content caching layer
+
 This section defines the canonical contract for this surface.
 
 ContractRef: Plans/storage-plan.md#4.4 Activity transparency payloads, Plans/storage-plan.md#8. Web content caching persistence

@@ -1,4 +1,5 @@
 ## 8. Web content caching persistence
+
 This section consumes the linked owner contract and stays aligned with it.
 
 Core rules:

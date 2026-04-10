@@ -198,6 +198,7 @@ ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Arc
 ### 4.4 Two Gemini providers
 
 ### 4.5 Web tool provider capability alignment
+
 This section mirrors the linked owner contract and stays aligned with it.
 
 Core rules:
