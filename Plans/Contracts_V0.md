@@ -31,7 +31,6 @@ ContractRef: ContractName:Plans/Contracts_V0.md
 ## 1. Events (persisted)
 
 ### 1.1 Assistant worktree seglog events
-
 This section defines the canonical contract for this surface.
 
 Core rules:
@@ -249,7 +248,6 @@ Minimum payload:
 ContractRef: ContractName:Plans/Contracts_V0.md#EventRecord, SchemaID:pm.requirements_quality_report.schema.v1, ContractName:Plans/chain-wizard-flexibility.md#15-requirements-quality-escalation-semantics
 
 ### 3.4 Tool-specific payload extensions
-
 This section defines the canonical contract for this surface.
 
 ContractRef: ContractName:Plans/storage-plan.md#4.4 Activity transparency payloads, ContractName:Plans/Contracts_V0.md#3.4 Tool-specific payload extensions, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md#3.18 Built-in Browser and Click-to-Context
@@ -431,7 +429,6 @@ Rules:
 - `max_content_length`
 - 5 MB default
 ### 3.4A Web error taxonomy and applicability
-
 This section defines the canonical contract for this surface.
 
 Core rules:
@@ -679,7 +676,6 @@ Serialization rules:
 - `revoked`, `blocked`, `expired`, and `omitted` items remain visible for audit but are not serialized as successful prompt attachments
 
 ### 5.1B Persona/Runtime Snapshot Payload Contract
-
 This section defines the canonical contract for this surface.
 
 Core rules:

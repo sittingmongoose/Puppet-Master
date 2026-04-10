@@ -5,59 +5,45 @@ This document is the single SSOT for PM MCP configuration, naming, availability,
 ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Permissions_System.md
 
 ## 1. Canonical naming
-
 This section defines the canonical contract for this surface.
 
 Core rules:
-- MCP owner canon must preserve the exact auth and effective-state enums, canonical naming, and credential binding or invalidation behavior.
+- canonical naming uses underscore form `{server_slug}_{tool_name}`
+- Credential lifecycle still surfaces `LoggedIn | LoggedOut | AuthExpired | AuthFailed`, but that lifecycle vocabulary does not redefine the naming format.
 
 Fields:
-- authenticated | expired | not_authenticated
-- connected | disabled | needs_auth | needs_client_registration | failed
-- LoggedIn | LoggedOut | AuthExpired | AuthFailed
 - {server_slug}_{tool_name}
+- LoggedIn | LoggedOut | AuthExpired | AuthFailed
 
 Labels and values:
-- requested availability
-- effective availability
-- credential binding
-
+- canonical naming
 ## 2. Requested versus effective availability
-
 This section defines the canonical contract for this surface.
 
 Core rules:
-- MCP owner canon must preserve the exact auth and effective-state enums, canonical naming, and credential binding or invalidation behavior.
+- requested and effective MCP availability remain distinct disclosure surfaces
+- Requested availability uses `authenticated | expired | not_authenticated`.
+- Effective availability uses `connected | disabled | needs_auth | needs_client_registration | failed`.
 
 Fields:
 - authenticated | expired | not_authenticated
 - connected | disabled | needs_auth | needs_client_registration | failed
-- LoggedIn | LoggedOut | AuthExpired | AuthFailed
-- {server_slug}_{tool_name}
 
 Labels and values:
 - requested availability
 - effective availability
-- credential binding
-
 ## 3. Credential binding and invalidation
-
 This section defines the canonical contract for this surface.
 
 Core rules:
-- MCP owner canon must preserve the exact auth and effective-state enums, canonical naming, and credential binding or invalidation behavior.
-
-Fields:
-- authenticated | expired | not_authenticated
-- connected | disabled | needs_auth | needs_client_registration | failed
-- LoggedIn | LoggedOut | AuthExpired | AuthFailed
-- {server_slug}_{tool_name}
+- credential binding or invalidation behavior remains MCP-owned canon
+- Auth lifecycle outcomes surface as `LoggedIn | LoggedOut | AuthExpired | AuthFailed` for bound, missing, expired, or failed credentials.
 
 Labels and values:
-- requested availability
-- effective availability
 - credential binding
 
+Rules:
+- LoggedIn | LoggedOut | AuthExpired | AuthFailed
 ## 4. Cross-surface responsibilities
 
 - `Plans/Tools.md` consumes MCP naming and tool-registry behavior.
@@ -95,7 +81,6 @@ Flow rules:
 - `debug` surfaces connection, handshake, and tool-registration diagnostics without minting a second status vocabulary
 
 ## 7. Effective tool availability and GUI surfacing
-
 This section defines the canonical contract for this surface.
 
 Core rules:

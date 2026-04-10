@@ -1,7 +1,7 @@
 {
-  "schema_id": "pm.bucket_plan.v3",
+  "schema_id": "pm.bucket_plan.v4",
   "work_id": "w-20260329-235630",
-  "created_at_utc": "2026-04-09T20:33:55.166Z",
+  "created_at_utc": "2026-04-10T02:48:56.897Z",
   "topic_or_scope": "Firecrawl Gap Analysis + Lost-Spec Recovery",
   "must_change": [
     {
@@ -10,12 +10,12 @@
       "doc_role": "owner",
       "section_role": "owner_section",
       "source_reasons": [
-        "obl-007: The web routing algorithm must include a capability-unavailable terminal branch with clear setup guidance when no provider supports the requested operation.",
-        "obl-008: Site Reader canon must require real browser interaction, reserve `Reading Site` for the PM-native Site Reader path, and prevent provider-routed fetch from reusing that reserved identity.",
-        "obl-009: Answer construction must preserve search-then-read behavior, final citations must come from the actual read path rather than raw search snippets alone, and web activity/provenance docs must use the exact storage/contracts/browser ContractRef targets instead of malformed generic anchors.",
-        "obl-017: Routing must remain cost-aware when multiple providers offer similar capability; static priority alone is insufficient, and the >100 credits warning plus 500 credits cap must remain aligned with routing.",
-        "obl-033: Retire stale cited-search ownership residue from reference sections; provider-capability and web-routing canon is owned by Plans/Tools.md sections 11-12, while Plans/newtools.md#8.2.1 is non-normative consumer guidance only.",
-        "obl-048: Natural-language web intents must hit the same dispatcher as slash commands, and site or page reading intents must resolve to webfetch rather than websearch or provider extract."
+        "section_obligation:obl-007",
+        "section_obligation:obl-008",
+        "section_obligation:obl-009",
+        "section_obligation:obl-017",
+        "section_obligation:obl-033",
+        "section_obligation:obl-048"
       ],
       "exact_items_that_must_survive": [
         "capability-unavailable terminal branch",
@@ -66,10 +66,10 @@
       "doc_role": "owner",
       "section_role": "owner_section",
       "source_reasons": [
-        "obl-014: The Firecrawl configuration field set must preserve proxy_mode with the exact supported enum values and the self-hosted Fire Engine limitation note.",
-        "obl-015: Retire stale stealth as a proxy_mode enum value; current canon preserves only basic, enhanced, and auto.",
-        "obl-023: The Firecrawl owner section must preserve the base configuration fields and default-disabled state already restored in the live owner doc.",
-        "obl-053: Firecrawl provider identity canon includes exact provider ID firecrawl, display name Firecrawl, default priority below Exa and Tavily and above DuckDuckGo, user-adjustable ordering, default-disabled state until API key or self-hosted URL is configured, and retirement of exact stale residue \"stale cited-search framing and older `newtools` wording\" from owner/provider canon."
+        "section_obligation:obl-014",
+        "section_obligation:obl-015",
+        "section_obligation:obl-023",
+        "section_obligation:obl-053"
       ],
       "exact_items_that_must_survive": [
         "proxy_mode",
@@ -111,12 +111,12 @@
       "doc_role": "owner",
       "section_role": "owner_section",
       "source_reasons": [
-        "obl-010: The Firecrawl webextract mapping must preserve structured extraction modes and option surface, not a thin single-URL summary.",
-        "obl-011: The Firecrawl webresearch mapping must preserve provider-native no-URL research behavior, navigation/forms/pagination capability, and structured extraction during agent-led research.",
-        "obl-012: The Firecrawl websearch mapping must preserve provider-specific search behavior and option surface.",
-        "obl-013: The Firecrawl owner section must either preserve `changeTracking` with its structured output shape or explicitly retire it as out of scope; it must not disappear silently.",
-        "obl-025: The Firecrawl mapping table must preserve all PM operation rows, including the exact batch_webextract mapping POST /v2/extract with urls[].",
-        "obl-054: Firecrawl search responses must be transformed into PM's unified search result shape by flattening source-partitioned results into one results array and tagging each item with source_type in a fixed merge order."
+        "section_obligation:obl-010",
+        "section_obligation:obl-011",
+        "section_obligation:obl-012",
+        "section_obligation:obl-013",
+        "section_obligation:obl-025",
+        "section_obligation:obl-054"
       ],
       "exact_items_that_must_survive": [
         "webextract",
@@ -166,14 +166,15 @@
       "doc_role": "owner",
       "section_role": "owner_section",
       "source_reasons": [
-        "obl-001: Preserve the Firecrawl-specific audit payload keys as exact contract-owned fields.",
-        "obl-018: PM must not silently switch between self-hosted Firecrawl and hosted/cloud Firecrawl, and deployment-mode disclosure must remain visible.",
-        "obl-028: The Firecrawl owner section must preserve shared routing/audit disclosure for requested/effective provider selection, fallback visibility, denied-web projection, and canonical web error taxonomy linkage.",
-        "obl-029: Web tool permission keys, approval-card summary templates, session-approval semantics, and their exact approval-card cross-reference target remain canonical in Permissions_System and must not be re-invented from thin tool descriptions or stale Ask UI links.",
-        "obl-032: The per-contract web error applicability table remains required canon and must stay aligned with provider-to-PM error mapping.",
-        "obl-060: Activity transparency payloads must preserve adapter-selection and projection fields used for routing and audit disclosure.",
-        "obl-062: Permission canon must preserve the four-tier approval ladder, question default allow only when HITL is available, keep the six web tools ask-gated in read_only and plan presets, and carry the blocked/unavailable payload fields through to permission-card consumers.",
-        "obl-066: Firecrawl-specific HTTP and provider errors must map to PM canonical error codes exactly as specified."
+        "section_obligation:obl-001",
+        "section_obligation:obl-018",
+        "section_obligation:obl-028",
+        "section_obligation:obl-029",
+        "section_obligation:obl-032",
+        "section_obligation:obl-060",
+        "section_obligation:obl-062",
+        "section_obligation:obl-066",
+        "fidelity_recovery:LF-002"
       ],
       "exact_items_that_must_survive": [
         "firecrawl_credits_used",
@@ -245,7 +246,7 @@
         "headless_unavailable"
       ],
       "status": "active",
-      "bucket_reason": "active unresolved owner section in collected impact set; includes fidelity recovery work and remains packet-mutation eligible as an SSOT section",
+      "bucket_reason": "active unresolved owner section in collected impact set; includes fidelity blocker carry-through and remains packet-mutation eligible as an SSOT section",
       "linked_unresolved_findings": [
         "LF-002"
       ]
@@ -256,14 +257,14 @@
       "doc_role": "owner",
       "section_role": "owner_section",
       "source_reasons": [
-        "obl-002: The global provider stack is user-changeable in Settings, while per-operation priority reordering is not MVP and the MVP priority order must not be treated as immutable product policy.",
-        "obl-003: The provider capability matrix must preserve capability tier separately from routing posture: Firecrawl, Tavily, and Exa retain real webfetch capability and must not be flattened to fallback-only merely because Site Reader is preferred.",
-        "obl-004: Anthropic and OpenAI websearch support must remain labeled native (model) / model-native, not pm-composed.",
-        "obl-005: DuckDuckGo capability rows must preserve native-ish search, PM-composed research/fetch/extract, and partial crawl behavior instead of flattening those cells to unsupported.",
-        "obl-006: Google must remain a pluggable adapter slot with display label Google, and its ledger support semantics must not be collapsed away.",
-        "obl-022: GUI/help canon must preserve row-level health/error disclosure, last-failure messaging, inline contextual help, and availability/support-tier visibility in Settings and /web help/autocomplete.",
-        "obl-033: Retire stale cited-search ownership residue from reference sections; provider-capability and web-routing canon is owned by Plans/Tools.md sections 11-12, while Plans/newtools.md#8.2.1 is non-normative consumer guidance only.",
-        "obl-053: Firecrawl provider identity canon includes exact provider ID firecrawl, display name Firecrawl, default priority below Exa and Tavily and above DuckDuckGo, user-adjustable ordering, default-disabled state until API key or self-hosted URL is configured, and retirement of exact stale residue \"stale cited-search framing and older `newtools` wording\" from owner/provider canon."
+        "section_obligation:obl-002",
+        "section_obligation:obl-003",
+        "section_obligation:obl-004",
+        "section_obligation:obl-005",
+        "section_obligation:obl-006",
+        "section_obligation:obl-022",
+        "section_obligation:obl-033",
+        "section_obligation:obl-053"
       ],
       "exact_items_that_must_survive": [
         "global provider stack is user-changeable in Settings",
@@ -315,17 +316,17 @@
       "doc_role": "owner",
       "section_role": "owner_section",
       "source_reasons": [
-        "obl-001: Preserve the Firecrawl-specific audit payload keys as exact contract-owned fields.",
-        "obl-010: The Firecrawl webextract mapping must preserve structured extraction modes and option surface, not a thin single-URL summary.",
-        "obl-013: The Firecrawl owner section must either preserve `changeTracking` with its structured output shape or explicitly retire it as out of scope; it must not disappear silently.",
-        "obl-018: PM must not silently switch between self-hosted Firecrawl and hosted/cloud Firecrawl, and deployment-mode disclosure must remain visible.",
-        "obl-020: Batch audit/event canon must preserve a parent audit event for the batch plus child audit events per URL.",
-        "obl-028: The Firecrawl owner section must preserve shared routing/audit disclosure for requested/effective provider selection, fallback visibility, denied-web projection, and canonical web error taxonomy linkage.",
-        "obl-032: The per-contract web error applicability table remains required canon and must stay aligned with provider-to-PM error mapping.",
-        "obl-035: Blocked action recovery is locked to `blocked_reason_code`, `allowed_action_ids[]`, canonical blocked classes `permission_denied`, `network_error`, `adapter_unavailable`, and `timeout`, while headless/HITL-unavailable carries through as `status: \"unavailable\"` and stale `provider_unavailable` / `headless_unavailable` blocked-class residue must be retired.",
-        "obl-056: All web tools share a common output field set that includes provider identity, routing reason, timing, cache status, and standard error or warning fields.",
-        "obl-059: Blocked and denied activity payloads must preserve the exact blocked and denial payload keys in the owned web-operation child payload, include `blocked_reason_code` alongside `allowed_action_ids[]`, `denial_reason_code`, `denial_source`, and `suggested_recovery_action`, keep `projection_freshness` and `projection_health`, align canonical error naming to `adapter_unavailable`, and retire exact stale residue such as `unblock_action_ids[]`, `provider_unavailable`, `headless_unavailable`, and unrelated terminal/chat/card carry-through that contradicts the owner payload schema.",
-        "obl-060: Activity transparency payloads must preserve adapter-selection and projection fields used for routing and audit disclosure."
+        "section_obligation:obl-001",
+        "section_obligation:obl-010",
+        "section_obligation:obl-013",
+        "section_obligation:obl-018",
+        "section_obligation:obl-020",
+        "section_obligation:obl-028",
+        "section_obligation:obl-032",
+        "section_obligation:obl-035",
+        "section_obligation:obl-056",
+        "section_obligation:obl-059",
+        "section_obligation:obl-060"
       ],
       "exact_items_that_must_survive": [
         "firecrawl_credits_used",
@@ -397,10 +398,7 @@
         "unrelated terminal/chat/card canon must not live inside the web activity payload SSOT"
       ],
       "status": "active",
-      "bucket_reason": "active unresolved owner section in collected impact set; includes fidelity recovery work and remains packet-mutation eligible as an SSOT section",
-      "linked_unresolved_findings": [
-        "LF-003"
-      ]
+      "bucket_reason": "active owner section in collected impact set; packet planning may target this SSOT section directly"
     },
     {
       "path": "Plans/storage-plan.md",
@@ -408,9 +406,9 @@
       "doc_role": "owner",
       "section_role": "owner_section",
       "source_reasons": [
-        "obl-016: The Firecrawl async contract must preserve timeout behavior tied to timeout_ms and partial-result survival on timeout.",
-        "obl-021: Long-running web operations must preserve the structured progress_event payload and cancellation-with-partial-results contract.",
-        "obl-026: The Firecrawl async contract must preserve the exact poll ladder and status family already restored in the owner section."
+        "section_obligation:obl-016",
+        "section_obligation:obl-021",
+        "section_obligation:obl-026"
       ],
       "exact_items_that_must_survive": [
         "timeout_ms",
@@ -437,7 +435,7 @@
       ],
       "stale_residue_to_retire": [],
       "status": "active",
-      "bucket_reason": "active unresolved owner section in collected impact set; includes fidelity recovery work and remains packet-mutation eligible as an SSOT section",
+      "bucket_reason": "active unresolved owner section in collected impact set; includes fidelity blocker carry-through and remains packet-mutation eligible as an SSOT section",
       "linked_unresolved_findings": [
         "LF-004"
       ]
@@ -448,8 +446,8 @@
       "doc_role": "owner",
       "section_role": "owner_section",
       "source_reasons": [
-        "obl-026: The Firecrawl async contract must preserve the exact poll ladder and status family already restored in the owner section.",
-        "obl-056: All web tools share a common output field set that includes provider identity, routing reason, timing, cache status, and standard error or warning fields."
+        "section_obligation:obl-026",
+        "section_obligation:obl-056"
       ],
       "exact_items_that_must_survive": [
         "2s, 4s, 8s, 15s, 30s",
@@ -486,8 +484,8 @@
       "doc_role": "owner",
       "section_role": "owner_section",
       "source_reasons": [
-        "obl-055: WebAction is a locked typed interface with an exact action enum, required and optional fields, hard timing limits, sequential execution, and invalid_input on unknown action types.",
-        "obl-057: webfetch URL handling is locked: reject non-HTTP(S) schemes, normalize before routing, default bare domains to https://, reject malformed URLs with invalid_input, and enforce a default 5 MB max_content_length unless configured otherwise."
+        "section_obligation:obl-055",
+        "section_obligation:obl-057"
       ],
       "exact_items_that_must_survive": [
         "`type: \"click\" | \"scroll\" | \"type\" | \"press_key\" | \"wait_for\" | \"navigate\" | \"screenshot\" | \"set_viewport\" | \"fill_form\" | \"select_option\" | \"back\" | \"reload\" | \"snapshot\" | \"console\" | \"network\";`",
@@ -516,8 +514,8 @@
       "doc_role": "owner",
       "section_role": "owner_section",
       "source_reasons": [
-        "obl-032: The per-contract web error applicability table remains required canon and must stay aligned with provider-to-PM error mapping.",
-        "obl-066: Firecrawl-specific HTTP and provider errors must map to PM canonical error codes exactly as specified."
+        "section_obligation:obl-032",
+        "section_obligation:obl-066"
       ],
       "exact_items_that_must_survive": [
         "adapter_unavailable",
@@ -548,7 +546,7 @@
       "doc_role": "owner",
       "section_role": "owner_section",
       "source_reasons": [
-        "obl-057: webfetch URL handling is locked: reject non-HTTP(S) schemes, normalize before routing, default bare domains to https://, reject malformed URLs with invalid_input, and enforce a default 5 MB max_content_length unless configured otherwise."
+        "section_obligation:obl-057"
       ],
       "exact_items_that_must_survive": [
         "reject non-HTTP(S) schemes",
@@ -569,8 +567,9 @@
       "doc_role": "owner",
       "section_role": "owner_section",
       "source_reasons": [
-        "obl-031: The PM-owned web cache contract must preserve two-phase lookup, state vocabulary, and per-project cache sizing.",
-        "obl-067: Cache routing must skip read-time cache for requests with actions, may still store the post-action result, and must preserve PM-cache precedence over Firecrawl cache with diff-reuse audit states."
+        "section_obligation:obl-031",
+        "section_obligation:obl-067",
+        "fidelity_recovery:LF-003"
       ],
       "exact_items_that_must_survive": [
         "hit",
@@ -598,7 +597,7 @@
       ],
       "stale_residue_to_retire": [],
       "status": "active",
-      "bucket_reason": "active unresolved owner section in collected impact set; includes fidelity recovery work and remains packet-mutation eligible as an SSOT section",
+      "bucket_reason": "active unresolved owner section in collected impact set; includes fidelity blocker carry-through and remains packet-mutation eligible as an SSOT section",
       "linked_unresolved_findings": [
         "LF-003"
       ]
@@ -609,8 +608,8 @@
       "doc_role": "owner",
       "section_role": "owner_section",
       "source_reasons": [
-        "obl-040: Plan/TODO persistence is locked to explicit revision states, structural-edit gating after approval, bounded revision history, and emission of `chat.plan_todo_updated` for durable TODO mutations.",
-        "obl-068: `chat.plan_todo_updated` must have an explicit owner-contract definition for durable normalized TODO mutation, and `todoread` must not survive as a `source_surface` mutation source."
+        "section_obligation:obl-040",
+        "section_obligation:obl-068"
       ],
       "exact_items_that_must_survive": [
         "draft",
@@ -635,10 +634,10 @@
       "doc_role": "owner",
       "section_role": "owner_section",
       "source_reasons": [
-        "obl-039: Plan and Deep Plan must both project to a normalized TODO list, with a named Q&A loop before Deep Plan execution and a locked TODO item schema/status set.",
-        "obl-040: Plan/TODO persistence is locked to explicit revision states, structural-edit gating after approval, bounded revision history, and emission of `chat.plan_todo_updated` for durable TODO mutations.",
-        "obl-041: TODO tool behavior is locked so todowrite and todoread use the normalized TODO schema, todowrite is not blanket auto-denied in ask/plan mode, and Deep Plan edits must resync the TODO projection before execution.",
-        "obl-068: `chat.plan_todo_updated` must have an explicit owner-contract definition for durable normalized TODO mutation, and `todoread` must not survive as a `source_surface` mutation source."
+        "section_obligation:obl-039",
+        "section_obligation:obl-040",
+        "section_obligation:obl-041",
+        "section_obligation:obl-068"
       ],
       "exact_items_that_must_survive": [
         "Q&A loop",
@@ -679,10 +678,10 @@
       "doc_role": "owner",
       "section_role": "owner_section",
       "source_reasons": [
-        "obl-039: Plan and Deep Plan must both project to a normalized TODO list, with a named Q&A loop before Deep Plan execution and a locked TODO item schema/status set.",
-        "obl-040: Plan/TODO persistence is locked to explicit revision states, structural-edit gating after approval, bounded revision history, and emission of `chat.plan_todo_updated` for durable TODO mutations.",
-        "obl-041: TODO tool behavior is locked so todowrite and todoread use the normalized TODO schema, todowrite is not blanket auto-denied in ask/plan mode, and Deep Plan edits must resync the TODO projection before execution.",
-        "obl-068: `chat.plan_todo_updated` must have an explicit owner-contract definition for durable normalized TODO mutation, and `todoread` must not survive as a `source_surface` mutation source."
+        "section_obligation:obl-039",
+        "section_obligation:obl-040",
+        "section_obligation:obl-041",
+        "section_obligation:obl-068"
       ],
       "exact_items_that_must_survive": [
         "Q&A loop",
@@ -721,9 +720,9 @@
       "doc_role": "owner",
       "section_role": "owner_section",
       "source_reasons": [
-        "obl-042: Question flows are locked to PM-managed draft state, required visible options plus a freeform path, resumable multi-question drafts, and explicit dismissed or paused behavior instead of fabricated answers.",
-        "obl-043: Question schema canonical names and enums are locked, including QuestionItem fields, canonical freeform and multi-select field names, and answer source metadata.",
-        "obl-044: The question tool contract is locked to a multi-question envelope, normalized output statuses, object-array options, included answer source, and top-level orchestrator ownership of user questioning."
+        "section_obligation:obl-042",
+        "section_obligation:obl-043",
+        "section_obligation:obl-044"
       ],
       "exact_items_that_must_survive": [
         "NOT via `sendPrompt`",
@@ -772,9 +771,9 @@
       "doc_role": "owner",
       "section_role": "owner_section",
       "source_reasons": [
-        "obl-042: Question flows are locked to PM-managed draft state, required visible options plus a freeform path, resumable multi-question drafts, and explicit dismissed or paused behavior instead of fabricated answers.",
-        "obl-043: Question schema canonical names and enums are locked, including QuestionItem fields, canonical freeform and multi-select field names, and answer source metadata.",
-        "obl-044: The question tool contract is locked to a multi-question envelope, normalized output statuses, object-array options, included answer source, and top-level orchestrator ownership of user questioning."
+        "section_obligation:obl-042",
+        "section_obligation:obl-043",
+        "section_obligation:obl-044"
       ],
       "exact_items_that_must_survive": [
         "NOT via `sendPrompt`",
@@ -823,8 +822,8 @@
       "doc_role": "owner",
       "section_role": "owner_section",
       "source_reasons": [
-        "obl-029: Web tool permission keys, approval-card summary templates, session-approval semantics, and their exact approval-card cross-reference target remain canonical in Permissions_System and must not be re-invented from thin tool descriptions or stale Ask UI links.",
-        "obl-062: Permission canon must preserve the four-tier approval ladder, question default allow only when HITL is available, keep the six web tools ask-gated in read_only and plan presets, and carry the blocked/unavailable payload fields through to permission-card consumers."
+        "section_obligation:obl-029",
+        "section_obligation:obl-062"
       ],
       "exact_items_that_must_survive": [
         "websearch summary shows tool name + query preview",
@@ -869,10 +868,10 @@
       "doc_role": "owner",
       "section_role": "owner_section",
       "source_reasons": [
-        "obl-029: Web tool permission keys, approval-card summary templates, session-approval semantics, and their exact approval-card cross-reference target remain canonical in Permissions_System and must not be re-invented from thin tool descriptions or stale Ask UI links.",
-        "obl-041: TODO tool behavior is locked so todowrite and todoread use the normalized TODO schema, todowrite is not blanket auto-denied in ask/plan mode, and Deep Plan edits must resync the TODO projection before execution.",
-        "obl-058: Batch webfetch canon includes exact batch inputs, concurrency limits, shared-host permission flow, and the locked batch timeout formula.",
-        "obl-062: Permission canon must preserve the four-tier approval ladder, question default allow only when HITL is available, keep the six web tools ask-gated in read_only and plan presets, and carry the blocked/unavailable payload fields through to permission-card consumers."
+        "section_obligation:obl-029",
+        "section_obligation:obl-041",
+        "section_obligation:obl-058",
+        "section_obligation:obl-062"
       ],
       "exact_items_that_must_survive": [
         "websearch summary shows tool name + query preview",
@@ -928,8 +927,8 @@
       "doc_role": "owner",
       "section_role": "owner_section",
       "source_reasons": [
-        "obl-041: TODO tool behavior is locked so todowrite and todoread use the normalized TODO schema, todowrite is not blanket auto-denied in ask/plan mode, and Deep Plan edits must resync the TODO projection before execution.",
-        "obl-062: Permission canon must preserve the four-tier approval ladder, question default allow only when HITL is available, keep the six web tools ask-gated in read_only and plan presets, and carry the blocked/unavailable payload fields through to permission-card consumers."
+        "section_obligation:obl-041",
+        "section_obligation:obl-062"
       ],
       "exact_items_that_must_survive": [
         "todowrite",
@@ -969,7 +968,7 @@
       "doc_role": "owner",
       "section_role": "owner_section",
       "source_reasons": [
-        "obl-062: Permission canon must preserve the four-tier approval ladder, question default allow only when HITL is available, keep the six web tools ask-gated in read_only and plan presets, and carry the blocked/unavailable payload fields through to permission-card consumers."
+        "section_obligation:obl-062"
       ],
       "exact_items_that_must_survive": [
         "deny",
@@ -1003,9 +1002,9 @@
       "doc_role": "owner",
       "section_role": "owner_section",
       "source_reasons": [
-        "obl-049: Agent behavior management is locked under Agent Config, with Skills as a tab inside it, while Settings retains system-level dependencies and rules.",
-        "obl-050: Skills management is locked to explicit catalog and import UX, fixed source and readiness vocabularies, store-vs-management separation, and visible source/readiness badges including pm_enhanced.",
-        "obl-052: Skill runtime and permission behavior is locked to a structured skill tool envelope, discovery versus auto-invoke readiness rules, dynamic runtime tool descriptions, FileSafe-constrained resource access, and Agent Config ownership."
+        "section_obligation:obl-049",
+        "section_obligation:obl-050",
+        "section_obligation:obl-052"
       ],
       "exact_items_that_must_survive": [
         "Agent Config",
@@ -1039,12 +1038,12 @@
       "doc_role": "owner",
       "section_role": "owner_section",
       "source_reasons": [
-        "obl-019: Batch semantics must preserve the explicit false branch for continue_on_error.",
-        "obl-034: Inline mini-terminal and operation cards are locked to bounded inline previews, persistent per-command cards, narrative-order placement, and shared card anatomy.",
-        "obl-035: Blocked action recovery is locked to `blocked_reason_code`, `allowed_action_ids[]`, canonical blocked classes `permission_denied`, `network_error`, `adapter_unavailable`, and `timeout`, while headless/HITL-unavailable carries through as `status: \"unavailable\"` and stale `provider_unavailable` / `headless_unavailable` blocked-class residue must be retired.",
-        "obl-036: Operation cards are restricted to lifecycle-bearing operations, exclude other widget families, and use a locked card-level state machine reconciled against the 8-state agent/process taxonomy.",
-        "obl-059: Blocked and denied activity payloads must preserve the exact blocked and denial payload keys in the owned web-operation child payload, include `blocked_reason_code` alongside `allowed_action_ids[]`, `denial_reason_code`, `denial_source`, and `suggested_recovery_action`, keep `projection_freshness` and `projection_health`, align canonical error naming to `adapter_unavailable`, and retire exact stale residue such as `unblock_action_ids[]`, `provider_unavailable`, `headless_unavailable`, and unrelated terminal/chat/card carry-through that contradicts the owner payload schema.",
-        "obl-062: Permission canon must preserve the four-tier approval ladder, question default allow only when HITL is available, keep the six web tools ask-gated in read_only and plan presets, and carry the blocked/unavailable payload fields through to permission-card consumers."
+        "section_obligation:obl-019",
+        "section_obligation:obl-034",
+        "section_obligation:obl-035",
+        "section_obligation:obl-036",
+        "section_obligation:obl-059",
+        "section_obligation:obl-062"
       ],
       "exact_items_that_must_survive": [
         "continue_on_error: false",
@@ -1111,9 +1110,9 @@
       "doc_role": "owner",
       "section_role": "owner_section",
       "source_reasons": [
-        "obl-034: Inline mini-terminal and operation cards are locked to bounded inline previews, persistent per-command cards, narrative-order placement, and shared card anatomy.",
-        "obl-037: Terminal promotion and handoff are locked so interactive or long-running work binds to a stable terminal session while chat retains only bounded preview and audit ownership.",
-        "obl-063: Terminal action canon must preserve the distinct terminal actions and give Rerun in Terminal owned command-table treatment rather than collapsing actions into one normalized target."
+        "section_obligation:obl-034",
+        "section_obligation:obl-037",
+        "section_obligation:obl-063"
       ],
       "exact_items_that_must_survive": [
         "Collapsed preview: 5 lines",
@@ -1151,8 +1150,8 @@
       "doc_role": "owner",
       "section_role": "owner_section",
       "source_reasons": [
-        "obl-037: Terminal promotion and handoff are locked so interactive or long-running work binds to a stable terminal session while chat retains only bounded preview and audit ownership.",
-        "obl-063: Terminal action canon must preserve the distinct terminal actions and give Rerun in Terminal owned command-table treatment rather than collapsing actions into one normalized target."
+        "section_obligation:obl-037",
+        "section_obligation:obl-063"
       ],
       "exact_items_that_must_survive": [
         "Shell owns interactive state; chat owns preview+audit",
@@ -1183,7 +1182,7 @@
       "doc_role": "owner",
       "section_role": "owner_section",
       "source_reasons": [
-        "obl-038: Message controls are locked to most-recent-user scope, queued-message FIFO semantics, explicit rewind/discard behavior, always-visible code-block copy, mandatory subagent disclosure, and transient queue state that is not restored across reload or restart."
+        "section_obligation:obl-038"
       ],
       "exact_items_that_must_survive": [
         "Stop/Edit/Resend attach ONLY to most recent user-sent message",
@@ -1206,8 +1205,8 @@
       "doc_role": "owner",
       "section_role": "owner_section",
       "source_reasons": [
-        "obl-046: The reserved built-in slash-command set is locked and non-overridable; bare /web has no default action, bare /skill is discovery or invocation only, /cancel remains a deprecated alias to /stop, and /clear stays removed.",
-        "obl-047: The /web family is locked as one slash-command family with stable command IDs, bare /web help behavior, and no flattening into separate top-level families."
+        "section_obligation:obl-046",
+        "section_obligation:obl-047"
       ],
       "exact_items_that_must_survive": [
         "/web search <query>",
@@ -1257,7 +1256,7 @@
       "doc_role": "owner",
       "section_role": "owner_section",
       "source_reasons": [
-        "obl-048: Natural-language web intents must hit the same dispatcher as slash commands, and site or page reading intents must resolve to webfetch rather than websearch or provider extract."
+        "section_obligation:obl-048"
       ],
       "exact_items_that_must_survive": [
         "NL intents and slash commands hit the same dispatcher",
@@ -1282,9 +1281,9 @@
       "doc_role": "owner",
       "section_role": "owner_section",
       "source_reasons": [
-        "obl-049: Agent behavior management is locked under Agent Config, with Skills as a tab inside it, while Settings retains system-level dependencies and rules.",
-        "obl-050: Skills management is locked to explicit catalog and import UX, fixed source and readiness vocabularies, store-vs-management separation, and visible source/readiness badges including pm_enhanced.",
-        "obl-052: Skill runtime and permission behavior is locked to a structured skill tool envelope, discovery versus auto-invoke readiness rules, dynamic runtime tool descriptions, FileSafe-constrained resource access, and Agent Config ownership."
+        "section_obligation:obl-049",
+        "section_obligation:obl-050",
+        "section_obligation:obl-052"
       ],
       "exact_items_that_must_survive": [
         "Agent Config",
@@ -1325,7 +1324,7 @@
       "doc_role": "owner",
       "section_role": "owner_section",
       "source_reasons": [
-        "obl-045: Mermaid and inline visualizer behavior is locked to native card rendering, explicit error and fallback disclosure, sandboxing without arbitrary HTML execution, bounded persistence, injected theme tokens, and the exact inline visualizer bridge cross-reference target."
+        "section_obligation:obl-045"
       ],
       "exact_items_that_must_survive": [
         "Copy source",
@@ -1348,7 +1347,7 @@
       "doc_role": "owner",
       "section_role": "owner_section",
       "source_reasons": [
-        "obl-061: Runtime identity canon must preserve requested and effective naming and the account/provider identity fields, and must retire local _id substitutes."
+        "section_obligation:obl-061"
       ],
       "exact_items_that_must_survive": [
         "requested_persona",
@@ -1371,7 +1370,7 @@
       "doc_role": "owner",
       "section_role": "owner_section",
       "source_reasons": [
-        "obl-064: LSP canon must preserve the exact MVP operation inventory, normalized parameter shapes, and result envelope; `workspaceSymbol` must carry `query`, position-based operations use `path` + `position`, and `rename` requires `path` + `position` + `newName` with approval gating."
+        "section_obligation:obl-064"
       ],
       "exact_items_that_must_survive": [
         "goToDefinition",
@@ -1401,19 +1400,118 @@
       "bucket_reason": "active owner section in collected impact set; packet planning may target this SSOT section directly"
     },
     {
+      "path": "Plans/MCP_Integration.md",
+      "heading": "## 1. Canonical naming",
+      "doc_role": "owner",
+      "section_role": "owner_section",
+      "source_reasons": [
+        "section_obligation:obl-065",
+        "ledger_fidelity:FIDELITY-MCP-001"
+      ],
+      "exact_items_that_must_survive": [
+        "{server_slug}_{tool_name}",
+        "LoggedIn | LoggedOut | AuthExpired | AuthFailed",
+        "canonical naming",
+        "canonical naming uses underscore form `{server_slug}_{tool_name}`"
+      ],
+      "stale_residue_to_retire": [
+        "authenticated | expired | not_authenticated",
+        "connected | disabled | needs_auth | needs_client_registration | failed",
+        "requested availability",
+        "effective availability",
+        "credential binding"
+      ],
+      "status": "active",
+      "bucket_reason": "active unresolved owner section in collected impact set; includes fidelity blocker carry-through and remains packet-mutation eligible as an SSOT section",
+      "linked_unresolved_findings": [
+        "FIDELITY-MCP-001"
+      ]
+    },
+    {
+      "path": "Plans/MCP_Integration.md",
+      "heading": "## 2. Requested versus effective availability",
+      "doc_role": "owner",
+      "section_role": "owner_section",
+      "source_reasons": [
+        "section_obligation:obl-065",
+        "ledger_fidelity:FIDELITY-MCP-002"
+      ],
+      "exact_items_that_must_survive": [
+        "authenticated | expired | not_authenticated",
+        "connected | disabled | needs_auth | needs_client_registration | failed",
+        "requested availability",
+        "effective availability",
+        "requested and effective MCP availability remain distinct disclosure surfaces"
+      ],
+      "stale_residue_to_retire": [
+        "LoggedIn | LoggedOut | AuthExpired | AuthFailed",
+        "{server_slug}_{tool_name}",
+        "credential binding"
+      ],
+      "status": "active",
+      "bucket_reason": "active unresolved owner section in collected impact set; includes fidelity blocker carry-through and remains packet-mutation eligible as an SSOT section",
+      "linked_unresolved_findings": [
+        "FIDELITY-MCP-002"
+      ]
+    },
+    {
+      "path": "Plans/MCP_Integration.md",
+      "heading": "## 3. Credential binding and invalidation",
+      "doc_role": "owner",
+      "section_role": "owner_section",
+      "source_reasons": [
+        "section_obligation:obl-065"
+      ],
+      "exact_items_that_must_survive": [
+        "LoggedIn | LoggedOut | AuthExpired | AuthFailed",
+        "credential binding",
+        "credential binding or invalidation behavior remains MCP-owned canon"
+      ],
+      "stale_residue_to_retire": [
+        "authenticated | expired | not_authenticated",
+        "connected | disabled | needs_auth | needs_client_registration | failed",
+        "{server_slug}_{tool_name}",
+        "requested availability",
+        "effective availability"
+      ],
+      "status": "active",
+      "bucket_reason": "active owner section in collected impact set; packet planning may target this SSOT section directly"
+    },
+    {
+      "path": "Plans/MCP_Integration.md",
+      "heading": "## 7. Effective tool availability and GUI surfacing",
+      "doc_role": "owner",
+      "section_role": "owner_section",
+      "source_reasons": [
+        "section_obligation:obl-065"
+      ],
+      "exact_items_that_must_survive": [
+        "connected | disabled | needs_auth | needs_client_registration | failed",
+        "authenticated | expired | not_authenticated",
+        "effective tool availability",
+        "GUI surfacing",
+        "GUI summary surfaces reference the MCP SSOT instead of re-owning connection-state vocabulary",
+        "Plans/FinalGUISpec.md#7.4.4 Settings (Unified) panel specification",
+        "Plans/newtools.md#8.2 GUI/settings alignment"
+      ],
+      "stale_residue_to_retire": [],
+      "status": "active",
+      "bucket_reason": "active owner section in collected impact set; packet planning may target this SSOT section directly"
+    },
+    {
       "path": "Plans/Contracts_V0.md",
       "heading": "### 3.4 Tool-specific payload extensions",
       "doc_role": "owner",
       "section_role": "owner_section",
       "source_reasons": [
-        "obl-001: Preserve the Firecrawl-specific audit payload keys as exact contract-owned fields.",
-        "obl-009: Answer construction must preserve search-then-read behavior, final citations must come from the actual read path rather than raw search snippets alone, and web activity/provenance docs must use the exact storage/contracts/browser ContractRef targets instead of malformed generic anchors.",
-        "obl-016: The Firecrawl async contract must preserve timeout behavior tied to timeout_ms and partial-result survival on timeout.",
-        "obl-020: Batch audit/event canon must preserve a parent audit event for the batch plus child audit events per URL.",
-        "obl-021: Long-running web operations must preserve the structured progress_event payload and cancellation-with-partial-results contract.",
-        "obl-025: The Firecrawl mapping table must preserve all PM operation rows, including the exact batch_webextract mapping POST /v2/extract with urls[].",
-        "obl-054: Firecrawl search responses must be transformed into PM's unified search result shape by flattening source-partitioned results into one results array and tagging each item with source_type in a fixed merge order.",
-        "obl-059: Blocked and denied activity payloads must preserve the exact blocked and denial payload keys in the owned web-operation child payload, include `blocked_reason_code` alongside `allowed_action_ids[]`, `denial_reason_code`, `denial_source`, and `suggested_recovery_action`, keep `projection_freshness` and `projection_health`, align canonical error naming to `adapter_unavailable`, and retire exact stale residue such as `unblock_action_ids[]`, `provider_unavailable`, `headless_unavailable`, and unrelated terminal/chat/card carry-through that contradicts the owner payload schema."
+        "section_obligation:obl-001",
+        "section_obligation:obl-009",
+        "section_obligation:obl-016",
+        "section_obligation:obl-020",
+        "section_obligation:obl-021",
+        "section_obligation:obl-025",
+        "section_obligation:obl-054",
+        "section_obligation:obl-059"
       ],
       "exact_items_that_must_survive": [
         "firecrawl_credits_used",
@@ -1474,10 +1572,7 @@
         "ContractName:Plans/storage-plan.md#44-activity-transparency-payloads"
       ],
       "status": "active",
-      "bucket_reason": "active unresolved owner section in collected impact set; includes fidelity recovery work and remains packet-mutation eligible as an SSOT section",
-      "linked_unresolved_findings": [
-        "LF-004"
-      ]
+      "bucket_reason": "active owner section in collected impact set; packet planning may target this SSOT section directly"
     },
     {
       "path": "Plans/Tools.md",
@@ -1485,7 +1580,7 @@
       "doc_role": "owner",
       "section_role": "owner_section",
       "source_reasons": [
-        "obl-055: WebAction is a locked typed interface with an exact action enum, required and optional fields, hard timing limits, sequential execution, and invalid_input on unknown action types."
+        "section_obligation:obl-055"
       ],
       "exact_items_that_must_survive": [
         "`type: \"click\" | \"scroll\" | \"type\" | \"press_key\" | \"wait_for\" | \"navigate\" | \"screenshot\" | \"set_viewport\" | \"fill_form\" | \"select_option\" | \"back\" | \"reload\" | \"snapshot\" | \"console\" | \"network\";`",
@@ -1514,9 +1609,9 @@
       "doc_role": "owner",
       "section_role": "owner_section",
       "source_reasons": [
-        "obl-016: The Firecrawl async contract must preserve timeout behavior tied to timeout_ms and partial-result survival on timeout.",
-        "obl-021: Long-running web operations must preserve the structured progress_event payload and cancellation-with-partial-results contract.",
-        "obl-026: The Firecrawl async contract must preserve the exact poll ladder and status family already restored in the owner section."
+        "section_obligation:obl-016",
+        "section_obligation:obl-021",
+        "section_obligation:obl-026"
       ],
       "exact_items_that_must_survive": [
         "timeout_ms",
@@ -1556,8 +1651,8 @@
       "doc_role": "owner",
       "section_role": "owner_section",
       "source_reasons": [
-        "obl-017: Routing must remain cost-aware when multiple providers offer similar capability; static priority alone is insufficient, and the >100 credits warning plus 500 credits cap must remain aligned with routing.",
-        "obl-027: The Firecrawl credit and disclosure contract must preserve the warning threshold, hard cap, and self-hosted billing exception already restored in the owner section."
+        "section_obligation:obl-017",
+        "section_obligation:obl-027"
       ],
       "exact_items_that_must_survive": [
         "cost-aware selection when providers offer similar capability",
@@ -1584,10 +1679,10 @@
       "doc_role": "owner",
       "section_role": "owner_section",
       "source_reasons": [
-        "obl-019: Batch semantics must preserve the explicit false branch for continue_on_error.",
-        "obl-020: Batch audit/event canon must preserve a parent audit event for the batch plus child audit events per URL.",
-        "obl-030: Batch approval and timeout behavior already restored in section 13 must survive unchanged.",
-        "obl-058: Batch webfetch canon includes exact batch inputs, concurrency limits, shared-host permission flow, and the locked batch timeout formula."
+        "section_obligation:obl-019",
+        "section_obligation:obl-020",
+        "section_obligation:obl-030",
+        "section_obligation:obl-058"
       ],
       "exact_items_that_must_survive": [
         "continue_on_error: false",
@@ -1626,9 +1721,9 @@
       "doc_role": "owner",
       "section_role": "owner_section",
       "source_reasons": [
-        "obl-039: Plan and Deep Plan must both project to a normalized TODO list, with a named Q&A loop before Deep Plan execution and a locked TODO item schema/status set.",
-        "obl-040: Plan/TODO persistence is locked to explicit revision states, structural-edit gating after approval, bounded revision history, and emission of `chat.plan_todo_updated` for durable TODO mutations.",
-        "obl-068: `chat.plan_todo_updated` must have an explicit owner-contract definition for durable normalized TODO mutation, and `todoread` must not survive as a `source_surface` mutation source."
+        "section_obligation:obl-039",
+        "section_obligation:obl-040",
+        "section_obligation:obl-068"
       ],
       "exact_items_that_must_survive": [
         "Q&A loop",
@@ -1662,7 +1757,7 @@
       "doc_role": "owner",
       "section_role": "owner_section",
       "source_reasons": [
-        "obl-051: Skill discovery and invocation are locked to three paths\u2014GUI panel, /skill, and natural language\u2014without an MVP subcommand family, all converging on the same invoke_skill contract."
+        "section_obligation:obl-051"
       ],
       "exact_items_that_must_survive": [
         "/skill <skill_name> [args]",
@@ -1681,28 +1776,6 @@
       "stale_residue_to_retire": [],
       "status": "active",
       "bucket_reason": "active owner section in collected impact set; packet planning may target this SSOT section directly"
-    },
-    {
-      "path": "Plans/MCP_Integration.md",
-      "heading": "## 7. Effective tool availability and GUI surfacing",
-      "doc_role": "owner",
-      "section_role": "owner_section",
-      "source_reasons": [
-        "obl-065: MCP owner canon must preserve the exact auth and effective-state enums, canonical naming, credential binding or invalidation behavior, and the GUI-facing SSOT rewrite anchors for downstream consumers.",
-        "LF-001: this owner section still has a live cross-reference stale gap because the exact GUI consumer rewrites to FinalGUISpec and newtools are not yet explicit here."
-      ],
-      "exact_items_that_must_survive": [
-        "connected | disabled | needs_auth | needs_client_registration | failed",
-        "authenticated | expired | not_authenticated",
-        "effective tool availability",
-        "GUI surfacing",
-        "GUI summary surfaces reference the MCP SSOT instead of re-owning connection-state vocabulary",
-        "Plans/FinalGUISpec.md#7.4.4 Settings (Unified) panel specification",
-        "Plans/newtools.md#8.2 GUI/settings alignment"
-      ],
-      "stale_residue_to_retire": [],
-      "status": "active",
-      "bucket_reason": "active owner section in collected impact set; packet planning may target this SSOT section directly"
     }
   ],
   "must_reconcile": [
@@ -1712,9 +1785,9 @@
       "doc_role": "consumer",
       "section_role": "consumer_section",
       "source_reasons": [
-        "obl-008: Site Reader canon must require real browser interaction, reserve `Reading Site` for the PM-native Site Reader path, and prevent provider-routed fetch from reusing that reserved identity.",
-        "obl-055: WebAction is a locked typed interface with an exact action enum, required and optional fields, hard timing limits, sequential execution, and invalid_input on unknown action types.",
-        "obl-057: webfetch URL handling is locked: reject non-HTTP(S) schemes, normalize before routing, default bare domains to https://, reject malformed URLs with invalid_input, and enforce a default 5 MB max_content_length unless configured otherwise."
+        "section_obligation:obl-008",
+        "section_obligation:obl-055",
+        "section_obligation:obl-057"
       ],
       "exact_items_that_must_survive": [
         "Site Reader v1 requires real browser-interaction capability, not static HTTP fetch only",
@@ -1755,22 +1828,22 @@
       "doc_role": "consumer",
       "section_role": "consumer_section",
       "source_reasons": [
-        "obl-001: Preserve the Firecrawl-specific audit payload keys as exact contract-owned fields.",
-        "obl-003: The provider capability matrix must preserve capability tier separately from routing posture: Firecrawl, Tavily, and Exa retain real webfetch capability and must not be flattened to fallback-only merely because Site Reader is preferred.",
-        "obl-004: Anthropic and OpenAI websearch support must remain labeled native (model) / model-native, not pm-composed.",
-        "obl-007: The web routing algorithm must include a capability-unavailable terminal branch with clear setup guidance when no provider supports the requested operation.",
-        "obl-008: Site Reader canon must require real browser interaction, reserve `Reading Site` for the PM-native Site Reader path, and prevent provider-routed fetch from reusing that reserved identity.",
-        "obl-009: Answer construction must preserve search-then-read behavior, final citations must come from the actual read path rather than raw search snippets alone, and web activity/provenance docs must use the exact storage/contracts/browser ContractRef targets instead of malformed generic anchors.",
-        "obl-011: The Firecrawl webresearch mapping must preserve provider-native no-URL research behavior, navigation/forms/pagination capability, and structured extraction during agent-led research.",
-        "obl-012: The Firecrawl websearch mapping must preserve provider-specific search behavior and option surface.",
-        "obl-013: The Firecrawl owner section must either preserve `changeTracking` with its structured output shape or explicitly retire it as out of scope; it must not disappear silently.",
-        "obl-017: Routing must remain cost-aware when multiple providers offer similar capability; static priority alone is insufficient, and the >100 credits warning plus 500 credits cap must remain aligned with routing.",
-        "obl-028: The Firecrawl owner section must preserve shared routing/audit disclosure for requested/effective provider selection, fallback visibility, denied-web projection, and canonical web error taxonomy linkage.",
-        "obl-032: The per-contract web error applicability table remains required canon and must stay aligned with provider-to-PM error mapping.",
-        "obl-033: Retire stale cited-search ownership residue from reference sections; provider-capability and web-routing canon is owned by Plans/Tools.md sections 11-12, while Plans/newtools.md#8.2.1 is non-normative consumer guidance only.",
-        "obl-056: All web tools share a common output field set that includes provider identity, routing reason, timing, cache status, and standard error or warning fields.",
-        "obl-058: Batch webfetch canon includes exact batch inputs, concurrency limits, shared-host permission flow, and the locked batch timeout formula.",
-        "obl-060: Activity transparency payloads must preserve adapter-selection and projection fields used for routing and audit disclosure."
+        "section_obligation:obl-001",
+        "section_obligation:obl-003",
+        "section_obligation:obl-004",
+        "section_obligation:obl-007",
+        "section_obligation:obl-008",
+        "section_obligation:obl-009",
+        "section_obligation:obl-011",
+        "section_obligation:obl-012",
+        "section_obligation:obl-013",
+        "section_obligation:obl-017",
+        "section_obligation:obl-028",
+        "section_obligation:obl-032",
+        "section_obligation:obl-033",
+        "section_obligation:obl-056",
+        "section_obligation:obl-058",
+        "section_obligation:obl-060"
       ],
       "exact_items_that_must_survive": [
         "firecrawl_credits_used",
@@ -1872,8 +1945,8 @@
       "doc_role": "consumer",
       "section_role": "consumer_section",
       "source_reasons": [
-        "obl-009: Answer construction must preserve search-then-read behavior, final citations must come from the actual read path rather than raw search snippets alone, and web activity/provenance docs must use the exact storage/contracts/browser ContractRef targets instead of malformed generic anchors.",
-        "obl-012: The Firecrawl websearch mapping must preserve provider-specific search behavior and option surface."
+        "section_obligation:obl-009",
+        "section_obligation:obl-012"
       ],
       "exact_items_that_must_survive": [
         "search-then-read behavior",
@@ -1900,18 +1973,18 @@
       "doc_role": "consumer",
       "section_role": "consumer_section",
       "source_reasons": [
-        "obl-007: The web routing algorithm must include a capability-unavailable terminal branch with clear setup guidance when no provider supports the requested operation.",
-        "obl-008: Site Reader canon must require real browser interaction, reserve `Reading Site` for the PM-native Site Reader path, and prevent provider-routed fetch from reusing that reserved identity.",
-        "obl-011: The Firecrawl webresearch mapping must preserve provider-native no-URL research behavior, navigation/forms/pagination capability, and structured extraction during agent-led research.",
-        "obl-019: Batch semantics must preserve the explicit false branch for continue_on_error.",
-        "obl-021: Long-running web operations must preserve the structured progress_event payload and cancellation-with-partial-results contract.",
-        "obl-034: Inline mini-terminal and operation cards are locked to bounded inline previews, persistent per-command cards, narrative-order placement, and shared card anatomy.",
-        "obl-035: Blocked action recovery is locked to `blocked_reason_code`, `allowed_action_ids[]`, canonical blocked classes `permission_denied`, `network_error`, `adapter_unavailable`, and `timeout`, while headless/HITL-unavailable carries through as `status: \"unavailable\"` and stale `provider_unavailable` / `headless_unavailable` blocked-class residue must be retired.",
-        "obl-036: Operation cards are restricted to lifecycle-bearing operations, exclude other widget families, and use a locked card-level state machine reconciled against the 8-state agent/process taxonomy.",
-        "obl-038: Message controls are locked to most-recent-user scope, queued-message FIFO semantics, explicit rewind/discard behavior, always-visible code-block copy, mandatory subagent disclosure, and transient queue state that is not restored across reload or restart.",
-        "obl-056: All web tools share a common output field set that includes provider identity, routing reason, timing, cache status, and standard error or warning fields.",
-        "obl-059: Blocked and denied activity payloads must preserve the exact blocked and denial payload keys in the owned web-operation child payload, include `blocked_reason_code` alongside `allowed_action_ids[]`, `denial_reason_code`, `denial_source`, and `suggested_recovery_action`, keep `projection_freshness` and `projection_health`, align canonical error naming to `adapter_unavailable`, and retire exact stale residue such as `unblock_action_ids[]`, `provider_unavailable`, `headless_unavailable`, and unrelated terminal/chat/card carry-through that contradicts the owner payload schema.",
-        "obl-060: Activity transparency payloads must preserve adapter-selection and projection fields used for routing and audit disclosure."
+        "section_obligation:obl-007",
+        "section_obligation:obl-008",
+        "section_obligation:obl-011",
+        "section_obligation:obl-019",
+        "section_obligation:obl-021",
+        "section_obligation:obl-034",
+        "section_obligation:obl-035",
+        "section_obligation:obl-036",
+        "section_obligation:obl-038",
+        "section_obligation:obl-056",
+        "section_obligation:obl-059",
+        "section_obligation:obl-060"
       ],
       "exact_items_that_must_survive": [
         "capability-unavailable terminal branch",
@@ -2000,10 +2073,7 @@
         "headless_unavailable"
       ],
       "status": "active",
-      "bucket_reason": "active unresolved consumer/mirror section in collected impact set; includes fidelity recovery work and requires section-level reconciliation",
-      "linked_unresolved_findings": [
-        "LF-004"
-      ]
+      "bucket_reason": "active consumer/mirror section in collected impact set; packet planning may reconcile carry-through here without treating the section as SSOT"
     },
     {
       "path": "Plans/FinalGUISpec.md",
@@ -2011,9 +2081,9 @@
       "doc_role": "consumer",
       "section_role": "consumer_section",
       "source_reasons": [
-        "obl-029: Web tool permission keys, approval-card summary templates, session-approval semantics, and their exact approval-card cross-reference target remain canonical in Permissions_System and must not be re-invented from thin tool descriptions or stale Ask UI links.",
-        "obl-035: Blocked action recovery is locked to `blocked_reason_code`, `allowed_action_ids[]`, canonical blocked classes `permission_denied`, `network_error`, `adapter_unavailable`, and `timeout`, while headless/HITL-unavailable carries through as `status: \"unavailable\"` and stale `provider_unavailable` / `headless_unavailable` blocked-class residue must be retired.",
-        "obl-062: Permission canon must preserve the four-tier approval ladder, question default allow only when HITL is available, keep the six web tools ask-gated in read_only and plan presets, and carry the blocked/unavailable payload fields through to permission-card consumers."
+        "section_obligation:obl-029",
+        "section_obligation:obl-035",
+        "section_obligation:obl-062"
       ],
       "exact_items_that_must_survive": [
         "websearch summary shows tool name + query preview",
@@ -2047,10 +2117,7 @@
         "Plans/Tools.md#10.7 Ask UI contract"
       ],
       "status": "active",
-      "bucket_reason": "active unresolved consumer/mirror section in collected impact set; includes fidelity recovery work and requires section-level reconciliation",
-      "linked_unresolved_findings": [
-        "LF-002"
-      ]
+      "bucket_reason": "active consumer/mirror section in collected impact set; packet planning may reconcile carry-through here without treating the section as SSOT"
     },
     {
       "path": "Plans/FinalGUISpec.md",
@@ -2058,20 +2125,20 @@
       "doc_role": "consumer",
       "section_role": "consumer_section",
       "source_reasons": [
-        "obl-002: The global provider stack is user-changeable in Settings, while per-operation priority reordering is not MVP and the MVP priority order must not be treated as immutable product policy.",
-        "obl-003: The provider capability matrix must preserve capability tier separately from routing posture: Firecrawl, Tavily, and Exa retain real webfetch capability and must not be flattened to fallback-only merely because Site Reader is preferred.",
-        "obl-005: DuckDuckGo capability rows must preserve native-ish search, PM-composed research/fetch/extract, and partial crawl behavior instead of flattening those cells to unsupported.",
-        "obl-006: Google must remain a pluggable adapter slot with display label Google, and its ledger support semantics must not be collapsed away.",
-        "obl-014: The Firecrawl configuration field set must preserve proxy_mode with the exact supported enum values and the self-hosted Fire Engine limitation note.",
-        "obl-015: Retire stale stealth as a proxy_mode enum value; current canon preserves only basic, enhanced, and auto.",
-        "obl-017: Routing must remain cost-aware when multiple providers offer similar capability; static priority alone is insufficient, and the >100 credits warning plus 500 credits cap must remain aligned with routing.",
-        "obl-018: PM must not silently switch between self-hosted Firecrawl and hosted/cloud Firecrawl, and deployment-mode disclosure must remain visible.",
-        "obl-022: GUI/help canon must preserve row-level health/error disclosure, last-failure messaging, inline contextual help, and availability/support-tier visibility in Settings and /web help/autocomplete.",
-        "obl-023: The Firecrawl owner section must preserve the base configuration fields and default-disabled state already restored in the live owner doc.",
-        "obl-027: The Firecrawl credit and disclosure contract must preserve the warning threshold, hard cap, and self-hosted billing exception already restored in the owner section.",
-        "obl-033: Retire stale cited-search ownership residue from reference sections; provider-capability and web-routing canon is owned by Plans/Tools.md sections 11-12, while Plans/newtools.md#8.2.1 is non-normative consumer guidance only.",
-        "obl-053: Firecrawl provider identity canon includes exact provider ID firecrawl, display name Firecrawl, default priority below Exa and Tavily and above DuckDuckGo, user-adjustable ordering, default-disabled state until API key or self-hosted URL is configured, and retirement of exact stale residue \"stale cited-search framing and older `newtools` wording\" from owner/provider canon.",
-        "obl-065: MCP owner canon must preserve the exact auth and effective-state enums, canonical naming, and credential binding or invalidation behavior."
+        "section_obligation:obl-002",
+        "section_obligation:obl-003",
+        "section_obligation:obl-005",
+        "section_obligation:obl-006",
+        "section_obligation:obl-014",
+        "section_obligation:obl-015",
+        "section_obligation:obl-017",
+        "section_obligation:obl-018",
+        "section_obligation:obl-022",
+        "section_obligation:obl-023",
+        "section_obligation:obl-027",
+        "section_obligation:obl-033",
+        "section_obligation:obl-053",
+        "section_obligation:obl-065"
       ],
       "exact_items_that_must_survive": [
         "global provider stack is user-changeable in Settings",
@@ -2150,13 +2217,13 @@
       "doc_role": "mirror",
       "section_role": "mirror_section",
       "source_reasons": [
-        "obl-003: The provider capability matrix must preserve capability tier separately from routing posture: Firecrawl, Tavily, and Exa retain real webfetch capability and must not be flattened to fallback-only merely because Site Reader is preferred.",
-        "obl-004: Anthropic and OpenAI websearch support must remain labeled native (model) / model-native, not pm-composed.",
-        "obl-005: DuckDuckGo capability rows must preserve native-ish search, PM-composed research/fetch/extract, and partial crawl behavior instead of flattening those cells to unsupported.",
-        "obl-006: Google must remain a pluggable adapter slot with display label Google, and its ledger support semantics must not be collapsed away.",
-        "obl-014: The Firecrawl configuration field set must preserve proxy_mode with the exact supported enum values and the self-hosted Fire Engine limitation note.",
-        "obl-023: The Firecrawl owner section must preserve the base configuration fields and default-disabled state already restored in the live owner doc.",
-        "obl-053: Firecrawl provider identity canon includes exact provider ID firecrawl, display name Firecrawl, default priority below Exa and Tavily and above DuckDuckGo, user-adjustable ordering, default-disabled state until API key or self-hosted URL is configured, and retirement of exact stale residue \"stale cited-search framing and older `newtools` wording\" from owner/provider canon."
+        "section_obligation:obl-003",
+        "section_obligation:obl-004",
+        "section_obligation:obl-005",
+        "section_obligation:obl-006",
+        "section_obligation:obl-014",
+        "section_obligation:obl-023",
+        "section_obligation:obl-053"
       ],
       "exact_items_that_must_survive": [
         "Firecrawl `webfetch` capability is not erased by Site Reader primacy",
@@ -2210,10 +2277,10 @@
       "doc_role": "mirror",
       "section_role": "mirror_section",
       "source_reasons": [
-        "obl-002: The global provider stack is user-changeable in Settings, while per-operation priority reordering is not MVP and the MVP priority order must not be treated as immutable product policy.",
-        "obl-022: GUI/help canon must preserve row-level health/error disclosure, last-failure messaging, inline contextual help, and availability/support-tier visibility in Settings and /web help/autocomplete.",
-        "obl-053: Firecrawl provider identity canon includes exact provider ID firecrawl, display name Firecrawl, default priority below Exa and Tavily and above DuckDuckGo, user-adjustable ordering, default-disabled state until API key or self-hosted URL is configured, and retirement of exact stale residue \"stale cited-search framing and older `newtools` wording\" from owner/provider canon.",
-        "obl-065: MCP owner canon must preserve the exact auth and effective-state enums, canonical naming, and credential binding or invalidation behavior."
+        "section_obligation:obl-002",
+        "section_obligation:obl-022",
+        "section_obligation:obl-053",
+        "section_obligation:obl-065"
       ],
       "exact_items_that_must_survive": [
         "global provider stack is user-changeable in Settings",
@@ -2262,9 +2329,9 @@
       "doc_role": "consumer",
       "section_role": "consumer_section",
       "source_reasons": [
-        "obl-039: Plan and Deep Plan must both project to a normalized TODO list, with a named Q&A loop before Deep Plan execution and a locked TODO item schema/status set.",
-        "obl-041: TODO tool behavior is locked so todowrite and todoread use the normalized TODO schema, todowrite is not blanket auto-denied in ask/plan mode, and Deep Plan edits must resync the TODO projection before execution.",
-        "obl-068: `chat.plan_todo_updated` must have an explicit owner-contract definition for durable normalized TODO mutation, and `todoread` must not survive as a `source_surface` mutation source."
+        "section_obligation:obl-039",
+        "section_obligation:obl-041",
+        "section_obligation:obl-068"
       ],
       "exact_items_that_must_survive": [
         "Q&A loop",
@@ -2299,8 +2366,8 @@
       "doc_role": "consumer",
       "section_role": "consumer_section",
       "source_reasons": [
-        "obl-043: Question schema canonical names and enums are locked, including QuestionItem fields, canonical freeform and multi-select field names, and answer source metadata.",
-        "obl-044: The question tool contract is locked to a multi-question envelope, normalized output statuses, object-array options, included answer source, and top-level orchestrator ownership of user questioning."
+        "section_obligation:obl-043",
+        "section_obligation:obl-044"
       ],
       "exact_items_that_must_survive": [
         "mode: \"single_question\" | \"questionnaire\"",
@@ -2336,7 +2403,7 @@
       "doc_role": "consumer",
       "section_role": "consumer_section",
       "source_reasons": [
-        "obl-043: Question schema canonical names and enums are locked, including QuestionItem fields, canonical freeform and multi-select field names, and answer source metadata."
+        "section_obligation:obl-043"
       ],
       "exact_items_that_must_survive": [
         "question_id",
@@ -2364,7 +2431,7 @@
       "doc_role": "consumer",
       "section_role": "consumer_section",
       "source_reasons": [
-        "obl-042: Question flows are locked to PM-managed draft state, required visible options plus a freeform path, resumable multi-question drafts, and explicit dismissed or paused behavior instead of fabricated answers."
+        "section_obligation:obl-042"
       ],
       "exact_items_that_must_survive": [
         "NOT via `sendPrompt`",
@@ -2395,9 +2462,9 @@
       "doc_role": "consumer",
       "section_role": "consumer_section",
       "source_reasons": [
-        "obl-034: Inline mini-terminal and operation cards are locked to bounded inline previews, persistent per-command cards, narrative-order placement, and shared card anatomy.",
-        "obl-037: Terminal promotion and handoff are locked so interactive or long-running work binds to a stable terminal session while chat retains only bounded preview and audit ownership.",
-        "obl-063: Terminal action canon must preserve the distinct terminal actions and give Rerun in Terminal owned command-table treatment rather than collapsing actions into one normalized target."
+        "section_obligation:obl-034",
+        "section_obligation:obl-037",
+        "section_obligation:obl-063"
       ],
       "exact_items_that_must_survive": [
         "Collapsed preview: 5 lines",
@@ -2435,7 +2502,8 @@
       "doc_role": "consumer",
       "section_role": "consumer_section",
       "source_reasons": [
-        "obl-046: The reserved built-in slash-command set is locked and non-overridable; bare /web has no default action, bare /skill is discovery or invocation only, /cancel remains a deprecated alias to /stop, and /clear stays removed."
+        "section_obligation:obl-046",
+        "fidelity_recovery:LF-001"
       ],
       "exact_items_that_must_survive": [
         "/new",
@@ -2466,7 +2534,7 @@
         "/worktree"
       ],
       "status": "active",
-      "bucket_reason": "active unresolved consumer/mirror section in collected impact set; includes fidelity recovery work and requires section-level reconciliation",
+      "bucket_reason": "active unresolved consumer/mirror section in collected impact set; includes fidelity blocker carry-through and remains packet-mutation eligible for reconciliation only",
       "linked_unresolved_findings": [
         "LF-001"
       ]
@@ -2477,9 +2545,9 @@
       "doc_role": "consumer",
       "section_role": "consumer_section",
       "source_reasons": [
-        "obl-022: GUI/help canon must preserve row-level health/error disclosure, last-failure messaging, inline contextual help, and availability/support-tier visibility in Settings and /web help/autocomplete.",
-        "obl-047: The /web family is locked as one slash-command family with stable command IDs, bare /web help behavior, and no flattening into separate top-level families.",
-        "obl-051: Skill discovery and invocation are locked to three paths\u2014GUI panel, /skill, and natural language\u2014without an MVP subcommand family, all converging on the same invoke_skill contract."
+        "section_obligation:obl-022",
+        "section_obligation:obl-047",
+        "section_obligation:obl-051"
       ],
       "exact_items_that_must_survive": [
         "row-level health/error disclosure",
@@ -2525,10 +2593,10 @@
       "doc_role": "consumer",
       "section_role": "consumer_section",
       "source_reasons": [
-        "obl-046: The reserved built-in slash-command set is locked and non-overridable; bare /web has no default action, bare /skill is discovery or invocation only, /cancel remains a deprecated alias to /stop, and /clear stays removed.",
-        "obl-047: The /web family is locked as one slash-command family with stable command IDs, bare /web help behavior, and no flattening into separate top-level families.",
-        "obl-048: Natural-language web intents must hit the same dispatcher as slash commands, and site or page reading intents must resolve to webfetch rather than websearch or provider extract.",
-        "obl-051: Skill discovery and invocation are locked to three paths\u2014GUI panel, /skill, and natural language\u2014without an MVP subcommand family, all converging on the same invoke_skill contract."
+        "section_obligation:obl-046",
+        "section_obligation:obl-047",
+        "section_obligation:obl-048",
+        "section_obligation:obl-051"
       ],
       "exact_items_that_must_survive": [
         "/web search <query>",
@@ -2596,10 +2664,7 @@
         "/worktree"
       ],
       "status": "active",
-      "bucket_reason": "active unresolved consumer/mirror section in collected impact set; includes fidelity recovery work and requires section-level reconciliation",
-      "linked_unresolved_findings": [
-        "LF-001"
-      ]
+      "bucket_reason": "active consumer/mirror section in collected impact set; packet planning may reconcile carry-through here without treating the section as SSOT"
     },
     {
       "path": "Plans/Tools.md",
@@ -2607,7 +2672,7 @@
       "doc_role": "consumer",
       "section_role": "consumer_section",
       "source_reasons": [
-        "obl-052: Skill runtime and permission behavior is locked to a structured skill tool envelope, discovery versus auto-invoke readiness rules, dynamic runtime tool descriptions, FileSafe-constrained resource access, and Agent Config ownership."
+        "section_obligation:obl-052"
       ],
       "exact_items_that_must_survive": [
         "skill_id",
@@ -2630,7 +2695,7 @@
       "doc_role": "consumer",
       "section_role": "consumer_section",
       "source_reasons": [
-        "obl-045: Mermaid and inline visualizer behavior is locked to native card rendering, explicit error and fallback disclosure, sandboxing without arbitrary HTML execution, bounded persistence, injected theme tokens, and the exact inline visualizer bridge cross-reference target."
+        "section_obligation:obl-045"
       ],
       "exact_items_that_must_survive": [],
       "stale_residue_to_retire": [],
@@ -2643,7 +2708,7 @@
       "doc_role": "consumer",
       "section_role": "consumer_section",
       "source_reasons": [
-        "obl-061: Runtime identity canon must preserve requested and effective naming and the account/provider identity fields, and must retire local _id substitutes."
+        "section_obligation:obl-061"
       ],
       "exact_items_that_must_survive": [
         "requested_persona",
@@ -2662,7 +2727,7 @@
       "doc_role": "consumer",
       "section_role": "consumer_section",
       "source_reasons": [
-        "obl-061: Runtime identity canon must preserve requested and effective naming and the account/provider identity fields, and must retire local _id substitutes."
+        "section_obligation:obl-061"
       ],
       "exact_items_that_must_survive": [
         "requested_persona",
@@ -2681,7 +2746,7 @@
       "doc_role": "consumer",
       "section_role": "consumer_section",
       "source_reasons": [
-        "obl-064: LSP canon must preserve the exact MVP operation inventory, normalized parameter shapes, and result envelope; `workspaceSymbol` must carry `query`, position-based operations use `path` + `position`, and `rename` requires `path` + `position` + `newName` with approval gating."
+        "section_obligation:obl-064"
       ],
       "exact_items_that_must_survive": [
         "goToDefinition",
@@ -2716,7 +2781,7 @@
       "doc_role": "consumer",
       "section_role": "consumer_section",
       "source_reasons": [
-        "obl-064: LSP canon must preserve the exact MVP operation inventory, normalized parameter shapes, and result envelope; `workspaceSymbol` must carry `query`, position-based operations use `path` + `position`, and `rename` requires `path` + `position` + `newName` with approval gating."
+        "section_obligation:obl-064"
       ],
       "exact_items_that_must_survive": [
         "goToDefinition",
@@ -2751,8 +2816,8 @@
       "doc_role": "consumer",
       "section_role": "consumer_section",
       "source_reasons": [
-        "obl-031: The PM-owned web cache contract must preserve two-phase lookup, state vocabulary, and per-project cache sizing.",
-        "obl-067: Cache routing must skip read-time cache for requests with actions, may still store the post-action result, and must preserve PM-cache precedence over Firecrawl cache with diff-reuse audit states."
+        "section_obligation:obl-031",
+        "section_obligation:obl-067"
       ],
       "exact_items_that_must_survive": [
         "hit",
@@ -2779,7 +2844,7 @@
       "doc_role": "consumer",
       "section_role": "consumer_section",
       "source_reasons": [
-        "obl-039: Plan and Deep Plan must both project to a normalized TODO list, with a named Q&A loop before Deep Plan execution and a locked TODO item schema/status set."
+        "section_obligation:obl-039"
       ],
       "exact_items_that_must_survive": [
         "Q&A loop",
@@ -2807,7 +2872,7 @@
       "doc_role": "mirror",
       "section_role": "mirror_section",
       "source_reasons": [
-        "obl-033: Retire stale cited-search ownership residue from reference sections; provider-capability and web-routing canon is owned by Plans/Tools.md sections 11-12, while Plans/newtools.md#8.2.1 is non-normative consumer guidance only."
+        "section_obligation:obl-033"
       ],
       "exact_items_that_must_survive": [
         "cited web search contract",
@@ -2834,7 +2899,7 @@
       "doc_role": "mirror",
       "section_role": "mirror_section",
       "source_reasons": [
-        "obl-069: Stale reference cleanup must stay explicit: `LF-007` repairs in `Plans/FinalGUISpec.md#Appendix A: Cross-References` and `Plans/assistant-chat-design.md#20. References` must rewrite nonexistent `FinalGUISpec.md` section citations `\u00a77.4.16`, `\u00a77.4.10`, and `\u00a77.16.2` instead of leaving them implicit."
+        "section_obligation:obl-069"
       ],
       "exact_items_that_must_survive": [
         "Plans/Commands_System.md",
@@ -2866,7 +2931,7 @@
       "doc_role": "mirror",
       "section_role": "mirror_section",
       "source_reasons": [
-        "obl-069: Stale reference cleanup must stay explicit: `LF-007` repairs in `Plans/FinalGUISpec.md#Appendix A: Cross-References` and `Plans/assistant-chat-design.md#20. References` must rewrite nonexistent `FinalGUISpec.md` section citations `\u00a77.4.16`, `\u00a77.4.10`, and `\u00a77.16.2` instead of leaving them implicit."
+        "section_obligation:obl-069"
       ],
       "exact_items_that_must_survive": [
         "Plans/Tools.md",
@@ -2892,66 +2957,12 @@
   ],
   "must_verify": [
     {
-      "path": "Plans/MCP_Integration.md",
-      "heading": "## 1. Canonical naming",
-      "doc_role": "owner",
-      "section_role": "owner_section",
-      "source_reasons": [
-        "obl-065: MCP owner canon must preserve the exact auth and effective-state enums, canonical naming, and credential binding or invalidation behavior."
-      ],
-      "exact_items_that_must_survive": [
-        "{server_slug}_{tool_name}",
-        "LoggedIn | LoggedOut | AuthExpired | AuthFailed",
-        "canonical naming",
-        "canonical naming uses underscore form `{server_slug}_{tool_name}`"
-      ],
-      "stale_residue_to_retire": [],
-      "status": "verify_only",
-      "bucket_reason": "verify-only section in collected impact set; excluded from packet mutation flow and retained for consistency checks only"
-    },
-    {
-      "path": "Plans/MCP_Integration.md",
-      "heading": "## 2. Requested versus effective availability",
-      "doc_role": "owner",
-      "section_role": "owner_section",
-      "source_reasons": [
-        "obl-065: MCP owner canon must preserve the exact auth and effective-state enums, canonical naming, and credential binding or invalidation behavior."
-      ],
-      "exact_items_that_must_survive": [
-        "authenticated | expired | not_authenticated",
-        "connected | disabled | needs_auth | needs_client_registration | failed",
-        "requested availability",
-        "effective availability",
-        "requested and effective MCP availability remain distinct disclosure surfaces"
-      ],
-      "stale_residue_to_retire": [],
-      "status": "verify_only",
-      "bucket_reason": "verify-only section in collected impact set; excluded from packet mutation flow and retained for consistency checks only"
-    },
-    {
-      "path": "Plans/MCP_Integration.md",
-      "heading": "## 3. Credential binding and invalidation",
-      "doc_role": "owner",
-      "section_role": "owner_section",
-      "source_reasons": [
-        "obl-065: MCP owner canon must preserve the exact auth and effective-state enums, canonical naming, and credential binding or invalidation behavior."
-      ],
-      "exact_items_that_must_survive": [
-        "LoggedIn | LoggedOut | AuthExpired | AuthFailed",
-        "credential binding",
-        "credential binding or invalidation behavior remains MCP-owned canon"
-      ],
-      "stale_residue_to_retire": [],
-      "status": "verify_only",
-      "bucket_reason": "verify-only section in collected impact set; excluded from packet mutation flow and retained for consistency checks only"
-    },
-    {
       "path": "Plans/Tools.md",
       "heading": "### 10.2 Endpoint inventory",
       "doc_role": "owner",
       "section_role": "owner_section",
       "source_reasons": [
-        "obl-024: The Firecrawl owner section must preserve the exact endpoint inventory."
+        "section_obligation:obl-024"
       ],
       "exact_items_that_must_survive": [
         "/v2/scrape",
@@ -2974,17 +2985,6 @@
       "bucket_reason": "already-resolved section in collected impact set; excluded from packet mutation flow and retained for consistency checks only"
     }
   ],
-  "missing_coverage_warnings": [
-    {
-      "warning_type": "recovery_plan_out_of_sync",
-      "detail": "fidelity_recovery_plan.txt has no entry matching one or more live unresolved findings by exact `where`; bucket derivation ignored stale recovery-plan IDs and used coverage_collection.json as the packet-planning source of truth.",
-      "live_findings_without_recovery_entry": [
-        {
-          "fidelity_id": "LF-001",
-          "where": "Plans/MCP_Integration.md#7. Effective tool availability and GUI surfacing"
-        }
-      ]
-    }
-  ],
+  "missing_coverage_warnings": [],
   "derived_regen_only_checks": []
 }

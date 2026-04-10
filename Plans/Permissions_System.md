@@ -374,7 +374,6 @@ Rules:
 - MVP uses wildcard session approval for search/research; advanced query-pattern support is future only
 - search/research use wildcard session approval only in MVP
 ## 6. Ask flow semantics
-
 This section defines the canonical contract for this surface.
 
 ContractRef: Plans/FinalGUISpec.md#15.7 Permission approval card widget
@@ -428,7 +427,6 @@ Rules:
 - webcrawl
 - webmap
 ## 7. Deterministic defaults
-
 This section defines the canonical contract for this surface.
 
 Core rules:
@@ -631,7 +629,6 @@ When a tool row is expanded (§10.2), the granular rule editor appears:
 - Pattern input supports wildcard syntax (§3.1); inline help tooltip shows `*` and `?` semantics.
 
 ### 10.4 Presets
-
 This section defines the canonical contract for this surface.
 
 Core rules:
