@@ -170,40 +170,52 @@ Examples:
 
 ContractRef: PolicyRule:no_secrets_in_storage, ContractName:Plans/Contracts_V0.md#AuthState, ContractName:Plans/usage-feature.md
 
-### 4.3 Entitlement and billing context
-
-Some account-backed providers resolve an additional quota or policy bucket beneath the auth identity.
-
-Required behavior:
-- GitHub Copilot keeps one auth-backed account row and one or more billing/entity contexts beneath it.
-- billing/entity selection is cached per account row.
-- changing billing/entity selection affects subsequent runs only; it does not mutate an in-flight attempt.
-- entitlement context is surfaced in requested/effective runtime records through additive fields only.
-
-ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/FinalGUISpec.md
-
-### 4.4 Server profile (canonical)
-
-Server-bridged providers use server profiles instead of account rows.
-
-Minimum fields:
-- `connection_profile_id`
-- `provider_id`
-- `label`
-- `profile_mode = managed | attached`
-- endpoint/config summary
-- health state
-- discovery state
-- PM ownership mode
-- last discovery snapshot metadata
-
-`connection_profile_id` is the stable internal key for OpenCode runtime selection.
-
-ContractRef: ContractName:Plans/Provider_OpenCode.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md
-
 ### 4.5 Selectable unit and runtime resolution
 
+ContractRef: Plans/Contracts_V0.md#4. Auth contracts, Plans/GitHub_API_Auth_and_Flows.md#Token handling and storage (hard rules), Plans/GitHub_API_Auth_and_Flows.md#Credential store keying (canonical), Plans/Prompt_Pipeline.md#6.4 Effective resolution record, Plans/assistant-chat-design.md#Canonical navigation model
 
+Required fields:
+- requested_account_id
+- requested_account_binding
+- requested_account_policy
+- effective_account_id
+- provider_account_id
+- login
+- auth_realm
+- effective_provider_identity
+- execution_role
+- operational_identity
+
+Canonical terms and values:
+- requested_account_id
+- requested_account_binding
+- requested_account_policy
+- effective_account_id
+- provider_account_id
+- login
+- account_id is the internal stable key.
+- provider_identity is descriptive metadata only.
+- the canonical account-registration shape is { account_id: ulid, provider_id, display_name, auth_method, credential_ref, created_at, last_used_at, status }
+- requested/effective execution identity
+- effective_provider_identity
+- execution_role
+- operational_identity
+
+Labels:
+- requested account
+- effective account
+
+Behavioral rules:
+- Stable internal account identity outranks provider-native display metadata.
+- Requested/effective account state remains explicit across runtime resolution.
+- Stable internal account identity is separate from provider-native display metadata.
+- Secrets remain outside config and state stores.
+- Requested state must remain recoverable in historical snapshots.
+- Binding distinguishes preference from requirement.
+- Fallback behavior depends on binding rather than ad hoc UI or provider policy.
+
+Permission carry-through:
+- effective account identity must remain available to permission and approval consumers
 ### 4.6 Owner/consumer boundary alignment
 
 Multi-account consumer sections use the shared runtime snapshot fields and do not redefine them locally.

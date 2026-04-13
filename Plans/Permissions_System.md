@@ -149,6 +149,30 @@ Scope meanings:
 
 This specificity order applies anywhere scoped permission material is evaluated, including session-cache approvals, durable project/global rules, and inherited parent/run ceilings. Ties within the same scope still use the layer order in §2.4 and last-match-wins behavior inside the selected ruleset (§3.1).
 
+ContractRef: Plans/FinalGUISpec.md#10.8 Human-in-the-loop approvals, Plans/Tools.md#10.7A Web-operation approval summary rules
+
+Required fields:
+- execution_entity_id
+- account_id
+- permission_scope
+- approval_carryover_scope
+
+Canonical terms and values:
+- execution_entity_id
+- account_id
+- permission_scope
+- approval_carryover_scope
+
+Labels:
+- account
+
+Behavioral rules:
+- Permission resolution and approval carryover must be multi-lane and account-aware rather than session-only.
+
+Permission carry-through:
+- execution-entity
+- effective-account
+
 ### 2.4A Requested vs effective permissioned capability state
 
 The UI and runtime must distinguish requested state from effective state whenever permission, policy, platform, or health constraints change what is actually available.
@@ -339,8 +363,8 @@ This section defines the canonical contract for tool permission keys.
 ContractRef: Plans/FinalGUISpec.md#15.7 Permission approval card widget
 
 Core rules:
-- Web tool permission keys, approval-card summary templates, session-approval semantics, and their exact approval-card cross-reference target remain canonical in Permissions_System and must not be re-invented from thin tool descriptions or stale Ask UI links.
-- Permission canon must preserve the four-tier approval ladder, question default allow only when HITL is available, keep the six web tools ask-gated in read_only and plan presets, and carry the blocked/unavailable payload fields through to permission-card consumers.
+- This section owns tool permission-key taxonomy and preset vocabulary.
+- Approval-card summaries and session-approval behavior are owned by `## 6. Ask flow semantics`.
 
 Labels and values:
 - tool permission keys
@@ -364,16 +388,8 @@ Permission rules:
 - status: "unavailable"
 
 Rules:
-- summary templates are part of permission canon, not GUI-local prose
-- websearch summary shows tool name + query preview
-- webfetch/webextract summary shows tool name + target host/URL
-- webresearch summary shows tool name + task summary + estimated source count when available
-- webcrawl/webmap summary shows tool name + root URL + page/depth caps
-- Approving webcrawl For Session auto-approves crawl/map/extract/fetch for the same host pattern
-- For Session approval for webcrawl expands to crawl/map/extract/fetch on the same host pattern
-- Approving webresearch For Session does NOT create broad allow for unrelated tools
-- MVP uses wildcard session approval for search/research; advanced query-pattern support is future only
-- search/research use wildcard session approval only in MVP
+- summary-template and session-approval details are defined in `## 6. Ask flow semantics`
+
 ## 6. Ask flow semantics
 
 This section defines the canonical contract for this surface.
@@ -428,22 +444,39 @@ Rules:
 - webresearch
 - webcrawl
 - webmap
+
+ContractRef: Plans/human-in-the-loop.md#Shared approval-ladder alignment (2026-04-04)
+
+Required fields:
+- approval_scope_key
+- blocked_sequence
+- execution_entity_id
+- lane_id
+- package_id
+- account_id
+
+Canonical terms and values:
+- approval_scope_key
+- blocked_sequence
+
+Labels:
+- Deny
+- Once
+- For session
+- Always
+
+Behavioral rules:
+- Approval scope must not silently become same-session if lanes are parallel.
+- Chat blocked action buttons derive from ordered `allowed_action_ids[]`.
+- Session-wide approval policy must remain distinct from blocked-episode approval.
+
+Permission carry-through:
+- lane/package/account scope
+- `approval_scope_key`
+- ordered `allowed_action_ids[]`
 ## 7. Deterministic defaults
 
 This section defines the canonical contract for this surface.
-
-Core rules:
-- TODO tool behavior is locked so todowrite and todoread use the normalized TODO schema, todowrite is not blanket auto-denied in ask/plan mode, and Deep Plan edits must resync the TODO projection before execution.
-- Permission canon must preserve the four-tier approval ladder, question default allow only when HITL is available, keep the six web tools ask-gated in read_only and plan presets, and carry the blocked/unavailable payload fields through to permission-card consumers.
-
-Fields:
-- todowrite
-- todoread
-- todowrite can create, reorder, update statuses/notes
-- todoread returns current normalized list for active thread/run
-- Remove `todowrite` from blanket `ask/plan` mode auto-deny
-- editing Deep Plan markdown (the rich artifact) MUST update the normalized TODO projection BEFORE execution begins
-ContractRef: ContractName:Plans/assistant-chat-design.md#8.1 Canonical planning model, ContractName:Plans/storage-plan.md#4.3 Plan and TODO state, ContractName:Plans/Contracts_V0.md#1.1 Assistant worktree seglog events
 
 Permission rules:
 - deny
@@ -464,6 +497,7 @@ Rules:
 - webresearch
 - webcrawl
 - webmap
+
 ## 8. Resolution algorithm
 
 ### 8.1 Banned-command full-string check
@@ -947,6 +981,31 @@ A permission snapshot captures the resolved permission state at attempt start fo
 5. Chat, provider, and storage surfaces may reference these fields, but they MUST NOT redefine the nested snapshot schema locally.
 
 ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md
+
+ContractRef: Plans/Contracts_V0.md#6.1 Canonical blocked-episode approval anchor
+
+Required fields:
+- blocked_sequence
+- execution_entity_id
+- lane_id
+- package_id
+- account_id
+- allowed_action_ids
+
+Canonical terms and values:
+- blocked_sequence
+- execution_entity_id
+- lane_id
+- package_id
+- account_id
+- allowed_action_ids
+
+Behavioral rules:
+- Permission snapshots must preserve blocked-episode identity and scoped approval dimensions together.
+
+Permission carry-through:
+- lane/package/account scope
+- ordered `allowed_action_ids[]`
 
 ### External side-effect wakeup chain
 

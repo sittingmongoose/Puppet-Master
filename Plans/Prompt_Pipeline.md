@@ -507,6 +507,34 @@ Rules:
 
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Models_System.md, ContractName:Plans/CLI_Bridged_Providers.md
 
+ContractRef: Plans/Contracts_V0.md#4. Auth contracts, Plans/Multi-Account.md#4.5 Selectable unit and runtime resolution
+
+Required fields:
+- requested_account_id
+- requested_account_binding
+- requested_account_policy
+- execution_role
+- operational_identity
+
+Canonical terms and values:
+- requested_account_id
+- requested_account_binding
+- requested_account_policy
+- execution_role
+- operational_identity
+
+Labels:
+- requested account
+- effective account
+- effective resolution
+
+Behavioral rules:
+- Prompt assembly must preserve both requested and effective execution identity.
+- Binding must distinguish preference from requirement so fallback behavior stays deterministic.
+
+Permission carry-through:
+- effective identity must remain available to downstream permission and approval flows
+
 ### 6.5 PM-native skills, MCP, and instruction assembly
 
 Skill/tool/MCP resolution is part of the prompt pipeline, not a provider-specific afterthought.
@@ -551,33 +579,12 @@ Acceptance criteria:
 - prompt assembly does not become the hidden source of truth; canonical truth remains in event/storage contracts
 ## Runtime Attempt Snapshot and Handoff Consolidation Addendum (2026-03-09)
 
-The prompt pipeline MUST emit the same immutable runtime handoff bundle used by the provider envelope.
+This addendum is retained as historical reconciliation context only.
 
-ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md
+Canonical runtime handoff fields and rules now live in `## Runtime Attempt Snapshot and Handoff Bundle`, which is the single owner section for the immutable handoff bundle.
 
-Required fields:
-- `run_id`
-- `thread_id`
-- `node_id`
-- `attempt_id`
-- `scheduler_pass_id`
-- `replan_generation`
-- requested/effective model snapshot ids
-- requested/effective permission snapshot ids
-- `mutation_capable`
-- `safe_point_id?`
-- remediation lineage refs when present
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/assistant-memory-subsystem.md
 
-ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/storage-plan.md
-
-Rules:
-- snapshots are captured at attempt start and are immutable for that attempt
-- retry/resume/rerun flows always create a new handoff bundle with a new `attempt_id`
-- new bundles MUST preserve lineage references needed for safe-point restore, remediation, and generation tracking
-- prompt assembly MUST NOT become an alternate source of truth for blocked or retry state; canonical truth remains in events/projections
-- downstream providers and consumers MUST NOT infer missing runtime identity from prompt text alone
-
-ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/assistant-memory-subsystem.md
 ## Runtime Attempt Snapshot and Handoff Bundle
 
 The runtime handoff bundle is the continuity contract for child runs, retries, reroutes, and resumes.
@@ -607,3 +614,43 @@ Handoff rules:
 - completed disposable children are not the default continuity mechanism for later work; later work normally spawns a fresh child.
 
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-memory-subsystem.md, ContractName:Plans/Tools.md
+
+ContractRef: Plans/Executor_Protocol.md#Worktree-aware execution unit context, Plans/orchestrator-subagent-integration.md#Tier Context
+
+Required fields:
+- run_id
+- node_id
+- attempt_id
+- lane_id
+- package_id
+- seam_id
+- worktree_id
+- execution_role
+- requested_account_id
+- effective_account_id
+- operational_identity
+- tool_use_id
+
+Canonical terms and values:
+- execution_unit_context
+- run_id
+- node_id
+- attempt_id
+- lane_id
+- package_id
+- seam_id
+- worktree_id
+- execution_role
+- requested_account_id
+- effective_account_id
+- operational_identity
+
+Labels:
+- attempt snapshot
+
+Behavioral rules:
+- Handoff bundles must carry lossless runtime identity rather than tier-era scope.
+- Downstream consumers must be able to reconcile tool, attempt, artifact, and account identity from the bundle.
+
+Permission carry-through:
+- effective account and execution role must survive the handoff bundle

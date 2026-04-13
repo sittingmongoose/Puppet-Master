@@ -342,6 +342,14 @@ Rules:
 - the implementation may back the tab with a generated document id rather than a workspace file path, but the route/open split remains canonical
 
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/assistant-chat-design.md
+
+ContractRef: Plans/Contracts_V0.md#7.4 `OpenSubject`
+
+Labels:
+- Open Subject
+
+Behavioral rules:
+- File/open surfaces must use `subject_id` only for canonical openable content families.
 ## 5. Click-to-open from chat
 
 **Done when:** Click on path or code block in files-touched strip, activity line, or diff header opens file in editor at line/range when available; already-open file focuses existing tab. **Depends on** §4.1 and §2; chat only invokes open-file contract. **If file not found:** Open-file contract returns error; chat or editor shows brief message (e.g. "File not found").

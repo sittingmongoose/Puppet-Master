@@ -30,6 +30,41 @@ ContractRef: Invariant:INV-010
 ## 2. Core terms
 
 ### Orchestrator rewrite terms
+ContractRef: Plans/FinalGUISpec.md#7.5 Project and attention surfaces
+
+Required fields:
+- canonical_name
+- short_definition
+- why_it_matters
+- what_it_is_not
+- common_related_states
+- related_concepts
+- surface_examples
+
+Canonical terms and values:
+- canonical term system
+- contextual help system
+- dedicated help-entry contract
+- related_concepts
+- project health
+- project activity
+- project attention
+- historical
+- stale_historical
+- superseded
+- revoked
+- reopened
+- archived
+- removed
+
+Labels:
+- why it matters
+- what it is not
+- related concepts
+
+Behavioral rules:
+- Canonical term names must stay stable across expert and simplified help surfaces.
+- Historical vocabulary must be shared without collapsing family-local state.
 
 ### Assistant worktree terms
 
@@ -65,6 +100,34 @@ ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Git
 - **Restore Outcome**: the disclosed recovery result for restored shell state (`restored_live | restored_exited | restored_disconnected | restored_without_history`).
 
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/FileManager.md
+
+ContractRef: Plans/Contracts_V0.md#7.3 `route_target`, Plans/FileManager.md#OpenSubject
+
+Required fields:
+- canonical_name
+- short_definition
+- why_it_matters
+- what_it_is_not
+- related_concepts
+- surface_examples
+
+Canonical terms and values:
+- target_kind
+- object_kind
+- inspector_target
+- subject_id
+- doc:<document_id>
+- artifact:<artifact_id>
+- resume_url
+
+Labels:
+- why it matters
+- what it is not
+- related concepts
+
+Behavioral rules:
+- Glossary routing definitions must mirror canonical contracts instead of inventing consumer-local interpretations.
+- `resume_url` must be defined as transport-only.
 
 ### Debug investigation terms
 - **Debug Mode**: the Assistant chat workflow overlay for evidence-first automated diagnosis, fix, verification, and cleanup. It is not a runtime-mode enum value.

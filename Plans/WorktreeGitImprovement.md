@@ -141,6 +141,33 @@ ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/Architecture_Inv
 - **Gap:** Worktree recovery runs with `std::env::current_dir()` and `git rev-parse --show-toplevel` there. If the app is started from a launcher or different repo, recovery runs in the wrong place.
 - **Fix:** Run recovery only when a project/workspace is known (e.g. from config or current project). Use that path for `WorktreeManager` and `recover_orphaned_worktrees()`. If no project is known at startup, skip or run recovery when the user first selects/opens a project.
 
+ContractRef: Plans/storage-plan.md#Restart and stale history
+
+Required fields:
+- worktree_id
+- lane_id
+- last_seen_at_utc
+- owner_run_id
+- owner_attempt_id
+- historical_lineage_refs[]
+
+Canonical terms and values:
+- historical
+- archived
+- removed
+- last_seen_at_utc
+- owner_run_id
+- owner_attempt_id
+- orchestrator.receipt.{run_id}.{attempt_id}
+
+Labels:
+- startup recovery
+- historical lineage
+
+Behavioral rules:
+- Startup restore must recover historical lineage from durable records, not just CWD discovery.
+- Missing live worktrees must render as historical/archived/removed rather than disappearing.
+
 ### 2.9 PR creation after restart uses main repo branch
 
 - **Gap:** After restart, `get_node_worktree(node_id)` is `None`. `create_node_pr` then uses `git_manager.current_branch()` for head_branch, so the PR is created from the main repo branch, not the worktree branch.
@@ -308,6 +335,42 @@ Assistant worktrees are created via the chat header worktree button or auto-crea
 **Doctor check:** WorktreeManager Doctor reports orphaned assistant worktrees (no matching `worktree_binding_reverse` key and no `owner_thread_id`) alongside orphaned orch worktrees. Also reports stale `.git/pm-merge.lock` files and incomplete merge/rebase states (`.git/MERGE_HEAD`, `.git/rebase-merge/`).
 
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/MiscPlan.md
+
+ContractRef: Plans/storage-plan.md#Required redb keys, Plans/GitHub_Integration.md#A.4 Worktrees
+
+Required fields:
+- worktree_id
+- lane_id
+- lifecycle_state
+- selected_worktree_id
+- dirty_state
+- conflict_state
+- blocked_reason_code
+- projection_freshness
+- projection_health
+
+Canonical terms and values:
+- baseline
+- active
+- suspect
+- restoring
+- retained
+- cleanup_eligible
+- archived
+- removed
+- worktree_id
+- lane_id
+- selected_worktree_id
+
+Labels:
+- worktree lifecycle
+- cleanup eligible
+- archived
+- removed
+
+Behavioral rules:
+- Cleaning files inside a worktree is not the same thing as removing the worktree.
+- `lane_id` remains operational lineage while `worktree_id` remains durable identity.
 
 ## 5. Config Wiring (Prerequisite)
 
@@ -636,15 +699,10 @@ Worktree-native isolation remains canonical, but runtime recovery must integrate
 - worktree isolation does not replace runtime blocked classification; it complements it
 ## Runtime Worktree Conflict Reconciliation Addendum (2026-03-09)
 
-Worktree-native isolation remains canonical, but runtime recovery must classify worktree problems explicitly.
+This addendum is retained as historical context only.
 
-### Required runtime classifications
-- merge/conflict risk or overlapping mutable state that forbids dispatch -> `blocked_reason_code = worktree_conflict`
-- dirty or drifted baseline that forbids safe restore/reuse -> `blocked_reason_code = dirty_worktree`
-- lack of free slots alone -> `non_selected_reason = capacity_deferred`
+Canonical worktree-conflict and dirty-worktree runtime rules now live in `## Worktree Conflict and Dirty-Worktree Runtime Alignment`.
 
-### Recovery rule
-Any restore-before-rerun operation MUST identify the exact worktree/baseline target and MUST NOT silently reuse a changed worktree.
 ## Worktree Conflict and Dirty-Worktree Runtime Alignment
 
 Canonical blocked reasons for this domain are `worktree_conflict` and `dirty_worktree`.
@@ -654,3 +712,26 @@ Required rules:
 - recovery may require safe-point restore when the runtime marks `requires_safe_point_restore = true`
 - clearing the underlying worktree issue resolves the blocked prerequisite; it does not fabricate a new failure class
 - worktree conflict resolution must preserve lineage to the blocked episode and any affected safe point
+
+ContractRef: Plans/Orchestrator_Page.md#11. Source Control boundary
+
+Required fields:
+- blocked_reason_code
+- blocked_reason_detail
+- remediation_actions_allowed
+- dirty_state
+- conflict_state
+
+Canonical terms and values:
+- blocked_reason_code
+- remediation_actions_allowed
+
+Labels:
+- dirty worktree
+
+Behavioral rules:
+- `dirty_worktree` and `worktree_conflict` stay canonical blocked reasons instead of generic SCM failures.
+- Conflict and cleanup semantics must remain distinct.
+
+Permission carry-through:
+- remediation actions must surface only through the allowed-action set

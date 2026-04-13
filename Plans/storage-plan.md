@@ -528,6 +528,28 @@ Rules:
 
 ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Provider_OpenCode.md, ContractName:Plans/storage-plan.md
 
+ContractRef: Plans/Runtime_Artifacts_Panel.md#4. redb key and projector, Plans/WorktreeGitImprovement.md#4.1 Assistant-created worktree lifecycle
+
+Required fields:
+- artifact_type
+- repo_id
+- path_ref
+- branch_ref
+- baseline_ref
+
+Canonical terms and values:
+- artifacts_project_state.v1:{project_id}
+- projector.checkpoint.runtime_artifacts:{project_id}
+
+Labels:
+- runtime artifact index
+- worktree record
+- lane record
+
+Behavioral rules:
+- Runtime-artifact indexing and durable worktree/lane identity are storage-owned families.
+- Projection state and projector checkpoints must be first-class rather than panel-owned leftovers.
+
 ### Canonical terminal persistence decomposition
 
 Storage-plan is the canonical source for terminal persistence keys. The terminal surface persists as the following decomposed key families:
@@ -696,6 +718,39 @@ Storage rules:
 - these fields are additive and do not replace the existing requested/effective vocabulary
 - `_id` aliases such as `requested_persona_id` are not canonical runtime snapshot fields
 - chat and GUI surfaces consume the same stored field names rather than projecting local variants
+
+ContractRef: Plans/Multi-Account.md#4. Data model, Plans/GitHub_API_Auth_and_Flows.md#Token handling and storage (hard rules)
+
+Required fields:
+- requested_account_id
+- requested_account_policy
+- effective_account_id
+- execution_role
+- account_id
+- credential_ref
+- login
+- auth_realm
+
+Canonical terms and values:
+- requested_account_id
+- requested_account_policy
+- effective_account_id
+- execution_role
+- account_id
+- credential_ref
+- login
+- auth_realm
+
+Labels:
+- requested account
+- operational identity
+
+Behavioral rules:
+- Requested/effective identity must survive in storage snapshots.
+- GitHub durable identity uses stable internal account keys while login remains display metadata.
+
+Permission carry-through:
+- permission snapshots and usage surfaces must preserve `effective_account_id` and `execution_role`
 ### 4.2 Question and clarification state
 
 This section consumes the linked owner contract and stays aligned with it.
@@ -871,6 +926,46 @@ Fields:
 - completed
 - failed
 - cancelled
+
+ContractRef: Plans/Tools.md#8.0 Event payloads (seglog), Plans/Runtime_Artifacts_Panel.md#Cross-Surface Operation Receipt Linkage Addendum (2026-03-12)
+
+Required fields:
+- node_id
+- attempt_id
+- lane_id
+- package_id
+- execution_role
+- effective_account_id
+- operational_identity
+- provider_attempt_ref
+- usage_event_ref
+- detail_ref
+- report_ref
+
+Canonical terms and values:
+- node_id
+- attempt_id
+- lane_id
+- package_id
+- execution_role
+- effective_account_id
+- operational_identity
+- provider_attempt_ref
+- usage_event_ref
+- detail_ref
+- report_ref
+- receipt refs
+
+Labels:
+- activity payload
+- bridge fields
+
+Behavioral rules:
+- Inspection refs remain inspection/provenance refs; route/open contracts remain route/open contracts.
+- Bridge-field precedence must be explicit rather than inferred.
+
+Permission carry-through:
+- effective actor and account identity must survive into activity payloads
 ### 4.5 Inline visualizer persistence
 
 Inline visualizer persistence stores only PM-managed source, metadata, and PM-owned outputs.
@@ -1181,6 +1276,38 @@ ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Contrac
 - `ready_since_utc` survives projection refresh only while the node remains continuously ready
 - attempts from older generations remain queryable but are labeled stale and are never resumable
 
+ContractRef: Plans/Widget_System.md#2. Hostability and data contracts, Plans/FinalGUISpec.md#10.6 Blocked and recovery surfaces
+
+Required fields:
+- projection_freshness
+- projection_health
+- last_projected_at_utc
+- projector_lag
+- degraded_reason_code
+- fallback_policy
+
+Canonical terms and values:
+- projection_freshness
+- projection_health
+- last_projected_at_utc
+- projector_lag
+- degraded_reason_code
+- fallback_policy
+- runtime_artifact.*
+
+Labels:
+- projection freshness
+- projection health
+- fallback
+
+Behavioral rules:
+- Projection freshness is not the same thing as action authority.
+- Projection-backed surfaces must degrade to direct-record views when trust drops.
+- Runtime-artifact projections must be rebuildable from canonical seglog events.
+
+Permission carry-through:
+- action gating must respect projection trust before surfacing mutation actions
+
 ### Snapshot refresh rules
 - permission/auth/approval/replan resolution creates a new attempt snapshot; old attempt snapshots remain immutable
 - safe-point restore does not mutate the originating attempt record in place; it leads to a new attempt record tied back by lineage
@@ -1304,6 +1431,24 @@ These are additive receipt-domain extensions and do not replace the canonical mi
 
 ContractRef: ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/usage-feature.md, ContractName:Plans/Orchestrator_Page.md
 
+ContractRef: Plans/Project_Output_Artifacts.md#10. Validation Pass Report Artifacts, Plans/Runtime_Artifacts_Panel.md#Cross-Surface Operation Receipt Linkage Addendum (2026-03-12)
+
+Required fields:
+- provider_attempt_ref
+- workflow_run_id
+
+Canonical terms and values:
+- provider_attempt_ref
+- validation_pass_report
+- workflow_run_id
+
+Labels:
+- validation lineage
+
+Behavioral rules:
+- Receipts bridge external side-effect lineage without replacing local runtime identity.
+- Validation outputs must bridge into launch through a receipt or promoted package reference.
+
 ### Canonical records
 
 Canonical records for this feature set must support rebuild, resume, auditability, and UI reconstruction without hidden side stores.
@@ -1371,6 +1516,59 @@ Canonical truth exclusions:
 - provider-native session trees are correlation data, not PM identity.
 
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/orchestrator-subagent-integration.md
+
+ContractRef: Plans/Project_Output_Artifacts.md#8. Seglog canonical persistence contract (artifact events), Plans/Orchestrator_Page.md#12. Concern and notification model
+
+Required fields:
+- record_id
+- record_kind
+- schema_version
+- scope_type
+- scope_id
+- status
+- created_at_utc
+- lineage_refs
+- source_refs
+- artifact_refs
+- concern_id
+- owner_kind
+- resolution_kind
+- export_kind
+- trust_state_at_export
+
+Canonical terms and values:
+- record_id
+- record_kind
+- schema_version
+- status
+- created_at_utc
+- lineage_refs
+- source_refs
+- artifact_refs
+- historical
+- stale_historical
+- superseded
+- revoked
+- reopened
+- archived
+- removed
+- concern_id
+- owner_kind
+- resolution_kind
+- record export
+- bundle export
+- view export
+
+Labels:
+- record family
+- export taxonomy
+- historical vocabulary
+- concern
+
+Behavioral rules:
+- Record export, bundle export, and view export must remain distinct.
+- Shared historical vocabulary must not erase family-local semantics.
+- Concern lineage must be queryable across merge, split, supersession, reopen, and revoke flows.
 ### Counter rule
 - `attempt_count` is the total started-attempt count for the node in the run and is the canonical policy/input counter.
 - `automatic_retry_count`, `prerequisite_resume_count`, `manual_resume_count`, and `remediation_retry_count` remain independent stored attribution counters.
@@ -1381,6 +1579,41 @@ ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Contrac
 
 ### Restart and stale history
 Attempts from older generations, or in-flight attempts that cannot resume after restart, transition to `stale_historical`. They remain queryable but are never resumable.
+
+ContractRef: Plans/WorktreeGitImprovement.md#4.1 Assistant-created worktree lifecycle, Plans/GitHub_Integration.md#A.4 Worktrees
+
+Required fields:
+- worktree_id
+- lane_id
+- lifecycle_state
+- historical_flag
+- archived_flag
+- removed_flag
+- cleanup_eligible_flag
+- historical_lineage_refs[]
+
+Canonical terms and values:
+- archived
+- removed
+- baseline
+- active
+- suspect
+- restoring
+- retained
+- cleanup_eligible
+- worktree_id
+- lane_id
+- historical_lineage_refs[]
+
+Labels:
+- archived
+- removed
+- cleanup eligible
+
+Behavioral rules:
+- Historical references must survive after live worktree cleanup.
+- `cleanup_eligible` is queue state, not removal.
+- Filesystem rediscovery must not be the only restart authority.
 
 ### Identity and field-name rules
 Canonical naming and identity rules:
@@ -1460,6 +1693,22 @@ ContractRef: ContractName:Plans/Crosswalk.md, ContractName:Plans/DRY_Rules.md
 - Existing key: `worktree_record.v1:{project_id}:{worktree_id}`
 - New optional field: `owner_thread_id?` alongside existing `owner_run_id?` and `owner_node_id?`
 - Owner semantics: exactly one of `owner_thread_id`, `owner_run_id/owner_node_id`, or neither (manual) is set
+
+ContractRef: Plans/WorktreeGitImprovement.md#4. GUI for Git & Worktrees, Plans/Orchestrator_Page.md#11. Source Control boundary
+
+Required fields:
+- selected_worktree_id
+- lane_id
+
+Canonical terms and values:
+- selected_worktree_id
+
+Labels:
+- worktree record
+
+Behavioral rules:
+- `selected_worktree_id` remains UI state and must not replace durable worktree identity.
+- Thread binding keys do not replace lane/worktree lifecycle records or historical lineage.
 
 ## 8. Web content caching persistence
 
