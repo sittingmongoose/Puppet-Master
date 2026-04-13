@@ -319,3 +319,41 @@ pub enum SubtaskFocus {
 }
 ```
 
+ContractRef: Plans/Executor_Protocol.md#Worktree-aware execution unit context, Plans/Prompt_Pipeline.md#Runtime Attempt Snapshot and Handoff Bundle
+
+Required fields:
+- run_id
+- node_id
+- attempt_id
+- lane_id
+- package_id
+- seam_id
+- worktree_id
+- execution_role
+- requested_account_id
+- effective_account_id
+- operational_identity
+
+Canonical terms and values:
+- execution_unit_context
+- run_id
+- node_id
+- attempt_id
+- lane_id
+- package_id
+- seam_id
+- worktree_id
+- execution_role
+- requested_account_id
+- effective_account_id
+- operational_identity
+
+Labels:
+- execution unit context
+
+Behavioral rules:
+- Tier context must be replaced by execution-unit context so subagent orchestration can join losslessly to runtime lineage and permissions.
+
+Permission carry-through:
+- execution role and effective account must remain in subagent orchestration context
+

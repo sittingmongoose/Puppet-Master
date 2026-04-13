@@ -46,3 +46,39 @@ Assistant worktrees are created via the chat header worktree button or auto-crea
 
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/MiscPlan.md
 
+ContractRef: Plans/storage-plan.md#Required redb keys, Plans/GitHub_Integration.md#A.4 Worktrees
+
+Required fields:
+- worktree_id
+- lane_id
+- lifecycle_state
+- selected_worktree_id
+- dirty_state
+- conflict_state
+- blocked_reason_code
+- projection_freshness
+- projection_health
+
+Canonical terms and values:
+- baseline
+- active
+- suspect
+- restoring
+- retained
+- cleanup_eligible
+- archived
+- removed
+- worktree_id
+- lane_id
+- selected_worktree_id
+
+Labels:
+- worktree lifecycle
+- cleanup eligible
+- archived
+- removed
+
+Behavioral rules:
+- Cleaning files inside a worktree is not the same thing as removing the worktree.
+- `lane_id` remains operational lineage while `worktree_id` remains durable identity.
+

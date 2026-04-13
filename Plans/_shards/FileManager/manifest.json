@@ -1,6 +1,6 @@
 {
   "source_path": "Plans/FileManager.md",
-  "source_sha256": "3cb9b36ac45c7985c2662979016167c8ce63079cb600cb04f571294747fb4abb",
+  "source_sha256": "a50273bbd791b14477f7be41dc6bcf28453ef313562d35fc1c302146b6ed5e0f",
   "split_rule": {
     "primary": "## outside fences",
     "fallback": "line-count-200",
@@ -59,91 +59,91 @@
     {
       "dest_path": "Plans/_shards/FileManager/08-4-integration-file-manager-editor-and-chat.md",
       "start_line": 293,
-      "end_line": 344,
-      "segment_sha256": "fa86247510efca6d39b8904a0d3565549e04d5b573a29a7f7136be87e8c8549c",
+      "end_line": 352,
+      "segment_sha256": "b4324dede2066361e91c416d6a786a0062428d143121e8eb29d2ee9c12f6fc22",
       "heading": "## 4. Integration: File Manager, editor, and chat"
     },
     {
       "dest_path": "Plans/_shards/FileManager/09-5-click-to-open-from-chat.md",
-      "start_line": 345,
-      "end_line": 358,
+      "start_line": 353,
+      "end_line": 366,
       "segment_sha256": "fdbc8e2084545a0f00ad04e8760c0725a4e451dbd0aaa05e55b66cfa4a492e2e",
       "heading": "## 5. Click-to-open from chat"
     },
     {
       "dest_path": "Plans/_shards/FileManager/10-6-out-of-scope.md",
-      "start_line": 359,
-      "end_line": 380,
+      "start_line": 367,
+      "end_line": 388,
       "segment_sha256": "9330c96efcf4719836832b74f220aab08906836df9038cfc3b5d531892666ab8",
       "heading": "## 6. Out of scope"
     },
     {
       "dest_path": "Plans/_shards/FileManager/11-7-edge-cases.md",
-      "start_line": 381,
-      "end_line": 395,
+      "start_line": 389,
+      "end_line": 403,
       "segment_sha256": "39e1be215a1fa435bbb1a7381a8d466dfab01c9c815c51e5cba65390b44d7a03",
       "heading": "## 7. Edge cases"
     },
     {
       "dest_path": "Plans/_shards/FileManager/12-8-image-viewer-and-html-preview.md",
-      "start_line": 396,
-      "end_line": 475,
+      "start_line": 404,
+      "end_line": 483,
       "segment_sha256": "4f476daf82b04cba7d12e37641ec00bedd64e6d7174fae4bdc0eb01a6fa7080c",
       "heading": "## 8. Image viewer and HTML preview"
     },
     {
       "dest_path": "Plans/_shards/FileManager/13-9-tabs-editor-terminal-browser.md",
-      "start_line": 476,
-      "end_line": 512,
+      "start_line": 484,
+      "end_line": 520,
       "segment_sha256": "0e238518827d722c7b893042055ac88db7991a4f0741acd3b440913452fac182",
       "heading": "## 9. Tabs: Editor, Terminal, Browser"
     },
     {
       "dest_path": "Plans/_shards/FileManager/14-10-editor-navigation-and-semantic-affordances.md",
-      "start_line": 513,
-      "end_line": 571,
+      "start_line": 521,
+      "end_line": 579,
       "segment_sha256": "4f31e84613c29350d979acf1c8927277af66e7524022f754e0d47a9545470b44",
       "heading": "## 10. Editor navigation and semantic affordances"
     },
     {
       "dest_path": "Plans/_shards/FileManager/15-11-file-tree-actions-local-filter-and-chat-handoff.md",
-      "start_line": 572,
-      "end_line": 637,
+      "start_line": 580,
+      "end_line": 645,
       "segment_sha256": "5d36ba53d403cf5e39876dd48f42ed5f702b8971018deceafd3864a965b0735d",
       "heading": "## 11. File tree actions, local filter, and chat handoff"
     },
     {
       "dest_path": "Plans/_shards/FileManager/16-12-source-control-handoff-compare-and-review.md",
-      "start_line": 638,
-      "end_line": 684,
+      "start_line": 646,
+      "end_line": 692,
       "segment_sha256": "83c9f264fcc22d82b17485905359e46bea220b466ae21c4b56fca239e49ea4c4",
       "heading": "## 12. Source Control handoff, compare, and review"
     },
     {
       "dest_path": "Plans/_shards/FileManager/17-verification-ai-executable.md",
-      "start_line": 685,
-      "end_line": 703,
+      "start_line": 693,
+      "end_line": 711,
       "segment_sha256": "b83d5c4ab5d474fda9f199391ee77f854241f74dc35354592d73f819b064c51b",
       "heading": "## Verification (AI-executable)"
     },
     {
       "dest_path": "Plans/_shards/FileManager/18-13-git-status-integration.md",
-      "start_line": 704,
-      "end_line": 733,
+      "start_line": 712,
+      "end_line": 741,
       "segment_sha256": "62c4e492b0ad80e96cd0548c86daa5a1a39b550db1abb34033c65b12023b8a95",
       "heading": "## 13. Git Status Integration"
     },
     {
       "dest_path": "Plans/_shards/FileManager/19-14-markdown-mermaid-html-svg-and-image-rendering-rewrite-addendum-2026-03-07.md",
-      "start_line": 734,
-      "end_line": 944,
+      "start_line": 742,
+      "end_line": 952,
       "segment_sha256": "9132fc32d79c6a96c927fcfe5e0ea5dcb4afb834a0a08e4c4d5a38d912aa69d2",
       "heading": "## 14. Markdown, Mermaid, HTML, SVG, and Image Rendering (Rewrite Addendum -- 2026-03-07)"
     },
     {
       "dest_path": "Plans/_shards/FileManager/20-runtime-artifact-open-by-identity-consolidation-addendum-2026-03-09.md",
-      "start_line": 945,
-      "end_line": 966,
+      "start_line": 953,
+      "end_line": 974,
       "segment_sha256": "97eadd7e5d77ebbc4551a82e31a81d3a5e93f19aa2f65b867d7139f073f9c29d",
       "heading": "## Runtime Artifact Open-by-Identity Consolidation Addendum (2026-03-09)"
     }

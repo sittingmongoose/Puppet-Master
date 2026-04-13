@@ -118,6 +118,24 @@ These are additive receipt-domain extensions and do not replace the canonical mi
 
 ContractRef: ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/usage-feature.md, ContractName:Plans/Orchestrator_Page.md
 
+ContractRef: Plans/Project_Output_Artifacts.md#10. Validation Pass Report Artifacts, Plans/Runtime_Artifacts_Panel.md#Cross-Surface Operation Receipt Linkage Addendum (2026-03-12)
+
+Required fields:
+- provider_attempt_ref
+- workflow_run_id
+
+Canonical terms and values:
+- provider_attempt_ref
+- validation_pass_report
+- workflow_run_id
+
+Labels:
+- validation lineage
+
+Behavioral rules:
+- Receipts bridge external side-effect lineage without replacing local runtime identity.
+- Validation outputs must bridge into launch through a receipt or promoted package reference.
+
 ### Canonical records
 
 Canonical records for this feature set must support rebuild, resume, auditability, and UI reconstruction without hidden side stores.
@@ -185,6 +203,59 @@ Canonical truth exclusions:
 - provider-native session trees are correlation data, not PM identity.
 
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/orchestrator-subagent-integration.md
+
+ContractRef: Plans/Project_Output_Artifacts.md#8. Seglog canonical persistence contract (artifact events), Plans/Orchestrator_Page.md#12. Concern and notification model
+
+Required fields:
+- record_id
+- record_kind
+- schema_version
+- scope_type
+- scope_id
+- status
+- created_at_utc
+- lineage_refs
+- source_refs
+- artifact_refs
+- concern_id
+- owner_kind
+- resolution_kind
+- export_kind
+- trust_state_at_export
+
+Canonical terms and values:
+- record_id
+- record_kind
+- schema_version
+- status
+- created_at_utc
+- lineage_refs
+- source_refs
+- artifact_refs
+- historical
+- stale_historical
+- superseded
+- revoked
+- reopened
+- archived
+- removed
+- concern_id
+- owner_kind
+- resolution_kind
+- record export
+- bundle export
+- view export
+
+Labels:
+- record family
+- export taxonomy
+- historical vocabulary
+- concern
+
+Behavioral rules:
+- Record export, bundle export, and view export must remain distinct.
+- Shared historical vocabulary must not erase family-local semantics.
+- Concern lineage must be queryable across merge, split, supersession, reopen, and revoke flows.
 ### Counter rule
 - `attempt_count` is the total started-attempt count for the node in the run and is the canonical policy/input counter.
 - `automatic_retry_count`, `prerequisite_resume_count`, `manual_resume_count`, and `remediation_retry_count` remain independent stored attribution counters.
@@ -195,6 +266,41 @@ ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Contrac
 
 ### Restart and stale history
 Attempts from older generations, or in-flight attempts that cannot resume after restart, transition to `stale_historical`. They remain queryable but are never resumable.
+
+ContractRef: Plans/WorktreeGitImprovement.md#4.1 Assistant-created worktree lifecycle, Plans/GitHub_Integration.md#A.4 Worktrees
+
+Required fields:
+- worktree_id
+- lane_id
+- lifecycle_state
+- historical_flag
+- archived_flag
+- removed_flag
+- cleanup_eligible_flag
+- historical_lineage_refs[]
+
+Canonical terms and values:
+- archived
+- removed
+- baseline
+- active
+- suspect
+- restoring
+- retained
+- cleanup_eligible
+- worktree_id
+- lane_id
+- historical_lineage_refs[]
+
+Labels:
+- archived
+- removed
+- cleanup eligible
+
+Behavioral rules:
+- Historical references must survive after live worktree cleanup.
+- `cleanup_eligible` is queue state, not removal.
+- Filesystem rediscovery must not be the only restart authority.
 
 ### Identity and field-name rules
 Canonical naming and identity rules:

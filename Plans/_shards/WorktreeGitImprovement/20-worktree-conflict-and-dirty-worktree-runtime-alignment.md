@@ -7,3 +7,26 @@ Required rules:
 - recovery may require safe-point restore when the runtime marks `requires_safe_point_restore = true`
 - clearing the underlying worktree issue resolves the blocked prerequisite; it does not fabricate a new failure class
 - worktree conflict resolution must preserve lineage to the blocked episode and any affected safe point
+
+ContractRef: Plans/Orchestrator_Page.md#11. Source Control boundary
+
+Required fields:
+- blocked_reason_code
+- blocked_reason_detail
+- remediation_actions_allowed
+- dirty_state
+- conflict_state
+
+Canonical terms and values:
+- blocked_reason_code
+- remediation_actions_allowed
+
+Labels:
+- dirty worktree
+
+Behavioral rules:
+- `dirty_worktree` and `worktree_conflict` stay canonical blocked reasons instead of generic SCM failures.
+- Conflict and cleanup semantics must remain distinct.
+
+Permission carry-through:
+- remediation actions must surface only through the allowed-action set

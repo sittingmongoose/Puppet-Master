@@ -14,6 +14,24 @@ The **Artifacts panel** is the single place to see everything agents produced du
 | **Project Plan Package** | User-project outputs | Plans/Project_Output_Artifacts.md | .puppet-master/project/** |
 | **Runtime Artifacts** | Agent-run outputs in Artifacts panel | This document | seglog runtime_artifact.*, redb artifacts_index:v1:{project_id} |
 
+ContractRef: Plans/Project_Output_Artifacts.md#Runtime Artifacts (GUI panel) — distinct from this document, Plans/storage-plan.md#Required redb keys
+
+Required fields:
+- artifact_id
+- artifact_type
+- run_id
+- attempt_id
+- projection_freshness
+- projection_health
+
+Canonical terms and values:
+- seglog `runtime_artifact.*`
+- artifacts_index.v1:{project_id}:{artifact_id}
+
+Behavioral rules:
+- Project Plan Package and Runtime Artifacts remain distinct families.
+- Runtime artifact lookup/indexing remains a projection concern rather than canonical artifact truth.
+
 ## 3. Mechanism: one event type per artifact type
 
 **Option 2 only:** One seglog event type per artifact type. No single generic `runtime_artifact` event with a subtype field. Each event uses the standard EventRecord envelope (schema, ts, seq, type, run_id, thread_id, payload). The `type` value is exactly one of the 19 event type names below.
@@ -80,6 +98,27 @@ Rules:
 - runtime artifact open flows resolve through `OpenSubject` and route/open contracts rather than through feature-local path guessing
 
 ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/Crosswalk.md, ContractName:Plans/FinalGUISpec.md
+
+ContractRef: Plans/storage-plan.md#Cross-surface receipt record, Plans/usage-feature.md#Cost_usage runtime artifact and Show in Ledger / Show in Usage, Plans/Project_Output_Artifacts.md#10. Validation Pass Report Artifacts
+
+Required fields:
+- created_at_utc
+- summary
+
+Canonical terms and values:
+- runtime-artifact envelope
+- created_at_utc
+- summary
+
+Labels:
+- artifact id
+- attempt id
+
+Behavioral rules:
+- `attempt_id` is the canonical local execution anchor.
+- Bridge refs remain joins rather than replacement primary keys.
+- Timestamp/run/thread fallback is compatibility-only when bridge refs are absent.
+- Artifact open flows resolve through identity plus route/open contracts rather than feature-local path guessing.
 
 ## 5A. Debug investigation grouping, manifests, and exports
 

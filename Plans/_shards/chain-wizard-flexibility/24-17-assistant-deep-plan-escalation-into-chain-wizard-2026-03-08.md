@@ -56,6 +56,40 @@ Optional but useful fields:
 - `effective_platform`
 - `effective_model`
 
+ContractRef: Plans/assistant-chat-design.md#29.4 Accepting the recommendation: handoff to Chain Wizard / Interview
+
+Required fields:
+- node_id
+- attempt_id
+- lane_id
+- package_id
+- execution_role
+- effective_account_id
+- operational_identity
+- workflow_run_id
+- run_id
+
+Canonical terms and values:
+- node_id
+- attempt_id
+- lane_id
+- package_id
+- execution_role
+- effective_account_id
+- operational_identity
+- validation_pass_report
+- workflow_run_id
+- run_id
+
+Labels:
+- validation lineage
+
+Behavioral rules:
+- Wizard handoff must carry runtime attribution and validation lineage explicitly rather than by implication.
+
+Permission carry-through:
+- effective account and execution role must survive wizard handoff payloads
+
 ### 17.5 Wizard state additions
 
 `ChainWizardState` (or equivalent persisted state) should gain fields sufficient to preserve this handoff.

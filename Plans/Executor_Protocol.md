@@ -116,8 +116,6 @@ Required fields are:
 - `run_id`
 - `node_id`
 - `attempt_id`
-- `feature_seam_id?`
-- `work_package_id?`
 - `lane_id?`
 - `worktree_id?`
 - `blocked_sequence?`
@@ -192,6 +190,32 @@ Normalization rules:
 Field provenance:
 - Unioned from one or both prior dispatch field sets and now mandatory in the canonical unified view: `node_id`, `package_id`, `lane_id`, `seam_id`, `attempt_number`, `max_attempts`, `execution_mode`, `mode_overlay`, `provider_id`, `model_id`, `selected_at_utc`, `scheduler_score_breakdown`, `parent_thread_id`, `dev_session_id`, `terminal_session_id`, `budget_remaining`, `cost_ceiling`, `persona_id`, and `persona_snapshot`.
 - Newly added by this Executor Protocol reconciliation pass: `investigation_id`.
+
+ContractRef: Plans/Prompt_Pipeline.md#6.4 Effective resolution record, Plans/Contracts_V0.md#6.1 Canonical blocked-episode approval anchor, Plans/Crosswalk.md#3.1 Runtime orchestration ownership
+
+Required fields:
+- requested_account_id
+- requested_account_binding
+- requested_account_policy
+- effective_account_id
+
+Canonical terms and values:
+- requested_account_id
+- requested_account_binding
+- requested_account_policy
+- effective_account_id
+- tier_id
+
+Labels:
+- node execution fields
+
+Behavioral rules:
+- `TierContext` and `tier_id` stop acting as canonical execution scope.
+- Downstream consumers join losslessly to attempt, worktree, permission, and runtime records.
+- Blocked-action carrythrough stays anchored to blocked-sequence lineage rather than ad hoc view context.
+
+Permission carry-through:
+- blocked action carrythrough
 
 ## 6. Overseer dispatch algorithm (deterministic)
 
@@ -285,21 +309,11 @@ Selection is global across the ready set, not level-by-level lexical dispatch.
 
 ### 5. Wakeup triggers
 
-Queue analysis MUST rerun immediately on:
-ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Orchestrator_Page.md
-- node completion
-- prerequisite resolution
-- verification completion
-- HITL approval or rejection resolution
-- clarification resolution
-- backoff expiry
-- remediation completion
-- replan patch application
-- restore/recovery completion
-- runtime capacity changes
+Canonical wake-trigger values and coalescing behavior are defined in `### Wake reasons and coalescing`.
 
-Polling may exist only as a watchdog fallback and MUST NOT be the primary correctness mechanism.
-ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/FinalGUISpec.md
+This section is a forward-reference only so the wake-trigger canon has a single owner section in this file.
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/FinalGUISpec.md
 
 ### 6. Blocked-to-runnable cascade
 
@@ -460,7 +474,8 @@ The canonical selection tuple is `(scheduler_lane, manual_priority, transitive_u
 No critical-path term is part of MVP selection.
 
 ### Wakeup triggers
-Queue analysis MUST rerun on node completion, prerequisite resolution, verification completion, approval resolution, clarification resolution, auth recovery, backoff expiry, remediation completion, restore completion, replan application, and capacity change. Polling is watchdog-only.
+See `### Wake reasons and coalescing` for the canonical wake-trigger list, `wake_reason` values, and watchdog-only polling rule.
+
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Orchestrator_Page.md
 
 ### Blocked and retry behavior
@@ -592,6 +607,17 @@ Canonical wake-trigger event mapping for prerequisite cascades:
 - scheduler projection: if this is the first trigger in the pass, persist `wake_reason = prerequisite_resolved`
 - wake behavior: re-evaluate prerequisites for every node in `target_node_ids[]`; if all prerequisites are resolved, clear the blocked projection and move the node from `blocked` to `pending` / ready-eligible queue state before dispatch selection
 
+ContractRef: Plans/Contracts_V0.md#`scheduler.pass` (minimum addendum fields), Plans/UI_Command_Catalog.md#Canonical Runtime Recovery Command Consolidation (2026-03-09)
+
+Canonical terms and values:
+- scheduler.pass
+
+Labels:
+- wake reasons
+
+Behavioral rules:
+- Startup recovery hands off explicitly into the first `scheduler.pass`.
+
 ### Outcome families
 - `failure_class` is only for classified attempt outcomes.
 - `blocked_reason_code` is only for unresolved prerequisites or intentionally prevented work.
@@ -685,6 +711,48 @@ ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/assistant-chat-
 - LSP root identity uses worktree path when `is_worktree` is true
 
 ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/LSPSupport.md, ContractName:Plans/Commands_System.md
+
+ContractRef: Plans/Contracts_V0.md#6.1 Canonical blocked-episode approval anchor
+
+Required fields:
+- run_id
+- node_id
+- attempt_id
+- lane_id
+- package_id
+- seam_id
+- execution_role
+- requested_account_id
+- effective_account_id
+- operational_identity
+- blocked_sequence
+- approval_scope_key
+
+Canonical terms and values:
+- execution_unit_context
+- run_id
+- node_id
+- attempt_id
+- lane_id
+- package_id
+- seam_id
+- execution_role
+- requested_account_id
+- effective_account_id
+- operational_identity
+- blocked_sequence
+- approval_scope_key
+
+Labels:
+- execution unit context
+- blocked episode
+
+Behavioral rules:
+- Execution protocol must define runtime scope through execution-unit context rather than tier roots.
+- Blocked-episode identity must remain explicit in execution-relevant recovery paths.
+
+Permission carry-through:
+- effective account, execution role, and blocked-episode approval scope must survive execution handoff
 
 ### Mode interaction
 

@@ -63,6 +63,34 @@ Every command listed below MUST define:
 
 ContractRef: ContractName:Contracts_V0.md#UICommand, ContractName:Contracts_V0.md#EventRecord
 
+ContractRef: Plans/Wiring_Matrix.md#UI command handler rule, Plans/Progression_Gates.md#GATE-010 -- Wiring matrix validation
+
+Required fields:
+- command_kind
+- normalization.kind
+- normalizes_to_contract
+- alias_of_command_id
+
+Canonical terms and values:
+- command_kind
+- normalization
+- kind
+- normalizes_to_contract
+- alias_of_command_id
+- shell_view
+- navigation_wrapper
+- domain_action
+- wrapper
+- deprecated_alias
+
+Labels:
+- command kind
+- normalization
+
+Behavioral rules:
+- Wrapper metadata must remain narrow and contract-level.
+- Command metadata must not restate route payload structure.
+
 ### 2.0.1 Acceptance hooks contract (wiring verification)
 Every command listed in this catalog MUST be verifiable through the wiring matrix (`Plans/Wiring_Matrix.md`, schema: `Plans/Wiring_Matrix.schema.json`). Specifically:
 
@@ -166,16 +194,7 @@ ContractRef: ContractName:Plans/Widget_System.md#11, ContractName:Plans/Contract
 
 ### 2.4 Run Graph commands
 
-Canonical Run Graph and runtime recovery commands are:
-- `cmd.runtime.approve`
-- `cmd.runtime.decline`
-- `cmd.runtime.retry_from_safe_point`
-- `cmd.runtime.retry_fresh`
-- `cmd.runtime.open_attempt_details`
-- `cmd.runtime.open_queue_analysis`
-- `cmd.runtime.open_safe_point`
-- `cmd.runtime.open_remediation`
-- `cmd.runtime.open_blocked_episode`
+Run Graph runtime recovery commands are defined canonically in `## Canonical Runtime Recovery Command Consolidation (2026-03-09)`.
 
 Rules:
 - graph approval and recovery commands target blocked/runtime identity, not `request_id`
@@ -183,6 +202,7 @@ Rules:
 - any graph-facing wrapper command normalizes to the runtime command family and canonical `route_target` semantics
 
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/human-in-the-loop.md, ContractName:Plans/Run_Graph_View.md
+
 ### 2.5 Orchestrator page commands
 
 Canonical Orchestrator commands are:
@@ -202,6 +222,43 @@ Rules:
 - commands that pivot into Source Control or Usage remain public wrapper commands and normalize internally to canonical route/open contracts
 
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/FinalGUISpec.md
+
+ContractRef: Plans/Orchestrator_Page.md#10. Search, routing, and action policy, Plans/Contracts_V0.md#7.3 `route_target`
+
+Required fields:
+- action_type
+- target_scope
+- palette_visible
+- shortcut_eligible
+- confirmation_strength
+- reversibility
+- target_kind
+- subject_id
+- object_kind
+- object_id
+- tab_id
+- inspector_target
+
+Canonical terms and values:
+- navigation vs mutation
+- single-target vs multi-target
+- shortcut eligibility
+- palette visibility
+- confirmation
+- reversibility
+- route_target
+
+Labels:
+- Open
+- Review
+- Resolve
+- Export
+
+Behavioral rules:
+- Orchestrator commands must encode the action-surface policy and route through the shared route payload when navigating.
+
+Permission carry-through:
+- mutation commands must retain confirmation and safety class
 ### 2.5A Operational external-system command families
 
 Source Control (`cmd.source_control.*`), GitHub Actions (`cmd.actions.*`), and Docker Manager (`cmd.docker.*`) form a triple-family block of operational command groups. They share one characteristic: each family manages a live external system boundary (repository state, remote CI workflows, or local container runtime) rather than a purely local layout toggle, so canonical IDs remain stable even when the hosting panel or toolbar evolves.
@@ -585,6 +642,33 @@ Search rules:
 
 ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/LSPSupport.md
 
+ContractRef: Plans/Contracts_V0.md#7.3 `route_target`, Plans/FileManager.md#OpenSubject
+
+Required fields:
+- target_kind
+- subject_id
+- object_kind
+- object_id
+- tab_id
+- inspector_target
+
+Canonical terms and values:
+- route_target
+- target_kind
+- subject_id
+- object_kind
+- object_id
+- inspector_target
+
+Labels:
+- Details
+- Artifacts
+- History
+
+Behavioral rules:
+- Search commands must route through the shared route payload rather than bespoke search payloads.
+- `subject_id` remains bounded to document/artifact open-by-identity.
+
 #### File-tree action commands
 
 | Command ID | Parameters | Behavior |
@@ -690,3 +774,36 @@ All blocked-state recovery buttons and menu entries in GUI, chat, graph, and orc
 No surface may introduce a thread-local, graph-local, or provider-local recovery command family for the same action semantics.
 
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Run_Graph_View.md, ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/human-in-the-loop.md
+
+ContractRef: Plans/Contracts_V0.md#6.1 Canonical blocked-episode approval anchor, Plans/Executor_Protocol.md#Wake reasons and coalescing, Plans/Contracts_V0.md#`scheduler.pass` (minimum addendum fields), Plans/Wiring_Matrix.md#UI command handler rule
+
+Required fields:
+- command_kind
+- normalization.kind
+- normalizes_to_contract
+- alias_of_command_id
+- approval_scope_key
+
+Canonical terms and values:
+- approve_continue
+- command_kind
+- normalization
+- approval_scope_key
+
+Labels:
+- Approve
+- Decline
+- Resume after prerequisite
+- Blocked
+- Retry
+- Review
+- Resolve
+
+Behavioral rules:
+- Blocked-state recovery buttons and menu entries map from `allowed_action_ids[]` to canonical `cmd.runtime.*` commands.
+- Recovery commands must bind to blocked-episode identity rather than request-level or tier-level surrogates.
+- Normalization metadata must survive for wrappers and deprecated aliases.
+
+Permission carry-through:
+- ordered `allowed_action_ids[]`
+- ordered `allowed_action_ids[]` drive visible recovery command affordances

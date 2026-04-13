@@ -22,6 +22,39 @@ Storage rules:
 - these fields are additive and do not replace the existing requested/effective vocabulary
 - `_id` aliases such as `requested_persona_id` are not canonical runtime snapshot fields
 - chat and GUI surfaces consume the same stored field names rather than projecting local variants
+
+ContractRef: Plans/Multi-Account.md#4. Data model, Plans/GitHub_API_Auth_and_Flows.md#Token handling and storage (hard rules)
+
+Required fields:
+- requested_account_id
+- requested_account_policy
+- effective_account_id
+- execution_role
+- account_id
+- credential_ref
+- login
+- auth_realm
+
+Canonical terms and values:
+- requested_account_id
+- requested_account_policy
+- effective_account_id
+- execution_role
+- account_id
+- credential_ref
+- login
+- auth_realm
+
+Labels:
+- requested account
+- operational identity
+
+Behavioral rules:
+- Requested/effective identity must survive in storage snapshots.
+- GitHub durable identity uses stable internal account keys while login remains display metadata.
+
+Permission carry-through:
+- permission snapshots and usage surfaces must preserve `effective_account_id` and `execution_role`
 ### 4.2 Question and clarification state
 
 This section consumes the linked owner contract and stays aligned with it.
@@ -145,7 +178,6 @@ Rules:
 - no silent disappearance of the capability
 - PM MUST NOT silently switch between self-hosted Firecrawl and hosted/cloud Firecrawl
 ContractRef: ContractName:Plans/Contracts_V0.md#3.4A Web error taxonomy and applicability, ContractName:Plans/Contracts_V0.md#3.4 Tool-specific payload extensions, ContractName:Plans/FinalGUISpec.md#15.3 Web and diff operation card widget
-- no silent switch between self-hosted Firecrawl and hosted/cloud Firecrawl
 - deployment-mode disclosure remains visible
 - self-hosted Firecrawl does not use hosted credit billing
 - tool.denied
@@ -197,6 +229,46 @@ Fields:
 - completed
 - failed
 - cancelled
+
+ContractRef: Plans/Tools.md#8.0 Event payloads (seglog), Plans/Runtime_Artifacts_Panel.md#Cross-Surface Operation Receipt Linkage Addendum (2026-03-12)
+
+Required fields:
+- node_id
+- attempt_id
+- lane_id
+- package_id
+- execution_role
+- effective_account_id
+- operational_identity
+- provider_attempt_ref
+- usage_event_ref
+- detail_ref
+- report_ref
+
+Canonical terms and values:
+- node_id
+- attempt_id
+- lane_id
+- package_id
+- execution_role
+- effective_account_id
+- operational_identity
+- provider_attempt_ref
+- usage_event_ref
+- detail_ref
+- report_ref
+- receipt refs
+
+Labels:
+- activity payload
+- bridge fields
+
+Behavioral rules:
+- Inspection refs remain inspection/provenance refs; route/open contracts remain route/open contracts.
+- Bridge-field precedence must be explicit rather than inferred.
+
+Permission carry-through:
+- effective actor and account identity must survive into activity payloads
 ### 4.5 Inline visualizer persistence
 
 Inline visualizer persistence stores only PM-managed source, metadata, and PM-owned outputs.

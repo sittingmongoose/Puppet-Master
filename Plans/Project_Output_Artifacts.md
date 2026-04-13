@@ -415,7 +415,7 @@ ContractRef: ContractName:Plans/Contracts_V0.md#EventRecord, Primitive:Seglog
 - `auto_decisions` → `.puppet-master/project/auto_decisions.jsonl`
 - `ui_wiring_matrix` → `.puppet-master/project/ui/wiring_matrix.json` (optional GUI)
 - `ui_command_catalog` → `.puppet-master/project/ui/ui_command_catalog.json` (optional GUI)
-- `validation_pass_report` → `.puppet-master/project/validation/pass_<N>_report.json` (one per pass; N=1,2,3; stored only in seglog — see §10)
+- `validation_pass_report` → `.puppet-master/project/validation/pass_<N>_report.json` (one per pass; N=1,2,3; see §10 for lineage, History/Ledger, and export requirements)
 - `requirements_quality_report` → `.puppet-master/project/traceability/requirements_quality_report.json` (derived verification output; see §11)
 - `requirements_coverage_json` → `.puppet-master/project/traceability/requirements_coverage.json` (derived verification output; see §11)
 - `requirements_coverage_md` → `.puppet-master/project/traceability/requirements_coverage.md` (derived verification output; see §11)
@@ -508,6 +508,31 @@ Rules:
 - pass reports remain first-class records in History/Ledger and first-class export members in manifests
 
 ContractRef: ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/Decision_Policy.md, ContractName:Plans/Contracts_V0.md
+
+ContractRef: Plans/Contracts_V0.md#3.3 Requirements quality events, Plans/chain-wizard-flexibility.md#12. Three-Pass Canonical Validation Workflow (Mandatory Invariant Sweep)
+
+Required fields:
+- pass_number
+- pass_name
+- pass_verdict
+- verdict_reason
+- staged_bundle_ref
+
+Canonical terms and values:
+- validation_pass_report
+- pass_number
+- pass_name
+- pass_verdict
+- verdict_reason
+- staged_bundle_ref
+- skipped
+
+Behavioral rules:
+- Validation pass reports remain upstream artifacts.
+- Pass reports must bridge into launchable execution through explicit lineage fields.
+
+Permission carry-through:
+- effective runtime/account identity must survive from pass report into downstream execution handoff
 ## 11. Traceability outputs
 
 This section defines the **normative generation rules and integrity requirements** for derived verification outputs under `.puppet-master/project/traceability/`. These files are:
@@ -686,7 +711,7 @@ ContractRef: SchemaID:pm.acceptance_manifest.schema.v1, ContractName:Plans/Proje
 - 2026-02-25: Added required derived verification contract for `.puppet-master/project/traceability/requirements_quality_report.json` (schema: `pm.requirements_quality_report.schema.v1`), added optional derived `.puppet-master/project/quickstart.md` contract, added deterministic quickstart generation/validation rules, aligned requirements coverage generation rules with `Plans/requirements_coverage.schema.json` (`orphaned_node_requirement_refs[].reason` sentinel and schema-aligned `uncovered_acceptance[]` semantics), updated validator acceptance checks, and clarified Pass 3 write-protection interaction (requirements/plan protected; quickstart may be regenerated as derived output).
 - 2026-07-24: Added §11 Traceability outputs (requirements_coverage.json + requirements_coverage.md under `.puppet-master/project/traceability/`); added item 9 in §2 required artifact set; added `traceability/` to §2.1 staging tree; added `requirements_coverage_json` and `requirements_coverage_md` `artifact_type` values to §8.2; added acceptance criterion item 10 in §9. ContractRefs: SchemaID:pm.requirements_coverage.schema.v1, SchemaID:pm.project-plan-node.v1, SchemaID:pm.acceptance_manifest.schema.v1, Gate:GATE-011.
 - 2026-02-25: Hardened validation sweep acceptance contracts: added provider/model-to-settings linkage (`validation_sweep.passN.*`), deterministic/headless sweep provenance requirement, post-pass artifact finality requirement, and fixed `unresolved_findings[]` naming in Pass 3 write-protection invariant.
-- 2026-02-25: Added validation_pass_report artifact_type to §8.2; added §10 Validation Pass Report Artifacts defining seglog-only pass report structure, JSON schema, Pass 3 write-protection invariant, and acceptance criteria. Updated §9 acceptance criteria with item 8 for validation sweep artifact completeness.
+- 2026-02-25: Added `validation_pass_report` artifact typing in §8.2 and §10 Validation Pass Report Artifacts, including execution-bridge lineage and validation-sweep acceptance requirements. Updated §9 acceptance criteria with item 8 for validation sweep artifact completeness.
 - 2026-02-24: Locked decision: user-project plan graph is **sharded-only**; canonical entrypoint is `.puppet-master/project/plan_graph/index.json`; monolithic export (if materialized) lives at `.puppet-master/project/plan_graph/exports/plan_graph.monolithic.json`.
 - 2026-02-24: Marked `.puppet-master/project/plan_graph/exports/plan_graph.monolithic.json` as an **optional, non-canonical** derived export (may be generated, but must not be required; path was previously `.puppet-master/project/plan_graph.json`).
 - 2026-02-24: Replaced this document to be the canonical SSOT for user-project **Project Plan Package** outputs under `.puppet-master/project/**`.

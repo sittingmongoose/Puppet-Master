@@ -159,3 +159,29 @@ The following criteria are required for a conformant implementation of this work
 
 ---
 
+ContractRef: Plans/Project_Output_Artifacts.md#10. Validation Pass Report Artifacts
+
+Required fields:
+- workflow_run_id
+- phase_plan_ref
+- staged_bundle_ref
+- requirements_quality_report_ref
+- run_id
+
+Canonical terms and values:
+- workflow_run_id
+- phase_plan_ref
+- staged_bundle_ref
+- requirements_quality_report_ref
+- run_id
+
+Labels:
+- validation pass report
+
+Behavioral rules:
+- Validation passes must emit lineage-rich pass reports that can explain what was evaluated and what execution was seeded.
+- `pass_verdict` must support `skipped`.
+
+Permission carry-through:
+- effective runtime identity must survive validation into launch handoff
+

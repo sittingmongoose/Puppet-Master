@@ -216,6 +216,30 @@ The Worktrees accordion uses narrow-panel rows for direct actions, and Source Co
 - stale or disconnected worktree projections remain viewable but block mutation until revalidated
 
 ContractRef: ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/Decision_Policy.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/assistant-chat-design.md
+
+ContractRef: Plans/storage-plan.md#Required redb keys, Plans/WorktreeGitImprovement.md#4.1 Assistant-created worktree lifecycle
+
+Required fields:
+- lane_id
+- path_ref
+- branch_ref
+- baseline_ref
+- lifecycle_state
+- selected_worktree_id
+
+Canonical terms and values:
+- lane_id
+- archived
+- removed
+- cleanup_eligible
+- selected_worktree_id
+
+Labels:
+- archived
+- removed
+
+Behavioral rules:
+- GitHub surface worktree rows must respect durable worktree/lane identity and historical rendering semantics.
 ### A.5 Surface boundary rule
 
 Source Control, Orchestrator, and GitHub surfaces keep distinct responsibilities.
@@ -234,6 +258,21 @@ Remote-operation receipts must retain linkage to:
 - remote workflow/PR/action identity
 
 ContractRef: ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Decision_Policy.md
+
+ContractRef: Plans/Orchestrator_Page.md#11. Source Control boundary, Plans/FinalGUISpec.md#7.2 Source Control
+
+Required fields:
+- initiator_surface
+- executor_surface
+- worktree_id
+- lane_id
+- package_id
+- run_reference
+
+Behavioral rules:
+- Source Control owns Git-native worktree inspection and mutation actions.
+- Orchestrator owns lane/package/seam operational context and lineage.
+- Remote-operation receipts retain both local runtime identity and remote workflow identity.
 ## B. GitHub API Integration
 
 GitHub API is used for hosting operations only (repository management, PR, Issues,
@@ -1046,3 +1085,25 @@ Rules:
 Acceptance criteria:
 - no-wizard/deferred GitHub entry paths do not lose blocked-state recovery
 - deep links and preloaded payloads remain stable across blocked/unblocked transitions
+
+ContractRef: Plans/Contracts_V0.md#7.3 `route_target`, Plans/GitHub_API_Auth_and_Flows.md#Token handling and storage (hard rules)
+
+Required fields:
+- project_id
+- focused_run_id
+- account_id
+- credential_ref
+- login
+
+Canonical terms and values:
+- route_target
+- account_id
+- credential_ref
+- login
+
+Labels:
+- recovery binding
+
+Behavioral rules:
+- Deep-link recovery must serialize canonical route identity rather than inventing a second routing model.
+- GitHub reconnect context must use stable internal account identity rather than login-keyed recovery.

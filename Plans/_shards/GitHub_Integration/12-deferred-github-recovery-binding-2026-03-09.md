@@ -28,3 +28,25 @@ Rules:
 Acceptance criteria:
 - no-wizard/deferred GitHub entry paths do not lose blocked-state recovery
 - deep links and preloaded payloads remain stable across blocked/unblocked transitions
+
+ContractRef: Plans/Contracts_V0.md#7.3 `route_target`, Plans/GitHub_API_Auth_and_Flows.md#Token handling and storage (hard rules)
+
+Required fields:
+- project_id
+- focused_run_id
+- account_id
+- credential_ref
+- login
+
+Canonical terms and values:
+- route_target
+- account_id
+- credential_ref
+- login
+
+Labels:
+- recovery binding
+
+Behavioral rules:
+- Deep-link recovery must serialize canonical route identity rather than inventing a second routing model.
+- GitHub reconnect context must use stable internal account identity rather than login-keyed recovery.

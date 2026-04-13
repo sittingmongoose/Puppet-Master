@@ -17,6 +17,38 @@ ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Contrac
 - `ready_since_utc` survives projection refresh only while the node remains continuously ready
 - attempts from older generations remain queryable but are labeled stale and are never resumable
 
+ContractRef: Plans/Widget_System.md#2. Hostability and data contracts, Plans/FinalGUISpec.md#10.6 Blocked and recovery surfaces
+
+Required fields:
+- projection_freshness
+- projection_health
+- last_projected_at_utc
+- projector_lag
+- degraded_reason_code
+- fallback_policy
+
+Canonical terms and values:
+- projection_freshness
+- projection_health
+- last_projected_at_utc
+- projector_lag
+- degraded_reason_code
+- fallback_policy
+- runtime_artifact.*
+
+Labels:
+- projection freshness
+- projection health
+- fallback
+
+Behavioral rules:
+- Projection freshness is not the same thing as action authority.
+- Projection-backed surfaces must degrade to direct-record views when trust drops.
+- Runtime-artifact projections must be rebuildable from canonical seglog events.
+
+Permission carry-through:
+- action gating must respect projection trust before surfacing mutation actions
+
 ### Snapshot refresh rules
 - permission/auth/approval/replan resolution creates a new attempt snapshot; old attempt snapshots remain immutable
 - safe-point restore does not mutate the originating attempt record in place; it leads to a new attempt record tied back by lineage

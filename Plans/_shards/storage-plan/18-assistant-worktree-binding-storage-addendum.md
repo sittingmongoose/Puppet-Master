@@ -25,3 +25,19 @@ ContractRef: ContractName:Plans/Crosswalk.md, ContractName:Plans/DRY_Rules.md
 - New optional field: `owner_thread_id?` alongside existing `owner_run_id?` and `owner_node_id?`
 - Owner semantics: exactly one of `owner_thread_id`, `owner_run_id/owner_node_id`, or neither (manual) is set
 
+ContractRef: Plans/WorktreeGitImprovement.md#4. GUI for Git & Worktrees, Plans/Orchestrator_Page.md#11. Source Control boundary
+
+Required fields:
+- selected_worktree_id
+- lane_id
+
+Canonical terms and values:
+- selected_worktree_id
+
+Labels:
+- worktree record
+
+Behavioral rules:
+- `selected_worktree_id` remains UI state and must not replace durable worktree identity.
+- Thread binding keys do not replace lane/worktree lifecycle records or historical lineage.
+

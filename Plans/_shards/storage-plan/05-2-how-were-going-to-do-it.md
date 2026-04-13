@@ -462,6 +462,28 @@ Rules:
 
 ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Provider_OpenCode.md, ContractName:Plans/storage-plan.md
 
+ContractRef: Plans/Runtime_Artifacts_Panel.md#4. redb key and projector, Plans/WorktreeGitImprovement.md#4.1 Assistant-created worktree lifecycle
+
+Required fields:
+- artifact_type
+- repo_id
+- path_ref
+- branch_ref
+- baseline_ref
+
+Canonical terms and values:
+- artifacts_project_state.v1:{project_id}
+- projector.checkpoint.runtime_artifacts:{project_id}
+
+Labels:
+- runtime artifact index
+- worktree record
+- lane record
+
+Behavioral rules:
+- Runtime-artifact indexing and durable worktree/lane identity are storage-owned families.
+- Projection state and projector checkpoints must be first-class rather than panel-owned leftovers.
+
 ### Canonical terminal persistence decomposition
 
 Storage-plan is the canonical source for terminal persistence keys. The terminal surface persists as the following decomposed key families:

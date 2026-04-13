@@ -24,3 +24,28 @@ Rules:
 - pass reports remain first-class records in History/Ledger and first-class export members in manifests
 
 ContractRef: ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/Decision_Policy.md, ContractName:Plans/Contracts_V0.md
+
+ContractRef: Plans/Contracts_V0.md#3.3 Requirements quality events, Plans/chain-wizard-flexibility.md#12. Three-Pass Canonical Validation Workflow (Mandatory Invariant Sweep)
+
+Required fields:
+- pass_number
+- pass_name
+- pass_verdict
+- verdict_reason
+- staged_bundle_ref
+
+Canonical terms and values:
+- validation_pass_report
+- pass_number
+- pass_name
+- pass_verdict
+- verdict_reason
+- staged_bundle_ref
+- skipped
+
+Behavioral rules:
+- Validation pass reports remain upstream artifacts.
+- Pass reports must bridge into launchable execution through explicit lineage fields.
+
+Permission carry-through:
+- effective runtime/account identity must survive from pass report into downstream execution handoff

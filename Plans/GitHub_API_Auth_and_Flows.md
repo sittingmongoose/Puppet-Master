@@ -253,17 +253,38 @@ Source: GitHub OAuth device flow docs (see References). ContractRef: PolicyRule:
 - Never place tokens in logs (stdout/stderr, structured logs, debug dumps, evidence bundles). ContractRef: PolicyRule:redaction
 
 ### Credential store keying (canonical)
-- **Service:** `Puppet Master` (stable, not user-editable). ContractRef: PolicyRule:no_secrets_in_storage
-- **Account:** `github_api:github.com/<login>` (example: `github_api:github.com/octocat`). ContractRef: SchemaID:Spec_Lock.json#github_operations
-- **Secret payload:** JSON string containing:
-  - `access_token`
-  - `issued_at`
-  - `granted_scopes` (array)
-  - `token_fingerprint`
+GitHub durable account identity uses stable internal account keys inside the owned credential-keying structure rather than login-derived identity.
 
-`copilot_github` credential keying is defined by Copilot provider auth flows and remains separate from this keyspace.
+ContractRef: Plans/Multi-Account.md#4. Data model, Plans/storage-plan.md#4.1 Shared runtime identity consumption
 
-ContractRef: PolicyRule:no_secrets_in_storage
+**Authoritative credential-keying fields**
+
+| Field | Requirement |
+| --- | --- |
+| `account_id` | Stable internal account identity for the GitHub account record. |
+| `credential_ref` | Stable credential-store locator bound to the account record. |
+| `login` | GitHub username metadata that remains `display-only` and provider-native. |
+| `auth_realm` | Auth realm for the stored credential binding. |
+
+**Credential store entry**
+
+| Component | Value |
+| --- | --- |
+| Service | `Puppet Master` |
+| Account identity | `account_id` |
+| Credential locator | `credential_ref` |
+| Display metadata | `login` |
+| Auth realm | `auth_realm = github_api` |
+
+**Secret payload**
+- `access_token`
+- `issued_at`
+- `granted_scopes`
+- `token_fingerprint`
+
+Rules:
+- GitHub durable account identity must use stable internal account keys while login remains display-only/provider-native metadata.
+- Username rename must not break identity or reconnect behavior.
 
 ### Token lifecycle
 
@@ -543,26 +564,34 @@ Required rules:
 
 ContractRef: ContractName:Plans/Contracts_V0.md#AuthEvent, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Run_Graph_View.md
 
-### 3. UI and command-surface alignment
+ContractRef: Plans/GitHub_Integration.md#Deferred GitHub Recovery Binding (2026-03-09), Plans/Contracts_V0.md#7.3 `route_target`, Plans/Contracts_V0.md#6.1 Canonical blocked-episode approval anchor
 
-The GitHub connect/disconnect commands remain the initiation surfaces for auth, but runtime recovery MUST be visible from blocked-state surfaces.
+Required fields:
+- account_id
+- credential_ref
+- login
+- resume_url
+- blocked_sequence
+- run_id
+- attempt_id
 
-Required UI behavior:
-- Blocked-node and blocked-thread surfaces MUST show that the unresolved dependency is `GitHub API authentication` rather than a generic provider failure.
-- Recovery actions MUST include the canonical GitHub connect/re-auth action plus the relevant runtime retry/resume action after auth succeeds.
-- Headless or ask-disabled runs MUST show why the auth flow could not proceed automatically and MUST not imply that a silent background retry is still pending.
-- Missing-scope blocks MUST display the required scopes in user-facing recovery UI so the user understands why reconnection is needed.
+Canonical terms and values:
+- account_id
+- credential_ref
+- login
+- resume_url
 
-ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/FinalGUISpec.md
+Labels:
+- auth blocked recovery
 
-### 4. Storage and secrecy constraints during recovery
+Behavioral rules:
+- Reconnect/recovery payloads must carry canonical recovery context rather than login-keyed identity.
+- A successful reconnect, re-auth, or scope upgrade binds back to the originating blocked attempt or blocked node episode.
+- Previously blocked attempts remain immutable history after auth recovery.
+- Completed local preparation survives auth blocking.
 
-Auth-blocked recovery MUST preserve the existing secrecy contract:
-- tokens remain only in the OS credential store
-- seglog/redb/Tantivy and evidence bundles may persist auth state, realm, missing scopes, fingerprint, and blocked metadata, but never raw credentials
-- auth recovery state changes must be replayable from canonical events without reconstructing secrets from runtime storage
-
-ContractRef: ContractName:Plans/Contracts_V0.md#AuthEvent, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/GitHub_Integration.md, PolicyRule:no_secrets_in_storage
+Permission carry-through:
+- blocked-episode identity must survive auth recovery
 
 ## Auth Expired Mid-Attempt Recovery Addendum
 

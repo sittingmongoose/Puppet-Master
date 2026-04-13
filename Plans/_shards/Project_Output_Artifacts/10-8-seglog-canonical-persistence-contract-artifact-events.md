@@ -41,7 +41,7 @@ ContractRef: ContractName:Plans/Contracts_V0.md#EventRecord, Primitive:Seglog
 - `auto_decisions` → `.puppet-master/project/auto_decisions.jsonl`
 - `ui_wiring_matrix` → `.puppet-master/project/ui/wiring_matrix.json` (optional GUI)
 - `ui_command_catalog` → `.puppet-master/project/ui/ui_command_catalog.json` (optional GUI)
-- `validation_pass_report` → `.puppet-master/project/validation/pass_<N>_report.json` (one per pass; N=1,2,3; stored only in seglog — see §10)
+- `validation_pass_report` → `.puppet-master/project/validation/pass_<N>_report.json` (one per pass; N=1,2,3; see §10 for lineage, History/Ledger, and export requirements)
 - `requirements_quality_report` → `.puppet-master/project/traceability/requirements_quality_report.json` (derived verification output; see §11)
 - `requirements_coverage_json` → `.puppet-master/project/traceability/requirements_coverage.json` (derived verification output; see §11)
 - `requirements_coverage_md` → `.puppet-master/project/traceability/requirements_coverage.md` (derived verification output; see §11)

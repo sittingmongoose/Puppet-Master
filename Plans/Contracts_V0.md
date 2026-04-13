@@ -52,47 +52,38 @@ Rules:
 - source_surface
 ### 1.2 EventRecord -- canonical persisted envelope (schema: `pm.event.v0`)
 
-The canonical persisted runtime snapshot keeps the historical base field names stable while allowing additive disclosure fields for runtime family, runtime platform, billing/entity attribution, and server-profile routing.
+The canonical persisted **record envelope** defines the shared EventRecord shape used by runtime, audit, and historical record families.
 
-ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Models_System.md
+ContractRef: Plans/storage-plan.md#Canonical records, Plans/Orchestrator_Page.md#12. Concern and notification model
 
-```json
-{
-  "requested_platform": "copilot",
-  "effective_platform": "copilot",
-  "provider_family_id": "github_copilot",
-  "requested_runtime_platform_id": "copilot_direct",
-  "effective_runtime_platform_id": "copilot_direct",
-  "requested_model": "openai/gpt-5-codex",
-  "effective_model": "openai/gpt-5-codex",
-  "requested_model_provider_id": "openai",
-  "effective_model_provider_id": "openai",
-  "requested_auth_mode": "oauth",
-  "effective_auth_mode": "oauth",
-  "effective_account_id": "acct-copilot-work",
-  "effective_provider_identity": "user@example.com",
-  "requested_billing_entity_id": "org-acme",
-  "effective_billing_entity_id": "org-acme",
-  "effective_billing_entity_label": "Acme Engineering",
-  "effective_entitlement_class": "org_subscription",
-  "connection_profile_id": null,
-  "effective_project_id": null,
-  "account_switch_reason": null,
-  "requested_reasoning_effort": "medium",
-  "effective_reasoning_effort": "medium"
-}
-```
+**Authoritative EventRecord shape**
 
-ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/usage-feature.md, ContractName:Plans/Provider_OpenCode.md
+| Field | Requirement |
+| --- | --- |
+| `record_id` | Stable record identifier for one canonical persisted record. |
+| `record_kind` | Family discriminator for the persisted record. |
+| `schema_version` | Version of the owned EventRecord schema. |
+| `project_id` | Owning project identity for the record. |
+| `run_id` | Run identity when the record is run-scoped. |
+| `scope_type` | Declares the authoritative scope family for the record payload. |
+| `scope_id` | Stable identifier inside the declared `scope_type`. |
+| `status` | Current state for the record instance. |
+| `created_at_utc` | Canonical creation timestamp for the record. |
+| `lineage_refs` | Stable lineage references for supersession, merge, split, or reopen chains. |
+| `source_refs` | Source-side provenance references used to explain how the record was derived. |
+| `artifact_refs` | Artifact references associated with the record payload or evidence bundle. |
+| `concern_id` | Concern identity when the record participates in concern tracking. |
+| `owner_kind` | Owning family for the `concern_id` relationship. |
+| `resolution_kind` | Resolution family for concern closure, supersession, or reopen semantics. |
+
+**historical state** vocabulary: `historical`, `stale_historical`, `superseded`, `revoked`, `reopened`, `archived`, `removed`.
+
+**concern** linkage uses `concern_id`, `owner_kind`, and `resolution_kind` without collapsing concern identity into review, blocked, or annotation objects.
 
 Rules:
-- `requested_platform` and `effective_platform` remain the canonical persisted provider-entry fields.
-- `provider_family_id`, `requested_runtime_platform_id`, `effective_runtime_platform_id`, `requested_model_provider_id`, and `effective_model_provider_id` are additive disclosure fields; they MUST NOT replace the canonical base field names.
-- `effective_account_id` identifies the effective account record when the runtime subject is account-backed.
-- `connection_profile_id` identifies the effective server profile when the runtime subject is server-bridged.
-- `requested_billing_entity_id`, `effective_billing_entity_id`, `effective_billing_entity_label`, and `effective_entitlement_class` are REQUIRED when the provider's quota or policy semantics depend on a distinct billing/entity bucket; when the provider has no such concept, these fields MUST be omitted rather than null-padded.
-- `effective_provider_identity` is provider-native descriptive metadata only and MUST NOT become the stable internal account key.
-- secrets, bearer tokens, API keys, refresh tokens, and raw credential payloads MUST NOT appear in EventRecord payloads.
+- A shared envelope must exist without flattening family-specific semantics.
+- Historical vocabulary must stay shared while family-local lifecycles stay distinct.
+- Concern identity and lineage must remain distinct from review, blocked, and annotation objects.
 
 ContractRef: PolicyRule:no_secrets_in_storage, ContractName:Plans/storage-plan.md, ContractName:Plans/Architecture_Invariants.md#INV-002
 
@@ -169,267 +160,120 @@ Tool activity MUST be represented in the persisted event stream using the follow
 ContractRef: EventType:tool.invoked, EventType:tool.denied, ContractName:Plans/Contracts_V0.md
 
 ### 3.1 `tool.invoked`
-Emitted when a tool call is allowed and execution completes.
+**tool event contract** for `tool.invoked`.
 
-**Payload (minimum):**
-```json
-{
-  "tool_name": "bash",
-  "run_id": "PM-...",
-  "thread_id": "TH-...",
-  "latency_ms": 120,
-  "success": true,
-  "error": null
-}
-```
+ContractRef: Plans/Tools.md#8.0 Event payloads (seglog), Plans/Runtime_Artifacts_Panel.md#Cross-Surface Operation Receipt Linkage Addendum (2026-03-12)
+
+**runtime/tool/artifact attribution** must live in the authoritative payload shape itself.
+
+**Authoritative payload fields**
+
+| Field | Requirement |
+| --- | --- |
+| `node_id` | Runtime node identity for the tool invocation. |
+| `attempt_id` | Canonical local runtime anchor for the invocation attempt. |
+| `lane_id` | Lane identity associated with the invocation. |
+| `package_id` | Package identity associated with the invocation. |
+| `execution_role` | Effective execution-role disclosure for the tool attempt. |
+| `effective_account_id` | Effective account identity when the invocation is account-backed. |
+| `operational_identity` | External-operation identity carried for downstream attribution. |
+| `tool_use_id` | Stable tool-use identity for receipts and joins. |
+| `provider_attempt_ref` | Provider-side attempt/reference bridge that remains subordinate to `attempt_id`. |
+| `usage_event_ref` | Usage-side reference for accounting and evidence joins. |
+
+Rules:
+- Analytics-thin tool events are no longer sufficient.
+- `attempt_id` is the canonical local runtime anchor; bridge refs stay subordinate but explicit.
 
 ### 3.2 `tool.denied`
-Emitted when policy blocks (deny) or the user declines an ask.
+**tool event contract** for `tool.denied`.
 
-**Payload (minimum):**
-```json
-{
-  "tool_name": "bash",
-  "run_id": "PM-...",
-  "thread_id": "TH-...",
-  "reason": "permission_denied"
-}
-```
+ContractRef: Plans/Tools.md#8.0 Event payloads (seglog), Plans/Runtime_Artifacts_Panel.md#Cross-Surface Operation Receipt Linkage Addendum (2026-03-12)
 
-**SSOT tie-in:** Payload fields and semantics are SSOT in `Plans/Tools.md` (§8.0) and `Plans/storage-plan.md` (§2.2). This file defines the event-type names as a contract.
+**runtime/tool/artifact attribution** must live in the authoritative denial payload shape itself.
+
+**Authoritative payload fields**
+
+| Field | Requirement |
+| --- | --- |
+| `node_id` | Runtime node identity for the denied tool action. |
+| `attempt_id` | Canonical local runtime anchor for the denied action. |
+| `lane_id` | Lane identity associated with the denial. |
+| `package_id` | Package identity associated with the denial. |
+| `execution_role` | Effective execution-role disclosure for the denied action. |
+| `effective_account_id` | Effective account identity when the denial is account-backed. |
+| `operational_identity` | External-operation identity carried for denial attribution. |
+| `tool_use_id` | Stable tool-use identity for denial receipts. |
+| `provider_attempt_ref` | Provider-side bridge reference that remains subordinate to `attempt_id`. |
+| `usage_event_ref` | Usage-side reference for accounting and evidence joins. |
+
+Rules:
+- Analytics-thin tool events are no longer sufficient.
+- `attempt_id` is the canonical local runtime anchor; bridge refs stay subordinate but explicit.
+- permission and denial surfaces must still expose effective actor and account identity.
 
 ### 3.3 Requirements quality events
 
-Requirements-quality workflow state MUST be represented in the persisted event stream with stable event types.
+Requirements-quality workflow state uses stable persisted event shapes anchored to the canonical **validation pass report** artifact and launch handoff lineage.
 
-ContractRef: EventType:requirements.quality_report.generated, EventType:requirements.clarification_requested, EventType:requirements.clarification_resolved, SchemaID:pm.requirements_quality_report.schema.v1
+ContractRef: Plans/Project_Output_Artifacts.md#10. Validation Pass Report Artifacts, Plans/chain-wizard-flexibility.md#12. Three-Pass Canonical Validation Workflow (Mandatory Invariant Sweep)
 
-#### `requirements.quality_report.generated`
-Emitted when Pass 1 or Pass 2 writes the canonical quality report artifact.
+**Authoritative shared payload fields**
 
-Minimum payload:
-```json
-{
-  "wizard_id": "WIZ-...",
-  "report_path": ".puppet-master/project/traceability/requirements_quality_report.json",
-  "verdict": "PASS",
-  "needs_user_clarification_count": 0,
-  "question_ids": []
-}
-```
+| Field | Requirement |
+| --- | --- |
+| `validation_pass_report` | Canonical artifact family for the persisted quality result. |
+| `workflow_run_id` | Workflow execution lineage for the validation pass. |
+| `pass_number` | Ordered validation pass index. |
+| `pass_name` | Stable name for the pass. |
+| `pass_verdict` | Verdict value for the pass; supports `skipped` where the flow requires it. |
+| `verdict_reason` | Structured reason for the emitted verdict. |
+| `provider` | Provider used for the validation step. |
+| `model` | Model used for the validation step. |
+| `wizard_id` | Wizard identity that owns the requirements workflow. |
+| `project_id` | Owning project identity. |
+| `thread_id` | Conversation or workflow thread identity. |
+| `phase_plan_ref` | Phase-plan lineage reference for launch handoff. |
+| `staged_bundle_ref` | Staged-bundle lineage reference for launch handoff. |
+| `requirements_quality_report_ref` | Stable reference to the quality report artifact. |
+| `execution_role` | Effective runtime identity that survives from validation into launch handoff. |
+| `effective_account_id` | Effective account identity that survives from validation into launch handoff. |
+| `run_id` | Run identity when a launch handoff is already bound to runtime state. |
 
-#### `requirements.clarification_requested`
-Emitted when the workflow enters `attention_required` or `blocked`.
-
-Minimum payload:
-```json
-{
-  "wizard_id": "WIZ-...",
-  "wizard_step": "requirements",
-  "report_path": ".puppet-master/project/traceability/requirements_quality_report.json",
-  "thread_id": "TH-...",
-  "question_ids": ["Q-0001"]
-}
-```
-
-#### `requirements.clarification_resolved`
-Emitted when user answers are accepted and a subsequent report clears all clarification items.
-
-Minimum payload:
-```json
-{
-  "wizard_id": "WIZ-...",
-  "thread_id": "TH-...",
-  "report_path": ".puppet-master/project/traceability/requirements_quality_report.json",
-  "previous_question_ids": ["Q-0001"],
-  "verdict": "PASS"
-}
-```
-
-ContractRef: ContractName:Plans/Contracts_V0.md#EventRecord, SchemaID:pm.requirements_quality_report.schema.v1, ContractName:Plans/chain-wizard-flexibility.md#15-requirements-quality-escalation-semantics
+Rules:
+- Pass reports must stay upstream artifacts rather than masquerading as runtime attempts.
+- `pass_verdict` must support `skipped` where the flow needs it.
+- Accepted/final pass output must bridge into launched execution.
+- effective runtime identity must survive from validation into launch handoff.
 
 ### 3.4 Tool-specific payload extensions
 
-This section defines the canonical contract for this surface.
+This section owns the payload-extension fields that stay attached to persisted events and records rather than becoming route payload surrogates.
 
-ContractRef: ContractName:Plans/storage-plan.md#4.4 Activity transparency payloads, ContractName:Plans/Contracts_V0.md#3.4 Tool-specific payload extensions, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md#3.18 Built-in Browser and Click-to-Context
+ContractRef: Plans/storage-plan.md#4.4 Activity transparency payloads, Plans/Contracts_V0.md#7.3 `route_target`
 
-Core rules:
-- Preserve the Firecrawl-specific audit payload keys as exact contract-owned fields.
-- Answer construction must preserve search-then-read behavior, final citations must come from the actual read path rather than raw search snippets alone, and web activity/provenance docs must use the exact storage/contracts/browser ContractRef targets instead of malformed generic anchors.
-- The Firecrawl async contract must preserve timeout behavior tied to timeout_ms and partial-result survival on timeout.
-- Batch audit/event canon must preserve a parent audit event for the batch plus child audit events per URL.
-- Long-running web operations must preserve the structured progress_event payload and cancellation-with-partial-results contract.
-- The Firecrawl mapping table must preserve all PM operation rows, including the exact batch_webextract mapping POST /v2/extract with urls[].
-- Firecrawl search responses must be transformed into PM's unified search result shape by flattening source-partitioned results into one results array and tagging each item with source_type in a fixed merge order.
-- Blocked and denied activity payloads must preserve the exact blocked and denial payload keys in the owned web-operation child payload, include `blocked_reason_code` alongside `allowed_action_ids[]`, `denial_reason_code`, `denial_source`, and `suggested_recovery_action`, keep `projection_freshness` and `projection_health`, align canonical error naming to `adapter_unavailable`, and retire exact stale residue such as `unblock_action_ids[]`, `provider_unavailable`, `headless_unavailable`, and unrelated terminal/chat/card carry-through that contradicts the owner payload schema.
+**inspection refs**
 
-Fields:
-- firecrawl_credits_used
-- firecrawl_cache_state
-- firecrawl_scrape_id
-- timeout_ms
-- timeout when polling exceeds `timeout_ms`
-- partial results survive timeout if already materialized
-- parent audit event for the batch
-- child audit events per URL
-- tool.invoked
-- continue_on_error
-- progress_event
-- tool_use_id
-- operation
-- phase
-- detail
-- pages_completed
-- pages_total
-- elapsed_ms
-- estimated_remaining_ms
-- cancelled: true
-- Response transformation
-- Adapter MUST flatten into PM's unified `results` array
-ContractRef: ContractName:Plans/Tools.md#10.7 Audit, error, and self-hosted rules, ContractName:Plans/storage-plan.md#4.4 Activity transparency payloads
-- tagging each item with `source_type`
-- Merge order: web results first, then news, then images
+| Field | Requirement |
+| --- | --- |
+| `detail_ref` | Stable detail reference for a tool/event detail payload. |
+| `report_ref` | Stable report reference for emitted reports. |
+| `evidence_ref` | Stable evidence reference for linked evidence artifacts. |
+| `usage_event_ref` | Stable usage reference for accounting joins. |
+| `workflow_refs` | Workflow-specific reference bundle when workflow lineage is present. |
+| `docker_refs` | Container/runtime reference bundle when Docker lineage is present. |
+| `kubernetes_refs` | Cluster/workload reference bundle when Kubernetes lineage is present. |
 
-Labels and values:
-- Firecrawl
-- websearch
-- webfetch
-- webextract
-- webresearch
-- webcrawl
-- webmap
+**navigation transport**
+
+| Field | Requirement |
+| --- | --- |
+| `resume_url` | Transport-only serialized resume/open handoff; it does not replace canonical route identity. |
 
 Rules:
-- search-then-read behavior
-- final citations come from the actual read path
-- raw search snippets alone are not enough provenance for the final answer
-- batch_webfetch
-- batch_webextract
-- POST /v2/extract
-- urls[]
-- blocked_reason_code
-- allowed_action_ids[]
-- denial_reason_code
-- denial_source
-- suggested_recovery_action
-- projection_freshness
-- projection_health
-- adapter_id
-- adapter_unavailable
-- chat may shortlist with search but must read chosen pages before citing them as final evidence
-- blocked responses must be machine-actionable through `allowed_action_ids[]`
-- error naming aligns to `adapter_unavailable`
-
-#### Question schema and tool contract
-
-This section defines the canonical contract for this surface.
-
-Core rules:
-- Question flows are locked to PM-managed draft state, required visible options plus a freeform path, resumable multi-question drafts, and explicit dismissed or paused behavior instead of fabricated answers.
-- Question schema canonical names and enums are locked, including QuestionItem fields, canonical freeform and multi-select field names, and answer source metadata.
-- The question tool contract is locked to a multi-question envelope, normalized output statuses, object-array options, included answer source, and top-level orchestrator ownership of user questioning.
-
-Fields:
-- mode: "single_question" | "questionnaire"
-- questions: Array<QuestionItem>
-- status: "answered" | "submitted" | "dismissed" | "timed_out" | "unavailable"
-- answers: Array<{question_id, values: string[]}>
-- answer_text?
-- source?: "option" | "other" | "freeform"
-- Headless/HITL-unavailable = `status = "unavailable"`
-- Subagent question tool access is DENIED by default
-
-Labels and values:
-- questionnaire
-- single_question
-- unavailable
-- dismissed
-
-Rules:
-- NOT via `sendPrompt`
-- Something else
-- Always-visible options
-- Drafts auto-save until submit
-- Exiting/dismissing does NOT auto-submit
-- Thread-scoped draft state
-- status: 'dismissed'
-- draft
-- question_id
-- question
-- allow_freeform
-- multi_select
-- default_values?: string[]
-- draft_value?: string
-- response_kind
-- validation_state
-- drafts auto-save continuously
-- required questions block final submit
-- question cards may include a visual
-- users can answer out of order and revise before submit
-- dismissing pauses conversation until resume
-
-#### Common web output fields
-
-This section defines the canonical contract for this surface.
-
-Core rules:
-- The Firecrawl async contract must preserve the exact poll ladder and status family already restored in the owner section.
-- All web tools share a common output field set that includes provider identity, routing reason, timing, cache status, and standard error or warning fields.
-
-Fields:
-- 2s, 4s, 8s, 15s, 30s
-- scraping
-- processing
-- completed
-- failed
-- cancelled
-- `tool_use_id`
-- `adapter_id`
-- `adapter_selection_reason`
-- `duration_ms`
-- `timestamp`
-- `cached`
-- `error_code?`
-- `error_message?`
-- `warnings?`
-- `provenance_badge?`
-
-Labels and values:
-- Firecrawl
-- websearch
-- webfetch
-- webextract
-- webresearch
-- webcrawl
-- webmap
-
-#### `WebAction`
-
-This section defines the canonical contract for this surface.
-
-Core rules:
-- WebAction is a locked typed interface with an exact action enum, required and optional fields, hard timing limits, sequential execution, and invalid_input on unknown action types.
-- webfetch URL handling is locked: reject non-HTTP(S) schemes, normalize before routing, default bare domains to https://, reject malformed URLs with invalid_input, and enforce a default 5 MB max_content_length unless configured otherwise.
-
-Fields:
-- `type: "click" | "scroll" | "type" | "press_key" | "wait_for" | "navigate" | "screenshot" | "set_viewport" | "fill_form" | "select_option" | "back" | "reload" | "snapshot" | "console" | "network";`
-- `selector?: string`
-- `value?: string`
-- `timeout_ms?: number`
-- `description?: string`
-- `timeout_ms` defaults to 5000ms; max 30000ms; total across all actions capped at 30s
-- Unknown `type` values → `invalid_input` error
-- Actions are executed sequentially in array order
-
-Rules:
-- reject non-HTTP(S) schemes
-- invalid_input
-- normalize URL before routing
-- default to `https://` if bare domain
-- reject malformed URLs
-- `max_content_length`
-- 5 MB default
+- Inspection/provenance refs stay in event and record payloads.
+- Route/open contracts own navigation identity.
+- `resume_url` remains transport-only.
 ### 3.4A Web error taxonomy and applicability
 
 This section defines the canonical contract for this surface.
@@ -486,7 +330,6 @@ ContractRef: PolicyRule:no_secrets_in_storage, ContractName:Plans/Runtime_Artifa
 ---
 
 ## 4. Auth contracts
-
 <a id="AuthState"></a>
 ### 4.1 AuthState
 `AuthState` is the canonical persisted and evented auth snapshot for a provider subject. It records the selected identity, readiness state, and any provider-owned optional dimensions without forcing null-padding for dimensions that do not apply.
@@ -616,6 +459,39 @@ Provider setup/health projection needs an explicit lifecycle mapping because pro
 When provider lifecycle is projected into canonical child execution, only execution-relevant states map through the child-run lifecycle directly: `active`/`degraded` correspond to active execution, `suspended` corresponds to blocked execution, and `expired` corresponds to failure. Discovery/configuration-only states remain provider-profile states and MUST NOT be misreported as in-flight child execution.
 ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/Executor_Protocol.md
 
+ContractRef: Plans/Prompt_Pipeline.md#6.4 Effective resolution record, Plans/Multi-Account.md#4.5 Selectable unit and runtime resolution
+
+Required fields:
+- requested_account_id
+- requested_account_binding
+- requested_account_policy
+- effective_account_id
+- effective_provider_identity
+- provider_account_id
+- execution_role
+- operational_identity
+
+Canonical terms and values:
+- requested_account_id
+- requested_account_binding
+- requested_account_policy
+- effective_account_id
+- effective_provider_identity
+- provider_account_id
+
+Labels:
+- requested/effective execution identity
+- provider-native metadata
+
+Behavioral rules:
+- Requested state must remain recoverable in historical snapshots.
+- Binding distinguishes preference from requirement.
+- `provider_account_id` must be retired or explicitly governed as provider-native metadata subordinate to stable internal identity.
+
+Permission carry-through:
+- effective-account-scoped permission resolution must read `requested_account_binding` rather than a policy-only route
+- `effective_account_id` must remain available to approval and permission snapshots
+
 ## 5. Context management (instruction scoping + attempt journaling + parent summary + `AGENTS.md` enforcement)
 
 This section defines cross-cutting context assembly and enforcement behaviors for the finished Puppet Master product.
@@ -693,6 +569,45 @@ Rules:
 - effective_account_label
 - effective_provider_identity
 - effective_project_id
+ 
+ContractRef: Plans/Executor_Protocol.md#Worktree-aware execution unit context, Plans/orchestrator-subagent-integration.md#Tier Context
+
+Required fields:
+- run_id
+- node_id
+- attempt_id
+- lane_id
+- package_id
+- seam_id
+- worktree_id
+- execution_role
+- requested_account_id
+- effective_account_id
+- tool_use_id
+
+Canonical terms and values:
+- execution_unit_context
+- run_id
+- node_id
+- attempt_id
+- lane_id
+- package_id
+- seam_id
+- worktree_id
+- execution_role
+- requested_account_id
+- effective_account_id
+
+Labels:
+- execution unit context
+- runtime snapshot
+
+Behavioral rules:
+- Tier-rooted execution context must be replaced by lossless execution-unit context.
+- Downstream consumers must be able to join runtime, attempt, worktree, and approval records without guessing.
+
+Permission carry-through:
+- `execution_role` and `effective_account_id` must survive into runtime and approval surfaces
 ### 5.2 AttemptJournal
 
 **Definition:** `attempt_journal` is the per-Subtask, per-Iteration ephemeral artifact used to prevent repeated failed attempts.
@@ -770,6 +685,31 @@ Rules:
 
 ContractRef: ContractName:Plans/human-in-the-loop.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/storage-plan.md
 
+ContractRef: Plans/human-in-the-loop.md#Canonical HITL request contract, Plans/Executor_Protocol.md#Worktree-aware execution unit context
+
+Required fields:
+- report_ref
+- startup_recovered
+- failure_class
+
+Canonical terms and values:
+- report_ref
+- startup_recovered
+
+Labels:
+- Blocked
+- Waiting approval
+- Action Required
+
+Behavioral rules:
+- `blocked_sequence` is the canonical approval anchor.
+- Pre-attempt blocked episodes must not invent `attempt_id`.
+- Chat and GUI action buttons derive from ordered `allowed_action_ids[]`.
+
+Permission carry-through:
+- approval scope remains blocked-episode-scoped rather than session-global
+- ordered `allowed_action_ids[]` must survive into approval UI
+
 ### 6.2 Scope and persistence rules
 Rules:
 - approvals bind to canonical runtime identity first: `run_id`, `node_id`, `blocked_sequence`, and `attempt_id?`
@@ -822,10 +762,25 @@ Required envelope fields are:
 Rules:
 - deprecated aliases point at `alias_of_command_id`
 - stable wrapper commands point at `normalizes_to_contract`
-- wrapper commands remain user-facing command IDs; they do not disappear behind a public `cmd.nav.*` family
 - shell-facing commands may carry terminal-scoped identity args, but those identities still normalize through the canonical route and persistence model
 
 ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Progression_Gates.md, ContractName:Plans/Crosswalk.md
+
+ContractRef: Plans/UI_Command_Catalog.md#2.0 Command entry contract (doc-level), Plans/Crosswalk.md#3.1 Runtime orchestration ownership
+
+Required fields:
+- normalization.kind
+
+Canonical terms and values:
+- normalization.kind
+
+Labels:
+- command envelope
+
+Behavioral rules:
+- Wrapper metadata stays narrow and contract-level.
+- Wrappers point to canonical primitive families only.
+- Route payload structure is not restated inside command metadata.
 
 ### 7.3 `route_target`
 `route_target` is the canonical navigation-and-focus contract.
@@ -909,6 +864,20 @@ Rules:
 
 ContractRef: ContractName:Plans/Crosswalk.md, ContractName:Plans/FileManager.md, ContractName:Plans/FinalGUISpec.md
 
+ContractRef: Plans/FinalGUISpec.md#7.3 Shared route and open behavior, Plans/Crosswalk.md#3.3 Navigation and source-open ownership
+
+Labels:
+- route target
+- target kind
+- object kind
+- inspector target
+
+Behavioral rules:
+- Exactly one canonical primary selector is permitted.
+- `project_id` is required.
+- `target_kind` is destination class only, and `inspector_target` is focus refinement only after selector identity is established.
+- `resume_url` is serialized transport of `route_target`, not a second routing ontology.
+
 ### 7.4 `OpenSubject`
 `OpenSubject` is the canonical identity-native source-open contract.
 
@@ -928,6 +897,21 @@ Rules:
 - terminal, dev-session, and browser-session reveals normalize through `route_target` rather than overloading `OpenSubject`
 
 ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md
+
+ContractRef: Plans/FileManager.md#OpenSubject
+
+Canonical terms and values:
+- doc:<document_id>
+- artifact:<artifact_id>
+- Everything else routes through object_kind + object_id
+
+Labels:
+- open subject
+- subject identity
+
+Behavioral rules:
+- `subject_id` is bounded to canonical renderable/openable content only.
+- Everything outside document/artifact families routes through `object_kind + object_id`.
 ## 8. UI Scaling
 
 The application exposes a user-facing UI scale setting (Settings → General tab).
@@ -1239,6 +1223,22 @@ Required fields:
 - `selected_nodes[]`
 - `non_selected[]` with `non_selected_reason`
 - capacity summary
+
+ContractRef: Plans/Executor_Protocol.md#Wake reasons and coalescing
+
+Required fields:
+- startup_recovered
+
+Canonical terms and values:
+- scheduler.pass
+- startup_recovered
+
+Labels:
+- scheduler pass
+
+Behavioral rules:
+- The first scheduler pass after startup recovery persists `wake_reason = startup_recovered`.
+- Blocked and recovery wake ownership is carried by `scheduler.pass` rather than inferred from prompt text.
 
 ### `attempt.started`
 Required fields:

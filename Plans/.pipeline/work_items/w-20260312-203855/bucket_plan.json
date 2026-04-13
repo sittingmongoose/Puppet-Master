@@ -1,14 +1,16 @@
 {
-  "schema_id": "pm.bucket_plan.v4",
+  "schema_id": "pm.bucket_plan.v5",
   "work_id": "w-20260312-203855",
-  "created_at_utc": "2026-04-10T20:49:48.792Z",
+  "created_at_utc": "2026-04-10T22:34:16.044Z",
   "topic_or_scope": "Orchestrator rewrite transfer-fidelity audit, legacy-canon cleanup readiness, and reconciliation prep",
+  "current_wave": "owner_first",
   "must_change": [
     {
       "path": "Plans/Contracts_V0.md",
       "heading": "## 3. Tool events (persisted)",
       "doc_role": "owner",
       "section_role": "owner_section",
+      "phase_role": "owner_first_wave_eligible",
       "source_reasons": [
         "coverage_collection",
         "OBL-033",
@@ -41,13 +43,14 @@
         "artifact attribution without attempt identity"
       ],
       "status": "active",
-      "bucket_reason": "active owner section in collected impact set; packet planning may target this SSOT section directly"
+      "bucket_reason": "active owner section in collected impact set; current owner-first wave must establish or replace canon here before dependent reconciliation proceeds"
     },
     {
       "path": "Plans/Contracts_V0.md",
       "heading": "## 4. Auth contracts",
       "doc_role": "owner",
       "section_role": "owner_section",
+      "phase_role": "owner_first_wave_eligible",
       "source_reasons": [
         "coverage_collection",
         "OBL-007",
@@ -78,13 +81,14 @@
         "ambiguous `provider_account_id` status"
       ],
       "status": "active",
-      "bucket_reason": "active owner section in collected impact set; packet planning may target this SSOT section directly"
+      "bucket_reason": "active owner section in collected impact set; current owner-first wave must establish or replace canon here before dependent reconciliation proceeds"
     },
     {
       "path": "Plans/Contracts_V0.md",
       "heading": "### 1.2 EventRecord -- canonical persisted envelope (schema: `pm.event.v0`)",
       "doc_role": "owner",
       "section_role": "owner_section",
+      "phase_role": "owner_first_wave_eligible",
       "source_reasons": [
         "coverage_collection",
         "OBL-016",
@@ -129,13 +133,14 @@
         "concerns treated as badges or review leftovers without durable identity"
       ],
       "status": "active",
-      "bucket_reason": "active owner section in collected impact set; packet planning may target this SSOT section directly"
+      "bucket_reason": "active owner section in collected impact set; current owner-first wave must establish or replace canon here before dependent reconciliation proceeds"
     },
     {
       "path": "Plans/Contracts_V0.md",
       "heading": "### 3.3 Requirements quality events",
       "doc_role": "owner",
       "section_role": "owner_section",
+      "phase_role": "owner_first_wave_eligible",
       "source_reasons": [
         "coverage_collection",
         "OBL-036"
@@ -174,13 +179,14 @@
         "pass/fail-only assumptions where `skipped` is required"
       ],
       "status": "active",
-      "bucket_reason": "active owner section in collected impact set; packet planning may target this SSOT section directly"
+      "bucket_reason": "active owner section in collected impact set; current owner-first wave must establish or replace canon here before dependent reconciliation proceeds"
     },
     {
       "path": "Plans/Contracts_V0.md",
       "heading": "### 3.4 Tool-specific payload extensions",
       "doc_role": "owner",
       "section_role": "owner_section",
+      "phase_role": "owner_first_wave_eligible",
       "source_reasons": [
         "coverage_collection",
         "OBL-028",
@@ -208,13 +214,14 @@
         "treating ref families as route payload surrogates"
       ],
       "status": "active",
-      "bucket_reason": "active owner section in collected impact set; packet planning may target this SSOT section directly"
+      "bucket_reason": "active owner section in collected impact set; current owner-first wave must establish or replace canon here before dependent reconciliation proceeds"
     },
     {
       "path": "Plans/Contracts_V0.md",
       "heading": "### 5.1B Persona/Runtime Snapshot Payload Contract",
       "doc_role": "owner",
       "section_role": "owner_section",
+      "phase_role": "owner_first_wave_eligible",
       "source_reasons": [
         "coverage_collection",
         "OBL-031",
@@ -248,13 +255,14 @@
         "pseudo-tier execution keys"
       ],
       "status": "active",
-      "bucket_reason": "active owner section in collected impact set; packet planning may target this SSOT section directly"
+      "bucket_reason": "active owner section in collected impact set; current owner-first wave must establish or replace canon here before dependent reconciliation proceeds"
     },
     {
       "path": "Plans/Contracts_V0.md",
       "heading": "### 6.1 Canonical blocked-episode approval anchor",
       "doc_role": "owner",
       "section_role": "owner_section",
+      "phase_role": "owner_first_wave_eligible",
       "source_reasons": [
         "coverage_collection",
         "OBL-029",
@@ -287,13 +295,14 @@
         "`approve_continue`"
       ],
       "status": "active",
-      "bucket_reason": "active owner section in collected impact set; packet planning may target this SSOT section directly"
+      "bucket_reason": "active owner section in collected impact set; current owner-first wave must establish or replace canon here before dependent reconciliation proceeds"
     },
     {
       "path": "Plans/Contracts_V0.md",
       "heading": "### 7.2 UICommand envelope",
       "doc_role": "owner",
       "section_role": "owner_section",
+      "phase_role": "owner_first_wave_eligible",
       "source_reasons": [
         "coverage_collection",
         "OBL-030"
@@ -320,13 +329,14 @@
         "cmd.nav.*"
       ],
       "status": "active",
-      "bucket_reason": "active owner section in collected impact set; packet planning may target this SSOT section directly"
+      "bucket_reason": "active owner section in collected impact set; current owner-first wave must establish or replace canon here before dependent reconciliation proceeds"
     },
     {
       "path": "Plans/Contracts_V0.md",
       "heading": "### 7.3 `route_target`",
       "doc_role": "owner",
       "section_role": "owner_section",
+      "phase_role": "owner_first_wave_eligible",
       "source_reasons": [
         "coverage_collection",
         "OBL-020",
@@ -375,13 +385,14 @@
         "`resume_url` acting as a shadow routing primitive"
       ],
       "status": "active",
-      "bucket_reason": "active owner section in collected impact set; packet planning may target this SSOT section directly"
+      "bucket_reason": "active owner section in collected impact set; current owner-first wave must establish or replace canon here before dependent reconciliation proceeds"
     },
     {
       "path": "Plans/Contracts_V0.md",
       "heading": "### 7.4 `OpenSubject`",
       "doc_role": "owner",
       "section_role": "owner_section",
+      "phase_role": "owner_first_wave_eligible",
       "source_reasons": [
         "coverage_collection",
         "OBL-026"
@@ -403,13 +414,14 @@
         "wizard or message flows treated as special deep-link payload families instead of object routes"
       ],
       "status": "active",
-      "bucket_reason": "active owner section in collected impact set; packet planning may target this SSOT section directly"
+      "bucket_reason": "active owner section in collected impact set; current owner-first wave must establish or replace canon here before dependent reconciliation proceeds"
     },
     {
       "path": "Plans/Contracts_V0.md",
       "heading": "### `scheduler.pass` (minimum addendum fields)",
       "doc_role": "owner",
       "section_role": "owner_section",
+      "phase_role": "owner_first_wave_eligible",
       "source_reasons": [
         "coverage_collection",
         "OBL-032"
@@ -425,13 +437,14 @@
       ],
       "stale_residue_to_retire": [],
       "status": "active",
-      "bucket_reason": "active owner section in collected impact set; packet planning may target this SSOT section directly"
+      "bucket_reason": "active owner section in collected impact set; current owner-first wave must establish or replace canon here before dependent reconciliation proceeds"
     },
     {
       "path": "Plans/Executor_Protocol.md",
       "heading": "## 5. Node execution fields",
       "doc_role": "owner",
       "section_role": "owner_section",
+      "phase_role": "owner_first_wave_eligible",
       "source_reasons": [
         "coverage_collection",
         "OBL-007",
@@ -475,13 +488,14 @@
         "tier_id"
       ],
       "status": "active",
-      "bucket_reason": "active owner section in collected impact set; packet planning may target this SSOT section directly"
+      "bucket_reason": "active owner section in collected impact set; current owner-first wave must establish or replace canon here before dependent reconciliation proceeds"
     },
     {
       "path": "Plans/Executor_Protocol.md",
       "heading": "### Wake reasons and coalescing",
       "doc_role": "owner",
       "section_role": "owner_section",
+      "phase_role": "owner_first_wave_eligible",
       "source_reasons": [
         "coverage_collection",
         "OBL-032"
@@ -499,13 +513,14 @@
       ],
       "stale_residue_to_retire": [],
       "status": "active",
-      "bucket_reason": "active owner section in collected impact set; packet planning may target this SSOT section directly"
+      "bucket_reason": "active owner section in collected impact set; current owner-first wave must establish or replace canon here before dependent reconciliation proceeds"
     },
     {
       "path": "Plans/Executor_Protocol.md",
       "heading": "### Worktree-aware execution unit context",
       "doc_role": "owner",
       "section_role": "owner_section",
+      "phase_role": "owner_first_wave_eligible",
       "source_reasons": [
         "coverage_collection",
         "OBL-031",
@@ -539,13 +554,14 @@
         "request-level blocked identity"
       ],
       "status": "active",
-      "bucket_reason": "active owner section in collected impact set; packet planning may target this SSOT section directly"
+      "bucket_reason": "active owner section in collected impact set; current owner-first wave must establish or replace canon here before dependent reconciliation proceeds"
     },
     {
       "path": "Plans/FileManager.md",
       "heading": "### OpenSubject",
       "doc_role": "owner",
       "section_role": "consumer_section",
+      "phase_role": "owner_first_wave_eligible",
       "source_reasons": [
         "coverage_collection",
         "OBL-026"
@@ -563,13 +579,14 @@
         "document/artifact navigation prose that bypasses `subject_id`"
       ],
       "status": "active",
-      "bucket_reason": "active owner section in collected impact set; packet planning may target this SSOT section directly"
+      "bucket_reason": "active owner section in collected impact set; current owner-first wave must establish or replace canon here before dependent reconciliation proceeds"
     },
     {
       "path": "Plans/GitHub_API_Auth_and_Flows.md",
       "heading": "## Runtime Auth-Blocked Recovery Addendum (2026-03-09)",
       "doc_role": "owner",
       "section_role": "owner_section",
+      "phase_role": "owner_first_wave_eligible",
       "source_reasons": [
         "coverage_collection",
         "OBL-035"
@@ -588,13 +605,14 @@
         "arg-less login-keyed recovery flows"
       ],
       "status": "active",
-      "bucket_reason": "active owner section in collected impact set; packet planning may target this SSOT section directly"
+      "bucket_reason": "active owner section in collected impact set; current owner-first wave must establish or replace canon here before dependent reconciliation proceeds"
     },
     {
       "path": "Plans/GitHub_API_Auth_and_Flows.md",
       "heading": "## Token handling and storage (hard rules)",
       "doc_role": "owner",
       "section_role": "owner_section",
+      "phase_role": "owner_first_wave_eligible",
       "source_reasons": [
         "coverage_collection",
         "OBL-035"
@@ -616,13 +634,14 @@
         "login-keyed durable identity"
       ],
       "status": "active",
-      "bucket_reason": "active owner section in collected impact set; packet planning may target this SSOT section directly"
+      "bucket_reason": "active owner section in collected impact set; current owner-first wave must establish or replace canon here before dependent reconciliation proceeds"
     },
     {
       "path": "Plans/GitHub_API_Auth_and_Flows.md",
       "heading": "### 2. Event and wakeup integration",
       "doc_role": "owner",
       "section_role": "owner_section",
+      "phase_role": "owner_first_wave_eligible",
       "source_reasons": [
         "coverage_collection",
         "OBL-035"
@@ -646,13 +665,14 @@
       ],
       "stale_residue_to_retire": [],
       "status": "active",
-      "bucket_reason": "active owner section in collected impact set; packet planning may target this SSOT section directly"
+      "bucket_reason": "active owner section in collected impact set; current owner-first wave must establish or replace canon here before dependent reconciliation proceeds"
     },
     {
       "path": "Plans/GitHub_API_Auth_and_Flows.md",
       "heading": "### Credential store keying (canonical)",
       "doc_role": "owner",
       "section_role": "owner_section",
+      "phase_role": "owner_first_wave_eligible",
       "source_reasons": [
         "coverage_collection",
         "OBL-035"
@@ -676,13 +696,14 @@
         "login-keyed durable identity"
       ],
       "status": "active",
-      "bucket_reason": "active owner section in collected impact set; packet planning may target this SSOT section directly"
+      "bucket_reason": "active owner section in collected impact set; current owner-first wave must establish or replace canon here before dependent reconciliation proceeds"
     },
     {
       "path": "Plans/GitHub_Integration.md",
       "heading": "## Deferred GitHub Recovery Binding (2026-03-09)",
       "doc_role": "owner",
       "section_role": "owner_section",
+      "phase_role": "owner_first_wave_eligible",
       "source_reasons": [
         "coverage_collection",
         "OBL-027",
@@ -708,13 +729,14 @@
         "login-keyed durable recovery identity"
       ],
       "status": "active",
-      "bucket_reason": "active owner section in collected impact set; packet planning may target this SSOT section directly"
+      "bucket_reason": "active owner section in collected impact set; current owner-first wave must establish or replace canon here before dependent reconciliation proceeds"
     },
     {
       "path": "Plans/GitHub_Integration.md",
       "heading": "### A.4 Worktrees",
       "doc_role": "owner",
       "section_role": "owner_section",
+      "phase_role": "owner_first_wave_eligible",
       "source_reasons": [
         "coverage_collection",
         "OBL-003",
@@ -743,13 +765,14 @@
         "tier-keyed worktree identity"
       ],
       "status": "active",
-      "bucket_reason": "active owner section in collected impact set; packet planning may target this SSOT section directly"
+      "bucket_reason": "active owner section in collected impact set; current owner-first wave must establish or replace canon here before dependent reconciliation proceeds"
     },
     {
       "path": "Plans/GitHub_Integration.md",
       "heading": "### A.5 Surface boundary rule",
       "doc_role": "owner",
       "section_role": "owner_section",
+      "phase_role": "owner_first_wave_eligible",
       "source_reasons": [
         "coverage_collection",
         "OBL-001"
@@ -774,13 +797,14 @@
       ],
       "stale_residue_to_retire": [],
       "status": "active",
-      "bucket_reason": "active owner section in collected impact set; packet planning may target this SSOT section directly"
+      "bucket_reason": "active owner section in collected impact set; current owner-first wave must establish or replace canon here before dependent reconciliation proceeds"
     },
     {
       "path": "Plans/Glossary.md",
       "heading": "### Orchestrator rewrite terms",
       "doc_role": "owner",
       "section_role": "owner_section",
+      "phase_role": "owner_first_wave_eligible",
       "source_reasons": [
         "coverage_collection",
         "OBL-011",
@@ -820,13 +844,14 @@
         "parallel friendly names that drift from contracts"
       ],
       "status": "active",
-      "bucket_reason": "active owner section in collected impact set; packet planning may target this SSOT section directly"
+      "bucket_reason": "active owner section in collected impact set; current owner-first wave must establish or replace canon here before dependent reconciliation proceeds"
     },
     {
       "path": "Plans/Glossary.md",
       "heading": "### Runtime and routing terms",
       "doc_role": "owner",
       "section_role": "owner_section",
+      "phase_role": "owner_first_wave_eligible",
       "source_reasons": [
         "coverage_collection",
         "OBL-011",
@@ -865,13 +890,14 @@
         "special-case route families outside `subject_id` or `object_kind + object_id`"
       ],
       "status": "active",
-      "bucket_reason": "active owner section in collected impact set; packet planning may target this SSOT section directly"
+      "bucket_reason": "active owner section in collected impact set; current owner-first wave must establish or replace canon here before dependent reconciliation proceeds"
     },
     {
       "path": "Plans/Multi-Account.md",
       "heading": "## 4. Data model",
       "doc_role": "owner",
       "section_role": "owner_section",
+      "phase_role": "owner_first_wave_eligible",
       "source_reasons": [
         "coverage_collection",
         "OBL-007",
@@ -903,13 +929,14 @@
         "policy-only account routing without selected-account anchor"
       ],
       "status": "active",
-      "bucket_reason": "active owner section in collected impact set; packet planning may target this SSOT section directly"
+      "bucket_reason": "active owner section in collected impact set; current owner-first wave must establish or replace canon here before dependent reconciliation proceeds"
     },
     {
       "path": "Plans/Multi-Account.md",
       "heading": "### 4.2 Account record (canonical)",
       "doc_role": "owner",
       "section_role": "owner_section",
+      "phase_role": "owner_first_wave_eligible",
       "source_reasons": [
         "coverage_collection",
         "OBL-035"
@@ -933,13 +960,14 @@
       ],
       "stale_residue_to_retire": [],
       "status": "active",
-      "bucket_reason": "active owner section in collected impact set; packet planning may target this SSOT section directly"
+      "bucket_reason": "active owner section in collected impact set; current owner-first wave must establish or replace canon here before dependent reconciliation proceeds"
     },
     {
       "path": "Plans/Multi-Account.md",
       "heading": "### 4.5 Selectable unit and runtime resolution",
       "doc_role": "owner",
       "section_role": "owner_section",
+      "phase_role": "owner_first_wave_eligible",
       "source_reasons": [
         "coverage_collection",
         "OBL-007"
@@ -967,13 +995,14 @@
         "identity bundles that stop at effective_account_id only"
       ],
       "status": "active",
-      "bucket_reason": "active owner section in collected impact set; packet planning may target this SSOT section directly"
+      "bucket_reason": "active owner section in collected impact set; current owner-first wave must establish or replace canon here before dependent reconciliation proceeds"
     },
     {
       "path": "Plans/Orchestrator_Page.md",
       "heading": "## 1. Scope and canonical model",
       "doc_role": "owner",
       "section_role": "owner_section",
+      "phase_role": "owner_first_wave_eligible",
       "source_reasons": [
         "coverage_collection",
         "OBL-001",
@@ -1009,13 +1038,14 @@
         "per-tab performance guidance without shared Orchestrator scale contract"
       ],
       "status": "active",
-      "bucket_reason": "active owner section in collected impact set; packet planning may target this SSOT section directly"
+      "bucket_reason": "active owner section in collected impact set; current owner-first wave must establish or replace canon here before dependent reconciliation proceeds"
     },
     {
       "path": "Plans/Orchestrator_Page.md",
       "heading": "## 10. Search, routing, and action policy",
       "doc_role": "owner",
       "section_role": "owner_section",
+      "phase_role": "owner_first_wave_eligible",
       "source_reasons": [
         "coverage_collection",
         "OBL-015",
@@ -1054,13 +1084,14 @@
         "separate ad hoc payloads per surface"
       ],
       "status": "active",
-      "bucket_reason": "active owner section in collected impact set; packet planning may target this SSOT section directly"
+      "bucket_reason": "active owner section in collected impact set; current owner-first wave must establish or replace canon here before dependent reconciliation proceeds"
     },
     {
       "path": "Plans/Orchestrator_Page.md",
       "heading": "## 11. Source Control boundary",
       "doc_role": "owner",
       "section_role": "owner_section",
+      "phase_role": "owner_first_wave_eligible",
       "source_reasons": [
         "coverage_collection",
         "OBL-001",
@@ -1097,13 +1128,14 @@
         "cleanup equals removal assumptions"
       ],
       "status": "active",
-      "bucket_reason": "active owner section in collected impact set; packet planning may target this SSOT section directly"
+      "bucket_reason": "active owner section in collected impact set; current owner-first wave must establish or replace canon here before dependent reconciliation proceeds"
     },
     {
       "path": "Plans/Orchestrator_Page.md",
       "heading": "## 12. Concern and notification model",
       "doc_role": "owner",
       "section_role": "owner_section",
+      "phase_role": "owner_first_wave_eligible",
       "source_reasons": [
         "coverage_collection",
         "OBL-012",
@@ -1145,13 +1177,14 @@
         "concerns treated as badges or notes without durable identity"
       ],
       "status": "active",
-      "bucket_reason": "active owner section in collected impact set; packet planning may target this SSOT section directly"
+      "bucket_reason": "active owner section in collected impact set; current owner-first wave must establish or replace canon here before dependent reconciliation proceeds"
     },
     {
       "path": "Plans/Orchestrator_Page.md",
       "heading": "## 2. Page layout",
       "doc_role": "owner",
       "section_role": "owner_section",
+      "phase_role": "owner_first_wave_eligible",
       "source_reasons": [
         "coverage_collection",
         "OBL-014"
@@ -1177,13 +1210,14 @@
         "per-tab performance guidance without shared Orchestrator scale contract"
       ],
       "status": "active",
-      "bucket_reason": "active owner section in collected impact set; packet planning may target this SSOT section directly"
+      "bucket_reason": "active owner section in collected impact set; current owner-first wave must establish or replace canon here before dependent reconciliation proceeds"
     },
     {
       "path": "Plans/Orchestrator_Page.md",
       "heading": "## 6. Evidence tab",
       "doc_role": "owner",
       "section_role": "owner_section",
+      "phase_role": "owner_first_wave_eligible",
       "source_reasons": [
         "coverage_collection",
         "OBL-017",
@@ -1214,13 +1248,14 @@
         "validation artifacts presented as runtime records"
       ],
       "status": "active",
-      "bucket_reason": "active owner section in collected impact set; packet planning may target this SSOT section directly"
+      "bucket_reason": "active owner section in collected impact set; current owner-first wave must establish or replace canon here before dependent reconciliation proceeds"
     },
     {
       "path": "Plans/Orchestrator_Page.md",
       "heading": "## 7. History tab",
       "doc_role": "owner",
       "section_role": "owner_section",
+      "phase_role": "owner_first_wave_eligible",
       "source_reasons": [
         "coverage_collection",
         "OBL-018"
@@ -1247,13 +1282,14 @@
         "overloaded `resolved` keyword"
       ],
       "status": "active",
-      "bucket_reason": "active owner section in collected impact set; packet planning may target this SSOT section directly"
+      "bucket_reason": "active owner section in collected impact set; current owner-first wave must establish or replace canon here before dependent reconciliation proceeds"
     },
     {
       "path": "Plans/Orchestrator_Page.md",
       "heading": "## 8. Ledger tab",
       "doc_role": "owner",
       "section_role": "owner_section",
+      "phase_role": "owner_first_wave_eligible",
       "source_reasons": [
         "coverage_collection",
         "OBL-017"
@@ -1281,13 +1317,14 @@
         "conflating record exports, artifact exports, and view exports into one unclear family"
       ],
       "status": "active",
-      "bucket_reason": "active owner section in collected impact set; packet planning may target this SSOT section directly"
+      "bucket_reason": "active owner section in collected impact set; current owner-first wave must establish or replace canon here before dependent reconciliation proceeds"
     },
     {
       "path": "Plans/Orchestrator_Page.md",
       "heading": "## 9. Current vs historical run behavior",
       "doc_role": "owner",
       "section_role": "owner_section",
+      "phase_role": "owner_first_wave_eligible",
       "source_reasons": [
         "coverage_collection",
         "OBL-003",
@@ -1322,13 +1359,14 @@
         "historical implied by missing live state"
       ],
       "status": "active",
-      "bucket_reason": "active owner section in collected impact set; packet planning may target this SSOT section directly"
+      "bucket_reason": "active owner section in collected impact set; current owner-first wave must establish or replace canon here before dependent reconciliation proceeds"
     },
     {
       "path": "Plans/Permissions_System.md",
       "heading": "## 6. Ask flow semantics",
       "doc_role": "owner",
       "section_role": "owner_section",
+      "phase_role": "owner_first_wave_eligible",
       "source_reasons": [
         "coverage_collection",
         "OBL-009",
@@ -1368,13 +1406,14 @@
         "approve_continue"
       ],
       "status": "active",
-      "bucket_reason": "active owner section in collected impact set; packet planning may target this SSOT section directly"
+      "bucket_reason": "active owner section in collected impact set; current owner-first wave must establish or replace canon here before dependent reconciliation proceeds"
     },
     {
       "path": "Plans/Permissions_System.md",
       "heading": "### 2.4B Scope specificity across package, seam, lane, project, and global contexts",
       "doc_role": "owner",
       "section_role": "owner_section",
+      "phase_role": "owner_first_wave_eligible",
       "source_reasons": [
         "coverage_collection",
         "OBL-009"
@@ -1402,13 +1441,14 @@
         "tool/context/mode-only permission resolution"
       ],
       "status": "active",
-      "bucket_reason": "active owner section in collected impact set; packet planning may target this SSOT section directly"
+      "bucket_reason": "active owner section in collected impact set; current owner-first wave must establish or replace canon here before dependent reconciliation proceeds"
     },
     {
       "path": "Plans/Permissions_System.md",
       "heading": "### Permission snapshot contract",
       "doc_role": "owner",
       "section_role": "owner_section",
+      "phase_role": "owner_first_wave_eligible",
       "source_reasons": [
         "coverage_collection",
         "OBL-009",
@@ -1433,13 +1473,14 @@
         "session-global approval snapshots that omit blocked-episode identity"
       ],
       "status": "active",
-      "bucket_reason": "active owner section in collected impact set; packet planning may target this SSOT section directly"
+      "bucket_reason": "active owner section in collected impact set; current owner-first wave must establish or replace canon here before dependent reconciliation proceeds"
     },
     {
       "path": "Plans/Project_Output_Artifacts.md",
       "heading": "## 10. Validation Pass Report Artifacts",
       "doc_role": "owner",
       "section_role": "owner_section",
+      "phase_role": "owner_first_wave_eligible",
       "source_reasons": [
         "coverage_collection",
         "OBL-036"
@@ -1475,13 +1516,14 @@
         "pass/fail-only assumptions where `skipped` is required"
       ],
       "status": "active",
-      "bucket_reason": "active owner section in collected impact set; packet planning may target this SSOT section directly"
+      "bucket_reason": "active owner section in collected impact set; current owner-first wave must establish or replace canon here before dependent reconciliation proceeds"
     },
     {
       "path": "Plans/Prompt_Pipeline.md",
       "heading": "## Runtime Attempt Snapshot and Handoff Bundle",
       "doc_role": "owner",
       "section_role": "owner_section",
+      "phase_role": "owner_first_wave_eligible",
       "source_reasons": [
         "coverage_collection",
         "OBL-031",
@@ -1514,13 +1556,14 @@
         "`tier_id` as canonical scope"
       ],
       "status": "active",
-      "bucket_reason": "active owner section in collected impact set; packet planning may target this SSOT section directly"
+      "bucket_reason": "active owner section in collected impact set; current owner-first wave must establish or replace canon here before dependent reconciliation proceeds"
     },
     {
       "path": "Plans/Prompt_Pipeline.md",
       "heading": "### 6.4 Effective resolution record",
       "doc_role": "owner",
       "section_role": "owner_section",
+      "phase_role": "owner_first_wave_eligible",
       "source_reasons": [
         "coverage_collection",
         "OBL-007"
@@ -1546,13 +1589,14 @@
         "policy-only account routing without selected-account anchor"
       ],
       "status": "active",
-      "bucket_reason": "active owner section in collected impact set; packet planning may target this SSOT section directly"
+      "bucket_reason": "active owner section in collected impact set; current owner-first wave must establish or replace canon here before dependent reconciliation proceeds"
     },
     {
       "path": "Plans/Runtime_Artifacts_Panel.md",
       "heading": "## 2. Two artifact families (no conflation)",
       "doc_role": "owner",
       "section_role": "owner_section",
+      "phase_role": "owner_first_wave_eligible",
       "source_reasons": [
         "coverage_collection",
         "OBL-037"
@@ -1578,13 +1622,14 @@
         "redb `artifacts_index:v1:{project_id}`"
       ],
       "status": "active",
-      "bucket_reason": "active owner section in collected impact set; packet planning may target this SSOT section directly"
+      "bucket_reason": "active owner section in collected impact set; current owner-first wave must establish or replace canon here before dependent reconciliation proceeds"
     },
     {
       "path": "Plans/Runtime_Artifacts_Panel.md",
       "heading": "## 5. Canonical IDs and task_id rule",
       "doc_role": "owner",
       "section_role": "owner_section",
+      "phase_role": "owner_first_wave_eligible",
       "source_reasons": [
         "coverage_collection",
         "OBL-034"
@@ -1617,13 +1662,14 @@
         "`task_id`"
       ],
       "status": "active",
-      "bucket_reason": "active owner section in collected impact set; packet planning may target this SSOT section directly"
+      "bucket_reason": "active owner section in collected impact set; current owner-first wave must establish or replace canon here before dependent reconciliation proceeds"
     },
     {
       "path": "Plans/UI_Command_Catalog.md",
       "heading": "## Canonical Runtime Recovery Command Consolidation (2026-03-09)",
       "doc_role": "owner",
       "section_role": "owner_section",
+      "phase_role": "owner_first_wave_eligible",
       "source_reasons": [
         "coverage_collection",
         "OBL-032"
@@ -1654,13 +1700,14 @@
         "approve_continue"
       ],
       "status": "active",
-      "bucket_reason": "active owner section in collected impact set; packet planning may target this SSOT section directly"
+      "bucket_reason": "active owner section in collected impact set; current owner-first wave must establish or replace canon here before dependent reconciliation proceeds"
     },
     {
       "path": "Plans/UI_Command_Catalog.md",
       "heading": "### 2.0 Command entry contract (doc-level)",
       "doc_role": "owner",
       "section_role": "owner_section",
+      "phase_role": "owner_first_wave_eligible",
       "source_reasons": [
         "coverage_collection",
         "OBL-030"
@@ -1688,13 +1735,14 @@
         "thin command envelope lacking normalization metadata"
       ],
       "status": "active",
-      "bucket_reason": "active owner section in collected impact set; packet planning may target this SSOT section directly"
+      "bucket_reason": "active owner section in collected impact set; current owner-first wave must establish or replace canon here before dependent reconciliation proceeds"
     },
     {
       "path": "Plans/UI_Command_Catalog.md",
       "heading": "### 2.5 Orchestrator page commands",
       "doc_role": "owner",
       "section_role": "owner_section",
+      "phase_role": "owner_first_wave_eligible",
       "source_reasons": [
         "coverage_collection",
         "OBL-015",
@@ -1734,13 +1782,14 @@
         "separate ad hoc payloads per surface"
       ],
       "status": "active",
-      "bucket_reason": "active owner section in collected impact set; packet planning may target this SSOT section directly"
+      "bucket_reason": "active owner section in collected impact set; current owner-first wave must establish or replace canon here before dependent reconciliation proceeds"
     },
     {
       "path": "Plans/UI_Command_Catalog.md",
       "heading": "### Recovery command definitions",
       "doc_role": "owner",
       "section_role": "consumer_section",
+      "phase_role": "owner_first_wave_eligible",
       "source_reasons": [
         "coverage_collection",
         "OBL-030",
@@ -1770,13 +1819,14 @@
         "request-level recovery identity"
       ],
       "status": "active",
-      "bucket_reason": "active owner section in collected impact set; packet planning may target this SSOT section directly"
+      "bucket_reason": "active owner section in collected impact set; current owner-first wave must establish or replace canon here before dependent reconciliation proceeds"
     },
     {
       "path": "Plans/UI_Command_Catalog.md",
       "heading": "#### Search commands",
       "doc_role": "owner",
       "section_role": "consumer_section",
+      "phase_role": "owner_first_wave_eligible",
       "source_reasons": [
         "coverage_collection",
         "OBL-020",
@@ -1806,13 +1856,14 @@
         "`artifact_id` and `document_id` as direct route fields"
       ],
       "status": "active",
-      "bucket_reason": "active owner section in collected impact set; packet planning may target this SSOT section directly"
+      "bucket_reason": "active owner section in collected impact set; current owner-first wave must establish or replace canon here before dependent reconciliation proceeds"
     },
     {
       "path": "Plans/WorktreeGitImprovement.md",
       "heading": "## Worktree Conflict and Dirty-Worktree Runtime Alignment",
       "doc_role": "owner",
       "section_role": "owner_section",
+      "phase_role": "owner_first_wave_eligible",
       "source_reasons": [
         "coverage_collection",
         "OBL-005",
@@ -1838,13 +1889,14 @@
         "cleanup equals removal assumptions"
       ],
       "status": "active",
-      "bucket_reason": "active owner section in collected impact set; packet planning may target this SSOT section directly"
+      "bucket_reason": "active owner section in collected impact set; current owner-first wave must establish or replace canon here before dependent reconciliation proceeds"
     },
     {
       "path": "Plans/WorktreeGitImprovement.md",
       "heading": "### 2.8 Startup recovery uses process CWD",
       "doc_role": "owner",
       "section_role": "owner_section",
+      "phase_role": "owner_first_wave_eligible",
       "source_reasons": [
         "coverage_collection",
         "OBL-003",
@@ -1872,13 +1924,14 @@
         "cleanup wipes history model"
       ],
       "status": "active",
-      "bucket_reason": "active owner section in collected impact set; packet planning may target this SSOT section directly"
+      "bucket_reason": "active owner section in collected impact set; current owner-first wave must establish or replace canon here before dependent reconciliation proceeds"
     },
     {
       "path": "Plans/WorktreeGitImprovement.md",
       "heading": "### 4.1 Assistant-created worktree lifecycle",
       "doc_role": "owner",
       "section_role": "owner_section",
+      "phase_role": "owner_first_wave_eligible",
       "source_reasons": [
         "coverage_collection",
         "OBL-004",
@@ -1916,13 +1969,14 @@
         "hidden `extract_tier_id()` migration behavior"
       ],
       "status": "active",
-      "bucket_reason": "active owner section in collected impact set; packet planning may target this SSOT section directly"
+      "bucket_reason": "active owner section in collected impact set; current owner-first wave must establish or replace canon here before dependent reconciliation proceeds"
     },
     {
       "path": "Plans/chain-wizard-flexibility.md",
       "heading": "## 12. Three-Pass Canonical Validation Workflow (Mandatory Invariant Sweep)",
       "doc_role": "owner",
       "section_role": "owner_section",
+      "phase_role": "owner_first_wave_eligible",
       "source_reasons": [
         "coverage_collection",
         "OBL-036"
@@ -1953,13 +2007,14 @@
         "`workflow_run_id` as the only lineage bridge"
       ],
       "status": "active",
-      "bucket_reason": "active owner section in collected impact set; packet planning may target this SSOT section directly"
+      "bucket_reason": "active owner section in collected impact set; current owner-first wave must establish or replace canon here before dependent reconciliation proceeds"
     },
     {
       "path": "Plans/chain-wizard-flexibility.md",
       "heading": "### 17.4 Assistant-to-wizard handoff payload",
       "doc_role": "owner",
       "section_role": "owner_section",
+      "phase_role": "owner_first_wave_eligible",
       "source_reasons": [
         "coverage_collection",
         "OBL-033",
@@ -1987,13 +2042,14 @@
         "validation lineage that depends on provider/model only"
       ],
       "status": "active",
-      "bucket_reason": "active owner section in collected impact set; packet planning may target this SSOT section directly"
+      "bucket_reason": "active owner section in collected impact set; current owner-first wave must establish or replace canon here before dependent reconciliation proceeds"
     },
     {
       "path": "Plans/chain-wizard-flexibility.md",
       "heading": "### 2.2 Downstream Handoff Contract",
       "doc_role": "owner",
       "section_role": "owner_section",
+      "phase_role": "owner_first_wave_eligible",
       "source_reasons": [
         "coverage_collection",
         "OBL-036"
@@ -2021,13 +2077,14 @@
         "isolated pass reports that do not name the wizard, session, or bundle they came from"
       ],
       "status": "active",
-      "bucket_reason": "active owner section in collected impact set; packet planning may target this SSOT section directly"
+      "bucket_reason": "active owner section in collected impact set; current owner-first wave must establish or replace canon here before dependent reconciliation proceeds"
     },
     {
       "path": "Plans/orchestrator-subagent-integration.md",
       "heading": "### Tier Context",
       "doc_role": "owner",
       "section_role": "owner_section",
+      "phase_role": "owner_first_wave_eligible",
       "source_reasons": [
         "coverage_collection",
         "OBL-031"
@@ -2057,13 +2114,14 @@
         "pseudo-tier execution keys"
       ],
       "status": "active",
-      "bucket_reason": "active owner section in collected impact set; packet planning may target this SSOT section directly"
+      "bucket_reason": "active owner section in collected impact set; current owner-first wave must establish or replace canon here before dependent reconciliation proceeds"
     },
     {
       "path": "Plans/storage-plan.md",
       "heading": "### 4.1 Shared runtime identity consumption",
       "doc_role": "owner",
       "section_role": "owner_section",
+      "phase_role": "owner_first_wave_eligible",
       "source_reasons": [
         "coverage_collection",
         "OBL-007",
@@ -2095,13 +2153,14 @@
         "policy-only account routing without requested-account anchor"
       ],
       "status": "active",
-      "bucket_reason": "active owner section in collected impact set; packet planning may target this SSOT section directly"
+      "bucket_reason": "active owner section in collected impact set; current owner-first wave must establish or replace canon here before dependent reconciliation proceeds"
     },
     {
       "path": "Plans/storage-plan.md",
       "heading": "### 4.4 Activity transparency payloads",
       "doc_role": "owner",
       "section_role": "owner_section",
+      "phase_role": "owner_first_wave_eligible",
       "source_reasons": [
         "coverage_collection",
         "OBL-033",
@@ -2134,13 +2193,14 @@
         "cost/usage linkage resting on optional undeclared semantics"
       ],
       "status": "active",
-      "bucket_reason": "active owner section in collected impact set; packet planning may target this SSOT section directly"
+      "bucket_reason": "active owner section in collected impact set; current owner-first wave must establish or replace canon here before dependent reconciliation proceeds"
     },
     {
       "path": "Plans/storage-plan.md",
       "heading": "### Canonical records",
       "doc_role": "owner",
       "section_role": "owner_section",
+      "phase_role": "owner_first_wave_eligible",
       "source_reasons": [
         "coverage_collection",
         "OBL-016",
@@ -2192,13 +2252,14 @@
         "concerns treated as transient notes"
       ],
       "status": "active",
-      "bucket_reason": "active owner section in collected impact set; packet planning may target this SSOT section directly"
+      "bucket_reason": "active owner section in collected impact set; current owner-first wave must establish or replace canon here before dependent reconciliation proceeds"
     },
     {
       "path": "Plans/storage-plan.md",
       "heading": "### Cross-surface receipt record",
       "doc_role": "owner",
       "section_role": "owner_section",
+      "phase_role": "owner_first_wave_eligible",
       "source_reasons": [
         "coverage_collection",
         "OBL-034",
@@ -2226,13 +2287,14 @@
         "timestamp/thread fallback treated as primary attribution"
       ],
       "status": "active",
-      "bucket_reason": "active owner section in collected impact set; packet planning may target this SSOT section directly"
+      "bucket_reason": "active owner section in collected impact set; current owner-first wave must establish or replace canon here before dependent reconciliation proceeds"
     },
     {
       "path": "Plans/storage-plan.md",
       "heading": "### New redb key families",
       "doc_role": "owner",
       "section_role": "owner_section",
+      "phase_role": "owner_first_wave_eligible",
       "source_reasons": [
         "coverage_collection",
         "OBL-038"
@@ -2258,13 +2320,14 @@
         "thread worktree binding as the only durable worktree contract"
       ],
       "status": "active",
-      "bucket_reason": "active owner section in collected impact set; packet planning may target this SSOT section directly"
+      "bucket_reason": "active owner section in collected impact set; current owner-first wave must establish or replace canon here before dependent reconciliation proceeds"
     },
     {
       "path": "Plans/storage-plan.md",
       "heading": "### Projection rules (reconciled)",
       "doc_role": "owner",
       "section_role": "owner_section",
+      "phase_role": "owner_first_wave_eligible",
       "source_reasons": [
         "coverage_collection",
         "OBL-010",
@@ -2293,13 +2356,14 @@
         "generic `projection_trust` wording that collides with other trust vocabularies"
       ],
       "status": "active",
-      "bucket_reason": "active owner section in collected impact set; packet planning may target this SSOT section directly"
+      "bucket_reason": "active owner section in collected impact set; current owner-first wave must establish or replace canon here before dependent reconciliation proceeds"
     },
     {
       "path": "Plans/storage-plan.md",
       "heading": "### Required redb keys",
       "doc_role": "owner",
       "section_role": "owner_section",
+      "phase_role": "owner_first_wave_eligible",
       "source_reasons": [
         "coverage_collection",
         "OBL-037",
@@ -2342,13 +2406,14 @@
         "tier-keyed worktree identity"
       ],
       "status": "active",
-      "bucket_reason": "active owner section in collected impact set; packet planning may target this SSOT section directly"
+      "bucket_reason": "active owner section in collected impact set; current owner-first wave must establish or replace canon here before dependent reconciliation proceeds"
     },
     {
       "path": "Plans/storage-plan.md",
       "heading": "### Restart and stale history",
       "doc_role": "owner",
       "section_role": "owner_section",
+      "phase_role": "owner_first_wave_eligible",
       "source_reasons": [
         "coverage_collection",
         "OBL-003",
@@ -2386,15 +2451,18 @@
         "filesystem rediscovery as sole restart authority"
       ],
       "status": "active",
-      "bucket_reason": "active owner section in collected impact set; packet planning may target this SSOT section directly"
+      "bucket_reason": "active owner section in collected impact set; current owner-first wave must establish or replace canon here before dependent reconciliation proceeds"
     }
   ],
-  "must_reconcile": [
+  "must_reconcile": [],
+  "must_verify": [],
+  "deferred_followon_sections": [
     {
       "path": "Plans/Crosswalk.md",
       "heading": "### 3.1 Runtime orchestration ownership",
       "doc_role": "mirror",
       "section_role": "mirror_section",
+      "phase_role": "dependent_mirror_followon",
       "source_reasons": [
         "coverage_collection",
         "OBL-007",
@@ -2436,13 +2504,15 @@
       ],
       "stale_residue_to_retire": [],
       "status": "active",
-      "bucket_reason": "active consumer/mirror section in collected impact set; packet planning may reconcile carry-through here without treating the section as SSOT"
+      "bucket_reason": "deferred from the owner-first current wave; this dependent consumer/mirror section remains mutation-bearing but must wait for owner-canon reconciliation before packet planning",
+      "intended_bucket_on_followon_wave": "must_reconcile"
     },
     {
       "path": "Plans/Crosswalk.md",
       "heading": "### 3.10 Permission and approval-scope ownership",
       "doc_role": "mirror",
       "section_role": "mirror_section",
+      "phase_role": "dependent_mirror_followon",
       "source_reasons": [
         "coverage_collection",
         "OBL-009",
@@ -2468,13 +2538,15 @@
         "tier-bound approval scope wording"
       ],
       "status": "active",
-      "bucket_reason": "active consumer/mirror section in collected impact set; packet planning may reconcile carry-through here without treating the section as SSOT"
+      "bucket_reason": "deferred from the owner-first current wave; this dependent consumer/mirror section remains mutation-bearing but must wait for owner-canon reconciliation before packet planning",
+      "intended_bucket_on_followon_wave": "must_reconcile"
     },
     {
       "path": "Plans/Crosswalk.md",
       "heading": "### 3.12 Provider and account-selection ownership",
       "doc_role": "mirror",
       "section_role": "mirror_section",
+      "phase_role": "dependent_mirror_followon",
       "source_reasons": [
         "coverage_collection",
         "OBL-007",
@@ -2504,13 +2576,15 @@
         "ambiguous `provider_account_id` ownership"
       ],
       "status": "active",
-      "bucket_reason": "active consumer/mirror section in collected impact set; packet planning may reconcile carry-through here without treating the section as SSOT"
+      "bucket_reason": "deferred from the owner-first current wave; this dependent consumer/mirror section remains mutation-bearing but must wait for owner-canon reconciliation before packet planning",
+      "intended_bucket_on_followon_wave": "must_reconcile"
     },
     {
       "path": "Plans/Crosswalk.md",
       "heading": "### 3.3 Navigation and source-open ownership",
       "doc_role": "mirror",
       "section_role": "mirror_section",
+      "phase_role": "dependent_mirror_followon",
       "source_reasons": [
         "coverage_collection",
         "OBL-020",
@@ -2540,13 +2614,15 @@
         "routing prose that treats `resume_url` as primary canon"
       ],
       "status": "active",
-      "bucket_reason": "active consumer/mirror section in collected impact set; packet planning may reconcile carry-through here without treating the section as SSOT"
+      "bucket_reason": "deferred from the owner-first current wave; this dependent consumer/mirror section remains mutation-bearing but must wait for owner-canon reconciliation before packet planning",
+      "intended_bucket_on_followon_wave": "must_reconcile"
     },
     {
       "path": "Plans/FileManager.md",
       "heading": "### 4.1 Open-file contract",
       "doc_role": "consumer",
       "section_role": "consumer_section",
+      "phase_role": "dependent_consumer_followon",
       "source_reasons": [
         "coverage_collection",
         "OBL-026",
@@ -2571,13 +2647,15 @@
       ],
       "stale_residue_to_retire": [],
       "status": "active",
-      "bucket_reason": "active consumer/mirror section in collected impact set; packet planning may reconcile carry-through here without treating the section as SSOT"
+      "bucket_reason": "deferred from the owner-first current wave; this dependent consumer/mirror section remains mutation-bearing but must wait for owner-canon reconciliation before packet planning",
+      "intended_bucket_on_followon_wave": "must_reconcile"
     },
     {
       "path": "Plans/FinalGUISpec.md",
       "heading": "## Canonical Blocked/Recovery Behavior",
       "doc_role": "consumer",
       "section_role": "consumer_section",
+      "phase_role": "dependent_consumer_followon",
       "source_reasons": [
         "coverage_collection",
         "OBL-013"
@@ -2605,13 +2683,15 @@
         "attention_required and blocked collapsed into one generic state"
       ],
       "status": "active",
-      "bucket_reason": "active consumer/mirror section in collected impact set; packet planning may reconcile carry-through here without treating the section as SSOT"
+      "bucket_reason": "deferred from the owner-first current wave; this dependent consumer/mirror section remains mutation-bearing but must wait for owner-canon reconciliation before packet planning",
+      "intended_bucket_on_followon_wave": "must_reconcile"
     },
     {
       "path": "Plans/FinalGUISpec.md",
       "heading": "### 10.1 Confirmation dialogs",
       "doc_role": "consumer",
       "section_role": "consumer_section",
+      "phase_role": "dependent_consumer_followon",
       "source_reasons": [
         "coverage_collection",
         "OBL-015"
@@ -2633,13 +2713,15 @@
         "editor undo language for external side effects"
       ],
       "status": "active",
-      "bucket_reason": "active consumer/mirror section in collected impact set; packet planning may reconcile carry-through here without treating the section as SSOT"
+      "bucket_reason": "deferred from the owner-first current wave; this dependent consumer/mirror section remains mutation-bearing but must wait for owner-canon reconciliation before packet planning",
+      "intended_bucket_on_followon_wave": "must_reconcile"
     },
     {
       "path": "Plans/FinalGUISpec.md",
       "heading": "### 10.6 Blocked and recovery surfaces",
       "doc_role": "consumer",
       "section_role": "consumer_section",
+      "phase_role": "dependent_consumer_followon",
       "source_reasons": [
         "coverage_collection",
         "OBL-029",
@@ -2666,13 +2748,15 @@
         "tier-bound approval identity"
       ],
       "status": "active",
-      "bucket_reason": "active consumer/mirror section in collected impact set; packet planning may reconcile carry-through here without treating the section as SSOT"
+      "bucket_reason": "deferred from the owner-first current wave; this dependent consumer/mirror section remains mutation-bearing but must wait for owner-canon reconciliation before packet planning",
+      "intended_bucket_on_followon_wave": "must_reconcile"
     },
     {
       "path": "Plans/FinalGUISpec.md",
       "heading": "### 10.8 Human-in-the-loop approvals",
       "doc_role": "consumer",
       "section_role": "consumer_section",
+      "phase_role": "dependent_consumer_followon",
       "source_reasons": [
         "coverage_collection",
         "OBL-009",
@@ -2703,13 +2787,15 @@
         "`request_id`-centered approval identity"
       ],
       "status": "active",
-      "bucket_reason": "active consumer/mirror section in collected impact set; packet planning may reconcile carry-through here without treating the section as SSOT"
+      "bucket_reason": "deferred from the owner-first current wave; this dependent consumer/mirror section remains mutation-bearing but must wait for owner-canon reconciliation before packet planning",
+      "intended_bucket_on_followon_wave": "must_reconcile"
     },
     {
       "path": "Plans/FinalGUISpec.md",
       "heading": "### 15.7 Permission approval card widget",
       "doc_role": "consumer",
       "section_role": "consumer_section",
+      "phase_role": "dependent_consumer_followon",
       "source_reasons": [
         "coverage_collection",
         "OBL-009",
@@ -2742,13 +2828,15 @@
         "`approve_continue`"
       ],
       "status": "active",
-      "bucket_reason": "active consumer/mirror section in collected impact set; packet planning may reconcile carry-through here without treating the section as SSOT"
+      "bucket_reason": "deferred from the owner-first current wave; this dependent consumer/mirror section remains mutation-bearing but must wait for owner-canon reconciliation before packet planning",
+      "intended_bucket_on_followon_wave": "must_reconcile"
     },
     {
       "path": "Plans/FinalGUISpec.md",
       "heading": "### 4.2 Command Palette",
       "doc_role": "consumer",
       "section_role": "consumer_section",
+      "phase_role": "dependent_consumer_followon",
       "source_reasons": [
         "coverage_collection",
         "OBL-015",
@@ -2787,13 +2875,15 @@
         "separate ad hoc payloads per surface"
       ],
       "status": "active",
-      "bucket_reason": "active consumer/mirror section in collected impact set; packet planning may reconcile carry-through here without treating the section as SSOT"
+      "bucket_reason": "deferred from the owner-first current wave; this dependent consumer/mirror section remains mutation-bearing but must wait for owner-canon reconciliation before packet planning",
+      "intended_bucket_on_followon_wave": "must_reconcile"
     },
     {
       "path": "Plans/FinalGUISpec.md",
       "heading": "### 4.4 Keyboard Shortcuts",
       "doc_role": "consumer",
       "section_role": "consumer_section",
+      "phase_role": "dependent_consumer_followon",
       "source_reasons": [
         "coverage_collection",
         "OBL-015"
@@ -2814,13 +2904,15 @@
         "blanket shortcut exposure for dangerous runtime mutations"
       ],
       "status": "active",
-      "bucket_reason": "active consumer/mirror section in collected impact set; packet planning may reconcile carry-through here without treating the section as SSOT"
+      "bucket_reason": "deferred from the owner-first current wave; this dependent consumer/mirror section remains mutation-bearing but must wait for owner-canon reconciliation before packet planning",
+      "intended_bucket_on_followon_wave": "must_reconcile"
     },
     {
       "path": "Plans/FinalGUISpec.md",
       "heading": "### 7.19A Dedicated log and audit inspector",
       "doc_role": "consumer",
       "section_role": "consumer_section",
+      "phase_role": "dependent_consumer_followon",
       "source_reasons": [
         "coverage_collection",
         "OBL-017"
@@ -2848,13 +2940,15 @@
         "conflating record exports, artifact exports, and view exports into one unclear family"
       ],
       "status": "active",
-      "bucket_reason": "active consumer/mirror section in collected impact set; packet planning may reconcile carry-through here without treating the section as SSOT"
+      "bucket_reason": "deferred from the owner-first current wave; this dependent consumer/mirror section remains mutation-bearing but must wait for owner-canon reconciliation before packet planning",
+      "intended_bucket_on_followon_wave": "must_reconcile"
     },
     {
       "path": "Plans/FinalGUISpec.md",
       "heading": "### 7.2 Source Control",
       "doc_role": "consumer",
       "section_role": "consumer_section",
+      "phase_role": "dependent_consumer_followon",
       "source_reasons": [
         "coverage_collection",
         "OBL-001",
@@ -2881,13 +2975,15 @@
       ],
       "stale_residue_to_retire": [],
       "status": "active",
-      "bucket_reason": "active consumer/mirror section in collected impact set; packet planning may reconcile carry-through here without treating the section as SSOT"
+      "bucket_reason": "deferred from the owner-first current wave; this dependent consumer/mirror section remains mutation-bearing but must wait for owner-canon reconciliation before packet planning",
+      "intended_bucket_on_followon_wave": "must_reconcile"
     },
     {
       "path": "Plans/FinalGUISpec.md",
       "heading": "### 7.3 Shared route and open behavior",
       "doc_role": "consumer",
       "section_role": "consumer_section",
+      "phase_role": "dependent_consumer_followon",
       "source_reasons": [
         "coverage_collection",
         "OBL-020",
@@ -2935,13 +3031,15 @@
         "`resume_url` as a first-class routing ontology"
       ],
       "status": "active",
-      "bucket_reason": "active consumer/mirror section in collected impact set; packet planning may reconcile carry-through here without treating the section as SSOT"
+      "bucket_reason": "deferred from the owner-first current wave; this dependent consumer/mirror section remains mutation-bearing but must wait for owner-canon reconciliation before packet planning",
+      "intended_bucket_on_followon_wave": "must_reconcile"
     },
     {
       "path": "Plans/FinalGUISpec.md",
       "heading": "### 7.5 Project and attention surfaces",
       "doc_role": "consumer",
       "section_role": "consumer_section",
+      "phase_role": "dependent_consumer_followon",
       "source_reasons": [
         "coverage_collection",
         "OBL-011",
@@ -2977,13 +3075,15 @@
         "tooltip-only help for complex rewrite concepts"
       ],
       "status": "active",
-      "bucket_reason": "active consumer/mirror section in collected impact set; packet planning may reconcile carry-through here without treating the section as SSOT"
+      "bucket_reason": "deferred from the owner-first current wave; this dependent consumer/mirror section remains mutation-bearing but must wait for owner-canon reconciliation before packet planning",
+      "intended_bucket_on_followon_wave": "must_reconcile"
     },
     {
       "path": "Plans/FinalGUISpec.md",
       "heading": "#### 7.4.4 Settings (Unified) panel specification",
       "doc_role": "consumer",
       "section_role": "consumer_section",
+      "phase_role": "dependent_consumer_followon",
       "source_reasons": [
         "coverage_collection",
         "OBL-011"
@@ -3009,13 +3109,15 @@
         "tooltip-only help approach for complex rewrite concepts"
       ],
       "status": "active",
-      "bucket_reason": "active consumer/mirror section in collected impact set; packet planning may reconcile carry-through here without treating the section as SSOT"
+      "bucket_reason": "deferred from the owner-first current wave; this dependent consumer/mirror section remains mutation-bearing but must wait for owner-canon reconciliation before packet planning",
+      "intended_bucket_on_followon_wave": "must_reconcile"
     },
     {
       "path": "Plans/FinalGUISpec.md",
       "heading": "#### Artifacts side-panel owner",
       "doc_role": "consumer",
       "section_role": "consumer_section",
+      "phase_role": "dependent_consumer_followon",
       "source_reasons": [
         "coverage_collection",
         "OBL-037"
@@ -3039,13 +3141,15 @@
         "per-project blob artifact selection state that replaces per-artifact row identity"
       ],
       "status": "active",
-      "bucket_reason": "active consumer/mirror section in collected impact set; packet planning may reconcile carry-through here without treating the section as SSOT"
+      "bucket_reason": "deferred from the owner-first current wave; this dependent consumer/mirror section remains mutation-bearing but must wait for owner-canon reconciliation before packet planning",
+      "intended_bucket_on_followon_wave": "must_reconcile"
     },
     {
       "path": "Plans/Progression_Gates.md",
       "heading": "## GATE-010 -- Wiring matrix validation",
       "doc_role": "mirror",
       "section_role": "mirror_section",
+      "phase_role": "dependent_mirror_followon",
       "source_reasons": [
         "coverage_collection",
         "OBL-030"
@@ -3065,13 +3169,15 @@
         "validation rules that ignore wrapper-vs-alias metadata"
       ],
       "status": "active",
-      "bucket_reason": "active consumer/mirror section in collected impact set; packet planning may reconcile carry-through here without treating the section as SSOT"
+      "bucket_reason": "deferred from the owner-first current wave; this dependent consumer/mirror section remains mutation-bearing but must wait for owner-canon reconciliation before packet planning",
+      "intended_bucket_on_followon_wave": "must_reconcile"
     },
     {
       "path": "Plans/Project_Output_Artifacts.md",
       "heading": "### Runtime Artifacts (GUI panel) \u2014 distinct from this document",
       "doc_role": "mirror",
       "section_role": "mirror_section",
+      "phase_role": "dependent_mirror_followon",
       "source_reasons": [
         "coverage_collection",
         "OBL-037"
@@ -3094,13 +3200,15 @@
         "redb `artifacts_index:v1:{project_id}`"
       ],
       "status": "active",
-      "bucket_reason": "active consumer/mirror section in collected impact set; packet planning may reconcile carry-through here without treating the section as SSOT"
+      "bucket_reason": "deferred from the owner-first current wave; this dependent consumer/mirror section remains mutation-bearing but must wait for owner-canon reconciliation before packet planning",
+      "intended_bucket_on_followon_wave": "must_reconcile"
     },
     {
       "path": "Plans/Run_Graph_View.md",
       "heading": "## 2. Layout",
       "doc_role": "consumer",
       "section_role": "consumer_section",
+      "phase_role": "dependent_consumer_followon",
       "source_reasons": [
         "coverage_collection",
         "OBL-014"
@@ -3125,13 +3233,15 @@
         "per-tab performance guidance without shared Orchestrator scale contract"
       ],
       "status": "active",
-      "bucket_reason": "active consumer/mirror section in collected impact set; packet planning may reconcile carry-through here without treating the section as SSOT"
+      "bucket_reason": "deferred from the owner-first current wave; this dependent consumer/mirror section remains mutation-bearing but must wait for owner-canon reconciliation before packet planning",
+      "intended_bucket_on_followon_wave": "must_reconcile"
     },
     {
       "path": "Plans/Run_Graph_View.md",
       "heading": "## 3. Node detail inspector",
       "doc_role": "consumer",
       "section_role": "consumer_section",
+      "phase_role": "dependent_consumer_followon",
       "source_reasons": [
         "coverage_collection",
         "OBL-013",
@@ -3176,13 +3286,15 @@
         "`request_id` and `tier_id` as primary graph action keys"
       ],
       "status": "active",
-      "bucket_reason": "active consumer/mirror section in collected impact set; packet planning may reconcile carry-through here without treating the section as SSOT"
+      "bucket_reason": "deferred from the owner-first current wave; this dependent consumer/mirror section remains mutation-bearing but must wait for owner-canon reconciliation before packet planning",
+      "intended_bucket_on_followon_wave": "must_reconcile"
     },
     {
       "path": "Plans/Run_Graph_View.md",
       "heading": "## 4. Data model and identity",
       "doc_role": "consumer",
       "section_role": "consumer_section",
+      "phase_role": "dependent_consumer_followon",
       "source_reasons": [
         "coverage_collection",
         "OBL-002",
@@ -3219,13 +3331,15 @@
         "`tier_id` as a primary graph action key"
       ],
       "status": "active",
-      "bucket_reason": "active consumer/mirror section in collected impact set; packet planning may reconcile carry-through here without treating the section as SSOT"
+      "bucket_reason": "deferred from the owner-first current wave; this dependent consumer/mirror section remains mutation-bearing but must wait for owner-canon reconciliation before packet planning",
+      "intended_bucket_on_followon_wave": "must_reconcile"
     },
     {
       "path": "Plans/Runtime_Artifacts_Panel.md",
       "heading": "## 4. redb key and projector",
       "doc_role": "consumer",
       "section_role": "consumer_section",
+      "phase_role": "dependent_consumer_followon",
       "source_reasons": [
         "coverage_collection",
         "OBL-037"
@@ -3258,13 +3372,15 @@
         "artifact indexing that omits `attempt_id` and `node_id`"
       ],
       "status": "active",
-      "bucket_reason": "active consumer/mirror section in collected impact set; packet planning may reconcile carry-through here without treating the section as SSOT"
+      "bucket_reason": "deferred from the owner-first current wave; this dependent consumer/mirror section remains mutation-bearing but must wait for owner-canon reconciliation before packet planning",
+      "intended_bucket_on_followon_wave": "must_reconcile"
     },
     {
       "path": "Plans/Runtime_Artifacts_Panel.md",
       "heading": "## 5A. Debug investigation grouping, manifests, and exports",
       "doc_role": "consumer",
       "section_role": "consumer_section",
+      "phase_role": "dependent_consumer_followon",
       "source_reasons": [
         "coverage_collection",
         "OBL-017"
@@ -3290,13 +3406,15 @@
       ],
       "stale_residue_to_retire": [],
       "status": "active",
-      "bucket_reason": "active consumer/mirror section in collected impact set; packet planning may reconcile carry-through here without treating the section as SSOT"
+      "bucket_reason": "deferred from the owner-first current wave; this dependent consumer/mirror section remains mutation-bearing but must wait for owner-canon reconciliation before packet planning",
+      "intended_bucket_on_followon_wave": "must_reconcile"
     },
     {
       "path": "Plans/Runtime_Artifacts_Panel.md",
       "heading": "## Cross-Surface Operation Receipt Linkage Addendum (2026-03-12)",
       "doc_role": "consumer",
       "section_role": "consumer_section",
+      "phase_role": "dependent_consumer_followon",
       "source_reasons": [
         "coverage_collection",
         "OBL-034",
@@ -3325,13 +3443,15 @@
         "provider/model-only validation lineage"
       ],
       "status": "active",
-      "bucket_reason": "active consumer/mirror section in collected impact set; packet planning may reconcile carry-through here without treating the section as SSOT"
+      "bucket_reason": "deferred from the owner-first current wave; this dependent consumer/mirror section remains mutation-bearing but must wait for owner-canon reconciliation before packet planning",
+      "intended_bucket_on_followon_wave": "must_reconcile"
     },
     {
       "path": "Plans/Tools.md",
       "heading": "### 10.7 Ask-flow runner notes",
       "doc_role": "consumer",
       "section_role": "consumer_section",
+      "phase_role": "dependent_consumer_followon",
       "source_reasons": [
         "coverage_collection",
         "OBL-009",
@@ -3363,13 +3483,15 @@
         "{ tool_name, invocation_summary, options: deny | once | for session | always }"
       ],
       "status": "active",
-      "bucket_reason": "active consumer/mirror section in collected impact set; packet planning may reconcile carry-through here without treating the section as SSOT"
+      "bucket_reason": "deferred from the owner-first current wave; this dependent consumer/mirror section remains mutation-bearing but must wait for owner-canon reconciliation before packet planning",
+      "intended_bucket_on_followon_wave": "must_reconcile"
     },
     {
       "path": "Plans/Tools.md",
       "heading": "### 10.7A Web-operation approval summary rules",
       "doc_role": "consumer",
       "section_role": "consumer_section",
+      "phase_role": "dependent_consumer_followon",
       "source_reasons": [
         "coverage_collection",
         "OBL-009"
@@ -3395,13 +3517,15 @@
         "document-generic permission references that omit the exact owner anchor"
       ],
       "status": "active",
-      "bucket_reason": "active consumer/mirror section in collected impact set; packet planning may reconcile carry-through here without treating the section as SSOT"
+      "bucket_reason": "deferred from the owner-first current wave; this dependent consumer/mirror section remains mutation-bearing but must wait for owner-canon reconciliation before packet planning",
+      "intended_bucket_on_followon_wave": "must_reconcile"
     },
     {
       "path": "Plans/Tools.md",
       "heading": "### 8.0 Event payloads (seglog)",
       "doc_role": "consumer",
       "section_role": "consumer_section",
+      "phase_role": "dependent_consumer_followon",
       "source_reasons": [
         "coverage_collection",
         "OBL-033"
@@ -3426,13 +3550,15 @@
         "analytics-thin tool events"
       ],
       "status": "active",
-      "bucket_reason": "active consumer/mirror section in collected impact set; packet planning may reconcile carry-through here without treating the section as SSOT"
+      "bucket_reason": "deferred from the owner-first current wave; this dependent consumer/mirror section remains mutation-bearing but must wait for owner-canon reconciliation before packet planning",
+      "intended_bucket_on_followon_wave": "must_reconcile"
     },
     {
       "path": "Plans/Tools.md",
       "heading": "### `tool.denied` requirements",
       "doc_role": "consumer",
       "section_role": "consumer_section",
+      "phase_role": "dependent_consumer_followon",
       "source_reasons": [
         "coverage_collection",
         "OBL-029",
@@ -3461,13 +3587,15 @@
         "approve_continue"
       ],
       "status": "active",
-      "bucket_reason": "active consumer/mirror section in collected impact set; packet planning may reconcile carry-through here without treating the section as SSOT"
+      "bucket_reason": "deferred from the owner-first current wave; this dependent consumer/mirror section remains mutation-bearing but must wait for owner-canon reconciliation before packet planning",
+      "intended_bucket_on_followon_wave": "must_reconcile"
     },
     {
       "path": "Plans/Widget_System.md",
       "heading": "## 2. Hostability and data contracts",
       "doc_role": "consumer",
       "section_role": "consumer_section",
+      "phase_role": "dependent_consumer_followon",
       "source_reasons": [
         "coverage_collection",
         "OBL-010",
@@ -3504,13 +3632,15 @@
         "separate ad hoc payloads per surface"
       ],
       "status": "active",
-      "bucket_reason": "active consumer/mirror section in collected impact set; packet planning may reconcile carry-through here without treating the section as SSOT"
+      "bucket_reason": "deferred from the owner-first current wave; this dependent consumer/mirror section remains mutation-bearing but must wait for owner-canon reconciliation before packet planning",
+      "intended_bucket_on_followon_wave": "must_reconcile"
     },
     {
       "path": "Plans/Wiring_Matrix.md",
       "heading": "### UI command handler rule",
       "doc_role": "mirror",
       "section_role": "mirror_section",
+      "phase_role": "dependent_mirror_followon",
       "source_reasons": [
         "coverage_collection",
         "OBL-030"
@@ -3529,13 +3659,15 @@
         "thin handler rows that omit wrapper-vs-alias semantics"
       ],
       "status": "active",
-      "bucket_reason": "active consumer/mirror section in collected impact set; packet planning may reconcile carry-through here without treating the section as SSOT"
+      "bucket_reason": "deferred from the owner-first current wave; this dependent consumer/mirror section remains mutation-bearing but must wait for owner-canon reconciliation before packet planning",
+      "intended_bucket_on_followon_wave": "must_reconcile"
     },
     {
       "path": "Plans/WorktreeGitImprovement.md",
       "heading": "## 4. GUI for Git & Worktrees",
       "doc_role": "consumer",
       "section_role": "consumer_section",
+      "phase_role": "dependent_consumer_followon",
       "source_reasons": [
         "coverage_collection",
         "OBL-001",
@@ -3568,13 +3700,15 @@
       ],
       "stale_residue_to_retire": [],
       "status": "active",
-      "bucket_reason": "active consumer/mirror section in collected impact set; packet planning may reconcile carry-through here without treating the section as SSOT"
+      "bucket_reason": "deferred from the owner-first current wave; this dependent consumer/mirror section remains mutation-bearing but must wait for owner-canon reconciliation before packet planning",
+      "intended_bucket_on_followon_wave": "must_reconcile"
     },
     {
       "path": "Plans/assistant-chat-design.md",
       "heading": "## Unified Thread Blocked-State Lifecycle",
       "doc_role": "consumer",
       "section_role": "consumer_section",
+      "phase_role": "dependent_consumer_followon",
       "source_reasons": [
         "coverage_collection",
         "OBL-029",
@@ -3603,13 +3737,15 @@
         "tier-bound approval language"
       ],
       "status": "active",
-      "bucket_reason": "active consumer/mirror section in collected impact set; packet planning may reconcile carry-through here without treating the section as SSOT"
+      "bucket_reason": "deferred from the owner-first current wave; this dependent consumer/mirror section remains mutation-bearing but must wait for owner-canon reconciliation before packet planning",
+      "intended_bucket_on_followon_wave": "must_reconcile"
     },
     {
       "path": "Plans/assistant-chat-design.md",
       "heading": "### 13.4 Shared runtime identity display",
       "doc_role": "consumer",
       "section_role": "consumer_section",
+      "phase_role": "dependent_consumer_followon",
       "source_reasons": [
         "coverage_collection",
         "OBL-033"
@@ -3636,13 +3772,15 @@
         "artifact attribution without attempt identity"
       ],
       "status": "active",
-      "bucket_reason": "active consumer/mirror section in collected impact set; packet planning may reconcile carry-through here without treating the section as SSOT"
+      "bucket_reason": "deferred from the owner-first current wave; this dependent consumer/mirror section remains mutation-bearing but must wait for owner-canon reconciliation before packet planning",
+      "intended_bucket_on_followon_wave": "must_reconcile"
     },
     {
       "path": "Plans/assistant-chat-design.md",
       "heading": "### 26.5 Storage",
       "doc_role": "consumer",
       "section_role": "consumer_section",
+      "phase_role": "dependent_consumer_followon",
       "source_reasons": [
         "coverage_collection",
         "OBL-036"
@@ -3661,13 +3799,15 @@
       ],
       "stale_residue_to_retire": [],
       "status": "active",
-      "bucket_reason": "active consumer/mirror section in collected impact set; packet planning may reconcile carry-through here without treating the section as SSOT"
+      "bucket_reason": "deferred from the owner-first current wave; this dependent consumer/mirror section remains mutation-bearing but must wait for owner-canon reconciliation before packet planning",
+      "intended_bucket_on_followon_wave": "must_reconcile"
     },
     {
       "path": "Plans/assistant-chat-design.md",
       "heading": "### 29.4 Accepting the recommendation: handoff to Chain Wizard / Interview",
       "doc_role": "consumer",
       "section_role": "consumer_section",
+      "phase_role": "dependent_consumer_followon",
       "source_reasons": [
         "coverage_collection",
         "OBL-033"
@@ -3694,13 +3834,15 @@
         "identity-thin validation or handoff payloads"
       ],
       "status": "active",
-      "bucket_reason": "active consumer/mirror section in collected impact set; packet planning may reconcile carry-through here without treating the section as SSOT"
+      "bucket_reason": "deferred from the owner-first current wave; this dependent consumer/mirror section remains mutation-bearing but must wait for owner-canon reconciliation before packet planning",
+      "intended_bucket_on_followon_wave": "must_reconcile"
     },
     {
       "path": "Plans/assistant-chat-design.md",
       "heading": "### Canonical navigation model",
       "doc_role": "consumer",
       "section_role": "consumer_section",
+      "phase_role": "dependent_consumer_followon",
       "source_reasons": [
         "coverage_collection",
         "OBL-027",
@@ -3727,13 +3869,15 @@
       ],
       "stale_residue_to_retire": [],
       "status": "active",
-      "bucket_reason": "active consumer/mirror section in collected impact set; packet planning may reconcile carry-through here without treating the section as SSOT"
+      "bucket_reason": "deferred from the owner-first current wave; this dependent consumer/mirror section remains mutation-bearing but must wait for owner-canon reconciliation before packet planning",
+      "intended_bucket_on_followon_wave": "must_reconcile"
     },
     {
       "path": "Plans/assistant-chat-design.md",
       "heading": "### Persistence and restore rule",
       "doc_role": "consumer",
       "section_role": "consumer_section",
+      "phase_role": "dependent_consumer_followon",
       "source_reasons": [
         "coverage_collection",
         "OBL-029",
@@ -3761,13 +3905,15 @@
         "thread-local recovery semantics"
       ],
       "status": "active",
-      "bucket_reason": "active consumer/mirror section in collected impact set; packet planning may reconcile carry-through here without treating the section as SSOT"
+      "bucket_reason": "deferred from the owner-first current wave; this dependent consumer/mirror section remains mutation-bearing but must wait for owner-canon reconciliation before packet planning",
+      "intended_bucket_on_followon_wave": "must_reconcile"
     },
     {
       "path": "Plans/chain-wizard-flexibility.md",
       "heading": "### 3. Dashboard / thread / resume behavior",
       "doc_role": "consumer",
       "section_role": "consumer_section",
+      "phase_role": "dependent_consumer_followon",
       "source_reasons": [
         "coverage_collection",
         "OBL-027",
@@ -3798,13 +3944,15 @@
         "resume_url-centered blocked-card payload canon"
       ],
       "status": "active",
-      "bucket_reason": "active consumer/mirror section in collected impact set; packet planning may reconcile carry-through here without treating the section as SSOT"
+      "bucket_reason": "deferred from the owner-first current wave; this dependent consumer/mirror section remains mutation-bearing but must wait for owner-canon reconciliation before packet planning",
+      "intended_bucket_on_followon_wave": "must_reconcile"
     },
     {
       "path": "Plans/human-in-the-loop.md",
       "heading": "## Shared approval-ladder alignment (2026-04-04)",
       "doc_role": "consumer",
       "section_role": "consumer_section",
+      "phase_role": "dependent_consumer_followon",
       "source_reasons": [
         "coverage_collection",
         "OBL-013",
@@ -3833,13 +3981,15 @@
         "case-by-case local attention behavior without shared ladder"
       ],
       "status": "active",
-      "bucket_reason": "active consumer/mirror section in collected impact set; packet planning may reconcile carry-through here without treating the section as SSOT"
+      "bucket_reason": "deferred from the owner-first current wave; this dependent consumer/mirror section remains mutation-bearing but must wait for owner-canon reconciliation before packet planning",
+      "intended_bucket_on_followon_wave": "must_reconcile"
     },
     {
       "path": "Plans/human-in-the-loop.md",
       "heading": "### Canonical HITL request contract",
       "doc_role": "consumer",
       "section_role": "consumer_section",
+      "phase_role": "dependent_consumer_followon",
       "source_reasons": [
         "coverage_collection",
         "OBL-029",
@@ -3866,13 +4016,15 @@
         "`approve_continue`"
       ],
       "status": "active",
-      "bucket_reason": "active consumer/mirror section in collected impact set; packet planning may reconcile carry-through here without treating the section as SSOT"
+      "bucket_reason": "deferred from the owner-first current wave; this dependent consumer/mirror section remains mutation-bearing but must wait for owner-canon reconciliation before packet planning",
+      "intended_bucket_on_followon_wave": "must_reconcile"
     },
     {
       "path": "Plans/interview-subagent-integration.md",
       "heading": "### Execution-Critical Validation References",
       "doc_role": "consumer",
       "section_role": "consumer_section",
+      "phase_role": "dependent_consumer_followon",
       "source_reasons": [
         "coverage_collection",
         "OBL-036"
@@ -3893,13 +4045,15 @@
         "validation lineage that depends on provider/model only"
       ],
       "status": "active",
-      "bucket_reason": "active consumer/mirror section in collected impact set; packet planning may reconcile carry-through here without treating the section as SSOT"
+      "bucket_reason": "deferred from the owner-first current wave; this dependent consumer/mirror section remains mutation-bearing but must wait for owner-canon reconciliation before packet planning",
+      "intended_bucket_on_followon_wave": "must_reconcile"
     },
     {
       "path": "Plans/interview-subagent-integration.md",
       "heading": "### Requested/effective Interview contract",
       "doc_role": "consumer",
       "section_role": "consumer_section",
+      "phase_role": "dependent_consumer_followon",
       "source_reasons": [
         "coverage_collection",
         "OBL-007",
@@ -3929,13 +4083,15 @@
         "identity-thin interview runtime display"
       ],
       "status": "active",
-      "bucket_reason": "active consumer/mirror section in collected impact set; packet planning may reconcile carry-through here without treating the section as SSOT"
+      "bucket_reason": "deferred from the owner-first current wave; this dependent consumer/mirror section remains mutation-bearing but must wait for owner-canon reconciliation before packet planning",
+      "intended_bucket_on_followon_wave": "must_reconcile"
     },
     {
       "path": "Plans/interview-subagent-integration.md",
       "heading": "### Runtime identity visibility",
       "doc_role": "consumer",
       "section_role": "consumer_section",
+      "phase_role": "dependent_consumer_followon",
       "source_reasons": [
         "coverage_collection",
         "OBL-007"
@@ -3959,13 +4115,15 @@
       ],
       "stale_residue_to_retire": [],
       "status": "active",
-      "bucket_reason": "active consumer/mirror section in collected impact set; packet planning may reconcile carry-through here without treating the section as SSOT"
+      "bucket_reason": "deferred from the owner-first current wave; this dependent consumer/mirror section remains mutation-bearing but must wait for owner-canon reconciliation before packet planning",
+      "intended_bucket_on_followon_wave": "must_reconcile"
     },
     {
       "path": "Plans/orchestrator-subagent-integration.md",
       "heading": "## Tier-Level Subagent Strategy",
       "doc_role": "consumer",
       "section_role": "consumer_section",
+      "phase_role": "dependent_consumer_followon",
       "source_reasons": [
         "coverage_collection",
         "OBL-007",
@@ -4002,13 +4160,15 @@
         "tier_id"
       ],
       "status": "active",
-      "bucket_reason": "active consumer/mirror section in collected impact set; packet planning may reconcile carry-through here without treating the section as SSOT"
+      "bucket_reason": "deferred from the owner-first current wave; this dependent consumer/mirror section remains mutation-bearing but must wait for owner-canon reconciliation before packet planning",
+      "intended_bucket_on_followon_wave": "must_reconcile"
     },
     {
       "path": "Plans/usage-feature.md",
       "heading": "## Rewrite alignment (2026-02-21)",
       "doc_role": "consumer",
       "section_role": "consumer_section",
+      "phase_role": "dependent_consumer_followon",
       "source_reasons": [
         "coverage_collection",
         "OBL-011"
@@ -4034,13 +4194,15 @@
         "ELI5/Expert copy that renames canonical terms"
       ],
       "status": "active",
-      "bucket_reason": "active consumer/mirror section in collected impact set; packet planning may reconcile carry-through here without treating the section as SSOT"
+      "bucket_reason": "deferred from the owner-first current wave; this dependent consumer/mirror section remains mutation-bearing but must wait for owner-canon reconciliation before packet planning",
+      "intended_bucket_on_followon_wave": "must_reconcile"
     },
     {
       "path": "Plans/usage-feature.md",
       "heading": "## Runtime Scheduler / Recovery Observability Addendum (2026-03-09)",
       "doc_role": "consumer",
       "section_role": "consumer_section",
+      "phase_role": "dependent_consumer_followon",
       "source_reasons": [
         "coverage_collection",
         "OBL-013"
@@ -4068,13 +4230,15 @@
         "blocked outcomes flattened into generic failures"
       ],
       "status": "active",
-      "bucket_reason": "active consumer/mirror section in collected impact set; packet planning may reconcile carry-through here without treating the section as SSOT"
+      "bucket_reason": "deferred from the owner-first current wave; this dependent consumer/mirror section remains mutation-bearing but must wait for owner-canon reconciliation before packet planning",
+      "intended_bucket_on_followon_wave": "must_reconcile"
     },
     {
       "path": "Plans/usage-feature.md",
       "heading": "### Billing identity, attribution, and pricing metadata",
       "doc_role": "consumer",
       "section_role": "consumer_section",
+      "phase_role": "dependent_consumer_followon",
       "source_reasons": [
         "coverage_collection",
         "OBL-007",
@@ -4104,13 +4268,15 @@
         "identity-thin usage attribution"
       ],
       "status": "active",
-      "bucket_reason": "active consumer/mirror section in collected impact set; packet planning may reconcile carry-through here without treating the section as SSOT"
+      "bucket_reason": "deferred from the owner-first current wave; this dependent consumer/mirror section remains mutation-bearing but must wait for owner-canon reconciliation before packet planning",
+      "intended_bucket_on_followon_wave": "must_reconcile"
     },
     {
       "path": "Plans/usage-feature.md",
       "heading": "### Canonical usage pipeline",
       "doc_role": "consumer",
       "section_role": "consumer_section",
+      "phase_role": "dependent_consumer_followon",
       "source_reasons": [
         "coverage_collection",
         "OBL-017",
@@ -4142,13 +4308,15 @@
         "unclear export family boundaries"
       ],
       "status": "active",
-      "bucket_reason": "active consumer/mirror section in collected impact set; packet planning may reconcile carry-through here without treating the section as SSOT"
+      "bucket_reason": "deferred from the owner-first current wave; this dependent consumer/mirror section remains mutation-bearing but must wait for owner-canon reconciliation before packet planning",
+      "intended_bucket_on_followon_wave": "must_reconcile"
     },
     {
       "path": "Plans/usage-feature.md",
       "heading": "### Cost_usage runtime artifact and Show in Ledger / Show in Usage",
       "doc_role": "consumer",
       "section_role": "consumer_section",
+      "phase_role": "dependent_consumer_followon",
       "source_reasons": [
         "coverage_collection",
         "OBL-034",
@@ -4174,10 +4342,10 @@
         "implicit projection freshness assumptions"
       ],
       "status": "active",
-      "bucket_reason": "active consumer/mirror section in collected impact set; packet planning may reconcile carry-through here without treating the section as SSOT"
+      "bucket_reason": "deferred from the owner-first current wave; this dependent consumer/mirror section remains mutation-bearing but must wait for owner-canon reconciliation before packet planning",
+      "intended_bucket_on_followon_wave": "must_reconcile"
     }
   ],
-  "must_verify": [],
   "missing_coverage_warnings": [
     {
       "finding_id": "LF-001",
@@ -4185,50 +4353,45 @@
       "missing_section_refs": [
         "Plans/assistant-chat-design.md#5.1 Reserved built-ins",
         "Plans/Commands_System.md#7. Reserved built-in slash commands",
-        "Plans/assistant-chat-design.md#5.1 Reserved built-ins",
         "Plans/UI_Command_Catalog.md#2.7 Chat slash commands (reserved)"
       ],
       "matched_section_refs": [],
-      "reason": "unresolved fidelity blocker references section targets not present as exact collected sections, so packet planning cannot classify those exact targets without refreshed coverage alignment"
+      "reason": "unresolved fidelity blocker still references section targets not fully present as exact collected sections, so packet planning cannot classify the missing targets without refreshed coverage alignment"
     },
     {
       "finding_id": "LF-002",
       "finding_classification": "cross-reference stale",
       "missing_section_refs": [
         "Plans/Tools.md#10.7 Audit, error, and self-hosted rules",
-        "Plans/Permissions_System.md#3.4A Web-operation permission-key derivation",
-        "Plans/Tools.md#10.7 Audit, error, and self-hosted rules"
+        "Plans/Permissions_System.md#3.4A Web-operation permission-key derivation"
       ],
       "matched_section_refs": [
         "Plans/FinalGUISpec.md#15.7 Permission approval card widget"
       ],
-      "reason": "unresolved fidelity blocker references section targets not present as exact collected sections, so packet planning cannot classify those exact targets without refreshed coverage alignment"
+      "reason": "unresolved fidelity blocker still references section targets not fully present as exact collected sections, so packet planning cannot classify the missing targets without refreshed coverage alignment"
     },
     {
       "finding_id": "LF-003",
       "finding_classification": "persistence coupling missing",
       "missing_section_refs": [
-        "Plans/Tools.md#14. Web content caching layer",
         "Plans/Tools.md#14. Web content caching layer"
       ],
       "matched_section_refs": [
-        "Plans/storage-plan.md#4.4 Activity transparency payloads",
         "Plans/storage-plan.md#4.4 Activity transparency payloads"
       ],
-      "reason": "unresolved fidelity blocker references section targets not present as exact collected sections, so packet planning cannot classify those exact targets without refreshed coverage alignment"
+      "reason": "unresolved fidelity blocker still references section targets not fully present as exact collected sections, so packet planning cannot classify the missing targets without refreshed coverage alignment"
     },
     {
       "finding_id": "LF-004",
       "finding_classification": "wrong section allocation",
       "missing_section_refs": [
-        "Plans/storage-plan.md#Long-running `progress_event` payload",
-        "Plans/storage-plan.md#Long-running `progress_event` payload",
+        "Plans/storage-plan.md#Long-running \\`progress_event\\` payload",
         "Plans/FinalGUISpec.md#15.3 Web and diff operation card widget"
       ],
       "matched_section_refs": [
         "Plans/Contracts_V0.md#3.4 Tool-specific payload extensions"
       ],
-      "reason": "unresolved fidelity blocker references section targets not present as exact collected sections, so packet planning cannot classify those exact targets without refreshed coverage alignment"
+      "reason": "unresolved fidelity blocker still references section targets not fully present as exact collected sections, so packet planning cannot classify the missing targets without refreshed coverage alignment"
     }
   ],
   "derived_regen_only_checks": []

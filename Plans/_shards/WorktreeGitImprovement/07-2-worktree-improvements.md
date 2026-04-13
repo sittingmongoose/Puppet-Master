@@ -64,6 +64,33 @@ ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/Architecture_Inv
 - **Gap:** Worktree recovery runs with `std::env::current_dir()` and `git rev-parse --show-toplevel` there. If the app is started from a launcher or different repo, recovery runs in the wrong place.
 - **Fix:** Run recovery only when a project/workspace is known (e.g. from config or current project). Use that path for `WorktreeManager` and `recover_orphaned_worktrees()`. If no project is known at startup, skip or run recovery when the user first selects/opens a project.
 
+ContractRef: Plans/storage-plan.md#Restart and stale history
+
+Required fields:
+- worktree_id
+- lane_id
+- last_seen_at_utc
+- owner_run_id
+- owner_attempt_id
+- historical_lineage_refs[]
+
+Canonical terms and values:
+- historical
+- archived
+- removed
+- last_seen_at_utc
+- owner_run_id
+- owner_attempt_id
+- orchestrator.receipt.{run_id}.{attempt_id}
+
+Labels:
+- startup recovery
+- historical lineage
+
+Behavioral rules:
+- Startup restore must recover historical lineage from durable records, not just CWD discovery.
+- Missing live worktrees must render as historical/archived/removed rather than disappearing.
+
 ### 2.9 PR creation after restart uses main repo branch
 
 - **Gap:** After restart, `get_node_worktree(node_id)` is `None`. `create_node_pr` then uses `git_manager.current_branch()` for head_branch, so the PR is created from the main repo branch, not the worktree branch.

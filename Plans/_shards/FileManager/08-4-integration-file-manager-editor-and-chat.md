@@ -50,3 +50,11 @@ Rules:
 - the implementation may back the tab with a generated document id rather than a workspace file path, but the route/open split remains canonical
 
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/assistant-chat-design.md
+
+ContractRef: Plans/Contracts_V0.md#7.4 `OpenSubject`
+
+Labels:
+- Open Subject
+
+Behavioral rules:
+- File/open surfaces must use `subject_id` only for canonical openable content families.

@@ -180,6 +180,37 @@ Rules:
 
 ContractRef: ContractName:Plans/Project_Output_Artifacts.md, ContractName:Plans/interview-subagent-integration.md, Primitive:SessionStore
 
+ContractRef: Plans/Project_Output_Artifacts.md#10. Validation Pass Report Artifacts, Plans/Project_Output_Artifacts.md#11.1 `traceability/requirements_quality_report.json` (machine-readable), Plans/Prompt_Pipeline.md#6.4 Effective resolution record
+
+Required fields:
+- workflow_run_id
+- staged_bundle_ref
+- requirements_quality_report_ref
+- execution_role
+- effective_account_id
+- run_id
+
+Canonical terms and values:
+- validation_pass_report
+- workflow_run_id
+- staged_bundle_ref
+- requirements_quality_report_ref
+- execution_role
+- effective_account_id
+- run_id
+- launch receipt
+- promoted package ref
+
+Labels:
+- handoff contract
+
+Behavioral rules:
+- Accepted or final sweep output must bridge into launched execution through a launch receipt or promoted package ref.
+- Pass reports must not masquerade as run, node, or attempt records.
+
+Permission carry-through:
+- effective runtime identity must survive downstream handoff
+
 ### 2.3 Wizard Cancellation Cleanup
 
 When the wizard is cancelled (user clicks Cancel or closes the wizard), Puppet Master MUST execute the following cleanup sequence:
