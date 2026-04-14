@@ -107,104 +107,63 @@ ContractRef: ContractName:Plans/Progression_Gates.md, ContractName:Plans/Executo
 
 ---
 
-## 5. Node execution fields
-
 The canonical dispatch/runtime packet carries `execution_unit_context`.
 
-Required fields are:
-- `project_id`
-- `run_id`
-- `node_id`
-- `attempt_id`
-- `lane_id?`
-- `worktree_id?`
-- `blocked_sequence?`
-- `safe_point_id?`
-- `remediation_root_id?`
-- `graph_generation_id?`
-- `execution_role`
-- requested/effective runtime identity snapshot fields
-- requested/effective account-binding fields
-- `operational_identity?`
-- `allowed_action_ids[]?`
-- `investigation_id?`
+**Authoritative execution_unit_context fields**
 
-ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md
+| Field | Requirement |
+| --- | --- |
+| `run_id` | Canonical run identity for execution lineage. |
+| `node_id` | Canonical node identity for dispatch and receipts. |
+| `attempt_id` | Immutable local execution-attempt identity. |
+| `lane_id` | Lane identity when the node is lane-bound. |
+| `package_id` | Package identity for orchestration joins. |
+| `seam_id` | Seam identity when dispatch is feature-scoped. |
+| `worktree_id` | Durable worktree identity when execution runs in a bound worktree. |
+| `execution_role` | Canonical execution-role disclosure for the packet. |
+| `requested_account_id` | Requested account identity before routing resolution. |
+| `requested_account_binding` | Binding mode that distinguishes preference from requirement. |
+| `requested_account_policy` | Requested account-policy selection for routing and approvals. |
+| `effective_account_id` | Effective resolved account identity. |
+| `operational_identity` | Stable runtime identity for audit and joins. |
+| `blocked_sequence` | Blocked-episode anchor when execution is paused or recovered through blocked state. |
+| `allowed_action_ids[]` | Ordered blocked-action set carried into recovery surfaces. |
 
-`investigation_id` is optional and is present when this execution is part of a debug investigation. Format: `inv_{ulid}`. It links all execution units that belong to the same investigation session and, when set, enables extended logging, breakpoint support, evidence collection, and investigation-scoped tool permissions.
-
-When Debug Mode triggers an investigation, the originating execution unit receives the `investigation_id`, and all execution units spawned as part of that same investigation MUST inherit the same value for correlation and evidence aggregation.
-
-Rules:
-- `TierContext` does not remain the canonical execution context
-- any surviving decomposition or view context is derived and non-canonical
-- mutation, audit, blocked actions, and routing resolve through runtime identity anchored by run/node/attempt/blocked-sequence lineage
-
-ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Run_Graph_View.md, ContractName:Plans/Orchestrator_Page.md
+ContractRef: Plans/Prompt_Pipeline.md#6.4 Effective resolution record, Plans/Contracts_V0.md#6.1 Canonical blocked-episode approval anchor, Plans/Crosswalk.md#3.1 Runtime orchestration ownership
 
 ### 5.1 Unified `DispatchContext` schema
 
-The canonical dispatch view is the unified `DispatchContext` projection over `execution_unit_context`. It unions the overlapping runtime field sets and coexists with the enclosing packet's immutable lineage fields such as `project_id`, `run_id`, `attempt_id`, `safe_point_id`, `worktree_id`, and remediation lineage.
+The canonical dispatch view is the unified `DispatchContext` projection over `execution_unit_context`.
 
-```
+```text
 DispatchContext {
-  // Identity
   node_id: string,
   package_id: string,
   lane_id: string?,
   seam_id: string?,
-
-  // Execution
   attempt_number: u32,
   max_attempts: u32,
   execution_mode: RuntimeMode,
   mode_overlay: ModeOverlay?,
-
-  // Provider/Model
   provider_id: string,
   model_id: string,
   selected_at_utc: ISO8601,
   scheduler_score_breakdown: ScoreBreakdown?,
-
-  // Context
   parent_thread_id: string?,
   dev_session_id: string,
   terminal_session_id: string?,
   investigation_id: string?,
-
-  // Budget
   budget_remaining: TokenBudget?,
   cost_ceiling: CostCeiling?,
-
-  // Persona
   persona_id: string?,
-  persona_snapshot: PersonaSnapshot?,
+  persona_snapshot: PersonaSnapshot?
 }
 ```
 
 Normalization rules:
 - `package_id` is the canonical dispatch alias for `work_package_id` when older payloads still carry the longer field name.
 - `seam_id` is the canonical dispatch alias for `feature_seam_id` when older payloads still carry the longer field name.
-- `investigation_id` follows the same `inv_{ulid}` format defined above and is copied from `execution_unit_context` into the dispatch projection when present.
-
-Field provenance:
-- Unioned from one or both prior dispatch field sets and now mandatory in the canonical unified view: `node_id`, `package_id`, `lane_id`, `seam_id`, `attempt_number`, `max_attempts`, `execution_mode`, `mode_overlay`, `provider_id`, `model_id`, `selected_at_utc`, `scheduler_score_breakdown`, `parent_thread_id`, `dev_session_id`, `terminal_session_id`, `budget_remaining`, `cost_ceiling`, `persona_id`, and `persona_snapshot`.
-- Newly added by this Executor Protocol reconciliation pass: `investigation_id`.
-
-ContractRef: Plans/Prompt_Pipeline.md#6.4 Effective resolution record, Plans/Contracts_V0.md#6.1 Canonical blocked-episode approval anchor, Plans/Crosswalk.md#3.1 Runtime orchestration ownership
-
-Required fields:
-- requested_account_id
-- requested_account_binding
-- requested_account_policy
-- effective_account_id
-
-Canonical terms and values:
-- requested_account_id
-- requested_account_binding
-- requested_account_policy
-- effective_account_id
-- tier_id
+- `investigation_id` follows the `inv_{ulid}` format and is copied from `execution_unit_context` into the dispatch projection when present.
 
 Labels:
 - node execution fields
@@ -215,8 +174,8 @@ Behavioral rules:
 - Blocked-action carrythrough stays anchored to blocked-sequence lineage rather than ad hoc view context.
 
 Permission carry-through:
+- requested/effective runtime identity
 - blocked action carrythrough
-
 ## 6. Overseer dispatch algorithm (deterministic)
 
 1. Evaluate readiness predicate over all queued nodes.
@@ -582,7 +541,6 @@ This section supersedes earlier lexical-dispatch, attempt-reuse, and mixed block
 
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Decision_Policy.md
 
-### Wake reasons and coalescing
 Canonical `wake_reason` values are:
 - `node_completed`
 - `prerequisite_resolved`
@@ -617,7 +575,6 @@ Labels:
 
 Behavioral rules:
 - Startup recovery hands off explicitly into the first `scheduler.pass`.
-
 ### Outcome families
 - `failure_class` is only for classified attempt outcomes.
 - `blocked_reason_code` is only for unresolved prerequisites or intentionally prevented work.
@@ -689,8 +646,6 @@ When Orchestrator or Assistant Chat creates an execution unit that should run in
 
 ContractRef: ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/assistant-chat-design.md
 
-### Worktree-aware execution unit context
-
 The execution context MUST include:
 - `working_directory`: set to worktree root path (not project root) when worktree is bound
 - `worktree_id`: identifier of the target worktree
@@ -753,7 +708,6 @@ Behavioral rules:
 
 Permission carry-through:
 - effective account, execution role, and blocked-episode approval scope must survive execution handoff
-
 ### Mode interaction
 
 All assistant chat modes (Ask, Agent, Plan, Deep Plan, Debug) operate within the thread's worktree when one is bound:

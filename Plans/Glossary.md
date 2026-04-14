@@ -29,7 +29,6 @@ ContractRef: Invariant:INV-010
 
 ## 2. Core terms
 
-### Orchestrator rewrite terms
 ContractRef: Plans/FinalGUISpec.md#7.5 Project and attention surfaces
 
 Required fields:
@@ -65,7 +64,6 @@ Labels:
 Behavioral rules:
 - Canonical term names must stay stable across expert and simplified help surfaces.
 - Historical vocabulary must be shared without collapsing family-local state.
-
 ### Assistant worktree terms
 
 
@@ -80,8 +78,6 @@ Behavioral rules:
 | **worktree filter** | Segmented control in SC Worktrees section: All \| Threads \| Orchestrator \| Manual. Filters visible worktree rows by owner type. Default: All. Persisted per project. |
 
 ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/storage-plan.md
-### Runtime and routing terms
-
 - **Blocked Episode**: one runtime-owned blocked period anchored by `run_id`, `node_id`, and `blocked_sequence`.
 - **Execution Role**: the actor-role identity used for runtime disclosure and audit, distinct from provider/account identity.
 - **Operational Identity**: the side-effect or target-context identity used for external operations, distinct from provider/account identity.
@@ -128,7 +124,6 @@ Labels:
 Behavioral rules:
 - Glossary routing definitions must mirror canonical contracts instead of inventing consumer-local interpretations.
 - `resume_url` must be defined as transport-only.
-
 ### Debug investigation terms
 - **Debug Mode**: the Assistant chat workflow overlay for evidence-first automated diagnosis, fix, verification, and cleanup. It is not a runtime-mode enum value.
 - **Debugger / DAP Debugger**: the classical runtime debugger surface based on DAP. It is not the same thing as Debug Mode.

@@ -482,8 +482,6 @@ ContractRef: SchemaID:pm.project-plan-graph-index.v1, ContractName:Plans/Project
 
 ContractRef: SchemaID:pm.requirements_quality_report.schema.v1, SchemaID:pm.requirements_coverage.schema.v1, SchemaID:pm.acceptance_manifest.schema.v1, Gate:GATE-011, ContractName:Plans/Project_Output_Artifacts.md
 
-## 10. Validation Pass Report Artifacts
-
 Validation pass reports remain upstream governance artifacts, but they require stronger lineage into execution and artifact history.
 
 Required lineage fields include:

@@ -188,8 +188,6 @@ Rules:
 
 ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/FileManager.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/storage-plan.md
 
-### A.4 Worktrees
-
 Worktrees are first-class UI objects, not hidden plumbing.
 
 The Worktrees accordion uses narrow-panel rows for direct actions, and Source Control also provides a topology-aware view that overlays worktree state on branch ancestry when the user pivots from Graph/History into worktree reasoning.
@@ -240,8 +238,6 @@ Labels:
 
 Behavioral rules:
 - GitHub surface worktree rows must respect durable worktree/lane identity and historical rendering semantics.
-### A.5 Surface boundary rule
-
 Source Control, Orchestrator, and GitHub surfaces keep distinct responsibilities.
 
 Rules:
@@ -1055,20 +1051,26 @@ Puppet Master Assistant Chat supports importing an external repository (typicall
 
 ContractRef: ToolID:GitHubApiTool, ContractName:Plans/GitHub_API_Auth_and_Flows.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/assistant-chat-design.md
 
-## Deferred GitHub Recovery Binding (2026-03-09)
-
 Deferred or GitHub-seeded wizard/runtime flows must preserve blocked-state identity, recovery context, and local generated artifacts.
 
-Deferred GitHub launch and resume flows MUST persist a binding record containing:
+**recovery binding** record:
+- `project_id`
+- `focused_run_id?`
 - `wizard_id?`
 - `thread_id?`
 - `run_id?`
 - `node_id?`
 - `attempt_id?`
+- `account_id`
+- `credential_ref`
+- `login`
+- `resume_url?`
 - deferred payload ref
 - `blocked_sequence?`
 - `replan_generation?`
 - clearing status
+
+ContractRef: Plans/Contracts_V0.md#7.3 `route_target`, Plans/GitHub_API_Auth_and_Flows.md#Token handling and storage (hard rules)
 
 Rules:
 - deferred wizard launch paths must support both `attention_required` and `blocked`
@@ -1082,11 +1084,11 @@ Rules:
 - the binding is cleared only when the deferred flow completes successfully, the owning blocked episode is abandoned, or the wizard/run context is cancelled or superseded
 - approval or auth resolution wakes the scheduler/event consumer immediately; it is not a polling loop
 
+ContractRef: Plans/Contracts_V0.md#7.3 `route_target`, Plans/GitHub_API_Auth_and_Flows.md#Token handling and storage (hard rules)
+
 Acceptance criteria:
 - no-wizard/deferred GitHub entry paths do not lose blocked-state recovery
 - deep links and preloaded payloads remain stable across blocked/unblocked transitions
-
-ContractRef: Plans/Contracts_V0.md#7.3 `route_target`, Plans/GitHub_API_Auth_and_Flows.md#Token handling and storage (hard rules)
 
 Required fields:
 - project_id
@@ -1094,15 +1096,19 @@ Required fields:
 - account_id
 - credential_ref
 - login
+- resume_url
 
 Canonical terms and values:
 - route_target
 - account_id
 - credential_ref
 - login
+- resume_url
 
 Labels:
 - recovery binding
+
+ContractRef: Plans/Contracts_V0.md#7.3 `route_target`, Plans/GitHub_API_Auth_and_Flows.md#Token handling and storage (hard rules)
 
 Behavioral rules:
 - Deep-link recovery must serialize canonical route identity rather than inventing a second routing model.

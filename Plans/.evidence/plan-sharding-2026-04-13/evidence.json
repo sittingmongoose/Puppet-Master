@@ -1,7 +1,7 @@
 {
   "schema_id": "pm.evidence.schema.v1",
   "evidence_id": "plan-sharding-2026-04-13",
-  "created_at_utc": "2026-04-13T17:33:32.095026+00:00",
+  "created_at_utc": "2026-04-13T22:38:29.318688+00:00",
   "node": {
     "node_id": "plan-sharding"
   },
@@ -17,8 +17,7 @@
     },
     {
       "cmd": "python3 scripts/pm-plans-verify.py run-gates",
-      "exit_code": -1,
-      "stdout_excerpt": "not yet run"
+      "exit_code": 0
     }
   ],
   "tool_calls": [
@@ -737,10 +736,6 @@
       "change_type": "modified"
     },
     {
-      "path": "Plans/_shards/GitHub_Integration/12-deferred-github-recovery-binding-2026-03-09.md",
-      "change_type": "modified"
-    },
-    {
       "path": "Plans/_shards/GitHub_Integration/manifest.json",
       "change_type": "modified"
     },
@@ -981,23 +976,19 @@
       "change_type": "modified"
     },
     {
-      "path": "Plans/_shards/Project_Output_Artifacts/12-10-validation-pass-report-artifacts.md",
+      "path": "Plans/_shards/Project_Output_Artifacts/12-11-traceability-outputs.md",
       "change_type": "modified"
     },
     {
-      "path": "Plans/_shards/Project_Output_Artifacts/13-11-traceability-outputs.md",
+      "path": "Plans/_shards/Project_Output_Artifacts/13-12-optional-derived-quickstartmd-contract-human-convenience-only.md",
       "change_type": "modified"
     },
     {
-      "path": "Plans/_shards/Project_Output_Artifacts/14-12-optional-derived-quickstartmd-contract-human-convenience-only.md",
+      "path": "Plans/_shards/Project_Output_Artifacts/14-change-summary.md",
       "change_type": "modified"
     },
     {
-      "path": "Plans/_shards/Project_Output_Artifacts/15-change-summary.md",
-      "change_type": "modified"
-    },
-    {
-      "path": "Plans/_shards/Project_Output_Artifacts/16-runtime-evidence-and-degradation-artifact-addendum-2026-03-08.md",
+      "path": "Plans/_shards/Project_Output_Artifacts/15-runtime-evidence-and-degradation-artifact-addendum-2026-03-08.md",
       "change_type": "modified"
     },
     {
@@ -1214,10 +1205,6 @@
     },
     {
       "path": "Plans/_shards/WorktreeGitImprovement/19-runtime-worktree-conflict-reconciliation-addendum-2026-03-09.md",
-      "change_type": "modified"
-    },
-    {
-      "path": "Plans/_shards/WorktreeGitImprovement/20-worktree-conflict-and-dirty-worktree-runtime-alignment.md",
       "change_type": "modified"
     },
     {
@@ -1453,51 +1440,47 @@
       "change_type": "modified"
     },
     {
-      "path": "Plans/_shards/chain-wizard-flexibility/19-12-three-pass-canonical-validation-workflow-mandatory-invariant-sweep.md",
+      "path": "Plans/_shards/chain-wizard-flexibility/19-13-no-wizard-project-management-flows.md",
       "change_type": "modified"
     },
     {
-      "path": "Plans/_shards/chain-wizard-flexibility/20-13-no-wizard-project-management-flows.md",
+      "path": "Plans/_shards/chain-wizard-flexibility/20-14-requirements-completion-contract.md",
       "change_type": "modified"
     },
     {
-      "path": "Plans/_shards/chain-wizard-flexibility/21-14-requirements-completion-contract.md",
+      "path": "Plans/_shards/chain-wizard-flexibility/21-15-requirements-quality-escalation-semantics.md",
       "change_type": "modified"
     },
     {
-      "path": "Plans/_shards/chain-wizard-flexibility/22-15-requirements-quality-escalation-semantics.md",
+      "path": "Plans/_shards/chain-wizard-flexibility/22-requirements-builder-persona-strategy-addendum-2026-03-06.md",
       "change_type": "modified"
     },
     {
-      "path": "Plans/_shards/chain-wizard-flexibility/23-requirements-builder-persona-strategy-addendum-2026-03-06.md",
+      "path": "Plans/_shards/chain-wizard-flexibility/23-17-assistant-deep-plan-escalation-into-chain-wizard-2026-03-08.md",
       "change_type": "modified"
     },
     {
-      "path": "Plans/_shards/chain-wizard-flexibility/24-17-assistant-deep-plan-escalation-into-chain-wizard-2026-03-08.md",
+      "path": "Plans/_shards/chain-wizard-flexibility/24-clarification-escalation-and-draft-decomposition-addendum-2026-03-08.md",
       "change_type": "modified"
     },
     {
-      "path": "Plans/_shards/chain-wizard-flexibility/25-clarification-escalation-and-draft-decomposition-addendum-2026-03-08.md",
+      "path": "Plans/_shards/chain-wizard-flexibility/25-draft-decomposition-fallback-wizard-blocked-state-addendum-2026-03-09.md",
       "change_type": "modified"
     },
     {
-      "path": "Plans/_shards/chain-wizard-flexibility/26-draft-decomposition-fallback-wizard-blocked-state-addendum-2026-03-09.md",
+      "path": "Plans/_shards/chain-wizard-flexibility/26-canonical-wizard-blocked-state-reconciliation-addendum-2026-03-09.md",
       "change_type": "modified"
     },
     {
-      "path": "Plans/_shards/chain-wizard-flexibility/27-canonical-wizard-blocked-state-reconciliation-addendum-2026-03-09.md",
+      "path": "Plans/_shards/chain-wizard-flexibility/27-wizard-escalation-degradation-and-blocked-state-consolidation-addendum-2026-03-09.md",
       "change_type": "modified"
     },
     {
-      "path": "Plans/_shards/chain-wizard-flexibility/28-wizard-escalation-degradation-and-blocked-state-consolidation-addendum-2026-03-09.md",
+      "path": "Plans/_shards/chain-wizard-flexibility/28-canonical-wizard-blocked-lifecycle.md",
       "change_type": "modified"
     },
     {
-      "path": "Plans/_shards/chain-wizard-flexibility/29-canonical-wizard-blocked-lifecycle.md",
-      "change_type": "modified"
-    },
-    {
-      "path": "Plans/_shards/chain-wizard-flexibility/30-wizard-status-enum-correction-addendum.md",
+      "path": "Plans/_shards/chain-wizard-flexibility/29-wizard-status-enum-correction-addendum.md",
       "change_type": "modified"
     },
     {

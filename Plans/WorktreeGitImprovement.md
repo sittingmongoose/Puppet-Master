@@ -136,8 +136,6 @@ ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/Architecture_Inv
 - **Gap:** `worktree_exists(node_id)` is `get_worktree_path(node_id).exists()`. A non-worktree directory with the same name would be treated as existing; `remove_worktree` could then run `git worktree remove --force` on a non-worktree path.
 - **Fix:** Consider "exists" only if the path exists and looks like a worktree (e.g. has a `.git` file pointing at the main repo), or rely on `list_worktrees()` and check if the path is in that list.
 
-### 2.8 Startup recovery uses process CWD
-
 - **Gap:** Worktree recovery runs with `std::env::current_dir()` and `git rev-parse --show-toplevel` there. If the app is started from a launcher or different repo, recovery runs in the wrong place.
 - **Fix:** Run recovery only when a project/workspace is known (e.g. from config or current project). Use that path for `WorktreeManager` and `recover_orphaned_worktrees()`. If no project is known at startup, skip or run recovery when the user first selects/opens a project.
 
@@ -167,7 +165,6 @@ Labels:
 Behavioral rules:
 - Startup restore must recover historical lineage from durable records, not just CWD discovery.
 - Missing live worktrees must render as historical/archived/removed rather than disappearing.
-
 ### 2.9 PR creation after restart uses main repo branch
 
 - **Gap:** After restart, `get_node_worktree(node_id)` is `None`. `create_node_pr` then uses `git_manager.current_branch()` for head_branch, so the PR is created from the main repo branch, not the worktree branch.
@@ -322,8 +319,6 @@ Rules:
 
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Decision_Policy.md, ContractName:Plans/FileManager.md, ContractName:Plans/Crosswalk.md
 
-### 4.1 Assistant-created worktree lifecycle
-
 Assistant worktrees are created via the chat header worktree button or auto-create setting. They follow the same `WorktreeManager` backend as orchestrator worktrees.
 
 **Naming:** Directory `.puppet-master/worktrees/thread-{short_id}` where `short_id` is first 8 chars of `thread_id`. Branch name `assistant/<sanitized_title>` (temp name `assistant/thread-{short_id}` before title generation).
@@ -371,7 +366,6 @@ Labels:
 Behavioral rules:
 - Cleaning files inside a worktree is not the same thing as removing the worktree.
 - `lane_id` remains operational lineage while `worktree_id` remains durable identity.
-
 ## 5. Config Wiring (Prerequisite)
 
 ### 5.1 Problem
@@ -702,8 +696,6 @@ Worktree-native isolation remains canonical, but runtime recovery must integrate
 This addendum is retained as historical context only.
 
 Canonical worktree-conflict and dirty-worktree runtime rules now live in `## Worktree Conflict and Dirty-Worktree Runtime Alignment`.
-
-## Worktree Conflict and Dirty-Worktree Runtime Alignment
 
 Canonical blocked reasons for this domain are `worktree_conflict` and `dirty_worktree`.
 

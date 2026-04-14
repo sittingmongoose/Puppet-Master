@@ -1,7 +1,7 @@
 {
   "schema_id": "pm.bucket_plan.v5",
   "work_id": "w-20260312-203855",
-  "created_at_utc": "2026-04-13T20:02:28.801Z",
+  "created_at_utc": "2026-04-14T00:46:15.420Z",
   "topic_or_scope": "Orchestrator rewrite transfer-fidelity audit, legacy-canon cleanup readiness, and reconciliation prep",
   "current_wave": "owner_first",
   "must_change": [
@@ -52,7 +52,8 @@
       "source_reasons": [
         "coverage_collection",
         "OBL-031",
-        "OBL-033"
+        "OBL-033",
+        "FIDELITY-001"
       ],
       "exact_items_that_must_survive": [
         "execution_unit_context",
@@ -178,8 +179,7 @@
       "phase_role": "owner_first_wave_eligible",
       "source_reasons": [
         "coverage_collection",
-        "OBL-028",
-        "LF-004"
+        "OBL-028"
       ],
       "exact_items_that_must_survive": [
         "detail_ref",
@@ -259,7 +259,8 @@
         "OBL-023",
         "OBL-024",
         "OBL-025",
-        "OBL-027"
+        "OBL-027",
+        "FIDELITY-002"
       ],
       "exact_items_that_must_survive": [
         "route_target",
@@ -340,7 +341,8 @@
         "coverage_collection",
         "OBL-016",
         "OBL-018",
-        "OBL-019"
+        "OBL-019",
+        "OBL-043"
       ],
       "exact_items_that_must_survive": [
         "record_id",
@@ -360,24 +362,39 @@
         "concern_id",
         "owner_kind",
         "resolution_kind",
+        "account_pressure_episode",
+        "account_switch_event",
+        "episode_id",
+        "switch_event_id",
+        "source_kind",
+        "signal_confidence",
+        "pressure_kind",
+        "decision_kind",
+        "source_episode_id?",
         "record envelope",
         "historical state",
         "concern",
+        "account history event",
         "scope_type",
         "scope_id",
         "lineage_refs",
         "source_refs",
         "artifact_refs",
+        "source_episode_id",
         "A shared envelope must exist without flattening family-specific semantics.",
         "Historical vocabulary must stay shared while family-local lifecycles stay distinct.",
         "Concern identity and lineage must remain distinct from review, blocked, and annotation objects.",
+        "Account pressure and switch decisions remain durable event families instead of recent-reason snapshots.",
         "Plans/storage-plan.md#Canonical records",
-        "Plans/Orchestrator_Page.md#12. Concern and notification model"
+        "Plans/Orchestrator_Page.md#12. Concern and notification model",
+        "Plans/Multi-Account.md#4. Data model"
       ],
       "stale_residue_to_retire": [
         "ad hoc one-off record shapes for each new object family",
         "overloaded `resolved` semantics",
-        "concerns treated as badges or review leftovers without durable identity"
+        "concerns treated as badges or review leftovers without durable identity",
+        "`account_switch_reason` as both pressure cause and switch outcome",
+        "`recent_switch_reason` as durable history"
       ],
       "status": "active",
       "bucket_reason": "active owner section in collected impact set; current owner-first wave must establish or replace canon here before dependent reconciliation proceeds"
@@ -391,7 +408,9 @@
       "source_reasons": [
         "coverage_collection",
         "OBL-037",
-        "OBL-038"
+        "OBL-038",
+        "OBL-042",
+        "FIDELITY-003"
       ],
       "exact_items_that_must_survive": [
         "artifacts_index.v1:{project_id}:{artifact_id}",
@@ -401,9 +420,11 @@
         "lane_record.v1:{project_id}:{lane_id}",
         "worktree_projection.v1:{project_id}:{worktree_id}",
         "lane_projection.v1:{project_id}:{lane_id}",
+        "orchestrator.project_state.{project_id}",
         "runtime artifact index",
         "worktree record",
         "lane record",
+        "orchestrator project state",
         "artifact_id",
         "artifact_type",
         "project_id",
@@ -419,15 +440,24 @@
         "baseline_ref",
         "projection_freshness",
         "projection_health",
+        "focused_run_id",
+        "focus_mode",
+        "last_live_run_id",
+        "selected_tab",
+        "per_tab_view_state_refs",
+        "auto_return_to_live",
         "Runtime-artifact indexing and durable worktree/lane identity are storage-owned families.",
         "Projection state and projector checkpoints must be first-class rather than panel-owned leftovers.",
+        "Persisted Orchestrator focus state must keep the page on the same focused historical run across reload and restart.",
         "Plans/Runtime_Artifacts_Panel.md#4. redb key and projector",
-        "Plans/WorktreeGitImprovement.md#4.1 Assistant-created worktree lifecycle"
+        "Plans/WorktreeGitImprovement.md#4.1 Assistant-created worktree lifecycle",
+        "Plans/FinalGUISpec.md#7.1 Orchestrator"
       ],
       "stale_residue_to_retire": [
         "`artifacts_index:v1:{project_id}` as a sole underspecified canonical contract",
         "panel-only ownership of runtime-artifact projector semantics",
-        "tier-keyed worktree identity"
+        "tier-keyed worktree identity",
+        "tab-local run drift without shared persisted Orchestrator state"
       ],
       "status": "active",
       "bucket_reason": "active owner section in collected impact set; current owner-first wave must establish or replace canon here before dependent reconciliation proceeds"
@@ -443,7 +473,8 @@
         "OBL-016",
         "OBL-017",
         "OBL-018",
-        "OBL-019"
+        "OBL-019",
+        "OBL-043"
       ],
       "exact_items_that_must_survive": [
         "record_id",
@@ -469,24 +500,40 @@
         "record export",
         "bundle export",
         "view export",
+        "account_pressure_episode",
+        "account_switch_event",
+        "episode_id",
+        "switch_event_id",
+        "source_kind",
+        "signal_confidence",
+        "pressure_kind",
+        "decision_kind",
+        "source_episode_id?",
         "record family",
         "export taxonomy",
         "historical vocabulary",
         "concern",
+        "account history family",
         "scope_type",
         "scope_id",
         "export_kind",
         "trust_state_at_export",
+        "source_episode_id",
         "Record export, bundle export, and view export must remain distinct.",
         "Shared historical vocabulary must not erase family-local semantics.",
         "Concern lineage must be queryable across merge, split, supersession, reopen, and revoke flows.",
+        "Current health snapshots and recent-reason fields do not substitute for canonical switch history.",
         "Plans/Project_Output_Artifacts.md#8. Seglog canonical persistence contract (artifact events)",
-        "Plans/Orchestrator_Page.md#12. Concern and notification model"
+        "Plans/Orchestrator_Page.md#12. Concern and notification model",
+        "Plans/Multi-Account.md#4. Data model",
+        "Plans/usage-feature.md#Billing identity, attribution, and pricing metadata"
       ],
       "stale_residue_to_retire": [
         "conflating record exports, artifact exports, and view exports",
         "overloaded `resolved` state",
-        "concerns treated as transient notes"
+        "concerns treated as transient notes",
+        "`account_switch_reason` as both pressure cause and switch outcome",
+        "`recent_switch_reason` as durable history"
       ],
       "status": "active",
       "bucket_reason": "active owner section in collected impact set; current owner-first wave must establish or replace canon here before dependent reconciliation proceeds"
@@ -537,7 +584,8 @@
         "coverage_collection",
         "OBL-003",
         "OBL-004",
-        "OBL-038"
+        "OBL-038",
+        "FIDELITY-004"
       ],
       "exact_items_that_must_survive": [
         "historical",
@@ -620,8 +668,7 @@
       "source_reasons": [
         "coverage_collection",
         "OBL-033",
-        "OBL-034",
-        "LF-003"
+        "OBL-034"
       ],
       "exact_items_that_must_survive": [
         "node_id",
@@ -687,7 +734,8 @@
       "source_reasons": [
         "coverage_collection",
         "OBL-034",
-        "OBL-036"
+        "OBL-036",
+        "FIDELITY-005"
       ],
       "exact_items_that_must_survive": [
         "attempt_id",
@@ -723,7 +771,8 @@
         "coverage_collection",
         "OBL-004",
         "OBL-006",
-        "OBL-038"
+        "OBL-038",
+        "FIDELITY-065"
       ],
       "exact_items_that_must_survive": [
         "baseline",
@@ -767,7 +816,8 @@
       "source_reasons": [
         "coverage_collection",
         "OBL-003",
-        "OBL-038"
+        "OBL-038",
+        "FIDELITY-064"
       ],
       "exact_items_that_must_survive": [
         "historical",
@@ -802,7 +852,8 @@
       "source_reasons": [
         "coverage_collection",
         "OBL-005",
-        "OBL-006"
+        "OBL-006",
+        "FIDELITY-066"
       ],
       "exact_items_that_must_survive": [
         "dirty_worktree",
@@ -834,7 +885,8 @@
       "phase_role": "owner_first_wave_eligible",
       "source_reasons": [
         "coverage_collection",
-        "OBL-036"
+        "OBL-036",
+        "FIDELITY-007"
       ],
       "exact_items_that_must_survive": [
         "validation_pass_report",
@@ -904,6 +956,155 @@
     },
     {
       "path": "Plans/Orchestrator_Page.md",
+      "heading": "## 3. Progress tab",
+      "doc_role": "owner",
+      "section_role": "owner_section",
+      "phase_role": "owner_first_wave_eligible",
+      "source_reasons": [
+        "coverage_collection",
+        "OBL-039"
+      ],
+      "exact_items_that_must_survive": [
+        "Progress",
+        "Run Status",
+        "Current Activity",
+        "Attention / Blockers",
+        "Seam Health",
+        "Package Activity",
+        "Promotion Queue",
+        "Worktree Lanes",
+        "Account / Usage Pressure",
+        "Recent Major Events",
+        "Overseer Activity",
+        "Corroboration Queue",
+        "Recovery State",
+        "Throughput / Capacity",
+        "History",
+        "Node Graph",
+        "Seams",
+        "Ledger",
+        "Usage",
+        "Evidence",
+        "widget_id",
+        "host_surface",
+        "default_drill_target",
+        "widget_layout_state",
+        "`Progress` is the only Orchestrator widget canvas.",
+        "A reusable subset may also be hostable on Dashboard.",
+        "Non-Orchestrator widgets must not be hostable on the Orchestrator page.",
+        "Drill targets are deterministic defaults, not per-surface guesswork.",
+        "Plans/Widget_System.md#2. Hostability and data contracts",
+        "Plans/FinalGUISpec.md#7.1 Orchestrator"
+      ],
+      "stale_residue_to_retire": [
+        "unnamed Progress widget catalog",
+        "widget hosting outside `Progress` as the default Orchestrator model"
+      ],
+      "status": "active",
+      "bucket_reason": "active owner section in collected impact set; current owner-first wave must establish or replace canon here before dependent reconciliation proceeds"
+    },
+    {
+      "path": "Plans/Orchestrator_Page.md",
+      "heading": "## 4. Seams tab",
+      "doc_role": "owner",
+      "section_role": "owner_section",
+      "phase_role": "owner_first_wave_eligible",
+      "source_reasons": [
+        "coverage_collection",
+        "OBL-039",
+        "OBL-040"
+      ],
+      "exact_items_that_must_survive": [
+        "Seams",
+        "Feature Seam",
+        "Work Package",
+        "Package Overseer",
+        "Seam Overseer",
+        "Seam Health",
+        "Package Activity",
+        "Overseer Activity",
+        "Locally Complete",
+        "Available to Seam",
+        "Seam Complete",
+        "Completion Blocked",
+        "Weak Integration",
+        "Promotion Blocked",
+        "Promotion Revoked",
+        "Seam Completion",
+        "Seam Completion Revoked",
+        "Reopened",
+        "Reopened by Patch",
+        "Reopened by New Evidence",
+        "default_drill_target",
+        "tab_label",
+        "object_label",
+        "state_label",
+        "action_label",
+        "concern_group_label",
+        "`Seam Health`, `Package Activity`, and `Overseer Activity` default into `Seams`.",
+        "Package issues roll up to seam concerns only when they cross package/seam or user-visible boundaries.",
+        "`Weak Integration` remains a visible grouped concern rather than generic drift copy.",
+        "Plans/Glossary.md#Orchestrator rewrite terms",
+        "Plans/FinalGUISpec.md#7.1 Orchestrator"
+      ],
+      "stale_residue_to_retire": [
+        "`Tiers` as the primary rewrite tab/object label",
+        "local jargon that renames canonical rewrite objects"
+      ],
+      "status": "active",
+      "bucket_reason": "active owner section in collected impact set; current owner-first wave must establish or replace canon here before dependent reconciliation proceeds"
+    },
+    {
+      "path": "Plans/Orchestrator_Page.md",
+      "heading": "## 5. Node Graph tab",
+      "doc_role": "owner",
+      "section_role": "owner_section",
+      "phase_role": "owner_first_wave_eligible",
+      "source_reasons": [
+        "coverage_collection",
+        "OBL-039",
+        "OBL-040",
+        "OBL-042",
+        "OBL-044"
+      ],
+      "exact_items_that_must_survive": [
+        "Node Graph",
+        "Current Activity",
+        "Attention / Blockers",
+        "Worktree Lanes",
+        "Lane to Package",
+        "Package to Seam",
+        "focused_run_id?",
+        "focus_mode = live | historical",
+        "Historical Run Mode",
+        "inline help",
+        "context help",
+        "canonical help entry",
+        "default_drill_target",
+        "focused_run_id",
+        "focus_mode",
+        "selected_tab",
+        "tab_label",
+        "action_label",
+        "help_depth",
+        "context_help_target",
+        "canonical_help_entry_ref",
+        "`Current Activity`, `Attention / Blockers`, and `Worktree Lanes` default into `Node Graph`.",
+        "Graph pivots stay on the shared focused run context instead of tab-local run drift.",
+        "Compact graph badges and chips use linked deeper help instead of local jargon.",
+        "Plans/Run_Graph_View.md#3. Node detail inspector",
+        "Plans/FinalGUISpec.md#7.1 Orchestrator"
+      ],
+      "stale_residue_to_retire": [
+        "tab-local run drift without shared `focused_run_id`",
+        "tooltip-only governance for rewrite terms",
+        "local jargon that renames canonical rewrite objects"
+      ],
+      "status": "active",
+      "bucket_reason": "active owner section in collected impact set; current owner-first wave must establish or replace canon here before dependent reconciliation proceeds"
+    },
+    {
+      "path": "Plans/Orchestrator_Page.md",
       "heading": "## 1. Scope and canonical model",
       "doc_role": "owner",
       "section_role": "owner_section",
@@ -912,7 +1113,8 @@
         "coverage_collection",
         "OBL-001",
         "OBL-002",
-        "OBL-014"
+        "OBL-014",
+        "FIDELITY-056"
       ],
       "exact_items_that_must_survive": [
         "Source Control",
@@ -953,7 +1155,11 @@
       "phase_role": "owner_first_wave_eligible",
       "source_reasons": [
         "coverage_collection",
-        "OBL-018"
+        "OBL-018",
+        "OBL-039",
+        "OBL-041",
+        "OBL-043",
+        "FIDELITY-058"
       ],
       "exact_items_that_must_survive": [
         "historical",
@@ -963,18 +1169,40 @@
         "reopened",
         "archived",
         "removed",
+        "Run Status",
+        "Recent Major Events",
+        "Throughput / Capacity",
+        "Info",
+        "Warning",
+        "Attention",
+        "Action Required",
+        "resolved",
+        "dismissed",
+        "acknowledged",
+        "account_pressure_episode",
+        "account_switch_event",
         "historical_state",
         "lineage_refs",
         "supersession_refs",
         "revocation_refs",
         "archive_status",
+        "event_family",
+        "condition_state",
+        "linger_policy",
+        "episode_id",
+        "switch_event_id",
         "History surfaces must render the shared historical vocabulary explicitly instead of implying history through absence of live state.",
+        "Resolved items fall back to `History` with normal resolved linger about 15 minutes and major resolved linger until dismissed or up to 24 hours.",
+        "Account pressure and switch histories remain visible as durable major-event families instead of recent-reason summaries.",
         "Plans/storage-plan.md#Canonical records",
-        "Plans/Glossary.md#Orchestrator rewrite terms"
+        "Plans/Glossary.md#Orchestrator rewrite terms",
+        "Plans/Orchestrator_Page.md#12. Concern and notification model"
       ],
       "stale_residue_to_retire": [
         "historical implied by missing live state",
-        "overloaded `resolved` keyword"
+        "overloaded `resolved` keyword",
+        "silent demotion of persistent blockers into history",
+        "`recent_switch_reason` as durable history"
       ],
       "status": "active",
       "bucket_reason": "active owner section in collected impact set; current owner-first wave must establish or replace canon here before dependent reconciliation proceeds"
@@ -987,7 +1215,10 @@
       "phase_role": "owner_first_wave_eligible",
       "source_reasons": [
         "coverage_collection",
-        "OBL-017"
+        "OBL-017",
+        "OBL-039",
+        "OBL-043",
+        "FIDELITY-059"
       ],
       "exact_items_that_must_survive": [
         "record export",
@@ -995,6 +1226,11 @@
         "view export",
         "manifest",
         "trust_state_at_export",
+        "Promotion Queue",
+        "account_pressure_episode",
+        "account_switch_event",
+        "decision_kind",
+        "source_episode_id?",
         "export_id",
         "export_kind",
         "source_surface",
@@ -1004,12 +1240,19 @@
         "included_artifact_ids",
         "included_file_paths",
         "lineage_notes",
+        "episode_id",
+        "switch_event_id",
+        "source_episode_id",
         "Ledger export affordances must distinguish canonical record exports from derived view exports and bundles.",
+        "`Promotion Queue` defaults into `Ledger` as the canonical operational drill target.",
+        "Failed or blocked switch decisions still produce durable ledger-visible history even when the effective account did not change.",
         "Plans/storage-plan.md#Canonical records",
-        "Plans/FinalGUISpec.md#7.19A Dedicated log and audit inspector"
+        "Plans/FinalGUISpec.md#7.19A Dedicated log and audit inspector",
+        "Plans/usage-feature.md#Canonical usage pipeline"
       ],
       "stale_residue_to_retire": [
-        "conflating record exports, artifact exports, and view exports into one unclear family"
+        "conflating record exports, artifact exports, and view exports into one unclear family",
+        "`recent_switch_reason` as durable history"
       ],
       "status": "active",
       "bucket_reason": "active owner section in collected impact set; current owner-first wave must establish or replace canon here before dependent reconciliation proceeds"
@@ -1023,7 +1266,9 @@
       "source_reasons": [
         "coverage_collection",
         "OBL-017",
-        "OBL-036"
+        "OBL-036",
+        "OBL-039",
+        "FIDELITY-057"
       ],
       "exact_items_that_must_survive": [
         "record export",
@@ -1032,6 +1277,8 @@
         "manifest",
         "trust_state_at_export",
         "validation_pass_report",
+        "Corroboration Queue",
+        "Recovery State",
         "export_id",
         "export_kind",
         "focused_run_id",
@@ -1042,6 +1289,7 @@
         "workflow_run_id",
         "Filtered JSON is not automatically canonical record export.",
         "Validation pass reports must remain visibly upstream artifacts even when shown in Evidence.",
+        "`Corroboration Queue` and `Recovery State` widgets default here as the evidence/recovery drill targets.",
         "Plans/storage-plan.md#Canonical records",
         "Plans/Project_Output_Artifacts.md#10. Validation Pass Report Artifacts"
       ],
@@ -1062,7 +1310,9 @@
         "coverage_collection",
         "OBL-003",
         "OBL-004",
-        "OBL-018"
+        "OBL-018",
+        "OBL-042",
+        "FIDELITY-060"
       ],
       "exact_items_that_must_survive": [
         "historical",
@@ -1078,18 +1328,33 @@
         "superseded",
         "revoked",
         "reopened",
+        "Historical Run Mode",
+        "active_run_id?",
+        "focused_run_id?",
+        "focus_mode = live | historical",
+        "last_live_run_id?",
+        "auto_return_to_live = false",
         "cleanup eligible",
         "lifecycle_state",
         "historical_state",
         "archive_status",
         "lineage_refs",
+        "active_run_id",
+        "focused_run_id",
+        "focus_mode",
+        "last_live_run_id",
+        "auto_return_to_live",
         "Historical truth must not disappear when live worktrees are gone.",
         "`historical` is record truth and is distinct from cleanup state.",
-        "Plans/storage-plan.md#Restart and stale history"
+        "Historical mode shows a persistent banner/chip with the focused historical `run_id`.",
+        "The page must not auto-switch away from a historical run just because live activity appears.",
+        "Plans/storage-plan.md#Restart and stale history",
+        "Plans/FinalGUISpec.md#7.1 Orchestrator"
       ],
       "stale_residue_to_retire": [
         "cleanup wipes history model",
-        "historical implied by missing live state"
+        "historical implied by missing live state",
+        "silent live-focus switching"
       ],
       "status": "active",
       "bucket_reason": "active owner section in collected impact set; current owner-first wave must establish or replace canon here before dependent reconciliation proceeds"
@@ -1103,7 +1368,10 @@
       "source_reasons": [
         "coverage_collection",
         "OBL-015",
-        "OBL-020"
+        "OBL-020",
+        "OBL-042",
+        "OBL-045",
+        "FIDELITY-061"
       ],
       "exact_items_that_must_survive": [
         "navigation vs mutation",
@@ -1113,6 +1381,17 @@
         "confirmation",
         "reversibility",
         "shared routing payload contract",
+        "focused_run_id?",
+        "focus_mode = live | historical",
+        "source",
+        "request",
+        "execution",
+        "Requested",
+        "Effective",
+        "Reason",
+        "ranked candidates",
+        "winner",
+        "fallback reason",
         "navigation",
         "mutation",
         "action_type",
@@ -1127,15 +1406,28 @@
         "object_id",
         "tab_id",
         "inspector_target",
+        "focused_run_id",
+        "source_axis",
+        "request_axis",
+        "execution_axis",
+        "ranked_candidates[]",
+        "fallback_reason",
+        "actor_type",
+        "operation_type",
+        "scope_level",
         "Command/palette exposure must not silently downgrade confirmation strength.",
         "Cross-surface pivots restore context through canonical route payloads rather than ad hoc payloads.",
+        "Default search scope is the focused run; widening to project/all-runs must disclose when a result changes `focused_run_id`.",
+        "Worker-policy display follows the same requested/effective grammar as persona/model/account disclosure.",
         "mutation actions must preserve confirmation and gating semantics across palette, shortcut, and context-menu entry points",
         "Plans/UI_Command_Catalog.md#2.0 Command entry contract (doc-level)",
         "Plans/Contracts_V0.md#7.3 `route_target`"
       ],
       "stale_residue_to_retire": [
         "blanket command exposure for dangerous runtime mutations",
-        "separate ad hoc payloads per surface"
+        "separate ad hoc payloads per surface",
+        "tab-local run drift without shared `focused_run_id`",
+        "precedence reconstruction from docs instead of explicit requested/effective disclosure"
       ],
       "status": "active",
       "bucket_reason": "active owner section in collected impact set; current owner-first wave must establish or replace canon here before dependent reconciliation proceeds"
@@ -1151,7 +1443,8 @@
         "OBL-001",
         "OBL-005",
         "OBL-006",
-        "OBL-038"
+        "OBL-038",
+        "FIDELITY-062"
       ],
       "exact_items_that_must_survive": [
         "Source Control",
@@ -1194,7 +1487,9 @@
         "coverage_collection",
         "OBL-012",
         "OBL-013",
-        "OBL-019"
+        "OBL-019",
+        "OBL-041",
+        "FIDELITY-063"
       ],
       "exact_items_that_must_survive": [
         "project health",
@@ -1211,24 +1506,55 @@
         "concern_id",
         "owner_kind",
         "resolution_kind",
-        "Attention Required",
-        "Blocked",
+        "Runtime",
+        "Package Overseer",
+        "Seam Overseer",
+        "Corroboration",
+        "Graph Patch",
+        "Recovery",
+        "User",
+        "External Resource",
+        "Info",
+        "Warning",
+        "Attention",
+        "Action Required",
+        "seam.*",
+        "package.*",
+        "node.*",
+        "promotion.*",
+        "corroboration.*",
+        "graph_patch.*",
+        "recovery.*",
+        "account.*",
+        "resolved",
+        "dismissed",
+        "acknowledged",
         "System notification",
         "activity_state",
         "attention_state",
         "health_indicator",
         "escalation_level",
         "lineage_refs",
+        "blocked_owner_kind",
+        "alert_level",
+        "event_family",
+        "condition_state",
+        "linger_policy",
         "Health, activity, and attention must not collapse into one indicator.",
         "`attention_required` and `blocked` must remain distinct across concern and notification flows.",
         "Concern owner and blocked owner remain different concepts.",
+        "Dashboard is summary/urgency, Orchestrator is detailed operational context, and chat threads are only for cases needing real user resolution.",
+        "`acknowledged` is distinct from both `resolved` and `dismissed` and only reduces noise for advisory/minor concerns.",
+        "Resurfacing responds to meaningful change, persistence, owner change, threshold crossing, or newly available action, not heartbeat spam.",
         "Plans/Glossary.md#Orchestrator rewrite terms",
         "Plans/human-in-the-loop.md#Shared approval-ladder alignment (2026-04-04)"
       ],
       "stale_residue_to_retire": [
         "conflated single health indicator",
         "case-by-case local attention behavior without shared ladder",
-        "concerns treated as badges or notes without durable identity"
+        "concerns treated as badges or notes without durable identity",
+        "generic red project badge without owner/reason context",
+        "silent demotion of persistent blockers into history"
       ],
       "status": "active",
       "bucket_reason": "active owner section in collected impact set; current owner-first wave must establish or replace canon here before dependent reconciliation proceeds"
@@ -1243,7 +1569,8 @@
         "coverage_collection",
         "OBL-003",
         "OBL-004",
-        "OBL-038"
+        "OBL-038",
+        "FIDELITY-068"
       ],
       "exact_items_that_must_survive": [
         "worktree_id",
@@ -1278,7 +1605,8 @@
       "source_reasons": [
         "coverage_collection",
         "OBL-027",
-        "OBL-035"
+        "OBL-035",
+        "FIDELITY-069"
       ],
       "exact_items_that_must_survive": [
         "resume_url",
@@ -1312,7 +1640,11 @@
         "coverage_collection",
         "OBL-011",
         "OBL-012",
-        "OBL-018"
+        "OBL-018",
+        "OBL-040",
+        "OBL-041",
+        "OBL-044",
+        "FIDELITY-008"
       ],
       "exact_items_that_must_survive": [
         "canonical term system",
@@ -1329,6 +1661,51 @@
         "reopened",
         "archived",
         "removed",
+        "Seams",
+        "Feature Seam",
+        "Work Package",
+        "Package Overseer",
+        "Seam Overseer",
+        "Locally Complete",
+        "Available to Seam",
+        "Seam Complete",
+        "Completion Blocked",
+        "Weak Integration",
+        "Promotion Blocked",
+        "Promotion Revoked",
+        "Corroboration Requested",
+        "Challenge Accepted",
+        "Challenge Not Accepted",
+        "Advisory Concern Recorded",
+        "Graph Patch Requested",
+        "Graph Patch Applied",
+        "Generation Updated",
+        "Lane to Package",
+        "Package to Seam",
+        "Seam Completion",
+        "Seam Completion Revoked",
+        "Reopened by Patch",
+        "Reopened by New Evidence",
+        "Runtime",
+        "Corroboration",
+        "Graph Patch",
+        "Recovery",
+        "User",
+        "External Resource",
+        "Info",
+        "Warning",
+        "Attention",
+        "Action Required",
+        "inline help",
+        "context help",
+        "canonical help entry",
+        "Promotion",
+        "Concern",
+        "Graph Generation",
+        "Lane",
+        "requested vs effective",
+        "History vs Ledger",
+        "historical vs superseded vs revoked vs reopened",
         "why it matters",
         "what it is not",
         "related concepts",
@@ -1338,13 +1715,30 @@
         "what_it_is_not",
         "common_related_states",
         "surface_examples",
+        "term_id",
+        "help_depth",
+        "context_help_target",
+        "canonical_help_entry_ref",
+        "object_label",
+        "state_label",
+        "action_label",
+        "concern_group_label",
+        "blocked_owner_kind",
+        "alert_level",
         "Canonical term names must stay stable across expert and simplified help surfaces.",
         "Historical vocabulary must be shared without collapsing family-local state.",
+        "`Weak Integration` is summarized visibly and grouped under `Wiring`, `Workflow`, `State`, `GUI`, and `Design`.",
+        "Canonical help stays three-tier: inline, contextual, and dedicated help entry without renaming terms between Expert and ELI5.",
+        "Alert-level and blocked-owner terms remain stable across docs and runtime copy.",
+        "Plans/FinalGUISpec.md#7.1 Orchestrator",
         "Plans/FinalGUISpec.md#7.5 Project and attention surfaces"
       ],
       "stale_residue_to_retire": [
         "empty Orchestrator rewrite terms section",
-        "parallel friendly names that drift from contracts"
+        "parallel friendly names that drift from contracts",
+        "`Tiers` as the primary rewrite tab/object label",
+        "tooltip-only governance for rewrite terms",
+        "renaming canonical terms between Expert and ELI5"
       ],
       "status": "active",
       "bucket_reason": "active owner section in collected impact set; current owner-first wave must establish or replace canon here before dependent reconciliation proceeds"
@@ -1363,7 +1757,8 @@
         "OBL-023",
         "OBL-024",
         "OBL-026",
-        "OBL-027"
+        "OBL-027",
+        "FIDELITY-009"
       ],
       "exact_items_that_must_survive": [
         "route_target",
@@ -1404,7 +1799,8 @@
       "source_reasons": [
         "coverage_collection",
         "OBL-015",
-        "OBL-020"
+        "OBL-020",
+        "FIDELITY-041"
       ],
       "exact_items_that_must_survive": [
         "navigation vs mutation",
@@ -1450,7 +1846,8 @@
       "phase_role": "owner_first_wave_eligible",
       "source_reasons": [
         "coverage_collection",
-        "OBL-030"
+        "OBL-030",
+        "FIDELITY-040"
       ],
       "exact_items_that_must_survive": [
         "command_kind",
@@ -1478,80 +1875,6 @@
       "bucket_reason": "active owner section in collected impact set; current owner-first wave must establish or replace canon here before dependent reconciliation proceeds"
     },
     {
-      "path": "Plans/UI_Command_Catalog.md",
-      "heading": "#### Search commands",
-      "doc_role": "owner",
-      "section_role": "consumer_section",
-      "phase_role": "owner_first_wave_eligible",
-      "source_reasons": [
-        "coverage_collection",
-        "OBL-020",
-        "OBL-021",
-        "OBL-026"
-      ],
-      "exact_items_that_must_survive": [
-        "route_target",
-        "project_id",
-        "target_kind",
-        "subject_id",
-        "object_kind",
-        "object_id",
-        "inspector_target",
-        "Open",
-        "Details",
-        "Artifacts",
-        "History",
-        "tab_id",
-        "Search commands must route through the shared route payload rather than bespoke search payloads.",
-        "`subject_id` remains bounded to document/artifact open-by-identity.",
-        "Plans/Contracts_V0.md#7.3 `route_target`",
-        "Plans/FileManager.md#OpenSubject"
-      ],
-      "stale_residue_to_retire": [
-        "ad hoc search result route payloads",
-        "`artifact_id` and `document_id` as direct route fields"
-      ],
-      "status": "active",
-      "bucket_reason": "active owner section in collected impact set; current owner-first wave must establish or replace canon here before dependent reconciliation proceeds"
-    },
-    {
-      "path": "Plans/UI_Command_Catalog.md",
-      "heading": "### Recovery command definitions",
-      "doc_role": "owner",
-      "section_role": "consumer_section",
-      "phase_role": "owner_first_wave_eligible",
-      "source_reasons": [
-        "coverage_collection",
-        "OBL-030",
-        "OBL-032"
-      ],
-      "exact_items_that_must_survive": [
-        "command_kind",
-        "normalization",
-        "blocked_sequence",
-        "approval_scope_key",
-        "allowed_action_ids",
-        "Blocked",
-        "Retry",
-        "Review",
-        "Resolve",
-        "normalization.kind",
-        "normalizes_to_contract",
-        "alias_of_command_id",
-        "Recovery commands must bind to blocked-episode identity rather than request-level or tier-level surrogates.",
-        "Normalization metadata must survive for wrappers and deprecated aliases.",
-        "ordered `allowed_action_ids[]` drive visible recovery command affordances",
-        "Plans/Contracts_V0.md#6.1 Canonical blocked-episode approval anchor",
-        "Plans/Wiring_Matrix.md#UI command handler rule"
-      ],
-      "stale_residue_to_retire": [
-        "`approve_continue`",
-        "request-level recovery identity"
-      ],
-      "status": "active",
-      "bucket_reason": "active owner section in collected impact set; current owner-first wave must establish or replace canon here before dependent reconciliation proceeds"
-    },
-    {
       "path": "Plans/Prompt_Pipeline.md",
       "heading": "### 6.4 Effective resolution record",
       "doc_role": "owner",
@@ -1559,7 +1882,8 @@
       "phase_role": "owner_first_wave_eligible",
       "source_reasons": [
         "coverage_collection",
-        "OBL-007"
+        "OBL-007",
+        "OBL-045"
       ],
       "exact_items_that_must_survive": [
         "requested_account_id",
@@ -1569,17 +1893,44 @@
         "effective_provider_identity",
         "execution_role",
         "operational_identity",
+        "source",
+        "request",
+        "execution",
+        "Inherited from",
+        "Overridden by",
+        "Requested",
+        "Effective",
+        "Reason",
+        "Support",
+        "ranked candidates",
+        "winner",
+        "fallback reason",
+        "actor type",
+        "operation type",
+        "scope level",
         "requested account",
         "effective account",
         "effective resolution",
+        "source_axis",
+        "request_axis",
+        "execution_axis",
+        "ranked_candidates[]",
+        "fallback_reason",
+        "actor_type",
+        "operation_type",
+        "scope_level",
         "Prompt assembly must preserve both requested and effective execution identity.",
         "Binding must distinguish preference from requirement so fallback behavior stays deterministic.",
+        "UI shows the winning source explicitly instead of forcing precedence reconstruction from docs.",
+        "Actor type and operation type dominate stack hints in resolver choice.",
         "effective identity must remain available to downstream permission and approval flows",
         "Plans/Contracts_V0.md#4. Auth contracts",
-        "Plans/Multi-Account.md#4.5 Selectable unit and runtime resolution"
+        "Plans/Multi-Account.md#4.5 Selectable unit and runtime resolution",
+        "Plans/FinalGUISpec.md#7.4.4 Settings (Unified) panel specification"
       ],
       "stale_residue_to_retire": [
-        "policy-only account routing without selected-account anchor"
+        "policy-only account routing without selected-account anchor",
+        "precedence reconstruction from docs instead of explicit requested/effective disclosure"
       ],
       "status": "active",
       "bucket_reason": "active owner section in collected impact set; current owner-first wave must establish or replace canon here before dependent reconciliation proceeds"
@@ -1632,7 +1983,8 @@
       "phase_role": "owner_first_wave_eligible",
       "source_reasons": [
         "coverage_collection",
-        "OBL-031"
+        "OBL-031",
+        "FIDELITY-076"
       ],
       "exact_items_that_must_survive": [
         "execution_unit_context",
@@ -1670,7 +2022,8 @@
       "source_reasons": [
         "coverage_collection",
         "OBL-031",
-        "OBL-032"
+        "OBL-032",
+        "FIDELITY-010"
       ],
       "exact_items_that_must_survive": [
         "execution_unit_context",
@@ -1698,31 +2051,6 @@
         "`TierContext`",
         "`tier_id` as canonical execution scope",
         "request-level blocked identity"
-      ],
-      "status": "active",
-      "bucket_reason": "active owner section in collected impact set; current owner-first wave must establish or replace canon here before dependent reconciliation proceeds"
-    },
-    {
-      "path": "Plans/FileManager.md",
-      "heading": "### OpenSubject",
-      "doc_role": "owner",
-      "section_role": "consumer_section",
-      "phase_role": "owner_first_wave_eligible",
-      "source_reasons": [
-        "coverage_collection",
-        "OBL-026"
-      ],
-      "exact_items_that_must_survive": [
-        "OpenSubject",
-        "subject_id",
-        "doc:<document_id>",
-        "artifact:<artifact_id>",
-        "Open Subject",
-        "File/open surfaces must use `subject_id` only for canonical openable content families.",
-        "Plans/Contracts_V0.md#7.4 `OpenSubject`"
-      ],
-      "stale_residue_to_retire": [
-        "document/artifact navigation prose that bypasses `subject_id`"
       ],
       "status": "active",
       "bucket_reason": "active owner section in collected impact set; current owner-first wave must establish or replace canon here before dependent reconciliation proceeds"
@@ -1808,7 +2136,8 @@
       "phase_role": "owner_first_wave_eligible",
       "source_reasons": [
         "coverage_collection",
-        "OBL-009"
+        "OBL-009",
+        "FIDELITY-021"
       ],
       "exact_items_that_must_survive": [
         "execution_entity_id",
@@ -1844,7 +2173,8 @@
       "source_reasons": [
         "coverage_collection",
         "OBL-009",
-        "OBL-032"
+        "OBL-032",
+        "FIDELITY-022"
       ],
       "exact_items_that_must_survive": [
         "blocked_sequence",
@@ -1932,7 +2262,8 @@
         "coverage_collection",
         "OBL-007",
         "OBL-008",
-        "OBL-035"
+        "OBL-035",
+        "OBL-043"
       ],
       "exact_items_that_must_survive": [
         "requested_account_id",
@@ -1943,20 +2274,37 @@
         "account_id",
         "credential_ref",
         "login",
+        "account_pressure_episode",
+        "account_switch_event",
+        "episode_id",
+        "switch_event_id",
+        "source_kind",
+        "signal_confidence",
+        "pressure_kind",
+        "decision_kind",
+        "source_episode_id?",
         "requested account",
         "effective account",
         "account record",
+        "account pressure episode",
+        "account switch event",
         "auth_realm",
+        "source_episode_id",
         "Stable internal account identity outranks provider-native display metadata.",
         "Requested/effective account state remains explicit across runtime resolution.",
+        "Failed or blocked switch decisions still produce durable history even when the effective account did not change.",
+        "Current health snapshots and recent-reason fields do not substitute for canonical pressure/switch history.",
         "effective account identity must remain available to permission and approval consumers",
         "Plans/Contracts_V0.md#4. Auth contracts",
-        "Plans/GitHub_API_Auth_and_Flows.md#Token handling and storage (hard rules)"
+        "Plans/GitHub_API_Auth_and_Flows.md#Token handling and storage (hard rules)",
+        "Plans/storage-plan.md#Canonical records"
       ],
       "stale_residue_to_retire": [
         "login-keyed durable identity",
         "ambiguous `provider_account_id` status",
-        "policy-only account routing without selected-account anchor"
+        "policy-only account routing without selected-account anchor",
+        "`account_switch_reason` as both pressure cause and switch outcome",
+        "`recent_switch_reason` as durable history"
       ],
       "status": "active",
       "bucket_reason": "active owner section in collected impact set; current owner-first wave must establish or replace canon here before dependent reconciliation proceeds"
@@ -2002,7 +2350,8 @@
       "phase_role": "owner_first_wave_eligible",
       "source_reasons": [
         "coverage_collection",
-        "OBL-001"
+        "OBL-001",
+        "FIDELITY-070"
       ],
       "exact_items_that_must_survive": [
         "Source Control owns Git-native worktree inspection and mutation actions",
@@ -2034,7 +2383,8 @@
       "phase_role": "owner_first_wave_eligible",
       "source_reasons": [
         "coverage_collection",
-        "OBL-037"
+        "OBL-037",
+        "FIDELITY-016"
       ],
       "exact_items_that_must_survive": [
         "Project Plan Package",
@@ -2050,7 +2400,7 @@
         "projection_health",
         "Project Plan Package and Runtime Artifacts remain distinct families.",
         "Runtime artifact lookup/indexing remains a projection concern rather than canonical artifact truth.",
-        "Plans/Project_Output_Artifacts.md#Runtime Artifacts (GUI panel) \u2014 distinct from this document",
+        "Plans/Project_Output_Artifacts.md#Runtime Artifacts (GUI panel) — distinct from this document",
         "Plans/storage-plan.md#Required redb keys"
       ],
       "stale_residue_to_retire": [
@@ -2067,7 +2417,8 @@
       "phase_role": "owner_first_wave_eligible",
       "source_reasons": [
         "coverage_collection",
-        "OBL-034"
+        "OBL-034",
+        "FIDELITY-018"
       ],
       "exact_items_that_must_survive": [
         "attempt_id",
@@ -2158,7 +2509,8 @@
       "phase_role": "owner_first_wave_eligible",
       "source_reasons": [
         "coverage_collection",
-        "OBL-035"
+        "OBL-035",
+        "FIDELITY-023"
       ],
       "exact_items_that_must_survive": [
         "account_id",
@@ -2249,7 +2601,8 @@
       "phase_role": "owner_first_wave_eligible",
       "source_reasons": [
         "coverage_collection",
-        "OBL-007"
+        "OBL-007",
+        "OBL-045"
       ],
       "exact_items_that_must_survive": [
         "requested/effective execution identity",
@@ -2260,18 +2613,44 @@
         "requested_account_binding",
         "execution_role",
         "operational_identity",
+        "source",
+        "request",
+        "execution",
+        "Inherited from",
+        "Overridden by",
+        "Requested",
+        "Effective",
+        "Reason",
+        "Support",
+        "ranked candidates",
+        "winner",
+        "fallback reason",
+        "actor type",
+        "operation type",
+        "scope level",
         "requested account",
         "effective account",
+        "source_axis",
+        "request_axis",
+        "execution_axis",
+        "ranked_candidates[]",
+        "fallback_reason",
+        "actor_type",
+        "operation_type",
+        "scope_level",
         "Requested state must remain recoverable in historical snapshots.",
         "Binding distinguishes preference from requirement.",
         "Fallback behavior depends on binding rather than ad hoc UI or provider policy.",
+        "Requested/effective differences expand visibly when runtime did not honor the request exactly.",
         "effective account identity must remain available to permission and approval consumers",
         "Plans/Prompt_Pipeline.md#6.4 Effective resolution record",
-        "Plans/assistant-chat-design.md#Canonical navigation model"
+        "Plans/assistant-chat-design.md#Canonical navigation model",
+        "Plans/FinalGUISpec.md#7.4.4 Settings (Unified) panel specification"
       ],
       "stale_residue_to_retire": [
         "policy-only account routing without selected-account anchor",
-        "identity bundles that stop at effective_account_id only"
+        "identity bundles that stop at effective_account_id only",
+        "precedence reconstruction from docs instead of explicit requested/effective disclosure"
       ],
       "status": "active",
       "bucket_reason": "active owner section in collected impact set; current owner-first wave must establish or replace canon here before dependent reconciliation proceeds"
@@ -2284,7 +2663,8 @@
       "phase_role": "owner_first_wave_eligible",
       "source_reasons": [
         "coverage_collection",
-        "OBL-036"
+        "OBL-036",
+        "FIDELITY-024"
       ],
       "exact_items_that_must_survive": [
         "validation_pass_report",
@@ -2378,7 +2758,8 @@
         "coverage_collection",
         "OBL-007",
         "OBL-031",
-        "OBL-032"
+        "OBL-032",
+        "FIDELITY-011"
       ],
       "exact_items_that_must_survive": [
         "execution_unit_context",
@@ -2452,7 +2833,8 @@
       "phase_role": "owner_first_wave_eligible",
       "source_reasons": [
         "coverage_collection",
-        "OBL-032"
+        "OBL-032",
+        "FIDELITY-043"
       ],
       "exact_items_that_must_survive": [
         "allowed_action_id",
@@ -2494,7 +2876,8 @@
       "phase_role": "dependent_consumer_followon",
       "source_reasons": [
         "coverage_collection",
-        "OBL-037"
+        "OBL-037",
+        "FIDELITY-017"
       ],
       "exact_items_that_must_survive": [
         "artifacts_index.v1:{project_id}:{artifact_id}",
@@ -2536,7 +2919,8 @@
       "source_reasons": [
         "coverage_collection",
         "OBL-034",
-        "OBL-036"
+        "OBL-036",
+        "FIDELITY-020"
       ],
       "exact_items_that_must_survive": [
         "attempt_id",
@@ -2577,7 +2961,9 @@
         "OBL-018",
         "OBL-023",
         "OBL-024",
-        "OBL-038"
+        "OBL-038",
+        "OBL-042",
+        "FIDELITY-073"
       ],
       "exact_items_that_must_survive": [
         "lane",
@@ -2590,20 +2976,29 @@
         "inspector_target",
         "worktree_id",
         "lane_id",
+        "Historical Run Mode",
+        "focused_run_id?",
+        "focus_mode = live | historical",
         "lineage",
         "package_id",
         "node_id",
         "historical_state",
         "lineage_refs",
+        "focused_run_id",
+        "focus_mode",
         "Lane remains the primary operational object while worktree remains concrete backing.",
         "Historical/archived/removed semantics remain visible after cleanup.",
+        "Run Graph pivots stay on the shared focused run context instead of tab-local run drift.",
+        "Historical mode must not auto-switch back to live because new activity appeared.",
         "Plans/storage-plan.md#Restart and stale history",
-        "Plans/Contracts_V0.md#7.3 `route_target`"
+        "Plans/Contracts_V0.md#7.3 `route_target`",
+        "Plans/Orchestrator_Page.md#9. Current vs historical run behavior"
       ],
       "stale_residue_to_retire": [
         "tier-era object stack",
         "historical implied by missing live state",
-        "`tier_id` as a primary graph action key"
+        "`tier_id` as a primary graph action key",
+        "tab-local run drift without shared `focused_run_id`"
       ],
       "status": "active",
       "bucket_reason": "deferred from the owner-first current wave; this dependent consumer/mirror section remains mutation-bearing but must wait for owner-canon reconciliation before packet planning",
@@ -2617,7 +3012,8 @@
       "phase_role": "dependent_consumer_followon",
       "source_reasons": [
         "coverage_collection",
-        "OBL-014"
+        "OBL-014",
+        "FIDELITY-071"
       ],
       "exact_items_that_must_survive": [
         "virtualization",
@@ -2653,7 +3049,10 @@
         "OBL-013",
         "OBL-020",
         "OBL-034",
-        "OBL-036"
+        "OBL-036",
+        "OBL-040",
+        "OBL-044",
+        "FIDELITY-072"
       ],
       "exact_items_that_must_survive": [
         "attempt_id",
@@ -2668,6 +3067,16 @@
         "blocked",
         "system_notification",
         "route_target",
+        "Feature Seam",
+        "Work Package",
+        "Package Overseer",
+        "Seam Overseer",
+        "Weak Integration",
+        "Corroboration Requested",
+        "Graph Patch",
+        "inline help",
+        "context help",
+        "canonical help entry",
         "details",
         "artifacts",
         "Attention Required",
@@ -2679,17 +3088,81 @@
         "subject_id",
         "object_kind",
         "object_id",
+        "object_label",
+        "state_label",
+        "help_depth",
+        "context_help_target",
+        "canonical_help_entry_ref",
         "Inspector detail pivots must respect bridge-field precedence.",
         "Validation reports must open as artifacts with lineage rather than as runtime records.",
         "Inspector escalations and pivots must preserve the shared routing payload and escalation ladder rather than tier-era/request-era special cases.",
+        "Graph/detail copy must use canonical rewrite labels instead of local jargon.",
+        "Dense graph badges and narrow inspector chips use linked deeper help rather than local renaming.",
         "Plans/Runtime_Artifacts_Panel.md#Cross-Surface Operation Receipt Linkage Addendum (2026-03-12)",
         "Plans/Contracts_V0.md#7.3 `route_target`",
-        "Plans/Orchestrator_Page.md#12. Concern and notification model"
+        "Plans/Orchestrator_Page.md#12. Concern and notification model",
+        "Plans/Glossary.md#Orchestrator rewrite terms"
       ],
       "stale_residue_to_retire": [
         "artifact attribution without attempt identity",
         "`workflow_run_id` as the only lineage bridge",
-        "`request_id` and `tier_id` as primary graph action keys"
+        "`request_id` and `tier_id` as primary graph action keys",
+        "tooltip-only governance for rewrite terms",
+        "local jargon that renames canonical rewrite objects"
+      ],
+      "status": "active",
+      "bucket_reason": "deferred from the owner-first current wave; this dependent consumer/mirror section remains mutation-bearing but must wait for owner-canon reconciliation before packet planning",
+      "intended_bucket_on_followon_wave": "must_reconcile"
+    },
+    {
+      "path": "Plans/FinalGUISpec.md",
+      "heading": "### 7.1 Orchestrator",
+      "doc_role": "consumer",
+      "section_role": "consumer_section",
+      "phase_role": "dependent_consumer_followon",
+      "source_reasons": [
+        "coverage_collection",
+        "OBL-039",
+        "OBL-040",
+        "OBL-042",
+        "OBL-044"
+      ],
+      "exact_items_that_must_survive": [
+        "Progress",
+        "Seams",
+        "History",
+        "Ledger",
+        "Historical Run Mode",
+        "focus_mode = live | historical",
+        "focused_run_id?",
+        "Feature Seam",
+        "Work Package",
+        "Package Overseer",
+        "Seam Overseer",
+        "inline help",
+        "context help",
+        "canonical help entry",
+        "widget_id",
+        "host_surface",
+        "default_drill_target",
+        "focused_run_id",
+        "focus_mode",
+        "selected_tab",
+        "help_depth",
+        "context_help_target",
+        "canonical_help_entry_ref",
+        "`Progress` is the only Orchestrator widget canvas.",
+        "All Orchestrator tabs share the same focused run context.",
+        "Historical mode shows a persistent banner/chip with the focused historical `run_id`.",
+        "Compact surfaces use canonical labels plus linked deeper help instead of local jargon renaming.",
+        "Plans/Orchestrator_Page.md#3. Progress tab",
+        "Plans/Orchestrator_Page.md#9. Current vs historical run behavior",
+        "Plans/Glossary.md#Orchestrator rewrite terms"
+      ],
+      "stale_residue_to_retire": [
+        "widget hosting outside `Progress` as the default Orchestrator model",
+        "silent live-focus switching",
+        "local jargon that renames canonical rewrite objects"
       ],
       "status": "active",
       "bucket_reason": "deferred from the owner-first current wave; this dependent consumer/mirror section remains mutation-bearing but must wait for owner-canon reconciliation before packet planning",
@@ -2704,7 +3177,8 @@
       "source_reasons": [
         "coverage_collection",
         "OBL-015",
-        "OBL-020"
+        "OBL-020",
+        "FIDELITY-026"
       ],
       "exact_items_that_must_survive": [
         "navigation vs mutation",
@@ -2750,7 +3224,8 @@
       "phase_role": "dependent_consumer_followon",
       "source_reasons": [
         "coverage_collection",
-        "OBL-015"
+        "OBL-015",
+        "FIDELITY-027"
       ],
       "exact_items_that_must_survive": [
         "shortcut eligibility",
@@ -2786,7 +3261,8 @@
         "OBL-024",
         "OBL-025",
         "OBL-026",
-        "OBL-027"
+        "OBL-027",
+        "FIDELITY-029"
       ],
       "exact_items_that_must_survive": [
         "route_target",
@@ -2835,13 +3311,34 @@
       "phase_role": "dependent_consumer_followon",
       "source_reasons": [
         "coverage_collection",
-        "OBL-011"
+        "OBL-011",
+        "OBL-044",
+        "OBL-045",
+        "FIDELITY-030"
       ],
       "exact_items_that_must_survive": [
         "canonical term system",
         "contextual help system",
         "dedicated help-entry contract",
         "related_concepts",
+        "inline help",
+        "context help",
+        "canonical help entry",
+        "source",
+        "request",
+        "execution",
+        "Inherited from",
+        "Overridden by",
+        "Requested",
+        "Effective",
+        "Reason",
+        "Support",
+        "ranked candidates",
+        "winner",
+        "fallback reason",
+        "actor type",
+        "operation type",
+        "scope level",
         "why it matters",
         "what it is not",
         "related concepts",
@@ -2851,11 +3348,27 @@
         "what_it_is_not",
         "common_related_states",
         "surface_examples",
+        "help_depth",
+        "term_id",
+        "inline_help_text",
+        "context_help_target",
+        "canonical_help_entry_ref",
+        "source_axis",
+        "request_axis",
+        "execution_axis",
+        "ranked_candidates[]",
+        "fallback_reason",
+        "actor_type",
+        "operation_type",
+        "scope_level",
         "Settings/help surfaces must reuse canonical help-entry structure instead of drifting into tooltip-only explanations.",
+        "UI shows the winning source explicitly instead of forcing precedence reconstruction from docs.",
+        "Requested/effective differences expand visibly when runtime did not honor the request exactly.",
         "Plans/Glossary.md#Orchestrator rewrite terms"
       ],
       "stale_residue_to_retire": [
-        "tooltip-only help approach for complex rewrite concepts"
+        "tooltip-only help approach for complex rewrite concepts",
+        "precedence reconstruction from docs instead of explicit requested/effective disclosure"
       ],
       "status": "active",
       "bucket_reason": "deferred from the owner-first current wave; this dependent consumer/mirror section remains mutation-bearing but must wait for owner-canon reconciliation before packet planning",
@@ -2869,7 +3382,8 @@
       "phase_role": "dependent_consumer_followon",
       "source_reasons": [
         "coverage_collection",
-        "OBL-017"
+        "OBL-017",
+        "FIDELITY-033"
       ],
       "exact_items_that_must_survive": [
         "record export",
@@ -2907,7 +3421,9 @@
         "coverage_collection",
         "OBL-011",
         "OBL-012",
-        "OBL-013"
+        "OBL-013",
+        "OBL-041",
+        "FIDELITY-031"
       ],
       "exact_items_that_must_survive": [
         "project health",
@@ -2921,6 +3437,22 @@
         "blocked",
         "system_notification",
         "related_concepts",
+        "Runtime",
+        "Package Overseer",
+        "Seam Overseer",
+        "Corroboration",
+        "Graph Patch",
+        "Recovery",
+        "User",
+        "External Resource",
+        "Info",
+        "Warning",
+        "Attention",
+        "Action Required",
+        "account.*",
+        "resolved",
+        "dismissed",
+        "acknowledged",
         "Attention Required",
         "Blocked",
         "System notification",
@@ -2928,14 +3460,22 @@
         "attention_state",
         "health_indicator",
         "escalation_level",
+        "blocked_owner_kind",
+        "alert_level",
+        "event_family",
+        "condition_state",
+        "linger_policy",
         "Project health and attention must remain separate visible dimensions.",
         "Escalation ladder rendering must preserve `attention_required` vs `blocked`.",
+        "Dashboard is summary/urgency while Orchestrator holds detailed operational context.",
+        "`acknowledged` remains distinct from both `resolved` and `dismissed`.",
         "Plans/Orchestrator_Page.md#12. Concern and notification model",
         "Plans/Glossary.md#Orchestrator rewrite terms"
       ],
       "stale_residue_to_retire": [
         "conflated single health indicator",
-        "tooltip-only help for complex rewrite concepts"
+        "tooltip-only help for complex rewrite concepts",
+        "generic red project badge without owner/reason context"
       ],
       "status": "active",
       "bucket_reason": "deferred from the owner-first current wave; this dependent consumer/mirror section remains mutation-bearing but must wait for owner-canon reconciliation before packet planning",
@@ -2949,7 +3489,8 @@
       "phase_role": "dependent_consumer_followon",
       "source_reasons": [
         "coverage_collection",
-        "OBL-015"
+        "OBL-015",
+        "FIDELITY-034"
       ],
       "exact_items_that_must_survive": [
         "confirmation",
@@ -2979,7 +3520,8 @@
       "phase_role": "dependent_consumer_followon",
       "source_reasons": [
         "coverage_collection",
-        "OBL-013"
+        "OBL-013",
+        "FIDELITY-037"
       ],
       "exact_items_that_must_survive": [
         "info",
@@ -3016,7 +3558,8 @@
       "source_reasons": [
         "coverage_collection",
         "OBL-029",
-        "OBL-032"
+        "OBL-032",
+        "FIDELITY-035"
       ],
       "exact_items_that_must_survive": [
         "blocked_sequence",
@@ -3051,7 +3594,8 @@
       "source_reasons": [
         "coverage_collection",
         "OBL-009",
-        "OBL-032"
+        "OBL-032",
+        "FIDELITY-036"
       ],
       "exact_items_that_must_survive": [
         "execution_entity_id",
@@ -3091,7 +3635,7 @@
         "coverage_collection",
         "OBL-009",
         "OBL-032",
-        "LF-002"
+        "FIDELITY-038"
       ],
       "exact_items_that_must_survive": [
         "execution_entity_id",
@@ -3131,7 +3675,10 @@
       "source_reasons": [
         "coverage_collection",
         "OBL-010",
-        "OBL-020"
+        "OBL-020",
+        "OBL-039",
+        "OBL-044",
+        "FIDELITY-044"
       ],
       "exact_items_that_must_survive": [
         "projection_freshness",
@@ -3144,16 +3691,43 @@
         "object_kind",
         "object_id",
         "inspector_target",
+        "widget_id",
+        "host_surface",
+        "default_drill_target",
+        "widget_layout_state",
+        "Progress",
+        "Run Status",
+        "Current Activity",
+        "Attention / Blockers",
+        "Seam Health",
+        "Package Activity",
+        "Promotion Queue",
+        "Worktree Lanes",
+        "Account / Usage Pressure",
+        "Recent Major Events",
+        "Overseer Activity",
+        "Corroboration Queue",
+        "Recovery State",
+        "Throughput / Capacity",
+        "inline help",
+        "context help",
+        "canonical help entry",
         "stale",
         "degraded",
         "unavailable",
+        "Dashboard",
         "last_projected_at_utc",
         "projector_lag",
         "degraded_reason_code",
         "tab_id",
+        "help_depth",
+        "context_help_target",
+        "canonical_help_entry_ref",
         "Widgets must consume the shared projection-health contract rather than inventing local trust semantics.",
         "Projection-backed widgets must degrade to record-backed fallback views when trust drops.",
         "Widget drill-downs must route through the shared routing payload rather than widget-local payload variants.",
+        "`Progress` is the only Orchestrator widget canvas while a reusable subset may also be hostable on Dashboard.",
+        "Dense widget chrome uses linked deeper help instead of local jargon or tooltip-only explanations.",
         "action widgets must respect projection trust before exposing mutation affordances",
         "Plans/storage-plan.md#Projection rules (reconciled)",
         "Plans/Contracts_V0.md#7.3 `route_target`"
@@ -3161,7 +3735,86 @@
       "stale_residue_to_retire": [
         "implicit freshness assumptions",
         "generic `projection_trust` phrasing",
-        "separate ad hoc payloads per surface"
+        "separate ad hoc payloads per surface",
+        "widget hosting outside `Progress` as the default Orchestrator model",
+        "tooltip-only governance for rewrite terms"
+      ],
+      "status": "active",
+      "bucket_reason": "deferred from the owner-first current wave; this dependent consumer/mirror section remains mutation-bearing but must wait for owner-canon reconciliation before packet planning",
+      "intended_bucket_on_followon_wave": "must_reconcile"
+    },
+    {
+      "path": "Plans/UI_Command_Catalog.md",
+      "heading": "#### Search commands",
+      "doc_role": "owner",
+      "section_role": "consumer_section",
+      "phase_role": "dependent_consumer_followon",
+      "source_reasons": [
+        "coverage_collection",
+        "OBL-020",
+        "OBL-021",
+        "OBL-026",
+        "FIDELITY-042"
+      ],
+      "exact_items_that_must_survive": [
+        "route_target",
+        "project_id",
+        "target_kind",
+        "subject_id",
+        "object_kind",
+        "object_id",
+        "inspector_target",
+        "Open",
+        "Details",
+        "Artifacts",
+        "History",
+        "tab_id",
+        "Search commands must route through the shared route payload rather than bespoke search payloads.",
+        "`subject_id` remains bounded to document/artifact open-by-identity.",
+        "Plans/Contracts_V0.md#7.3 `route_target`",
+        "Plans/FileManager.md#OpenSubject"
+      ],
+      "stale_residue_to_retire": [
+        "ad hoc search result route payloads",
+        "`artifact_id` and `document_id` as direct route fields"
+      ],
+      "status": "active",
+      "bucket_reason": "deferred from the owner-first current wave; this dependent consumer/mirror section remains mutation-bearing but must wait for owner-canon reconciliation before packet planning",
+      "intended_bucket_on_followon_wave": "must_reconcile"
+    },
+    {
+      "path": "Plans/UI_Command_Catalog.md",
+      "heading": "### Recovery command definitions",
+      "doc_role": "owner",
+      "section_role": "consumer_section",
+      "phase_role": "dependent_consumer_followon",
+      "source_reasons": [
+        "coverage_collection",
+        "OBL-030",
+        "OBL-032"
+      ],
+      "exact_items_that_must_survive": [
+        "command_kind",
+        "normalization",
+        "blocked_sequence",
+        "approval_scope_key",
+        "allowed_action_ids",
+        "Blocked",
+        "Retry",
+        "Review",
+        "Resolve",
+        "normalization.kind",
+        "normalizes_to_contract",
+        "alias_of_command_id",
+        "Recovery commands must bind to blocked-episode identity rather than request-level or tier-level surrogates.",
+        "Normalization metadata must survive for wrappers and deprecated aliases.",
+        "ordered `allowed_action_ids[]` drive visible recovery command affordances",
+        "Plans/Contracts_V0.md#6.1 Canonical blocked-episode approval anchor",
+        "Plans/Wiring_Matrix.md#UI command handler rule"
+      ],
+      "stale_residue_to_retire": [
+        "`approve_continue`",
+        "request-level recovery identity"
       ],
       "status": "active",
       "bucket_reason": "deferred from the owner-first current wave; this dependent consumer/mirror section remains mutation-bearing but must wait for owner-canon reconciliation before packet planning",
@@ -3177,7 +3830,8 @@
         "coverage_collection",
         "OBL-020",
         "OBL-026",
-        "OBL-027"
+        "OBL-027",
+        "FIDELITY-046"
       ],
       "exact_items_that_must_survive": [
         "route_target",
@@ -3214,7 +3868,8 @@
       "source_reasons": [
         "coverage_collection",
         "OBL-009",
-        "OBL-032"
+        "OBL-032",
+        "FIDELITY-047"
       ],
       "exact_items_that_must_survive": [
         "execution_entity_id",
@@ -3249,7 +3904,8 @@
         "coverage_collection",
         "OBL-007",
         "OBL-008",
-        "OBL-035"
+        "OBL-035",
+        "FIDELITY-048"
       ],
       "exact_items_that_must_survive": [
         "requested_account_id",
@@ -3285,7 +3941,8 @@
       "phase_role": "dependent_mirror_followon",
       "source_reasons": [
         "coverage_collection",
-        "OBL-030"
+        "OBL-030",
+        "FIDELITY-054"
       ],
       "exact_items_that_must_survive": [
         "command_kind",
@@ -3312,7 +3969,8 @@
       "phase_role": "dependent_mirror_followon",
       "source_reasons": [
         "coverage_collection",
-        "OBL-030"
+        "OBL-030",
+        "FIDELITY-055"
       ],
       "exact_items_that_must_survive": [
         "command_kind",
@@ -3333,6 +3991,33 @@
       "intended_bucket_on_followon_wave": "must_reconcile"
     },
     {
+      "path": "Plans/FileManager.md",
+      "heading": "### OpenSubject",
+      "doc_role": "owner",
+      "section_role": "consumer_section",
+      "phase_role": "dependent_consumer_followon",
+      "source_reasons": [
+        "coverage_collection",
+        "OBL-026",
+        "FIDELITY-039"
+      ],
+      "exact_items_that_must_survive": [
+        "OpenSubject",
+        "subject_id",
+        "doc:<document_id>",
+        "artifact:<artifact_id>",
+        "Open Subject",
+        "File/open surfaces must use `subject_id` only for canonical openable content families.",
+        "Plans/Contracts_V0.md#7.4 `OpenSubject`"
+      ],
+      "stale_residue_to_retire": [
+        "document/artifact navigation prose that bypasses `subject_id`"
+      ],
+      "status": "active",
+      "bucket_reason": "deferred from the owner-first current wave; this dependent consumer/mirror section remains mutation-bearing but must wait for owner-canon reconciliation before packet planning",
+      "intended_bucket_on_followon_wave": "must_reconcile"
+    },
+    {
       "path": "Plans/assistant-chat-design.md",
       "heading": "### 13.4 Shared runtime identity display",
       "doc_role": "consumer",
@@ -3340,7 +4025,8 @@
       "phase_role": "dependent_consumer_followon",
       "source_reasons": [
         "coverage_collection",
-        "OBL-033"
+        "OBL-033",
+        "FIDELITY-050"
       ],
       "exact_items_that_must_survive": [
         "node_id",
@@ -3376,7 +4062,8 @@
       "source_reasons": [
         "coverage_collection",
         "OBL-029",
-        "OBL-032"
+        "OBL-032",
+        "FIDELITY-052"
       ],
       "exact_items_that_must_survive": [
         "blocked_sequence",
@@ -3413,7 +4100,8 @@
       "source_reasons": [
         "coverage_collection",
         "OBL-029",
-        "OBL-032"
+        "OBL-032",
+        "FIDELITY-074"
       ],
       "exact_items_that_must_survive": [
         "blocked_sequence",
@@ -3448,7 +4136,8 @@
       "source_reasons": [
         "coverage_collection",
         "OBL-013",
-        "OBL-032"
+        "OBL-032",
+        "FIDELITY-075"
       ],
       "exact_items_that_must_survive": [
         "info",
@@ -3484,7 +4173,8 @@
       "phase_role": "dependent_consumer_followon",
       "source_reasons": [
         "coverage_collection",
-        "OBL-033"
+        "OBL-033",
+        "FIDELITY-012"
       ],
       "exact_items_that_must_survive": [
         "tool.invoked",
@@ -3517,7 +4207,8 @@
       "phase_role": "dependent_consumer_followon",
       "source_reasons": [
         "coverage_collection",
-        "OBL-009"
+        "OBL-009",
+        "FIDELITY-014"
       ],
       "exact_items_that_must_survive": [
         "execution_entity_id",
@@ -3551,7 +4242,8 @@
       "phase_role": "dependent_consumer_followon",
       "source_reasons": [
         "coverage_collection",
-        "OBL-011"
+        "OBL-011",
+        "FIDELITY-081"
       ],
       "exact_items_that_must_survive": [
         "canonical term system",
@@ -3586,7 +4278,9 @@
       "source_reasons": [
         "coverage_collection",
         "OBL-017",
-        "OBL-033"
+        "OBL-033",
+        "OBL-043",
+        "FIDELITY-082"
       ],
       "exact_items_that_must_survive": [
         "node_id",
@@ -3599,19 +4293,30 @@
         "record export",
         "bundle export",
         "view export",
+        "account_pressure_episode",
+        "account_switch_event",
+        "episode_id",
+        "switch_event_id",
+        "decision_kind",
+        "source_episode_id?",
         "Show in Ledger",
         "Show in Usage",
+        "Account / Usage Pressure",
         "export_kind",
         "trust_state_at_export",
+        "source_episode_id",
         "Usage views must consume unified attribution rather than infer identity from coarse session or provider data.",
         "Usage exports must respect the shared export taxonomy.",
+        "Account pressure and switch history must stay durable in usage views instead of collapsing to current-run reason fields.",
         "effective account identity must survive into usage views",
         "Plans/Contracts_V0.md#3. Tool events (persisted)",
-        "Plans/storage-plan.md#Canonical records"
+        "Plans/storage-plan.md#Canonical records",
+        "Plans/Multi-Account.md#4. Data model"
       ],
       "stale_residue_to_retire": [
         "session-only or tier-only usage correlation",
-        "unclear export family boundaries"
+        "unclear export family boundaries",
+        "`recent_switch_reason` as durable history"
       ],
       "status": "active",
       "bucket_reason": "deferred from the owner-first current wave; this dependent consumer/mirror section remains mutation-bearing but must wait for owner-canon reconciliation before packet planning",
@@ -3625,7 +4330,8 @@
       "phase_role": "dependent_consumer_followon",
       "source_reasons": [
         "coverage_collection",
-        "OBL-013"
+        "OBL-013",
+        "FIDELITY-083"
       ],
       "exact_items_that_must_survive": [
         "info",
@@ -3663,7 +4369,9 @@
         "coverage_collection",
         "OBL-007",
         "OBL-033",
-        "OBL-035"
+        "OBL-035",
+        "OBL-043",
+        "FIDELITY-084"
       ],
       "exact_items_that_must_survive": [
         "requested_account_id",
@@ -3674,18 +4382,31 @@
         "login",
         "execution_role",
         "operational_identity",
+        "account_pressure_episode",
+        "account_switch_event",
+        "source_kind",
+        "signal_confidence",
+        "decision_kind",
         "requested account",
         "effective account",
         "billing identity",
+        "account pressure episode",
+        "account switch event",
+        "started_at_utc",
+        "updated_at_utc",
+        "ended_at_utc",
         "Usage and billing surfaces must attribute cost through stable internal account identity and runtime attribution rather than login or provider-thin surrogates.",
+        "Billing/usage disclosure must distinguish current requested/effective state from durable pressure/switch history.",
         "effective account identity must remain visible in billing/usage summaries",
         "Plans/Multi-Account.md#4. Data model",
-        "Plans/GitHub_API_Auth_and_Flows.md#Token handling and storage (hard rules)"
+        "Plans/GitHub_API_Auth_and_Flows.md#Token handling and storage (hard rules)",
+        "Plans/storage-plan.md#Canonical records"
       ],
       "stale_residue_to_retire": [
         "login-keyed durable identity",
         "policy-only account routing",
-        "identity-thin usage attribution"
+        "identity-thin usage attribution",
+        "`recent_switch_reason` as durable history"
       ],
       "status": "active",
       "bucket_reason": "deferred from the owner-first current wave; this dependent consumer/mirror section remains mutation-bearing but must wait for owner-canon reconciliation before packet planning",
@@ -3700,7 +4421,8 @@
       "source_reasons": [
         "coverage_collection",
         "OBL-034",
-        "OBL-037"
+        "OBL-037",
+        "FIDELITY-085"
       ],
       "exact_items_that_must_survive": [
         "attempt_id",
@@ -3734,7 +4456,8 @@
       "source_reasons": [
         "coverage_collection",
         "OBL-007",
-        "OBL-033"
+        "OBL-033",
+        "FIDELITY-079"
       ],
       "exact_items_that_must_survive": [
         "requested_account_id",
@@ -3771,7 +4494,8 @@
       "phase_role": "dependent_consumer_followon",
       "source_reasons": [
         "coverage_collection",
-        "OBL-036"
+        "OBL-036",
+        "FIDELITY-080"
       ],
       "exact_items_that_must_survive": [
         "validation_pass_report",
@@ -3803,7 +4527,8 @@
         "OBL-001",
         "OBL-002",
         "OBL-006",
-        "OBL-038"
+        "OBL-038",
+        "FIDELITY-067"
       ],
       "exact_items_that_must_survive": [
         "worktree-first",
@@ -3841,7 +4566,8 @@
       "phase_role": "dependent_consumer_followon",
       "source_reasons": [
         "coverage_collection",
-        "OBL-017"
+        "OBL-017",
+        "FIDELITY-019"
       ],
       "exact_items_that_must_survive": [
         "record export",
@@ -3869,13 +4595,14 @@
     },
     {
       "path": "Plans/Project_Output_Artifacts.md",
-      "heading": "### Runtime Artifacts (GUI panel) \u2014 distinct from this document",
+      "heading": "### Runtime Artifacts (GUI panel) — distinct from this document",
       "doc_role": "mirror",
       "section_role": "mirror_section",
       "phase_role": "dependent_mirror_followon",
       "source_reasons": [
         "coverage_collection",
-        "OBL-037"
+        "OBL-037",
+        "FIDELITY-006"
       ],
       "exact_items_that_must_survive": [
         "Runtime Artifacts",
@@ -3907,7 +4634,8 @@
       "source_reasons": [
         "coverage_collection",
         "OBL-001",
-        "OBL-002"
+        "OBL-002",
+        "FIDELITY-028"
       ],
       "exact_items_that_must_survive": [
         "Source Control",
@@ -3941,7 +4669,8 @@
       "phase_role": "dependent_consumer_followon",
       "source_reasons": [
         "coverage_collection",
-        "OBL-037"
+        "OBL-037",
+        "FIDELITY-032"
       ],
       "exact_items_that_must_survive": [
         "artifact_panel_state.v1:{project_id}",
@@ -3974,7 +4703,8 @@
       "source_reasons": [
         "coverage_collection",
         "OBL-009",
-        "OBL-032"
+        "OBL-032",
+        "FIDELITY-013"
       ],
       "exact_items_that_must_survive": [
         "approval_scope_key",
@@ -4014,7 +4744,8 @@
       "source_reasons": [
         "coverage_collection",
         "OBL-029",
-        "OBL-032"
+        "OBL-032",
+        "FIDELITY-015"
       ],
       "exact_items_that_must_survive": [
         "blocked_reason_code",
@@ -4051,7 +4782,8 @@
       "source_reasons": [
         "coverage_collection",
         "OBL-027",
-        "OBL-029"
+        "OBL-029",
+        "FIDELITY-025"
       ],
       "exact_items_that_must_survive": [
         "route_target",
@@ -4090,7 +4822,8 @@
       "source_reasons": [
         "coverage_collection",
         "OBL-027",
-        "OBL-007"
+        "OBL-007",
+        "FIDELITY-049"
       ],
       "exact_items_that_must_survive": [
         "route_target",
@@ -4151,7 +4884,8 @@
       "phase_role": "dependent_consumer_followon",
       "source_reasons": [
         "coverage_collection",
-        "OBL-033"
+        "OBL-033",
+        "FIDELITY-051"
       ],
       "exact_items_that_must_survive": [
         "origin_thread_id",
@@ -4187,7 +4921,8 @@
       "source_reasons": [
         "coverage_collection",
         "OBL-029",
-        "OBL-032"
+        "OBL-032",
+        "FIDELITY-053"
       ],
       "exact_items_that_must_survive": [
         "blocked_sequence",
@@ -4225,7 +4960,8 @@
         "OBL-007",
         "OBL-030",
         "OBL-031",
-        "OBL-032"
+        "OBL-032",
+        "FIDELITY-045"
       ],
       "exact_items_that_must_survive": [
         "`Executor_Protocol.md` owns dispatch-time execution context and runtime role boundaries",
@@ -4305,7 +5041,8 @@
       "phase_role": "dependent_consumer_followon",
       "source_reasons": [
         "coverage_collection",
-        "OBL-007"
+        "OBL-007",
+        "FIDELITY-078"
       ],
       "exact_items_that_must_survive": [
         "requested_account_id",
@@ -4338,7 +5075,8 @@
       "source_reasons": [
         "coverage_collection",
         "OBL-007",
-        "OBL-031"
+        "OBL-031",
+        "FIDELITY-077"
       ],
       "exact_items_that_must_survive": [
         "execution_unit_context",
@@ -4375,53 +5113,6 @@
       "intended_bucket_on_followon_wave": "must_reconcile"
     }
   ],
-  "missing_coverage_warnings": [
-    {
-      "finding_id": "LF-001",
-      "finding_classification": "stale contradictory residue",
-      "missing_section_refs": [
-        "Plans/assistant-chat-design.md#5.1 Reserved built-ins",
-        "Plans/Commands_System.md#7. Reserved built-in slash commands",
-        "Plans/UI_Command_Catalog.md#2.7 Chat slash commands (reserved)"
-      ],
-      "matched_section_refs": [],
-      "reason": "unresolved fidelity blocker still references section targets not fully present as exact collected sections, so packet planning cannot classify the missing targets without refreshed coverage alignment"
-    },
-    {
-      "finding_id": "LF-002",
-      "finding_classification": "cross-reference stale",
-      "missing_section_refs": [
-        "Plans/Tools.md#10.7 Audit, error, and self-hosted rules",
-        "Plans/Permissions_System.md#3.4A Web-operation permission-key derivation"
-      ],
-      "matched_section_refs": [
-        "Plans/FinalGUISpec.md#15.7 Permission approval card widget"
-      ],
-      "reason": "unresolved fidelity blocker still references section targets not fully present as exact collected sections, so packet planning cannot classify the missing targets without refreshed coverage alignment"
-    },
-    {
-      "finding_id": "LF-003",
-      "finding_classification": "persistence coupling missing",
-      "missing_section_refs": [
-        "Plans/Tools.md#14. Web content caching layer"
-      ],
-      "matched_section_refs": [
-        "Plans/storage-plan.md#4.4 Activity transparency payloads"
-      ],
-      "reason": "unresolved fidelity blocker still references section targets not fully present as exact collected sections, so packet planning cannot classify the missing targets without refreshed coverage alignment"
-    },
-    {
-      "finding_id": "LF-004",
-      "finding_classification": "wrong section allocation",
-      "missing_section_refs": [
-        "Plans/storage-plan.md#Long-running \\`progress_event\\` payload",
-        "Plans/FinalGUISpec.md#15.3 Web and diff operation card widget"
-      ],
-      "matched_section_refs": [
-        "Plans/Contracts_V0.md#3.4 Tool-specific payload extensions"
-      ],
-      "reason": "unresolved fidelity blocker still references section targets not fully present as exact collected sections, so packet planning cannot classify the missing targets without refreshed coverage alignment"
-    }
-  ],
+  "missing_coverage_warnings": [],
   "derived_regen_only_checks": []
 }

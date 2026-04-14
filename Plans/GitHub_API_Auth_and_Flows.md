@@ -252,8 +252,8 @@ Source: GitHub OAuth device flow docs (see References). ContractRef: PolicyRule:
 - Never persist tokens to Puppet Master state stores (seglog, redb, Tantivy) or to any plaintext file. ContractRef: PolicyRule:no_secrets_in_storage, Plans/Architecture_Invariants.md#INV-002
 - Never place tokens in logs (stdout/stderr, structured logs, debug dumps, evidence bundles). ContractRef: PolicyRule:redaction
 
-### Credential store keying (canonical)
 GitHub durable account identity uses stable internal account keys inside the owned credential-keying structure rather than login-derived identity.
+The credential store entry preserves stable account identity and credential locator values.
 
 ContractRef: Plans/Multi-Account.md#4. Data model, Plans/storage-plan.md#4.1 Shared runtime identity consumption
 
@@ -285,7 +285,6 @@ ContractRef: Plans/Multi-Account.md#4. Data model, Plans/storage-plan.md#4.1 Sha
 Rules:
 - GitHub durable account identity must use stable internal account keys while login remains display-only/provider-native metadata.
 - Username rename must not break identity or reconnect behavior.
-
 ### Token lifecycle
 
 Token lifecycle for all GitHub-authenticated flows follows deterministic refresh and rebuild rules.
@@ -527,8 +526,6 @@ When a Puppet Master project runs on an SSH remote dev server (see `Plans/GitHub
 
 ContractRef: Plans/GitHub_Integration.md §C, Plans/Architecture_Invariants.md#INV-002, Plans/DRY_Rules.md
 
-## Runtime Auth-Blocked Recovery Addendum (2026-03-09)
-
 This addendum aligns GitHub API auth flows with the runtime scheduler, blocked-state, retry, and recovery model.
 
 ### 1. Canonical runtime mapping for GitHub API operations
@@ -592,7 +589,6 @@ Behavioral rules:
 
 Permission carry-through:
 - blocked-episode identity must survive auth recovery
-
 ## Auth Expired Mid-Attempt Recovery Addendum
 
 ### Mid-attempt token expiry

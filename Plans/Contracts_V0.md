@@ -50,8 +50,6 @@ Fields:
 
 Rules:
 - source_surface
-### 1.2 EventRecord -- canonical persisted envelope (schema: `pm.event.v0`)
-
 The canonical persisted **record envelope** defines the shared EventRecord shape used by runtime, audit, and historical record families.
 
 ContractRef: Plans/storage-plan.md#Canonical records, Plans/Orchestrator_Page.md#12. Concern and notification model
@@ -84,9 +82,6 @@ Rules:
 - A shared envelope must exist without flattening family-specific semantics.
 - Historical vocabulary must stay shared while family-local lifecycles stay distinct.
 - Concern identity and lineage must remain distinct from review, blocked, and annotation objects.
-
-ContractRef: PolicyRule:no_secrets_in_storage, ContractName:Plans/storage-plan.md, ContractName:Plans/Architecture_Invariants.md#INV-002
-
 ### 1.3 EventEnvelopeV1 -- minimal compatibility envelope
 `EventEnvelopeV1` is the minimal event envelope used by some plans as an intermediate format.
 
@@ -159,7 +154,6 @@ Tool activity MUST be represented in the persisted event stream using the follow
 
 ContractRef: EventType:tool.invoked, EventType:tool.denied, ContractName:Plans/Contracts_V0.md
 
-### 3.1 `tool.invoked`
 **tool event contract** for `tool.invoked`.
 
 ContractRef: Plans/Tools.md#8.0 Event payloads (seglog), Plans/Runtime_Artifacts_Panel.md#Cross-Surface Operation Receipt Linkage Addendum (2026-03-12)
@@ -184,8 +178,6 @@ ContractRef: Plans/Tools.md#8.0 Event payloads (seglog), Plans/Runtime_Artifacts
 Rules:
 - Analytics-thin tool events are no longer sufficient.
 - `attempt_id` is the canonical local runtime anchor; bridge refs stay subordinate but explicit.
-
-### 3.2 `tool.denied`
 **tool event contract** for `tool.denied`.
 
 ContractRef: Plans/Tools.md#8.0 Event payloads (seglog), Plans/Runtime_Artifacts_Panel.md#Cross-Surface Operation Receipt Linkage Addendum (2026-03-12)
@@ -211,9 +203,6 @@ Rules:
 - Analytics-thin tool events are no longer sufficient.
 - `attempt_id` is the canonical local runtime anchor; bridge refs stay subordinate but explicit.
 - permission and denial surfaces must still expose effective actor and account identity.
-
-### 3.3 Requirements quality events
-
 Requirements-quality workflow state uses stable persisted event shapes anchored to the canonical **validation pass report** artifact and launch handoff lineage.
 
 ContractRef: Plans/Project_Output_Artifacts.md#10. Validation Pass Report Artifacts, Plans/chain-wizard-flexibility.md#12. Three-Pass Canonical Validation Workflow (Mandatory Invariant Sweep)
@@ -245,9 +234,6 @@ Rules:
 - `pass_verdict` must support `skipped` where the flow needs it.
 - Accepted/final pass output must bridge into launched execution.
 - effective runtime identity must survive from validation into launch handoff.
-
-### 3.4 Tool-specific payload extensions
-
 This section owns the payload-extension fields that stay attached to persisted events and records rather than becoming route payload surrogates.
 
 ContractRef: Plans/storage-plan.md#4.4 Activity transparency payloads, Plans/Contracts_V0.md#7.3 `route_target`
@@ -329,7 +315,6 @@ ContractRef: PolicyRule:no_secrets_in_storage, ContractName:Plans/Runtime_Artifa
 
 ---
 
-## 4. Auth contracts
 <a id="AuthState"></a>
 ### 4.1 AuthState
 `AuthState` is the canonical persisted and evented auth snapshot for a provider subject. It records the selected identity, readiness state, and any provider-owned optional dimensions without forcing null-padding for dimensions that do not apply.
@@ -459,6 +444,37 @@ Provider setup/health projection needs an explicit lifecycle mapping because pro
 When provider lifecycle is projected into canonical child execution, only execution-relevant states map through the child-run lifecycle directly: `active`/`degraded` correspond to active execution, `suspended` corresponds to blocked execution, and `expired` corresponds to failure. Discovery/configuration-only states remain provider-profile states and MUST NOT be misreported as in-flight child execution.
 ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/Executor_Protocol.md
 
+**requested/effective execution identity**
+
+**AuthState account-backed identity fields**
+
+| Field | Meaning |
+| --- | --- |
+| `effective_account_id` | Stable internal selected account identity captured in persisted auth state when the runtime subject is account-backed. |
+| `effective_provider_identity` | provider-native metadata preserved for display and routing audit without replacing the stable internal account key. |
+| `provider_account_id` | provider-native metadata key retained only as provider-native metadata subordinate to stable internal identity. |
+| `execution_role` | Runtime disclosure role preserved with the effective auth snapshot. |
+| `operational_identity` | Stable runtime and audit identity preserved with the effective auth snapshot. |
+
+**AuthPolicy requested selection fields**
+
+| Field | Meaning |
+| --- | --- |
+| `requested_account_id` | Explicit selected-account anchor for historical recovery and account-directed routing. |
+| `requested_account_binding` | Binding mode that distinguishes preference from requirement. |
+| `requested_account_policy` | Requested account-policy selection used before effective resolution. |
+
+**provider-native metadata** remains subordinate to the stable internal account key.
+
+Rules:
+- Requested state must remain recoverable in historical snapshots.
+- Binding distinguishes preference from requirement.
+- `provider_account_id` must be retired or explicitly governed as provider-native metadata subordinate to stable internal identity.
+
+Permission carry-through:
+- effective-account-scoped permission resolution must read `requested_account_binding` rather than a policy-only route
+- `effective_account_id` must remain available to approval and permission snapshots
+
 ContractRef: Plans/Prompt_Pipeline.md#6.4 Effective resolution record, Plans/Multi-Account.md#4.5 Selectable unit and runtime resolution
 
 Required fields:
@@ -491,7 +507,6 @@ Behavioral rules:
 Permission carry-through:
 - effective-account-scoped permission resolution must read `requested_account_binding` rather than a policy-only route
 - `effective_account_id` must remain available to approval and permission snapshots
-
 ## 5. Context management (instruction scoping + attempt journaling + parent summary + `AGENTS.md` enforcement)
 
 This section defines cross-cutting context assembly and enforcement behaviors for the finished Puppet Master product.
@@ -554,8 +569,6 @@ Serialization rules:
 - only items in `active` or `redacted` state may be serialized as successful prompt context
 - `revoked`, `blocked`, `expired`, and `omitted` items remain visible for audit but are not serialized as successful prompt attachments
 
-### 5.1B Persona/Runtime Snapshot Payload Contract
-
 This section defines the canonical contract for this surface.
 
 Core rules:
@@ -569,7 +582,7 @@ Rules:
 - effective_account_label
 - effective_provider_identity
 - effective_project_id
- 
+
 ContractRef: Plans/Executor_Protocol.md#Worktree-aware execution unit context, Plans/orchestrator-subagent-integration.md#Tier Context
 
 Required fields:
@@ -665,7 +678,6 @@ ContractRef: ContractName:Plans/Contracts_V0.md#ContextInjectionToggles, PolicyR
 
 Approval and recovery are anchored to runtime blocked episodes rather than to tier-boundary request objects.
 
-### 6.1 Canonical blocked-episode approval anchor
 Required runtime-facing fields are:
 - `run_id`
 - `node_id`
@@ -676,25 +688,9 @@ Required runtime-facing fields are:
 - `approval_scope_key`
 - `approver_identity?`
 - `detail_ref?`
-
-Rules:
-- `waiting_approval` is a blocked runtime state, not a separate orchestration ontology.
-- `blocked_sequence` is the canonical approval anchor for resume, approve, decline, skip, abort, and retry flows.
-- `allowed_action_ids[]` is canonical. `allowed_actions[]` is not canonical.
-- `request_id` is compatibility lineage only and MUST NOT be the primary approval target.
-
-ContractRef: ContractName:Plans/human-in-the-loop.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/storage-plan.md
+- `report_ref?`
 
 ContractRef: Plans/human-in-the-loop.md#Canonical HITL request contract, Plans/Executor_Protocol.md#Worktree-aware execution unit context
-
-Required fields:
-- report_ref
-- startup_recovered
-- failure_class
-
-Canonical terms and values:
-- report_ref
-- startup_recovered
 
 Labels:
 - Blocked
@@ -709,7 +705,6 @@ Behavioral rules:
 Permission carry-through:
 - approval scope remains blocked-episode-scoped rather than session-global
 - ordered `allowed_action_ids[]` must survive into approval UI
-
 ### 6.2 Scope and persistence rules
 Rules:
 - approvals bind to canonical runtime identity first: `run_id`, `node_id`, `blocked_sequence`, and `attempt_id?`
@@ -742,7 +737,6 @@ ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Comman
 
 `UICommand` is the canonical command envelope. Shared navigation and identity-open primitives sit underneath public wrapper commands rather than beside them.
 
-### 7.2 UICommand envelope
 Required envelope fields are:
 - `command_id`
 - `command_kind`
@@ -781,8 +775,6 @@ Behavioral rules:
 - Wrapper metadata stays narrow and contract-level.
 - Wrappers point to canonical primitive families only.
 - Route payload structure is not restated inside command metadata.
-
-### 7.3 `route_target`
 `route_target` is the canonical navigation-and-focus contract.
 
 Required fields:
@@ -877,8 +869,6 @@ Behavioral rules:
 - `project_id` is required.
 - `target_kind` is destination class only, and `inspector_target` is focus refinement only after selector identity is established.
 - `resume_url` is serialized transport of `route_target`, not a second routing ontology.
-
-### 7.4 `OpenSubject`
 `OpenSubject` is the canonical identity-native source-open contract.
 
 Required fields:
@@ -1212,7 +1202,6 @@ Minimum payload:
 
 Add the following canonical runtime event families and required fields.
 
-### `scheduler.pass` (minimum addendum fields)
 Required fields:
 - `run_id`
 - `thread_id`
@@ -1239,7 +1228,6 @@ Labels:
 Behavioral rules:
 - The first scheduler pass after startup recovery persists `wake_reason = startup_recovered`.
 - Blocked and recovery wake ownership is carried by `scheduler.pass` rather than inferred from prompt text.
-
 ### `attempt.started`
 Required fields:
 - `run_id`, `thread_id`, `node_id`, `attempt_id`

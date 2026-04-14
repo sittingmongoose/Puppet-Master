@@ -136,8 +136,6 @@ Child inheritance rules:
 
 ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Executor_Protocol.md
 
-### 2.4B Scope specificity across package, seam, lane, project, and global contexts
-
 When multiple rules for the same permission key are simultaneously applicable, the most specific scope wins before falling back to the broader layer order in §2.4. Scope specificity is:
 
 `lane:{lane_id}` > `seam:{seam_id}` > `package:{package_id}` > project > global
@@ -172,7 +170,6 @@ Behavioral rules:
 Permission carry-through:
 - execution-entity
 - effective-account
-
 ### 2.4A Requested vs effective permissioned capability state
 
 The UI and runtime must distinguish requested state from effective state whenever permission, policy, platform, or health constraints change what is actually available.
@@ -389,8 +386,6 @@ Permission rules:
 
 Rules:
 - summary-template and session-approval details are defined in `## 6. Ask flow semantics`
-
-## 6. Ask flow semantics
 
 This section defines the canonical contract for this surface.
 
@@ -937,8 +932,6 @@ Rules:
 
 ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Decision_Policy.md
 
-### Permission snapshot contract
-
 A permission snapshot captures the resolved permission state at attempt start for auditability, immutability, and replay-safe approval logic.
 
 **Schema:**
@@ -1006,7 +999,6 @@ Behavioral rules:
 Permission carry-through:
 - lane/package/account scope
 - ordered `allowed_action_ids[]`
-
 ### External side-effect wakeup chain
 
 When HITL approval resolves an `external_side_effect_blocked` state:

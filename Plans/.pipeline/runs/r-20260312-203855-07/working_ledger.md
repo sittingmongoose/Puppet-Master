@@ -15,15 +15,15 @@
   - readiness for canon-collapse reconciliation
 
 ## Objective
-- Preserve durable execution memory for the completed audit, blocked fidelity findings, and late-session handoffs.
-- Keep the missed-transfer findings, legacy-canon hotspots, and recovery posture recoverable without relying on chat history.
-- Support owner-first fidelity recovery from the existing packetized work item.
+- Preserve durable execution memory for the completed audit and late-session handoffs.
+- Keep the missed-transfer findings, legacy-canon hotspots, and reconciliation posture recoverable without relying on chat history.
+- Support owner-first canon-collapse reconciliation from a stable pre-packetize work item.
 
 ## Constraints / Non-Goals
 - Ledger is execution memory only; it is not canonical and must not be cited in planning docs.
 - Do not write planning-doc changes during work-item stewardship.
 - Do not treat this file as packet content, reconciliation text, or canonical cleanup output.
-- Preserve established packetized state and run metadata while refreshing mode-contract durability files.
+- Preserve established work-item status and run metadata while backfilling mode-contract durability files.
 
 ## Key Facts and Findings
 - Orchestrator page shell direction clarified by user:
@@ -1116,29 +1116,39 @@
     - precedence between provider/account/execution-role rules
 
 ## Packetization Notes
-- Work item is currently `packetized` for run `r-20260312-203855-07`; reuse it for recovery and post-audit work instead of creating a new work item.
-- Section Fidelity Audit completed for that run and found 85 live fidelity gaps, so the current blocked state is a recovery problem, not a work-item continuity problem.
-- `ledger_fidelity_report.txt` and `fidelity_recovery_plan.txt` now provide the durable audit and recovery handoff for fresh agents.
-- Earlier packet-plan contradiction history is still useful context, but it is not the current authoritative blocker set.
-- Preserve `status`, `run_prefix`, `next_run_seq`, and `run_id` during stewardship refreshes.
-- Supporting work-item artifacts already exist:
+- Work item is currently `ready_for_reconciliation`, not ready for light packetization.
+- Packetization has not superseded the audit; the durable next phase is owner-first canon-collapse reconciliation.
+- This work item was backfilled on 2026-04-10 with `mode_rules.md` and `mode_status.md` so future long sessions can reload durable operating context without depending on prior chat history.
+- Pre-packet artifacts now exist for this work item:
   - `canonical_obligations.json`
   - `section_obligation_map.json`
   - `coverage_collection.json`
   - `bucket_plan.json`
   - `packet_plan.json`
-- If recovery proceeds, apply owner-doc corrections first, then consumer and mirror cleanup, then rerun fidelity audit.
+- Packet emission was attempted and blocked:
+  - blocker class = packet-plan contradiction, not missing research
+  - emitter-safe packetization now depends on repairing survivor/residue overlap inside `packet_plan.json`
+  - do not treat the current packet plan as emitted or verifier-ready just because the plan artifact exists
+- Missing-coverage warnings from bucketing still matter:
+  - reserved slash-command consumer coverage (`LF-001`)
+  - web-operation approval cross-reference coverage (`LF-002`)
+  - web cache/storage handoff coverage (`LF-003`)
+  - long-running `progress_event` subsection coverage (`LF-004`)
 
 ## Do-Not-Forget Details
 - Later GUI help/tooltip generation will need:
   - stable canonical terminology
   - clear object vs state vs action distinctions
   - enough explicit “why this exists” language in the planning model to support Simple/Expert/ELI5 derivation
-- Reuse this `work_id` for continued Orchestrator audit and fidelity-recovery work unless scope changes into a separate work item.
-- Do not downgrade or reset the packetized work-item state during stewardship refreshes.
-- Do not create a new work item just to continue the blocked-audit recovery for the current run.
+- Reuse this `work_id` for continued Orchestrator audit / reconciliation-prep work unless scope changes into a separate work item.
+- Do not downgrade `meta.json` from `ready_for_reconciliation` during stewardship backfills.
+- Do not upgrade the work item to `packetized` until packet emission succeeds; the failed emitter pass did not advance run metadata.
 - Update this ledger after meaningful discovery clusters, design decisions, or contradictions are found.
-- If recovery work resumes, start from the blocked fidelity report and the recovery plan rather than reconstructing missing obligations from chat history.
+- If packet work resumes, repair these exact contradictions before re-running emission:
+  - `TierContext` / `tier_id` overlap in `Plans/Executor_Protocol.md#5. Node execution fields`
+  - `github_api:github.com/<login>` overlap in `Plans/GitHub_API_Auth_and_Flows.md#Token handling and storage (hard rules)`
+  - `approve_continue` overlap in `Plans/UI_Command_Catalog.md#Canonical Runtime Recovery Command Consolidation (2026-03-09)`
+  - `tier_id` overlap in `Plans/orchestrator-subagent-integration.md#Tier-Level Subagent Strategy`
 - Track requested vs effective runtime identity if persona/provider/model fallback becomes part of the Orchestrator discussion.
 - Watch for event-name drift, local shadow schemas, and UI-layer redefinitions of runtime semantics.
 - Treat the highest-risk same-file supersession hotspots as canon-collapse targets:
