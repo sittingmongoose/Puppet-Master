@@ -1,16 +1,17 @@
 # Mode Status
 
 ## Current Focus
-- Preserve the packetized audit work item for recovery handoff on `r-20260312-203855-07`.
+- Keep the packetized audit work item durable for resumed recovery on `r-20260312-203855-07`.
 
 ## Current Direction
 - Treat the next phase as owner-first fidelity recovery, not a new work-item setup.
 - Use the blocked fidelity report plus the recovery plan as the durable handoff pair.
+- Refresh mode-contract files without resetting packetized state.
 
 ## What Changed Most Recently
-- Recovered `w-20260312-203855` instead of creating a new work item.
-- Section Fidelity Audit finished blocked with 85 live gaps.
-- Fidelity Recovery Plan was written for the same run.
+- Reused `w-20260312-203855` instead of creating a new work item.
+- Refreshed `meta.json`, `mode_rules.md`, and `mode_status.md` for fresh-agent continuity.
+- Section Fidelity Audit remains blocked with 85 live gaps, with the Fidelity Recovery Plan still governing next actions.
 
 ## Open Questions
 - Whether recovery executes directly from the current run artifacts or after a successor repair run is opened.

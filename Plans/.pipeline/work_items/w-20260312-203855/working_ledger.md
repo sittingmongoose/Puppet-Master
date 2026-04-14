@@ -1121,6 +1121,9 @@
 - `ledger_fidelity_report.txt` and `fidelity_recovery_plan.txt` now provide the durable audit and recovery handoff for fresh agents.
 - Earlier packet-plan contradiction history is still useful context, but it is not the current authoritative blocker set.
 - Preserve `status`, `run_prefix`, `next_run_seq`, and `run_id` during stewardship refreshes.
+- 2026-04-14 stewardship refresh:
+  - refreshed `meta.json`, `mode_rules.md`, and `mode_status.md` for fresh-agent durability
+  - preserved packetized state and existing run metadata in place
 - Supporting work-item artifacts already exist:
   - `canonical_obligations.json`
   - `section_obligation_map.json`
