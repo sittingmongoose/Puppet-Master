@@ -2,8 +2,6 @@
 
 Assistant and Interview surfaces persist thread-local state, activity traces, and reviewable history, but they do not become the canonical owner of runtime identity.
 
-### 4.1 Shared runtime identity consumption
-
 Shared runtime identity projection is consumed across chat, widgets, audit, and delegated execution. Storage keeps the canonical field names and their meanings aligned.
 
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Multi-Account.md, ContractName:Plans/Personas.md
@@ -116,148 +114,27 @@ ContractRef: ContractName:Plans/assistant-chat-design.md#8.1 Canonical planning 
 Labels and values:
 - Plan
 - Deep Plan
-### 4.4 Activity transparency payloads
-
-This section defines the canonical contract for this surface.
-
-ContractRef: Plans/Contracts_V0.md#3.4A Web error taxonomy and applicability
-
-Core rules:
-- Preserve the Firecrawl-specific audit payload keys as exact contract-owned fields.
-- The Firecrawl webextract mapping must preserve structured extraction modes and option surface, not a thin single-URL summary.
-- The Firecrawl owner section must either preserve `changeTracking` with its structured output shape or explicitly retire it as out of scope; it must not disappear silently.
-- PM must not silently switch between self-hosted Firecrawl and hosted/cloud Firecrawl, and deployment-mode disclosure must remain visible.
-- Batch audit/event canon must preserve a parent audit event for the batch plus child audit events per URL.
-- The Firecrawl owner section must preserve shared routing/audit disclosure for requested/effective provider selection, fallback visibility, denied-web projection, and canonical web error taxonomy linkage.
-- The per-contract web error applicability table remains required canon and must stay aligned with provider-to-PM error mapping.
-- All web tools share a common output field set that includes provider identity, routing reason, timing, cache status, and standard error or warning fields.
-- Activity transparency payloads must preserve adapter-selection and projection fields used for routing and audit disclosure.
-
-Fields:
-- firecrawl_credits_used
-- firecrawl_cache_state
-- firecrawl_scrape_id
-- webextract
-- JSON Schema support
-- prompt-driven extraction behavior
-- URL wildcards
-- enableWebSearch
-- changeTracking.status
-- changeTracking.previous_content_ref
-- changeTracking.diff_summary_ref
-- changeTracking.checked_at_utc
-- parent audit event for the batch
-- child audit events per URL
-- tool.invoked
-- continue_on_error
-- `tool_use_id`
-- `adapter_id`
-- `adapter_selection_reason`
-- `duration_ms`
-- `timestamp`
-- `cached`
-- `error_code?`
-- `error_message?`
-- `warnings?`
-- `provenance_badge?`
-- requested_adapter_id
-- effective_adapter_id
-- adapter_selection_reason
-- provider_fallback_summary
-- warnings_count
-- error_code
-- projection_freshness
-- projection_health
-
-Rules:
-- changeTracking { status: changed | unchanged | no_previous_version, previous_content_ref?, diff_summary_ref?, checked_at_utc }
-- change_status: 'new' | 'same' | 'changed' | 'removed'
-- pages[].change_status
-- change_summary
-- explicit out-of-scope retirement if `changeTracking` is not MVP
-- no silent disappearance of the capability
-- PM MUST NOT silently switch between self-hosted Firecrawl and hosted/cloud Firecrawl
-ContractRef: ContractName:Plans/Contracts_V0.md#3.4A Web error taxonomy and applicability, ContractName:Plans/Contracts_V0.md#3.4 Tool-specific payload extensions, ContractName:Plans/FinalGUISpec.md#15.3 Web and diff operation card widget
-- deployment-mode disclosure remains visible
-- self-hosted Firecrawl does not use hosted credit billing
-- tool.denied
-- adapter_unavailable
-- unsupported_operation
-- content_blocked
-- content_not_found
-- unsupported_source
-- extraction_schema_mismatch
-- autonomous_budget_exceeded
-- no_previous_version
-- blocked_reason_code
-- allowed_action_ids[]
-- denial_reason_code
-- denial_source
-- suggested_recovery_action
-- adapter_id
-- blocked responses must be machine-actionable through `allowed_action_ids[]`
-- error naming aligns to `adapter_unavailable`
-
-#### Long-running `progress_event` payload
-
-This section defines the canonical contract for this surface.
-
-ContractRef: Plans/Contracts_V0.md#3.4 Tool-specific payload extensions, Plans/FinalGUISpec.md#15.3 Web and diff operation card widget
-
-Core rules:
-- The Firecrawl async contract must preserve timeout behavior tied to timeout_ms and partial-result survival on timeout.
-- Long-running web operations must preserve the structured progress_event payload and cancellation-with-partial-results contract.
-- The Firecrawl async contract must preserve the exact poll ladder and status family already restored in the owner section.
-
-Fields:
-- timeout_ms
-- timeout when polling exceeds `timeout_ms`
-- partial results survive timeout if already materialized
-- progress_event
-- tool_use_id
-- operation
-- phase
-- detail
-- pages_completed
-- pages_total
-- elapsed_ms
-- estimated_remaining_ms
-- cancelled: true
-- 2s, 4s, 8s, 15s, 30s
-- scraping
-- processing
-- completed
-- failed
-- cancelled
+Activity transparency payloads carry canonical runtime bridge fields and receipt refs used across audit, artifacts, and usage surfaces.
 
 ContractRef: Plans/Tools.md#8.0 Event payloads (seglog), Plans/Runtime_Artifacts_Panel.md#Cross-Surface Operation Receipt Linkage Addendum (2026-03-12)
 
-Required fields:
-- node_id
-- attempt_id
-- lane_id
-- package_id
-- execution_role
-- effective_account_id
-- operational_identity
-- provider_attempt_ref
-- usage_event_ref
-- detail_ref
-- report_ref
+**activity payload**
 
-Canonical terms and values:
-- node_id
-- attempt_id
-- lane_id
-- package_id
-- execution_role
-- effective_account_id
-- operational_identity
-- provider_attempt_ref
-- usage_event_ref
-- detail_ref
-- report_ref
-- receipt refs
+| Field | Requirement |
+| --- | --- |
+| `node_id` | Runtime node identity for the emitted activity payload. |
+| `attempt_id` | Canonical local execution anchor for the activity record. |
+| `lane_id` | Lane identity associated with the activity payload. |
+| `package_id` | Package identity associated with the activity payload. |
+| `execution_role` | Effective execution-role disclosure for the activity payload. |
+| `effective_account_id` | Effective account identity carried into the activity payload. |
+| `operational_identity` | Stable runtime identity for audit and joins. |
+| `provider_attempt_ref` | Provider-side bridge reference that remains subordinate to `attempt_id`. |
+| `usage_event_ref` | Usage-side reference for accounting and evidence joins. |
+| `detail_ref` | Inspection reference for drilldown payloads. |
+| `report_ref` | Inspection reference for report payloads. |
+
+**receipt refs** remain inspection and provenance links rather than route/open surrogates.
 
 Labels:
 - activity payload

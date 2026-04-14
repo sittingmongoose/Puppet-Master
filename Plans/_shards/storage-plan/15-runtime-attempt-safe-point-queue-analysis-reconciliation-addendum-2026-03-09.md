@@ -11,7 +11,6 @@ Storage and projections MUST persist the scheduler and recovery model without am
 
 ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Permissions_System.md
 
-### Projection rules (reconciled)
 - run-graph and orchestrator projections MUST resolve by `attempt_id`, not only `node_id`
 - blocked projections remain historical after resolution; unblocking does not overwrite prior blocked rows
 - `ready_since_utc` survives projection refresh only while the node remains continuously ready
@@ -48,7 +47,6 @@ Behavioral rules:
 
 Permission carry-through:
 - action gating must respect projection trust before surfacing mutation actions
-
 ### Snapshot refresh rules
 - permission/auth/approval/replan resolution creates a new attempt snapshot; old attempt snapshots remain immutable
 - safe-point restore does not mutate the originating attempt record in place; it leads to a new attempt record tied back by lineage

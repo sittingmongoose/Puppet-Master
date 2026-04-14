@@ -24,15 +24,14 @@ Canonical source: [Plans/chain-wizard-flexibility.md](../../chain-wizard-flexibi
 - [16-9-gaps-and-potential-problems.md](16-9-gaps-and-potential-problems.md) — ## 9. Gaps and Potential Problems
 - [17-10-implementation-readiness-checklist.md](17-10-implementation-readiness-checklist.md) — ## 10. Implementation Readiness Checklist
 - [18-11-user-project-output-artifacts-sharded-only.md](18-11-user-project-output-artifacts-sharded-only.md) — ## 11. User-Project Output Artifacts (Sharded-Only)
-- [19-12-three-pass-canonical-validation-workflow-mandatory-invariant-sweep.md](19-12-three-pass-canonical-validation-workflow-mandatory-invariant-sweep.md) — ## 12. Three-Pass Canonical Validation Workflow (Mandatory Invariant Sweep)
-- [20-13-no-wizard-project-management-flows.md](20-13-no-wizard-project-management-flows.md) — ## 13. No-Wizard Project Management Flows
-- [21-14-requirements-completion-contract.md](21-14-requirements-completion-contract.md) — ## 14. Requirements Completion Contract
-- [22-15-requirements-quality-escalation-semantics.md](22-15-requirements-quality-escalation-semantics.md) — ## 15. Requirements Quality Escalation Semantics
-- [23-requirements-builder-persona-strategy-addendum-2026-03-06.md](23-requirements-builder-persona-strategy-addendum-2026-03-06.md) — ## Requirements Builder Persona Strategy Addendum (2026-03-06)
-- [24-17-assistant-deep-plan-escalation-into-chain-wizard-2026-03-08.md](24-17-assistant-deep-plan-escalation-into-chain-wizard-2026-03-08.md) — ## 17. Assistant / Deep Plan Escalation into Chain Wizard (2026-03-08)
-- [25-clarification-escalation-and-draft-decomposition-addendum-2026-03-08.md](25-clarification-escalation-and-draft-decomposition-addendum-2026-03-08.md) — ## Clarification Escalation and Draft Decomposition Addendum (2026-03-08)
-- [26-draft-decomposition-fallback-wizard-blocked-state-addendum-2026-03-09.md](26-draft-decomposition-fallback-wizard-blocked-state-addendum-2026-03-09.md) — ## Draft Decomposition Fallback / Wizard Blocked-State Addendum (2026-03-09)
-- [27-canonical-wizard-blocked-state-reconciliation-addendum-2026-03-09.md](27-canonical-wizard-blocked-state-reconciliation-addendum-2026-03-09.md) — ## Canonical Wizard Blocked-State Reconciliation Addendum (2026-03-09)
-- [28-wizard-escalation-degradation-and-blocked-state-consolidation-addendum-2026-03-09.md](28-wizard-escalation-degradation-and-blocked-state-consolidation-addendum-2026-03-09.md) — ## Wizard Escalation Degradation and Blocked-State Consolidation Addendum (2026-03-09)
-- [29-canonical-wizard-blocked-lifecycle.md](29-canonical-wizard-blocked-lifecycle.md) — ## Canonical Wizard Blocked Lifecycle
-- [30-wizard-status-enum-correction-addendum.md](30-wizard-status-enum-correction-addendum.md) — ## Wizard Status Enum Correction Addendum
+- [19-13-no-wizard-project-management-flows.md](19-13-no-wizard-project-management-flows.md) — ## 13. No-Wizard Project Management Flows
+- [20-14-requirements-completion-contract.md](20-14-requirements-completion-contract.md) — ## 14. Requirements Completion Contract
+- [21-15-requirements-quality-escalation-semantics.md](21-15-requirements-quality-escalation-semantics.md) — ## 15. Requirements Quality Escalation Semantics
+- [22-requirements-builder-persona-strategy-addendum-2026-03-06.md](22-requirements-builder-persona-strategy-addendum-2026-03-06.md) — ## Requirements Builder Persona Strategy Addendum (2026-03-06)
+- [23-17-assistant-deep-plan-escalation-into-chain-wizard-2026-03-08.md](23-17-assistant-deep-plan-escalation-into-chain-wizard-2026-03-08.md) — ## 17. Assistant / Deep Plan Escalation into Chain Wizard (2026-03-08)
+- [24-clarification-escalation-and-draft-decomposition-addendum-2026-03-08.md](24-clarification-escalation-and-draft-decomposition-addendum-2026-03-08.md) — ## Clarification Escalation and Draft Decomposition Addendum (2026-03-08)
+- [25-draft-decomposition-fallback-wizard-blocked-state-addendum-2026-03-09.md](25-draft-decomposition-fallback-wizard-blocked-state-addendum-2026-03-09.md) — ## Draft Decomposition Fallback / Wizard Blocked-State Addendum (2026-03-09)
+- [26-canonical-wizard-blocked-state-reconciliation-addendum-2026-03-09.md](26-canonical-wizard-blocked-state-reconciliation-addendum-2026-03-09.md) — ## Canonical Wizard Blocked-State Reconciliation Addendum (2026-03-09)
+- [27-wizard-escalation-degradation-and-blocked-state-consolidation-addendum-2026-03-09.md](27-wizard-escalation-degradation-and-blocked-state-consolidation-addendum-2026-03-09.md) — ## Wizard Escalation Degradation and Blocked-State Consolidation Addendum (2026-03-09)
+- [28-canonical-wizard-blocked-lifecycle.md](28-canonical-wizard-blocked-lifecycle.md) — ## Canonical Wizard Blocked Lifecycle
+- [29-wizard-status-enum-correction-addendum.md](29-wizard-status-enum-correction-addendum.md) — ## Wizard Status Enum Correction Addendum

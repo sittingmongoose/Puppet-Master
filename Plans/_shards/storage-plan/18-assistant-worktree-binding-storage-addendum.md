@@ -4,8 +4,6 @@ This addendum defines storage additions for the assistant thread-to-worktree bin
 
 ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/WorktreeGitImprovement.md
 
-### New redb key families
-
 **Thread worktree binding:**
 - Key pattern: `thread_state:{thread_id}:worktree_binding`
 - Value: JSON `{ "worktree_id", "branch_name", "worktree_path", "bound_at_utc", "binding_origin" ("manual"|"auto_create"), "temp_branch_name" }`
@@ -40,4 +38,3 @@ Labels:
 Behavioral rules:
 - `selected_worktree_id` remains UI state and must not replace durable worktree identity.
 - Thread binding keys do not replace lane/worktree lifecycle records or historical lineage.
-

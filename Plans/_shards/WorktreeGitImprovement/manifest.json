@@ -1,6 +1,6 @@
 {
   "source_path": "Plans/WorktreeGitImprovement.md",
-  "source_sha256": "d3c508a3ad6998744f5785690efb9ee1048056b0e3ee20e3be68b4db9ecc2293",
+  "source_sha256": "2b77d1f20a0c6538046027bfa33a28c2eb148649ee7c498d729f6badd2ead30a",
   "split_rule": {
     "primary": "## outside fences",
     "fallback": "line-count-200",
@@ -52,100 +52,93 @@
     {
       "dest_path": "Plans/_shards/WorktreeGitImprovement/07-2-worktree-improvements.md",
       "start_line": 78,
-      "end_line": 191,
-      "segment_sha256": "f05f91045f92046e252eaf48165175dda0468e73d53617b209b7eac9387196e7",
+      "end_line": 188,
+      "segment_sha256": "086060975c25ec571d209a6666d60f02fde11fbad78d190d7efe4c5ca53a5291",
       "heading": "## 2. Worktree Improvements"
     },
     {
       "dest_path": "Plans/_shards/WorktreeGitImprovement/08-3-git-improvements.md",
-      "start_line": 192,
-      "end_line": 290,
+      "start_line": 189,
+      "end_line": 287,
       "segment_sha256": "e5481ac5ae9ecd9fe4c8afca23b2e50bf37e57a309e203337216b35f2bd0e535",
       "heading": "## 3. Git Improvements"
     },
     {
       "dest_path": "Plans/_shards/WorktreeGitImprovement/09-4-gui-for-git-worktrees.md",
-      "start_line": 291,
-      "end_line": 374,
-      "segment_sha256": "180624a6a0f6572f887f43f4ff55c49710b8c11229428988d924b8862fedd340",
+      "start_line": 288,
+      "end_line": 368,
+      "segment_sha256": "1596df586872b4ab347272ce1bdd41f061fb5e9fc78e1d28c2ae180ea1e70b0b",
       "heading": "## 4. GUI for Git & Worktrees"
     },
     {
       "dest_path": "Plans/_shards/WorktreeGitImprovement/10-5-config-wiring-prerequisite.md",
-      "start_line": 375,
-      "end_line": 413,
+      "start_line": 369,
+      "end_line": 407,
       "segment_sha256": "5937765ccaf1d0f2312e4af68cc4fb2bf917ad20cf49b5bd2ca760ec700592da",
       "heading": "## 5. Config Wiring (Prerequisite)"
     },
     {
       "dest_path": "Plans/_shards/WorktreeGitImprovement/11-6-implementation-checklist.md",
-      "start_line": 414,
-      "end_line": 504,
+      "start_line": 408,
+      "end_line": 498,
       "segment_sha256": "7fe3b2e322085a530aa5566b9369230ea0da988069f1eeb0c751ee30f46f940a",
       "heading": "## 6. Implementation Checklist"
     },
     {
       "dest_path": "Plans/_shards/WorktreeGitImprovement/12-7-gaps-risks-and-implementation-notes.md",
-      "start_line": 505,
-      "end_line": 584,
+      "start_line": 499,
+      "end_line": 578,
       "segment_sha256": "a91dd93b58292fed47a1cb1246828dca39b6b6a4cb26b699e3d03a2de6bf77a4",
       "heading": "## 7. Gaps, Risks, and Implementation Notes"
     },
     {
       "dest_path": "Plans/_shards/WorktreeGitImprovement/13-dry-method-compliance.md",
-      "start_line": 585,
-      "end_line": 625,
+      "start_line": 579,
+      "end_line": 619,
       "segment_sha256": "87daa6db3d2f69a8e775c7b97b79091787b8e6723e618ff895fe43fe75728de4",
       "heading": "## DRY Method Compliance"
     },
     {
       "dest_path": "Plans/_shards/WorktreeGitImprovement/14-712-crews-and-subagent-communication-enhancements-for-gitworktree-operations.md",
-      "start_line": 626,
-      "end_line": 643,
+      "start_line": 620,
+      "end_line": 637,
       "segment_sha256": "8c3b91acecd93929101d4911ead52dc9e20612507faf6085e944cfd6addab124",
       "heading": "## 7.12 Crews and Subagent Communication Enhancements for Git/Worktree Operations"
     },
     {
       "dest_path": "Plans/_shards/WorktreeGitImprovement/15-713-lifecycle-and-quality-enhancements-for-gitworktree-operations.md",
-      "start_line": 644,
-      "end_line": 658,
+      "start_line": 638,
+      "end_line": 652,
       "segment_sha256": "42cfc3d0a94b54270ff341d390cc5b33ceca55168cd89c25d42d6041ff0c8510",
       "heading": "## 7.13 Lifecycle and Quality Enhancements for Git/Worktree Operations"
     },
     {
       "dest_path": "Plans/_shards/WorktreeGitImprovement/16-8-references.md",
-      "start_line": 659,
-      "end_line": 666,
+      "start_line": 653,
+      "end_line": 660,
       "segment_sha256": "c39e075d55d020ef0d521635d6fbe68abc93d1a097cba79abc7b799a7fdabf1e",
       "heading": "## 8. References"
     },
     {
       "dest_path": "Plans/_shards/WorktreeGitImprovement/17-safe-point-and-retry-integration-addendum-2026-03-08.md",
-      "start_line": 667,
-      "end_line": 690,
+      "start_line": 661,
+      "end_line": 684,
       "segment_sha256": "adabe73539f8f4f75ebf724ecb5afebedc70d773a08cf22a4f87b4a691c2c866",
       "heading": "## Safe-Point and Retry Integration Addendum (2026-03-08)"
     },
     {
       "dest_path": "Plans/_shards/WorktreeGitImprovement/18-safe-point-worktree-recovery-alignment-addendum-2026-03-09.md",
-      "start_line": 691,
-      "end_line": 699,
+      "start_line": 685,
+      "end_line": 693,
       "segment_sha256": "50ad5cd10d514fe2b98fbc55a915366fb17b480564c985d536aa023f120e2969",
       "heading": "## Safe Point / Worktree Recovery Alignment Addendum (2026-03-09)"
     },
     {
       "dest_path": "Plans/_shards/WorktreeGitImprovement/19-runtime-worktree-conflict-reconciliation-addendum-2026-03-09.md",
-      "start_line": 700,
-      "end_line": 705,
-      "segment_sha256": "d658b98dafd7cfdf8c4cea9d1a5f4f011538208813c2716debe9dc47ed15a760",
+      "start_line": 694,
+      "end_line": 729,
+      "segment_sha256": "90aed95e220f41d9c6e025362e151a79cd478ba138d208923ad3d8538dcd2c85",
       "heading": "## Runtime Worktree Conflict Reconciliation Addendum (2026-03-09)"
-    },
-    {
-      "dest_path": "Plans/_shards/WorktreeGitImprovement/20-worktree-conflict-and-dirty-worktree-runtime-alignment.md",
-      "start_line": 706,
-      "end_line": 737,
-      "segment_sha256": "e2898f9d244d793d07e3c335dfa0ac72301090c8fc06a8bdcb457b5db538a9ce",
-      "heading": "## Worktree Conflict and Dirty-Worktree Runtime Alignment"
     }
   ]
 }

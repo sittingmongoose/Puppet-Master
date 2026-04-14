@@ -1,12 +1,12 @@
 {
   "schema_id": "pm.packet_plan.v18",
   "work_id": "w-20260312-203855",
-  "created_at_utc": "2026-04-14T01:11:13.852038Z",
+  "created_at_utc": "2026-04-13T21:55:48.462Z",
   "topic_or_scope": "Orchestrator rewrite transfer-fidelity audit, legacy-canon cleanup readiness, and reconciliation prep",
   "packet_targets": [
     {
       "path": "Plans/Contracts_V0.md",
-      "heading": "### 1.1 Assistant worktree seglog events",
+      "heading": "### 1.2 EventRecord -- canonical persisted envelope (schema: `pm.event.v0`)",
       "anchor_type": "heading",
       "operation": "replace_section",
       "required_section_maps": [
@@ -19,8 +19,7 @@
         "required_obligations": [
           "OBL-016",
           "OBL-018",
-          "OBL-019",
-          "OBL-043"
+          "OBL-019"
         ],
         "required_exact_tokens": [
           "record_id",
@@ -39,22 +38,12 @@
           "removed",
           "concern_id",
           "owner_kind",
-          "resolution_kind",
-          "account_pressure_episode",
-          "account_switch_event",
-          "episode_id",
-          "switch_event_id",
-          "source_kind",
-          "signal_confidence",
-          "pressure_kind",
-          "decision_kind",
-          "source_episode_id?"
+          "resolution_kind"
         ],
         "required_labels": [
           "record envelope",
           "historical state",
-          "concern",
-          "account history event"
+          "concern"
         ],
         "required_interface_shape_fields": [
           "record_id",
@@ -71,48 +60,60 @@
           "artifact_refs",
           "concern_id",
           "owner_kind",
-          "resolution_kind",
-          "episode_id",
-          "switch_event_id",
-          "source_kind",
-          "signal_confidence",
-          "pressure_kind",
-          "decision_kind",
-          "source_episode_id"
+          "resolution_kind"
         ],
         "required_behavioral_edges": [
           "A shared envelope must exist without flattening family-specific semantics.",
           "Historical vocabulary must stay shared while family-local lifecycles stay distinct.",
-          "Concern identity and lineage must remain distinct from review, blocked, and annotation objects.",
-          "Account pressure and switch decisions remain durable event families instead of recent-reason snapshots."
+          "Concern identity and lineage must remain distinct from review, blocked, and annotation objects."
         ],
         "required_permission_carrythrough": [],
         "cross_reference_rewrites": [
           "Plans/storage-plan.md#Canonical records",
-          "Plans/Orchestrator_Page.md#12. Concern and notification model",
-          "Plans/Multi-Account.md#4. Data model"
+          "Plans/Orchestrator_Page.md#12. Concern and notification model"
         ]
       },
       "stale_residue_to_retire": [
         "ad hoc one-off record shapes for each new object family",
         "overloaded `resolved` semantics",
         "concerns treated as badges or review leftovers without durable identity",
-        "`account_switch_reason` as both pressure cause and switch outcome",
-        "`recent_switch_reason` as durable history"
+        "The canonical persisted runtime snapshot keeps the historical base field names stable while allowing additive disclosure fields for runtime family, runtime platform, billing/entity attribution, and server-profile routing.",
+        "requested_platform",
+        "effective_platform",
+        "provider_family_id",
+        "requested_runtime_platform_id",
+        "effective_runtime_platform_id",
+        "requested_model",
+        "effective_model",
+        "requested_model_provider_id",
+        "effective_model_provider_id",
+        "requested_auth_mode",
+        "effective_auth_mode",
+        "effective_account_id",
+        "effective_provider_identity",
+        "requested_billing_entity_id",
+        "effective_billing_entity_id",
+        "effective_billing_entity_label",
+        "effective_entitlement_class",
+        "connection_profile_id",
+        "effective_project_id",
+        "account_switch_reason",
+        "requested_reasoning_effort",
+        "effective_reasoning_effort"
       ],
       "notes": [
         "Bucket: MUST_CHANGE.",
-        "Use a live-anchor replace_section so the current source span can be rebuilt canonically without leaving inline or sibling residue behind.",
-        "This target owns one current-wave section map and keeps the mutation in one self-canonicalizable landing zone.",
+        "Use a heading-anchored replace_section; the anchor exists verbatim in the current source and keeps the mutation in one self-canonicalizable landing zone.",
+        "Rebuild the authoritative EventRecord envelope in this section itself; do not preserve the current runtime-snapshot JSON example or requested/effective runtime disclosure rules from `### 5.1B Persona/Runtime Snapshot Payload Contract`.",
+        "Treat the entire current runtime-snapshot example block and its requested/effective runtime fields as wrong-section residue that must be fully retired within this target span.",
         "Retire the full listed stale residue within the target span; do not leave same-file conflicting residue partially live after emission.",
-        "Preserve or rebuild authoritative tables, schemas, registries, and other structural owner surfaces in-place rather than collapsing them to prose-only summary.",
-        "Preserve nearby ContractRef coverage for every surviving MUST-level operational rule cluster, including later Rules / Behavioral rules / Acceptance criteria clusters when they remain normative.",
+        "Preserve or rebuild owner structural form when the live section uses tables, rows, matrices, registries, or other enumerated containers rather than collapsing canon to prose.",
         "Exact cross-reference rewrite targets are promoted into required survivor items for this packet target, not left in notes-only metadata."
       ]
     },
     {
       "path": "Plans/Contracts_V0.md",
-      "heading": "## 3. Tool events (persisted)",
+      "heading": "### 3.1 `tool.invoked`",
       "anchor_type": "heading",
       "operation": "replace_section",
       "required_section_maps": [
@@ -122,22 +123,88 @@
         },
         {
           "path": "Plans/Contracts_V0.md",
-          "heading": "### 3.3 Requirements quality events"
-        },
-        {
-          "path": "Plans/Contracts_V0.md",
-          "heading": "### 3.4 Tool-specific payload extensions"
+          "heading": "### 3.1 `tool.invoked`"
         }
       ],
       "exact_items_that_must_survive": {
         "required_obligations": [
           "OBL-033",
-          "OBL-034",
-          "OBL-036",
-          "OBL-028"
+          "OBL-034"
         ],
         "required_exact_tokens": [
           "tool.invoked",
+          "node_id",
+          "attempt_id",
+          "lane_id",
+          "package_id",
+          "execution_role",
+          "effective_account_id",
+          "operational_identity",
+          "tool_use_id",
+          "provider_attempt_ref",
+          "usage_event_ref"
+        ],
+        "required_labels": [
+          "tool event contract",
+          "runtime/tool/artifact attribution"
+        ],
+        "required_interface_shape_fields": [
+          "node_id",
+          "attempt_id",
+          "lane_id",
+          "package_id",
+          "execution_role",
+          "effective_account_id",
+          "operational_identity",
+          "tool_use_id",
+          "provider_attempt_ref",
+          "usage_event_ref"
+        ],
+        "required_behavioral_edges": [
+          "Analytics-thin tool events are no longer sufficient.",
+          "`attempt_id` is the canonical local runtime anchor; bridge refs stay subordinate but explicit."
+        ],
+        "required_permission_carrythrough": [],
+        "cross_reference_rewrites": [
+          "Plans/Tools.md#8.0 Event payloads (seglog)",
+          "Plans/Runtime_Artifacts_Panel.md#Cross-Surface Operation Receipt Linkage Addendum (2026-03-12)"
+        ]
+      },
+      "stale_residue_to_retire": [
+        "analytics-thin tool events",
+        "implicit bridge precedence",
+        "artifact attribution without attempt identity"
+      ],
+      "notes": [
+        "Bucket: MUST_CHANGE.",
+        "Split the former `## 3. Tool events (persisted)` parent packet target into child-owned replacements so unrelated sibling canon such as `### 3.5 Debug investigation events` is not deleted or redistributed.",
+        "Rebuild the authoritative `tool.invoked` payload shape in this subsection itself; do not preserve the old minimal payload example and append required fields later.",
+        "Retire the full listed stale residue within the target span; do not leave same-file conflicting residue partially live after emission.",
+        "Keep the denial-specific identity/permission carry-through in the paired `### 3.2 `tool.denied`` target rather than cloning one generic parent body across siblings.",
+        "Exact cross-reference rewrite targets are promoted into required survivor items for this packet target, not left in notes-only metadata."
+      ]
+    },
+    {
+      "path": "Plans/Contracts_V0.md",
+      "heading": "### 3.2 `tool.denied`",
+      "anchor_type": "heading",
+      "operation": "replace_section",
+      "required_section_maps": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "## 3. Tool events (persisted)"
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "### 3.2 `tool.denied`"
+        }
+      ],
+      "exact_items_that_must_survive": {
+        "required_obligations": [
+          "OBL-033",
+          "OBL-034"
+        ],
+        "required_exact_tokens": [
           "tool.denied",
           "node_id",
           "attempt_id",
@@ -148,7 +215,67 @@
           "operational_identity",
           "tool_use_id",
           "provider_attempt_ref",
-          "usage_event_ref",
+          "usage_event_ref"
+        ],
+        "required_labels": [
+          "tool event contract",
+          "runtime/tool/artifact attribution"
+        ],
+        "required_interface_shape_fields": [
+          "node_id",
+          "attempt_id",
+          "lane_id",
+          "package_id",
+          "execution_role",
+          "effective_account_id",
+          "operational_identity",
+          "tool_use_id",
+          "provider_attempt_ref",
+          "usage_event_ref"
+        ],
+        "required_behavioral_edges": [
+          "Analytics-thin tool events are no longer sufficient.",
+          "`attempt_id` is the canonical local runtime anchor; bridge refs stay subordinate but explicit."
+        ],
+        "required_permission_carrythrough": [
+          "permission and denial surfaces must still expose effective actor and account identity"
+        ],
+        "cross_reference_rewrites": [
+          "Plans/Tools.md#8.0 Event payloads (seglog)",
+          "Plans/Runtime_Artifacts_Panel.md#Cross-Surface Operation Receipt Linkage Addendum (2026-03-12)"
+        ]
+      },
+      "stale_residue_to_retire": [
+        "analytics-thin tool events",
+        "implicit bridge precedence",
+        "artifact attribution without attempt identity",
+        "permission and denial surfaces without effective actor and account identity"
+      ],
+      "notes": [
+        "Bucket: MUST_CHANGE.",
+        "Split the former `## 3. Tool events (persisted)` parent packet target into child-owned replacements so unrelated sibling canon such as `### 3.5 Debug investigation events` is not deleted or redistributed.",
+        "Rebuild the authoritative `tool.denied` payload shape in this subsection itself; do not preserve the old minimal denial payload and append canonical identity fields later.",
+        "Keep denial-specific identity and permission carry-through local to this subsection so the paired `### 3.1 `tool.invoked`` target and this target remain semantically differentiated.",
+        "Retire the full listed stale residue within the target span; do not leave same-file conflicting residue partially live after emission.",
+        "Exact cross-reference rewrite targets are promoted into required survivor items for this packet target, not left in notes-only metadata."
+      ]
+    },
+    {
+      "path": "Plans/Contracts_V0.md",
+      "heading": "### 3.3 Requirements quality events",
+      "anchor_type": "heading",
+      "operation": "replace_section",
+      "required_section_maps": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "### 3.3 Requirements quality events"
+        }
+      ],
+      "exact_items_that_must_survive": {
+        "required_obligations": [
+          "OBL-036"
+        ],
+        "required_exact_tokens": [
           "validation_pass_report",
           "workflow_run_id",
           "pass_number",
@@ -163,35 +290,16 @@
           "phase_plan_ref",
           "staged_bundle_ref",
           "requirements_quality_report_ref",
-          "run_id",
-          "skipped",
-          "detail_ref",
-          "report_ref",
-          "evidence_ref",
-          "workflow_refs",
-          "docker_refs",
-          "kubernetes_refs",
-          "resume_url"
-        ],
-        "required_labels": [
-          "tool event contract",
-          "runtime/tool/artifact attribution",
-          "validation pass report",
-          "launch handoff lineage",
-          "inspection refs",
-          "navigation transport"
-        ],
-        "required_interface_shape_fields": [
-          "node_id",
-          "attempt_id",
-          "lane_id",
-          "package_id",
           "execution_role",
           "effective_account_id",
-          "operational_identity",
-          "tool_use_id",
-          "provider_attempt_ref",
-          "usage_event_ref",
+          "run_id",
+          "skipped"
+        ],
+        "required_labels": [
+          "validation pass report",
+          "launch handoff lineage"
+        ],
+        "required_interface_shape_fields": [
           "workflow_run_id",
           "pass_number",
           "pass_name",
@@ -205,61 +313,105 @@
           "phase_plan_ref",
           "staged_bundle_ref",
           "requirements_quality_report_ref",
-          "run_id",
+          "execution_role",
+          "effective_account_id",
+          "run_id"
+        ],
+        "required_behavioral_edges": [
+          "Pass reports must stay upstream artifacts rather than masquerading as runtime attempts.",
+          "`pass_verdict` must support `skipped` where the flow needs it.",
+          "Accepted/final pass output must bridge into launched execution."
+        ],
+        "required_permission_carrythrough": [
+          "effective runtime identity must survive from validation into launch handoff"
+        ],
+        "cross_reference_rewrites": [
+          "Plans/Project_Output_Artifacts.md#10. Validation Pass Report Artifacts",
+          "Plans/chain-wizard-flexibility.md#12. Three-Pass Canonical Validation Workflow (Mandatory Invariant Sweep)"
+        ]
+      },
+      "stale_residue_to_retire": [
+        "provider/model-only identity on pass reports",
+        "`workflow_run_id` as the only lineage bridge",
+        "pass/fail-only assumptions where `skipped` is required"
+      ],
+      "notes": [
+        "Bucket: MUST_CHANGE.",
+        "Use a child-heading replace_section so the requirements-quality owner section is rebuilt in place without forcing a parent-wide replacement across unrelated sibling canon.",
+        "Retire the full listed stale residue within the target span; do not leave same-file conflicting residue partially live after emission.",
+        "Preserve or rebuild owner structural form when the live section uses tables, rows, matrices, registries, or other enumerated containers rather than collapsing canon to prose.",
+        "Exact cross-reference rewrite targets are promoted into required survivor items for this packet target, not left in notes-only metadata."
+      ]
+    },
+    {
+      "path": "Plans/Contracts_V0.md",
+      "heading": "### 3.4 Tool-specific payload extensions",
+      "anchor_type": "heading",
+      "operation": "replace_section",
+      "required_section_maps": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "### 3.4 Tool-specific payload extensions"
+        }
+      ],
+      "exact_items_that_must_survive": {
+        "required_obligations": [
+          "OBL-028"
+        ],
+        "required_exact_tokens": [
           "detail_ref",
           "report_ref",
           "evidence_ref",
+          "usage_event_ref",
+          "workflow_refs",
+          "docker_refs",
+          "kubernetes_refs",
+          "resume_url"
+        ],
+        "required_labels": [
+          "inspection refs",
+          "navigation transport"
+        ],
+        "required_interface_shape_fields": [
+          "detail_ref",
+          "report_ref",
+          "evidence_ref",
+          "usage_event_ref",
           "workflow_refs",
           "docker_refs",
           "kubernetes_refs",
           "resume_url"
         ],
         "required_behavioral_edges": [
-          "Analytics-thin tool events are no longer sufficient.",
-          "`attempt_id` is the canonical local runtime anchor; bridge refs stay subordinate but explicit.",
-          "Pass reports must stay upstream artifacts rather than masquerading as runtime attempts.",
-          "`pass_verdict` must support `skipped` where the flow needs it.",
-          "Accepted/final pass output must bridge into launched execution.",
           "Inspection/provenance refs stay in event and record payloads.",
           "Route/open contracts own navigation identity.",
           "`resume_url` remains transport-only."
         ],
-        "required_permission_carrythrough": [
-          "permission and denial surfaces must still expose effective actor and account identity",
-          "effective runtime identity must survive from validation into launch handoff"
-        ],
+        "required_permission_carrythrough": [],
         "cross_reference_rewrites": [
-          "Plans/Tools.md#8.0 Event payloads (seglog)",
-          "Plans/Runtime_Artifacts_Panel.md#Cross-Surface Operation Receipt Linkage Addendum (2026-03-12)",
-          "Plans/Project_Output_Artifacts.md#10. Validation Pass Report Artifacts",
-          "Plans/chain-wizard-flexibility.md#12. Three-Pass Canonical Validation Workflow (Mandatory Invariant Sweep)",
           "Plans/storage-plan.md#4.4 Activity transparency payloads",
           "Plans/Contracts_V0.md#7.3 `route_target`"
         ]
       },
       "stale_residue_to_retire": [
-        "analytics-thin tool events",
-        "implicit bridge precedence",
-        "artifact attribution without attempt identity",
-        "provider/model-only identity on pass reports",
-        "`workflow_run_id` as the only lineage bridge",
-        "pass/fail-only assumptions where `skipped` is required",
         "treating `detail_ref`, `report_ref`, and `resume_url` as interchangeable open-this-thing fields",
-        "treating ref families as route payload surrogates"
+        "treating ref families as route payload surrogates",
+        "#### Question schema and tool contract",
+        "#### Common web output fields",
+        "#### `WebAction`"
       ],
       "notes": [
         "Bucket: MUST_CHANGE.",
-        "Use a live-anchor replace_section so the current source span can be rebuilt canonically without leaving inline or sibling residue behind.",
-        "Grouped related current-wave section maps under one live anchor to avoid overlapping parent/child packet targets while keeping the owner canon in one self-canonicalizable landing zone.",
+        "Use a child-heading replace_section so the payload-extension owner section is rebuilt in place without forcing a parent-wide replacement across unrelated sibling canon.",
+        "Rebuild only the mapped payload-extension canon in this subsection; do not carry forward nested question-schema, common-web-output, or `WebAction` blocks that belong to different feature surfaces.",
         "Retire the full listed stale residue within the target span; do not leave same-file conflicting residue partially live after emission.",
-        "Preserve or rebuild authoritative tables, schemas, registries, and other structural owner surfaces in-place rather than collapsing them to prose-only summary.",
-        "Preserve nearby ContractRef coverage for every surviving MUST-level operational rule cluster, including later Rules / Behavioral rules / Acceptance criteria clusters when they remain normative.",
+        "Preserve or rebuild owner structural form when the live section uses tables, rows, matrices, registries, or other enumerated containers rather than collapsing canon to prose.",
         "Exact cross-reference rewrite targets are promoted into required survivor items for this packet target, not left in notes-only metadata."
       ]
     },
     {
       "path": "Plans/Contracts_V0.md",
-      "heading": "### 4.1 AuthState",
+      "heading": "## 4. Auth contracts",
       "anchor_type": "heading",
       "operation": "replace_section",
       "required_section_maps": [
@@ -316,19 +468,18 @@
       ],
       "notes": [
         "Bucket: MUST_CHANGE.",
-        "Use a live-anchor replace_section so the current source span can be rebuilt canonically without leaving inline or sibling residue behind.",
-        "This target owns one current-wave section map and keeps the mutation in one self-canonicalizable landing zone.",
+        "Use a heading-anchored replace_section; the anchor exists verbatim in the current source and keeps the mutation in one self-canonicalizable landing zone.",
+        "Rebuild the authoritative `AuthState` and `AuthPolicy` owned shapes in this section so `requested_account_id`, `requested_account_binding`, `requested_account_policy`, `effective_provider_identity`, `execution_role`, and `operational_identity` live in those in-section shape containers rather than only in trailing prose.",
         "Retire the full listed stale residue within the target span; do not leave same-file conflicting residue partially live after emission.",
-        "Preserve or rebuild authoritative tables, schemas, registries, and other structural owner surfaces in-place rather than collapsing them to prose-only summary.",
-        "Preserve nearby ContractRef coverage for every surviving MUST-level operational rule cluster, including later Rules / Behavioral rules / Acceptance criteria clusters when they remain normative.",
+        "Preserve or rebuild owner structural form when the live section uses tables, rows, matrices, registries, or other enumerated containers rather than collapsing canon to prose.",
         "Exact cross-reference rewrite targets are promoted into required survivor items for this packet target, not left in notes-only metadata."
       ]
     },
     {
       "path": "Plans/Contracts_V0.md",
-      "heading": "### 5.1A InvestigationContextAttachment",
+      "heading": "### 5.1B Persona/Runtime Snapshot Payload Contract",
       "anchor_type": "heading",
-      "operation": "insert_after",
+      "operation": "replace_section",
       "required_section_maps": [
         {
           "path": "Plans/Contracts_V0.md",
@@ -391,17 +542,15 @@
       ],
       "notes": [
         "Bucket: MUST_CHANGE.",
-        "Use a live-anchor insert_after so the missing owner section lands directly after the current anchor without relying on nonexistent headings.",
-        "This target owns one current-wave section map and keeps the mutation in one self-canonicalizable landing zone.",
+        "Use a heading-anchored replace_section; the anchor exists verbatim in the current source and keeps the mutation in one self-canonicalizable landing zone.",
         "Retire the full listed stale residue within the target span; do not leave same-file conflicting residue partially live after emission.",
-        "Preserve or rebuild authoritative tables, schemas, registries, and other structural owner surfaces in-place rather than collapsing them to prose-only summary.",
-        "Preserve nearby ContractRef coverage for every surviving MUST-level operational rule cluster, including later Rules / Behavioral rules / Acceptance criteria clusters when they remain normative.",
+        "Preserve or rebuild owner structural form when the live section uses tables, rows, matrices, registries, or other enumerated containers rather than collapsing canon to prose.",
         "Exact cross-reference rewrite targets are promoted into required survivor items for this packet target, not left in notes-only metadata."
       ]
     },
     {
       "path": "Plans/Contracts_V0.md",
-      "heading": "## 6. HITLRequest",
+      "heading": "### 6.1 Canonical blocked-episode approval anchor",
       "anchor_type": "heading",
       "operation": "replace_section",
       "required_section_maps": [
@@ -456,48 +605,32 @@
         "tier-bound HITL anchoring",
         "`approve_continue`",
         "startup_recovered",
-        "failure_class"
+        "failure_class",
+        "startup-recovery addendum fields in the blocked-episode approval anchor"
       ],
       "notes": [
         "Bucket: MUST_CHANGE.",
-        "Use a live-anchor replace_section so the current source span can be rebuilt canonically without leaving inline or sibling residue behind.",
-        "This target owns one current-wave section map and keeps the mutation in one self-canonicalizable landing zone.",
+        "Use a heading-anchored replace_section; the anchor exists verbatim in the current source and keeps the mutation in one self-canonicalizable landing zone.",
+        "Do not preserve or restate the startup-recovery addendum in this section; `startup_recovered` and related restart-recovery fields belong in `Plans/Contracts_V0.md#`scheduler.pass` (minimum addendum fields)`.",
         "Retire the full listed stale residue within the target span; do not leave same-file conflicting residue partially live after emission.",
-        "Preserve or rebuild authoritative tables, schemas, registries, and other structural owner surfaces in-place rather than collapsing them to prose-only summary.",
-        "Preserve nearby ContractRef coverage for every surviving MUST-level operational rule cluster, including later Rules / Behavioral rules / Acceptance criteria clusters when they remain normative.",
+        "Preserve or rebuild owner structural form when the live section uses tables, rows, matrices, registries, or other enumerated containers rather than collapsing canon to prose.",
         "Exact cross-reference rewrite targets are promoted into required survivor items for this packet target, not left in notes-only metadata."
       ]
     },
     {
       "path": "Plans/Contracts_V0.md",
-      "heading": "## 7. UICommand",
+      "heading": "### 7.2 UICommand envelope",
       "anchor_type": "heading",
       "operation": "replace_section",
       "required_section_maps": [
         {
           "path": "Plans/Contracts_V0.md",
           "heading": "### 7.2 UICommand envelope"
-        },
-        {
-          "path": "Plans/Contracts_V0.md",
-          "heading": "### 7.3 `route_target`"
-        },
-        {
-          "path": "Plans/Contracts_V0.md",
-          "heading": "### 7.4 `OpenSubject`"
         }
       ],
       "exact_items_that_must_survive": {
         "required_obligations": [
-          "OBL-030",
-          "OBL-020",
-          "OBL-021",
-          "OBL-022",
-          "OBL-023",
-          "OBL-024",
-          "OBL-025",
-          "OBL-027",
-          "OBL-026"
+          "OBL-030"
         ],
         "required_exact_tokens": [
           "command_kind",
@@ -509,7 +642,62 @@
           "navigation_wrapper",
           "domain_action",
           "wrapper",
-          "deprecated_alias",
+          "deprecated_alias"
+        ],
+        "required_labels": [
+          "command envelope",
+          "normalization"
+        ],
+        "required_interface_shape_fields": [
+          "command_kind",
+          "normalization.kind",
+          "normalizes_to_contract",
+          "alias_of_command_id"
+        ],
+        "required_behavioral_edges": [
+          "Wrapper metadata stays narrow and contract-level.",
+          "Wrappers point to canonical primitive families only.",
+          "Route payload structure is not restated inside command metadata."
+        ],
+        "required_permission_carrythrough": [],
+        "cross_reference_rewrites": [
+          "Plans/UI_Command_Catalog.md#2.0 Command entry contract (doc-level)",
+          "Plans/Crosswalk.md#3.1 Runtime orchestration ownership"
+        ]
+      },
+      "stale_residue_to_retire": [
+        "cmd.nav.*"
+      ],
+      "notes": [
+        "Bucket: MUST_CHANGE.",
+        "Use a heading-anchored replace_section; the anchor exists verbatim in the current source and keeps the mutation in one self-canonicalizable landing zone.",
+        "Retire the full listed stale residue within the target span; do not leave same-file conflicting residue partially live after emission.",
+        "Preserve or rebuild owner structural form when the live section uses tables, rows, matrices, registries, or other enumerated containers rather than collapsing canon to prose.",
+        "Exact cross-reference rewrite targets are promoted into required survivor items for this packet target, not left in notes-only metadata."
+      ]
+    },
+    {
+      "path": "Plans/Contracts_V0.md",
+      "heading": "### 7.3 `route_target`",
+      "anchor_type": "heading",
+      "operation": "replace_section",
+      "required_section_maps": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "### 7.3 `route_target`"
+        }
+      ],
+      "exact_items_that_must_survive": {
+        "required_obligations": [
+          "OBL-020",
+          "OBL-021",
+          "OBL-022",
+          "OBL-023",
+          "OBL-024",
+          "OBL-025",
+          "OBL-027"
+        ],
+        "required_exact_tokens": [
           "route_target",
           "target_kind",
           "project_id",
@@ -525,27 +713,15 @@
           "bottom_panel",
           "embedded_surface",
           "page_tab",
-          "resume_url",
-          "OpenSubject",
-          "doc:<document_id>",
-          "artifact:<artifact_id>",
-          "Everything else routes through object_kind + object_id"
+          "resume_url"
         ],
         "required_labels": [
-          "command envelope",
-          "normalization",
           "route target",
           "target kind",
           "object kind",
-          "inspector target",
-          "open subject",
-          "subject identity"
+          "inspector target"
         ],
         "required_interface_shape_fields": [
-          "command_kind",
-          "normalization.kind",
-          "normalizes_to_contract",
-          "alias_of_command_id",
           "target_kind",
           "project_id",
           "focused_run_id",
@@ -558,50 +734,87 @@
           "resume_url"
         ],
         "required_behavioral_edges": [
-          "Wrapper metadata stays narrow and contract-level.",
-          "Wrappers point to canonical primitive families only.",
-          "Route payload structure is not restated inside command metadata.",
           "Exactly one canonical primary selector is permitted.",
           "`project_id` is required.",
           "`target_kind` is destination class only, and `inspector_target` is focus refinement only after selector identity is established.",
-          "`resume_url` is serialized transport of `route_target`, not a second routing ontology.",
-          "`subject_id` is bounded to canonical renderable/openable content only.",
-          "Everything outside document/artifact families routes through `object_kind + object_id`."
+          "`resume_url` is serialized transport of `route_target`, not a second routing ontology."
         ],
         "required_permission_carrythrough": [],
         "cross_reference_rewrites": [
-          "Plans/UI_Command_Catalog.md#2.0 Command entry contract (doc-level)",
-          "Plans/Crosswalk.md#3.1 Runtime orchestration ownership",
           "Plans/FinalGUISpec.md#7.3 Shared route and open behavior",
-          "Plans/Crosswalk.md#3.3 Navigation and source-open ownership",
-          "Plans/FileManager.md#OpenSubject"
+          "Plans/Crosswalk.md#3.3 Navigation and source-open ownership"
         ]
       },
       "stale_residue_to_retire": [
-        "cmd.nav.*",
         "`usage_event_ref` as a top-level route field",
         "`wizard_id` or `wizard_step` as primary route fields",
         "`artifact_id` and `document_id` as direct route fields instead of `subject_id`",
         "`docked` or `floating` as `target_kind` values",
         "`widget slot` as a `target_kind` value",
         "multiple competing selectors in the same route payload",
-        "`resume_url` acting as a shadow routing primitive",
-        "`document_id` and `artifact_id` appearing in navigation prose instead of `subject_id`",
-        "wizard or message flows treated as special deep-link payload families instead of object routes"
+        "`resume_url` acting as a shadow routing primitive"
       ],
       "notes": [
         "Bucket: MUST_CHANGE.",
-        "Use a live-anchor replace_section so the current source span can be rebuilt canonically without leaving inline or sibling residue behind.",
-        "Grouped related current-wave section maps under one live anchor to avoid overlapping parent/child packet targets while keeping the owner canon in one self-canonicalizable landing zone.",
+        "Use a heading-anchored replace_section; the anchor exists verbatim in the current source and keeps the mutation in one self-canonicalizable landing zone.",
         "Retire the full listed stale residue within the target span; do not leave same-file conflicting residue partially live after emission.",
-        "Preserve or rebuild authoritative tables, schemas, registries, and other structural owner surfaces in-place rather than collapsing them to prose-only summary.",
-        "Preserve nearby ContractRef coverage for every surviving MUST-level operational rule cluster, including later Rules / Behavioral rules / Acceptance criteria clusters when they remain normative.",
+        "Preserve or rebuild owner structural form when the live section uses tables, rows, matrices, registries, or other enumerated containers rather than collapsing canon to prose.",
         "Exact cross-reference rewrite targets are promoted into required survivor items for this packet target, not left in notes-only metadata."
       ]
     },
     {
       "path": "Plans/Contracts_V0.md",
-      "heading": "#### `scheduler.pass`",
+      "heading": "### 7.4 `OpenSubject`",
+      "anchor_type": "heading",
+      "operation": "replace_section",
+      "required_section_maps": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "### 7.4 `OpenSubject`"
+        }
+      ],
+      "exact_items_that_must_survive": {
+        "required_obligations": [
+          "OBL-026"
+        ],
+        "required_exact_tokens": [
+          "OpenSubject",
+          "subject_id",
+          "doc:<document_id>",
+          "artifact:<artifact_id>",
+          "Everything else routes through object_kind + object_id"
+        ],
+        "required_labels": [
+          "open subject",
+          "subject identity"
+        ],
+        "required_interface_shape_fields": [
+          "subject_id"
+        ],
+        "required_behavioral_edges": [
+          "`subject_id` is bounded to canonical renderable/openable content only.",
+          "Everything outside document/artifact families routes through `object_kind + object_id`."
+        ],
+        "required_permission_carrythrough": [],
+        "cross_reference_rewrites": [
+          "Plans/FileManager.md#OpenSubject"
+        ]
+      },
+      "stale_residue_to_retire": [
+        "`document_id` and `artifact_id` appearing in navigation prose instead of `subject_id`",
+        "wizard or message flows treated as special deep-link payload families instead of object routes"
+      ],
+      "notes": [
+        "Bucket: MUST_CHANGE.",
+        "Use a heading-anchored replace_section; the anchor exists verbatim in the current source and keeps the mutation in one self-canonicalizable landing zone.",
+        "Retire the full listed stale residue within the target span; do not leave same-file conflicting residue partially live after emission.",
+        "Preserve or rebuild owner structural form when the live section uses tables, rows, matrices, registries, or other enumerated containers rather than collapsing canon to prose.",
+        "Exact cross-reference rewrite targets are promoted into required survivor items for this packet target, not left in notes-only metadata."
+      ]
+    },
+    {
+      "path": "Plans/Contracts_V0.md",
+      "heading": "### `scheduler.pass` (minimum addendum fields)",
       "anchor_type": "heading",
       "operation": "replace_section",
       "required_section_maps": [
@@ -638,94 +851,15 @@
       "stale_residue_to_retire": [],
       "notes": [
         "Bucket: MUST_CHANGE.",
-        "Use a live-anchor replace_section so the current source span can be rebuilt canonically without leaving inline or sibling residue behind.",
-        "This target owns one current-wave section map and keeps the mutation in one self-canonicalizable landing zone.",
+        "Use a heading-anchored replace_section; the anchor exists verbatim in the current source and keeps the mutation in one self-canonicalizable landing zone.",
         "Retire the full listed stale residue within the target span; do not leave same-file conflicting residue partially live after emission.",
-        "Preserve or rebuild authoritative tables, schemas, registries, and other structural owner surfaces in-place rather than collapsing them to prose-only summary.",
-        "Preserve nearby ContractRef coverage for every surviving MUST-level operational rule cluster, including later Rules / Behavioral rules / Acceptance criteria clusters when they remain normative.",
+        "Preserve or rebuild owner structural form when the live section uses tables, rows, matrices, registries, or other enumerated containers rather than collapsing canon to prose.",
         "Exact cross-reference rewrite targets are promoted into required survivor items for this packet target, not left in notes-only metadata."
       ]
     },
     {
       "path": "Plans/Executor_Protocol.md",
-      "heading": "## Execution Context: Worktree Handoff",
-      "anchor_type": "heading",
-      "operation": "replace_section",
-      "required_section_maps": [
-        {
-          "path": "Plans/Executor_Protocol.md",
-          "heading": "### Worktree-aware execution unit context"
-        }
-      ],
-      "exact_items_that_must_survive": {
-        "required_obligations": [
-          "OBL-031",
-          "OBL-032"
-        ],
-        "required_exact_tokens": [
-          "execution_unit_context",
-          "run_id",
-          "node_id",
-          "attempt_id",
-          "lane_id",
-          "package_id",
-          "seam_id",
-          "worktree_id",
-          "execution_role",
-          "requested_account_id",
-          "effective_account_id",
-          "operational_identity",
-          "blocked_sequence",
-          "approval_scope_key"
-        ],
-        "required_labels": [
-          "execution unit context",
-          "blocked episode"
-        ],
-        "required_interface_shape_fields": [
-          "run_id",
-          "node_id",
-          "attempt_id",
-          "lane_id",
-          "package_id",
-          "seam_id",
-          "worktree_id",
-          "execution_role",
-          "requested_account_id",
-          "effective_account_id",
-          "operational_identity",
-          "blocked_sequence",
-          "approval_scope_key"
-        ],
-        "required_behavioral_edges": [
-          "Execution protocol must define runtime scope through execution-unit context rather than tier roots.",
-          "Blocked-episode identity must remain explicit in execution-relevant recovery paths."
-        ],
-        "required_permission_carrythrough": [
-          "effective account, execution role, and blocked-episode approval scope must survive execution handoff"
-        ],
-        "cross_reference_rewrites": [
-          "Plans/Contracts_V0.md#6.1 Canonical blocked-episode approval anchor"
-        ]
-      },
-      "stale_residue_to_retire": [
-        "`TierContext`",
-        "`tier_id` as canonical execution scope",
-        "request-level blocked identity"
-      ],
-      "notes": [
-        "Bucket: MUST_CHANGE.",
-        "Use a live-anchor replace_section so the current source span can be rebuilt canonically without leaving inline or sibling residue behind.",
-        "This target owns one current-wave section map and keeps the mutation in one self-canonicalizable landing zone.",
-        "Retire the full listed stale residue within the target span; do not leave same-file conflicting residue partially live after emission.",
-        "Preserve or rebuild authoritative tables, schemas, registries, and other structural owner surfaces in-place rather than collapsing them to prose-only summary.",
-        "Preserve nearby ContractRef coverage for every surviving MUST-level operational rule cluster, including later Rules / Behavioral rules / Acceptance criteria clusters when they remain normative.",
-        "Exact cross-reference rewrite targets are promoted into required survivor items for this packet target, not left in notes-only metadata."
-      ]
-    },
-    {
-      "path": "Plans/Executor_Protocol.md",
-      "heading": "### 5.1 Unified `DispatchContext` schema",
+      "heading": "## 5. Node execution fields",
       "anchor_type": "heading",
       "operation": "replace_section",
       "required_section_maps": [
@@ -799,21 +933,21 @@
         "TierContext",
         "tier_id",
         "`TierContext` as canonical execution scope",
-        "`tier_id` as canonical execution scope"
+        "`tier_id` as canonical execution scope",
+        "tier-scoped execution context tables or field lists"
       ],
       "notes": [
         "Bucket: MUST_CHANGE.",
-        "Use a live-anchor replace_section so the current source span can be rebuilt canonically without leaving inline or sibling residue behind.",
-        "This target owns one current-wave section map and keeps the mutation in one self-canonicalizable landing zone.",
+        "Use a heading-anchored replace_section; the anchor exists verbatim in the current source and keeps the mutation in one self-canonicalizable landing zone.",
+        "Rebuild the execution-unit context surface in this section itself; do not preserve legacy TierContext or tier-id-centric execution scope and append bridge fields afterward.",
         "Retire the full listed stale residue within the target span; do not leave same-file conflicting residue partially live after emission.",
-        "Preserve or rebuild authoritative tables, schemas, registries, and other structural owner surfaces in-place rather than collapsing them to prose-only summary.",
-        "Preserve nearby ContractRef coverage for every surviving MUST-level operational rule cluster, including later Rules / Behavioral rules / Acceptance criteria clusters when they remain normative.",
+        "Preserve or rebuild owner structural form when the live section uses tables, rows, matrices, registries, or other enumerated containers rather than collapsing canon to prose.",
         "Exact cross-reference rewrite targets are promoted into required survivor items for this packet target, not left in notes-only metadata."
       ]
     },
     {
       "path": "Plans/Executor_Protocol.md",
-      "heading": "### 5. Wakeup triggers",
+      "heading": "### Wake reasons and coalescing",
       "anchor_type": "heading",
       "operation": "replace_section",
       "required_section_maps": [
@@ -853,17 +987,136 @@
       "stale_residue_to_retire": [],
       "notes": [
         "Bucket: MUST_CHANGE.",
-        "Use a live-anchor replace_section so the current source span can be rebuilt canonically without leaving inline or sibling residue behind.",
-        "This target owns one current-wave section map and keeps the mutation in one self-canonicalizable landing zone.",
+        "Use a heading-anchored replace_section; the anchor exists verbatim in the current source and keeps the mutation in one self-canonicalizable landing zone.",
         "Retire the full listed stale residue within the target span; do not leave same-file conflicting residue partially live after emission.",
-        "Preserve or rebuild authoritative tables, schemas, registries, and other structural owner surfaces in-place rather than collapsing them to prose-only summary.",
-        "Preserve nearby ContractRef coverage for every surviving MUST-level operational rule cluster, including later Rules / Behavioral rules / Acceptance criteria clusters when they remain normative.",
+        "Preserve or rebuild owner structural form when the live section uses tables, rows, matrices, registries, or other enumerated containers rather than collapsing canon to prose.",
+        "Exact cross-reference rewrite targets are promoted into required survivor items for this packet target, not left in notes-only metadata."
+      ]
+    },
+    {
+      "path": "Plans/Executor_Protocol.md",
+      "heading": "### Worktree-aware execution unit context",
+      "anchor_type": "heading",
+      "operation": "replace_section",
+      "required_section_maps": [
+        {
+          "path": "Plans/Executor_Protocol.md",
+          "heading": "### Worktree-aware execution unit context"
+        }
+      ],
+      "exact_items_that_must_survive": {
+        "required_obligations": [
+          "OBL-031",
+          "OBL-032"
+        ],
+        "required_exact_tokens": [
+          "execution_unit_context",
+          "run_id",
+          "node_id",
+          "attempt_id",
+          "lane_id",
+          "package_id",
+          "seam_id",
+          "worktree_id",
+          "execution_role",
+          "requested_account_id",
+          "effective_account_id",
+          "operational_identity",
+          "blocked_sequence",
+          "approval_scope_key"
+        ],
+        "required_labels": [
+          "execution unit context",
+          "blocked episode"
+        ],
+        "required_interface_shape_fields": [
+          "run_id",
+          "node_id",
+          "attempt_id",
+          "lane_id",
+          "package_id",
+          "seam_id",
+          "worktree_id",
+          "execution_role",
+          "requested_account_id",
+          "effective_account_id",
+          "operational_identity",
+          "blocked_sequence",
+          "approval_scope_key"
+        ],
+        "required_behavioral_edges": [
+          "Execution protocol must define runtime scope through execution-unit context rather than tier roots.",
+          "Blocked-episode identity must remain explicit in execution-relevant recovery paths."
+        ],
+        "required_permission_carrythrough": [
+          "effective account, execution role, and blocked-episode approval scope must survive execution handoff"
+        ],
+        "cross_reference_rewrites": [
+          "Plans/Contracts_V0.md#6.1 Canonical blocked-episode approval anchor"
+        ]
+      },
+      "stale_residue_to_retire": [
+        "`TierContext`",
+        "`tier_id` as canonical execution scope",
+        "request-level blocked identity"
+      ],
+      "notes": [
+        "Bucket: MUST_CHANGE.",
+        "Use a heading-anchored replace_section; the anchor exists verbatim in the current source and keeps the mutation in one self-canonicalizable landing zone.",
+        "Retire the full listed stale residue within the target span; do not leave same-file conflicting residue partially live after emission.",
+        "Preserve or rebuild owner structural form when the live section uses tables, rows, matrices, registries, or other enumerated containers rather than collapsing canon to prose.",
+        "Exact cross-reference rewrite targets are promoted into required survivor items for this packet target, not left in notes-only metadata."
+      ]
+    },
+    {
+      "path": "Plans/FileManager.md",
+      "heading": "### OpenSubject",
+      "anchor_type": "heading",
+      "operation": "replace_section",
+      "required_section_maps": [
+        {
+          "path": "Plans/FileManager.md",
+          "heading": "### OpenSubject"
+        }
+      ],
+      "exact_items_that_must_survive": {
+        "required_obligations": [
+          "OBL-026"
+        ],
+        "required_exact_tokens": [
+          "OpenSubject",
+          "subject_id",
+          "doc:<document_id>",
+          "artifact:<artifact_id>"
+        ],
+        "required_labels": [
+          "Open Subject"
+        ],
+        "required_interface_shape_fields": [
+          "subject_id"
+        ],
+        "required_behavioral_edges": [
+          "File/open surfaces must use `subject_id` only for canonical openable content families."
+        ],
+        "required_permission_carrythrough": [],
+        "cross_reference_rewrites": [
+          "Plans/Contracts_V0.md#7.4 `OpenSubject`"
+        ]
+      },
+      "stale_residue_to_retire": [
+        "document/artifact navigation prose that bypasses `subject_id`"
+      ],
+      "notes": [
+        "Bucket: MUST_CHANGE.",
+        "Use a heading-anchored replace_section; the anchor exists verbatim in the current source and keeps the mutation in one self-canonicalizable landing zone.",
+        "Retire the full listed stale residue within the target span; do not leave same-file conflicting residue partially live after emission.",
+        "Preserve or rebuild owner structural form when the live section uses tables, rows, matrices, registries, or other enumerated containers rather than collapsing canon to prose.",
         "Exact cross-reference rewrite targets are promoted into required survivor items for this packet target, not left in notes-only metadata."
       ]
     },
     {
       "path": "Plans/GitHub_API_Auth_and_Flows.md",
-      "heading": "## Token handling and storage (hard rules)",
+      "heading": "### Credential store keying (canonical)",
       "anchor_type": "heading",
       "operation": "replace_section",
       "required_section_maps": [
@@ -910,21 +1163,21 @@
       "stale_residue_to_retire": [
         "`github_api:github.com/<login>` as durable identity",
         "login-keyed durable identity",
-        "github_api:github.com/<login>"
+        "github_api:github.com/<login>",
+        "`github_api:github.com/<login>`"
       ],
       "notes": [
         "Bucket: MUST_CHANGE.",
-        "Use a live-anchor replace_section so the current source span can be rebuilt canonically without leaving inline or sibling residue behind.",
-        "Grouped related current-wave section maps under one live anchor to avoid overlapping parent/child packet targets while keeping the owner canon in one self-canonicalizable landing zone.",
+        "Use a child-heading replace_section at `### Credential store keying (canonical)` so the owned keying structure is rebuilt in place while sibling Storage location, Token lifecycle, and Credential-store unavailable canon remains intact.",
+        "Rebuild the authoritative credential-keying shape in this subsection itself; do not preserve the old login-keyed account bullet and append `account_id`, `credential_ref`, `login`, and `auth_realm` afterward.",
         "Retire the full listed stale residue within the target span; do not leave same-file conflicting residue partially live after emission.",
-        "Preserve or rebuild authoritative tables, schemas, registries, and other structural owner surfaces in-place rather than collapsing them to prose-only summary.",
-        "Preserve nearby ContractRef coverage for every surviving MUST-level operational rule cluster, including later Rules / Behavioral rules / Acceptance criteria clusters when they remain normative.",
+        "Preserve or rebuild owner structural form when the live section uses tables, rows, matrices, registries, or other enumerated containers rather than collapsing canon to prose.",
         "Exact cross-reference rewrite targets are promoted into required survivor items for this packet target, not left in notes-only metadata."
       ]
     },
     {
       "path": "Plans/GitHub_API_Auth_and_Flows.md",
-      "heading": "## SSH Remote Dev Server \u2014 Auth Context",
+      "heading": "## Runtime Auth-Blocked Recovery Addendum (2026-03-09)",
       "anchor_type": "heading",
       "operation": "replace_section",
       "required_section_maps": [
@@ -984,35 +1237,29 @@
       ],
       "notes": [
         "Bucket: MUST_CHANGE.",
-        "Use a live-anchor replace_section so the current source span can be rebuilt canonically without leaving inline or sibling residue behind.",
-        "Grouped related current-wave section maps under one live anchor to avoid overlapping parent/child packet targets while keeping the owner canon in one self-canonicalizable landing zone.",
+        "Use a heading-anchored replace_section; the anchor exists verbatim in the current source and keeps the mutation in one self-canonicalizable landing zone.",
+        "Merged nested owner section maps into one heading-owned packet target to eliminate overlapping parent/child replace semantics inside the current wave.",
         "Retire the full listed stale residue within the target span; do not leave same-file conflicting residue partially live after emission.",
-        "Preserve or rebuild authoritative tables, schemas, registries, and other structural owner surfaces in-place rather than collapsing them to prose-only summary.",
-        "Preserve nearby ContractRef coverage for every surviving MUST-level operational rule cluster, including later Rules / Behavioral rules / Acceptance criteria clusters when they remain normative.",
+        "Preserve or rebuild owner structural form when the live section uses tables, rows, matrices, registries, or other enumerated containers rather than collapsing canon to prose.",
         "Exact cross-reference rewrite targets are promoted into required survivor items for this packet target, not left in notes-only metadata."
       ]
     },
     {
       "path": "Plans/GitHub_Integration.md",
-      "heading": "### A.3 History and Graph",
+      "heading": "### A.4 Worktrees",
       "anchor_type": "heading",
-      "operation": "insert_after",
+      "operation": "replace_section",
       "required_section_maps": [
         {
           "path": "Plans/GitHub_Integration.md",
           "heading": "### A.4 Worktrees"
-        },
-        {
-          "path": "Plans/GitHub_Integration.md",
-          "heading": "### A.5 Surface boundary rule"
         }
       ],
       "exact_items_that_must_survive": {
         "required_obligations": [
           "OBL-003",
           "OBL-004",
-          "OBL-038",
-          "OBL-001"
+          "OBL-038"
         ],
         "required_exact_tokens": [
           "worktree_id",
@@ -1021,18 +1268,13 @@
           "archived",
           "removed",
           "cleanup_eligible",
-          "selected_worktree_id",
-          "Source Control owns Git-native worktree inspection and mutation actions",
-          "Orchestrator owns lane/package/seam operational context, lineage, and governance state",
-          "cross-surface opens route through canonical route/open contracts rather than feature-local payloads"
+          "selected_worktree_id"
         ],
         "required_labels": [
           "worktrees",
           "historical",
           "archived",
-          "removed",
-          "Source Control",
-          "Orchestrator"
+          "removed"
         ],
         "required_interface_shape_fields": [
           "worktree_id",
@@ -1041,24 +1283,15 @@
           "branch_ref",
           "baseline_ref",
           "lifecycle_state",
-          "selected_worktree_id",
-          "initiator_surface",
-          "executor_surface",
-          "package_id",
-          "run_reference"
+          "selected_worktree_id"
         ],
         "required_behavioral_edges": [
-          "GitHub surface worktree rows must respect durable worktree/lane identity and historical rendering semantics.",
-          "Source Control owns Git-native worktree inspection and mutation actions.",
-          "Orchestrator owns lane/package/seam operational context and lineage.",
-          "Remote-operation receipts retain both local runtime identity and remote workflow identity."
+          "GitHub surface worktree rows must respect durable worktree/lane identity and historical rendering semantics."
         ],
         "required_permission_carrythrough": [],
         "cross_reference_rewrites": [
           "Plans/storage-plan.md#Required redb keys",
-          "Plans/WorktreeGitImprovement.md#4.1 Assistant-created worktree lifecycle",
-          "Plans/Orchestrator_Page.md#11. Source Control boundary",
-          "Plans/FinalGUISpec.md#7.2 Source Control"
+          "Plans/WorktreeGitImprovement.md#4.1 Assistant-created worktree lifecycle"
         ]
       },
       "stale_residue_to_retire": [
@@ -1067,17 +1300,67 @@
       ],
       "notes": [
         "Bucket: MUST_CHANGE.",
-        "Use a live-anchor insert_after so the missing owner section lands directly after the current anchor without relying on nonexistent headings.",
-        "Grouped related current-wave section maps under one live anchor to avoid overlapping parent/child packet targets while keeping the owner canon in one self-canonicalizable landing zone.",
+        "Use a heading-anchored replace_section; the anchor exists verbatim in the current source and keeps the mutation in one self-canonicalizable landing zone.",
         "Retire the full listed stale residue within the target span; do not leave same-file conflicting residue partially live after emission.",
-        "Preserve or rebuild authoritative tables, schemas, registries, and other structural owner surfaces in-place rather than collapsing them to prose-only summary.",
-        "Preserve nearby ContractRef coverage for every surviving MUST-level operational rule cluster, including later Rules / Behavioral rules / Acceptance criteria clusters when they remain normative.",
+        "Preserve or rebuild owner structural form when the live section uses tables, rows, matrices, registries, or other enumerated containers rather than collapsing canon to prose.",
         "Exact cross-reference rewrite targets are promoted into required survivor items for this packet target, not left in notes-only metadata."
       ]
     },
     {
       "path": "Plans/GitHub_Integration.md",
-      "heading": "## Chat-driven external repo import (MVP)",
+      "heading": "### A.5 Surface boundary rule",
+      "anchor_type": "heading",
+      "operation": "replace_section",
+      "required_section_maps": [
+        {
+          "path": "Plans/GitHub_Integration.md",
+          "heading": "### A.5 Surface boundary rule"
+        }
+      ],
+      "exact_items_that_must_survive": {
+        "required_obligations": [
+          "OBL-001"
+        ],
+        "required_exact_tokens": [
+          "Source Control owns Git-native worktree inspection and mutation actions",
+          "Orchestrator owns lane/package/seam operational context, lineage, and governance state",
+          "cross-surface opens route through canonical route/open contracts rather than feature-local payloads"
+        ],
+        "required_labels": [
+          "Source Control",
+          "Orchestrator"
+        ],
+        "required_interface_shape_fields": [
+          "initiator_surface",
+          "executor_surface",
+          "worktree_id",
+          "lane_id",
+          "package_id",
+          "run_reference"
+        ],
+        "required_behavioral_edges": [
+          "Source Control owns Git-native worktree inspection and mutation actions.",
+          "Orchestrator owns lane/package/seam operational context and lineage.",
+          "Remote-operation receipts retain both local runtime identity and remote workflow identity."
+        ],
+        "required_permission_carrythrough": [],
+        "cross_reference_rewrites": [
+          "Plans/Orchestrator_Page.md#11. Source Control boundary",
+          "Plans/FinalGUISpec.md#7.2 Source Control"
+        ]
+      },
+      "stale_residue_to_retire": [],
+      "notes": [
+        "Bucket: MUST_CHANGE.",
+        "Use a heading-anchored replace_section; the anchor exists verbatim in the current source and keeps the mutation in one self-canonicalizable landing zone.",
+        "Retire the full listed stale residue within the target span; do not leave same-file conflicting residue partially live after emission.",
+        "Preserve or rebuild owner structural form when the live section uses tables, rows, matrices, registries, or other enumerated containers rather than collapsing canon to prose.",
+        "Exact cross-reference rewrite targets are promoted into required survivor items for this packet target, not left in notes-only metadata."
+      ]
+    },
+    {
+      "path": "Plans/GitHub_Integration.md",
+      "heading": "## Deferred GitHub Recovery Binding (2026-03-09)",
       "anchor_type": "heading",
       "operation": "replace_section",
       "required_section_maps": [
@@ -1126,43 +1409,30 @@
       ],
       "notes": [
         "Bucket: MUST_CHANGE.",
-        "Use a live-anchor replace_section so the current source span can be rebuilt canonically without leaving inline or sibling residue behind.",
-        "This target owns one current-wave section map and keeps the mutation in one self-canonicalizable landing zone.",
+        "Use a heading-anchored replace_section; the anchor exists verbatim in the current source and keeps the mutation in one self-canonicalizable landing zone.",
+        "Preserve multi-cluster ContractRef locality inside the rebuilt section body: the opening MUST-level binding-record cluster and the later blocked/recovery Rules cluster each need forward local ContractRef coverage within verifier locality range.",
+        "Place the later local ContractRef after the blocked/recovery Rules cluster so the `resume MUST return ...` requirement and the rest of that MUST-level cluster do not rely on an earlier section-level ContractRef.",
         "Retire the full listed stale residue within the target span; do not leave same-file conflicting residue partially live after emission.",
-        "Preserve or rebuild authoritative tables, schemas, registries, and other structural owner surfaces in-place rather than collapsing them to prose-only summary.",
-        "Preserve nearby ContractRef coverage for every surviving MUST-level operational rule cluster, including later Rules / Behavioral rules / Acceptance criteria clusters when they remain normative.",
+        "Preserve or rebuild owner structural form when the live section uses tables, rows, matrices, registries, or other enumerated containers rather than collapsing canon to prose.",
         "Exact cross-reference rewrite targets are promoted into required survivor items for this packet target, not left in notes-only metadata."
       ]
     },
     {
       "path": "Plans/Glossary.md",
-      "heading": "## 2. Core terms",
+      "heading": "### Orchestrator rewrite terms",
       "anchor_type": "heading",
-      "operation": "insert_after",
+      "operation": "replace_section",
       "required_section_maps": [
         {
           "path": "Plans/Glossary.md",
           "heading": "### Orchestrator rewrite terms"
-        },
-        {
-          "path": "Plans/Glossary.md",
-          "heading": "### Runtime and routing terms"
         }
       ],
       "exact_items_that_must_survive": {
         "required_obligations": [
           "OBL-011",
           "OBL-012",
-          "OBL-018",
-          "OBL-040",
-          "OBL-041",
-          "OBL-044",
-          "OBL-020",
-          "OBL-022",
-          "OBL-023",
-          "OBL-024",
-          "OBL-026",
-          "OBL-027"
+          "OBL-018"
         ],
         "required_exact_tokens": [
           "canonical term system",
@@ -1178,52 +1448,65 @@
           "revoked",
           "reopened",
           "archived",
-          "removed",
-          "Seams",
-          "Feature Seam",
-          "Work Package",
-          "Package Overseer",
-          "Seam Overseer",
-          "Locally Complete",
-          "Available to Seam",
-          "Seam Complete",
-          "Completion Blocked",
-          "Weak Integration",
-          "Promotion Blocked",
-          "Promotion Revoked",
-          "Corroboration Requested",
-          "Challenge Accepted",
-          "Challenge Not Accepted",
-          "Advisory Concern Recorded",
-          "Graph Patch Requested",
-          "Graph Patch Applied",
-          "Generation Updated",
-          "Lane to Package",
-          "Package to Seam",
-          "Seam Completion",
-          "Seam Completion Revoked",
-          "Reopened by Patch",
-          "Reopened by New Evidence",
-          "Runtime",
-          "Corroboration",
-          "Graph Patch",
-          "Recovery",
-          "User",
-          "External Resource",
-          "Info",
-          "Warning",
-          "Attention",
-          "Action Required",
-          "inline help",
-          "context help",
-          "canonical help entry",
-          "Promotion",
-          "Concern",
-          "Graph Generation",
-          "Lane",
-          "requested vs effective",
-          "History vs Ledger",
-          "historical vs superseded vs revoked vs reopened",
+          "removed"
+        ],
+        "required_labels": [
+          "why it matters",
+          "what it is not",
+          "related concepts"
+        ],
+        "required_interface_shape_fields": [
+          "canonical_name",
+          "short_definition",
+          "why_it_matters",
+          "what_it_is_not",
+          "common_related_states",
+          "related_concepts",
+          "surface_examples"
+        ],
+        "required_behavioral_edges": [
+          "Canonical term names must stay stable across expert and simplified help surfaces.",
+          "Historical vocabulary must be shared without collapsing family-local state."
+        ],
+        "required_permission_carrythrough": [],
+        "cross_reference_rewrites": [
+          "Plans/FinalGUISpec.md#7.5 Project and attention surfaces"
+        ]
+      },
+      "stale_residue_to_retire": [
+        "empty Orchestrator rewrite terms section",
+        "parallel friendly names that drift from contracts"
+      ],
+      "notes": [
+        "Bucket: MUST_CHANGE.",
+        "Use a heading-anchored replace_section; the anchor exists verbatim in the current source and keeps the mutation in one self-canonicalizable landing zone.",
+        "Retire the full listed stale residue within the target span; do not leave same-file conflicting residue partially live after emission.",
+        "Preserve or rebuild owner structural form when the live section uses tables, rows, matrices, registries, or other enumerated containers rather than collapsing canon to prose.",
+        "Exact cross-reference rewrite targets are promoted into required survivor items for this packet target, not left in notes-only metadata."
+      ]
+    },
+    {
+      "path": "Plans/Glossary.md",
+      "heading": "### Runtime and routing terms",
+      "anchor_type": "heading",
+      "operation": "replace_section",
+      "required_section_maps": [
+        {
+          "path": "Plans/Glossary.md",
+          "heading": "### Runtime and routing terms"
+        }
+      ],
+      "exact_items_that_must_survive": {
+        "required_obligations": [
+          "OBL-011",
+          "OBL-020",
+          "OBL-022",
+          "OBL-023",
+          "OBL-024",
+          "OBL-026",
+          "OBL-027"
+        ],
+        "required_exact_tokens": [
           "route_target",
           "target_kind",
           "object_kind",
@@ -1236,71 +1519,41 @@
         "required_labels": [
           "why it matters",
           "what it is not",
-          "related concepts",
-          "Feature Seam",
-          "Work Package",
-          "Weak Integration",
-          "Attention",
-          "Action Required"
+          "related concepts"
         ],
         "required_interface_shape_fields": [
           "canonical_name",
           "short_definition",
           "why_it_matters",
           "what_it_is_not",
-          "common_related_states",
           "related_concepts",
-          "surface_examples",
-          "term_id",
-          "help_depth",
-          "context_help_target",
-          "canonical_help_entry_ref",
-          "object_label",
-          "state_label",
-          "action_label",
-          "concern_group_label",
-          "blocked_owner_kind",
-          "alert_level"
+          "surface_examples"
         ],
         "required_behavioral_edges": [
-          "Canonical term names must stay stable across expert and simplified help surfaces.",
-          "Historical vocabulary must be shared without collapsing family-local state.",
-          "`Weak Integration` is summarized visibly and grouped under `Wiring`, `Workflow`, `State`, `GUI`, and `Design`.",
-          "Canonical help stays three-tier: inline, contextual, and dedicated help entry without renaming terms between Expert and ELI5.",
-          "Alert-level and blocked-owner terms remain stable across docs and runtime copy.",
           "Glossary routing definitions must mirror canonical contracts instead of inventing consumer-local interpretations.",
           "`resume_url` must be defined as transport-only."
         ],
         "required_permission_carrythrough": [],
         "cross_reference_rewrites": [
-          "Plans/FinalGUISpec.md#7.1 Orchestrator",
-          "Plans/FinalGUISpec.md#7.5 Project and attention surfaces",
           "Plans/Contracts_V0.md#7.3 `route_target`",
           "Plans/FileManager.md#OpenSubject"
         ]
       },
       "stale_residue_to_retire": [
-        "empty Orchestrator rewrite terms section",
-        "parallel friendly names that drift from contracts",
-        "`Tiers` as the primary rewrite tab/object label",
-        "tooltip-only governance for rewrite terms",
-        "renaming canonical terms between Expert and ELI5",
         "routing prose that treats `resume_url` as primary ontology",
         "special-case route families outside `subject_id` or `object_kind + object_id`"
       ],
       "notes": [
         "Bucket: MUST_CHANGE.",
-        "Use a live-anchor insert_after so the missing owner section lands directly after the current anchor without relying on nonexistent headings.",
-        "Grouped related current-wave section maps under one live anchor to avoid overlapping parent/child packet targets while keeping the owner canon in one self-canonicalizable landing zone.",
+        "Use a heading-anchored replace_section; the anchor exists verbatim in the current source and keeps the mutation in one self-canonicalizable landing zone.",
         "Retire the full listed stale residue within the target span; do not leave same-file conflicting residue partially live after emission.",
-        "Preserve or rebuild authoritative tables, schemas, registries, and other structural owner surfaces in-place rather than collapsing them to prose-only summary.",
-        "Preserve nearby ContractRef coverage for every surviving MUST-level operational rule cluster, including later Rules / Behavioral rules / Acceptance criteria clusters when they remain normative.",
+        "Preserve or rebuild owner structural form when the live section uses tables, rows, matrices, registries, or other enumerated containers rather than collapsing canon to prose.",
         "Exact cross-reference rewrite targets are promoted into required survivor items for this packet target, not left in notes-only metadata."
       ]
     },
     {
       "path": "Plans/Multi-Account.md",
-      "heading": "### 4.1 Provider entry (canonical)",
+      "heading": "## 4. Data model",
       "anchor_type": "heading",
       "operation": "replace_section",
       "required_section_maps": [
@@ -1321,9 +1574,7 @@
         "required_obligations": [
           "OBL-007",
           "OBL-008",
-          "OBL-035",
-          "OBL-043",
-          "OBL-045"
+          "OBL-035"
         ],
         "required_exact_tokens": [
           "requested_account_id",
@@ -1334,47 +1585,18 @@
           "account_id",
           "credential_ref",
           "login",
-          "account_pressure_episode",
-          "account_switch_event",
-          "episode_id",
-          "switch_event_id",
-          "source_kind",
-          "signal_confidence",
-          "pressure_kind",
-          "decision_kind",
-          "source_episode_id?",
           "account_id is the internal stable key.",
           "provider_identity is descriptive metadata only.",
           "the canonical account-registration shape is { account_id: ulid, provider_id, display_name, auth_method, credential_ref, created_at, last_used_at, status }",
           "requested/effective execution identity",
           "effective_provider_identity",
           "execution_role",
-          "operational_identity",
-          "source",
-          "request",
-          "execution",
-          "Inherited from",
-          "Overridden by",
-          "Requested",
-          "Effective",
-          "Reason",
-          "Support",
-          "ranked candidates",
-          "winner",
-          "fallback reason",
-          "actor type",
-          "operation type",
-          "scope level"
+          "operational_identity"
         ],
         "required_labels": [
           "requested account",
           "effective account",
-          "account record",
-          "account pressure episode",
-          "account switch event",
-          "source",
-          "request",
-          "execution"
+          "account record"
         ],
         "required_interface_shape_fields": [
           "requested_account_id",
@@ -1386,13 +1608,6 @@
           "credential_ref",
           "login",
           "auth_realm",
-          "episode_id",
-          "switch_event_id",
-          "source_kind",
-          "signal_confidence",
-          "pressure_kind",
-          "decision_kind",
-          "source_episode_id",
           "provider_id",
           "display_name",
           "auth_method",
@@ -1401,28 +1616,16 @@
           "status",
           "effective_provider_identity",
           "execution_role",
-          "operational_identity",
-          "source_axis",
-          "request_axis",
-          "execution_axis",
-          "ranked_candidates[]",
-          "winner",
-          "fallback_reason",
-          "actor_type",
-          "operation_type",
-          "scope_level"
+          "operational_identity"
         ],
         "required_behavioral_edges": [
           "Stable internal account identity outranks provider-native display metadata.",
           "Requested/effective account state remains explicit across runtime resolution.",
-          "Failed or blocked switch decisions still produce durable history even when the effective account did not change.",
-          "Current health snapshots and recent-reason fields do not substitute for canonical pressure/switch history.",
           "Stable internal account identity is separate from provider-native display metadata.",
           "Secrets remain outside config and state stores.",
           "Requested state must remain recoverable in historical snapshots.",
           "Binding distinguishes preference from requirement.",
-          "Fallback behavior depends on binding rather than ad hoc UI or provider policy.",
-          "Requested/effective differences expand visibly when runtime did not honor the request exactly."
+          "Fallback behavior depends on binding rather than ad hoc UI or provider policy."
         ],
         "required_permission_carrythrough": [
           "effective account identity must remain available to permission and approval consumers"
@@ -1430,112 +1633,42 @@
         "cross_reference_rewrites": [
           "Plans/Contracts_V0.md#4. Auth contracts",
           "Plans/GitHub_API_Auth_and_Flows.md#Token handling and storage (hard rules)",
-          "Plans/storage-plan.md#Canonical records",
           "Plans/GitHub_API_Auth_and_Flows.md#Credential store keying (canonical)",
           "Plans/Prompt_Pipeline.md#6.4 Effective resolution record",
-          "Plans/assistant-chat-design.md#Canonical navigation model",
-          "Plans/FinalGUISpec.md#7.4.4 Settings (Unified) panel specification"
+          "Plans/assistant-chat-design.md#Canonical navigation model"
         ]
       },
       "stale_residue_to_retire": [
         "login-keyed durable identity",
         "ambiguous `provider_account_id` status",
         "policy-only account routing without selected-account anchor",
-        "`account_switch_reason` as both pressure cause and switch outcome",
-        "`recent_switch_reason` as durable history",
-        "identity bundles that stop at effective_account_id only",
-        "precedence reconstruction from docs instead of explicit requested/effective disclosure"
+        "identity bundles that stop at effective_account_id only"
       ],
       "notes": [
         "Bucket: MUST_CHANGE.",
-        "Use a live-anchor replace_section so the current source span can be rebuilt canonically without leaving inline or sibling residue behind.",
-        "Grouped related current-wave section maps under one live anchor to avoid overlapping parent/child packet targets while keeping the owner canon in one self-canonicalizable landing zone.",
+        "Use a heading-anchored replace_section; the anchor exists verbatim in the current source and keeps the mutation in one self-canonicalizable landing zone.",
+        "Merged nested owner section maps into one heading-owned packet target to eliminate overlapping parent/child replace semantics inside the current wave.",
         "Retire the full listed stale residue within the target span; do not leave same-file conflicting residue partially live after emission.",
-        "Preserve or rebuild authoritative tables, schemas, registries, and other structural owner surfaces in-place rather than collapsing them to prose-only summary.",
-        "Preserve nearby ContractRef coverage for every surviving MUST-level operational rule cluster, including later Rules / Behavioral rules / Acceptance criteria clusters when they remain normative.",
+        "Preserve or rebuild owner structural form when the live section uses tables, rows, matrices, registries, or other enumerated containers rather than collapsing canon to prose.",
         "Exact cross-reference rewrite targets are promoted into required survivor items for this packet target, not left in notes-only metadata."
       ]
     },
     {
       "path": "Plans/Orchestrator_Page.md",
-      "heading": "# Orchestrator Page -- Single-Page 6-Tab Specification",
+      "heading": "## 1. Scope and canonical model",
       "anchor_type": "heading",
       "operation": "replace_section",
       "required_section_maps": [
         {
           "path": "Plans/Orchestrator_Page.md",
           "heading": "## 1. Scope and canonical model"
-        },
-        {
-          "path": "Plans/Orchestrator_Page.md",
-          "heading": "## 2. Page layout"
-        },
-        {
-          "path": "Plans/Orchestrator_Page.md",
-          "heading": "## 3. Progress tab"
-        },
-        {
-          "path": "Plans/Orchestrator_Page.md",
-          "heading": "## 4. Seams tab"
-        },
-        {
-          "path": "Plans/Orchestrator_Page.md",
-          "heading": "## 5. Node Graph tab"
-        },
-        {
-          "path": "Plans/Orchestrator_Page.md",
-          "heading": "## 6. Evidence tab"
-        },
-        {
-          "path": "Plans/Orchestrator_Page.md",
-          "heading": "## 7. History tab"
-        },
-        {
-          "path": "Plans/Orchestrator_Page.md",
-          "heading": "## 8. Ledger tab"
-        },
-        {
-          "path": "Plans/Orchestrator_Page.md",
-          "heading": "## 9. Current vs historical run behavior"
-        },
-        {
-          "path": "Plans/Orchestrator_Page.md",
-          "heading": "## 10. Search, routing, and action policy"
-        },
-        {
-          "path": "Plans/Orchestrator_Page.md",
-          "heading": "## 11. Source Control boundary"
-        },
-        {
-          "path": "Plans/Orchestrator_Page.md",
-          "heading": "## 12. Concern and notification model"
         }
       ],
       "exact_items_that_must_survive": {
         "required_obligations": [
           "OBL-001",
           "OBL-002",
-          "OBL-014",
-          "OBL-039",
-          "OBL-040",
-          "OBL-042",
-          "OBL-044",
-          "OBL-017",
-          "OBL-036",
-          "OBL-018",
-          "OBL-041",
-          "OBL-043",
-          "OBL-003",
-          "OBL-004",
-          "OBL-015",
-          "OBL-020",
-          "OBL-045",
-          "OBL-005",
-          "OBL-006",
-          "OBL-038",
-          "OBL-012",
-          "OBL-013",
-          "OBL-019"
+          "OBL-014"
         ],
         "required_exact_tokens": [
           "Source Control",
@@ -1545,108 +1678,499 @@
           "primary operational object in Orchestrator",
           "Worktree",
           "concrete filesystem/Git backing",
+          "Orchestrator-wide scale contract"
+        ],
+        "required_labels": [
+          "Source Control",
+          "Orchestrator",
+          "Lane",
+          "Worktree"
+        ],
+        "required_interface_shape_fields": [
+          "lane_id",
+          "worktree_id",
+          "package_id",
+          "node_id",
+          "seam_id",
+          "virtualization_strategy",
+          "lazy_expansion_trigger",
+          "inspector_loading_strategy"
+        ],
+        "required_behavioral_edges": [
+          "Source Control remains the primary operational surface for concrete Git/worktree actions.",
+          "Orchestrator remains the surface for why those actions matter.",
+          "Scale behavior must be defined above individual tab prose."
+        ],
+        "required_permission_carrythrough": [],
+        "cross_reference_rewrites": [
+          "Plans/GitHub_Integration.md#A.1 Source Control information architecture",
+          "Plans/FinalGUISpec.md#7.1 Orchestrator"
+        ]
+      },
+      "stale_residue_to_retire": [
+        "tier-era worktree ownership model",
+        "run/tier-centric framing of Source Control",
+        "per-tab performance guidance without shared Orchestrator scale contract"
+      ],
+      "notes": [
+        "Bucket: MUST_CHANGE.",
+        "Use a heading-anchored replace_section; the anchor exists verbatim in the current source and keeps the mutation in one self-canonicalizable landing zone.",
+        "Retire the full listed stale residue within the target span; do not leave same-file conflicting residue partially live after emission.",
+        "Preserve or rebuild owner structural form when the live section uses tables, rows, matrices, registries, or other enumerated containers rather than collapsing canon to prose.",
+        "Exact cross-reference rewrite targets are promoted into required survivor items for this packet target, not left in notes-only metadata."
+      ]
+    },
+    {
+      "path": "Plans/Orchestrator_Page.md",
+      "heading": "## 2. Page layout",
+      "anchor_type": "heading",
+      "operation": "insert_after",
+      "required_section_maps": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": "## 2. Page layout"
+        }
+      ],
+      "exact_items_that_must_survive": {
+        "required_obligations": [
+          "OBL-014"
+        ],
+        "required_exact_tokens": [
           "Orchestrator-wide scale contract",
           "virtualization",
           "lazy expansion",
           "paging",
-          "demand-loaded inspectors",
-          "Progress",
-          "Run Status",
-          "Current Activity",
-          "Attention / Blockers",
-          "Seam Health",
-          "Package Activity",
-          "Promotion Queue",
-          "Worktree Lanes",
-          "Account / Usage Pressure",
-          "Recent Major Events",
-          "Overseer Activity",
-          "Corroboration Queue",
-          "Recovery State",
-          "Throughput / Capacity",
-          "History",
-          "Node Graph",
-          "Seams",
-          "Ledger",
-          "Usage",
-          "Evidence",
-          "Feature Seam",
-          "Work Package",
-          "Package Overseer",
-          "Seam Overseer",
-          "Locally Complete",
-          "Available to Seam",
-          "Seam Complete",
-          "Completion Blocked",
-          "Weak Integration",
-          "Promotion Blocked",
-          "Promotion Revoked",
-          "Seam Completion",
-          "Seam Completion Revoked",
-          "Reopened",
-          "Reopened by Patch",
-          "Reopened by New Evidence",
-          "Lane to Package",
-          "Package to Seam",
-          "focused_run_id?",
-          "focus_mode = live | historical",
-          "Historical Run Mode",
-          "inline help",
-          "context help",
-          "canonical help entry",
+          "demand-loaded inspectors"
+        ],
+        "required_labels": [
+          "layout",
+          "scale contract"
+        ],
+        "required_interface_shape_fields": [
+          "initial_slice_size",
+          "virtualization_strategy",
+          "lazy_expansion_trigger",
+          "inspector_loading_strategy",
+          "projection_fallback"
+        ],
+        "required_behavioral_edges": [
+          "Shared scale behavior must be defined at page-layout level so every dense tab inherits the same contract."
+        ],
+        "required_permission_carrythrough": [],
+        "cross_reference_rewrites": [
+          "Plans/FinalGUISpec.md#7.1 Orchestrator",
+          "Plans/Run_Graph_View.md## 2. Layout"
+        ]
+      },
+      "stale_residue_to_retire": [
+        "per-tab performance guidance without shared Orchestrator scale contract"
+      ],
+      "notes": [
+        "Bucket: MUST_CHANGE.",
+        "Use a heading-anchored replace_section; the anchor exists verbatim in the current source and keeps the mutation in one self-canonicalizable landing zone.",
+        "Retire the full listed stale residue within the target span; do not leave same-file conflicting residue partially live after emission.",
+        "Preserve or rebuild owner structural form when the live section uses tables, rows, matrices, registries, or other enumerated containers rather than collapsing canon to prose.",
+        "Exact cross-reference rewrite targets are promoted into required survivor items for this packet target, not left in notes-only metadata."
+      ]
+    },
+    {
+      "path": "Plans/Orchestrator_Page.md",
+      "heading": "## 6. Evidence tab",
+      "anchor_type": "heading",
+      "operation": "replace_section",
+      "required_section_maps": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": "## 6. Evidence tab"
+        }
+      ],
+      "exact_items_that_must_survive": {
+        "required_obligations": [
+          "OBL-017",
+          "OBL-036"
+        ],
+        "required_exact_tokens": [
           "record export",
           "bundle export",
           "view export",
           "manifest",
           "trust_state_at_export",
-          "validation_pass_report",
+          "validation_pass_report"
+        ],
+        "required_labels": [
+          "record export",
+          "bundle export",
+          "view export"
+        ],
+        "required_interface_shape_fields": [
+          "export_id",
+          "export_kind",
+          "focused_run_id",
+          "filter_summary",
+          "included_record_ids",
+          "included_artifact_ids",
+          "included_file_paths",
+          "trust_state_at_export",
+          "workflow_run_id"
+        ],
+        "required_behavioral_edges": [
+          "Filtered JSON is not automatically canonical record export.",
+          "Validation pass reports must remain visibly upstream artifacts even when shown in Evidence."
+        ],
+        "required_permission_carrythrough": [],
+        "cross_reference_rewrites": [
+          "Plans/storage-plan.md#Canonical records",
+          "Plans/Project_Output_Artifacts.md#10. Validation Pass Report Artifacts"
+        ]
+      },
+      "stale_residue_to_retire": [
+        "conflating record exports, artifact exports, and view exports",
+        "validation artifacts presented as runtime records"
+      ],
+      "notes": [
+        "Bucket: MUST_CHANGE.",
+        "Use a heading-anchored replace_section; the anchor exists verbatim in the current source and keeps the mutation in one self-canonicalizable landing zone.",
+        "Retire the full listed stale residue within the target span; do not leave same-file conflicting residue partially live after emission.",
+        "Preserve or rebuild owner structural form when the live section uses tables, rows, matrices, registries, or other enumerated containers rather than collapsing canon to prose.",
+        "Exact cross-reference rewrite targets are promoted into required survivor items for this packet target, not left in notes-only metadata."
+      ]
+    },
+    {
+      "path": "Plans/Orchestrator_Page.md",
+      "heading": "## 7. History tab",
+      "anchor_type": "heading",
+      "operation": "replace_section",
+      "required_section_maps": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": "## 7. History tab"
+        }
+      ],
+      "exact_items_that_must_survive": {
+        "required_obligations": [
+          "OBL-018"
+        ],
+        "required_exact_tokens": [
           "historical",
           "stale_historical",
           "superseded",
           "revoked",
           "reopened",
           "archived",
+          "removed"
+        ],
+        "required_labels": [
+          "historical",
+          "archived",
+          "removed"
+        ],
+        "required_interface_shape_fields": [
+          "historical_state",
+          "lineage_refs",
+          "supersession_refs",
+          "revocation_refs",
+          "archive_status"
+        ],
+        "required_behavioral_edges": [
+          "History surfaces must render the shared historical vocabulary explicitly instead of implying history through absence of live state."
+        ],
+        "required_permission_carrythrough": [],
+        "cross_reference_rewrites": [
+          "Plans/storage-plan.md#Canonical records",
+          "Plans/Glossary.md#Orchestrator rewrite terms"
+        ]
+      },
+      "stale_residue_to_retire": [
+        "historical implied by missing live state",
+        "overloaded `resolved` keyword"
+      ],
+      "notes": [
+        "Bucket: MUST_CHANGE.",
+        "Use a heading-anchored replace_section; the anchor exists verbatim in the current source and keeps the mutation in one self-canonicalizable landing zone.",
+        "Retire the full listed stale residue within the target span; do not leave same-file conflicting residue partially live after emission.",
+        "Preserve or rebuild owner structural form when the live section uses tables, rows, matrices, registries, or other enumerated containers rather than collapsing canon to prose.",
+        "Exact cross-reference rewrite targets are promoted into required survivor items for this packet target, not left in notes-only metadata."
+      ]
+    },
+    {
+      "path": "Plans/Orchestrator_Page.md",
+      "heading": "## 8. Ledger tab",
+      "anchor_type": "heading",
+      "operation": "replace_section",
+      "required_section_maps": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": "## 8. Ledger tab"
+        }
+      ],
+      "exact_items_that_must_survive": {
+        "required_obligations": [
+          "OBL-017"
+        ],
+        "required_exact_tokens": [
+          "record export",
+          "bundle export",
+          "view export",
+          "manifest",
+          "trust_state_at_export"
+        ],
+        "required_labels": [
+          "record export",
+          "bundle export",
+          "view export"
+        ],
+        "required_interface_shape_fields": [
+          "export_id",
+          "export_kind",
+          "source_surface",
+          "focused_run_id",
+          "filter_summary",
+          "included_record_ids",
+          "included_artifact_ids",
+          "included_file_paths",
+          "lineage_notes",
+          "trust_state_at_export"
+        ],
+        "required_behavioral_edges": [
+          "Ledger export affordances must distinguish canonical record exports from derived view exports and bundles."
+        ],
+        "required_permission_carrythrough": [],
+        "cross_reference_rewrites": [
+          "Plans/storage-plan.md#Canonical records",
+          "Plans/FinalGUISpec.md#7.19A Dedicated log and audit inspector"
+        ]
+      },
+      "stale_residue_to_retire": [
+        "conflating record exports, artifact exports, and view exports into one unclear family"
+      ],
+      "notes": [
+        "Bucket: MUST_CHANGE.",
+        "Use a heading-anchored replace_section; the anchor exists verbatim in the current source and keeps the mutation in one self-canonicalizable landing zone.",
+        "Retire the full listed stale residue within the target span; do not leave same-file conflicting residue partially live after emission.",
+        "Preserve or rebuild owner structural form when the live section uses tables, rows, matrices, registries, or other enumerated containers rather than collapsing canon to prose.",
+        "Exact cross-reference rewrite targets are promoted into required survivor items for this packet target, not left in notes-only metadata."
+      ]
+    },
+    {
+      "path": "Plans/Orchestrator_Page.md",
+      "heading": "## 9. Current vs historical run behavior",
+      "anchor_type": "heading",
+      "operation": "replace_section",
+      "required_section_maps": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": "## 9. Current vs historical run behavior"
+        }
+      ],
+      "exact_items_that_must_survive": {
+        "required_obligations": [
+          "OBL-003",
+          "OBL-004",
+          "OBL-018"
+        ],
+        "required_exact_tokens": [
+          "historical",
+          "archived",
           "removed",
-          "Info",
-          "Warning",
-          "Attention",
-          "Action Required",
-          "resolved",
-          "dismissed",
-          "acknowledged",
-          "account_pressure_episode",
-          "account_switch_event",
-          "decision_kind",
-          "source_episode_id?",
           "baseline",
           "active",
           "suspect",
           "restoring",
           "retained",
           "cleanup_eligible",
-          "active_run_id?",
-          "last_live_run_id?",
-          "auto_return_to_live = false",
+          "stale_historical",
+          "superseded",
+          "revoked",
+          "reopened"
+        ],
+        "required_labels": [
+          "historical",
+          "archived",
+          "removed",
+          "cleanup eligible"
+        ],
+        "required_interface_shape_fields": [
+          "lifecycle_state",
+          "historical_state",
+          "archive_status",
+          "lineage_refs"
+        ],
+        "required_behavioral_edges": [
+          "Historical truth must not disappear when live worktrees are gone.",
+          "`historical` is record truth and is distinct from cleanup state."
+        ],
+        "required_permission_carrythrough": [],
+        "cross_reference_rewrites": [
+          "Plans/storage-plan.md#Restart and stale history"
+        ]
+      },
+      "stale_residue_to_retire": [
+        "cleanup wipes history model",
+        "historical implied by missing live state"
+      ],
+      "notes": [
+        "Bucket: MUST_CHANGE.",
+        "Use a heading-anchored replace_section; the anchor exists verbatim in the current source and keeps the mutation in one self-canonicalizable landing zone.",
+        "Retire the full listed stale residue within the target span; do not leave same-file conflicting residue partially live after emission.",
+        "Preserve or rebuild owner structural form when the live section uses tables, rows, matrices, registries, or other enumerated containers rather than collapsing canon to prose.",
+        "Exact cross-reference rewrite targets are promoted into required survivor items for this packet target, not left in notes-only metadata."
+      ]
+    },
+    {
+      "path": "Plans/Orchestrator_Page.md",
+      "heading": "## 10. Search, routing, and action policy",
+      "anchor_type": "heading",
+      "operation": "replace_section",
+      "required_section_maps": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": "## 10. Search, routing, and action policy"
+        }
+      ],
+      "exact_items_that_must_survive": {
+        "required_obligations": [
+          "OBL-015",
+          "OBL-020"
+        ],
+        "required_exact_tokens": [
           "navigation vs mutation",
           "single-target vs multi-target",
           "shortcut eligibility",
           "palette visibility",
           "confirmation",
           "reversibility",
-          "shared routing payload contract",
-          "source",
-          "request",
-          "execution",
-          "Requested",
-          "Effective",
-          "Reason",
-          "ranked candidates",
-          "winner",
-          "fallback reason",
+          "shared routing payload contract"
+        ],
+        "required_labels": [
+          "navigation",
+          "mutation",
+          "confirmation"
+        ],
+        "required_interface_shape_fields": [
+          "action_type",
+          "target_scope",
+          "palette_visible",
+          "shortcut_eligible",
+          "confirmation_strength",
+          "reversibility",
+          "project_id",
+          "target_kind",
+          "subject_id",
+          "object_kind",
+          "object_id",
+          "tab_id",
+          "inspector_target"
+        ],
+        "required_behavioral_edges": [
+          "Command/palette exposure must not silently downgrade confirmation strength.",
+          "Cross-surface pivots restore context through canonical route payloads rather than ad hoc payloads."
+        ],
+        "required_permission_carrythrough": [
+          "mutation actions must preserve confirmation and gating semantics across palette, shortcut, and context-menu entry points"
+        ],
+        "cross_reference_rewrites": [
+          "Plans/UI_Command_Catalog.md#2.0 Command entry contract (doc-level)",
+          "Plans/Contracts_V0.md#7.3 `route_target`"
+        ]
+      },
+      "stale_residue_to_retire": [
+        "blanket command exposure for dangerous runtime mutations",
+        "separate ad hoc payloads per surface"
+      ],
+      "notes": [
+        "Bucket: MUST_CHANGE.",
+        "Use a heading-anchored replace_section; the anchor exists verbatim in the current source and keeps the mutation in one self-canonicalizable landing zone.",
+        "Retire the full listed stale residue within the target span; do not leave same-file conflicting residue partially live after emission.",
+        "Preserve or rebuild owner structural form when the live section uses tables, rows, matrices, registries, or other enumerated containers rather than collapsing canon to prose.",
+        "Exact cross-reference rewrite targets are promoted into required survivor items for this packet target, not left in notes-only metadata."
+      ]
+    },
+    {
+      "path": "Plans/Orchestrator_Page.md",
+      "heading": "## 11. Source Control boundary",
+      "anchor_type": "heading",
+      "operation": "replace_section",
+      "required_section_maps": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": "## 11. Source Control boundary"
+        }
+      ],
+      "exact_items_that_must_survive": {
+        "required_obligations": [
+          "OBL-001",
+          "OBL-005",
+          "OBL-006",
+          "OBL-038"
+        ],
+        "required_exact_tokens": [
+          "Source Control",
+          "worktree-first",
           "dirty_worktree",
           "worktree_conflict",
           "worktree_id",
           "lane_id",
+          "cleanup_eligible",
+          "archived",
+          "removed"
+        ],
+        "required_labels": [
+          "Source Control",
+          "dirty worktree",
+          "worktree conflict"
+        ],
+        "required_interface_shape_fields": [
+          "worktree_id",
+          "lane_id",
+          "blocked_reason_code",
+          "remediation_actions_allowed",
+          "dirty_state",
+          "conflict_state",
+          "selected_worktree_id"
+        ],
+        "required_behavioral_edges": [
+          "Destructive Git/worktree actions resolve through Source Control semantics even when launched from Orchestrator.",
+          "Files cleanup must remain distinct from worktree removal."
+        ],
+        "required_permission_carrythrough": [
+          "remediation actions surface only through the allowed-action set"
+        ],
+        "cross_reference_rewrites": [
+          "Plans/GitHub_Integration.md#A.4 Worktrees",
+          "Plans/WorktreeGitImprovement.md#Worktree Conflict and Dirty-Worktree Runtime Alignment"
+        ]
+      },
+      "stale_residue_to_retire": [
+        "Orchestrator direct Git mutation without Source Control execution semantics",
+        "generic SCM error framing",
+        "cleanup equals removal assumptions"
+      ],
+      "notes": [
+        "Bucket: MUST_CHANGE.",
+        "Use a heading-anchored replace_section; the anchor exists verbatim in the current source and keeps the mutation in one self-canonicalizable landing zone.",
+        "Retire the full listed stale residue within the target span; do not leave same-file conflicting residue partially live after emission.",
+        "Preserve or rebuild owner structural form when the live section uses tables, rows, matrices, registries, or other enumerated containers rather than collapsing canon to prose.",
+        "Exact cross-reference rewrite targets are promoted into required survivor items for this packet target, not left in notes-only metadata."
+      ]
+    },
+    {
+      "path": "Plans/Orchestrator_Page.md",
+      "heading": "## 12. Concern and notification model",
+      "anchor_type": "heading",
+      "operation": "replace_section",
+      "required_section_maps": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": "## 12. Concern and notification model"
+        }
+      ],
+      "exact_items_that_must_survive": {
+        "required_obligations": [
+          "OBL-012",
+          "OBL-013",
+          "OBL-019"
+        ],
+        "required_exact_tokens": [
           "project health",
           "project activity",
           "project attention",
@@ -1660,150 +2184,16 @@
           "concern",
           "concern_id",
           "owner_kind",
-          "resolution_kind",
-          "Runtime",
-          "Corroboration",
-          "Graph Patch",
-          "Recovery",
-          "User",
-          "External Resource",
-          "seam.*",
-          "package.*",
-          "node.*",
-          "promotion.*",
-          "corroboration.*",
-          "graph_patch.*",
-          "recovery.*",
-          "account.*"
+          "resolution_kind"
         ],
         "required_labels": [
-          "Source Control",
-          "Orchestrator",
-          "Lane",
-          "Worktree",
-          "layout",
-          "scale contract",
-          "Progress",
-          "History",
-          "Node Graph",
-          "Seams",
-          "Ledger",
-          "Usage",
-          "Evidence",
-          "Feature Seam",
-          "Work Package",
-          "Package Overseer",
-          "Seam Overseer",
-          "Weak Integration",
-          "Current Activity",
-          "Attention / Blockers",
-          "Worktree Lanes",
-          "record export",
-          "bundle export",
-          "view export",
-          "Corroboration Queue",
-          "Recovery State",
-          "historical",
-          "archived",
-          "removed",
-          "Run Status",
-          "Recent Major Events",
-          "Throughput / Capacity",
-          "Promotion Queue",
-          "cleanup eligible",
-          "Historical Run Mode",
-          "navigation",
-          "mutation",
-          "confirmation",
-          "Requested",
-          "Effective",
-          "dirty worktree",
-          "worktree conflict",
-          "Info",
-          "Warning",
-          "Attention",
-          "Action Required",
+          "info",
+          "warning",
+          "Attention Required",
+          "Blocked",
           "System notification"
         ],
         "required_interface_shape_fields": [
-          "lane_id",
-          "worktree_id",
-          "package_id",
-          "node_id",
-          "seam_id",
-          "virtualization_strategy",
-          "lazy_expansion_trigger",
-          "inspector_loading_strategy",
-          "initial_slice_size",
-          "projection_fallback",
-          "widget_id",
-          "host_surface",
-          "default_drill_target",
-          "widget_layout_state",
-          "tab_label",
-          "object_label",
-          "state_label",
-          "action_label",
-          "concern_group_label",
-          "focused_run_id",
-          "focus_mode",
-          "selected_tab",
-          "help_depth",
-          "context_help_target",
-          "canonical_help_entry_ref",
-          "export_id",
-          "export_kind",
-          "filter_summary",
-          "included_record_ids",
-          "included_artifact_ids",
-          "included_file_paths",
-          "trust_state_at_export",
-          "workflow_run_id",
-          "historical_state",
-          "lineage_refs",
-          "supersession_refs",
-          "revocation_refs",
-          "archive_status",
-          "event_family",
-          "condition_state",
-          "linger_policy",
-          "episode_id",
-          "switch_event_id",
-          "source_surface",
-          "lineage_notes",
-          "decision_kind",
-          "source_episode_id",
-          "lifecycle_state",
-          "active_run_id",
-          "last_live_run_id",
-          "auto_return_to_live",
-          "action_type",
-          "target_scope",
-          "palette_visible",
-          "shortcut_eligible",
-          "confirmation_strength",
-          "reversibility",
-          "project_id",
-          "target_kind",
-          "subject_id",
-          "object_kind",
-          "object_id",
-          "tab_id",
-          "inspector_target",
-          "source_axis",
-          "request_axis",
-          "execution_axis",
-          "ranked_candidates[]",
-          "winner",
-          "fallback_reason",
-          "actor_type",
-          "operation_type",
-          "scope_level",
-          "blocked_reason_code",
-          "remediation_actions_allowed",
-          "dirty_state",
-          "conflict_state",
-          "selected_worktree_id",
           "activity_state",
           "attention_state",
           "health_indicator",
@@ -1813,119 +2203,37 @@
           "concern_id",
           "owner_kind",
           "resolution_kind",
-          "blocked_owner_kind",
-          "alert_level"
+          "lineage_refs"
         ],
         "required_behavioral_edges": [
-          "Source Control remains the primary operational surface for concrete Git/worktree actions.",
-          "Orchestrator remains the surface for why those actions matter.",
-          "Scale behavior must be defined above individual tab prose.",
-          "Shared scale behavior must be defined at page-layout level so every dense tab inherits the same contract.",
-          "`Progress` is the only Orchestrator widget canvas.",
-          "A reusable subset may also be hostable on Dashboard.",
-          "Non-Orchestrator widgets must not be hostable on the Orchestrator page.",
-          "Drill targets are deterministic defaults, not per-surface guesswork.",
-          "`Seam Health`, `Package Activity`, and `Overseer Activity` default into `Seams`.",
-          "Package issues roll up to seam concerns only when they cross package/seam or user-visible boundaries.",
-          "`Weak Integration` remains a visible grouped concern rather than generic drift copy.",
-          "`Current Activity`, `Attention / Blockers`, and `Worktree Lanes` default into `Node Graph`.",
-          "Graph pivots stay on the shared focused run context instead of tab-local run drift.",
-          "Compact graph badges and chips use linked deeper help instead of local jargon.",
-          "Filtered JSON is not automatically canonical record export.",
-          "Validation pass reports must remain visibly upstream artifacts even when shown in Evidence.",
-          "`Corroboration Queue` and `Recovery State` widgets default here as the evidence/recovery drill targets.",
-          "History surfaces must render the shared historical vocabulary explicitly instead of implying history through absence of live state.",
-          "Resolved items fall back to `History` with normal resolved linger about 15 minutes and major resolved linger until dismissed or up to 24 hours.",
-          "Account pressure and switch histories remain visible as durable major-event families instead of recent-reason summaries.",
-          "Ledger export affordances must distinguish canonical record exports from derived view exports and bundles.",
-          "`Promotion Queue` defaults into `Ledger` as the canonical operational drill target.",
-          "Failed or blocked switch decisions still produce durable ledger-visible history even when the effective account did not change.",
-          "Historical truth must not disappear when live worktrees are gone.",
-          "`historical` is record truth and is distinct from cleanup state.",
-          "Historical mode shows a persistent banner/chip with the focused historical `run_id`.",
-          "The page must not auto-switch away from a historical run just because live activity appears.",
-          "Command/palette exposure must not silently downgrade confirmation strength.",
-          "Cross-surface pivots restore context through canonical route payloads rather than ad hoc payloads.",
-          "Default search scope is the focused run; widening to project/all-runs must disclose when a result changes `focused_run_id`.",
-          "Worker-policy display follows the same requested/effective grammar as persona/model/account disclosure.",
-          "Destructive Git/worktree actions resolve through Source Control semantics even when launched from Orchestrator.",
-          "Files cleanup must remain distinct from worktree removal.",
           "Health, activity, and attention must not collapse into one indicator.",
           "`attention_required` and `blocked` must remain distinct across concern and notification flows.",
-          "Concern owner and blocked owner remain different concepts.",
-          "Dashboard is summary/urgency, Orchestrator is detailed operational context, and chat threads are only for cases needing real user resolution.",
-          "`acknowledged` is distinct from both `resolved` and `dismissed` and only reduces noise for advisory/minor concerns.",
-          "Resurfacing responds to meaningful change, persistence, owner change, threshold crossing, or newly available action, not heartbeat spam."
+          "Concern owner and blocked owner remain different concepts."
         ],
-        "required_permission_carrythrough": [
-          "mutation actions must preserve confirmation and gating semantics across palette, shortcut, and context-menu entry points",
-          "remediation actions surface only through the allowed-action set"
-        ],
+        "required_permission_carrythrough": [],
         "cross_reference_rewrites": [
-          "Plans/GitHub_Integration.md#A.1 Source Control information architecture",
-          "Plans/FinalGUISpec.md#7.1 Orchestrator",
-          "Plans/Run_Graph_View.md## 2. Layout",
-          "Plans/Widget_System.md#2. Hostability and data contracts",
           "Plans/Glossary.md#Orchestrator rewrite terms",
-          "Plans/Run_Graph_View.md#3. Node detail inspector",
-          "Plans/storage-plan.md#Canonical records",
-          "Plans/Project_Output_Artifacts.md#10. Validation Pass Report Artifacts",
-          "Plans/Orchestrator_Page.md#12. Concern and notification model",
-          "Plans/FinalGUISpec.md#7.19A Dedicated log and audit inspector",
-          "Plans/usage-feature.md#Canonical usage pipeline",
-          "Plans/storage-plan.md#Restart and stale history",
-          "Plans/UI_Command_Catalog.md#2.0 Command entry contract (doc-level)",
-          "Plans/Contracts_V0.md#7.3 `route_target`",
-          "Plans/GitHub_Integration.md#A.4 Worktrees",
-          "Plans/WorktreeGitImprovement.md#Worktree Conflict and Dirty-Worktree Runtime Alignment",
           "Plans/human-in-the-loop.md#Shared approval-ladder alignment (2026-04-04)"
         ]
       },
       "stale_residue_to_retire": [
-        "tier-era worktree ownership model",
-        "run/tier-centric framing of Source Control",
-        "per-tab performance guidance without shared Orchestrator scale contract",
-        "unnamed Progress widget catalog",
-        "widget hosting outside `Progress` as the default Orchestrator model",
-        "`Tiers` as the primary rewrite tab/object label",
-        "local jargon that renames canonical rewrite objects",
-        "tab-local run drift without shared `focused_run_id`",
-        "tooltip-only governance for rewrite terms",
-        "conflating record exports, artifact exports, and view exports",
-        "validation artifacts presented as runtime records",
-        "historical implied by missing live state",
-        "overloaded `resolved` keyword",
-        "silent demotion of persistent blockers into history",
-        "`recent_switch_reason` as durable history",
-        "conflating record exports, artifact exports, and view exports into one unclear family",
-        "cleanup wipes history model",
-        "silent live-focus switching",
-        "blanket command exposure for dangerous runtime mutations",
-        "separate ad hoc payloads per surface",
-        "precedence reconstruction from docs instead of explicit requested/effective disclosure",
-        "Orchestrator direct Git mutation without Source Control execution semantics",
-        "generic SCM error framing",
-        "cleanup equals removal assumptions",
         "conflated single health indicator",
         "case-by-case local attention behavior without shared ladder",
-        "concerns treated as badges or notes without durable identity",
-        "generic red project badge without owner/reason context"
+        "concerns treated as badges or notes without durable identity"
       ],
       "notes": [
         "Bucket: MUST_CHANGE.",
-        "Use a live-anchor replace_section so the current source span can be rebuilt canonically without leaving inline or sibling residue behind.",
-        "Grouped related current-wave section maps under one live anchor to avoid overlapping parent/child packet targets while keeping the owner canon in one self-canonicalizable landing zone.",
+        "Use a heading-anchored replace_section; the anchor exists verbatim in the current source and keeps the mutation in one self-canonicalizable landing zone.",
         "Retire the full listed stale residue within the target span; do not leave same-file conflicting residue partially live after emission.",
-        "Preserve or rebuild authoritative tables, schemas, registries, and other structural owner surfaces in-place rather than collapsing them to prose-only summary.",
-        "Preserve nearby ContractRef coverage for every surviving MUST-level operational rule cluster, including later Rules / Behavioral rules / Acceptance criteria clusters when they remain normative.",
+        "Preserve or rebuild owner structural form when the live section uses tables, rows, matrices, registries, or other enumerated containers rather than collapsing canon to prose.",
         "Exact cross-reference rewrite targets are promoted into required survivor items for this packet target, not left in notes-only metadata."
       ]
     },
     {
       "path": "Plans/Permissions_System.md",
-      "heading": "### 2.4A Requested vs effective permissioned capability state",
+      "heading": "### 2.4B Scope specificity across package, seam, lane, project, and global contexts",
       "anchor_type": "heading",
-      "operation": "insert_after",
+      "operation": "replace_section",
       "required_section_maps": [
         {
           "path": "Plans/Permissions_System.md",
@@ -1979,19 +2287,17 @@
       ],
       "notes": [
         "Bucket: MUST_CHANGE.",
-        "Use a live-anchor insert_after so the missing owner section lands directly after the current anchor without relying on nonexistent headings.",
-        "This target owns one current-wave section map and keeps the mutation in one self-canonicalizable landing zone.",
+        "Use a heading-anchored replace_section; the anchor exists verbatim in the current source and keeps the mutation in one self-canonicalizable landing zone.",
         "Retire the full listed stale residue within the target span; do not leave same-file conflicting residue partially live after emission.",
-        "Preserve or rebuild authoritative tables, schemas, registries, and other structural owner surfaces in-place rather than collapsing them to prose-only summary.",
-        "Preserve nearby ContractRef coverage for every surviving MUST-level operational rule cluster, including later Rules / Behavioral rules / Acceptance criteria clusters when they remain normative.",
+        "Preserve or rebuild owner structural form when the live section uses tables, rows, matrices, registries, or other enumerated containers rather than collapsing canon to prose.",
         "Exact cross-reference rewrite targets are promoted into required survivor items for this packet target, not left in notes-only metadata."
       ]
     },
     {
       "path": "Plans/Permissions_System.md",
-      "heading": "## 5. Tool permission keys",
+      "heading": "## 6. Ask flow semantics",
       "anchor_type": "heading",
-      "operation": "insert_after",
+      "operation": "replace_section",
       "required_section_maps": [
         {
           "path": "Plans/Permissions_System.md",
@@ -2052,19 +2358,17 @@
       ],
       "notes": [
         "Bucket: MUST_CHANGE.",
-        "Use a live-anchor insert_after so the missing owner section lands directly after the current anchor without relying on nonexistent headings.",
-        "This target owns one current-wave section map and keeps the mutation in one self-canonicalizable landing zone.",
+        "Use a heading-anchored replace_section; the anchor exists verbatim in the current source and keeps the mutation in one self-canonicalizable landing zone.",
         "Retire the full listed stale residue within the target span; do not leave same-file conflicting residue partially live after emission.",
-        "Preserve or rebuild authoritative tables, schemas, registries, and other structural owner surfaces in-place rather than collapsing them to prose-only summary.",
-        "Preserve nearby ContractRef coverage for every surviving MUST-level operational rule cluster, including later Rules / Behavioral rules / Acceptance criteria clusters when they remain normative.",
+        "Preserve or rebuild owner structural form when the live section uses tables, rows, matrices, registries, or other enumerated containers rather than collapsing canon to prose.",
         "Exact cross-reference rewrite targets are promoted into required survivor items for this packet target, not left in notes-only metadata."
       ]
     },
     {
       "path": "Plans/Permissions_System.md",
-      "heading": "## 9. Persistence and storage",
+      "heading": "### Permission snapshot contract",
       "anchor_type": "heading",
-      "operation": "insert_after",
+      "operation": "replace_section",
       "required_section_maps": [
         {
           "path": "Plans/Permissions_System.md",
@@ -2114,19 +2418,17 @@
       ],
       "notes": [
         "Bucket: MUST_CHANGE.",
-        "Use a live-anchor insert_after so the missing owner section lands directly after the current anchor without relying on nonexistent headings.",
-        "This target owns one current-wave section map and keeps the mutation in one self-canonicalizable landing zone.",
+        "Use a heading-anchored replace_section; the anchor exists verbatim in the current source and keeps the mutation in one self-canonicalizable landing zone.",
         "Retire the full listed stale residue within the target span; do not leave same-file conflicting residue partially live after emission.",
-        "Preserve or rebuild authoritative tables, schemas, registries, and other structural owner surfaces in-place rather than collapsing them to prose-only summary.",
-        "Preserve nearby ContractRef coverage for every surviving MUST-level operational rule cluster, including later Rules / Behavioral rules / Acceptance criteria clusters when they remain normative.",
+        "Preserve or rebuild owner structural form when the live section uses tables, rows, matrices, registries, or other enumerated containers rather than collapsing canon to prose.",
         "Exact cross-reference rewrite targets are promoted into required survivor items for this packet target, not left in notes-only metadata."
       ]
     },
     {
       "path": "Plans/Project_Output_Artifacts.md",
-      "heading": "## 9. Acceptance criteria (validator requirements)",
+      "heading": "## 10. Validation Pass Report Artifacts",
       "anchor_type": "heading",
-      "operation": "insert_after",
+      "operation": "replace_section",
       "required_section_maps": [
         {
           "path": "Plans/Project_Output_Artifacts.md",
@@ -2196,19 +2498,17 @@
       ],
       "notes": [
         "Bucket: MUST_CHANGE.",
-        "Use a live-anchor insert_after so the missing owner section lands directly after the current anchor without relying on nonexistent headings.",
-        "This target owns one current-wave section map and keeps the mutation in one self-canonicalizable landing zone.",
+        "Use a heading-anchored replace_section; the anchor exists verbatim in the current source and keeps the mutation in one self-canonicalizable landing zone.",
         "Retire the full listed stale residue within the target span; do not leave same-file conflicting residue partially live after emission.",
-        "Preserve or rebuild authoritative tables, schemas, registries, and other structural owner surfaces in-place rather than collapsing them to prose-only summary.",
-        "Preserve nearby ContractRef coverage for every surviving MUST-level operational rule cluster, including later Rules / Behavioral rules / Acceptance criteria clusters when they remain normative.",
+        "Preserve or rebuild owner structural form when the live section uses tables, rows, matrices, registries, or other enumerated containers rather than collapsing canon to prose.",
         "Exact cross-reference rewrite targets are promoted into required survivor items for this packet target, not left in notes-only metadata."
       ]
     },
     {
       "path": "Plans/Prompt_Pipeline.md",
-      "heading": "### 6.3 Natural-language Persona invocation in prompt assembly",
+      "heading": "### 6.4 Effective resolution record",
       "anchor_type": "heading",
-      "operation": "insert_after",
+      "operation": "replace_section",
       "required_section_maps": [
         {
           "path": "Plans/Prompt_Pipeline.md",
@@ -2217,8 +2517,7 @@
       ],
       "exact_items_that_must_survive": {
         "required_obligations": [
-          "OBL-007",
-          "OBL-045"
+          "OBL-007"
         ],
         "required_exact_tokens": [
           "requested_account_id",
@@ -2227,30 +2526,12 @@
           "effective_account_id",
           "effective_provider_identity",
           "execution_role",
-          "operational_identity",
-          "source",
-          "request",
-          "execution",
-          "Inherited from",
-          "Overridden by",
-          "Requested",
-          "Effective",
-          "Reason",
-          "Support",
-          "ranked candidates",
-          "winner",
-          "fallback reason",
-          "actor type",
-          "operation type",
-          "scope level"
+          "operational_identity"
         ],
         "required_labels": [
           "requested account",
           "effective account",
-          "effective resolution",
-          "source",
-          "request",
-          "execution"
+          "effective resolution"
         ],
         "required_interface_shape_fields": [
           "requested_account_id",
@@ -2259,49 +2540,34 @@
           "effective_account_id",
           "effective_provider_identity",
           "execution_role",
-          "operational_identity",
-          "source_axis",
-          "request_axis",
-          "execution_axis",
-          "ranked_candidates[]",
-          "winner",
-          "fallback_reason",
-          "actor_type",
-          "operation_type",
-          "scope_level"
+          "operational_identity"
         ],
         "required_behavioral_edges": [
           "Prompt assembly must preserve both requested and effective execution identity.",
-          "Binding must distinguish preference from requirement so fallback behavior stays deterministic.",
-          "UI shows the winning source explicitly instead of forcing precedence reconstruction from docs.",
-          "Actor type and operation type dominate stack hints in resolver choice."
+          "Binding must distinguish preference from requirement so fallback behavior stays deterministic."
         ],
         "required_permission_carrythrough": [
           "effective identity must remain available to downstream permission and approval flows"
         ],
         "cross_reference_rewrites": [
           "Plans/Contracts_V0.md#4. Auth contracts",
-          "Plans/Multi-Account.md#4.5 Selectable unit and runtime resolution",
-          "Plans/FinalGUISpec.md#7.4.4 Settings (Unified) panel specification"
+          "Plans/Multi-Account.md#4.5 Selectable unit and runtime resolution"
         ]
       },
       "stale_residue_to_retire": [
-        "policy-only account routing without selected-account anchor",
-        "precedence reconstruction from docs instead of explicit requested/effective disclosure"
+        "policy-only account routing without selected-account anchor"
       ],
       "notes": [
         "Bucket: MUST_CHANGE.",
-        "Use a live-anchor insert_after so the missing owner section lands directly after the current anchor without relying on nonexistent headings.",
-        "This target owns one current-wave section map and keeps the mutation in one self-canonicalizable landing zone.",
+        "Use a heading-anchored replace_section; the anchor exists verbatim in the current source and keeps the mutation in one self-canonicalizable landing zone.",
         "Retire the full listed stale residue within the target span; do not leave same-file conflicting residue partially live after emission.",
-        "Preserve or rebuild authoritative tables, schemas, registries, and other structural owner surfaces in-place rather than collapsing them to prose-only summary.",
-        "Preserve nearby ContractRef coverage for every surviving MUST-level operational rule cluster, including later Rules / Behavioral rules / Acceptance criteria clusters when they remain normative.",
+        "Preserve or rebuild owner structural form when the live section uses tables, rows, matrices, registries, or other enumerated containers rather than collapsing canon to prose.",
         "Exact cross-reference rewrite targets are promoted into required survivor items for this packet target, not left in notes-only metadata."
       ]
     },
     {
       "path": "Plans/Prompt_Pipeline.md",
-      "heading": "## Runtime Attempt Snapshot and Handoff Consolidation Addendum (2026-03-09)",
+      "heading": "## Runtime Attempt Snapshot and Handoff Bundle",
       "anchor_type": "heading",
       "operation": "replace_section",
       "required_section_maps": [
@@ -2365,19 +2631,17 @@
       ],
       "notes": [
         "Bucket: MUST_CHANGE.",
-        "Use a live-anchor replace_section so the current source span can be rebuilt canonically without leaving inline or sibling residue behind.",
-        "This target owns one current-wave section map and keeps the mutation in one self-canonicalizable landing zone.",
+        "Use a heading-anchored replace_section; the anchor exists verbatim in the current source and keeps the mutation in one self-canonicalizable landing zone.",
         "Retire the full listed stale residue within the target span; do not leave same-file conflicting residue partially live after emission.",
-        "Preserve or rebuild authoritative tables, schemas, registries, and other structural owner surfaces in-place rather than collapsing them to prose-only summary.",
-        "Preserve nearby ContractRef coverage for every surviving MUST-level operational rule cluster, including later Rules / Behavioral rules / Acceptance criteria clusters when they remain normative.",
+        "Preserve or rebuild owner structural form when the live section uses tables, rows, matrices, registries, or other enumerated containers rather than collapsing canon to prose.",
         "Exact cross-reference rewrite targets are promoted into required survivor items for this packet target, not left in notes-only metadata."
       ]
     },
     {
       "path": "Plans/Runtime_Artifacts_Panel.md",
-      "heading": "## 1. Purpose and scope",
+      "heading": "## 2. Two artifact families (no conflation)",
       "anchor_type": "heading",
-      "operation": "insert_after",
+      "operation": "replace_section",
       "required_section_maps": [
         {
           "path": "Plans/Runtime_Artifacts_Panel.md",
@@ -2422,19 +2686,17 @@
       ],
       "notes": [
         "Bucket: MUST_CHANGE.",
-        "Use a live-anchor insert_after so the missing owner section lands directly after the current anchor without relying on nonexistent headings.",
-        "This target owns one current-wave section map and keeps the mutation in one self-canonicalizable landing zone.",
+        "Use a heading-anchored replace_section; the anchor exists verbatim in the current source and keeps the mutation in one self-canonicalizable landing zone.",
         "Retire the full listed stale residue within the target span; do not leave same-file conflicting residue partially live after emission.",
-        "Preserve or rebuild authoritative tables, schemas, registries, and other structural owner surfaces in-place rather than collapsing them to prose-only summary.",
-        "Preserve nearby ContractRef coverage for every surviving MUST-level operational rule cluster, including later Rules / Behavioral rules / Acceptance criteria clusters when they remain normative.",
+        "Preserve or rebuild owner structural form when the live section uses tables, rows, matrices, registries, or other enumerated containers rather than collapsing canon to prose.",
         "Exact cross-reference rewrite targets are promoted into required survivor items for this packet target, not left in notes-only metadata."
       ]
     },
     {
       "path": "Plans/Runtime_Artifacts_Panel.md",
-      "heading": "## 4. redb key and projector",
+      "heading": "## 5. Canonical IDs and task_id rule",
       "anchor_type": "heading",
-      "operation": "insert_after",
+      "operation": "replace_section",
       "required_section_maps": [
         {
           "path": "Plans/Runtime_Artifacts_Panel.md",
@@ -2500,19 +2762,18 @@
       ],
       "notes": [
         "Bucket: MUST_CHANGE.",
-        "Use a live-anchor insert_after so the missing owner section lands directly after the current anchor without relying on nonexistent headings.",
-        "This target owns one current-wave section map and keeps the mutation in one self-canonicalizable landing zone.",
+        "Use a heading-anchored replace_section; the anchor exists verbatim in the current source and keeps the mutation in one self-canonicalizable landing zone.",
+        "Rebuild the common runtime-artifact envelope with `artifact_type` in this section itself; do not preserve `artifact_kind` as a competing envelope discriminator.",
         "Retire the full listed stale residue within the target span; do not leave same-file conflicting residue partially live after emission.",
-        "Preserve or rebuild authoritative tables, schemas, registries, and other structural owner surfaces in-place rather than collapsing them to prose-only summary.",
-        "Preserve nearby ContractRef coverage for every surviving MUST-level operational rule cluster, including later Rules / Behavioral rules / Acceptance criteria clusters when they remain normative.",
+        "Preserve or rebuild owner structural form when the live section uses tables, rows, matrices, registries, or other enumerated containers rather than collapsing canon to prose.",
         "Exact cross-reference rewrite targets are promoted into required survivor items for this packet target, not left in notes-only metadata."
       ]
     },
     {
       "path": "Plans/UI_Command_Catalog.md",
-      "heading": "## 2. Canonical command IDs",
+      "heading": "### 2.0 Command entry contract (doc-level)",
       "anchor_type": "heading",
-      "operation": "insert_after",
+      "operation": "replace_section",
       "required_section_maps": [
         {
           "path": "Plans/UI_Command_Catalog.md",
@@ -2561,19 +2822,17 @@
       ],
       "notes": [
         "Bucket: MUST_CHANGE.",
-        "Use a live-anchor insert_after so the missing owner section lands directly after the current anchor without relying on nonexistent headings.",
-        "This target owns one current-wave section map and keeps the mutation in one self-canonicalizable landing zone.",
+        "Use a heading-anchored replace_section; the anchor exists verbatim in the current source and keeps the mutation in one self-canonicalizable landing zone.",
         "Retire the full listed stale residue within the target span; do not leave same-file conflicting residue partially live after emission.",
-        "Preserve or rebuild authoritative tables, schemas, registries, and other structural owner surfaces in-place rather than collapsing them to prose-only summary.",
-        "Preserve nearby ContractRef coverage for every surviving MUST-level operational rule cluster, including later Rules / Behavioral rules / Acceptance criteria clusters when they remain normative.",
+        "Preserve or rebuild owner structural form when the live section uses tables, rows, matrices, registries, or other enumerated containers rather than collapsing canon to prose.",
         "Exact cross-reference rewrite targets are promoted into required survivor items for this packet target, not left in notes-only metadata."
       ]
     },
     {
       "path": "Plans/UI_Command_Catalog.md",
-      "heading": "### 2.4 Run Graph commands",
+      "heading": "### 2.5 Orchestrator page commands",
       "anchor_type": "heading",
-      "operation": "insert_after",
+      "operation": "replace_section",
       "required_section_maps": [
         {
           "path": "Plans/UI_Command_Catalog.md",
@@ -2632,28 +2891,94 @@
       ],
       "notes": [
         "Bucket: MUST_CHANGE.",
-        "Use a live-anchor insert_after so the missing owner section lands directly after the current anchor without relying on nonexistent headings.",
-        "This target owns one current-wave section map and keeps the mutation in one self-canonicalizable landing zone.",
+        "Use a heading-anchored replace_section; the anchor exists verbatim in the current source and keeps the mutation in one self-canonicalizable landing zone.",
         "Retire the full listed stale residue within the target span; do not leave same-file conflicting residue partially live after emission.",
-        "Preserve or rebuild authoritative tables, schemas, registries, and other structural owner surfaces in-place rather than collapsing them to prose-only summary.",
-        "Preserve nearby ContractRef coverage for every surviving MUST-level operational rule cluster, including later Rules / Behavioral rules / Acceptance criteria clusters when they remain normative.",
+        "Preserve or rebuild owner structural form when the live section uses tables, rows, matrices, registries, or other enumerated containers rather than collapsing canon to prose.",
         "Exact cross-reference rewrite targets are promoted into required survivor items for this packet target, not left in notes-only metadata."
       ]
     },
     {
       "path": "Plans/UI_Command_Catalog.md",
-      "heading": "### Recovery command definitions",
+      "heading": "#### Search commands",
       "anchor_type": "heading",
-      "operation": "insert_after",
+      "operation": "replace_section",
       "required_section_maps": [
         {
           "path": "Plans/UI_Command_Catalog.md",
-          "heading": "## Canonical Runtime Recovery Command Consolidation (2026-03-09)"
+          "heading": "#### Search commands"
         }
       ],
       "exact_items_that_must_survive": {
         "required_obligations": [
-          "OBL-032"
+          "OBL-020",
+          "OBL-021",
+          "OBL-026"
+        ],
+        "required_exact_tokens": [
+          "route_target",
+          "project_id",
+          "target_kind",
+          "subject_id",
+          "object_kind",
+          "object_id",
+          "inspector_target"
+        ],
+        "required_labels": [
+          "Open",
+          "Details",
+          "Artifacts",
+          "History"
+        ],
+        "required_interface_shape_fields": [
+          "project_id",
+          "target_kind",
+          "subject_id",
+          "object_kind",
+          "object_id",
+          "tab_id",
+          "inspector_target"
+        ],
+        "required_behavioral_edges": [
+          "Search commands must route through the shared route payload rather than bespoke search payloads.",
+          "`subject_id` remains bounded to document/artifact open-by-identity."
+        ],
+        "required_permission_carrythrough": [],
+        "cross_reference_rewrites": [
+          "Plans/Contracts_V0.md#7.3 `route_target`",
+          "Plans/FileManager.md#OpenSubject"
+        ]
+      },
+      "stale_residue_to_retire": [
+        "ad hoc search result route payloads",
+        "`artifact_id` and `document_id` as direct route fields"
+      ],
+      "notes": [
+        "Bucket: MUST_CHANGE.",
+        "Use a heading-anchored replace_section; the anchor exists verbatim in the current source and keeps the mutation in one self-canonicalizable landing zone.",
+        "Retire the full listed stale residue within the target span; do not leave same-file conflicting residue partially live after emission.",
+        "Preserve or rebuild owner structural form when the live section uses tables, rows, matrices, registries, or other enumerated containers rather than collapsing canon to prose.",
+        "Exact cross-reference rewrite targets are promoted into required survivor items for this packet target, not left in notes-only metadata."
+      ]
+    },
+    {
+      "path": "Plans/UI_Command_Catalog.md",
+      "heading": "## Canonical Runtime Recovery Command Consolidation (2026-03-09)",
+      "anchor_type": "heading",
+      "operation": "replace_section",
+      "required_section_maps": [
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "heading": "## Canonical Runtime Recovery Command Consolidation (2026-03-09)"
+        },
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "heading": "### Recovery command definitions"
+        }
+      ],
+      "exact_items_that_must_survive": {
+        "required_obligations": [
+          "OBL-032",
+          "OBL-030"
         ],
         "required_exact_tokens": [
           "allowed_action_id",
@@ -2662,52 +2987,76 @@
           "cmd.runtime.approve",
           "cmd.runtime.decline",
           "cmd.runtime.resume_after_prerequisite",
-          "allowed_action_ids[]"
+          "allowed_action_ids[]",
+          "command_kind",
+          "normalization",
+          "approval_scope_key",
+          "allowed_action_ids"
         ],
         "required_labels": [
           "Approve",
           "Decline",
-          "Resume after prerequisite"
+          "Resume after prerequisite",
+          "Blocked",
+          "Retry",
+          "Review",
+          "Resolve"
         ],
         "required_interface_shape_fields": [
           "allowed_action_id",
           "blocked_sequence",
           "attempt_id",
-          "allowed_action_ids"
+          "allowed_action_ids",
+          "command_kind",
+          "normalization.kind",
+          "normalizes_to_contract",
+          "alias_of_command_id",
+          "approval_scope_key"
         ],
         "required_behavioral_edges": [
           "When a blocked episode exists before any attempt is created, the recovery target is `blocked_sequence` and MUST NOT fabricate an `attempt_id`.",
           "Blocked-state recovery buttons and menu entries map from `allowed_action_ids[]` to canonical `cmd.runtime.*` commands.",
           "No surface may introduce a thread-local, graph-local, or provider-local recovery command family for the same action semantics.",
-          "approve_continue is legacy vocabulary and must not survive as canonical action naming."
+          "approve_continue is legacy vocabulary and must not survive as canonical action naming.",
+          "Recovery commands must bind to blocked-episode identity rather than request-level or tier-level surrogates.",
+          "Normalization metadata must survive for wrappers and deprecated aliases."
         ],
         "required_permission_carrythrough": [
-          "ordered `allowed_action_ids[]`"
+          "ordered `allowed_action_ids[]`",
+          "ordered `allowed_action_ids[]` drive visible recovery command affordances"
         ],
         "cross_reference_rewrites": [
           "Plans/Contracts_V0.md#6.1 Canonical blocked-episode approval anchor",
           "Plans/Executor_Protocol.md#Wake reasons and coalescing",
-          "Plans/Contracts_V0.md#`scheduler.pass` (minimum addendum fields)"
+          "Plans/Contracts_V0.md#`scheduler.pass` (minimum addendum fields)",
+          "Plans/Wiring_Matrix.md#UI command handler rule"
         ]
       },
       "stale_residue_to_retire": [
-        "approve_continue"
+        "approve_continue",
+        "`approve_continue`",
+        "request-level recovery identity",
+        "`approve_continue` as a canonical recovery command id",
+        "`approve_continue` as a visible recovery action entry"
       ],
       "notes": [
         "Bucket: MUST_CHANGE.",
-        "Use a live-anchor insert_after so the missing owner section lands directly after the current anchor without relying on nonexistent headings.",
-        "This target owns one current-wave section map and keeps the mutation in one self-canonicalizable landing zone.",
+        "Use a heading-anchored replace_section; the anchor exists verbatim in the current source and keeps the mutation in one self-canonicalizable landing zone.",
+        "Merged nested owner section maps into one heading-owned packet target to eliminate overlapping parent/child replace semantics inside the current wave.",
+        "Retire `approve_continue` as canonical action naming and as a visible recovery action entry, while still preserving normalization metadata for wrappers and deprecated aliases inside the rebuilt owner surface.",
+        "Preserve multi-cluster ContractRef locality inside the rebuilt inventory body: the pre-attempt blocked rule cluster and the `### Recovery command definitions` cluster each need nearby local ContractRef coverage.",
+        "Treat any trailing Behavioral rules / Rules surface that still contains MUST or MUST NOT recovery wording as its own locality-sensitive cluster; either add nearby local ContractRef coverage there or demote duplicated MUST-level wording so the tail cluster no longer needs verifier-locality scaffolding.",
         "Retire the full listed stale residue within the target span; do not leave same-file conflicting residue partially live after emission.",
-        "Preserve or rebuild authoritative tables, schemas, registries, and other structural owner surfaces in-place rather than collapsing them to prose-only summary.",
-        "Preserve nearby ContractRef coverage for every surviving MUST-level operational rule cluster, including later Rules / Behavioral rules / Acceptance criteria clusters when they remain normative.",
+        "Inventory-style target: if emitted as replace_section, rebuild the full still-live inventory for this span rather than a narrowed cleanup-only subset.",
+        "Preserve or rebuild owner structural form when the live section uses tables, rows, matrices, registries, or other enumerated containers rather than collapsing canon to prose.",
         "Exact cross-reference rewrite targets are promoted into required survivor items for this packet target, not left in notes-only metadata."
       ]
     },
     {
       "path": "Plans/WorktreeGitImprovement.md",
-      "heading": "### 2.7 worktree_exists is path-only",
+      "heading": "### 2.8 Startup recovery uses process CWD",
       "anchor_type": "heading",
-      "operation": "insert_after",
+      "operation": "replace_section",
       "required_section_maps": [
         {
           "path": "Plans/WorktreeGitImprovement.md",
@@ -2755,19 +3104,17 @@
       ],
       "notes": [
         "Bucket: MUST_CHANGE.",
-        "Use a live-anchor insert_after so the missing owner section lands directly after the current anchor without relying on nonexistent headings.",
-        "This target owns one current-wave section map and keeps the mutation in one self-canonicalizable landing zone.",
+        "Use a heading-anchored replace_section; the anchor exists verbatim in the current source and keeps the mutation in one self-canonicalizable landing zone.",
         "Retire the full listed stale residue within the target span; do not leave same-file conflicting residue partially live after emission.",
-        "Preserve or rebuild authoritative tables, schemas, registries, and other structural owner surfaces in-place rather than collapsing them to prose-only summary.",
-        "Preserve nearby ContractRef coverage for every surviving MUST-level operational rule cluster, including later Rules / Behavioral rules / Acceptance criteria clusters when they remain normative.",
+        "Preserve or rebuild owner structural form when the live section uses tables, rows, matrices, registries, or other enumerated containers rather than collapsing canon to prose.",
         "Exact cross-reference rewrite targets are promoted into required survivor items for this packet target, not left in notes-only metadata."
       ]
     },
     {
       "path": "Plans/WorktreeGitImprovement.md",
-      "heading": "## 4. GUI for Git & Worktrees",
+      "heading": "### 4.1 Assistant-created worktree lifecycle",
       "anchor_type": "heading",
-      "operation": "insert_after",
+      "operation": "replace_section",
       "required_section_maps": [
         {
           "path": "Plans/WorktreeGitImprovement.md",
@@ -2827,17 +3174,16 @@
       ],
       "notes": [
         "Bucket: MUST_CHANGE.",
-        "Use a live-anchor insert_after so the missing owner section lands directly after the current anchor without relying on nonexistent headings.",
-        "This target owns one current-wave section map and keeps the mutation in one self-canonicalizable landing zone.",
+        "Use a heading-anchored replace_section; the anchor exists verbatim in the current source and keeps the mutation in one self-canonicalizable landing zone.",
+        "Split from the prior mixed parent/child packet target so the owner-only subsection can packetize in the current wave without pulling deferred consumer content into the same packet.",
         "Retire the full listed stale residue within the target span; do not leave same-file conflicting residue partially live after emission.",
-        "Preserve or rebuild authoritative tables, schemas, registries, and other structural owner surfaces in-place rather than collapsing them to prose-only summary.",
-        "Preserve nearby ContractRef coverage for every surviving MUST-level operational rule cluster, including later Rules / Behavioral rules / Acceptance criteria clusters when they remain normative.",
+        "Preserve or rebuild owner structural form when the live section uses tables, rows, matrices, registries, or other enumerated containers rather than collapsing canon to prose.",
         "Exact cross-reference rewrite targets are promoted into required survivor items for this packet target, not left in notes-only metadata."
       ]
     },
     {
       "path": "Plans/WorktreeGitImprovement.md",
-      "heading": "## Runtime Worktree Conflict Reconciliation Addendum (2026-03-09)",
+      "heading": "## Worktree Conflict and Dirty-Worktree Runtime Alignment",
       "anchor_type": "heading",
       "operation": "replace_section",
       "required_section_maps": [
@@ -2885,19 +3231,17 @@
       ],
       "notes": [
         "Bucket: MUST_CHANGE.",
-        "Use a live-anchor replace_section so the current source span can be rebuilt canonically without leaving inline or sibling residue behind.",
-        "This target owns one current-wave section map and keeps the mutation in one self-canonicalizable landing zone.",
+        "Use a heading-anchored replace_section; the anchor exists verbatim in the current source and keeps the mutation in one self-canonicalizable landing zone.",
         "Retire the full listed stale residue within the target span; do not leave same-file conflicting residue partially live after emission.",
-        "Preserve or rebuild authoritative tables, schemas, registries, and other structural owner surfaces in-place rather than collapsing them to prose-only summary.",
-        "Preserve nearby ContractRef coverage for every surviving MUST-level operational rule cluster, including later Rules / Behavioral rules / Acceptance criteria clusters when they remain normative.",
+        "Preserve or rebuild owner structural form when the live section uses tables, rows, matrices, registries, or other enumerated containers rather than collapsing canon to prose.",
         "Exact cross-reference rewrite targets are promoted into required survivor items for this packet target, not left in notes-only metadata."
       ]
     },
     {
       "path": "Plans/chain-wizard-flexibility.md",
-      "heading": "### 2.1 Wizard State Shape",
+      "heading": "### 2.2 Downstream Handoff Contract",
       "anchor_type": "heading",
-      "operation": "insert_after",
+      "operation": "replace_section",
       "required_section_maps": [
         {
           "path": "Plans/chain-wizard-flexibility.md",
@@ -2950,19 +3294,17 @@
       ],
       "notes": [
         "Bucket: MUST_CHANGE.",
-        "Use a live-anchor insert_after so the missing owner section lands directly after the current anchor without relying on nonexistent headings.",
-        "This target owns one current-wave section map and keeps the mutation in one self-canonicalizable landing zone.",
+        "Use a heading-anchored replace_section; the anchor exists verbatim in the current source and keeps the mutation in one self-canonicalizable landing zone.",
         "Retire the full listed stale residue within the target span; do not leave same-file conflicting residue partially live after emission.",
-        "Preserve or rebuild authoritative tables, schemas, registries, and other structural owner surfaces in-place rather than collapsing them to prose-only summary.",
-        "Preserve nearby ContractRef coverage for every surviving MUST-level operational rule cluster, including later Rules / Behavioral rules / Acceptance criteria clusters when they remain normative.",
+        "Preserve or rebuild owner structural form when the live section uses tables, rows, matrices, registries, or other enumerated containers rather than collapsing canon to prose.",
         "Exact cross-reference rewrite targets are promoted into required survivor items for this packet target, not left in notes-only metadata."
       ]
     },
     {
       "path": "Plans/chain-wizard-flexibility.md",
-      "heading": "### 11.2 Autonomy + HITL (deterministic ambiguity handling)",
+      "heading": "## 12. Three-Pass Canonical Validation Workflow (Mandatory Invariant Sweep)",
       "anchor_type": "heading",
-      "operation": "insert_after",
+      "operation": "replace_section",
       "required_section_maps": [
         {
           "path": "Plans/chain-wizard-flexibility.md",
@@ -3020,19 +3362,17 @@
       ],
       "notes": [
         "Bucket: MUST_CHANGE.",
-        "Use a live-anchor insert_after so the missing owner section lands directly after the current anchor without relying on nonexistent headings.",
-        "This target owns one current-wave section map and keeps the mutation in one self-canonicalizable landing zone.",
+        "Use a heading-anchored replace_section; the anchor exists verbatim in the current source and keeps the mutation in one self-canonicalizable landing zone.",
         "Retire the full listed stale residue within the target span; do not leave same-file conflicting residue partially live after emission.",
-        "Preserve or rebuild authoritative tables, schemas, registries, and other structural owner surfaces in-place rather than collapsing them to prose-only summary.",
-        "Preserve nearby ContractRef coverage for every surviving MUST-level operational rule cluster, including later Rules / Behavioral rules / Acceptance criteria clusters when they remain normative.",
+        "Preserve or rebuild owner structural form when the live section uses tables, rows, matrices, registries, or other enumerated containers rather than collapsing canon to prose.",
         "Exact cross-reference rewrite targets are promoted into required survivor items for this packet target, not left in notes-only metadata."
       ]
     },
     {
       "path": "Plans/chain-wizard-flexibility.md",
-      "heading": "### 17.3 Handoff target intent",
+      "heading": "### 17.4 Assistant-to-wizard handoff payload",
       "anchor_type": "heading",
-      "operation": "insert_after",
+      "operation": "replace_section",
       "required_section_maps": [
         {
           "path": "Plans/chain-wizard-flexibility.md",
@@ -3087,19 +3427,17 @@
       ],
       "notes": [
         "Bucket: MUST_CHANGE.",
-        "Use a live-anchor insert_after so the missing owner section lands directly after the current anchor without relying on nonexistent headings.",
-        "This target owns one current-wave section map and keeps the mutation in one self-canonicalizable landing zone.",
+        "Use a heading-anchored replace_section; the anchor exists verbatim in the current source and keeps the mutation in one self-canonicalizable landing zone.",
         "Retire the full listed stale residue within the target span; do not leave same-file conflicting residue partially live after emission.",
-        "Preserve or rebuild authoritative tables, schemas, registries, and other structural owner surfaces in-place rather than collapsing them to prose-only summary.",
-        "Preserve nearby ContractRef coverage for every surviving MUST-level operational rule cluster, including later Rules / Behavioral rules / Acceptance criteria clusters when they remain normative.",
+        "Preserve or rebuild owner structural form when the live section uses tables, rows, matrices, registries, or other enumerated containers rather than collapsing canon to prose.",
         "Exact cross-reference rewrite targets are promoted into required survivor items for this packet target, not left in notes-only metadata."
       ]
     },
     {
       "path": "Plans/orchestrator-subagent-integration.md",
-      "heading": "## Tier-Level Subagent Strategy",
+      "heading": "### Tier Context",
       "anchor_type": "heading",
-      "operation": "insert_after",
+      "operation": "replace_section",
       "required_section_maps": [
         {
           "path": "Plans/orchestrator-subagent-integration.md",
@@ -3154,39 +3492,129 @@
       "stale_residue_to_retire": [
         "`TierContext`",
         "`tier_id`",
-        "pseudo-tier execution keys"
+        "pseudo-tier execution keys",
+        "pub struct TierContext",
+        "tier_type",
+        "title",
+        "description",
+        "workspace",
+        "worktree_path",
+        "primary_language",
+        "domain",
+        "framework",
+        "needs_architecture_review",
+        "needs_product_planning",
+        "subtask_focus",
+        "has_errors",
+        "needs_code_review",
+        "needs_testing",
+        "error_patterns",
+        "parent_subagents",
+        "requested_persona",
+        "effective_persona",
+        "requested_platform",
+        "effective_platform",
+        "requested_model",
+        "effective_model",
+        "persona_stage"
       ],
       "notes": [
         "Bucket: MUST_CHANGE.",
-        "Use a live-anchor insert_after so the missing owner section lands directly after the current anchor without relying on nonexistent headings.",
-        "This target owns one current-wave section map and keeps the mutation in one self-canonicalizable landing zone.",
+        "Use a heading-anchored replace_section; the anchor exists verbatim in the current source and keeps the mutation in one self-canonicalizable landing zone.",
+        "Rebuild this section around `execution_unit_context`; do not preserve the concrete Rust `TierContext` struct or its tier-scoped field inventory as carried source material.",
         "Retire the full listed stale residue within the target span; do not leave same-file conflicting residue partially live after emission.",
-        "Preserve or rebuild authoritative tables, schemas, registries, and other structural owner surfaces in-place rather than collapsing them to prose-only summary.",
-        "Preserve nearby ContractRef coverage for every surviving MUST-level operational rule cluster, including later Rules / Behavioral rules / Acceptance criteria clusters when they remain normative.",
+        "Preserve or rebuild owner structural form when the live section uses tables, rows, matrices, registries, or other enumerated containers rather than collapsing canon to prose.",
         "Exact cross-reference rewrite targets are promoted into required survivor items for this packet target, not left in notes-only metadata."
       ]
     },
     {
       "path": "Plans/storage-plan.md",
-      "heading": "## 4. Impact on chat (Assistant / Interview)",
+      "heading": "### Required redb keys",
+      "anchor_type": "heading",
+      "operation": "replace_section",
+      "required_section_maps": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "### Required redb keys"
+        }
+      ],
+      "exact_items_that_must_survive": {
+        "required_obligations": [
+          "OBL-037",
+          "OBL-038"
+        ],
+        "required_exact_tokens": [
+          "artifacts_index.v1:{project_id}:{artifact_id}",
+          "artifacts_project_state.v1:{project_id}",
+          "projector.checkpoint.runtime_artifacts:{project_id}",
+          "worktree_record.v1:{project_id}:{worktree_id}",
+          "lane_record.v1:{project_id}:{lane_id}",
+          "worktree_projection.v1:{project_id}:{worktree_id}",
+          "lane_projection.v1:{project_id}:{lane_id}"
+        ],
+        "required_labels": [
+          "runtime artifact index",
+          "worktree record",
+          "lane record"
+        ],
+        "required_interface_shape_fields": [
+          "artifact_id",
+          "artifact_type",
+          "project_id",
+          "run_id",
+          "thread_id",
+          "node_id",
+          "attempt_id",
+          "worktree_id",
+          "lane_id",
+          "repo_id",
+          "path_ref",
+          "branch_ref",
+          "baseline_ref",
+          "projection_freshness",
+          "projection_health"
+        ],
+        "required_behavioral_edges": [
+          "Runtime-artifact indexing and durable worktree/lane identity are storage-owned families.",
+          "Projection state and projector checkpoints must be first-class rather than panel-owned leftovers."
+        ],
+        "required_permission_carrythrough": [],
+        "cross_reference_rewrites": [
+          "Plans/Runtime_Artifacts_Panel.md#4. redb key and projector",
+          "Plans/WorktreeGitImprovement.md#4.1 Assistant-created worktree lifecycle"
+        ]
+      },
+      "stale_residue_to_retire": [
+        "`artifacts_index:v1:{project_id}` as a sole underspecified canonical contract",
+        "panel-only ownership of runtime-artifact projector semantics",
+        "tier-keyed worktree identity"
+      ],
+      "notes": [
+        "Bucket: MUST_CHANGE.",
+        "Use a heading-anchored replace_section; the anchor exists verbatim in the current source and keeps the mutation in one self-canonicalizable landing zone.",
+        "Inventory-style owner surface: if emitted as `replace_section`, rebuild the full still-live key-family inventory rather than a narrowed artifact/worktree subset.",
+        "Add authoritative in-section shape containers for the runtime-artifact/worktree/lane record families so `artifact_type`, `repo_id`, `path_ref`, `branch_ref`, and `baseline_ref` live in those owned shapes rather than only in trailing prose.",
+        "Retire the full listed stale residue within the target span; do not leave same-file conflicting residue partially live after emission.",
+        "Preserve or rebuild owner structural form when the live section uses tables, rows, matrices, registries, or other enumerated containers rather than collapsing canon to prose.",
+        "Exact cross-reference rewrite targets are promoted into required survivor items for this packet target, not left in notes-only metadata."
+      ]
+    },
+    {
+      "path": "Plans/storage-plan.md",
+      "heading": "### 4.1 Shared runtime identity consumption",
       "anchor_type": "heading",
       "operation": "replace_section",
       "required_section_maps": [
         {
           "path": "Plans/storage-plan.md",
           "heading": "### 4.1 Shared runtime identity consumption"
-        },
-        {
-          "path": "Plans/storage-plan.md",
-          "heading": "### 4.4 Activity transparency payloads"
         }
       ],
       "exact_items_that_must_survive": {
         "required_obligations": [
           "OBL-007",
           "OBL-033",
-          "OBL-035",
-          "OBL-034"
+          "OBL-035"
         ],
         "required_exact_tokens": [
           "requested_account_id",
@@ -3198,23 +3626,12 @@
           "account_id",
           "credential_ref",
           "login",
-          "auth_realm",
-          "node_id",
-          "attempt_id",
-          "lane_id",
-          "package_id",
-          "provider_attempt_ref",
-          "usage_event_ref",
-          "detail_ref",
-          "report_ref",
-          "receipt refs"
+          "auth_realm"
         ],
         "required_labels": [
           "requested account",
           "effective account",
-          "operational identity",
-          "activity payload",
-          "bridge fields"
+          "operational identity"
         ],
         "required_interface_shape_fields": [
           "requested_account_id",
@@ -3226,36 +3643,92 @@
           "account_id",
           "credential_ref",
           "login",
-          "auth_realm",
+          "auth_realm"
+        ],
+        "required_behavioral_edges": [
+          "Requested/effective identity must survive in storage snapshots.",
+          "GitHub durable identity uses stable internal account keys while login remains display metadata."
+        ],
+        "required_permission_carrythrough": [
+          "permission snapshots and usage surfaces must preserve `effective_account_id` and `execution_role`"
+        ],
+        "cross_reference_rewrites": [
+          "Plans/Multi-Account.md#4. Data model",
+          "Plans/GitHub_API_Auth_and_Flows.md#Token handling and storage (hard rules)"
+        ]
+      },
+      "stale_residue_to_retire": [
+        "login-keyed durable identity",
+        "policy-only account routing without requested-account anchor"
+      ],
+      "notes": [
+        "Bucket: MUST_CHANGE.",
+        "Use a heading-anchored replace_section; the anchor exists verbatim in the current source and keeps the mutation in one self-canonicalizable landing zone.",
+        "Retire the full listed stale residue within the target span; do not leave same-file conflicting residue partially live after emission.",
+        "Preserve or rebuild owner structural form when the live section uses tables, rows, matrices, registries, or other enumerated containers rather than collapsing canon to prose.",
+        "Exact cross-reference rewrite targets are promoted into required survivor items for this packet target, not left in notes-only metadata."
+      ]
+    },
+    {
+      "path": "Plans/storage-plan.md",
+      "heading": "### 4.4 Activity transparency payloads",
+      "anchor_type": "heading",
+      "operation": "replace_section",
+      "required_section_maps": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "### 4.4 Activity transparency payloads"
+        }
+      ],
+      "exact_items_that_must_survive": {
+        "required_obligations": [
+          "OBL-033",
+          "OBL-034"
+        ],
+        "required_exact_tokens": [
           "node_id",
           "attempt_id",
           "lane_id",
           "package_id",
+          "execution_role",
+          "effective_account_id",
+          "operational_identity",
+          "provider_attempt_ref",
+          "usage_event_ref",
+          "detail_ref",
+          "report_ref",
+          "receipt refs"
+        ],
+        "required_labels": [
+          "activity payload",
+          "bridge fields"
+        ],
+        "required_interface_shape_fields": [
+          "node_id",
+          "attempt_id",
+          "lane_id",
+          "package_id",
+          "execution_role",
+          "effective_account_id",
+          "operational_identity",
           "provider_attempt_ref",
           "usage_event_ref",
           "detail_ref",
           "report_ref"
         ],
         "required_behavioral_edges": [
-          "Requested/effective identity must survive in storage snapshots.",
-          "GitHub durable identity uses stable internal account keys while login remains display metadata.",
           "Inspection refs remain inspection/provenance refs; route/open contracts remain route/open contracts.",
           "Bridge-field precedence must be explicit rather than inferred."
         ],
         "required_permission_carrythrough": [
-          "permission snapshots and usage surfaces must preserve `effective_account_id` and `execution_role`",
           "effective actor and account identity must survive into activity payloads"
         ],
         "cross_reference_rewrites": [
-          "Plans/Multi-Account.md#4. Data model",
-          "Plans/GitHub_API_Auth_and_Flows.md#Token handling and storage (hard rules)",
           "Plans/Tools.md#8.0 Event payloads (seglog)",
           "Plans/Runtime_Artifacts_Panel.md#Cross-Surface Operation Receipt Linkage Addendum (2026-03-12)"
         ]
       },
       "stale_residue_to_retire": [
-        "login-keyed durable identity",
-        "policy-only account routing without requested-account anchor",
         "treating `detail_ref`, `report_ref`, and `resume_url` as interchangeable open-this-thing fields",
         "cost/usage linkage resting on optional undeclared semantics",
         "Firecrawl-specific audit payload keys",
@@ -3284,21 +3757,69 @@
         "pages_completed",
         "pages_total",
         "estimated_remaining_ms",
-        "2s, 4s, 8s, 15s, 30s"
+        "2s, 4s, 8s, 15s, 30s",
+        "Firecrawl-specific audit payload keys in this owner span",
+        "JSON Schema support",
+        "prompt-driven extraction behavior",
+        "URL wildcards",
+        "enableWebSearch",
+        "tool.invoked",
+        "continue_on_error",
+        "`tool_use_id`",
+        "`adapter_id`",
+        "`adapter_selection_reason`",
+        "`duration_ms`",
+        "`timestamp`",
+        "`cached`",
+        "`error_code?`",
+        "`error_message?`",
+        "`warnings?`",
+        "`provenance_badge?`",
+        "warnings_count",
+        "projection_freshness",
+        "projection_health",
+        "change_status",
+        "pages[].change_status",
+        "change_summary",
+        "no silent switch between self-hosted Firecrawl and hosted/cloud Firecrawl",
+        "tool.denied",
+        "adapter_unavailable",
+        "unsupported_operation",
+        "content_blocked",
+        "content_not_found",
+        "unsupported_source",
+        "extraction_schema_mismatch",
+        "autonomous_budget_exceeded",
+        "no_previous_version",
+        "blocked_reason_code",
+        "allowed_action_ids[]",
+        "Long-running `progress_event` payload",
+        "timeout_ms",
+        "progress_event",
+        "tool_use_id",
+        "operation",
+        "phase",
+        "detail",
+        "elapsed_ms",
+        "cancelled: true",
+        "scraping",
+        "processing",
+        "completed",
+        "failed",
+        "cancelled"
       ],
       "notes": [
         "Bucket: MUST_CHANGE.",
-        "Use a live-anchor replace_section so the current source span can be rebuilt canonically without leaving inline or sibling residue behind.",
-        "Grouped related current-wave section maps under one live anchor to avoid overlapping parent/child packet targets while keeping the owner canon in one self-canonicalizable landing zone.",
+        "Use a heading-anchored replace_section; the anchor exists verbatim in the current source and keeps the mutation in one self-canonicalizable landing zone.",
+        "Rebuild only the bridge-field and receipt-ref canon owned by this section; do not preserve the current Firecrawl-specific payload contract or nested long-running `progress_event` subsection as carried source material.",
         "Retire the full listed stale residue within the target span; do not leave same-file conflicting residue partially live after emission.",
-        "Preserve or rebuild authoritative tables, schemas, registries, and other structural owner surfaces in-place rather than collapsing them to prose-only summary.",
-        "Preserve nearby ContractRef coverage for every surviving MUST-level operational rule cluster, including later Rules / Behavioral rules / Acceptance criteria clusters when they remain normative.",
+        "Preserve or rebuild owner structural form when the live section uses tables, rows, matrices, registries, or other enumerated containers rather than collapsing canon to prose.",
         "Exact cross-reference rewrite targets are promoted into required survivor items for this packet target, not left in notes-only metadata."
       ]
     },
     {
       "path": "Plans/storage-plan.md",
-      "heading": "## Runtime Attempt / Safe Point / Queue Analysis Storage Addendum (2026-03-09)",
+      "heading": "### Projection rules (reconciled)",
       "anchor_type": "heading",
       "operation": "replace_section",
       "required_section_maps": [
@@ -3353,32 +3874,18 @@
       ],
       "notes": [
         "Bucket: MUST_CHANGE.",
-        "Use a live-anchor replace_section so the current source span can be rebuilt canonically without leaving inline or sibling residue behind.",
-        "This target owns one current-wave section map and keeps the mutation in one self-canonicalizable landing zone.",
+        "Use a heading-anchored replace_section; the anchor exists verbatim in the current source and keeps the mutation in one self-canonicalizable landing zone.",
         "Retire the full listed stale residue within the target span; do not leave same-file conflicting residue partially live after emission.",
-        "Preserve or rebuild authoritative tables, schemas, registries, and other structural owner surfaces in-place rather than collapsing them to prose-only summary.",
-        "Preserve nearby ContractRef coverage for every surviving MUST-level operational rule cluster, including later Rules / Behavioral rules / Acceptance criteria clusters when they remain normative.",
+        "Preserve or rebuild owner structural form when the live section uses tables, rows, matrices, registries, or other enumerated containers rather than collapsing canon to prose.",
         "Exact cross-reference rewrite targets are promoted into required survivor items for this packet target, not left in notes-only metadata."
       ]
     },
     {
       "path": "Plans/storage-plan.md",
-      "heading": "## Runtime Recovery Persistence and Restart Reconciliation Addendum (2026-03-09)",
+      "heading": "### Cross-surface receipt record",
       "anchor_type": "heading",
       "operation": "replace_section",
       "required_section_maps": [
-        {
-          "path": "Plans/storage-plan.md",
-          "heading": "### Required redb keys"
-        },
-        {
-          "path": "Plans/storage-plan.md",
-          "heading": "### Canonical records"
-        },
-        {
-          "path": "Plans/storage-plan.md",
-          "heading": "### Restart and stale history"
-        },
         {
           "path": "Plans/storage-plan.md",
           "heading": "### Cross-surface receipt record"
@@ -3386,28 +3893,76 @@
       ],
       "exact_items_that_must_survive": {
         "required_obligations": [
-          "OBL-037",
-          "OBL-038",
-          "OBL-042",
-          "OBL-016",
-          "OBL-017",
-          "OBL-018",
-          "OBL-019",
-          "OBL-043",
-          "OBL-003",
-          "OBL-004",
           "OBL-034",
           "OBL-036"
         ],
         "required_exact_tokens": [
-          "artifacts_index.v1:{project_id}:{artifact_id}",
-          "artifacts_project_state.v1:{project_id}",
-          "projector.checkpoint.runtime_artifacts:{project_id}",
-          "worktree_record.v1:{project_id}:{worktree_id}",
-          "lane_record.v1:{project_id}:{lane_id}",
-          "worktree_projection.v1:{project_id}:{worktree_id}",
-          "lane_projection.v1:{project_id}:{lane_id}",
-          "orchestrator.project_state.{project_id}",
+          "attempt_id",
+          "provider_attempt_ref",
+          "usage_event_ref",
+          "workflow_refs",
+          "docker_refs",
+          "kubernetes_refs",
+          "validation_pass_report",
+          "workflow_run_id",
+          "run_id"
+        ],
+        "required_labels": [
+          "receipt record",
+          "validation lineage"
+        ],
+        "required_interface_shape_fields": [
+          "attempt_id",
+          "provider_attempt_ref",
+          "usage_event_ref",
+          "workflow_refs",
+          "docker_refs",
+          "kubernetes_refs",
+          "workflow_run_id",
+          "run_id"
+        ],
+        "required_behavioral_edges": [
+          "Receipts bridge external side-effect lineage without replacing local runtime identity.",
+          "Validation outputs must bridge into launch through a receipt or promoted package reference."
+        ],
+        "required_permission_carrythrough": [],
+        "cross_reference_rewrites": [
+          "Plans/Project_Output_Artifacts.md#10. Validation Pass Report Artifacts",
+          "Plans/Runtime_Artifacts_Panel.md#Cross-Surface Operation Receipt Linkage Addendum (2026-03-12)"
+        ]
+      },
+      "stale_residue_to_retire": [
+        "`workflow_run_id` as the only lineage bridge",
+        "timestamp/thread fallback treated as primary attribution"
+      ],
+      "notes": [
+        "Bucket: MUST_CHANGE.",
+        "Use a heading-anchored replace_section; the anchor exists verbatim in the current source and keeps the mutation in one self-canonicalizable landing zone.",
+        "Rebuild the authoritative minimum receipt shape itself and place `provider_attempt_ref` and `workflow_run_id` inside that owned shape container rather than only in trailing prose.",
+        "Retire the full listed stale residue within the target span; do not leave same-file conflicting residue partially live after emission.",
+        "Preserve or rebuild owner structural form when the live section uses tables, rows, matrices, registries, or other enumerated containers rather than collapsing canon to prose.",
+        "Exact cross-reference rewrite targets are promoted into required survivor items for this packet target, not left in notes-only metadata."
+      ]
+    },
+    {
+      "path": "Plans/storage-plan.md",
+      "heading": "### Canonical records",
+      "anchor_type": "heading",
+      "operation": "replace_section",
+      "required_section_maps": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "### Canonical records"
+        }
+      ],
+      "exact_items_that_must_survive": {
+        "required_obligations": [
+          "OBL-016",
+          "OBL-017",
+          "OBL-018",
+          "OBL-019"
+        ],
+        "required_exact_tokens": [
           "record_id",
           "record_kind",
           "schema_version",
@@ -3430,76 +3985,20 @@
           "resolution_kind",
           "record export",
           "bundle export",
-          "view export",
-          "account_pressure_episode",
-          "account_switch_event",
-          "episode_id",
-          "switch_event_id",
-          "source_kind",
-          "signal_confidence",
-          "pressure_kind",
-          "decision_kind",
-          "source_episode_id?",
-          "baseline",
-          "active",
-          "suspect",
-          "restoring",
-          "retained",
-          "cleanup_eligible",
-          "worktree_id",
-          "lane_id",
-          "historical_lineage_refs[]",
-          "attempt_id",
-          "provider_attempt_ref",
-          "usage_event_ref",
-          "workflow_refs",
-          "docker_refs",
-          "kubernetes_refs",
-          "validation_pass_report",
-          "workflow_run_id"
+          "view export"
         ],
         "required_labels": [
-          "runtime artifact index",
-          "worktree record",
-          "lane record",
-          "orchestrator project state",
           "record family",
           "export taxonomy",
           "historical vocabulary",
-          "concern",
-          "account history family",
-          "historical",
-          "archived",
-          "removed",
-          "cleanup eligible",
-          "receipt record",
-          "validation lineage"
+          "concern"
         ],
         "required_interface_shape_fields": [
-          "artifact_id",
-          "artifact_type",
-          "project_id",
-          "run_id",
-          "thread_id",
-          "node_id",
-          "attempt_id",
-          "worktree_id",
-          "lane_id",
-          "repo_id",
-          "path_ref",
-          "branch_ref",
-          "baseline_ref",
-          "projection_freshness",
-          "projection_health",
-          "focused_run_id",
-          "focus_mode",
-          "last_live_run_id",
-          "selected_tab",
-          "per_tab_view_state_refs",
-          "auto_return_to_live",
           "record_id",
           "record_kind",
           "schema_version",
+          "project_id",
+          "run_id",
           "scope_type",
           "scope_id",
           "status",
@@ -3511,84 +4010,107 @@
           "owner_kind",
           "resolution_kind",
           "export_kind",
-          "trust_state_at_export",
-          "episode_id",
-          "switch_event_id",
-          "source_kind",
-          "signal_confidence",
-          "pressure_kind",
-          "decision_kind",
-          "source_episode_id",
-          "lifecycle_state",
-          "historical_flag",
-          "archived_flag",
-          "removed_flag",
-          "cleanup_eligible_flag",
-          "historical_lineage_refs[]",
-          "provider_attempt_ref",
-          "usage_event_ref",
-          "workflow_refs",
-          "docker_refs",
-          "kubernetes_refs",
-          "workflow_run_id"
+          "trust_state_at_export"
         ],
         "required_behavioral_edges": [
-          "Runtime-artifact indexing and durable worktree/lane identity are storage-owned families.",
-          "Projection state and projector checkpoints must be first-class rather than panel-owned leftovers.",
-          "Persisted Orchestrator focus state must keep the page on the same focused historical run across reload and restart.",
           "Record export, bundle export, and view export must remain distinct.",
           "Shared historical vocabulary must not erase family-local semantics.",
-          "Concern lineage must be queryable across merge, split, supersession, reopen, and revoke flows.",
-          "Current health snapshots and recent-reason fields do not substitute for canonical switch history.",
-          "Historical references must survive after live worktree cleanup.",
-          "`cleanup_eligible` is queue state, not removal.",
-          "Filesystem rediscovery must not be the only restart authority.",
-          "Receipts bridge external side-effect lineage without replacing local runtime identity.",
-          "Validation outputs must bridge into launch through a receipt or promoted package reference."
+          "Concern lineage must be queryable across merge, split, supersession, reopen, and revoke flows."
         ],
         "required_permission_carrythrough": [],
         "cross_reference_rewrites": [
-          "Plans/Runtime_Artifacts_Panel.md#4. redb key and projector",
-          "Plans/WorktreeGitImprovement.md#4.1 Assistant-created worktree lifecycle",
-          "Plans/FinalGUISpec.md#7.1 Orchestrator",
           "Plans/Project_Output_Artifacts.md#8. Seglog canonical persistence contract (artifact events)",
-          "Plans/Orchestrator_Page.md#12. Concern and notification model",
-          "Plans/Multi-Account.md#4. Data model",
-          "Plans/usage-feature.md#Billing identity, attribution, and pricing metadata",
-          "Plans/GitHub_Integration.md#A.4 Worktrees",
-          "Plans/Project_Output_Artifacts.md#10. Validation Pass Report Artifacts",
-          "Plans/Runtime_Artifacts_Panel.md#Cross-Surface Operation Receipt Linkage Addendum (2026-03-12)"
+          "Plans/Orchestrator_Page.md#12. Concern and notification model"
         ]
       },
       "stale_residue_to_retire": [
-        "`artifacts_index:v1:{project_id}` as a sole underspecified canonical contract",
-        "panel-only ownership of runtime-artifact projector semantics",
-        "tier-keyed worktree identity",
-        "tab-local run drift without shared persisted Orchestrator state",
         "conflating record exports, artifact exports, and view exports",
         "overloaded `resolved` state",
-        "concerns treated as transient notes",
-        "`account_switch_reason` as both pressure cause and switch outcome",
-        "`recent_switch_reason` as durable history",
-        "cleanup wipes history model",
-        "action-verb-only cleanup model",
-        "filesystem rediscovery as sole restart authority",
-        "`workflow_run_id` as the only lineage bridge",
-        "timestamp/thread fallback treated as primary attribution"
+        "concerns treated as transient notes"
       ],
       "notes": [
         "Bucket: MUST_CHANGE.",
-        "Use a live-anchor replace_section so the current source span can be rebuilt canonically without leaving inline or sibling residue behind.",
-        "Grouped related current-wave section maps under one live anchor to avoid overlapping parent/child packet targets while keeping the owner canon in one self-canonicalizable landing zone.",
+        "Use a heading-anchored replace_section; the anchor exists verbatim in the current source and keeps the mutation in one self-canonicalizable landing zone.",
+        "Rebuild an authoritative canonical-record shape container inside this section and place `record_id`, `record_kind`, `schema_version`, `scope_type`, `scope_id`, `status`, `created_at_utc`, `lineage_refs`, `source_refs`, `artifact_refs`, `concern_id`, `owner_kind`, `resolution_kind`, `export_kind`, and `trust_state_at_export` inside the owned shape rather than only in trailing prose or debug-example carry-through.",
         "Retire the full listed stale residue within the target span; do not leave same-file conflicting residue partially live after emission.",
-        "Preserve or rebuild authoritative tables, schemas, registries, and other structural owner surfaces in-place rather than collapsing them to prose-only summary.",
-        "Preserve nearby ContractRef coverage for every surviving MUST-level operational rule cluster, including later Rules / Behavioral rules / Acceptance criteria clusters when they remain normative.",
+        "Preserve or rebuild owner structural form when the live section uses tables, rows, matrices, registries, or other enumerated containers rather than collapsing canon to prose.",
         "Exact cross-reference rewrite targets are promoted into required survivor items for this packet target, not left in notes-only metadata."
       ]
     },
     {
       "path": "Plans/storage-plan.md",
-      "heading": "### 2.3 redb: schema, migrations, key patterns",
+      "heading": "### Restart and stale history",
+      "anchor_type": "heading",
+      "operation": "replace_section",
+      "required_section_maps": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "### Restart and stale history"
+        }
+      ],
+      "exact_items_that_must_survive": {
+        "required_obligations": [
+          "OBL-003",
+          "OBL-004",
+          "OBL-038"
+        ],
+        "required_exact_tokens": [
+          "historical",
+          "archived",
+          "removed",
+          "baseline",
+          "active",
+          "suspect",
+          "restoring",
+          "retained",
+          "cleanup_eligible",
+          "worktree_id",
+          "lane_id",
+          "historical_lineage_refs[]"
+        ],
+        "required_labels": [
+          "historical",
+          "archived",
+          "removed",
+          "cleanup eligible"
+        ],
+        "required_interface_shape_fields": [
+          "worktree_id",
+          "lane_id",
+          "lifecycle_state",
+          "historical_flag",
+          "archived_flag",
+          "removed_flag",
+          "cleanup_eligible_flag",
+          "historical_lineage_refs[]"
+        ],
+        "required_behavioral_edges": [
+          "Historical references must survive after live worktree cleanup.",
+          "`cleanup_eligible` is queue state, not removal.",
+          "Filesystem rediscovery must not be the only restart authority."
+        ],
+        "required_permission_carrythrough": [],
+        "cross_reference_rewrites": [
+          "Plans/WorktreeGitImprovement.md#4.1 Assistant-created worktree lifecycle",
+          "Plans/GitHub_Integration.md#A.4 Worktrees"
+        ]
+      },
+      "stale_residue_to_retire": [
+        "cleanup wipes history model",
+        "action-verb-only cleanup model",
+        "filesystem rediscovery as sole restart authority"
+      ],
+      "notes": [
+        "Bucket: MUST_CHANGE.",
+        "Use a heading-anchored replace_section; the anchor exists verbatim in the current source and keeps the mutation in one self-canonicalizable landing zone.",
+        "Retire the full listed stale residue within the target span; do not leave same-file conflicting residue partially live after emission.",
+        "Preserve or rebuild owner structural form when the live section uses tables, rows, matrices, registries, or other enumerated containers rather than collapsing canon to prose.",
+        "Exact cross-reference rewrite targets are promoted into required survivor items for this packet target, not left in notes-only metadata."
+      ]
+    },
+    {
+      "path": "Plans/storage-plan.md",
+      "heading": "### New redb key families",
       "anchor_type": "heading",
       "operation": "replace_section",
       "required_section_maps": [
@@ -3638,11 +4160,9 @@
       ],
       "notes": [
         "Bucket: MUST_CHANGE.",
-        "Use a live-anchor replace_section so the current source span can be rebuilt canonically without leaving inline or sibling residue behind.",
-        "This target owns one current-wave section map and keeps the mutation in one self-canonicalizable landing zone.",
+        "Use a heading-anchored replace_section; the anchor exists verbatim in the current source and keeps the mutation in one self-canonicalizable landing zone.",
         "Retire the full listed stale residue within the target span; do not leave same-file conflicting residue partially live after emission.",
-        "Preserve or rebuild authoritative tables, schemas, registries, and other structural owner surfaces in-place rather than collapsing them to prose-only summary.",
-        "Preserve nearby ContractRef coverage for every surviving MUST-level operational rule cluster, including later Rules / Behavioral rules / Acceptance criteria clusters when they remain normative.",
+        "Preserve or rebuild owner structural form when the live section uses tables, rows, matrices, registries, or other enumerated containers rather than collapsing canon to prose.",
         "Exact cross-reference rewrite targets are promoted into required survivor items for this packet target, not left in notes-only metadata."
       ]
     }

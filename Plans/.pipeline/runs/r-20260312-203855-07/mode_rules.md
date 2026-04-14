@@ -4,9 +4,9 @@
 - `audit`
 
 ## Allowed Writes
-- `meta.json`
-- `working_ledger.md`
-- `mode_status.md`
+- `Plans/.pipeline/work_items/w-20260312-203855/meta.json`
+- `Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md`
+- `Plans/.pipeline/work_items/w-20260312-203855/mode_status.md`
 
 ## Forbidden Writes
 - `Plans/*.md`
@@ -30,3 +30,4 @@
 ## Completion Standard
 - Do not declare ready while an implementer would still need to invent material behavior, state, wiring, data shape, fallback logic, or ownership boundaries.
 - Keep unresolved material gaps visible in ledger + mode status.
+- If later packetization or emission fails, record the exact blocking contradiction in the ledger and mode status without rewriting the completed audit history.

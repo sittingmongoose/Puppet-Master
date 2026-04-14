@@ -119,8 +119,6 @@ Rules:
 
 ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/FileManager.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/storage-plan.md
 
-### A.4 Worktrees
-
 Worktrees are first-class UI objects, not hidden plumbing.
 
 The Worktrees accordion uses narrow-panel rows for direct actions, and Source Control also provides a topology-aware view that overlays worktree state on branch ancestry when the user pivots from Graph/History into worktree reasoning.
@@ -171,8 +169,6 @@ Labels:
 
 Behavioral rules:
 - GitHub surface worktree rows must respect durable worktree/lane identity and historical rendering semantics.
-### A.5 Surface boundary rule
-
 Source Control, Orchestrator, and GitHub surfaces keep distinct responsibilities.
 
 Rules:

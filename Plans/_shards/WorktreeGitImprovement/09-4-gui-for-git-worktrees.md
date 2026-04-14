@@ -32,8 +32,6 @@ Rules:
 
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Decision_Policy.md, ContractName:Plans/FileManager.md, ContractName:Plans/Crosswalk.md
 
-### 4.1 Assistant-created worktree lifecycle
-
 Assistant worktrees are created via the chat header worktree button or auto-create setting. They follow the same `WorktreeManager` backend as orchestrator worktrees.
 
 **Naming:** Directory `.puppet-master/worktrees/thread-{short_id}` where `short_id` is first 8 chars of `thread_id`. Branch name `assistant/<sanitized_title>` (temp name `assistant/thread-{short_id}` before title generation).
@@ -81,4 +79,3 @@ Labels:
 Behavioral rules:
 - Cleaning files inside a worktree is not the same thing as removing the worktree.
 - `lane_id` remains operational lineage while `worktree_id` remains durable identity.
-

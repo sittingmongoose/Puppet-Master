@@ -315,7 +315,6 @@ ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/assistant
 
 ContractRef: ContractName:Plans/GitHub_API_Auth_and_Flows.md, ContractName:Plans/newtools.md, PolicyRule:no_secrets_in_storage
 
-### Required redb keys
 The promoted provider/runtime rewrite and the updated terminal/editor model require durable record and projection families that preserve concrete runtime surfaces, account/profile identity, entitlement attribution, and terminal layout continuity.
 
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Multi-Account.md
@@ -464,6 +463,74 @@ browser_profile_state.v1:{profile_name} {
 }
 ```
 
+**runtime artifact index** authoritative record families:
+
+```text
+artifacts_project_state.v1:{project_id} {
+  project_id: string,
+  projection_freshness: "current" | "refreshing" | "stale",
+  projection_health: "healthy" | "degraded" | "unavailable",
+  artifacts: [{
+    artifact_id: string,
+    artifact_type: string,
+    run_id?: string,
+    thread_id?: string,
+    node_id?: string,
+    attempt_id?: string,
+    worktree_id?: string,
+    lane_id?: string,
+    repo_id?: string,
+    path_ref?: string,
+    branch_ref?: string,
+    baseline_ref?: string
+  }]
+}
+
+projector.checkpoint.runtime_artifacts:{project_id} {
+  project_id: string,
+  projection_freshness: "current" | "refreshing" | "stale",
+  projection_health: "healthy" | "degraded" | "unavailable"
+}
+```
+
+**worktree record** and **lane record** authoritative fields:
+
+```text
+worktree_record.v1:{project_id}:{worktree_id} {
+  project_id: string,
+  worktree_id: string,
+  lane_id?: string,
+  repo_id?: string,
+  path_ref?: string,
+  branch_ref?: string,
+  baseline_ref?: string
+}
+
+lane_record.v1:{project_id}:{lane_id} {
+  project_id: string,
+  lane_id: string,
+  worktree_id?: string,
+  repo_id?: string,
+  path_ref?: string,
+  branch_ref?: string,
+  baseline_ref?: string
+}
+
+worktree_projection.v1:{project_id}:{worktree_id} {
+  project_id: string,
+  worktree_id: string,
+  projection_freshness: "current" | "refreshing" | "stale",
+  projection_health: "healthy" | "degraded" | "unavailable"
+}
+
+lane_projection.v1:{project_id}:{lane_id} {
+  project_id: string,
+  lane_id: string,
+  projection_freshness: "current" | "refreshing" | "stale",
+  projection_health: "healthy" | "degraded" | "unavailable"
+}
+```
+
 Related events:
 - `preview.session.started`
 - `preview.session.stopped`
@@ -549,7 +616,6 @@ Labels:
 Behavioral rules:
 - Runtime-artifact indexing and durable worktree/lane identity are storage-owned families.
 - Projection state and projector checkpoints must be first-class rather than panel-owned leftovers.
-
 ### Canonical terminal persistence decomposition
 
 Storage-plan is the canonical source for terminal persistence keys. The terminal surface persists as the following decomposed key families:
@@ -698,8 +764,6 @@ ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Contrac
 
 Assistant and Interview surfaces persist thread-local state, activity traces, and reviewable history, but they do not become the canonical owner of runtime identity.
 
-### 4.1 Shared runtime identity consumption
-
 Shared runtime identity projection is consumed across chat, widgets, audit, and delegated execution. Storage keeps the canonical field names and their meanings aligned.
 
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Multi-Account.md, ContractName:Plans/Personas.md
@@ -812,149 +876,27 @@ ContractRef: ContractName:Plans/assistant-chat-design.md#8.1 Canonical planning 
 Labels and values:
 - Plan
 - Deep Plan
-### 4.4 Activity transparency payloads
-
-This section defines the canonical contract for this surface.
-
-ContractRef: Plans/Contracts_V0.md#3.4A Web error taxonomy and applicability
-
-Core rules:
-- Preserve the Firecrawl-specific audit payload keys as exact contract-owned fields.
-- The Firecrawl webextract mapping must preserve structured extraction modes and option surface, not a thin single-URL summary.
-- The Firecrawl owner section must either preserve `changeTracking` with its structured output shape or explicitly retire it as out of scope; it must not disappear silently.
-- PM must not silently switch between self-hosted Firecrawl and hosted/cloud Firecrawl, and deployment-mode disclosure must remain visible.
-- Batch audit/event canon must preserve a parent audit event for the batch plus child audit events per URL.
-- The Firecrawl owner section must preserve shared routing/audit disclosure for requested/effective provider selection, fallback visibility, denied-web projection, and canonical web error taxonomy linkage.
-- The per-contract web error applicability table remains required canon and must stay aligned with provider-to-PM error mapping.
-- All web tools share a common output field set that includes provider identity, routing reason, timing, cache status, and standard error or warning fields.
-- Activity transparency payloads must preserve adapter-selection and projection fields used for routing and audit disclosure.
-
-Fields:
-- firecrawl_credits_used
-- firecrawl_cache_state
-- firecrawl_scrape_id
-- webextract
-- JSON Schema support
-- prompt-driven extraction behavior
-- URL wildcards
-- enableWebSearch
-- changeTracking.status
-- changeTracking.previous_content_ref
-- changeTracking.diff_summary_ref
-- changeTracking.checked_at_utc
-- parent audit event for the batch
-- child audit events per URL
-- tool.invoked
-- continue_on_error
-- `tool_use_id`
-- `adapter_id`
-- `adapter_selection_reason`
-- `duration_ms`
-- `timestamp`
-- `cached`
-- `error_code?`
-- `error_message?`
-- `warnings?`
-- `provenance_badge?`
-- requested_adapter_id
-- effective_adapter_id
-- adapter_selection_reason
-- provider_fallback_summary
-- warnings_count
-- error_code
-- projection_freshness
-- projection_health
-
-Rules:
-- changeTracking { status: changed | unchanged | no_previous_version, previous_content_ref?, diff_summary_ref?, checked_at_utc }
-- change_status: 'new' | 'same' | 'changed' | 'removed'
-- pages[].change_status
-- change_summary
-- explicit out-of-scope retirement if `changeTracking` is not MVP
-- no silent disappearance of the capability
-- PM MUST NOT silently switch between self-hosted Firecrawl and hosted/cloud Firecrawl
-ContractRef: ContractName:Plans/Contracts_V0.md#3.4A Web error taxonomy and applicability, ContractName:Plans/Contracts_V0.md#3.4 Tool-specific payload extensions, ContractName:Plans/FinalGUISpec.md#15.3 Web and diff operation card widget
-- no silent switch between self-hosted Firecrawl and hosted/cloud Firecrawl
-- deployment-mode disclosure remains visible
-- self-hosted Firecrawl does not use hosted credit billing
-- tool.denied
-- adapter_unavailable
-- unsupported_operation
-- content_blocked
-- content_not_found
-- unsupported_source
-- extraction_schema_mismatch
-- autonomous_budget_exceeded
-- no_previous_version
-- blocked_reason_code
-- allowed_action_ids[]
-- denial_reason_code
-- denial_source
-- suggested_recovery_action
-- adapter_id
-- blocked responses must be machine-actionable through `allowed_action_ids[]`
-- error naming aligns to `adapter_unavailable`
-
-#### Long-running `progress_event` payload
-
-This section defines the canonical contract for this surface.
-
-ContractRef: Plans/Contracts_V0.md#3.4 Tool-specific payload extensions, Plans/FinalGUISpec.md#15.3 Web and diff operation card widget
-
-Core rules:
-- The Firecrawl async contract must preserve timeout behavior tied to timeout_ms and partial-result survival on timeout.
-- Long-running web operations must preserve the structured progress_event payload and cancellation-with-partial-results contract.
-- The Firecrawl async contract must preserve the exact poll ladder and status family already restored in the owner section.
-
-Fields:
-- timeout_ms
-- timeout when polling exceeds `timeout_ms`
-- partial results survive timeout if already materialized
-- progress_event
-- tool_use_id
-- operation
-- phase
-- detail
-- pages_completed
-- pages_total
-- elapsed_ms
-- estimated_remaining_ms
-- cancelled: true
-- 2s, 4s, 8s, 15s, 30s
-- scraping
-- processing
-- completed
-- failed
-- cancelled
+Activity transparency payloads carry canonical runtime bridge fields and receipt refs used across audit, artifacts, and usage surfaces.
 
 ContractRef: Plans/Tools.md#8.0 Event payloads (seglog), Plans/Runtime_Artifacts_Panel.md#Cross-Surface Operation Receipt Linkage Addendum (2026-03-12)
 
-Required fields:
-- node_id
-- attempt_id
-- lane_id
-- package_id
-- execution_role
-- effective_account_id
-- operational_identity
-- provider_attempt_ref
-- usage_event_ref
-- detail_ref
-- report_ref
+**activity payload**
 
-Canonical terms and values:
-- node_id
-- attempt_id
-- lane_id
-- package_id
-- execution_role
-- effective_account_id
-- operational_identity
-- provider_attempt_ref
-- usage_event_ref
-- detail_ref
-- report_ref
-- receipt refs
+| Field | Requirement |
+| --- | --- |
+| `node_id` | Runtime node identity for the emitted activity payload. |
+| `attempt_id` | Canonical local execution anchor for the activity record. |
+| `lane_id` | Lane identity associated with the activity payload. |
+| `package_id` | Package identity associated with the activity payload. |
+| `execution_role` | Effective execution-role disclosure for the activity payload. |
+| `effective_account_id` | Effective account identity carried into the activity payload. |
+| `operational_identity` | Stable runtime identity for audit and joins. |
+| `provider_attempt_ref` | Provider-side bridge reference that remains subordinate to `attempt_id`. |
+| `usage_event_ref` | Usage-side reference for accounting and evidence joins. |
+| `detail_ref` | Inspection reference for drilldown payloads. |
+| `report_ref` | Inspection reference for report payloads. |
+
+**receipt refs** remain inspection and provenance links rather than route/open surrogates.
 
 Labels:
 - activity payload
@@ -1270,7 +1212,6 @@ Storage and projections MUST persist the scheduler and recovery model without am
 
 ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Permissions_System.md
 
-### Projection rules (reconciled)
 - run-graph and orchestrator projections MUST resolve by `attempt_id`, not only `node_id`
 - blocked projections remain historical after resolution; unblocking does not overwrite prior blocked rows
 - `ready_since_utc` survives projection refresh only while the node remains continuously ready
@@ -1307,7 +1248,6 @@ Behavioral rules:
 
 Permission carry-through:
 - action gating must respect projection trust before surfacing mutation actions
-
 ### Snapshot refresh rules
 - permission/auth/approval/replan resolution creates a new attempt snapshot; old attempt snapshots remain immutable
 - safe-point restore does not mutate the originating attempt record in place; it leads to a new attempt record tied back by lineage
@@ -1379,8 +1319,6 @@ Rules:
 - `dev_session_record` is workflow-scoped and may link multiple terminal sessions without collapsing them into one key family
 
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Run_Modes.md
-### Cross-surface receipt record
-
 The runtime receipt record is the canonical bridge between Orchestrator, Source Control, GitHub Actions, Docker Manager, Artifacts, and Usage.
 
 Minimum fields:
@@ -1394,7 +1332,9 @@ Minimum fields:
 - `workflow_refs?` with workflow / run / job / step identifiers
 - `docker_refs?` with runtime/context/image/publish/template identifiers
 - `kubernetes_refs?` with context/namespace/workload/rollout identifiers
+- `provider_attempt_ref?`
 - `usage_event_ref?`
+- `workflow_run_id?`
 - `created_at_utc`
 
 Receipt extensions by operational domain:
@@ -1448,10 +1388,31 @@ Labels:
 Behavioral rules:
 - Receipts bridge external side-effect lineage without replacing local runtime identity.
 - Validation outputs must bridge into launch through a receipt or promoted package reference.
-
-### Canonical records
-
 Canonical records for this feature set must support rebuild, resume, auditability, and UI reconstruction without hidden side stores.
+
+**record family** authoritative container:
+
+```text
+canonical_record.v1:{project_id}:{record_id} {
+  record_id: string,
+  record_kind: string,
+  schema_version: string,
+  project_id: string,
+  run_id?: string,
+  scope_type: string,
+  scope_id: string,
+  status: string,
+  created_at_utc: ISO8601,
+  lineage_refs: LineageRef[],
+  source_refs: SourceRef[],
+  artifact_refs: ArtifactRef[],
+  concern_id?: string,
+  owner_kind?: string,
+  resolution_kind?: string,
+  export_kind?: "record export" | "bundle export" | "view export",
+  trust_state_at_export?: string
+}
+```
 
 Required canonical records include:
 - child runs and attempts
@@ -1577,7 +1538,6 @@ Behavioral rules:
 
 ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Permissions_System.md
 
-### Restart and stale history
 Attempts from older generations, or in-flight attempts that cannot resume after restart, transition to `stale_historical`. They remain queryable but are never resumable.
 
 ContractRef: Plans/WorktreeGitImprovement.md#4.1 Assistant-created worktree lifecycle, Plans/GitHub_Integration.md#A.4 Worktrees
@@ -1614,7 +1574,6 @@ Behavioral rules:
 - Historical references must survive after live worktree cleanup.
 - `cleanup_eligible` is queue state, not removal.
 - Filesystem rediscovery must not be the only restart authority.
-
 ### Identity and field-name rules
 Canonical naming and identity rules:
 - persisted requested/effective runtime base fields keep the names defined in `Plans/Contracts_V0.md`
@@ -1673,8 +1632,6 @@ This addendum defines storage additions for the assistant thread-to-worktree bin
 
 ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/WorktreeGitImprovement.md
 
-### New redb key families
-
 **Thread worktree binding:**
 - Key pattern: `thread_state:{thread_id}:worktree_binding`
 - Value: JSON `{ "worktree_id", "branch_name", "worktree_path", "bound_at_utc", "binding_origin" ("manual"|"auto_create"), "temp_branch_name" }`
@@ -1709,7 +1666,6 @@ Labels:
 Behavioral rules:
 - `selected_worktree_id` remains UI state and must not replace durable worktree identity.
 - Thread binding keys do not replace lane/worktree lifecycle records or historical lineage.
-
 ## 8. Web content caching persistence
 
 This section consumes the linked owner contract and stays aligned with it.

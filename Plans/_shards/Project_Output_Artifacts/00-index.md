@@ -17,8 +17,7 @@ Canonical source: [Plans/Project_Output_Artifacts.md](../../Project_Output_Artif
 - [09-7-plan-graph-requirements-sharded-only-canonical-optional-derived-export.md](09-7-plan-graph-requirements-sharded-only-canonical-optional-derived-export.md) — ## 7. Plan graph requirements (**sharded-only canonical** + optional derived export)
 - [10-8-seglog-canonical-persistence-contract-artifact-events.md](10-8-seglog-canonical-persistence-contract-artifact-events.md) — ## 8. Seglog canonical persistence contract (artifact events)
 - [11-9-acceptance-criteria-validator-requirements.md](11-9-acceptance-criteria-validator-requirements.md) — ## 9. Acceptance criteria (validator requirements)
-- [12-10-validation-pass-report-artifacts.md](12-10-validation-pass-report-artifacts.md) — ## 10. Validation Pass Report Artifacts
-- [13-11-traceability-outputs.md](13-11-traceability-outputs.md) — ## 11. Traceability outputs
-- [14-12-optional-derived-quickstartmd-contract-human-convenience-only.md](14-12-optional-derived-quickstartmd-contract-human-convenience-only.md) — ## 12. Optional derived `quickstart.md` contract (human convenience only)
-- [15-change-summary.md](15-change-summary.md) — ## Change Summary
-- [16-runtime-evidence-and-degradation-artifact-addendum-2026-03-08.md](16-runtime-evidence-and-degradation-artifact-addendum-2026-03-08.md) — ## Runtime Evidence and Degradation Artifact Addendum (2026-03-08)
+- [12-11-traceability-outputs.md](12-11-traceability-outputs.md) — ## 11. Traceability outputs
+- [13-12-optional-derived-quickstartmd-contract-human-convenience-only.md](13-12-optional-derived-quickstartmd-contract-human-convenience-only.md) — ## 12. Optional derived `quickstart.md` contract (human convenience only)
+- [14-change-summary.md](14-change-summary.md) — ## Change Summary
+- [15-runtime-evidence-and-degradation-artifact-addendum-2026-03-08.md](15-runtime-evidence-and-degradation-artifact-addendum-2026-03-08.md) — ## Runtime Evidence and Degradation Artifact Addendum (2026-03-08)

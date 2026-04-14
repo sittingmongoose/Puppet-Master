@@ -265,88 +265,25 @@ impl SubagentSelector {
 
 ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md#7
 
-### Tier Context
-
-```rust
-// src/types/state.rs (additions)
-
-pub struct TierContext {
-    pub tier_type: TierType,
-    pub tier_id: String,
-    pub title: String,
-    pub description: String,
-    pub workspace: PathBuf,
-    pub worktree_path: Option<PathBuf>,
-
-    // Project context
-    pub primary_language: Option<String>,
-    pub domain: ProjectDomain,
-    pub framework: Option<String>,
-
-    // Tier-specific
-    pub needs_architecture_review: bool,
-    pub needs_product_planning: bool,
-    pub subtask_focus: Option<SubtaskFocus>,
-
-    // Iteration state
-    pub has_errors: bool,
-    pub needs_code_review: bool,
-    pub needs_testing: bool,
-    pub error_patterns: Vec<ErrorPattern>,
-
-    // Inheritance
-    pub parent_subagents: Option<Vec<String>>,
-
-    // Frozen tier-runtime snapshot
-    pub requested_persona: Option<String>,
-    pub effective_persona: Option<String>,
-    pub requested_platform: Option<Platform>,
-    pub effective_platform: Platform,
-    pub requested_model: Option<String>,
-    pub effective_model: String,
-    pub persona_stage: Option<String>,
-}
-
-pub enum SubtaskFocus {
-    CodeReview,
-    Testing,
-    Documentation,
-    APIDesign,
-    UIDesign,
-    Security,
-    Performance,
-    Database,
-}
-```
+The subagent handoff surface uses `execution_unit_context` as the canonical orchestration payload.
 
 ContractRef: Plans/Executor_Protocol.md#Worktree-aware execution unit context, Plans/Prompt_Pipeline.md#Runtime Attempt Snapshot and Handoff Bundle
 
-Required fields:
-- run_id
-- node_id
-- attempt_id
-- lane_id
-- package_id
-- seam_id
-- worktree_id
-- execution_role
-- requested_account_id
-- effective_account_id
-- operational_identity
-
-Canonical terms and values:
-- execution_unit_context
-- run_id
-- node_id
-- attempt_id
-- lane_id
-- package_id
-- seam_id
-- worktree_id
-- execution_role
-- requested_account_id
-- effective_account_id
-- operational_identity
+```text
+execution_unit_context {
+  run_id: string,
+  node_id: string,
+  attempt_id: string,
+  lane_id: string?,
+  package_id: string,
+  seam_id: string?,
+  worktree_id: string?,
+  execution_role: string,
+  requested_account_id: string?,
+  effective_account_id: string?,
+  operational_identity: string?
+}
+```
 
 Labels:
 - execution unit context
@@ -356,4 +293,3 @@ Behavioral rules:
 
 Permission carry-through:
 - execution role and effective account must remain in subagent orchestration context
-

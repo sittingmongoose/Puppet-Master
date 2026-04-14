@@ -1,6 +1,6 @@
 {
   "source_path": "Plans/GitHub_Integration.md",
-  "source_sha256": "decc59afc9373ccc9f4db47ebbf220d499a8580377704cc464d67345ae176b61",
+  "source_sha256": "0d7cb68cd0dfb39291151c4fedda9eb9bbcfba9d0e654311b30cc096e67e0730",
   "split_rule": {
     "primary": "## outside fences",
     "fallback": "line-count-200",
@@ -31,65 +31,58 @@
     {
       "dest_path": "Plans/_shards/GitHub_Integration/04-a-git-panel-ide-surface.md",
       "start_line": 70,
-      "end_line": 275,
-      "segment_sha256": "30896e069bf8e6b3d2e03211e49300f292cf5c2fd965515a6a9019541606b050",
+      "end_line": 271,
+      "segment_sha256": "757cb292bb43c85f350f8eb1c5dcff550e868b4583eb79c0459fe208d36fde8e",
       "heading": "## A. Git Panel (IDE Surface)"
     },
     {
       "dest_path": "Plans/_shards/GitHub_Integration/05-b-github-api-integration.md",
-      "start_line": 276,
-      "end_line": 716,
+      "start_line": 272,
+      "end_line": 712,
       "segment_sha256": "9f3bb9b5d1edff584d90e8079022710a50c9cd159461c4ecbd85f98f200b1bed",
       "heading": "## B. GitHub API Integration"
     },
     {
       "dest_path": "Plans/_shards/GitHub_Integration/06-d-project-management-flows-no-chain-wizard-required.md",
-      "start_line": 717,
-      "end_line": 957,
+      "start_line": 713,
+      "end_line": 953,
       "segment_sha256": "9212cd3f3d7d6dcb7d9253be6efc45c6df01d3a2b0b2b0bc60439c219f6b2bfb",
       "heading": "## D. Project Management Flows (No Chain Wizard Required)"
     },
     {
       "dest_path": "Plans/_shards/GitHub_Integration/07-e-ui-command-ids-reserved-by-this-document.md",
-      "start_line": 958,
-      "end_line": 976,
+      "start_line": 954,
+      "end_line": 972,
       "segment_sha256": "6008ae9048eea6c7b72145366b0918ab364fff1994da4be9d41f7967f96b8966",
       "heading": "## E. UI Command IDs Reserved by This Document"
     },
     {
       "dest_path": "Plans/_shards/GitHub_Integration/08-f-redb-configuration-keys-reserved-by-this-document.md",
-      "start_line": 977,
-      "end_line": 998,
+      "start_line": 973,
+      "end_line": 994,
       "segment_sha256": "ac7ff0b42bb08fe80501b536e98f176c6547530b311f714251e4ecea0cc555a2",
       "heading": "## F. redb Configuration Keys Reserved by This Document"
     },
     {
       "dest_path": "Plans/_shards/GitHub_Integration/09-anti-drift-compliance.md",
-      "start_line": 999,
-      "end_line": 1017,
+      "start_line": 995,
+      "end_line": 1013,
       "segment_sha256": "3d5b3f4ca30aa8a944b9d2c7b1ba6fe09915172a8d5e163f94788edb6bb3ea13",
       "heading": "## Anti-Drift Compliance"
     },
     {
       "dest_path": "Plans/_shards/GitHub_Integration/10-references.md",
-      "start_line": 1018,
-      "end_line": 1033,
+      "start_line": 1014,
+      "end_line": 1029,
       "segment_sha256": "660a6944818a6729f64bec03cbf98f66dd80e3517ab6dde8fe9d2e60b7ca56af",
       "heading": "## References"
     },
     {
       "dest_path": "Plans/_shards/GitHub_Integration/11-chat-driven-external-repo-import-mvp.md",
-      "start_line": 1034,
-      "end_line": 1057,
-      "segment_sha256": "89b15b94d7f74bb032f5cd1ac07407498dbbcfd5465610e3111c1245dc16acb0",
+      "start_line": 1030,
+      "end_line": 1115,
+      "segment_sha256": "336f38048bc2c9ad88983eadcd1604be17d6a97dd0b64ff8961589792defdedc",
       "heading": "## Chat-driven external repo import (MVP)"
-    },
-    {
-      "dest_path": "Plans/_shards/GitHub_Integration/12-deferred-github-recovery-binding-2026-03-09.md",
-      "start_line": 1058,
-      "end_line": 1109,
-      "segment_sha256": "01da90557ec90771e66438e9d3fd7b038e2f7c56a46d7eb969eb179431a55b6d",
-      "heading": "## Deferred GitHub Recovery Binding (2026-03-09)"
     }
   ]
 }

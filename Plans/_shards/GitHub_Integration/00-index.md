@@ -17,4 +17,3 @@ Canonical source: [Plans/GitHub_Integration.md](../../GitHub_Integration.md)
 - [09-anti-drift-compliance.md](09-anti-drift-compliance.md) — ## Anti-Drift Compliance
 - [10-references.md](10-references.md) — ## References
 - [11-chat-driven-external-repo-import-mvp.md](11-chat-driven-external-repo-import-mvp.md) — ## Chat-driven external repo import (MVP)
-- [12-deferred-github-recovery-binding-2026-03-09.md](12-deferred-github-recovery-binding-2026-03-09.md) — ## Deferred GitHub Recovery Binding (2026-03-09)

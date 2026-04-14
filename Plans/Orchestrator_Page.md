@@ -1,6 +1,5 @@
 # Orchestrator Page -- Single-Page 6-Tab Specification
 
-## 1. Scope and canonical model
 Orchestrator is the operational surface for the rewrite-era execution model.
 
 Canonical execution/model rules:
@@ -42,8 +41,8 @@ Behavioral rules:
 - Source Control remains the primary operational surface for concrete Git/worktree actions.
 - Orchestrator remains the surface for why those actions matter.
 - Scale behavior must be defined above individual tab prose.
-
 ## 2. Page layout
+
 Orchestrator remains tab-first.
 
 Canonical tabs, in order, are:
@@ -156,7 +155,6 @@ Rules:
 
 ContractRef: ContractName:Plans/Run_Graph_View.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md
 
-## 6. Evidence tab
 `Evidence` is the evidence-first review surface.
 
 The tab uses separate panes for:
@@ -199,8 +197,6 @@ Labels:
 Behavioral rules:
 - Filtered JSON is not automatically canonical record export.
 - Validation pass reports must remain visibly upstream artifacts even when shown in Evidence.
-
-## 7. History tab
 `History` is the chronological story of the run and its related runtime/governance events.
 
 Rules:
@@ -221,8 +217,6 @@ Required fields:
 
 Behavioral rules:
 - History surfaces must render the shared historical vocabulary explicitly instead of implying history through absence of live state.
-
-## 8. Ledger tab
 `Ledger` is the exact record-inspection surface.
 
 Rules:
@@ -261,8 +255,6 @@ Labels:
 
 Behavioral rules:
 - Ledger export affordances must distinguish canonical record exports from derived view exports and bundles.
-
-## 9. Current vs historical run behavior
 Orchestrator distinguishes:
 - `active_run_id`
 - `focused_run_id`
@@ -304,8 +296,6 @@ Labels:
 Behavioral rules:
 - Historical truth must not disappear when live worktrees are gone.
 - `historical` is record truth and is distinct from cleanup state.
-
-## 10. Search, routing, and action policy
 Orchestrator search is object-first.
 
 Searchable object families include:
@@ -365,9 +355,6 @@ Behavioral rules:
 
 Permission carry-through:
 - mutation actions must preserve confirmation and gating semantics across palette, shortcut, and context-menu entry points
-
-## 11. Source Control boundary
-
 Source Control owns compact worktree-first Git operations and the unified worktree inventory UI.
 
 Orchestrator owns lane/package/seam operational context, history/lineage, and concern/recovery/governance. Orchestrator does not duplicate a raw worktree inventory; it shows lane/worktree summary in the Progress tab.
@@ -422,7 +409,6 @@ Behavioral rules:
 
 Permission carry-through:
 - remediation actions surface only through the allowed-action set
-## 12. Concern and notification model
 Concern is first-class.
 
 **Concern lifecycle is closed to:**

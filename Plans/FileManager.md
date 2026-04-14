@@ -309,7 +309,6 @@ Required fields are:
 - `range?`
 - `target_group?`
 
-### OpenSubject
 `OpenSubject` is the identity-native source-open contract.
 
 Required fields are:

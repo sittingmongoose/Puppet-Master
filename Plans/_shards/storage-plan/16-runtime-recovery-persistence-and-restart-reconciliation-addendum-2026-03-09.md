@@ -66,8 +66,6 @@ Rules:
 - `dev_session_record` is workflow-scoped and may link multiple terminal sessions without collapsing them into one key family
 
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Run_Modes.md
-### Cross-surface receipt record
-
 The runtime receipt record is the canonical bridge between Orchestrator, Source Control, GitHub Actions, Docker Manager, Artifacts, and Usage.
 
 Minimum fields:
@@ -81,7 +79,9 @@ Minimum fields:
 - `workflow_refs?` with workflow / run / job / step identifiers
 - `docker_refs?` with runtime/context/image/publish/template identifiers
 - `kubernetes_refs?` with context/namespace/workload/rollout identifiers
+- `provider_attempt_ref?`
 - `usage_event_ref?`
+- `workflow_run_id?`
 - `created_at_utc`
 
 Receipt extensions by operational domain:
@@ -135,10 +135,31 @@ Labels:
 Behavioral rules:
 - Receipts bridge external side-effect lineage without replacing local runtime identity.
 - Validation outputs must bridge into launch through a receipt or promoted package reference.
-
-### Canonical records
-
 Canonical records for this feature set must support rebuild, resume, auditability, and UI reconstruction without hidden side stores.
+
+**record family** authoritative container:
+
+```text
+canonical_record.v1:{project_id}:{record_id} {
+  record_id: string,
+  record_kind: string,
+  schema_version: string,
+  project_id: string,
+  run_id?: string,
+  scope_type: string,
+  scope_id: string,
+  status: string,
+  created_at_utc: ISO8601,
+  lineage_refs: LineageRef[],
+  source_refs: SourceRef[],
+  artifact_refs: ArtifactRef[],
+  concern_id?: string,
+  owner_kind?: string,
+  resolution_kind?: string,
+  export_kind?: "record export" | "bundle export" | "view export",
+  trust_state_at_export?: string
+}
+```
 
 Required canonical records include:
 - child runs and attempts
@@ -264,7 +285,6 @@ Behavioral rules:
 
 ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Permissions_System.md
 
-### Restart and stale history
 Attempts from older generations, or in-flight attempts that cannot resume after restart, transition to `stale_historical`. They remain queryable but are never resumable.
 
 ContractRef: Plans/WorktreeGitImprovement.md#4.1 Assistant-created worktree lifecycle, Plans/GitHub_Integration.md#A.4 Worktrees
@@ -301,7 +321,6 @@ Behavioral rules:
 - Historical references must survive after live worktree cleanup.
 - `cleanup_eligible` is queue state, not removal.
 - Filesystem rediscovery must not be the only restart authority.
-
 ### Identity and field-name rules
 Canonical naming and identity rules:
 - persisted requested/effective runtime base fields keep the names defined in `Plans/Contracts_V0.md`

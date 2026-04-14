@@ -54,7 +54,6 @@ Family rules:
 
 ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/LSPSupport.md
 
-### 2.0 Command entry contract (doc-level)
 Every command listed below MUST define:
 - **Args schema (keys only)** — the `args` keys expected by the command handler
 - **Expected events** — stable event types emitted as a result of the command
@@ -90,7 +89,6 @@ Labels:
 Behavioral rules:
 - Wrapper metadata must remain narrow and contract-level.
 - Command metadata must not restate route payload structure.
-
 ### 2.0.1 Acceptance hooks contract (wiring verification)
 Every command listed in this catalog MUST be verifiable through the wiring matrix (`Plans/Wiring_Matrix.md`, schema: `Plans/Wiring_Matrix.schema.json`). Specifically:
 
@@ -202,8 +200,6 @@ Rules:
 - any graph-facing wrapper command normalizes to the runtime command family and canonical `route_target` semantics
 
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/human-in-the-loop.md, ContractName:Plans/Run_Graph_View.md
-
-### 2.5 Orchestrator page commands
 
 Canonical Orchestrator commands are:
 - `cmd.orchestrator.focus_object`
@@ -613,8 +609,6 @@ ContractRef: ContractName:Plans/assistant-memory-subsystem.md#5-verification-and
 ---
 ### 2.8A Side-panel and artifacts navigation commands
 
-#### Search commands
-
 | Command ID | Parameters | Behavior |
 |---|---|---|
 | `cmd.search.show` | `{ project_id, focus?: "query" | "replace" | "results" }` | Reveal or focus the Search side panel. |
@@ -668,7 +662,6 @@ Labels:
 Behavioral rules:
 - Search commands must route through the shared route payload rather than bespoke search payloads.
 - `subject_id` remains bounded to document/artifact open-by-identity.
-
 #### File-tree action commands
 
 | Command ID | Parameters | Behavior |
@@ -742,11 +735,10 @@ ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/FinalG
 - `Plans/Wiring_Matrix.schema.json`
 - `Plans/Wiring_Matrix.md`
 
-## Canonical Runtime Recovery Command Consolidation (2026-03-09)
 Canonical recovery commands use one shared namespace: `cmd.runtime.*`. Legacy recovery command namespaces are deprecated aliases only.
 
 | `allowed_action_id` | canonical command id | minimum args |
-|---|---|---|
+| --- | --- | --- |
 | `approve` | `cmd.runtime.approve` | `{ run_id, node_id, blocked_sequence, attempt_id? }` |
 | `decline` | `cmd.runtime.decline` | `{ run_id, node_id, blocked_sequence, attempt_id? }` |
 | `retry_now` | `cmd.runtime.retry_now` | `{ run_id, node_id, attempt_id }` |
@@ -766,26 +758,24 @@ Canonical recovery commands use one shared namespace: `cmd.runtime.*`. Legacy re
 ### Pre-attempt blocked rule
 When a blocked episode exists before any attempt is created, the recovery target is `blocked_sequence` and MUST NOT fabricate an `attempt_id`.
 
-ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Run_Graph_View.md
+ContractRef: ContractName:Plans/Contracts_V0.md#6.1 Canonical blocked-episode approval anchor, ContractName:Plans/Executor_Protocol.md#Wake reasons and coalescing, ContractName:Plans/Contracts_V0.md#`scheduler.pass` (minimum addendum fields)
 
 ### Recovery command definitions
 All blocked-state recovery buttons and menu entries in GUI, chat, graph, and orchestrator surfaces MUST map from `allowed_action_ids[]` to one of the canonical runtime commands above.
 
 No surface may introduce a thread-local, graph-local, or provider-local recovery command family for the same action semantics.
 
-ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Run_Graph_View.md, ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/human-in-the-loop.md
+ContractRef: ContractName:Plans/Contracts_V0.md#6.1 Canonical blocked-episode approval anchor, ContractName:Plans/Executor_Protocol.md#Wake reasons and coalescing, ContractName:Plans/Contracts_V0.md#`scheduler.pass` (minimum addendum fields), ContractName:Plans/Wiring_Matrix.md#UI command handler rule
 
-ContractRef: Plans/Contracts_V0.md#6.1 Canonical blocked-episode approval anchor, Plans/Executor_Protocol.md#Wake reasons and coalescing, Plans/Contracts_V0.md#`scheduler.pass` (minimum addendum fields), Plans/Wiring_Matrix.md#UI command handler rule
-
-Required fields:
-- command_kind
-- normalization.kind
-- normalizes_to_contract
-- alias_of_command_id
-- approval_scope_key
+Required command metadata:
+- `command_kind`
+- `normalization.kind`
+- `normalizes_to_contract`
+- `alias_of_command_id`
+- `approval_scope_key`
+- `allowed_action_ids[]`
 
 Canonical terms and values:
-- approve_continue
 - command_kind
 - normalization
 - approval_scope_key
@@ -801,6 +791,8 @@ Labels:
 
 Behavioral rules:
 - Blocked-state recovery buttons and menu entries map from `allowed_action_ids[]` to canonical `cmd.runtime.*` commands.
+- No surface may introduce a thread-local, graph-local, or provider-local recovery command family for the same action semantics.
+- approve_continue is legacy vocabulary and must not survive as canonical action naming.
 - Recovery commands must bind to blocked-episode identity rather than request-level or tier-level surrogates.
 - Normalization metadata must survive for wrappers and deprecated aliases.
 

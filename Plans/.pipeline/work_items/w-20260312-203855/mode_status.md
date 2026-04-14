@@ -1,28 +1,23 @@
 # Mode Status
 
 ## Current Focus
-- Preserve durable audit context for reconciliation handoff.
-- Keep legacy-canon hotspots, packet-plan contradictions, and owner-first cleanup order easy to reload.
+- Preserve the packetized audit work item for recovery handoff on `r-20260312-203855-07`.
 
 ## Current Direction
-- Treat the next phase as canon-collapse reconciliation, not a light edit pass.
-- Reconcile owner docs first, then primary consumers, then mirrors/checklists.
-- Do not re-run packet emission until the current packet-plan contradictions are repaired.
+- Treat the next phase as owner-first fidelity recovery, not a new work-item setup.
+- Use the blocked fidelity report plus the recovery plan as the durable handoff pair.
 
 ## What Changed Most Recently
-- Completed canonical-obligation, section-map, coverage, bucket, and packet-plan artifacts for this work item.
-- Packet emission blocked because `packet_plan.json` still contains survivor/residue contradictions on four targets.
+- Recovered `w-20260312-203855` instead of creating a new work item.
+- Section Fidelity Audit finished blocked with 85 live gaps.
+- Fidelity Recovery Plan was written for the same run.
 
 ## Open Questions
-- Whether packet-plan repair should remove contradictory survivor tokens, split targets differently, or push those sections back through coverage/bucketing refresh.
+- Whether recovery executes directly from the current run artifacts or after a successor repair run is opened.
 
 ## Readiness Blockers
-- No blocker-level research gap remains for reconciliation start.
-- Packet emission is currently blocked until packet-plan contradictions are repaired for:
-  - `Plans/Executor_Protocol.md#5. Node execution fields`
-  - `Plans/GitHub_API_Auth_and_Flows.md#Token handling and storage (hard rules)`
-  - `Plans/UI_Command_Catalog.md#Canonical Runtime Recovery Command Consolidation (2026-03-09)`
-  - `Plans/orchestrator-subagent-integration.md#Tier-Level Subagent Strategy`
+- Owner-doc and stale-residue fixes from the recovery plan have not been applied yet.
+- Do not claim fidelity-complete transfer until those blockers are resolved and re-audited.
 
 ## Next Step
-- Repair the four packet-plan contradictions, then re-run Packet Emitter; if reconciliation resumes first, start owner-doc work at `Contracts_V0.md` and `storage-plan.md`.
+- Reload `ledger_fidelity_report.txt` and `fidelity_recovery_plan.txt`, then start owner-first recovery for the named sections.

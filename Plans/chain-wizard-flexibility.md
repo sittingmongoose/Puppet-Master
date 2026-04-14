@@ -299,8 +299,6 @@ wizard_status: enum {
 
 ContractRef: ContractName:Plans/Project_Output_Artifacts.md, PolicyRule:no_secrets_in_storage, ContractName:Plans/GitHub_Integration.md
 
-### 2.2 Downstream Handoff Contract
-
 Wizard hands a single normalized payload to Builder handoff, Interview initialization, and start-chain kickoff.
 
 Required fields:
@@ -354,7 +352,6 @@ Behavioral rules:
 
 Permission carry-through:
 - effective runtime identity must survive downstream handoff
-
 ### 2.3 Wizard Cancellation Cleanup
 
 When the wizard is cancelled (user clicks Cancel or closes the wizard), Puppet Master MUST execute the following cleanup sequence:
@@ -1287,8 +1284,6 @@ ContractRef: ContractName:Plans/Project_Output_Artifacts.md, SchemaID:pm.project
 
 ---
 
-## 12. Three-Pass Canonical Validation Workflow (Mandatory Invariant Sweep)
-
 > **Compliance:** Follows `Plans/DRY_Rules.md`, `Plans/Contracts_V0.md`, and `Plans/Decision_Policy.md`. Naming: "Puppet Master" only. All decisions deterministic; no open questions.
 
 ContractRef: Gate:GATE-001, ContractName:Plans/Project_Output_Artifacts.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/DRY_Rules.md, PolicyRule:Decision_Policy.md§2
@@ -1473,7 +1468,6 @@ Behavioral rules:
 
 Permission carry-through:
 - effective runtime identity must survive validation into launch handoff
-
 ## 13. No-Wizard Project Management Flows
 
 Full specification for these flows is in `Plans/GitHub_Integration.md §D`. This section provides the chain-wizard-flexibility cross-reference and entry-point wiring.
@@ -1921,8 +1915,6 @@ When the recommendation is accepted for feature/enhancement work, the canonical 
 
 This remains true even when the user entered via the friendlier CTA copy **Add a new Feature or Enhancement**.
 
-### 17.4 Assistant-to-wizard handoff payload
-
 A typed handoff payload MUST be created when Assistant Chat or Deep Plan launches the Chain Wizard.
 ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Project_Output_Artifacts.md
 
@@ -1984,7 +1976,6 @@ Behavioral rules:
 
 Permission carry-through:
 - effective account and execution role must survive wizard handoff payloads
-
 ### 17.5 Wizard state additions
 
 `ChainWizardState` (or equivalent persisted state) should gain fields sufficient to preserve this handoff.

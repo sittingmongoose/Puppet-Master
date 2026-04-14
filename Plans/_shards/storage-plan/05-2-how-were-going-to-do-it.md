@@ -249,7 +249,6 @@ ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/assistant
 
 ContractRef: ContractName:Plans/GitHub_API_Auth_and_Flows.md, ContractName:Plans/newtools.md, PolicyRule:no_secrets_in_storage
 
-### Required redb keys
 The promoted provider/runtime rewrite and the updated terminal/editor model require durable record and projection families that preserve concrete runtime surfaces, account/profile identity, entitlement attribution, and terminal layout continuity.
 
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Multi-Account.md
@@ -398,6 +397,74 @@ browser_profile_state.v1:{profile_name} {
 }
 ```
 
+**runtime artifact index** authoritative record families:
+
+```text
+artifacts_project_state.v1:{project_id} {
+  project_id: string,
+  projection_freshness: "current" | "refreshing" | "stale",
+  projection_health: "healthy" | "degraded" | "unavailable",
+  artifacts: [{
+    artifact_id: string,
+    artifact_type: string,
+    run_id?: string,
+    thread_id?: string,
+    node_id?: string,
+    attempt_id?: string,
+    worktree_id?: string,
+    lane_id?: string,
+    repo_id?: string,
+    path_ref?: string,
+    branch_ref?: string,
+    baseline_ref?: string
+  }]
+}
+
+projector.checkpoint.runtime_artifacts:{project_id} {
+  project_id: string,
+  projection_freshness: "current" | "refreshing" | "stale",
+  projection_health: "healthy" | "degraded" | "unavailable"
+}
+```
+
+**worktree record** and **lane record** authoritative fields:
+
+```text
+worktree_record.v1:{project_id}:{worktree_id} {
+  project_id: string,
+  worktree_id: string,
+  lane_id?: string,
+  repo_id?: string,
+  path_ref?: string,
+  branch_ref?: string,
+  baseline_ref?: string
+}
+
+lane_record.v1:{project_id}:{lane_id} {
+  project_id: string,
+  lane_id: string,
+  worktree_id?: string,
+  repo_id?: string,
+  path_ref?: string,
+  branch_ref?: string,
+  baseline_ref?: string
+}
+
+worktree_projection.v1:{project_id}:{worktree_id} {
+  project_id: string,
+  worktree_id: string,
+  projection_freshness: "current" | "refreshing" | "stale",
+  projection_health: "healthy" | "degraded" | "unavailable"
+}
+
+lane_projection.v1:{project_id}:{lane_id} {
+  project_id: string,
+  lane_id: string,
+  projection_freshness: "current" | "refreshing" | "stale",
+  projection_health: "healthy" | "degraded" | "unavailable"
+}
+```
+
 Related events:
 - `preview.session.started`
 - `preview.session.stopped`
@@ -483,7 +550,6 @@ Labels:
 Behavioral rules:
 - Runtime-artifact indexing and durable worktree/lane identity are storage-owned families.
 - Projection state and projector checkpoints must be first-class rather than panel-owned leftovers.
-
 ### Canonical terminal persistence decomposition
 
 Storage-plan is the canonical source for terminal persistence keys. The terminal surface persists as the following decomposed key families:

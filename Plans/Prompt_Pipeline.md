@@ -467,8 +467,6 @@ Those selections remain explicit policy or configuration decisions surfaced thro
 ContractRef: ContractName:Plans/Personas.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Multi-Account.md
 
 <a id="EFFECTIVE-RESOLUTION-RECORD"></a>
-### 6.4 Effective resolution record
-
 The frozen requested/effective runtime snapshot MUST preserve these canonical base fields:
 
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/usage-feature.md
@@ -534,7 +532,6 @@ Behavioral rules:
 
 Permission carry-through:
 - effective identity must remain available to downstream permission and approval flows
-
 ### 6.5 PM-native skills, MCP, and instruction assembly
 
 Skill/tool/MCP resolution is part of the prompt pipeline, not a provider-specific afterthought.
@@ -584,8 +581,6 @@ This addendum is retained as historical reconciliation context only.
 Canonical runtime handoff fields and rules now live in `## Runtime Attempt Snapshot and Handoff Bundle`, which is the single owner section for the immutable handoff bundle.
 
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/assistant-memory-subsystem.md
-
-## Runtime Attempt Snapshot and Handoff Bundle
 
 The runtime handoff bundle is the continuity contract for child runs, retries, reroutes, and resumes.
 

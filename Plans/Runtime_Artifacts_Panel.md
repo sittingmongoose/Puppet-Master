@@ -7,8 +7,6 @@ ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan
 
 The **Artifacts panel** is the single place to see everything agents produced during a run or thread: file changes (diffs), plans, verification evidence, screenshots, reasoning summaries, browser recordings, tool/LLM traces, cost_usage attribution, and other types below. It does not run agents; it lists, previews, and links. All artifact types listed are **required** for MVP; there are no optional types.
 
-## 2. Two artifact families (no conflation)
-
 | Family | Scope | SSOT | Persistence |
 |--------|--------|------|-------------|
 | **Project Plan Package** | User-project outputs | Plans/Project_Output_Artifacts.md | .puppet-master/project/** |
@@ -31,7 +29,6 @@ Canonical terms and values:
 Behavioral rules:
 - Project Plan Package and Runtime Artifacts remain distinct families.
 - Runtime artifact lookup/indexing remains a projection concern rather than canonical artifact truth.
-
 ## 3. Mechanism: one event type per artifact type
 
 **Option 2 only:** One seglog event type per artifact type. No single generic `runtime_artifact` event with a subtype field. Each event uses the standard EventRecord envelope (schema, ts, seq, type, run_id, thread_id, payload). The `type` value is exactly one of the 19 event type names below.
@@ -63,63 +60,37 @@ Behavioral rules:
 
 **Projector:** A projector (or equivalent) reads seglog events whose `type` starts with `runtime_artifact.` (or lists the 19 types explicitly) and writes/updates the per-project artifacts index. No payload.artifact_type discriminator; type is given by event `type`.
 
-## 5. Canonical IDs and task_id rule
-
 Runtime artifacts are attempt-native, bridge-aware records.
-
-Required common envelope fields include:
-- `artifact_id`
-- `artifact_kind`
-- `logical_artifact_id?`
-- `linked_artifact_id?`
-- `project_id`
-- `run_id`
-- `thread_id?`
-- `node_id?`
-- `attempt_id?`
-- `execution_role?`
-- `provider_attempt_ref?`
-- `usage_event_ref?`
-- `repo_id?`
-- `worktree_id?`
-- `branch_ref?`
-- `workflow_refs?`
-- `docker_refs?`
-- `kubernetes_refs?`
-- `operational_identity?`
-- `detail_ref?`
-- `content_ref?`
-
-ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/usage-feature.md, ContractName:Plans/Contracts_V0.md
-
-Rules:
-- `attempt_id` is the canonical local execution anchor
-- bridge refs such as `provider_attempt_ref`, `usage_event_ref`, and receipt refs remain joins rather than replacement primary keys
-- runtime artifact open flows resolve through `OpenSubject` and route/open contracts rather than through feature-local path guessing
-
-ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/Crosswalk.md, ContractName:Plans/FinalGUISpec.md
 
 ContractRef: Plans/storage-plan.md#Cross-surface receipt record, Plans/usage-feature.md#Cost_usage runtime artifact and Show in Ledger / Show in Usage, Plans/Project_Output_Artifacts.md#10. Validation Pass Report Artifacts
 
-Required fields:
-- created_at_utc
-- summary
+**runtime-artifact envelope**
 
-Canonical terms and values:
-- runtime-artifact envelope
-- created_at_utc
-- summary
+| Field | Requirement |
+| --- | --- |
+| `artifact_id` | Stable artifact identity for one runtime artifact record. |
+| `artifact_type` | Canonical runtime-artifact family discriminator. |
+| `logical_artifact_id?` | Stable logical identity shared across linked artifact revisions when applicable. |
+| `linked_artifact_id?` | Direct lineage pointer to a related runtime artifact. |
+| `attempt_id` | Canonical local execution anchor for the artifact. |
+| `provider_attempt_ref` | Provider-side bridge reference that remains subordinate to `attempt_id`. |
+| `usage_event_ref` | Usage-side reference for accounting and evidence joins. |
+| `workflow_refs` | Workflow lineage bundle when workflow-linked execution is involved. |
+| `docker_refs` | Container/runtime lineage bundle when Docker-linked execution is involved. |
+| `kubernetes_refs` | Cluster/workload lineage bundle when Kubernetes-linked execution is involved. |
+| `created_at_utc` | Canonical artifact creation timestamp. |
+| `summary` | Human-readable artifact summary. |
 
 Labels:
 - artifact id
 - attempt id
 
 Behavioral rules:
+- `artifact_type` is the canonical runtime-artifact family discriminator; `artifact_kind` is not canonical in this envelope.
 - `attempt_id` is the canonical local execution anchor.
 - Bridge refs remain joins rather than replacement primary keys.
 - Timestamp/run/thread fallback is compatibility-only when bridge refs are absent.
 - Artifact open flows resolve through identity plus route/open contracts rather than feature-local path guessing.
-
 ## 5A. Debug investigation grouping, manifests, and exports
 
 Runtime artifacts may participate in a shared Debug investigation without changing artifact-family ownership.

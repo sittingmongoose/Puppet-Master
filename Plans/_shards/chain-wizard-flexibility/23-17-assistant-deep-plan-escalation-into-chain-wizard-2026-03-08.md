@@ -26,8 +26,6 @@ When the recommendation is accepted for feature/enhancement work, the canonical 
 
 This remains true even when the user entered via the friendlier CTA copy **Add a new Feature or Enhancement**.
 
-### 17.4 Assistant-to-wizard handoff payload
-
 A typed handoff payload MUST be created when Assistant Chat or Deep Plan launches the Chain Wizard.
 ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Project_Output_Artifacts.md
 
@@ -89,7 +87,6 @@ Behavioral rules:
 
 Permission carry-through:
 - effective account and execution role must survive wizard handoff payloads
-
 ### 17.5 Wizard state additions
 
 `ChainWizardState` (or equivalent persisted state) should gain fields sufficient to preserve this handoff.

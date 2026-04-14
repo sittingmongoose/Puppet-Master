@@ -87,7 +87,6 @@ ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, PolicyRule:no_secrets_
 
 ---
 
-## 4. Data model
 The multi-account system is built from provider entries, account records, entitlement contexts, server profiles, and the derived selectable units PM uses at runtime.
 
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Prompt_Pipeline.md
@@ -216,20 +215,6 @@ Behavioral rules:
 
 Permission carry-through:
 - effective account identity must remain available to permission and approval consumers
-### 4.6 Owner/consumer boundary alignment
-
-Multi-account consumer sections use the shared runtime snapshot fields and do not redefine them locally.
-
-ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Models_System.md
-
-Required fields:
-- `requested_account_binding`
-- `operational_identity`
-- `effective_account_label`
-- `effective_provider_identity`
-- `effective_project_id`
-
-Local substitute field families are not canonical.
 ## 5. Auto-rotation
 - **Switch boundary:** Switching happens only at attempt/message boundaries. Never switch mid-attempt.
 - **Completed ownership rule:** A completed message/attempt always belongs to the account it actually used. The next message/attempt re-resolves and may switch immediately.

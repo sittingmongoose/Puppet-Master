@@ -155,8 +155,6 @@ wizard_status: enum {
 
 ContractRef: ContractName:Plans/Project_Output_Artifacts.md, PolicyRule:no_secrets_in_storage, ContractName:Plans/GitHub_Integration.md
 
-### 2.2 Downstream Handoff Contract
-
 Wizard hands a single normalized payload to Builder handoff, Interview initialization, and start-chain kickoff.
 
 Required fields:
@@ -210,7 +208,6 @@ Behavioral rules:
 
 Permission carry-through:
 - effective runtime identity must survive downstream handoff
-
 ### 2.3 Wizard Cancellation Cleanup
 
 When the wizard is cancelled (user clicks Cancel or closes the wizard), Puppet Master MUST execute the following cleanup sequence:
