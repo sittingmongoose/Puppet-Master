@@ -1,7 +1,7 @@
 {
   "schema_id": "pm.packet_plan.v19",
   "work_id": "w-20260312-203855",
-  "created_at_utc": "2026-04-14T01:47:18Z",
+  "created_at_utc": "2026-04-14T02:28:03Z",
   "topic_or_scope": "Orchestrator rewrite transfer-fidelity audit, legacy-canon cleanup readiness, and reconciliation prep",
   "packet_targets": [
     {
@@ -259,9 +259,9 @@
     },
     {
       "path": "Plans/Contracts_V0.md",
-      "heading": "### 4.1 AuthState",
+      "heading": "## 3. Tool events (persisted)",
       "anchor_type": "heading",
-      "operation": "replace_section",
+      "operation": "insert_after",
       "required_section_maps": [
         {
           "path": "Plans/Contracts_V0.md",
@@ -316,8 +316,8 @@
       ],
       "notes": [
         "Bucket: MUST_CHANGE.",
-        "Use a live-anchor replace_section so the current source span can be rebuilt canonically without leaving inline or sibling residue behind.",
-        "This target owns one current-wave section map and keeps the mutation in one self-canonicalizable landing zone.",
+        "Use a live-anchor insert_after so the missing owner section lands directly after the rebuilt preceding section without relying on nonexistent headings.",
+        "This target creates the missing owner heading at the section boundary instead of borrowing a child fallback anchor that cannot retire sibling residue canonically.",
         "Retire the full listed stale residue within the target span; do not leave same-file conflicting residue partially live after emission.",
         "Preserve or rebuild authoritative tables, schemas, registries, and other structural owner surfaces in-place rather than collapsing them to prose-only summary.",
         "Preserve nearby ContractRef coverage for every surviving MUST-level operational rule cluster, including later Rules / Behavioral rules / Acceptance criteria clusters when they remain normative.",
@@ -1300,21 +1300,13 @@
     },
     {
       "path": "Plans/Multi-Account.md",
-      "heading": "### 4.1 Provider entry (canonical)",
+      "heading": "### 3.5 Current Puppet Master context",
       "anchor_type": "heading",
-      "operation": "replace_section",
+      "operation": "insert_after",
       "required_section_maps": [
         {
           "path": "Plans/Multi-Account.md",
           "heading": "## 4. Data model"
-        },
-        {
-          "path": "Plans/Multi-Account.md",
-          "heading": "### 4.2 Account record (canonical)"
-        },
-        {
-          "path": "Plans/Multi-Account.md",
-          "heading": "### 4.5 Selectable unit and runtime resolution"
         }
       ],
       "exact_items_that_must_survive": {
@@ -1322,8 +1314,7 @@
           "OBL-007",
           "OBL-008",
           "OBL-035",
-          "OBL-043",
-          "OBL-045"
+          "OBL-043"
         ],
         "required_exact_tokens": [
           "requested_account_id",
@@ -1342,12 +1333,143 @@
           "signal_confidence",
           "pressure_kind",
           "decision_kind",
-          "source_episode_id?",
+          "source_episode_id?"
+        ],
+        "required_labels": [
+          "requested account",
+          "effective account",
+          "account record",
+          "account pressure episode",
+          "account switch event"
+        ],
+        "required_interface_shape_fields": [
+          "requested_account_id",
+          "requested_account_binding",
+          "requested_account_policy",
+          "effective_account_id",
+          "provider_account_id",
+          "account_id",
+          "credential_ref",
+          "login",
+          "auth_realm",
+          "episode_id",
+          "switch_event_id",
+          "source_kind",
+          "signal_confidence",
+          "pressure_kind",
+          "decision_kind",
+          "source_episode_id"
+        ],
+        "required_behavioral_edges": [
+          "Stable internal account identity outranks provider-native display metadata.",
+          "Requested/effective account state remains explicit across runtime resolution.",
+          "Failed or blocked switch decisions still produce durable history even when the effective account did not change.",
+          "Current health snapshots and recent-reason fields do not substitute for canonical pressure/switch history."
+        ],
+        "required_permission_carrythrough": [
+          "effective account identity must remain available to permission and approval consumers"
+        ],
+        "cross_reference_rewrites": [
+          "Plans/Contracts_V0.md#4. Auth contracts",
+          "Plans/GitHub_API_Auth_and_Flows.md#Token handling and storage (hard rules)",
+          "Plans/storage-plan.md#Canonical records"
+        ]
+      },
+      "stale_residue_to_retire": [
+        "login-keyed durable identity",
+        "ambiguous `provider_account_id` status",
+        "policy-only account routing without selected-account anchor",
+        "`account_switch_reason` as both pressure cause and switch outcome",
+        "`recent_switch_reason` as durable history"
+      ],
+      "notes": [
+        "Bucket: MUST_CHANGE.",
+        "Use a live-anchor insert_after so the missing owner section lands directly after the current anchor without relying on nonexistent headings.",
+        "This target creates the missing owner heading before the existing subsection block so later sibling replace_section targets can rebuild section-owned canon without overlap.",
+        "Retire the full listed stale residue within the target span; do not leave same-file conflicting residue partially live after emission.",
+        "Preserve or rebuild authoritative tables, schemas, registries, and other structural owner surfaces in-place rather than collapsing them to prose-only summary.",
+        "Preserve nearby ContractRef coverage for every surviving MUST-level operational rule cluster, including later Rules / Behavioral rules / Acceptance criteria clusters when they remain normative.",
+        "Exact cross-reference rewrite targets are promoted into required survivor items for this packet target, not left in notes-only metadata."
+      ]
+    },
+    {
+      "path": "Plans/Multi-Account.md",
+      "heading": "### 4.2 Account record (canonical)",
+      "anchor_type": "heading",
+      "operation": "replace_section",
+      "required_section_maps": [
+        {
+          "path": "Plans/Multi-Account.md",
+          "heading": "### 4.2 Account record (canonical)"
+        }
+      ],
+      "exact_items_that_must_survive": {
+        "required_obligations": [
+          "OBL-035"
+        ],
+        "required_exact_tokens": [
+          "account_id",
+          "credential_ref",
           "account_id is the internal stable key.",
           "provider_identity is descriptive metadata only.",
-          "the canonical account-registration shape is { account_id: ulid, provider_id, display_name, auth_method, credential_ref, created_at, last_used_at, status }",
+          "the canonical account-registration shape is { account_id: ulid, provider_id, display_name, auth_method, credential_ref, created_at, last_used_at, status }"
+        ],
+        "required_labels": [
+          "account record"
+        ],
+        "required_interface_shape_fields": [
+          "account_id",
+          "credential_ref",
+          "provider_id",
+          "display_name",
+          "auth_method",
+          "created_at",
+          "last_used_at",
+          "status"
+        ],
+        "required_behavioral_edges": [
+          "Stable internal account identity is separate from provider-native display metadata.",
+          "Secrets remain outside config and state stores."
+        ],
+        "required_permission_carrythrough": [],
+        "cross_reference_rewrites": [
+          "Plans/GitHub_API_Auth_and_Flows.md#Credential store keying (canonical)"
+        ]
+      },
+      "stale_residue_to_retire": [],
+      "notes": [
+        "Bucket: MUST_CHANGE.",
+        "Use a live-anchor replace_section so the current source span can be rebuilt canonically without leaving inline or sibling residue behind.",
+        "This target owns one current-wave section map and keeps the mutation in one self-canonicalizable landing zone.",
+        "Retire the full listed stale residue within the target span; do not leave same-file conflicting residue partially live after emission.",
+        "Preserve or rebuild authoritative tables, schemas, registries, and other structural owner surfaces in-place rather than collapsing them to prose-only summary.",
+        "Preserve nearby ContractRef coverage for every surviving MUST-level operational rule cluster, including later Rules / Behavioral rules / Acceptance criteria clusters when they remain normative.",
+        "Exact cross-reference rewrite targets are promoted into required survivor items for this packet target, not left in notes-only metadata."
+      ]
+    },
+    {
+      "path": "Plans/Multi-Account.md",
+      "heading": "### 4.5 Selectable unit and runtime resolution",
+      "anchor_type": "heading",
+      "operation": "replace_section",
+      "required_section_maps": [
+        {
+          "path": "Plans/Multi-Account.md",
+          "heading": "### 4.5 Selectable unit and runtime resolution"
+        }
+      ],
+      "exact_items_that_must_survive": {
+        "required_obligations": [
+          "OBL-007",
+          "OBL-045"
+        ],
+        "required_exact_tokens": [
           "requested/effective execution identity",
+          "requested_account_policy",
+          "effective_account_id",
           "effective_provider_identity",
+          "requested_account_id",
+          "requested_account_binding",
           "execution_role",
           "operational_identity",
           "source",
@@ -1369,9 +1491,6 @@
         "required_labels": [
           "requested account",
           "effective account",
-          "account record",
-          "account pressure episode",
-          "account switch event",
           "source",
           "request",
           "execution"
@@ -1381,24 +1500,6 @@
           "requested_account_binding",
           "requested_account_policy",
           "effective_account_id",
-          "provider_account_id",
-          "account_id",
-          "credential_ref",
-          "login",
-          "auth_realm",
-          "episode_id",
-          "switch_event_id",
-          "source_kind",
-          "signal_confidence",
-          "pressure_kind",
-          "decision_kind",
-          "source_episode_id",
-          "provider_id",
-          "display_name",
-          "auth_method",
-          "created_at",
-          "last_used_at",
-          "status",
           "effective_provider_identity",
           "execution_role",
           "operational_identity",
@@ -1413,12 +1514,6 @@
           "scope_level"
         ],
         "required_behavioral_edges": [
-          "Stable internal account identity outranks provider-native display metadata.",
-          "Requested/effective account state remains explicit across runtime resolution.",
-          "Failed or blocked switch decisions still produce durable history even when the effective account did not change.",
-          "Current health snapshots and recent-reason fields do not substitute for canonical pressure/switch history.",
-          "Stable internal account identity is separate from provider-native display metadata.",
-          "Secrets remain outside config and state stores.",
           "Requested state must remain recoverable in historical snapshots.",
           "Binding distinguishes preference from requirement.",
           "Fallback behavior depends on binding rather than ad hoc UI or provider policy.",
@@ -1428,28 +1523,20 @@
           "effective account identity must remain available to permission and approval consumers"
         ],
         "cross_reference_rewrites": [
-          "Plans/Contracts_V0.md#4. Auth contracts",
-          "Plans/GitHub_API_Auth_and_Flows.md#Token handling and storage (hard rules)",
-          "Plans/storage-plan.md#Canonical records",
-          "Plans/GitHub_API_Auth_and_Flows.md#Credential store keying (canonical)",
           "Plans/Prompt_Pipeline.md#6.4 Effective resolution record",
           "Plans/assistant-chat-design.md#Canonical navigation model",
           "Plans/FinalGUISpec.md#7.4.4 Settings (Unified) panel specification"
         ]
       },
       "stale_residue_to_retire": [
-        "login-keyed durable identity",
-        "ambiguous `provider_account_id` status",
         "policy-only account routing without selected-account anchor",
-        "`account_switch_reason` as both pressure cause and switch outcome",
-        "`recent_switch_reason` as durable history",
         "identity bundles that stop at effective_account_id only",
         "precedence reconstruction from docs instead of explicit requested/effective disclosure"
       ],
       "notes": [
         "Bucket: MUST_CHANGE.",
         "Use a live-anchor replace_section so the current source span can be rebuilt canonically without leaving inline or sibling residue behind.",
-        "Grouped related current-wave section maps under one live anchor to avoid overlapping parent/child packet targets while keeping the owner canon in one self-canonicalizable landing zone.",
+        "This target owns one current-wave section map and keeps the mutation in one self-canonicalizable landing zone.",
         "Retire the full listed stale residue within the target span; do not leave same-file conflicting residue partially live after emission.",
         "Preserve or rebuild authoritative tables, schemas, registries, and other structural owner surfaces in-place rather than collapsing them to prose-only summary.",
         "Preserve nearby ContractRef coverage for every surviving MUST-level operational rule cluster, including later Rules / Behavioral rules / Acceptance criteria clusters when they remain normative.",
