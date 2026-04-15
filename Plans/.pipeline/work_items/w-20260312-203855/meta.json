@@ -1,11 +1,42 @@
 {
   "work_id": "w-20260312-203855",
-  "mode": "audit",
+  "mode": "migrated",
+  "status": "blocked",
   "topic_or_scope": "Orchestrator rewrite transfer-fidelity audit, legacy-canon cleanup readiness, and reconciliation prep",
-  "status": "packetized",
   "created_at_utc": "2026-03-12T20:38:55Z",
-  "updated_at_utc": "2026-04-15T16:27:52Z",
+  "updated_at_utc": "2026-04-15T23:27:36.950Z",
   "run_prefix": "r-20260312-203855",
   "next_run_seq": 10,
-  "run_id": "r-20260312-203855-09"
+  "run_id": "r-20260312-203855-09",
+  "legacy_state": {
+    "mode": "audit",
+    "status": "packetized",
+    "latest_run_id": "r-20260312-203855-09",
+    "run_prefix": "r-20260312-203855",
+    "next_run_seq": 10,
+    "durable_fidelity_baseline_run_id": "r-20260312-203855-07"
+  },
+  "migration_audit": {
+    "canon_obligation_count": 45,
+    "mapped_section_count": 119,
+    "open_gap_count": 85,
+    "docs_with_open_gaps": 26,
+    "obligations_with_open_gaps": 43,
+    "reconciliation_plan_written": true,
+    "generated_files": [
+      "migration_report.md",
+      "missing_transfer_report.md",
+      "current_state.md",
+      "canon_inventory.json",
+      "open_gaps.json",
+      "meta.json",
+      "reconciliation_plan.json"
+    ]
+  },
+  "readiness_check": {
+    "checked_at_utc": "2026-04-15T23:27:36.950Z",
+    "result": "blocked",
+    "reason": "not_ready_for_planning",
+    "summary": "Exact canon and mapped owner/consumer targets exist, but 85 live transfer blockers across 26 docs remain material."
+  }
 }

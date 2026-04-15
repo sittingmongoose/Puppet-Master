@@ -1,0 +1,632 @@
+{
+  "work_id": "w-20260312-203855",
+  "generated_at_utc": "2026-04-15T23:09:20.486Z",
+  "readiness": "ready_for_planning",
+  "basis": {
+    "work_id": "w-20260312-203855",
+    "obligation_count": 45,
+    "mapped_section_count": 119,
+    "open_gap_count": 85,
+    "doc_count_with_gaps": 26,
+    "by_classification": {
+      "interface shape missing": 23,
+      "stale contradictory residue": 7,
+      "persistence coupling missing": 3,
+      "over-summarized section": 6,
+      "section allocation missing": 20,
+      "consumer propagation missing": 21,
+      "cross-reference stale": 1,
+      "routing edge missing": 1,
+      "wrong section allocation": 3
+    },
+    "by_failure_type": {
+      "stubbed owner section": 11,
+      "other": 7,
+      "over-summarized transfer": 6,
+      "missing structural heading": 23,
+      "stubbed consumer propagation": 38
+    },
+    "top_docs": [
+      {
+        "path": "Plans/FinalGUISpec.md",
+        "gap_count": 13
+      },
+      {
+        "path": "Plans/Orchestrator_Page.md",
+        "gap_count": 8
+      },
+      {
+        "path": "Plans/Runtime_Artifacts_Panel.md",
+        "gap_count": 5
+      },
+      {
+        "path": "Plans/assistant-chat-design.md",
+        "gap_count": 5
+      },
+      {
+        "path": "Plans/usage-feature.md",
+        "gap_count": 5
+      },
+      {
+        "path": "Plans/Tools.md",
+        "gap_count": 4
+      },
+      {
+        "path": "Plans/UI_Command_Catalog.md",
+        "gap_count": 4
+      },
+      {
+        "path": "Plans/Crosswalk.md",
+        "gap_count": 4
+      },
+      {
+        "path": "Plans/WorktreeGitImprovement.md",
+        "gap_count": 4
+      },
+      {
+        "path": "Plans/storage-plan.md",
+        "gap_count": 3
+      },
+      {
+        "path": "Plans/GitHub_Integration.md",
+        "gap_count": 3
+      },
+      {
+        "path": "Plans/Run_Graph_View.md",
+        "gap_count": 3
+      },
+      {
+        "path": "Plans/interview-subagent-integration.md",
+        "gap_count": 3
+      },
+      {
+        "path": "Plans/Contracts_V0.md",
+        "gap_count": 2
+      },
+      {
+        "path": "Plans/Project_Output_Artifacts.md",
+        "gap_count": 2
+      },
+      {
+        "path": "Plans/Glossary.md",
+        "gap_count": 2
+      },
+      {
+        "path": "Plans/Executor_Protocol.md",
+        "gap_count": 2
+      },
+      {
+        "path": "Plans/Permissions_System.md",
+        "gap_count": 2
+      },
+      {
+        "path": "Plans/chain-wizard-flexibility.md",
+        "gap_count": 2
+      },
+      {
+        "path": "Plans/human-in-the-loop.md",
+        "gap_count": 2
+      }
+    ],
+    "obligations_with_open_gaps": 43,
+    "ledger_source_basis_count": 43
+  },
+  "clusters": [
+    {
+      "cluster_id": "contracts-storage",
+      "title": "Contracts/storage cluster",
+      "docs": [
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md",
+        "Plans/Multi-Account.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Project_Output_Artifacts.md",
+        "Plans/Glossary.md"
+      ],
+      "gap_ids": [
+        "FIDELITY-001",
+        "FIDELITY-002",
+        "FIDELITY-003",
+        "FIDELITY-004",
+        "FIDELITY-005",
+        "FIDELITY-006",
+        "FIDELITY-007",
+        "FIDELITY-008",
+        "FIDELITY-009"
+      ],
+      "gap_count": 9,
+      "docs_with_gaps": [
+        "Plans/Contracts_V0.md",
+        "Plans/Glossary.md",
+        "Plans/Project_Output_Artifacts.md",
+        "Plans/storage-plan.md"
+      ]
+    },
+    {
+      "cluster_id": "runtime-execution",
+      "title": "Runtime/execution cluster",
+      "docs": [
+        "Plans/Executor_Protocol.md",
+        "Plans/Tools.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Permissions_System.md",
+        "Plans/GitHub_API_Auth_and_Flows.md",
+        "Plans/chain-wizard-flexibility.md"
+      ],
+      "gap_ids": [
+        "FIDELITY-010",
+        "FIDELITY-011",
+        "FIDELITY-012",
+        "FIDELITY-013",
+        "FIDELITY-014",
+        "FIDELITY-015",
+        "FIDELITY-016",
+        "FIDELITY-017",
+        "FIDELITY-018",
+        "FIDELITY-019",
+        "FIDELITY-020",
+        "FIDELITY-021",
+        "FIDELITY-022",
+        "FIDELITY-023",
+        "FIDELITY-024",
+        "FIDELITY-025"
+      ],
+      "gap_count": 16,
+      "docs_with_gaps": [
+        "Plans/Executor_Protocol.md",
+        "Plans/GitHub_API_Auth_and_Flows.md",
+        "Plans/Permissions_System.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Tools.md",
+        "Plans/chain-wizard-flexibility.md"
+      ]
+    },
+    {
+      "cluster_id": "navigation-ui",
+      "title": "Navigation/UI cluster",
+      "docs": [
+        "Plans/FinalGUISpec.md",
+        "Plans/FileManager.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Widget_System.md",
+        "Plans/Crosswalk.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/Progression_Gates.md",
+        "Plans/Wiring_Matrix.md"
+      ],
+      "gap_ids": [
+        "FIDELITY-026",
+        "FIDELITY-027",
+        "FIDELITY-028",
+        "FIDELITY-029",
+        "FIDELITY-030",
+        "FIDELITY-031",
+        "FIDELITY-032",
+        "FIDELITY-033",
+        "FIDELITY-034",
+        "FIDELITY-035",
+        "FIDELITY-036",
+        "FIDELITY-037",
+        "FIDELITY-038",
+        "FIDELITY-039",
+        "FIDELITY-040",
+        "FIDELITY-041",
+        "FIDELITY-042",
+        "FIDELITY-043",
+        "FIDELITY-044",
+        "FIDELITY-045",
+        "FIDELITY-046",
+        "FIDELITY-047",
+        "FIDELITY-048",
+        "FIDELITY-049",
+        "FIDELITY-050",
+        "FIDELITY-051",
+        "FIDELITY-052",
+        "FIDELITY-053",
+        "FIDELITY-054",
+        "FIDELITY-055"
+      ],
+      "gap_count": 30,
+      "docs_with_gaps": [
+        "Plans/Crosswalk.md",
+        "Plans/FileManager.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Progression_Gates.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Widget_System.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/assistant-chat-design.md"
+      ]
+    },
+    {
+      "cluster_id": "orchestrator-worktree",
+      "title": "Orchestrator/worktree cluster",
+      "docs": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/human-in-the-loop.md"
+      ],
+      "gap_ids": [
+        "FIDELITY-056",
+        "FIDELITY-057",
+        "FIDELITY-058",
+        "FIDELITY-059",
+        "FIDELITY-060",
+        "FIDELITY-061",
+        "FIDELITY-062",
+        "FIDELITY-063",
+        "FIDELITY-064",
+        "FIDELITY-065",
+        "FIDELITY-066",
+        "FIDELITY-067",
+        "FIDELITY-068",
+        "FIDELITY-069",
+        "FIDELITY-070",
+        "FIDELITY-071",
+        "FIDELITY-072",
+        "FIDELITY-073",
+        "FIDELITY-074",
+        "FIDELITY-075"
+      ],
+      "gap_count": 20,
+      "docs_with_gaps": [
+        "Plans/GitHub_Integration.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/human-in-the-loop.md"
+      ]
+    },
+    {
+      "cluster_id": "usage-subagent",
+      "title": "Usage/subagent cluster",
+      "docs": [
+        "Plans/orchestrator-subagent-integration.md",
+        "Plans/interview-subagent-integration.md",
+        "Plans/usage-feature.md"
+      ],
+      "gap_ids": [
+        "FIDELITY-076",
+        "FIDELITY-077",
+        "FIDELITY-078",
+        "FIDELITY-079",
+        "FIDELITY-080",
+        "FIDELITY-081",
+        "FIDELITY-082",
+        "FIDELITY-083",
+        "FIDELITY-084",
+        "FIDELITY-085"
+      ],
+      "gap_count": 10,
+      "docs_with_gaps": [
+        "Plans/interview-subagent-integration.md",
+        "Plans/orchestrator-subagent-integration.md",
+        "Plans/usage-feature.md"
+      ]
+    }
+  ],
+  "phases": [
+    {
+      "phase_id": "phase-1-owner-canon",
+      "title": "Restore owner canon",
+      "goal": "Restore missing structural headings, skeletal owner packets, and owner over-summaries before downstream mirrors are touched.",
+      "depends_on": [],
+      "gap_ids": [
+        "FIDELITY-001",
+        "FIDELITY-003",
+        "FIDELITY-004",
+        "FIDELITY-005",
+        "FIDELITY-007",
+        "FIDELITY-008",
+        "FIDELITY-009",
+        "FIDELITY-010",
+        "FIDELITY-015",
+        "FIDELITY-021",
+        "FIDELITY-022",
+        "FIDELITY-023",
+        "FIDELITY-024",
+        "FIDELITY-026",
+        "FIDELITY-027",
+        "FIDELITY-030",
+        "FIDELITY-034",
+        "FIDELITY-038",
+        "FIDELITY-039",
+        "FIDELITY-040",
+        "FIDELITY-041",
+        "FIDELITY-042",
+        "FIDELITY-043",
+        "FIDELITY-054",
+        "FIDELITY-056",
+        "FIDELITY-057",
+        "FIDELITY-058",
+        "FIDELITY-059",
+        "FIDELITY-060",
+        "FIDELITY-061",
+        "FIDELITY-062",
+        "FIDELITY-063",
+        "FIDELITY-064",
+        "FIDELITY-065",
+        "FIDELITY-068",
+        "FIDELITY-069",
+        "FIDELITY-070",
+        "FIDELITY-076",
+        "FIDELITY-079",
+        "FIDELITY-080"
+      ],
+      "doc_count": 18,
+      "docs": [
+        "Plans/Contracts_V0.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FileManager.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/GitHub_API_Auth_and_Flows.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/Glossary.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Permissions_System.md",
+        "Plans/Project_Output_Artifacts.md",
+        "Plans/Tools.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/chain-wizard-flexibility.md",
+        "Plans/interview-subagent-integration.md",
+        "Plans/orchestrator-subagent-integration.md",
+        "Plans/storage-plan.md"
+      ],
+      "required_operations": [
+        "append",
+        "insert_after",
+        "replace_section"
+      ],
+      "success_criteria": [
+        "Every missing owner heading named in the legacy section map exists at the expected anchor.",
+        "Owner sections carry the exact field lists, enums, labels, and behavioral rules named in the legacy canon.",
+        "No owner packet remains skeletal relative to its mapped obligations."
+      ]
+    },
+    {
+      "phase_id": "phase-2-consumer-propagation",
+      "title": "Replay consumer propagation",
+      "goal": "Update consumer sections after owner canon is restored so downstream docs carry the exact runtime, approval, routing, and export shapes.",
+      "depends_on": [
+        "phase-1-owner-canon"
+      ],
+      "gap_ids": [
+        "FIDELITY-012",
+        "FIDELITY-013",
+        "FIDELITY-014",
+        "FIDELITY-017",
+        "FIDELITY-019",
+        "FIDELITY-020",
+        "FIDELITY-025",
+        "FIDELITY-028",
+        "FIDELITY-029",
+        "FIDELITY-031",
+        "FIDELITY-032",
+        "FIDELITY-033",
+        "FIDELITY-035",
+        "FIDELITY-036",
+        "FIDELITY-037",
+        "FIDELITY-044",
+        "FIDELITY-045",
+        "FIDELITY-046",
+        "FIDELITY-047",
+        "FIDELITY-048",
+        "FIDELITY-049",
+        "FIDELITY-050",
+        "FIDELITY-051",
+        "FIDELITY-052",
+        "FIDELITY-053",
+        "FIDELITY-055",
+        "FIDELITY-067",
+        "FIDELITY-071",
+        "FIDELITY-072",
+        "FIDELITY-073",
+        "FIDELITY-074",
+        "FIDELITY-075",
+        "FIDELITY-077",
+        "FIDELITY-081",
+        "FIDELITY-082",
+        "FIDELITY-083",
+        "FIDELITY-084",
+        "FIDELITY-085"
+      ],
+      "doc_count": 13,
+      "docs": [
+        "Plans/Crosswalk.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Progression_Gates.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Tools.md",
+        "Plans/Widget_System.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/chain-wizard-flexibility.md",
+        "Plans/human-in-the-loop.md",
+        "Plans/orchestrator-subagent-integration.md",
+        "Plans/usage-feature.md"
+      ],
+      "required_operations": [
+        "replace_section"
+      ],
+      "success_criteria": [
+        "Consumer sections mirror the exact owner-owned runtime, approval, routing, and export contracts.",
+        "No downstream section relies on shorthand payload summaries where the legacy canon required exact fields."
+      ]
+    },
+    {
+      "phase_id": "phase-3-stale-residue",
+      "title": "Retire stale survivors",
+      "goal": "Remove contradictory residue that conflicts with the restored canon once owner and consumer repairs land.",
+      "depends_on": [
+        "phase-1-owner-canon",
+        "phase-2-consumer-propagation"
+      ],
+      "gap_ids": [
+        "FIDELITY-002",
+        "FIDELITY-006",
+        "FIDELITY-011",
+        "FIDELITY-016",
+        "FIDELITY-018",
+        "FIDELITY-066",
+        "FIDELITY-078"
+      ],
+      "doc_count": 6,
+      "docs": [
+        "Plans/Contracts_V0.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/Project_Output_Artifacts.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/interview-subagent-integration.md"
+      ],
+      "required_operations": [
+        "insert_after",
+        "replace_section"
+      ],
+      "success_criteria": [
+        "Superseded enums, key names, aliases, and contradictory survivors named by the fidelity audit are retired.",
+        "No live section advertises both the restored and retired contract shape."
+      ]
+    },
+    {
+      "phase_id": "phase-4-verify",
+      "title": "Re-audit transfer",
+      "goal": "Re-run the fidelity/verifier pass after doc repairs to confirm the transfer failures are closed.",
+      "depends_on": [
+        "phase-1-owner-canon",
+        "phase-2-consumer-propagation",
+        "phase-3-stale-residue"
+      ],
+      "gap_ids": [
+        "FIDELITY-001",
+        "FIDELITY-002",
+        "FIDELITY-003",
+        "FIDELITY-004",
+        "FIDELITY-005",
+        "FIDELITY-006",
+        "FIDELITY-007",
+        "FIDELITY-008",
+        "FIDELITY-009",
+        "FIDELITY-010",
+        "FIDELITY-011",
+        "FIDELITY-012",
+        "FIDELITY-013",
+        "FIDELITY-014",
+        "FIDELITY-015",
+        "FIDELITY-016",
+        "FIDELITY-017",
+        "FIDELITY-018",
+        "FIDELITY-019",
+        "FIDELITY-020",
+        "FIDELITY-021",
+        "FIDELITY-022",
+        "FIDELITY-023",
+        "FIDELITY-024",
+        "FIDELITY-025",
+        "FIDELITY-026",
+        "FIDELITY-027",
+        "FIDELITY-028",
+        "FIDELITY-029",
+        "FIDELITY-030",
+        "FIDELITY-031",
+        "FIDELITY-032",
+        "FIDELITY-033",
+        "FIDELITY-034",
+        "FIDELITY-035",
+        "FIDELITY-036",
+        "FIDELITY-037",
+        "FIDELITY-038",
+        "FIDELITY-039",
+        "FIDELITY-040",
+        "FIDELITY-041",
+        "FIDELITY-042",
+        "FIDELITY-043",
+        "FIDELITY-044",
+        "FIDELITY-045",
+        "FIDELITY-046",
+        "FIDELITY-047",
+        "FIDELITY-048",
+        "FIDELITY-049",
+        "FIDELITY-050",
+        "FIDELITY-051",
+        "FIDELITY-052",
+        "FIDELITY-053",
+        "FIDELITY-054",
+        "FIDELITY-055",
+        "FIDELITY-056",
+        "FIDELITY-057",
+        "FIDELITY-058",
+        "FIDELITY-059",
+        "FIDELITY-060",
+        "FIDELITY-061",
+        "FIDELITY-062",
+        "FIDELITY-063",
+        "FIDELITY-064",
+        "FIDELITY-065",
+        "FIDELITY-066",
+        "FIDELITY-067",
+        "FIDELITY-068",
+        "FIDELITY-069",
+        "FIDELITY-070",
+        "FIDELITY-071",
+        "FIDELITY-072",
+        "FIDELITY-073",
+        "FIDELITY-074",
+        "FIDELITY-075",
+        "FIDELITY-076",
+        "FIDELITY-077",
+        "FIDELITY-078",
+        "FIDELITY-079",
+        "FIDELITY-080",
+        "FIDELITY-081",
+        "FIDELITY-082",
+        "FIDELITY-083",
+        "FIDELITY-084",
+        "FIDELITY-085"
+      ],
+      "doc_count": 26,
+      "docs": [
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FileManager.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/GitHub_API_Auth_and_Flows.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/Glossary.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Permissions_System.md",
+        "Plans/Progression_Gates.md",
+        "Plans/Project_Output_Artifacts.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Tools.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Widget_System.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/chain-wizard-flexibility.md",
+        "Plans/human-in-the-loop.md",
+        "Plans/interview-subagent-integration.md",
+        "Plans/orchestrator-subagent-integration.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "required_operations": [
+        "append",
+        "insert_after",
+        "replace_section"
+      ],
+      "success_criteria": [
+        "A rerun of the transfer audit closes the open gap set for this work item.",
+        "Verifier output is clean or limited to unrelated non-transfer findings."
+      ]
+    }
+  ]
+}
