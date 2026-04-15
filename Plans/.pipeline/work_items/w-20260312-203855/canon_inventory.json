@@ -1,0 +1,4552 @@
+{
+  "work_id": "w-20260312-203855",
+  "generated_at_utc": "2026-04-15T23:09:20.486Z",
+  "summary": {
+    "obligation_count": 45,
+    "mapped_section_count": 119,
+    "obligations_with_open_gaps": 43
+  },
+  "obligations": [
+    {
+      "obligation_id": "OBL-001",
+      "kind": "model_structure",
+      "exact_obligation": "Source Control stays worktree-first as the primary operational surface for worktree inventory and user actions, while Orchestrator remains the operational surface for why those actions matter.",
+      "exact_tokens": [
+        "Source Control",
+        "worktree-first",
+        "primary operational surface for worktree inventory and user actions",
+        "Orchestrator",
+        "operational surface for why those actions matter"
+      ],
+      "propagation_scope": "Source Control, Orchestrator, Git/worktree action routing, CTA initiation and execution surfaces",
+      "owner_hint": "GitHub_Integration.md and Orchestrator_Page.md",
+      "affected_doc_hints": [
+        "Plans/GitHub_Integration.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/WorktreeGitImprovement.md"
+      ],
+      "interface_shape_fields": [
+        "worktree_id",
+        "owning_lane",
+        "owning_package",
+        "run_reference",
+        "lifecycle_state",
+        "blocked_state",
+        "initiator_surface",
+        "executor_surface"
+      ],
+      "behavioral_edges": [
+        "Worktree rows remain concrete and filesystem/Git oriented.",
+        "Orchestrator CTAs route into Source Control with exact project/run/package/lane/worktree context.",
+        "Destructive Git/worktree actions resolve through Source Control semantics even if launched from Orchestrator."
+      ],
+      "cross_reference_targets": [
+        "lane/package ownership metadata",
+        "CTA routing contract",
+        "remediation action set"
+      ],
+      "stale_residue_to_retire": [
+        "tier-era worktree ownership model",
+        "run/tier-centric framing of Source Control",
+        "Orchestrator direct Git mutation without Source Control execution semantics"
+      ],
+      "source_basis": "working_ledger.md:1923-1933, 2105-2125, 2179-2194",
+      "mapped_sections": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": "## 1. Scope and canonical model",
+          "doc_role": "owner",
+          "section_role": "owner_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": "## 11. Source Control boundary",
+          "doc_role": "owner",
+          "section_role": "owner_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/WorktreeGitImprovement.md",
+          "heading": "## 4. GUI for Git & Worktrees",
+          "doc_role": "consumer",
+          "section_role": "consumer_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/GitHub_Integration.md",
+          "heading": "### A.5 Surface boundary rule",
+          "doc_role": "owner",
+          "section_role": "owner_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### 7.2 Source Control",
+          "doc_role": "consumer",
+          "section_role": "consumer_section",
+          "status": "active"
+        }
+      ],
+      "transfer_status": "open_gap",
+      "open_gap_ids": [
+        "FIDELITY-028",
+        "FIDELITY-056",
+        "FIDELITY-062",
+        "FIDELITY-067",
+        "FIDELITY-070"
+      ],
+      "open_gap_count": 5
+    },
+    {
+      "obligation_id": "OBL-002",
+      "kind": "model_structure",
+      "exact_obligation": "Lane becomes the primary operational object in Orchestrator, with Worktree remaining the concrete filesystem/Git backing for a lane instance.",
+      "exact_tokens": [
+        "Lane",
+        "primary operational object in Orchestrator",
+        "Worktree",
+        "concrete filesystem/Git backing"
+      ],
+      "propagation_scope": "Orchestrator package/seam/lane views, runtime object identity, lane/worktree lineage",
+      "owner_hint": "Orchestrator_Page.md and storage-plan.md",
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/storage-plan.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/WorktreeGitImprovement.md"
+      ],
+      "interface_shape_fields": [
+        "lane_id",
+        "lane_lifecycle_state",
+        "worktree_id",
+        "package_id",
+        "node_id",
+        "seam_id"
+      ],
+      "behavioral_edges": [
+        "Lane may preserve historical identity after live worktree cleanup.",
+        "Worktree shows in context as backing asset rather than the primary operational object."
+      ],
+      "cross_reference_targets": [
+        "historical lane identity",
+        "package lane pool"
+      ],
+      "stale_residue_to_retire": [
+        "tier-era object stack",
+        "subtask ownership as primary operational identity"
+      ],
+      "source_basis": "working_ledger.md:1935-1946; current chat context legacy-readiness checks",
+      "mapped_sections": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "## 4. Data model and identity",
+          "doc_role": "consumer",
+          "section_role": "consumer_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": "## 1. Scope and canonical model",
+          "doc_role": "owner",
+          "section_role": "owner_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/WorktreeGitImprovement.md",
+          "heading": "## 4. GUI for Git & Worktrees",
+          "doc_role": "consumer",
+          "section_role": "consumer_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### 7.2 Source Control",
+          "doc_role": "consumer",
+          "section_role": "consumer_section",
+          "status": "active"
+        }
+      ],
+      "transfer_status": "open_gap",
+      "open_gap_ids": [
+        "FIDELITY-028",
+        "FIDELITY-056",
+        "FIDELITY-067",
+        "FIDELITY-073"
+      ],
+      "open_gap_count": 4
+    },
+    {
+      "obligation_id": "OBL-003",
+      "kind": "data_contract",
+      "exact_obligation": "Historical run/package/node/lane references MUST survive after live worktree cleanup; a missing live worktree must render as historical, archived, or removed rather than disappearing.",
+      "exact_tokens": [
+        "historical run/package/node/lane references",
+        "MUST survive after live worktree cleanup",
+        "historical",
+        "archived",
+        "removed"
+      ],
+      "propagation_scope": "Historical lineage rendering, receipt preservation, Source Control and Orchestrator historical state",
+      "owner_hint": "storage-plan.md and Run_Graph_View.md",
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "interface_shape_fields": [
+        "worktree_id",
+        "path_snapshot",
+        "branch_snapshot",
+        "compare_target_snapshot",
+        "package_id",
+        "lane_id",
+        "lifecycle_state"
+      ],
+      "behavioral_edges": [
+        "Cleanup/archive/remove must preserve exact history.",
+        "Graph generation lineage and safe-point/recovery history must remain inspectable after live worktree loss."
+      ],
+      "cross_reference_targets": [
+        "receipt historical linkage",
+        "lineage view contract",
+        "cleanup archive remove semantics"
+      ],
+      "stale_residue_to_retire": [
+        "worktree disappears on cleanup assumption",
+        "cleanup wipes history model"
+      ],
+      "source_basis": "working_ledger.md:2127-2141",
+      "mapped_sections": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "### Restart and stale history",
+          "doc_role": "owner",
+          "section_role": "owner_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/WorktreeGitImprovement.md",
+          "heading": "### 2.8 Startup recovery uses process CWD",
+          "doc_role": "owner",
+          "section_role": "owner_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "## 4. Data model and identity",
+          "doc_role": "consumer",
+          "section_role": "consumer_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": "## 9. Current vs historical run behavior",
+          "doc_role": "owner",
+          "section_role": "owner_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/GitHub_Integration.md",
+          "heading": "### A.4 Worktrees",
+          "doc_role": "owner",
+          "section_role": "owner_section",
+          "status": "active"
+        }
+      ],
+      "transfer_status": "open_gap",
+      "open_gap_ids": [
+        "FIDELITY-004",
+        "FIDELITY-060",
+        "FIDELITY-064",
+        "FIDELITY-068",
+        "FIDELITY-073"
+      ],
+      "open_gap_count": 5
+    },
+    {
+      "obligation_id": "OBL-004",
+      "kind": "state_model",
+      "exact_obligation": "Lane/worktree lifecycle vocabulary must include baseline, active, suspect, restoring, retained, cleanup_eligible, archived, removed, historical, with explicit semantic distinction between cleanup state and historical truth.",
+      "exact_tokens": [
+        "baseline",
+        "active",
+        "suspect",
+        "restoring",
+        "retained",
+        "cleanup_eligible",
+        "archived",
+        "removed",
+        "historical"
+      ],
+      "propagation_scope": "Lifecycle state schema, UI row rendering, cleanup policy, historical lineage",
+      "owner_hint": "storage-plan.md and WorktreeGitImprovement.md",
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "interface_shape_fields": [
+        "lifecycle_state",
+        "historical_flag",
+        "archived_flag",
+        "removed_flag",
+        "cleanup_eligible_flag"
+      ],
+      "behavioral_edges": [
+        "archived means metadata/lineage visible while execution surface is inactive",
+        "removed means live directory gone",
+        "cleanup_eligible is policy queue state and is not the same as removed",
+        "historical is record truth and can coexist with archived or removed"
+      ],
+      "cross_reference_targets": [
+        "cleanup semantics distinction",
+        "policy queue state"
+      ],
+      "stale_residue_to_retire": [
+        "action-verb-only cleanup model",
+        "fuzzy lane/worktree state vocabulary"
+      ],
+      "source_basis": "working_ledger.md:1948-1965",
+      "mapped_sections": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "### Restart and stale history",
+          "doc_role": "owner",
+          "section_role": "owner_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/WorktreeGitImprovement.md",
+          "heading": "### 4.1 Assistant-created worktree lifecycle",
+          "doc_role": "owner",
+          "section_role": "owner_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": "## 9. Current vs historical run behavior",
+          "doc_role": "owner",
+          "section_role": "owner_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/GitHub_Integration.md",
+          "heading": "### A.4 Worktrees",
+          "doc_role": "owner",
+          "section_role": "owner_section",
+          "status": "active"
+        }
+      ],
+      "transfer_status": "open_gap",
+      "open_gap_ids": [
+        "FIDELITY-004",
+        "FIDELITY-060",
+        "FIDELITY-065",
+        "FIDELITY-068"
+      ],
+      "open_gap_count": 4
+    },
+    {
+      "obligation_id": "OBL-005",
+      "kind": "semantic_invariant",
+      "exact_obligation": "dirty_worktree and worktree_conflict are canonical blocked reasons and must remain visible in both Orchestrator and Source Control without collapsing into generic SCM errors.",
+      "exact_tokens": [
+        "dirty_worktree",
+        "worktree_conflict",
+        "canonical blocked reasons"
+      ],
+      "propagation_scope": "Runtime blocked state emission, remediation action gating, Source Control and Orchestrator condition display",
+      "owner_hint": "Contracts_V0.md and Orchestrator runtime",
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/storage-plan.md"
+      ],
+      "interface_shape_fields": [
+        "blocked_reason_kind",
+        "blocked_reason_detail",
+        "remediation_actions_allowed"
+      ],
+      "behavioral_edges": [
+        "Runtime truth is owned by Orchestrator.",
+        "Source Control executes allowed remediation.",
+        "Condition rendering must preserve semantic clarity."
+      ],
+      "cross_reference_targets": [
+        "remediation action set",
+        "blocked state propagation"
+      ],
+      "stale_residue_to_retire": [
+        "generic SCM error framing",
+        "tier-local blocked state"
+      ],
+      "source_basis": "working_ledger.md:2169-2175",
+      "mapped_sections": [
+        {
+          "path": "Plans/WorktreeGitImprovement.md",
+          "heading": "## Worktree Conflict and Dirty-Worktree Runtime Alignment",
+          "doc_role": "owner",
+          "section_role": "owner_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": "## 11. Source Control boundary",
+          "doc_role": "owner",
+          "section_role": "owner_section",
+          "status": "active"
+        }
+      ],
+      "transfer_status": "open_gap",
+      "open_gap_ids": [
+        "FIDELITY-062",
+        "FIDELITY-066"
+      ],
+      "open_gap_count": 2
+    },
+    {
+      "obligation_id": "OBL-006",
+      "kind": "semantic_invariant",
+      "exact_obligation": "Cleanup of files inside a worktree must not be the same thing as removing the worktree itself, and lane lifecycle must remain distinct from cleanup actions.",
+      "exact_tokens": [
+        "cleanup of files inside a worktree",
+        "not the same thing as",
+        "removing the worktree itself",
+        "lane lifecycle"
+      ],
+      "propagation_scope": "Cleanup action modeling, lifecycle schema, UI action copy and safeguards",
+      "owner_hint": "WorktreeGitImprovement.md and storage-plan.md",
+      "affected_doc_hints": [
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/storage-plan.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/MiscPlan.md"
+      ],
+      "interface_shape_fields": [
+        "cleanup_action_kind",
+        "cleanup_scope",
+        "lifecycle_state",
+        "worktree_removed_flag"
+      ],
+      "behavioral_edges": [
+        "files cleanup does not imply worktree removal",
+        "retained vs cleanup_eligible vs archived vs removed must stay distinct",
+        "destructive cleanup semantics need explicit disclosure"
+      ],
+      "cross_reference_targets": [
+        "lane lifecycle state",
+        "cleanup action types",
+        "remediation chain"
+      ],
+      "stale_residue_to_retire": [
+        "unified cleanup action model",
+        "worktree plan cleanup equals files cleanup assumption"
+      ],
+      "source_basis": "working_ledger.md:1911-1914, 2172",
+      "mapped_sections": [
+        {
+          "path": "Plans/WorktreeGitImprovement.md",
+          "heading": "### 4.1 Assistant-created worktree lifecycle",
+          "doc_role": "owner",
+          "section_role": "owner_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/WorktreeGitImprovement.md",
+          "heading": "## Worktree Conflict and Dirty-Worktree Runtime Alignment",
+          "doc_role": "owner",
+          "section_role": "owner_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": "## 11. Source Control boundary",
+          "doc_role": "owner",
+          "section_role": "owner_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/WorktreeGitImprovement.md",
+          "heading": "## 4. GUI for Git & Worktrees",
+          "doc_role": "consumer",
+          "section_role": "consumer_section",
+          "status": "active"
+        }
+      ],
+      "transfer_status": "open_gap",
+      "open_gap_ids": [
+        "FIDELITY-062",
+        "FIDELITY-065",
+        "FIDELITY-066",
+        "FIDELITY-067"
+      ],
+      "open_gap_count": 4
+    },
+    {
+      "obligation_id": "OBL-007",
+      "kind": "runtime_contract",
+      "exact_obligation": "Requested/effective execution identity must include one canonical requested-side concrete-account field, with requested_account_policy remaining the routing rule rather than the selected account.",
+      "exact_tokens": [
+        "requested/effective execution identity",
+        "requested_account_policy",
+        "effective_account_id",
+        "effective_provider_identity",
+        "requested_account_id",
+        "requested_account_binding"
+      ],
+      "propagation_scope": "Prompt pipeline, contracts, storage snapshots, UI disclosure, multi-account routing",
+      "owner_hint": "Contracts_V0.md and Prompt_Pipeline.md",
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/storage-plan.md",
+        "Plans/Multi-Account.md",
+        "Plans/usage-feature.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "interface_shape_fields": [
+        "requested_account_id",
+        "requested_account_binding",
+        "requested_account_policy",
+        "effective_account_id",
+        "effective_provider_identity",
+        "execution_role",
+        "operational_identity"
+      ],
+      "behavioral_edges": [
+        "Requested state must remain recoverable in historical snapshots.",
+        "Binding distinguishes preference from requirement.",
+        "Fallback behavior depends on binding rather than ad hoc UI or provider policy."
+      ],
+      "cross_reference_targets": [
+        "effective-resolution record",
+        "multi-account switch history",
+        "requested/effective display grammar"
+      ],
+      "stale_residue_to_retire": [
+        "policy-only account routing without selected-account anchor",
+        "identity bundles that stop at effective_account_id only"
+      ],
+      "source_basis": "working_ledger.md:1984-2001, 2022-2036, 7811-7900, 10137-10226, 17421-17431",
+      "mapped_sections": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "## 4. Auth contracts",
+          "doc_role": "owner",
+          "section_role": "owner_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "### 4.1 Shared runtime identity consumption",
+          "doc_role": "owner",
+          "section_role": "owner_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/Crosswalk.md",
+          "heading": "### 3.12 Provider and account-selection ownership",
+          "doc_role": "mirror",
+          "section_role": "mirror_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/Prompt_Pipeline.md",
+          "heading": "### 6.4 Effective resolution record",
+          "doc_role": "owner",
+          "section_role": "owner_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/Multi-Account.md",
+          "heading": "## 4. Data model",
+          "doc_role": "owner",
+          "section_role": "owner_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/usage-feature.md",
+          "heading": "### Billing identity, attribution, and pricing metadata",
+          "doc_role": "consumer",
+          "section_role": "consumer_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/interview-subagent-integration.md",
+          "heading": "### Requested/effective Interview contract",
+          "doc_role": "consumer",
+          "section_role": "consumer_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/Multi-Account.md",
+          "heading": "### 4.5 Selectable unit and runtime resolution",
+          "doc_role": "owner",
+          "section_role": "owner_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "heading": "### Canonical navigation model",
+          "doc_role": "consumer",
+          "section_role": "consumer_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/Crosswalk.md",
+          "heading": "### 3.1 Runtime orchestration ownership",
+          "doc_role": "mirror",
+          "section_role": "mirror_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/Executor_Protocol.md",
+          "heading": "## 5. Node execution fields",
+          "doc_role": "owner",
+          "section_role": "owner_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/interview-subagent-integration.md",
+          "heading": "### Runtime identity visibility",
+          "doc_role": "consumer",
+          "section_role": "consumer_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "heading": "## Tier-Level Subagent Strategy",
+          "doc_role": "consumer",
+          "section_role": "consumer_section",
+          "status": "active"
+        }
+      ],
+      "transfer_status": "open_gap",
+      "open_gap_ids": [
+        "FIDELITY-011",
+        "FIDELITY-045",
+        "FIDELITY-048",
+        "FIDELITY-049",
+        "FIDELITY-077",
+        "FIDELITY-078",
+        "FIDELITY-079",
+        "FIDELITY-084"
+      ],
+      "open_gap_count": 8
+    },
+    {
+      "obligation_id": "OBL-008",
+      "kind": "semantic_rule",
+      "exact_obligation": "provider_account_id must either be retired or explicitly governed as provider-native metadata subordinate to stable internal effective_account_id.",
+      "exact_tokens": [
+        "provider_account_id",
+        "retire it",
+        "provider-native metadata",
+        "effective_account_id"
+      ],
+      "propagation_scope": "Identity storage, UI disclosure, provider integration, cross-doc account precedence",
+      "owner_hint": "Contracts_V0.md and Multi-Account.md",
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/Multi-Account.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "interface_shape_fields": [
+        "provider_account_id",
+        "effective_account_id",
+        "governance_status"
+      ],
+      "behavioral_edges": [
+        "No shadow routing identity normalization.",
+        "Provider-native display metadata stays subordinate to stable internal identity."
+      ],
+      "cross_reference_targets": [
+        "effective_account_id",
+        "provider native disclosure"
+      ],
+      "stale_residue_to_retire": [
+        "ambiguous provider_account_id status",
+        "cross-doc provider identity drift"
+      ],
+      "source_basis": "working_ledger.md:1991, 2023-2026",
+      "mapped_sections": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "## 4. Auth contracts",
+          "doc_role": "owner",
+          "section_role": "owner_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/Crosswalk.md",
+          "heading": "### 3.12 Provider and account-selection ownership",
+          "doc_role": "mirror",
+          "section_role": "mirror_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/Multi-Account.md",
+          "heading": "## 4. Data model",
+          "doc_role": "owner",
+          "section_role": "owner_section",
+          "status": "active"
+        }
+      ],
+      "transfer_status": "open_gap",
+      "open_gap_ids": [
+        "FIDELITY-048"
+      ],
+      "open_gap_count": 1
+    },
+    {
+      "obligation_id": "OBL-009",
+      "kind": "schema_extension",
+      "exact_obligation": "Permission resolution and approval carryover/cascade rules must add execution-entity, lane, package, and effective-account dimensions for multi-lane orchestrator runs.",
+      "exact_tokens": [
+        "permission resolution",
+        "approval carryover/cascade rules",
+        "execution-entity",
+        "lane",
+        "package",
+        "effective-account"
+      ],
+      "propagation_scope": "Permissions, approvals, HITL, multi-lane runtime execution",
+      "owner_hint": "Permissions_System.md and human-in-the-loop runtime policy",
+      "affected_doc_hints": [
+        "Plans/Permissions_System.md",
+        "Plans/human-in-the-loop.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "interface_shape_fields": [
+        "actor_kind",
+        "execution_entity_id",
+        "lane_id",
+        "package_id",
+        "account_id",
+        "permission_scope",
+        "approval_carryover_scope"
+      ],
+      "behavioral_edges": [
+        "Approval scope must not silently become same-session if lanes are parallel.",
+        "Crew/member/lane/account-bounded permissions must be implementable.",
+        "Actor-scoped narrowing must survive concurrency and restart."
+      ],
+      "cross_reference_targets": [
+        "approval scope key",
+        "multi-lane approval semantics"
+      ],
+      "stale_residue_to_retire": [
+        "single-session approval assumption",
+        "tool/context/mode-only permission resolution"
+      ],
+      "source_basis": "working_ledger.md:1999-2001, 2029, 2036",
+      "mapped_sections": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### 10.8 Human-in-the-loop approvals",
+          "doc_role": "consumer",
+          "section_role": "consumer_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### 15.7 Permission approval card widget",
+          "doc_role": "consumer",
+          "section_role": "consumer_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/Crosswalk.md",
+          "heading": "### 3.10 Permission and approval-scope ownership",
+          "doc_role": "mirror",
+          "section_role": "mirror_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/Permissions_System.md",
+          "heading": "### 2.4B Scope specificity across package, seam, lane, project, and global contexts",
+          "doc_role": "owner",
+          "section_role": "owner_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/Permissions_System.md",
+          "heading": "### Permission snapshot contract",
+          "doc_role": "owner",
+          "section_role": "owner_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/Tools.md",
+          "heading": "### 10.7A Web-operation approval summary rules",
+          "doc_role": "consumer",
+          "section_role": "consumer_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/Permissions_System.md",
+          "heading": "## 6. Ask flow semantics",
+          "doc_role": "owner",
+          "section_role": "owner_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/Tools.md",
+          "heading": "### 10.7 Ask-flow runner notes",
+          "doc_role": "consumer",
+          "section_role": "consumer_section",
+          "status": "active"
+        }
+      ],
+      "transfer_status": "open_gap",
+      "open_gap_ids": [
+        "FIDELITY-013",
+        "FIDELITY-014",
+        "FIDELITY-021",
+        "FIDELITY-022",
+        "FIDELITY-036",
+        "FIDELITY-038",
+        "FIDELITY-047"
+      ],
+      "open_gap_count": 7
+    },
+    {
+      "obligation_id": "OBL-010",
+      "kind": "data_contract",
+      "exact_obligation": "One shared projection-health / trust-state record family must be defined and required by Orchestrator, widgets, and Run Graph surfaces for action gating and fallback.",
+      "exact_tokens": [
+        "projection_freshness",
+        "projection_health",
+        "trust-state record family",
+        "action gating",
+        "fallback"
+      ],
+      "propagation_scope": "Projection-backed surfaces, widget subscriptions, historical/current rendering, action gating",
+      "owner_hint": "storage-plan.md",
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Widget_System.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "interface_shape_fields": [
+        "projection_id",
+        "projection_freshness",
+        "projection_health",
+        "last_projected_at_utc",
+        "projector_lag",
+        "degraded_reason_code",
+        "fallback_policy"
+      ],
+      "behavioral_edges": [
+        "Stale visibility is not the same as action authority.",
+        "Ledger/direct-record fallback must be available when projection trust drops.",
+        "UI must surface trust/freshness explicitly rather than assuming freshness."
+      ],
+      "cross_reference_targets": [
+        "action gate freshness rules",
+        "degraded trust fallback"
+      ],
+      "stale_residue_to_retire": [
+        "implicit freshness assumptions",
+        "generic projection_trust phrasing that collides with other trust vocabularies"
+      ],
+      "source_basis": "working_ledger.md:2363-2467, 4648-4766, 8408-8479, 17433-17439",
+      "mapped_sections": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "### Projection rules (reconciled)",
+          "doc_role": "owner",
+          "section_role": "owner_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "## 2. Hostability and data contracts",
+          "doc_role": "consumer",
+          "section_role": "consumer_section",
+          "status": "active"
+        }
+      ],
+      "transfer_status": "open_gap",
+      "open_gap_ids": [
+        "FIDELITY-044"
+      ],
+      "open_gap_count": 1
+    },
+    {
+      "obligation_id": "OBL-011",
+      "kind": "contract_requirement",
+      "exact_obligation": "Define a three-part help system contract consisting of canonical term system, contextual help system, and dedicated help-entry contract with fixed structure and related-concept links.",
+      "exact_tokens": [
+        "canonical term system",
+        "contextual help system",
+        "dedicated help-entry contract",
+        "related-concept links"
+      ],
+      "propagation_scope": "Glossary, GUI help, tooltips, ELI5/simple/expert surfaces, help-entry rendering",
+      "owner_hint": "Glossary.md and FinalGUISpec.md",
+      "affected_doc_hints": [
+        "Plans/Glossary.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "interface_shape_fields": [
+        "canonical_name",
+        "short_definition",
+        "why_it_matters",
+        "what_it_is_not",
+        "common_related_states",
+        "related_concepts",
+        "surface_examples"
+      ],
+      "behavioral_edges": [
+        "Canonical term names must stay stable across Expert and ELI5.",
+        "Do not create parallel friendly names that drift from contracts."
+      ],
+      "cross_reference_targets": [
+        "help entry system",
+        "canonical term system",
+        "contextual help system"
+      ],
+      "stale_residue_to_retire": [
+        "tooltip-only help approach for complex rewrite concepts",
+        "empty Orchestrator rewrite terms section in Glossary.md"
+      ],
+      "source_basis": "working_ledger.md:3987-4126, 6468-6571, 17393-17407",
+      "mapped_sections": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "#### 7.4.4 Settings (Unified) panel specification",
+          "doc_role": "consumer",
+          "section_role": "consumer_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### 7.5 Project and attention surfaces",
+          "doc_role": "consumer",
+          "section_role": "consumer_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/Glossary.md",
+          "heading": "### Orchestrator rewrite terms",
+          "doc_role": "owner",
+          "section_role": "owner_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/Glossary.md",
+          "heading": "### Runtime and routing terms",
+          "doc_role": "owner",
+          "section_role": "owner_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/usage-feature.md",
+          "heading": "## Rewrite alignment (2026-02-21)",
+          "doc_role": "consumer",
+          "section_role": "consumer_section",
+          "status": "active"
+        }
+      ],
+      "transfer_status": "open_gap",
+      "open_gap_ids": [
+        "FIDELITY-008",
+        "FIDELITY-009",
+        "FIDELITY-030",
+        "FIDELITY-031",
+        "FIDELITY-081"
+      ],
+      "open_gap_count": 5
+    },
+    {
+      "obligation_id": "OBL-012",
+      "kind": "architectural_decision",
+      "exact_obligation": "Separate project health, project activity, and project attention as distinct status dimensions, and add blocked_owner plus primary attention reason to project-level surfaces.",
+      "exact_tokens": [
+        "project health",
+        "project activity",
+        "project attention",
+        "blocked_owner",
+        "primary_attention_reason",
+        "activity_state",
+        "attention_state"
+      ],
+      "propagation_scope": "Projects page, Orchestrator summaries, attention routing, dashboard project cards",
+      "owner_hint": "FinalGUISpec.md and Orchestrator_Page.md",
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/storage-plan.md",
+        "Plans/Glossary.md"
+      ],
+      "interface_shape_fields": [
+        "activity_state",
+        "attention_state",
+        "health_indicator",
+        "blocked_owner",
+        "primary_attention_reason",
+        "pressure_summary"
+      ],
+      "behavioral_edges": [
+        "Health and attention must not share one overloaded indicator.",
+        "A project with only historical runs is not inherently degraded.",
+        "Blocked ownership should describe the dominant current issue, not every issue."
+      ],
+      "cross_reference_targets": [
+        "blocked owner model",
+        "attention required model",
+        "project summary schema"
+      ],
+      "stale_residue_to_retire": [
+        "conflated single health indicator for all project operational states"
+      ],
+      "source_basis": "working_ledger.md:4127-4272, 7080-7174, 17393-17407",
+      "mapped_sections": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": "## 12. Concern and notification model",
+          "doc_role": "owner",
+          "section_role": "owner_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### 7.5 Project and attention surfaces",
+          "doc_role": "consumer",
+          "section_role": "consumer_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/Glossary.md",
+          "heading": "### Orchestrator rewrite terms",
+          "doc_role": "owner",
+          "section_role": "owner_section",
+          "status": "active"
+        }
+      ],
+      "transfer_status": "open_gap",
+      "open_gap_ids": [
+        "FIDELITY-008",
+        "FIDELITY-031",
+        "FIDELITY-063"
+      ],
+      "open_gap_count": 3
+    },
+    {
+      "obligation_id": "OBL-013",
+      "kind": "escalation_policy",
+      "exact_obligation": "Define one shared escalation ladder: info, warning, attention_required, blocked, system_notification, and use it across concerns, blocked states, usage pressure, and persistent unresolved conditions.",
+      "exact_tokens": [
+        "info",
+        "warning",
+        "attention_required",
+        "blocked",
+        "system_notification"
+      ],
+      "propagation_scope": "Dashboard, Progress, History, badges, chat/thread, system notifications",
+      "owner_hint": "Orchestrator_Page.md and FinalGUISpec.md",
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/usage-feature.md"
+      ],
+      "interface_shape_fields": [
+        "escalation_level",
+        "severity",
+        "blocked_owner",
+        "persistence_duration",
+        "action_available"
+      ],
+      "behavioral_edges": [
+        "attention_required and blocked must remain distinct everywhere",
+        "resurfacing responds to meaningful change rather than scheduler ticks",
+        "persistent blocker must not be dismissible into fake health"
+      ],
+      "cross_reference_targets": [
+        "notification routing",
+        "concern lifecycle",
+        "surface ladder mapping"
+      ],
+      "stale_residue_to_retire": [
+        "case-by-case local attention behavior without shared ladder"
+      ],
+      "source_basis": "working_ledger.md:4273-4395, 17393-17407",
+      "mapped_sections": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "## 3. Node detail inspector",
+          "doc_role": "consumer",
+          "section_role": "consumer_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": "## 12. Concern and notification model",
+          "doc_role": "owner",
+          "section_role": "owner_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### 7.5 Project and attention surfaces",
+          "doc_role": "consumer",
+          "section_role": "consumer_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "## Canonical Blocked/Recovery Behavior",
+          "doc_role": "consumer",
+          "section_role": "consumer_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/human-in-the-loop.md",
+          "heading": "## Shared approval-ladder alignment (2026-04-04)",
+          "doc_role": "consumer",
+          "section_role": "consumer_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/usage-feature.md",
+          "heading": "## Runtime Scheduler / Recovery Observability Addendum (2026-03-09)",
+          "doc_role": "consumer",
+          "section_role": "consumer_section",
+          "status": "active"
+        }
+      ],
+      "transfer_status": "open_gap",
+      "open_gap_ids": [
+        "FIDELITY-031",
+        "FIDELITY-037",
+        "FIDELITY-063",
+        "FIDELITY-072",
+        "FIDELITY-075",
+        "FIDELITY-083"
+      ],
+      "open_gap_count": 6
+    },
+    {
+      "obligation_id": "OBL-014",
+      "kind": "performance_contract",
+      "exact_obligation": "Define an Orchestrator-wide scale contract above individual tab docs with virtualization, lazy expansion, paging, and demand-loaded inspectors mandatory across dense tabs.",
+      "exact_tokens": [
+        "Orchestrator-wide scale contract",
+        "virtualization",
+        "lazy expansion",
+        "paging",
+        "demand-loaded inspectors"
+      ],
+      "propagation_scope": "Node Graph, Seams, Evidence, History, Ledger, Progress",
+      "owner_hint": "Orchestrator_Page.md and FinalGUISpec.md",
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Run_Graph_View.md"
+      ],
+      "interface_shape_fields": [
+        "initial_slice_size",
+        "virtualization_strategy",
+        "lazy_expansion_trigger",
+        "inspector_loading_strategy",
+        "projection_fallback"
+      ],
+      "behavioral_edges": [
+        "Exact record inspection in Ledger still needs paging.",
+        "Historical graph generations must stay accessible without default visual density."
+      ],
+      "cross_reference_targets": [
+        "evidence virtualization",
+        "ledger paging",
+        "graph view performance"
+      ],
+      "stale_residue_to_retire": [
+        "per-tab performance guidance without shared Orchestrator scale contract"
+      ],
+      "source_basis": "working_ledger.md:4396-4514",
+      "mapped_sections": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "## 2. Layout",
+          "doc_role": "consumer",
+          "section_role": "consumer_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": "## 2. Page layout",
+          "doc_role": "owner",
+          "section_role": "owner_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": "## 1. Scope and canonical model",
+          "doc_role": "owner",
+          "section_role": "owner_section",
+          "status": "active"
+        }
+      ],
+      "transfer_status": "open_gap",
+      "open_gap_ids": [
+        "FIDELITY-056",
+        "FIDELITY-071"
+      ],
+      "open_gap_count": 2
+    },
+    {
+      "obligation_id": "OBL-015",
+      "kind": "action_safety_policy",
+      "exact_obligation": "Define an Orchestrator action-surface policy that classifies actions by navigation vs mutation, single-target vs multi-target, shortcut eligibility, palette visibility, and confirmation/reversibility class.",
+      "exact_tokens": [
+        "navigation vs mutation",
+        "single-target vs multi-target",
+        "shortcut eligibility",
+        "palette visibility",
+        "confirmation",
+        "reversibility"
+      ],
+      "propagation_scope": "Command palette, shortcuts, context menus, bulk actions, multi-select, action confirmation",
+      "owner_hint": "UI_Command_Catalog.md and FinalGUISpec.md",
+      "affected_doc_hints": [
+        "Plans/UI_Command_Catalog.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Decision_Policy.md"
+      ],
+      "interface_shape_fields": [
+        "action_type",
+        "target_scope",
+        "palette_visible",
+        "shortcut_eligible",
+        "confirmation_strength",
+        "reversibility"
+      ],
+      "behavioral_edges": [
+        "Palette visibility must not silently downgrade confirmation strength.",
+        "Bulk actions are narrower than bulk navigation.",
+        "Context menus are the cleanest home for exact-object valid live actions."
+      ],
+      "cross_reference_targets": [
+        "confirmation policy",
+        "keyboard shortcuts",
+        "context menus"
+      ],
+      "stale_residue_to_retire": [
+        "blanket command exposure for dangerous runtime mutations"
+      ],
+      "source_basis": "working_ledger.md:3162-3328, 4515-4647, 6376-6467, 17365-17377",
+      "mapped_sections": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": "## 10. Search, routing, and action policy",
+          "doc_role": "owner",
+          "section_role": "owner_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### 4.2 Command Palette",
+          "doc_role": "consumer",
+          "section_role": "consumer_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### 4.4 Keyboard Shortcuts",
+          "doc_role": "consumer",
+          "section_role": "consumer_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### 10.1 Confirmation dialogs",
+          "doc_role": "consumer",
+          "section_role": "consumer_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "heading": "### 2.5 Orchestrator page commands",
+          "doc_role": "owner",
+          "section_role": "owner_section",
+          "status": "active"
+        }
+      ],
+      "transfer_status": "open_gap",
+      "open_gap_ids": [
+        "FIDELITY-026",
+        "FIDELITY-027",
+        "FIDELITY-034",
+        "FIDELITY-041",
+        "FIDELITY-061"
+      ],
+      "open_gap_count": 5
+    },
+    {
+      "obligation_id": "OBL-016",
+      "kind": "record_normalization",
+      "exact_obligation": "Define one shared governance/runtime record-envelope pattern and let each family add its own payload block.",
+      "exact_tokens": [
+        "shared governance/runtime record-envelope pattern",
+        "record_id",
+        "record_kind",
+        "schema_version",
+        "project_id",
+        "run_id",
+        "status",
+        "created_at_utc"
+      ],
+      "propagation_scope": "Concerns, reviews, corroboration, promotions, graph patches, recovery records, state-transition reports, evidence records",
+      "owner_hint": "storage-plan.md and Contracts_V0.md",
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "interface_shape_fields": [
+        "record_id",
+        "record_kind",
+        "schema_version",
+        "project_id",
+        "run_id",
+        "scope_type",
+        "scope_id",
+        "status",
+        "created_at_utc",
+        "summary",
+        "detail_ref",
+        "source_refs",
+        "artifact_refs",
+        "lineage_refs"
+      ],
+      "behavioral_edges": [
+        "Record and artifact remain different objects.",
+        "Envelope carries enough shared identity without flattening family-specific meaning."
+      ],
+      "cross_reference_targets": [
+        "record families",
+        "artifact model",
+        "search contract",
+        "export contract"
+      ],
+      "stale_residue_to_retire": [
+        "ad hoc one-off record shapes for each new Orchestrator object family"
+      ],
+      "source_basis": "working_ledger.md:3329-3511, 4767-4891, 17365-17377",
+      "mapped_sections": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "### 1.2 EventRecord -- canonical persisted envelope (schema: `pm.event.v0`)",
+          "doc_role": "owner",
+          "section_role": "owner_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "### Canonical records",
+          "doc_role": "owner",
+          "section_role": "owner_section",
+          "status": "active"
+        }
+      ],
+      "transfer_status": "no_open_gap_detected",
+      "open_gap_ids": [],
+      "open_gap_count": 0
+    },
+    {
+      "obligation_id": "OBL-017",
+      "kind": "export_taxonomy",
+      "exact_obligation": "Define a shared Orchestrator export taxonomy consisting of record export, bundle export, and view export, with manifest discipline and trust-state disclosure.",
+      "exact_tokens": [
+        "record export",
+        "bundle export",
+        "view export",
+        "manifest",
+        "trust_state_at_export"
+      ],
+      "propagation_scope": "Orchestrator exports, bundle generation, artifact/record export boundaries, manifest generation",
+      "owner_hint": "Orchestrator_Page.md and storage-plan.md",
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/storage-plan.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "interface_shape_fields": [
+        "export_id",
+        "export_kind",
+        "schema_version",
+        "source_surface",
+        "focused_run_id",
+        "filter_summary",
+        "included_record_ids",
+        "included_artifact_ids",
+        "included_file_paths",
+        "lineage_notes",
+        "trust_state_at_export"
+      ],
+      "behavioral_edges": [
+        "Filtered JSON is not automatically canonical record export.",
+        "Derived exports stay useful but must remain visibly derived.",
+        "Export correctness depends on projection-trust validation."
+      ],
+      "cross_reference_targets": [
+        "record export",
+        "bundle export",
+        "view export",
+        "canonical revalidation"
+      ],
+      "stale_residue_to_retire": [
+        "conflating record exports, artifact exports, and view exports into one unclear family"
+      ],
+      "source_basis": "working_ledger.md:3512-3635, 5298-5439, 17379-17391",
+      "mapped_sections": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "### Canonical records",
+          "doc_role": "owner",
+          "section_role": "owner_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": "## 8. Ledger tab",
+          "doc_role": "owner",
+          "section_role": "owner_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": "## 6. Evidence tab",
+          "doc_role": "owner",
+          "section_role": "owner_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### 7.19A Dedicated log and audit inspector",
+          "doc_role": "consumer",
+          "section_role": "consumer_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/usage-feature.md",
+          "heading": "### Canonical usage pipeline",
+          "doc_role": "consumer",
+          "section_role": "consumer_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "heading": "## 5A. Debug investigation grouping, manifests, and exports",
+          "doc_role": "consumer",
+          "section_role": "consumer_section",
+          "status": "active"
+        }
+      ],
+      "transfer_status": "open_gap",
+      "open_gap_ids": [
+        "FIDELITY-019",
+        "FIDELITY-033",
+        "FIDELITY-057",
+        "FIDELITY-059",
+        "FIDELITY-082"
+      ],
+      "open_gap_count": 5
+    },
+    {
+      "obligation_id": "OBL-018",
+      "kind": "semantic_consistency",
+      "exact_obligation": "Define a shared historical-semantic vocabulary for cross-family overlays: historical, stale_historical, superseded, revoked, reopened, archived, removed.",
+      "exact_tokens": [
+        "historical",
+        "stale_historical",
+        "superseded",
+        "revoked",
+        "reopened",
+        "archived",
+        "removed"
+      ],
+      "propagation_scope": "Record families, ledger/history semantics, search filters, UI badges and state descriptions",
+      "owner_hint": "Glossary.md, Contracts_V0.md, storage-plan.md",
+      "affected_doc_hints": [
+        "Plans/Glossary.md",
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "interface_shape_fields": [
+        "historical_state",
+        "lineage_refs",
+        "supersession_refs",
+        "revocation_refs",
+        "archive_status"
+      ],
+      "behavioral_edges": [
+        "Consistency means shared meaning, not one single lifecycle enum for every object family.",
+        "historical must remain distinct from family-local lifecycle state.",
+        "resolved overloading requires family-local clarification."
+      ],
+      "cross_reference_targets": [
+        "concern lifecycle",
+        "record families",
+        "search filters"
+      ],
+      "stale_residue_to_retire": [
+        "remediation.resolved enum conflict",
+        "overloaded resolved keyword",
+        "historical implied by missing live state"
+      ],
+      "source_basis": "working_ledger.md:2758-2885, 5734-5885",
+      "mapped_sections": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "### 1.2 EventRecord -- canonical persisted envelope (schema: `pm.event.v0`)",
+          "doc_role": "owner",
+          "section_role": "owner_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "### Canonical records",
+          "doc_role": "owner",
+          "section_role": "owner_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "## 4. Data model and identity",
+          "doc_role": "consumer",
+          "section_role": "consumer_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": "## 7. History tab",
+          "doc_role": "owner",
+          "section_role": "owner_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": "## 9. Current vs historical run behavior",
+          "doc_role": "owner",
+          "section_role": "owner_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/Glossary.md",
+          "heading": "### Orchestrator rewrite terms",
+          "doc_role": "owner",
+          "section_role": "owner_section",
+          "status": "active"
+        }
+      ],
+      "transfer_status": "open_gap",
+      "open_gap_ids": [
+        "FIDELITY-008",
+        "FIDELITY-058",
+        "FIDELITY-060",
+        "FIDELITY-073"
+      ],
+      "open_gap_count": 4
+    },
+    {
+      "obligation_id": "OBL-019",
+      "kind": "record_family_definition",
+      "exact_obligation": "Add a canonical concern record family and corresponding projection contract with durable identity, lineage, source linking, owner distinctions, and interaction rules distinct from review findings, annotations, and blocked episodes.",
+      "exact_tokens": [
+        "concern",
+        "concern_id",
+        "owner_kind",
+        "resolution_kind",
+        "lineage_refs",
+        "source_refs",
+        "blocked owner and concern owner are distinct concepts"
+      ],
+      "propagation_scope": "Concerns surfaces, History, Ledger, escalation routing, governance records",
+      "owner_hint": "storage-plan.md and Contracts_V0.md",
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "interface_shape_fields": [
+        "concern_id",
+        "project_id",
+        "run_id",
+        "scope_type",
+        "scope_id",
+        "status",
+        "severity",
+        "category",
+        "owner_kind",
+        "resolution_kind",
+        "lineage_refs",
+        "source_refs",
+        "evidence_refs"
+      ],
+      "behavioral_edges": [
+        "acknowledged is noise-control state, not semantic resolution",
+        "merge/split/supersession lineage must stay queryable",
+        "review, corroboration, graph patch, and recovery must interact with concern lineage explicitly"
+      ],
+      "cross_reference_targets": [
+        "resolution kinds",
+        "concern interactions",
+        "merge split supersession"
+      ],
+      "stale_residue_to_retire": [
+        "concerns treated as badges, notes, or review leftovers without durable identity"
+      ],
+      "source_basis": "working_ledger.md:2947-3161, 5886-6075, 17365-17377",
+      "mapped_sections": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "### 1.2 EventRecord -- canonical persisted envelope (schema: `pm.event.v0`)",
+          "doc_role": "owner",
+          "section_role": "owner_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "### Canonical records",
+          "doc_role": "owner",
+          "section_role": "owner_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": "## 12. Concern and notification model",
+          "doc_role": "owner",
+          "section_role": "owner_section",
+          "status": "active"
+        }
+      ],
+      "transfer_status": "open_gap",
+      "open_gap_ids": [
+        "FIDELITY-063"
+      ],
+      "open_gap_count": 1
+    },
+    {
+      "obligation_id": "OBL-020",
+      "kind": "routing_and_navigation",
+      "exact_obligation": "Define one shared routing payload contract for search, command palette, widget drill-downs, recovery links, and cross-surface pivots rather than separate ad hoc payloads per surface.",
+      "exact_tokens": [
+        "shared routing payload contract",
+        "search",
+        "command palette",
+        "widget drill-downs",
+        "recovery links",
+        "cross-surface pivots"
+      ],
+      "propagation_scope": "Search results, command palette, widgets, deep links, cross-surface pivots",
+      "owner_hint": "Contracts_V0.md",
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "interface_shape_fields": [
+        "project_id",
+        "focused_run_id",
+        "thread_id",
+        "target_kind",
+        "subject_id",
+        "object_kind",
+        "object_id",
+        "tab_id",
+        "inspector_target"
+      ],
+      "behavioral_edges": [
+        "Route payloads restore context rather than merely switching tabs.",
+        "Degraded surfaces remain routable through canonical fallback views."
+      ],
+      "cross_reference_targets": [
+        "object kinds",
+        "destination surfaces",
+        "resume_url contract",
+        "widget routing"
+      ],
+      "stale_residue_to_retire": [
+        "separate ad hoc payloads per surface"
+      ],
+      "source_basis": "working_ledger.md:2613-2757, 5576-5733",
+      "mapped_sections": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "### 7.3 `route_target`",
+          "doc_role": "owner",
+          "section_role": "owner_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "## 3. Node detail inspector",
+          "doc_role": "consumer",
+          "section_role": "consumer_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": "## 10. Search, routing, and action policy",
+          "doc_role": "owner",
+          "section_role": "owner_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### 4.2 Command Palette",
+          "doc_role": "consumer",
+          "section_role": "consumer_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### 7.3 Shared route and open behavior",
+          "doc_role": "consumer",
+          "section_role": "consumer_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/Glossary.md",
+          "heading": "### Runtime and routing terms",
+          "doc_role": "owner",
+          "section_role": "owner_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "## 2. Hostability and data contracts",
+          "doc_role": "consumer",
+          "section_role": "consumer_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "heading": "### 2.5 Orchestrator page commands",
+          "doc_role": "owner",
+          "section_role": "owner_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "heading": "#### Search commands",
+          "doc_role": "owner",
+          "section_role": "consumer_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/Crosswalk.md",
+          "heading": "### 3.3 Navigation and source-open ownership",
+          "doc_role": "mirror",
+          "section_role": "mirror_section",
+          "status": "active"
+        }
+      ],
+      "transfer_status": "open_gap",
+      "open_gap_ids": [
+        "FIDELITY-009",
+        "FIDELITY-026",
+        "FIDELITY-029",
+        "FIDELITY-041",
+        "FIDELITY-042",
+        "FIDELITY-044",
+        "FIDELITY-046",
+        "FIDELITY-061",
+        "FIDELITY-072"
+      ],
+      "open_gap_count": 9
+    },
+    {
+      "obligation_id": "OBL-021",
+      "kind": "field-set-boundary",
+      "exact_obligation": "Define route_target minimum field set bounded to target_kind, project_id, focused_run_id, thread_id, tab_id, subject_id, object_kind, object_id, inspector_target, with exactly one canonical target selector.",
+      "exact_tokens": [
+        "route_target",
+        "target_kind",
+        "project_id",
+        "focused_run_id",
+        "thread_id",
+        "tab_id",
+        "subject_id",
+        "object_kind",
+        "object_id",
+        "inspector_target"
+      ],
+      "propagation_scope": "Route contract, route validation, navigation payload creation, route-aware gating",
+      "owner_hint": "Contracts_V0.md",
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/storage-plan.md"
+      ],
+      "interface_shape_fields": [
+        "target_kind",
+        "project_id",
+        "focused_run_id",
+        "thread_id",
+        "tab_id",
+        "subject_id",
+        "object_kind",
+        "object_id",
+        "inspector_target"
+      ],
+      "behavioral_edges": [
+        "project_id is required",
+        "scope and focus fields are not selector identity",
+        "line and range do not belong in route_target"
+      ],
+      "cross_reference_targets": [
+        "target_kind enum",
+        "selector precedence",
+        "subject_id boundary"
+      ],
+      "stale_residue_to_retire": [
+        "usage_event_ref as top-level route field",
+        "wizard_id and wizard_step as primary route fields",
+        "artifact_id and document_id as direct route fields instead of subject_id"
+      ],
+      "source_basis": "working_ledger.md:11917-12020, 13289-13391",
+      "mapped_sections": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "### 7.3 `route_target`",
+          "doc_role": "owner",
+          "section_role": "owner_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### 7.3 Shared route and open behavior",
+          "doc_role": "consumer",
+          "section_role": "consumer_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "heading": "#### Search commands",
+          "doc_role": "owner",
+          "section_role": "consumer_section",
+          "status": "active"
+        }
+      ],
+      "transfer_status": "open_gap",
+      "open_gap_ids": [
+        "FIDELITY-029",
+        "FIDELITY-042"
+      ],
+      "open_gap_count": 2
+    },
+    {
+      "obligation_id": "OBL-022",
+      "kind": "enum-vocabulary",
+      "exact_obligation": "Define target_kind closed enum with exactly five values: primary_view, side_panel, bottom_panel, embedded_surface, page_tab.",
+      "exact_tokens": [
+        "primary_view",
+        "side_panel",
+        "bottom_panel",
+        "embedded_surface",
+        "page_tab"
+      ],
+      "propagation_scope": "Route destination classification, shell routing, page-tab restoration",
+      "owner_hint": "Contracts_V0.md",
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Crosswalk.md"
+      ],
+      "interface_shape_fields": [
+        "target_kind"
+      ],
+      "behavioral_edges": [
+        "target_kind is destination class only",
+        "target_kind is not shell persistence state",
+        "target_kind is not object taxonomy"
+      ],
+      "cross_reference_targets": [
+        "route_target"
+      ],
+      "stale_residue_to_retire": [
+        "docked vs floating as target_kind values",
+        "widget slot as target_kind value"
+      ],
+      "source_basis": "working_ledger.md:13392-13461",
+      "mapped_sections": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "### 7.3 `route_target`",
+          "doc_role": "owner",
+          "section_role": "owner_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### 7.3 Shared route and open behavior",
+          "doc_role": "consumer",
+          "section_role": "consumer_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/Glossary.md",
+          "heading": "### Runtime and routing terms",
+          "doc_role": "owner",
+          "section_role": "owner_section",
+          "status": "active"
+        }
+      ],
+      "transfer_status": "open_gap",
+      "open_gap_ids": [
+        "FIDELITY-009",
+        "FIDELITY-029"
+      ],
+      "open_gap_count": 2
+    },
+    {
+      "obligation_id": "OBL-023",
+      "kind": "enum-vocabulary",
+      "exact_obligation": "Define canonical object_kind covering conversational/upstream, runtime/execution, and orchestration rewrite objects, including thread, message, wizard, usage_event, run, node, attempt, scheduler_pass, blocked_episode, safe_point, remediation, feature_seam, work_package, lane, worktree, concern, promotion, graph_patch, graph_generation.",
+      "exact_tokens": [
+        "thread",
+        "message",
+        "wizard",
+        "usage_event",
+        "run",
+        "node",
+        "attempt",
+        "scheduler_pass",
+        "blocked_episode",
+        "safe_point",
+        "remediation",
+        "feature_seam",
+        "work_package",
+        "lane",
+        "worktree",
+        "concern",
+        "promotion",
+        "graph_patch",
+        "graph_generation"
+      ],
+      "propagation_scope": "Object identity taxonomy, route resolution, navigation targeting, glossary, UI surfaces",
+      "owner_hint": "Contracts_V0.md and Glossary.md",
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/Glossary.md",
+        "Plans/storage-plan.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/usage-feature.md"
+      ],
+      "interface_shape_fields": [
+        "object_kind"
+      ],
+      "behavioral_edges": [
+        "New object families must be added deliberately, not ad hoc in surface docs.",
+        "blocked_sequence participates in blocked_episode identity in {run_id, node_id} scope."
+      ],
+      "cross_reference_targets": [
+        "subject_id boundary",
+        "route selector precedence"
+      ],
+      "stale_residue_to_retire": [
+        "tier as first-class navigation target",
+        "usage_event_ref as a special-case route field instead of object_kind=usage_event"
+      ],
+      "source_basis": "working_ledger.md:12021-12124, 13595-13678",
+      "mapped_sections": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "### 7.3 `route_target`",
+          "doc_role": "owner",
+          "section_role": "owner_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "## 4. Data model and identity",
+          "doc_role": "consumer",
+          "section_role": "consumer_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### 7.3 Shared route and open behavior",
+          "doc_role": "consumer",
+          "section_role": "consumer_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/Glossary.md",
+          "heading": "### Runtime and routing terms",
+          "doc_role": "owner",
+          "section_role": "owner_section",
+          "status": "active"
+        }
+      ],
+      "transfer_status": "open_gap",
+      "open_gap_ids": [
+        "FIDELITY-009",
+        "FIDELITY-029",
+        "FIDELITY-073"
+      ],
+      "open_gap_count": 3
+    },
+    {
+      "obligation_id": "OBL-024",
+      "kind": "enum-vocabulary",
+      "exact_obligation": "Define inspector_target closed vocabulary with exactly eight values: summary, evidence, artifacts, history, reviews, usage, lineage, details.",
+      "exact_tokens": [
+        "summary",
+        "evidence",
+        "artifacts",
+        "history",
+        "reviews",
+        "usage",
+        "lineage",
+        "details"
+      ],
+      "propagation_scope": "Inspector/detail-pane focus refinement, graph detail, usage pivots, lineage drill-ins",
+      "owner_hint": "Contracts_V0.md",
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "interface_shape_fields": [
+        "inspector_target"
+      ],
+      "behavioral_edges": [
+        "Use inspector_target only after primary selector identity is established.",
+        "inspector_target must stay small and typed."
+      ],
+      "cross_reference_targets": [
+        "route_target"
+      ],
+      "stale_residue_to_retire": [
+        "free-form subsection focus",
+        "untyped inspector_target extension bags"
+      ],
+      "source_basis": "working_ledger.md:12125-12208, 13679-13733",
+      "mapped_sections": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "### 7.3 `route_target`",
+          "doc_role": "owner",
+          "section_role": "owner_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "## 4. Data model and identity",
+          "doc_role": "consumer",
+          "section_role": "consumer_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### 7.3 Shared route and open behavior",
+          "doc_role": "consumer",
+          "section_role": "consumer_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/Glossary.md",
+          "heading": "### Runtime and routing terms",
+          "doc_role": "owner",
+          "section_role": "owner_section",
+          "status": "active"
+        }
+      ],
+      "transfer_status": "open_gap",
+      "open_gap_ids": [
+        "FIDELITY-009",
+        "FIDELITY-029",
+        "FIDELITY-073"
+      ],
+      "open_gap_count": 3
+    },
+    {
+      "obligation_id": "OBL-025",
+      "kind": "selector-precedence-rule",
+      "exact_obligation": "Establish hard selector precedence: exactly one primary selector is present in route_target: subject_id, or object_kind + object_id, never both. Resolution order is project_id, scope restoration, target_kind, primary selector, then focus refinement.",
+      "exact_tokens": [
+        "exactly one primary selector",
+        "subject_id",
+        "object_kind + object_id",
+        "project_id",
+        "target_kind",
+        "tab_id",
+        "inspector_target"
+      ],
+      "propagation_scope": "Route validation, route creation, deep-link normalization, navigation gates",
+      "owner_hint": "Contracts_V0.md",
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/usage-feature.md"
+      ],
+      "interface_shape_fields": [
+        "subject_id",
+        "object_kind",
+        "object_id",
+        "project_id",
+        "focused_run_id",
+        "thread_id",
+        "target_kind",
+        "tab_id",
+        "inspector_target"
+      ],
+      "behavioral_edges": [
+        "Reject multi-selector route payloads as non-canonical.",
+        "Normalize artifact_id and document_id to subject_id before route entry.",
+        "wizard_step is not a primary selector."
+      ],
+      "cross_reference_targets": [
+        "route_target",
+        "subject_id boundary",
+        "resume_url transport"
+      ],
+      "stale_residue_to_retire": [
+        "multiple competing selectors in same navigation action",
+        "usage_event_ref as first-class top-level route selector"
+      ],
+      "source_basis": "working_ledger.md:13462-13523",
+      "mapped_sections": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "### 7.3 `route_target`",
+          "doc_role": "owner",
+          "section_role": "owner_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### 7.3 Shared route and open behavior",
+          "doc_role": "consumer",
+          "section_role": "consumer_section",
+          "status": "active"
+        }
+      ],
+      "transfer_status": "open_gap",
+      "open_gap_ids": [
+        "FIDELITY-029"
+      ],
+      "open_gap_count": 1
+    },
+    {
+      "obligation_id": "OBL-026",
+      "kind": "subject-identity-boundary",
+      "exact_obligation": "Freeze subject_id to exactly two canonical families: doc:<document_id> and artifact:<artifact_id>. Everything else routes through object_kind + object_id.",
+      "exact_tokens": [
+        "doc:<document_id>",
+        "artifact:<artifact_id>",
+        "Everything else routes through object_kind + object_id"
+      ],
+      "propagation_scope": "OpenSubject identity, route selectors, file/artifact navigation, deep-link normalization",
+      "owner_hint": "Contracts_V0.md and FileManager.md",
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/FileManager.md",
+        "Plans/Crosswalk.md",
+        "Plans/storage-plan.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "interface_shape_fields": [
+        "subject_id"
+      ],
+      "behavioral_edges": [
+        "Use subject_id only when target is canonical renderable/openable content.",
+        "subject_id resolves through OpenSubject rather than generic route selectors."
+      ],
+      "cross_reference_targets": [
+        "OpenSubject",
+        "object_kind"
+      ],
+      "stale_residue_to_retire": [
+        "document_id and artifact_id appearing in navigation prose instead of subject_id",
+        "wizard and message flows treated as special deep-link payload families instead of object routes"
+      ],
+      "source_basis": "working_ledger.md:12021-12124, 13210-13288, 13734-13805",
+      "mapped_sections": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "### 7.4 `OpenSubject`",
+          "doc_role": "owner",
+          "section_role": "owner_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### 7.3 Shared route and open behavior",
+          "doc_role": "consumer",
+          "section_role": "consumer_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/Glossary.md",
+          "heading": "### Runtime and routing terms",
+          "doc_role": "owner",
+          "section_role": "owner_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "heading": "#### Search commands",
+          "doc_role": "owner",
+          "section_role": "consumer_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/Crosswalk.md",
+          "heading": "### 3.3 Navigation and source-open ownership",
+          "doc_role": "mirror",
+          "section_role": "mirror_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/FileManager.md",
+          "heading": "### OpenSubject",
+          "doc_role": "owner",
+          "section_role": "consumer_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/FileManager.md",
+          "heading": "### 4.1 Open-file contract",
+          "doc_role": "consumer",
+          "section_role": "consumer_section",
+          "status": "active"
+        }
+      ],
+      "transfer_status": "open_gap",
+      "open_gap_ids": [
+        "FIDELITY-009",
+        "FIDELITY-029",
+        "FIDELITY-039",
+        "FIDELITY-042",
+        "FIDELITY-046"
+      ],
+      "open_gap_count": 5
+    },
+    {
+      "obligation_id": "OBL-027",
+      "kind": "serialization-transport-rule",
+      "exact_obligation": "Treat resume_url as serialized transport of route_target only. route_target is canonical identity; resume_url must stay narrower than the internal route model and must not define a second routing ontology.",
+      "exact_tokens": [
+        "resume_url",
+        "serialized transport",
+        "route_target",
+        "canonical identity",
+        "does not define a second routing ontology"
+      ],
+      "propagation_scope": "Deep-link serialization, persisted navigation state, wizard/thread resume, blocked-step resume flows",
+      "owner_hint": "Contracts_V0.md",
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/chain-wizard-flexibility.md"
+      ],
+      "interface_shape_fields": [
+        "resume_url"
+      ],
+      "behavioral_edges": [
+        "Good serialized fields are canonical identity, required scope, and narrow anchor detail.",
+        "Bad serialized fields are shell layout state, widget state, generic filter bags, panel widths, and provider/account disclosure."
+      ],
+      "cross_reference_targets": [
+        "route_target",
+        "selector precedence"
+      ],
+      "stale_residue_to_retire": [
+        "resume_url acting as shadow routing primitive",
+        "resume_url treated as first-class behavioral object",
+        "resume_url-centered blocked-card payload canon"
+      ],
+      "source_basis": "working_ledger.md:12371-12447, 13524-13594, 14913-14965; current chat context legacy-readiness checks",
+      "mapped_sections": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "### 7.3 `route_target`",
+          "doc_role": "owner",
+          "section_role": "owner_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/GitHub_Integration.md",
+          "heading": "## Deferred GitHub Recovery Binding (2026-03-09)",
+          "doc_role": "owner",
+          "section_role": "owner_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### 7.3 Shared route and open behavior",
+          "doc_role": "consumer",
+          "section_role": "consumer_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/Glossary.md",
+          "heading": "### Runtime and routing terms",
+          "doc_role": "owner",
+          "section_role": "owner_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/Crosswalk.md",
+          "heading": "### 3.3 Navigation and source-open ownership",
+          "doc_role": "mirror",
+          "section_role": "mirror_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/chain-wizard-flexibility.md",
+          "heading": "### 3. Dashboard / thread / resume behavior",
+          "doc_role": "consumer",
+          "section_role": "consumer_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "heading": "### Canonical navigation model",
+          "doc_role": "consumer",
+          "section_role": "consumer_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/FileManager.md",
+          "heading": "### 4.1 Open-file contract",
+          "doc_role": "consumer",
+          "section_role": "consumer_section",
+          "status": "active"
+        }
+      ],
+      "transfer_status": "open_gap",
+      "open_gap_ids": [
+        "FIDELITY-009",
+        "FIDELITY-025",
+        "FIDELITY-029",
+        "FIDELITY-046",
+        "FIDELITY-049",
+        "FIDELITY-069"
+      ],
+      "open_gap_count": 6
+    },
+    {
+      "obligation_id": "OBL-028",
+      "kind": "ref-family-boundary",
+      "exact_obligation": "Make the owner-doc distinction explicit: inspection/provenance refs stay in event and record payloads; route/open contracts own navigation identity.",
+      "exact_tokens": [
+        "detail_ref",
+        "report_ref",
+        "evidence_ref",
+        "usage_event_ref",
+        "workflow_refs",
+        "docker_refs",
+        "kubernetes_refs",
+        "resume_url"
+      ],
+      "propagation_scope": "Event payloads, record schemas, route/open contracts, inspection linking",
+      "owner_hint": "Contracts_V0.md and storage-plan.md",
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "interface_shape_fields": [
+        "detail_ref",
+        "report_ref",
+        "evidence_ref",
+        "usage_event_ref",
+        "workflow_refs",
+        "docker_refs",
+        "kubernetes_refs",
+        "resume_url"
+      ],
+      "behavioral_edges": [
+        "detail_ref, report_ref, evidence_ref, usage_event_ref stay as inspection/provenance families",
+        "resume_url stays navigation transport only"
+      ],
+      "cross_reference_targets": [
+        "resume_url transport",
+        "bridge-field behavior"
+      ],
+      "stale_residue_to_retire": [
+        "treating detail_ref, report_ref, and resume_url as interchangeable open-this-thing fields",
+        "treating ref families as route payload surrogates"
+      ],
+      "source_basis": "working_ledger.md:14967-15026",
+      "mapped_sections": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "### 3.4 Tool-specific payload extensions",
+          "doc_role": "owner",
+          "section_role": "owner_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/FileManager.md",
+          "heading": "### 4.1 Open-file contract",
+          "doc_role": "consumer",
+          "section_role": "consumer_section",
+          "status": "active"
+        }
+      ],
+      "transfer_status": "no_open_gap_detected",
+      "open_gap_ids": [],
+      "open_gap_count": 0
+    },
+    {
+      "obligation_id": "OBL-029",
+      "kind": "cross-family-contract-minimum",
+      "exact_obligation": "Define a cross-family blocked minimum for canonical blocked objects: blocked reason, ordered allowed actions where applicable, preserved-work/local-state disclosure where applicable, stable blocked-episode identity or family-local equivalent, and detail/report inspection refs.",
+      "exact_tokens": [
+        "blocked reason",
+        "allowed_action_ids",
+        "preserved_local_work",
+        "blocked_sequence",
+        "detail_ref",
+        "report_ref"
+      ],
+      "propagation_scope": "node.blocked, wizard.blocked, blocked notices, blocked recovery, escalation, chat action rendering",
+      "owner_hint": "Contracts_V0.md and storage-plan.md",
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/human-in-the-loop.md"
+      ],
+      "interface_shape_fields": [
+        "blocked_reason_code",
+        "allowed_action_ids",
+        "preserved_local_work",
+        "detail_ref",
+        "blocked_sequence",
+        "attempt_id",
+        "failure_class"
+      ],
+      "behavioral_edges": [
+        "Family-local additions stay separate from the cross-family minimum.",
+        "Chat blocked action buttons derive from ordered allowed_action_ids[].",
+        "wizard.blocked must be strengthened to peer level rather than remain a thin special-case."
+      ],
+      "cross_reference_targets": [
+        "blocked runtime overlay",
+        "cmd.runtime.* handlers"
+      ],
+      "stale_residue_to_retire": [
+        "thin wizard.blocked definition",
+        "wizard-blocked behavior as special deep-link flow instead of peer blocked family"
+      ],
+      "source_basis": "working_ledger.md:15027-15144",
+      "mapped_sections": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "### 6.1 Canonical blocked-episode approval anchor",
+          "doc_role": "owner",
+          "section_role": "owner_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### 10.6 Blocked and recovery surfaces",
+          "doc_role": "consumer",
+          "section_role": "consumer_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "heading": "## Unified Thread Blocked-State Lifecycle",
+          "doc_role": "consumer",
+          "section_role": "consumer_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/human-in-the-loop.md",
+          "heading": "### Canonical HITL request contract",
+          "doc_role": "consumer",
+          "section_role": "consumer_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/Permissions_System.md",
+          "heading": "## 6. Ask flow semantics",
+          "doc_role": "owner",
+          "section_role": "owner_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/Tools.md",
+          "heading": "### `tool.denied` requirements",
+          "doc_role": "consumer",
+          "section_role": "consumer_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/chain-wizard-flexibility.md",
+          "heading": "### 3. Dashboard / thread / resume behavior",
+          "doc_role": "consumer",
+          "section_role": "consumer_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "heading": "### Persistence and restore rule",
+          "doc_role": "consumer",
+          "section_role": "consumer_section",
+          "status": "active"
+        }
+      ],
+      "transfer_status": "open_gap",
+      "open_gap_ids": [
+        "FIDELITY-025",
+        "FIDELITY-035",
+        "FIDELITY-052",
+        "FIDELITY-053",
+        "FIDELITY-074"
+      ],
+      "open_gap_count": 5
+    },
+    {
+      "obligation_id": "OBL-030",
+      "kind": "contract-field-schema",
+      "exact_obligation": "Add command-classification and normalization contract to the command-definition layer using command_kind and optional normalization { kind, normalizes_to_contract? | alias_of_command_id? }.",
+      "exact_tokens": [
+        "command_kind",
+        "normalization",
+        "kind",
+        "normalizes_to_contract",
+        "alias_of_command_id",
+        "shell_view",
+        "navigation_wrapper",
+        "domain_action",
+        "wrapper",
+        "deprecated_alias"
+      ],
+      "propagation_scope": "Command definition metadata, wrapper/alias governance, wiring verification, gate logic",
+      "owner_hint": "UI_Command_Catalog.md and Contracts_V0.md",
+      "affected_doc_hints": [
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/Progression_Gates.md",
+        "Plans/Crosswalk.md"
+      ],
+      "interface_shape_fields": [
+        "command_kind",
+        "normalization.kind",
+        "normalizes_to_contract",
+        "alias_of_command_id"
+      ],
+      "behavioral_edges": [
+        "Keep wrapper metadata narrow and contract-level.",
+        "Point wrappers to canonical primitive families only.",
+        "Do not restate route payload structure inside command metadata."
+      ],
+      "cross_reference_targets": [
+        "route_target",
+        "Crosswalk owner split",
+        "GATE-010"
+      ],
+      "stale_residue_to_retire": [
+        "prose-only command meaning without precise wrapper-vs-alias slots",
+        "thin UICommand envelope lacking normalization metadata"
+      ],
+      "source_basis": "working_ledger.md:12782-13050, 12905-13050, 17409-17419",
+      "mapped_sections": [
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "heading": "### 2.0 Command entry contract (doc-level)",
+          "doc_role": "owner",
+          "section_role": "owner_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "heading": "### Recovery command definitions",
+          "doc_role": "owner",
+          "section_role": "consumer_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/Wiring_Matrix.md",
+          "heading": "### UI command handler rule",
+          "doc_role": "mirror",
+          "section_role": "mirror_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/Progression_Gates.md",
+          "heading": "## GATE-010 -- Wiring matrix validation",
+          "doc_role": "mirror",
+          "section_role": "mirror_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "### 7.2 UICommand envelope",
+          "doc_role": "owner",
+          "section_role": "owner_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/Crosswalk.md",
+          "heading": "### 3.1 Runtime orchestration ownership",
+          "doc_role": "mirror",
+          "section_role": "mirror_section",
+          "status": "active"
+        }
+      ],
+      "transfer_status": "open_gap",
+      "open_gap_ids": [
+        "FIDELITY-040",
+        "FIDELITY-045",
+        "FIDELITY-054",
+        "FIDELITY-055"
+      ],
+      "open_gap_count": 4
+    },
+    {
+      "obligation_id": "OBL-031",
+      "kind": "execution_context_contract",
+      "exact_obligation": "Replace tier-rooted execution context with execution_unit_context carrying node/attempt/worktree/package/seam/lane/account/role/runtime identity rather than TierContext and tier_id as canonical execution scope.",
+      "exact_tokens": [
+        "execution_unit_context",
+        "TierContext",
+        "tier_id",
+        "run_id",
+        "node_id",
+        "attempt_id",
+        "lane_id",
+        "package_id",
+        "seam_id",
+        "worktree_id",
+        "execution_role",
+        "requested_account_id",
+        "effective_account_id",
+        "operational_identity"
+      ],
+      "propagation_scope": "Execution core, subagent orchestration, runtime snapshots, worker coordination, downstream consumers",
+      "owner_hint": "orchestrator-subagent-integration.md and Contracts_V0.md",
+      "affected_doc_hints": [
+        "Plans/orchestrator-subagent-integration.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/interview-subagent-integration.md"
+      ],
+      "interface_shape_fields": [
+        "run_id",
+        "node_id",
+        "attempt_id",
+        "lane_id",
+        "package_id",
+        "seam_id",
+        "worktree_id",
+        "execution_role",
+        "requested_account_id",
+        "effective_account_id",
+        "operational_identity"
+      ],
+      "behavioral_edges": [
+        "TierContext and tier_id must stop acting as canonical execution scope.",
+        "Downstream consumers must join losslessly to attempt/worktree/permission/runtime records."
+      ],
+      "cross_reference_targets": [
+        "execution_role placement",
+        "operational_identity placement",
+        "blocked episode ownership"
+      ],
+      "stale_residue_to_retire": [
+        "TierContext",
+        "tier_id as canonical execution scope",
+        "pseudo-tier execution keys"
+      ],
+      "source_basis": "working_ledger.md:8572-8755, 9805-10136, 17421-17431; current chat context legacy-readiness checks",
+      "mapped_sections": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "### 5.1B Persona/Runtime Snapshot Payload Contract",
+          "doc_role": "owner",
+          "section_role": "owner_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/Prompt_Pipeline.md",
+          "heading": "## Runtime Attempt Snapshot and Handoff Bundle",
+          "doc_role": "owner",
+          "section_role": "owner_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "heading": "### Tier Context",
+          "doc_role": "owner",
+          "section_role": "owner_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/Executor_Protocol.md",
+          "heading": "### Worktree-aware execution unit context",
+          "doc_role": "owner",
+          "section_role": "owner_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/Crosswalk.md",
+          "heading": "### 3.1 Runtime orchestration ownership",
+          "doc_role": "mirror",
+          "section_role": "mirror_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/Executor_Protocol.md",
+          "heading": "## 5. Node execution fields",
+          "doc_role": "owner",
+          "section_role": "owner_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "heading": "## Tier-Level Subagent Strategy",
+          "doc_role": "consumer",
+          "section_role": "consumer_section",
+          "status": "active"
+        }
+      ],
+      "transfer_status": "open_gap",
+      "open_gap_ids": [
+        "FIDELITY-001",
+        "FIDELITY-010",
+        "FIDELITY-011",
+        "FIDELITY-045",
+        "FIDELITY-076",
+        "FIDELITY-077"
+      ],
+      "open_gap_count": 6
+    },
+    {
+      "obligation_id": "OBL-032",
+      "kind": "blocked_runtime_identity",
+      "exact_obligation": "Unify approval identity around blocked episodes, with blocked_sequence as the canonical approval anchor and explicit startup-recovery to first scheduler.pass handoff ownership.",
+      "exact_tokens": [
+        "blocked_sequence",
+        "startup_recovered",
+        "scheduler.pass",
+        "approval_scope_key",
+        "allowed_action_ids",
+        "approve_continue"
+      ],
+      "propagation_scope": "HITL, blocked runtime recovery, scheduler wake logic, restart persistence, approval routing",
+      "owner_hint": "Executor_Protocol.md, Contracts_V0.md, human-in-the-loop.md",
+      "affected_doc_hints": [
+        "Plans/Executor_Protocol.md",
+        "Plans/Contracts_V0.md",
+        "Plans/human-in-the-loop.md",
+        "Plans/storage-plan.md",
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "interface_shape_fields": [
+        "blocked_sequence",
+        "blocked_reason_code",
+        "allowed_action_ids",
+        "approval_scope_key",
+        "startup_recovered"
+      ],
+      "behavioral_edges": [
+        "pre-attempt blocked episodes must not invent an attempt_id",
+        "session-wide approval policy must remain distinct from blocked-episode approval",
+        "approve_continue is legacy vocabulary and must not survive as canonical action naming"
+      ],
+      "cross_reference_targets": [
+        "cmd.runtime.*",
+        "blocked family minimums"
+      ],
+      "stale_residue_to_retire": [
+        "request_id-centered HITL identity",
+        "tier-bound HITL anchoring",
+        "approve_continue"
+      ],
+      "source_basis": "working_ledger.md:8645-8824, 9642-9729, 17421-17431; current chat context legacy-readiness checks",
+      "mapped_sections": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "### 6.1 Canonical blocked-episode approval anchor",
+          "doc_role": "owner",
+          "section_role": "owner_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### 10.6 Blocked and recovery surfaces",
+          "doc_role": "consumer",
+          "section_role": "consumer_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### 10.8 Human-in-the-loop approvals",
+          "doc_role": "consumer",
+          "section_role": "consumer_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### 15.7 Permission approval card widget",
+          "doc_role": "consumer",
+          "section_role": "consumer_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "heading": "### Recovery command definitions",
+          "doc_role": "owner",
+          "section_role": "consumer_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/Crosswalk.md",
+          "heading": "### 3.10 Permission and approval-scope ownership",
+          "doc_role": "mirror",
+          "section_role": "mirror_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/Executor_Protocol.md",
+          "heading": "### Worktree-aware execution unit context",
+          "doc_role": "owner",
+          "section_role": "owner_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "heading": "## Unified Thread Blocked-State Lifecycle",
+          "doc_role": "consumer",
+          "section_role": "consumer_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/Permissions_System.md",
+          "heading": "### Permission snapshot contract",
+          "doc_role": "owner",
+          "section_role": "owner_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/human-in-the-loop.md",
+          "heading": "### Canonical HITL request contract",
+          "doc_role": "consumer",
+          "section_role": "consumer_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/human-in-the-loop.md",
+          "heading": "## Shared approval-ladder alignment (2026-04-04)",
+          "doc_role": "consumer",
+          "section_role": "consumer_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/Permissions_System.md",
+          "heading": "## 6. Ask flow semantics",
+          "doc_role": "owner",
+          "section_role": "owner_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/Tools.md",
+          "heading": "### 10.7 Ask-flow runner notes",
+          "doc_role": "consumer",
+          "section_role": "consumer_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/Tools.md",
+          "heading": "### `tool.denied` requirements",
+          "doc_role": "consumer",
+          "section_role": "consumer_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "heading": "### Persistence and restore rule",
+          "doc_role": "consumer",
+          "section_role": "consumer_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "### `scheduler.pass` (minimum addendum fields)",
+          "doc_role": "owner",
+          "section_role": "owner_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/Crosswalk.md",
+          "heading": "### 3.1 Runtime orchestration ownership",
+          "doc_role": "mirror",
+          "section_role": "mirror_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/Executor_Protocol.md",
+          "heading": "## 5. Node execution fields",
+          "doc_role": "owner",
+          "section_role": "owner_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/Executor_Protocol.md",
+          "heading": "### Wake reasons and coalescing",
+          "doc_role": "owner",
+          "section_role": "owner_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "heading": "## Canonical Runtime Recovery Command Consolidation (2026-03-09)",
+          "doc_role": "owner",
+          "section_role": "owner_section",
+          "status": "active"
+        }
+      ],
+      "transfer_status": "open_gap",
+      "open_gap_ids": [
+        "FIDELITY-010",
+        "FIDELITY-011",
+        "FIDELITY-013",
+        "FIDELITY-022",
+        "FIDELITY-035",
+        "FIDELITY-036",
+        "FIDELITY-038",
+        "FIDELITY-043",
+        "FIDELITY-045",
+        "FIDELITY-047",
+        "FIDELITY-052",
+        "FIDELITY-053",
+        "FIDELITY-074",
+        "FIDELITY-075"
+      ],
+      "open_gap_count": 14
+    },
+    {
+      "obligation_id": "OBL-033",
+      "kind": "attribution_schema",
+      "exact_obligation": "Define one unified runtime/tool/artifact attribution packet and carry it through tool events, runtime artifacts, validation reports, wizard handoff, and downstream usage/account-pressure surfaces.",
+      "exact_tokens": [
+        "node_id",
+        "attempt_id",
+        "lane_id",
+        "package_id",
+        "execution_role",
+        "effective_account_id",
+        "operational_identity",
+        "tool.invoked",
+        "tool.denied"
+      ],
+      "propagation_scope": "Tool events, artifact envelopes, validation-pass reports, wizard/interview handoff, usage/account-pressure history",
+      "owner_hint": "Contracts_V0.md and Tools.md",
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/Tools.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/chain-wizard-flexibility.md",
+        "Plans/interview-subagent-integration.md",
+        "Plans/usage-feature.md"
+      ],
+      "interface_shape_fields": [
+        "node_id",
+        "attempt_id",
+        "lane_id",
+        "package_id",
+        "execution_role",
+        "effective_account_id",
+        "operational_identity",
+        "tool_use_id"
+      ],
+      "behavioral_edges": [
+        "Artifact, tool, blocked, and handoff surfaces must explain which effective account/actor produced or approved the action.",
+        "validation_pass_report and wizard handoff must carry project/report lineage plus runtime identity."
+      ],
+      "cross_reference_targets": [
+        "runtime artifact minimum contract",
+        "wizard handoff governance payload",
+        "tool event contract"
+      ],
+      "stale_residue_to_retire": [
+        "analytics-thin tool events",
+        "identity-thin validation or handoff payloads",
+        "artifact attribution without attempt identity"
+      ],
+      "source_basis": "working_ledger.md:9052-9136, 9137-9221, 10137-10335, 10336-10536, 17421-17431; current chat context audit synthesis",
+      "mapped_sections": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "### 5.1B Persona/Runtime Snapshot Payload Contract",
+          "doc_role": "owner",
+          "section_role": "owner_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "## 3. Tool events (persisted)",
+          "doc_role": "owner",
+          "section_role": "owner_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "### 4.1 Shared runtime identity consumption",
+          "doc_role": "owner",
+          "section_role": "owner_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "### 4.4 Activity transparency payloads",
+          "doc_role": "owner",
+          "section_role": "owner_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/Prompt_Pipeline.md",
+          "heading": "## Runtime Attempt Snapshot and Handoff Bundle",
+          "doc_role": "owner",
+          "section_role": "owner_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "heading": "### 13.4 Shared runtime identity display",
+          "doc_role": "consumer",
+          "section_role": "consumer_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/chain-wizard-flexibility.md",
+          "heading": "### 17.4 Assistant-to-wizard handoff payload",
+          "doc_role": "owner",
+          "section_role": "owner_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/Tools.md",
+          "heading": "### 8.0 Event payloads (seglog)",
+          "doc_role": "consumer",
+          "section_role": "consumer_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/usage-feature.md",
+          "heading": "### Canonical usage pipeline",
+          "doc_role": "consumer",
+          "section_role": "consumer_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/usage-feature.md",
+          "heading": "### Billing identity, attribution, and pricing metadata",
+          "doc_role": "consumer",
+          "section_role": "consumer_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/interview-subagent-integration.md",
+          "heading": "### Requested/effective Interview contract",
+          "doc_role": "consumer",
+          "section_role": "consumer_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "heading": "### 29.4 Accepting the recommendation: handoff to Chain Wizard / Interview",
+          "doc_role": "consumer",
+          "section_role": "consumer_section",
+          "status": "active"
+        }
+      ],
+      "transfer_status": "open_gap",
+      "open_gap_ids": [
+        "FIDELITY-001",
+        "FIDELITY-012",
+        "FIDELITY-050",
+        "FIDELITY-051",
+        "FIDELITY-079",
+        "FIDELITY-082",
+        "FIDELITY-084"
+      ],
+      "open_gap_count": 7
+    },
+    {
+      "obligation_id": "OBL-034",
+      "kind": "bridge_and_envelope_contract",
+      "exact_obligation": "Make bridge-field behavior explicit: attempt_id is canonical local runtime anchor; provider_attempt_ref bridges provider/runtime execution; usage_event_ref bridges cost/usage history; receipt refs bridge external side-effect lineage. Define runtime-artifact envelope minimum contract accordingly.",
+      "exact_tokens": [
+        "attempt_id",
+        "provider_attempt_ref",
+        "usage_event_ref",
+        "receipt refs",
+        "runtime-artifact envelope"
+      ],
+      "propagation_scope": "Artifacts, receipts, usage pivots, provider/runtime correlation, evidence and ledger drill-through",
+      "owner_hint": "Contracts_V0.md and Runtime_Artifacts_Panel.md",
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/storage-plan.md",
+        "Plans/Project_Output_Artifacts.md"
+      ],
+      "interface_shape_fields": [
+        "attempt_id",
+        "provider_attempt_ref",
+        "usage_event_ref",
+        "workflow_refs",
+        "docker_refs",
+        "kubernetes_refs",
+        "subagent_lineage",
+        "cost_usage"
+      ],
+      "behavioral_edges": [
+        "Timestamp/run/thread fallback is compatibility-only when bridge refs are absent.",
+        "Artifacts need degraded/stale projection behavior.",
+        "Missing attempt_id in artifact surfaces is a correctness bug, not a future enhancement."
+      ],
+      "cross_reference_targets": [
+        "ref family split",
+        "tool/artifact attribution",
+        "usage and evidence correlation refactor"
+      ],
+      "stale_residue_to_retire": [
+        "artifact envelopes that omit attempt_id",
+        "implicit bridge precedence",
+        "cost_usage linkage resting on optional undeclared semantics"
+      ],
+      "source_basis": "working_ledger.md:10460-10645, 10537-10645, 11663-11722, 17409-17419; current chat context audit synthesis",
+      "mapped_sections": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "## 3. Tool events (persisted)",
+          "doc_role": "owner",
+          "section_role": "owner_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "### 4.4 Activity transparency payloads",
+          "doc_role": "owner",
+          "section_role": "owner_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "### Cross-surface receipt record",
+          "doc_role": "owner",
+          "section_role": "owner_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "heading": "## Cross-Surface Operation Receipt Linkage Addendum (2026-03-12)",
+          "doc_role": "consumer",
+          "section_role": "consumer_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "## 3. Node detail inspector",
+          "doc_role": "consumer",
+          "section_role": "consumer_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/usage-feature.md",
+          "heading": "### Cost_usage runtime artifact and Show in Ledger / Show in Usage",
+          "doc_role": "consumer",
+          "section_role": "consumer_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "heading": "## 5. Canonical IDs and task_id rule",
+          "doc_role": "owner",
+          "section_role": "owner_section",
+          "status": "active"
+        }
+      ],
+      "transfer_status": "open_gap",
+      "open_gap_ids": [
+        "FIDELITY-005",
+        "FIDELITY-018",
+        "FIDELITY-020",
+        "FIDELITY-072",
+        "FIDELITY-085"
+      ],
+      "open_gap_count": 5
+    },
+    {
+      "obligation_id": "OBL-035",
+      "kind": "storage_convention",
+      "exact_obligation": "GitHub durable account identity must use stable internal account_id and credential_ref, with login remaining display-only/provider-native metadata.",
+      "exact_tokens": [
+        "account_id",
+        "credential_ref",
+        "github_api:github.com/<login>",
+        "login",
+        "display-only"
+      ],
+      "propagation_scope": "GitHub auth flows, account storage, reconnect context, multi-account routing, audit display",
+      "owner_hint": "GitHub_API_Auth_and_Flows.md and Multi-Account.md",
+      "affected_doc_hints": [
+        "Plans/GitHub_API_Auth_and_Flows.md",
+        "Plans/Multi-Account.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/storage-plan.md"
+      ],
+      "interface_shape_fields": [
+        "account_id",
+        "credential_ref",
+        "login",
+        "auth_realm"
+      ],
+      "behavioral_edges": [
+        "Username rename must not break identity or reconnect behavior.",
+        "Reconnect payloads must carry canonical recovery context rather than arg-less login-keyed flows."
+      ],
+      "cross_reference_targets": [
+        "requested/effective identity bundle",
+        "GitHub reconnect context"
+      ],
+      "stale_residue_to_retire": [
+        "github_api:github.com/<login>",
+        "login-keyed durable identity"
+      ],
+      "source_basis": "working_ledger.md:6988-7056, 17421-17431; current chat context legacy-readiness checks",
+      "mapped_sections": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "### 4.1 Shared runtime identity consumption",
+          "doc_role": "owner",
+          "section_role": "owner_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/GitHub_Integration.md",
+          "heading": "## Deferred GitHub Recovery Binding (2026-03-09)",
+          "doc_role": "owner",
+          "section_role": "owner_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/Crosswalk.md",
+          "heading": "### 3.12 Provider and account-selection ownership",
+          "doc_role": "mirror",
+          "section_role": "mirror_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/GitHub_API_Auth_and_Flows.md",
+          "heading": "## Token handling and storage (hard rules)",
+          "doc_role": "owner",
+          "section_role": "owner_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/GitHub_API_Auth_and_Flows.md",
+          "heading": "## Runtime Auth-Blocked Recovery Addendum (2026-03-09)",
+          "doc_role": "owner",
+          "section_role": "owner_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/Multi-Account.md",
+          "heading": "## 4. Data model",
+          "doc_role": "owner",
+          "section_role": "owner_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/usage-feature.md",
+          "heading": "### Billing identity, attribution, and pricing metadata",
+          "doc_role": "consumer",
+          "section_role": "consumer_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/GitHub_API_Auth_and_Flows.md",
+          "heading": "### Credential store keying (canonical)",
+          "doc_role": "owner",
+          "section_role": "owner_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/GitHub_API_Auth_and_Flows.md",
+          "heading": "### 2. Event and wakeup integration",
+          "doc_role": "owner",
+          "section_role": "owner_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/Multi-Account.md",
+          "heading": "### 4.2 Account record (canonical)",
+          "doc_role": "owner",
+          "section_role": "owner_section",
+          "status": "active"
+        }
+      ],
+      "transfer_status": "open_gap",
+      "open_gap_ids": [
+        "FIDELITY-023",
+        "FIDELITY-048",
+        "FIDELITY-069",
+        "FIDELITY-084"
+      ],
+      "open_gap_count": 4
+    },
+    {
+      "obligation_id": "OBL-036",
+      "kind": "artifact_lineage",
+      "exact_obligation": "`validation_pass_report` must remain an upstream artifact, but it must carry enough planning lineage, runtime identity, and downstream bridge data to explain which sweep ran, what it evaluated, and what execution it seeded.",
+      "exact_tokens": [
+        "validation_pass_report",
+        "workflow_run_id",
+        "pass_number",
+        "pass_name",
+        "pass_verdict",
+        "verdict_reason",
+        "provider",
+        "model",
+        "wizard_id",
+        "project_id",
+        "thread_id",
+        "phase_plan_ref",
+        "staged_bundle_ref",
+        "requirements_quality_report_ref",
+        "execution_role",
+        "effective_account_id",
+        "run_id",
+        "skipped"
+      ],
+      "propagation_scope": "Validation-pass sweep artifacts, wizard blocked/attention behavior, artifact promotion lineage, execution launch handoff",
+      "owner_hint": "chain-wizard-flexibility.md, Project_Output_Artifacts.md, storage-plan.md, and Contracts_V0.md",
+      "affected_doc_hints": [
+        "Plans/chain-wizard-flexibility.md",
+        "Plans/Project_Output_Artifacts.md",
+        "Plans/storage-plan.md",
+        "Plans/Contracts_V0.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Run_Graph_View.md"
+      ],
+      "interface_shape_fields": [
+        "workflow_run_id",
+        "pass_number",
+        "pass_name",
+        "pass_verdict",
+        "verdict_reason",
+        "provider",
+        "model",
+        "wizard_id",
+        "project_id",
+        "thread_id",
+        "phase_plan_ref",
+        "staged_bundle_ref",
+        "requirements_quality_report_ref",
+        "execution_role",
+        "effective_account_id",
+        "run_id"
+      ],
+      "behavioral_edges": [
+        "Pass reports must not masquerade as run/node/attempt records.",
+        "Accepted/final sweep output must bridge into launched execution through a launch receipt or promoted package ref.",
+        "`pass_verdict` cannot remain pass/fail-only where downstream flow requires `skipped`."
+      ],
+      "cross_reference_targets": [
+        "wizard blocked state",
+        "post-pass artifact tree finality",
+        "launch receipt",
+        "promoted package ref"
+      ],
+      "stale_residue_to_retire": [
+        "provider/model-only identity on pass reports",
+        "`workflow_run_id` as the only lineage bridge",
+        "isolated pass reports that do not name the wizard/session/bundle they came from",
+        "pass/fail-only assumptions where `skipped` is required"
+      ],
+      "source_basis": "working_ledger.md:9297-9379, 10963-10966",
+      "mapped_sections": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "### 3.3 Requirements quality events",
+          "doc_role": "owner",
+          "section_role": "owner_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "### Cross-surface receipt record",
+          "doc_role": "owner",
+          "section_role": "owner_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "heading": "## Cross-Surface Operation Receipt Linkage Addendum (2026-03-12)",
+          "doc_role": "consumer",
+          "section_role": "consumer_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/Project_Output_Artifacts.md",
+          "heading": "## 10. Validation Pass Report Artifacts",
+          "doc_role": "owner",
+          "section_role": "owner_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "## 3. Node detail inspector",
+          "doc_role": "consumer",
+          "section_role": "consumer_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": "## 6. Evidence tab",
+          "doc_role": "owner",
+          "section_role": "owner_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/chain-wizard-flexibility.md",
+          "heading": "## 12. Three-Pass Canonical Validation Workflow (Mandatory Invariant Sweep)",
+          "doc_role": "owner",
+          "section_role": "owner_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/chain-wizard-flexibility.md",
+          "heading": "### 17.4 Assistant-to-wizard handoff payload",
+          "doc_role": "owner",
+          "section_role": "owner_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/interview-subagent-integration.md",
+          "heading": "### Execution-Critical Validation References",
+          "doc_role": "consumer",
+          "section_role": "consumer_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/chain-wizard-flexibility.md",
+          "heading": "### 2.2 Downstream Handoff Contract",
+          "doc_role": "owner",
+          "section_role": "owner_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "heading": "### 26.5 Storage",
+          "doc_role": "consumer",
+          "section_role": "consumer_section",
+          "status": "active"
+        }
+      ],
+      "transfer_status": "open_gap",
+      "open_gap_ids": [
+        "FIDELITY-005",
+        "FIDELITY-007",
+        "FIDELITY-020",
+        "FIDELITY-024",
+        "FIDELITY-057",
+        "FIDELITY-072",
+        "FIDELITY-080"
+      ],
+      "open_gap_count": 7
+    },
+    {
+      "obligation_id": "OBL-037",
+      "kind": "storage_family",
+      "exact_obligation": "Storage must own a first-class runtime-artifact index/projection family with per-artifact row identity, projector checkpoints, rebuild/degrade semantics, and attempt/node-aware indexed fields instead of leaving artifact indexing half-owned by the panel doc.",
+      "exact_tokens": [
+        "runtime_artifact.*",
+        "artifacts_index.v1:{project_id}:{artifact_id}",
+        "artifacts_project_state.v1:{project_id}",
+        "projector.checkpoint.runtime_artifacts:{project_id}",
+        "artifact_id",
+        "artifact_type",
+        "project_id",
+        "run_id",
+        "thread_id",
+        "node_id",
+        "attempt_id",
+        "created_at_utc",
+        "summary",
+        "linked_artifact_id",
+        "usage_event_ref",
+        "projection_freshness",
+        "projection_health"
+      ],
+      "propagation_scope": "Runtime-artifact storage, artifact panel lookup/filter/navigation, projector rebuild and degradation handling, artifact inspection fallback behavior",
+      "owner_hint": "storage-plan.md and Runtime_Artifacts_Panel.md",
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Project_Output_Artifacts.md",
+        "Plans/usage-feature.md"
+      ],
+      "interface_shape_fields": [
+        "artifacts_index.v1:{project_id}:{artifact_id}",
+        "artifacts_project_state.v1:{project_id}",
+        "projector.checkpoint.runtime_artifacts:{project_id}",
+        "artifact_id",
+        "artifact_type",
+        "project_id",
+        "run_id",
+        "thread_id",
+        "node_id",
+        "attempt_id",
+        "created_at_utc",
+        "summary",
+        "linked_artifact_id",
+        "usage_event_ref",
+        "projection_freshness",
+        "projection_health"
+      ],
+      "behavioral_edges": [
+        "The index is a projection for lookup/filter/navigation, not the canonical source.",
+        "It must be rebuildable from seglog `runtime_artifact.*` events.",
+        "Missing or corrupt index rows must degrade to record-backed views rather than implying artifact loss."
+      ],
+      "cross_reference_targets": [
+        "seglog `runtime_artifact.*` as canonical source",
+        "artifact envelope refs",
+        "`projection_freshness`",
+        "`projection_health`"
+      ],
+      "stale_residue_to_retire": [
+        "`artifacts_index:v1:{project_id}` as a sole underspecified canonical contract",
+        "panel-only ownership of projector/checkpoint semantics",
+        "artifact indexing that omits `attempt_id` and `node_id`"
+      ],
+      "source_basis": "working_ledger.md:9381-9457, 9467-9498",
+      "mapped_sections": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "### Required redb keys",
+          "doc_role": "owner",
+          "section_role": "owner_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "### Projection rules (reconciled)",
+          "doc_role": "owner",
+          "section_role": "owner_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "heading": "## 4. redb key and projector",
+          "doc_role": "consumer",
+          "section_role": "consumer_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/usage-feature.md",
+          "heading": "### Cost_usage runtime artifact and Show in Ledger / Show in Usage",
+          "doc_role": "consumer",
+          "section_role": "consumer_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "heading": "## 2. Two artifact families (no conflation)",
+          "doc_role": "owner",
+          "section_role": "owner_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/Project_Output_Artifacts.md",
+          "heading": "### Runtime Artifacts (GUI panel) \u2014 distinct from this document",
+          "doc_role": "mirror",
+          "section_role": "mirror_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "#### Artifacts side-panel owner",
+          "doc_role": "consumer",
+          "section_role": "consumer_section",
+          "status": "active"
+        }
+      ],
+      "transfer_status": "open_gap",
+      "open_gap_ids": [
+        "FIDELITY-003",
+        "FIDELITY-006",
+        "FIDELITY-016",
+        "FIDELITY-017",
+        "FIDELITY-032",
+        "FIDELITY-085"
+      ],
+      "open_gap_count": 6
+    },
+    {
+      "obligation_id": "OBL-038",
+      "kind": "storage_family",
+      "exact_obligation": "Storage must own durable worktree and lane record/projection families so `worktree_id` becomes the durable identity and `lane_id` becomes operational lineage, with lifecycle/history surviving restart, cleanup, archive, and remove flows.",
+      "exact_tokens": [
+        "worktree_record.v1:{project_id}:{worktree_id}",
+        "lane_record.v1:{project_id}:{lane_id}",
+        "worktree_projection.v1:{project_id}:{worktree_id}",
+        "lane_projection.v1:{project_id}:{lane_id}",
+        "worktree_id",
+        "lane_id",
+        "repo_id",
+        "path_ref",
+        "branch_ref",
+        "baseline_ref",
+        "created_by_run_id",
+        "created_by_attempt_id",
+        "historical_lineage_refs[]",
+        "owner_run_id",
+        "owner_attempt_id",
+        "dirty_state",
+        "conflict_state",
+        "blocked_reason_code",
+        "last_seen_at_utc",
+        "projection_freshness",
+        "projection_health",
+        "active",
+        "suspect",
+        "restoring",
+        "retained",
+        "cleanup_eligible",
+        "archived",
+        "removed",
+        "extract_tier_id()",
+        "selected_worktree_id",
+        "orchestrator.receipt.{run_id}.{attempt_id}"
+      ],
+      "propagation_scope": "Source-control lifecycle state, restart recovery, historical lineage and audit, cross-surface worktree/lane pivots",
+      "owner_hint": "storage-plan.md and WorktreeGitImprovement.md",
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "interface_shape_fields": [
+        "worktree_record.v1:{project_id}:{worktree_id}",
+        "lane_record.v1:{project_id}:{lane_id}",
+        "worktree_projection.v1:{project_id}:{worktree_id}",
+        "lane_projection.v1:{project_id}:{lane_id}",
+        "worktree_id",
+        "lane_id",
+        "repo_id",
+        "path_ref",
+        "branch_ref",
+        "baseline_ref",
+        "created_by_run_id",
+        "created_by_attempt_id",
+        "historical_lineage_refs[]",
+        "owner_run_id",
+        "owner_attempt_id",
+        "dirty_state",
+        "conflict_state",
+        "blocked_reason_code",
+        "last_seen_at_utc",
+        "projection_freshness",
+        "projection_health"
+      ],
+      "behavioral_edges": [
+        "Filesystem rediscovery must not be the only restart authority for worktrees.",
+        "`extract_tier_id()` is a migration trap and must not silently decide durable identity for lane-era worktrees.",
+        "Lane/worktree lifecycle and historical lineage must survive cleanup, archive, and remove flows."
+      ],
+      "cross_reference_targets": [
+        "`selected_worktree_id`",
+        "`orchestrator.receipt.{run_id}.{attempt_id}`",
+        "lane/worktree lifecycle vocab"
+      ],
+      "stale_residue_to_retire": [
+        "tier-keyed worktree identity",
+        "filesystem rediscovery as sole restart authority",
+        "hidden `extract_tier_id()` migration behavior"
+      ],
+      "source_basis": "working_ledger.md:9459-9575, 4892-5050, 17264-17266",
+      "mapped_sections": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "### Required redb keys",
+          "doc_role": "owner",
+          "section_role": "owner_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "### Restart and stale history",
+          "doc_role": "owner",
+          "section_role": "owner_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/WorktreeGitImprovement.md",
+          "heading": "### 4.1 Assistant-created worktree lifecycle",
+          "doc_role": "owner",
+          "section_role": "owner_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/WorktreeGitImprovement.md",
+          "heading": "### 2.8 Startup recovery uses process CWD",
+          "doc_role": "owner",
+          "section_role": "owner_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "## 4. Data model and identity",
+          "doc_role": "consumer",
+          "section_role": "consumer_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": "## 11. Source Control boundary",
+          "doc_role": "owner",
+          "section_role": "owner_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/GitHub_Integration.md",
+          "heading": "### A.4 Worktrees",
+          "doc_role": "owner",
+          "section_role": "owner_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "### New redb key families",
+          "doc_role": "owner",
+          "section_role": "owner_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/WorktreeGitImprovement.md",
+          "heading": "## 4. GUI for Git & Worktrees",
+          "doc_role": "consumer",
+          "section_role": "consumer_section",
+          "status": "active"
+        }
+      ],
+      "transfer_status": "open_gap",
+      "open_gap_ids": [
+        "FIDELITY-003",
+        "FIDELITY-004",
+        "FIDELITY-062",
+        "FIDELITY-064",
+        "FIDELITY-065",
+        "FIDELITY-067",
+        "FIDELITY-068",
+        "FIDELITY-073"
+      ],
+      "open_gap_count": 8
+    },
+    {
+      "obligation_id": "OBL-039",
+      "kind": "ui_contract",
+      "exact_obligation": "Orchestrator remains tab-first with `Progress` as the only widget-hosting tab, and the default Progress widget catalog plus drill-target mapping stay explicit: `Run Status -> History`, `Current Activity -> Node Graph`, `Attention / Blockers -> Node Graph`, `Seam Health -> Seams`, `Package Activity -> Seams`, `Promotion Queue -> Ledger`, `Worktree Lanes -> Node Graph`, `Account / Usage Pressure -> Usage`, `Recent Major Events -> History`, `Overseer Activity -> Seams`, `Corroboration Queue -> Evidence`, `Recovery State -> Evidence`, `Throughput / Capacity -> History`.",
+      "exact_tokens": [
+        "Progress",
+        "Run Status",
+        "Current Activity",
+        "Attention / Blockers",
+        "Seam Health",
+        "Package Activity",
+        "Promotion Queue",
+        "Worktree Lanes",
+        "Account / Usage Pressure",
+        "Recent Major Events",
+        "Overseer Activity",
+        "Corroboration Queue",
+        "Recovery State",
+        "Throughput / Capacity",
+        "History",
+        "Node Graph",
+        "Seams",
+        "Ledger",
+        "Usage",
+        "Evidence"
+      ],
+      "propagation_scope": "Orchestrator shell, widget system, and dashboard-hostable summary widgets.",
+      "owner_hint": "Orchestrator_Page.md and Widget_System.md",
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/Widget_System.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Glossary.md"
+      ],
+      "interface_shape_fields": [
+        "widget_id",
+        "host_surface",
+        "default_drill_target",
+        "widget_layout_state"
+      ],
+      "behavioral_edges": [
+        "`Progress` is the only Orchestrator widget canvas.",
+        "A reusable subset may also be hostable on Dashboard.",
+        "Non-Orchestrator widgets must not be hostable on the Orchestrator page.",
+        "Drill targets are deterministic defaults, not per-surface guesswork."
+      ],
+      "cross_reference_targets": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/Widget_System.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "stale_residue_to_retire": [
+        "unnamed Progress widget catalog",
+        "widget hosting outside `Progress` as the default Orchestrator model"
+      ],
+      "source_basis": "working_ledger.md:75-105, 322-329, 17369-17372",
+      "mapped_sections": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": "## 3. Progress tab",
+          "doc_role": "owner",
+          "section_role": "owner_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": "## 4. Seams tab",
+          "doc_role": "owner",
+          "section_role": "owner_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": "## 5. Node Graph tab",
+          "doc_role": "owner",
+          "section_role": "owner_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": "## 7. History tab",
+          "doc_role": "owner",
+          "section_role": "owner_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": "## 8. Ledger tab",
+          "doc_role": "owner",
+          "section_role": "owner_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": "## 6. Evidence tab",
+          "doc_role": "owner",
+          "section_role": "owner_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### 7.1 Orchestrator",
+          "doc_role": "consumer",
+          "section_role": "consumer_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "## 2. Hostability and data contracts",
+          "doc_role": "consumer",
+          "section_role": "consumer_section",
+          "status": "active"
+        }
+      ],
+      "transfer_status": "open_gap",
+      "open_gap_ids": [
+        "FIDELITY-044",
+        "FIDELITY-057",
+        "FIDELITY-058",
+        "FIDELITY-059"
+      ],
+      "open_gap_count": 4
+    },
+    {
+      "obligation_id": "OBL-040",
+      "kind": "terminology",
+      "exact_obligation": "Canonical rewrite labels stay stable across docs and help: tabs/objects use `Seams`, `Feature Seam`, `Work Package`, `Package Overseer`, `Seam Overseer`; user-facing state/action labels use `Locally Complete`, `Available to Seam`, `Seam Complete`, `Completion Blocked`, `Weak Integration`, `Promotion Blocked`, `Promotion Revoked`, `Corroboration Requested`, `Challenge Accepted`, `Challenge Not Accepted`, `Advisory Concern Recorded`, `Graph Patch Requested`, `Graph Patch Applied`, `Generation Updated`, `Lane to Package`, `Package to Seam`, `Seam Completion`, `Seam Completion Revoked`, `Reopened`, `Reopened by Patch`, and `Reopened by New Evidence`.",
+      "exact_tokens": [
+        "Seams",
+        "Feature Seam",
+        "Work Package",
+        "Package Overseer",
+        "Seam Overseer",
+        "Locally Complete",
+        "Available to Seam",
+        "Seam Complete",
+        "Completion Blocked",
+        "Weak Integration",
+        "Promotion Blocked",
+        "Promotion Revoked",
+        "Corroboration Requested",
+        "Challenge Accepted",
+        "Challenge Not Accepted",
+        "Advisory Concern Recorded",
+        "Graph Patch Requested",
+        "Graph Patch Applied",
+        "Generation Updated",
+        "Lane to Package",
+        "Package to Seam",
+        "Seam Completion",
+        "Seam Completion Revoked",
+        "Reopened",
+        "Reopened by Patch",
+        "Reopened by New Evidence"
+      ],
+      "propagation_scope": "Glossary ownership, Orchestrator copy, graph/detail copy, and cross-surface rewrite labeling.",
+      "owner_hint": "Glossary.md and Orchestrator_Page.md",
+      "affected_doc_hints": [
+        "Plans/Glossary.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Widget_System.md"
+      ],
+      "interface_shape_fields": [
+        "tab_label",
+        "object_label",
+        "state_label",
+        "action_label",
+        "concern_group_label"
+      ],
+      "behavioral_edges": [
+        "Canonical terms remain stable in docs and runtime models; simpler copy changes explanation depth only.",
+        "`Weak Integration` is summarized visibly and grouped under `Wiring`, `Workflow`, `State`, `GUI`, and `Design`.",
+        "Package issues roll up to seam concerns only when they cross package/seam or user-visible boundaries.",
+        "Promotion and reopen semantics remain explicit named boundaries and states."
+      ],
+      "cross_reference_targets": [
+        "Plans/Glossary.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "stale_residue_to_retire": [
+        "`Tiers` as the primary rewrite tab/object label",
+        "local jargon that renames canonical rewrite objects"
+      ],
+      "source_basis": "working_ledger.md:145-206, 6501-6584, 17373-17375",
+      "mapped_sections": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "## 3. Node detail inspector",
+          "doc_role": "consumer",
+          "section_role": "consumer_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": "## 4. Seams tab",
+          "doc_role": "owner",
+          "section_role": "owner_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": "## 5. Node Graph tab",
+          "doc_role": "owner",
+          "section_role": "owner_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### 7.1 Orchestrator",
+          "doc_role": "consumer",
+          "section_role": "consumer_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/Glossary.md",
+          "heading": "### Orchestrator rewrite terms",
+          "doc_role": "owner",
+          "section_role": "owner_section",
+          "status": "active"
+        }
+      ],
+      "transfer_status": "open_gap",
+      "open_gap_ids": [
+        "FIDELITY-008",
+        "FIDELITY-072"
+      ],
+      "open_gap_count": 2
+    },
+    {
+      "obligation_id": "OBL-041",
+      "kind": "event_taxonomy",
+      "exact_obligation": "Operational attention semantics remain explicit: blocked owners normalize to `Runtime`, `Package Overseer`, `Seam Overseer`, `Corroboration`, `Graph Patch`, `Recovery`, `User`, and `External Resource`; alert levels are `Info`, `Warning`, `Attention`, and `Action Required`; canonical event families are `seam.*`, `package.*`, `node.*`, `promotion.*`, `corroboration.*`, `graph_patch.*`, `recovery.*`, and `account.*`; unresolved conditions stay on operational surfaces while resolved items fall back to `History` with normal resolved linger about 15 minutes and major resolved linger until dismissed or up to 24 hours.",
+      "exact_tokens": [
+        "Runtime",
+        "Package Overseer",
+        "Seam Overseer",
+        "Corroboration",
+        "Graph Patch",
+        "Recovery",
+        "User",
+        "External Resource",
+        "Info",
+        "Warning",
+        "Attention",
+        "Action Required",
+        "seam.*",
+        "package.*",
+        "node.*",
+        "promotion.*",
+        "corroboration.*",
+        "graph_patch.*",
+        "recovery.*",
+        "account.*",
+        "resolved",
+        "dismissed",
+        "acknowledged"
+      ],
+      "propagation_scope": "Orchestrator, Dashboard, notifications, chat escalation, and event/backbone copy.",
+      "owner_hint": "Orchestrator_Page.md and FinalGUISpec.md",
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Glossary.md",
+        "Plans/usage-feature.md"
+      ],
+      "interface_shape_fields": [
+        "blocked_owner_kind",
+        "alert_level",
+        "event_family",
+        "condition_state",
+        "linger_policy"
+      ],
+      "behavioral_edges": [
+        "Dashboard is summary/urgency, Orchestrator is detailed operational context, and chat threads are only for cases needing real user resolution.",
+        "Active blockers must not be dismissible into fake health.",
+        "`acknowledged` is distinct from both `resolved` and `dismissed` and only reduces noise for advisory/minor concerns.",
+        "Resurfacing responds to meaningful change, persistence, owner change, threshold crossing, or newly available action, not heartbeat spam."
+      ],
+      "cross_reference_targets": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/storage-plan.md"
+      ],
+      "stale_residue_to_retire": [
+        "generic red project badge without owner/reason context",
+        "silent demotion of persistent blockers into history"
+      ],
+      "source_basis": "working_ledger.md:193-257, 4295-4417, 17373-17375",
+      "mapped_sections": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": "## 7. History tab",
+          "doc_role": "owner",
+          "section_role": "owner_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": "## 12. Concern and notification model",
+          "doc_role": "owner",
+          "section_role": "owner_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### 7.5 Project and attention surfaces",
+          "doc_role": "consumer",
+          "section_role": "consumer_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/Glossary.md",
+          "heading": "### Orchestrator rewrite terms",
+          "doc_role": "owner",
+          "section_role": "owner_section",
+          "status": "active"
+        }
+      ],
+      "transfer_status": "open_gap",
+      "open_gap_ids": [
+        "FIDELITY-008",
+        "FIDELITY-031",
+        "FIDELITY-058",
+        "FIDELITY-063"
+      ],
+      "open_gap_count": 4
+    },
+    {
+      "obligation_id": "OBL-042",
+      "kind": "ui_state",
+      "exact_obligation": "Orchestrator must own explicit historical focus state: `Historical Run Mode`, `active_run_id?`, `focused_run_id?`, `focus_mode = live | historical`, and `orchestrator.project_state.{project_id}` with `focused_run_id?`, `focus_mode`, `last_live_run_id?`, `selected_tab`, per-tab view state refs, and `auto_return_to_live = false` by default.",
+      "exact_tokens": [
+        "Historical Run Mode",
+        "active_run_id?",
+        "focused_run_id?",
+        "focus_mode = live | historical",
+        "orchestrator.project_state.{project_id}",
+        "last_live_run_id?",
+        "selected_tab",
+        "auto_return_to_live = false"
+      ],
+      "propagation_scope": "Orchestrator page state, historical/live switching, and cross-tab search routing.",
+      "owner_hint": "Orchestrator_Page.md and FinalGUISpec.md",
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Widget_System.md",
+        "Plans/storage-plan.md"
+      ],
+      "interface_shape_fields": [
+        "active_run_id",
+        "focused_run_id",
+        "focus_mode",
+        "selected_tab",
+        "per_tab_view_state_refs",
+        "auto_return_to_live"
+      ],
+      "behavioral_edges": [
+        "Historical mode shows a persistent banner/chip with the focused historical `run_id`.",
+        "Live-only actions are disabled or removed in historical mode; historical-safe actions remain inspect/export/lineage oriented.",
+        "The page must not auto-switch away from a historical run just because live activity appears.",
+        "Default search scope is the focused run; widening to project/all-runs must disclose when a result changes `focused_run_id`.",
+        "All Orchestrator tabs share the same focused run context."
+      ],
+      "cross_reference_targets": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/storage-plan.md",
+        "Plans/Run_Graph_View.md"
+      ],
+      "stale_residue_to_retire": [
+        "silent live-focus switching",
+        "tab-local run drift without shared `focused_run_id`"
+      ],
+      "source_basis": "working_ledger.md:2517-2629, 2661-2707, 17377-17385",
+      "mapped_sections": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "### Required redb keys",
+          "doc_role": "owner",
+          "section_role": "owner_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "## 4. Data model and identity",
+          "doc_role": "consumer",
+          "section_role": "consumer_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": "## 5. Node Graph tab",
+          "doc_role": "owner",
+          "section_role": "owner_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": "## 9. Current vs historical run behavior",
+          "doc_role": "owner",
+          "section_role": "owner_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": "## 10. Search, routing, and action policy",
+          "doc_role": "owner",
+          "section_role": "owner_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### 7.1 Orchestrator",
+          "doc_role": "consumer",
+          "section_role": "consumer_section",
+          "status": "active"
+        }
+      ],
+      "transfer_status": "open_gap",
+      "open_gap_ids": [
+        "FIDELITY-003",
+        "FIDELITY-060",
+        "FIDELITY-061",
+        "FIDELITY-073"
+      ],
+      "open_gap_count": 4
+    },
+    {
+      "obligation_id": "OBL-043",
+      "kind": "event_history",
+      "exact_obligation": "Canonical account history uses append-only `account_pressure_episode` and `account_switch_event` families, while `account_switch_reason` on runtime snapshots remains current-run disclosure only.",
+      "exact_tokens": [
+        "account_pressure_episode",
+        "account_switch_event",
+        "episode_id",
+        "switch_event_id",
+        "source_kind",
+        "signal_confidence",
+        "pressure_kind",
+        "decision_kind",
+        "switched",
+        "stayed",
+        "blocked_no_backup",
+        "blocked_required_account",
+        "failed",
+        "source_episode_id?"
+      ],
+      "propagation_scope": "Contracts, storage, Usage, History, Ledger, runtime detail, and notifications.",
+      "owner_hint": "Contracts_V0.md and storage-plan.md",
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md",
+        "Plans/Multi-Account.md",
+        "Plans/usage-feature.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "interface_shape_fields": [
+        "episode_id",
+        "project_id",
+        "provider_id",
+        "account_id",
+        "execution_role?",
+        "source_kind",
+        "signal_confidence",
+        "pressure_kind",
+        "projected_remaining?",
+        "reset_at?",
+        "started_at_utc",
+        "updated_at_utc",
+        "ended_at_utc?",
+        "status",
+        "switch_event_id",
+        "requested_account_id?",
+        "requested_account_binding?",
+        "from_account_id?",
+        "to_account_id?",
+        "switch_reason",
+        "decision_kind",
+        "source_episode_id?",
+        "run_id?",
+        "attempt_id?",
+        "thread_id?",
+        "ts"
+      ],
+      "behavioral_edges": [
+        "Failed or blocked switch decisions still produce durable history even when the effective account did not change.",
+        "Pressure timelines preserve `signal_confidence` and `source_kind` over time.",
+        "Current health snapshots and recent-reason fields do not substitute for canonical switch history."
+      ],
+      "cross_reference_targets": [
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md",
+        "Plans/Multi-Account.md",
+        "Plans/usage-feature.md"
+      ],
+      "stale_residue_to_retire": [
+        "`account_switch_reason` as both pressure cause and switch outcome",
+        "`recent_switch_reason` as durable history"
+      ],
+      "source_basis": "working_ledger.md:8143-8238, 17256-17264, 17446-17449",
+      "mapped_sections": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "### 1.2 EventRecord -- canonical persisted envelope (schema: `pm.event.v0`)",
+          "doc_role": "owner",
+          "section_role": "owner_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "### Canonical records",
+          "doc_role": "owner",
+          "section_role": "owner_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": "## 7. History tab",
+          "doc_role": "owner",
+          "section_role": "owner_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": "## 8. Ledger tab",
+          "doc_role": "owner",
+          "section_role": "owner_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/Multi-Account.md",
+          "heading": "## 4. Data model",
+          "doc_role": "owner",
+          "section_role": "owner_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/usage-feature.md",
+          "heading": "### Canonical usage pipeline",
+          "doc_role": "consumer",
+          "section_role": "consumer_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/usage-feature.md",
+          "heading": "### Billing identity, attribution, and pricing metadata",
+          "doc_role": "consumer",
+          "section_role": "consumer_section",
+          "status": "active"
+        }
+      ],
+      "transfer_status": "open_gap",
+      "open_gap_ids": [
+        "FIDELITY-058",
+        "FIDELITY-059",
+        "FIDELITY-082",
+        "FIDELITY-084"
+      ],
+      "open_gap_count": 4
+    },
+    {
+      "obligation_id": "OBL-044",
+      "kind": "help_contract",
+      "exact_obligation": "Help depth is three-tier: `inline help`, `context help`, and `canonical help entry`; canonical term names do not change between Expert and ELI5, and dedicated help entries must exist for `Feature Seam`, `Work Package`, `Package Overseer`, `Seam Overseer`, `Weak Integration`, `Promotion`, `Corroboration`, `Concern`, `Graph Patch`, `Graph Generation`, `Lane`, `requested vs effective`, `History vs Ledger`, and `historical vs superseded vs revoked vs reopened`.",
+      "exact_tokens": [
+        "inline help",
+        "context help",
+        "canonical help entry",
+        "Feature Seam",
+        "Work Package",
+        "Package Overseer",
+        "Seam Overseer",
+        "Weak Integration",
+        "Promotion",
+        "Corroboration",
+        "Concern",
+        "Graph Patch",
+        "Graph Generation",
+        "Lane",
+        "requested vs effective",
+        "History vs Ledger",
+        "historical vs superseded vs revoked vs reopened"
+      ],
+      "propagation_scope": "Glossary ownership, contextual explainer routing, and cross-surface help/copy governance.",
+      "owner_hint": "Glossary.md and FinalGUISpec.md",
+      "affected_doc_hints": [
+        "Plans/Glossary.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Widget_System.md"
+      ],
+      "interface_shape_fields": [
+        "help_depth",
+        "term_id",
+        "related_concepts[]",
+        "inline_help_text",
+        "context_help_target",
+        "canonical_help_entry_ref"
+      ],
+      "behavioral_edges": [
+        "Small or dense surfaces use compact labels plus linked deeper help instead of local jargon renaming.",
+        "Contextual-help-only surfaces include graph badges, narrow panel chips, trust-state chrome, widget filter fields, and per-surface action-gating messages.",
+        "Glossary owns stable term lists while longer help entries explain why an object exists, related objects, common misunderstandings, and linked concepts."
+      ],
+      "cross_reference_targets": [
+        "Plans/Glossary.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Run_Graph_View.md"
+      ],
+      "stale_residue_to_retire": [
+        "tooltip-only governance for rewrite terms",
+        "renaming canonical terms between Expert and ELI5"
+      ],
+      "source_basis": "working_ledger.md:6490-6590, 17286-17292, 17415-17420",
+      "mapped_sections": [
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "## 3. Node detail inspector",
+          "doc_role": "consumer",
+          "section_role": "consumer_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": "## 5. Node Graph tab",
+          "doc_role": "owner",
+          "section_role": "owner_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### 7.1 Orchestrator",
+          "doc_role": "consumer",
+          "section_role": "consumer_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "#### 7.4.4 Settings (Unified) panel specification",
+          "doc_role": "consumer",
+          "section_role": "consumer_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/Glossary.md",
+          "heading": "### Orchestrator rewrite terms",
+          "doc_role": "owner",
+          "section_role": "owner_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": "## 2. Hostability and data contracts",
+          "doc_role": "consumer",
+          "section_role": "consumer_section",
+          "status": "active"
+        }
+      ],
+      "transfer_status": "open_gap",
+      "open_gap_ids": [
+        "FIDELITY-008",
+        "FIDELITY-030",
+        "FIDELITY-044",
+        "FIDELITY-072"
+      ],
+      "open_gap_count": 4
+    },
+    {
+      "obligation_id": "OBL-045",
+      "kind": "runtime_resolution",
+      "exact_obligation": "Settings and runtime resolution stay three-axis: `source`, `request`, and `execution`; display grammar is `Inherited from`, `Overridden by`, `Requested`, `Effective`, `Reason`, and `Support`; surface auto resolvers emit ranked candidates, winner, and fallback reason using actor type, operation type, scope level, language/framework/domain hints, and project defaults.",
+      "exact_tokens": [
+        "source",
+        "request",
+        "execution",
+        "Inherited from",
+        "Overridden by",
+        "Requested",
+        "Effective",
+        "Reason",
+        "Support",
+        "ranked candidates",
+        "winner",
+        "fallback reason",
+        "actor type",
+        "operation type",
+        "scope level"
+      ],
+      "propagation_scope": "Prompt pipeline, settings display, personas/models resolution, and Orchestrator worker policy disclosure.",
+      "owner_hint": "Prompt_Pipeline.md, Personas.md, Models_System.md, and FinalGUISpec.md",
+      "affected_doc_hints": [
+        "Plans/Prompt_Pipeline.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Personas.md",
+        "Plans/Models_System.md",
+        "Plans/Multi-Account.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "interface_shape_fields": [
+        "source_axis",
+        "request_axis",
+        "execution_axis",
+        "ranked_candidates[]",
+        "winner",
+        "fallback_reason",
+        "actor_type",
+        "operation_type",
+        "scope_level"
+      ],
+      "behavioral_edges": [
+        "UI shows the winning source explicitly instead of forcing precedence reconstruction from docs.",
+        "Requested/effective differences expand visibly when runtime did not honor the request exactly.",
+        "Actor type and operation type dominate stack hints in resolver choice.",
+        "Worker-policy display follows the same requested/effective grammar as persona/model/account disclosure."
+      ],
+      "cross_reference_targets": [
+        "Plans/Prompt_Pipeline.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Personas.md",
+        "Plans/Models_System.md",
+        "Plans/Multi-Account.md"
+      ],
+      "stale_residue_to_retire": [],
+      "source_basis": "working_ledger.md:3658-3745, 3831-3925, 17401-17414",
+      "mapped_sections": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": "## 10. Search, routing, and action policy",
+          "doc_role": "owner",
+          "section_role": "owner_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "#### 7.4.4 Settings (Unified) panel specification",
+          "doc_role": "consumer",
+          "section_role": "consumer_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/Prompt_Pipeline.md",
+          "heading": "### 6.4 Effective resolution record",
+          "doc_role": "owner",
+          "section_role": "owner_section",
+          "status": "active"
+        },
+        {
+          "path": "Plans/Multi-Account.md",
+          "heading": "### 4.5 Selectable unit and runtime resolution",
+          "doc_role": "owner",
+          "section_role": "owner_section",
+          "status": "active"
+        }
+      ],
+      "transfer_status": "open_gap",
+      "open_gap_ids": [
+        "FIDELITY-030",
+        "FIDELITY-061"
+      ],
+      "open_gap_count": 2
+    }
+  ]
+}
