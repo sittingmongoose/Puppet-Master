@@ -1,16 +1,25 @@
 {
+  "schema_id": "pm.canon_inventory.v1",
   "work_id": "w-20260312-203855",
-  "generated_at_utc": "2026-04-15T23:09:20.486Z",
+  "generated_at_utc": "2026-04-15T23:48:09Z",
+  "source_artifacts": [
+    "Plans/.pipeline/work_items/w-20260312-203855/canonical_obligations.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/section_obligation_map.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/working_ledger.md",
+    "Plans/.pipeline/runs/r-20260312-203855-07/ledger_fidelity_report.txt",
+    "Plans/.pipeline/runs/r-20260312-203855-07/fidelity_recovery_plan.txt"
+  ],
   "summary": {
-    "obligation_count": 45,
+    "canon_item_count": 45,
     "mapped_section_count": 119,
-    "obligations_with_open_gaps": 43
+    "canon_items_with_open_gaps": 43,
+    "transferred_canon_items": 2
   },
-  "obligations": [
+  "canon_items": [
     {
-      "obligation_id": "OBL-001",
+      "canon_id": "OBL-001",
       "kind": "model_structure",
-      "exact_obligation": "Source Control stays worktree-first as the primary operational surface for worktree inventory and user actions, while Orchestrator remains the operational surface for why those actions matter.",
+      "exact_canon": "Source Control stays worktree-first as the primary operational surface for worktree inventory and user actions, while Orchestrator remains the operational surface for why those actions matter.",
       "exact_tokens": [
         "Source Control",
         "worktree-first",
@@ -20,7 +29,7 @@
       ],
       "propagation_scope": "Source Control, Orchestrator, Git/worktree action routing, CTA initiation and execution surfaces",
       "owner_hint": "GitHub_Integration.md and Orchestrator_Page.md",
-      "affected_doc_hints": [
+      "affected_docs": [
         "Plans/GitHub_Integration.md",
         "Plans/Orchestrator_Page.md",
         "Plans/FinalGUISpec.md",
@@ -51,8 +60,10 @@
         "run/tier-centric framing of Source Control",
         "Orchestrator direct Git mutation without Source Control execution semantics"
       ],
-      "source_basis": "working_ledger.md:1923-1933, 2105-2125, 2179-2194",
-      "mapped_sections": [
+      "legacy_source_basis": [
+        "working_ledger.md:1923-1933, 2105-2125, 2179-2194"
+      ],
+      "mapped_targets": [
         {
           "path": "Plans/Orchestrator_Page.md",
           "heading": "## 1. Scope and canonical model",
@@ -89,20 +100,19 @@
           "status": "active"
         }
       ],
-      "transfer_status": "open_gap",
+      "transfer_state": "open_gap",
       "open_gap_ids": [
         "FIDELITY-028",
         "FIDELITY-056",
         "FIDELITY-062",
         "FIDELITY-067",
         "FIDELITY-070"
-      ],
-      "open_gap_count": 5
+      ]
     },
     {
-      "obligation_id": "OBL-002",
+      "canon_id": "OBL-002",
       "kind": "model_structure",
-      "exact_obligation": "Lane becomes the primary operational object in Orchestrator, with Worktree remaining the concrete filesystem/Git backing for a lane instance.",
+      "exact_canon": "Lane becomes the primary operational object in Orchestrator, with Worktree remaining the concrete filesystem/Git backing for a lane instance.",
       "exact_tokens": [
         "Lane",
         "primary operational object in Orchestrator",
@@ -111,7 +121,7 @@
       ],
       "propagation_scope": "Orchestrator package/seam/lane views, runtime object identity, lane/worktree lineage",
       "owner_hint": "Orchestrator_Page.md and storage-plan.md",
-      "affected_doc_hints": [
+      "affected_docs": [
         "Plans/Orchestrator_Page.md",
         "Plans/storage-plan.md",
         "Plans/Run_Graph_View.md",
@@ -137,8 +147,11 @@
         "tier-era object stack",
         "subtask ownership as primary operational identity"
       ],
-      "source_basis": "working_ledger.md:1935-1946; current chat context legacy-readiness checks",
-      "mapped_sections": [
+      "legacy_source_basis": [
+        "working_ledger.md:1935-1946",
+        "current chat context legacy-readiness checks"
+      ],
+      "mapped_targets": [
         {
           "path": "Plans/Run_Graph_View.md",
           "heading": "## 4. Data model and identity",
@@ -168,19 +181,18 @@
           "status": "active"
         }
       ],
-      "transfer_status": "open_gap",
+      "transfer_state": "open_gap",
       "open_gap_ids": [
         "FIDELITY-028",
         "FIDELITY-056",
         "FIDELITY-067",
         "FIDELITY-073"
-      ],
-      "open_gap_count": 4
+      ]
     },
     {
-      "obligation_id": "OBL-003",
+      "canon_id": "OBL-003",
       "kind": "data_contract",
-      "exact_obligation": "Historical run/package/node/lane references MUST survive after live worktree cleanup; a missing live worktree must render as historical, archived, or removed rather than disappearing.",
+      "exact_canon": "Historical run/package/node/lane references MUST survive after live worktree cleanup; a missing live worktree must render as historical, archived, or removed rather than disappearing.",
       "exact_tokens": [
         "historical run/package/node/lane references",
         "MUST survive after live worktree cleanup",
@@ -190,7 +202,7 @@
       ],
       "propagation_scope": "Historical lineage rendering, receipt preservation, Source Control and Orchestrator historical state",
       "owner_hint": "storage-plan.md and Run_Graph_View.md",
-      "affected_doc_hints": [
+      "affected_docs": [
         "Plans/storage-plan.md",
         "Plans/Run_Graph_View.md",
         "Plans/GitHub_Integration.md",
@@ -218,8 +230,10 @@
         "worktree disappears on cleanup assumption",
         "cleanup wipes history model"
       ],
-      "source_basis": "working_ledger.md:2127-2141",
-      "mapped_sections": [
+      "legacy_source_basis": [
+        "working_ledger.md:2127-2141"
+      ],
+      "mapped_targets": [
         {
           "path": "Plans/storage-plan.md",
           "heading": "### Restart and stale history",
@@ -256,20 +270,19 @@
           "status": "active"
         }
       ],
-      "transfer_status": "open_gap",
+      "transfer_state": "open_gap",
       "open_gap_ids": [
         "FIDELITY-004",
         "FIDELITY-060",
         "FIDELITY-064",
         "FIDELITY-068",
         "FIDELITY-073"
-      ],
-      "open_gap_count": 5
+      ]
     },
     {
-      "obligation_id": "OBL-004",
+      "canon_id": "OBL-004",
       "kind": "state_model",
-      "exact_obligation": "Lane/worktree lifecycle vocabulary must include baseline, active, suspect, restoring, retained, cleanup_eligible, archived, removed, historical, with explicit semantic distinction between cleanup state and historical truth.",
+      "exact_canon": "Lane/worktree lifecycle vocabulary must include baseline, active, suspect, restoring, retained, cleanup_eligible, archived, removed, historical, with explicit semantic distinction between cleanup state and historical truth.",
       "exact_tokens": [
         "baseline",
         "active",
@@ -283,7 +296,7 @@
       ],
       "propagation_scope": "Lifecycle state schema, UI row rendering, cleanup policy, historical lineage",
       "owner_hint": "storage-plan.md and WorktreeGitImprovement.md",
-      "affected_doc_hints": [
+      "affected_docs": [
         "Plans/storage-plan.md",
         "Plans/WorktreeGitImprovement.md",
         "Plans/Orchestrator_Page.md",
@@ -310,8 +323,10 @@
         "action-verb-only cleanup model",
         "fuzzy lane/worktree state vocabulary"
       ],
-      "source_basis": "working_ledger.md:1948-1965",
-      "mapped_sections": [
+      "legacy_source_basis": [
+        "working_ledger.md:1948-1965"
+      ],
+      "mapped_targets": [
         {
           "path": "Plans/storage-plan.md",
           "heading": "### Restart and stale history",
@@ -341,19 +356,18 @@
           "status": "active"
         }
       ],
-      "transfer_status": "open_gap",
+      "transfer_state": "open_gap",
       "open_gap_ids": [
         "FIDELITY-004",
         "FIDELITY-060",
         "FIDELITY-065",
         "FIDELITY-068"
-      ],
-      "open_gap_count": 4
+      ]
     },
     {
-      "obligation_id": "OBL-005",
+      "canon_id": "OBL-005",
       "kind": "semantic_invariant",
-      "exact_obligation": "dirty_worktree and worktree_conflict are canonical blocked reasons and must remain visible in both Orchestrator and Source Control without collapsing into generic SCM errors.",
+      "exact_canon": "dirty_worktree and worktree_conflict are canonical blocked reasons and must remain visible in both Orchestrator and Source Control without collapsing into generic SCM errors.",
       "exact_tokens": [
         "dirty_worktree",
         "worktree_conflict",
@@ -361,7 +375,7 @@
       ],
       "propagation_scope": "Runtime blocked state emission, remediation action gating, Source Control and Orchestrator condition display",
       "owner_hint": "Contracts_V0.md and Orchestrator runtime",
-      "affected_doc_hints": [
+      "affected_docs": [
         "Plans/Contracts_V0.md",
         "Plans/Orchestrator_Page.md",
         "Plans/GitHub_Integration.md",
@@ -385,8 +399,10 @@
         "generic SCM error framing",
         "tier-local blocked state"
       ],
-      "source_basis": "working_ledger.md:2169-2175",
-      "mapped_sections": [
+      "legacy_source_basis": [
+        "working_ledger.md:2169-2175"
+      ],
+      "mapped_targets": [
         {
           "path": "Plans/WorktreeGitImprovement.md",
           "heading": "## Worktree Conflict and Dirty-Worktree Runtime Alignment",
@@ -402,17 +418,16 @@
           "status": "active"
         }
       ],
-      "transfer_status": "open_gap",
+      "transfer_state": "open_gap",
       "open_gap_ids": [
         "FIDELITY-062",
         "FIDELITY-066"
-      ],
-      "open_gap_count": 2
+      ]
     },
     {
-      "obligation_id": "OBL-006",
+      "canon_id": "OBL-006",
       "kind": "semantic_invariant",
-      "exact_obligation": "Cleanup of files inside a worktree must not be the same thing as removing the worktree itself, and lane lifecycle must remain distinct from cleanup actions.",
+      "exact_canon": "Cleanup of files inside a worktree must not be the same thing as removing the worktree itself, and lane lifecycle must remain distinct from cleanup actions.",
       "exact_tokens": [
         "cleanup of files inside a worktree",
         "not the same thing as",
@@ -421,7 +436,7 @@
       ],
       "propagation_scope": "Cleanup action modeling, lifecycle schema, UI action copy and safeguards",
       "owner_hint": "WorktreeGitImprovement.md and storage-plan.md",
-      "affected_doc_hints": [
+      "affected_docs": [
         "Plans/WorktreeGitImprovement.md",
         "Plans/storage-plan.md",
         "Plans/FinalGUISpec.md",
@@ -447,8 +462,10 @@
         "unified cleanup action model",
         "worktree plan cleanup equals files cleanup assumption"
       ],
-      "source_basis": "working_ledger.md:1911-1914, 2172",
-      "mapped_sections": [
+      "legacy_source_basis": [
+        "working_ledger.md:1911-1914, 2172"
+      ],
+      "mapped_targets": [
         {
           "path": "Plans/WorktreeGitImprovement.md",
           "heading": "### 4.1 Assistant-created worktree lifecycle",
@@ -478,19 +495,18 @@
           "status": "active"
         }
       ],
-      "transfer_status": "open_gap",
+      "transfer_state": "open_gap",
       "open_gap_ids": [
         "FIDELITY-062",
         "FIDELITY-065",
         "FIDELITY-066",
         "FIDELITY-067"
-      ],
-      "open_gap_count": 4
+      ]
     },
     {
-      "obligation_id": "OBL-007",
+      "canon_id": "OBL-007",
       "kind": "runtime_contract",
-      "exact_obligation": "Requested/effective execution identity must include one canonical requested-side concrete-account field, with requested_account_policy remaining the routing rule rather than the selected account.",
+      "exact_canon": "Requested/effective execution identity must include one canonical requested-side concrete-account field, with requested_account_policy remaining the routing rule rather than the selected account.",
       "exact_tokens": [
         "requested/effective execution identity",
         "requested_account_policy",
@@ -501,7 +517,7 @@
       ],
       "propagation_scope": "Prompt pipeline, contracts, storage snapshots, UI disclosure, multi-account routing",
       "owner_hint": "Contracts_V0.md and Prompt_Pipeline.md",
-      "affected_doc_hints": [
+      "affected_docs": [
         "Plans/Contracts_V0.md",
         "Plans/Prompt_Pipeline.md",
         "Plans/storage-plan.md",
@@ -532,8 +548,10 @@
         "policy-only account routing without selected-account anchor",
         "identity bundles that stop at effective_account_id only"
       ],
-      "source_basis": "working_ledger.md:1984-2001, 2022-2036, 7811-7900, 10137-10226, 17421-17431",
-      "mapped_sections": [
+      "legacy_source_basis": [
+        "working_ledger.md:1984-2001, 2022-2036, 7811-7900, 10137-10226, 17421-17431"
+      ],
+      "mapped_targets": [
         {
           "path": "Plans/Contracts_V0.md",
           "heading": "## 4. Auth contracts",
@@ -626,7 +644,7 @@
           "status": "active"
         }
       ],
-      "transfer_status": "open_gap",
+      "transfer_state": "open_gap",
       "open_gap_ids": [
         "FIDELITY-011",
         "FIDELITY-045",
@@ -636,13 +654,12 @@
         "FIDELITY-078",
         "FIDELITY-079",
         "FIDELITY-084"
-      ],
-      "open_gap_count": 8
+      ]
     },
     {
-      "obligation_id": "OBL-008",
+      "canon_id": "OBL-008",
       "kind": "semantic_rule",
-      "exact_obligation": "provider_account_id must either be retired or explicitly governed as provider-native metadata subordinate to stable internal effective_account_id.",
+      "exact_canon": "provider_account_id must either be retired or explicitly governed as provider-native metadata subordinate to stable internal effective_account_id.",
       "exact_tokens": [
         "provider_account_id",
         "retire it",
@@ -651,7 +668,7 @@
       ],
       "propagation_scope": "Identity storage, UI disclosure, provider integration, cross-doc account precedence",
       "owner_hint": "Contracts_V0.md and Multi-Account.md",
-      "affected_doc_hints": [
+      "affected_docs": [
         "Plans/Contracts_V0.md",
         "Plans/Multi-Account.md",
         "Plans/storage-plan.md",
@@ -674,8 +691,10 @@
         "ambiguous provider_account_id status",
         "cross-doc provider identity drift"
       ],
-      "source_basis": "working_ledger.md:1991, 2023-2026",
-      "mapped_sections": [
+      "legacy_source_basis": [
+        "working_ledger.md:1991, 2023-2026"
+      ],
+      "mapped_targets": [
         {
           "path": "Plans/Contracts_V0.md",
           "heading": "## 4. Auth contracts",
@@ -698,16 +717,15 @@
           "status": "active"
         }
       ],
-      "transfer_status": "open_gap",
+      "transfer_state": "open_gap",
       "open_gap_ids": [
         "FIDELITY-048"
-      ],
-      "open_gap_count": 1
+      ]
     },
     {
-      "obligation_id": "OBL-009",
+      "canon_id": "OBL-009",
       "kind": "schema_extension",
-      "exact_obligation": "Permission resolution and approval carryover/cascade rules must add execution-entity, lane, package, and effective-account dimensions for multi-lane orchestrator runs.",
+      "exact_canon": "Permission resolution and approval carryover/cascade rules must add execution-entity, lane, package, and effective-account dimensions for multi-lane orchestrator runs.",
       "exact_tokens": [
         "permission resolution",
         "approval carryover/cascade rules",
@@ -718,7 +736,7 @@
       ],
       "propagation_scope": "Permissions, approvals, HITL, multi-lane runtime execution",
       "owner_hint": "Permissions_System.md and human-in-the-loop runtime policy",
-      "affected_doc_hints": [
+      "affected_docs": [
         "Plans/Permissions_System.md",
         "Plans/human-in-the-loop.md",
         "Plans/Orchestrator_Page.md"
@@ -745,8 +763,10 @@
         "single-session approval assumption",
         "tool/context/mode-only permission resolution"
       ],
-      "source_basis": "working_ledger.md:1999-2001, 2029, 2036",
-      "mapped_sections": [
+      "legacy_source_basis": [
+        "working_ledger.md:1999-2001, 2029, 2036"
+      ],
+      "mapped_targets": [
         {
           "path": "Plans/FinalGUISpec.md",
           "heading": "### 10.8 Human-in-the-loop approvals",
@@ -804,7 +824,7 @@
           "status": "active"
         }
       ],
-      "transfer_status": "open_gap",
+      "transfer_state": "open_gap",
       "open_gap_ids": [
         "FIDELITY-013",
         "FIDELITY-014",
@@ -813,13 +833,12 @@
         "FIDELITY-036",
         "FIDELITY-038",
         "FIDELITY-047"
-      ],
-      "open_gap_count": 7
+      ]
     },
     {
-      "obligation_id": "OBL-010",
+      "canon_id": "OBL-010",
       "kind": "data_contract",
-      "exact_obligation": "One shared projection-health / trust-state record family must be defined and required by Orchestrator, widgets, and Run Graph surfaces for action gating and fallback.",
+      "exact_canon": "One shared projection-health / trust-state record family must be defined and required by Orchestrator, widgets, and Run Graph surfaces for action gating and fallback.",
       "exact_tokens": [
         "projection_freshness",
         "projection_health",
@@ -829,7 +848,7 @@
       ],
       "propagation_scope": "Projection-backed surfaces, widget subscriptions, historical/current rendering, action gating",
       "owner_hint": "storage-plan.md",
-      "affected_doc_hints": [
+      "affected_docs": [
         "Plans/storage-plan.md",
         "Plans/Orchestrator_Page.md",
         "Plans/Widget_System.md",
@@ -858,8 +877,10 @@
         "implicit freshness assumptions",
         "generic projection_trust phrasing that collides with other trust vocabularies"
       ],
-      "source_basis": "working_ledger.md:2363-2467, 4648-4766, 8408-8479, 17433-17439",
-      "mapped_sections": [
+      "legacy_source_basis": [
+        "working_ledger.md:2363-2467, 4648-4766, 8408-8479, 17433-17439"
+      ],
+      "mapped_targets": [
         {
           "path": "Plans/storage-plan.md",
           "heading": "### Projection rules (reconciled)",
@@ -875,16 +896,15 @@
           "status": "active"
         }
       ],
-      "transfer_status": "open_gap",
+      "transfer_state": "open_gap",
       "open_gap_ids": [
         "FIDELITY-044"
-      ],
-      "open_gap_count": 1
+      ]
     },
     {
-      "obligation_id": "OBL-011",
+      "canon_id": "OBL-011",
       "kind": "contract_requirement",
-      "exact_obligation": "Define a three-part help system contract consisting of canonical term system, contextual help system, and dedicated help-entry contract with fixed structure and related-concept links.",
+      "exact_canon": "Define a three-part help system contract consisting of canonical term system, contextual help system, and dedicated help-entry contract with fixed structure and related-concept links.",
       "exact_tokens": [
         "canonical term system",
         "contextual help system",
@@ -893,7 +913,7 @@
       ],
       "propagation_scope": "Glossary, GUI help, tooltips, ELI5/simple/expert surfaces, help-entry rendering",
       "owner_hint": "Glossary.md and FinalGUISpec.md",
-      "affected_doc_hints": [
+      "affected_docs": [
         "Plans/Glossary.md",
         "Plans/FinalGUISpec.md",
         "Plans/Orchestrator_Page.md"
@@ -920,8 +940,10 @@
         "tooltip-only help approach for complex rewrite concepts",
         "empty Orchestrator rewrite terms section in Glossary.md"
       ],
-      "source_basis": "working_ledger.md:3987-4126, 6468-6571, 17393-17407",
-      "mapped_sections": [
+      "legacy_source_basis": [
+        "working_ledger.md:3987-4126, 6468-6571, 17393-17407"
+      ],
+      "mapped_targets": [
         {
           "path": "Plans/FinalGUISpec.md",
           "heading": "#### 7.4.4 Settings (Unified) panel specification",
@@ -958,20 +980,19 @@
           "status": "active"
         }
       ],
-      "transfer_status": "open_gap",
+      "transfer_state": "open_gap",
       "open_gap_ids": [
         "FIDELITY-008",
         "FIDELITY-009",
         "FIDELITY-030",
         "FIDELITY-031",
         "FIDELITY-081"
-      ],
-      "open_gap_count": 5
+      ]
     },
     {
-      "obligation_id": "OBL-012",
+      "canon_id": "OBL-012",
       "kind": "architectural_decision",
-      "exact_obligation": "Separate project health, project activity, and project attention as distinct status dimensions, and add blocked_owner plus primary attention reason to project-level surfaces.",
+      "exact_canon": "Separate project health, project activity, and project attention as distinct status dimensions, and add blocked_owner plus primary attention reason to project-level surfaces.",
       "exact_tokens": [
         "project health",
         "project activity",
@@ -983,7 +1004,7 @@
       ],
       "propagation_scope": "Projects page, Orchestrator summaries, attention routing, dashboard project cards",
       "owner_hint": "FinalGUISpec.md and Orchestrator_Page.md",
-      "affected_doc_hints": [
+      "affected_docs": [
         "Plans/FinalGUISpec.md",
         "Plans/Orchestrator_Page.md",
         "Plans/storage-plan.md",
@@ -1010,8 +1031,10 @@
       "stale_residue_to_retire": [
         "conflated single health indicator for all project operational states"
       ],
-      "source_basis": "working_ledger.md:4127-4272, 7080-7174, 17393-17407",
-      "mapped_sections": [
+      "legacy_source_basis": [
+        "working_ledger.md:4127-4272, 7080-7174, 17393-17407"
+      ],
+      "mapped_targets": [
         {
           "path": "Plans/Orchestrator_Page.md",
           "heading": "## 12. Concern and notification model",
@@ -1034,18 +1057,17 @@
           "status": "active"
         }
       ],
-      "transfer_status": "open_gap",
+      "transfer_state": "open_gap",
       "open_gap_ids": [
         "FIDELITY-008",
         "FIDELITY-031",
         "FIDELITY-063"
-      ],
-      "open_gap_count": 3
+      ]
     },
     {
-      "obligation_id": "OBL-013",
+      "canon_id": "OBL-013",
       "kind": "escalation_policy",
-      "exact_obligation": "Define one shared escalation ladder: info, warning, attention_required, blocked, system_notification, and use it across concerns, blocked states, usage pressure, and persistent unresolved conditions.",
+      "exact_canon": "Define one shared escalation ladder: info, warning, attention_required, blocked, system_notification, and use it across concerns, blocked states, usage pressure, and persistent unresolved conditions.",
       "exact_tokens": [
         "info",
         "warning",
@@ -1055,7 +1077,7 @@
       ],
       "propagation_scope": "Dashboard, Progress, History, badges, chat/thread, system notifications",
       "owner_hint": "Orchestrator_Page.md and FinalGUISpec.md",
-      "affected_doc_hints": [
+      "affected_docs": [
         "Plans/Orchestrator_Page.md",
         "Plans/FinalGUISpec.md",
         "Plans/usage-feature.md"
@@ -1080,8 +1102,10 @@
       "stale_residue_to_retire": [
         "case-by-case local attention behavior without shared ladder"
       ],
-      "source_basis": "working_ledger.md:4273-4395, 17393-17407",
-      "mapped_sections": [
+      "legacy_source_basis": [
+        "working_ledger.md:4273-4395, 17393-17407"
+      ],
+      "mapped_targets": [
         {
           "path": "Plans/Run_Graph_View.md",
           "heading": "## 3. Node detail inspector",
@@ -1125,7 +1149,7 @@
           "status": "active"
         }
       ],
-      "transfer_status": "open_gap",
+      "transfer_state": "open_gap",
       "open_gap_ids": [
         "FIDELITY-031",
         "FIDELITY-037",
@@ -1133,13 +1157,12 @@
         "FIDELITY-072",
         "FIDELITY-075",
         "FIDELITY-083"
-      ],
-      "open_gap_count": 6
+      ]
     },
     {
-      "obligation_id": "OBL-014",
+      "canon_id": "OBL-014",
       "kind": "performance_contract",
-      "exact_obligation": "Define an Orchestrator-wide scale contract above individual tab docs with virtualization, lazy expansion, paging, and demand-loaded inspectors mandatory across dense tabs.",
+      "exact_canon": "Define an Orchestrator-wide scale contract above individual tab docs with virtualization, lazy expansion, paging, and demand-loaded inspectors mandatory across dense tabs.",
       "exact_tokens": [
         "Orchestrator-wide scale contract",
         "virtualization",
@@ -1149,7 +1172,7 @@
       ],
       "propagation_scope": "Node Graph, Seams, Evidence, History, Ledger, Progress",
       "owner_hint": "Orchestrator_Page.md and FinalGUISpec.md",
-      "affected_doc_hints": [
+      "affected_docs": [
         "Plans/Orchestrator_Page.md",
         "Plans/FinalGUISpec.md",
         "Plans/Run_Graph_View.md"
@@ -1173,8 +1196,10 @@
       "stale_residue_to_retire": [
         "per-tab performance guidance without shared Orchestrator scale contract"
       ],
-      "source_basis": "working_ledger.md:4396-4514",
-      "mapped_sections": [
+      "legacy_source_basis": [
+        "working_ledger.md:4396-4514"
+      ],
+      "mapped_targets": [
         {
           "path": "Plans/Run_Graph_View.md",
           "heading": "## 2. Layout",
@@ -1197,17 +1222,16 @@
           "status": "active"
         }
       ],
-      "transfer_status": "open_gap",
+      "transfer_state": "open_gap",
       "open_gap_ids": [
         "FIDELITY-056",
         "FIDELITY-071"
-      ],
-      "open_gap_count": 2
+      ]
     },
     {
-      "obligation_id": "OBL-015",
+      "canon_id": "OBL-015",
       "kind": "action_safety_policy",
-      "exact_obligation": "Define an Orchestrator action-surface policy that classifies actions by navigation vs mutation, single-target vs multi-target, shortcut eligibility, palette visibility, and confirmation/reversibility class.",
+      "exact_canon": "Define an Orchestrator action-surface policy that classifies actions by navigation vs mutation, single-target vs multi-target, shortcut eligibility, palette visibility, and confirmation/reversibility class.",
       "exact_tokens": [
         "navigation vs mutation",
         "single-target vs multi-target",
@@ -1218,7 +1242,7 @@
       ],
       "propagation_scope": "Command palette, shortcuts, context menus, bulk actions, multi-select, action confirmation",
       "owner_hint": "UI_Command_Catalog.md and FinalGUISpec.md",
-      "affected_doc_hints": [
+      "affected_docs": [
         "Plans/UI_Command_Catalog.md",
         "Plans/FinalGUISpec.md",
         "Plans/Orchestrator_Page.md",
@@ -1245,8 +1269,10 @@
       "stale_residue_to_retire": [
         "blanket command exposure for dangerous runtime mutations"
       ],
-      "source_basis": "working_ledger.md:3162-3328, 4515-4647, 6376-6467, 17365-17377",
-      "mapped_sections": [
+      "legacy_source_basis": [
+        "working_ledger.md:3162-3328, 4515-4647, 6376-6467, 17365-17377"
+      ],
+      "mapped_targets": [
         {
           "path": "Plans/Orchestrator_Page.md",
           "heading": "## 10. Search, routing, and action policy",
@@ -1283,20 +1309,19 @@
           "status": "active"
         }
       ],
-      "transfer_status": "open_gap",
+      "transfer_state": "open_gap",
       "open_gap_ids": [
         "FIDELITY-026",
         "FIDELITY-027",
         "FIDELITY-034",
         "FIDELITY-041",
         "FIDELITY-061"
-      ],
-      "open_gap_count": 5
+      ]
     },
     {
-      "obligation_id": "OBL-016",
+      "canon_id": "OBL-016",
       "kind": "record_normalization",
-      "exact_obligation": "Define one shared governance/runtime record-envelope pattern and let each family add its own payload block.",
+      "exact_canon": "Define one shared governance/runtime record-envelope pattern and let each family add its own payload block.",
       "exact_tokens": [
         "shared governance/runtime record-envelope pattern",
         "record_id",
@@ -1309,7 +1334,7 @@
       ],
       "propagation_scope": "Concerns, reviews, corroboration, promotions, graph patches, recovery records, state-transition reports, evidence records",
       "owner_hint": "storage-plan.md and Contracts_V0.md",
-      "affected_doc_hints": [
+      "affected_docs": [
         "Plans/storage-plan.md",
         "Plans/Contracts_V0.md",
         "Plans/Orchestrator_Page.md"
@@ -1343,8 +1368,10 @@
       "stale_residue_to_retire": [
         "ad hoc one-off record shapes for each new Orchestrator object family"
       ],
-      "source_basis": "working_ledger.md:3329-3511, 4767-4891, 17365-17377",
-      "mapped_sections": [
+      "legacy_source_basis": [
+        "working_ledger.md:3329-3511, 4767-4891, 17365-17377"
+      ],
+      "mapped_targets": [
         {
           "path": "Plans/Contracts_V0.md",
           "heading": "### 1.2 EventRecord -- canonical persisted envelope (schema: `pm.event.v0`)",
@@ -1360,14 +1387,13 @@
           "status": "active"
         }
       ],
-      "transfer_status": "no_open_gap_detected",
-      "open_gap_ids": [],
-      "open_gap_count": 0
+      "transfer_state": "transferred",
+      "open_gap_ids": []
     },
     {
-      "obligation_id": "OBL-017",
+      "canon_id": "OBL-017",
       "kind": "export_taxonomy",
-      "exact_obligation": "Define a shared Orchestrator export taxonomy consisting of record export, bundle export, and view export, with manifest discipline and trust-state disclosure.",
+      "exact_canon": "Define a shared Orchestrator export taxonomy consisting of record export, bundle export, and view export, with manifest discipline and trust-state disclosure.",
       "exact_tokens": [
         "record export",
         "bundle export",
@@ -1377,7 +1403,7 @@
       ],
       "propagation_scope": "Orchestrator exports, bundle generation, artifact/record export boundaries, manifest generation",
       "owner_hint": "Orchestrator_Page.md and storage-plan.md",
-      "affected_doc_hints": [
+      "affected_docs": [
         "Plans/Orchestrator_Page.md",
         "Plans/storage-plan.md",
         "Plans/Runtime_Artifacts_Panel.md",
@@ -1410,8 +1436,10 @@
       "stale_residue_to_retire": [
         "conflating record exports, artifact exports, and view exports into one unclear family"
       ],
-      "source_basis": "working_ledger.md:3512-3635, 5298-5439, 17379-17391",
-      "mapped_sections": [
+      "legacy_source_basis": [
+        "working_ledger.md:3512-3635, 5298-5439, 17379-17391"
+      ],
+      "mapped_targets": [
         {
           "path": "Plans/storage-plan.md",
           "heading": "### Canonical records",
@@ -1455,20 +1483,19 @@
           "status": "active"
         }
       ],
-      "transfer_status": "open_gap",
+      "transfer_state": "open_gap",
       "open_gap_ids": [
         "FIDELITY-019",
         "FIDELITY-033",
         "FIDELITY-057",
         "FIDELITY-059",
         "FIDELITY-082"
-      ],
-      "open_gap_count": 5
+      ]
     },
     {
-      "obligation_id": "OBL-018",
+      "canon_id": "OBL-018",
       "kind": "semantic_consistency",
-      "exact_obligation": "Define a shared historical-semantic vocabulary for cross-family overlays: historical, stale_historical, superseded, revoked, reopened, archived, removed.",
+      "exact_canon": "Define a shared historical-semantic vocabulary for cross-family overlays: historical, stale_historical, superseded, revoked, reopened, archived, removed.",
       "exact_tokens": [
         "historical",
         "stale_historical",
@@ -1480,7 +1507,7 @@
       ],
       "propagation_scope": "Record families, ledger/history semantics, search filters, UI badges and state descriptions",
       "owner_hint": "Glossary.md, Contracts_V0.md, storage-plan.md",
-      "affected_doc_hints": [
+      "affected_docs": [
         "Plans/Glossary.md",
         "Plans/Contracts_V0.md",
         "Plans/storage-plan.md",
@@ -1508,8 +1535,10 @@
         "overloaded resolved keyword",
         "historical implied by missing live state"
       ],
-      "source_basis": "working_ledger.md:2758-2885, 5734-5885",
-      "mapped_sections": [
+      "legacy_source_basis": [
+        "working_ledger.md:2758-2885, 5734-5885"
+      ],
+      "mapped_targets": [
         {
           "path": "Plans/Contracts_V0.md",
           "heading": "### 1.2 EventRecord -- canonical persisted envelope (schema: `pm.event.v0`)",
@@ -1553,19 +1582,18 @@
           "status": "active"
         }
       ],
-      "transfer_status": "open_gap",
+      "transfer_state": "open_gap",
       "open_gap_ids": [
         "FIDELITY-008",
         "FIDELITY-058",
         "FIDELITY-060",
         "FIDELITY-073"
-      ],
-      "open_gap_count": 4
+      ]
     },
     {
-      "obligation_id": "OBL-019",
+      "canon_id": "OBL-019",
       "kind": "record_family_definition",
-      "exact_obligation": "Add a canonical concern record family and corresponding projection contract with durable identity, lineage, source linking, owner distinctions, and interaction rules distinct from review findings, annotations, and blocked episodes.",
+      "exact_canon": "Add a canonical concern record family and corresponding projection contract with durable identity, lineage, source linking, owner distinctions, and interaction rules distinct from review findings, annotations, and blocked episodes.",
       "exact_tokens": [
         "concern",
         "concern_id",
@@ -1577,7 +1605,7 @@
       ],
       "propagation_scope": "Concerns surfaces, History, Ledger, escalation routing, governance records",
       "owner_hint": "storage-plan.md and Contracts_V0.md",
-      "affected_doc_hints": [
+      "affected_docs": [
         "Plans/storage-plan.md",
         "Plans/Contracts_V0.md",
         "Plans/Orchestrator_Page.md"
@@ -1610,8 +1638,10 @@
       "stale_residue_to_retire": [
         "concerns treated as badges, notes, or review leftovers without durable identity"
       ],
-      "source_basis": "working_ledger.md:2947-3161, 5886-6075, 17365-17377",
-      "mapped_sections": [
+      "legacy_source_basis": [
+        "working_ledger.md:2947-3161, 5886-6075, 17365-17377"
+      ],
+      "mapped_targets": [
         {
           "path": "Plans/Contracts_V0.md",
           "heading": "### 1.2 EventRecord -- canonical persisted envelope (schema: `pm.event.v0`)",
@@ -1634,16 +1664,15 @@
           "status": "active"
         }
       ],
-      "transfer_status": "open_gap",
+      "transfer_state": "open_gap",
       "open_gap_ids": [
         "FIDELITY-063"
-      ],
-      "open_gap_count": 1
+      ]
     },
     {
-      "obligation_id": "OBL-020",
+      "canon_id": "OBL-020",
       "kind": "routing_and_navigation",
-      "exact_obligation": "Define one shared routing payload contract for search, command palette, widget drill-downs, recovery links, and cross-surface pivots rather than separate ad hoc payloads per surface.",
+      "exact_canon": "Define one shared routing payload contract for search, command palette, widget drill-downs, recovery links, and cross-surface pivots rather than separate ad hoc payloads per surface.",
       "exact_tokens": [
         "shared routing payload contract",
         "search",
@@ -1654,7 +1683,7 @@
       ],
       "propagation_scope": "Search results, command palette, widgets, deep links, cross-surface pivots",
       "owner_hint": "Contracts_V0.md",
-      "affected_doc_hints": [
+      "affected_docs": [
         "Plans/Contracts_V0.md",
         "Plans/Orchestrator_Page.md",
         "Plans/UI_Command_Catalog.md",
@@ -1684,8 +1713,10 @@
       "stale_residue_to_retire": [
         "separate ad hoc payloads per surface"
       ],
-      "source_basis": "working_ledger.md:2613-2757, 5576-5733",
-      "mapped_sections": [
+      "legacy_source_basis": [
+        "working_ledger.md:2613-2757, 5576-5733"
+      ],
+      "mapped_targets": [
         {
           "path": "Plans/Contracts_V0.md",
           "heading": "### 7.3 `route_target`",
@@ -1757,7 +1788,7 @@
           "status": "active"
         }
       ],
-      "transfer_status": "open_gap",
+      "transfer_state": "open_gap",
       "open_gap_ids": [
         "FIDELITY-009",
         "FIDELITY-026",
@@ -1768,13 +1799,12 @@
         "FIDELITY-046",
         "FIDELITY-061",
         "FIDELITY-072"
-      ],
-      "open_gap_count": 9
+      ]
     },
     {
-      "obligation_id": "OBL-021",
+      "canon_id": "OBL-021",
       "kind": "field-set-boundary",
-      "exact_obligation": "Define route_target minimum field set bounded to target_kind, project_id, focused_run_id, thread_id, tab_id, subject_id, object_kind, object_id, inspector_target, with exactly one canonical target selector.",
+      "exact_canon": "Define route_target minimum field set bounded to target_kind, project_id, focused_run_id, thread_id, tab_id, subject_id, object_kind, object_id, inspector_target, with exactly one canonical target selector.",
       "exact_tokens": [
         "route_target",
         "target_kind",
@@ -1789,7 +1819,7 @@
       ],
       "propagation_scope": "Route contract, route validation, navigation payload creation, route-aware gating",
       "owner_hint": "Contracts_V0.md",
-      "affected_doc_hints": [
+      "affected_docs": [
         "Plans/Contracts_V0.md",
         "Plans/FinalGUISpec.md",
         "Plans/UI_Command_Catalog.md",
@@ -1821,8 +1851,10 @@
         "wizard_id and wizard_step as primary route fields",
         "artifact_id and document_id as direct route fields instead of subject_id"
       ],
-      "source_basis": "working_ledger.md:11917-12020, 13289-13391",
-      "mapped_sections": [
+      "legacy_source_basis": [
+        "working_ledger.md:11917-12020, 13289-13391"
+      ],
+      "mapped_targets": [
         {
           "path": "Plans/Contracts_V0.md",
           "heading": "### 7.3 `route_target`",
@@ -1845,17 +1877,16 @@
           "status": "active"
         }
       ],
-      "transfer_status": "open_gap",
+      "transfer_state": "open_gap",
       "open_gap_ids": [
         "FIDELITY-029",
         "FIDELITY-042"
-      ],
-      "open_gap_count": 2
+      ]
     },
     {
-      "obligation_id": "OBL-022",
+      "canon_id": "OBL-022",
       "kind": "enum-vocabulary",
-      "exact_obligation": "Define target_kind closed enum with exactly five values: primary_view, side_panel, bottom_panel, embedded_surface, page_tab.",
+      "exact_canon": "Define target_kind closed enum with exactly five values: primary_view, side_panel, bottom_panel, embedded_surface, page_tab.",
       "exact_tokens": [
         "primary_view",
         "side_panel",
@@ -1865,7 +1896,7 @@
       ],
       "propagation_scope": "Route destination classification, shell routing, page-tab restoration",
       "owner_hint": "Contracts_V0.md",
-      "affected_doc_hints": [
+      "affected_docs": [
         "Plans/Contracts_V0.md",
         "Plans/FinalGUISpec.md",
         "Plans/Crosswalk.md"
@@ -1885,8 +1916,10 @@
         "docked vs floating as target_kind values",
         "widget slot as target_kind value"
       ],
-      "source_basis": "working_ledger.md:13392-13461",
-      "mapped_sections": [
+      "legacy_source_basis": [
+        "working_ledger.md:13392-13461"
+      ],
+      "mapped_targets": [
         {
           "path": "Plans/Contracts_V0.md",
           "heading": "### 7.3 `route_target`",
@@ -1909,17 +1942,16 @@
           "status": "active"
         }
       ],
-      "transfer_status": "open_gap",
+      "transfer_state": "open_gap",
       "open_gap_ids": [
         "FIDELITY-009",
         "FIDELITY-029"
-      ],
-      "open_gap_count": 2
+      ]
     },
     {
-      "obligation_id": "OBL-023",
+      "canon_id": "OBL-023",
       "kind": "enum-vocabulary",
-      "exact_obligation": "Define canonical object_kind covering conversational/upstream, runtime/execution, and orchestration rewrite objects, including thread, message, wizard, usage_event, run, node, attempt, scheduler_pass, blocked_episode, safe_point, remediation, feature_seam, work_package, lane, worktree, concern, promotion, graph_patch, graph_generation.",
+      "exact_canon": "Define canonical object_kind covering conversational/upstream, runtime/execution, and orchestration rewrite objects, including thread, message, wizard, usage_event, run, node, attempt, scheduler_pass, blocked_episode, safe_point, remediation, feature_seam, work_package, lane, worktree, concern, promotion, graph_patch, graph_generation.",
       "exact_tokens": [
         "thread",
         "message",
@@ -1943,7 +1975,7 @@
       ],
       "propagation_scope": "Object identity taxonomy, route resolution, navigation targeting, glossary, UI surfaces",
       "owner_hint": "Contracts_V0.md and Glossary.md",
-      "affected_doc_hints": [
+      "affected_docs": [
         "Plans/Contracts_V0.md",
         "Plans/Glossary.md",
         "Plans/storage-plan.md",
@@ -1966,8 +1998,10 @@
         "tier as first-class navigation target",
         "usage_event_ref as a special-case route field instead of object_kind=usage_event"
       ],
-      "source_basis": "working_ledger.md:12021-12124, 13595-13678",
-      "mapped_sections": [
+      "legacy_source_basis": [
+        "working_ledger.md:12021-12124, 13595-13678"
+      ],
+      "mapped_targets": [
         {
           "path": "Plans/Contracts_V0.md",
           "heading": "### 7.3 `route_target`",
@@ -1997,18 +2031,17 @@
           "status": "active"
         }
       ],
-      "transfer_status": "open_gap",
+      "transfer_state": "open_gap",
       "open_gap_ids": [
         "FIDELITY-009",
         "FIDELITY-029",
         "FIDELITY-073"
-      ],
-      "open_gap_count": 3
+      ]
     },
     {
-      "obligation_id": "OBL-024",
+      "canon_id": "OBL-024",
       "kind": "enum-vocabulary",
-      "exact_obligation": "Define inspector_target closed vocabulary with exactly eight values: summary, evidence, artifacts, history, reviews, usage, lineage, details.",
+      "exact_canon": "Define inspector_target closed vocabulary with exactly eight values: summary, evidence, artifacts, history, reviews, usage, lineage, details.",
       "exact_tokens": [
         "summary",
         "evidence",
@@ -2021,7 +2054,7 @@
       ],
       "propagation_scope": "Inspector/detail-pane focus refinement, graph detail, usage pivots, lineage drill-ins",
       "owner_hint": "Contracts_V0.md",
-      "affected_doc_hints": [
+      "affected_docs": [
         "Plans/Contracts_V0.md",
         "Plans/Run_Graph_View.md",
         "Plans/Orchestrator_Page.md",
@@ -2041,8 +2074,10 @@
         "free-form subsection focus",
         "untyped inspector_target extension bags"
       ],
-      "source_basis": "working_ledger.md:12125-12208, 13679-13733",
-      "mapped_sections": [
+      "legacy_source_basis": [
+        "working_ledger.md:12125-12208, 13679-13733"
+      ],
+      "mapped_targets": [
         {
           "path": "Plans/Contracts_V0.md",
           "heading": "### 7.3 `route_target`",
@@ -2072,18 +2107,17 @@
           "status": "active"
         }
       ],
-      "transfer_status": "open_gap",
+      "transfer_state": "open_gap",
       "open_gap_ids": [
         "FIDELITY-009",
         "FIDELITY-029",
         "FIDELITY-073"
-      ],
-      "open_gap_count": 3
+      ]
     },
     {
-      "obligation_id": "OBL-025",
+      "canon_id": "OBL-025",
       "kind": "selector-precedence-rule",
-      "exact_obligation": "Establish hard selector precedence: exactly one primary selector is present in route_target: subject_id, or object_kind + object_id, never both. Resolution order is project_id, scope restoration, target_kind, primary selector, then focus refinement.",
+      "exact_canon": "Establish hard selector precedence: exactly one primary selector is present in route_target: subject_id, or object_kind + object_id, never both. Resolution order is project_id, scope restoration, target_kind, primary selector, then focus refinement.",
       "exact_tokens": [
         "exactly one primary selector",
         "subject_id",
@@ -2095,7 +2129,7 @@
       ],
       "propagation_scope": "Route validation, route creation, deep-link normalization, navigation gates",
       "owner_hint": "Contracts_V0.md",
-      "affected_doc_hints": [
+      "affected_docs": [
         "Plans/Contracts_V0.md",
         "Plans/UI_Command_Catalog.md",
         "Plans/FinalGUISpec.md",
@@ -2126,8 +2160,10 @@
         "multiple competing selectors in same navigation action",
         "usage_event_ref as first-class top-level route selector"
       ],
-      "source_basis": "working_ledger.md:13462-13523",
-      "mapped_sections": [
+      "legacy_source_basis": [
+        "working_ledger.md:13462-13523"
+      ],
+      "mapped_targets": [
         {
           "path": "Plans/Contracts_V0.md",
           "heading": "### 7.3 `route_target`",
@@ -2143,16 +2179,15 @@
           "status": "active"
         }
       ],
-      "transfer_status": "open_gap",
+      "transfer_state": "open_gap",
       "open_gap_ids": [
         "FIDELITY-029"
-      ],
-      "open_gap_count": 1
+      ]
     },
     {
-      "obligation_id": "OBL-026",
+      "canon_id": "OBL-026",
       "kind": "subject-identity-boundary",
-      "exact_obligation": "Freeze subject_id to exactly two canonical families: doc:<document_id> and artifact:<artifact_id>. Everything else routes through object_kind + object_id.",
+      "exact_canon": "Freeze subject_id to exactly two canonical families: doc:<document_id> and artifact:<artifact_id>. Everything else routes through object_kind + object_id.",
       "exact_tokens": [
         "doc:<document_id>",
         "artifact:<artifact_id>",
@@ -2160,7 +2195,7 @@
       ],
       "propagation_scope": "OpenSubject identity, route selectors, file/artifact navigation, deep-link normalization",
       "owner_hint": "Contracts_V0.md and FileManager.md",
-      "affected_doc_hints": [
+      "affected_docs": [
         "Plans/Contracts_V0.md",
         "Plans/FileManager.md",
         "Plans/Crosswalk.md",
@@ -2182,8 +2217,10 @@
         "document_id and artifact_id appearing in navigation prose instead of subject_id",
         "wizard and message flows treated as special deep-link payload families instead of object routes"
       ],
-      "source_basis": "working_ledger.md:12021-12124, 13210-13288, 13734-13805",
-      "mapped_sections": [
+      "legacy_source_basis": [
+        "working_ledger.md:12021-12124, 13210-13288, 13734-13805"
+      ],
+      "mapped_targets": [
         {
           "path": "Plans/Contracts_V0.md",
           "heading": "### 7.4 `OpenSubject`",
@@ -2234,20 +2271,19 @@
           "status": "active"
         }
       ],
-      "transfer_status": "open_gap",
+      "transfer_state": "open_gap",
       "open_gap_ids": [
         "FIDELITY-009",
         "FIDELITY-029",
         "FIDELITY-039",
         "FIDELITY-042",
         "FIDELITY-046"
-      ],
-      "open_gap_count": 5
+      ]
     },
     {
-      "obligation_id": "OBL-027",
+      "canon_id": "OBL-027",
       "kind": "serialization-transport-rule",
-      "exact_obligation": "Treat resume_url as serialized transport of route_target only. route_target is canonical identity; resume_url must stay narrower than the internal route model and must not define a second routing ontology.",
+      "exact_canon": "Treat resume_url as serialized transport of route_target only. route_target is canonical identity; resume_url must stay narrower than the internal route model and must not define a second routing ontology.",
       "exact_tokens": [
         "resume_url",
         "serialized transport",
@@ -2257,7 +2293,7 @@
       ],
       "propagation_scope": "Deep-link serialization, persisted navigation state, wizard/thread resume, blocked-step resume flows",
       "owner_hint": "Contracts_V0.md",
-      "affected_doc_hints": [
+      "affected_docs": [
         "Plans/Contracts_V0.md",
         "Plans/storage-plan.md",
         "Plans/FinalGUISpec.md",
@@ -2280,8 +2316,11 @@
         "resume_url treated as first-class behavioral object",
         "resume_url-centered blocked-card payload canon"
       ],
-      "source_basis": "working_ledger.md:12371-12447, 13524-13594, 14913-14965; current chat context legacy-readiness checks",
-      "mapped_sections": [
+      "legacy_source_basis": [
+        "working_ledger.md:12371-12447, 13524-13594, 14913-14965",
+        "current chat context legacy-readiness checks"
+      ],
+      "mapped_targets": [
         {
           "path": "Plans/Contracts_V0.md",
           "heading": "### 7.3 `route_target`",
@@ -2339,7 +2378,7 @@
           "status": "active"
         }
       ],
-      "transfer_status": "open_gap",
+      "transfer_state": "open_gap",
       "open_gap_ids": [
         "FIDELITY-009",
         "FIDELITY-025",
@@ -2347,13 +2386,12 @@
         "FIDELITY-046",
         "FIDELITY-049",
         "FIDELITY-069"
-      ],
-      "open_gap_count": 6
+      ]
     },
     {
-      "obligation_id": "OBL-028",
+      "canon_id": "OBL-028",
       "kind": "ref-family-boundary",
-      "exact_obligation": "Make the owner-doc distinction explicit: inspection/provenance refs stay in event and record payloads; route/open contracts own navigation identity.",
+      "exact_canon": "Make the owner-doc distinction explicit: inspection/provenance refs stay in event and record payloads; route/open contracts own navigation identity.",
       "exact_tokens": [
         "detail_ref",
         "report_ref",
@@ -2366,7 +2404,7 @@
       ],
       "propagation_scope": "Event payloads, record schemas, route/open contracts, inspection linking",
       "owner_hint": "Contracts_V0.md and storage-plan.md",
-      "affected_doc_hints": [
+      "affected_docs": [
         "Plans/Contracts_V0.md",
         "Plans/storage-plan.md",
         "Plans/Runtime_Artifacts_Panel.md",
@@ -2395,8 +2433,10 @@
         "treating detail_ref, report_ref, and resume_url as interchangeable open-this-thing fields",
         "treating ref families as route payload surrogates"
       ],
-      "source_basis": "working_ledger.md:14967-15026",
-      "mapped_sections": [
+      "legacy_source_basis": [
+        "working_ledger.md:14967-15026"
+      ],
+      "mapped_targets": [
         {
           "path": "Plans/Contracts_V0.md",
           "heading": "### 3.4 Tool-specific payload extensions",
@@ -2412,14 +2452,13 @@
           "status": "active"
         }
       ],
-      "transfer_status": "no_open_gap_detected",
-      "open_gap_ids": [],
-      "open_gap_count": 0
+      "transfer_state": "transferred",
+      "open_gap_ids": []
     },
     {
-      "obligation_id": "OBL-029",
+      "canon_id": "OBL-029",
       "kind": "cross-family-contract-minimum",
-      "exact_obligation": "Define a cross-family blocked minimum for canonical blocked objects: blocked reason, ordered allowed actions where applicable, preserved-work/local-state disclosure where applicable, stable blocked-episode identity or family-local equivalent, and detail/report inspection refs.",
+      "exact_canon": "Define a cross-family blocked minimum for canonical blocked objects: blocked reason, ordered allowed actions where applicable, preserved-work/local-state disclosure where applicable, stable blocked-episode identity or family-local equivalent, and detail/report inspection refs.",
       "exact_tokens": [
         "blocked reason",
         "allowed_action_ids",
@@ -2430,7 +2469,7 @@
       ],
       "propagation_scope": "node.blocked, wizard.blocked, blocked notices, blocked recovery, escalation, chat action rendering",
       "owner_hint": "Contracts_V0.md and storage-plan.md",
-      "affected_doc_hints": [
+      "affected_docs": [
         "Plans/Contracts_V0.md",
         "Plans/storage-plan.md",
         "Plans/assistant-chat-design.md",
@@ -2458,8 +2497,10 @@
         "thin wizard.blocked definition",
         "wizard-blocked behavior as special deep-link flow instead of peer blocked family"
       ],
-      "source_basis": "working_ledger.md:15027-15144",
-      "mapped_sections": [
+      "legacy_source_basis": [
+        "working_ledger.md:15027-15144"
+      ],
+      "mapped_targets": [
         {
           "path": "Plans/Contracts_V0.md",
           "heading": "### 6.1 Canonical blocked-episode approval anchor",
@@ -2517,20 +2558,19 @@
           "status": "active"
         }
       ],
-      "transfer_status": "open_gap",
+      "transfer_state": "open_gap",
       "open_gap_ids": [
         "FIDELITY-025",
         "FIDELITY-035",
         "FIDELITY-052",
         "FIDELITY-053",
         "FIDELITY-074"
-      ],
-      "open_gap_count": 5
+      ]
     },
     {
-      "obligation_id": "OBL-030",
+      "canon_id": "OBL-030",
       "kind": "contract-field-schema",
-      "exact_obligation": "Add command-classification and normalization contract to the command-definition layer using command_kind and optional normalization { kind, normalizes_to_contract? | alias_of_command_id? }.",
+      "exact_canon": "Add command-classification and normalization contract to the command-definition layer using command_kind and optional normalization { kind, normalizes_to_contract? | alias_of_command_id? }.",
       "exact_tokens": [
         "command_kind",
         "normalization",
@@ -2545,7 +2585,7 @@
       ],
       "propagation_scope": "Command definition metadata, wrapper/alias governance, wiring verification, gate logic",
       "owner_hint": "UI_Command_Catalog.md and Contracts_V0.md",
-      "affected_doc_hints": [
+      "affected_docs": [
         "Plans/UI_Command_Catalog.md",
         "Plans/Contracts_V0.md",
         "Plans/Wiring_Matrix.md",
@@ -2572,8 +2612,10 @@
         "prose-only command meaning without precise wrapper-vs-alias slots",
         "thin UICommand envelope lacking normalization metadata"
       ],
-      "source_basis": "working_ledger.md:12782-13050, 12905-13050, 17409-17419",
-      "mapped_sections": [
+      "legacy_source_basis": [
+        "working_ledger.md:12782-13050, 12905-13050, 17409-17419"
+      ],
+      "mapped_targets": [
         {
           "path": "Plans/UI_Command_Catalog.md",
           "heading": "### 2.0 Command entry contract (doc-level)",
@@ -2617,19 +2659,18 @@
           "status": "active"
         }
       ],
-      "transfer_status": "open_gap",
+      "transfer_state": "open_gap",
       "open_gap_ids": [
         "FIDELITY-040",
         "FIDELITY-045",
         "FIDELITY-054",
         "FIDELITY-055"
-      ],
-      "open_gap_count": 4
+      ]
     },
     {
-      "obligation_id": "OBL-031",
+      "canon_id": "OBL-031",
       "kind": "execution_context_contract",
-      "exact_obligation": "Replace tier-rooted execution context with execution_unit_context carrying node/attempt/worktree/package/seam/lane/account/role/runtime identity rather than TierContext and tier_id as canonical execution scope.",
+      "exact_canon": "Replace tier-rooted execution context with execution_unit_context carrying node/attempt/worktree/package/seam/lane/account/role/runtime identity rather than TierContext and tier_id as canonical execution scope.",
       "exact_tokens": [
         "execution_unit_context",
         "TierContext",
@@ -2648,7 +2689,7 @@
       ],
       "propagation_scope": "Execution core, subagent orchestration, runtime snapshots, worker coordination, downstream consumers",
       "owner_hint": "orchestrator-subagent-integration.md and Contracts_V0.md",
-      "affected_doc_hints": [
+      "affected_docs": [
         "Plans/orchestrator-subagent-integration.md",
         "Plans/Contracts_V0.md",
         "Plans/Executor_Protocol.md",
@@ -2682,8 +2723,11 @@
         "tier_id as canonical execution scope",
         "pseudo-tier execution keys"
       ],
-      "source_basis": "working_ledger.md:8572-8755, 9805-10136, 17421-17431; current chat context legacy-readiness checks",
-      "mapped_sections": [
+      "legacy_source_basis": [
+        "working_ledger.md:8572-8755, 9805-10136, 17421-17431",
+        "current chat context legacy-readiness checks"
+      ],
+      "mapped_targets": [
         {
           "path": "Plans/Contracts_V0.md",
           "heading": "### 5.1B Persona/Runtime Snapshot Payload Contract",
@@ -2734,7 +2778,7 @@
           "status": "active"
         }
       ],
-      "transfer_status": "open_gap",
+      "transfer_state": "open_gap",
       "open_gap_ids": [
         "FIDELITY-001",
         "FIDELITY-010",
@@ -2742,13 +2786,12 @@
         "FIDELITY-045",
         "FIDELITY-076",
         "FIDELITY-077"
-      ],
-      "open_gap_count": 6
+      ]
     },
     {
-      "obligation_id": "OBL-032",
+      "canon_id": "OBL-032",
       "kind": "blocked_runtime_identity",
-      "exact_obligation": "Unify approval identity around blocked episodes, with blocked_sequence as the canonical approval anchor and explicit startup-recovery to first scheduler.pass handoff ownership.",
+      "exact_canon": "Unify approval identity around blocked episodes, with blocked_sequence as the canonical approval anchor and explicit startup-recovery to first scheduler.pass handoff ownership.",
       "exact_tokens": [
         "blocked_sequence",
         "startup_recovered",
@@ -2759,7 +2802,7 @@
       ],
       "propagation_scope": "HITL, blocked runtime recovery, scheduler wake logic, restart persistence, approval routing",
       "owner_hint": "Executor_Protocol.md, Contracts_V0.md, human-in-the-loop.md",
-      "affected_doc_hints": [
+      "affected_docs": [
         "Plans/Executor_Protocol.md",
         "Plans/Contracts_V0.md",
         "Plans/human-in-the-loop.md",
@@ -2787,8 +2830,11 @@
         "tier-bound HITL anchoring",
         "approve_continue"
       ],
-      "source_basis": "working_ledger.md:8645-8824, 9642-9729, 17421-17431; current chat context legacy-readiness checks",
-      "mapped_sections": [
+      "legacy_source_basis": [
+        "working_ledger.md:8645-8824, 9642-9729, 17421-17431",
+        "current chat context legacy-readiness checks"
+      ],
+      "mapped_targets": [
         {
           "path": "Plans/Contracts_V0.md",
           "heading": "### 6.1 Canonical blocked-episode approval anchor",
@@ -2930,7 +2976,7 @@
           "status": "active"
         }
       ],
-      "transfer_status": "open_gap",
+      "transfer_state": "open_gap",
       "open_gap_ids": [
         "FIDELITY-010",
         "FIDELITY-011",
@@ -2946,13 +2992,12 @@
         "FIDELITY-053",
         "FIDELITY-074",
         "FIDELITY-075"
-      ],
-      "open_gap_count": 14
+      ]
     },
     {
-      "obligation_id": "OBL-033",
+      "canon_id": "OBL-033",
       "kind": "attribution_schema",
-      "exact_obligation": "Define one unified runtime/tool/artifact attribution packet and carry it through tool events, runtime artifacts, validation reports, wizard handoff, and downstream usage/account-pressure surfaces.",
+      "exact_canon": "Define one unified runtime/tool/artifact attribution packet and carry it through tool events, runtime artifacts, validation reports, wizard handoff, and downstream usage/account-pressure surfaces.",
       "exact_tokens": [
         "node_id",
         "attempt_id",
@@ -2966,7 +3011,7 @@
       ],
       "propagation_scope": "Tool events, artifact envelopes, validation-pass reports, wizard/interview handoff, usage/account-pressure history",
       "owner_hint": "Contracts_V0.md and Tools.md",
-      "affected_doc_hints": [
+      "affected_docs": [
         "Plans/Contracts_V0.md",
         "Plans/Tools.md",
         "Plans/Runtime_Artifacts_Panel.md",
@@ -2998,8 +3043,11 @@
         "identity-thin validation or handoff payloads",
         "artifact attribution without attempt identity"
       ],
-      "source_basis": "working_ledger.md:9052-9136, 9137-9221, 10137-10335, 10336-10536, 17421-17431; current chat context audit synthesis",
-      "mapped_sections": [
+      "legacy_source_basis": [
+        "working_ledger.md:9052-9136, 9137-9221, 10137-10335, 10336-10536, 17421-17431",
+        "current chat context audit synthesis"
+      ],
+      "mapped_targets": [
         {
           "path": "Plans/Contracts_V0.md",
           "heading": "### 5.1B Persona/Runtime Snapshot Payload Contract",
@@ -3085,7 +3133,7 @@
           "status": "active"
         }
       ],
-      "transfer_status": "open_gap",
+      "transfer_state": "open_gap",
       "open_gap_ids": [
         "FIDELITY-001",
         "FIDELITY-012",
@@ -3094,13 +3142,12 @@
         "FIDELITY-079",
         "FIDELITY-082",
         "FIDELITY-084"
-      ],
-      "open_gap_count": 7
+      ]
     },
     {
-      "obligation_id": "OBL-034",
+      "canon_id": "OBL-034",
       "kind": "bridge_and_envelope_contract",
-      "exact_obligation": "Make bridge-field behavior explicit: attempt_id is canonical local runtime anchor; provider_attempt_ref bridges provider/runtime execution; usage_event_ref bridges cost/usage history; receipt refs bridge external side-effect lineage. Define runtime-artifact envelope minimum contract accordingly.",
+      "exact_canon": "Make bridge-field behavior explicit: attempt_id is canonical local runtime anchor; provider_attempt_ref bridges provider/runtime execution; usage_event_ref bridges cost/usage history; receipt refs bridge external side-effect lineage. Define runtime-artifact envelope minimum contract accordingly.",
       "exact_tokens": [
         "attempt_id",
         "provider_attempt_ref",
@@ -3110,7 +3157,7 @@
       ],
       "propagation_scope": "Artifacts, receipts, usage pivots, provider/runtime correlation, evidence and ledger drill-through",
       "owner_hint": "Contracts_V0.md and Runtime_Artifacts_Panel.md",
-      "affected_doc_hints": [
+      "affected_docs": [
         "Plans/Contracts_V0.md",
         "Plans/Runtime_Artifacts_Panel.md",
         "Plans/storage-plan.md",
@@ -3141,8 +3188,11 @@
         "implicit bridge precedence",
         "cost_usage linkage resting on optional undeclared semantics"
       ],
-      "source_basis": "working_ledger.md:10460-10645, 10537-10645, 11663-11722, 17409-17419; current chat context audit synthesis",
-      "mapped_sections": [
+      "legacy_source_basis": [
+        "working_ledger.md:10460-10645, 10537-10645, 11663-11722, 17409-17419",
+        "current chat context audit synthesis"
+      ],
+      "mapped_targets": [
         {
           "path": "Plans/Contracts_V0.md",
           "heading": "## 3. Tool events (persisted)",
@@ -3193,20 +3243,19 @@
           "status": "active"
         }
       ],
-      "transfer_status": "open_gap",
+      "transfer_state": "open_gap",
       "open_gap_ids": [
         "FIDELITY-005",
         "FIDELITY-018",
         "FIDELITY-020",
         "FIDELITY-072",
         "FIDELITY-085"
-      ],
-      "open_gap_count": 5
+      ]
     },
     {
-      "obligation_id": "OBL-035",
+      "canon_id": "OBL-035",
       "kind": "storage_convention",
-      "exact_obligation": "GitHub durable account identity must use stable internal account_id and credential_ref, with login remaining display-only/provider-native metadata.",
+      "exact_canon": "GitHub durable account identity must use stable internal account_id and credential_ref, with login remaining display-only/provider-native metadata.",
       "exact_tokens": [
         "account_id",
         "credential_ref",
@@ -3216,7 +3265,7 @@
       ],
       "propagation_scope": "GitHub auth flows, account storage, reconnect context, multi-account routing, audit display",
       "owner_hint": "GitHub_API_Auth_and_Flows.md and Multi-Account.md",
-      "affected_doc_hints": [
+      "affected_docs": [
         "Plans/GitHub_API_Auth_and_Flows.md",
         "Plans/Multi-Account.md",
         "Plans/GitHub_Integration.md",
@@ -3240,8 +3289,11 @@
         "github_api:github.com/<login>",
         "login-keyed durable identity"
       ],
-      "source_basis": "working_ledger.md:6988-7056, 17421-17431; current chat context legacy-readiness checks",
-      "mapped_sections": [
+      "legacy_source_basis": [
+        "working_ledger.md:6988-7056, 17421-17431",
+        "current chat context legacy-readiness checks"
+      ],
+      "mapped_targets": [
         {
           "path": "Plans/storage-plan.md",
           "heading": "### 4.1 Shared runtime identity consumption",
@@ -3313,19 +3365,18 @@
           "status": "active"
         }
       ],
-      "transfer_status": "open_gap",
+      "transfer_state": "open_gap",
       "open_gap_ids": [
         "FIDELITY-023",
         "FIDELITY-048",
         "FIDELITY-069",
         "FIDELITY-084"
-      ],
-      "open_gap_count": 4
+      ]
     },
     {
-      "obligation_id": "OBL-036",
+      "canon_id": "OBL-036",
       "kind": "artifact_lineage",
-      "exact_obligation": "`validation_pass_report` must remain an upstream artifact, but it must carry enough planning lineage, runtime identity, and downstream bridge data to explain which sweep ran, what it evaluated, and what execution it seeded.",
+      "exact_canon": "`validation_pass_report` must remain an upstream artifact, but it must carry enough planning lineage, runtime identity, and downstream bridge data to explain which sweep ran, what it evaluated, and what execution it seeded.",
       "exact_tokens": [
         "validation_pass_report",
         "workflow_run_id",
@@ -3348,7 +3399,7 @@
       ],
       "propagation_scope": "Validation-pass sweep artifacts, wizard blocked/attention behavior, artifact promotion lineage, execution launch handoff",
       "owner_hint": "chain-wizard-flexibility.md, Project_Output_Artifacts.md, storage-plan.md, and Contracts_V0.md",
-      "affected_doc_hints": [
+      "affected_docs": [
         "Plans/chain-wizard-flexibility.md",
         "Plans/Project_Output_Artifacts.md",
         "Plans/storage-plan.md",
@@ -3393,8 +3444,10 @@
         "isolated pass reports that do not name the wizard/session/bundle they came from",
         "pass/fail-only assumptions where `skipped` is required"
       ],
-      "source_basis": "working_ledger.md:9297-9379, 10963-10966",
-      "mapped_sections": [
+      "legacy_source_basis": [
+        "working_ledger.md:9297-9379, 10963-10966"
+      ],
+      "mapped_targets": [
         {
           "path": "Plans/Contracts_V0.md",
           "heading": "### 3.3 Requirements quality events",
@@ -3473,7 +3526,7 @@
           "status": "active"
         }
       ],
-      "transfer_status": "open_gap",
+      "transfer_state": "open_gap",
       "open_gap_ids": [
         "FIDELITY-005",
         "FIDELITY-007",
@@ -3482,13 +3535,12 @@
         "FIDELITY-057",
         "FIDELITY-072",
         "FIDELITY-080"
-      ],
-      "open_gap_count": 7
+      ]
     },
     {
-      "obligation_id": "OBL-037",
+      "canon_id": "OBL-037",
       "kind": "storage_family",
-      "exact_obligation": "Storage must own a first-class runtime-artifact index/projection family with per-artifact row identity, projector checkpoints, rebuild/degrade semantics, and attempt/node-aware indexed fields instead of leaving artifact indexing half-owned by the panel doc.",
+      "exact_canon": "Storage must own a first-class runtime-artifact index/projection family with per-artifact row identity, projector checkpoints, rebuild/degrade semantics, and attempt/node-aware indexed fields instead of leaving artifact indexing half-owned by the panel doc.",
       "exact_tokens": [
         "runtime_artifact.*",
         "artifacts_index.v1:{project_id}:{artifact_id}",
@@ -3510,7 +3562,7 @@
       ],
       "propagation_scope": "Runtime-artifact storage, artifact panel lookup/filter/navigation, projector rebuild and degradation handling, artifact inspection fallback behavior",
       "owner_hint": "storage-plan.md and Runtime_Artifacts_Panel.md",
-      "affected_doc_hints": [
+      "affected_docs": [
         "Plans/storage-plan.md",
         "Plans/Runtime_Artifacts_Panel.md",
         "Plans/Orchestrator_Page.md",
@@ -3552,8 +3604,10 @@
         "panel-only ownership of projector/checkpoint semantics",
         "artifact indexing that omits `attempt_id` and `node_id`"
       ],
-      "source_basis": "working_ledger.md:9381-9457, 9467-9498",
-      "mapped_sections": [
+      "legacy_source_basis": [
+        "working_ledger.md:9381-9457, 9467-9498"
+      ],
+      "mapped_targets": [
         {
           "path": "Plans/storage-plan.md",
           "heading": "### Required redb keys",
@@ -3604,7 +3658,7 @@
           "status": "active"
         }
       ],
-      "transfer_status": "open_gap",
+      "transfer_state": "open_gap",
       "open_gap_ids": [
         "FIDELITY-003",
         "FIDELITY-006",
@@ -3612,13 +3666,12 @@
         "FIDELITY-017",
         "FIDELITY-032",
         "FIDELITY-085"
-      ],
-      "open_gap_count": 6
+      ]
     },
     {
-      "obligation_id": "OBL-038",
+      "canon_id": "OBL-038",
       "kind": "storage_family",
-      "exact_obligation": "Storage must own durable worktree and lane record/projection families so `worktree_id` becomes the durable identity and `lane_id` becomes operational lineage, with lifecycle/history surviving restart, cleanup, archive, and remove flows.",
+      "exact_canon": "Storage must own durable worktree and lane record/projection families so `worktree_id` becomes the durable identity and `lane_id` becomes operational lineage, with lifecycle/history surviving restart, cleanup, archive, and remove flows.",
       "exact_tokens": [
         "worktree_record.v1:{project_id}:{worktree_id}",
         "lane_record.v1:{project_id}:{lane_id}",
@@ -3654,7 +3707,7 @@
       ],
       "propagation_scope": "Source-control lifecycle state, restart recovery, historical lineage and audit, cross-surface worktree/lane pivots",
       "owner_hint": "storage-plan.md and WorktreeGitImprovement.md",
-      "affected_doc_hints": [
+      "affected_docs": [
         "Plans/storage-plan.md",
         "Plans/WorktreeGitImprovement.md",
         "Plans/GitHub_Integration.md",
@@ -3700,8 +3753,10 @@
         "filesystem rediscovery as sole restart authority",
         "hidden `extract_tier_id()` migration behavior"
       ],
-      "source_basis": "working_ledger.md:9459-9575, 4892-5050, 17264-17266",
-      "mapped_sections": [
+      "legacy_source_basis": [
+        "working_ledger.md:9459-9575, 4892-5050, 17264-17266"
+      ],
+      "mapped_targets": [
         {
           "path": "Plans/storage-plan.md",
           "heading": "### Required redb keys",
@@ -3766,7 +3821,7 @@
           "status": "active"
         }
       ],
-      "transfer_status": "open_gap",
+      "transfer_state": "open_gap",
       "open_gap_ids": [
         "FIDELITY-003",
         "FIDELITY-004",
@@ -3776,13 +3831,12 @@
         "FIDELITY-067",
         "FIDELITY-068",
         "FIDELITY-073"
-      ],
-      "open_gap_count": 8
+      ]
     },
     {
-      "obligation_id": "OBL-039",
+      "canon_id": "OBL-039",
       "kind": "ui_contract",
-      "exact_obligation": "Orchestrator remains tab-first with `Progress` as the only widget-hosting tab, and the default Progress widget catalog plus drill-target mapping stay explicit: `Run Status -> History`, `Current Activity -> Node Graph`, `Attention / Blockers -> Node Graph`, `Seam Health -> Seams`, `Package Activity -> Seams`, `Promotion Queue -> Ledger`, `Worktree Lanes -> Node Graph`, `Account / Usage Pressure -> Usage`, `Recent Major Events -> History`, `Overseer Activity -> Seams`, `Corroboration Queue -> Evidence`, `Recovery State -> Evidence`, `Throughput / Capacity -> History`.",
+      "exact_canon": "Orchestrator remains tab-first with `Progress` as the only widget-hosting tab, and the default Progress widget catalog plus drill-target mapping stay explicit: `Run Status -> History`, `Current Activity -> Node Graph`, `Attention / Blockers -> Node Graph`, `Seam Health -> Seams`, `Package Activity -> Seams`, `Promotion Queue -> Ledger`, `Worktree Lanes -> Node Graph`, `Account / Usage Pressure -> Usage`, `Recent Major Events -> History`, `Overseer Activity -> Seams`, `Corroboration Queue -> Evidence`, `Recovery State -> Evidence`, `Throughput / Capacity -> History`.",
       "exact_tokens": [
         "Progress",
         "Run Status",
@@ -3807,7 +3861,7 @@
       ],
       "propagation_scope": "Orchestrator shell, widget system, and dashboard-hostable summary widgets.",
       "owner_hint": "Orchestrator_Page.md and Widget_System.md",
-      "affected_doc_hints": [
+      "affected_docs": [
         "Plans/Orchestrator_Page.md",
         "Plans/Widget_System.md",
         "Plans/FinalGUISpec.md",
@@ -3834,8 +3888,10 @@
         "unnamed Progress widget catalog",
         "widget hosting outside `Progress` as the default Orchestrator model"
       ],
-      "source_basis": "working_ledger.md:75-105, 322-329, 17369-17372",
-      "mapped_sections": [
+      "legacy_source_basis": [
+        "working_ledger.md:75-105, 322-329, 17369-17372"
+      ],
+      "mapped_targets": [
         {
           "path": "Plans/Orchestrator_Page.md",
           "heading": "## 3. Progress tab",
@@ -3893,19 +3949,18 @@
           "status": "active"
         }
       ],
-      "transfer_status": "open_gap",
+      "transfer_state": "open_gap",
       "open_gap_ids": [
         "FIDELITY-044",
         "FIDELITY-057",
         "FIDELITY-058",
         "FIDELITY-059"
-      ],
-      "open_gap_count": 4
+      ]
     },
     {
-      "obligation_id": "OBL-040",
+      "canon_id": "OBL-040",
       "kind": "terminology",
-      "exact_obligation": "Canonical rewrite labels stay stable across docs and help: tabs/objects use `Seams`, `Feature Seam`, `Work Package`, `Package Overseer`, `Seam Overseer`; user-facing state/action labels use `Locally Complete`, `Available to Seam`, `Seam Complete`, `Completion Blocked`, `Weak Integration`, `Promotion Blocked`, `Promotion Revoked`, `Corroboration Requested`, `Challenge Accepted`, `Challenge Not Accepted`, `Advisory Concern Recorded`, `Graph Patch Requested`, `Graph Patch Applied`, `Generation Updated`, `Lane to Package`, `Package to Seam`, `Seam Completion`, `Seam Completion Revoked`, `Reopened`, `Reopened by Patch`, and `Reopened by New Evidence`.",
+      "exact_canon": "Canonical rewrite labels stay stable across docs and help: tabs/objects use `Seams`, `Feature Seam`, `Work Package`, `Package Overseer`, `Seam Overseer`; user-facing state/action labels use `Locally Complete`, `Available to Seam`, `Seam Complete`, `Completion Blocked`, `Weak Integration`, `Promotion Blocked`, `Promotion Revoked`, `Corroboration Requested`, `Challenge Accepted`, `Challenge Not Accepted`, `Advisory Concern Recorded`, `Graph Patch Requested`, `Graph Patch Applied`, `Generation Updated`, `Lane to Package`, `Package to Seam`, `Seam Completion`, `Seam Completion Revoked`, `Reopened`, `Reopened by Patch`, and `Reopened by New Evidence`.",
       "exact_tokens": [
         "Seams",
         "Feature Seam",
@@ -3936,7 +3991,7 @@
       ],
       "propagation_scope": "Glossary ownership, Orchestrator copy, graph/detail copy, and cross-surface rewrite labeling.",
       "owner_hint": "Glossary.md and Orchestrator_Page.md",
-      "affected_doc_hints": [
+      "affected_docs": [
         "Plans/Glossary.md",
         "Plans/Orchestrator_Page.md",
         "Plans/FinalGUISpec.md",
@@ -3965,8 +4020,10 @@
         "`Tiers` as the primary rewrite tab/object label",
         "local jargon that renames canonical rewrite objects"
       ],
-      "source_basis": "working_ledger.md:145-206, 6501-6584, 17373-17375",
-      "mapped_sections": [
+      "legacy_source_basis": [
+        "working_ledger.md:145-206, 6501-6584, 17373-17375"
+      ],
+      "mapped_targets": [
         {
           "path": "Plans/Run_Graph_View.md",
           "heading": "## 3. Node detail inspector",
@@ -4003,17 +4060,16 @@
           "status": "active"
         }
       ],
-      "transfer_status": "open_gap",
+      "transfer_state": "open_gap",
       "open_gap_ids": [
         "FIDELITY-008",
         "FIDELITY-072"
-      ],
-      "open_gap_count": 2
+      ]
     },
     {
-      "obligation_id": "OBL-041",
+      "canon_id": "OBL-041",
       "kind": "event_taxonomy",
-      "exact_obligation": "Operational attention semantics remain explicit: blocked owners normalize to `Runtime`, `Package Overseer`, `Seam Overseer`, `Corroboration`, `Graph Patch`, `Recovery`, `User`, and `External Resource`; alert levels are `Info`, `Warning`, `Attention`, and `Action Required`; canonical event families are `seam.*`, `package.*`, `node.*`, `promotion.*`, `corroboration.*`, `graph_patch.*`, `recovery.*`, and `account.*`; unresolved conditions stay on operational surfaces while resolved items fall back to `History` with normal resolved linger about 15 minutes and major resolved linger until dismissed or up to 24 hours.",
+      "exact_canon": "Operational attention semantics remain explicit: blocked owners normalize to `Runtime`, `Package Overseer`, `Seam Overseer`, `Corroboration`, `Graph Patch`, `Recovery`, `User`, and `External Resource`; alert levels are `Info`, `Warning`, `Attention`, and `Action Required`; canonical event families are `seam.*`, `package.*`, `node.*`, `promotion.*`, `corroboration.*`, `graph_patch.*`, `recovery.*`, and `account.*`; unresolved conditions stay on operational surfaces while resolved items fall back to `History` with normal resolved linger about 15 minutes and major resolved linger until dismissed or up to 24 hours.",
       "exact_tokens": [
         "Runtime",
         "Package Overseer",
@@ -4041,7 +4097,7 @@
       ],
       "propagation_scope": "Orchestrator, Dashboard, notifications, chat escalation, and event/backbone copy.",
       "owner_hint": "Orchestrator_Page.md and FinalGUISpec.md",
-      "affected_doc_hints": [
+      "affected_docs": [
         "Plans/Orchestrator_Page.md",
         "Plans/FinalGUISpec.md",
         "Plans/Glossary.md",
@@ -4069,8 +4125,10 @@
         "generic red project badge without owner/reason context",
         "silent demotion of persistent blockers into history"
       ],
-      "source_basis": "working_ledger.md:193-257, 4295-4417, 17373-17375",
-      "mapped_sections": [
+      "legacy_source_basis": [
+        "working_ledger.md:193-257, 4295-4417, 17373-17375"
+      ],
+      "mapped_targets": [
         {
           "path": "Plans/Orchestrator_Page.md",
           "heading": "## 7. History tab",
@@ -4100,19 +4158,18 @@
           "status": "active"
         }
       ],
-      "transfer_status": "open_gap",
+      "transfer_state": "open_gap",
       "open_gap_ids": [
         "FIDELITY-008",
         "FIDELITY-031",
         "FIDELITY-058",
         "FIDELITY-063"
-      ],
-      "open_gap_count": 4
+      ]
     },
     {
-      "obligation_id": "OBL-042",
+      "canon_id": "OBL-042",
       "kind": "ui_state",
-      "exact_obligation": "Orchestrator must own explicit historical focus state: `Historical Run Mode`, `active_run_id?`, `focused_run_id?`, `focus_mode = live | historical`, and `orchestrator.project_state.{project_id}` with `focused_run_id?`, `focus_mode`, `last_live_run_id?`, `selected_tab`, per-tab view state refs, and `auto_return_to_live = false` by default.",
+      "exact_canon": "Orchestrator must own explicit historical focus state: `Historical Run Mode`, `active_run_id?`, `focused_run_id?`, `focus_mode = live | historical`, and `orchestrator.project_state.{project_id}` with `focused_run_id?`, `focus_mode`, `last_live_run_id?`, `selected_tab`, per-tab view state refs, and `auto_return_to_live = false` by default.",
       "exact_tokens": [
         "Historical Run Mode",
         "active_run_id?",
@@ -4125,7 +4182,7 @@
       ],
       "propagation_scope": "Orchestrator page state, historical/live switching, and cross-tab search routing.",
       "owner_hint": "Orchestrator_Page.md and FinalGUISpec.md",
-      "affected_doc_hints": [
+      "affected_docs": [
         "Plans/Orchestrator_Page.md",
         "Plans/FinalGUISpec.md",
         "Plans/Run_Graph_View.md",
@@ -4157,8 +4214,10 @@
         "silent live-focus switching",
         "tab-local run drift without shared `focused_run_id`"
       ],
-      "source_basis": "working_ledger.md:2517-2629, 2661-2707, 17377-17385",
-      "mapped_sections": [
+      "legacy_source_basis": [
+        "working_ledger.md:2517-2629, 2661-2707, 17377-17385"
+      ],
+      "mapped_targets": [
         {
           "path": "Plans/storage-plan.md",
           "heading": "### Required redb keys",
@@ -4202,19 +4261,18 @@
           "status": "active"
         }
       ],
-      "transfer_status": "open_gap",
+      "transfer_state": "open_gap",
       "open_gap_ids": [
         "FIDELITY-003",
         "FIDELITY-060",
         "FIDELITY-061",
         "FIDELITY-073"
-      ],
-      "open_gap_count": 4
+      ]
     },
     {
-      "obligation_id": "OBL-043",
+      "canon_id": "OBL-043",
       "kind": "event_history",
-      "exact_obligation": "Canonical account history uses append-only `account_pressure_episode` and `account_switch_event` families, while `account_switch_reason` on runtime snapshots remains current-run disclosure only.",
+      "exact_canon": "Canonical account history uses append-only `account_pressure_episode` and `account_switch_event` families, while `account_switch_reason` on runtime snapshots remains current-run disclosure only.",
       "exact_tokens": [
         "account_pressure_episode",
         "account_switch_event",
@@ -4233,7 +4291,7 @@
       ],
       "propagation_scope": "Contracts, storage, Usage, History, Ledger, runtime detail, and notifications.",
       "owner_hint": "Contracts_V0.md and storage-plan.md",
-      "affected_doc_hints": [
+      "affected_docs": [
         "Plans/Contracts_V0.md",
         "Plans/storage-plan.md",
         "Plans/Multi-Account.md",
@@ -4284,8 +4342,10 @@
         "`account_switch_reason` as both pressure cause and switch outcome",
         "`recent_switch_reason` as durable history"
       ],
-      "source_basis": "working_ledger.md:8143-8238, 17256-17264, 17446-17449",
-      "mapped_sections": [
+      "legacy_source_basis": [
+        "working_ledger.md:8143-8238, 17256-17264, 17446-17449"
+      ],
+      "mapped_targets": [
         {
           "path": "Plans/Contracts_V0.md",
           "heading": "### 1.2 EventRecord -- canonical persisted envelope (schema: `pm.event.v0`)",
@@ -4336,19 +4396,18 @@
           "status": "active"
         }
       ],
-      "transfer_status": "open_gap",
+      "transfer_state": "open_gap",
       "open_gap_ids": [
         "FIDELITY-058",
         "FIDELITY-059",
         "FIDELITY-082",
         "FIDELITY-084"
-      ],
-      "open_gap_count": 4
+      ]
     },
     {
-      "obligation_id": "OBL-044",
+      "canon_id": "OBL-044",
       "kind": "help_contract",
-      "exact_obligation": "Help depth is three-tier: `inline help`, `context help`, and `canonical help entry`; canonical term names do not change between Expert and ELI5, and dedicated help entries must exist for `Feature Seam`, `Work Package`, `Package Overseer`, `Seam Overseer`, `Weak Integration`, `Promotion`, `Corroboration`, `Concern`, `Graph Patch`, `Graph Generation`, `Lane`, `requested vs effective`, `History vs Ledger`, and `historical vs superseded vs revoked vs reopened`.",
+      "exact_canon": "Help depth is three-tier: `inline help`, `context help`, and `canonical help entry`; canonical term names do not change between Expert and ELI5, and dedicated help entries must exist for `Feature Seam`, `Work Package`, `Package Overseer`, `Seam Overseer`, `Weak Integration`, `Promotion`, `Corroboration`, `Concern`, `Graph Patch`, `Graph Generation`, `Lane`, `requested vs effective`, `History vs Ledger`, and `historical vs superseded vs revoked vs reopened`.",
       "exact_tokens": [
         "inline help",
         "context help",
@@ -4370,7 +4429,7 @@
       ],
       "propagation_scope": "Glossary ownership, contextual explainer routing, and cross-surface help/copy governance.",
       "owner_hint": "Glossary.md and FinalGUISpec.md",
-      "affected_doc_hints": [
+      "affected_docs": [
         "Plans/Glossary.md",
         "Plans/FinalGUISpec.md",
         "Plans/Orchestrator_Page.md",
@@ -4400,8 +4459,10 @@
         "tooltip-only governance for rewrite terms",
         "renaming canonical terms between Expert and ELI5"
       ],
-      "source_basis": "working_ledger.md:6490-6590, 17286-17292, 17415-17420",
-      "mapped_sections": [
+      "legacy_source_basis": [
+        "working_ledger.md:6490-6590, 17286-17292, 17415-17420"
+      ],
+      "mapped_targets": [
         {
           "path": "Plans/Run_Graph_View.md",
           "heading": "## 3. Node detail inspector",
@@ -4445,19 +4506,18 @@
           "status": "active"
         }
       ],
-      "transfer_status": "open_gap",
+      "transfer_state": "open_gap",
       "open_gap_ids": [
         "FIDELITY-008",
         "FIDELITY-030",
         "FIDELITY-044",
         "FIDELITY-072"
-      ],
-      "open_gap_count": 4
+      ]
     },
     {
-      "obligation_id": "OBL-045",
+      "canon_id": "OBL-045",
       "kind": "runtime_resolution",
-      "exact_obligation": "Settings and runtime resolution stay three-axis: `source`, `request`, and `execution`; display grammar is `Inherited from`, `Overridden by`, `Requested`, `Effective`, `Reason`, and `Support`; surface auto resolvers emit ranked candidates, winner, and fallback reason using actor type, operation type, scope level, language/framework/domain hints, and project defaults.",
+      "exact_canon": "Settings and runtime resolution stay three-axis: `source`, `request`, and `execution`; display grammar is `Inherited from`, `Overridden by`, `Requested`, `Effective`, `Reason`, and `Support`; surface auto resolvers emit ranked candidates, winner, and fallback reason using actor type, operation type, scope level, language/framework/domain hints, and project defaults.",
       "exact_tokens": [
         "source",
         "request",
@@ -4477,7 +4537,7 @@
       ],
       "propagation_scope": "Prompt pipeline, settings display, personas/models resolution, and Orchestrator worker policy disclosure.",
       "owner_hint": "Prompt_Pipeline.md, Personas.md, Models_System.md, and FinalGUISpec.md",
-      "affected_doc_hints": [
+      "affected_docs": [
         "Plans/Prompt_Pipeline.md",
         "Plans/FinalGUISpec.md",
         "Plans/Personas.md",
@@ -4510,8 +4570,10 @@
         "Plans/Multi-Account.md"
       ],
       "stale_residue_to_retire": [],
-      "source_basis": "working_ledger.md:3658-3745, 3831-3925, 17401-17414",
-      "mapped_sections": [
+      "legacy_source_basis": [
+        "working_ledger.md:3658-3745, 3831-3925, 17401-17414"
+      ],
+      "mapped_targets": [
         {
           "path": "Plans/Orchestrator_Page.md",
           "heading": "## 10. Search, routing, and action policy",
@@ -4541,12 +4603,11 @@
           "status": "active"
         }
       ],
-      "transfer_status": "open_gap",
+      "transfer_state": "open_gap",
       "open_gap_ids": [
         "FIDELITY-030",
         "FIDELITY-061"
-      ],
-      "open_gap_count": 2
+      ]
     }
   ]
 }
