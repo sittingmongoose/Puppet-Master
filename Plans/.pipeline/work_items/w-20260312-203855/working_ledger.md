@@ -17512,3 +17512,76 @@ Optional later expansion only if a real cross-surface need appears:
 - Audit-stage handoff decision:
   - blocker inventory remains materially open
   - the gap record is now detailed enough that the next stage should be condensation rather than another broad evidence sweep
+
+## Entry
+- timestamp_utc: 2026-04-16T02:02:50.628Z
+- stage: Ready Check
+- finding_type: decision
+- summary: Rewrote the work item bundle to the v2 artifact shapes and re-confirmed that mutation planning is still blocked because eight material blocker families remain.
+- exact_items:
+  - `meta.json` now uses `pm.work_item_meta.v2`.
+  - `current_state.md`, `canon_inventory.json`, and `open_gaps.json` now use the v2 shapes.
+  - `next_required_stage` remains `Audit Mode`.
+  - Exact stale survivors still to retire include `TierContext`, `tier_id`, `detached_window`, `result_id`, `artifact_kind`, `task_id`, `{ tool_name, invocation_summary, options }`, `No remaining gaps`, and `restore points`.
+- impacted_docs:
+  - `Plans/.pipeline/work_items/w-20260312-203855/meta.json`
+  - `Plans/.pipeline/work_items/w-20260312-203855/current_state.md`
+  - `Plans/.pipeline/work_items/w-20260312-203855/canon_inventory.json`
+  - `Plans/.pipeline/work_items/w-20260312-203855/open_gaps.json`
+- evidence_refs:
+  - `Plans/.pipeline/work_items/w-20260312-203855/current_state.md`
+  - `Plans/.pipeline/work_items/w-20260312-203855/canon_inventory.json`
+  - `Plans/.pipeline/work_items/w-20260312-203855/open_gaps.json`
+  - `Plans/.pipeline/work_items/w-20260312-203855/meta.json`
+- supersedes_prior: yes
+- notes:
+  - The v2 `canon_inventory.json` keeps only the eight surviving canon clusters needed for the remaining blockers.
+  - The v2 `open_gaps.json` keeps only unresolved blocker families and their exact missing items.
+
+## Entry
+- timestamp_utc: 2026-04-16T02:09:06.971Z
+- stage: Audit Mode
+- finding_type: contract
+- summary: Re-audited live owner and consumer docs in chunks and confirmed that several blockers remain real but are overstated as total absence; the live failures are now more precisely partial-transfer, structural-heading, and stale-survivor defects.
+- exact_items:
+  - `Plans/UI_Command_Catalog.md` already has a real command-normalization owner block, but `cmd.search.open_result` and `cmd.search.replace_selected` still preserve `result_id`.
+  - `Plans/orchestrator-subagent-integration.md` already carries an `execution_unit_context` field block, but stale `TierContext` / `tier_id` residue still survives nearby.
+  - `Plans/Executor_Protocol.md` already carries a strong `execution_unit_context` owner field block, but `Plans/Contracts_V0.md` still lacks the exact `### 5.1B Persona/Runtime Snapshot Payload Contract` heading.
+  - `Plans/Contracts_V0.md` still preserves forbidden `detached_window` in the closed `target_kind` enum.
+  - `Plans/storage-plan.md` already carries `artifacts_index.v1:{project_id}:{artifact_id}`, `provider_attempt_ref`, `usage_event_ref`, `workflow_run_id`, and a `validation lineage` block.
+  - `Plans/human-in-the-loop.md` already carries `blocked_sequence` and `approval_scope_key`.
+  - `Plans/Glossary.md` and `Plans/Orchestrator_Page.md` already carry real token/label/behavior blocks, but still lack the required discoverable owner headings in the audited canon clusters.
+  - Exact stale contradictory survivors still confirmed: `No remaining gaps`, `restore points`, `TierContext`, `tier_id`, `result_id`, `artifact_kind`, `task_id`, `{ tool_name, invocation_summary, options }`.
+- impacted_docs:
+  - `Plans/UI_Command_Catalog.md`
+  - `Plans/orchestrator-subagent-integration.md`
+  - `Plans/storage-plan.md`
+  - `Plans/human-in-the-loop.md`
+  - `Plans/Glossary.md`
+  - `Plans/Orchestrator_Page.md`
+  - `Plans/assistant-chat-design.md`
+  - `Plans/FinalGUISpec.md`
+- evidence_refs:
+  - `Plans/UI_Command_Catalog.md:67-91`
+  - `Plans/UI_Command_Catalog.md:224-246`
+  - `Plans/UI_Command_Catalog.md:617-622`
+  - `Plans/Contracts_V0.md:778-806`
+  - `Plans/Executor_Protocol.md:110-130`
+  - `Plans/orchestrator-subagent-integration.md:209-235`
+  - `Plans/orchestrator-subagent-integration.md:380-402`
+  - `Plans/storage-plan.md:325`
+  - `Plans/storage-plan.md:894-897`
+  - `Plans/storage-plan.md:1335-1383`
+  - `Plans/human-in-the-loop.md:29-33`
+  - `Plans/human-in-the-loop.md:96`
+  - `Plans/Glossary.md:34-67`
+  - `Plans/Glossary.md:102-126`
+  - `Plans/Orchestrator_Page.md:16-43`
+  - `Plans/Orchestrator_Page.md:451-474`
+  - `Plans/assistant-chat-design.md:1784`
+  - `Plans/FinalGUISpec.md:2092`
+  - `Plans/FinalGUISpec.md:2737-2739`
+- supersedes_prior: yes
+- notes:
+  - This pass did not clear material blockers; it refined them into more exact unresolved items.
+  - The next best stage is condensation so the compact blocker bundle matches the sharper live-doc evidence.

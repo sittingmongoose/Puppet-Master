@@ -1,78 +1,13 @@
 {
+  "schema_id": "pm.work_item_meta.v2",
   "work_id": "w-20260312-203855",
   "mode": "migrated",
-  "status": "blocked",
   "topic_or_scope": "Orchestrator rewrite transfer-fidelity audit, legacy-canon cleanup readiness, and reconciliation prep",
+  "status": "blocked",
   "created_at_utc": "2026-03-12T20:38:55Z",
-  "updated_at_utc": "2026-04-16T01:41:42.242Z",
+  "updated_at_utc": "2026-04-16T02:20:23.833Z",
   "run_prefix": "r-20260312-203855",
   "next_run_seq": 10,
   "run_id": "r-20260312-203855-09",
-  "legacy_state": {
-    "mode": "audit",
-    "status": "packetized",
-    "latest_run_id": "r-20260312-203855-09",
-    "run_prefix": "r-20260312-203855",
-    "next_run_seq": 10,
-    "durable_fidelity_baseline_run_id": "r-20260312-203855-07"
-  },
-  "next_required_stage": "Audit Mode",
-  "migration_audit": {
-    "canon_item_count": 45,
-    "mapped_section_count": 119,
-    "open_gap_count": 84,
-    "docs_with_open_gaps": 26,
-    "obligations_with_open_gaps": 43,
-    "reconciliation_plan_written": false,
-    "resolved_legacy_gap_ids": [
-      "FIDELITY-015"
-    ],
-    "deep_audit_revalidated": true,
-    "deep_audit_method": "multi-agent semantic canon-transfer audit against ledger chunks and live Plans surfaces",
-    "deep_audit_refinement_group_count": 10,
-    "deep_audit_cross_cutting_finding_count": 13,
-    "deep_audit_summary": {
-      "registered_gap_inventory_note": "The 84 registered legacy gap ids remain the baseline inventory. Deep-audit findings refined many entries as anchor-only, partial-transfer, over-summarized, or stale-contradictory failures rather than total absence.",
-      "overstated_prior_gap_ids": [
-        "FIDELITY-023",
-        "FIDELITY-040",
-        "FIDELITY-041",
-        "FIDELITY-042",
-        "FIDELITY-056",
-        "FIDELITY-062",
-        "FIDELITY-070",
-        "FIDELITY-079",
-        "FIDELITY-082"
-      ],
-      "cross_cutting_themes": [
-        "three-tier help architecture and 7-field help-entry contract remain uninstantiated",
-        "related-concept help clusters are absent",
-        "lane vs worktree and safe point vs restore point confusion pairs still lack glossary anchoring",
-        "historical vs superseded vs revoked vs reopened vocabulary remains under-defined outside the ledger",
-        "active blockers must not be dismissible into fake health is still not propagated",
-        "blocked-owner vocabulary and alert-level families are still missing from live docs",
-        "full escalation ladder is still not carried consistently across approval and concern surfaces",
-        "browser capture must produce visible composer chips and must not inject hidden chat messages",
-        "projection freshness and health ladders remain under-propagated across consumer docs",
-        "unified attribution packet is still not defined as one reusable object",
-        "account-history append-only families remain absent from usage/runtime docs",
-        "three-axis requested/effective display grammar is still under-transferred",
-        "provider account governance and bridge-field precedence rules remain under-specified"
-      ]
-    },
-    "generated_files": [
-      "migration_report.md",
-      "missing_transfer_report.md",
-      "current_state.md",
-      "canon_inventory.json",
-      "open_gaps.json",
-      "meta.json"
-    ]
-  },
-  "readiness_check": {
-    "checked_at_utc": "2026-04-16T01:41:42.242Z",
-    "result": "blocked",
-    "reason": "not_ready_for_planning",
-    "summary": "Ready check failed because `canon_inventory.json` is usable and non-empty, but `open_gaps.json summary.material_blockers = 8`. The condensed blocker set still leaves exact owner/consumer transfer failures in runtime identity, route/command ownership, storage and historical semantics, receipt/validation lineage, blocked-episode restoration, glossary/help ownership, Orchestrator structural ownership, and usage/account-history attribution."
-  }
+  "next_required_stage": "Audit Mode"
 }
