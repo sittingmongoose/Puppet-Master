@@ -1,618 +1,318 @@
 {
-  "schema_id": "pm.open_gaps.v1",
+  "schema_id": "pm.open_gaps.v2",
   "work_id": "w-20260312-203855",
-  "generated_at_utc": "2026-04-16T01:33:41Z",
-  "readiness": "blocked",
   "summary": {
-    "open_gap_count": 8,
-    "underlying_gap_evidence_count": 45,
     "material_blockers": 8,
-    "docs_with_open_gaps": 19,
-    "canon_items_with_open_gaps": 8,
-    "by_failure_type": {
-      "stubbed consumer propagation": 19,
-      "missing structural heading": 14,
-      "other": 9,
-      "over-summarized transfer": 3
-    },
-    "by_classification": {
-      "interface shape missing": 13,
-      "section allocation missing": 12,
-      "consumer propagation missing": 8,
-      "stale contradictory residue": 6,
-      "over-summarized section": 3,
-      "persistence coupling missing": 2,
-      "wrong section allocation": 1
-    },
-    "top_docs": [
-      {
-        "path": "Plans/Orchestrator_Page.md",
-        "gap_count": 5
-      },
-      {
-        "path": "Plans/assistant-chat-design.md",
-        "gap_count": 5
-      },
-      {
-        "path": "Plans/usage-feature.md",
-        "gap_count": 5
-      },
-      {
-        "path": "Plans/UI_Command_Catalog.md",
-        "gap_count": 4
-      },
-      {
-        "path": "Plans/storage-plan.md",
-        "gap_count": 3
-      },
-      {
-        "path": "Plans/Runtime_Artifacts_Panel.md",
-        "gap_count": 3
-      }
-    ]
+    "total_gaps": 8,
+    "docs_affected": 19,
+    "canon_items_affected": 8,
+    "top_pressure_docs": [
+      "Plans/Orchestrator_Page.md",
+      "Plans/usage-feature.md",
+      "Plans/storage-plan.md",
+      "Plans/assistant-chat-design.md",
+      "Plans/Contracts_V0.md",
+      "Plans/FinalGUISpec.md"
+    ],
+    "dominant_gap_classes": [
+      "missing_data_shape",
+      "over_summarized_transfer",
+      "missing_structural_heading",
+      "stale_contradictory_survivor",
+      "stubbed_consumer_propagation"
+    ],
+    "underlying_gap_evidence_count": 45
   },
   "open_gaps": [
     {
-      "blocker_id": "BLK-001",
-      "title": "Execution unit context and requested/effective runtime identity remain under-specified",
-      "canon_ids": [
-        "CANON-001"
+      "gap_id": "gap-001",
+      "severity": "blocker",
+      "gap_class": "missing_data_shape",
+      "description": "Execution-unit runtime identity is partially transferred, but it still lacks one authoritative owner shape and still coexists with stale tier-era residue.",
+      "affected_targets": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "### 5.1B Persona/Runtime Snapshot Payload Contract"
+        },
+        {
+          "path": "Plans/Executor_Protocol.md",
+          "heading": "### 5.1 Unified `DispatchContext` schema"
+        },
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "heading": "### Canonical navigation model"
+        },
+        {
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "heading": "execution-unit context consumer block"
+        },
+        {
+          "path": "Plans/usage-feature.md",
+          "heading": "usage attribution section"
+        }
       ],
-      "source_gap_ids": [
-        "FIDELITY-001",
-        "FIDELITY-010",
-        "FIDELITY-011",
-        "FIDELITY-049",
-        "FIDELITY-076",
-        "FIDELITY-077",
-        "FIDELITY-078",
-        "FIDELITY-079",
-        "FIDELITY-084"
-      ],
-      "affected_docs": [
-        "Plans/Contracts_V0.md",
-        "Plans/Executor_Protocol.md",
-        "Plans/assistant-chat-design.md",
-        "Plans/orchestrator-subagent-integration.md",
-        "Plans/interview-subagent-integration.md",
-        "Plans/usage-feature.md"
-      ],
-      "failure_type": "missing structural heading",
-      "classification": "interface shape missing",
-      "exact_missing_headings": [
-        "execution unit context",
-        "runtime snapshot",
-        "Canonical navigation model"
-      ],
-      "exact_missing_fields": [
-        "run_id",
-        "node_id",
-        "attempt_id",
-        "lane_id",
-        "package_id",
-        "seam_id",
-        "worktree_id",
-        "execution_role",
-        "requested_account_id",
+      "exact_missing_items": [
+        "### 5.1B Persona/Runtime Snapshot Payload Contract",
+        "authoritative owner heading for `execution_unit_context`",
         "requested_account_binding",
         "requested_account_policy",
-        "effective_account_id",
-        "operational_identity",
-        "tool_use_id"
-      ],
-      "exact_missing_terms": [
-        "execution_unit_context",
-        "requested_account_id",
-        "effective_account_id",
-        "operational_identity"
-      ],
-      "exact_cross_reference_targets": [
-        "Plans/Contracts_V0.md :: ### 5.1B Persona/Runtime Snapshot Payload Contract",
-        "Plans/Executor_Protocol.md :: node execution context owner section",
-        "Plans/assistant-chat-design.md :: ### Canonical navigation model",
-        "Plans/orchestrator-subagent-integration.md :: execution context consumer section",
-        "Plans/interview-subagent-integration.md :: requested/effective identity consumer section",
-        "Plans/usage-feature.md :: usage attribution consumer section"
-      ],
-      "forbidden_strings": [
+        "tool_use_id",
+        "consumer carry-through for requested/effective runtime identity in chat and usage surfaces",
         "TierContext",
-        "tier_id",
-        "work_package_id",
-        "feature_seam_id"
-      ]
+        "tier_id"
+      ],
+      "blocking_reason": "`Plans/Executor_Protocol.md` already carries a strong `execution_unit_context` owner field block, but `Plans/Contracts_V0.md` still lacks the exact `### 5.1B Persona/Runtime Snapshot Payload Contract` anchor and `Plans/orchestrator-subagent-integration.md` still preserves tier-era residue, so owner authority remains split across competing structures.",
+      "next_resolution_stage": "Audit Mode"
     },
     {
-      "blocker_id": "BLK-002",
-      "title": "Route/open payload and command normalization are still missing exact owner sections",
-      "canon_ids": [
-        "CANON-002"
+      "gap_id": "gap-002",
+      "severity": "blocker",
+      "gap_class": "stale_contradictory_survivor",
+      "description": "Route/open payload and command normalization are partly transferred, but stale search-routing survivors and incomplete consumer carry-through still keep the contract unsafe to build from.",
+      "affected_targets": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "7.3 `route_target`"
+        },
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "### 7.3 Shared route and open behavior"
+        },
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "heading": "### 2.0 Command entry contract (doc-level)"
+        },
+        {
+          "path": "Plans/Wiring_Matrix.md",
+          "heading": "command normalization rows"
+        },
+        {
+          "path": "Plans/Progression_Gates.md",
+          "heading": "normalization validation"
+        }
       ],
-      "source_gap_ids": [
-        "FIDELITY-002",
-        "FIDELITY-029",
-        "FIDELITY-040",
-        "FIDELITY-041",
-        "FIDELITY-042",
-        "FIDELITY-043",
-        "FIDELITY-054",
-        "FIDELITY-055"
-      ],
-      "affected_docs": [
-        "Plans/Contracts_V0.md",
-        "Plans/FinalGUISpec.md",
-        "Plans/UI_Command_Catalog.md",
-        "Plans/Wiring_Matrix.md",
-        "Plans/Progression_Gates.md",
-        "Plans/GitHub_Integration.md"
-      ],
-      "failure_type": "mixed",
-      "classification": "mixed",
-      "exact_missing_headings": [
-        "### 7.3 Shared route and open behavior",
-        "### 2.0 Command entry contract (doc-level)",
-        "Orchestrator commands",
+      "exact_missing_items": [
+        "consumer-level `route_target` payload shape in `Plans/FinalGUISpec.md`",
+        "closed `target_kind` carry-through across search/open consumers",
         "Search-command routing",
-        "Canonical runtime recovery command ownership"
-      ],
-      "exact_missing_fields": [
-        "project_id",
-        "focused_run_id",
-        "thread_id",
-        "target_kind",
-        "subject_id",
-        "object_kind",
-        "object_id",
-        "tab_id",
-        "inspector_target",
-        "command_kind",
-        "normalization.kind",
-        "normalizes_to_contract",
-        "alias_of_command_id"
-      ],
-      "exact_missing_terms": [
-        "route_target",
-        "target_kind",
-        "object_kind",
-        "inspector_target",
-        "subject_id",
-        "resume_url",
-        "command_kind",
-        "normalization",
-        "primary_view",
-        "side_panel",
-        "bottom_panel",
-        "embedded_surface",
-        "page_tab",
-        "doc:<document_id>",
-        "artifact:<artifact_id>"
-      ],
-      "exact_cross_reference_targets": [
-        "Plans/Contracts_V0.md :: 7.3 `route_target`",
-        "Plans/FinalGUISpec.md :: ### 7.3 Shared route and open behavior",
-        "Plans/UI_Command_Catalog.md :: command owner sections",
-        "Plans/Wiring_Matrix.md :: normalization metadata rows",
-        "Plans/Progression_Gates.md :: normalization validation",
-        "Plans/GitHub_Integration.md :: cross-surface open routing"
-      ],
-      "forbidden_strings": [
+        "Canonical runtime recovery command ownership",
         "detached_window",
         "result_id"
-      ]
+      ],
+      "blocking_reason": "`Plans/UI_Command_Catalog.md` already has a real command-normalization owner block, but it still lacks the exact `Search-command routing` and `Canonical runtime recovery command ownership` headings, `Contracts_V0.md` still keeps forbidden `detached_window` in the `target_kind` enum, and search commands still preserve `result_id` in live command definitions.",
+      "next_resolution_stage": "Audit Mode"
     },
     {
-      "blocker_id": "BLK-003",
-      "title": "Storage and runtime-artifact ownership still lack exact key families and historical semantics",
-      "canon_ids": [
-        "CANON-003"
+      "gap_id": "gap-003",
+      "severity": "blocker",
+      "gap_class": "over_summarized_transfer",
+      "description": "Storage and runtime-artifact canon is substantially transferred, but the remaining blocker is the still-missing project-state owner shape and the exact distinction between historical truth and cleanup state.",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "### Required redb keys"
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "### Restart and stale history"
+        },
+        {
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "heading": "runtime-artifact projection consumer"
+        },
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": "Current vs historical run behavior"
+        },
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": "historical route identity packet"
+        }
       ],
-      "source_gap_ids": [
-        "FIDELITY-003",
-        "FIDELITY-004",
-        "FIDELITY-006",
-        "FIDELITY-016",
-        "FIDELITY-017",
-        "FIDELITY-018",
-        "FIDELITY-058",
-        "FIDELITY-060",
-        "FIDELITY-062",
-        "FIDELITY-073",
-        "FIDELITY-085"
-      ],
-      "affected_docs": [
-        "Plans/storage-plan.md",
-        "Plans/Project_Output_Artifacts.md",
-        "Plans/Runtime_Artifacts_Panel.md",
-        "Plans/Orchestrator_Page.md",
-        "Plans/Run_Graph_View.md"
-      ],
-      "failure_type": "mixed",
-      "classification": "mixed",
-      "exact_missing_headings": [
+      "exact_missing_items": [
         "### Required redb keys",
         "### Restart and stale history",
-        "runtime artifact index",
-        "worktree record",
-        "lane record",
-        "orchestrator project state"
-      ],
-      "exact_missing_fields": [
-        "artifact_id",
-        "artifact_type",
-        "project_id",
-        "run_id",
-        "thread_id",
-        "node_id",
-        "attempt_id",
-        "worktree_id",
-        "lane_id",
-        "repo_id",
-        "path_ref",
-        "branch_ref",
-        "baseline_ref",
-        "lifecycle_state",
-        "historical_flag",
-        "archived_flag",
-        "removed_flag",
-        "cleanup_eligible_flag",
-        "historical_lineage_refs[]",
-        "focused_run_id",
-        "focus_mode",
-        "last_live_run_id",
-        "selected_tab",
-        "per_tab_view_state_refs",
-        "auto_return_to_live"
-      ],
-      "exact_missing_terms": [
-        "artifacts_index.v1:{project_id}:{artifact_id}",
-        "artifacts_project_state.v1:{project_id}",
-        "projector.checkpoint.runtime_artifacts:{project_id}",
-        "worktree_record.v1:{project_id}:{worktree_id}",
-        "lane_record.v1:{project_id}:{lane_id}",
-        "worktree_projection.v1:{project_id}:{worktree_id}",
-        "lane_projection.v1:{project_id}:{lane_id}",
         "orchestrator.project_state.{project_id}",
-        "historical",
-        "archived",
-        "removed",
-        "baseline",
-        "active",
-        "suspect",
-        "restoring",
-        "retained",
-        "cleanup_eligible",
-        "projection_freshness",
-        "projection_health",
-        "historical_lineage_refs[]"
-      ],
-      "exact_cross_reference_targets": [
-        "Plans/storage-plan.md :: owner sections for keys, history, and projections",
-        "Plans/Project_Output_Artifacts.md :: runtime-artifact index consumer",
-        "Plans/Runtime_Artifacts_Panel.md :: projection consumer",
-        "Plans/Orchestrator_Page.md :: historical behavior consumer",
-        "Plans/Run_Graph_View.md :: historical route identity consumer"
-      ],
-      "forbidden_strings": [
+        "exact owner semantics distinguishing `historical`, `archived`, and `removed`",
+        "historical_lineage_refs[]",
         "artifact_kind",
         "task_id"
-      ]
+      ],
+      "blocking_reason": "`Plans/storage-plan.md` already carries `artifacts_index.v1:{project_id}:{artifact_id}` and several artifact and bridge fields, so the blocker is no longer missing wholesale storage canon; it is the unresolved owner shape for project state and the still-ambiguous lifecycle boundary after cleanup.",
+      "next_resolution_stage": "Audit Mode"
     },
     {
-      "blocker_id": "BLK-004",
-      "title": "Receipt, bridge, and validation lineage still lack the exact downstream handoff contract",
-      "canon_ids": [
-        "CANON-004"
+      "gap_id": "gap-004",
+      "severity": "blocker",
+      "gap_class": "over_summarized_transfer",
+      "description": "Receipt and validation lineage are partially transferred, but the remaining bridge and lineage fields are still not explicit enough for downstream handoff without guesswork.",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "### Cross-surface receipt record"
+        },
+        {
+          "path": "Plans/Project_Output_Artifacts.md",
+          "heading": "validation artifact lineage"
+        },
+        {
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "heading": "bridge-field viewer"
+        },
+        {
+          "path": "Plans/interview-subagent-integration.md",
+          "heading": "validation/report section"
+        }
       ],
-      "source_gap_ids": [
-        "FIDELITY-005",
-        "FIDELITY-080",
-        "FIDELITY-085"
-      ],
-      "affected_docs": [
-        "Plans/storage-plan.md",
-        "Plans/Project_Output_Artifacts.md",
-        "Plans/Runtime_Artifacts_Panel.md",
-        "Plans/interview-subagent-integration.md",
-        "Plans/usage-feature.md"
-      ],
-      "failure_type": "missing structural heading",
-      "classification": "interface shape missing",
-      "exact_missing_headings": [
+      "exact_missing_items": [
         "### Cross-surface receipt record",
-        "validation lineage"
-      ],
-      "exact_missing_fields": [
-        "attempt_id",
-        "provider_attempt_ref",
-        "usage_event_ref",
+        "validation lineage",
         "workflow_refs",
         "docker_refs",
         "kubernetes_refs",
-        "validation_pass_report",
-        "workflow_run_id",
         "run_id",
         "pass_verdict",
         "phase_plan_ref",
         "requirements_quality_report_ref"
       ],
-      "exact_missing_terms": [
-        "attempt_id",
-        "provider_attempt_ref",
-        "usage_event_ref",
-        "workflow_refs",
-        "docker_refs",
-        "kubernetes_refs",
-        "validation_pass_report",
-        "workflow_run_id",
-        "run_id",
-        "pass_verdict",
-        "phase_plan_ref",
-        "requirements_quality_report_ref"
-      ],
-      "exact_cross_reference_targets": [
-        "Plans/storage-plan.md :: receipt record owner section",
-        "Plans/Project_Output_Artifacts.md :: validation artifact consumer",
-        "Plans/Runtime_Artifacts_Panel.md :: bridge-field viewer",
-        "Plans/interview-subagent-integration.md :: validation/report consumer",
-        "Plans/usage-feature.md :: drill-through and export consumer"
-      ],
-      "forbidden_strings": []
+      "blocking_reason": "`Plans/storage-plan.md` already carries `provider_attempt_ref`, `usage_event_ref`, `workflow_run_id`, and a `validation lineage` block, but the explicit `### Cross-surface receipt record` owner section and the remaining lineage fields still are not complete enough to build downstream consumers safely.",
+      "next_resolution_stage": "Audit Mode"
     },
     {
-      "blocker_id": "BLK-005",
-      "title": "Blocked-episode identity, restart restoration, and tool attribution still do not line up across surfaces",
-      "canon_ids": [
-        "CANON-005"
+      "gap_id": "gap-005",
+      "severity": "blocker",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "Blocked-episode identity is partly transferred, but tool and chat consumers still do not carry the full blocked packet and stale closure text still survives in assistant chat.",
+      "affected_targets": [
+        {
+          "path": "Plans/Tools.md",
+          "heading": "### 8.0 Event payloads (seglog)"
+        },
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "heading": "Thread blocked-state lifecycle"
+        },
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "heading": "Blocked notices"
+        },
+        {
+          "path": "Plans/human-in-the-loop.md",
+          "heading": "blocked-episode request contract"
+        },
+        {
+          "path": "Plans/usage-feature.md",
+          "heading": "escalation ladder observability"
+        }
       ],
-      "source_gap_ids": [
-        "FIDELITY-012",
-        "FIDELITY-050",
-        "FIDELITY-051",
-        "FIDELITY-052",
-        "FIDELITY-053",
-        "FIDELITY-074",
-        "FIDELITY-075",
-        "FIDELITY-083"
-      ],
-      "affected_docs": [
-        "Plans/Tools.md",
-        "Plans/assistant-chat-design.md",
-        "Plans/human-in-the-loop.md",
-        "Plans/usage-feature.md"
-      ],
-      "failure_type": "stubbed consumer propagation",
-      "classification": "consumer propagation missing",
-      "exact_missing_headings": [
-        "### 8.0 Event payloads (seglog)",
-        "Thread blocked-state lifecycle",
-        "Blocked notices",
-        "HITL request contract"
-      ],
-      "exact_missing_fields": [
+      "exact_missing_items": [
         "blocked_sequence",
         "approval_scope_key",
         "report_ref",
         "startup_recovered",
-        "node_id",
-        "lane_id",
-        "package_id",
-        "execution_role",
-        "effective_account_id",
-        "operational_identity",
-        "tool_use_id",
         "action_available",
-        "escalation_level"
-      ],
-      "exact_missing_terms": [
-        "blocked_sequence",
-        "approval_scope_key",
-        "report_ref",
-        "startup_recovered",
-        "tool.invoked",
-        "tool.denied",
-        "info",
-        "warning",
-        "attention_required",
-        "blocked",
-        "system_notification",
-        "action_available",
-        "escalation_level"
-      ],
-      "exact_cross_reference_targets": [
-        "Plans/Tools.md :: tool event payload owner section",
-        "Plans/assistant-chat-design.md :: blocked lifecycle and handoff consumer sections",
-        "Plans/human-in-the-loop.md :: blocked-episode approval consumer section",
-        "Plans/usage-feature.md :: escalation ladder consumer section"
-      ],
-      "forbidden_strings": [
+        "escalation_level",
         "{ tool_name, invocation_summary, options }",
-        "The plan is **fully fleshed out** for MVP for all adopted items (§23.4). No remaining gaps; **accessibility** is explicitly not MVP.",
         "No remaining gaps"
-      ]
+      ],
+      "blocking_reason": "`Plans/human-in-the-loop.md` already carries `blocked_sequence` and `approval_scope_key`, and `Plans/Tools.md` already carries real `tool.invoked` / `tool.denied` sections. The blocker remains because those exact blocked-episode fields still are not carried into the Tools event payload contract or the assistant-chat blocked notices flow, and assistant chat still contains a stale closure verdict.",
+      "next_resolution_stage": "Audit Mode"
     },
     {
-      "blocker_id": "BLK-006",
-      "title": "Help and glossary owner sections still do not instantiate the required rewrite, routing, and historical terms",
-      "canon_ids": [
-        "CANON-006"
+      "gap_id": "gap-006",
+      "severity": "blocker",
+      "gap_class": "missing_structural_heading",
+      "description": "Glossary/help canon is partly transferred, but token lists and labels exist without the required owned headings and instantiated help-entry sections.",
+      "affected_targets": [
+        {
+          "path": "Plans/Glossary.md",
+          "heading": "### Orchestrator rewrite terms"
+        },
+        {
+          "path": "Plans/Glossary.md",
+          "heading": "### Runtime and routing terms"
+        },
+        {
+          "path": "Plans/usage-feature.md",
+          "heading": "help surfaces"
+        },
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": "glossary/help references"
+        }
       ],
-      "source_gap_ids": [
-        "FIDELITY-008",
-        "FIDELITY-009",
-        "FIDELITY-081"
-      ],
-      "affected_docs": [
-        "Plans/Glossary.md",
-        "Plans/usage-feature.md",
-        "Plans/Orchestrator_Page.md"
-      ],
-      "failure_type": "missing structural heading",
-      "classification": "section allocation missing",
-      "exact_missing_headings": [
+      "exact_missing_items": [
         "### Orchestrator rewrite terms",
         "### Runtime and routing terms",
+        "instantiated help-entry rows for rewrite terms",
+        "instantiated help-entry rows for routing terms",
+        "instantiated help-entry rows for historical vocabulary",
+        "help surfaces",
+        "glossary/help references",
         "why it matters",
         "what it is not",
         "related concepts"
       ],
-      "exact_missing_fields": [
-        "canonical_name",
-        "short_definition",
-        "why_it_matters",
-        "what_it_is_not",
-        "common_related_states",
-        "related_concepts",
-        "surface_examples",
-        "term_id",
-        "help_depth",
-        "context_help_target",
-        "canonical_help_entry_ref",
-        "object_label",
-        "state_label",
-        "action_label",
-        "concern_group_label",
-        "blocked_owner_kind",
-        "alert_level"
-      ],
-      "exact_missing_terms": [
-        "canonical term system",
-        "contextual help system",
-        "dedicated help-entry contract",
-        "related_concepts",
-        "project health",
-        "project activity",
-        "project attention",
-        "historical",
-        "stale_historical",
-        "superseded",
-        "revoked",
-        "reopened",
-        "archived",
-        "removed",
-        "Seams",
-        "Feature Seam",
-        "Work Package",
-        "Package Overseer",
-        "Seam Overseer",
-        "inline help",
-        "context help",
-        "canonical help entry",
-        "route_target",
-        "target_kind",
-        "object_kind",
-        "inspector_target",
-        "subject_id",
-        "resume_url"
-      ],
-      "exact_cross_reference_targets": [
-        "Plans/Glossary.md :: rewrite and routing term owner sections",
-        "Plans/usage-feature.md :: help consumer section",
-        "Plans/Orchestrator_Page.md :: glossary/help references"
-      ],
-      "forbidden_strings": []
+      "blocking_reason": "`Plans/Glossary.md` already carries required fields, labels, and many canonical terms, but the required owner headings and instantiated help-entry structure still are not present, and the expected consumer sections `help surfaces` and `glossary/help references` are still not discoverable in downstream docs.",
+      "next_resolution_stage": "Audit Mode"
     },
     {
-      "blocker_id": "BLK-007",
-      "title": "Orchestrator still lacks explicit owner sections for scope, history, and separate attention semantics",
-      "canon_ids": [
-        "CANON-007"
+      "gap_id": "gap-007",
+      "severity": "blocker",
+      "gap_class": "missing_structural_heading",
+      "description": "Orchestrator structural canon is partly transferred, but discoverable owner headings and one stale false-cognate survivor still keep scope/history/attention ownership incomplete.",
+      "affected_targets": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": "## 1. Scope and canonical model"
+        },
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": "Current vs historical run behavior"
+        },
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": "Concern and notification model"
+        },
+        {
+          "path": "Plans/GitHub_Integration.md",
+          "heading": "Source Control boundary"
+        },
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "route/open and recovery consumer references"
+        }
       ],
-      "source_gap_ids": [
-        "FIDELITY-056",
-        "FIDELITY-058",
-        "FIDELITY-060",
-        "FIDELITY-062",
-        "FIDELITY-063",
-        "FIDELITY-070",
-        "FIDELITY-073"
-      ],
-      "affected_docs": [
-        "Plans/Orchestrator_Page.md",
-        "Plans/GitHub_Integration.md",
-        "Plans/Run_Graph_View.md",
-        "Plans/FinalGUISpec.md"
-      ],
-      "failure_type": "missing structural heading",
-      "classification": "section allocation missing",
-      "exact_missing_headings": [
+      "exact_missing_items": [
         "## 1. Scope and canonical model",
-        "History",
-        "Current vs historical run behavior",
-        "Concern and notification model",
-        "Source Control boundary"
-      ],
-      "exact_missing_fields": [
-        "lane_id",
-        "worktree_id",
-        "package_id",
-        "node_id",
-        "seam_id",
-        "virtualization_strategy",
-        "lazy_expansion_trigger",
-        "inspector_loading_strategy"
-      ],
-      "exact_missing_terms": [
-        "Source Control",
-        "worktree-first",
-        "Orchestrator",
-        "Lane",
-        "primary operational object in Orchestrator",
-        "Worktree",
-        "concrete filesystem/Git backing",
-        "Orchestrator-wide scale contract",
-        "historical",
-        "archived",
-        "removed",
-        "attention_required",
-        "blocked"
-      ],
-      "exact_cross_reference_targets": [
-        "Plans/Orchestrator_Page.md :: owner sections for scope, history, and concern model",
-        "Plans/GitHub_Integration.md :: Source Control boundary owner section",
-        "Plans/Run_Graph_View.md :: historical route identity consumer",
-        "Plans/FinalGUISpec.md :: route/open and recovery consumer references"
-      ],
-      "forbidden_strings": [
+        "discoverable heading for current-vs-historical owner rules",
+        "discoverable heading for concern and notification owner rules",
+        "Source Control boundary",
         "restore points"
-      ]
+      ],
+      "blocking_reason": "`Plans/Orchestrator_Page.md` already carries `worktree-first`, health/activity/attention vocabulary, and the Source Control boundary rules, but the owner sections are still structurally hard to discover and `Plans/FinalGUISpec.md` still preserves the false-cognate `restore points` reference.",
+      "next_resolution_stage": "Audit Mode"
     },
     {
-      "blocker_id": "BLK-008",
-      "title": "Usage, interview, and account history still do not share stable account identity and projection-health degrade rules",
-      "canon_ids": [
-        "CANON-008"
+      "gap_id": "gap-008",
+      "severity": "blocker",
+      "gap_class": "missing_data_shape",
+      "description": "Usage, interview, and account-history surfaces still do not carry stable internal account identity and projection-health-aware degrade behavior.",
+      "affected_targets": [
+        {
+          "path": "Plans/usage-feature.md",
+          "heading": "usage attribution and drill-through"
+        },
+        {
+          "path": "Plans/interview-subagent-integration.md",
+          "heading": "requested/effective identity consumer section"
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "projection health and account history owner sections"
+        }
       ],
-      "source_gap_ids": [
-        "FIDELITY-078",
-        "FIDELITY-079",
-        "FIDELITY-082",
-        "FIDELITY-084",
-        "FIDELITY-085"
-      ],
-      "affected_docs": [
-        "Plans/usage-feature.md",
-        "Plans/interview-subagent-integration.md",
-        "Plans/storage-plan.md"
-      ],
-      "failure_type": "stubbed consumer propagation",
-      "classification": "interface shape missing",
-      "exact_missing_headings": [
-        "usage attribution",
-        "export taxonomy",
-        "account history"
-      ],
-      "exact_missing_fields": [
-        "requested_account_id",
-        "effective_account_id",
-        "provider_account_id",
-        "execution_role",
-        "operational_identity",
-        "run_id",
-        "node_id",
-        "attempt_id",
-        "lane_id",
-        "package_id"
-      ],
-      "exact_missing_terms": [
+      "exact_missing_items": [
         "account_pressure_episode",
         "account_switch_event",
         "provider_account_id",
@@ -624,14 +324,14 @@
         "requested_account_id",
         "effective_account_id",
         "execution_role",
-        "operational_identity"
+        "operational_identity",
+        "usage attribution",
+        "export taxonomy",
+        "account history"
       ],
-      "exact_cross_reference_targets": [
-        "Plans/usage-feature.md :: usage attribution and drill-through consumer sections",
-        "Plans/interview-subagent-integration.md :: requested/effective identity consumer section",
-        "Plans/storage-plan.md :: projection health and account history owner sections"
-      ],
-      "forbidden_strings": []
+      "blocking_reason": "Planning cannot safely author usage, interview, or account-switch behavior while account identity, account history, and degrade semantics are still incomplete.",
+      "next_resolution_stage": "Audit Mode"
     }
-  ]
+  ],
+  "next_required_stage": "Ready Check"
 }
