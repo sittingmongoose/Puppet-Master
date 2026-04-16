@@ -4,11 +4,13 @@
 - Work item: `w-20260312-203855`
 - Status: `blocked`
 - Run lineage preserved: `run_prefix = r-20260312-203855`, `run_id = r-20260312-203855-09`, `next_run_seq = 10`
-- Ready-standard verdict: **not ready for planning**
-- Scope clarity: **clear enough for planning once blockers are removed**
-- Canon availability: **exact canon is materialized**
-- Owner/consumer targeting: **clear enough**
-- Why still blocked: `84` registered transfer blockers remain open across `26` docs and `43` canon items, and the unresolved set is still materially implementation-shaping rather than bookkeeping-level.
+- Operational verdict: **blocked / audit-ready**
+- Ready gate status:
+  - canon inventory: **pass** (`45` canon items; non-empty and usable)
+  - owner/consumer targets: **pass**
+  - material blockers: **fail** (`open_gaps.json summary.material_blockers = 8`)
+  - research/audit dependency: **fail** (current next stage remains `Audit Mode`)
+- Why still blocked: `84` registered transfer blockers remain open across `26` docs and `43` canon items, and the `8` material blockers still shape implementation behavior rather than bookkeeping only.
 - Canon inventory state: `45` canon items across `119` mapped sections.
 
 ## Locked decisions
@@ -28,6 +30,7 @@
 
 ## Open blockers
 - Registered blocker counts: missing structural heading `27`, stubbed consumer propagation `40`, over-summarized transfer `6`, other `11`.
+- Material blocker count: `8`.
 - Highest-pressure docs: `Plans/FinalGUISpec.md` (`13`), `Plans/Orchestrator_Page.md` (`8`), `Plans/Runtime_Artifacts_Panel.md` (`5`), `Plans/assistant-chat-design.md` (`5`), `Plans/usage-feature.md` (`5`).
 - Runtime identity still has competing models because `execution_unit_context` is not anchored cleanly and stale `TierContext`-family residue remains live.
 - Routing is still materially blocked because `route_target` is under-specified and search still carries the stale `result_id` path.
