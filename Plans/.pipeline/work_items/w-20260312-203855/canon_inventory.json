@@ -4,8 +4,8 @@
   "topic_or_scope": "Orchestrator rewrite transfer-fidelity audit, legacy-canon cleanup readiness, and reconciliation prep",
   "summary": {
     "canon_item_count": 8,
-    "owner_target_count": 16,
-    "consumer_target_count": 25
+    "owner_target_count": 17,
+    "consumer_target_count": 29
   },
   "canon_items": [
     {
@@ -28,15 +28,15 @@
         },
         {
           "path": "Plans/orchestrator-subagent-integration.md",
-          "heading": "### Tier Context"
+          "heading": "### Subagent Selector"
         },
         {
           "path": "Plans/interview-subagent-integration.md",
-          "heading": "requested/effective identity section"
+          "heading": "### Runtime identity visibility"
         },
         {
           "path": "Plans/usage-feature.md",
-          "heading": "usage attribution section"
+          "heading": "### Unified `UsageRecord` schema expectations"
         }
       ],
       "exact_terms": [
@@ -73,8 +73,8 @@
         "feature_seam_id"
       ],
       "notes": [
-        "The audit confirmed a strong owner field block in `Plans/Executor_Protocol.md`, but `Plans/Contracts_V0.md` still lacks the explicit `### 5.1B Persona/Runtime Snapshot Payload Contract` anchor.",
-        "Consumer docs must mirror the owner field set without dropping requested/effective account identity, and stale tier-era residue must retire rather than coexist beside the packet."
+        "The unresolved owner defect is now two-part: the exact `### 5.1B Persona/Runtime Snapshot Payload Contract` anchor is still absent, and the explicit `execution_unit_context` required-field list in `Plans/Contracts_V0.md` still omits `requested_account_binding`, `requested_account_policy`, and `operational_identity` even though surrounding canon expects them.",
+        "The live consumer carry-through remains narrower than the owner packet: `Plans/orchestrator-subagent-integration.md` stops at `requested_account_id`, `effective_account_id`, and `operational_identity`, while `Plans/interview-subagent-integration.md` still omits `requested_account_policy` and `tool_use_id`."
       ]
     },
     {
@@ -106,6 +106,10 @@
         {
           "path": "Plans/GitHub_Integration.md",
           "heading": "Source Control open routing"
+        },
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": "Search, routing, and action policy"
         }
       ],
       "exact_terms": [
@@ -146,7 +150,7 @@
       ],
       "notes": [
         "This item carries both route payload canon and command normalization canon.",
-        "The audit confirmed a real command-normalization owner block in `Plans/UI_Command_Catalog.md`, but `Search-command routing` and `Canonical runtime recovery command ownership` still are not discoverable owner headings and stale `detached_window` / `result_id` survivors remain live."
+        "The audit confirmed a real command-normalization owner block in `Plans/UI_Command_Catalog.md`, but the required owner anchors still are not discoverable, `Plans/UI_Command_Catalog.md` still points at the non-existent `Plans/Orchestrator_Page.md#10. Search, routing, and action policy`, and `cmd.search.open_result` / `cmd.search.replace_selected` still expose `result_id` alongside live `detached_window` residue."
       ]
     },
     {
@@ -178,6 +182,14 @@
         {
           "path": "Plans/Run_Graph_View.md",
           "heading": "historical route identity packet"
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "Authoritative EventRecord shape"
+        },
+        {
+          "path": "Plans/WorktreeGitImprovement.md",
+          "heading": "### 2.7 worktree_exists is path-only"
         }
       ],
       "exact_terms": [
@@ -210,6 +222,7 @@
       "required_structural_headings": [
         "### Required redb keys",
         "### Restart and stale history",
+        "Canonical records",
         "runtime artifact index",
         "worktree record",
         "lane record",
@@ -221,7 +234,10 @@
       ],
       "notes": [
         "This item preserves both key families and lifecycle semantics.",
-        "The audit confirmed real storage transfer for `artifacts_index.v1:{project_id}:{artifact_id}` and related fields, but `orchestrator.project_state.{project_id}` and the exact `historical` / `archived` / `removed` distinction remain unresolved."
+        "The audit confirmed real storage transfer for `artifacts_index.v1:{project_id}:{artifact_id}`, `historical_lineage_refs[]`, and the broader `project_summary.v1:{project_id}` record family, but the exact `orchestrator.project_state.{project_id}` key and the lifecycle boundary semantics remain unresolved.",
+        "The live owner text still exposes only inline `Canonical records for this feature set...` prose plus `canonical_record.v1:{project_id}:{record_id}` rather than a discoverable `Canonical records` heading, and both `Plans/Orchestrator_Page.md` and `Plans/Contracts_V0.md` still point at that missing anchor.",
+        "`Plans/Orchestrator_Page.md` and `Plans/WorktreeGitImprovement.md` also still point at the missing `Plans/storage-plan.md#Restart and stale history` anchor, so the unresolved storage defect now includes broken consumer cross-references as well as missing owner headings.",
+        "Stale `artifact_kind` and `task_id` references still survive in consumer docs and must retire, but they are not the core owner-shape defect."
       ]
     },
     {
@@ -272,12 +288,19 @@
       ],
       "required_structural_headings": [
         "### Cross-surface receipt record",
-        "validation lineage"
+        "validation lineage",
+        "artifact drill-through section",
+        "validation artifact lineage",
+        "bridge-field viewer",
+        "validation/report section"
       ],
       "forbidden_strings": [],
       "notes": [
         "This item is focused on bridge-field and validation-lineage completeness.",
-        "The audit confirmed existing `provider_attempt_ref`, `usage_event_ref`, `workflow_run_id`, and `validation lineage` transfer in `Plans/storage-plan.md`, but the explicit cross-surface receipt owner section and remaining lineage fields still are incomplete."
+        "The audit confirmed inline receipt transfer for `run_id`, `provider_attempt_ref`, `usage_event_ref`, `workflow_run_id`, `workflow_refs`, `docker_refs`, `kubernetes_refs`, and `validation lineage` in `Plans/storage-plan.md`.",
+        "The audit also confirmed that `pass_verdict`, `phase_plan_ref`, and `requirements_quality_report_ref` already live in `Plans/Project_Output_Artifacts.md` as validation-pass-report lineage rather than missing receipt fields.",
+        "The unresolved defect is now the missing `### Cross-surface receipt record` owner heading plus the missing consumer anchors for drill-through, validation lineage, bridge-field viewing, and validation/report display.",
+        "`Plans/Runtime_Artifacts_Panel.md` still points directly at the missing `Plans/storage-plan.md#Cross-surface receipt record` anchor, so the receipt blocker now includes live broken consumer linkage in addition to missing headings."
       ]
     },
     {
@@ -290,21 +313,21 @@
         },
         {
           "path": "Plans/human-in-the-loop.md",
-          "heading": "blocked-episode request contract"
+          "heading": "### Canonical HITL request contract"
         }
       ],
       "consumer_targets": [
         {
           "path": "Plans/assistant-chat-design.md",
-          "heading": "Thread blocked-state lifecycle"
+          "heading": "## Unified Thread Blocked-State Lifecycle"
         },
         {
           "path": "Plans/assistant-chat-design.md",
-          "heading": "Blocked notices"
+          "heading": "### Multi-episode display"
         },
         {
           "path": "Plans/usage-feature.md",
-          "heading": "escalation ladder observability"
+          "heading": "## Runtime Scheduler / Recovery Observability Addendum (2026-03-09)"
         }
       ],
       "exact_terms": [
@@ -329,9 +352,9 @@
       ],
       "required_structural_headings": [
         "### 8.0 Event payloads (seglog)",
-        "Thread blocked-state lifecycle",
-        "Blocked notices",
-        "HITL request contract"
+        "## Unified Thread Blocked-State Lifecycle",
+        "### Multi-episode display",
+        "### Canonical HITL request contract"
       ],
       "forbidden_strings": [
         "{ tool_name, invocation_summary, options }",
@@ -339,7 +362,7 @@
       ],
       "notes": [
         "The stale self-verdict in assistant chat must be retired rather than preserved beside open blockers.",
-        "The audit confirmed that HITL and Tools already carry significant blocked-episode canon, but the exact blocked packet still is not propagated cleanly into the Tools payload contract and assistant-chat blocked notices flow."
+        "The audit confirmed that `report_ref` and `startup_recovered` are already owned elsewhere, but the live `blocked_notice` payload still carries only `blocked_family` and `allowed_action_ids[]`, the usage observability section still reports blocked attempts only by `blocked_reason_code` without `escalation_level`, `action_available` still lacks a discoverable owner, and the ask-tuple schema still is not propagated cleanly."
       ]
     },
     {
@@ -407,7 +430,9 @@
       "forbidden_strings": [],
       "notes": [
         "This item captures the three-part help architecture.",
-        "The audit confirmed that `Plans/Glossary.md` already carries many required fields, labels, and terms, but the required owner headings and instantiated help-entry rows are still missing."
+        "The audit confirmed that `Plans/Glossary.md` already carries the required help-entry field template, labels, and many canonical terms, but the named owner headings and populated help-entry rows are still missing.",
+        "The live glossary still instantiates terms as two-column `Term | Definition` tables or inline bullets instead of the full help-entry field set (`canonical_name`, `short_definition`, `why_it_matters`, `what_it_is_not`, `common_related_states`, `related_concepts`, `surface_examples`).",
+        "`Plans/Orchestrator_Page.md` history and concern sections still point at the missing `Plans/Glossary.md#Orchestrator rewrite terms` anchor, so the consumer side now carries live broken glossary references in addition to the missing owner headings."
       ]
     },
     {
@@ -437,8 +462,12 @@
           "heading": "historical route identity packet"
         },
         {
-          "path": "Plans/FinalGUISpec.md",
-          "heading": "route/open and recovery consumer references"
+          "path": "Plans/storage-plan.md",
+          "heading": "Source Control boundary"
+        },
+        {
+          "path": "Plans/WorktreeGitImprovement.md",
+          "heading": "Source Control boundary"
         }
       ],
       "exact_terms": [
@@ -467,12 +496,11 @@
         "Concern and notification model",
         "Source Control boundary"
       ],
-      "forbidden_strings": [
-        "restore points"
-      ],
+      "forbidden_strings": [],
       "notes": [
-        "The safe-point versus restore-point confusion remains live until the false cognate is retired.",
-        "The audit confirmed substantial transfer for worktree-first and health/activity/attention semantics, but the owner headings remain structurally weak and the false-cognate `restore points` reference still survives."
+        "This item is now purely a structural-heading and cross-reference integrity defect rather than a restore-point vocabulary contradiction.",
+        "The audit confirmed substantial transfer for worktree-first and health/activity/attention semantics, but the owner headings remain structurally weak, and the non-existent `Plans/Orchestrator_Page.md#11. Source Control boundary` reference still survives in `Plans/GitHub_Integration.md`, `Plans/storage-plan.md`, and `Plans/WorktreeGitImprovement.md`.",
+        "`Plans/storage-plan.md` now cleanly separates runtime safe points from project-scoped restore points, and `Plans/FinalGUISpec.md` explicitly forbids presenting safe points as restore points, so the prior `restore points` contradiction is no longer part of the unresolved canon defect."
       ]
     },
     {
@@ -481,17 +509,21 @@
       "owner_targets": [
         {
           "path": "Plans/storage-plan.md",
-          "heading": "projection health and account history owner sections"
+          "heading": "### 2.3 redb: schema, migrations, key patterns"
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": "### 5.2 Requested vs effective runtime state must remain visible"
         }
       ],
       "consumer_targets": [
         {
           "path": "Plans/usage-feature.md",
-          "heading": "usage attribution and drill-through"
+          "heading": "### Unified `UsageRecord` schema expectations"
         },
         {
           "path": "Plans/interview-subagent-integration.md",
-          "heading": "requested/effective identity consumer section"
+          "heading": "### Runtime identity visibility"
         }
       ],
       "exact_terms": [
@@ -516,12 +548,14 @@
       "required_structural_headings": [
         "usage attribution",
         "export taxonomy",
-        "account history"
+        "account history",
+        "projection-health-aware degrade behavior"
       ],
       "forbidden_strings": [],
       "notes": [
         "This item captures account identity, account history, and projection-health-driven degrade behavior.",
-        "Usage and interview remain consumers of storage-owned account-history canon."
+        "Storage, Final GUI, and Interview already carry the account-history record families, projection-health fields, and much of the requested/effective identity canon, and `Plans/usage-feature.md` already preserves canonical `account_id` attribution.",
+        "The unresolved defect is now the missing usage-side sections plus the remaining requested/effective account identity, runtime-role, `credential_ref`, and `operational_identity` carry-through."
       ]
     }
   ]
