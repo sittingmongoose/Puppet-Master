@@ -7,16 +7,17 @@
 - status: `blocked`
 
 ## Scope
-- Ready Check confirmed the canon bundle is usable but not planning-ready because `8` unresolved blocker families still remain across `19` affected docs.
-- Preserve the partial-transfer refinements so the bundle continues to distinguish genuinely missing canon from stubbed, over-summarized, and stale-survivor transfer failures.
+- Keep the work item in compact audit form for `8` unresolved blocker families, `8` canon items, and `19` affected docs.
+- Preserve the sharpened audit framing: several blockers remain real, but the current failures are mostly split owner anchors, missing discoverable headings, under-propagated consumer payloads, and exact stale survivors rather than total canon absence.
 
 ## Locked Decisions
 - This remains the existing migrated work item; no new work item is created.
 - `canon_inventory.json` is the exact canon source for required terms, behaviors, structural headings, targets, and stale literals to retire.
 - `open_gaps.json` keeps only unresolved blockers and their exact missing items.
 - `reconciliation_plan.json` remains absent while material blockers remain non-zero.
-- Ready Check does not advance planning while `open_gaps.json.summary.material_blockers = 8`.
-- The next required stage returns to `Audit Mode` because every unresolved blocker still depends on audit-stage doc repair rather than mutation planning.
+- Status remains `blocked`; `open_gaps.json.summary.material_blockers = 8` is still the controlling readiness fact.
+- `meta.json.next_required_stage = Audit Mode` remains the operative stage because unresolved blockers still require audit-stage doc repair before any planning mutation pass.
+- This audit pass confirmed that glossary labels, receipt bridge refs, account-history records, and requested/effective runtime visibility are already transferred in several owner/consumer docs; the unresolved work is now the missing owner anchors, missing consumer sections, and remaining stale survivors.
 
 ## Exact Canon That Must Survive
 - `execution_unit_context` remains the shared runtime identity packet, carrying `run_id`, `node_id`, `attempt_id`, `lane_id`, `package_id`, `seam_id`, `worktree_id`, `execution_role`, `requested_account_id`, `requested_account_binding`, `requested_account_policy`, `effective_account_id`, `operational_identity`, and `tool_use_id`.
@@ -33,21 +34,21 @@
 - Highest-pressure consumer docs: `Plans/usage-feature.md`, `Plans/assistant-chat-design.md`, `Plans/Runtime_Artifacts_Panel.md`, `Plans/FinalGUISpec.md`, `Plans/interview-subagent-integration.md`, `Plans/human-in-the-loop.md`
 
 ## Open Blockers
-- `execution_unit_context` is partially transferred, but owner authority is still split between `Plans/Contracts_V0.md` and `Plans/Executor_Protocol.md`, and stale `TierContext` / `tier_id` residue still survives in subagent docs.
-- `route_target` and command normalization are partially transferred, but `Search-command routing` and `Canonical runtime recovery command ownership` are still missing as discoverable owner headings, `detached_window` still survives in `target_kind`, and search commands still use stale `result_id`.
+- `execution_unit_context` is materially transferred, but owner authority is still split across differently named sections in `Plans/Contracts_V0.md` and `Plans/Executor_Protocol.md`, subagent consumers still under-carry `requested_account_binding` / `requested_account_policy` / `tool_use_id`, and stale `TierContext` / `tier_id` residue still survives.
+- `route_target` and command normalization are materially transferred, but `### 2.0 Command entry contract (doc-level)`, `Search-command routing`, and `Canonical runtime recovery command ownership` still are not discoverable owner anchors, `detached_window` still survives in `target_kind`, and search commands still use stale `result_id`.
 - Storage/runtime-artifact canon is substantially transferred, but `orchestrator.project_state.{project_id}` and the exact `historical` / `archived` / `removed` distinction are still unresolved.
-- Receipt and validation lineage are partially transferred, but the explicit `### Cross-surface receipt record` owner section and the remaining lineage fields are still missing.
-- Blocked-episode canon is partially transferred, but the full blocked packet is still under-propagated in Tools/chat consumers and assistant chat still contains stale closure text.
-- Glossary/help canon is partially transferred, but the required owner headings and instantiated help-entry sections are still absent.
-- Orchestrator scope/history/attention canon is partially transferred, but discoverable owner headings remain weak and `restore points` still survives as a false cognate.
-- Usage/interview/account-history canon still lacks stable internal account identity and projection-health-aware degrade behavior.
-- Highest-pressure docs: `Plans/Orchestrator_Page.md`, `Plans/usage-feature.md`, `Plans/storage-plan.md`, `Plans/assistant-chat-design.md`, `Plans/Contracts_V0.md`, `Plans/FinalGUISpec.md`
-- Exact stale survivors still to retire: `TierContext`, `tier_id`, `detached_window`, `result_id`, `artifact_kind`, `task_id`, `{ tool_name, invocation_summary, options }`, `No remaining gaps`, `restore points`
-- Planning readiness failed because blocker severities remain `blocker` and blocker next-resolution stages still point to `Audit Mode`.
+- Receipt and validation lineage are partially transferred, but the explicit `### Cross-surface receipt record` owner section is still missing and the remaining unresolved receipt fields are now narrowed to `run_id` in receipt minimum fields, `pass_verdict`, `phase_plan_ref`, `requirements_quality_report_ref`, and the missing consumer anchors.
+- Blocked-episode canon is materially transferred in HITL, but Tools/chat consumers still lack blocked-packet carry-through for `blocked_sequence` / `approval_scope_key`, still lack a fully owned escalation schema, and assistant chat still contains stale closure text.
+- Glossary/help canon already carries labels and core term rows, but the required owner headings and instantiated help-entry sections are still absent.
+- Orchestrator scope/history/attention canon is materially transferred inline, but discoverable owner headings remain weak and `Plans/FinalGUISpec.md` still contains a live `restore points` contradiction.
+- Account-history and projection-health canon is already present in storage, Final GUI, and Interview, but `Plans/usage-feature.md` still under-specifies usage attribution, export taxonomy, account history, and projection-health-aware degrade behavior.
+- Highest-pressure docs remain `Plans/Orchestrator_Page.md`, `Plans/usage-feature.md`, `Plans/storage-plan.md`, `Plans/assistant-chat-design.md`, `Plans/Contracts_V0.md`, and `Plans/FinalGUISpec.md`.
+- Exact stale survivors still to retire: `TierContext`, `tier_id`, `detached_window`, `result_id`, `artifact_kind`, `task_id`, `{ tool_name, invocation_summary, options }`, `No remaining gaps`, `restore points`.
+- All unresolved blocker entries still carry severity `blocker`, and their next-resolution stages still point to `Audit Mode`.
 
 ## Next Required Stage
 - `Audit Mode`
 
 ## Resume Notes
-- Start from `open_gaps.json` and audit the highest-pressure docs first: `Plans/Orchestrator_Page.md`, `Plans/usage-feature.md`, `Plans/storage-plan.md`, `Plans/assistant-chat-design.md`, `Plans/Contracts_V0.md`, and `Plans/FinalGUISpec.md`.
-- The next ready-check should happen only after those audit-stage blockers are reduced to zero and no blocker still points to `Audit Mode`.
+- Start from `open_gaps.json` and the top-pressure docs first: `Plans/Orchestrator_Page.md`, `Plans/usage-feature.md`, `Plans/storage-plan.md`, `Plans/assistant-chat-design.md`, `Plans/Contracts_V0.md`, and `Plans/FinalGUISpec.md`.
+- The sharpest next audit targets are: split runtime owner anchors in `Plans/Contracts_V0.md` / `Plans/Executor_Protocol.md`, missing command-routing headings in `Plans/UI_Command_Catalog.md`, missing receipt and account-history owner anchors in `Plans/storage-plan.md`, and missing consumer sections in `Plans/usage-feature.md`.

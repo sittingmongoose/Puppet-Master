@@ -15,9 +15,9 @@
       "Plans/FinalGUISpec.md"
     ],
     "dominant_gap_classes": [
-      "missing_data_shape",
       "over_summarized_transfer",
       "missing_structural_heading",
+      "missing_data_shape",
       "stale_contradictory_survivor",
       "stubbed_consumer_propagation"
     ],
@@ -28,7 +28,7 @@
       "gap_id": "gap-001",
       "severity": "blocker",
       "gap_class": "missing_data_shape",
-      "description": "Execution-unit runtime identity is partially transferred, but it still lacks one authoritative owner shape and still coexists with stale tier-era residue.",
+      "description": "Execution-unit runtime identity is materially transferred, but its owner canon is still split across competing sections and it still coexists with active tier-era residue.",
       "affected_targets": [
         {
           "path": "Plans/Contracts_V0.md",
@@ -53,22 +53,21 @@
       ],
       "exact_missing_items": [
         "### 5.1B Persona/Runtime Snapshot Payload Contract",
-        "authoritative owner heading for `execution_unit_context`",
-        "requested_account_binding",
-        "requested_account_policy",
-        "tool_use_id",
-        "consumer carry-through for requested/effective runtime identity in chat and usage surfaces",
+        "single authoritative owner anchor for `execution_unit_context`",
+        "consumer carry-through for `requested_account_binding`",
+        "consumer carry-through for `requested_account_policy`",
+        "consumer carry-through for `tool_use_id`",
         "TierContext",
         "tier_id"
       ],
-      "blocking_reason": "`Plans/Executor_Protocol.md` already carries a strong `execution_unit_context` owner field block, but `Plans/Contracts_V0.md` still lacks the exact `### 5.1B Persona/Runtime Snapshot Payload Contract` anchor and `Plans/orchestrator-subagent-integration.md` still preserves tier-era residue, so owner authority remains split across competing structures.",
+      "blocking_reason": "`Plans/Executor_Protocol.md` already carries a strong `execution_unit_context` owner field block and `Plans/Contracts_V0.md` already carries `requested_account_binding`, `requested_account_policy`, and `tool_use_id`, but those fields are still split across differently named owner sections and `Plans/orchestrator-subagent-integration.md` still mixes `execution_unit_context` consumer prose with active `TierContext` / `tier_id` residue.",
       "next_resolution_stage": "Audit Mode"
     },
     {
       "gap_id": "gap-002",
       "severity": "blocker",
       "gap_class": "stale_contradictory_survivor",
-      "description": "Route/open payload and command normalization are partly transferred, but stale search-routing survivors and incomplete consumer carry-through still keep the contract unsafe to build from.",
+      "description": "Route/open payload and command normalization are materially transferred, but their owner anchors stay fragmented and stale search-routing survivors still keep the contract unsafe to build from.",
       "affected_targets": [
         {
           "path": "Plans/Contracts_V0.md",
@@ -92,14 +91,15 @@
         }
       ],
       "exact_missing_items": [
-        "consumer-level `route_target` payload shape in `Plans/FinalGUISpec.md`",
-        "closed `target_kind` carry-through across search/open consumers",
+        "### 2.0 Command entry contract (doc-level)",
         "Search-command routing",
         "Canonical runtime recovery command ownership",
+        "consumer-level `route_target` payload shape in `Plans/FinalGUISpec.md`",
+        "closed `target_kind` carry-through across search/open consumers",
         "detached_window",
         "result_id"
       ],
-      "blocking_reason": "`Plans/UI_Command_Catalog.md` already has a real command-normalization owner block, but it still lacks the exact `Search-command routing` and `Canonical runtime recovery command ownership` headings, `Contracts_V0.md` still keeps forbidden `detached_window` in the `target_kind` enum, and search commands still preserve `result_id` in live command definitions.",
+      "blocking_reason": "`Plans/Contracts_V0.md` already owns a strong `route_target` block and `Plans/UI_Command_Catalog.md` already carries real command-normalization content, but the required `### 2.0 Command entry contract (doc-level)`, `Search-command routing`, and `Canonical runtime recovery command ownership` anchors still are not discoverable owner sections, `Contracts_V0.md` still keeps forbidden `detached_window`, and search commands still preserve `result_id` in live definitions.",
       "next_resolution_stage": "Audit Mode"
     },
     {
@@ -166,23 +166,22 @@
       ],
       "exact_missing_items": [
         "### Cross-surface receipt record",
-        "validation lineage",
-        "workflow_refs",
-        "docker_refs",
-        "kubernetes_refs",
-        "run_id",
+        "run_id in receipt minimum fields",
         "pass_verdict",
         "phase_plan_ref",
-        "requirements_quality_report_ref"
+        "requirements_quality_report_ref",
+        "validation artifact lineage",
+        "bridge-field viewer",
+        "validation/report section"
       ],
-      "blocking_reason": "`Plans/storage-plan.md` already carries `provider_attempt_ref`, `usage_event_ref`, `workflow_run_id`, and a `validation lineage` block, but the explicit `### Cross-surface receipt record` owner section and the remaining lineage fields still are not complete enough to build downstream consumers safely.",
+      "blocking_reason": "`Plans/storage-plan.md` already carries `workflow_refs`, `docker_refs`, `kubernetes_refs`, `provider_attempt_ref`, `usage_event_ref`, `workflow_run_id`, and a `validation lineage` label, but the explicit `### Cross-surface receipt record` owner section is still missing and the remaining receipt lineage fields and consumer anchors are still not complete enough to build downstream surfaces safely.",
       "next_resolution_stage": "Audit Mode"
     },
     {
       "gap_id": "gap-005",
       "severity": "blocker",
       "gap_class": "stubbed_consumer_propagation",
-      "description": "Blocked-episode identity is partly transferred, but tool and chat consumers still do not carry the full blocked packet and stale closure text still survives in assistant chat.",
+      "description": "Blocked-episode identity is materially transferred in HITL, but tool and chat consumers still do not carry the full blocked packet, escalation semantics, or event-to-notice linkage.",
       "affected_targets": [
         {
           "path": "Plans/Tools.md",
@@ -206,16 +205,17 @@
         }
       ],
       "exact_missing_items": [
-        "blocked_sequence",
-        "approval_scope_key",
+        "consumer carry-through for `blocked_sequence`",
+        "consumer carry-through for `approval_scope_key`",
         "report_ref",
         "startup_recovered",
         "action_available",
         "escalation_level",
         "{ tool_name, invocation_summary, options }",
+        "escalation ladder observability",
         "No remaining gaps"
       ],
-      "blocking_reason": "`Plans/human-in-the-loop.md` already carries `blocked_sequence` and `approval_scope_key`, and `Plans/Tools.md` already carries real `tool.invoked` / `tool.denied` sections. The blocker remains because those exact blocked-episode fields still are not carried into the Tools event payload contract or the assistant-chat blocked notices flow, and assistant chat still contains a stale closure verdict.",
+      "blocking_reason": "`Plans/human-in-the-loop.md` already carries `blocked_sequence` and `approval_scope_key`, and `Plans/Tools.md` already carries real `tool.invoked` / `tool.denied` plus blocked-payload consolidation rules. The blocker remains because those blocked-episode fields still are not carried cleanly into the Tools event payload contract or the assistant-chat blocked notices flow, the composite ask tuple still has no owner schema, and assistant chat still contains a stale closure verdict.",
       "next_resolution_stage": "Audit Mode"
     },
     {
@@ -248,10 +248,7 @@
         "instantiated help-entry rows for routing terms",
         "instantiated help-entry rows for historical vocabulary",
         "help surfaces",
-        "glossary/help references",
-        "why it matters",
-        "what it is not",
-        "related concepts"
+        "glossary/help references"
       ],
       "blocking_reason": "`Plans/Glossary.md` already carries required fields, labels, and many canonical terms, but the required owner headings and instantiated help-entry structure still are not present, and the expected consumer sections `help surfaces` and `glossary/help references` are still not discoverable in downstream docs.",
       "next_resolution_stage": "Audit Mode"
@@ -260,7 +257,7 @@
       "gap_id": "gap-007",
       "severity": "blocker",
       "gap_class": "missing_structural_heading",
-      "description": "Orchestrator structural canon is partly transferred, but discoverable owner headings and one stale false-cognate survivor still keep scope/history/attention ownership incomplete.",
+      "description": "Orchestrator structural canon is materially transferred inline, but discoverable owner headings are still absent and a live `restore points` contradiction still keeps scope/history/attention ownership incomplete.",
       "affected_targets": [
         {
           "path": "Plans/Orchestrator_Page.md",
@@ -290,14 +287,14 @@
         "Source Control boundary",
         "restore points"
       ],
-      "blocking_reason": "`Plans/Orchestrator_Page.md` already carries `worktree-first`, health/activity/attention vocabulary, and the Source Control boundary rules, but the owner sections are still structurally hard to discover and `Plans/FinalGUISpec.md` still preserves the false-cognate `restore points` reference.",
+      "blocking_reason": "`Plans/Orchestrator_Page.md` already carries `worktree-first`, current-vs-historical, and concern/notification rules inline, but those owner sections are still structurally hard to discover and `Plans/FinalGUISpec.md` still preserves a live `restore points` reference even though the same file later forbids presenting safe points that way.",
       "next_resolution_stage": "Audit Mode"
     },
     {
       "gap_id": "gap-008",
       "severity": "blocker",
-      "gap_class": "missing_data_shape",
-      "description": "Usage, interview, and account-history surfaces still do not carry stable internal account identity and projection-health-aware degrade behavior.",
+      "gap_class": "over_summarized_transfer",
+      "description": "Account-history and projection-health canon is partially transferred in storage, Final GUI, and Interview, but Usage-facing consumer sections still under-specify stable internal account identity, account-history drill-through, and degrade behavior.",
       "affected_targets": [
         {
           "path": "Plans/usage-feature.md",
@@ -313,25 +310,23 @@
         }
       ],
       "exact_missing_items": [
-        "account_pressure_episode",
-        "account_switch_event",
-        "provider_account_id",
-        "account_switch_reason",
-        "projection_freshness",
-        "projection_health",
-        "account_id",
-        "credential_ref",
-        "requested_account_id",
-        "effective_account_id",
-        "execution_role",
-        "operational_identity",
         "usage attribution",
         "export taxonomy",
-        "account history"
+        "account history",
+        "consumer carry-through for `account_id`",
+        "consumer carry-through for `credential_ref`",
+        "consumer carry-through for `requested_account_id`",
+        "consumer carry-through for `effective_account_id`",
+        "consumer carry-through for `execution_role`",
+        "consumer carry-through for `operational_identity`",
+        "projection-health-aware degrade behavior in `Plans/usage-feature.md`",
+        "discoverable `requested/effective identity consumer section` anchor",
+        "discoverable projection-health owner section",
+        "discoverable account-history owner section"
       ],
-      "blocking_reason": "Planning cannot safely author usage, interview, or account-switch behavior while account identity, account history, and degrade semantics are still incomplete.",
+      "blocking_reason": "`Plans/storage-plan.md` already carries `account_pressure_episode`, `account_switch_event`, `projection_freshness`, `projection_health`, `requested_account_id`, `effective_account_id`, `execution_role`, and `account_switch_reason`; `Plans/FinalGUISpec.md` already carries account-history record families and projection fields; and `Plans/interview-subagent-integration.md` already carries requested/effective runtime visibility and `operational_identity`. The blocker remains because `Plans/usage-feature.md` still lacks explicit usage-attribution, export-taxonomy, account-history, and degrade-behavior consumer sections, and the storage/interview owner anchors remain too implicit to build from without guesswork.",
       "next_resolution_stage": "Audit Mode"
     }
   ],
-  "next_required_stage": "Ready Check"
+  "next_required_stage": "Audit Mode"
 }

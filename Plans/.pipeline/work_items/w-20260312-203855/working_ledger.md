@@ -17585,3 +17585,60 @@ Optional later expansion only if a real cross-surface need appears:
 - notes:
   - This pass did not clear material blockers; it refined them into more exact unresolved items.
   - The next best stage is condensation so the compact blocker bundle matches the sharper live-doc evidence.
+
+## Entry
+- timestamp_utc: 2026-04-16T02:29:10.186Z
+- stage: Audit Mode
+- finding_type: contract
+- summary: Re-audited the live owner and consumer docs in bounded chunks and further narrowed the unresolved set: several blockers remain real, but some exact-missing lists were overstated because the live docs already carry more receipt, glossary-label, and account-history canon than the compact gap bundle claimed.
+- exact_items:
+  - `Plans/storage-plan.md` already carries `workflow_refs`, `docker_refs`, `kubernetes_refs`, `provider_attempt_ref`, `usage_event_ref`, `workflow_run_id`, `validation lineage`, `account_pressure_episode`, `account_switch_event`, `projection_freshness`, `projection_health`, `requested_account_id`, `effective_account_id`, `execution_role`, and `account_switch_reason`.
+  - `Plans/FinalGUISpec.md` already carries `account_pressure_episode`, `account_switch_event`, `projection_freshness`, and `projection_health`.
+  - `Plans/interview-subagent-integration.md` already carries requested/effective runtime visibility and `operational_identity`.
+  - `gap-004` therefore narrows to the missing `### Cross-surface receipt record` anchor, the unresolved fields `run_id`, `pass_verdict`, `phase_plan_ref`, and `requirements_quality_report_ref`, and the still-missing consumer anchors.
+  - `Plans/Glossary.md` already carries the labels `why it matters`, `what it is not`, and `related concepts`; `gap-006` therefore narrows to missing owner headings and instantiated help-entry rows rather than missing labels.
+  - `gap-005` remains real, but the exact-missing set narrows to blocked-packet consumer carry-through, escalation semantics, the composite ask tuple `{ tool_name, invocation_summary, options }`, and the stale assistant-chat verdict `No remaining gaps`.
+  - `gap-008` is overstated as `missing_data_shape`: the owner and adjacent consumer docs already carry much of the account-history and projection-health canon, so the unresolved work is now over-summarized transfer centered on `Plans/usage-feature.md` plus missing discoverable owner/consumer anchors.
+  - Exact stale contradictory survivors remain confirmed: `TierContext`, `tier_id`, `detached_window`, `result_id`, `artifact_kind`, `task_id`, `{ tool_name, invocation_summary, options }`, `No remaining gaps`, `restore points`.
+- impacted_docs:
+  - `Plans/storage-plan.md`
+  - `Plans/FinalGUISpec.md`
+  - `Plans/interview-subagent-integration.md`
+  - `Plans/usage-feature.md`
+  - `Plans/Glossary.md`
+  - `Plans/Tools.md`
+  - `Plans/assistant-chat-design.md`
+  - `Plans/Orchestrator_Page.md`
+  - `Plans/UI_Command_Catalog.md`
+  - `Plans/Contracts_V0.md`
+  - `Plans/Executor_Protocol.md`
+- evidence_refs:
+  - `Plans/storage-plan.md:330-337`
+  - `Plans/storage-plan.md:468-590`
+  - `Plans/storage-plan.md:788-817`
+  - `Plans/storage-plan.md:1330-1391`
+  - `Plans/FinalGUISpec.md:1842-1845`
+  - `Plans/FinalGUISpec.md:2092`
+  - `Plans/FinalGUISpec.md:2737-2739`
+  - `Plans/FinalGUISpec.md:2924-2925`
+  - `Plans/interview-subagent-integration.md:257`
+  - `Plans/interview-subagent-integration.md:1692-1698`
+  - `Plans/interview-subagent-integration.md:1966`
+  - `Plans/usage-feature.md:234-239`
+  - `Plans/usage-feature.md:715-717`
+  - `Plans/Glossary.md:34-67`
+  - `Plans/Glossary.md:102-126`
+  - `Plans/Tools.md:866-916`
+  - `Plans/Tools.md:1262-1284`
+  - `Plans/assistant-chat-design.md:1784`
+  - `Plans/assistant-chat-design.md:2240`
+  - `Plans/Orchestrator_Page.md:258-266`
+  - `Plans/Orchestrator_Page.md:358-377`
+  - `Plans/Orchestrator_Page.md:428-475`
+  - `Plans/UI_Command_Catalog.md:617-622`
+  - `Plans/Contracts_V0.md:778-806`
+  - `Plans/Executor_Protocol.md:110-175`
+- supersedes_prior: yes
+- notes:
+  - This pass keeps all `8` blocker families open, but it sharpens the unresolved set so follow-on audit work can target exact missing anchors and stale survivors instead of re-auditing already transferred fields.
+  - `open_gaps.json.next_required_stage` is returned to `Audit Mode`; this pass updated the compact blocker bundle directly rather than handing off to Ready Check.
