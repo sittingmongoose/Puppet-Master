@@ -678,6 +678,7 @@
 
 ## Gaps / Problems Identified
 - Packetization is not emitter-ready yet:
+
   - `packet_plan.json` currently contains at least four survivor/residue contradictions where the same token appears in both required-survivor and stale-retire sets
   - confirmed contradictions currently include:
     - `Plans/Executor_Protocol.md#5. Node execution fields` -> `TierContext`, `tier_id`
@@ -17492,3 +17493,22 @@ Optional later expansion only if a real cross-surface need appears:
   7. `Plans/Glossary.md`
   8. `Plans/WorktreeGitImprovement.md`
 - Then consumer cleanup and same-file supersession collapse.
+
+## Audit Pass 2026-04-16T01:28:16Z
+- Scope of this pass:
+  - confirm the highest-pressure owner/consumer docs still match the current blocker inventory
+  - capture any newly visible stale survivors or false-cognate cross-references that the current gap wording was not explicit enough about
+- Exact findings confirmed from live docs:
+  - `Plans/assistant-chat-design.md:1775-1784` still contains a stale self-verdict:
+    - `**Verdict:** The plan is **fully fleshed out** for MVP for all adopted items (§23.4). No remaining gaps; **accessibility** is explicitly not MVP.`
+    - this directly conflicts with still-open chat consumer gaps already tracked under `FIDELITY-049` through `FIDELITY-053`
+    - result: keep the assistant-chat blocked-state/runtime-identity cluster open and record this verdict text as an additional stale contradictory survivor rather than treating the surrounding section as trustworthy closure text
+  - `Plans/FinalGUISpec.md:2092` still references `restore points` through `Plans/newfeatures.md`
+    - `Plans/FinalGUISpec.md:2737-2739` separately and correctly says safe points are runtime recovery anchors and MUST NOT be presented as user-facing restore points
+    - result: preserve this as an unresolved false-cognate / cross-reference survivor; the problem is not absence of safe-point canon, it is coexistence of a misleading alternate restore-point reference
+  - `Plans/storage-plan.md:879-910` confirms partial transfer for bridge/activity payload canon:
+    - fields present now include `provider_attempt_ref`, `usage_event_ref`, `detail_ref`, and `report_ref`
+    - result: storage receipt/activity gaps should continue to be treated as under-transfer / anchor failures, not as total missing-content claims
+- Audit-stage handoff decision:
+  - blocker inventory remains materially open
+  - the gap record is now detailed enough that the next stage should be condensation rather than another broad evidence sweep
