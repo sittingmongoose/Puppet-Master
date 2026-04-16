@@ -4,7 +4,7 @@
   "status": "blocked",
   "topic_or_scope": "Orchestrator rewrite transfer-fidelity audit, legacy-canon cleanup readiness, and reconciliation prep",
   "created_at_utc": "2026-03-12T20:38:55Z",
-  "updated_at_utc": "2026-04-16T01:13:00.201Z",
+  "updated_at_utc": "2026-04-16T01:41:42.242Z",
   "run_prefix": "r-20260312-203855",
   "next_run_seq": 10,
   "run_id": "r-20260312-203855-09",
@@ -70,9 +70,9 @@
     ]
   },
   "readiness_check": {
-    "checked_at_utc": "2026-04-16T01:13:00.201Z",
+    "checked_at_utc": "2026-04-16T01:41:42.242Z",
     "result": "blocked",
     "reason": "not_ready_for_planning",
-    "summary": "Ready check failed because canon inventory is usable but `open_gaps.json summary.material_blockers = 8`. Owner and consumer targets are clear enough, but routing, runtime identity, storage/receipt lineage, blocked-episode approval identity, and help/history propagation remain materially unresolved."
+    "summary": "Ready check failed because `canon_inventory.json` is usable and non-empty, but `open_gaps.json summary.material_blockers = 8`. The condensed blocker set still leaves exact owner/consumer transfer failures in runtime identity, route/command ownership, storage and historical semantics, receipt/validation lineage, blocked-episode restoration, glossary/help ownership, Orchestrator structural ownership, and usage/account-history attribution."
   }
 }
