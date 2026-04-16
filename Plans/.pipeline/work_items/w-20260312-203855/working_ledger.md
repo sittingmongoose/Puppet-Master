@@ -17642,3 +17642,506 @@ Optional later expansion only if a real cross-surface need appears:
 - notes:
   - This pass keeps all `8` blocker families open, but it sharpens the unresolved set so follow-on audit work can target exact missing anchors and stale survivors instead of re-auditing already transferred fields.
   - `open_gaps.json.next_required_stage` is returned to `Audit Mode`; this pass updated the compact blocker bundle directly rather than handing off to Ready Check.
+
+## Entry
+- timestamp_utc: 2026-04-16T02:44:23.119Z
+- stage: Audit Mode
+- finding_type: contract
+- summary: Final follow-up chunk audits confirmed that the remaining work is now classification cleanup and handoff, not more discovery; the blocker bundle is ready for Ledger Condenser.
+- exact_items:
+  - `gap-001` is no longer best described as `missing_data_shape`; the owner docs already carry `requested_account_binding`, `requested_account_policy`, and `tool_use_id`, so the live blocker is split owner anchors plus active `TierContext` / `tier_id` survivor residue.
+  - `gap-002` is primarily a missing-owner-heading problem in `Plans/UI_Command_Catalog.md`; `detached_window` and `result_id` remain real stale survivors, but the absent owner anchors are the sharper blocking defect.
+  - `gap-003` still blocks on missing project-state ownership and lifecycle-boundary semantics; `artifact_kind` and `task_id` survive only as stale anti-pattern references and should not remain in that gap's exact-missing list.
+  - `gap-004` is stable as written; no further storage/lineage audit was productive beyond confirming that the remaining defects are the missing `### Cross-surface receipt record` anchor, four unresolved receipt fields, and the absent consumer anchors.
+  - `gap-005` through `gap-008` are now audit-stable; further broad sweeps are low yield. The only notable caution is that `gap-007` still carries a live `restore points` contradiction in addition to missing structural headings.
+  - Follow-up subagent assessment converged on the same conclusion: the bundle is ready to hand off to Ledger Condenser.
+- impacted_docs:
+  - `Plans/Contracts_V0.md`
+  - `Plans/Executor_Protocol.md`
+  - `Plans/UI_Command_Catalog.md`
+  - `Plans/storage-plan.md`
+  - `Plans/FinalGUISpec.md`
+  - `Plans/assistant-chat-design.md`
+  - `Plans/usage-feature.md`
+  - `Plans/Orchestrator_Page.md`
+- evidence_refs:
+  - `Plans/.pipeline/work_items/w-20260312-203855/open_gaps.json`
+  - `Plans/.pipeline/work_items/w-20260312-203855/current_state.md`
+  - `Plans/Contracts_V0.md:778-806`
+  - `Plans/Executor_Protocol.md:110-175`
+  - `Plans/UI_Command_Catalog.md:617-622`
+  - `Plans/storage-plan.md:330-337`
+  - `Plans/storage-plan.md:468-590`
+  - `Plans/storage-plan.md:1330-1391`
+  - `Plans/assistant-chat-design.md:2213-2240`
+  - `Plans/usage-feature.md:104-127`
+  - `Plans/usage-feature.md:714-717`
+  - `Plans/FinalGUISpec.md:2092`
+  - `Plans/FinalGUISpec.md:2737-2739`
+- supersedes_prior: yes
+- notes:
+  - The current unresolved set is sharp enough that another broad audit pass would mostly reconfirm existing evidence.
+  - Handoff target is now `Ledger Condenser`.
+
+## Entry
+- timestamp_utc: 2026-04-16T02:52:01.474Z
+- stage: Audit Mode
+- finding_type: contract
+- summary: Re-audited the condensed blocker bundle against live plan sections in bounded chunks and confirmed all eight blocker families remain, but one storage item was overstated and several blocker reasons needed sharper exact wording.
+- exact_items:
+  - `historical_lineage_refs[]` is already present in `Plans/storage-plan.md`, so it no longer belongs in `gap-003`'s exact-missing list.
+  - `orchestrator.project_state.{project_id}` still is not present in `Plans/storage-plan.md`, and the required owner headings `### Required redb keys` and `### Restart and stale history` still are not discoverable.
+  - `Plans/storage-plan.md` still omits `run_id` from the receipt minimum-fields list and still does not carry `pass_verdict`, `phase_plan_ref`, or `requirements_quality_report_ref`.
+  - `Plans/usage-feature.md` still lacks the named `artifact drill-through`, usage-attribution, export-taxonomy, account-history, and degrade-behavior consumer sections.
+  - `Plans/UI_Command_Catalog.md` still lacks the exact `### 2.0 Command entry contract (doc-level)`, `Search-command routing`, and `Canonical runtime recovery command ownership` anchors even though real normalization content exists under `### 2.0A Promoted Section 15 command families`.
+  - `Plans/orchestrator-subagent-integration.md` still actively carries `TierContext` / `tier_id` residue, and `Plans/Contracts_V0.md` still preserves `detached_window`.
+  - `Plans/Tools.md` still carries the stale tuple `{ tool_name, invocation_summary, options }`, `Plans/assistant-chat-design.md` still carries `No remaining gaps`, and `Plans/FinalGUISpec.md` still carries the `restore points` contradiction.
+  - `Plans/GitHub_Integration.md` still points to a non-existent `Plans/Orchestrator_Page.md#11. Source Control boundary`, which sharpens `gap-007`'s owner-heading defect.
+- impacted_docs:
+  - `Plans/storage-plan.md`
+  - `Plans/usage-feature.md`
+  - `Plans/UI_Command_Catalog.md`
+  - `Plans/Contracts_V0.md`
+  - `Plans/orchestrator-subagent-integration.md`
+  - `Plans/Tools.md`
+  - `Plans/assistant-chat-design.md`
+  - `Plans/Glossary.md`
+  - `Plans/Orchestrator_Page.md`
+  - `Plans/GitHub_Integration.md`
+  - `Plans/FinalGUISpec.md`
+  - `Plans/interview-subagent-integration.md`
+  - `Plans/human-in-the-loop.md`
+- evidence_refs:
+  - `Plans/storage-plan.md:1330-1391`
+  - `Plans/storage-plan.md:1548-1568`
+  - `Plans/usage-feature.md:104-127`
+  - `Plans/usage-feature.md:228-242`
+  - `Plans/usage-feature.md:714-720`
+  - `Plans/UI_Command_Catalog.md:29-90`
+  - `Plans/UI_Command_Catalog.md:617-622`
+  - `Plans/Contracts_V0.md:778-806`
+  - `Plans/Executor_Protocol.md:110-175`
+  - `Plans/orchestrator-subagent-integration.md:209-235`
+  - `Plans/Tools.md:866-920`
+  - `Plans/Tools.md:1262-1288`
+  - `Plans/assistant-chat-design.md:1784`
+  - `Plans/assistant-chat-design.md:2213-2240`
+  - `Plans/Glossary.md:30-127`
+  - `Plans/Orchestrator_Page.md:1-44`
+  - `Plans/Orchestrator_Page.md:428-475`
+  - `Plans/GitHub_Integration.md:251-258`
+  - `Plans/FinalGUISpec.md:2092`
+  - `Plans/FinalGUISpec.md:2737-2739`
+  - `Plans/interview-subagent-integration.md:1692-1698`
+  - `Plans/human-in-the-loop.md:22-49`
+- supersedes_prior: yes
+- notes:
+  - This pass did not remove any blocker families; it only removed one overstated exact-missing item and sharpened several blocker reasons.
+  - `open_gaps.json.next_required_stage` returns to `Audit Mode` because the bundle still needs targeted owner-anchor and consumer-propagation repair rather than another readiness check.
+
+## Entry
+- timestamp_utc: 2026-04-16T02:58:53.759Z
+- stage: Audit Mode
+- finding_type: contract
+- summary: Re-audited the already-condensed blocker bundle in smaller target passes and found one more precision improvement: assistant-chat blocked-state headings are real, so that blocker is now more clearly a skeletal consumer-payload problem rather than a missing-section problem.
+- exact_items:
+  - `Plans/assistant-chat-design.md` does contain the exact heading `## Unified Thread Blocked-State Lifecycle`.
+  - `Plans/assistant-chat-design.md` also contains `### Multi-episode display`, so the blocked-notice flow is not missing wholesale.
+  - `Plans/assistant-chat-design.md` still does not carry the exact blocked packet fields `blocked_sequence`, `approval_scope_key`, `report_ref`, `startup_recovered`, `action_available`, or `escalation_level`.
+  - `Plans/FinalGUISpec.md` still contains the exact consumer anchor `### 7.3 Shared route and open behavior`, so gap-002 remains an owner-heading and stale-survivor problem rather than a missing Final GUI consumer anchor.
+  - No blocker families resolved; the live defects remain owner-anchor absence, skeletal consumer carry-through, and exact stale contradictory survivors.
+- impacted_docs:
+  - `Plans/assistant-chat-design.md`
+  - `Plans/FinalGUISpec.md`
+  - `Plans/Tools.md`
+  - `Plans/human-in-the-loop.md`
+- evidence_refs:
+  - `Plans/assistant-chat-design.md:2213-2240`
+  - `Plans/FinalGUISpec.md:728-735`
+  - `Plans/Tools.md:866-920`
+  - `Plans/human-in-the-loop.md:22-49`
+- supersedes_prior: yes
+- notes:
+  - This pass only refined heading precision and did not change blocker counts, top-pressure docs, or next stage.
+  - `gap-005` stays open because the blocked-packet payload is still under-specified even though the assistant-chat headings are now confirmed.
+
+## Entry
+- timestamp_utc: 2026-04-16T03:01:34.605Z
+- stage: Audit Mode
+- finding_type: contract
+- summary: Ran another narrow evidence pass against the remaining exact-missing items and found two more bundle-level precision fixes: gap-001 was under-reporting Interview as an affected consumer, and gap-004 still needed the missing Usage drill-through anchor recorded as an exact missing item rather than only in blocker prose.
+- exact_items:
+  - `Plans/interview-subagent-integration.md` does contain `### Runtime identity visibility`, but its required fields still stop at `requested_account_binding` / `operational_identity` and do not carry `requested_account_policy` or `tool_use_id`.
+  - `Plans/assistant-chat-design.md` already carries `tool_use_id`, so gap-001's consumer deficiency is sharper than a blanket "missing everywhere" claim.
+  - `Plans/usage-feature.md` still does not contain an exact `artifact drill-through section` heading.
+  - `Plans/Project_Output_Artifacts.md`, `Plans/Runtime_Artifacts_Panel.md`, and `Plans/interview-subagent-integration.md` still do not contain the exact `validation artifact lineage`, `bridge-field viewer`, or `validation/report section` headings.
+- impacted_docs:
+  - `Plans/interview-subagent-integration.md`
+  - `Plans/assistant-chat-design.md`
+  - `Plans/usage-feature.md`
+  - `Plans/Project_Output_Artifacts.md`
+  - `Plans/Runtime_Artifacts_Panel.md`
+- evidence_refs:
+  - `Plans/interview-subagent-integration.md:1686-1698`
+  - `Plans/assistant-chat-design.md:1112-1120`
+  - `Plans/usage-feature.md:233-245`
+  - `Plans/Project_Output_Artifacts.md:1-24`
+  - `Plans/Runtime_Artifacts_Panel.md:63-93`
+- supersedes_prior: yes
+- notes:
+  - This pass refined affected-target precision and exact-missing lists only; blocker counts, pressure docs, and next stage remain unchanged.
+  - The unresolved shape is still the same: missing owner anchors, skeletal consumer carry-through, and exact stale contradictory survivors.
+
+## Entry
+- timestamp_utc: 2026-04-16T03:05:14.708Z
+- stage: Audit Mode
+- finding_type: contract
+- summary: Ran one more narrow pass on the blocked-episode canon and confirmed that several gap-005 items were overstated as globally missing when they are actually owner-defined elsewhere and only missing from the Tools/chat/usage consumers.
+- exact_items:
+  - `Plans/Contracts_V0.md` already carries `report_ref` in the blocked-episode contract.
+  - `Plans/Contracts_V0.md` and `Plans/Executor_Protocol.md` already carry `startup_recovered` in runtime wake canon.
+  - `Plans/Orchestrator_Page.md` already carries `escalation_level` in the concern/notification owner fields.
+  - `Plans/Tools.md`, `Plans/assistant-chat-design.md`, and `Plans/usage-feature.md` still do not carry `report_ref`, `startup_recovered`, or `escalation_level` through the blocked-packet consumer surfaces under audit.
+  - `action_available` still does not have a discoverable owner or consumer presence in the live Plans docs.
+- impacted_docs:
+  - `Plans/Contracts_V0.md`
+  - `Plans/Executor_Protocol.md`
+  - `Plans/Orchestrator_Page.md`
+  - `Plans/Tools.md`
+  - `Plans/assistant-chat-design.md`
+  - `Plans/usage-feature.md`
+- evidence_refs:
+  - `Plans/Contracts_V0.md:684-692`
+  - `Plans/Contracts_V0.md:1218-1229`
+  - `Plans/Executor_Protocol.md:548-557`
+  - `Plans/Orchestrator_Page.md:439-446`
+  - `Plans/Tools.md:866-920`
+  - `Plans/assistant-chat-design.md:2213-2240`
+  - `Plans/usage-feature.md:233-245`
+- supersedes_prior: yes
+- notes:
+  - This pass narrowed `gap-005` exact-missing wording from blanket field absence to consumer-propagation defects for the fields already owned elsewhere.
+  - Material blocker counts and next stage remain unchanged.
+
+## Entry
+- timestamp_utc: 2026-04-16T03:07:02.489Z
+- stage: Audit Mode
+- finding_type: contract
+- summary: Ran a narrow identity-carrythrough pass and found one more overstated exact-missing item in gap-008: Usage already preserves canonical `account_id`, so the unresolved usage-side account-history gap is now the remaining requested/effective identity and runtime-role carry-through rather than account identity wholesale.
+- exact_items:
+  - `Plans/usage-feature.md` already carries canonical `account_id` attribution in both the billing-identity tuple and the unified `UsageRecord` schema.
+  - `Plans/interview-subagent-integration.md` still carries `requested_account_binding` and `operational_identity`, but still omits `requested_account_policy` and `tool_use_id` in its runtime-identity section.
+  - `Plans/orchestrator-subagent-integration.md` still carries a narrower `execution_unit_context` packet that stops at `requested_account_id`, `effective_account_id`, and `operational_identity`.
+  - The unresolved identity defect is therefore no longer missing `account_id`; it is the missing requested/effective account identity carry-through, runtime-role carry-through, and explicit usage/account-history section ownership.
+- impacted_docs:
+  - `Plans/usage-feature.md`
+  - `Plans/interview-subagent-integration.md`
+  - `Plans/orchestrator-subagent-integration.md`
+- evidence_refs:
+  - `Plans/usage-feature.md:346-389`
+  - `Plans/interview-subagent-integration.md:1692-1698`
+  - `Plans/orchestrator-subagent-integration.md:379-391`
+- supersedes_prior: yes
+- notes:
+  - This pass removed only one overstated exact-missing item from gap-008 and further sharpened the identity-carrythrough wording.
+  - Material blocker counts, pressure docs, and next stage remain unchanged.
+
+## Entry
+- timestamp_utc: 2026-04-16T03:08:09.801Z
+- stage: Audit Mode
+- finding_type: contract
+- summary: Re-audited the runtime-identity and account-history bundle for exact partial-transfer locations and replaced several pseudo-target headings with the real live sections that currently carry the partial canon.
+- exact_items:
+- `gap-001` now points at `Plans/interview-subagent-integration.md` — `### Runtime identity visibility` instead of a non-existent requested/effective identity heading.
+- `gap-001` now points at `Plans/usage-feature.md` — `### Unified \`UsageRecord\` schema expectations` as the actual usage-side partial-transfer section.
+- `gap-001` now points at `Plans/orchestrator-subagent-integration.md` — `### Subagent Selector`, which is the real containing section for the narrower `execution_unit_context` packet.
+  - `gap-008` now points at the real storage/usage/interview sections that currently carry the partial account-history and requested/effective identity transfer, rather than pseudo owner-section labels that do not yet exist verbatim.
+- impacted_docs:
+  - `Plans/orchestrator-subagent-integration.md`
+  - `Plans/interview-subagent-integration.md`
+  - `Plans/usage-feature.md`
+  - `Plans/storage-plan.md`
+- evidence_refs:
+  - `Plans/orchestrator-subagent-integration.md:374-391`
+  - `Plans/interview-subagent-integration.md:1686-1698`
+  - `Plans/usage-feature.md:346-389`
+  - `Plans/storage-plan.md:322-337`
+  - `Plans/storage-plan.md:941-956`
+- supersedes_prior: yes
+- notes:
+  - This pass changed target precision only; blocker counts, exact missing terms, and next stage remain unchanged.
+  - The unresolved work is still the same underlying canon defect, now mapped to the actual live sections where partial transfer exists.
+
+## Entry
+- timestamp_utc: 2026-04-16T03:11:01.839Z
+- stage: Audit Mode
+- finding_type: contract
+- summary: Ran two bounded internal audit waves against the remaining unresolved blocker set and hit the stop condition: both waves produced zero new exact missing items, zero new blocker families, and zero newly confirmed contradictory survivors.
+- exact_items:
+  - Wave 1 targeted the structural/survivor subset around `gap-002`, `gap-006`, and `gap-007` (`Plans/UI_Command_Catalog.md`, `Plans/Glossary.md`, `Plans/Orchestrator_Page.md`, `Plans/GitHub_Integration.md`, `Plans/FinalGUISpec.md`) and only reconfirmed the already-recorded missing owner headings plus existing `detached_window`, `result_id`, `restore points`, and the broken `#11. Source Control boundary` reference.
+  - Wave 2 targeted the storage/receipt/blocked subset around `gap-003`, `gap-004`, and `gap-005` (`Plans/storage-plan.md`, `Plans/Project_Output_Artifacts.md`, `Plans/Runtime_Artifacts_Panel.md`, `Plans/interview-subagent-integration.md`, `Plans/usage-feature.md`, `Plans/Tools.md`, `Plans/assistant-chat-design.md`) and only reconfirmed the already-recorded missing anchors/fields plus the already-known owner-vs-consumer split for blocked-packet fields.
+  - Neither wave added a new exact missing field, command, status, cross-reference target, heading, stubbed transfer, over-summarized transfer, stale contradictory survivor, affected target, or blocker family.
+- impacted_docs:
+  - `Plans/UI_Command_Catalog.md`
+  - `Plans/Glossary.md`
+  - `Plans/Orchestrator_Page.md`
+  - `Plans/GitHub_Integration.md`
+  - `Plans/FinalGUISpec.md`
+  - `Plans/storage-plan.md`
+  - `Plans/Project_Output_Artifacts.md`
+  - `Plans/Runtime_Artifacts_Panel.md`
+  - `Plans/interview-subagent-integration.md`
+  - `Plans/usage-feature.md`
+  - `Plans/Tools.md`
+  - `Plans/assistant-chat-design.md`
+- evidence_refs:
+  - `Plans/UI_Command_Catalog.md:617-622`
+  - `Plans/Contracts_V0.md:778-806`
+  - `Plans/Glossary.md:30-127`
+  - `Plans/Orchestrator_Page.md:1-44`
+  - `Plans/Orchestrator_Page.md:428-475`
+  - `Plans/GitHub_Integration.md:251-258`
+  - `Plans/FinalGUISpec.md:2092`
+  - `Plans/FinalGUISpec.md:2737-2739`
+  - `Plans/storage-plan.md:1289-1300`
+  - `Plans/storage-plan.md:1548-1568`
+  - `Plans/Project_Output_Artifacts.md:16-24`
+  - `Plans/Runtime_Artifacts_Panel.md:63-93`
+  - `Plans/interview-subagent-integration.md:1686-1698`
+  - `Plans/usage-feature.md:233-245`
+  - `Plans/usage-feature.md:346-389`
+  - `Plans/Tools.md:866-920`
+  - `Plans/assistant-chat-design.md:2213-2240`
+- supersedes_prior: yes
+- notes:
+  - This entry records a real stop condition under the iterative audit sweep rule: two consecutive zero-finding waves.
+  - The blocker bundle remains materially blocked, but the next useful stage is now `Ledger Condenser`, not another Audit Mode sweep.
+
+## Entry
+- timestamp_utc: 2026-04-16T03:31:08.058Z
+- stage: Audit Mode
+- finding_type: contract
+- summary: Re-audited the condensed blocker bundle against live plan sections in delegated chunks and found one material overstatement in receipt lineage plus several exact owner/consumer refinements that leave all eight blocker families unresolved but sharper.
+- exact_items:
+  - `Plans/storage-plan.md` already includes `run_id` in the runtime receipt minimum-fields list, so `gap-004` must no longer treat that field as unresolved.
+  - `Plans/Project_Output_Artifacts.md` already carries `phase_plan_ref`, `requirements_quality_report_ref`, and `pass_verdict` in the validation-pass-report lineage, so `gap-004`'s unresolved work is now the missing receipt owner heading plus missing consumer anchors rather than those fields wholesale.
+  - `Plans/storage-plan.md` already carries the broader `project_summary.v1:{project_id}` record family, but the exact `orchestrator.project_state.{project_id}` key family still is not present as named canon.
+  - `Plans/assistant-chat-design.md` still defines `blocked_notice` with only `blocked_family` and `allowed_action_ids[]`, so `blocked_sequence` and `approval_scope_key` remain missing specifically from the live blocked-notice payload.
+  - `Plans/usage-feature.md` still reports blocked attempts only by `blocked_reason_code`, so `escalation_level` remains missing from the runtime scheduler / recovery observability consumer path.
+  - `Plans/Tools.md` still carries the stale ask tuple `{ tool_name, invocation_summary, options }`, and `Plans/assistant-chat-design.md` still carries the stale self-verdict `No remaining gaps`.
+  - `Plans/Glossary.md` already carries the required help-entry field template and labels, but still does not have the named `### Orchestrator rewrite terms` / `### Runtime and routing terms` sections or populated help-entry rows.
+- impacted_docs:
+  - `Plans/storage-plan.md`
+  - `Plans/Project_Output_Artifacts.md`
+  - `Plans/Runtime_Artifacts_Panel.md`
+  - `Plans/usage-feature.md`
+  - `Plans/assistant-chat-design.md`
+  - `Plans/Tools.md`
+  - `Plans/Glossary.md`
+  - `Plans/Orchestrator_Page.md`
+  - `Plans/GitHub_Integration.md`
+  - `Plans/UI_Command_Catalog.md`
+  - `Plans/orchestrator-subagent-integration.md`
+  - `Plans/interview-subagent-integration.md`
+- evidence_refs:
+  - `Plans/storage-plan.md:324-337`
+  - `Plans/storage-plan.md:541-590`
+  - `Plans/storage-plan.md:1289-1391`
+  - `Plans/Project_Output_Artifacts.md:485-530`
+  - `Plans/Runtime_Artifacts_Panel.md:63-93`
+  - `Plans/usage-feature.md:233-245`
+  - `Plans/usage-feature.md:346-389`
+  - `Plans/usage-feature.md:690-705`
+  - `Plans/assistant-chat-design.md:808-818`
+  - `Plans/assistant-chat-design.md:1784`
+  - `Plans/assistant-chat-design.md:2213-2240`
+  - `Plans/Tools.md:1131-1135`
+  - `Plans/Glossary.md:30-67`
+  - `Plans/Orchestrator_Page.md:1-44`
+  - `Plans/Orchestrator_Page.md:200-209`
+  - `Plans/GitHub_Integration.md:251-258`
+  - `Plans/UI_Command_Catalog.md:29-92`
+  - `Plans/UI_Command_Catalog.md:617-623`
+  - `Plans/orchestrator-subagent-integration.md:374-391`
+  - `Plans/interview-subagent-integration.md:1686-1698`
+- supersedes_prior: yes
+- notes:
+  - This pass kept the blocker-family count at eight and did not add new blocker families, but it removed one overstated unresolved item and made several owner/consumer defects more exact.
+  - `canon_inventory.json` now lags the refined blocker wording again, so the next useful stage is `Ledger Condenser`.
+
+## Entry
+- timestamp_utc: 2026-04-16T03:47:03.119Z
+- stage: Audit Mode
+- finding_type: contract
+- summary: Ran two bounded audit waves against the condensed blocker bundle after the failed Ready Check and both waves produced zero new findings, so the work item stops on the iterative-audit zero-finding condition and hands back to Ledger Condenser.
+- exact_items:
+  - Wave 1 rechecked the storage/receipt/blocked/usage cluster and only reconfirmed the already-recorded inline receipt transfer, missing consumer anchors, skeletal `blocked_notice` payload, blocked-attempt observability gap, and stale ask tuple without adding any new exact missing item or blocker family.
+  - Wave 2 rechecked the runtime-identity / route-target / glossary / orchestrator cluster and only reconfirmed the already-recorded missing owner anchors, incomplete consumer carry-through, broken `Plans/Orchestrator_Page.md#11. Source Control boundary` reference, and live `restore points` contradiction without adding any new exact missing item or blocker family.
+  - The current unresolved blocker inventory therefore remains at eight blocker families, nineteen affected docs, and fifty underlying evidence refs.
+- impacted_docs:
+  - `Plans/storage-plan.md`
+  - `Plans/Project_Output_Artifacts.md`
+  - `Plans/Runtime_Artifacts_Panel.md`
+  - `Plans/usage-feature.md`
+  - `Plans/assistant-chat-design.md`
+  - `Plans/Tools.md`
+  - `Plans/human-in-the-loop.md`
+  - `Plans/interview-subagent-integration.md`
+  - `Plans/Contracts_V0.md`
+  - `Plans/Executor_Protocol.md`
+  - `Plans/orchestrator-subagent-integration.md`
+  - `Plans/UI_Command_Catalog.md`
+  - `Plans/Glossary.md`
+  - `Plans/Orchestrator_Page.md`
+  - `Plans/GitHub_Integration.md`
+  - `Plans/FinalGUISpec.md`
+- evidence_refs:
+  - `Plans/storage-plan.md:1322-1391`
+  - `Plans/Project_Output_Artifacts.md:485-530`
+  - `Plans/Runtime_Artifacts_Panel.md:61-93`
+  - `Plans/usage-feature.md:233-245`
+  - `Plans/usage-feature.md:690-705`
+  - `Plans/assistant-chat-design.md:808-818`
+  - `Plans/Tools.md:1131-1135`
+  - `Plans/human-in-the-loop.md:22-49`
+  - `Plans/interview-subagent-integration.md:1686-1698`
+  - `Plans/Contracts_V0.md:461-465`
+  - `Plans/Executor_Protocol.md:134-160`
+  - `Plans/orchestrator-subagent-integration.md:374-391`
+  - `Plans/UI_Command_Catalog.md:29-95`
+  - `Plans/UI_Command_Catalog.md:617-623`
+  - `Plans/Glossary.md:30-70`
+  - `Plans/Orchestrator_Page.md:1-44`
+  - `Plans/GitHub_Integration.md:251-258`
+  - `Plans/FinalGUISpec.md:2092`
+  - `Plans/FinalGUISpec.md:2737-2739`
+- supersedes_prior: yes
+- notes:
+  - Wave 1 and Wave 2 both count as zero-finding waves under the strict audit rule because they added no new exact missing field, command, heading, stale survivor, affected target, or blocker family.
+  - The next useful stage is `Ledger Condenser`, not another immediate audit wave.
+
+## Entry
+- timestamp_utc: 2026-04-16T03:59:39.707Z
+- stage: Audit Mode
+- finding_type: contract
+- summary: Ran a new bounded audit pass after the blocked Ready Check; the first wave produced exact refinements in the runtime-identity, route-target, glossary/help, and orchestrator cross-reference blocker families, and two bounded follow-up sweeps then produced zero new exact missing items.
+- exact_items:
+  - `gap-001` sharpened: the exact owner anchor `### 5.1B Persona/Runtime Snapshot Payload Contract` is still absent, and the explicit `execution_unit_context` required-field list in `Plans/Contracts_V0.md` still omits `requested_account_binding`, `requested_account_policy`, and `operational_identity` even though the surrounding canon expects requested/effective identity carry-through.
+  - `gap-002` sharpened: `Plans/UI_Command_Catalog.md` still points at the non-existent `Plans/Orchestrator_Page.md#10. Search, routing, and action policy`, and `result_id` remains live in `cmd.search.open_result` / `cmd.search.replace_selected` args rather than appearing only as stale residue.
+  - `gap-005` downgraded: `report_ref` and `startup_recovered` are no longer kept in the unresolved exact-missing list; the remaining live defect is the skeletal `blocked_notice` payload, missing usage observability carry-through for `escalation_level`, missing `action_available` ownership, and the stale tuple / stale verdict survivors.
+  - `gap-006` sharpened: `Plans/Glossary.md` still lacks `### Orchestrator rewrite terms` / `### Runtime and routing terms`, and the live glossary still instantiates terms as two-column `Term | Definition` tables or inline bullets instead of the full help-entry field set (`canonical_name`, `short_definition`, `why_it_matters`, `what_it_is_not`, `common_related_states`, `related_concepts`, `surface_examples`).
+  - `gap-007` sharpened: the broken `Plans/Orchestrator_Page.md#11. Source Control boundary` reference survives not only in `Plans/GitHub_Integration.md` but also in `Plans/storage-plan.md` and `Plans/WorktreeGitImprovement.md`, while `Plans/FinalGUISpec.md` still preserves the `restore points` contradiction.
+  - Follow-up Wave 2 rechecked the storage/receipt/usage cluster and added no new exact missing field, heading, stale survivor, affected target, or blocker family beyond the wave-one refinements.
+  - Follow-up Wave 3 rechecked the blocked/chat/routing cluster and added no new exact missing field, heading, stale survivor, affected target, or blocker family beyond the wave-one refinements.
+- impacted_docs:
+  - `Plans/Contracts_V0.md`
+  - `Plans/UI_Command_Catalog.md`
+  - `Plans/Orchestrator_Page.md`
+  - `Plans/assistant-chat-design.md`
+  - `Plans/usage-feature.md`
+  - `Plans/Glossary.md`
+  - `Plans/GitHub_Integration.md`
+  - `Plans/storage-plan.md`
+  - `Plans/WorktreeGitImprovement.md`
+- evidence_refs:
+  - `Plans/Contracts_V0.md:557-624`
+  - `Plans/UI_Command_Catalog.md:214-223`
+  - `Plans/UI_Command_Catalog.md:617-623`
+  - `Plans/assistant-chat-design.md:808-818`
+  - `Plans/assistant-chat-design.md:1784`
+  - `Plans/assistant-chat-design.md:2218-2242`
+  - `Plans/usage-feature.md:233-249`
+  - `Plans/usage-feature.md:690-705`
+  - `Plans/Glossary.md:34-85`
+  - `Plans/GitHub_Integration.md:251-258`
+  - `Plans/storage-plan.md:1650-1654`
+  - `Plans/WorktreeGitImprovement.md:704-708`
+  - `Plans/FinalGUISpec.md:2092`
+  - `Plans/FinalGUISpec.md:2737-2739`
+  - `Plans/Orchestrator_Page.md:1-150`
+- supersedes_prior: yes
+- notes:
+  - This invocation kept the blocker-family count at eight, raised the affected-doc count to twenty by pulling `Plans/WorktreeGitImprovement.md` into the unresolved blocker set, and raised the underlying evidence count to fifty-four.
+  - The stop condition for this invocation is satisfied by two consecutive zero-finding follow-up waves after the wave-one refinements.
+  - `canon_inventory.json` now lags the sharpened audit wording again, so the next useful stage is `Ledger Condenser`.
+
+## Entry
+- timestamp_utc: 2026-04-16T04:12:47.793Z
+- stage: Audit Mode
+- finding_type: contract
+- summary: Ran another bounded audit pass after the blocked Ready Check; the first wave sharpened the storage and glossary blocker families with missing discoverable anchors and broken consumer references, and the follow-up sweeps produced zero new exact missing items beyond those refinements.
+- exact_items:
+  - `gap-003` sharpened: `Plans/storage-plan.md` still lacks a discoverable `Canonical records` heading even though it contains inline `Canonical records for this feature set...` prose and a `canonical_record.v1:{project_id}:{record_id}` authoritative container, and `Plans/Orchestrator_Page.md` still points at the missing `Plans/storage-plan.md#Canonical records` anchor from three different sections.
+  - `gap-006` sharpened: `Plans/Orchestrator_Page.md` history and concern sections still point at the missing `Plans/Glossary.md#Orchestrator rewrite terms` anchor, so the glossary/help blocker now includes live broken consumer references in addition to the missing owner headings and incomplete help-entry structure.
+  - Follow-up Wave 2 rechecked the runtime-identity and blocked-episode cluster and added no new exact missing field, heading, stale survivor, affected target, or blocker family beyond the current blocker wording.
+  - Follow-up Wave 3 rechecked the storage/receipt/account-history cluster and added no new exact missing field, heading, stale survivor, affected target, or blocker family beyond the wave-one refinements.
+  - Follow-up Wave 4 rechecked the route/open, blocked-action, and projection-health consumer surfaces and added no new exact missing field, heading, stale survivor, affected target, or blocker family beyond the current blocker wording.
+- impacted_docs:
+  - `Plans/storage-plan.md`
+  - `Plans/Orchestrator_Page.md`
+  - `Plans/Glossary.md`
+  - `Plans/assistant-chat-design.md`
+  - `Plans/usage-feature.md`
+  - `Plans/UI_Command_Catalog.md`
+  - `Plans/FinalGUISpec.md`
+- evidence_refs:
+  - `Plans/storage-plan.md:1389-1396`
+  - `Plans/Orchestrator_Page.md:171-171`
+  - `Plans/Orchestrator_Page.md:209-209`
+  - `Plans/Orchestrator_Page.md:230-230`
+  - `Plans/Orchestrator_Page.md:270-270`
+  - `Plans/Orchestrator_Page.md:437-437`
+  - `Plans/Glossary.md:30-85`
+  - `Plans/assistant-chat-design.md:808-818`
+  - `Plans/assistant-chat-design.md:1784`
+  - `Plans/assistant-chat-design.md:2233-2240`
+  - `Plans/usage-feature.md:346-382`
+  - `Plans/usage-feature.md:694-701`
+  - `Plans/UI_Command_Catalog.md:617-623`
+  - `Plans/FinalGUISpec.md:2924-2928`
+- supersedes_prior: yes
+- notes:
+  - This invocation kept the blocker-family count at eight and the affected-doc count at twenty, but raised the underlying evidence count to fifty-nine by adding the missing-storage-anchor and missing-glossary-anchor evidence.
+  - The stop condition for this invocation is satisfied because the follow-up sweeps after the wave-one refinements produced consecutive zero-finding results.
+  - `canon_inventory.json` now lags the sharpened audit wording again, so the next useful stage is `Ledger Condenser`.
+
+## Entry
+- timestamp_utc: 2026-04-16T04:27:38.269Z
+- stage: Audit Mode
+- finding_type: contract
+- summary: Ran another bounded audit pass after the blocked Ready Check; the first wave sharpened the storage and receipt blocker families with additional broken storage-plan anchor evidence and downgraded the overstated restore-point contradiction, and two bounded follow-up sweeps then produced zero new exact missing items.
+- exact_items:
+  - `gap-003` sharpened: `Plans/Contracts_V0.md` still points at the missing `Plans/storage-plan.md#Canonical records` anchor, and both `Plans/Orchestrator_Page.md` and `Plans/WorktreeGitImprovement.md` still point at the missing `Plans/storage-plan.md#Restart and stale history` anchor in addition to the already-carried missing `Canonical records` heading.
+  - `gap-004` sharpened: `Plans/Runtime_Artifacts_Panel.md` still points directly at the missing `Plans/storage-plan.md#Cross-surface receipt record` anchor, so the receipt blocker now includes a live broken consumer reference rather than only missing owner/consumer headings.
+  - `gap-007` downgraded: the prior `restore points` contradiction was overstated because `Plans/storage-plan.md` now cleanly separates runtime safe points from project-scoped restore points and `Plans/FinalGUISpec.md` explicitly forbids presenting safe points as restore points; the remaining blocker is structural-heading and broken-reference drift.
+  - Follow-up Wave 2 rechecked the route/open and blocked-state survivor set (`detached_window`, `result_id`, `blocked_notice`, `action_available`, `No remaining gaps`) and added no new exact missing field, heading, stale survivor, affected target, or blocker family beyond the wave-one refinements.
+  - Follow-up Wave 3 rechecked the storage/help/history cluster and added no new exact missing field, heading, stale survivor, affected target, or blocker family beyond the wave-one refinements.
+- impacted_docs:
+  - `Plans/Contracts_V0.md`
+  - `Plans/Runtime_Artifacts_Panel.md`
+  - `Plans/Orchestrator_Page.md`
+  - `Plans/storage-plan.md`
+  - `Plans/WorktreeGitImprovement.md`
+  - `Plans/FinalGUISpec.md`
+  - `Plans/UI_Command_Catalog.md`
+  - `Plans/assistant-chat-design.md`
+- evidence_refs:
+  - `Plans/Contracts_V0.md:55-60`
+  - `Plans/Contracts_V0.md:800-807`
+  - `Plans/Runtime_Artifacts_Panel.md:57-65`
+  - `Plans/Orchestrator_Page.md:171-171`
+  - `Plans/Orchestrator_Page.md:209-209`
+  - `Plans/Orchestrator_Page.md:230-230`
+  - `Plans/Orchestrator_Page.md:270-270`
+  - `Plans/storage-plan.md:1616-1625`
+  - `Plans/WorktreeGitImprovement.md:134-150`
+  - `Plans/FinalGUISpec.md:2092-2092`
+  - `Plans/FinalGUISpec.md:2736-2739`
+  - `Plans/UI_Command_Catalog.md:617-623`
+  - `Plans/assistant-chat-design.md:808-818`
+  - `Plans/assistant-chat-design.md:1784-1784`
+- supersedes_prior: yes
+- notes:
+  - This invocation kept the blocker-family count at eight and the affected-doc count at twenty, removed the overstated `restore points` contradiction from `gap-007`, added exact broken-anchor evidence to `gap-003` and `gap-004`, and raised the underlying evidence count to sixty-two.
+  - The stop condition for this invocation is satisfied by two consecutive zero-finding follow-up waves after the wave-one refinements.
+  - `canon_inventory.json` now lags the sharpened audit wording again, so the next useful stage is `Ledger Condenser`.
