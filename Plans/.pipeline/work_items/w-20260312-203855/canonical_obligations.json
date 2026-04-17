@@ -1,0 +1,882 @@
+{
+  "schema_id": "pm.canonical_obligations.v1",
+  "work_id": "w-20260312-203855",
+  "summary": {
+    "obligations_total": 31,
+    "owner_obligations": 12,
+    "consumer_obligations": 10,
+    "stale_retirement_obligations": 9,
+    "docs_affected": 18
+  },
+  "obligations": [
+    {
+      "obligation_id": "obl-001",
+      "canon_label": "canon-001 / execution_unit_context owner anchor",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "5.1B Persona/Runtime Snapshot Payload Contract",
+        "execution_unit_context",
+        "requested_account_binding",
+        "requested_account_policy",
+        "operational_identity",
+        "tool_use_id"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/Executor_Protocol.md"
+      ],
+      "heading_hints": [
+        "### 5.1B Persona/Runtime Snapshot Payload Contract",
+        "### 5.1 Unified `DispatchContext` schema"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/Contracts_V0.md:557-624",
+        "working_ledger.md:18028-18029",
+        "canon_inventory.json:10-79"
+      ],
+      "notes": [
+        "Contracts_V0.md is missing the named \u00a75.1B heading. The existing execution_unit_context required-field list omits requested_account_binding, requested_account_policy, and operational_identity.",
+        "Executor_Protocol.md \u00a75.1 carries DispatchContext and must remain aligned once Contracts_V0.md is repaired."
+      ]
+    },
+    {
+      "obligation_id": "obl-002",
+      "canon_label": "canon-002 / route-target and command-normalization owner anchors",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "route_target",
+        "target_kind",
+        "command_kind",
+        "normalization",
+        "normalizes_to_contract",
+        "alias_of_command_id",
+        "primary_view",
+        "side_panel",
+        "bottom_panel",
+        "embedded_surface",
+        "page_tab",
+        "Search-command routing",
+        "Canonical runtime recovery command ownership"
+      ],
+      "affected_doc_hints": [
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "heading_hints": [
+        "### 2.0 Command entry contract (doc-level)",
+        "7.3 `route_target`"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/UI_Command_Catalog.md:214-223",
+        "Plans/UI_Command_Catalog.md:617-623",
+        "working_ledger.md:18029-18031",
+        "canon_inventory.json:80-155"
+      ],
+      "notes": [
+        "A real command-normalization owner block exists in UI_Command_Catalog.md, but the required owner anchor headings (Search-command routing, Canonical runtime recovery command ownership) are not discoverable.",
+        "UI_Command_Catalog.md still points at the non-existent Plans/Orchestrator_Page.md#10. Search, routing, and action policy \u2014 that broken cross-ref is tracked as obl-026 (stale_retirement)."
+      ]
+    },
+    {
+      "obligation_id": "obl-003",
+      "canon_label": "canon-003 / storage Canonical records heading",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Canonical records",
+        "canonical_record.v1:{project_id}:{record_id}",
+        "artifacts_index.v1:{project_id}:{artifact_id}",
+        "artifacts_project_state.v1:{project_id}"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [
+        "### Canonical records"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/storage-plan.md:1289-1391",
+        "working_ledger.md:18073-18075",
+        "canon_inventory.json:156-242"
+      ],
+      "notes": [
+        "storage-plan.md currently has only inline 'Canonical records for this feature set...' prose and a canonical_record.v1 container but no discoverable ### Canonical records heading.",
+        "Both Plans/Orchestrator_Page.md and Plans/Contracts_V0.md point at the missing anchor."
+      ]
+    },
+    {
+      "obligation_id": "obl-004",
+      "canon_label": "canon-003 / storage Restart and stale history heading",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "historical",
+        "archived",
+        "removed",
+        "baseline",
+        "suspect",
+        "restoring",
+        "retained",
+        "cleanup_eligible",
+        "historical_lineage_refs[]",
+        "Restart and stale history"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [
+        "### Restart and stale history"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/storage-plan.md:1548-1568",
+        "working_ledger.md:18113-18115",
+        "canon_inventory.json:156-242"
+      ],
+      "notes": [
+        "Plans/Orchestrator_Page.md and Plans/WorktreeGitImprovement.md both point at the missing Plans/storage-plan.md#Restart and stale history anchor.",
+        "The heading must be added and the lifecycle boundary semantics made discoverable."
+      ]
+    },
+    {
+      "obligation_id": "obl-005",
+      "canon_label": "canon-003 / orchestrator.project_state key family owner definition",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "orchestrator.project_state.{project_id}",
+        "projector.checkpoint.runtime_artifacts:{project_id}",
+        "worktree_record.v1:{project_id}:{worktree_id}",
+        "lane_record.v1:{project_id}:{lane_id}"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [
+        "### Required redb keys",
+        "### Restart and stale history"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/storage-plan.md:323-337",
+        "Plans/storage-plan.md:541-590",
+        "working_ledger.md:17926-17928",
+        "canon_inventory.json:195-215"
+      ],
+      "notes": [
+        "storage-plan.md carries the broader project_summary.v1:{project_id} record family but the exact orchestrator.project_state.{project_id} key is not present as named canon.",
+        "Must be added explicitly alongside the other redb key families in the owner section."
+      ]
+    },
+    {
+      "obligation_id": "obl-006",
+      "canon_label": "canon-004 / Cross-surface receipt record owner heading",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "attempt_id",
+        "provider_attempt_ref",
+        "usage_event_ref",
+        "workflow_refs",
+        "docker_refs",
+        "kubernetes_refs",
+        "validation_pass_report",
+        "workflow_run_id",
+        "run_id",
+        "Cross-surface receipt record"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [
+        "### Cross-surface receipt record"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/storage-plan.md:1322-1391",
+        "Plans/Runtime_Artifacts_Panel.md:57-65",
+        "working_ledger.md:18113-18116",
+        "canon_inventory.json:243-305"
+      ],
+      "notes": [
+        "storage-plan.md carries inline receipt transfer for run_id, provider_attempt_ref, usage_event_ref, workflow_run_id, workflow_refs, docker_refs, kubernetes_refs, and validation lineage \u2014 but the discoverable ### Cross-surface receipt record heading is missing.",
+        "Plans/Runtime_Artifacts_Panel.md still points directly at the missing anchor, creating a live broken link."
+      ]
+    },
+    {
+      "obligation_id": "obl-007",
+      "canon_label": "canon-005 / blocked_notice payload expansion",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "blocked_notice",
+        "blocked_sequence",
+        "approval_scope_key",
+        "blocked_family",
+        "allowed_action_ids[]"
+      ],
+      "affected_doc_hints": [
+        "Plans/assistant-chat-design.md"
+      ],
+      "heading_hints": [
+        "## Unified Thread Blocked-State Lifecycle",
+        "### Multi-episode display"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/assistant-chat-design.md:808-818",
+        "working_ledger.md:17929",
+        "canon_inventory.json:306-367"
+      ],
+      "notes": [
+        "The live blocked_notice payload carries only blocked_family and allowed_action_ids[]. It must be expanded to include blocked_sequence and approval_scope_key to fully own the blocked-episode identity contract."
+      ]
+    },
+    {
+      "obligation_id": "obl-008",
+      "canon_label": "canon-005 / action_available ownership section",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "action_available",
+        "escalation_level",
+        "system_notification",
+        "attention_required",
+        "blocked",
+        "info",
+        "warning"
+      ],
+      "affected_doc_hints": [
+        "Plans/Tools.md",
+        "Plans/human-in-the-loop.md"
+      ],
+      "heading_hints": [
+        "### 8.0 Event payloads (seglog)",
+        "### Canonical HITL request contract"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/Tools.md:866-920",
+        "Plans/human-in-the-loop.md:22-49",
+        "working_ledger.md:17804-17805",
+        "canon_inventory.json:333-346"
+      ],
+      "notes": [
+        "action_available still does not have a discoverable owner or consumer presence in the live Plans docs. Ownership must be assigned to either Tools.md \u00a78.0 or human-in-the-loop.md HITL contract section and made explicit."
+      ]
+    },
+    {
+      "obligation_id": "obl-009",
+      "canon_label": "canon-006 / Glossary Orchestrator rewrite terms heading",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Orchestrator rewrite terms",
+        "Seams",
+        "Feature Seam",
+        "Work Package",
+        "Package Overseer",
+        "Seam Overseer",
+        "canonical_name",
+        "short_definition",
+        "why_it_matters",
+        "what_it_is_not",
+        "common_related_states",
+        "related_concepts",
+        "surface_examples"
+      ],
+      "affected_doc_hints": [
+        "Plans/Glossary.md"
+      ],
+      "heading_hints": [
+        "### Orchestrator rewrite terms"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/Glossary.md:30-85",
+        "working_ledger.md:18031-18032",
+        "canon_inventory.json:368-437"
+      ],
+      "notes": [
+        "Plans/Glossary.md already carries the help-entry field template and many canonical terms but lacks the named ### Orchestrator rewrite terms heading.",
+        "Plans/Orchestrator_Page.md history and concern sections point at this missing anchor \u2014 a live broken consumer reference."
+      ]
+    },
+    {
+      "obligation_id": "obl-010",
+      "canon_label": "canon-006 / Glossary Runtime and routing terms heading",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Runtime and routing terms",
+        "route_target",
+        "target_kind",
+        "object_kind",
+        "inspector_target",
+        "subject_id",
+        "resume_url",
+        "project health",
+        "project activity",
+        "project attention"
+      ],
+      "affected_doc_hints": [
+        "Plans/Glossary.md"
+      ],
+      "heading_hints": [
+        "### Runtime and routing terms"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/Glossary.md:34-85",
+        "working_ledger.md:18031-18032",
+        "canon_inventory.json:368-437"
+      ],
+      "notes": [
+        "The ### Runtime and routing terms section must be added alongside Orchestrator rewrite terms to complete the three-part help architecture."
+      ]
+    },
+    {
+      "obligation_id": "obl-011",
+      "canon_label": "canon-006 / Glossary help-entry row population",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "canonical_name",
+        "short_definition",
+        "why_it_matters",
+        "what_it_is_not",
+        "common_related_states",
+        "related_concepts",
+        "surface_examples",
+        "dedicated help-entry contract"
+      ],
+      "affected_doc_hints": [
+        "Plans/Glossary.md"
+      ],
+      "heading_hints": [
+        "### Orchestrator rewrite terms",
+        "### Runtime and routing terms"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/Glossary.md:30-90",
+        "working_ledger.md:18031-18032",
+        "canon_inventory.json:418-436"
+      ],
+      "notes": [
+        "Glossary currently instantiates terms as two-column Term | Definition tables or inline bullets. Each term row must be replaced with the full help-entry field set.",
+        "This obligation depends on obl-009 and obl-010 adding the owner headings first."
+      ]
+    },
+    {
+      "obligation_id": "obl-012",
+      "canon_label": "canon-007 / Orchestrator_Page Source Control boundary heading",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Source Control",
+        "Source Control boundary",
+        "worktree-first",
+        "Orchestrator-wide scale contract"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md"
+      ],
+      "heading_hints": [
+        "### 11. Source Control boundary"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/Orchestrator_Page.md:1-44",
+        "Plans/GitHub_Integration.md:251-258",
+        "working_ledger.md:18033",
+        "canon_inventory.json:438-505"
+      ],
+      "notes": [
+        "Plans/Orchestrator_Page.md lacks a discoverable ### 11. Source Control boundary section. Three consumer docs (GitHub_Integration.md, storage-plan.md, WorktreeGitImprovement.md) all point at this missing anchor \u2014 broken links tracked separately as stale_retirement obligations obl-030 and obl-031."
+      ]
+    },
+    {
+      "obligation_id": "obl-013",
+      "canon_label": "canon-001 / orchestrator-subagent-integration consumer propagation",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "execution_unit_context",
+        "requested_account_binding",
+        "requested_account_policy",
+        "tool_use_id"
+      ],
+      "affected_doc_hints": [
+        "Plans/orchestrator-subagent-integration.md"
+      ],
+      "heading_hints": [
+        "### Subagent Selector"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/orchestrator-subagent-integration.md:374-391",
+        "working_ledger.md:18028-18029",
+        "canon_inventory.json:24-78"
+      ],
+      "notes": [
+        "execution_unit_context consumer currently stops at requested_account_id, effective_account_id, and operational_identity. Must be extended to include requested_account_binding, requested_account_policy, and tool_use_id."
+      ]
+    },
+    {
+      "obligation_id": "obl-014",
+      "canon_label": "canon-001 / interview-subagent-integration consumer propagation",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "requested_account_policy",
+        "tool_use_id"
+      ],
+      "affected_doc_hints": [
+        "Plans/interview-subagent-integration.md"
+      ],
+      "heading_hints": [
+        "### Runtime identity visibility"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/interview-subagent-integration.md:1686-1698",
+        "working_ledger.md:17833",
+        "canon_inventory.json:24-78"
+      ],
+      "notes": [
+        "Runtime identity visibility section carries requested_account_binding and operational_identity but still omits requested_account_policy and tool_use_id."
+      ]
+    },
+    {
+      "obligation_id": "obl-015",
+      "canon_label": "canon-004 / usage-feature artifact drill-through consumer anchor",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "artifact drill-through section",
+        "attempt_id",
+        "provider_attempt_ref",
+        "usage_event_ref"
+      ],
+      "affected_doc_hints": [
+        "Plans/usage-feature.md"
+      ],
+      "heading_hints": [
+        "artifact drill-through section"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/usage-feature.md:346-389",
+        "working_ledger.md:17950-17954",
+        "canon_inventory.json:252-304"
+      ],
+      "notes": [
+        "usage-feature.md must add or make discoverable the artifact drill-through section that bridges to the receipt record owner in storage-plan.md."
+      ]
+    },
+    {
+      "obligation_id": "obl-016",
+      "canon_label": "canon-004 / Runtime_Artifacts_Panel bridge-field viewer consumer anchor",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "bridge-field viewer",
+        "workflow_refs",
+        "docker_refs",
+        "kubernetes_refs",
+        "validation_pass_report"
+      ],
+      "affected_doc_hints": [
+        "Plans/Runtime_Artifacts_Panel.md"
+      ],
+      "heading_hints": [
+        "bridge-field viewer"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/Runtime_Artifacts_Panel.md:57-65",
+        "working_ledger.md:18115",
+        "canon_inventory.json:252-304"
+      ],
+      "notes": [
+        "Runtime_Artifacts_Panel.md currently points at the missing Plans/storage-plan.md#Cross-surface receipt record anchor. Once obl-006 adds that heading, this consumer section must also establish its own discoverable bridge-field viewer anchor."
+      ]
+    },
+    {
+      "obligation_id": "obl-017",
+      "canon_label": "canon-004 / interview-subagent validation/report section consumer anchor",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "validation/report section",
+        "validation_pass_report",
+        "pass_verdict",
+        "phase_plan_ref",
+        "requirements_quality_report_ref"
+      ],
+      "affected_doc_hints": [
+        "Plans/interview-subagent-integration.md"
+      ],
+      "heading_hints": [
+        "validation/report section"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/interview-subagent-integration.md:1686-1698",
+        "working_ledger.md:17927",
+        "canon_inventory.json:252-304"
+      ],
+      "notes": [
+        "interview-subagent-integration.md must add a discoverable validation/report section anchor that consumes the receipt record lineage from storage-plan.md."
+      ]
+    },
+    {
+      "obligation_id": "obl-018",
+      "canon_label": "canon-004 / Project_Output_Artifacts validation artifact lineage consumer anchor",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "validation artifact lineage",
+        "pass_verdict",
+        "phase_plan_ref",
+        "requirements_quality_report_ref",
+        "validation_pass_report"
+      ],
+      "affected_doc_hints": [
+        "Plans/Project_Output_Artifacts.md"
+      ],
+      "heading_hints": [
+        "validation artifact lineage"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/Project_Output_Artifacts.md:485-530",
+        "working_ledger.md:17927",
+        "canon_inventory.json:252-304"
+      ],
+      "notes": [
+        "Project_Output_Artifacts.md already carries pass_verdict, phase_plan_ref, and requirements_quality_report_ref in the validation-pass-report lineage, but the consumer anchor heading 'validation artifact lineage' must be made discoverable."
+      ]
+    },
+    {
+      "obligation_id": "obl-019",
+      "canon_label": "canon-005 / usage-feature escalation_level observability consumer",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "escalation_level",
+        "blocked_reason_code"
+      ],
+      "affected_doc_hints": [
+        "Plans/usage-feature.md"
+      ],
+      "heading_hints": [
+        "## Runtime Scheduler / Recovery Observability Addendum (2026-03-09)"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/usage-feature.md:690-705",
+        "working_ledger.md:17929-17930",
+        "canon_inventory.json:333-366"
+      ],
+      "notes": [
+        "usage-feature.md currently reports blocked attempts only by blocked_reason_code. The escalation_level field from the shared escalation ladder must be added to the observability section."
+      ]
+    },
+    {
+      "obligation_id": "obl-020",
+      "canon_label": "canon-008 / usage-feature account history sections consumer",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "account_pressure_episode",
+        "account_switch_event",
+        "provider_account_id",
+        "account_switch_reason",
+        "account history",
+        "export taxonomy"
+      ],
+      "affected_doc_hints": [
+        "Plans/usage-feature.md"
+      ],
+      "heading_hints": [
+        "account history",
+        "export taxonomy"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/usage-feature.md:346-389",
+        "working_ledger.md:17834-17836",
+        "canon_inventory.json:506-562"
+      ],
+      "notes": [
+        "usage-feature.md must add account history sections that carry account_pressure_episode, account_switch_event, provider_account_id, and account_switch_reason using append-only families rather than ad-hoc switch summaries."
+      ]
+    },
+    {
+      "obligation_id": "obl-021",
+      "canon_label": "canon-008 / usage-feature projection-health-aware degrade behavior consumer",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "projection-health-aware degrade behavior",
+        "projection_freshness",
+        "projection_health",
+        "credential_ref"
+      ],
+      "affected_doc_hints": [
+        "Plans/usage-feature.md"
+      ],
+      "heading_hints": [
+        "projection-health-aware degrade behavior"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/usage-feature.md:346-382",
+        "working_ledger.md:17835",
+        "canon_inventory.json:542-562"
+      ],
+      "notes": [
+        "usage-feature.md must add a discoverable projection-health-aware degrade behavior section that consumes projection_freshness and projection_health from storage canon and degrades via those semantics instead of implying artifact loss."
+      ]
+    },
+    {
+      "obligation_id": "obl-022",
+      "canon_label": "canon-008 / interview-subagent identity and account carry-through consumer",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "requested_account_id",
+        "effective_account_id",
+        "credential_ref",
+        "operational_identity",
+        "execution_role"
+      ],
+      "affected_doc_hints": [
+        "Plans/interview-subagent-integration.md"
+      ],
+      "heading_hints": [
+        "### Runtime identity visibility"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/interview-subagent-integration.md:1692-1698",
+        "working_ledger.md:17833-17835",
+        "canon_inventory.json:519-558"
+      ],
+      "notes": [
+        "Remaining identity defect is the missing requested/effective account carry-through, runtime-role carry-through, and credential_ref not propagated into the interview-subagent runtime identity visibility section."
+      ]
+    },
+    {
+      "obligation_id": "obl-023",
+      "canon_label": "canon-001 / retire TierContext and tier-rooted aliases",
+      "obligation_type": "stale_retirement",
+      "exact_tokens": [
+        "TierContext",
+        "tier_id",
+        "work_package_id",
+        "feature_seam_id"
+      ],
+      "affected_doc_hints": [
+        "Plans/orchestrator-subagent-integration.md",
+        "Plans/interview-subagent-integration.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/usage-feature.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [
+        "TierContext",
+        "tier_id",
+        "work_package_id",
+        "feature_seam_id"
+      ],
+      "source_evidence": [
+        "canon_inventory.json:69-74",
+        "working_ledger.md:18028"
+      ],
+      "notes": [
+        "These are forbidden_strings under canon-001. Must be retired wherever they survive in consumer docs \u2014 not layered beside the canonical execution_unit_context field set."
+      ]
+    },
+    {
+      "obligation_id": "obl-024",
+      "canon_label": "canon-002 / retire detached_window stale residue",
+      "obligation_type": "stale_retirement",
+      "exact_tokens": [
+        "detached_window"
+      ],
+      "affected_doc_hints": [
+        "Plans/UI_Command_Catalog.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [
+        "detached_window"
+      ],
+      "source_evidence": [
+        "Plans/UI_Command_Catalog.md:617-623",
+        "working_ledger.md:18030",
+        "canon_inventory.json:147-154"
+      ],
+      "notes": [
+        "detached_window is a forbidden_string under canon-002 that still survives in UI_Command_Catalog.md and FinalGUISpec.md as stale residue."
+      ]
+    },
+    {
+      "obligation_id": "obl-025",
+      "canon_label": "canon-002 / retire result_id from command args",
+      "obligation_type": "stale_retirement",
+      "exact_tokens": [
+        "result_id"
+      ],
+      "affected_doc_hints": [
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "heading_hints": [
+        "cmd.search.open_result",
+        "cmd.search.replace_selected"
+      ],
+      "stale_residue_to_retire": [
+        "result_id"
+      ],
+      "source_evidence": [
+        "Plans/UI_Command_Catalog.md:214-223",
+        "working_ledger.md:18030",
+        "canon_inventory.json:147-154"
+      ],
+      "notes": [
+        "result_id remains live in cmd.search.open_result and cmd.search.replace_selected args in UI_Command_Catalog.md. Must be retired \u2014 it is a forbidden_string under canon-002."
+      ]
+    },
+    {
+      "obligation_id": "obl-026",
+      "canon_label": "canon-002 / fix broken UI_Command_Catalog.md#10 Orchestrator_Page cross-ref",
+      "obligation_type": "stale_retirement",
+      "exact_tokens": [
+        "Plans/Orchestrator_Page.md#10. Search, routing, and action policy"
+      ],
+      "affected_doc_hints": [
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [
+        "Plans/Orchestrator_Page.md#10. Search, routing, and action policy"
+      ],
+      "source_evidence": [
+        "Plans/UI_Command_Catalog.md:617-623",
+        "working_ledger.md:18030-18031",
+        "canon_inventory.json:150-155"
+      ],
+      "notes": [
+        "UI_Command_Catalog.md points at Plans/Orchestrator_Page.md#10. Search, routing, and action policy which does not exist. The broken reference must be retired and replaced with the real discoverable section heading once obl-012 is resolved."
+      ]
+    },
+    {
+      "obligation_id": "obl-027",
+      "canon_label": "canon-003 / retire artifact_kind and task_id stale tokens",
+      "obligation_type": "stale_retirement",
+      "exact_tokens": [
+        "artifact_kind",
+        "task_id"
+      ],
+      "affected_doc_hints": [
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Project_Output_Artifacts.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Run_Graph_View.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [
+        "artifact_kind",
+        "task_id"
+      ],
+      "source_evidence": [
+        "canon_inventory.json:231-241",
+        "working_ledger.md:17926"
+      ],
+      "notes": [
+        "artifact_kind and task_id are forbidden_strings under canon-003 that survive as stale residue in artifact and panel consumer docs. Must be retired wherever they appear."
+      ]
+    },
+    {
+      "obligation_id": "obl-028",
+      "canon_label": "canon-005 / retire stale ask-tuple schema in Tools.md",
+      "obligation_type": "stale_retirement",
+      "exact_tokens": [
+        "{ tool_name, invocation_summary, options }"
+      ],
+      "affected_doc_hints": [
+        "Plans/Tools.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [
+        "{ tool_name, invocation_summary, options }"
+      ],
+      "source_evidence": [
+        "Plans/Tools.md:1131-1135",
+        "working_ledger.md:17931",
+        "canon_inventory.json:359-366"
+      ],
+      "notes": [
+        "Tools.md still carries the stale ask tuple { tool_name, invocation_summary, options } which is a forbidden_string under canon-005. It must be retired and replaced with the blocked-episode-aware ask schema."
+      ]
+    },
+    {
+      "obligation_id": "obl-029",
+      "canon_label": "canon-005 / retire stale No remaining gaps verdict in assistant-chat-design.md",
+      "obligation_type": "stale_retirement",
+      "exact_tokens": [
+        "No remaining gaps"
+      ],
+      "affected_doc_hints": [
+        "Plans/assistant-chat-design.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [
+        "No remaining gaps"
+      ],
+      "source_evidence": [
+        "Plans/assistant-chat-design.md:1784",
+        "working_ledger.md:17931",
+        "canon_inventory.json:359-362"
+      ],
+      "notes": [
+        "'No remaining gaps' is a stale self-verdict in assistant-chat-design.md that must be retired \u2014 it contradicts the live open blockers and is a forbidden_string under canon-005."
+      ]
+    },
+    {
+      "obligation_id": "obl-030",
+      "canon_label": "canon-007 / fix broken Source Control boundary ref in GitHub_Integration.md",
+      "obligation_type": "stale_retirement",
+      "exact_tokens": [
+        "Plans/Orchestrator_Page.md#11. Source Control boundary"
+      ],
+      "affected_doc_hints": [
+        "Plans/GitHub_Integration.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [
+        "Plans/Orchestrator_Page.md#11. Source Control boundary"
+      ],
+      "source_evidence": [
+        "Plans/GitHub_Integration.md:251-258",
+        "working_ledger.md:18033",
+        "canon_inventory.json:498-504"
+      ],
+      "notes": [
+        "GitHub_Integration.md points at Plans/Orchestrator_Page.md#11. Source Control boundary which does not exist. Retire the broken link once obl-012 adds the real heading and replace with the actual anchor."
+      ]
+    },
+    {
+      "obligation_id": "obl-031",
+      "canon_label": "canon-007 / fix broken Source Control boundary refs in storage-plan.md and WorktreeGitImprovement.md",
+      "obligation_type": "stale_retirement",
+      "exact_tokens": [
+        "Plans/Orchestrator_Page.md#11. Source Control boundary"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/WorktreeGitImprovement.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [
+        "Plans/Orchestrator_Page.md#11. Source Control boundary"
+      ],
+      "source_evidence": [
+        "Plans/storage-plan.md:1650-1654",
+        "Plans/WorktreeGitImprovement.md:704-708",
+        "working_ledger.md:18033",
+        "canon_inventory.json:498-504"
+      ],
+      "notes": [
+        "Both storage-plan.md and WorktreeGitImprovement.md still carry broken references to Plans/Orchestrator_Page.md#11. Source Control boundary. Retire and replace once obl-012 adds the real heading."
+      ]
+    }
+  ],
+  "next_required_stage": "Coverage Matrix Builder"
+}
