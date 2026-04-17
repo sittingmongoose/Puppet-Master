@@ -1,0 +1,26 @@
+{
+  "schema_id": "pm.canonical_obligations_pass.v1",
+  "work_id": "w-20260312-203855",
+  "pass": "001",
+  "timestamp_utc": "2026-04-17T21:47:09Z",
+  "sweep_targets": [
+    "canon_inventory.json \u2014 all 8 canon items re-checked",
+    "working_ledger.md tail (lines 17797-18196) \u2014 all gap-XXX entries re-checked",
+    "cross-canon consumer doc overlap re-verified"
+  ],
+  "findings": {
+    "new_obligations": 0,
+    "new_affected_docs": 0,
+    "stronger_evidence_replacements": 0,
+    "new_stale_retirement_obligations": 0
+  },
+  "stop_condition_met": true,
+  "stop_condition_reason": "Full verification sweep produced zero new obligations, zero new affected docs, zero evidence upgrades, and zero new stale-retirement obligations. All 31 obligations are stable.",
+  "final_counts": {
+    "obligations_total": 31,
+    "owner_obligations": 12,
+    "consumer_obligations": 10,
+    "stale_retirement_obligations": 9,
+    "docs_affected": 18
+  }
+}
