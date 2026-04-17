@@ -7,7 +7,7 @@
 - queue-analysis passes and wake reasons
 - safe-point creates/restores
 - blocked outcomes remain distinct from failures
-- blocked counters also retain `escalation_level` and the shared blocked-action disclosure
+- blocked counters also retain `escalation_level` and the shared blocked-action disclosure (`action_available`)
 
 ### Metrics integrity rule
 - usage rollups may keep executed-tool metrics separate while blocked and remediation disclosure remains queryable

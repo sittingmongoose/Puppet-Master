@@ -84,7 +84,7 @@ Rules:
 ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/LSPSupport.md, ContractName:Plans/FileSafe.md
 
 ### A.3 History and Graph
-`Source Control` remains the Git/worktree owner surface.
+Source Control remains the Git/worktree owner surface.
 
 Rules:
 - History and Graph pivots that mention Orchestrator now point at `Plans/Orchestrator_Page.md#Source Control boundary` rather than the stale numbered anchor.
