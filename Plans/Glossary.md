@@ -28,150 +28,27 @@ ContractRef: Invariant:INV-010
 ---
 
 ## 2. Core terms
+The glossary keeps one `canonical term system`, one `contextual help system`, and one `dedicated help-entry contract`.
 
-ContractRef: Plans/FinalGUISpec.md#7.5 Project and attention surfaces
+### Orchestrator rewrite terms
+#### Seams
+- canonical_name: `Seams`
+- short_definition: `Seams` are the rewrite-era coordination boundary between related `Feature Seam` and `Work Package` groups.
+- why it matters: `Seams` are used to explain `project health`, `project activity`, and `project attention` without collapsing rewrite vocabulary.
+- what it is not: `Seams` are not a replacement name for every package or lane.
+- common_related_states: `historical`, `stale_historical`, `superseded`, `revoked`, `reopened`, `archived`, `removed`
+- related concepts: `Feature Seam`, `Work Package`, `Package Overseer`, `Seam Overseer`
+- surface_examples: Orchestrator, History, Run Graph
 
-Required fields:
-- canonical_name
-- short_definition
-- why_it_matters
-- what_it_is_not
-- common_related_states
-- related_concepts
-- surface_examples
-
-Canonical terms and values:
-- canonical term system
-- contextual help system
-- dedicated help-entry contract
-- related_concepts
-- project health
-- project activity
-- project attention
-- historical
-- stale_historical
-- superseded
-- revoked
-- reopened
-- archived
-- removed
-
-Labels:
-- why it matters
-- what it is not
-- related concepts
-
-Behavioral rules:
-- Canonical term names must stay stable across expert and simplified help surfaces.
-- Historical vocabulary must be shared without collapsing family-local state.
-### Assistant worktree terms
-
-
-| Term | Definition |
-|---|---|
-| **thread worktree binding** | A 1:1 association between an assistant chat thread and a git worktree. Persisted via seglog events and projected into redb. A thread can have at most one worktree; a worktree can be bound to at most one thread. |
-| **assistant worktree** | A git worktree whose `owner_thread_id` field identifies it as owned by an assistant chat thread. Distinguished from orchestrator-owned (`owner_run_id`/`owner_node_id`) and manual (no owner) worktrees. |
-| **worktree header button** | The button in the assistant chat header (between model selector and context-usage) that provides worktree create/bind/remove/merge/PR actions for the active thread. |
-| **merge-back flow** | The process of integrating assistant worktree changes into the target branch. Four paths: local merge (squash/merge/rebase), PR creation, export (patch/diff/stash), and natural-language merge via assistant. |
-| **pre-merge test gate** | Optional automated test execution before merge-back. Tests run against the merged result (default) or branch only. Auto-detects test commands from 9 project types. Configurable, on by default. |
-| **SC accordion** | Source Control's vertically stacked collapsible section layout: Changes, Worktrees, Branches/Stash, History, Graph. Fixed order, multiple sections openable, persist state per project. |
-| **worktree filter** | Segmented control in SC Worktrees section: All \| Threads \| Orchestrator \| Manual. Filters visible worktree rows by owner type. Default: All. Persisted per project. |
-
-ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/storage-plan.md
-- **Blocked Episode**: one runtime-owned blocked period anchored by `run_id`, `node_id`, and `blocked_sequence`.
-- **Execution Role**: the actor-role identity used for runtime disclosure and audit, distinct from provider/account identity.
-- **Operational Identity**: the side-effect or target-context identity used for external operations, distinct from provider/account identity.
-- **Requested vs Effective**: the distinction between what was asked for and what actually ran.
-- **projection_freshness**: `current | refreshing | stale`.
-- **projection_health**: `healthy | degraded | unavailable`.
-- **route_target**: the canonical navigation-and-focus contract.
-- **OpenSubject**: the canonical identity-native source-open contract.
-- **Terminal Section**: the presentation-level terminal container that owns dock/detach state and ordered terminal tabs.
-- **Terminal Tab**: the terminal workspace container that owns title, pin state, order, and selected pane state.
-- **Terminal Pane**: the split-tree slot inside a terminal tab that binds to exactly one live or historical terminal session at a time.
-- **Terminal Session**: a single PTY instance identified by `terminal_session_id`; minted on terminal creation and replaced with a new ID on restart.
-- **Dev Session**: a logical session representing one period of active development, identified by `dev_session_id`; it may span terminal sessions and chat threads without replacing terminal-session identity.
-- **Command Block**: transcript-layer metadata anchored to one observed command invocation; it is not a replacement for the underlying terminal transcript.
-- **Shell Integration Tier**: the disclosed confidence tier for command/cwd/prompt metadata (`rich | basic | opaque`).
-- **Restore Outcome**: the disclosed recovery result for restored shell state (`restored_live | restored_exited | restored_disconnected | restored_without_history`).
-
-ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/FileManager.md
-
-ContractRef: Plans/Contracts_V0.md#7.3 `route_target`, Plans/FileManager.md#OpenSubject
-
-Required fields:
-- canonical_name
-- short_definition
-- why_it_matters
-- what_it_is_not
-- related_concepts
-- surface_examples
-
-Canonical terms and values:
-- target_kind
-- object_kind
-- inspector_target
-- subject_id
-- doc:<document_id>
-- artifact:<artifact_id>
-- resume_url
-
-Labels:
-- why it matters
-- what it is not
-- related concepts
-
-Behavioral rules:
-- Glossary routing definitions must mirror canonical contracts instead of inventing consumer-local interpretations.
-- `resume_url` must be defined as transport-only.
-### Debug investigation terms
-- **Debug Mode**: the Assistant chat workflow overlay for evidence-first automated diagnosis, fix, verification, and cleanup. It is not a runtime-mode enum value.
-- **Debugger / DAP Debugger**: the classical runtime debugger surface based on DAP. It is not the same thing as Debug Mode.
-- **Debug Console**: the runtime-output / debugger-adjacent console surface. It is not the same thing as Debug Mode.
-- **Investigation Context**: the visible, bounded bundle of target metadata, evidence summaries, instrumentation state, and verification outcomes carried by an active investigation.
-- **`investigation_id`**: the canonical cross-surface identity for one debugging investigation.
-- **`instrumentation_id`**: the canonical identity for one temporary instrumentation lane or reversible debug mutation set inside an investigation.
-- **`debug_target_kind`**: the canonical target enum `dev_session | browser_target | dap_session | agent_session | imported_bundle`.
-- **Verification Strength**: the canonical verification-result strength `none | weak | strong`; only `strong` supports silent auto-resolution.
-- **Attention Reason Code**: machine-readable reason indicating why an investigation needs explicit user awareness even when it is not hard-blocked.
-
-ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/FileManager.md
-
-### Shell and workspace terms
-
-| Term | Definition |
-|---|---|
-| **Dev Session** | A logical session representing one period of active development. Identified by `dev_session_id`. It spans terminal sessions and chat threads while preserving higher-level workflow continuity. |
-| **Terminal Session** | A single PTY instance. Identified by `terminal_session_id`. It is minted on terminal creation, and a restarted terminal receives a new ID. |
-| **Workspace** | The top-level container for one or more projects. A workspace may be local or remote and owns the surrounding shell, navigation, and settings context. |
-| **Project** | A single codebase/repository within a workspace. Each project has its own settings, LSP instances, indexing state, and persisted operational state. |
-| **Shell Profile** | A named terminal configuration that defines shell binary, environment variables, and working directory defaults for launched terminal sessions. |
-| **Thread** | A single conversation in the chat assistant. Identified by `thread_id` and used as the durable chat-scoped context boundary. |
-| **Investigation** | A debug session within a thread. Identified by `investigation_id` and used to scope evidence, instrumentation, and verification state. |
-
-ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md
-
-### Source control, CI, and container orchestration terms
-
-| Term | Definition |
-|---|---|
-| **Worktree** | A git worktree — a separate working directory sharing the same repository — used when PM needs repository-isolated execution or review state without cloning a second repository. |
-| **Branch Strategy** | The branching model used by Puppet Master for multi-node execution, including per-node branches, merge sequencing, and branch-to-lineage mapping. |
-| **Merge Gate** | A gate that validates merge readiness before branches are combined, such as verification, policy, or lineage checks. |
-| **Workflow** | A GitHub Actions workflow definition file (`.yml`) that declares triggers, jobs, and automation behavior. |
-| **Workflow Run** | A single execution instance of a workflow. It records status, jobs, artifacts, and timing for one triggered automation pass. |
-| **Job** | A unit of work within a workflow run. A job groups ordered steps, execution environment, and status reporting. |
-| **Step** | A single command or action within a workflow job. Steps execute in declared order and produce the fine-grained log stream for a job. |
-| **Artifact** | A file or bundle produced by a workflow run, such as logs, binaries, screenshots, or test results, for later download or inspection. |
-| **Container** | A Docker container instance: one runnable container created from an image with concrete runtime state. |
-| **Image** | A Docker image: the packaged template from which containers are created. |
-| **Compose** | Docker Compose: the multi-container orchestration model for defining and running related services together. |
-| **Pod** | A Kubernetes pod: the smallest deployable unit in Kubernetes, containing one or more tightly coupled containers. |
-| **Deployment** | A Kubernetes deployment: the controller that manages pod replicas, rollout history, and declarative desired state. |
-| **Service** | A Kubernetes service: the stable network endpoint that exposes one or more pods. |
-
-ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/Containers_Registry_and_Unraid.md, ContractName:Plans/storage-plan.md
-
+### Runtime and routing terms
+#### route_target
+- canonical_name: `route_target`
+- short_definition: `route_target` is the shared navigation and focus contract.
+- why it matters: runtime and routing views must align on one contract instead of feature-local open payloads.
+- what it is not: `route_target` is not a shell-layout or transport-only alias.
+- common_related_states: navigation remains distinct from `historical`, `archived`, and `removed` state overlays.
+- related concepts: `target_kind`, `object_kind`, `inspector_target`, `subject_id`, `resume_url`
+- surface_examples: Search, Orchestrator, File Manager
 ## 3. Anti-drift documents
 - **Spec Lock** -- `Plans/Spec_Lock.json`; locked decisions that MUST NOT drift.
 - **Crosswalk** -- `Plans/Crosswalk.md`; ownership boundaries for primitives.

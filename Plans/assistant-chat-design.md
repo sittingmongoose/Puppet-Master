@@ -1773,16 +1773,9 @@ All of the following are **MVP requirements** and are already reflected in the m
 
 ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/interview-subagent-integration.md
 ### 23.5 Previously open gaps (now closed)
+This traceability table now records what moved into the main body without claiming blanket closure.
 
-The following were the last open gaps; they are now specified in the main body. This table is kept for traceability.
-
-| Area | Status |
-|------|--------|
-| **Error and failure UX** | Now in §4: thread shows error state, Resend/Cancel, queue unchanged unless user resends; suggest switch platform/model when appropriate. |
-| **Orchestrator → Assistant handoff** | Now in §21: Dashboard offers "Continue in Assistant" with run summary and context when orchestrator completes or pauses. |
-
-**Verdict:** The plan is **fully fleshed out** for MVP for all adopted items (§23.4). No remaining gaps; **accessibility** is explicitly not MVP.
-
+The competitive-comparison traceability stays intact.
 ### 23.6 Git & GitHub parity
 
 **Git & GitHub parity:** Full specification in Plans/GitHub_Integration.md. The Git panel (§A), GitHub API integration (§B), SSH remote dev servers (§C), and no-wizard project flows (§D) bring Puppet Master to IDE-level git integration. Chat git commands (§5.1 above) allow driving git operations from the assistant without switching to the Git panel. ContractRef: Plans/GitHub_Integration.md.
@@ -2211,36 +2204,19 @@ The interviewer must not start cold:
 - The imported handoff remains visible/auditable and does not silently create a repo file.
 
 ## Unified Thread Blocked-State Lifecycle
-Canonical thread states:
-- `active`
-- `attention_required`
-- `blocked`
-- `completed`
-- `failed`
+Canonical thread blocked surfaces reuse the shared blocked packet instead of local ask-flow tuples.
 
-Rules:
-- `attention_required` means the active flow can continue inside the same clarification or review loop
-- `blocked` means automation cannot continue until a prerequisite changes or a new explicit recovery action occurs
-- blocked episodes are persisted as distinct episodes and MUST NOT be collapsed into one mutable thread flag
-- thread-surface action buttons are rendered from ordered `allowed_action_ids[]` plus blocked metadata; chat does not invent thread-local recovery semantics
-
-### Precedence
-1. active node-blocked episode for the visible runtime context
-2. active wizard-blocked episode
-3. active `attention_required` clarification
-4. historical blocked episodes
+Required fields:
+- `blocked_notice`
+- `blocked_sequence`
+- `approval_scope_key`
+- `allowed_action_ids[]`
 
 ### Multi-episode display
 - each `blocked_notice` renders as its own system message
-- a thread with multiple active blocked episodes shows the highest-severity active badge plus a count indicator
-- resolving one blocked episode updates only that episode; others remain active
-- `validation_blocked` and `remediation_ceiling_exceeded` are ordinary members of the canonical blocked taxonomy and render through the same blocked-notice contract
-
-### Persistence and restore rule
-Thread blocked notices persist enough identity to restore the same blocked surfaces and action set after restart or resume.
-
-ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/UI_Command_Catalog.md
-
+- `validation_blocked` and `remediation_ceiling_exceeded` remain ordinary members of the blocked taxonomy
+- chat action buttons are rendered from ordered `allowed_action_ids[]`
+- resolving one blocked episode does not collapse sibling blocked episodes
 ## Worktrees in Assistant
 
 This section specifies the thread-level worktree binding feature: a per-thread worktree button in the chat header, worktree icon in the thread selector, merge-back flow, pre-merge test gate, and all associated lifecycle, data model, events, commands, settings, and error handling.

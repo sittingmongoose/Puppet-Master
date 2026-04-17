@@ -20,8 +20,7 @@ HITL semantics are part of the deterministic agent-loop core described in `Plans
 - UI can change (Slint rewrite), but tier-boundary meaning and approval requirements must not
 
 ### Canonical HITL request contract
-
-The canonical human-in-the-loop contract is a blocked-runtime overlay, not a separate request-centric orchestration model.
+The canonical human-in-the-loop contract remains a blocked-runtime overlay.
 
 Required runtime-facing fields are:
 - `run_id`
@@ -35,20 +34,9 @@ Required runtime-facing fields are:
 - `approver_identity?`
 
 Rules:
-- `waiting_approval` is the canonical blocked reason for approval pauses
-- `cmd.runtime.approve` and `cmd.runtime.decline` are the canonical approval/decline commands
-- `cmd.graph.approve_hitl` and `cmd.graph.deny_hitl` do not remain live canon
-- `request_id` may persist for compatibility lineage only and must not remain the primary action target
-
-ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/storage-plan.md
-
-Action-family rules:
-- approve/continue resumes the blocked episode using the runtime-owned action set
-- decline keeps the blocked decision historically visible and records the chosen compensating action when one exists
-- skip, abort, retry from safe point, and retry fresh remain action-family decisions surfaced through `allowed_action_ids[]`
-
-ContractRef: ContractName:Plans/Decision_Policy.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Run_Graph_View.md
-
+- `blocked_sequence` remains the canonical approval anchor.
+- `allowed_action_ids[]` stay ordered and runtime-owned.
+- `action_available` rows derive from the same blocked-runtime action set.
 ### Debug automation front-door grants
 
 Debug Mode may ask for a run-scoped front-door grant that covers repeated low-risk investigation actions.

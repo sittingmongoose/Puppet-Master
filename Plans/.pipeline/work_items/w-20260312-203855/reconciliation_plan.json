@@ -1,0 +1,667 @@
+{
+  "schema_id": "pm.reconciliation_plan.v2",
+  "work_id": "w-20260312-203855",
+  "summary": {
+    "mutation_target_count": 23,
+    "docs_affected": 15,
+    "canon_items_covered": 8,
+    "gaps_covered": 8,
+    "observe_only_target_count": 0
+  },
+  "mutation_targets": [
+    {
+      "target_id": "target-001-contracts-runtime-snapshot",
+      "path": "Plans/Contracts_V0.md",
+      "role": "owner",
+      "canon_ids": ["canon-001"],
+      "gap_ids": ["gap-001"],
+      "depends_on": [],
+      "mapped_owner_heading": "## 5. Context management (instruction scoping + attempt journaling + parent summary + `AGENTS.md` enforcement)",
+      "fallback_anchor": "### 5.1A InvestigationContextAttachment",
+      "must_create_owner_heading": true,
+      "replace_scope": "full_owner_container",
+      "required_structural_headings": [
+        "### 5.1B Persona/Runtime Snapshot Payload Contract"
+      ],
+      "exact_survivors": [
+        "execution_unit_context",
+        "run_id",
+        "node_id",
+        "attempt_id",
+        "lane_id",
+        "package_id",
+        "seam_id",
+        "worktree_id",
+        "execution_role",
+        "requested_account_id",
+        "requested_account_binding",
+        "requested_account_policy",
+        "effective_account_id",
+        "operational_identity",
+        "tool_use_id"
+      ],
+      "forbidden_strings": [
+        "TierContext",
+        "tier_id"
+      ],
+      "notes": "Rebuild the local context-management container so the missing `### 5.1B Persona/Runtime Snapshot Payload Contract` becomes the discoverable owner anchor and the explicit required-field enumeration matches the canon bundle exactly."
+    },
+    {
+      "target_id": "target-002-contracts-storage-anchor-ref",
+      "path": "Plans/Contracts_V0.md",
+      "role": "consumer",
+      "canon_ids": ["canon-003"],
+      "gap_ids": ["gap-003"],
+      "depends_on": ["target-008-storage-redb-record-families"],
+      "mapped_owner_heading": "### 1.1 Assistant worktree seglog events",
+      "fallback_anchor": "### 1.1 Assistant worktree seglog events",
+      "must_create_owner_heading": false,
+      "replace_scope": "exact_owner_section",
+      "required_structural_headings": [],
+      "exact_survivors": [
+        "Authoritative storage ownership stays in `Plans/storage-plan.md`"
+      ],
+      "forbidden_strings": [],
+      "notes": "Repair the broken `Plans/storage-plan.md#Canonical records` consumer reference after Packet Builder materializes the discoverable storage owner heading."
+    },
+    {
+      "target_id": "target-003-orchestrator-subagent-runtime-identity",
+      "path": "Plans/orchestrator-subagent-integration.md",
+      "role": "consumer",
+      "canon_ids": ["canon-001"],
+      "gap_ids": ["gap-001"],
+      "depends_on": ["target-001-contracts-runtime-snapshot"],
+      "mapped_owner_heading": "### Subagent Selector",
+      "fallback_anchor": "### Subagent Selector",
+      "must_create_owner_heading": false,
+      "replace_scope": "exact_owner_section",
+      "required_structural_headings": [],
+      "exact_survivors": [
+        "requested_account_id",
+        "effective_account_id",
+        "requested_account_binding",
+        "requested_account_policy",
+        "operational_identity",
+        "tool_use_id"
+      ],
+      "forbidden_strings": [],
+      "notes": "Extend the child-run/runtime snapshot carry-through so subagent selection and runtime disclosure stay aligned with the owner packet instead of stopping at the narrower requested/effective pair."
+    },
+    {
+      "target_id": "target-004-interview-runtime-identity",
+      "path": "Plans/interview-subagent-integration.md",
+      "role": "consumer",
+      "canon_ids": ["canon-001", "canon-008"],
+      "gap_ids": ["gap-001", "gap-008"],
+      "depends_on": ["target-001-contracts-runtime-snapshot"],
+      "mapped_owner_heading": "### Runtime identity visibility",
+      "fallback_anchor": "### Runtime identity visibility",
+      "must_create_owner_heading": false,
+      "replace_scope": "exact_owner_section",
+      "required_structural_headings": [],
+      "exact_survivors": [
+        "requested_account_binding",
+        "requested_account_policy",
+        "requested_account_id",
+        "effective_account_id",
+        "execution_role",
+        "operational_identity",
+        "tool_use_id",
+        "effective_provider_identity"
+      ],
+      "forbidden_strings": [],
+      "notes": "Complete the interview-visible requested/effective runtime disclosure so it carries the remaining account-policy and tool identity fields rather than stopping at the smaller current list."
+    },
+    {
+      "target_id": "target-005-interview-validation-report",
+      "path": "Plans/interview-subagent-integration.md",
+      "role": "consumer",
+      "canon_ids": ["canon-004"],
+      "gap_ids": ["gap-004"],
+      "depends_on": ["target-008-storage-redb-record-families", "target-011-runtime-artifacts-receipt-viewer", "target-012-project-output-validation-lineage"],
+      "mapped_owner_heading": "### Preview and document surfaces",
+      "fallback_anchor": "### Preview and document surfaces",
+      "must_create_owner_heading": true,
+      "replace_scope": "full_owner_container",
+      "required_structural_headings": [
+        "validation/report section"
+      ],
+      "exact_survivors": [
+        "attempt_id",
+        "provider_attempt_ref",
+        "workflow_run_id",
+        "validation_pass_report",
+        "pass_verdict",
+        "phase_plan_ref",
+        "requirements_quality_report_ref"
+      ],
+      "forbidden_strings": [],
+      "notes": "Rebuild the local preview/document-surfaces container to add the missing validation/report subsection and tie interview drill-through to the shared receipt/validation lineage packet."
+    },
+    {
+      "target_id": "target-006-ui-command-entry-contract",
+      "path": "Plans/UI_Command_Catalog.md",
+      "role": "owner",
+      "canon_ids": ["canon-002"],
+      "gap_ids": ["gap-002"],
+      "depends_on": [],
+      "mapped_owner_heading": "### 2.0A Promoted Section 15 command families",
+      "fallback_anchor": "### 2.0A Promoted Section 15 command families",
+      "must_create_owner_heading": true,
+      "replace_scope": "full_owner_container",
+      "required_structural_headings": [
+        "### 2.0 Command entry contract (doc-level)",
+        "Search-command routing",
+        "Canonical runtime recovery command ownership"
+      ],
+      "exact_survivors": [
+        "command_kind",
+        "normalization.kind",
+        "normalizes_to_contract",
+        "alias_of_command_id",
+        "route_target",
+        "command normalization"
+      ],
+      "forbidden_strings": [],
+      "notes": "Rebuild the top command-catalog owner cluster so the doc gains the missing doc-level command-entry contract and the two discoverable subheadings that own search routing and runtime recovery command policy."
+    },
+    {
+      "target_id": "target-007-ui-command-search-routing",
+      "path": "Plans/UI_Command_Catalog.md",
+      "role": "consumer",
+      "canon_ids": ["canon-002"],
+      "gap_ids": ["gap-002"],
+      "depends_on": ["target-006-ui-command-entry-contract", "target-018-orchestrator-page-structural-rebuild"],
+      "mapped_owner_heading": "### 2.8A Side-panel and artifacts navigation commands",
+      "fallback_anchor": "### 2.8A Side-panel and artifacts navigation commands",
+      "must_create_owner_heading": false,
+      "replace_scope": "exact_owner_section",
+      "required_structural_headings": [],
+      "exact_survivors": [
+        "cmd.search.show",
+        "cmd.search.find_in_files",
+        "cmd.search.replace_in_files",
+        "cmd.search.open_result",
+        "cmd.search.replace_selected",
+        "route_target"
+      ],
+      "forbidden_strings": [
+        "result_id",
+        "detached_window"
+      ],
+      "notes": "Normalize the search-command args and routing text so the stale `result_id` residue is retired, the non-existent Orchestrator anchor is repaired, and command payloads stay aligned with the shared route/open contract."
+    },
+    {
+      "target_id": "target-008-storage-redb-record-families",
+      "path": "Plans/storage-plan.md",
+      "role": "owner",
+      "canon_ids": ["canon-003", "canon-004"],
+      "gap_ids": ["gap-003", "gap-004"],
+      "depends_on": [],
+      "mapped_owner_heading": "### 2.3 redb: schema, migrations, key patterns",
+      "fallback_anchor": "### 2.3 redb: schema, migrations, key patterns",
+      "must_create_owner_heading": false,
+      "replace_scope": "full_owner_container",
+      "required_structural_headings": [
+        "Canonical records",
+        "### Required redb keys",
+        "### Cross-surface receipt record"
+      ],
+      "exact_survivors": [
+        "artifacts_index.v1:{project_id}:{artifact_id}",
+        "artifacts_project_state.v1:{project_id}",
+        "projector.checkpoint.runtime_artifacts:{project_id}",
+        "worktree_record.v1:{project_id}:{worktree_id}",
+        "lane_record.v1:{project_id}:{lane_id}",
+        "worktree_projection.v1:{project_id}:{worktree_id}",
+        "lane_projection.v1:{project_id}:{lane_id}",
+        "orchestrator.project_state.{project_id}",
+        "attempt_id",
+        "provider_attempt_ref",
+        "usage_event_ref",
+        "workflow_refs",
+        "docker_refs",
+        "kubernetes_refs",
+        "validation_pass_report",
+        "workflow_run_id",
+        "run_id",
+        "pass_verdict",
+        "phase_plan_ref",
+        "requirements_quality_report_ref"
+      ],
+      "forbidden_strings": [],
+      "notes": "Rebuild the 2.3 redb container so storage becomes the discoverable owner for canonical records, required runtime-artifact/worktree/lane/project-state keys, and the cross-surface receipt record packet."
+    },
+    {
+      "target_id": "target-009-storage-restart-history",
+      "path": "Plans/storage-plan.md",
+      "role": "owner",
+      "canon_ids": ["canon-003"],
+      "gap_ids": ["gap-003"],
+      "depends_on": [],
+      "mapped_owner_heading": "## Runtime Recovery Persistence and Restart Reconciliation Addendum (2026-03-09)",
+      "fallback_anchor": "## Runtime Recovery Persistence and Restart Reconciliation Addendum (2026-03-09)",
+      "must_create_owner_heading": false,
+      "replace_scope": "full_owner_container",
+      "required_structural_headings": [
+        "### Restart and stale history"
+      ],
+      "exact_survivors": [
+        "historical",
+        "archived",
+        "removed",
+        "projection_freshness",
+        "projection_health",
+        "historical_lineage_refs[]",
+        "worktree_id",
+        "lane_id",
+        "last_seen_at_utc",
+        "owner_run_id",
+        "owner_attempt_id"
+      ],
+      "forbidden_strings": [],
+      "notes": "Rebuild the restart/recovery addendum so the missing `### Restart and stale history` heading owns historical-vs-live persistence semantics explicitly instead of leaving them implied across scattered restore and key notes."
+    },
+    {
+      "target_id": "target-010-storage-source-control-ref",
+      "path": "Plans/storage-plan.md",
+      "role": "consumer",
+      "canon_ids": ["canon-007"],
+      "gap_ids": ["gap-007"],
+      "depends_on": ["target-018-orchestrator-page-structural-rebuild"],
+      "mapped_owner_heading": "## Assistant Worktree Binding Storage Addendum",
+      "fallback_anchor": "## Assistant Worktree Binding Storage Addendum",
+      "must_create_owner_heading": false,
+      "replace_scope": "exact_owner_section",
+      "required_structural_headings": [],
+      "exact_survivors": [
+        "Source Control remains the Git/worktree owner surface"
+      ],
+      "forbidden_strings": [],
+      "notes": "Repair the stale `Plans/Orchestrator_Page.md#11. Source Control boundary` reference once Packet Builder materializes the live Orchestrator boundary heading."
+    },
+    {
+      "target_id": "target-011-runtime-artifacts-receipt-viewer",
+      "path": "Plans/Runtime_Artifacts_Panel.md",
+      "role": "consumer",
+      "canon_ids": ["canon-004"],
+      "gap_ids": ["gap-004"],
+      "depends_on": ["target-008-storage-redb-record-families"],
+      "mapped_owner_heading": "## Cross-Surface Operation Receipt Linkage Addendum (2026-03-12)",
+      "fallback_anchor": "## Cross-Surface Operation Receipt Linkage Addendum (2026-03-12)",
+      "must_create_owner_heading": true,
+      "replace_scope": "full_owner_container",
+      "required_structural_headings": [
+        "bridge-field viewer"
+      ],
+      "exact_survivors": [
+        "attempt_id",
+        "provider_attempt_ref",
+        "usage_event_ref",
+        "workflow_refs",
+        "docker_refs",
+        "kubernetes_refs",
+        "workflow_run_id",
+        "Show in Ledger",
+        "Show in Usage"
+      ],
+      "forbidden_strings": [
+        "artifact_kind"
+      ],
+      "notes": "Rebuild the receipt-linkage addendum to add the missing bridge-field viewer subsection and replace the broken storage anchor with the live `### Cross-surface receipt record` owner heading."
+    },
+    {
+      "target_id": "target-012-project-output-validation-lineage",
+      "path": "Plans/Project_Output_Artifacts.md",
+      "role": "consumer",
+      "canon_ids": ["canon-004"],
+      "gap_ids": ["gap-004"],
+      "depends_on": ["target-008-storage-redb-record-families"],
+      "mapped_owner_heading": "## Runtime Evidence and Degradation Artifact Addendum (2026-03-08)",
+      "fallback_anchor": "## Runtime Evidence and Degradation Artifact Addendum (2026-03-08)",
+      "must_create_owner_heading": true,
+      "replace_scope": "full_owner_container",
+      "required_structural_headings": [
+        "validation artifact lineage"
+      ],
+      "exact_survivors": [
+        "validation_pass_report",
+        "workflow_run_id",
+        "pass_verdict",
+        "phase_plan_ref",
+        "requirements_quality_report_ref"
+      ],
+      "forbidden_strings": [
+        "task_id"
+      ],
+      "notes": "Add the missing validation-artifact-lineage subsection inside the runtime-evidence addendum so Project Plan Package artifacts preserve the same receipt and validation joins owned by storage."
+    },
+    {
+      "target_id": "target-013-tools-blocked-payloads",
+      "path": "Plans/Tools.md",
+      "role": "owner",
+      "canon_ids": ["canon-005"],
+      "gap_ids": ["gap-005"],
+      "depends_on": [],
+      "mapped_owner_heading": "### 8.0 Event payloads (seglog)",
+      "fallback_anchor": "### 8.0 Event payloads (seglog)",
+      "must_create_owner_heading": false,
+      "replace_scope": "exact_owner_section",
+      "required_structural_headings": [],
+      "exact_survivors": [
+        "blocked_sequence",
+        "approval_scope_key",
+        "action_available",
+        "escalation_level",
+        "tool.invoked",
+        "tool.denied",
+        "info",
+        "warning",
+        "attention_required",
+        "blocked",
+        "system_notification"
+      ],
+      "forbidden_strings": [],
+      "notes": "Tighten the seglog event-payload owner section so tool/runtime blocked packets expose `action_available` and the shared escalation ladder as discoverable canon instead of leaving them implicit in later addenda."
+    },
+    {
+      "target_id": "target-014-hitl-blocked-approval",
+      "path": "Plans/human-in-the-loop.md",
+      "role": "owner",
+      "canon_ids": ["canon-005"],
+      "gap_ids": ["gap-005"],
+      "depends_on": ["target-013-tools-blocked-payloads"],
+      "mapped_owner_heading": "### Canonical HITL request contract",
+      "fallback_anchor": "### Canonical HITL request contract",
+      "must_create_owner_heading": false,
+      "replace_scope": "exact_owner_section",
+      "required_structural_headings": [],
+      "exact_survivors": [
+        "run_id",
+        "node_id",
+        "blocked_sequence",
+        "attempt_id?",
+        "blocked_reason_code",
+        "allowed_action_ids[]",
+        "approval_scope_key",
+        "detail_ref?",
+        "approver_identity?"
+      ],
+      "forbidden_strings": [],
+      "notes": "Keep HITL aligned to the shared blocked-runtime packet and make `action_available` / ordered action semantics discoverable without reintroducing request-centric drift."
+    },
+    {
+      "target_id": "target-015-assistant-blocked-lifecycle",
+      "path": "Plans/assistant-chat-design.md",
+      "role": "consumer",
+      "canon_ids": ["canon-005"],
+      "gap_ids": ["gap-005"],
+      "depends_on": ["target-013-tools-blocked-payloads", "target-014-hitl-blocked-approval"],
+      "mapped_owner_heading": "## Unified Thread Blocked-State Lifecycle",
+      "fallback_anchor": "## Unified Thread Blocked-State Lifecycle",
+      "must_create_owner_heading": false,
+      "replace_scope": "exact_owner_section",
+      "required_structural_headings": [
+        "### Multi-episode display"
+      ],
+      "exact_survivors": [
+        "blocked_notice",
+        "blocked_sequence",
+        "approval_scope_key",
+        "allowed_action_ids[]",
+        "validation_blocked",
+        "remediation_ceiling_exceeded"
+      ],
+      "forbidden_strings": [
+        "{ tool_name, invocation_summary, options }"
+      ],
+      "notes": "Update the thread blocked-notice packet so chat renders blocked episodes from the same blocked-sequence/approval-scope canon as tools and HITL rather than from the older ask-tuple residue."
+    },
+    {
+      "target_id": "target-016-assistant-gap-verdict-cleanup",
+      "path": "Plans/assistant-chat-design.md",
+      "role": "consumer",
+      "canon_ids": ["canon-005"],
+      "gap_ids": ["gap-005"],
+      "depends_on": [],
+      "mapped_owner_heading": "### 23.5 Previously open gaps (now closed)",
+      "fallback_anchor": "### 23.5 Previously open gaps (now closed)",
+      "must_create_owner_heading": false,
+      "replace_scope": "exact_owner_section",
+      "required_structural_headings": [],
+      "exact_survivors": [
+        "The competitive-comparison traceability stays intact."
+      ],
+      "forbidden_strings": [
+        "No remaining gaps"
+      ],
+      "notes": "Retire the stale self-closing verdict so the chat plan no longer claims closure that contradicts the active reconciliation backlog."
+    },
+    {
+      "target_id": "target-017-glossary-help-entry-owners",
+      "path": "Plans/Glossary.md",
+      "role": "owner",
+      "canon_ids": ["canon-006"],
+      "gap_ids": ["gap-006"],
+      "depends_on": [],
+      "mapped_owner_heading": "## 2. Core terms",
+      "fallback_anchor": "## 2. Core terms",
+      "must_create_owner_heading": false,
+      "replace_scope": "full_owner_container",
+      "required_structural_headings": [
+        "### Orchestrator rewrite terms",
+        "### Runtime and routing terms",
+        "why it matters",
+        "what it is not",
+        "related concepts"
+      ],
+      "exact_survivors": [
+        "canonical term system",
+        "contextual help system",
+        "dedicated help-entry contract",
+        "project health",
+        "project activity",
+        "project attention",
+        "historical",
+        "stale_historical",
+        "superseded",
+        "revoked",
+        "reopened",
+        "archived",
+        "removed",
+        "Seams",
+        "Feature Seam",
+        "Work Package",
+        "Package Overseer",
+        "Seam Overseer",
+        "route_target",
+        "target_kind",
+        "object_kind",
+        "inspector_target",
+        "subject_id",
+        "resume_url"
+      ],
+      "forbidden_strings": [],
+      "notes": "Rebuild the core-terms container so the glossary stops using two-column term tables for rewrite/routing/history canon and instead materializes the required help-entry structure under the two missing owner subsections."
+    },
+    {
+      "target_id": "target-018-orchestrator-page-structural-rebuild",
+      "path": "Plans/Orchestrator_Page.md",
+      "role": "mixed",
+      "canon_ids": ["canon-002", "canon-003", "canon-006", "canon-007"],
+      "gap_ids": ["gap-002", "gap-003", "gap-006", "gap-007"],
+      "depends_on": ["target-008-storage-redb-record-families", "target-009-storage-restart-history", "target-017-glossary-help-entry-owners"],
+      "mapped_owner_heading": "# Orchestrator Page -- Single-Page 6-Tab Specification",
+      "fallback_anchor": "# Orchestrator Page -- Single-Page 6-Tab Specification",
+      "must_create_owner_heading": false,
+      "replace_scope": "full_owner_container",
+      "required_structural_headings": [
+        "## 1. Scope and canonical model",
+        "Search, routing, and action policy",
+        "Current vs historical run behavior",
+        "Concern and notification model",
+        "Source Control boundary",
+        "glossary/help references"
+      ],
+      "exact_survivors": [
+        "Source Control",
+        "worktree-first",
+        "Orchestrator",
+        "Lane",
+        "Worktree",
+        "Orchestrator-wide scale contract",
+        "historical",
+        "archived",
+        "removed",
+        "attention_required",
+        "blocked",
+        "route_target",
+        "Canonical records",
+        "Restart and stale history"
+      ],
+      "forbidden_strings": [],
+      "notes": "Rebuild the document-level owner container because the unresolved Orchestrator drift is structural and cross-sectional: missing section 1, missing discoverable history/concern/boundary headings, a missing search-routing anchor, and multiple broken storage/glossary references all need to land together without dual-edit overlap."
+    },
+    {
+      "target_id": "target-019-github-source-control-ref",
+      "path": "Plans/GitHub_Integration.md",
+      "role": "consumer",
+      "canon_ids": ["canon-007"],
+      "gap_ids": ["gap-007"],
+      "depends_on": ["target-018-orchestrator-page-structural-rebuild"],
+      "mapped_owner_heading": "### A.3 History and Graph",
+      "fallback_anchor": "### A.3 History and Graph",
+      "must_create_owner_heading": false,
+      "replace_scope": "exact_owner_section",
+      "required_structural_headings": [],
+      "exact_survivors": [
+        "Source Control remains the Git/worktree owner surface."
+      ],
+      "forbidden_strings": [],
+      "notes": "Repair the stale `Plans/Orchestrator_Page.md#11. Source Control boundary` reference once the live Orchestrator boundary heading exists."
+    },
+    {
+      "target_id": "target-020-worktree-restart-history-ref",
+      "path": "Plans/WorktreeGitImprovement.md",
+      "role": "consumer",
+      "canon_ids": ["canon-003"],
+      "gap_ids": ["gap-003"],
+      "depends_on": ["target-009-storage-restart-history"],
+      "mapped_owner_heading": "### 2.7 worktree_exists is path-only",
+      "fallback_anchor": "### 2.7 worktree_exists is path-only",
+      "must_create_owner_heading": false,
+      "replace_scope": "exact_owner_section",
+      "required_structural_headings": [],
+      "exact_survivors": [
+        "historical",
+        "archived",
+        "removed",
+        "historical_lineage_refs[]"
+      ],
+      "forbidden_strings": [],
+      "notes": "Repair the broken `Plans/storage-plan.md#Restart and stale history` reference in the recovery/worktree section after the storage owner heading is materialized."
+    },
+    {
+      "target_id": "target-021-worktree-source-control-ref",
+      "path": "Plans/WorktreeGitImprovement.md",
+      "role": "consumer",
+      "canon_ids": ["canon-007"],
+      "gap_ids": ["gap-007"],
+      "depends_on": ["target-018-orchestrator-page-structural-rebuild"],
+      "mapped_owner_heading": "## 4. GUI for Git & Worktrees",
+      "fallback_anchor": "## 4. GUI for Git & Worktrees",
+      "must_create_owner_heading": false,
+      "replace_scope": "exact_owner_section",
+      "required_structural_headings": [],
+      "exact_survivors": [
+        "Source Control",
+        "worktree-first"
+      ],
+      "forbidden_strings": [],
+      "notes": "Repair the stale `Plans/Orchestrator_Page.md#11. Source Control boundary` reference in the GUI/source-control integration section."
+    },
+    {
+      "target_id": "target-022-usage-attribution-history",
+      "path": "Plans/usage-feature.md",
+      "role": "mixed",
+      "canon_ids": ["canon-001", "canon-004", "canon-006", "canon-008"],
+      "gap_ids": ["gap-001", "gap-004", "gap-006", "gap-008"],
+      "depends_on": ["target-001-contracts-runtime-snapshot", "target-008-storage-redb-record-families", "target-017-glossary-help-entry-owners"],
+      "mapped_owner_heading": "### Billing identity, attribution, and pricing metadata",
+      "fallback_anchor": "### Billing identity, attribution, and pricing metadata",
+      "must_create_owner_heading": false,
+      "replace_scope": "full_owner_container",
+      "required_structural_headings": [
+        "usage attribution",
+        "export taxonomy",
+        "account history",
+        "artifact drill-through section",
+        "help surfaces",
+        "projection-health-aware degrade behavior"
+      ],
+      "exact_survivors": [
+        "credential_ref",
+        "requested_account_id",
+        "effective_account_id",
+        "execution_role",
+        "operational_identity",
+        "account_pressure_episode",
+        "account_switch_event",
+        "provider_account_id",
+        "account_switch_reason",
+        "projection_freshness",
+        "projection_health",
+        "validation_pass_report",
+        "workflow_run_id",
+        "usage_event_ref"
+      ],
+      "forbidden_strings": [],
+      "notes": "Rebuild the main usage-schema cluster so Usage gains the missing attribution/history/degrade subsections, the receipt drill-through bridge, and the remaining requested/effective runtime identity carry-through in one non-overlapping packet."
+    },
+    {
+      "target_id": "target-023-usage-runtime-observability",
+      "path": "Plans/usage-feature.md",
+      "role": "consumer",
+      "canon_ids": ["canon-005"],
+      "gap_ids": ["gap-005"],
+      "depends_on": ["target-013-tools-blocked-payloads", "target-014-hitl-blocked-approval"],
+      "mapped_owner_heading": "## Runtime Scheduler / Recovery Observability Addendum (2026-03-09)",
+      "fallback_anchor": "## Runtime Scheduler / Recovery Observability Addendum (2026-03-09)",
+      "must_create_owner_heading": false,
+      "replace_scope": "exact_owner_section",
+      "required_structural_headings": [],
+      "exact_survivors": [
+        "blocked attempts by `blocked_reason_code`",
+        "retries by `failure_class`",
+        "remediation children spawned and resolved",
+        "queue-analysis passes and wake reasons",
+        "safe-point creates/restores",
+        "blocked outcomes remain distinct from failures"
+      ],
+      "forbidden_strings": [],
+      "notes": "Extend the runtime scheduler/recovery addendum so usage observability also carries the shared `escalation_level` and blocked-action disclosure instead of stopping at blocked-reason counts."
+    }
+  ],
+  "consistency_checks": {
+    "no_overlapping_targets": true,
+    "same_heading_dual_operations": [],
+    "observe_only_excluded": true,
+    "full_owner_container_targets": [
+      "target-001-contracts-runtime-snapshot",
+      "target-005-interview-validation-report",
+      "target-006-ui-command-entry-contract",
+      "target-008-storage-redb-record-families",
+      "target-009-storage-restart-history",
+      "target-011-runtime-artifacts-receipt-viewer",
+      "target-012-project-output-validation-lineage",
+      "target-017-glossary-help-entry-owners",
+      "target-018-orchestrator-page-structural-rebuild",
+      "target-022-usage-attribution-history"
+    ],
+    "dependency_order_notes": [
+      "Create missing owner headings in storage, glossary, Contracts, and Orchestrator before consumer-side anchor repair packets.",
+      "Retire stale literal residue only inside the listed local target spans; do not add global search-and-replace packets."
+    ]
+  },
+  "next_required_stage": "Packet Builder"
+}

@@ -344,13 +344,35 @@ Budget rules:
 
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Prompt_Pipeline.md
 ### Billing identity, attribution, and pricing metadata
+Usage surfaces keep stable account identity and receipt lineage visible.
 
-Cost attribution is keyed by the canonical runtime identity tuple: `(model_id, provider_id, account_id?, billing_entity_id?, entitlement_class?)` when those fields are known. `billing_entity_id` alone is not a sufficient canonical substitute when account or entitlement context exists. `parent_run_id` is the canonical attribution bridge for tool-level and subagent-level usage rollups.
+#### usage attribution
+Required fields:
+- `credential_ref`
+- `requested_account_id`
+- `effective_account_id`
+- `execution_role`
+- `operational_identity`
+- `usage_event_ref`
 
-Pricing metadata is consumed from `Plans/Models_System.md`; this document uses it but does not own provider pricing tables.
+#### export taxonomy
+Exports and deep links preserve `validation_pass_report` and `workflow_run_id` so usage, artifacts, and validation stay joinable.
 
-ContractRef: ContractName:Plans/Models_System.md, ContractName:Plans/Contracts_V0.md
+#### account history
+Stable usage history records:
+- `account_pressure_episode`
+- `account_switch_event`
+- `provider_account_id`
+- `account_switch_reason`
 
+#### artifact drill-through section
+Artifact drill-through keeps usage and validation pivots attached to `workflow_run_id` and `usage_event_ref`.
+
+#### help surfaces
+Help copy aligns to the shared `canonical term system`, `contextual help system`, and `dedicated help-entry contract`.
+
+#### projection-health-aware degrade behavior
+Usage degrade behavior stays explicit through `projection_freshness` and `projection_health` instead of implying data loss.
 ### Adaptive display precision
 UI cost display rules:
 - amounts below `$0.01`: show 6 decimal places
@@ -689,24 +711,18 @@ ContractRef: ContractName:Plans/Widget_System.md#4
 
 ## Runtime Scheduler / Recovery Observability Addendum (2026-03-09)
 
-Usage and analytics surfaces should reflect the new runtime model.
-
 ### Recommended counters / views
 - blocked attempts by `blocked_reason_code`
 - retries by `failure_class`
 - remediation children spawned and resolved
 - queue-analysis passes and wake reasons
 - safe-point creates/restores
+- blocked outcomes remain distinct from failures
+- blocked counters also retain `escalation_level` and the shared blocked-action disclosure
 
 ### Metrics integrity rule
-- usage rollups may continue to exclude non-executed tool calls from executed-tool latency/error widgets, but blocked and remediation counts should remain queryable via dedicated runtime/scheduler projections
-- queue-analysis freshness, blocked counts, remediation generations, and retry/backoff counts should be available for future usage/operations surfaces rather than being lost because they are not ordinary tool invocations
-
-Any summary view must differentiate blocked outcomes from failures so user-visible statistics do not imply unsuccessful work where local progress was preserved.
-
-Acceptance criteria:
-- the product can report on blocked/remediation/scheduler behavior without corrupting executed-tool usage metrics
-
+- usage rollups may keep executed-tool metrics separate while blocked and remediation disclosure remains queryable
+- blocked outcomes remain distinct from failures in user-visible statistics
 ## Source Control, GitHub Actions, and Docker Manager Cost Attribution Addendum (2026-03-12)
 
 Cross-surface receipts from Source Control, GitHub Actions, Docker Manager, Kubernetes, and Orchestrator must not create feature-local cost views.

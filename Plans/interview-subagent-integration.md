@@ -1684,18 +1684,22 @@ Button order is `[Resume] [Pause] [Cancel]`.
 - interrupted runs restore the same CTA set so the user can resume from checkpoint or start over
 
 ### Runtime identity visibility
-
 Interview-visible runtime identity preserves the shared owner fields and does not create local aliases.
 
-ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Personas.md
-
 Required fields:
-- `requested_persona`
-- `effective_persona`
 - `requested_account_binding`
+- `requested_account_policy`
+- `requested_account_id`
+- `effective_account_id`
+- `execution_role`
 - `operational_identity`
-- `effective_account_label`
+- `tool_use_id`
 - `effective_provider_identity`
+
+Rules:
+- Requested and effective account state remains explicit in Interview.
+- `execution_role`, `operational_identity`, and `tool_use_id` survive into interview-visible runtime rows.
+- `effective_provider_identity` remains display metadata rather than a replacement for stable runtime identity.
 ### Interview execution-affecting config wiring
 `InterviewGuiConfig` and `InterviewOrchestratorConfig` MUST expose and use the following execution-affecting fields:
 
@@ -1736,13 +1740,22 @@ Final approval state MUST persist so interrupted runs restore to the findings su
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md
 
 ### Preview and document surfaces
-The Interview page preview section shows:
-- Multi-Pass findings summary
-- final approval gate (`Accept | Reject | Edit`)
-- read-only rendered Plan Graph with explicit notice that plan-graph edits occur through Assistant rather than in-place here
+Preview and document surfaces keep receipt and validation lineage attached to the canonical runtime packet.
 
-A separate embedded document pane is required for human-readable interview artifacts and is distinct from the activity pane.
+#### validation/report section
+Required fields:
+- `attempt_id`
+- `provider_attempt_ref`
+- `workflow_run_id`
+- `validation_pass_report`
+- `pass_verdict`
+- `phase_plan_ref`
+- `requirements_quality_report_ref`
 
+Rules:
+- Validation and preview drill-through stay attached to canonical receipt lineage.
+- `validation_pass_report` remains an upstream artifact instead of a local replacement record.
+- `phase_plan_ref` and `requirements_quality_report_ref` remain visible in document and preview surfaces.
 ### Interview-phase verification mirror
 Interview phases mirror orchestrator node verification:
 - start = config wiring + readiness + sequence validation
