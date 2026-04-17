@@ -55,39 +55,17 @@ ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/Architecture_Inv
 - **Fix:** When parsing porcelain output, treat missing branch as "detached". In `merge_worktree`, if source_branch is empty, skip merge or merge by commit hash and document behavior.
 
 ### 2.7 worktree_exists is path-only
-
-- **Gap:** `worktree_exists(node_id)` is `get_worktree_path(node_id).exists()`. A non-worktree directory with the same name would be treated as existing; `remove_worktree` could then run `git worktree remove --force` on a non-worktree path.
-- **Fix:** Consider "exists" only if the path exists and looks like a worktree (e.g. has a `.git` file pointing at the main repo), or rely on `list_worktrees()` and check if the path is in that list.
-
-- **Gap:** Worktree recovery runs with `std::env::current_dir()` and `git rev-parse --show-toplevel` there. If the app is started from a launcher or different repo, recovery runs in the wrong place.
-- **Fix:** Run recovery only when a project/workspace is known (e.g. from config or current project). Use that path for `WorktreeManager` and `recover_orphaned_worktrees()`. If no project is known at startup, skip or run recovery when the user first selects/opens a project.
-
-ContractRef: Plans/storage-plan.md#Restart and stale history
+Recovery and path validation must preserve historical state instead of collapsing missing worktrees into disappearance.
 
 Required fields:
-- worktree_id
-- lane_id
-- last_seen_at_utc
-- owner_run_id
-- owner_attempt_id
-- historical_lineage_refs[]
+- `historical`
+- `archived`
+- `removed`
+- `historical_lineage_refs[]`
 
-Canonical terms and values:
-- historical
-- archived
-- removed
-- last_seen_at_utc
-- owner_run_id
-- owner_attempt_id
-- orchestrator.receipt.{run_id}.{attempt_id}
-
-Labels:
-- startup recovery
-- historical lineage
-
-Behavioral rules:
-- Startup restore must recover historical lineage from durable records, not just CWD discovery.
-- Missing live worktrees must render as historical/archived/removed rather than disappearing.
+Rules:
+- Recovery text references `Plans/storage-plan.md#Restart and stale history`.
+- Missing live worktrees remain inspectable through historical lineage.
 ### 2.9 PR creation after restart uses main repo branch
 
 - **Gap:** After restart, `get_node_worktree(node_id)` is `None`. `create_node_pr` then uses `git_manager.current_branch()` for head_branch, so the PR is created from the main repo branch, not the worktree branch.

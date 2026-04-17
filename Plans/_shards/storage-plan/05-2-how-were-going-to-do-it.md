@@ -169,75 +169,39 @@ Replay/rebuild rules:
 ContractRef: ContractName:Plans/Architecture_Invariants.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Contracts_V0.md
 
 ### 2.3 redb: schema, migrations, key patterns
+Canonical records for runtime-artifact, worktree or lane, and receipt-linked projections are storage owned.
 
-redb projections must be strong enough to rebuild child-run, crew, and context-shaping state after restart without relying on ad hoc JSON side files.
+### Canonical records
+Storage owns discoverable record families for runtime, receipt, and projection truth.
 
-ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/orchestrator-subagent-integration.md
+### Required redb keys
+- `artifacts_index.v1:{project_id}:{artifact_id}`
+- `artifacts_project_state.v1:{project_id}`
+- `projector.checkpoint.runtime_artifacts:{project_id}`
+- `worktree_record.v1:{project_id}:{worktree_id}`
+- `lane_record.v1:{project_id}:{lane_id}`
+- `worktree_projection.v1:{project_id}:{worktree_id}`
+- `lane_projection.v1:{project_id}:{lane_id}`
+- `orchestrator.project_state.{project_id}`
 
-Minimum canonical record families:
-- `child_run`
-- `child_attempt`
-- `child_batch`
-- `child_subgroup`
-- `crew`
-- `crew_member`
-- `crew_message`
-- `child_context_state`
-- `planning_child_output_projection`
-
-Minimum `child_run` fields:
-- `child_run_id`, `parent_run_id`, `thread_id`
-- `batch_id?`, `subgroup_id?`, launch order
-- requested/effective Persona and runtime surface fields
-- requested/effective effort fields
-- required/optional dependency classification
-- status, terminal reason, blocked reason, awaiting-parent reason
-- provider correlation fields as additive metadata only
-
-Minimum `child_attempt` fields:
+### Cross-surface receipt record
+Required fields:
 - `attempt_id`
-- retry count
-- reroute history
-- resumable handle when present
-- requested/effective surface for that attempt
-
-Web-operation child payload extension:
-
-```text
-web_operation_payload {
-  web_operation: "webextract" | "webresearch" | "webcrawl" | "webmap",
-  web_input: {
-    url: string?,                  // target URL (for extract/crawl/map)
-    query: string?,                // search query (for research)
-    domain_scope: string?,         // domain restriction
-    depth_limit: u32?,             // crawl depth limit (for crawl/map)
-  },
-  support_tier: "built_in" | "mcp_backed" | "provider_native",
-  result_summary: {
-    pages_fetched: u32,
-    content_length_bytes: u64,
-    extraction_quality: "full" | "partial" | "failed",
-  },
-}
-```
+- `provider_attempt_ref`
+- `usage_event_ref`
+- `workflow_refs`
+- `docker_refs`
+- `kubernetes_refs`
+- `validation_pass_report`
+- `workflow_run_id`
+- `run_id`
+- `pass_verdict`
+- `phase_plan_ref`
+- `requirements_quality_report_ref`
 
 Rules:
-- this payload is additive child-run / child-attempt metadata for web-capable executions
-- `web_input.url` is used for extract, crawl, and map operations; `web_input.query` is used for research operations
-- `support_tier` records whether the operation came from built-in PM support, MCP backing, or a provider-native surface
-- `result_summary` is persisted only after the operation completes or fails with partial results
-
-ContractRef: ContractName:Plans/Models_System.md, ContractName:Plans/Tools.md, ContractName:Plans/Permissions_System.md
-
-Minimum context-state fields:
-- stable block refs
-- shrink generation
-- current working-set refs
-- Context Lens overlay refs
-- rehydration-capable source refs
-- compacted/rotated lineage markers where applicable
-
-ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/assistant-memory-subsystem.md
+- Receipt fields remain lineage-bearing rather than summary prose.
+- Runtime artifacts, worktree records, lane records, and project-state keys stay storage owned.
 ### Scope split
 
 | Scope | Store | What belongs here |

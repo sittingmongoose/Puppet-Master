@@ -1,59 +1,28 @@
 ## 8. Implementation details and technical notes
 
 ### 8.0 Event payloads (seglog)
+Blocked and denied tool packets expose the shared runtime-facing blocked payload.
 
-Subagent, crew, and context-shaping events must project from a single canonical family.
+Required fields:
+- `blocked_sequence`
+- `approval_scope_key`
+- `action_available`
+- `escalation_level`
 
-ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md
+Canonical events:
+- `tool.invoked`
+- `tool.denied`
 
-Required child lifecycle event families:
-- `subagent.spawn_requested`
-- `subagent.spawned`
-- `subagent.started`
-- `subagent.progress`
-- `subagent.work_delta`
-- `subagent.thought_delta`
-- `subagent.awaiting_parent`
-- `subagent.blocked`
-- `subagent.context_expansion_requested`
-- `subagent.user_input_requested`
-- `subagent.completed`
-- `subagent.failed`
-- `subagent.cancel_requested`
-- `subagent.cancelled`
-- `subagent.superseded`
-- `subagent.retry_requested`
-- `subagent.retried`
-- `subagent.rerouted`
-- `subagent.resumed`
-- `subagent.context_shrunk`
-- `subagent.context_rehydrated`
+Escalation ladder:
+- `info`
+- `warning`
+- `attention_required`
+- `blocked`
+- `system_notification`
 
-Required crew event families:
-- `crew.created`
-- `crew.member_started`
-- `crew.member_completed`
-- `crew.message_posted`
-- `crew.completed`
-
-Minimum event payload identity fields:
-- `thread_id`
-- `parent_run_id`
-- `child_run_id?`
-- `batch_id?`
-- `subgroup_id?`
-- `attempt_id?`
-- requested/effective Persona and runtime fields where relevant
-- timestamp
-
-ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Provider_OpenCode.md
-
-Tool invocation events:
-
-The `tool.invoked` event for `grep` MUST include an optional `index_used: boolean` field indicating whether the sparse n-gram index was used to accelerate the query. When `true`, the index narrowed the candidate file set before ripgrep verification. When `false` or absent, raw ripgrep was used on all files (fallback path).
-
-ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/Contracts_V0.md
-
+Rules:
+- Tool payloads keep blocked identity and action availability discoverable.
+- The same escalation ladder is reused across tools, approvals, and blocked runtime surfaces.
 ### 8.1 Config persistence
 
 - **Where:** Tool permissions live in the same config as the rest of Settings (e.g. `GuiConfig` in memory, persisted to redb as `config:v1` per FinalGUISpec §15.1). Use the key **`tool_permissions`** (object: tool name or wildcard → `"allow"` | `"deny"` | `"ask"`, or per-tool object for granular rules per §10.1).

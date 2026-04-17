@@ -28,67 +28,24 @@ ContractRef: Primitive:UICommand, ContractName:Contracts_V0.md#UICommand
 
 ## 2. Canonical command IDs
 ### 2.0A Promoted Section 15 command families
+Command families stay normalized around shared navigation, search routing, and runtime recovery ownership.
 
-The command catalog normalizes Search, file-tree actions, Source Control diff/review, and chat restore handoff into stable command families.
+### 2.0 Command entry contract (doc-level)
+Required command metadata:
+- `command_kind`
+- `normalization.kind`
+- `normalizes_to_contract`
+- `alias_of_command_id`
 
-Required families:
-- `cmd.search.*`
-- `cmd.file.*`
-- `cmd.source_control.*`
-- `cmd.actions.*`
-- `cmd.docker.*`
-- `cmd.k8s.*`
-- `cmd.git.*` diff/review commands listed below
-- `cmd.git.worktree.*`
-- `cmd.chat.add_file_reference`
-- `cmd.chat.revert`
-- `cmd.chat.rewind`
+Rules:
+- `route_target` owns canonical open and focus identity.
+- command normalization remains discoverable at the doc-level contract.
 
-ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/FileManager.md, ContractName:Plans/GitHub_Integration.md
+### Search-command routing
+Search commands preserve query-session state and route selected results through `route_target` rather than feature-local navigation payloads.
 
-Family rules:
-- Search commands own persistent Search-panel behavior only; they do not replace command-palette navigation or semantic LSP navigation.
-- `cmd.file.*` covers file-tree actions only; it does not absorb terminal or chat-owned commands.
-- `cmd.chat.revert` and `cmd.chat.rewind` remain distinct commands with non-overlapping semantics.
-- Git diff/review commands mutate repository state and MUST NOT be described as editor undo.
-
-ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/LSPSupport.md
-
-Every command listed below MUST define:
-- **Args schema (keys only)** — the `args` keys expected by the command handler
-- **Expected events** — stable event types emitted as a result of the command
-- **Affected surfaces** — which screens/panels are impacted (layout can change; command IDs do not)
-- **UI-only clarification** — commands that only mutate local UI view state may declare `no persisted domain event`
-
-ContractRef: ContractName:Contracts_V0.md#UICommand, ContractName:Contracts_V0.md#EventRecord
-
-ContractRef: Plans/Wiring_Matrix.md#UI command handler rule, Plans/Progression_Gates.md#GATE-010 -- Wiring matrix validation
-
-Required fields:
-- command_kind
-- normalization.kind
-- normalizes_to_contract
-- alias_of_command_id
-
-Canonical terms and values:
-- command_kind
-- normalization
-- kind
-- normalizes_to_contract
-- alias_of_command_id
-- shell_view
-- navigation_wrapper
-- domain_action
-- wrapper
-- deprecated_alias
-
-Labels:
-- command kind
-- normalization
-
-Behavioral rules:
-- Wrapper metadata must remain narrow and contract-level.
-- Command metadata must not restate route payload structure.
+### Canonical runtime recovery command ownership
+Runtime recovery commands stay anchored to the shared blocked and runtime contracts instead of UI-local action tables.
 ### 2.0.1 Acceptance hooks contract (wiring verification)
 Every command listed in this catalog MUST be verifiable through the wiring matrix (`Plans/Wiring_Matrix.md`, schema: `Plans/Wiring_Matrix.schema.json`). Specifically:
 
@@ -610,119 +567,16 @@ ContractRef: ContractName:Plans/assistant-memory-subsystem.md#5-verification-and
 ### 2.8A Side-panel and artifacts navigation commands
 
 | Command ID | Parameters | Behavior |
-|---|---|---|
-| `cmd.search.show` | `{ project_id, focus?: "query" | "replace" | "results" }` | Reveal or focus the Search side panel. |
-| `cmd.search.find_in_files` | `{ project_id, query?, scope? }` | Run or re-run find-in-files in the Search panel. |
-| `cmd.search.replace_in_files` | `{ project_id, query?, replacement?, scope? }` | Run replace preview/apply flow in the Search panel. |
-| `cmd.search.open_result` | `{ project_id, result_id, disposition?: "current_tab" | "new_tab" | "split" }` | Open a Search result through the canonical file-open path. |
-| `cmd.search.next_result` | `{ project_id }` | Move to the next result row. |
-| `cmd.search.previous_result` | `{ project_id }` | Move to the previous result row. |
-| `cmd.search.set_scope` | `{ project_id, scope }` | Change include/exclude or logical scope selection. |
-| `cmd.search.toggle_flag` | `{ project_id, flag: "regex" | "case_sensitive" | "whole_word" }` | Toggle a search option. |
-| `cmd.search.replace_selected` | `{ project_id, result_id }` | Apply the replacement to one selected match/result. |
-| `cmd.search.replace_all` | `{ project_id, query_session_id }` | Apply all currently approved replacements for the active query session. |
-| `cmd.search.rebuild_regex_index` | `{ project_id }` | Trigger a full rebuild of the per-project sparse n-gram index. Equivalent to the `Rebuild Index` settings action. |
-| `cmd.search.evict_remote_cache` | `{ project_id }` | Evict the selected project's remote cache after confirmation. |
-| `cmd.search.clear_all_remote_caches` | `{}` | Open the global `Clear All Remote Caches` confirmation flow. |
+| --- | --- | --- |
+| `cmd.search.show` | `{ project_id, focus? }` | Reveal or focus the Search side panel. |
+| `cmd.search.find_in_files` | `{ project_id, query?, scope? }` | Run or rerun find-in-files in the Search panel. |
+| `cmd.search.replace_in_files` | `{ project_id, query?, replacement?, scope? }` | Run replace preview or apply flow in the Search panel. |
+| `cmd.search.open_result` | `{ project_id, query_session_id, subject_id, disposition? }` | Open a Search result through `route_target` and the canonical file-open path. |
+| `cmd.search.replace_selected` | `{ project_id, query_session_id, subject_id }` | Apply replacement to one selected result identified by canonical subject identity. |
 
-ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/FileManager.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Tools.md
-
-Search rules:
-- Search commands are side-panel scoped and preserve query-session state instead of behaving like transient palette commands.
-- Remote queries and replace operations use the effective remote host context; they surface `stale`, `degraded`, or `unavailable` state explicitly instead of silently falling back to local execution.
-- When the regex toggle is active, find-in-files uses the same sparse n-gram acceleration as agent `grep`.
-- A stale-but-valid snapshot remains accelerated. `(unindexed)` is reserved for the true raw-ripgrep fallback path.
-- Index-management commands route through canonical settings and confirmation surfaces rather than hidden background-only actions.
-
-ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/LSPSupport.md
-
-ContractRef: Plans/Contracts_V0.md#7.3 `route_target`, Plans/FileManager.md#OpenSubject
-
-Required fields:
-- target_kind
-- subject_id
-- object_kind
-- object_id
-- tab_id
-- inspector_target
-
-Canonical terms and values:
-- route_target
-- target_kind
-- subject_id
-- object_kind
-- object_id
-- inspector_target
-
-Labels:
-- Details
-- Artifacts
-- History
-
-Behavioral rules:
-- Search commands must route through the shared route payload rather than bespoke search payloads.
-- `subject_id` remains bounded to document/artifact open-by-identity.
-#### File-tree action commands
-
-| Command ID | Parameters | Behavior |
-|---|---|---|
-| `cmd.file.new_file` | `{ project_id, parent_path }` | Create a new file under the selected directory. |
-| `cmd.file.new_folder` | `{ project_id, parent_path }` | Create a new folder under the selected directory. |
-| `cmd.file.rename` | `{ project_id, path, new_name }` | Rename a file or folder. |
-| `cmd.file.delete` | `{ project_id, paths[] }` | Delete one or more selected nodes after confirmation. |
-| `cmd.file.copy_full_path` | `{ project_id, path }` | Copy the absolute path to the text clipboard. |
-| `cmd.file.copy_relative_path` | `{ project_id, path }` | Copy the project-relative path to the text clipboard. |
-| `cmd.file.copy_nodes` | `{ project_id, paths[] }` | Copy one or more nodes into the workspace-node clipboard. |
-| `cmd.file.cut_nodes` | `{ project_id, paths[] }` | Arm one or more nodes for move into the workspace-node clipboard. |
-| `cmd.file.paste_nodes` | `{ project_id, destination_path }` | Paste nodes using the shared validation/conflict engine. |
-| `cmd.file.open_with` | `{ project_id, path, target: "source_editor" | "image_viewer" | "workspace_preview" | "detached_preview" | "diff_review" }` | Open the file using an explicit target. |
-| `cmd.file.save_local_copy` | `{ project_id, path }` | Export a file or folder to a user-chosen local destination. |
-
-ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/FileSafe.md
-
-File-tree rules:
-- the workspace-node clipboard is distinct from the system text clipboard
-- cross-authority paste is blocked rather than silently converted into export/import
-- file-tree terminal pivots preserve the distinction between `Open in Terminal` and `Show Terminal`; they are not collapsed into one canonical command target under `cmd.file.*`
-- `cmd.file.open_with` MUST NOT expose `system_default` in MVP
-
-ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md
-
-#### Source Control diff/review commands
-
-| Command ID | Parameters | Behavior |
-|---|---|---|
-| `cmd.source_control.show` | `{ project_id, subview?: "changes" | "history" | "graph" | "worktrees" | "branches_stash" }` | Reveal Source Control and optionally select a subview. |
-| `cmd.source_control.switch_subview` | `{ project_id, subview }` | Switch Source Control subview without leaving the side panel. |
-| `cmd.git.open_diff` | `{ project_id, repo_id, path, compare_origin? }` | Open diff/review for a file. |
-| `cmd.git.diff_set_compare_target` | `{ project_id, diff_session_id, compare_target }` | Change compare baseline/target. |
-| `cmd.git.diff_search` | `{ project_id, diff_session_id, query }` | Search within the active diff/review surface. |
-| `cmd.git.stage_hunks` | `{ project_id, diff_session_id, hunks[] }` | Stage selected hunks. |
-| `cmd.git.unstage_hunks` | `{ project_id, diff_session_id, hunks[] }` | Unstage selected hunks. |
-| `cmd.git.discard_hunks` | `{ project_id, diff_session_id, hunks[] }` | Discard selected hunks after confirmation. |
-| `cmd.git.conflict_apply_resolution` | `{ project_id, diff_session_id, strategy }` | Apply structured conflict resolution to the result buffer. |
-
-ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/FileManager.md, ContractName:Plans/Wiring_Matrix.md
-
-Source Control operational commands:
-
-| Command ID | Label | Description | Preconditions |
-|---|---|---|---|
-| `cmd.source_control.history` | View History | Opens commit history view | `git_available` |
-| `cmd.source_control.graph` | View Graph | Opens branch/merge graph visualization | `git_available` |
-| `cmd.source_control.blame` | Toggle Blame | Shows/hides inline git blame annotations | `git_available && editor_active` |
-| `cmd.source_control.stash` | Stash Changes | Stashes current working changes | `git_available && has_changes` |
-| `cmd.source_control.stash_pop` | Pop Stash | Restores most recent stash | `git_available && has_stashes` |
-| `cmd.source_control.cherry_pick` | Cherry Pick | Cherry-picks selected commit | `git_available && commit_selected` |
-| `cmd.source_control.rebase` | Interactive Rebase | Opens interactive rebase UI | `git_available && branch_selected` |
-| `cmd.source_control.worktree` | Manage Worktrees | Opens worktree management panel | `git_available` |
-
-Notes:
-- `cmd.source_control.history`, `cmd.source_control.graph`, and `cmd.source_control.worktree` are canonical direct-entry commands even though `cmd.source_control.show` also accepts matching subviews.
-- stash, cherry-pick, rebase, and blame commands remain operational shortcuts within the same Source Control family rather than separate panel namespaces.
-
-ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Wiring_Matrix.md
-
+Rules:
+- Search command routing resolves through `route_target`.
+- Search commands remain side-panel scoped and preserve query-session state.
 ## References
 - `Plans/Contracts_V0.md#UICommand`
 - `Plans/GitHub_API_Auth_and_Flows.md`

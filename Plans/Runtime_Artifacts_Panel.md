@@ -209,12 +209,22 @@ All artifact differentiators identified in the research are MVP and required; no
 - Plans/FileManager.md (open by artifact identity)
 
 ## Cross-Surface Operation Receipt Linkage Addendum (2026-03-12)
+Receipt-like artifacts keep canonical runtime identity and bridge fields instead of inventing artifact-local lineage.
 
-Runtime artifacts and receipt-like summaries for this packet must stay on canonical runtime identity.
+### bridge-field viewer
+Required fields:
+- `attempt_id`
+- `provider_attempt_ref`
+- `usage_event_ref`
+- `workflow_refs`
+- `docker_refs`
+- `kubernetes_refs`
+- `workflow_run_id`
+
+Required actions:
+- `Show in Ledger`
+- `Show in Usage`
 
 Rules:
-- Source Control, GitHub Actions, Docker Manager, and Orchestrator must not invent isolated artifact-local receipt IDs when canonical run/attempt identity already exists.
-- If a receipt-like artifact is surfaced, it must preserve the canonical linkage fields needed to open the related surface in context.
-- cost-bearing receipt items continue to route to canonical Usage/Ledger identity.
-
-ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/usage-feature.md, ContractName:Plans/Orchestrator_Page.md
+- Bridge fields remain joins rather than replacement primary keys.
+- Open and focus actions route through canonical receipt and usage identity.

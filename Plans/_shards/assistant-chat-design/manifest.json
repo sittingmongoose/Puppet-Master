@@ -1,6 +1,6 @@
 {
   "source_path": "Plans/assistant-chat-design.md",
-  "source_sha256": "5265b92e51175e1d5c36293cf113618af88502bc56896bc9d4ad48b9d818e6ac",
+  "source_sha256": "cf5f59722d16a7294be99477e2bd354f51682ccbf27f941de260e0cbeaad0fdf",
   "split_rule": {
     "primary": "## outside fences",
     "fallback": "line-count-200",
@@ -199,63 +199,63 @@
     {
       "dest_path": "Plans/_shards/assistant-chat-design/28-23-gaps-competitive-comparison-and-enhancements.md",
       "start_line": 1691,
-      "end_line": 1791,
-      "segment_sha256": "4219d97c0e718586a59ccaffb8d67dd254ada5be16a71385a43dbd1a7f03f549",
+      "end_line": 1784,
+      "segment_sha256": "55c023ef53e18710eb95173d0d0657e713d67197bba4f96d1fd3786b071d5f8e",
       "heading": "## 23. Gaps, Competitive Comparison, and Enhancements"
     },
     {
       "dest_path": "Plans/_shards/assistant-chat-design/29-24-chat-thread-performance-virtualization-and-flicker-avoidance.md",
-      "start_line": 1792,
-      "end_line": 1844,
+      "start_line": 1785,
+      "end_line": 1837,
       "segment_sha256": "018346a671d7e8f209d93518643e5d0d9f13e2661997ce3a8d858539113e0d16",
       "heading": "## 24. Chat thread performance, virtualization, and flicker avoidance"
     },
     {
       "dest_path": "Plans/_shards/assistant-chat-design/30-25-context-circle-enhancements-addendum-2026-02-23.md",
-      "start_line": 1845,
-      "end_line": 1851,
+      "start_line": 1838,
+      "end_line": 1844,
       "segment_sha256": "fb75d8645866627a939ae9d2bd7f1ad2ee6357e84b64d19695d60b0f2dbd78ac",
       "heading": "## 25. Context Circle Enhancements (Addendum -- 2026-02-23)"
     },
     {
       "dest_path": "Plans/_shards/assistant-chat-design/31-26-per-pass-validation-modelprovider-settings-invariant-sweep.md",
-      "start_line": 1852,
-      "end_line": 1958,
+      "start_line": 1845,
+      "end_line": 1951,
       "segment_sha256": "f78237c1ca52de98b37416bdf4b52d7ee1fd2e8ebeeea31675bbd841488615b3",
       "heading": "## 26. Per-Pass Validation Model/Provider Settings (Invariant Sweep)"
     },
     {
       "dest_path": "Plans/_shards/assistant-chat-design/32-27-persona-control-in-assistant-chat-2026-03-06.md",
-      "start_line": 1959,
-      "end_line": 2073,
+      "start_line": 1952,
+      "end_line": 2066,
       "segment_sha256": "f813d2355b68db61c5a00be96c8ff9a8f735a2d3f5ec9eb81d9e063578df75de",
       "heading": "## 27. Persona Control in Assistant Chat (2026-03-06)"
     },
     {
       "dest_path": "Plans/_shards/assistant-chat-design/33-28-markdown-and-mermaid-rendering-in-chat-and-planning-surfaces-2026-03-07.md",
-      "start_line": 2074,
-      "end_line": 2103,
+      "start_line": 2067,
+      "end_line": 2096,
       "segment_sha256": "38b68c2e2663bb9e6ae65d4acb390eb2739e10e09aa721d55c2e4d53d2ecdcb8",
       "heading": "## 28. Markdown and Mermaid Rendering in Chat and Planning Surfaces (2026-03-07)"
     },
     {
       "dest_path": "Plans/_shards/assistant-chat-design/34-29-natural-language-mode-invocation-and-wizard-escalation-2026-03-08.md",
-      "start_line": 2104,
-      "end_line": 2212,
+      "start_line": 2097,
+      "end_line": 2205,
       "segment_sha256": "9823f3d4054d3e469c8cbed7440726e9703fc32ec45464816420e1d66556289c",
       "heading": "## 29. Natural-language Mode Invocation and Wizard Escalation (2026-03-08)"
     },
     {
       "dest_path": "Plans/_shards/assistant-chat-design/35-unified-thread-blocked-state-lifecycle.md",
-      "start_line": 2213,
-      "end_line": 2243,
-      "segment_sha256": "d2fd6857b1ec45ae80a8f57330f12df4dc9d1dff9fe0a96e09f53cf68e676979",
+      "start_line": 2206,
+      "end_line": 2219,
+      "segment_sha256": "bb927bdcb201924011b55b00fb293899ad8c4f89ca6cc492eb06b95af730adbb",
       "heading": "## Unified Thread Blocked-State Lifecycle"
     },
     {
       "dest_path": "Plans/_shards/assistant-chat-design/36-worktrees-in-assistant.md",
-      "start_line": 2244,
-      "end_line": 2758,
+      "start_line": 2220,
+      "end_line": 2734,
       "segment_sha256": "18b20b640b6ea36c5668238c582df83a9aa818058fa2213d6520925ab210f682",
       "heading": "## Worktrees in Assistant"
     }

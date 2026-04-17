@@ -1,33 +1,33 @@
 {
-  "schema_id": "pm.open_gaps.v2",
+  "schema_id": "pm.open_gaps.v3",
   "work_id": "w-20260312-203855",
   "summary": {
-    "material_blockers": 8,
+    "planning_blockers": 0,
+    "fix_backlog_items": 8,
     "total_gaps": 8,
     "docs_affected": 20,
     "canon_items_affected": 8,
     "top_pressure_docs": [
-      "Plans/usage-feature.md",
-      "Plans/storage-plan.md",
       "Plans/Orchestrator_Page.md",
+      "Plans/storage-plan.md",
+      "Plans/usage-feature.md",
+      "Plans/Contracts_V0.md",
       "Plans/assistant-chat-design.md",
-      "Plans/interview-subagent-integration.md",
-      "Plans/Contracts_V0.md"
+      "Plans/interview-subagent-integration.md"
     ],
     "dominant_gap_classes": [
-      "over_summarized_transfer",
       "missing_structural_heading",
-      "stale_contradictory_survivor",
-      "stubbed_consumer_propagation"
+      "over_summarized_transfer"
     ],
     "underlying_gap_evidence_count": 62
   },
   "open_gaps": [
     {
       "gap_id": "gap-001",
-      "severity": "blocker",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
       "gap_class": "stale_contradictory_survivor",
-      "description": "Execution-unit runtime identity is materially transferred, but its owner canon is still split across competing sections, its explicit owner field list still omits part of the requested/effective account packet, and it still coexists with active tier-era residue in subagent consumer docs.",
+      "description": "Execution-unit runtime identity is materially transferred, but the known owner anchor, required-field enumeration, and consumer carry-through still need doc repair and stale tier-era residue still needs retirement.",
       "affected_targets": [
         {
           "path": "Plans/Contracts_V0.md",
@@ -66,14 +66,15 @@
         "TierContext",
         "tier_id"
       ],
-      "blocking_reason": "`Plans/Executor_Protocol.md` already carries a strong `execution_unit_context` owner field block, but the exact `### 5.1B Persona/Runtime Snapshot Payload Contract` owner anchor is still absent and the live `Plans/Contracts_V0.md` execution-unit field enumeration still lists only `requested_account_id`, `effective_account_id`, and `tool_use_id` while omitting `requested_account_binding`, `requested_account_policy`, and `operational_identity` from the explicit required-field list. `Plans/orchestrator-subagent-integration.md` still carries a narrower consumer packet without the full requested-account carry-through, `Plans/interview-subagent-integration.md` still omits `requested_account_policy` and `tool_use_id` from its runtime-identity section, and tier-era residue still remains active in subagent consumers.",
-      "next_resolution_stage": "Audit Mode"
+      "blocking_reason": "The canon bundle now identifies the owner and consumer targets precisely: add the known `### 5.1B Persona/Runtime Snapshot Payload Contract` section, fill in the known missing `execution_unit_context` fields, propagate the known requested/effective account carry-through to the named consumers, and retire the stale tier-era aliases.",
+      "next_resolution_stage": "Reconciliation Planner"
     },
     {
       "gap_id": "gap-002",
-      "severity": "blocker",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
       "gap_class": "missing_structural_heading",
-      "description": "Route/open payload and command normalization are materially transferred, but their owner anchors stay fragmented and the surviving route residues now include a broken Orchestrator cross-reference plus active `result_id` search-command args beside stale `detached_window`.",
+      "description": "Route/open payload and command normalization are materially transferred, but the remaining work is a known owner-heading, stale-survivor, and broken-cross-reference repair.",
       "affected_targets": [
         {
           "path": "Plans/Contracts_V0.md",
@@ -108,14 +109,15 @@
         "detached_window",
         "active `result_id` search-command args in `Plans/UI_Command_Catalog.md`"
       ],
-      "blocking_reason": "`Plans/Contracts_V0.md` already owns a strong `route_target` block and `Plans/UI_Command_Catalog.md` already carries real command-normalization content under `### 2.0A Promoted Section 15 command families`, but the required `### 2.0 Command entry contract (doc-level)`, `Search-command routing`, and `Canonical runtime recovery command ownership` anchors still are not discoverable owner sections. `Plans/UI_Command_Catalog.md` also still contains a broken `Plans/Orchestrator_Page.md#10. Search, routing, and action policy` reference, `detached_window` still survives in the closed `target_kind` set, and `cmd.search.open_result` / `cmd.search.replace_selected` still expose `result_id`, so the blocker remains both structural and survivor-driven.",
-      "next_resolution_stage": "Audit Mode"
+      "blocking_reason": "The owner section, shared route contract, and mutation targets are known; Reconciliation Planner can add the missing headings, remove the stale `detached_window` / `result_id` residue, and repair the known Orchestrator cross-reference without further canon discovery.",
+      "next_resolution_stage": "Reconciliation Planner"
     },
     {
       "gap_id": "gap-003",
-      "severity": "blocker",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
       "gap_class": "over_summarized_transfer",
-      "description": "Storage and runtime-artifact canon is substantially transferred, but the remaining blocker is the still-missing exact orchestrator project-state key family plus the under-specified distinction between historical truth and cleanup state.",
+      "description": "Storage and runtime-artifact canon is substantially transferred, and the remaining work is to materialize the named project-state key family, tighten the known lifecycle semantics, and repair the broken storage-plan anchor consumers.",
       "affected_targets": [
         {
           "path": "Plans/storage-plan.md",
@@ -157,14 +159,15 @@
         "orchestrator.project_state.{project_id}",
         "lifecycle state boundary semantics for `historical`, `archived`, and `removed`"
       ],
-      "blocking_reason": "`Plans/storage-plan.md` already carries `artifacts_index.v1:{project_id}:{artifact_id}`, `historical_lineage_refs[]`, lifecycle enums, and the broader `project_summary.v1:{project_id}` record family, so the blocker is no longer missing wholesale storage canon. The remaining defect is that the exact `orchestrator.project_state.{project_id}` key family still is not present as named canon, the required `### Required redb keys` and `### Restart and stale history` owner anchors still are missing, and the document still exposes only inline `Canonical records for this feature set...` prose plus `canonical_record.v1:{project_id}:{record_id}` instead of a discoverable `Canonical records` heading even though `Plans/Orchestrator_Page.md` cites that missing anchor three times and `Plans/Contracts_V0.md` now also points at it directly. `Plans/Orchestrator_Page.md` and `Plans/WorktreeGitImprovement.md` also still point at the missing `Plans/storage-plan.md#Restart and stale history` anchor. The lifecycle boundary semantics after cleanup remain scattered enough to be unsafe to build from without guesswork. Legacy `artifact_kind` / `task_id` terminology still appears in cross-doc prose, but it is no longer the core defect.",
-      "next_resolution_stage": "Audit Mode"
+      "blocking_reason": "The storage owner sections, consumer targets, key family name, and lifecycle vocabulary are all known in the canon bundle; the remaining work is to write them into the named sections and repair the known broken consumer anchors rather than to resolve who owns the canon.",
+      "next_resolution_stage": "Reconciliation Planner"
     },
     {
       "gap_id": "gap-004",
-      "severity": "blocker",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
       "gap_class": "over_summarized_transfer",
-      "description": "Receipt and validation lineage are materially transferred, but the owner heading and downstream consumer anchors are still not explicit enough for downstream handoff without guesswork.",
+      "description": "Receipt and validation lineage are materially transferred, and the remaining work is a known owner-heading plus consumer-anchor repair.",
       "affected_targets": [
         {
           "path": "Plans/storage-plan.md",
@@ -195,14 +198,15 @@
         "bridge-field viewer",
         "validation/report section"
       ],
-      "blocking_reason": "`Plans/storage-plan.md` already carries inline receipt content with `run_id`, `workflow_refs`, `docker_refs`, `kubernetes_refs`, `provider_attempt_ref`, `usage_event_ref`, and `workflow_run_id`, and `Plans/Project_Output_Artifacts.md` already carries `pass_verdict`, `phase_plan_ref`, and `requirements_quality_report_ref` in the validation-pass-report lineage. The remaining defect is that the explicit `### Cross-surface receipt record` owner heading still is missing, `Plans/Runtime_Artifacts_Panel.md` still points directly at that missing anchor, and the required consumer anchors, including the `artifact drill-through section` in `Plans/usage-feature.md`, still are not discoverable enough to build downstream surfaces safely.",
-      "next_resolution_stage": "Audit Mode"
+      "blocking_reason": "The receipt fields and downstream lineage packet are already captured in canon_inventory.json and the remaining mutations are explicit: add the known owner heading, restore the missing consumer anchors, and repair the broken Runtime Artifacts Panel link.",
+      "next_resolution_stage": "Reconciliation Planner"
     },
     {
       "gap_id": "gap-005",
-      "severity": "blocker",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
       "gap_class": "stubbed_consumer_propagation",
-      "description": "Blocked-episode identity is materially transferred in HITL, but tool and chat consumers still do not carry the full blocked packet, escalation semantics, or event-to-notice linkage.",
+      "description": "Blocked-episode identity is materially transferred, but the remaining work is known blocked-packet propagation and stale-residue cleanup across the named consumers.",
       "affected_targets": [
         {
           "path": "Plans/Tools.md",
@@ -233,14 +237,15 @@
         "{ tool_name, invocation_summary, options }",
         "No remaining gaps"
       ],
-      "blocking_reason": "`Plans/human-in-the-loop.md` already carries `blocked_sequence` and `approval_scope_key`, `Plans/Contracts_V0.md` already carries `report_ref` and the scheduler wake canon for `startup_recovered`, `Plans/Orchestrator_Page.md` already carries `escalation_level`, `Plans/Tools.md` already carries real `tool.invoked` / `tool.denied` plus blocked-payload consolidation rules, and `Plans/assistant-chat-design.md` already owns a unified blocked-state lifecycle plus blocked-notice display prose. The blocker remains because the live `blocked_notice` payload still carries only `blocked_family` and `allowed_action_ids[]`, `Plans/usage-feature.md` still reports blocked attempts only by `blocked_reason_code` without `escalation_level`, `action_available` still is not owned anywhere discoverable, the composite ask tuple still has no owner schema, and assistant chat still contains a stale closure verdict.",
-      "next_resolution_stage": "Audit Mode"
+      "blocking_reason": "The owner surfaces and escalation ladder are known; Reconciliation Planner can propagate the known blocked-episode fields into `blocked_notice` and usage observability, define `action_available` in the existing owner cluster, and retire the stale ask tuple and stale closure verdict.",
+      "next_resolution_stage": "Reconciliation Planner"
     },
     {
       "gap_id": "gap-006",
-      "severity": "blocker",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
       "gap_class": "missing_structural_heading",
-      "description": "Glossary/help canon is partly transferred, but token lists and labels exist without the required owned headings and the live glossary still uses two-column tables and inline bullets instead of the full dedicated help-entry contract.",
+      "description": "Glossary/help canon already has the field template and term inventory, and the remaining work is to instantiate the known help-entry structure in the named owner sections and repair the broken glossary references.",
       "affected_targets": [
         {
           "path": "Plans/Glossary.md",
@@ -270,14 +275,15 @@
         "help surfaces",
         "glossary/help references"
       ],
-      "blocking_reason": "`Plans/Glossary.md` already carries the required field template, labels, and many canonical terms, but the required owner headings and populated help-entry rows still are not present, and the live glossary sections still instantiate terms as two-column `Term | Definition` tables or inline bullets instead of the full help-entry field set. `Plans/Orchestrator_Page.md` history and concern sections also still point directly at the missing `Plans/Glossary.md#Orchestrator rewrite terms` anchor, so the consumer side now includes live broken glossary references in addition to the missing owner headings. The expected consumer sections `help surfaces` and `glossary/help references` also still are not discoverable in downstream docs.",
-      "next_resolution_stage": "Audit Mode"
+      "blocking_reason": "The owner sections, help-entry template, and consumer targets are already explicit, so the remaining work is to populate the known help-entry structure and repair the known broken glossary references during reconciliation planning.",
+      "next_resolution_stage": "Reconciliation Planner"
     },
     {
       "gap_id": "gap-007",
-      "severity": "blocker",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
       "gap_class": "missing_structural_heading",
-      "description": "Orchestrator structural canon is materially transferred inline, but discoverable owner headings are still absent and the broken Source Control boundary cross-reference now survives in multiple docs, leaving scope/history/attention ownership incomplete.",
+      "description": "Orchestrator scope/history/attention canon is materially transferred inline, and the remaining work is to add the known owner headings and repair the broken Source Control boundary references.",
       "affected_targets": [
         {
           "path": "Plans/Orchestrator_Page.md",
@@ -313,14 +319,15 @@
         "broken `Plans/Orchestrator_Page.md#11. Source Control boundary` reference in `Plans/storage-plan.md`",
         "broken `Plans/Orchestrator_Page.md#11. Source Control boundary` reference in `Plans/WorktreeGitImprovement.md`"
       ],
-      "blocking_reason": "`Plans/Orchestrator_Page.md` already carries `worktree-first`, current-vs-historical, and concern/notification rules inline, but section 1 is still missing entirely and the current-vs-historical and concern/notification owner rules still lack discoverable `##` / `###` anchors. The broken `Plans/Orchestrator_Page.md#11. Source Control boundary` reference still survives in `Plans/GitHub_Integration.md`, `Plans/storage-plan.md`, and `Plans/WorktreeGitImprovement.md`, so the unresolved defect is now purely structural and cross-reference-driven rather than a restore-point vocabulary contradiction.",
-      "next_resolution_stage": "Audit Mode"
+      "blocking_reason": "The remaining defect is already reduced to structural-heading and broken-reference drift in known files. Reconciliation Planner can add the named Orchestrator headings and repair the known Source Control boundary references without further audit.",
+      "next_resolution_stage": "Reconciliation Planner"
     },
     {
       "gap_id": "gap-008",
-      "severity": "blocker",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
       "gap_class": "over_summarized_transfer",
-      "description": "Account-history and projection-health canon is partially transferred in storage, Final GUI, and Interview, but Usage-facing consumer sections still under-specify stable internal account identity, account-history drill-through, and degrade behavior.",
+      "description": "Account-history and projection-health canon is already present in storage, Final GUI, and Interview, and the remaining work is to carry the known sections and fields into Usage.",
       "affected_targets": [
         {
           "path": "Plans/usage-feature.md",
@@ -350,8 +357,8 @@
         "consumer carry-through for `operational_identity`",
         "projection-health-aware degrade behavior in `Plans/usage-feature.md`"
       ],
-      "blocking_reason": "`Plans/storage-plan.md` already carries `account_pressure_episode`, `account_switch_event`, `projection_freshness`, `projection_health`, `requested_account_id`, `effective_account_id`, `execution_role`, and `account_switch_reason`; `Plans/FinalGUISpec.md` already carries account-history record families and projection fields; `Plans/interview-subagent-integration.md` already carries requested/effective runtime visibility and `operational_identity`; and `Plans/usage-feature.md` already carries canonical `account_id` attribution. The blocker remains because `Plans/usage-feature.md` still lacks all four explicit consumer sections for usage attribution, export taxonomy, account history, and projection-health-aware degrade behavior, and still does not carry the remaining requested/effective account identity and runtime-role fields cleanly enough to build from without guesswork.",
-      "next_resolution_stage": "Audit Mode"
+      "blocking_reason": "The owner and adjacent consumer canon is already explicit in storage, Final GUI, Interview, and canon_inventory.json. Reconciliation Planner can add the missing Usage sections and propagate the known requested/effective identity and degrade fields without needing more canon discovery.",
+      "next_resolution_stage": "Reconciliation Planner"
     }
   ],
   "next_required_stage": "Ready Check"

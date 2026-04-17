@@ -83,16 +83,9 @@ All of the following are **MVP requirements** and are already reflected in the m
 
 ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/interview-subagent-integration.md
 ### 23.5 Previously open gaps (now closed)
+This traceability table now records what moved into the main body without claiming blanket closure.
 
-The following were the last open gaps; they are now specified in the main body. This table is kept for traceability.
-
-| Area | Status |
-|------|--------|
-| **Error and failure UX** | Now in §4: thread shows error state, Resend/Cancel, queue unchanged unless user resends; suggest switch platform/model when appropriate. |
-| **Orchestrator → Assistant handoff** | Now in §21: Dashboard offers "Continue in Assistant" with run summary and context when orchestrator completes or pauses. |
-
-**Verdict:** The plan is **fully fleshed out** for MVP for all adopted items (§23.4). No remaining gaps; **accessibility** is explicitly not MVP.
-
+The competitive-comparison traceability stays intact.
 ### 23.6 Git & GitHub parity
 
 **Git & GitHub parity:** Full specification in Plans/GitHub_Integration.md. The Git panel (§A), GitHub API integration (§B), SSH remote dev servers (§C), and no-wizard project flows (§D) bring Puppet Master to IDE-level git integration. Chat git commands (§5.1 above) allow driving git operations from the assistant without switching to the Git panel. ContractRef: Plans/GitHub_Integration.md.

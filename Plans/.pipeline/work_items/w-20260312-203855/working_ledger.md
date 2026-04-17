@@ -18145,3 +18145,52 @@ Optional later expansion only if a real cross-surface need appears:
   - This invocation kept the blocker-family count at eight and the affected-doc count at twenty, removed the overstated `restore points` contradiction from `gap-007`, added exact broken-anchor evidence to `gap-003` and `gap-004`, and raised the underlying evidence count to sixty-two.
   - The stop condition for this invocation is satisfied by two consecutive zero-finding follow-up waves after the wave-one refinements.
   - `canon_inventory.json` now lags the sharpened audit wording again, so the next useful stage is `Ledger Condenser`.
+
+## Entry
+- timestamp_utc: 2026-04-16T21:43:01.694Z
+- stage: Audit Mode
+- finding_type: contract
+- summary: Audited the repaired `pm.open_gaps.v3` blocker split against live planning docs; the bounded waves reconfirmed the known missing headings, carry-through gaps, stale survivors, and broken cross-references, but produced zero new exact findings and no evidence that any repaired gap must move back to `blocker_type=planning`.
+- exact_items:
+  - Wave 1 rechecked `gap-001`, `gap-002`, and `gap-005` against live Contracts, UI command, chat, usage, HITL, and tool docs and only reconfirmed the already-recorded missing `5.1B` owner anchor, incomplete `execution_unit_context` required-field list, live `detached_window` / `result_id` survivors, skeletal `blocked_notice` payload, and stale closure verdict.
+  - Wave 1 rechecked `gap-003`, `gap-004`, and `gap-008` against live storage, runtime-artifact, receipt, and usage docs and only reconfirmed the already-recorded missing storage/receipt headings, broken `Plans/storage-plan.md` anchor consumers, missing `orchestrator.project_state.{project_id}` naming, and missing usage-side account-history / degrade sections.
+  - Wave 1 rechecked `gap-006` and `gap-007` against live glossary and orchestrator docs and only reconfirmed the already-recorded missing glossary/orchestrator owner headings plus the broken `Plans/Glossary.md#Orchestrator rewrite terms` and `Plans/Orchestrator_Page.md#11. Source Control boundary` references.
+  - A delegated storage/receipt pass suggested reclassifying some missing-heading and broken-anchor items back to planning blockers, but the repair rule rejects that interpretation here because the owner sections, consumer targets, and exact mutations are already known; no new canon ambiguity surfaced.
+  - Follow-up local stability sweeps across usage/help/blocked/storage clusters added no new exact missing field, heading, stale survivor, affected target, or blocker family.
+- impacted_docs:
+  - `Plans/Contracts_V0.md`
+  - `Plans/Executor_Protocol.md`
+  - `Plans/UI_Command_Catalog.md`
+  - `Plans/assistant-chat-design.md`
+  - `Plans/usage-feature.md`
+  - `Plans/human-in-the-loop.md`
+  - `Plans/Tools.md`
+  - `Plans/storage-plan.md`
+  - `Plans/Runtime_Artifacts_Panel.md`
+  - `Plans/Project_Output_Artifacts.md`
+  - `Plans/interview-subagent-integration.md`
+  - `Plans/Orchestrator_Page.md`
+  - `Plans/Glossary.md`
+  - `Plans/GitHub_Integration.md`
+  - `Plans/WorktreeGitImprovement.md`
+- evidence_refs:
+  - `Plans/Contracts_V0.md:50-58`
+  - `Plans/Contracts_V0.md:800-806`
+  - `Plans/storage-plan.md:323-337`
+  - `Plans/storage-plan.md:941-954`
+  - `Plans/storage-plan.md:1389-1396`
+  - `Plans/Runtime_Artifacts_Panel.md:57-65`
+  - `Plans/Glossary.md:30-90`
+  - `Plans/Orchestrator_Page.md:209-230`
+  - `Plans/Orchestrator_Page.md:270-270`
+  - `Plans/assistant-chat-design.md:814-818`
+  - `Plans/assistant-chat-design.md:1784-1784`
+  - `Plans/UI_Command_Catalog.md:617-623`
+  - `Plans/WorktreeGitImprovement.md:142-144`
+  - `Plans/GitHub_Integration.md:258-258`
+  - `Plans/usage-feature.md:346-382`
+- supersedes_prior: yes
+- notes:
+  - This invocation kept `planning_blockers = 0`, `fix_backlog_items = 8`, `total_gaps = 8`, `docs_affected = 20`, and `underlying_gap_evidence_count = 62`.
+  - The repaired blocker split held: no gap needed reclassification back to `planning`, and no resolved gap could be removed from the backlog.
+  - Because the inventory is stable and planning blockers remain zero, the next useful stage is `Ledger Condenser`.

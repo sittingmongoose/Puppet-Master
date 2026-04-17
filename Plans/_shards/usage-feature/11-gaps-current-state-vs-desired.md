@@ -59,13 +59,35 @@ Budget rules:
 
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Prompt_Pipeline.md
 ### Billing identity, attribution, and pricing metadata
+Usage surfaces keep stable account identity and receipt lineage visible.
 
-Cost attribution is keyed by the canonical runtime identity tuple: `(model_id, provider_id, account_id?, billing_entity_id?, entitlement_class?)` when those fields are known. `billing_entity_id` alone is not a sufficient canonical substitute when account or entitlement context exists. `parent_run_id` is the canonical attribution bridge for tool-level and subagent-level usage rollups.
+#### usage attribution
+Required fields:
+- `credential_ref`
+- `requested_account_id`
+- `effective_account_id`
+- `execution_role`
+- `operational_identity`
+- `usage_event_ref`
 
-Pricing metadata is consumed from `Plans/Models_System.md`; this document uses it but does not own provider pricing tables.
+#### export taxonomy
+Exports and deep links preserve `validation_pass_report` and `workflow_run_id` so usage, artifacts, and validation stay joinable.
 
-ContractRef: ContractName:Plans/Models_System.md, ContractName:Plans/Contracts_V0.md
+#### account history
+Stable usage history records:
+- `account_pressure_episode`
+- `account_switch_event`
+- `provider_account_id`
+- `account_switch_reason`
 
+#### artifact drill-through section
+Artifact drill-through keeps usage and validation pivots attached to `workflow_run_id` and `usage_event_ref`.
+
+#### help surfaces
+Help copy aligns to the shared `canonical term system`, `contextual help system`, and `dedicated help-entry contract`.
+
+#### projection-health-aware degrade behavior
+Usage degrade behavior stays explicit through `projection_freshness` and `projection_health` instead of implying data loss.
 ### Adaptive display precision
 UI cost display rules:
 - amounts below `$0.01`: show 6 decimal places

@@ -31,57 +31,11 @@ ContractRef: ContractName:Plans/Contracts_V0.md
 ## 1. Events (persisted)
 
 ### 1.1 Assistant worktree seglog events
-
-This section defines the canonical contract for this surface.
-
-Core rules:
-- Plan/TODO persistence is locked to explicit revision states, structural-edit gating after approval, bounded revision history, and emission of `chat.plan_todo_updated` for durable TODO mutations.
-- `chat.plan_todo_updated` must have an explicit owner-contract definition for durable normalized TODO mutation, and `todoread` must not survive as a `source_surface` mutation source.
-
-Fields:
-- draft
-- approved
-- executing
-- completed
-- blocked
-- superseded
-- Structural edits = adding / removing / reordering TODO items
-- chat.plan_todo_updated
+Assistant worktree seglog events keep assistant-worktree lifecycle local while pointing shared record ownership back to canonical storage.
 
 Rules:
-- source_surface
-The canonical persisted **record envelope** defines the shared EventRecord shape used by runtime, audit, and historical record families.
-
-ContractRef: Plans/storage-plan.md#Canonical records, Plans/Orchestrator_Page.md#12. Concern and notification model
-
-**Authoritative EventRecord shape**
-
-| Field | Requirement |
-| --- | --- |
-| `record_id` | Stable record identifier for one canonical persisted record. |
-| `record_kind` | Family discriminator for the persisted record. |
-| `schema_version` | Version of the owned EventRecord schema. |
-| `project_id` | Owning project identity for the record. |
-| `run_id` | Run identity when the record is run-scoped. |
-| `scope_type` | Declares the authoritative scope family for the record payload. |
-| `scope_id` | Stable identifier inside the declared `scope_type`. |
-| `status` | Current state for the record instance. |
-| `created_at_utc` | Canonical creation timestamp for the record. |
-| `lineage_refs` | Stable lineage references for supersession, merge, split, or reopen chains. |
-| `source_refs` | Source-side provenance references used to explain how the record was derived. |
-| `artifact_refs` | Artifact references associated with the record payload or evidence bundle. |
-| `concern_id` | Concern identity when the record participates in concern tracking. |
-| `owner_kind` | Owning family for the `concern_id` relationship. |
-| `resolution_kind` | Resolution family for concern closure, supersession, or reopen semantics. |
-
-**historical state** vocabulary: `historical`, `stale_historical`, `superseded`, `revoked`, `reopened`, `archived`, `removed`.
-
-**concern** linkage uses `concern_id`, `owner_kind`, and `resolution_kind` without collapsing concern identity into review, blocked, or annotation objects.
-
-Rules:
-- A shared envelope must exist without flattening family-specific semantics.
-- Historical vocabulary must stay shared while family-local lifecycles stay distinct.
-- Concern identity and lineage must remain distinct from review, blocked, and annotation objects.
+- Authoritative storage ownership stays in `Plans/storage-plan.md`.
+- This section links to `Plans/storage-plan.md#Canonical records` for canonical record families instead of restating them locally.
 ### 1.3 EventEnvelopeV1 -- minimal compatibility envelope
 `EventEnvelopeV1` is the minimal event envelope used by some plans as an intermediate format.
 
@@ -509,171 +463,35 @@ Permission carry-through:
 - `effective_account_id` must remain available to approval and permission snapshots
 ## 5. Context management (instruction scoping + attempt journaling + parent summary + `AGENTS.md` enforcement)
 
-This section defines cross-cutting context assembly and enforcement behaviors for the finished Puppet Master product.
+Context management keeps runtime identity explicit across prompt assembly, execution, approval, and historical review.
 
-<a id="InstructionBundleAssembly"></a>
-### 5.1 InstructionBundleAssembly
-InstructionBundleAssembly deterministically composes shared instructions, provider-native advanced instructions, PM-native skills, and PM-owned tool/MCP context before the Work Bundle and Memory Bundle are attached.
-
-ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Skills_System.md, ContractName:Plans/Tools.md
-
-Assembly order:
-1. run-envelope and surface policy controls
-2. shared instruction panes (`AGENTS.md`, `CLAUDE.md`, `GEMINI.md`, and Cursor Rules)
-3. provider-native advanced instruction surfaces when the active provider has them enabled
-4. PM-native skill bundle and skill manifest
-5. PM-owned MCP/tool availability context
-6. Work Bundle
-7. Memory Bundle
-
-ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/MiscPlan.md, ContractName:Plans/OpenCode_Deep_Extraction.md
-
-Rules:
-- PM-native skills are the canonical runtime path. Provider-native skill formats are discovery/import/export/projection compatibility layers only.
-- shared instruction panes remain the cross-provider baseline; GitHub Copilot advanced surfaces (`.github/copilot-instructions.md`, `.github/instructions/*.instructions.md`, `.github/agents/*.agent.md`) are additive provider-native advanced panes, not replacements for the shared panes.
-- Cursor Rules project canon is `.cursor/rules/*.mdc`; `.cursorrules` remains legacy compatibility only.
-- required and optional skill dependencies are validated from `SKILL.md` frontmatter via `required_tool_refs` and `optional_tool_refs` before prompt assembly. Missing required tool refs degrade skill readiness before the run starts.
-- PM-owned MCP availability is resolved before bundle emission. CLI-facing MCP configs are derived artifacts generated from PM canon and MUST NOT become the canonical instruction source.
-- projected or provider-native instruction files under PM control MUST carry drift state; PM must not silently overwrite a provider-modified target on the next refresh.
-
-ContractRef: ContractName:Plans/Skills_System.md, ContractName:Plans/Tools.md, ContractName:Plans/FinalGUISpec.md
 ### 5.1A InvestigationContextAttachment
+Investigation attachments remain additive and do not rename or shadow the shared runtime snapshot fields.
 
-`InvestigationContextAttachment` is the structured prompt-facing representation of active Debug investigation state.
-
-Required top-level fields are:
-- `investigation_id`
-- `debug_target_kind`
-- bounded `primary_target_summary`
-- `current_phase`
-- `investigation_state`
-- `verification_strength?`
-- `attention_reason_code?`
-- `blocked_reason_code?`
-- bounded `items[]`
-
-ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Glossary.md
-
-Canonical prompt-facing investigation context field names are `primary_target_summary` and `investigation_state`. Legacy aliases such as `primary_target`, `final_or_intermediate_state`, and bare `state` are non-canonical for `InvestigationContextAttachment` because they collide with other unrelated state fields. `Plans/assistant-chat-design.md` SHOULD be updated to match this canonical naming, but this document remains authoritative in the meantime.
-
-Required item fields are:
-- `item_id`
-- `item_kind`
-- `state`
-- bounded `summary`
-- `artifact_refs[]?`
-- `redaction_state`
-- `captured_at_utc`
-
-Serialization rules:
-- only items in `active` or `redacted` state may be serialized as successful prompt context
-- `revoked`, `blocked`, `expired`, and `omitted` items remain visible for audit but are not serialized as successful prompt attachments
-
-This section defines the canonical contract for this surface.
-
-Core rules:
-- Runtime identity canon must preserve requested and effective naming and the account/provider identity fields, and must retire local _id substitutes.
-
-Rules:
-- requested_persona
-- effective_persona
-- requested_account_binding
-- operational_identity
-- effective_account_label
-- effective_provider_identity
-- effective_project_id
-
-ContractRef: Plans/Executor_Protocol.md#Worktree-aware execution unit context, Plans/orchestrator-subagent-integration.md#Tier Context
+### 5.1B Persona/Runtime Snapshot Payload Contract
+`execution_unit_context` is the authoritative runtime snapshot packet.
 
 Required fields:
-- run_id
-- node_id
-- attempt_id
-- lane_id
-- package_id
-- seam_id
-- worktree_id
-- execution_role
-- requested_account_id
-- effective_account_id
-- tool_use_id
-
-Canonical terms and values:
-- execution_unit_context
-- run_id
-- node_id
-- attempt_id
-- lane_id
-- package_id
-- seam_id
-- worktree_id
-- execution_role
-- requested_account_id
-- effective_account_id
-
-Labels:
-- execution unit context
-- runtime snapshot
-
-Behavioral rules:
-- Tier-rooted execution context must be replaced by lossless execution-unit context.
-- Downstream consumers must be able to join runtime, attempt, worktree, and approval records without guessing.
-
-Permission carry-through:
-- `execution_role` and `effective_account_id` must survive into runtime and approval surfaces
-### 5.2 AttemptJournal
-
-**Definition:** `attempt_journal` is the per-Subtask, per-Iteration ephemeral artifact used to prevent repeated failed attempts.
+- `run_id`
+- `node_id`
+- `attempt_id`
+- `lane_id`
+- `package_id`
+- `seam_id`
+- `worktree_id`
+- `execution_role`
+- `requested_account_id`
+- `requested_account_binding`
+- `requested_account_policy`
+- `effective_account_id`
+- `operational_identity`
+- `tool_use_id`
 
 Rules:
-- When Attempt Journal injection is enabled, Puppet Master MUST inject only the **most recent** attempt journal for the same Subtask into the next Iteration’s Memory Bundle.
-- Puppet Master MUST NOT inject attempt-journal history by default (no multi-entry rollups in the Memory Bundle).
-
-ContractRef: ContractName:Plans/Contracts_V0.md#AttemptJournal, ContractName:Plans/Contracts_V0.md#ContextInjectionToggles
-
-<a id="ParentSummary"></a>
-### 5.3 ParentSummary
-
-**Definition:** `parent_summary` is a short handoff summary injected into Iteration context to preserve intent without long history.
-
-Rules:
-- When Parent Summary injection is enabled, Puppet Master MUST inject `parent_summary` into the Iteration Memory Bundle.
-- `parent_summary` MUST be capped to a short, deterministic budget (hard cap; see Decision Policy + defaults).
-
-ContractRef: ContractName:Plans/Contracts_V0.md#ParentSummary, ContractName:Plans/Contracts_V0.md#ContextInjectionToggles, PolicyRule:Decision_Policy.md§2
-
-<a id="PromotionRules"></a>
-### 5.4 PromotionRules (journal → scoped `AGENTS.md` with anti-clutter gating)
-
-Rules:
-- Promotion MUST move only stable, non-obvious, scope-relevant learnings into the nearest appropriate `AGENTS.md`.
-- Promotion MUST NOT add session-narrative or run-specific story text.
-- Promotion MUST be budget-aware; if promotion would exceed budgets, promotion MUST require replacement/condense rather than growth.
-
-ContractRef: ContractName:Plans/Contracts_V0.md#PromotionRules, ContractName:Plans/Contracts_V0.md#AgentsMdLightEnforcement
-
-<a id="AgentsMdLightEnforcement"></a>
-### 5.5 `AGENTS.md` light enforcement (authoring-time lint + runtime budgets)
-
-Rules:
-- Puppet Master MUST lint `AGENTS.md` content at authoring time to discourage wiki-style bloat (directory trees, architecture tours, command encyclopedias, redundant discoverable info).
-- Before a run, Puppet Master MUST enforce instruction budgets deterministically; when strict mode is enabled, Puppet Master MUST block the run until budgets are met.
-- If runtime truncation is required, Puppet Master MUST NOT truncate Work Bundle acceptance criteria; truncation MUST prefer illustrative/examples content first and MUST be recorded in run metadata.
-
-ContractRef: ContractName:Plans/Contracts_V0.md#AgentsMdLightEnforcement
-
-<a id="ContextInjectionToggles"></a>
-### 5.6 ContextInjectionToggles (GUI toggles + defaults + injected-context transparency)
-
-Rules:
-- Puppet Master MUST expose three per-project context injection toggles: Parent Summary, Scoped `AGENTS.md` beyond top-level, and Attempt Journal.
-- Deterministic defaults for these toggles MUST be defined and recorded via the Decision Policy (no open questions).
-- The GUI MUST show an “Injected Context” breakdown per run describing: included `AGENTS.md` paths + byte counts; parent summary and attempt journal inclusion + byte counts; and truncation (if any) with reason.
-
-ContractRef: ContractName:Plans/Contracts_V0.md#ContextInjectionToggles, PolicyRule:Decision_Policy.md§2
-
----
-
+- Requested and effective account state stays explicit across runtime, approval, and usage surfaces.
+- `requested_account_binding` distinguishes preference from requirement.
+- `requested_account_policy` remains explicit in the stored snapshot.
+- `operational_identity` and `tool_use_id` survive into downstream joins.
 ## 6. HITLRequest
 
 Approval and recovery are anchored to runtime blocked episodes rather than to tier-boundary request objects.
