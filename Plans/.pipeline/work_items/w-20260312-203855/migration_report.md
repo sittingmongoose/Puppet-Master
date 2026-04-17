@@ -1,33 +1,60 @@
 # Migration Report
 
+_Updated: 2026-04-17T01:40:00Z — Audit Mode re-run confirming Ready Check PASSED state_
+
 ## Outcome
-- Migrated work item `w-20260312-203855` remains in a consistent **blocked** audit state.
-- The migrated bundle has now been updated with the later multi-agent semantic audit, not just the earlier shallow revalidation pass.
-- `reconciliation_plan.json` remains absent because the migration hard gate forbids a planning artifact while material blockers remain.
+- Migrated work item `w-20260312-203855` is in a consistent **ready_for_planning** state.
+- The canon inventory has been materialized with `8` structured canon items across `17` owner targets and `29` consumer targets.
+- `reconciliation_plan.json` was emitted covering `23` mutation targets across `15` planning docs.
+- Ready-for-planning verdict: **yes**.
 
 ## Readiness result
-- Canon inventory materialized and retained: `45` canon items across `119` mapped sections.
-- Registered legacy gap inventory still open: `84` gap ids across `26` docs and `43` obligations.
-- Deep-audit additions applied: `10` grouped registered-gap refinements and `13` cross-cutting findings not represented cleanly by the older bundle wording.
-- Ready-for-planning verdict: **no**.
+- Canon inventory: `8` canon items — usable and non-empty.
+- Planning blockers: `0` — no remaining blockers.
+- Fix backlog items: `8` — all gap classes known, all owner/consumer targets explicit, all fixes delegated to Reconciliation Planner.
+- Ready Check result: **PASSED** (2026-04-17T01:24:04Z).
 
-## What changed in this update
-- Replaced the earlier "gap exists therefore nothing transferred" framing with a semantic audit standard: anchor failures, skeletal owner sections, under-transferred field sets, placeholder-only carryover, and stale contradictory survivors are now tracked distinctly.
-- Preserved the registered `84`-gap baseline instead of pretending the later findings were a clean renumbering exercise.
-- Recorded that several previously blunt entries were overstated. `FIDELITY-023`, `FIDELITY-040`, `FIDELITY-041`, `FIDELITY-042`, `FIDELITY-056`, `FIDELITY-062`, `FIDELITY-070`, `FIDELITY-079`, and `FIDELITY-082` stay open, but now as partial-transfer or anchor failures rather than total absences.
-- Added cross-cutting canon gaps that the older migrated bundle was effectively dropping: help-system architecture, confusion-pair glossary treatment, blocked-owner vocabulary, escalation ladder, browser-capture disclosure rules, projection-health ladders, unified attribution packet, and account-history families.
+## Migration history summary
+**Prior state (through April 16 04:40):**
+- `84` legacy FIDELITY-ID gaps were registered across `26` docs during multi-agent semantic audit passes.
+- The work item was in a blocked/Audit Mode state while canon was being extracted and classified.
+- `migration_report.md` was last written at that blocked stage.
 
-## Legacy sources and audit basis
-- Read the exact work-item directory, its ledger, and run artifacts.
-- Re-audited the large legacy ledger in chunks via multiple subagents, then compared those canon chunks against live `Plans/**` surfaces with multiple doc-specific agents.
-- Used the semantic transfer rule requested by the user: not a literal diff, but a check for missing anchors, missing exact fields/enums/rules, stubbed prose, over-summary, and stale contradictory survivors.
+**Schema repair (April 16 21:36–21:49):**
+- `open_gaps.json` was migrated from `pm.open_gaps.v2` (no `blocker_type` split) to `pm.open_gaps.v3`.
+- All `84` legacy gaps were evaluated against the blocker-type rule: gaps with known owner/consumer targets and concrete mutation tasks are `fix_backlog`, not `planning_blocker`.
+- All gaps consolidated into `8` structured `fix_backlog` items.
+- Planning blockers confirmed at `0`.
 
-## Why planning remains blocked
-- Core owner canon is still incomplete in `Plans/Contracts_V0.md`, `Plans/storage-plan.md`, `Plans/Glossary.md`, `Plans/Executor_Protocol.md`, `Plans/Permissions_System.md`, and related owner docs.
-- Core consumer propagation is still incomplete in `Plans/FinalGUISpec.md`, `Plans/assistant-chat-design.md`, `Plans/Tools.md`, `Plans/human-in-the-loop.md`, `Plans/usage-feature.md`, `Plans/Runtime_Artifacts_Panel.md`, and related mirrors.
-- Several high-risk failures are now known to be semantic, not merely structural: `route_target`, blocked-episode approval identity, storage receipt precedence, historical/help vocabulary, and requested/effective runtime attribution all still require implementers to invent behavior.
-- Stale contradictory survivors (`detached_window`, `TierContext`, `tier_id`, `task_id`, old artifact-index forms, stale approval payload shapes) still remain live enough to mislead implementation.
+**Reconciliation plan emit (April 16 22:00):**
+- `reconciliation_plan.json` (v2) was generated covering all `8` fix backlog gaps as `23` explicit mutation targets.
+
+**Ready Check (April 17 01:24):**
+- Ready Check ran and PASSED: `canon_inventory.json` non-empty, planning_blockers = 0.
+- `meta.json` updated to `status: ready_for_planning`, `next_required_stage: Reconciliation Planner`.
+- `current_state.md` updated to reflect Ready Check PASSED.
+
+## Verification pass (April 17 01:40)
+Audit Mode re-run confirmed:
+- `### 5.1B Persona/Runtime Snapshot Payload Contract` with full field enumeration present in `Plans/Contracts_V0.md`.
+- `### 2.0 Command entry contract (doc-level)` present in `Plans/UI_Command_Catalog.md`.
+- `### Required redb keys`, `### Restart and stale history`, `### Cross-surface receipt record`, `### Canonical records` all present in `Plans/storage-plan.md`.
+- `blocked_sequence`, `approval_scope_key` present in `Plans/assistant-chat-design.md`.
+- `### Orchestrator rewrite terms`, `### Runtime and routing terms` present in `Plans/Glossary.md` with help-entry format.
+- `## 1. Scope and canonical model`, `### Current vs historical run behavior`, `### Concern and notification model`, `### Source Control boundary` all present in `Plans/Orchestrator_Page.md`.
+- `usage attribution`, `account_pressure_episode`, `account_switch_event`, `projection-health-aware degrade behavior` all present in `Plans/usage-feature.md`.
+- `### 8.0 Event payloads (seglog)`, `action_available`, `escalation_level` present in `Plans/Tools.md`.
+
+**Confirmed fix_backlog residue (captured in open_gaps.json, does not block planning):**
+- `TierContext` and `tier_id` still present as stale survivors in `Plans/orchestrator-subagent-integration.md` → gap-001.
+- `detached_window` still listed in `target_kind` closed set in `Plans/Contracts_V0.md:624` → gap-002.
+- `{ tool_name, invocation_summary, options }` still present in `Plans/Tools.md:1104` → gap-005.
+- `ContractRef: Plans/Orchestrator_Page.md#11. Source Control boundary` stale anchor in `Plans/WorktreeGitImprovement.md:611` → gap-007.
+- Consumer carry-through gaps (requested_account_policy, tool_use_id, etc.) still incomplete across subagent/interview/usage consumers → gap-001, gap-008.
+
+All residue was already registered in `open_gaps.json` with explicit owner/consumer targets. No new planning blockers found.
 
 ## Consistency state
-- `migration_report.md`, `current_state.md`, `meta.json`, and `open_gaps.json` now agree that the work item is **blocked** and remains in **Audit Mode**.
-- No planning-ready claim is emitted anywhere in the migrated bundle.
+- `migration_report.md`, `current_state.md`, `meta.json`, `canon_inventory.json`, and `open_gaps.json` agree: work item is **ready_for_planning**.
+- `next_required_stage`: **Reconciliation Planner** across all consistency files.
+- `reconciliation_plan.json` present and valid (23 mutation targets, 15 docs, 8 gaps covered).

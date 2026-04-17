@@ -577,6 +577,7 @@ ContractRef: ContractName:Plans/assistant-memory-subsystem.md#5-verification-and
 Rules:
 - Search command routing resolves through `route_target`.
 - Search commands remain side-panel scoped and preserve query-session state.
+- Search routing policy is owned by `Plans/Orchestrator_Page.md#search-routing-and-action-policy`.
 ## References
 - `Plans/Contracts_V0.md#UICommand`
 - `Plans/GitHub_API_Auth_and_Flows.md`

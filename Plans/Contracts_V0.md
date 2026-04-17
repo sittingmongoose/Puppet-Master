@@ -578,6 +578,8 @@ Rules:
 
 ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Progression_Gates.md, ContractName:Plans/Crosswalk.md
 
+### 7.2 UICommand envelope rules
+
 ContractRef: Plans/UI_Command_Catalog.md#2.0 Command entry contract (doc-level), Plans/Crosswalk.md#3.1 Runtime orchestration ownership
 
 Required fields:
@@ -593,6 +595,8 @@ Behavioral rules:
 - Wrapper metadata stays narrow and contract-level.
 - Wrappers point to canonical primitive families only.
 - Route payload structure is not restated inside command metadata.
+
+### 7.3 `route_target`
 `route_target` is the canonical navigation-and-focus contract.
 
 Required fields:
@@ -621,7 +625,6 @@ Exactly one selector is required:
 - `bottom_panel`
 - `embedded_surface`
 - `page_tab`
-- `detached_window`
 
 `subject_id` is closed to:
 - `doc:<document_id>`
@@ -674,8 +677,6 @@ Rules:
 
 ContractRef: ContractName:Plans/Crosswalk.md, ContractName:Plans/FileManager.md, ContractName:Plans/FinalGUISpec.md
 
-ContractRef: Plans/FinalGUISpec.md#7.3 Shared route and open behavior, Plans/Crosswalk.md#3.3 Navigation and source-open ownership
-
 Labels:
 - route target
 - target kind
@@ -687,6 +688,8 @@ Behavioral rules:
 - `project_id` is required.
 - `target_kind` is destination class only, and `inspector_target` is focus refinement only after selector identity is established.
 - `resume_url` is serialized transport of `route_target`, not a second routing ontology.
+
+### 7.4 OpenSubject
 `OpenSubject` is the canonical identity-native source-open contract.
 
 Required fields:
@@ -705,8 +708,6 @@ Rules:
 - terminal, dev-session, and browser-session reveals normalize through `route_target` rather than overloading `OpenSubject`
 
 ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md
-
-ContractRef: Plans/FileManager.md#OpenSubject
 
 Canonical terms and values:
 - doc:<document_id>

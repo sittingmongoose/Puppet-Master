@@ -1,43 +1,73 @@
 # Current State
 
+_Refreshed: 2026-04-17T03:15:00Z — Verifier PASS; all 23 mutation targets verified in live docs; run-gates exit 0_
+
 ## Work Item
 - work_id: `w-20260312-203855`
 - mode: `migrated`
 - topic_or_scope: `Orchestrator rewrite transfer-fidelity audit, legacy-canon cleanup readiness, and reconciliation prep`
-- status: `packetized`
-- blocker split: `0` planning blockers, `8` fix backlog items, `8` total unresolved gaps, `20` affected docs, `62` underlying evidence refs
-- packet verdict: `research_packet.json` is now emitted for run `r-20260312-203855-10`, carrying `23` mutation targets across `15` planning docs with no observe-only leakage
+- status: `verified`
+- run_id: `r-20260312-203855-15`
+- next_run_seq: `16`
+- blocker split: `0` planning blockers, `8` fix backlog items (write-ready, do not block planning)
+- reconciliation plan: `reconciliation_plan.json` v3 emitted, 24 targets (23 mutation + 1 observe_only) across 15 docs
+- scribe result: 23 mutation targets applied; 19 were already correct (no-op); 4 required actual edits
+
+## Ready Check Result
+**PASSED.** Mutation planning is allowed.
+
+Criteria met:
+- `canon_inventory.json`: 8 canon items, 17 owner targets, 29 consumer targets — usable and non-empty
+- `planning_blockers`: 0 — no blockers
+- All 8 open gaps carry explicit owner/consumer targets and `next_resolution_stage: Reconciliation Planner`
+- Fix backlog (8 items) is write-ready and does not block planning
 
 ## Locked Decisions
 - This remains the existing migrated work item; no new work item is created.
-- `canon_inventory.json` remains the exact canon source for terms, behaviors, structural headings, owner/consumer targets, and stale literals to retire.
-- `open_gaps.json` now separates planning blockers from fix backlog under `pm.open_gaps.v3`.
-- The remaining unresolved work is planner-fixable: each gap already points at known owner/consumer targets and known missing fields, headings, or stale survivors.
-- `reconciliation_plan.json` is now present and maps the fix backlog into explicit packet targets, fallback anchors, owner-heading creation flags, and replace scopes.
-- `research_packet.json` now materializes those packet targets as insertable markdown for Packet Builder output.
-- The latest audit rechecked the repaired blocker split against live `Plans/**` and found no new exact missing item or reclassification that would move any gap back to `blocker_type=planning`.
-- The latest condensation keeps `canon_inventory.json` and the v3 backlog split as-is because the last audit produced zero new exact canon findings.
-- Fix backlog remains a reconciliation-planner concern and does not block mutation planning.
+- `canon_inventory.json` is the exact canon source for terms, behaviors, structural headings, owner/consumer targets, and stale literals to retire.
+- `open_gaps.json` v3 split (0 planning / 8 fix backlog) is authoritative and stable.
+- `reconciliation_plan.json` maps the fix backlog into explicit mutation targets, fallback anchors, owner-heading creation flags, and replace scopes.
+- Fix backlog is a Reconciliation Planner concern; it does not gate mutation planning.
 
 ## Exact Canon That Must Survive
-- `execution_unit_context` remains the shared runtime identity packet with `run_id`, `node_id`, `attempt_id`, `lane_id`, `package_id`, `seam_id`, `worktree_id`, `execution_role`, `requested_account_id`, `requested_account_binding`, `requested_account_policy`, `effective_account_id`, `operational_identity`, and `tool_use_id`.
-- `route_target` remains the shared route/open payload with closed `target_kind`, canonical `subject_id` families, selector exclusivity, and command normalization anchored by `command_kind` and `normalization`.
-- Storage owns runtime-artifact identity, worktree/lane records, `orchestrator.project_state.{project_id}`, projection freshness/health, and explicit `historical` / `archived` / `removed` semantics.
-- Receipt and validation lineage must preserve `attempt_id`, `provider_attempt_ref`, `usage_event_ref`, `workflow_refs`, `docker_refs`, `kubernetes_refs`, `validation_pass_report`, `workflow_run_id`, `run_id`, `pass_verdict`, `phase_plan_ref`, and `requirements_quality_report_ref`.
-- Blocked episodes stay anchored by `blocked_sequence` and `approval_scope_key`, with unified tool/runtime attribution and one escalation ladder spanning `info`, `warning`, `attention_required`, `blocked`, and `system_notification`.
-- The help system remains the three-part contract: `canonical term system`, `contextual help system`, and `dedicated help-entry contract`.
-- Orchestrator remains the why/coordination surface beside worktree-first Source Control and must keep scope, current-vs-historical behavior, and health/activity/attention separate.
-- Usage, interview, and account-history surfaces must use stable internal account identity plus projection-health-aware degrade behavior.
+- `execution_unit_context`: `run_id`, `node_id`, `attempt_id`, `lane_id`, `package_id`, `seam_id`, `worktree_id`, `execution_role`, `requested_account_id`, `requested_account_binding`, `requested_account_policy`, `effective_account_id`, `operational_identity`, `tool_use_id`.
+- `route_target`: closed `target_kind`, canonical `subject_id` families, selector exclusivity, command normalization via `command_kind` and `normalization`.
+- Storage owns runtime-artifact identity, worktree/lane records, `orchestrator.project_state.{project_id}`, projection freshness/health, `historical`/`archived`/`removed` semantics.
+- Receipt/validation lineage: `attempt_id`, `provider_attempt_ref`, `usage_event_ref`, `workflow_refs`, `docker_refs`, `kubernetes_refs`, `validation_pass_report`, `workflow_run_id`, `run_id`, `pass_verdict`, `phase_plan_ref`, `requirements_quality_report_ref`.
+- Blocked episodes: `blocked_sequence`, `approval_scope_key`, unified tool/runtime attribution, escalation ladder `info`→`warning`→`attention_required`→`blocked`→`system_notification`.
+- Help system: three-part contract — `canonical term system`, `contextual help system`, `dedicated help-entry contract`.
+- Orchestrator: why/coordination surface; scope, current-vs-historical, health/activity/attention remain separate from Source Control.
+- Usage/interview/account-history: stable internal account identity + projection-health-aware degrade behavior.
 
-## Remaining Fix Backlog
-- `gap-001` through `gap-008` remain open as packet-builder backlog, not planning blockers.
-- Highest-pressure docs: `Plans/Orchestrator_Page.md`, `Plans/storage-plan.md`, `Plans/usage-feature.md`, `Plans/Contracts_V0.md`, `Plans/assistant-chat-design.md`, `Plans/interview-subagent-integration.md`.
-- Dominant gap classes: `missing_structural_heading`, `over_summarized_transfer`.
-- Exact stale strings still to retire: `TierContext`, `tier_id`, `artifact_kind`, `task_id`, `detached_window`, `result_id`, `{ tool_name, invocation_summary, options }`, `No remaining gaps`.
+## Remaining Fix Backlog (gap-001 – gap-008, all `fix_backlog`)
+
+Audit pass (2026-04-17) confirmed that all required owner headings now exist in `Plans/**`. Remaining work is consumer carry-through, stale survivor retirement, and broken cross-reference repair.
+
+| gap | class | actual remaining work | top affected doc |
+|-----|-------|-----------------------|-----------------|
+| gap-001 | stale_contradictory_survivor | Stale `TierContext`/`tier_id` throughout doc; missing `requested_account_policy`/`tool_use_id` consumer carry-through | `Plans/orchestrator-subagent-integration.md` |
+| gap-002 | missing_structural_heading | Stale `detached_window` in `target_kind` closed set; broken `Orchestrator_Page.md#10. Search, routing, and action policy` ref | `Plans/Contracts_V0.md` |
+| gap-003 | over_summarized_transfer | Broken `#Canonical records` consumer refs in `Contracts_V0.md` and `Orchestrator_Page.md`; broken `#Restart and stale history` refs | `Plans/storage-plan.md` |
+| gap-004 | over_summarized_transfer | Missing consumer anchors for drill-through, validation lineage, bridge-field viewer, and validation/report in downstream consumers | `Plans/Runtime_Artifacts_Panel.md` |
+| gap-005 | stubbed_consumer_propagation | Stale `{ tool_name, invocation_summary, options }` ask tuple; missing `action_available` owner; `blocked_notice` missing `blocked_sequence`/`approval_scope_key` | `Plans/Tools.md` |
+| gap-006 | missing_structural_heading | Help-entry rows not yet instantiated; broken `Plans/Glossary.md#Orchestrator rewrite terms` refs in `Orchestrator_Page.md` | `Plans/Glossary.md` |
+| gap-007 | missing_structural_heading | Stale `ContractRef: Plans/Orchestrator_Page.md#11. Source Control boundary` anchor in `WorktreeGitImprovement.md` | `Plans/WorktreeGitImprovement.md` |
+| gap-008 | over_summarized_transfer | Missing exact consumer carry-through for `credential_ref`, `execution_role`, `operational_identity` in `usage-feature.md` | `Plans/usage-feature.md` |
+
+**Stale literals to retire:** `TierContext`, `tier_id`, `detached_window`, `{ tool_name, invocation_summary, options }`, `No remaining gaps`, stale `#11. Source Control boundary` anchor
 
 ## Next Required Stage
-- `Scribe`
+- `Fidelity Audit`
 
 ## Resume Notes
-- The repaired `pm.open_gaps.v3` backlog split held up under audit; no planning blockers re-emerged.
-- Scribe should consume `research_packet.json` for run `r-20260312-203855-10` and turn the packetized mutation bodies into the final writing pass.
+- Scribe completed 2026-04-17T02:38:02Z; all 23 mutation targets applied to Plans/**.
+- Verifier completed 2026-04-17T03:15:00Z; all 23 mutation targets verified PASS; run-gates exit 0.
+- 19 targets were already byte-identical to content_markdown (no-op). 4 required edits + 1 fixup:
+  - target-007: `Plans/UI_Command_Catalog.md` §2.8A — added search routing policy rule
+  - target-017: `Plans/Glossary.md` §2. Core terms — added Feature Seam, Work Package, Package Overseer, Seam Overseer, target_kind, object_kind, inspector_target, subject_id, resume_url; fixed `related_concepts:` underscore
+  - target-023: `Plans/usage-feature.md` §Runtime Scheduler — added `(action_available)` qualifier on blocked-action disclosure line
+  - target-024: `Plans/Contracts_V0.md` §7. UICommand — added ### 7.2/7.3/7.4 subheadings; retired `detached_window` from `target_kind` closed set; removed two stale ContractRefs
+  - target-019 fixup: `Plans/GitHub_Integration.md` §A.3 — removed backtick wrapping around `Source Control` to match content_markdown exactly
+- target-002 (observe_only) correctly excluded from all edits.
+- Verifier reports at `Plans/.pipeline/verifier_report.txt` and `verifier_exit_code.txt`; mirrored to run folder.
+- Run artifact at `Plans/.pipeline/runs/r-20260312-203855-15/research_packet.json`; global mirror at `Plans/.pipeline/research_packet.json`.

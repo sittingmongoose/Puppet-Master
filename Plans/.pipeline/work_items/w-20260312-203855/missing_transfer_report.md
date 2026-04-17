@@ -1,11 +1,16 @@
 # Missing Transfer Report
 
+## Status
+_This document records the legacy FIDELITY-ID semantic audit baseline from the multi-agent audit passes (through April 16 04:40). It is preserved as an audit lineage record._
+
+**Current authoritative gap state:** `open_gaps.json` v3 — `8` structured `fix_backlog` gaps, `0` planning blockers. The FIDELITY-ID items were either resolved (headings and content now exist in Plans/**) or consolidated into the 8 structured gaps with explicit owner/consumer targets and Reconciliation Planner assignments. See `current_state.md` and `migration_report.md` for current readiness state.
+
 ## Interpretation rule
-- `open_gaps.json` remains the registered `84`-gap baseline inventory.
-- This report records the later semantic audit findings that **supersede the older blunt migrated wording** when a gap id appears here.
+- `open_gaps.json` v3 (8 gaps) is the **current registered gap inventory**. The FIDELITY-IDs in this report are legacy tracking only.
+- This report records the semantic audit findings that **supersede the older blunt migrated wording** when a gap id appears here.
 - A gap remaining open does **not** always mean "nothing transferred." Many live failures are now known to be anchor-only, partially transferred, over-summarized, or stale-contradictory.
 
-## Summary
+## Summary (legacy baseline)
 - Registered live transfer failures: `84`
 - Registered baseline failure counts: missing structural heading `27`, stubbed consumer propagation `40`, over-summarized transfer `6`, other `11`
 - Deep-audit refinement groups applied to registered gaps: `10`
