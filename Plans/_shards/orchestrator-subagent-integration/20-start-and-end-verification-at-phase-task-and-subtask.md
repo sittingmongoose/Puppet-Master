@@ -113,7 +113,7 @@ use serde::{Deserialize, Serialize};
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct StartVerificationResult {
     pub tier_type: TierType,
-    pub tier_id: String,
+    pub node_id: String,
     pub status: VerificationStatus,
     pub findings: Vec<VerificationFinding>,
     pub timestamp: chrono::DateTime<Utc>,
@@ -227,7 +227,7 @@ pub async fn verify_tier_start(
 
     Ok(StartVerificationResult {
         tier_type,
-        tier_id: context.tier_id.clone(),
+        node_id: context.node_id.clone(),
         status,
         findings,
         timestamp: Utc::now(),
@@ -334,7 +334,7 @@ Config: `quality.gate.{check_name}.action` — override per check (`"fail"` or `
 
 **AfterTierEnd verification responsibilities:**
 
-- **Persist verification results:** Save verification results to `.puppet-master/state/verification-{tier_id}-end.json`
+- **Persist verification results:** Save verification results to `.puppet-master/state/verification-{node_id}-end.json`
 - **Update tier status:** Update tier status in PRD/state based on verification results
 - **Generate feedback:** If verification failed, generate feedback for agent/user (what failed, which file/criterion, suggested fix)
 - **Handle failures:** If quality fails, either mark tier as "incomplete" (rework) or "complete with warnings" (log and proceed) per policy
@@ -423,7 +423,7 @@ use serde::{Deserialize, Serialize};
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct EndVerificationResult {
     pub tier_type: TierType,
-    pub tier_id: String,
+    pub node_id: String,
     pub status: VerificationStatus,
     pub wiring_check: WiringCheckResult,
     pub acceptance_check: AcceptanceCheckResult,
@@ -495,7 +495,7 @@ pub async fn verify_tier_end(
 
     Ok(EndVerificationResult {
         tier_type,
-        tier_id: context.tier_id.clone(),
+        node_id: context.node_id.clone(),
         status,
         wiring_check: wiring_result,
         acceptance_check: acceptance_result,
@@ -755,9 +755,9 @@ When a tier fails because of issues outside its intended scope:
 Verification failures MUST produce structured feedback identifying the failing criterion, affected artifact or file when known, and the expected next action. Rework loops reuse the existing incomplete-task / remediation flow rather than inventing a separate ad hoc channel.
 
 ContractRef: ContractName:Plans/interview-subagent-integration.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/FinalGUISpec.md
-### 1. Hook-Based Lifecycle Middleware (BeforeTier/AfterTier)
+### 1. Hook-Based Lifecycle Middleware (BeforeUnit/AfterUnit)
 
-**Concept:** Puppet Master should support **BeforeTier** and **AfterTier** hooks that run automatically at tier boundaries (Phase, Task, Subtask, Iteration). Hooks handle lifecycle concerns (tracking, state management, validation) separately from execution logic.
+**Concept:** Puppet Master should support **BeforeUnit** and **AfterUnit** hooks that run automatically at execution unit boundaries (Phase, Task, Subtask, Iteration). Hooks handle lifecycle concerns (tracking, state management, validation) separately from execution logic.
 
 **Platform-specific hook registration:**
 
@@ -773,27 +773,41 @@ ContractRef: ContractName:Plans/interview-subagent-integration.md, ContractName:
 // src/core/hooks.rs or src/verification/hooks.rs
 
 use crate::types::{Platform, TierType};
-use crate::core::state_persistence::TierContext;
+use crate::core::state_persistence::ExecutionUnitContext;
 use anyhow::Result;
 
-/// Hook context passed to BeforeTier hook
-pub struct BeforeTierContext {
-    pub tier_id: String,
+/// Hook context passed to BeforeUnit hook
+pub struct BeforeUnitContext {
+    pub run_id: String,
+    pub node_id: String,
+    pub attempt_id: String,
+    pub lane_id: String,
+    pub worktree_id: String,
+    pub execution_role: String,
+    pub requested_account_policy: String,
+    pub tool_use_id: String,
     pub tier_type: TierType,
     pub platform: Platform,
     pub model: String,
     pub selected_subagents: Vec<String>,
-    pub config_snapshot: serde_json::Value, // Serialized tier config + orchestrator config
-    pub known_gaps: Vec<String>, // Known gaps/issues that could affect this tier
+    pub config_snapshot: serde_json::Value,
+    pub known_gaps: Vec<String>,
 }
 
-/// Hook context passed to AfterTier hook
-pub struct AfterTierContext {
-    pub tier_id: String,
+/// Hook context passed to AfterUnit hook
+pub struct AfterUnitContext {
+    pub run_id: String,
+    pub node_id: String,
+    pub attempt_id: String,
+    pub lane_id: String,
+    pub worktree_id: String,
+    pub execution_role: String,
+    pub requested_account_policy: String,
+    pub tool_use_id: String,
     pub tier_type: TierType,
     pub platform: Platform,
-    pub subagent_output: String, // Raw stdout from subagent
-    pub completion_status: CompletionStatus, // Success, Failure, Warning
+    pub subagent_output: String,
+    pub completion_status: CompletionStatus,
     pub iteration_count: u32,
 }
 
@@ -803,272 +817,89 @@ pub enum CompletionStatus {
     Warning(String),
 }
 
-/// BeforeTier hook trait
-pub trait BeforeTierHook: Send + Sync {
-    /// Execute hook before tier starts
-    fn execute(&self, ctx: &BeforeTierContext) -> Result<BeforeTierResult>;
-
-    /// Hook name for logging/debugging
+/// BeforeUnit hook trait
+pub trait BeforeUnitHook: Send + Sync {
+    fn execute(&self, ctx: &BeforeUnitContext) -> Result<BeforeUnitResult>;
     fn name(&self) -> &str;
 }
 
-/// AfterTier hook trait
-pub trait AfterTierHook: Send + Sync {
-    /// Execute hook after tier completes
-    fn execute(&self, ctx: &AfterTierContext) -> Result<AfterTierResult>;
-
-    /// Hook name for logging/debugging
+/// AfterUnit hook trait
+pub trait AfterUnitHook: Send + Sync {
+    fn execute(&self, ctx: &AfterUnitContext) -> Result<AfterUnitResult>;
     fn name(&self) -> &str;
 }
 
-pub struct BeforeTierResult {
-    /// Active subagent to track (from selection or override)
+pub struct BeforeUnitResult {
     pub active_subagent: Option<String>,
-    /// Additional context to inject into subagent prompt
     pub injected_context: Option<String>,
-    /// Whether to block tier start (hook can prevent execution)
     pub block: bool,
-    /// Block reason if blocking
     pub block_reason: Option<String>,
 }
 
-pub struct AfterTierResult {
-    /// Whether handoff validation passed
+pub struct AfterUnitResult {
     pub validation_passed: bool,
-    /// Validation error if failed
     pub validation_error: Option<String>,
-    /// Whether to request retry (one chance)
     pub request_retry: bool,
-    /// Retry reason
     pub retry_reason: Option<String>,
 }
 
-/// Hook registry that manages all hooks
 pub struct HookRegistry {
-    before_tier_hooks: Vec<Box<dyn BeforeTierHook>>,
-    after_tier_hooks: Vec<Box<dyn AfterTierHook>>,
+    before_unit_hooks: Vec<Box<dyn BeforeUnitHook>>,
+    after_unit_hooks: Vec<Box<dyn AfterUnitHook>>,
 }
 
 impl HookRegistry {
     pub fn new() -> Self {
-        Self {
-            before_tier_hooks: Vec::new(),
-            after_tier_hooks: Vec::new(),
-        }
+        Self { before_unit_hooks: Vec::new(), after_unit_hooks: Vec::new() }
     }
-
-    pub fn register_before_tier(&mut self, hook: Box<dyn BeforeTierHook>) {
-        self.before_tier_hooks.push(hook);
+    pub fn register_before_unit(&mut self, hook: Box<dyn BeforeUnitHook>) {
+        self.before_unit_hooks.push(hook);
     }
-
-    pub fn register_after_tier(&mut self, hook: Box<dyn AfterTierHook>) {
-        self.after_tier_hooks.push(hook);
+    pub fn register_after_unit(&mut self, hook: Box<dyn AfterUnitHook>) {
+        self.after_unit_hooks.push(hook);
     }
-
-    /// Execute all BeforeTier hooks (safe wrapper)
-    pub fn execute_before_tier(&self, ctx: &BeforeTierContext) -> Result<BeforeTierResult> {
+    pub fn execute_before_unit(&self, ctx: &BeforeUnitContext) -> Result<BeforeUnitResult> {
         let mut active_subagent = None;
         let mut injected_contexts = Vec::new();
         let mut block = false;
         let mut block_reason = None;
-
-        for hook in &self.before_tier_hooks {
+        for hook in &self.before_unit_hooks {
             match safe_hook_main(|| hook.execute(ctx)) {
                 Ok(result) => {
-                    if result.block {
-                        block = true;
-                        block_reason = Some(result.block_reason.unwrap_or_else(|| format!("Hook {} blocked", hook.name())));
-                        break; // Stop on first block
-                    }
-                    if let Some(subagent) = result.active_subagent {
-                        active_subagent = Some(subagent);
-                    }
-                    if let Some(ctx) = result.injected_context {
-                        injected_contexts.push(ctx);
-                    }
+                    if result.block { block = true; block_reason = Some(result.block_reason.unwrap_or_else(|| format!("Hook {} blocked", hook.name()))); break; }
+                    if let Some(subagent) = result.active_subagent { active_subagent = Some(subagent); }
+                    if let Some(ctx) = result.injected_context { injected_contexts.push(ctx); }
                 }
-                Err(e) => {
-                    log::warn!("BeforeTier hook {} failed: {}", hook.name(), e);
-                    // Continue with other hooks (fail-safe)
-                }
+                Err(e) => { log::warn!("BeforeUnit hook {} failed: {}", hook.name(), e); }
             }
         }
-
-        Ok(BeforeTierResult {
-            active_subagent,
-            injected_context: if injected_contexts.is_empty() {
-                None
-            } else {
-                Some(injected_contexts.join("\n\n"))
-            },
-            block,
-            block_reason,
-        })
+        Ok(BeforeUnitResult { active_subagent, injected_context: if injected_contexts.is_empty() { None } else { Some(injected_contexts.join("\n\n")) }, block, block_reason })
     }
-
-    /// Execute all AfterTier hooks (safe wrapper)
-    pub fn execute_after_tier(&self, ctx: &AfterTierContext) -> Result<AfterTierResult> {
+    pub fn execute_after_unit(&self, ctx: &AfterUnitContext) -> Result<AfterUnitResult> {
         let mut validation_passed = true;
         let mut validation_error = None;
         let mut request_retry = false;
         let mut retry_reason = None;
-
-        for hook in &self.after_tier_hooks {
+        for hook in &self.after_unit_hooks {
             match safe_hook_main(|| hook.execute(ctx)) {
                 Ok(result) => {
-                    if !result.validation_passed {
-                        validation_passed = false;
-                        validation_error = result.validation_error;
-                        request_retry = result.request_retry;
-                        retry_reason = result.retry_reason;
-                        break; // Stop on first validation failure
-                    }
+                    if !result.validation_passed { validation_passed = false; validation_error = result.validation_error; request_retry = result.request_retry; retry_reason = result.retry_reason; break; }
                 }
-                Err(e) => {
-                    log::warn!("AfterTier hook {} failed: {}", hook.name(), e);
-                    // Continue with other hooks (fail-safe)
-                }
+                Err(e) => { log::warn!("AfterUnit hook {} failed: {}", hook.name(), e); }
             }
         }
-
-        Ok(AfterTierResult {
-            validation_passed,
-            validation_error,
-            request_retry,
-            retry_reason,
-        })
+        Ok(AfterUnitResult { validation_passed, validation_error, request_retry, retry_reason })
     }
 }
 
-/// Safe hook wrapper that guarantees structured output
 fn safe_hook_main<F, T>(hook_fn: F) -> Result<T>
-where
-    F: FnOnce() -> Result<T>,
-{
-    hook_fn()
-}
+where F: FnOnce() -> Result<T>,
+{ hook_fn() }
 ```
 
-**Built-in hooks (implement in `src/core/hooks/builtin.rs`):**
+**Built-in hooks:** `ActiveSubagentTrackerHook` (BeforeUnit), `TierContextInjectorHook` (BeforeUnit), `StaleStatePrunerHook` (BeforeUnit), `HandoffValidatorHook` (AfterUnit).
 
-1. **ActiveSubagentTrackerHook** (BeforeTier): Sets `active_subagent` in `TierContext`; persists tracking updates through canonical runtime storage and projection.
-2. **TierContextInjectorHook** (BeforeTier): Injects current phase/task/subtask status, config snapshot, known gaps into subagent prompt.
-3. **StaleStatePrunerHook** (BeforeTier): Prunes verification state older than 2 hours; creates state directories on first write.
-4. **HandoffValidatorHook** (AfterTier): Validates subagent output format (calls `validate_subagent_output`); requests retry on malformed output.
-
-**Integration with orchestrator:**
-
-In `src/core/orchestrator.rs`, modify `execute_tier`:
-
-```rust
-async fn execute_tier(&self, tier_id: &str) -> Result<()> {
-    // ... existing state transition logic ...
-
-    // BEFORE TIER: Execute BeforeTier hooks
-    let before_ctx = BeforeTierContext {
-        tier_id: tier_id.to_string(),
-        tier_type,
-        platform: tier_config.platform,
-        model: tier_config.model.clone(),
-        selected_subagents: self.get_selected_subagents(tier_id)?,
-        config_snapshot: serde_json::to_value(&tier_config)?,
-        known_gaps: self.get_known_gaps_for_tier(tier_type)?,
-    };
-
-    let before_result = self.hook_registry.execute_before_tier(&before_ctx)?;
-
-    if before_result.block {
-        return Err(anyhow!("Tier {} blocked by hook: {}", tier_id, before_result.block_reason.unwrap_or_default()));
-    }
-
-    // Update TierContext with active subagent
-    if let Some(subagent) = before_result.active_subagent {
-        self.update_tier_context(tier_id, |ctx| {
-            ctx.active_subagent = Some(subagent);
-        })?;
-    }
-
-    // Inject context into prompt if provided
-    let prompt = if let Some(injected) = before_result.injected_context {
-        format!("{}\n\n{}", prompt, injected)
-    } else {
-        prompt
-    };
-
-    // ... existing iteration execution ...
-
-    // AFTER TIER: Execute AfterTier hooks
-    let after_ctx = AfterTierContext {
-        tier_id: tier_id.to_string(),
-        tier_type,
-        platform: tier_config.platform,
-        subagent_output: iteration_result.output.clone(),
-        completion_status: if gate_report.passed {
-            CompletionStatus::Success
-        } else {
-            CompletionStatus::Failure(gate_report.report.unwrap_or_default())
-        },
-        iteration_count: attempt,
-    };
-
-    let after_result = self.hook_registry.execute_after_tier(&after_ctx)?;
-
-    if !after_result.validation_passed {
-        if after_result.request_retry && attempt < max_iterations {
-            // Retry with format instruction
-            let retry_prompt = format!("{}\n\nIMPORTANT: Format your output as structured JSON with task_report, downstream_context, and findings fields.", prompt);
-            previous_feedback = Some(after_result.retry_reason.unwrap_or_else(|| "Output format validation failed".to_string()));
-            continue; // Retry iteration
-        } else {
-            // Fail-safe: proceed with warnings
-            log::warn!("Tier {} output validation failed but proceeding: {}", tier_id, after_result.validation_error.unwrap_or_default());
-            // Mark tier as complete with warnings
-        }
-    }
-
-    // ... rest of tier completion logic ...
-}
-```
-
-**BeforeTier hook responsibilities (detailed):**
-
-- **Track active subagent:** Record which subagent is active at this tier (e.g., `active_subagent: Option<String>` in `TierContext`). Persist the tracking change through canonical runtime events and storage projections rather than through `.puppet-master/state/active-subagents.json`.
-- **Inject tier context:** Add current phase/task/subtask status, config snapshot, and known gaps to subagent prompt or context. Format: "Current tier: {tier_id}, Type: {tier_type}, Platform: {platform}, Model: {model}. Known gaps: {gaps}. Config: {config_summary}."
-- **Prune stale state:** Clean up verification state older than threshold (e.g., 2 hours). Check modification time of files in `.puppet-master/verification/<session-id>/`; delete if `mtime < now - 2 hours`.
-- **Lazy state creation:** Create verification state directories on first write (no explicit setup commands). Create `.puppet-master/verification/<session-id>/` if it doesn't exist when first hook writes state.
-
-**AfterTier hook responsibilities (detailed):**
-
-- **Validate subagent output format:** Check that output matches structured handoff contract (see #2 below). Call `validate_subagent_output(output, platform)`; return `validation_passed: false` if malformed.
-- **Track completion:** Update active subagent tracking (clear `active_subagent` in `TierContext`) and mark tier completion through the same canonical runtime projection used for active tracking.
-- **Safe error handling:** Guarantee structured output even on hook failure. Wrap hook execution in `safe_hook_main`; on panic or error, return `{ "status": "error", "message": "...", "details": {...} }` instead of crashing.
-
-**Platform-native hook integration:**
-
-For platforms with native hooks, create adapter hooks that delegate:
-
-```rust
-// src/core/hooks/platform_adapters.rs
-
-/// Cursor native hook adapter
-pub struct CursorNativeHookAdapter {
-    hook_script_path: PathBuf, // Path to .cursor/hooks.json registered script
-}
-
-impl BeforeTierHook for CursorNativeHookAdapter {
-    fn execute(&self, ctx: &BeforeTierContext) -> Result<BeforeTierResult> {
-        // Call Cursor hook script via subprocess
-        // Pass context as JSON stdin
-        // Parse JSON stdout
-        // Return BeforeTierResult
-    }
-}
-
-// Similar adapters for Claude Code, Gemini
-```
-
-**Implementation:** Create `src/core/hooks.rs` or `src/verification/hooks.rs` with `BeforeTierHook` and `AfterTierHook` traits. Register hooks per tier type in `HookRegistry`. Call hooks automatically at tier boundaries (before `verify_tier_start`, after `verify_tier_end`) in `orchestrator.rs::execute_tier`. For platforms with native hooks, register Puppet Master hooks that delegate to platform hooks where possible. **Default hooks:** Always register built-in hooks (ActiveSubagentTrackerHook, TierContextInjectorHook, StaleStatePrunerHook, HandoffValidatorHook) even if platform-native hooks are also registered.
-
+**Integration:** In `src/core/orchestrator.rs`, call `hook_registry.execute_before_unit` before subagent execution and `hook_registry.execute_after_unit` after. Update `ExecutionUnitContext.active_subagent` from `BeforeUnitResult`. Always register built-in hooks even when platform-native hooks are also registered.
 ### 2. Structured Handoff Report Validation
 
 **Concept:** Enforce a standardized output format for subagent invocations. Every subagent must produce a structured handoff report with required fields. If output is malformed, block and request one retry (fail-safe after retry).
@@ -1090,7 +921,7 @@ impl BeforeTierHook for CursorNativeHookAdapter {
 
 **AfterHandoffValidation responsibilities:**
 
-- **Persist validation results:** Save validation results to `.puppet-master/state/handoff-validation-{tier_id}.json`
+- **Persist validation results:** Save validation results to `.puppet-master/state/handoff-validation-{node_id}.json`
 - **Update tier context:** Update tier context with validated `SubagentOutput` (task_report, downstream_context, findings)
 - **Handle validation failures:** If validation fails after retry, proceed with partial output but mark tier as "complete with warnings"
 
@@ -1333,7 +1164,7 @@ impl Orchestrator {
         model: &str,
         subagent_name: &str,
         prompt: &str,
-        context: &TierContext,
+        context: &ExecutionUnitContext,
     ) -> Result<SubagentOutput> {
         let runner = self.get_platform_runner(platform)?;
         let mut retry_count = 0;
@@ -1621,7 +1452,7 @@ pub fn validate_subagent_output(
 **Validation logic in AfterTier hook:** AfterTier hook calls `validate_subagent_output(output: &str, stderr: &str, platform: Platform) -> Result<SubagentOutput, ValidationError>`. If validation fails:
 1. Log error with details (platform, error type, partial output snippet).
 2. Request one retry (re-run subagent with "format your output as structured JSON" instruction appended to prompt).
-3. If retry also fails, proceed with partial output (fail-safe) but mark tier as "complete with warnings" in `TierContext`.
+3. If retry also fails, proceed with partial output (fail-safe) but mark tier as "complete with warnings" in `ExecutionUnitContext`.
 
 **Integration with existing ParsedOutput:**
 
@@ -1681,7 +1512,7 @@ impl RemediationLoop {
     /// Run remediation loop for a tier
     pub async fn run(
         &self,
-        tier_id: &str,
+        node_id: &str,
         reviewer_output: SubagentOutput,
     ) -> Result<RemediationResult> {
         // DRY: Severity filtering logic is reusable — consider extracting to DRY:FN:filter_critical_major_findings
@@ -1702,7 +1533,7 @@ impl RemediationLoop {
 
         while retry_count < self.max_retries {
             // Mark tier as incomplete
-            self.orchestrator.mark_tier_incomplete(tier_id, &current_findings).await?;
+            self.orchestrator.mark_tier_incomplete(node_id, &current_findings).await?;
 
             // Build remediation prompt
             let remediation_prompt = self.build_remediation_prompt(&current_findings);
@@ -1712,7 +1543,7 @@ impl RemediationLoop {
             // Implementation note: re_run_overseer_with_prompt MUST use subagent_registry to get overseer subagent name
             ContractRef: ContractName:Plans/DRY_Rules.md#7, ContractName:Plans/Contracts_V0.md
             let overseer_result = self.orchestrator
-                .re_run_overseer_with_prompt(tier_id, &remediation_prompt)
+                .re_run_overseer_with_prompt(node_id, &remediation_prompt)
                 .await?;
 
             // DRY REQUIREMENT: Reviewer subagent name MUST come from subagent_registry::get_reviewer_subagent_for_tier()
@@ -1720,7 +1551,7 @@ impl RemediationLoop {
             // Implementation note: re_run_reviewer MUST use subagent_registry to get reviewer subagent name
             ContractRef: ContractName:Plans/DRY_Rules.md#7, ContractName:Plans/Contracts_V0.md
             let reviewer_result = self.orchestrator
-                .re_run_reviewer(tier_id)
+                .re_run_reviewer(node_id)
                 .await?;
 
             // Parse new findings
@@ -1818,7 +1649,7 @@ let reviewer_output = parse_reviewer_output(&iteration_result.output)?;
 
 // Run remediation loop
 let remediation_result = self.remediation_loop
-    .run(tier_id, reviewer_output)
+    .run(node_id, reviewer_output)
     .await?;
 
 match remediation_result {
@@ -1831,8 +1662,8 @@ match remediation_result {
     }
     RemediationResult::Escalate(findings) => {
         // Escalate to parent-tier orchestrator
-        self.escalate_to_parent(tier_id, findings).await?;
-        return Err(anyhow!("Tier {} escalated due to unresolved Critical/Major findings", tier_id));
+        self.escalate_to_parent(node_id, findings).await?;
+        return Err(anyhow!("Tier {} escalated due to unresolved Critical/Major findings", node_id));
     }
 }
 ```
@@ -1998,7 +1829,7 @@ These lifecycle and quality features **complement** the existing start/end verif
 
 **Mitigation:**
 - **Execution order:** Built-in hooks run first (ActiveSubagentTrackerHook, TierContextInjectorHook, StaleStatePrunerHook), then platform-native hooks, then custom hooks.
-- **Dependencies:** Hooks should be independent. If a hook needs data from another hook, use shared context (`BeforeTierContext`/`AfterTierContext`).
+- **Dependencies:** Hooks should be independent. If a hook needs data from another hook, use shared context (`BeforeUnitContext`/`AfterUnitContext`).
 - **Blocking:** First hook that blocks stops execution. Log which hook blocked and why.
 
 **Gap #16: Structured output parsing reliability**
@@ -2036,8 +1867,8 @@ These lifecycle and quality features **complement** the existing start/end verif
 **Issue:** Active subagent tracking may be inaccurate if subagent selection changes mid-tier, or if platform-native hooks override selection. How do we ensure tracking reflects reality?
 
 **Mitigation:**
-- **Single source of truth:** `TierContext.active_subagent` is set by BeforeTier hook (built-in ActiveSubagentTrackerHook). Platform-native hooks can override but must update `TierContext`.
-- **Validation:** AfterTier hook validates that tracked subagent matches actual execution (check platform logs or output for subagent name).
+- **Single source of truth:** `ExecutionUnitContext.active_subagent` is set by BeforeUnit hook (built-in ActiveSubagentTrackerHook). Platform-native hooks can override but must update `ExecutionUnitContext`.
+- **Validation:** AfterUnit hook validates that tracked subagent matches actual execution (check platform logs or output for subagent name).
 - **Fallback:** If tracking fails, infer subagent from output patterns (e.g., "rust-engineer" if output mentions Rust-specific patterns).
 
 **Gap #20: Safe error handling performance overhead**
@@ -2084,8 +1915,8 @@ These lifecycle and quality features **complement** the existing start/end verif
 - **Unified adapter trait:** Define `PlatformHookAdapter` trait with common interface:
   ```rust
   trait PlatformHookAdapter: Send + Sync {
-      fn execute_before_tier(&self, ctx: &BeforeTierContext) -> Result<BeforeTierResult>;
-      fn execute_after_tier(&self, ctx: &AfterTierContext) -> Result<AfterTierResult>;
+      fn execute_before_unit(&self, ctx: &BeforeUnitContext) -> Result<BeforeTierResult>;
+      fn execute_after_unit(&self, ctx: &AfterUnitContext) -> Result<AfterTierResult>;
       fn platform(&self) -> Platform;
   }
   ```
@@ -2114,7 +1945,7 @@ These lifecycle and quality features **complement** the existing start/end verif
 
 **Gap #26: Hook performance impact on tier execution time**
 
-**Issue:** Hooks add overhead to tier execution (BeforeTier hooks run before every tier start, AfterTier hooks run after every tier completion). Could slow down fast tiers significantly.
+**Issue:** Hooks add overhead to tier execution (BeforeUnit hooks run before every tier start, AfterUnit hooks run after every tier completion). Could slow down fast tiers significantly.
 
 **Mitigation:**
 - **Async hooks:** Run hooks asynchronously where possible (e.g., StaleStatePrunerHook can run in background).
@@ -2135,7 +1966,7 @@ These lifecycle and quality features **complement** the existing start/end verif
 ### Implementation Notes
 
 - **Where:** New module `src/core/hooks.rs` or `src/verification/hooks.rs` for hook system; `src/core/memory.rs` for cross-session persistence; extend `SubagentOutput` in `src/types/` for structured handoff.
-- **What:** Implement `BeforeTierHook` and `AfterTierHook` traits; `save_memory()` and `load_memory()` functions; `validate_subagent_output()` with platform-specific parsers; remediation loop in orchestrator completion logic.
+- **What:** Implement `BeforeUnitHook` and `AfterUnitHook` traits; `save_memory()` and `load_memory()` functions; `validate_subagent_output()` with platform-specific parsers; remediation loop in orchestrator completion logic.
 - **When:** Hooks run automatically at tier boundaries; memory persists at Phase completion and loads at run start; remediation loop runs when Critical/Major findings detected.
 
 ---

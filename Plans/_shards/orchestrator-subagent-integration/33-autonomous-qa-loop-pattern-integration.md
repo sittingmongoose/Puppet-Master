@@ -78,7 +78,7 @@ pub struct QASystem {
 
 impl QASystem {
     /// Tier 1: Preflight checks (run by subagent before marking complete)
-    pub async fn run_preflight(&self, tier_id: &str) -> Result<PreflightResult> {
+    pub async fn run_preflight(&self, execution_unit_context: &ExecutionUnitContext) -> Result<PreflightResult> {
         // Existing preflight logic
     }
 
@@ -231,16 +231,16 @@ impl Orchestrator {
 impl Orchestrator {
     async fn commit_tier_progress(
         &self,
-        tier_id: &str,
+        node_id: &str,
         tier_type: TierType,
         iteration: u32,
         is_rework: bool,
     ) -> Result<()> {
         let message = if is_rework {
             // For rework, amend previous commit
-            format!("tier: {} iteration {} (after review)", tier_id, iteration)
+            format!("node: {} iteration {} (after review)", node_id, iteration)
         } else {
-            format!("tier: {} iteration {} complete", tier_id, iteration)
+            format!("node: {} iteration {} complete", node_id, iteration)
         };
 
         if is_rework {

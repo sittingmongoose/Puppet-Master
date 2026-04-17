@@ -28,18 +28,20 @@ Canonical source: [Plans/orchestrator-subagent-integration.md](../../orchestrato
 - [20-start-and-end-verification-at-phase-task-and-subtask.md](20-start-and-end-verification-at-phase-task-and-subtask.md) — ## Start and End Verification at Phase, Task, and Subtask
 - [21-considerations.md](21-considerations.md) — ## Considerations
 - [22-platform-capability-next-steps.md](22-platform-capability-next-steps.md) — ## Platform capability next steps
-- [23-implementation-notes-where-code-lives-and-what-to-add.md](23-implementation-notes-where-code-lives-and-what-to-add.md) — ## Implementation Notes (Where Code Lives and What to Add)
-- [24-parallel-execution-subagent-integration.md](24-parallel-execution-subagent-integration.md) — ## Parallel Execution & Subagent Integration
-- [25-platform-specific-capabilities-extensions.md](25-platform-specific-capabilities-extensions.md) — ## Platform-Specific Capabilities & Extensions
-- [26-leveraging-platform-capabilities-for-subagent-integration.md](26-leveraging-platform-capabilities-for-subagent-integration.md) — ## Leveraging Platform Capabilities for Subagent Integration
-- [27-updated-implementation-architecture.md](27-updated-implementation-architecture.md) — ## Updated Implementation Architecture
-- [28-benefits-of-platform-capabilities.md](28-benefits-of-platform-capabilities.md) — ## Benefits of Platform Capabilities
-- [29-implementation-considerations.md](29-implementation-considerations.md) — ## Implementation Considerations
-- [30-next-steps.md](30-next-steps.md) — ## Next Steps
-- [31-autonomous-qa-loop-pattern-integration.md](31-autonomous-qa-loop-pattern-integration.md) — ## Autonomous QA Loop Pattern Integration
-- [32-change-summary.md](32-change-summary.md) — ## Change Summary
-- [33-persona-and-effective-runtime-resolution-addendum-2026-03-06.md](33-persona-and-effective-runtime-resolution-addendum-2026-03-06.md) — ## Persona and Effective Runtime Resolution Addendum (2026-03-06)
-- [34-runtime-scheduler-parallelism-and-remediation-addendum-2026-03-08.md](34-runtime-scheduler-parallelism-and-remediation-addendum-2026-03-08.md) — ## Runtime Scheduler, Parallelism, and Remediation Addendum (2026-03-08)
-- [35-runtime-scheduler-consumer-subagent-reconciliation-addendum-2026-03-09.md](35-runtime-scheduler-consumer-subagent-reconciliation-addendum-2026-03-09.md) — ## Runtime Scheduler Consumer / Subagent Reconciliation Addendum (2026-03-09)
-- [36-orchestrator-runtime-consumer-and-remediation-execution-reconciliation-addendum-2026-03-09.md](36-orchestrator-runtime-consumer-and-remediation-execution-reconciliation-addendum-2026-03-09.md) — ## Orchestrator Runtime Consumer and Remediation Execution Reconciliation Addendum (2026-03-09)
-- [37-runtime-enum-and-counter-alignment-addendum.md](37-runtime-enum-and-counter-alignment-addendum.md) — ## Runtime Enum and Counter Alignment Addendum
+- [23-considerations-2.md](23-considerations-2.md) — ## Considerations
+- [24-platform-capability-next-steps-2.md](24-platform-capability-next-steps-2.md) — ## Platform capability next steps
+- [25-implementation-notes-where-code-lives-and-what-to-add.md](25-implementation-notes-where-code-lives-and-what-to-add.md) — ## Implementation Notes (Where Code Lives and What to Add)
+- [26-parallel-execution-subagent-integration.md](26-parallel-execution-subagent-integration.md) — ## Parallel Execution & Subagent Integration
+- [27-platform-specific-capabilities-extensions.md](27-platform-specific-capabilities-extensions.md) — ## Platform-Specific Capabilities & Extensions
+- [28-leveraging-platform-capabilities-for-subagent-integration.md](28-leveraging-platform-capabilities-for-subagent-integration.md) — ## Leveraging Platform Capabilities for Subagent Integration
+- [29-updated-implementation-architecture.md](29-updated-implementation-architecture.md) — ## Updated Implementation Architecture
+- [30-benefits-of-platform-capabilities.md](30-benefits-of-platform-capabilities.md) — ## Benefits of Platform Capabilities
+- [31-implementation-considerations.md](31-implementation-considerations.md) — ## Implementation Considerations
+- [32-next-steps.md](32-next-steps.md) — ## Next Steps
+- [33-autonomous-qa-loop-pattern-integration.md](33-autonomous-qa-loop-pattern-integration.md) — ## Autonomous QA Loop Pattern Integration
+- [34-change-summary.md](34-change-summary.md) — ## Change Summary
+- [35-persona-and-effective-runtime-resolution-addendum-2026-03-06.md](35-persona-and-effective-runtime-resolution-addendum-2026-03-06.md) — ## Persona and Effective Runtime Resolution Addendum (2026-03-06)
+- [36-runtime-scheduler-parallelism-and-remediation-addendum-2026-03-08.md](36-runtime-scheduler-parallelism-and-remediation-addendum-2026-03-08.md) — ## Runtime Scheduler, Parallelism, and Remediation Addendum (2026-03-08)
+- [37-runtime-scheduler-consumer-subagent-reconciliation-addendum-2026-03-09.md](37-runtime-scheduler-consumer-subagent-reconciliation-addendum-2026-03-09.md) — ## Runtime Scheduler Consumer / Subagent Reconciliation Addendum (2026-03-09)
+- [38-orchestrator-runtime-consumer-and-remediation-execution-reconciliation-addendum-2026-03-09.md](38-orchestrator-runtime-consumer-and-remediation-execution-reconciliation-addendum-2026-03-09.md) — ## Orchestrator Runtime Consumer and Remediation Execution Reconciliation Addendum (2026-03-09)
+- [39-runtime-enum-and-counter-alignment-addendum.md](39-runtime-enum-and-counter-alignment-addendum.md) — ## Runtime Enum and Counter Alignment Addendum

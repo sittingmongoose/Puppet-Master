@@ -102,7 +102,7 @@ impl Orchestrator {
             self.coordinator.register_agent(ActiveAgent {
                 agent_id: agent_id.clone(),
                 platform,
-                tier_id: tier_node.id.clone(),
+                node_id: tier_node.id.clone(),
                 worktree_path: context.worktree_path.clone(),
                 files_being_edited: Vec::new(), // Updated during execution
                 current_operation: format!("Executing {} tier", tier_node.tier_type),
@@ -164,7 +164,7 @@ impl Orchestrator {
         model: &str,
         subagent_name: &str,
         tier_node: &TierNode,
-        tier_context: &TierContext,
+        tier_context: &ExecutionUnitContext,
         coordination_context: &str,
     ) -> Result<SubagentOutput> {
         let agent_id = format!("{}-{}", subagent_name, tier_node.id);
@@ -205,7 +205,7 @@ impl Orchestrator {
         &self,
         subagent_name: &str,
         task_description: &str,
-        tier_context: &TierContext,
+        tier_context: &ExecutionUnitContext,
         coordination_context: &str,
     ) -> Result<String> {
         // Build platform-specific subagent invocation using platform_specs
@@ -263,7 +263,7 @@ ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md#7
         &self,
         tier_node: &TierNode,
         context: &OrchestratorContext,
-    ) -> Result<TierContext> {
+    ) -> Result<ExecutionUnitContext> {
         // Detect language if not already cached
         let primary_language = self.subagent_selector
             .detect_language(&context.workspace)?
@@ -277,9 +277,9 @@ ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md#7
         let framework = self.detect_framework(&context.workspace)?;
 
         // Build context
-        Ok(TierContext {
+        Ok(ExecutionUnitContext {
             tier_type: tier_node.tier_type,
-            tier_id: tier_node.id.clone(),
+            node_id: tier_node.id.clone(),
             title: tier_node.title.clone(),
             description: tier_node.description.clone(),
             primary_language,

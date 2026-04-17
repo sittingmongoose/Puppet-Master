@@ -111,6 +111,9 @@ All usage surfaces derive from the same `UsageRecord` identity. Minimum shared a
 - `provider_id`
 - `model_id`
 - `account_id?`
+- `credential_ref`
+- `execution_role`
+- `operational_identity`
 - `billing_entity_id?`
 - `entitlement_class?`
 - canonical token buckets including `total_tokens`

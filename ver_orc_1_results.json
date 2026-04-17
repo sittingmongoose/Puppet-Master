@@ -1,0 +1,178 @@
+{
+  "group": "ver_orc_1",
+  "note": "Output written to cwd (not /tmp) per runtime security policy prohibiting /tmp writes.",
+  "results": [
+    {
+      "target_id": "target-025-orc-modifications",
+      "anchor_found": true,
+      "anchor_line": 170,
+      "section_lines": [170, 463],
+      "forbidden_checks": [
+        {"string": "TierContext (not followed by InjectorHook)", "present": false, "status": "PASS", "evidence": "No standalone TierContext in L170-463; only tier_context (lowercase) and ExecutionUnitContext (type) appear"},
+        {"string": "tier_id", "present": false, "status": "PASS", "evidence": "Only occurrence is L79, before all target sections"}
+      ],
+      "survivor_checks": [
+        {"string": "node_id", "present": true, "status": "PASS", "evidence": "L268: node_id: tier_node.id.clone(); L445: node_id: tier_node.id.clone()"},
+        {"string": "subagent_selector", "present": true, "status": "PASS", "evidence": "L177, L187, L194, L212"},
+        {"string": "subagent_manager", "present": true, "status": "PASS", "evidence": "L178, L190, L195"},
+        {"string": "execution_unit_context", "present": false, "status": "PASS", "evidence": "0-hit: variable is named tier_context in this section; ExecutionUnitContext (type) IS present at L330, L371, L443; per 0-hit rule, absent variable name is acceptable"},
+        {"string": "run_id", "present": false, "status": "PASS", "evidence": "0-hit in section L170-463; acceptable absent"},
+        {"string": "attempt_id", "present": false, "status": "PASS", "evidence": "0-hit in section L170-463; acceptable absent"},
+        {"string": "lane_id", "present": false, "status": "PASS", "evidence": "0-hit in section L170-463; acceptable absent"}
+      ],
+      "overall": "PASS"
+    },
+    {
+      "target_id": "target-026-orc-start-verification",
+      "anchor_found": true,
+      "anchor_line": 1330,
+      "section_lines": [1330, 1608],
+      "forbidden_checks": [
+        {"string": "TierContext (not followed by InjectorHook)", "present": false, "status": "PASS", "evidence": "No TierContext in L1330-1608; headings use BeforeTierStart/DuringTierStart/AfterTierStart (not TierContext)"},
+        {"string": "tier_id", "present": false, "status": "PASS", "evidence": "Not found in L1330-1608"}
+      ],
+      "survivor_checks": [
+        {"string": "node_id", "present": true, "status": "PASS", "evidence": "L1436: pub node_id: String; L1550: node_id: context.node_id.clone()"},
+        {"string": "validate_config_wiring_for_tier", "present": true, "status": "PASS", "evidence": "L1334, L1345, L1483"},
+        {"string": "VerificationStatus", "present": true, "status": "PASS", "evidence": "L1387, L1390, L1401, L1443, L1540-1546"},
+        {"string": "execution_unit_context", "present": false, "status": "PASS", "evidence": "0-hit in section L1330-1608; context parameter is OrchestratorContext; acceptable absent"},
+        {"string": "run_id", "present": false, "status": "PASS", "evidence": "0-hit in section L1330-1608; acceptable absent"},
+        {"string": "attempt_id", "present": false, "status": "PASS", "evidence": "0-hit in section L1330-1608; acceptable absent"}
+      ],
+      "overall": "PASS"
+    },
+    {
+      "target_id": "target-027-orc-end-verification",
+      "anchor_found": true,
+      "anchor_line": 1609,
+      "section_lines": [1609, 1986],
+      "forbidden_checks": [
+        {"string": "TierContext (not followed by InjectorHook)", "present": false, "status": "PASS", "evidence": "No TierContext in L1609-1986; section uses BeforeTierEnd/DuringTierEnd/AfterTierEnd labels (not TierContext)"},
+        {"string": "tier_id", "present": false, "status": "PASS", "evidence": "Not found in L1609-1986"}
+      ],
+      "survivor_checks": [
+        {"string": "node_id", "present": true, "status": "PASS", "evidence": "L1657: verification-{node_id}-end.json; L1746: pub node_id: String; L1818: node_id: context.node_id.clone()"},
+        {"string": "VerificationStatus", "present": true, "status": "PASS", "evidence": "L1696, L1700, L1707, L1801, L1804, L1807"},
+        {"string": "execution_unit_context", "present": false, "status": "PASS", "evidence": "0-hit in section L1609-1986; acceptable absent"},
+        {"string": "run_id", "present": false, "status": "PASS", "evidence": "0-hit in section L1609-1986; acceptable absent"},
+        {"string": "attempt_id", "present": false, "status": "PASS", "evidence": "0-hit in section L1609-1986; acceptable absent"}
+      ],
+      "overall": "PASS"
+    },
+    {
+      "target_id": "target-028-orc-lifecycle-hooks",
+      "anchor_found": true,
+      "anchor_line": 2078,
+      "anchor_note": "Original anchor 'BeforeTier/AfterTier' was itself mutated to 'BeforeUnit/AfterUnit'; heading at L2078 reads '### 1. Hook-Based Lifecycle Middleware (BeforeUnit/AfterUnit)' — heading mutation correctly applied",
+      "section_lines": [2078, 2222],
+      "forbidden_checks": [
+        {"string": "TierContext (not followed by InjectorHook)", "present": false, "status": "PASS", "evidence": "L2220: 'TierContextInjectorHook' — this is the allowed exception (TierContext followed by InjectorHook); no standalone TierContext"},
+        {"string": "tier_id", "present": false, "status": "PASS", "evidence": "Not found in L2078-2222"},
+        {"string": "BeforeTierContext", "present": false, "status": "PASS", "evidence": "Not found anywhere in document"},
+        {"string": "AfterTierContext", "present": false, "status": "PASS", "evidence": "Not found anywhere in document"}
+      ],
+      "survivor_checks": [
+        {"string": "run_id", "present": true, "status": "PASS", "evidence": "L2101: pub run_id: String (BeforeUnitContext); L2119: pub run_id: String (AfterUnitContext)"},
+        {"string": "node_id", "present": true, "status": "PASS", "evidence": "L2102: pub node_id: String; L2120: pub node_id: String"},
+        {"string": "attempt_id", "present": true, "status": "PASS", "evidence": "L2103: pub attempt_id: String; L2121: pub attempt_id: String"},
+        {"string": "lane_id", "present": true, "status": "PASS", "evidence": "L2104: pub lane_id: String"},
+        {"string": "worktree_id", "present": true, "status": "PASS", "evidence": "L2105: pub worktree_id: String"},
+        {"string": "execution_role", "present": true, "status": "PASS", "evidence": "L2106: pub execution_role: String"},
+        {"string": "requested_account_policy", "present": true, "status": "PASS", "evidence": "L2107: pub requested_account_policy: String"},
+        {"string": "tool_use_id", "present": true, "status": "PASS", "evidence": "L2108: pub tool_use_id: String"},
+        {"string": "BeforeUnitHook", "present": true, "status": "PASS", "evidence": "L2141: pub trait BeforeUnitHook: Send + Sync; L2167, L2175"},
+        {"string": "AfterUnitHook", "present": true, "status": "PASS", "evidence": "L2147: pub trait AfterUnitHook: Send + Sync; L2168, L2178"},
+        {"string": "ActiveSubagentTrackerHook", "present": true, "status": "PASS", "evidence": "L2220: Built-in hooks listing"},
+        {"string": "StaleStatePrunerHook", "present": true, "status": "PASS", "evidence": "L2220: Built-in hooks listing"},
+        {"string": "HandoffValidatorHook", "present": true, "status": "PASS", "evidence": "L2220: Built-in hooks listing"},
+        {"string": "execution_unit_context", "present": false, "status": "PASS", "evidence": "0-hit as lowercase variable; ExecutionUnitContext (type) present at L2096, L2222; acceptable absent per 0-hit rule"}
+      ],
+      "overall": "PASS"
+    },
+    {
+      "target_id": "target-029-orc-handoff-validation",
+      "anchor_found": true,
+      "anchor_line": 2223,
+      "section_lines": [2223, 2796],
+      "forbidden_checks": [
+        {"string": "TierContext (not followed by InjectorHook)", "present": false, "status": "PASS", "evidence": "No TierContext in L2223-2796; ExecutionUnitContext (type) appears but not TierContext"},
+        {"string": "tier_id", "present": false, "status": "PASS", "evidence": "Not found in L2223-2796"},
+        {"string": "BeforeTierContext", "present": false, "status": "PASS", "evidence": "Not found anywhere in document"}
+      ],
+      "survivor_checks": [
+        {"string": "node_id", "present": true, "status": "PASS", "evidence": "L2244: handoff-validation-{node_id}.json in prose"},
+        {"string": "validate_subagent_output", "present": true, "status": "PASS", "evidence": "L2408, L2410: pub async fn validate_subagent_output; L2502, L2762, L2772"},
+        {"string": "execution_unit_context", "present": false, "status": "PASS", "evidence": "0-hit as lowercase variable in L2223-2796; ExecutionUnitContext type present at L2487; acceptable absent"},
+        {"string": "run_id", "present": false, "status": "PASS", "evidence": "0-hit in L2223-2796; acceptable absent"},
+        {"string": "BeforeUnitContext", "present": false, "status": "PASS", "evidence": "0-hit in L2223-2796 (defined in section 028, used in section 031); acceptable absent"}
+      ],
+      "overall": "PASS"
+    },
+    {
+      "target_id": "target-030-orc-remediation-loop",
+      "anchor_found": true,
+      "anchor_line": 2797,
+      "section_lines": [2797, 2994],
+      "forbidden_checks": [
+        {"string": "TierContext (not followed by InjectorHook)", "present": false, "status": "PASS", "evidence": "No TierContext in L2797-2994"},
+        {"string": "tier_id", "present": false, "status": "PASS", "evidence": "Not found in L2797-2994"}
+      ],
+      "survivor_checks": [
+        {"string": "node_id", "present": true, "status": "PASS", "evidence": "L2835: node_id: &str param; L2856, L2866, L2874, L2972, L2985, L2986"},
+        {"string": "mark_tier_incomplete", "present": true, "status": "PASS", "evidence": "L2856: self.orchestrator.mark_tier_incomplete(node_id, &current_findings).await?"},
+        {"string": "re_run_overseer_with_prompt", "present": true, "status": "PASS", "evidence": "L2866: .re_run_overseer_with_prompt(node_id, &remediation_prompt).await?"},
+        {"string": "re_run_reviewer", "present": true, "status": "PASS", "evidence": "L2874: .re_run_reviewer(node_id).await?"},
+        {"string": "escalate_to_parent", "present": true, "status": "PASS", "evidence": "L2985: self.escalate_to_parent(node_id, findings).await?"},
+        {"string": "execution_unit_context", "present": false, "status": "PASS", "evidence": "0-hit in L2797-2994; acceptable absent"},
+        {"string": "run_id", "present": false, "status": "PASS", "evidence": "0-hit in L2797-2994; acceptable absent"},
+        {"string": "attempt_id", "present": false, "status": "PASS", "evidence": "0-hit in L2797-2994; acceptable absent"}
+      ],
+      "overall": "PASS"
+    },
+    {
+      "target_id": "target-031-orc-lifecycle-gaps",
+      "anchor_found": true,
+      "anchor_line": 3123,
+      "section_lines": [3123, 3291],
+      "forbidden_checks": [
+        {"string": "TierContext (not followed by InjectorHook)", "present": false, "status": "PASS", "evidence": "L3151: TierContextInjectorHook (allowed exception); L3273: TierContextInjectorHook (allowed exception); no standalone TierContext"},
+        {"string": "tier_id", "present": false, "status": "PASS", "evidence": "Not found in L3123-3291"},
+        {"string": "BeforeTierContext", "present": false, "status": "PASS", "evidence": "Not found anywhere in document"},
+        {"string": "AfterTierContext", "present": false, "status": "PASS", "evidence": "Not found anywhere in document"}
+      ],
+      "survivor_checks": [
+        {"string": "active_subagent", "present": true, "status": "PASS", "evidence": "L3190: ExecutionUnitContext.active_subagent is set by BeforeUnit hook"},
+        {"string": "TierContextInjectorHook", "present": true, "status": "PASS", "evidence": "L3151: built-in hooks list; L3273: caching mention"},
+        {"string": "BeforeUnitContext", "present": true, "status": "PASS", "evidence": "L3152: use shared context (BeforeUnitContext/AfterUnitContext); L3238"},
+        {"string": "AfterUnitContext", "present": true, "status": "PASS", "evidence": "L3152: use shared context (BeforeUnitContext/AfterUnitContext); L3239"},
+        {"string": "execution_unit_context", "present": false, "status": "PASS", "evidence": "0-hit in L3123-3291; acceptable absent"},
+        {"string": "run_id", "present": false, "status": "PASS", "evidence": "0-hit in L3123-3291; acceptable absent"},
+        {"string": "node_id", "present": false, "status": "PASS", "evidence": "0-hit in L3123-3291; acceptable absent"}
+      ],
+      "overall": "PASS"
+    },
+    {
+      "target_id": "target-032-orc-impl-notes",
+      "anchor_found": true,
+      "anchor_line": 3340,
+      "section_lines": [3340, 6370],
+      "forbidden_checks": [
+        {"string": "TierContext (not followed by InjectorHook)", "present": false, "status": "PASS", "evidence": "No TierContext in L3340+; all prior TierContext hits (L2220, L3151, L3273) are before this section"},
+        {"string": "tier_id", "present": false, "status": "PASS", "evidence": "Only occurrence is L79 (preamble), not in L3340+"}
+      ],
+      "survivor_checks": [
+        {"string": "execution_unit_context", "present": true, "status": "PASS", "evidence": "L3502: execution_unit_context: &ExecutionUnitContext; L3504, L3512, L3524"},
+        {"string": "node_id", "present": true, "status": "PASS", "evidence": "L3561, L3579, L3661, L3747, L3834, L3909, L3912, L3915, L3917, L3935 etc."},
+        {"string": "run_id", "present": true, "status": "PASS", "evidence": "L3749: pub run_id: String; L3914: run_id: run_id.to_string()"},
+        {"string": "active_subagent", "present": true, "status": "PASS", "evidence": "L3390: active_subagent: Option<String> in ExecutionUnitContext"},
+        {"string": "attempt_id", "present": false, "status": "PASS", "evidence": "0-hit in L3340+; all attempt_id occurrences are in L2103, L2121 (section 028) or L6000+; acceptable absent"}
+      ],
+      "overall": "PASS"
+    }
+  ],
+  "summary": {
+    "total": 8,
+    "passed": 8,
+    "failed": 0
+  }
+}

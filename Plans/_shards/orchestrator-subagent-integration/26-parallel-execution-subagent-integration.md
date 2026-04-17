@@ -101,9 +101,9 @@ impl SubagentSelector {
         &self,
         tier_node: &TierNode,
         completed_dependencies: &[TierNode],
-        tier_context: &TierContext,
+        execution_unit_context: &ExecutionUnitContext,
     ) -> Vec<String> {
-        let mut subagents = self.select_for_tier(tier_node.tier_type, tier_context);
+        let mut subagents = self.select_for_tier(tier_node.tier_type, execution_unit_context);
 
         // DRY REQUIREMENT: language_to_subagent MUST use subagent_registry::get_subagent_for_language()
         ContractRef: ContractName:Plans/DRY_Rules.md#7, ContractName:Plans/Contracts_V0.md
@@ -111,7 +111,7 @@ impl SubagentSelector {
         for dep in completed_dependencies {
             if let Some(dep_context) = self.get_tier_context(dep) {
                 // Inherit language if not already set
-                if tier_context.primary_language.is_none() {
+                if execution_unit_context.primary_language.is_none() {
                     if let Some(lang) = &dep_context.primary_language {
                         // DRY: Use subagent_registry — DO NOT call self.language_to_subagent which may hardcode mappings
                         if let Some(subagent) = subagent_registry::get_subagent_for_language(lang) {
@@ -123,7 +123,7 @@ impl SubagentSelector {
                 }
 
                 // Inherit domain if not already set
-                if tier_context.domain == ProjectDomain::Unknown {
+                if execution_unit_context.domain == ProjectDomain::Unknown {
                     // Use domain from dependency
                 }
             }
@@ -160,12 +160,13 @@ Canonical message schema:
 - `from_platform`
 - `to_agent_id?` for direct routing
 - `to_agent_type?` for role-wide routing
-- `to_tier_id?` for tier-wide routing
+- `to_node_id?` for node-wide routing
+- `to_lane_id?` for lane-wide routing
 - `message_type` = `Question | Answer | Update | Request | Decision | Warning | Announcement`
 - `priority` = `low | normal | high | urgent`
 - `subject`
 - `content`
-- `context` (files mentioned, operations mentioned, sender tier, related message ids)
+- `context` (execution_unit_context: files mentioned, operations mentioned, sender node, related message ids)
 - `thread_id?`
 - `in_reply_to?`
 - `created_at`
@@ -177,10 +178,11 @@ ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Com
 Routing rules:
 - direct routing uses `to_agent_id`
 - role-wide routing uses `to_agent_type`
-- tier-wide routing uses `to_tier_id`
-- broadcast routing leaves all three target selectors empty
+- node-wide routing uses `to_node_id`
+- lane-wide routing uses `to_lane_id`
+- broadcast routing leaves all target selectors empty
 - the orchestrator MUST be able to inspect every message regardless of agent-local visibility filters
-- agent-local views MUST be filtered to direct messages, type-matched messages, tier-matched messages, broadcast messages, and file-relevant messages for the agent's active work
+- agent-local views MUST be filtered to direct messages, type-matched messages, node-matched messages, lane-matched messages, broadcast messages, and file-relevant messages for the agent's active work
 
 ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md
 
@@ -258,7 +260,7 @@ When a Codex agent and a Claude Code agent work simultaneously:
      {
        "agent_id": "rust-engineer-1.1.1",
        "platform": "codex",
-       "tier_id": "1.1.1",
+       "node_id": "1.1.1",
        "current_operation": "Starting API implementation",
        "files_being_edited": []
      }
@@ -270,7 +272,7 @@ When a Codex agent and a Claude Code agent work simultaneously:
      {
        "agent_id": "test-automator-1.1.2",
        "platform": "claude",
-       "tier_id": "1.1.2",
+       "node_id": "1.1.2",
        "current_operation": "Starting test implementation",
        "files_being_edited": []
      }
@@ -304,7 +306,7 @@ The coordination projection includes a `platform` field so agents know which pla
     "rust-engineer-1.1.1": {
       "agent_id": "rust-engineer-1.1.1",
       "platform": "codex",
-      "tier_id": "1.1.1",
+      "node_id": "1.1.1",
       "worktree_path": ".puppet-master/worktrees/1.1.1",
       "files_being_edited": ["src/api.rs"],
       "current_operation": "Editing src/api.rs",
@@ -314,7 +316,7 @@ The coordination projection includes a `platform` field so agents know which pla
     "test-automator-1.1.2": {
       "agent_id": "test-automator-1.1.2",
       "platform": "claude",
-      "tier_id": "1.1.2",
+      "node_id": "1.1.2",
       "worktree_path": ".puppet-master/worktrees/1.1.2",
       "files_being_edited": ["tests/api_test.rs"],
       "current_operation": "Writing tests for API endpoint",
@@ -342,8 +344,11 @@ use chrono::{DateTime, Utc};
 // DRY:DATA:ActiveAgent — Active agent coordination state
 pub struct ActiveAgent {
     pub agent_id: String, // e.g., "rust-engineer", "test-automator"
+    pub agent_type: String, // subagent type/role
     pub platform: Platform, // "codex", "claude", "cursor", "gemini", "copilot" - enables cross-platform coordination
-    pub tier_id: String,
+    pub node_id: String,
+    pub lane_id: Option<String>,
+    pub run_id: String,
     pub worktree_path: Option<PathBuf>, // None if main repo
     pub files_being_edited: Vec<PathBuf>,
     pub current_operation: String, // e.g., "editing src/api.rs", "running tests"
@@ -371,7 +376,7 @@ impl AgentCoordinator {
     }
 
     // DRY:FN:register_agent — Register an agent as active
-    // DRY REQUIREMENT: Agent platform field MUST be from tier_config.platform — NEVER hardcode platform
+    // DRY REQUIREMENT: Agent platform field MUST be from node_config.platform — NEVER hardcode platform
     ContractRef: ContractName:Plans/DRY_Rules.md#7, ContractName:Plans/Models_System.md
     /// Register an agent as active
     pub async fn register_agent(&self, agent: ActiveAgent) -> Result<()> {
@@ -423,12 +428,12 @@ impl AgentCoordinator {
                 ContractRef: ContractName:Plans/DRY_Rules.md#7, ContractName:Plans/Models_System.md
                 let platform_display = platform_specs::display_name_for(agent.platform);
                 context.push_str(&format!(
-                    "- {} ({}) is {} (started {} ago, tier: {})\n",
+                    "- {} ({}) is {} (started {} ago, node: {})\n",
                     agent.agent_id,
                     platform_display, // Use platform_specs for display name
                     agent.current_operation,
                     format_duration(age),
-                    agent.tier_id
+                    agent.node_id
                 ));
             }
 
@@ -495,20 +500,23 @@ fn format_duration(d: chrono::Duration) -> String {
 
 **Integration with orchestrator:**
 
-In `src/core/orchestrator.rs`, before executing a tier:
+In `src/core/orchestrator.rs`, before executing a node:
 
 ```rust
-// Before tier execution
+// Before node execution
 let coordinator = AgentCoordinator::new(&self.config.project.working_directory);
 
 // Register this agent/subagent as active (includes platform for cross-platform coordination)
 coordinator.register_agent(ActiveAgent {
-    agent_id: format!("{}-{}", subagent_name, tier_id),
-    platform: tier_config.platform, // Include platform so other agents know which platform this agent uses
-    tier_id: tier_id.to_string(),
-    worktree_path: self.get_tier_worktree(tier_id),
+    agent_id: format!("{}-{}", subagent_name, node_id),
+    agent_type: subagent_name.to_string(),
+    platform: node_config.platform, // Include platform so other agents know which platform this agent uses
+    node_id: node_id.to_string(),
+    lane_id: None,
+    run_id: run_id.to_string(),
+    worktree_path: self.get_node_worktree(node_id),
     files_being_edited: Vec::new(), // Will update as agent works
-    current_operation: format!("Starting tier {}", tier_id),
+    current_operation: format!("Starting node {}", node_id),
     started_at: Utc::now(),
     last_update: Utc::now(),
 }).await?;
@@ -516,17 +524,17 @@ coordinator.register_agent(ActiveAgent {
 // Get coordination context and inject into prompt
 let coordination_context = coordinator.get_coordination_context().await?;
 let enhanced_prompt = if !coordination_context.is_empty() {
-    format!("{}\n\n{}", prompt, coordination_context)
+    format!"{}\n\n{}", prompt, coordination_context)
 } else {
     prompt
 };
 
 // During execution, update status periodically (e.g., when agent edits files)
 // This requires parsing agent output or using platform-specific hooks
-// For now, update on tier completion
+// For now, update on node completion
 
-// After tier execution
-coordinator.unregister_agent(&format!("{}-{}", subagent_name, tier_id)).await?;
+// After node execution
+coordinator.unregister_agent(&format!("{}-{}", subagent_name, node_id)).await?;
 ```
 
 **Provider coordination model (Codex/Copilot included):**
@@ -601,6 +609,64 @@ coordinator.unregister_agent(&format!("{}-{}", subagent_name, tier_id)).await?;
 - **What:** Implement `AgentCoordinator`, inject coordination context into prompts, and keep status updates provider-agnostic.
 - **When:** Register agent before execution; update status during execution (periodically or on file operations); unregister after execution.
 
+### Puppet Master Crews (Teams/Fleets Alternative)
+
+Crew mode is a multi-model coordination overlay over child runs.
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Models_System.md, ContractName:Plans/storage-plan.md
+
+Canonical crew rules:
+- members are child runs.
+- model/provider diversity is the default distinguishing axis.
+- the same task and often the same Persona are preserved across the crew.
+- member-to-member coordination occurs through an attributable crew board.
+- the parent owns final synthesis and user-facing escalation.
+- crew shared state is explicit shared coordination state, not hidden long-term member memory.
+
+Crew defaults and confirmation:
+- default crews live in the model/runtime settings surface.
+- first crew invocation asks whether to use the default crew if one exists.
+- after model choice, PM resolves each member's provider/runtime surface and discloses the resulting mapping.
+- if any member is Copilot, the crew normalizes to Copilot as a crew-level provider constraint.
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/assistant-memory-subsystem.md, ContractName:Plans/CLI_Bridged_Providers.md
+### Gaps and Potential Issues for Crews Feature
+
+Gap-era crew notes in this section are retired as canonical guidance. The live crew rules now resolve through the orchestrator contracts elsewhere in this document rather than through illustrative fallback numbers, and the superseded gap-era examples that previously followed this heading MUST NOT be implemented as live crew canon.
+
+ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Crosswalk.md
+
+#### Canonical crew-cap and availability rules
+
+Crew admission MUST use `executionLimits` as the sole live source for:
+- `maxConcurrentCrewsPerPlatform = 4`
+- `maxConcurrentAgentsPerCrew = 8`
+- `maxTotalActiveAgents = 32`
+- `maxNestingDepth = 4`
+- `maxTotalSpawnedAgents = 99`
+- `maxToolRoundsPerAgent = 200`
+
+ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/interview-subagent-integration.md, ContractName:Plans/Crosswalk.md
+
+Later illustrative examples in this file MUST NOT widen or replace those values. Availability checks MAY narrow admission further based on platform support, current saturation, quota posture, or policy, but they MUST fail closed rather than inventing alternate per-gap ceilings.
+
+ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Contracts_V0.md
+
+#### Crew lifecycle, cleanup, and GUI routing
+
+Crew lifecycle, timeout propagation, cancellation, and cleanup follow the canonical parent/child orchestration and runtime lifecycle contracts. This section no longer defines separate crew-only timeout ceilings, alternate cleanup paths, or stale concurrency examples.
+
+ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md
+
+GUI and future Assistant-surface affordances for crews remain consumer projections. They MUST disclose canonical crew/member state and runtime ceilings, but they do not become the owner of orchestration authority.
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Crosswalk.md
+
+#### Future Assistant-surface note
+
+User-initiated crews remain future Assistant functionality. When that surface lands, platform selection, queueing, and subagent admission still resolve through the same orchestrator-owned ceilings and compatibility checks defined here and in `executionLimits`; future UX MUST NOT reintroduce alternative defaults such as "20 total crews" or "3 crews per subagent type".
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Decision_Policy.md, ContractName:Plans/Crosswalk.md
 ### Puppet Master Crews (Teams/Fleets Alternative)
 
 Crew mode is a multi-model coordination overlay over child runs.
@@ -796,7 +862,7 @@ pub struct AgentMessage {
     pub from_platform: Platform,
     pub to_agent_id: Option<String>, // None = broadcast
     pub to_agent_type: Option<String>, // e.g., "test-automator", "code-reviewer"
-    pub to_tier_id: Option<String>, // e.g., "1.1" (all agents in this tier)
+    pub to_node_id: Option<String>, // e.g., "1.1" (all agents in this node)
     pub message_type: MessageType,
     pub subject: String, // Brief summary
     pub content: String, // Full message content
@@ -823,7 +889,7 @@ pub enum MessageType {
 pub struct MessageContext {
     pub files_mentioned: Vec<PathBuf>,
     pub operations_mentioned: Vec<String>, // e.g., "editing src/api.rs", "running tests"
-    pub tier_id: String,
+    pub node_id: String,
     pub related_messages: Vec<String>, // message_ids
 }
 
@@ -840,8 +906,8 @@ pub struct AgentMessageBoard {
 Messages can be routed to:
 - **Direct:** Specific agent ID (`to_agent_id`)
 - **By type:** All agents of a specific type (`to_agent_type`, e.g., "all test-automators")
-- **By tier:** All agents in a specific tier (`to_tier_id`)
-- **Broadcast:** All active agents (`to_agent_id = None`, `to_agent_type = None`, `to_tier_id = None`)
+- **By node:** All agents in a specific node (`to_node_id`)
+- **Broadcast:** All active agents (`to_agent_id = None`, `to_agent_type = None`, `to_node_id = None`)
 
 **Usage examples:**
 
@@ -860,7 +926,7 @@ coordinator.post_message(AgentMessage {
     context: MessageContext {
         files_mentioned: vec![PathBuf::from("src/api.rs")],
         operations_mentioned: vec!["implemented POST /users endpoint".to_string()],
-        tier_id: "1.1.1".to_string(),
+        node_id: "1.1.1".to_string(),
         related_messages: vec![],
     },
     thread_id: None,
@@ -879,14 +945,14 @@ coordinator.post_message(AgentMessage {
     message_id: uuid::Uuid::new_v4().to_string(),
     from_agent_id: "architect-reviewer-1.0".to_string(),
     from_platform: Platform::Claude,
-    to_tier_id: Some("1.1".to_string()), // Share with all agents in tier 1.1
+    to_node_id: Some("1.1".to_string()), // Share with all agents in node 1.1
     message_type: MessageType::Decision,
     subject: "Architecture decision: Use Actix-web for API server".to_string(),
     content: "After reviewing requirements, I've decided we should use Actix-web for the API server. This provides async/await support, good performance, and strong Rust ecosystem integration. All agents working on API-related tasks should use this framework.".to_string(),
     context: MessageContext {
         files_mentioned: vec![],
         operations_mentioned: vec!["architecture review".to_string()],
-        tier_id: "1.0".to_string(),
+        node_id: "1.0".to_string(),
         related_messages: vec![],
     },
     thread_id: None,
@@ -912,7 +978,7 @@ coordinator.post_message(AgentMessage {
     context: MessageContext {
         files_mentioned: vec![PathBuf::from("src/api.rs")],
         operations_mentioned: vec!["adding tests".to_string()],
-        tier_id: "1.1.2".to_string(),
+        node_id: "1.1.2".to_string(),
         related_messages: vec![],
     },
     thread_id: None,
@@ -939,7 +1005,7 @@ Messages are injected into agent prompts as part of coordination context:
 ```rust
 // In orchestrator, before executing agent
 let coordination_context = coordinator.get_coordination_context().await?;
-let messages = coordinator.get_messages_for_agent(&agent_id, &tier_id).await?;
+let messages = coordinator.get_messages_for_agent(&agent_id, &node_id).await?;
 let message_context = coordinator.format_messages_for_prompt(&messages)?;
 
 let enhanced_prompt = format!(
@@ -955,7 +1021,7 @@ let enhanced_prompt = format!(
 Agents only see messages relevant to them:
 - Messages addressed to their agent_id
 - Messages addressed to their agent type
-- Messages addressed to their tier_id
+- Messages addressed to their node_id
 - Broadcast messages
 - Messages mentioning files they're working on
 
@@ -999,7 +1065,7 @@ impl AgentCommunicator {
     /// Post a message to the message board
     pub async fn post_message(&self, message: AgentMessage) -> Result<()> {
         // DRY: Validate message.from_agent_id if it's a subagent name (not a tier-specific ID)
-        // Implementation note: Extract subagent name from agent_id if format is "subagent-tier_id"
+        // Implementation note: Extract subagent name from agent_id if format is "subagent-node_id"
         // and validate using subagent_registry::is_valid_subagent_name()
         let mut board = self.load_message_board().await?;
         board.messages.push(message);
@@ -1011,7 +1077,7 @@ impl AgentCommunicator {
     pub async fn get_messages_for_agent(
         &self,
         agent_id: &str,
-        tier_id: &str,
+        node_id: &str,
         agent_type: Option<&str>,
     ) -> Result<Vec<AgentMessage>> {
         let board = self.load_message_board().await?;
@@ -1034,15 +1100,15 @@ impl AgentCommunicator {
                     }
                 }
 
-                // Message to tier
-                if let Some(ref to_tier) = msg.to_tier_id {
-                    if to_tier == tier_id {
+                // Message to node
+                if let Some(ref to_node) = msg.to_node_id {
+                    if to_node == node_id {
                         return true;
                     }
                 }
 
                 // Broadcast (no specific recipient)
-                if msg.to_agent_id.is_none() && msg.to_agent_type.is_none() && msg.to_tier_id.is_none() {
+                if msg.to_agent_id.is_none() && msg.to_agent_type.is_none() && msg.to_node_id.is_none() {
                     return true;
                 }
 
@@ -1171,7 +1237,7 @@ if agent_output.contains("@message") || agent_output.contains("@ask") {
 }
 
 // Before agent execution, inject messages into prompt
-let messages = communicator.get_messages_for_agent(&agent_id, &tier_id, Some(&agent_type)).await?;
+let messages = communicator.get_messages_for_agent(&agent_id, &node_id, Some(&agent_type)).await?;
 let message_context = communicator.format_messages_for_prompt(&messages)?;
 ```
 
@@ -1224,7 +1290,6 @@ impl OrchestratorInsights {
 4. Add orchestrator monitoring/insights
 5. Add GUI visualization of agent communication
 6. Test with multiple agents across different platforms
-
 ### Gaps and Potential Issues for Agent Coordination
 
 **Gap #28: File locking and concurrent writes**
@@ -1391,8 +1456,8 @@ fn validate_state(&self, state: &AgentCoordinationState) -> Result<()> {
         if agent.agent_id.is_empty() {
             return Err(anyhow!("Invalid agent: empty agent_id"));
         }
-        if agent.tier_id.is_empty() {
-            return Err(anyhow!("Invalid agent {}: empty tier_id", agent_id));
+        if agent.node_id.is_empty() {
+            return Err(anyhow!("Invalid agent {}: empty node_id", agent_id));
         }
         // Check for reasonable timestamps (not in future, not too old)
         let now = Utc::now();
@@ -1549,8 +1614,8 @@ pub async fn get_coordination_context(
     let filtered_agents: Vec<_> = state.active_agents.values()
         .filter(|agent| {
             if let Some(ref filter) = filter {
-                if let Some(ref tier_filter) = filter.tier_id {
-                    if agent.tier_id != *tier_filter {
+                if let Some(ref node_filter) = filter.node_id {
+                    if agent.node_id != *node_filter {
                         return false;
                     }
                 }
@@ -1590,7 +1655,7 @@ pub async fn get_coordination_context(
 }
 
 pub struct CoordinationFilter {
-    pub tier_id: Option<String>,
+    pub node_id: Option<String>,
     pub platform: Option<Platform>,
     pub file_path: Option<PathBuf>,
 }
@@ -1743,10 +1808,10 @@ impl AgentCoordinator {
             .collect())
     }
 
-    pub async fn get_agents_by_tier(&self, tier_id: &str) -> Result<Vec<ActiveAgent>> {
+    pub async fn get_agents_by_node(&self, node_id: &str) -> Result<Vec<ActiveAgent>> {
         let state = self.load_state().await?;
         Ok(state.active_agents.values()
-            .filter(|a| a.tier_id == tier_id)
+            .filter(|a| a.node_id == node_id)
             .cloned()
             .collect())
     }
@@ -1871,23 +1936,23 @@ impl SubagentConflictDetector {
     pub async fn detect_conflicts(
         &self,
         subagent_groups: &[Vec<String>],
-        tier_contexts: &[TierContext],
+        contexts: &[ExecutionUnitContext],
         coordinator: &AgentCoordinator,
     ) -> Vec<Conflict> {
         let mut conflicts = Vec::new();
         let coordination_state = coordinator.load_state().await.ok();
 
         // Check for overlapping file modifications using coordination state
-        for (i, context_a) in tier_contexts.iter().enumerate() {
-            for (j, context_b) in tier_contexts.iter().enumerate().skip(i + 1) {
+        for (i, context_a) in contexts.iter().enumerate() {
+            for (j, context_b) in contexts.iter().enumerate().skip(i + 1) {
                 if let Some(state) = &coordination_state {
                     // Check if any active agents are editing overlapping files
                     let files_a: Vec<_> = state.active_agents.values()
-                        .filter(|a| a.tier_id == context_a.item_id)
+                        .filter(|a| a.node_id == context_a.node_id)
                         .flat_map(|a| &a.files_being_edited)
                         .collect();
                     let files_b: Vec<_> = state.active_agents.values()
-                        .filter(|a| a.tier_id == context_b.item_id)
+                        .filter(|a| a.node_id == context_b.node_id)
                         .flat_map(|a| &a.files_being_edited)
                         .collect();
 
@@ -1949,7 +2014,6 @@ pub struct Conflict {
     pub files: Vec<String>,
 }
 ```
-
 ### Parallel Execution Configuration
 
 **Concurrency caps rationale:** Per-platform concurrency limits exist for two reasons:
