@@ -1,0 +1,31 @@
+{
+  "patches": [
+    {
+      "target_id": "target-040-tools-ask-flow-runner",
+      "path": "Plans/Tools.md",
+      "anchor": "### 10.7 Ask-flow runner notes",
+      "anchor_line": 1100,
+      "end_line": 1106,
+      "replace_scope": "exact_owner_section",
+      "modified_text": "### 10.7 Ask-flow runner notes\n\nAsk-flow semantics (`deny`/`once`/`for session`/`always`) are defined in `Plans/Permissions_System.md` §6. Implementation notes for the runner:\n\n- **Assistant (interactive):** When policy returns **ask**, surface a `blocked_notice` as a **pending approval** to the UI. The notice includes `action_available` (the scoped response options: `deny` / `once` / `for session` / `always`), `blocked_reason_code`, `blocked_sequence`, and `approval_scope_key`. See `Plans/Permissions_System.md` §6 for response semantics.\n- **Orchestrator / Interview (headless):** Map `ask` → `deny`, or to **pending-HITL** if HITL is enabled (`Plans/human-in-the-loop.md`).\n"
+    },
+    {
+      "target_id": "target-041-worktree-contractref-stale",
+      "path": "Plans/WorktreeGitImprovement.md",
+      "anchor": "## Runtime Worktree Conflict Reconciliation Addendum (2026-03-09)",
+      "anchor_line": 597,
+      "end_line": 632,
+      "replace_scope": "exact_owner_section",
+      "modified_text": "## Runtime Worktree Conflict Reconciliation Addendum (2026-03-09)\n\nThis addendum is retained as historical context only.\n\nCanonical worktree-conflict and dirty-worktree runtime rules now live in `## Worktree Conflict and Dirty-Worktree Runtime Alignment`.\n\nCanonical blocked reasons for this domain are `worktree_conflict` and `dirty_worktree`.\n\nRequired rules:\n- blocked payloads use canonical blocked fields and ordered `allowed_action_ids[]`\n- recovery may require safe-point restore when the runtime marks `requires_safe_point_restore = true`\n- clearing the underlying worktree issue resolves the blocked prerequisite; it does not fabricate a new failure class\n- worktree conflict resolution must preserve lineage to the blocked episode and any affected safe point\n\nContractRef: Plans/Orchestrator_Page.md#Source Control boundary\n\nRequired fields:\n- blocked_reason_code\n- blocked_reason_detail\n- remediation_actions_allowed\n- dirty_state\n- conflict_state\n\nCanonical terms and values:\n- blocked_reason_code\n- remediation_actions_allowed\n\nLabels:\n- dirty worktree\n\nBehavioral rules:\n- `dirty_worktree` and `worktree_conflict` stay canonical blocked reasons instead of generic SCM failures.\n- Conflict and cleanup semantics must remain distinct.\n\nPermission carry-through:\n- remediation actions must surface only through the allowed-action set"
+    },
+    {
+      "target_id": "target-042-usage-usagerecord-schema",
+      "path": "Plans/usage-feature.md",
+      "anchor": "### Unified `UsageRecord` schema expectations",
+      "anchor_line": 391,
+      "end_line": 418,
+      "replace_scope": "exact_owner_section",
+      "modified_text": "### Unified `UsageRecord` schema expectations\nAll usage surfaces derive from the same `UsageRecord` identity. Minimum shared attribution fields are:\n- `run_id`\n- `parent_run_id` when emitted by a child run, executed tool operation, or background/helper operation\n- `thread_id?`\n- `provider_id`\n- `model_id`\n- `account_id?`\n- `credential_ref`\n- `execution_role`\n- `operational_identity`\n- `billing_entity_id?`\n- `entitlement_class?`\n- canonical token buckets including `total_tokens`\n- `cost_microdollars`\n- `cache_hit?`\n- `cache_strategy?`\n\nContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Models_System.md\n\nRules:\n- every usage-relevant operation MUST emit canonical attribution. Provider/model calls emit a canonical usage record; executed tool operations and other helper/background activity that do not expose token buckets still emit the same run/provider/account/billing/entitlement lineage and omit only the unknown token counts\n- if a provider cannot supply every token bucket, PM still emits the record with all known attribution fields and omits only the unknown token counts; it MUST NOT skip the usage record entirely\n- bridge adapters, storage snapshots, and UI rollups MUST preserve the full `(provider_id, model_id, account_id?, billing_entity_id?, entitlement_class?)` tuple when known; they MUST NOT collapse attribution to billing entity alone\n- compatibility shims may ingest older records, but new surfaces MUST NOT invent a second attribution schema or add canonical-only fields exclusively to `usage.jsonl`\n- `cost_usd` may be projected for presentation, but the durable record remains `cost_microdollars` plus the canonical attribution fields above\n\nContractRef: ContractName:Plans/Architecture_Invariants.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Runtime_Artifacts_Panel.md"
+    }
+  ]
+}

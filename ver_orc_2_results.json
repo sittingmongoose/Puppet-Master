@@ -1,0 +1,400 @@
+{
+  "group": "ver_orc_2",
+  "results": [
+    {
+      "target_id": "target-033-orc-context-flow",
+      "anchor_found": true,
+      "anchor_line": 3479,
+      "section_lines": [
+        3479,
+        3534
+      ],
+      "forbidden_checks": [
+        {
+          "string": "TierContext",
+          "found": false,
+          "status": "PASS"
+        },
+        {
+          "string": "tier_id",
+          "found": false,
+          "status": "PASS"
+        }
+      ],
+      "survivor_checks": [
+        {
+          "string": "execution_unit_context",
+          "found": true,
+          "count": 4,
+          "status": "PASS"
+        },
+        {
+          "string": "run_id",
+          "found": false,
+          "count": 0,
+          "status": "ABSENT_OK",
+          "note": "Not found but not a core canon term; 0-hit rule applies"
+        },
+        {
+          "string": "node_id",
+          "found": false,
+          "count": 0,
+          "status": "ABSENT_CANON",
+          "note": "Canon-introduced term absent; acceptable if never in original section"
+        },
+        {
+          "string": "lane_id",
+          "found": false,
+          "count": 0,
+          "status": "ABSENT_OK",
+          "note": "Not found but not a core canon term; 0-hit rule applies"
+        }
+      ],
+      "overall": "PASS"
+    },
+    {
+      "target_id": "target-034-orc-agent-coordination",
+      "anchor_found": true,
+      "anchor_line": 3535,
+      "section_lines": [
+        3535,
+        4009
+      ],
+      "forbidden_checks": [
+        {
+          "string": "TierContext",
+          "found": false,
+          "status": "PASS"
+        },
+        {
+          "string": "tier_id",
+          "found": false,
+          "status": "PASS"
+        },
+        {
+          "string": "to_tier_id",
+          "found": false,
+          "status": "PASS"
+        }
+      ],
+      "survivor_checks": [
+        {
+          "string": "execution_unit_context",
+          "found": true,
+          "count": 1,
+          "status": "PASS"
+        },
+        {
+          "string": "run_id",
+          "found": true,
+          "count": 3,
+          "status": "PASS"
+        },
+        {
+          "string": "node_id",
+          "found": true,
+          "count": 14,
+          "status": "PASS"
+        },
+        {
+          "string": "lane_id",
+          "found": true,
+          "count": 4,
+          "status": "PASS"
+        },
+        {
+          "string": "to_agent_id",
+          "found": true,
+          "count": 2,
+          "status": "PASS"
+        },
+        {
+          "string": "to_agent_type",
+          "found": true,
+          "count": 2,
+          "status": "PASS"
+        },
+        {
+          "string": "agent_id",
+          "found": true,
+          "count": 21,
+          "status": "PASS"
+        },
+        {
+          "string": "agent_type",
+          "found": true,
+          "count": 4,
+          "status": "PASS"
+        }
+      ],
+      "overall": "PASS"
+    },
+    {
+      "target_id": "target-035-orc-crews",
+      "anchor_found": true,
+      "anchor_line": 4127,
+      "section_lines": [
+        4127,
+        4690
+      ],
+      "forbidden_checks": [
+        {
+          "string": "TierContext",
+          "found": false,
+          "status": "PASS"
+        },
+        {
+          "string": "tier_id",
+          "found": false,
+          "status": "PASS"
+        },
+        {
+          "string": "to_tier_id",
+          "found": false,
+          "status": "PASS"
+        }
+      ],
+      "survivor_checks": [
+        {
+          "string": "run_id",
+          "found": false,
+          "count": 0,
+          "status": "ABSENT_OK",
+          "note": "Not found but not a core canon term; 0-hit rule applies"
+        },
+        {
+          "string": "node_id",
+          "found": true,
+          "count": 16,
+          "status": "PASS"
+        },
+        {
+          "string": "lane_id",
+          "found": false,
+          "count": 0,
+          "status": "ABSENT_OK",
+          "note": "Not found but not a core canon term; 0-hit rule applies"
+        },
+        {
+          "string": "to_agent_id",
+          "found": true,
+          "count": 6,
+          "status": "PASS"
+        },
+        {
+          "string": "to_agent_type",
+          "found": true,
+          "count": 6,
+          "status": "PASS"
+        },
+        {
+          "string": "agent_id",
+          "found": true,
+          "count": 24,
+          "status": "PASS"
+        }
+      ],
+      "overall": "PASS"
+    },
+    {
+      "target_id": "target-036-orc-coord-gaps",
+      "anchor_found": true,
+      "anchor_line": 4691,
+      "section_lines": [
+        4691,
+        5192
+      ],
+      "forbidden_checks": [
+        {
+          "string": "TierContext",
+          "found": false,
+          "status": "PASS"
+        },
+        {
+          "string": "tier_id",
+          "found": false,
+          "status": "PASS"
+        }
+      ],
+      "survivor_checks": [
+        {
+          "string": "run_id",
+          "found": false,
+          "count": 0,
+          "status": "ABSENT_OK",
+          "note": "Not found but not a core canon term; 0-hit rule applies"
+        },
+        {
+          "string": "node_id",
+          "found": true,
+          "count": 5,
+          "status": "PASS"
+        },
+        {
+          "string": "lane_id",
+          "found": false,
+          "count": 0,
+          "status": "ABSENT_OK",
+          "note": "Not found but not a core canon term; 0-hit rule applies"
+        },
+        {
+          "string": "agent_id",
+          "found": true,
+          "count": 17,
+          "status": "PASS"
+        }
+      ],
+      "overall": "PASS"
+    },
+    {
+      "target_id": "target-037-orc-coord-improvements",
+      "anchor_found": true,
+      "anchor_line": 5193,
+      "section_lines": [
+        5193,
+        5287
+      ],
+      "forbidden_checks": [
+        {
+          "string": "TierContext",
+          "found": false,
+          "status": "PASS"
+        },
+        {
+          "string": "tier_id",
+          "found": false,
+          "status": "PASS"
+        }
+      ],
+      "survivor_checks": [
+        {
+          "string": "run_id",
+          "found": false,
+          "count": 0,
+          "status": "ABSENT_OK",
+          "note": "Not found but not a core canon term; 0-hit rule applies"
+        },
+        {
+          "string": "node_id",
+          "found": true,
+          "count": 3,
+          "status": "PASS"
+        },
+        {
+          "string": "lane_id",
+          "found": false,
+          "count": 0,
+          "status": "ABSENT_OK",
+          "note": "Not found but not a core canon term; 0-hit rule applies"
+        },
+        {
+          "string": "execution_unit_context",
+          "found": false,
+          "count": 0,
+          "status": "ABSENT_CANON",
+          "note": "Canon-introduced term absent; acceptable if never in original section"
+        }
+      ],
+      "overall": "PASS"
+    },
+    {
+      "target_id": "target-038-orc-conflict-prevention",
+      "anchor_found": true,
+      "anchor_line": 5310,
+      "section_lines": [
+        5310,
+        5414
+      ],
+      "forbidden_checks": [
+        {
+          "string": "TierContext",
+          "found": false,
+          "status": "PASS"
+        },
+        {
+          "string": "tier_id",
+          "found": false,
+          "status": "PASS"
+        }
+      ],
+      "survivor_checks": [
+        {
+          "string": "run_id",
+          "found": false,
+          "count": 0,
+          "status": "ABSENT_OK",
+          "note": "Not found but not a core canon term; 0-hit rule applies"
+        },
+        {
+          "string": "node_id",
+          "found": true,
+          "count": 4,
+          "status": "PASS"
+        },
+        {
+          "string": "execution_unit_context",
+          "found": false,
+          "count": 0,
+          "status": "ABSENT_OK",
+          "note": "Not found but not a core canon term; 0-hit rule applies"
+        }
+      ],
+      "overall": "PASS"
+    },
+    {
+      "target_id": "target-039-orc-qa-loop-integration",
+      "anchor_found": true,
+      "anchor_line": 5659,
+      "section_lines": [
+        5659,
+        5900
+      ],
+      "forbidden_checks": [
+        {
+          "string": "TierContext",
+          "found": false,
+          "status": "PASS"
+        },
+        {
+          "string": "tier_id",
+          "found": false,
+          "status": "PASS"
+        }
+      ],
+      "survivor_checks": [
+        {
+          "string": "run_id",
+          "found": false,
+          "count": 0,
+          "status": "ABSENT_OK",
+          "note": "Not found but not a core canon term; 0-hit rule applies"
+        },
+        {
+          "string": "node_id",
+          "found": true,
+          "count": 3,
+          "status": "PASS"
+        },
+        {
+          "string": "attempt_id",
+          "found": false,
+          "count": 0,
+          "status": "ABSENT_OK",
+          "note": "Not found but not a core canon term; 0-hit rule applies"
+        },
+        {
+          "string": "execution_unit_context",
+          "found": true,
+          "count": 1,
+          "status": "PASS"
+        }
+      ],
+      "overall": "PASS"
+    }
+  ],
+  "summary": {
+    "total": 7,
+    "passed": 7,
+    "failed": 0
+  }
+}

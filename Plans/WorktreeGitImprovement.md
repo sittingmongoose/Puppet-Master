@@ -608,7 +608,7 @@ Required rules:
 - clearing the underlying worktree issue resolves the blocked prerequisite; it does not fabricate a new failure class
 - worktree conflict resolution must preserve lineage to the blocked episode and any affected safe point
 
-ContractRef: Plans/Orchestrator_Page.md#11. Source Control boundary
+ContractRef: Plans/Orchestrator_Page.md#Source Control boundary
 
 Required fields:
 - blocked_reason_code

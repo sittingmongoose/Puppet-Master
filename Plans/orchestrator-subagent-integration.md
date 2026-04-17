@@ -265,7 +265,7 @@ impl Orchestrator {
             self.coordinator.register_agent(ActiveAgent {
                 agent_id: agent_id.clone(),
                 platform,
-                tier_id: tier_node.id.clone(),
+                node_id: tier_node.id.clone(),
                 worktree_path: context.worktree_path.clone(),
                 files_being_edited: Vec::new(), // Updated during execution
                 current_operation: format!("Executing {} tier", tier_node.tier_type),
@@ -327,7 +327,7 @@ impl Orchestrator {
         model: &str,
         subagent_name: &str,
         tier_node: &TierNode,
-        tier_context: &TierContext,
+        tier_context: &ExecutionUnitContext,
         coordination_context: &str,
     ) -> Result<SubagentOutput> {
         let agent_id = format!("{}-{}", subagent_name, tier_node.id);
@@ -368,7 +368,7 @@ impl Orchestrator {
         &self,
         subagent_name: &str,
         task_description: &str,
-        tier_context: &TierContext,
+        tier_context: &ExecutionUnitContext,
         coordination_context: &str,
     ) -> Result<String> {
         // Build platform-specific subagent invocation using platform_specs
@@ -426,7 +426,7 @@ ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md#7
         &self,
         tier_node: &TierNode,
         context: &OrchestratorContext,
-    ) -> Result<TierContext> {
+    ) -> Result<ExecutionUnitContext> {
         // Detect language if not already cached
         let primary_language = self.subagent_selector
             .detect_language(&context.workspace)?
@@ -440,9 +440,9 @@ ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md#7
         let framework = self.detect_framework(&context.workspace)?;
 
         // Build context
-        Ok(TierContext {
+        Ok(ExecutionUnitContext {
             tier_type: tier_node.tier_type,
-            tier_id: tier_node.id.clone(),
+            node_id: tier_node.id.clone(),
             title: tier_node.title.clone(),
             description: tier_node.description.clone(),
             primary_language,
@@ -1433,7 +1433,7 @@ use serde::{Deserialize, Serialize};
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct StartVerificationResult {
     pub tier_type: TierType,
-    pub tier_id: String,
+    pub node_id: String,
     pub status: VerificationStatus,
     pub findings: Vec<VerificationFinding>,
     pub timestamp: chrono::DateTime<Utc>,
@@ -1547,7 +1547,7 @@ pub async fn verify_tier_start(
 
     Ok(StartVerificationResult {
         tier_type,
-        tier_id: context.tier_id.clone(),
+        node_id: context.node_id.clone(),
         status,
         findings,
         timestamp: Utc::now(),
@@ -1654,7 +1654,7 @@ Config: `quality.gate.{check_name}.action` — override per check (`"fail"` or `
 
 **AfterTierEnd verification responsibilities:**
 
-- **Persist verification results:** Save verification results to `.puppet-master/state/verification-{tier_id}-end.json`
+- **Persist verification results:** Save verification results to `.puppet-master/state/verification-{node_id}-end.json`
 - **Update tier status:** Update tier status in PRD/state based on verification results
 - **Generate feedback:** If verification failed, generate feedback for agent/user (what failed, which file/criterion, suggested fix)
 - **Handle failures:** If quality fails, either mark tier as "incomplete" (rework) or "complete with warnings" (log and proceed) per policy
@@ -1743,7 +1743,7 @@ use serde::{Deserialize, Serialize};
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct EndVerificationResult {
     pub tier_type: TierType,
-    pub tier_id: String,
+    pub node_id: String,
     pub status: VerificationStatus,
     pub wiring_check: WiringCheckResult,
     pub acceptance_check: AcceptanceCheckResult,
@@ -1815,7 +1815,7 @@ pub async fn verify_tier_end(
 
     Ok(EndVerificationResult {
         tier_type,
-        tier_id: context.tier_id.clone(),
+        node_id: context.node_id.clone(),
         status,
         wiring_check: wiring_result,
         acceptance_check: acceptance_result,
@@ -2075,9 +2075,9 @@ When a tier fails because of issues outside its intended scope:
 Verification failures MUST produce structured feedback identifying the failing criterion, affected artifact or file when known, and the expected next action. Rework loops reuse the existing incomplete-task / remediation flow rather than inventing a separate ad hoc channel.
 
 ContractRef: ContractName:Plans/interview-subagent-integration.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/FinalGUISpec.md
-### 1. Hook-Based Lifecycle Middleware (BeforeTier/AfterTier)
+### 1. Hook-Based Lifecycle Middleware (BeforeUnit/AfterUnit)
 
-**Concept:** Puppet Master should support **BeforeTier** and **AfterTier** hooks that run automatically at tier boundaries (Phase, Task, Subtask, Iteration). Hooks handle lifecycle concerns (tracking, state management, validation) separately from execution logic.
+**Concept:** Puppet Master should support **BeforeUnit** and **AfterUnit** hooks that run automatically at execution unit boundaries (Phase, Task, Subtask, Iteration). Hooks handle lifecycle concerns (tracking, state management, validation) separately from execution logic.
 
 **Platform-specific hook registration:**
 
@@ -2093,27 +2093,41 @@ ContractRef: ContractName:Plans/interview-subagent-integration.md, ContractName:
 // src/core/hooks.rs or src/verification/hooks.rs
 
 use crate::types::{Platform, TierType};
-use crate::core::state_persistence::TierContext;
+use crate::core::state_persistence::ExecutionUnitContext;
 use anyhow::Result;
 
-/// Hook context passed to BeforeTier hook
-pub struct BeforeTierContext {
-    pub tier_id: String,
+/// Hook context passed to BeforeUnit hook
+pub struct BeforeUnitContext {
+    pub run_id: String,
+    pub node_id: String,
+    pub attempt_id: String,
+    pub lane_id: String,
+    pub worktree_id: String,
+    pub execution_role: String,
+    pub requested_account_policy: String,
+    pub tool_use_id: String,
     pub tier_type: TierType,
     pub platform: Platform,
     pub model: String,
     pub selected_subagents: Vec<String>,
-    pub config_snapshot: serde_json::Value, // Serialized tier config + orchestrator config
-    pub known_gaps: Vec<String>, // Known gaps/issues that could affect this tier
+    pub config_snapshot: serde_json::Value,
+    pub known_gaps: Vec<String>,
 }
 
-/// Hook context passed to AfterTier hook
-pub struct AfterTierContext {
-    pub tier_id: String,
+/// Hook context passed to AfterUnit hook
+pub struct AfterUnitContext {
+    pub run_id: String,
+    pub node_id: String,
+    pub attempt_id: String,
+    pub lane_id: String,
+    pub worktree_id: String,
+    pub execution_role: String,
+    pub requested_account_policy: String,
+    pub tool_use_id: String,
     pub tier_type: TierType,
     pub platform: Platform,
-    pub subagent_output: String, // Raw stdout from subagent
-    pub completion_status: CompletionStatus, // Success, Failure, Warning
+    pub subagent_output: String,
+    pub completion_status: CompletionStatus,
     pub iteration_count: u32,
 }
 
@@ -2123,272 +2137,89 @@ pub enum CompletionStatus {
     Warning(String),
 }
 
-/// BeforeTier hook trait
-pub trait BeforeTierHook: Send + Sync {
-    /// Execute hook before tier starts
-    fn execute(&self, ctx: &BeforeTierContext) -> Result<BeforeTierResult>;
-
-    /// Hook name for logging/debugging
+/// BeforeUnit hook trait
+pub trait BeforeUnitHook: Send + Sync {
+    fn execute(&self, ctx: &BeforeUnitContext) -> Result<BeforeUnitResult>;
     fn name(&self) -> &str;
 }
 
-/// AfterTier hook trait
-pub trait AfterTierHook: Send + Sync {
-    /// Execute hook after tier completes
-    fn execute(&self, ctx: &AfterTierContext) -> Result<AfterTierResult>;
-
-    /// Hook name for logging/debugging
+/// AfterUnit hook trait
+pub trait AfterUnitHook: Send + Sync {
+    fn execute(&self, ctx: &AfterUnitContext) -> Result<AfterUnitResult>;
     fn name(&self) -> &str;
 }
 
-pub struct BeforeTierResult {
-    /// Active subagent to track (from selection or override)
+pub struct BeforeUnitResult {
     pub active_subagent: Option<String>,
-    /// Additional context to inject into subagent prompt
     pub injected_context: Option<String>,
-    /// Whether to block tier start (hook can prevent execution)
     pub block: bool,
-    /// Block reason if blocking
     pub block_reason: Option<String>,
 }
 
-pub struct AfterTierResult {
-    /// Whether handoff validation passed
+pub struct AfterUnitResult {
     pub validation_passed: bool,
-    /// Validation error if failed
     pub validation_error: Option<String>,
-    /// Whether to request retry (one chance)
     pub request_retry: bool,
-    /// Retry reason
     pub retry_reason: Option<String>,
 }
 
-/// Hook registry that manages all hooks
 pub struct HookRegistry {
-    before_tier_hooks: Vec<Box<dyn BeforeTierHook>>,
-    after_tier_hooks: Vec<Box<dyn AfterTierHook>>,
+    before_unit_hooks: Vec<Box<dyn BeforeUnitHook>>,
+    after_unit_hooks: Vec<Box<dyn AfterUnitHook>>,
 }
 
 impl HookRegistry {
     pub fn new() -> Self {
-        Self {
-            before_tier_hooks: Vec::new(),
-            after_tier_hooks: Vec::new(),
-        }
+        Self { before_unit_hooks: Vec::new(), after_unit_hooks: Vec::new() }
     }
-
-    pub fn register_before_tier(&mut self, hook: Box<dyn BeforeTierHook>) {
-        self.before_tier_hooks.push(hook);
+    pub fn register_before_unit(&mut self, hook: Box<dyn BeforeUnitHook>) {
+        self.before_unit_hooks.push(hook);
     }
-
-    pub fn register_after_tier(&mut self, hook: Box<dyn AfterTierHook>) {
-        self.after_tier_hooks.push(hook);
+    pub fn register_after_unit(&mut self, hook: Box<dyn AfterUnitHook>) {
+        self.after_unit_hooks.push(hook);
     }
-
-    /// Execute all BeforeTier hooks (safe wrapper)
-    pub fn execute_before_tier(&self, ctx: &BeforeTierContext) -> Result<BeforeTierResult> {
+    pub fn execute_before_unit(&self, ctx: &BeforeUnitContext) -> Result<BeforeUnitResult> {
         let mut active_subagent = None;
         let mut injected_contexts = Vec::new();
         let mut block = false;
         let mut block_reason = None;
-
-        for hook in &self.before_tier_hooks {
+        for hook in &self.before_unit_hooks {
             match safe_hook_main(|| hook.execute(ctx)) {
                 Ok(result) => {
-                    if result.block {
-                        block = true;
-                        block_reason = Some(result.block_reason.unwrap_or_else(|| format!("Hook {} blocked", hook.name())));
-                        break; // Stop on first block
-                    }
-                    if let Some(subagent) = result.active_subagent {
-                        active_subagent = Some(subagent);
-                    }
-                    if let Some(ctx) = result.injected_context {
-                        injected_contexts.push(ctx);
-                    }
+                    if result.block { block = true; block_reason = Some(result.block_reason.unwrap_or_else(|| format!("Hook {} blocked", hook.name()))); break; }
+                    if let Some(subagent) = result.active_subagent { active_subagent = Some(subagent); }
+                    if let Some(ctx) = result.injected_context { injected_contexts.push(ctx); }
                 }
-                Err(e) => {
-                    log::warn!("BeforeTier hook {} failed: {}", hook.name(), e);
-                    // Continue with other hooks (fail-safe)
-                }
+                Err(e) => { log::warn!("BeforeUnit hook {} failed: {}", hook.name(), e); }
             }
         }
-
-        Ok(BeforeTierResult {
-            active_subagent,
-            injected_context: if injected_contexts.is_empty() {
-                None
-            } else {
-                Some(injected_contexts.join("\n\n"))
-            },
-            block,
-            block_reason,
-        })
+        Ok(BeforeUnitResult { active_subagent, injected_context: if injected_contexts.is_empty() { None } else { Some(injected_contexts.join("\n\n")) }, block, block_reason })
     }
-
-    /// Execute all AfterTier hooks (safe wrapper)
-    pub fn execute_after_tier(&self, ctx: &AfterTierContext) -> Result<AfterTierResult> {
+    pub fn execute_after_unit(&self, ctx: &AfterUnitContext) -> Result<AfterUnitResult> {
         let mut validation_passed = true;
         let mut validation_error = None;
         let mut request_retry = false;
         let mut retry_reason = None;
-
-        for hook in &self.after_tier_hooks {
+        for hook in &self.after_unit_hooks {
             match safe_hook_main(|| hook.execute(ctx)) {
                 Ok(result) => {
-                    if !result.validation_passed {
-                        validation_passed = false;
-                        validation_error = result.validation_error;
-                        request_retry = result.request_retry;
-                        retry_reason = result.retry_reason;
-                        break; // Stop on first validation failure
-                    }
+                    if !result.validation_passed { validation_passed = false; validation_error = result.validation_error; request_retry = result.request_retry; retry_reason = result.retry_reason; break; }
                 }
-                Err(e) => {
-                    log::warn!("AfterTier hook {} failed: {}", hook.name(), e);
-                    // Continue with other hooks (fail-safe)
-                }
+                Err(e) => { log::warn!("AfterUnit hook {} failed: {}", hook.name(), e); }
             }
         }
-
-        Ok(AfterTierResult {
-            validation_passed,
-            validation_error,
-            request_retry,
-            retry_reason,
-        })
+        Ok(AfterUnitResult { validation_passed, validation_error, request_retry, retry_reason })
     }
 }
 
-/// Safe hook wrapper that guarantees structured output
 fn safe_hook_main<F, T>(hook_fn: F) -> Result<T>
-where
-    F: FnOnce() -> Result<T>,
-{
-    hook_fn()
-}
+where F: FnOnce() -> Result<T>,
+{ hook_fn() }
 ```
 
-**Built-in hooks (implement in `src/core/hooks/builtin.rs`):**
+**Built-in hooks:** `ActiveSubagentTrackerHook` (BeforeUnit), `TierContextInjectorHook` (BeforeUnit), `StaleStatePrunerHook` (BeforeUnit), `HandoffValidatorHook` (AfterUnit).
 
-1. **ActiveSubagentTrackerHook** (BeforeTier): Sets `active_subagent` in `TierContext`; persists tracking updates through canonical runtime storage and projection.
-2. **TierContextInjectorHook** (BeforeTier): Injects current phase/task/subtask status, config snapshot, known gaps into subagent prompt.
-3. **StaleStatePrunerHook** (BeforeTier): Prunes verification state older than 2 hours; creates state directories on first write.
-4. **HandoffValidatorHook** (AfterTier): Validates subagent output format (calls `validate_subagent_output`); requests retry on malformed output.
-
-**Integration with orchestrator:**
-
-In `src/core/orchestrator.rs`, modify `execute_tier`:
-
-```rust
-async fn execute_tier(&self, tier_id: &str) -> Result<()> {
-    // ... existing state transition logic ...
-
-    // BEFORE TIER: Execute BeforeTier hooks
-    let before_ctx = BeforeTierContext {
-        tier_id: tier_id.to_string(),
-        tier_type,
-        platform: tier_config.platform,
-        model: tier_config.model.clone(),
-        selected_subagents: self.get_selected_subagents(tier_id)?,
-        config_snapshot: serde_json::to_value(&tier_config)?,
-        known_gaps: self.get_known_gaps_for_tier(tier_type)?,
-    };
-
-    let before_result = self.hook_registry.execute_before_tier(&before_ctx)?;
-
-    if before_result.block {
-        return Err(anyhow!("Tier {} blocked by hook: {}", tier_id, before_result.block_reason.unwrap_or_default()));
-    }
-
-    // Update TierContext with active subagent
-    if let Some(subagent) = before_result.active_subagent {
-        self.update_tier_context(tier_id, |ctx| {
-            ctx.active_subagent = Some(subagent);
-        })?;
-    }
-
-    // Inject context into prompt if provided
-    let prompt = if let Some(injected) = before_result.injected_context {
-        format!("{}\n\n{}", prompt, injected)
-    } else {
-        prompt
-    };
-
-    // ... existing iteration execution ...
-
-    // AFTER TIER: Execute AfterTier hooks
-    let after_ctx = AfterTierContext {
-        tier_id: tier_id.to_string(),
-        tier_type,
-        platform: tier_config.platform,
-        subagent_output: iteration_result.output.clone(),
-        completion_status: if gate_report.passed {
-            CompletionStatus::Success
-        } else {
-            CompletionStatus::Failure(gate_report.report.unwrap_or_default())
-        },
-        iteration_count: attempt,
-    };
-
-    let after_result = self.hook_registry.execute_after_tier(&after_ctx)?;
-
-    if !after_result.validation_passed {
-        if after_result.request_retry && attempt < max_iterations {
-            // Retry with format instruction
-            let retry_prompt = format!("{}\n\nIMPORTANT: Format your output as structured JSON with task_report, downstream_context, and findings fields.", prompt);
-            previous_feedback = Some(after_result.retry_reason.unwrap_or_else(|| "Output format validation failed".to_string()));
-            continue; // Retry iteration
-        } else {
-            // Fail-safe: proceed with warnings
-            log::warn!("Tier {} output validation failed but proceeding: {}", tier_id, after_result.validation_error.unwrap_or_default());
-            // Mark tier as complete with warnings
-        }
-    }
-
-    // ... rest of tier completion logic ...
-}
-```
-
-**BeforeTier hook responsibilities (detailed):**
-
-- **Track active subagent:** Record which subagent is active at this tier (e.g., `active_subagent: Option<String>` in `TierContext`). Persist the tracking change through canonical runtime events and storage projections rather than through `.puppet-master/state/active-subagents.json`.
-- **Inject tier context:** Add current phase/task/subtask status, config snapshot, and known gaps to subagent prompt or context. Format: "Current tier: {tier_id}, Type: {tier_type}, Platform: {platform}, Model: {model}. Known gaps: {gaps}. Config: {config_summary}."
-- **Prune stale state:** Clean up verification state older than threshold (e.g., 2 hours). Check modification time of files in `.puppet-master/verification/<session-id>/`; delete if `mtime < now - 2 hours`.
-- **Lazy state creation:** Create verification state directories on first write (no explicit setup commands). Create `.puppet-master/verification/<session-id>/` if it doesn't exist when first hook writes state.
-
-**AfterTier hook responsibilities (detailed):**
-
-- **Validate subagent output format:** Check that output matches structured handoff contract (see #2 below). Call `validate_subagent_output(output, platform)`; return `validation_passed: false` if malformed.
-- **Track completion:** Update active subagent tracking (clear `active_subagent` in `TierContext`) and mark tier completion through the same canonical runtime projection used for active tracking.
-- **Safe error handling:** Guarantee structured output even on hook failure. Wrap hook execution in `safe_hook_main`; on panic or error, return `{ "status": "error", "message": "...", "details": {...} }` instead of crashing.
-
-**Platform-native hook integration:**
-
-For platforms with native hooks, create adapter hooks that delegate:
-
-```rust
-// src/core/hooks/platform_adapters.rs
-
-/// Cursor native hook adapter
-pub struct CursorNativeHookAdapter {
-    hook_script_path: PathBuf, // Path to .cursor/hooks.json registered script
-}
-
-impl BeforeTierHook for CursorNativeHookAdapter {
-    fn execute(&self, ctx: &BeforeTierContext) -> Result<BeforeTierResult> {
-        // Call Cursor hook script via subprocess
-        // Pass context as JSON stdin
-        // Parse JSON stdout
-        // Return BeforeTierResult
-    }
-}
-
-// Similar adapters for Claude Code, Gemini
-```
-
-**Implementation:** Create `src/core/hooks.rs` or `src/verification/hooks.rs` with `BeforeTierHook` and `AfterTierHook` traits. Register hooks per tier type in `HookRegistry`. Call hooks automatically at tier boundaries (before `verify_tier_start`, after `verify_tier_end`) in `orchestrator.rs::execute_tier`. For platforms with native hooks, register Puppet Master hooks that delegate to platform hooks where possible. **Default hooks:** Always register built-in hooks (ActiveSubagentTrackerHook, TierContextInjectorHook, StaleStatePrunerHook, HandoffValidatorHook) even if platform-native hooks are also registered.
-
+**Integration:** In `src/core/orchestrator.rs`, call `hook_registry.execute_before_unit` before subagent execution and `hook_registry.execute_after_unit` after. Update `ExecutionUnitContext.active_subagent` from `BeforeUnitResult`. Always register built-in hooks even when platform-native hooks are also registered.
 ### 2. Structured Handoff Report Validation
 
 **Concept:** Enforce a standardized output format for subagent invocations. Every subagent must produce a structured handoff report with required fields. If output is malformed, block and request one retry (fail-safe after retry).
@@ -2410,7 +2241,7 @@ impl BeforeTierHook for CursorNativeHookAdapter {
 
 **AfterHandoffValidation responsibilities:**
 
-- **Persist validation results:** Save validation results to `.puppet-master/state/handoff-validation-{tier_id}.json`
+- **Persist validation results:** Save validation results to `.puppet-master/state/handoff-validation-{node_id}.json`
 - **Update tier context:** Update tier context with validated `SubagentOutput` (task_report, downstream_context, findings)
 - **Handle validation failures:** If validation fails after retry, proceed with partial output but mark tier as "complete with warnings"
 
@@ -2653,7 +2484,7 @@ impl Orchestrator {
         model: &str,
         subagent_name: &str,
         prompt: &str,
-        context: &TierContext,
+        context: &ExecutionUnitContext,
     ) -> Result<SubagentOutput> {
         let runner = self.get_platform_runner(platform)?;
         let mut retry_count = 0;
@@ -2941,7 +2772,7 @@ pub fn validate_subagent_output(
 **Validation logic in AfterTier hook:** AfterTier hook calls `validate_subagent_output(output: &str, stderr: &str, platform: Platform) -> Result<SubagentOutput, ValidationError>`. If validation fails:
 1. Log error with details (platform, error type, partial output snippet).
 2. Request one retry (re-run subagent with "format your output as structured JSON" instruction appended to prompt).
-3. If retry also fails, proceed with partial output (fail-safe) but mark tier as "complete with warnings" in `TierContext`.
+3. If retry also fails, proceed with partial output (fail-safe) but mark tier as "complete with warnings" in `ExecutionUnitContext`.
 
 **Integration with existing ParsedOutput:**
 
@@ -3001,7 +2832,7 @@ impl RemediationLoop {
     /// Run remediation loop for a tier
     pub async fn run(
         &self,
-        tier_id: &str,
+        node_id: &str,
         reviewer_output: SubagentOutput,
     ) -> Result<RemediationResult> {
         // DRY: Severity filtering logic is reusable — consider extracting to DRY:FN:filter_critical_major_findings
@@ -3022,7 +2853,7 @@ impl RemediationLoop {
 
         while retry_count < self.max_retries {
             // Mark tier as incomplete
-            self.orchestrator.mark_tier_incomplete(tier_id, &current_findings).await?;
+            self.orchestrator.mark_tier_incomplete(node_id, &current_findings).await?;
 
             // Build remediation prompt
             let remediation_prompt = self.build_remediation_prompt(&current_findings);
@@ -3032,7 +2863,7 @@ impl RemediationLoop {
             // Implementation note: re_run_overseer_with_prompt MUST use subagent_registry to get overseer subagent name
             ContractRef: ContractName:Plans/DRY_Rules.md#7, ContractName:Plans/Contracts_V0.md
             let overseer_result = self.orchestrator
-                .re_run_overseer_with_prompt(tier_id, &remediation_prompt)
+                .re_run_overseer_with_prompt(node_id, &remediation_prompt)
                 .await?;
 
             // DRY REQUIREMENT: Reviewer subagent name MUST come from subagent_registry::get_reviewer_subagent_for_tier()
@@ -3040,7 +2871,7 @@ impl RemediationLoop {
             // Implementation note: re_run_reviewer MUST use subagent_registry to get reviewer subagent name
             ContractRef: ContractName:Plans/DRY_Rules.md#7, ContractName:Plans/Contracts_V0.md
             let reviewer_result = self.orchestrator
-                .re_run_reviewer(tier_id)
+                .re_run_reviewer(node_id)
                 .await?;
 
             // Parse new findings
@@ -3138,7 +2969,7 @@ let reviewer_output = parse_reviewer_output(&iteration_result.output)?;
 
 // Run remediation loop
 let remediation_result = self.remediation_loop
-    .run(tier_id, reviewer_output)
+    .run(node_id, reviewer_output)
     .await?;
 
 match remediation_result {
@@ -3151,8 +2982,8 @@ match remediation_result {
     }
     RemediationResult::Escalate(findings) => {
         // Escalate to parent-tier orchestrator
-        self.escalate_to_parent(tier_id, findings).await?;
-        return Err(anyhow!("Tier {} escalated due to unresolved Critical/Major findings", tier_id));
+        self.escalate_to_parent(node_id, findings).await?;
+        return Err(anyhow!("Tier {} escalated due to unresolved Critical/Major findings", node_id));
     }
 }
 ```
@@ -3318,7 +3149,7 @@ These lifecycle and quality features **complement** the existing start/end verif
 
 **Mitigation:**
 - **Execution order:** Built-in hooks run first (ActiveSubagentTrackerHook, TierContextInjectorHook, StaleStatePrunerHook), then platform-native hooks, then custom hooks.
-- **Dependencies:** Hooks should be independent. If a hook needs data from another hook, use shared context (`BeforeTierContext`/`AfterTierContext`).
+- **Dependencies:** Hooks should be independent. If a hook needs data from another hook, use shared context (`BeforeUnitContext`/`AfterUnitContext`).
 - **Blocking:** First hook that blocks stops execution. Log which hook blocked and why.
 
 **Gap #16: Structured output parsing reliability**
@@ -3356,8 +3187,8 @@ These lifecycle and quality features **complement** the existing start/end verif
 **Issue:** Active subagent tracking may be inaccurate if subagent selection changes mid-tier, or if platform-native hooks override selection. How do we ensure tracking reflects reality?
 
 **Mitigation:**
-- **Single source of truth:** `TierContext.active_subagent` is set by BeforeTier hook (built-in ActiveSubagentTrackerHook). Platform-native hooks can override but must update `TierContext`.
-- **Validation:** AfterTier hook validates that tracked subagent matches actual execution (check platform logs or output for subagent name).
+- **Single source of truth:** `ExecutionUnitContext.active_subagent` is set by BeforeUnit hook (built-in ActiveSubagentTrackerHook). Platform-native hooks can override but must update `ExecutionUnitContext`.
+- **Validation:** AfterUnit hook validates that tracked subagent matches actual execution (check platform logs or output for subagent name).
 - **Fallback:** If tracking fails, infer subagent from output patterns (e.g., "rust-engineer" if output mentions Rust-specific patterns).
 
 **Gap #20: Safe error handling performance overhead**
@@ -3404,8 +3235,8 @@ These lifecycle and quality features **complement** the existing start/end verif
 - **Unified adapter trait:** Define `PlatformHookAdapter` trait with common interface:
   ```rust
   trait PlatformHookAdapter: Send + Sync {
-      fn execute_before_tier(&self, ctx: &BeforeTierContext) -> Result<BeforeTierResult>;
-      fn execute_after_tier(&self, ctx: &AfterTierContext) -> Result<AfterTierResult>;
+      fn execute_before_unit(&self, ctx: &BeforeUnitContext) -> Result<BeforeTierResult>;
+      fn execute_after_unit(&self, ctx: &AfterUnitContext) -> Result<AfterTierResult>;
       fn platform(&self) -> Platform;
   }
   ```
@@ -3434,7 +3265,7 @@ These lifecycle and quality features **complement** the existing start/end verif
 
 **Gap #26: Hook performance impact on tier execution time**
 
-**Issue:** Hooks add overhead to tier execution (BeforeTier hooks run before every tier start, AfterTier hooks run after every tier completion). Could slow down fast tiers significantly.
+**Issue:** Hooks add overhead to tier execution (BeforeUnit hooks run before every tier start, AfterUnit hooks run after every tier completion). Could slow down fast tiers significantly.
 
 **Mitigation:**
 - **Async hooks:** Run hooks asynchronously where possible (e.g., StaleStatePrunerHook can run in background).
@@ -3455,7 +3286,34 @@ These lifecycle and quality features **complement** the existing start/end verif
 ### Implementation Notes
 
 - **Where:** New module `src/core/hooks.rs` or `src/verification/hooks.rs` for hook system; `src/core/memory.rs` for cross-session persistence; extend `SubagentOutput` in `src/types/` for structured handoff.
-- **What:** Implement `BeforeTierHook` and `AfterTierHook` traits; `save_memory()` and `load_memory()` functions; `validate_subagent_output()` with platform-specific parsers; remediation loop in orchestrator completion logic.
+- **What:** Implement `BeforeUnitHook` and `AfterUnitHook` traits; `save_memory()` and `load_memory()` functions; `validate_subagent_output()` with platform-specific parsers; remediation loop in orchestrator completion logic.
+- **When:** Hooks run automatically at tier boundaries; memory persists at Phase completion and loads at run start; remediation loop runs when Critical/Major findings detected.
+
+---
+
+## Considerations
+
+1. **Performance:** Subagent detection should be cached, not recomputed every iteration
+2. **Fallbacks:** Always have fallback subagents if detection fails
+3. **Multiple Subagents:** Support parallel subagent invocation when appropriate
+4. **Configuration Overrides:** Allow manual overrides for edge cases
+5. **Language Detection:** Handle multi-language projects (e.g., Rust + TypeScript)
+6. **Subagent Availability:** Check if subagent files exist before selection
+
+## Platform capability next steps
+
+1. Review and approve this plan
+2. Implement Phase 1 (Project Context Detection)
+3. Implement Phase 2 (Subagent Selector)
+4. Integrate with orchestrator
+5. Test with real projects
+
+---
+
+### Implementation Notes
+
+- **Where:** New module `src/core/hooks.rs` or `src/verification/hooks.rs` for hook system; `src/core/memory.rs` for cross-session persistence; extend `SubagentOutput` in `src/types/` for structured handoff.
+- **What:** Implement `BeforeUnitHook` and `AfterUnitHook` traits; `save_memory()` and `load_memory()` functions; `validate_subagent_output()` with platform-specific parsers; remediation loop in orchestrator completion logic.
 - **When:** Hooks run automatically at tier boundaries; memory persists at Phase completion and loads at run start; remediation loop runs when Critical/Major findings detected.
 
 ---
@@ -3500,7 +3358,7 @@ Short notes so implementers know where to put code and what the orchestrator alr
 
 ### Phase 4: Error Pattern Detection
 
-- **Where:** In the orchestrator or in a small helper that parses iteration output (e.g. stderr/stdout). Update `TierContext.has_errors` or `error_patterns` from the result of the last iteration so the next selection can add debugger/security-auditor etc.
+- **Where:** In the orchestrator or in a small helper that parses iteration output (e.g. stderr/stdout). Update `ExecutionUnitContext.has_errors` or `error_patterns` from the result of the last iteration so the next selection can add debugger/security-auditor etc.
 - **What:** Define how to detect "compilation error," "test failure," "security issue" (e.g. regex on stderr or exit codes). Keep it simple for v1 (e.g. non-zero exit + keyword in stderr).
 
 ### SubagentManager
@@ -3518,7 +3376,7 @@ Short notes so implementers know where to put code and what the orchestrator alr
 - **Where:** Same verification module as config-wiring (e.g. `src/verification/` or `src/core/`) or a dedicated `tier_verification.rs`. The main orchestrator calls `verify_tier_start` when entering a Phase/Task/Subtask (after or as part of config-wiring) and `verify_tier_end` when completing a Phase/Task/Subtask (after acceptance gate; quality step can be part of gate or separate).
 - **What:** Start: config-wiring (existing) + wiring/readiness checklist (GUI updated? backend updated? steps make sense? known gaps?). End: wiring re-check + existing acceptance gate + quality verification. Quality verification is **both** (1) required reviewer subagent (code-reviewer) at end-of-tier, on retry, and when gate fails; (2) gate criteria (clippy, tests, etc.). Parent-tier orchestrator addresses unrelated failures. See **"Start and End Verification at Phase, Task, and Subtask"** for the table and gaps. Define per-tier quality checklist (e.g. Phase: docs; Task: design; Subtask: code + tests + clippy) in code or config.
 - **When called:** Start at Phase/Task/Subtask entry; end at Phase/Task/Subtask completion (before marking tier complete). Iteration can use tier-level checks only (no separate iteration start/end verification unless needed).
-- **Integration with hooks:** BeforeTier hook runs **before** `verify_tier_start` (tracks active subagent, injects context, prunes stale state). AfterTier hook runs **after** `verify_tier_end` (validates handoff format, tracks completion). See **"Lifecycle and Quality Features"** for hook implementation.
+- **Integration with hooks:** BeforeUnit hook runs **before** `verify_tier_start` (tracks active subagent, injects context, prunes stale state). AfterUnit hook runs **after** `verify_tier_end` (validates handoff format, tracks completion). See **"Lifecycle and Quality Features"** for hook implementation.
 
 ### Agent coordination
 
@@ -3529,8 +3387,8 @@ Short notes so implementers know where to put code and what the orchestrator alr
 ### Lifecycle hooks and quality features
 
 - **Where:** New module `src/core/hooks.rs` or `src/verification/hooks.rs` for hook system; canonical persistence and recovery projections in seglog/redb for continuity; extend `SubagentOutput` in `src/types/` for structured handoff format; remediation loop in orchestrator completion logic (`src/core/orchestrator.rs`).
-- **What:** (1) **BeforeTier/AfterTier hooks:** Implement hook traits, register hooks per tier type, call automatically at tier boundaries. For platforms with native hooks (Cursor, Claude, Gemini), register Puppet Master hooks that delegate where possible; for Codex/Copilot, use orchestrator-level middleware and canonical coordination projection. (2) **Structured handoff validation:** `validate_subagent_output()` with platform-specific parsers (JSON for Cursor/Claude/Gemini, JSONL for Codex, text parsing for Copilot). (3) **Remediation loop:** Parse findings from reviewer subagent output; filter Critical/Major; block completion and re-run until resolved or max retries; escalate to parent-tier on max retries. (4) **Cross-run continuity:** Persist architectural decisions, patterns, and tech choices as canonical outputs and projections at Phase completion; reload them at run start through handoff/context assembly rather than child-memory files. (5) **Active agent tracking:** `active_subagent: Option<String>` in `TierContext`; update in BeforeTier/AfterTier hooks; persist through canonical runtime storage and projections. (6) **Safe error handling:** Wrap hooks and verification in `safe_hook_main()` that guarantees structured output even on failure. (7) **Lazy lifecycle:** Create verification state on first write; prune stale state (>2 hours) in BeforeTier hook. (8) **Contract enforcement:** AfterTier hook validates handoff format; retry on malformed output; fail-safe after retry.
-- **When called:** Hooks run automatically at tier boundaries (before `verify_tier_start`, after `verify_tier_end`). Cross-run continuity persists at Phase completion and loads through run-start context assembly. Remediation loop runs when Critical/Major findings detected. See **"Lifecycle and Quality Features"** for full details and platform-specific implementation notes.
+- **What:** (1) **BeforeUnit/AfterUnit hooks:** Implement hook traits, register hooks per unit type, call automatically at unit boundaries. For platforms with native hooks (Cursor, Claude, Gemini), register Puppet Master hooks that delegate where possible; for Codex/Copilot, use orchestrator-level middleware and canonical coordination projection. (2) **Structured handoff validation:** `validate_subagent_output()` with platform-specific parsers (JSON for Cursor/Claude/Gemini, JSONL for Codex, text parsing for Copilot). (3) **Remediation loop:** Parse findings from reviewer subagent output; filter Critical/Major; block completion and re-run until resolved or max retries; escalate to parent-tier on max retries. (4) **Cross-run continuity:** Persist architectural decisions, patterns, and tech choices as canonical outputs and projections at Phase completion; reload them at run start through handoff/context assembly rather than child-memory files. (5) **Active agent tracking:** `active_subagent: Option<String>` in `ExecutionUnitContext`; update in BeforeUnit/AfterUnit hooks; persist through canonical runtime storage and projections. (6) **Safe error handling:** Wrap hooks and verification in `safe_hook_main()` that guarantees structured output even on failure. (7) **Lazy lifecycle:** Create verification state on first write; prune stale state (>2 hours) in BeforeUnit hook. (8) **Contract enforcement:** AfterUnit hook validates handoff format; retry on malformed output; fail-safe after retry.
+- **When called:** Hooks run automatically at unit boundaries (before `verify_tier_start`, after `verify_tier_end`). Cross-run continuity persists at Phase completion and loads through run-start context assembly. Remediation loop runs when Critical/Major findings detected. See **"Lifecycle and Quality Features"** for full details and platform-specific implementation notes.
 
 ### Considerations #6 (Subagent availability / files)
 
@@ -3641,9 +3499,9 @@ impl SubagentSelector {
         &self,
         tier_node: &TierNode,
         completed_dependencies: &[TierNode],
-        tier_context: &TierContext,
+        execution_unit_context: &ExecutionUnitContext,
     ) -> Vec<String> {
-        let mut subagents = self.select_for_tier(tier_node.tier_type, tier_context);
+        let mut subagents = self.select_for_tier(tier_node.tier_type, execution_unit_context);
 
         // DRY REQUIREMENT: language_to_subagent MUST use subagent_registry::get_subagent_for_language()
         ContractRef: ContractName:Plans/DRY_Rules.md#7, ContractName:Plans/Contracts_V0.md
@@ -3651,7 +3509,7 @@ impl SubagentSelector {
         for dep in completed_dependencies {
             if let Some(dep_context) = self.get_tier_context(dep) {
                 // Inherit language if not already set
-                if tier_context.primary_language.is_none() {
+                if execution_unit_context.primary_language.is_none() {
                     if let Some(lang) = &dep_context.primary_language {
                         // DRY: Use subagent_registry — DO NOT call self.language_to_subagent which may hardcode mappings
                         if let Some(subagent) = subagent_registry::get_subagent_for_language(lang) {
@@ -3663,7 +3521,7 @@ impl SubagentSelector {
                 }
 
                 // Inherit domain if not already set
-                if tier_context.domain == ProjectDomain::Unknown {
+                if execution_unit_context.domain == ProjectDomain::Unknown {
                     // Use domain from dependency
                 }
             }
@@ -3700,12 +3558,13 @@ Canonical message schema:
 - `from_platform`
 - `to_agent_id?` for direct routing
 - `to_agent_type?` for role-wide routing
-- `to_tier_id?` for tier-wide routing
+- `to_node_id?` for node-wide routing
+- `to_lane_id?` for lane-wide routing
 - `message_type` = `Question | Answer | Update | Request | Decision | Warning | Announcement`
 - `priority` = `low | normal | high | urgent`
 - `subject`
 - `content`
-- `context` (files mentioned, operations mentioned, sender tier, related message ids)
+- `context` (execution_unit_context: files mentioned, operations mentioned, sender node, related message ids)
 - `thread_id?`
 - `in_reply_to?`
 - `created_at`
@@ -3717,10 +3576,11 @@ ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Com
 Routing rules:
 - direct routing uses `to_agent_id`
 - role-wide routing uses `to_agent_type`
-- tier-wide routing uses `to_tier_id`
-- broadcast routing leaves all three target selectors empty
+- node-wide routing uses `to_node_id`
+- lane-wide routing uses `to_lane_id`
+- broadcast routing leaves all target selectors empty
 - the orchestrator MUST be able to inspect every message regardless of agent-local visibility filters
-- agent-local views MUST be filtered to direct messages, type-matched messages, tier-matched messages, broadcast messages, and file-relevant messages for the agent's active work
+- agent-local views MUST be filtered to direct messages, type-matched messages, node-matched messages, lane-matched messages, broadcast messages, and file-relevant messages for the agent's active work
 
 ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md
 
@@ -3798,7 +3658,7 @@ When a Codex agent and a Claude Code agent work simultaneously:
      {
        "agent_id": "rust-engineer-1.1.1",
        "platform": "codex",
-       "tier_id": "1.1.1",
+       "node_id": "1.1.1",
        "current_operation": "Starting API implementation",
        "files_being_edited": []
      }
@@ -3810,7 +3670,7 @@ When a Codex agent and a Claude Code agent work simultaneously:
      {
        "agent_id": "test-automator-1.1.2",
        "platform": "claude",
-       "tier_id": "1.1.2",
+       "node_id": "1.1.2",
        "current_operation": "Starting test implementation",
        "files_being_edited": []
      }
@@ -3844,7 +3704,7 @@ The coordination projection includes a `platform` field so agents know which pla
     "rust-engineer-1.1.1": {
       "agent_id": "rust-engineer-1.1.1",
       "platform": "codex",
-      "tier_id": "1.1.1",
+      "node_id": "1.1.1",
       "worktree_path": ".puppet-master/worktrees/1.1.1",
       "files_being_edited": ["src/api.rs"],
       "current_operation": "Editing src/api.rs",
@@ -3854,7 +3714,7 @@ The coordination projection includes a `platform` field so agents know which pla
     "test-automator-1.1.2": {
       "agent_id": "test-automator-1.1.2",
       "platform": "claude",
-      "tier_id": "1.1.2",
+      "node_id": "1.1.2",
       "worktree_path": ".puppet-master/worktrees/1.1.2",
       "files_being_edited": ["tests/api_test.rs"],
       "current_operation": "Writing tests for API endpoint",
@@ -3882,8 +3742,11 @@ use chrono::{DateTime, Utc};
 // DRY:DATA:ActiveAgent — Active agent coordination state
 pub struct ActiveAgent {
     pub agent_id: String, // e.g., "rust-engineer", "test-automator"
+    pub agent_type: String, // subagent type/role
     pub platform: Platform, // "codex", "claude", "cursor", "gemini", "copilot" - enables cross-platform coordination
-    pub tier_id: String,
+    pub node_id: String,
+    pub lane_id: Option<String>,
+    pub run_id: String,
     pub worktree_path: Option<PathBuf>, // None if main repo
     pub files_being_edited: Vec<PathBuf>,
     pub current_operation: String, // e.g., "editing src/api.rs", "running tests"
@@ -3911,7 +3774,7 @@ impl AgentCoordinator {
     }
 
     // DRY:FN:register_agent — Register an agent as active
-    // DRY REQUIREMENT: Agent platform field MUST be from tier_config.platform — NEVER hardcode platform
+    // DRY REQUIREMENT: Agent platform field MUST be from node_config.platform — NEVER hardcode platform
     ContractRef: ContractName:Plans/DRY_Rules.md#7, ContractName:Plans/Models_System.md
     /// Register an agent as active
     pub async fn register_agent(&self, agent: ActiveAgent) -> Result<()> {
@@ -3963,12 +3826,12 @@ impl AgentCoordinator {
                 ContractRef: ContractName:Plans/DRY_Rules.md#7, ContractName:Plans/Models_System.md
                 let platform_display = platform_specs::display_name_for(agent.platform);
                 context.push_str(&format!(
-                    "- {} ({}) is {} (started {} ago, tier: {})\n",
+                    "- {} ({}) is {} (started {} ago, node: {})\n",
                     agent.agent_id,
                     platform_display, // Use platform_specs for display name
                     agent.current_operation,
                     format_duration(age),
-                    agent.tier_id
+                    agent.node_id
                 ));
             }
 
@@ -4035,20 +3898,23 @@ fn format_duration(d: chrono::Duration) -> String {
 
 **Integration with orchestrator:**
 
-In `src/core/orchestrator.rs`, before executing a tier:
+In `src/core/orchestrator.rs`, before executing a node:
 
 ```rust
-// Before tier execution
+// Before node execution
 let coordinator = AgentCoordinator::new(&self.config.project.working_directory);
 
 // Register this agent/subagent as active (includes platform for cross-platform coordination)
 coordinator.register_agent(ActiveAgent {
-    agent_id: format!("{}-{}", subagent_name, tier_id),
-    platform: tier_config.platform, // Include platform so other agents know which platform this agent uses
-    tier_id: tier_id.to_string(),
-    worktree_path: self.get_tier_worktree(tier_id),
+    agent_id: format!("{}-{}", subagent_name, node_id),
+    agent_type: subagent_name.to_string(),
+    platform: node_config.platform, // Include platform so other agents know which platform this agent uses
+    node_id: node_id.to_string(),
+    lane_id: None,
+    run_id: run_id.to_string(),
+    worktree_path: self.get_node_worktree(node_id),
     files_being_edited: Vec::new(), // Will update as agent works
-    current_operation: format!("Starting tier {}", tier_id),
+    current_operation: format!("Starting node {}", node_id),
     started_at: Utc::now(),
     last_update: Utc::now(),
 }).await?;
@@ -4056,17 +3922,17 @@ coordinator.register_agent(ActiveAgent {
 // Get coordination context and inject into prompt
 let coordination_context = coordinator.get_coordination_context().await?;
 let enhanced_prompt = if !coordination_context.is_empty() {
-    format!("{}\n\n{}", prompt, coordination_context)
+    format!"{}\n\n{}", prompt, coordination_context)
 } else {
     prompt
 };
 
 // During execution, update status periodically (e.g., when agent edits files)
 // This requires parsing agent output or using platform-specific hooks
-// For now, update on tier completion
+// For now, update on node completion
 
-// After tier execution
-coordinator.unregister_agent(&format!("{}-{}", subagent_name, tier_id)).await?;
+// After node execution
+coordinator.unregister_agent(&format!("{}-{}", subagent_name, node_id)).await?;
 ```
 
 **Provider coordination model (Codex/Copilot included):**
@@ -4141,6 +4007,64 @@ coordinator.unregister_agent(&format!("{}-{}", subagent_name, tier_id)).await?;
 - **What:** Implement `AgentCoordinator`, inject coordination context into prompts, and keep status updates provider-agnostic.
 - **When:** Register agent before execution; update status during execution (periodically or on file operations); unregister after execution.
 
+### Puppet Master Crews (Teams/Fleets Alternative)
+
+Crew mode is a multi-model coordination overlay over child runs.
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Models_System.md, ContractName:Plans/storage-plan.md
+
+Canonical crew rules:
+- members are child runs.
+- model/provider diversity is the default distinguishing axis.
+- the same task and often the same Persona are preserved across the crew.
+- member-to-member coordination occurs through an attributable crew board.
+- the parent owns final synthesis and user-facing escalation.
+- crew shared state is explicit shared coordination state, not hidden long-term member memory.
+
+Crew defaults and confirmation:
+- default crews live in the model/runtime settings surface.
+- first crew invocation asks whether to use the default crew if one exists.
+- after model choice, PM resolves each member's provider/runtime surface and discloses the resulting mapping.
+- if any member is Copilot, the crew normalizes to Copilot as a crew-level provider constraint.
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/assistant-memory-subsystem.md, ContractName:Plans/CLI_Bridged_Providers.md
+### Gaps and Potential Issues for Crews Feature
+
+Gap-era crew notes in this section are retired as canonical guidance. The live crew rules now resolve through the orchestrator contracts elsewhere in this document rather than through illustrative fallback numbers, and the superseded gap-era examples that previously followed this heading MUST NOT be implemented as live crew canon.
+
+ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Crosswalk.md
+
+#### Canonical crew-cap and availability rules
+
+Crew admission MUST use `executionLimits` as the sole live source for:
+- `maxConcurrentCrewsPerPlatform = 4`
+- `maxConcurrentAgentsPerCrew = 8`
+- `maxTotalActiveAgents = 32`
+- `maxNestingDepth = 4`
+- `maxTotalSpawnedAgents = 99`
+- `maxToolRoundsPerAgent = 200`
+
+ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/interview-subagent-integration.md, ContractName:Plans/Crosswalk.md
+
+Later illustrative examples in this file MUST NOT widen or replace those values. Availability checks MAY narrow admission further based on platform support, current saturation, quota posture, or policy, but they MUST fail closed rather than inventing alternate per-gap ceilings.
+
+ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Contracts_V0.md
+
+#### Crew lifecycle, cleanup, and GUI routing
+
+Crew lifecycle, timeout propagation, cancellation, and cleanup follow the canonical parent/child orchestration and runtime lifecycle contracts. This section no longer defines separate crew-only timeout ceilings, alternate cleanup paths, or stale concurrency examples.
+
+ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md
+
+GUI and future Assistant-surface affordances for crews remain consumer projections. They MUST disclose canonical crew/member state and runtime ceilings, but they do not become the owner of orchestration authority.
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Crosswalk.md
+
+#### Future Assistant-surface note
+
+User-initiated crews remain future Assistant functionality. When that surface lands, platform selection, queueing, and subagent admission still resolve through the same orchestrator-owned ceilings and compatibility checks defined here and in `executionLimits`; future UX MUST NOT reintroduce alternative defaults such as "20 total crews" or "3 crews per subagent type".
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Decision_Policy.md, ContractName:Plans/Crosswalk.md
 ### Puppet Master Crews (Teams/Fleets Alternative)
 
 Crew mode is a multi-model coordination overlay over child runs.
@@ -4336,7 +4260,7 @@ pub struct AgentMessage {
     pub from_platform: Platform,
     pub to_agent_id: Option<String>, // None = broadcast
     pub to_agent_type: Option<String>, // e.g., "test-automator", "code-reviewer"
-    pub to_tier_id: Option<String>, // e.g., "1.1" (all agents in this tier)
+    pub to_node_id: Option<String>, // e.g., "1.1" (all agents in this node)
     pub message_type: MessageType,
     pub subject: String, // Brief summary
     pub content: String, // Full message content
@@ -4363,7 +4287,7 @@ pub enum MessageType {
 pub struct MessageContext {
     pub files_mentioned: Vec<PathBuf>,
     pub operations_mentioned: Vec<String>, // e.g., "editing src/api.rs", "running tests"
-    pub tier_id: String,
+    pub node_id: String,
     pub related_messages: Vec<String>, // message_ids
 }
 
@@ -4380,8 +4304,8 @@ pub struct AgentMessageBoard {
 Messages can be routed to:
 - **Direct:** Specific agent ID (`to_agent_id`)
 - **By type:** All agents of a specific type (`to_agent_type`, e.g., "all test-automators")
-- **By tier:** All agents in a specific tier (`to_tier_id`)
-- **Broadcast:** All active agents (`to_agent_id = None`, `to_agent_type = None`, `to_tier_id = None`)
+- **By node:** All agents in a specific node (`to_node_id`)
+- **Broadcast:** All active agents (`to_agent_id = None`, `to_agent_type = None`, `to_node_id = None`)
 
 **Usage examples:**
 
@@ -4400,7 +4324,7 @@ coordinator.post_message(AgentMessage {
     context: MessageContext {
         files_mentioned: vec![PathBuf::from("src/api.rs")],
         operations_mentioned: vec!["implemented POST /users endpoint".to_string()],
-        tier_id: "1.1.1".to_string(),
+        node_id: "1.1.1".to_string(),
         related_messages: vec![],
     },
     thread_id: None,
@@ -4419,14 +4343,14 @@ coordinator.post_message(AgentMessage {
     message_id: uuid::Uuid::new_v4().to_string(),
     from_agent_id: "architect-reviewer-1.0".to_string(),
     from_platform: Platform::Claude,
-    to_tier_id: Some("1.1".to_string()), // Share with all agents in tier 1.1
+    to_node_id: Some("1.1".to_string()), // Share with all agents in node 1.1
     message_type: MessageType::Decision,
     subject: "Architecture decision: Use Actix-web for API server".to_string(),
     content: "After reviewing requirements, I've decided we should use Actix-web for the API server. This provides async/await support, good performance, and strong Rust ecosystem integration. All agents working on API-related tasks should use this framework.".to_string(),
     context: MessageContext {
         files_mentioned: vec![],
         operations_mentioned: vec!["architecture review".to_string()],
-        tier_id: "1.0".to_string(),
+        node_id: "1.0".to_string(),
         related_messages: vec![],
     },
     thread_id: None,
@@ -4452,7 +4376,7 @@ coordinator.post_message(AgentMessage {
     context: MessageContext {
         files_mentioned: vec![PathBuf::from("src/api.rs")],
         operations_mentioned: vec!["adding tests".to_string()],
-        tier_id: "1.1.2".to_string(),
+        node_id: "1.1.2".to_string(),
         related_messages: vec![],
     },
     thread_id: None,
@@ -4479,7 +4403,7 @@ Messages are injected into agent prompts as part of coordination context:
 ```rust
 // In orchestrator, before executing agent
 let coordination_context = coordinator.get_coordination_context().await?;
-let messages = coordinator.get_messages_for_agent(&agent_id, &tier_id).await?;
+let messages = coordinator.get_messages_for_agent(&agent_id, &node_id).await?;
 let message_context = coordinator.format_messages_for_prompt(&messages)?;
 
 let enhanced_prompt = format!(
@@ -4495,7 +4419,7 @@ let enhanced_prompt = format!(
 Agents only see messages relevant to them:
 - Messages addressed to their agent_id
 - Messages addressed to their agent type
-- Messages addressed to their tier_id
+- Messages addressed to their node_id
 - Broadcast messages
 - Messages mentioning files they're working on
 
@@ -4539,7 +4463,7 @@ impl AgentCommunicator {
     /// Post a message to the message board
     pub async fn post_message(&self, message: AgentMessage) -> Result<()> {
         // DRY: Validate message.from_agent_id if it's a subagent name (not a tier-specific ID)
-        // Implementation note: Extract subagent name from agent_id if format is "subagent-tier_id"
+        // Implementation note: Extract subagent name from agent_id if format is "subagent-node_id"
         // and validate using subagent_registry::is_valid_subagent_name()
         let mut board = self.load_message_board().await?;
         board.messages.push(message);
@@ -4551,7 +4475,7 @@ impl AgentCommunicator {
     pub async fn get_messages_for_agent(
         &self,
         agent_id: &str,
-        tier_id: &str,
+        node_id: &str,
         agent_type: Option<&str>,
     ) -> Result<Vec<AgentMessage>> {
         let board = self.load_message_board().await?;
@@ -4574,15 +4498,15 @@ impl AgentCommunicator {
                     }
                 }
 
-                // Message to tier
-                if let Some(ref to_tier) = msg.to_tier_id {
-                    if to_tier == tier_id {
+                // Message to node
+                if let Some(ref to_node) = msg.to_node_id {
+                    if to_node == node_id {
                         return true;
                     }
                 }
 
                 // Broadcast (no specific recipient)
-                if msg.to_agent_id.is_none() && msg.to_agent_type.is_none() && msg.to_tier_id.is_none() {
+                if msg.to_agent_id.is_none() && msg.to_agent_type.is_none() && msg.to_node_id.is_none() {
                     return true;
                 }
 
@@ -4711,7 +4635,7 @@ if agent_output.contains("@message") || agent_output.contains("@ask") {
 }
 
 // Before agent execution, inject messages into prompt
-let messages = communicator.get_messages_for_agent(&agent_id, &tier_id, Some(&agent_type)).await?;
+let messages = communicator.get_messages_for_agent(&agent_id, &node_id, Some(&agent_type)).await?;
 let message_context = communicator.format_messages_for_prompt(&messages)?;
 ```
 
@@ -4764,7 +4688,6 @@ impl OrchestratorInsights {
 4. Add orchestrator monitoring/insights
 5. Add GUI visualization of agent communication
 6. Test with multiple agents across different platforms
-
 ### Gaps and Potential Issues for Agent Coordination
 
 **Gap #28: File locking and concurrent writes**
@@ -4931,8 +4854,8 @@ fn validate_state(&self, state: &AgentCoordinationState) -> Result<()> {
         if agent.agent_id.is_empty() {
             return Err(anyhow!("Invalid agent: empty agent_id"));
         }
-        if agent.tier_id.is_empty() {
-            return Err(anyhow!("Invalid agent {}: empty tier_id", agent_id));
+        if agent.node_id.is_empty() {
+            return Err(anyhow!("Invalid agent {}: empty node_id", agent_id));
         }
         // Check for reasonable timestamps (not in future, not too old)
         let now = Utc::now();
@@ -5089,8 +5012,8 @@ pub async fn get_coordination_context(
     let filtered_agents: Vec<_> = state.active_agents.values()
         .filter(|agent| {
             if let Some(ref filter) = filter {
-                if let Some(ref tier_filter) = filter.tier_id {
-                    if agent.tier_id != *tier_filter {
+                if let Some(ref node_filter) = filter.node_id {
+                    if agent.node_id != *node_filter {
                         return false;
                     }
                 }
@@ -5130,7 +5053,7 @@ pub async fn get_coordination_context(
 }
 
 pub struct CoordinationFilter {
-    pub tier_id: Option<String>,
+    pub node_id: Option<String>,
     pub platform: Option<Platform>,
     pub file_path: Option<PathBuf>,
 }
@@ -5283,10 +5206,10 @@ impl AgentCoordinator {
             .collect())
     }
 
-    pub async fn get_agents_by_tier(&self, tier_id: &str) -> Result<Vec<ActiveAgent>> {
+    pub async fn get_agents_by_node(&self, node_id: &str) -> Result<Vec<ActiveAgent>> {
         let state = self.load_state().await?;
         Ok(state.active_agents.values()
-            .filter(|a| a.tier_id == tier_id)
+            .filter(|a| a.node_id == node_id)
             .cloned()
             .collect())
     }
@@ -5411,23 +5334,23 @@ impl SubagentConflictDetector {
     pub async fn detect_conflicts(
         &self,
         subagent_groups: &[Vec<String>],
-        tier_contexts: &[TierContext],
+        contexts: &[ExecutionUnitContext],
         coordinator: &AgentCoordinator,
     ) -> Vec<Conflict> {
         let mut conflicts = Vec::new();
         let coordination_state = coordinator.load_state().await.ok();
 
         // Check for overlapping file modifications using coordination state
-        for (i, context_a) in tier_contexts.iter().enumerate() {
-            for (j, context_b) in tier_contexts.iter().enumerate().skip(i + 1) {
+        for (i, context_a) in contexts.iter().enumerate() {
+            for (j, context_b) in contexts.iter().enumerate().skip(i + 1) {
                 if let Some(state) = &coordination_state {
                     // Check if any active agents are editing overlapping files
                     let files_a: Vec<_> = state.active_agents.values()
-                        .filter(|a| a.tier_id == context_a.item_id)
+                        .filter(|a| a.node_id == context_a.node_id)
                         .flat_map(|a| &a.files_being_edited)
                         .collect();
                     let files_b: Vec<_> = state.active_agents.values()
-                        .filter(|a| a.tier_id == context_b.item_id)
+                        .filter(|a| a.node_id == context_b.node_id)
                         .flat_map(|a| &a.files_being_edited)
                         .collect();
 
@@ -5489,7 +5412,6 @@ pub struct Conflict {
     pub files: Vec<String>,
 }
 ```
-
 ### Parallel Execution Configuration
 
 **Concurrency caps rationale:** Per-platform concurrency limits exist for two reasons:
@@ -5798,7 +5720,7 @@ pub struct QASystem {
 
 impl QASystem {
     /// Tier 1: Preflight checks (run by subagent before marking complete)
-    pub async fn run_preflight(&self, tier_id: &str) -> Result<PreflightResult> {
+    pub async fn run_preflight(&self, execution_unit_context: &ExecutionUnitContext) -> Result<PreflightResult> {
         // Existing preflight logic
     }
 
@@ -5951,16 +5873,16 @@ impl Orchestrator {
 impl Orchestrator {
     async fn commit_tier_progress(
         &self,
-        tier_id: &str,
+        node_id: &str,
         tier_type: TierType,
         iteration: u32,
         is_rework: bool,
     ) -> Result<()> {
         let message = if is_rework {
             // For rework, amend previous commit
-            format!("tier: {} iteration {} (after review)", tier_id, iteration)
+            format!("node: {} iteration {} (after review)", node_id, iteration)
         } else {
-            format!("tier: {} iteration {} complete", tier_id, iteration)
+            format!("node: {} iteration {} complete", node_id, iteration)
         };
 
         if is_rework {
