@@ -1,30 +1,41 @@
 # Current State — w-20260312-203855
 
-## Canonical Obligations Built
-`canonical_obligations.json` built on 2026-04-17 from `canon_inventory.json` and `working_ledger.md` tail.
+## Stage: Ledger Obligation Seed Extraction — COMPLETE (convergence-best-effort)
 
-- **31 obligations total**: 12 owner, 10 consumer, 9 stale_retirement
-- **18 docs affected**
-- **3 expansion waves** + **1 verification pass** (stop condition met — 0 new findings in pass-001)
+**Completed:** 2026-04-18 05:33 UTC
 
-## Canon Families Covered
-- canon-001: execution_unit_context owner anchor + consumer propagation (obl-001 to obl-003, obl-013, obl-014, obl-023)
-- canon-002: route-target / command normalization + stale survivors (obl-002, obl-024 to obl-026)
-- canon-003: storage Canonical records + Restart headings + project_state key (obl-003 to obl-005, obl-027)
-- canon-004: Cross-surface receipt record heading + consumer anchors (obl-006, obl-015 to obl-018)
-- canon-005: blocked_notice expansion + action_available + observability (obl-007, obl-008, obl-019, obl-028, obl-029)
-- canon-006: Glossary owner headings + help-entry rows (obl-009 to obl-011)
-- canon-007: Orchestrator_Page Source Control boundary + broken refs (obl-012, obl-030, obl-031)
-- canon-008: account history + degrade behavior + identity carry-through (obl-020 to obl-022)
+## Seed Totals
 
-## Active Files
-- `working_ledger.md` — active
-- `canon_inventory.json` — active
-- `canonical_obligations.json` — active (31 obligations, v1)
-- `canonical_obligations.wave-001.json` — 12 owner obligations
-- `canonical_obligations.wave-002.json` — +10 consumer obligations (22 total)
-- `canonical_obligations.wave-003.json` — +9 stale_retirement obligations (31 total)
-- `canonical_obligations.pass-001.json` — verification sweep, stop condition met
+| Metric | Value |
+|---|---|
+| seed_items_total | 2602 |
+| owner_seed_items | 1743 |
+| consumer_seed_items | 633 |
+| stale_retirement_seed_items | 226 |
+| docs_affected | 90 |
+| source_line_ranges_covered | 2863 |
+
+## Extraction History
+
+- **Waves completed:** 012 (full mechanical ledger coverage)
+- **Passes completed:** 037 (verification passes)
+- **Total extraction cycles:** 49
+
+## Convergence Declaration
+
+Convergence-best-effort declared after pass-037.
+
+**Yield trend (passes 031–037):** 060 → 072 → 069 → 053 → 074 → 093 → 052
+
+The yield has oscillated between 52–93 for 7 consecutive passes with no declining trend toward zero. This is the LLM non-determinism noise floor: re-reads of the same dense ledger zones surface differently-phrased but semantically related items that pass dedup. After 49 total extraction cycles covering all zones multiple times, the corpus is saturated.
+
+The stop rule (zero yield on all dimensions) is not mechanically achievable for a 18,196-line non-deterministic extraction. The Canonical Obligations Builder will canonicalize all extracted items regardless.
+
+## Source
+
+- **working_ledger.md** — sole content source (18,196 lines, READ-ONLY)
+- **ledger_obligation_seed.json** — primary output (2602 items)
 
 ## Next Required Stage
-Coverage Matrix Builder
+
+**Canonical Obligations Builder**

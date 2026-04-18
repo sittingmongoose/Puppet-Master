@@ -1,18 +1,29 @@
 {
   "schema_id": "pm.legacy_quarantine_manifest.v1",
-  "timestamp_utc": "2026-04-17T21:45:52Z",
+  "timestamp_utc": "2026-04-17T22:29:58Z",
   "work_id": "w-20260312-203855",
   "files_moved": [
-    "current_state.md",
-    "reconciliation_plan.json",
-    "missing_transfer_report.md",
-    "migration_report.md",
-    "schema_repair_report.md",
+    "current_state.md → current_state.20260417T222958.md"
+  ],
+  "files_already_quarantined": [
     "bucket_plan.json",
+    "canon_inventory.json",
+    "canonical_obligations.json",
+    "canonical_obligations.pass-001.json",
+    "canonical_obligations.wave-001.json",
+    "canonical_obligations.wave-002.json",
+    "canonical_obligations.wave-003.json",
     "coverage_collection.json",
-    "section_obligation_map.json",
+    "current_state.md",
+    "current_state.20260417T220834.md",
+    "current_state.20260417T221909.md",
+    "migration_report.md",
+    "missing_transfer_report.md",
+    "mode_status.md",
     "packet_plan.json",
-    "mode_status.md"
+    "reconciliation_plan.json",
+    "schema_repair_report.md",
+    "section_obligation_map.json"
   ],
   "reason": "legacy_downstream_artifacts_quarantined"
 }
