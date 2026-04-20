@@ -2,386 +2,15 @@
   "schema_id": "pm.ledger_obligation_seed.wave.v1",
   "work_id": "w-20260312-203855",
   "wave": "008",
-  "line_ranges_covered": [
-    "L11201-L11600",
-    "L11601-L12000",
-    "L12001-L12400",
-    "L12401-L12800"
-  ],
+  "line_range_covered": "L11201-L12800",
   "seed_items": [
     {
-      "seed_id": "seed-510",
+      "seed_id": "w08c30-11806",
       "seed_type": "owner",
-      "canon_label_hint": "correlation_id passthrough obligations in wiring schema",
+      "canon_label_hint": "Crosswalk primitive ownership gap",
       "exact_items": [
-        "correlation_id is part of the canonical envelope in prose but not part of any matrix-verifiable passthrough requirement",
-        "arg_passthrough_requirements?",
-        "correlation_passthrough?"
-      ],
-      "affected_doc_hints": [
-        "Plans/UI_Wiring_Rules.md",
-        "Plans/Wiring_Matrix.md",
-        "Plans/Wiring_Matrix.schema.json"
-      ],
-      "heading_hints": [
-        "### Candidate fixes to carry forward"
-      ],
-      "stale_tokens": [],
-      "source_evidence": [
-        "working_ledger.md:L11224",
-        "working_ledger.md:L11234-L11235"
-      ],
-      "notes": []
-    },
-    {
-      "seed_id": "seed-511",
-      "seed_type": "stale_retirement",
-      "canon_label_hint": "stale ghost command example: cmd.orchestrator.switch_tab in wiring matrix",
-      "exact_items": [
-        "cmd.orchestrator.switch_tab reinforces an older command shape even though the broader research already flagged that command family as a ghost/stale-ID risk"
-      ],
-      "affected_doc_hints": [
-        "Plans/Wiring_Matrix.md"
-      ],
-      "heading_hints": [],
-      "stale_tokens": [
-        "cmd.orchestrator.switch_tab"
-      ],
-      "source_evidence": [
-        "working_ledger.md:L11203"
-      ],
-      "notes": []
-    },
-    {
-      "seed_id": "seed-512",
-      "seed_type": "owner",
-      "canon_label_hint": "GATE-010 route-aware verification gap",
-      "exact_items": [
-        "GATE-010 claims the wiring matrix is 'complete, valid, and testable,' but completeness is currently defined too narrowly for route/subject-aware navigation",
-        "GATE-010 currently cannot verify reusable navigation semantics strongly enough to act as a serious guardrail for the route/subject direction"
-      ],
-      "affected_doc_hints": [
-        "Plans/Progression_Gates.md",
-        "Plans/evidence.schema.json"
-      ],
-      "heading_hints": [],
-      "stale_tokens": [],
-      "source_evidence": [
-        "working_ledger.md:L11281",
-        "working_ledger.md:L11225"
-      ],
-      "notes": []
-    },
-    {
-      "seed_id": "seed-513",
-      "seed_type": "consumer",
-      "canon_label_hint": "subject-open command definitions needed in catalog",
-      "exact_items": [
-        "canonical navigation primitive",
-        "surface-specific wrapper command",
-        "deprecated alias/wrapper relationship",
-        "shared route-payload contract",
-        "shared subject-open/open-by-identity contract"
-      ],
-      "affected_doc_hints": [
-        "Plans/UI_Command_Catalog.md"
-      ],
-      "heading_hints": [],
-      "stale_tokens": [],
-      "source_evidence": [
-        "working_ledger.md:L11317-L11322"
-      ],
-      "notes": []
-    },
-    {
-      "seed_id": "seed-514",
-      "seed_type": "owner",
-      "canon_label_hint": "FileManager open contract narrowing for workspace paths only",
-      "exact_items": [
-        "OpenFile { path... } as the single internal open contract for all callers, which is correct for real workspace files but no longer sufficient for generated/runtime/preview-backed subjects",
-        "Narrow Plans/FileManager.md so OpenFile { path... } is explicitly the workspace-document path contract only, not the universal object-open contract"
-      ],
-      "affected_doc_hints": [
-        "Plans/FileManager.md"
-      ],
-      "heading_hints": [],
-      "stale_tokens": [],
-      "source_evidence": [
-        "working_ledger.md:L11377",
-        "working_ledger.md:L11405"
-      ],
-      "notes": []
-    },
-    {
-      "seed_id": "seed-515",
-      "seed_type": "owner",
-      "canon_label_hint": "subject identity fields required in route-target contract",
-      "exact_items": [
-        "subject kinds should at minimum include doc:<document_id> and artifact:<artifact_id>",
-        "canonical persisted subject identity = doc:<document_id> / artifact:<artifact_id>"
-      ],
-      "affected_doc_hints": [
-        "Plans/Contracts_V0.md",
-        "Plans/storage-plan.md",
-        "Plans/FinalGUISpec.md"
-      ],
-      "heading_hints": [],
-      "stale_tokens": [],
-      "source_evidence": [
-        "working_ledger.md:L11407",
-        "working_ledger.md:L11380"
-      ],
-      "notes": []
-    },
-    {
-      "seed_id": "seed-516",
-      "seed_type": "owner",
-      "canon_label_hint": "canonical route-target contract missing from Contracts_V0",
-      "exact_items": [
-        "There is still no canonical contract for: route target identity, subject-open identity, focused-run/thread/project restoration context, wrapper-command routing to a canonical target",
-        "project_id",
-        "focused_run_id?",
-        "thread_id?",
-        "subject_id?",
-        "object_kind?",
-        "object_id?",
-        "tab_id?",
-        "inspector_target?"
-      ],
-      "affected_doc_hints": [
-        "Plans/Contracts_V0.md",
-        "Plans/UI_Command_Catalog.md"
-      ],
-      "heading_hints": [
-        "### Candidate fixes to carry forward"
-      ],
-      "stale_tokens": [],
-      "source_evidence": [
-        "working_ledger.md:L11432-L11436",
-        "working_ledger.md:L11461-L11469"
-      ],
-      "notes": []
-    },
-    {
-      "seed_id": "seed-517",
-      "seed_type": "stale_retirement",
-      "canon_label_hint": "ghost command IDs persisting in examples and references",
-      "exact_items": [
-        "normative ghost IDs still survive through examples, Final GUI remediation actions, and non-catalog command references",
-        "coverage verification is still vulnerable to extraction hazards from prose, wildcard tokens, and filename-shaped cmd.*.json strings"
-      ],
-      "affected_doc_hints": [
-        "Plans/UI_Wiring_Rules.md",
-        "Plans/Wiring_Matrix.md",
-        "Plans/UI_Command_Catalog.md"
-      ],
-      "heading_hints": [],
-      "stale_tokens": [
-        "ghost IDs",
-        "cmd.*.json filename-shaped strings",
-        "wildcard tokens"
-      ],
-      "source_evidence": [
-        "working_ledger.md:L11547",
-        "working_ledger.md:L11548"
-      ],
-      "notes": []
-    },
-    {
-      "seed_id": "seed-518",
-      "seed_type": "owner",
-      "canon_label_hint": "evidence schema cannot represent structured gate failures",
-      "exact_items": [
-        "pm.evidence.schema.v1 still cannot represent the tri-state or structured payloads some gates already claim to require"
-      ],
-      "affected_doc_hints": [
-        "Plans/evidence.schema.json",
-        "Plans/Progression_Gates.md"
-      ],
-      "heading_hints": [],
-      "stale_tokens": [],
-      "source_evidence": [
-        "working_ledger.md:L11569"
-      ],
-      "notes": []
-    },
-    {
-      "seed_id": "seed-519",
-      "seed_type": "owner",
-      "canon_label_hint": "workflow_run_id vs run_id lineage unresolved",
-      "exact_items": [
-        "workflow_run_id vs run_id lineage remains unresolved"
-      ],
-      "affected_doc_hints": [
-        "Plans/Project_Output_Artifacts.md",
-        "Plans/Contracts_V0.md"
-      ],
-      "heading_hints": [],
-      "stale_tokens": [],
-      "source_evidence": [
-        "working_ledger.md:L11553"
-      ],
-      "notes": []
-    },
-    {
-      "seed_id": "seed-520",
-      "seed_type": "owner",
-      "canon_label_hint": "Runtime governance ownership fields",
-      "exact_items": [
-        "Runtime-governance docs still lack startup recovery handshake, blocked-owner attribution, DAE restart/intercept model"
-      ],
-      "affected_doc_hints": [
-        "Plans/Executor_Protocol.md",
-        "Plans/Contracts_V0.md",
-        "Plans/storage-plan.md"
-      ],
-      "heading_hints": [
-        "### Contradictions / gaps surfaced"
-      ],
-      "stale_tokens": [],
-      "source_evidence": [
-        "working_ledger.md:L11610"
-      ],
-      "notes": []
-    },
-    {
-      "seed_id": "seed-521",
-      "seed_type": "owner",
-      "canon_label_hint": "Future reconciliation priorities: five clusters",
-      "exact_items": [
-        "command/event namespace unification",
-        "wiring/gate extraction/schema hardening",
-        "artifact/run/workflow identity closure",
-        "Glossary/Crosswalk strengthening",
-        "startup/blocked/DAE governance ownership"
-      ],
-      "affected_doc_hints": [
-        "Plans/Glossary.md",
-        "Plans/Crosswalk.md",
-        "Plans/UI_Command_Catalog.md",
-        "Plans/Contracts_V0.md"
-      ],
-      "heading_hints": [
-        "### Candidate fixes to carry forward"
-      ],
-      "stale_tokens": [],
-      "source_evidence": [
-        "working_ledger.md:L11617-L11621"
-      ],
-      "notes": []
-    },
-    {
-      "seed_id": "seed-522",
-      "seed_type": "consumer",
-      "canon_label_hint": "Normalized route-target model for navigation across search, artifact, usage",
-      "exact_items": [
-        "Route search-result activation, attention-item activation, artifact Show in * actions, and Usage pivots through the same canonical route-target model rather than separate ad hoc behaviors",
-        "Treat resume_url as one serialized transport for that same model so wizard attention is no longer a special stronger path"
-      ],
-      "affected_doc_hints": [
-        "Plans/FinalGUISpec.md",
-        "Plans/usage-feature.md",
-        "Plans/Runtime_Artifacts_Panel.md",
-        "Plans/UI_Command_Catalog.md",
-        "Plans/Orchestrator_Page.md"
-      ],
-      "heading_hints": [
-        "### Candidate fixes to carry forward"
-      ],
-      "stale_tokens": [],
-      "source_evidence": [
-        "working_ledger.md:L11670-L11672"
-      ],
-      "notes": []
-    },
-    {
-      "seed_id": "seed-523",
-      "seed_type": "consumer",
-      "canon_label_hint": "Route-target context preservation fields",
-      "exact_items": [
-        "`project_id`",
-        "`focused_run_id?`",
-        "`thread_id?`",
-        "`artifact_id?`",
-        "`usage_event_ref?`",
-        "`object_kind?`",
-        "`object_id?`",
-        "`tab_id?`",
-        "`inspector_target?`"
-      ],
-      "affected_doc_hints": [
-        "Plans/Contracts_V0.md",
-        "Plans/FinalGUISpec.md",
-        "Plans/usage-feature.md",
-        "Plans/Runtime_Artifacts_Panel.md"
-      ],
-      "heading_hints": [
-        "### Candidate fixes to carry forward"
-      ],
-      "stale_tokens": [],
-      "source_evidence": [
-        "working_ledger.md:L11673-L11682"
-      ],
-      "notes": []
-    },
-    {
-      "seed_id": "seed-524",
-      "seed_type": "owner",
-      "canon_label_hint": "Export taxonomy: view/record/bundle with manifest discipline",
-      "exact_items": [
-        "Keep the earlier export taxonomy: view export, record export, bundle export",
-        "Require manifests for non-trivial bundle exports preserving canonical IDs/refs rather than export-local surrogate identities",
-        "For exports built from stale/degraded projections, carry trust disclosure or re-query canonical backing first",
-        "Reuse Project_Output_Artifacts.md manifest discipline as the strongest model for general export bundles"
-      ],
-      "affected_doc_hints": [
-        "Plans/storage-plan.md",
-        "Plans/usage-feature.md",
-        "Plans/Runtime_Artifacts_Panel.md",
-        "Plans/FinalGUISpec.md",
-        "Plans/Project_Output_Artifacts.md"
-      ],
-      "heading_hints": [
-        "### Candidate fixes to carry forward"
-      ],
-      "stale_tokens": [],
-      "source_evidence": [
-        "working_ledger.md:L11735-L11742"
-      ],
-      "notes": []
-    },
-    {
-      "seed_id": "seed-525",
-      "seed_type": "owner",
-      "canon_label_hint": "CtA/Attention surface route normalization with canonical fields",
-      "exact_items": [
-        "Treat CtA card actions and blocked-notice actions as first-class consumers of the canonical route-target model",
-        "Keep resume_url as one persisted/serialized form for recovery/deep-link transport, but not as the hidden canonical navigation primitive",
-        "Normalize attention-surface target fields: destination surface, project_id, thread_id?, focused_run_id?, wizard_id?, wizard_step?, message_id?, selected object / inspector context"
-      ],
-      "affected_doc_hints": [
-        "Plans/FinalGUISpec.md",
-        "Plans/assistant-chat-design.md",
-        "Plans/Contracts_V0.md"
-      ],
-      "heading_hints": [
-        "### Candidate fixes to carry forward"
-      ],
-      "stale_tokens": [],
-      "source_evidence": [
-        "working_ledger.md:L11786-L11797"
-      ],
-      "notes": []
-    },
-    {
-      "seed_id": "seed-526",
-      "seed_type": "owner",
-      "canon_label_hint": "Crosswalk routing/subject-open primitive ownership split",
-      "exact_items": [
-        "Add a new Crosswalk primitive for route-target navigation and likely another for subject-open/open-by-identity",
-        "Make Contracts_V0.md the concrete shape owner for those primitives",
-        "Narrow FileManager.md to consumer/realization ownership: file-backed document opening, editor/tab/buffer behavior, path validation",
-        "Keep storage-plan.md as the owner of persisted subject identity, projector-derived joins, and restore semantics"
+        "route target / internal navigation payload",
+        "subject-open / open-by-identity"
       ],
       "affected_doc_hints": [
         "Plans/Crosswalk.md",
@@ -390,124 +19,86 @@
         "Plans/storage-plan.md"
       ],
       "heading_hints": [
-        "### Candidate fixes to carry forward"
+        "## Research Progress - 2026-03-16 - Crosswalk still lacks route-target / subject-open ownership"
       ],
-      "stale_tokens": [],
+      "stale_tokens": [
+        "local navigation semantics"
+      ],
       "source_evidence": [
-        "working_ledger.md:L11851-L11858"
+        "working_ledger.md:11804-11863"
       ],
       "notes": []
     },
     {
-      "seed_id": "seed-527",
+      "seed_id": "w08c30-11865",
       "seed_type": "owner",
-      "canon_label_hint": "Layered route-target plus specialized open contracts: three-tier design",
+      "canon_label_hint": "Layered route-target and specialized open contracts",
       "exact_items": [
-        "one shared canonical route_target object",
-        "specialized operations that consume it: OpenSubject, OpenFile, focus/open wrapper commands in cmd.nav.*",
-        "The best model is a layered contract family, not two unrelated contracts and not one giant contract that does everything"
+        "route_target canonical object",
+        "OpenSubject identity-native open contract",
+        "OpenFile workspace-path contract",
+        "resume_url serialized transport form"
       ],
       "affected_doc_hints": [
         "Plans/Contracts_V0.md",
         "Plans/Crosswalk.md",
-        "Plans/FileManager.md"
+        "Plans/FileManager.md",
+        "Plans/storage-plan.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/Runtime_Artifacts_Panel.md"
       ],
       "heading_hints": [
         "## Research Progress - 2026-03-16 - Exact primitive shape: layered route-target plus specialized open contracts"
       ],
-      "stale_tokens": [],
+      "stale_tokens": [
+        "monolithic open/navigation contract"
+      ],
       "source_evidence": [
-        "working_ledger.md:L11878-L11884"
+        "working_ledger.md:11865-11941"
       ],
       "notes": []
     },
     {
-      "seed_id": "seed-528",
+      "seed_id": "w08c30-11943",
       "seed_type": "owner",
-      "canon_label_hint": "Exact route_target shape: fields definition",
+      "canon_label_hint": "Minimum canonical field set for route_target",
       "exact_items": [
-        "`route_target` canonical target/scope object with fields: target_kind, project_id?, focused_run_id?, thread_id?, tab_id?, object_kind?, object_id?, subject_id?, usage_event_ref?, inspector_target?, line?, range?",
-        "`OpenSubject` identity-native open contract with subject_id required",
-        "`OpenFile` workspace-path contract only",
-        "`resume_url` serialized transport form of route_target, not a stronger parallel primitive"
+        "Required: target_kind",
+        "Common scope: project_id?, focused_run_id?, thread_id?, tab_id?",
+        "Canonical target: subject_id? or object_kind? + object_id?",
+        "Optional: inspector_target?",
+        "Do NOT include: artifact_id, document_id, usage_event_ref, wizard_id, wizard_step, message_id, workflow_run_id, scheduler_pass_id, safe_point_id, remediation_root_id, line, range"
       ],
       "affected_doc_hints": [
         "Plans/Contracts_V0.md",
-        "Plans/Crosswalk.md",
-        "Plans/FileManager.md"
+        "Plans/UI_Command_Catalog.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/storage-plan.md"
       ],
       "heading_hints": [
-        "### Recommended shape"
-      ],
-      "stale_tokens": [],
-      "source_evidence": [
-        "working_ledger.md:L11886-L11912"
-      ],
-      "notes": []
-    },
-    {
-      "seed_id": "seed-529",
-      "seed_type": "owner",
-      "canon_label_hint": "Concrete primitive additions: Primitive:RouteTarget, Primitive:OpenSubject, cmd.nav.*",
-      "exact_items": [
-        "Add Primitive:RouteTarget and likely Primitive:OpenSubject to Crosswalk.md",
-        "Add concrete route_target and OpenSubject shapes to Contracts_V0.md",
-        "Narrow FileManager.md so OpenFile is explicitly a workspace-document path operation, not the universal object-open primitive",
-        "Use cmd.nav.* or equivalent wrappers to route through route_target without forcing every consumer doc to restate the model"
-      ],
-      "affected_doc_hints": [
-        "Plans/Crosswalk.md",
-        "Plans/Contracts_V0.md",
-        "Plans/FileManager.md"
-      ],
-      "heading_hints": [
-        "### Candidate fixes to carry forward"
-      ],
-      "stale_tokens": [],
-      "source_evidence": [
-        "working_ledger.md:L11930-L11934"
-      ],
-      "notes": []
-    },
-    {
-      "seed_id": "seed-530",
-      "seed_type": "stale_retirement",
-      "canon_label_hint": "Fields to NOT include in base route_target \u2014 must use sub-fields instead",
-      "exact_items": [
-        "artifact_id should normalize into subject_id",
-        "document_id should normalize into subject_id",
-        "usage_event_ref should stay in usage/cost bridge families",
-        "wizard_id, wizard_step, message_id should use object_kind+object_id",
-        "workflow_run_id, scheduler_pass_id, safe_point_id, remediation_root_id should use object_kind+object_id",
-        "line, range should be specialized in OpenFile only"
-      ],
-      "affected_doc_hints": [
-        "Plans/Contracts_V0.md"
-      ],
-      "heading_hints": [
-        "### What should NOT be base route_target fields by default"
+        "## Research Progress - 2026-03-16 - Minimum canonical field set for `route_target`"
       ],
       "stale_tokens": [
-        "artifact_id as top-level route field",
-        "document_id as top-level route field",
-        "wizard_step as top-level route field",
-        "line as top-level route_target field",
-        "range as top-level route_target field"
+        "surface-local field absorption",
+        "ad hoc payloads"
       ],
       "source_evidence": [
-        "working_ledger.md:L11978-L11996"
+        "working_ledger.md:11943-12000"
       ],
       "notes": []
     },
     {
-      "seed_id": "seed-531",
+      "seed_id": "w08c31-12017",
       "seed_type": "owner",
-      "canon_label_hint": "subject_id family declarations",
+      "canon_label_hint": "route_target impacted docs primary owners",
       "exact_items": [
-        "subject_id = artifact:<artifact_id>",
-        "subject_id = doc:<document_id>",
-        "Keep the initial canonical set deliberately small: doc:<document_id>, artifact:<artifact_id>",
-        "avoid adding thread:, run:, wizard:, safe_point:, etc. as subject_id families when those are better modeled as object_kind/object_id"
+        "Plans/Contracts_V0.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Crosswalk.md"
       ],
       "affected_doc_hints": [
         "Plans/Contracts_V0.md",
@@ -515,244 +106,700 @@
         "Plans/Crosswalk.md"
       ],
       "heading_hints": [
-        "### Recommended subject_id families"
+        "### Impacted docs"
       ],
       "stale_tokens": [],
       "source_evidence": [
-        "working_ledger.md:L12002-L12069"
+        "working_ledger.md:12017-12027"
       ],
-      "notes": []
+      "notes": [
+        "Primary owners for route_target normalization and subject_id/object_kind canonical set"
+      ]
     },
     {
-      "seed_id": "seed-532",
+      "seed_id": "w08c31-12034",
       "seed_type": "owner",
-      "canon_label_hint": "object_kind canonical enum family",
+      "canon_label_hint": "route_target contract specialization rules",
       "exact_items": [
-        "object_kind families (conversational/planning): thread, message, wizard, usage_event",
-        "object_kind families (execution/runtime): run, node, attempt, scheduler_pass, blocked_episode, safe_point, remediation",
-        "object_kind families (rewrite-era orchestration): feature_seam, work_package, lane, worktree, concern, promotion, graph_patch, graph_generation",
-        "object_id should use canonical domain identity: thread_id, message_id, wizard_id, run_id, attempt_id, lane_id, worktree_id",
-        "Avoid route-local surrogate IDs if a canonical domain ID already exists"
-      ],
-      "affected_doc_hints": [
-        "Plans/Contracts_V0.md",
-        "Plans/Crosswalk.md",
-        "Plans/storage-plan.md",
-        "Plans/UI_Command_Catalog.md",
-        "Plans/assistant-chat-design.md",
-        "Plans/Orchestrator_Page.md",
-        "Plans/Runtime_Artifacts_Panel.md",
-        "Plans/FinalGUISpec.md"
-      ],
-      "heading_hints": [
-        "### Recommended early object_kind set"
-      ],
-      "stale_tokens": [],
-      "source_evidence": [
-        "working_ledger.md:L12071-L12120"
-      ],
-      "notes": []
-    },
-    {
-      "seed_id": "seed-533",
-      "seed_type": "owner",
-      "canon_label_hint": "what must NOT be object_kind \u2014 exclusion rules",
-      "exact_items": [
-        "raw UI container state (panel ids, tab ids, split ratios, layout keys) MUST NOT be object_kind",
-        "transport/serialization artifacts (resume_url, generated://...) MUST NOT be object_kind",
-        "provider/runtime disclosure fields are attributes of objects, not usually target kinds by themselves"
+        "Keep `route_target` intentionally small and force normalization pressure through `subject_id` and `object_kind/object_id`",
+        "`OpenFile` owns `path`, `line`, `range`",
+        "`OpenSubject` owns `subject_id` and subject realization rules",
+        "Avoid adding a generic nested \"extra args\" bag to `route_target`"
       ],
       "affected_doc_hints": [
         "Plans/Contracts_V0.md"
       ],
       "heading_hints": [
-        "### What should generally NOT be object_kind"
+        "### Candidate fixes to carry forward"
       ],
       "stale_tokens": [],
       "source_evidence": [
-        "working_ledger.md:L12095-L12105"
+        "working_ledger.md:12034-12040"
       ],
-      "notes": []
+      "notes": [
+        "Contract layer normalization rules for target object design"
+      ]
     },
     {
-      "seed_id": "seed-534",
-      "seed_type": "owner",
-      "canon_label_hint": "inspector_target scope: good fits vs poor fits",
+      "seed_id": "w08c31-12063",
+      "seed_type": "consumer",
+      "canon_label_hint": "subject_id canonical families",
       "exact_items": [
-        "inspector_target should stay for reusable detail-pane or subsection focus, not as a universal dumping ground",
-        "Good fits: selected detail section/subsection, evidence tab vs history tab vs review tab, node detail subsection, document pane view mode",
-        "Poor fits: wizard_step as primary object identity, message_id when real target is the message, line/range, raw provider/account disclosure, arbitrary per-feature payload blobs"
+        "`doc:<document_id>`",
+        "`artifact:<artifact_id>`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md"
+      ],
+      "heading_hints": [
+        "### Recommended `subject_id` families"
+      ],
+      "stale_tokens": [
+        "`thread:`",
+        "`run:`",
+        "`wizard:`",
+        "`safe_point:`"
+      ],
+      "source_evidence": [
+        "working_ledger.md:12063-12069"
+      ],
+      "notes": [
+        "Keep initial canonical set deliberately small; avoid premature expansion"
+      ]
+    },
+    {
+      "seed_id": "w08c31-12071",
+      "seed_type": "consumer",
+      "canon_label_hint": "object_kind enum canonical set",
+      "exact_items": [
+        "conversational/planning: `thread`, `message`, `wizard`, `usage_event`",
+        "execution/runtime: `run`, `node`, `attempt`, `scheduler_pass`, `blocked_episode`, `safe_point`, `remediation`",
+        "rewrite-era orchestration: `feature_seam`, `work_package`, `lane`, `worktree`, `concern`, `promotion`, `graph_patch`, `graph_generation`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md"
+      ],
+      "heading_hints": [
+        "### Recommended early `object_kind` set"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:12071-12093"
+      ],
+      "notes": [
+        "Early canonical object_kind enum for cross-surface identity work"
+      ]
+    },
+    {
+      "seed_id": "w08c31-12107",
+      "seed_type": "consumer",
+      "canon_label_hint": "object_id canonical domain identity normalization",
+      "exact_items": [
+        "`thread_id`",
+        "`message_id`",
+        "`wizard_id`",
+        "`run_id`",
+        "`attempt_id`",
+        "`scheduler_pass_id`",
+        "`safe_point_id`",
+        "`remediation_root_id`",
+        "`lane_id`",
+        "`worktree_id`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md"
+      ],
+      "heading_hints": [
+        "### Recommended normalization rules"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:12107-12121"
+      ],
+      "notes": [
+        "Use canonical domain identity; avoid route-local surrogate IDs"
+      ]
+    },
+    {
+      "seed_id": "w08c31-12123",
+      "seed_type": "owner",
+      "canon_label_hint": "subject_id/object_kind impacted docs primary owners",
+      "exact_items": [
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md"
+      ],
+      "heading_hints": [
+        "### Impacted docs"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:12123-12133"
+      ],
+      "notes": [
+        "Primary owners for controlled vocabulary enforcement"
+      ]
+    },
+    {
+      "seed_id": "w08c31-12140",
+      "seed_type": "owner",
+      "canon_label_hint": "subject_id/object_kind contract layer decisions",
+      "exact_items": [
+        "Declare the initial `subject_id` families narrowly and explicitly",
+        "Declare an early canonical `object_kind` enum family in the contract layer, with room for later controlled extension",
+        "Prefer extending `object_kind` deliberately over adding new top-level route fields",
+        "Keep UI container state (`tab_id`, panel focus, inspector section) as view context around the target, not as the target taxonomy itself"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md"
+      ],
+      "heading_hints": [
+        "### Candidate fixes to carry forward"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:12140-12144"
+      ],
+      "notes": [
+        "Vocabulary split prevents routing model collapse; sparse subject_id, robust object_kind"
+      ]
+    },
+    {
+      "seed_id": "w08c31-12173",
+      "seed_type": "consumer",
+      "canon_label_hint": "inspector_target and sub-selection rules",
+      "exact_items": [
+        "`route_target` owns the main identity/scope only",
+        "`OpenFile` specialization for `line` / `range`",
+        "`inspector_target` for reusable detail-surface focus",
+        "object-family-specific anchor fields only when the anchor is truly domain-local and not reusable"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [
+        "### Recommended rule"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:12173-12178"
+      ],
+      "notes": [
+        "Canonical identity and UI focus are separate layers; prevents every surface from inventing custom anchors"
+      ]
+    },
+    {
+      "seed_id": "w08c31-12180",
+      "seed_type": "consumer",
+      "canon_label_hint": "inspector_target good fit patterns",
+      "exact_items": [
+        "selected detail section / subsection",
+        "evidence tab vs history tab vs review tab within an inspector",
+        "node detail subsection",
+        "document pane view mode / selected pane subsection when that is a stable reusable UI concept"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md"
+      ],
+      "heading_hints": [
+        "### Good fits for `inspector_target`"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:12180-12184"
+      ],
+      "notes": [
+        "Reusable detail-surface focus patterns"
+      ]
+    },
+    {
+      "seed_id": "w08c31-12186",
+      "seed_type": "stale_retirement",
+      "canon_label_hint": "inspector_target poor fit patterns to retire",
+      "exact_items": [
+        "`wizard_step` as the primary object identity",
+        "`message_id` when the real target is the message itself",
+        "`line` / `range`",
+        "raw provider/account disclosure fields",
+        "arbitrary per-feature payload blobs"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md"
+      ],
+      "heading_hints": [
+        "### Poor fits for `inspector_target`"
+      ],
+      "stale_tokens": [
+        "`wizard_step`",
+        "raw provider/account disclosure fields"
+      ],
+      "source_evidence": [
+        "working_ledger.md:12186-12191"
+      ],
+      "notes": [
+        "Anti-patterns for inspector_target that should not be encoded as canonical fields"
+      ]
+    },
+    {
+      "seed_id": "w08c31-12193",
+      "seed_type": "consumer",
+      "canon_label_hint": "navigation normalization patterns",
+      "exact_items": [
+        "thread search hit: `object_kind = message`, `object_id = <message_id>`, thread context stays in `thread_id`",
+        "wizard resume: `object_kind = wizard`, `object_id = <wizard_id>`, step/clarification focus is a domain-local anchor or serialized deep-link detail",
+        "node graph detail: `object_kind = node` or `attempt`, `object_id = <id>`, `inspector_target = evidence` / `history` / `reviews`",
+        "file/code open: `OpenFile { path, line, range }`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [
+        "### Recommended normalization direction"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:12193-12207"
+      ],
+      "notes": [
+        "Cross-surface normalization patterns for canonical target model"
+      ]
+    },
+    {
+      "seed_id": "w08c31-12209",
+      "seed_type": "owner",
+      "canon_label_hint": "sub-selection and inspector_target impacted docs primary owners",
+      "exact_items": [
+        "Plans/Contracts_V0.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/FileManager.md"
       ],
       "affected_doc_hints": [
         "Plans/Contracts_V0.md",
         "Plans/FinalGUISpec.md",
         "Plans/Orchestrator_Page.md",
-        "Plans/FileManager.md",
-        "Plans/assistant-chat-design.md"
+        "Plans/FileManager.md"
       ],
       "heading_hints": [
-        "### Good fits for inspector_target",
-        "### Poor fits for inspector_target"
+        "### Impacted docs"
       ],
       "stale_tokens": [],
       "source_evidence": [
-        "working_ledger.md:L12151-L12228"
+        "working_ledger.md:12209-12218"
       ],
-      "notes": []
+      "notes": [
+        "Primary owners for sub-selection layer definition"
+      ]
     },
     {
-      "seed_id": "seed-535",
+      "seed_id": "w08c31-12225",
       "seed_type": "owner",
-      "canon_label_hint": "navigation migration pattern and compatibility rules",
+      "canon_label_hint": "sub-selection contract layer enforcement",
       "exact_items": [
-        "existing user-facing wrapper commands may remain; their payload semantics should normalize through route_target/OpenSubject",
-        "older payload shapes can be accepted during migration; new producers/docs should emit canonical normalized target model",
-        "resume_url can remain as serialized transport form during migration but should stop being treated as stronger separate primitive",
-        "new docs/producers MUST prefer canonical route-target forms",
-        "migration aliases MUST NOT become permanent parallel canon"
+        "Define `inspector_target` narrowly in the contract layer as reusable detail/subsection focus",
+        "Keep line/range under `OpenFile`",
+        "Allow some object-family-specific anchors, but force them to justify themselves instead of defaulting every special case into the base route contract"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md"
+      ],
+      "heading_hints": [
+        "### Candidate fixes to carry forward"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:12225-12228"
+      ],
+      "notes": [
+        "Prevent base routing model from turning into per-surface deep-link spaghetti"
+      ]
+    },
+    {
+      "seed_id": "w08c31-12257",
+      "seed_type": "consumer",
+      "canon_label_hint": "navigation migration pattern canonical layer",
+      "exact_items": [
+        "`route_target`",
+        "`OpenSubject`",
+        "specialized `OpenFile`",
+        "canonical wrapper family such as `cmd.nav.*` if adopted"
       ],
       "affected_doc_hints": [
         "Plans/Contracts_V0.md",
-        "Plans/UI_Command_Catalog.md",
-        "Plans/Crosswalk.md",
-        "Plans/Wiring_Matrix.md",
-        "Plans/UI_Wiring_Rules.md",
-        "Plans/FinalGUISpec.md",
-        "Plans/assistant-chat-design.md"
+        "Plans/UI_Command_Catalog.md"
       ],
       "heading_hints": [
-        "### Recommended migration pattern",
+        "### Recommended migration pattern"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:12257-12262"
+      ],
+      "notes": [
+        "Canonical primitives for normalized navigation during migration"
+      ]
+    },
+    {
+      "seed_id": "w08c31-12263",
+      "seed_type": "consumer",
+      "canon_label_hint": "navigation migration phase details",
+      "exact_items": [
+        "surface-specific commands like `cmd.artifacts.show_in_usage` or `cmd.orchestrator.open_in_source_control` may remain user-facing wrappers",
+        "wrappers normalize their args into canonical target/subject forms internally",
+        "docs should explicitly mark older/raw payload conventions as migration aliases where needed",
+        "new docs/producers MUST prefer canonical route-target forms",
+        "consumers MAY accept older wrapper-local payloads during migration",
+        "migration aliases MUST NOT become permanent parallel canon"
+      ],
+      "affected_doc_hints": [
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "heading_hints": [
+        "### During migration",
         "### Compatibility rule"
       ],
       "stale_tokens": [],
       "source_evidence": [
-        "working_ledger.md:L12235-L12297"
+        "working_ledger.md:12263-12270"
       ],
-      "notes": []
+      "notes": [
+        "Migration discipline prevents either freezing old payloads or overclaiming immediate canonical switch"
+      ]
     },
     {
-      "seed_id": "seed-536",
-      "seed_type": "stale_retirement",
-      "canon_label_hint": "docs with stale assumptions and drift carriers",
+      "seed_id": "w08c31-12272",
+      "seed_type": "owner",
+      "canon_label_hint": "navigation migration impacted docs primary owners",
       "exact_items": [
-        "Plans/00-plans-index.md still misroutes or under-describes rewrite-critical owners",
-        "Plans/GUI_Rebuild_Requirements_Checklist.md contains phantom command IDs and inherits stale panel/view assumptions",
-        "Plans/Section15_MVP_Promoted_Features_Spec.md still points at missing concrete command entries and stale Final GUI summary text",
-        "Plans/Architecture_Invariants.md lacks invariants for requested/effective identity completeness, graph-lock degradation boundaries, projection trust/generation staleness",
-        "Plans/MiscPlan.md still embeds sequential tier-era cleanup/remediation assumptions",
-        "Plans/FileSafe.md still contains silent bypass/degradation paths and HTE-only enforcement assumptions",
-        "Plans/Containers_Registry_and_Unraid.md defines auth/publish/repo-management command families absent from the catalog",
-        "Plans/Document_Packaging_Policy.md still has no place for glossary artifacts or package-generation lineage states"
+        "Plans/Contracts_V0.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Crosswalk.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Crosswalk.md"
+      ],
+      "heading_hints": [
+        "### Impacted docs"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:12272-12281"
+      ],
+      "notes": [
+        "Primary owners for navigation normalization and migration rules"
+      ]
+    },
+    {
+      "seed_id": "w08c31-12288",
+      "seed_type": "owner",
+      "canon_label_hint": "navigation migration discipline carry-forward",
+      "exact_items": [
+        "Reuse the event-alias and recovery-command migration style as the template for navigation normalization",
+        "Let wrapper commands remain if they provide real UX meaning, but make the underlying target model canonical",
+        "Add explicit migration notes when replacing raw local IDs with normalized `subject_id` or `object_kind/object_id` forms",
+        "Teach the wiring/gate docs to understand canonical command vs wrapper vs deprecated alias, not just \"command id exists\""
+      ],
+      "affected_doc_hints": [
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Wiring_Matrix.md"
+      ],
+      "heading_hints": [
+        "### Candidate fixes to carry forward"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:12288-12292"
+      ],
+      "notes": [
+        "Stop every surface-specific command from inventing its own private navigation semantics"
+      ]
+    },
+    {
+      "seed_id": "w08c31-12318",
+      "seed_type": "owner",
+      "canon_label_hint": "command/event ownership contradictions ui_command_catalog",
+      "exact_items": [
+        "the catalog still has an unresolved split between legacy `cmd.graph.*` recovery commands and canonical `cmd.runtime.*` recovery families",
+        "`cmd.runtime.*` still lacks first-class placement in the main catalog structure despite being the actual cross-surface recovery command set"
+      ],
+      "affected_doc_hints": [
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "heading_hints": [
+        "### Key findings"
+      ],
+      "stale_tokens": [
+        "`cmd.graph.*`"
+      ],
+      "source_evidence": [
+        "working_ledger.md:12318-12320"
+      ],
+      "notes": [
+        "Unresolved split in recovery command namespace; cmd.runtime should be canonical"
+      ]
+    },
+    {
+      "seed_id": "w08c31-12321",
+      "seed_type": "owner",
+      "canon_label_hint": "index/checklist docs as drift carriers",
+      "exact_items": [
+        "`00-plans-index.md` still misroutes or under-describes several rewrite-critical owners (`Orchestrator_Page`, `Widget_System`, `storage-plan`, `Executor_Protocol`) and does not surface Multi-Account/Crosswalk strongly enough",
+        "`GUI_Rebuild_Requirements_Checklist.md` contains phantom command IDs and inherits stale panel/view assumptions from Final GUI/Orchestrator docs",
+        "`Section15_MVP_Promoted_Features_Spec.md` still points at missing concrete command entries, stale Final GUI summary text, and a persistence model that has not caught up to workspace-tab identity"
       ],
       "affected_doc_hints": [
         "Plans/00-plans-index.md",
         "Plans/GUI_Rebuild_Requirements_Checklist.md",
-        "Plans/Section15_MVP_Promoted_Features_Spec.md",
-        "Plans/Architecture_Invariants.md",
-        "Plans/MiscPlan.md",
-        "Plans/FileSafe.md",
-        "Plans/Containers_Registry_and_Unraid.md",
-        "Plans/Document_Packaging_Policy.md"
+        "Plans/Section15_MVP_Promoted_Features_Spec.md"
       ],
       "heading_hints": [
-        "### Contradictions / gaps surfaced"
+        "### Key findings"
       ],
       "stale_tokens": [
-        "tier-era cleanup/remediation assumptions",
-        "HTE-only enforcement assumptions",
         "phantom command IDs",
         "stale panel/view assumptions"
       ],
       "source_evidence": [
-        "working_ledger.md:L12315-L12390"
+        "working_ledger.md:12321-12324"
       ],
-      "notes": []
+      "notes": [
+        "Index/checklist/promoted-feature docs are drift carriers, not passive summaries"
+      ]
     },
     {
-      "seed_id": "seed-537",
+      "seed_id": "w08c31-12325",
       "seed_type": "owner",
-      "canon_label_hint": "cmd.runtime.* vs cmd.graph.* recovery family split unresolved",
+      "canon_label_hint": "architecture invariants gaps tier-era assumptions",
       "exact_items": [
-        "cmd.graph.* recovery commands vs cmd.runtime.* recovery families still have unresolved split",
-        "cmd.runtime.* still lacks first-class placement in main catalog structure",
-        "cmd.docker.image.push and cmd.orchestrator.push_image both claim publish authority with same event family"
+        "`Architecture_Invariants.md` lacks invariants for requested/effective identity completeness, graph-lock degradation boundaries, projection trust/generation staleness, blocked/failure classification, concurrent actors sharing provider pools, and safe-point vs restore-point separation"
       ],
       "affected_doc_hints": [
-        "Plans/UI_Command_Catalog.md",
-        "Plans/Contracts_V0.md",
-        "Plans/Containers_Registry_and_Unraid.md"
+        "Plans/Architecture_Invariants.md"
       ],
       "heading_hints": [
-        "### Contradictions / gaps surfaced"
-      ],
-      "stale_tokens": [
-        "legacy cmd.graph.* recovery commands"
-      ],
-      "source_evidence": [
-        "working_ledger.md:L12318-L12335"
-      ],
-      "notes": []
-    },
-    {
-      "seed_id": "seed-538",
-      "seed_type": "owner",
-      "canon_label_hint": "Multi-Account and DockerHub auth integration gaps",
-      "exact_items": [
-        "DockerHub auth/account identity remains structurally isolated from Multi-Account",
-        "DockerHub still lacks coherent receipt/lineage bridge",
-        "platform.capability_evaluated remains outside Contracts_V0 event registration",
-        "Provider/account seams: capability re-checks vs frozen run snapshots still unresolved"
-      ],
-      "affected_doc_hints": [
-        "Plans/Containers_Registry_and_Unraid.md",
-        "Plans/Multi-Account.md",
-        "Plans/Contracts_V0.md",
-        "Plans/orchestrator-subagent-integration.md"
-      ],
-      "heading_hints": [
-        "### Contradictions / gaps surfaced"
+        "### Key findings"
       ],
       "stale_tokens": [],
       "source_evidence": [
-        "working_ledger.md:L12329-L12343"
+        "working_ledger.md:12325-12326"
       ],
-      "notes": []
+      "notes": [
+        "Missing invariants for identity completeness, graph-lock, projections, blocking, concurrent actors, safe-point boundaries"
+      ]
     },
     {
-      "seed_id": "seed-539",
+      "seed_id": "w08c31-12327",
       "seed_type": "owner",
-      "canon_label_hint": "LSP and PM tooling boundary gaps",
+      "canon_label_hint": "miscplan tier-era sequential remediation assumptions",
       "exact_items": [
-        "LSPSupport.md assumes tool.invoked for user editor actions, which conflicts with event requirements assuming run_id",
-        "plan-mode tooling policy denies lsp even though LSP context is assumed for planning/interview features",
-        "mixed mutation semantics inside lsp remain unresolved against mutation_capable: bool contract"
+        "`MiscPlan.md` still embeds sequential tier-era cleanup/remediation assumptions, including a cleanup-remediation loop outside the canonical runtime failure matrix and prepare/cleanup ordering that can erase safe-point baselines"
+      ],
+      "affected_doc_hints": [
+        "Plans/MiscPlan.md"
+      ],
+      "heading_hints": [
+        "### Key findings"
+      ],
+      "stale_tokens": [
+        "tier-era cleanup/remediation assumptions",
+        "prepare/cleanup ordering"
+      ],
+      "source_evidence": [
+        "working_ledger.md:12327"
+      ],
+      "notes": [
+        "Stale sequential tier-era remediation model incompatible with runtime failure matrix"
+      ]
+    },
+    {
+      "seed_id": "w08c31-12328",
+      "seed_type": "owner",
+      "canon_label_hint": "filesafe under-owned bypass/degradation paths",
+      "exact_items": [
+        "`FileSafe.md` still contains silent or under-owned bypass/degradation paths, HTE-only enforcement assumptions, and no complete DAE-side contract for write-scope or remote side-effect enforcement"
+      ],
+      "affected_doc_hints": [
+        "Plans/FileSafe.md"
+      ],
+      "heading_hints": [
+        "### Key findings"
+      ],
+      "stale_tokens": [
+        "HTE-only enforcement assumptions"
+      ],
+      "source_evidence": [
+        "working_ledger.md:12328"
+      ],
+      "notes": [
+        "Missing complete contract for write-scope and remote side-effect enforcement"
+      ]
+    },
+    {
+      "seed_id": "w08c31-12329",
+      "seed_type": "owner",
+      "canon_label_hint": "media generation capability vs frozen snapshots",
+      "exact_items": [
+        "`Media_Generation_and_Capabilities.md` vs `orchestrator-subagent-integration.md` still disagree on live capability re-checks vs frozen run snapshots, and `platform.capability_evaluated` remains outside Contracts_V0 event registration"
+      ],
+      "affected_doc_hints": [
+        "Plans/Media_Generation_and_Capabilities.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "heading_hints": [
+        "### Key findings"
+      ],
+      "stale_tokens": [
+        "`platform.capability_evaluated`"
+      ],
+      "source_evidence": [
+        "working_ledger.md:12329-12330"
+      ],
+      "notes": [
+        "Unresolved disagreement on capability re-check vs frozen snapshots; event not registered"
+      ]
+    },
+    {
+      "seed_id": "w08c31-12331",
+      "seed_type": "owner",
+      "canon_label_hint": "opencode sse bus process-global scoping",
+      "exact_items": [
+        "`OpenCode_Deep_Extraction.md` source-verified that OpenCode's SSE bus and auth model are process-global/server-global, making per-session/per-run identity and account binding impossible without explicit PM-side scoping logic"
+      ],
+      "affected_doc_hints": [
+        "Plans/OpenCode_Deep_Extraction.md"
+      ],
+      "heading_hints": [
+        "### Key findings"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:12331"
+      ],
+      "notes": [
+        "OpenCode SSE/auth are process-global; requires explicit PM-side scoping"
+      ]
+    },
+    {
+      "seed_id": "w08c31-12332",
+      "seed_type": "owner",
+      "canon_label_hint": "agent-rules-context assumptions on actor set",
+      "exact_items": [
+        "`agent-rules-context.md` still assumes a tiny set of actors and CLI-only transport, while the real provider-using actor set is much broader and now includes non-CLI transports"
+      ],
+      "affected_doc_hints": [
+        "Plans/agent-rules-context.md"
+      ],
+      "heading_hints": [
+        "### Key findings"
+      ],
+      "stale_tokens": [
+        "tiny set of actors",
+        "CLI-only transport"
+      ],
+      "source_evidence": [
+        "working_ledger.md:12332"
+      ],
+      "notes": [
+        "Outdated actor-set assumptions; real set is broader and includes non-CLI transports"
+      ]
+    },
+    {
+      "seed_id": "w08c31-12333",
+      "seed_type": "owner",
+      "canon_label_hint": "containers registry fragmented ownership",
+      "exact_items": [
+        "`Containers_Registry_and_Unraid.md` is itself a second source of ghost command IDs and still defines auth/publish/repo-management command families absent from the catalog",
+        "`cmd.docker.image.push` and `cmd.orchestrator.push_image` still both claim publish authority with the same event family",
+        "DockerHub auth/account identity remains structurally isolated from Multi-Account and still lacks a coherent receipt/lineage bridge"
+      ],
+      "affected_doc_hints": [
+        "Plans/Containers_Registry_and_Unraid.md",
+        "Plans/Multi-Account.md"
+      ],
+      "heading_hints": [
+        "### Key findings"
+      ],
+      "stale_tokens": [
+        "ghost command IDs",
+        "`cmd.docker.image.push`",
+        "`cmd.orchestrator.push_image`"
+      ],
+      "source_evidence": [
+        "working_ledger.md:12333-12336"
+      ],
+      "notes": [
+        "Conflicting publish command authority; DockerHub auth/account isolated from Multi-Account"
+      ]
+    },
+    {
+      "seed_id": "w08c31-12337",
+      "seed_type": "owner",
+      "canon_label_hint": "packaging/evidence/artifact lineage gaps",
+      "exact_items": [
+        "`Document_Packaging_Policy.md` still has no place for glossary artifacts, requirements-staging seglog artifacts, or package-generation lineage states",
+        "packaging evidence and execution evidence still share confusing `evidence/` naming without a canonical discriminator"
+      ],
+      "affected_doc_hints": [
+        "Plans/Document_Packaging_Policy.md"
+      ],
+      "heading_hints": [
+        "### Key findings"
+      ],
+      "stale_tokens": [
+        "`evidence/` naming"
+      ],
+      "source_evidence": [
+        "working_ledger.md:12337-12339"
+      ],
+      "notes": [
+        "Missing artifact types in packaging policy; confusing evidence namespace"
+      ]
+    },
+    {
+      "seed_id": "w08c31-12340",
+      "seed_type": "owner",
+      "canon_label_hint": "lsp tooling pm internal-tool boundary under-owned",
+      "exact_items": [
+        "`LSPSupport.md` still assumes `tool.invoked` for user editor actions, which conflicts with event requirements that assume a `run_id`",
+        "plan-mode tooling policy still denies `lsp` even though LSP context is assumed for planning/interview features",
+        "mixed mutation semantics inside `lsp` remain unresolved against the `mutation_capable: bool` contract"
       ],
       "affected_doc_hints": [
         "Plans/LSPSupport.md",
         "Plans/Contracts_V0.md"
       ],
       "heading_hints": [
-        "### Contradictions / gaps surfaced"
+        "### Key findings"
       ],
       "stale_tokens": [
-        "plan-mode tooling policy still denies lsp"
+        "`tool.invoked`",
+        "`mutation_capable: bool`"
       ],
       "source_evidence": [
-        "working_ledger.md:L12340-L12343"
+        "working_ledger.md:12340-12343"
       ],
-      "notes": []
+      "notes": [
+        "Tool.invoked vs run_id conflict; LSP context assumed but policy denies it; unresolved mutation semantics"
+      ]
     },
     {
-      "seed_id": "seed-540",
+      "seed_id": "w08c32-12406",
       "seed_type": "owner",
-      "canon_label_hint": "Route-target deep-link contract\u2014impacted doc owners",
+      "canon_label_hint": "deep-link serialization contract",
       "exact_items": [
-        "Plans/Contracts_V0.md",
-        "Plans/FinalGUISpec.md",
-        "Plans/storage-plan.md",
-        "Plans/assistant-chat-design.md",
-        "Plans/UI_Command_Catalog.md",
-        "Plans/Crosswalk.md"
+        "puppet-master://wizard/<wizard_id>/step/<wizard_step_id>/clarify",
+        "route_target model should be richer than serialized URL form",
+        "preserve stable sharable identity, enough focus to restore task, deterministic decoding",
+        "NOT preserve ephemeral UI layout state, transient panel widths/split ratios, non-stable local widget state, every inspector subsection detail"
       ],
       "affected_doc_hints": [
         "Plans/Contracts_V0.md",
@@ -763,27 +810,23 @@
         "Plans/Crosswalk.md"
       ],
       "heading_hints": [
-        "Impacted docs"
+        "## Research Progress - 2026-03-15 - Deep-link transport should stay narrower than full internal route object"
       ],
       "stale_tokens": [],
       "source_evidence": [
-        "working_ledger.md:L12448-L12456"
+        "working_ledger.md:12406-12472"
       ],
       "notes": []
     },
     {
-      "seed_id": "seed-541",
+      "seed_id": "w08c32-12482",
       "seed_type": "owner",
-      "canon_label_hint": "Shell/workspace state boundary\u2014impacted doc owners",
+      "canon_label_hint": "shell/workspace state adjacency to routing",
       "exact_items": [
-        "Plans/FinalGUISpec.md",
-        "Plans/storage-plan.md",
-        "Plans/Crosswalk.md",
-        "Plans/Contracts_V0.md",
-        "Plans/UI_Command_Catalog.md",
-        "Plans/feature-list.md",
-        "Plans/FileManager.md",
-        "Plans/Orchestrator_Page.md"
+        "shell already has substantial persisted state: panel dock/floating state, which side panel was last visible, activity bar ordering, workspace-tab identity, per-project project_state, per-surface project state like source_control.project_state.{project_id}, browser/document pane/chat/editor shell state",
+        "routing should answer: what object, in which broad destination surface, in which project/run/thread context",
+        "shell state remains responsible for: panel docking/floating, workspace tab/window hosting, per-project layout and local UI state restoration",
+        "route may carry destination intent to answer panel/tab visibility but not encode panel widths, floating window coordinates, icon order, full project-state snapshots, incidental shell preferences"
       ],
       "affected_doc_hints": [
         "Plans/FinalGUISpec.md",
@@ -796,26 +839,25 @@
         "Plans/Orchestrator_Page.md"
       ],
       "heading_hints": [
-        "Impacted docs"
+        "## Research Progress - 2026-03-16 - Shell/workspace state should remain adjacent to routing, not inside it"
       ],
       "stale_tokens": [],
       "source_evidence": [
-        "working_ledger.md:L12516-L12526"
+        "working_ledger.md:12482-12542"
       ],
       "notes": []
     },
     {
-      "seed_id": "seed-542",
+      "seed_id": "w08c32-12552",
       "seed_type": "owner",
-      "canon_label_hint": "Destination-surface vocabulary control\u2014impacted doc owners",
+      "canon_label_hint": "coarse destination-surface vocabulary",
       "exact_items": [
-        "Plans/Contracts_V0.md",
-        "Plans/Crosswalk.md",
-        "Plans/FinalGUISpec.md",
-        "Plans/UI_Command_Catalog.md",
-        "Plans/Orchestrator_Page.md",
-        "Plans/storage-plan.md",
-        "Plans/feature-list.md"
+        "primary_view: Dashboard, Projects, Wizard, Interview, Settings, Usage, FileEditor, Orchestrator",
+        "side_panel: chat, files, source_control, github_actions, docker_manager, artifacts, run_debug",
+        "bottom_panel: terminal, problems, output, ports, browser, debug",
+        "embedded_surface: document_pane, agent_activity",
+        "page_tab: Orchestrator tabs like Progress, Seams/Tiers, Node Graph, Evidence, History, Ledger",
+        "stay out: specific dock/floating realization, side-panel width, exact subview state like selected repo or compare target, widget layout slot positions, remembered collapse/expand preferences"
       ],
       "affected_doc_hints": [
         "Plans/Contracts_V0.md",
@@ -827,25 +869,25 @@
         "Plans/feature-list.md"
       ],
       "heading_hints": [
-        "Impacted docs"
+        "## Research Progress - 2026-03-16 - Destination-surface vocabulary should stay controlled and coarse"
       ],
       "stale_tokens": [],
       "source_evidence": [
-        "working_ledger.md:L12583-L12592"
+        "working_ledger.md:12552-12607"
       ],
       "notes": []
     },
     {
-      "seed_id": "seed-543",
+      "seed_id": "w08c32-12616",
       "seed_type": "owner",
-      "canon_label_hint": "Subviews and panel-local selectors\u2014impacted doc owners",
+      "canon_label_hint": "subviews and panel-local selectors belong to view state",
       "exact_items": [
-        "Plans/storage-plan.md",
-        "Plans/UI_Command_Catalog.md",
-        "Plans/FinalGUISpec.md",
-        "Plans/Contracts_V0.md",
-        "Plans/Crosswalk.md",
-        "Plans/Orchestrator_Page.md"
+        "Source Control: active_subview, selected repo/worktree, compare target, graph filters",
+        "GitHub Actions: active_subview, current branch, pinned workflows, last opened run/job",
+        "Docker Manager: active_subview, runtime/context/registry/namespace focus, publish state",
+        "Document pane: selected document, selected view, history selection, approval stage",
+        "active_subview and similar fields belong to destination/view-state handling, not to object_kind, subject_id, or base route identity contract",
+        "persisted surface state continues to supply defaults when route does not override them"
       ],
       "affected_doc_hints": [
         "Plans/storage-plan.md",
@@ -856,23 +898,26 @@
         "Plans/Orchestrator_Page.md"
       ],
       "heading_hints": [
-        "Impacted docs"
+        "## Research Progress - 2026-03-16 - Subviews and panel-local selectors belong to view state, not target identity"
       ],
       "stale_tokens": [],
       "source_evidence": [
-        "working_ledger.md:L12629-L12638"
+        "working_ledger.md:12616-12652"
       ],
       "notes": []
     },
     {
-      "seed_id": "seed-544",
-      "seed_type": "consumer",
-      "canon_label_hint": "Route activation override rule\u2014consumer carry-through expectations",
+      "seed_id": "w08c32-12663",
+      "seed_type": "owner",
+      "canon_label_hint": "override rule: route-target should override only what necessary",
       "exact_items": [
-        "cmd.artifacts.show_in_usage",
-        "cmd.orchestrator.open_in_source_control",
-        "cmd.chat.focus_thread_usage",
-        "Resume Wizard"
+        "MUST override: target object identity, destination surface when action explicitly names different surface, scope required like project_id/thread_id/focused_run_id or explicitly requested panel/tab",
+        "MAY reuse persisted state for: panel docking/floating realization, destination-local subview when not specified by route, local filters/sort/layout where they don't hide or distort requested target",
+        "MUST NOT reuse persisted state when: landing on wrong object, hiding requested target behind wrong tab/subview, silently keeping user on stale run/thread/project context",
+        "cmd.artifacts.show_in_usage: must open/focus Usage in correct project/thread/run scope, may reuse current Usage layout/filter chrome if still reveals requested usage target",
+        "cmd.orchestrator.open_in_source_control: must land in Source Control with relevant run/worktree/repo context, may reuse remembered Source Control subview only if still exposes requested target clearly",
+        "Resume Wizard: must override to wizard surface and correct wizard/step context, must not preserve unrelated current primary-view context just because last open",
+        "cmd.chat.focus_thread_usage: must focus thread Usage detail surface for that thread, may reuse side-panel docking/floating realization"
       ],
       "affected_doc_hints": [
         "Plans/Contracts_V0.md",
@@ -884,24 +929,28 @@
         "Plans/Crosswalk.md"
       ],
       "heading_hints": [
-        "Impacted docs"
+        "## Research Progress - 2026-03-16 - Override rule: route-target should override only what is necessary"
       ],
       "stale_tokens": [],
       "source_evidence": [
-        "working_ledger.md:L12703-L12713"
+        "working_ledger.md:12663-12726"
       ],
       "notes": []
     },
     {
-      "seed_id": "seed-545",
-      "seed_type": "owner",
-      "canon_label_hint": "Support-system SSOTs and audit/governance meta-docs gap evidence",
+      "seed_id": "w08c32-12742",
+      "seed_type": "stale_retirement",
+      "canon_label_hint": "Gemini-only tranche synthesis confirms meaningful structural drift",
       "exact_items": [
-        "Decision_Log.md functionally empty for rewrite era",
-        "rewrite-tie-in-memo.md predates seams/packages/lanes/overseers",
-        "feature-list.md and newfeatures.md use tier-era execution framing",
-        "OpenCode_Coverage_Matrix.md, DRY_Rules.md require urgency",
-        "Formatters_System.md, Plugins_System.md, Skills_System.md have unresolved ownership splits and safety gaps"
+        "Decision_Log.md is functionally empty for rewrite era and does not capture major accepted design decisions already present in working memory and downstream addenda",
+        "rewrite-tie-in-memo.md is now stale as rewrite-alignment owner; predates seams/packages/lanes/overseers, scopes requested/effective identity too narrowly, does not surface projection-trust or lane scheduling as rewrite invariants",
+        "feature-list.md and newfeatures.md still carry tier-era execution framing, old widget inventories, stale shell terminology, promoted-feature phasing contradictions that would mislead implementation readers",
+        "Formatters_System.md has: unresolved ownership splits with LSP formatting, under-specified DAE behavior, custom formatter subprocess/FileSafe bypass risk, unregistered format.* events",
+        "Plugins_System.md has: severe hook/schema split, missing mutation_capable on plugin tools, in-process execution ambiguity vs subprocess-sandbox expectations, prompt/param hooks that can bypass run-mode safety assumptions",
+        "Skills_System.md: assumes HTE-style tool reachability, does not explain DAE delivery/bundling behavior, lacks proper introspection/listing surface for runtime skills",
+        "DRY_Rules.md cross-checking surfaced exact duplicate and mislabeled sections showing stale/additive layering is now mechanical doc-integrity issue",
+        "OpenCode_Coverage_Matrix.md is no longer broad enough; omits multi-account/runtime-correlation coverage dimensions and contains stale fix recommendations",
+        "BinaryLocator_Spec.md looks stale around OpenCode launcher ownership, dead four-tier naming references, process/session-scope wording"
       ],
       "affected_doc_hints": [
         "Plans/BinaryLocator_Spec.md",
@@ -910,21 +959,46 @@
         "Plans/Formatters_System.md",
         "Plans/OpenCode_Coverage_Matrix.md",
         "Plans/Plugins_System.md",
-        "Plans/Skills_System.md"
+        "Plans/Skills_System.md",
+        "Plans/feature-list.md",
+        "Plans/newfeatures.md",
+        "Plans/rewrite-tie-in-memo.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Run_Modes.md",
+        "Plans/Tools.md",
+        "Plans/CLI_Bridged_Providers.md",
+        "Plans/Multi-Account.md",
+        "Plans/Glossary.md",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Crosswalk.md"
       ],
       "heading_hints": [
-        "Impacted docs"
+        "## Research Progress - 2026-03-16 - Opus final Gemini-only tranche synthesis"
       ],
       "stale_tokens": [
-        "Decision_Log.md (functionally empty for rewrite era)",
-        "rewrite-tie-in-memo.md (predates seams/packages/lanes/overseers)",
-        "feature-list.md (tier-era execution framing)",
-        "newfeatures.md (tier-era execution framing)"
+        "Decision_Log rewrite-era treatment",
+        "rewrite-tie-in-memo seams/packages/lanes/overseers framing",
+        "feature-list tier-era execution terminology",
+        "newfeatures promoted-feature phasing",
+        "Formatters_System LSP formatting split",
+        "Plugins_System hook/schema split",
+        "Skills_System HTE-style tool reachability",
+        "BinaryLocator_Spec four-tier naming"
       ],
       "source_evidence": [
-        "working_ledger.md:L12758-L12784"
+        "working_ledger.md:12742-12800"
       ],
       "notes": []
     }
-  ]
+  ],
+  "summary": {
+    "items_this_wave": 37,
+    "docs_this_wave": 38
+  },
+  "generated_at_utc": "2026-04-20T20:28:52.055476+00:00"
 }

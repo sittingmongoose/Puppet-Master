@@ -1,41 +1,55 @@
 # Current State — w-20260312-203855
 
-## Stage: Ledger Obligation Seed Extraction — COMPLETE (convergence-best-effort)
+## Stage: Ledger Obligation Seed Extractor — BLOCKED (Deferred)
 
-**Completed:** 2026-04-18 05:33 UTC
+**Status**: active  
+**Next required stage**: Canonical Obligations Builder (after deferred rerun)
 
-## Seed Totals
+## Ledger Obligation Seed Summary
 
-| Metric | Value |
+| Field | Value |
 |---|---|
-| seed_items_total | 2602 |
-| owner_seed_items | 1743 |
-| consumer_seed_items | 633 |
-| stale_retirement_seed_items | 226 |
-| docs_affected | 90 |
-| source_line_ranges_covered | 2863 |
+| seed_items_total | 594 |
+| owner_seed_items | 402 |
+| consumer_seed_items | 162 |
+| stale_retirement_seed_items | 28 |
+| docs_affected | 93 |
+| source_line_ranges_covered | 587 |
+| verification_passes_completed | 3 (hard cap) |
+| material_findings_deferred | 29 |
 
-## Extraction History
+## Wave Files Written
 
-- **Waves completed:** 012 (full mechanical ledger coverage)
-- **Passes completed:** 037 (verification passes)
-- **Total extraction cycles:** 49
+ledger_obligation_seed.wave-001.json through wave-012.json  
+Coverage: L1–L18196 (full ledger, 46 chunks × ~400 lines, 12 waves)
 
-## Convergence Declaration
+## Verification Passes
 
-Convergence-best-effort declared after pass-037.
+| Pass | Ranges | Material | Noise |
+|---|---|---|---|
+| pass-001 | L2000–2400, L5600–6000, L9600–10000, L13600–14000 | 22 | 20 |
+| pass-002 | L800–1200, L7600–8000, L10000–10400, L12000–12400 | 59 | 49 |
+| pass-003 | L3200–3600, L4800–5200, L11200–11600, L15200–15600 | 29 | 58 |
 
-**Yield trend (passes 031–037):** 060 → 072 → 069 → 053 → 074 → 093 → 052
+Pass 3 reached the hard cap and still found 29 material items.  
+32 high-risk ranges remain unverified by re-check passes.
 
-The yield has oscillated between 52–93 for 7 consecutive passes with no declining trend toward zero. This is the LLM non-determinism noise floor: re-reads of the same dense ledger zones surface differently-phrased but semantically related items that pass dedup. After 49 total extraction cycles covering all zones multiple times, the corpus is saturated.
+## Deferred
 
-The stop rule (zero yield on all dimensions) is not mechanically achievable for a 18,196-line non-deterministic extraction. The Canonical Obligations Builder will canonicalize all extracted items regardless.
+- ledger_obligation_seed.deferred.json contains the 29 pass-3 material findings
+- and 32 unverified ranges recommended for next run
 
-## Source
+## Files Active
 
-- **working_ledger.md** — sole content source (18,196 lines, READ-ONLY)
-- **ledger_obligation_seed.json** — primary output (2602 items)
+- working_ledger.md — sole content source, READ-ONLY
+- ledger_obligation_seed.json — merged seed (594 items, 93 docs)
+- ledger_obligation_seed.wave-001..012.json — wave results
+- ledger_obligation_seed.pass-001..003.json — verification pass material
+- ledger_obligation_seed.noise-001..003.json — noise (not merged)
+- ledger_obligation_seed.deferred.json — deferred findings for next run
+- meta.json — control record
 
-## Next Required Stage
+## Legacy Quarantine
 
-**Canonical Obligations Builder**
+All prior-run artifacts quarantined in legacy_quarantine/.  
+This run is a clean-slate extraction.

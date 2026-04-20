@@ -1,0 +1,2541 @@
+{
+  "schema_id": "pm.ledger_obligation_seed.wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave": "005",
+  "line_ranges_covered": [
+    "L6401-L6800",
+    "L6801-L7200",
+    "L7201-L7600",
+    "L7601-L8000"
+  ],
+  "seed_items": [
+    {
+      "seed_id": "seed-257",
+      "seed_type": "owner",
+      "canon_label_hint": "Concern action policy matrix required",
+      "exact_items": [
+        "Add a canonical concern action policy table with at least: action, allowed_actor_kinds, confirmation_level, rationale_required, resulting_status_or_lineage, reversibility, audit_fields"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Widget_System.md",
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "heading_hints": [
+        "## Research Progress - 2026-03-16 - concern-action confirmation and reversibility cluster"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L6442-L6493"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "seed-258",
+      "seed_type": "owner",
+      "canon_label_hint": "Three-depth help contract and Glossary expansion",
+      "exact_items": [
+        "Define a three-depth help contract: inline help, context help, canonical help entry",
+        "Add an anti-drift rule: canonical term names do not change between Expert and ELI5",
+        "Expand Glossary.md so it becomes the owner for the stable term list"
+      ],
+      "affected_doc_hints": [
+        "Plans/Glossary.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Widget_System.md"
+      ],
+      "heading_hints": [
+        "## Research Progress - 2026-03-16 - help system contract and concept-depth cluster"
+      ],
+      "stale_tokens": [
+        "Tiers (legacy execution ontology label)",
+        "Phase/Task/Subtask (legacy execution ontology)"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L6539-L6596"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "seed-259",
+      "seed_type": "consumer",
+      "canon_label_hint": "Widget semantic scope and filter boundary rules",
+      "exact_items": [
+        "Define explicit filter/scope ownership layers: router/page scope (project_id, focused_run_id, historical/live mode, deep-link target), tab scope (tab-native filters), widget config (presentation settings and safe subfilters only)",
+        "Add a hard anti-drift rule for Orchestrator widgets: widgets may consume stable projections and canonical records; widgets may not invent independent semantic scope"
+      ],
+      "affected_doc_hints": [
+        "Plans/Widget_System.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [
+        "## Research Progress - 2026-03-16 - widget persistence and filter-boundary cluster"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L6637-L6677"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "seed-260",
+      "seed_type": "consumer",
+      "canon_label_hint": "Storage plan runtime identity event table vs prose normative rule mismatch",
+      "exact_items": [
+        "storage-plan.md says run.started MUST include the full persona/runtime snapshot, but the event table row still enumerates a much thinner field set",
+        "storage-plan.md usage.event row still omits effective auth/account/model identity even though usage-feature.md UsageRecord expects those fields downstream",
+        "Add a canonical account-switch history family: event or record based, carrying old/new effective account identity, reason, scope, and timeline semantics"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/Contracts_V0.md",
+        "Plans/usage-feature.md"
+      ],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L6725-L6751"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "seed-261",
+      "seed_type": "consumer",
+      "canon_label_hint": "Run Graph and Orchestrator must consume UI_Command_Catalog attempt/receipt patterns",
+      "exact_items": [
+        "UI_Command_Catalog.md already normalizes HITL and recovery around request_id, blocked_sequence, and cmd.runtime.*, but Run_Graph_View.md still presents older node-only command shapes",
+        "Make Run Graph and Orchestrator consume attempt/receipt-based canonical projections and command args already present in UI_Command_Catalog.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/Run_Graph_View.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L6730-L6743"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "seed-262",
+      "seed_type": "stale_retirement",
+      "canon_label_hint": "Tier-era field retirement from Prompt_Pipeline.md",
+      "exact_items": [
+        "plan_or_tier_default is still a persisted enum value in Prompt_Pipeline.md",
+        "persona_override_owner_id still allows tier_id",
+        "Prompt_Pipeline.md still contains a normative MUST against creating execution layers beyond Phase / Task / Subtask / Iteration"
+      ],
+      "affected_doc_hints": [
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Personas.md"
+      ],
+      "heading_hints": [],
+      "stale_tokens": [
+        "plan_or_tier_default",
+        "tier_id (in persona_override_owner_id context)",
+        "Phase / Task / Subtask / Iteration (layer constraint)"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L6768-L6772"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "seed-263",
+      "seed_type": "stale_retirement",
+      "canon_label_hint": "Personas.md SSOT field naming violation and select_for_tier removal",
+      "exact_items": [
+        "Personas.md still violates canonical field naming in its own SSOT",
+        "Personas.md still uses _persona_id canonical names and select_for_tier() references even though Contracts_V0.md prohibits the former and the rewrite invalidates the latter"
+      ],
+      "affected_doc_hints": [
+        "Plans/Personas.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "heading_hints": [],
+      "stale_tokens": [
+        "_persona_id (prohibited by Contracts_V0.md)",
+        "select_for_tier() (tier-era function reference)"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L6772-L6800"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "seed-264",
+      "seed_type": "consumer",
+      "canon_label_hint": "GitHub account identity mismatch and effective account display gap",
+      "exact_items": [
+        "GitHub_API_Auth_and_Flows.md still keys credential identity by mutable login",
+        "GitHub_Integration.md still lacks effective-account / switch-reason display and requested-vs-effective admin-capability UX"
+      ],
+      "affected_doc_hints": [
+        "Plans/GitHub_API_Auth_and_Flows.md",
+        "Plans/GitHub_Integration.md"
+      ],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L6700-L6742"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "seed-265",
+      "seed_type": "owner",
+      "canon_label_hint": "Multi-account switch-history records and queryable policy snapshots gap",
+      "exact_items": [
+        "Multi-Account.md still has no durable account.switched / switch-episode family",
+        "provider_accounts.run_snapshot still stores only an opaque policy_hash rather than a queryable policy version/ref",
+        "no canonical role enum or actor_kind / execution_role field exists to support role-by-provider and role-by-account overrides consistently"
+      ],
+      "affected_doc_hints": [
+        "Plans/Multi-Account.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Models_System.md",
+        "Plans/CLI_Bridged_Providers.md"
+      ],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L6773-L6776"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "seed-266",
+      "seed_type": "consumer",
+      "canon_label_hint": "Bridged provider account identity and runtime dispatch boundary gaps",
+      "exact_items": [
+        "CLI_Bridged_Providers.md ProviderRequestEnvelope still omits typed account identity and execution-role fields",
+        "Provider_OpenCode.md still leaves effective account identity opaque behind the bridge",
+        "bridged-provider usage events still omit effective account and pressure/switch fields",
+        "no lane/package/worktree identity enters the bridged envelope where Source Control / Orchestrator handshake now needs it"
+      ],
+      "affected_doc_hints": [
+        "Plans/CLI_Bridged_Providers.md",
+        "Plans/Provider_OpenCode.md",
+        "Plans/usage-feature.md"
+      ],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L6777-L6784"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "seed-267",
+      "seed_type": "consumer",
+      "canon_label_hint": "Permissions system multi-lane scope and account-switch invalidation gap",
+      "exact_items": [
+        "Permissions_System.md still scopes always approvals and reject-cascades to the whole session, which is unsafe for multi-lane/multi-actor execution",
+        "permission snapshots still have no account-switch invalidation rule"
+      ],
+      "affected_doc_hints": [
+        "Plans/Permissions_System.md"
+      ],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L6779-L6780"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "seed-268",
+      "seed_type": "owner",
+      "canon_label_hint": "Shared runtime identity bundle fields",
+      "exact_items": [
+        "Add `requested_account_id?`, `effective_account_id?`, execution-scope fields, and `actor_kind` / `execution_role` to the shared runtime identity bundle and to the bridged-provider envelope."
+      ],
+      "affected_doc_hints": [
+        "Plans/CLI_Bridged_Providers.md",
+        "Plans/Multi-Account.md",
+        "Plans/Permissions_System.md"
+      ],
+      "heading_hints": [
+        "### Candidate fixes to carry forward"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L6806"
+      ],
+      "notes": [
+        "Multi-account execution scope missing from bridged provider envelope"
+      ]
+    },
+    {
+      "seed_id": "seed-269",
+      "seed_type": "stale_retirement",
+      "canon_label_hint": "Tier-era persisted names and values",
+      "exact_items": [
+        "Replace tier-era persisted names/values in `Prompt_Pipeline.md` and `Personas.md` before they become entrenched in durable records."
+      ],
+      "affected_doc_hints": [
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Personas.md"
+      ],
+      "heading_hints": [
+        "### Candidate fixes to carry forward"
+      ],
+      "stale_tokens": [
+        "tier-era persisted names/values"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L6807"
+      ],
+      "notes": [
+        "Legacy terminology must be replaced before durable records entrench it"
+      ]
+    },
+    {
+      "seed_id": "seed-270",
+      "seed_type": "owner",
+      "canon_label_hint": "Switch-history and pressure-episode family",
+      "exact_items": [
+        "Define a canonical switch-history / pressure-episode family and make it queryable from History, Ledger, Usage, and Account/Usage Pressure projections."
+      ],
+      "affected_doc_hints": [
+        "Plans/Multi-Account.md"
+      ],
+      "heading_hints": [
+        "### Candidate fixes to carry forward"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L6808"
+      ],
+      "notes": [
+        "New canonical record family required for multi-account switch tracking"
+      ]
+    },
+    {
+      "seed_id": "seed-271",
+      "seed_type": "owner",
+      "canon_label_hint": "Canonical role enumeration",
+      "exact_items": [
+        "Add a canonical role enumeration and apply it consistently to role-scoped account policies, Persona resolution, permission scoping, and provider dispatch."
+      ],
+      "affected_doc_hints": [
+        "Plans/Personas.md",
+        "Plans/Permissions_System.md"
+      ],
+      "heading_hints": [
+        "### Candidate fixes to carry forward"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L6809"
+      ],
+      "notes": [
+        "Canonical enumeration missing across multiple subsystems"
+      ]
+    },
+    {
+      "seed_id": "seed-272",
+      "seed_type": "owner",
+      "canon_label_hint": "Session cache and reject cascade re-scoping",
+      "exact_items": [
+        "Re-scope permission session cache / reject cascade and OpenCode SSE/session isolation rules to actor/lane-aware boundaries."
+      ],
+      "affected_doc_hints": [
+        "Plans/Permissions_System.md"
+      ],
+      "heading_hints": [
+        "### Candidate fixes to carry forward"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L6810"
+      ],
+      "notes": [
+        "Permission system lacks actor/lane awareness in cache and reject semantics"
+      ]
+    },
+    {
+      "seed_id": "seed-273",
+      "seed_type": "consumer",
+      "canon_label_hint": "Missing requested_account_id asymmetry",
+      "exact_items": [
+        "`manual_preferred_account_id` now exists, but it still does not solve the broader missing `requested_account_id` asymmetry in runtime records."
+      ],
+      "affected_doc_hints": [
+        "Plans/Multi-Account.md"
+      ],
+      "heading_hints": [
+        "### Do-not-forget details"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L6813"
+      ],
+      "notes": [
+        "Field naming asymmetry creates incomplete multi-account tracking"
+      ]
+    },
+    {
+      "seed_id": "seed-274",
+      "seed_type": "consumer",
+      "canon_label_hint": "provider_account_id safety hazard",
+      "exact_items": [
+        "`provider_account_id` remains dangerous unless it is explicitly treated as audit/display-only metadata subordinate to stable internal account identity."
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [
+        "### Do-not-forget details"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L6814"
+      ],
+      "notes": [
+        "Field semantics and safety constraints must be enforced"
+      ]
+    },
+    {
+      "seed_id": "seed-275",
+      "seed_type": "consumer",
+      "canon_label_hint": "Account identity loss risk at provider boundaries",
+      "exact_items": [
+        "`Provider_OpenCode.md` and `CLI_Bridged_Providers.md` are now the sharpest places where the rewrite can silently lose account identity and execution-scope attribution before projections ever see the data."
+      ],
+      "affected_doc_hints": [
+        "Plans/Provider_OpenCode.md",
+        "Plans/CLI_Bridged_Providers.md"
+      ],
+      "heading_hints": [
+        "### Do-not-forget details"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L6815"
+      ],
+      "notes": [
+        "Critical loss vectors at bridged provider envelope"
+      ]
+    },
+    {
+      "seed_id": "seed-276",
+      "seed_type": "consumer",
+      "canon_label_hint": "usage_event_ref format and stability undefined",
+      "exact_items": [
+        "`storage-plan.md` promotes `usage_event_ref?` into receipt and cross-surface bridge records but still never defines its concrete format or stability semantics"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [
+        "### Key findings"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L6832"
+      ],
+      "notes": [
+        "Required field lacks authoritative schema definition"
+      ]
+    },
+    {
+      "seed_id": "seed-277",
+      "seed_type": "consumer",
+      "canon_label_hint": "Runtime artifact schema missing",
+      "exact_items": [
+        "`Runtime_Artifacts_Panel.md` requires `Show in Ledger` / `Show in Usage` for `cost_usage`, but the promised runtime-artifact schemas are not present and no concrete usage identity payload is pinned"
+      ],
+      "affected_doc_hints": [
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [
+        "### Key findings"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L6833"
+      ],
+      "notes": [
+        "Schema enforcement missing for UI command dependencies"
+      ]
+    },
+    {
+      "seed_id": "seed-278",
+      "seed_type": "consumer",
+      "canon_label_hint": "Deferred GitHub Recovery Binding mapping",
+      "exact_items": [
+        "Deferred GitHub Recovery Binding now fits more naturally as blocked-episode `detail_ref` / wizard-blocked attachment than as a new standalone runtime object"
+      ],
+      "affected_doc_hints": [
+        "Plans/GitHub_Integration.md"
+      ],
+      "heading_hints": [
+        "### Key findings"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L6838"
+      ],
+      "notes": [
+        "Structural ownership model change"
+      ]
+    },
+    {
+      "seed_id": "seed-279",
+      "seed_type": "consumer",
+      "canon_label_hint": "Cache scoping requirements",
+      "exact_items": [
+        "cache scoping still needs `{project_id, selected_repo_id, effective github_api account}` to avoid cross-root or cross-account ambiguity"
+      ],
+      "affected_doc_hints": [
+        "Plans/GitHub_Integration.md",
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [
+        "### Key findings"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L6839"
+      ],
+      "notes": [
+        "GitHub integration cache lacks required tuple scoping"
+      ]
+    },
+    {
+      "seed_id": "seed-280",
+      "seed_type": "consumer",
+      "canon_label_hint": "Orchestrator_Page missing TOC sections",
+      "exact_items": [
+        "`Orchestrator_Page.md` TOC sections 13\u201317 are genuinely missing, not relocated"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md"
+      ],
+      "heading_hints": [
+        "### Key findings"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L6841"
+      ],
+      "notes": [
+        "Exact missing heading sections"
+      ]
+    },
+    {
+      "seed_id": "seed-281",
+      "seed_type": "consumer",
+      "canon_label_hint": "Terminal widget split definition",
+      "exact_items": [
+        "`Widget_System.md` still splits terminal widgets between `widget.terminal_output` and `widget.agent_terminal`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Widget_System.md"
+      ],
+      "heading_hints": [
+        "### Key findings"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L6842"
+      ],
+      "notes": [
+        "Terminal widget identity conflict"
+      ]
+    },
+    {
+      "seed_id": "seed-282",
+      "seed_type": "consumer",
+      "canon_label_hint": "Widget layout project scoping",
+      "exact_items": [
+        "widget layouts still need project-scoped keys rather than implicit global layouts for project-heavy surfaces"
+      ],
+      "affected_doc_hints": [
+        "Plans/Widget_System.md"
+      ],
+      "heading_hints": [
+        "### Key findings"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L6844"
+      ],
+      "notes": [
+        "Layout persistence scope missing"
+      ]
+    },
+    {
+      "seed_id": "seed-283",
+      "seed_type": "consumer",
+      "canon_label_hint": "Shared ProjectionHealth trust contract",
+      "exact_items": [
+        "there is still no shared `ProjectionHealth`/trust contract spanning Usage, Orchestrator, Source Control, and widgets"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [
+        "### Key findings"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L6848"
+      ],
+      "notes": [
+        "Cross-surface trust model missing"
+      ]
+    },
+    {
+      "seed_id": "seed-284",
+      "seed_type": "consumer",
+      "canon_label_hint": "Live identity must center on attempt",
+      "exact_items": [
+        "stable live identity now centers on `attempt_id`, receipt refs, `scheduler_lane`, `worktree_id`, and requested/effective identity per attempt"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md"
+      ],
+      "heading_hints": [
+        "### Key findings"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L6850"
+      ],
+      "notes": [
+        "Canonical identity model for live data"
+      ]
+    },
+    {
+      "seed_id": "seed-285",
+      "seed_type": "consumer",
+      "canon_label_hint": "Orchestrator missing sections and specs",
+      "exact_items": [
+        "`Plans/Orchestrator_Page.md` still missing core persistence/acceptance sections and still under-specifies historical mode, worktree partitioning, and precise usage/deep-link behavior"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md"
+      ],
+      "heading_hints": [
+        "### Highest-risk impacted docs"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L6855"
+      ],
+      "notes": [
+        "Exact missing sections identified"
+      ]
+    },
+    {
+      "seed_id": "seed-286",
+      "seed_type": "consumer",
+      "canon_label_hint": "Widget system normalization needs",
+      "exact_items": [
+        "`Plans/Widget_System.md` still needs project-scoped layout rules, terminal-widget normalization, projection-trust chrome, and attempt/lane-aware live data contracts"
+      ],
+      "affected_doc_hints": [
+        "Plans/Widget_System.md"
+      ],
+      "heading_hints": [
+        "### Highest-risk impacted docs"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L6857"
+      ],
+      "notes": [
+        "Multiple contract gaps identified"
+      ]
+    },
+    {
+      "seed_id": "seed-287",
+      "seed_type": "consumer",
+      "canon_label_hint": "GitHub Integration missing contract layers",
+      "exact_items": [
+        "`Plans/GitHub_Integration.md` still needs explicit binding to project-scoped repo/account selection, degraded-trust signaling, and blocked-episode recovery linkage"
+      ],
+      "affected_doc_hints": [
+        "Plans/GitHub_Integration.md"
+      ],
+      "heading_hints": [
+        "### Highest-risk impacted docs"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L6859"
+      ],
+      "notes": [
+        "Contract binding and trust semantics missing"
+      ]
+    },
+    {
+      "seed_id": "seed-288",
+      "seed_type": "consumer",
+      "canon_label_hint": "storage-plan bridge semantics unfinished",
+      "exact_items": [
+        "`Plans/storage-plan.md` now clearly owns the missing bridge semantics for `usage_event_ref`, projection freshness, receipt pivots, and project-scoped UI state, but has not finished naming them"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [
+        "### Highest-risk impacted docs"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L6861"
+      ],
+      "notes": [
+        "Bridge layer naming incomplete"
+      ]
+    },
+    {
+      "seed_id": "seed-289",
+      "seed_type": "consumer",
+      "canon_label_hint": "usage_event_ref undefined contradiction",
+      "exact_items": [
+        "`usage_event_ref?` is treated as the canonical bridge name in storage/receipt rules, but no doc actually defines what it is."
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "heading_hints": [
+        "### Contradictions / gaps surfaced"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L6866"
+      ],
+      "notes": [
+        "Canonical field referenced but not defined"
+      ]
+    },
+    {
+      "seed_id": "seed-290",
+      "seed_type": "consumer",
+      "canon_label_hint": "Runtime artifact schema enforcement missing",
+      "exact_items": [
+        "`Runtime_Artifacts_Panel.md` assumes concrete runtime-artifact schema enforcement that is not currently present in the repo."
+      ],
+      "affected_doc_hints": [
+        "Plans/Runtime_Artifacts_Panel.md"
+      ],
+      "heading_hints": [
+        "### Contradictions / gaps surfaced"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L6867"
+      ],
+      "notes": [
+        "Schema anchor missing"
+      ]
+    },
+    {
+      "seed_id": "seed-291",
+      "seed_type": "consumer",
+      "canon_label_hint": "Tier-ID centric pivots stale",
+      "exact_items": [
+        "`Orchestrator_Page.md` and `Run_Graph_View.md` still pivot usage and identity with `tier_id`-centric addressing even though storage/runtime contracts have moved to attempt/receipt-based truth."
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/Run_Graph_View.md"
+      ],
+      "heading_hints": [
+        "### Contradictions / gaps surfaced"
+      ],
+      "stale_tokens": [
+        "tier_id-centric addressing"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L6868"
+      ],
+      "notes": [
+        "Stale identity model in high-risk surfaces"
+      ]
+    },
+    {
+      "seed_id": "seed-292",
+      "seed_type": "consumer",
+      "canon_label_hint": "GitHub current-repo/account contract missing",
+      "exact_items": [
+        "`GitHub_Integration.md` still lacks an explicit current-repo / current-account contract even though `storage-plan.md` already models `selected_repo_id` and project-scoped account policy state."
+      ],
+      "affected_doc_hints": [
+        "Plans/GitHub_Integration.md",
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [
+        "### Contradictions / gaps surfaced"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L6869"
+      ],
+      "notes": [
+        "Integration doc lags storage design"
+      ]
+    },
+    {
+      "seed_id": "seed-293",
+      "seed_type": "owner",
+      "canon_label_hint": "usage_event_ref definition and pivot normalization",
+      "exact_items": [
+        "Define `usage_event_ref` explicitly and make all `Show in Usage` / `Show in Ledger` pivots prefer receipt + attempt + usage-event identity over run-only or tier-only filters."
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "heading_hints": [
+        "### Candidate fixes to carry forward"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L6873"
+      ],
+      "notes": [
+        "Cross-surface navigation blocker"
+      ]
+    },
+    {
+      "seed_id": "seed-294",
+      "seed_type": "owner",
+      "canon_label_hint": "Projection health and trust contract",
+      "exact_items": [
+        "Add a shared projection-health / trust-state record family built from committed projection state, checkpoints, and last-updated metadata."
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [
+        "### Candidate fixes to carry forward"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L6874"
+      ],
+      "notes": [
+        "New record family required"
+      ]
+    },
+    {
+      "seed_id": "seed-295",
+      "seed_type": "owner",
+      "canon_label_hint": "Project-scoped widget layouts",
+      "exact_items": [
+        "Make widget layouts project-scoped for project-centric surfaces, with a limited global fallback only when no project is open."
+      ],
+      "affected_doc_hints": [
+        "Plans/Widget_System.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "heading_hints": [
+        "### Candidate fixes to carry forward"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L6875"
+      ],
+      "notes": [
+        "Scope precedence rule required"
+      ]
+    },
+    {
+      "seed_id": "seed-296",
+      "seed_type": "consumer",
+      "canon_label_hint": "tier_boundary reserved diagnostic embedded",
+      "exact_items": [
+        "`tier_boundary` is not just stale prose here; it is a reserved diagnostic category with hard detail keys (`from_tier` / `to_tier`). That means the tier model is still embedded at the stream-schema layer and cannot be reconciled by a simple terminology sweep."
+      ],
+      "affected_doc_hints": [
+        "Plans/Provider_Stream_Mapping_External_Reference_A2A.md"
+      ],
+      "heading_hints": [
+        "### Key findings"
+      ],
+      "stale_tokens": [
+        "tier_boundary",
+        "from_tier",
+        "to_tier"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L6898"
+      ],
+      "notes": [
+        "Schema-layer embedding blocks simple terminology sweep"
+      ]
+    },
+    {
+      "seed_id": "seed-297",
+      "seed_type": "consumer",
+      "canon_label_hint": "Overseer protocol incompatible with rewrite",
+      "exact_items": [
+        "The Overseer audit protocol is structurally incompatible with the rewrite: singular `Overseer`, `audit_kind = start_of_tier | end_of_tier`, hard `exactly 2 reviewer subagents`, no minority-advisory outcome for the now-required 2-of-3 corroboration pattern"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md"
+      ],
+      "heading_hints": [
+        "### Key findings"
+      ],
+      "stale_tokens": [
+        "Overseer",
+        "audit_kind = start_of_tier | end_of_tier"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L6900-L6902"
+      ],
+      "notes": [
+        "Audit protocol requires redesign"
+      ]
+    },
+    {
+      "seed_id": "seed-298",
+      "seed_type": "consumer",
+      "canon_label_hint": "attempt_id continuity contradiction",
+      "exact_items": [
+        "2026-03-09 addenda say normalized streams MUST preserve `attempt_id`, but none of the reserved diagnostic category schemas actually expose `attempt_id`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md"
+      ],
+      "heading_hints": [
+        "### Key findings"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L6904-L6906"
+      ],
+      "notes": [
+        "Adapter conformance impossible"
+      ]
+    },
+    {
+      "seed_id": "seed-299",
+      "seed_type": "consumer",
+      "canon_label_hint": "Stream lacks account and actor context",
+      "exact_items": [
+        "Multi-account and blocked-owner semantics are still lost at the stream boundary: `usage` events carry no account attribution, `auth_state` carries no pool-member / account context for failover rotation, `input_required` / `input_provided` cannot distinguish node HITL, corroboration pause, or conversational user-input pause"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md"
+      ],
+      "heading_hints": [
+        "### Key findings"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L6908-L6911"
+      ],
+      "notes": [
+        "Multiple stream contract gaps"
+      ]
+    },
+    {
+      "seed_id": "seed-300",
+      "seed_type": "consumer",
+      "canon_label_hint": "Shared provider lacks actor-class disclosure",
+      "exact_items": [
+        "Shared provider runtime still lacks actor-class disclosure in the normalized stream: no `actor_kind`, `handoff` uses bare agent names with no package/seam/lane context, `SelectSpeakerEvent` is demoted to `raw_observation`, which hides governance-relevant speaker/overseer transitions from downstream projections"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md"
+      ],
+      "heading_hints": [
+        "### Key findings"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L6912-L6915"
+      ],
+      "notes": [
+        "Governance-relevant transitions hidden"
+      ]
+    },
+    {
+      "seed_id": "seed-301",
+      "seed_type": "owner",
+      "canon_label_hint": "governance_boundary versioned replacement",
+      "exact_items": [
+        "Introduce a versioned replacement for `tier_boundary` such as `governance_boundary`, keeping compatibility aliases only as an explicit migration strategy."
+      ],
+      "affected_doc_hints": [
+        "Plans/Provider_Stream_Mapping_External_Reference_A2A.md"
+      ],
+      "heading_hints": [
+        "### Candidate fixes to carry forward"
+      ],
+      "stale_tokens": [
+        "tier_boundary"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L6937"
+      ],
+      "notes": [
+        "Schema versioning required"
+      ]
+    },
+    {
+      "seed_id": "seed-302",
+      "seed_type": "owner",
+      "canon_label_hint": "attempt_id in reserved diagnostic schemas",
+      "exact_items": [
+        "Add `attempt_id` to the reserved diagnostic schemas that represent execution, audit, handoff, and HITL events, and back it with a new architecture invariant for attempt continuity."
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/Architecture_Invariants.md"
+      ],
+      "heading_hints": [
+        "### Candidate fixes to carry forward"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L6938"
+      ],
+      "notes": [
+        "Architecture invariant required"
+      ]
+    },
+    {
+      "seed_id": "seed-303",
+      "seed_type": "owner",
+      "canon_label_hint": "Stream account and actor context extension",
+      "exact_items": [
+        "Extend the stream/event contract with account attribution, actor kind, blocked-owner context, and package/seam/lane identity where downstream projections depend on them."
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md"
+      ],
+      "heading_hints": [
+        "### Candidate fixes to carry forward"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L6939"
+      ],
+      "notes": [
+        "Multiple stream extensions required"
+      ]
+    },
+    {
+      "seed_id": "seed-304",
+      "seed_type": "consumer",
+      "canon_label_hint": "Contracts_V0 self-conflicts",
+      "exact_items": [
+        "`Contracts_V0.md` still conflicts with itself on remediation resolution enums and on safe-point / scheduler payload shapes"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md"
+      ],
+      "heading_hints": [
+        "### Key findings"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L6960-L6961"
+      ],
+      "notes": [
+        "Internal spec conflicts"
+      ]
+    },
+    {
+      "seed_id": "seed-305",
+      "seed_type": "consumer",
+      "canon_label_hint": "Actor envelope broader than run_id",
+      "exact_items": [
+        "The rewrite now clearly needs an actor envelope broader than `run_id`: `storage-plan.md` still keys provider account snapshots as `provider_accounts.run_snapshot.{run_id}.{provider_id}` but requested/effective account resolution already spans thread/chat/interview/wizard/non-run actors. Codex sharpened that the missing minimum envelope is now `project_id` + `actor_kind` + sparse actor refs (`run_id?`, `attempt_id?`, `thread_id?`, `wizard_id?`, `interview_id?`) plus requested/effective runtime/account fields"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "heading_hints": [
+        "### Key findings"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L6963-L6966"
+      ],
+      "notes": [
+        "Canonical actor envelope must be defined"
+      ]
+    },
+    {
+      "seed_id": "seed-306",
+      "seed_type": "consumer",
+      "canon_label_hint": "Receipt record shape contradictions",
+      "exact_items": [
+        "`storage-plan.md` internally contradicts itself because the early `orchestrator.receipt.{run_id}.{attempt_id}` value shape omits `project_id` and `created_at_utc`, while the later cross-surface receipt record makes them mandatory"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [
+        "### Key findings"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L6968"
+      ],
+      "notes": [
+        "Mandatory field presence contradicts earlier shape"
+      ]
+    },
+    {
+      "seed_id": "seed-307",
+      "seed_type": "consumer",
+      "canon_label_hint": "usage_event_ref canonical pointer",
+      "exact_items": [
+        "`usage-feature.md` sharpened that the canonical pointer should be `usage_event_ref`, not a new opaque `usage_event_id`"
+      ],
+      "affected_doc_hints": [
+        "Plans/usage-feature.md"
+      ],
+      "heading_hints": [
+        "### Key findings"
+      ],
+      "stale_tokens": [
+        "usage_event_id"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L6969"
+      ],
+      "notes": [
+        "Canonical reference naming established"
+      ]
+    },
+    {
+      "seed_id": "seed-308",
+      "seed_type": "consumer",
+      "canon_label_hint": "Run Graph HITL command arg mismatch",
+      "exact_items": [
+        "`cmd.graph.approve_hitl` / `deny_hitl` arguments do not match `UI_Command_Catalog.md` (`request_id` mismatch)"
+      ],
+      "affected_doc_hints": [
+        "Plans/Run_Graph_View.md",
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "heading_hints": [
+        "### Key findings"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L6972"
+      ],
+      "notes": [
+        "Command contract divergence"
+      ]
+    },
+    {
+      "seed_id": "seed-309",
+      "seed_type": "consumer",
+      "canon_label_hint": "Run Graph cross-surface commands unbound",
+      "exact_items": [
+        "cross-surface open commands are required in prose but not bound in the Run Graph command section"
+      ],
+      "affected_doc_hints": [
+        "Plans/Run_Graph_View.md"
+      ],
+      "heading_hints": [
+        "### Key findings"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L6974"
+      ],
+      "notes": [
+        "Cross-surface command routing incomplete"
+      ]
+    },
+    {
+      "seed_id": "seed-310",
+      "seed_type": "owner",
+      "canon_label_hint": "Canonical payload block for remediation/safe-point/scheduler",
+      "exact_items": [
+        "Publish a single superseding canonical payload block in `Contracts_V0.md` for scheduler/safe-point/remediation records and explicitly demote older variants."
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md"
+      ],
+      "heading_hints": [
+        "### Candidate fixes to carry forward"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L7001"
+      ],
+      "notes": [
+        "Payload consolidation required"
+      ]
+    },
+    {
+      "seed_id": "seed-311",
+      "seed_type": "owner",
+      "canon_label_hint": "Canonical actor envelope for runtime records",
+      "exact_items": [
+        "Add a canonical actor envelope shared by runtime records, provider-account snapshots, receipts, Usage pivots, and conversational actor telemetry."
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [
+        "### Candidate fixes to carry forward"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L7002"
+      ],
+      "notes": [
+        "Cross-system actor identity unification"
+      ]
+    },
+    {
+      "seed_id": "seed-312",
+      "seed_type": "consumer",
+      "canon_label_hint": "GitHub identity login-keyed stale",
+      "exact_items": [
+        "`GitHub_API_Auth_and_Flows.md` still keys durable credential identity as `github_api:github.com/<login>` and exposes `login` as primary token metadata"
+      ],
+      "affected_doc_hints": [
+        "Plans/GitHub_API_Auth_and_Flows.md"
+      ],
+      "heading_hints": [
+        "### Key findings"
+      ],
+      "stale_tokens": [
+        "github_api:github.com/<login>"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L7028"
+      ],
+      "notes": [
+        "Mutable login keying conflicts with stable account model"
+      ]
+    },
+    {
+      "seed_id": "seed-313",
+      "seed_type": "consumer",
+      "canon_label_hint": "cmd.github.connect arg-less",
+      "exact_items": [
+        "`cmd.github.connect` is still effectively arg-less even though reconnect must bind back to a blocked run/node/thread/wizard context"
+      ],
+      "affected_doc_hints": [
+        "Plans/GitHub_Integration.md",
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "heading_hints": [
+        "### Key findings"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L7031"
+      ],
+      "notes": [
+        "Command underspecification blocks recovery binding"
+      ]
+    },
+    {
+      "seed_id": "seed-314",
+      "seed_type": "consumer",
+      "canon_label_hint": "Forbidden persona field names in Orchestrator",
+      "exact_items": [
+        "`Orchestrator_Page.md` still requires forbidden `requested_persona_id` / `effective_persona_id` names in live-status dependencies"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md"
+      ],
+      "heading_hints": [
+        "### Key findings"
+      ],
+      "stale_tokens": [
+        "requested_persona_id",
+        "effective_persona_id"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L7035"
+      ],
+      "notes": [
+        "Forbidden naming must be replaced"
+      ]
+    },
+    {
+      "seed_id": "seed-315",
+      "seed_type": "consumer",
+      "canon_label_hint": "Orchestrator missing account policy fields",
+      "exact_items": [
+        "requested/effective provider/model visibility exists, but account policy/account selection/switch fields are still missing from the required identity set"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md"
+      ],
+      "heading_hints": [
+        "### Key findings"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L7036"
+      ],
+      "notes": [
+        "Multi-account fields missing from live-status"
+      ]
+    },
+    {
+      "seed_id": "seed-316",
+      "seed_type": "consumer",
+      "canon_label_hint": "Widget dashboard layout contradiction",
+      "exact_items": [
+        "`Widget_System.md` still persists layouts for them and still has an explicit internal contradiction over whether legacy `dashboard_layout:v1` is retained or deleted"
+      ],
+      "affected_doc_hints": [
+        "Plans/Widget_System.md"
+      ],
+      "heading_hints": [
+        "### Key findings"
+      ],
+      "stale_tokens": [
+        "dashboard_layout:v1"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L7040"
+      ],
+      "notes": [
+        "Internal doc contradiction"
+      ]
+    },
+    {
+      "seed_id": "seed-317",
+      "seed_type": "consumer",
+      "canon_label_hint": "Widget multi_account namespace stale",
+      "exact_items": [
+        "`widget.multi_account` still binds to `settings/multi_account.*` instead of the canonical `provider_accounts.*` storage family"
+      ],
+      "affected_doc_hints": [
+        "Plans/Widget_System.md",
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [
+        "### Key findings"
+      ],
+      "stale_tokens": [
+        "settings/multi_account.*"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L7043"
+      ],
+      "notes": [
+        "Widget data sourcing namespace stale"
+      ]
+    },
+    {
+      "seed_id": "seed-318",
+      "seed_type": "consumer",
+      "canon_label_hint": "Orchestrator uses forbidden persona names",
+      "exact_items": [
+        "Orchestrator still uses forbidden `requested_persona_id` / `effective_persona_id` names."
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md"
+      ],
+      "heading_hints": [
+        "### Contradictions / gaps surfaced"
+      ],
+      "stale_tokens": [
+        "requested_persona_id",
+        "effective_persona_id"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L7063"
+      ],
+      "notes": [
+        "Stale naming persists"
+      ]
+    },
+    {
+      "seed_id": "seed-319",
+      "seed_type": "owner",
+      "canon_label_hint": "GitHub identity replacement",
+      "exact_items": [
+        "Replace login-keyed durable GitHub identity with stable `account_id` / `credential_ref`, keeping `login` and provider identity display-only."
+      ],
+      "affected_doc_hints": [
+        "Plans/GitHub_API_Auth_and_Flows.md"
+      ],
+      "heading_hints": [
+        "### Candidate fixes to carry forward"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L7069"
+      ],
+      "notes": [
+        "Auth boundary alignment required"
+      ]
+    },
+    {
+      "seed_id": "seed-320",
+      "seed_type": "owner",
+      "canon_label_hint": "GitHub recovery context payload",
+      "exact_items": [
+        "Add a canonical GitHub recovery context payload that can round-trip blocked episode, project, actor kind, auth realm, and effective-account refs."
+      ],
+      "affected_doc_hints": [
+        "Plans/GitHub_Integration.md"
+      ],
+      "heading_hints": [
+        "### Candidate fixes to carry forward"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L7070"
+      ],
+      "notes": [
+        "Recovery binding requires structured context"
+      ]
+    },
+    {
+      "seed_id": "seed-321",
+      "seed_type": "owner",
+      "canon_label_hint": "GitHub command migration map",
+      "exact_items": [
+        "Publish a GitHub command migration map from legacy IDs to canonical `UI_Command_Catalog.md` IDs and payloads."
+      ],
+      "affected_doc_hints": [
+        "Plans/GitHub_Integration.md",
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "heading_hints": [
+        "### Candidate fixes to carry forward"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L7071"
+      ],
+      "notes": [
+        "Command divergence requires migration plan"
+      ]
+    },
+    {
+      "seed_id": "seed-322",
+      "seed_type": "consumer",
+      "canon_label_hint": "Missing project_summary projection",
+      "exact_items": [
+        "There is still no canonical `project_summary` or equivalent projection contract. `projects:v1` is too thin, `project_state:v1:{project_id}` is UI-state heavy, not operational-summary heavy"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [
+        "### Contradictions / gaps surfaced"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L7151-L7153"
+      ],
+      "notes": [
+        "Projection schema gap"
+      ]
+    },
+    {
+      "seed_id": "seed-323",
+      "seed_type": "owner",
+      "canon_label_hint": "Canonical project-summary projection",
+      "exact_items": [
+        "Add a canonical project-summary projection, likely alongside `projects:v1` rather than inside raw shell UI state."
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [
+        "### Candidate fixes to carry forward"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L7168"
+      ],
+      "notes": [
+        "Projection ownership requires clarity"
+      ]
+    },
+    {
+      "seed_id": "seed-324",
+      "seed_type": "owner",
+      "canon_label_hint": "Project summary minimum shape",
+      "exact_items": [
+        "Recommended minimum project-summary shape: `project_id`, `activity_state` (`idle | active | background_active | historical_only`), `attention_state` (`none | advisory | attention_required | blocked`), `health_state` (`healthy | degraded | blocked`), `primary_owner_kind?`, `primary_reason_code?`, `primary_object_ref?`, `active_run_count`, `blocked_run_count`, `attention_object_count`, `projection_trust_state`, `last_activity_at_utc`, `historical_run_count`"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [
+        "### Candidate fixes to carry forward"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L7169-L7182"
+      ],
+      "notes": [
+        "Authoritative schema defined"
+      ]
+    },
+    {
+      "seed_id": "seed-325",
+      "seed_type": "owner",
+      "canon_label_hint": "missing project_attention_item contract",
+      "exact_items": [
+        "What is still missing is a shared project-attention item contract.",
+        "they do not yet define one normalized object that can back: attention-center rows, project-card badges, title-bar attention badges, command-palette \"resume/fix\" entries, cross-surface \"go to the right place\" behavior"
+      ],
+      "affected_doc_hints": [
+        "Plans/Glossary.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/storage-plan.md",
+        "Plans/assistant-chat-design.md"
+      ],
+      "heading_hints": [
+        "## Research Progress - 2026-03-16 - attention center and project-attention routing cluster"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L7215-L7222"
+      ],
+      "notes": [
+        "Field contract must define normalized object backing multiple UI surfaces"
+      ]
+    },
+    {
+      "seed_id": "seed-326",
+      "seed_type": "owner",
+      "canon_label_hint": "missing attention-center item payload schema",
+      "exact_items": [
+        "attention center exists in the glossary, but there is no concrete payload/schema for attention-center items."
+      ],
+      "affected_doc_hints": [
+        "Plans/Glossary.md"
+      ],
+      "heading_hints": [
+        "### Contradictions / gaps surfaced"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L7241"
+      ],
+      "notes": [
+        "Glossary term lacks concrete payload/schema definition"
+      ]
+    },
+    {
+      "seed_id": "seed-327",
+      "seed_type": "owner",
+      "canon_label_hint": "missing generalized resume_url equivalent",
+      "exact_items": [
+        "resume_url exists for wizard/thread recovery, but no generalized equivalent is yet defined for: blocked run items, concern-driven attention, auth/account issues, Source Control / GitHub action-needed items, degraded-trust inspection prompts"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/assistant-chat-design.md"
+      ],
+      "heading_hints": [
+        "### Contradictions / gaps surfaced"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L7242-L7247"
+      ],
+      "notes": [
+        "Generalized route payload needed beyond wizard recovery pattern"
+      ]
+    },
+    {
+      "seed_id": "seed-328",
+      "seed_type": "owner",
+      "canon_label_hint": "required project_attention_item projection fields",
+      "exact_items": [
+        "Add a shared project_attention_item projection or equivalent normalized row model.",
+        "Recommended minimum shape: attention_item_id, project_id, severity (advisory | attention_required | blocked), owner_kind, reason_code, source_kind, source_object_ref, primary_route_payload, secondary_route_payload?, projection_trust_state, created_at_utc, updated_at_utc, dismissibility_kind (none | quiet_only | dismissible), active"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [
+        "### Candidate fixes to carry forward"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L7254-L7269"
+      ],
+      "notes": [
+        "Exact field list for project_attention_item record; severity values enumerated"
+      ]
+    },
+    {
+      "seed_id": "seed-329",
+      "seed_type": "owner",
+      "canon_label_hint": "missing requested concrete account field",
+      "exact_items": [
+        "The missing requested-side concrete account field is now clearly blocking multiple downstream contracts, not just storage purity: Multi-Account.md already supports manual preferred-account behavior and role-by-account overrides; Prompt_Pipeline.md, Contracts_V0.md, and Models_System.md still only expose requested_account_policy plus effective_account_id"
+      ],
+      "affected_doc_hints": [
+        "Plans/Multi-Account.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Models_System.md"
+      ],
+      "heading_hints": [
+        "## Research Progress - 2026-03-16 - GPT-5.4 Identity / Actor Envelope Deepening"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L7301-L7304"
+      ],
+      "notes": [
+        "Field blocking multiple downstream contracts"
+      ]
+    },
+    {
+      "seed_id": "seed-330",
+      "seed_type": "owner",
+      "canon_label_hint": "missing first-class actor envelope",
+      "exact_items": [
+        "The rewrite now needs a first-class actor envelope, not just a richer run record: Models_System.md still frames deterministic selection around provider/model/variant and availability sets; Prompt_Pipeline.md still lacks actor_kind / execution_role; storage-plan.md still keys provider account snapshots only by run_id"
+      ],
+      "affected_doc_hints": [
+        "Plans/Models_System.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [
+        "### Key findings"
+      ],
+      "stale_tokens": [
+        "_persona_id"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L7305-L7309"
+      ],
+      "notes": [
+        "First-class actor envelope needed for multi-actor auditability and replay"
+      ]
+    },
+    {
+      "seed_id": "seed-331",
+      "seed_type": "owner",
+      "canon_label_hint": "Prompt Pipeline handoff boundary fracture",
+      "exact_items": [
+        "Prompt Pipeline has become internally split on what the dispatch boundary actually carries: \u00a76.5 defines a rich runtime identity record with auth/account/switch fields; later handoff/addenda collapse the bundle back to IDs + model/permission refs and even lose thread_id; this now creates a concrete SSOT fracture between Prompt Pipeline, bridged providers, and conversational surfaces"
+      ],
+      "affected_doc_hints": [
+        "Plans/Prompt_Pipeline.md"
+      ],
+      "heading_hints": [
+        "### Key findings"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L7310-L7313"
+      ],
+      "notes": [
+        "Section reference: \u00a76.5 critical to contract verification"
+      ]
+    },
+    {
+      "seed_id": "seed-332",
+      "seed_type": "stale_retirement",
+      "canon_label_hint": "retire stale _persona_id naming",
+      "exact_items": [
+        "stale _persona_id names remain in required worker identity fields"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/Run_Graph_View.md"
+      ],
+      "heading_hints": [
+        "### Key findings"
+      ],
+      "stale_tokens": [
+        "_persona_id"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L7315"
+      ],
+      "notes": [
+        "Must be replaced in worker identity fields"
+      ]
+    },
+    {
+      "seed_id": "seed-333",
+      "seed_type": "stale_retirement",
+      "canon_label_hint": "retire tier_id in favor of usage_event_ref + attempt_id",
+      "exact_items": [
+        "graph/use pivots still rely on tier_id where storage/receipts have moved to attempt_id + usage_event_ref"
+      ],
+      "affected_doc_hints": [
+        "Plans/Run_Graph_View.md",
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [
+        "### Key findings"
+      ],
+      "stale_tokens": [
+        "tier_id"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L7316"
+      ],
+      "notes": [
+        "Usage pivots should use usage_event_ref + attempt_id instead"
+      ]
+    },
+    {
+      "seed_id": "seed-334",
+      "seed_type": "owner",
+      "canon_label_hint": "missing append-only account_switch_event family",
+      "exact_items": [
+        "there is still no append-only account_switch_event / account_pressure_episode family for History, Ledger, Usage, and Dashboard to share"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [
+        "### Key findings"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L7320"
+      ],
+      "notes": [
+        "Blocking runtime-story and audit surfaces, not just analytics"
+      ]
+    },
+    {
+      "seed_id": "seed-335",
+      "seed_type": "consumer",
+      "canon_label_hint": "Multi-Account.md no-open-questions claim contradicted",
+      "exact_items": [
+        "Multi-Account.md still strongest policy owner, but its \"no design-open questions remain\" claim is now contradicted by unresolved requested-account/history/trust ownership across adjacent SSOTs"
+      ],
+      "affected_doc_hints": [
+        "Plans/Multi-Account.md"
+      ],
+      "heading_hints": [
+        "### Highest-risk impacted docs"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L7327"
+      ],
+      "notes": [
+        "Consumer expectation: cross-doc ownership must be resolved before Multi-Account can claim completeness"
+      ]
+    },
+    {
+      "seed_id": "seed-336",
+      "seed_type": "consumer",
+      "canon_label_hint": "Multi-Account.md unresolved cross-doc ownership",
+      "exact_items": [
+        "Multi-Account.md says there are no design-open questions left while cross-doc ownership is still unresolved for requested concrete account, switch history, conversational actor fields, and trust behavior."
+      ],
+      "affected_doc_hints": [
+        "Plans/Multi-Account.md"
+      ],
+      "heading_hints": [
+        "### Contradictions / gaps surfaced"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L7336"
+      ],
+      "notes": [
+        "Consumer carry-through: must resolve before claiming no open questions remain"
+      ]
+    },
+    {
+      "seed_id": "seed-337",
+      "seed_type": "owner",
+      "canon_label_hint": "missing requested concrete account in runtime grammar",
+      "exact_items": [
+        "Add one canonical requested concrete-account field to the shared runtime identity grammar, distinct from requested_account_policy."
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Multi-Account.md"
+      ],
+      "heading_hints": [
+        "### Candidate fixes to carry forward"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L7343"
+      ],
+      "notes": [
+        "Distinct from policy; both needed"
+      ]
+    },
+    {
+      "seed_id": "seed-338",
+      "seed_type": "owner",
+      "canon_label_hint": "missing actor_kind / execution_role fields",
+      "exact_items": [
+        "Add actor_kind / execution_role and actor-scoped refs to the shared runtime identity bundle, snapshots, and handoff objects."
+      ],
+      "affected_doc_hints": [
+        "Plans/Prompt_Pipeline.md",
+        "Plans/storage-plan.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "heading_hints": [
+        "### Candidate fixes to carry forward"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L7344"
+      ],
+      "notes": [
+        "Required across bundle, snapshots, and handoff objects"
+      ]
+    },
+    {
+      "seed_id": "seed-339",
+      "seed_type": "owner",
+      "canon_label_hint": "Prompt Pipeline canonical handoff consolidation",
+      "exact_items": [
+        "Consolidate Prompt Pipeline onto one canonical handoff/runtime object that preserves thread/auth/account/switch data across dispatch boundaries."
+      ],
+      "affected_doc_hints": [
+        "Plans/Prompt_Pipeline.md"
+      ],
+      "heading_hints": [
+        "### Candidate fixes to carry forward"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L7345"
+      ],
+      "notes": [
+        "Must preserve thread_id, auth, account, switch data"
+      ]
+    },
+    {
+      "seed_id": "seed-340",
+      "seed_type": "owner",
+      "canon_label_hint": "append-only account_switch_event and account_pressure_episode",
+      "exact_items": [
+        "Add append-only account_switch_event / account_pressure_episode records and bind History/Ledger/Usage/Progress projections to them."
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [
+        "### Candidate fixes to carry forward"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L7346"
+      ],
+      "notes": [
+        "Must be shared across History, Ledger, Usage, Progress"
+      ]
+    },
+    {
+      "seed_id": "seed-341",
+      "seed_type": "owner",
+      "canon_label_hint": "replace worker/verifier contracts with canonical runtime refs",
+      "exact_items": [
+        "Replace worker/verifier/page contracts with canonical runtime snapshot refs or inline canonical runtime bundles instead of ad hoc persona/provider/model strings."
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/Run_Graph_View.md"
+      ],
+      "heading_hints": [
+        "### Candidate fixes to carry forward"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L7347"
+      ],
+      "notes": [
+        "Must retire ad hoc persona/provider/model strings"
+      ]
+    },
+    {
+      "seed_id": "seed-342",
+      "seed_type": "owner",
+      "canon_label_hint": "missing bridged-provider capability metadata parity",
+      "exact_items": [
+        "Bridged-provider contracts are now visibly weaker than direct-provider contracts: direct providers must expose capability metadata like multi-account support, switch boundary, quota signal sources/confidence, and role-scoped pools; bridged-provider sections still do not expose equivalent capability blocks"
+      ],
+      "affected_doc_hints": [
+        "Plans/CLI_Bridged_Providers.md",
+        "Plans/Provider_OpenCode.md"
+      ],
+      "heading_hints": [
+        "### Key findings"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L7368-L7371"
+      ],
+      "notes": [
+        "Multi-account routing and pressure interpretation are weaker on bridged providers"
+      ]
+    },
+    {
+      "seed_id": "seed-343",
+      "seed_type": "owner",
+      "canon_label_hint": "CLI_Bridged_Providers normalized correlation envelope inconsistent",
+      "exact_items": [
+        "CLI_Bridged_Providers.md is internally inconsistent on normalized correlation shape: early envelope is only { run_id, seq, type, payload }; later addenda require preservation of thread_id, attempt_id, node_id, generation, snapshot IDs, and remediation lineage; there is still no canonical envelope slot for those fields"
+      ],
+      "affected_doc_hints": [
+        "Plans/CLI_Bridged_Providers.md"
+      ],
+      "heading_hints": [
+        "### Key findings"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L7372-L7375"
+      ],
+      "notes": [
+        "Exact envelope inconsistency: early vs late addenda"
+      ]
+    },
+    {
+      "seed_id": "seed-344",
+      "seed_type": "owner",
+      "canon_label_hint": "OpenCode missing auth/account runtime identity",
+      "exact_items": [
+        "OpenCode still preserves the older model/permission snapshot view of runtime identity, not the newer auth/account bundle: it carries requested/effective model IDs and permission snapshots; but not requested/effective auth/account fields, upstream provider identity ownership, or switch attribution"
+      ],
+      "affected_doc_hints": [
+        "Plans/Provider_OpenCode.md"
+      ],
+      "heading_hints": [
+        "### Key findings"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L7376-L7378"
+      ],
+      "notes": [
+        "Missing fields block transport vs upstream identity ownership clarity"
+      ]
+    },
+    {
+      "seed_id": "seed-345",
+      "seed_type": "owner",
+      "canon_label_hint": "A2A stream missing account-switch/pressure/actor disclosure",
+      "exact_items": [
+        "The A2A stream seam is still more dangerous than \"stale tier wording\" suggests: it still productizes tier_boundary and tier-audit semantics at the normalized stream layer; it still leaves no normalized path for account-switch, pressure/confidence, or actor-class disclosure; SelectSpeakerEvent remains raw_observation, so shared conversational/runtime actor changes are still largely invisible as durable lineage"
+      ],
+      "affected_doc_hints": [
+        "Plans/Provider_Stream_Mapping_External_Reference_A2A.md"
+      ],
+      "heading_hints": [
+        "### Key findings"
+      ],
+      "stale_tokens": [
+        "tier_boundary"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L7380-L7383"
+      ],
+      "notes": [
+        "SelectSpeakerEvent currently raw_observation; needs durable lineage"
+      ]
+    },
+    {
+      "seed_id": "seed-346",
+      "seed_type": "owner",
+      "canon_label_hint": "Permissions still session-centric and under-bound",
+      "exact_items": [
+        "Permissions are still effectively session-centric and under-bound to identity: base headless ask -> deny unless HITL at current tier boundary language is still tier-era and conflicts with unified blocked-overlay contracts; permission snapshots do not carry effective auth/account or operational identity context; approval caching still lacks an explicit actor/lane/run/account scope rule, which is unsafe under shared-runtime parallel actors"
+      ],
+      "affected_doc_hints": [
+        "Plans/Permissions_System.md"
+      ],
+      "heading_hints": [
+        "### Key findings"
+      ],
+      "stale_tokens": [
+        "tier boundary"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L7384-L7387"
+      ],
+      "notes": [
+        "Approval caching scope rule unsafe for parallel actors"
+      ]
+    },
+    {
+      "seed_id": "seed-347",
+      "seed_type": "owner",
+      "canon_label_hint": "missing shared degraded-trust / concern escalation contract",
+      "exact_items": [
+        "Degraded-trust and concern escalation remain under-owned across provider/runtime/UI boundaries: auth/account health, switch pressure, provider confidence, and projection freshness still do not flow through one reusable trust/concern contract; Assistant chat is ahead of interview/builder docs on requested/effective auth-account visibility, which is useful evidence of parity drift across conversational actors"
+      ],
+      "affected_doc_hints": [
+        "Plans/assistant-chat-design.md",
+        "Plans/interview-subagent-integration.md"
+      ],
+      "heading_hints": [
+        "### Key findings"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L7388-L7390"
+      ],
+      "notes": [
+        "Consumer evidence: assistant-chat ahead on auth/account visibility"
+      ]
+    },
+    {
+      "seed_id": "seed-348",
+      "seed_type": "owner",
+      "canon_label_hint": "CLI_Bridged_Providers needs versioned correlation envelope",
+      "exact_items": [
+        "Add a versioned correlation block to bridged-provider normalized events and require actor/thread/attempt/lineage refs there."
+      ],
+      "affected_doc_hints": [
+        "Plans/CLI_Bridged_Providers.md"
+      ],
+      "heading_hints": [
+        "### Candidate fixes to carry forward"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L7413"
+      ],
+      "notes": [
+        "Must include actor/thread/attempt/lineage refs"
+      ]
+    },
+    {
+      "seed_id": "seed-349",
+      "seed_type": "owner",
+      "canon_label_hint": "make bridged providers expose capability block",
+      "exact_items": [
+        "Make bridged providers expose the same capability block expected of direct providers, or centralize that capability block for both classes."
+      ],
+      "affected_doc_hints": [
+        "Plans/CLI_Bridged_Providers.md",
+        "Plans/Provider_OpenCode.md"
+      ],
+      "heading_hints": [
+        "### Candidate fixes to carry forward"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L7414"
+      ],
+      "notes": [
+        "Parity requirement: direct and bridged"
+      ]
+    },
+    {
+      "seed_id": "seed-350",
+      "seed_type": "owner",
+      "canon_label_hint": "extend OpenCode with auth/account identity block",
+      "exact_items": [
+        "Extend OpenCode and bridged request/runtime bundles with the full auth/account identity block plus explicit upstream-provider identity rules."
+      ],
+      "affected_doc_hints": [
+        "Plans/Provider_OpenCode.md"
+      ],
+      "heading_hints": [
+        "### Candidate fixes to carry forward"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L7415"
+      ],
+      "notes": [
+        "Must define upstream-provider identity ownership explicitly"
+      ]
+    },
+    {
+      "seed_id": "seed-351",
+      "seed_type": "owner",
+      "canon_label_hint": "re-anchor A2A scope away from tier specifics",
+      "exact_items": [
+        "Re-anchor A2A scope away from tier-specific required keys and add actor/account/provenance/trust hints for stream consumers."
+      ],
+      "affected_doc_hints": [
+        "Plans/Provider_Stream_Mapping_External_Reference_A2A.md"
+      ],
+      "heading_hints": [
+        "### Candidate fixes to carry forward"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L7416"
+      ],
+      "notes": [
+        "Remove tier-specific required keys; add hints"
+      ]
+    },
+    {
+      "seed_id": "seed-352",
+      "seed_type": "owner",
+      "canon_label_hint": "permission docs need runtime-overlay terminology",
+      "exact_items": [
+        "Replace permission tier-boundary language with runtime-overlay/blocked-state terminology and key approval cache scope by actor/run/lane/account context."
+      ],
+      "affected_doc_hints": [
+        "Plans/Permissions_System.md"
+      ],
+      "heading_hints": [
+        "### Candidate fixes to carry forward"
+      ],
+      "stale_tokens": [
+        "tier-boundary"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L7417"
+      ],
+      "notes": [
+        "Retire tier-boundary language; key cache scope by actor/run/lane/account"
+      ]
+    },
+    {
+      "seed_id": "seed-353",
+      "seed_type": "owner",
+      "canon_label_hint": "missing shared degraded-trust / concern bridge",
+      "exact_items": [
+        "Add one shared degraded-trust / projection-health / concern bridge that provider, permissions, Orchestrator, Usage, and widget surfaces can all consume."
+      ],
+      "affected_doc_hints": [
+        "Plans/Permissions_System.md",
+        "Plans/Widget_System.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "heading_hints": [
+        "### Candidate fixes to carry forward"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L7418"
+      ],
+      "notes": [
+        "Must be consumable by provider, permissions, Orchestrator, Usage, widget surfaces"
+      ]
+    },
+    {
+      "seed_id": "seed-354",
+      "seed_type": "owner",
+      "canon_label_hint": "projects:v1 health status field risks becoming junk drawer",
+      "exact_items": [
+        "projects:v1 currently mixes true registry fields with an under-defined health status. that invites it to become an accidental junk drawer for operational rollups"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [
+        "### Contradictions / gaps surfaced"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L7463-L7465"
+      ],
+      "notes": [
+        "Consumer expectation: narrow projects:v1 to true registry fields"
+      ]
+    },
+    {
+      "seed_id": "seed-355",
+      "seed_type": "owner",
+      "canon_label_hint": "missing canonical redb key patterns for project summary and attention",
+      "exact_items": [
+        "There is still no canonical redb key pattern or record shape for: per-project operational summary, per-project active attention items, attention-item archival/resolution behavior"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [
+        "### Contradictions / gaps surfaced"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L7467-L7470"
+      ],
+      "notes": [
+        "Consumer expectation: define exact key patterns and record shapes"
+      ]
+    },
+    {
+      "seed_id": "seed-356",
+      "seed_type": "owner",
+      "canon_label_hint": "keep projects:v1 narrow to registry",
+      "exact_items": [
+        "Keep projects:v1 narrow: project registry only, path, display metadata, detection metadata, last-opened, stable config references, remove or sharply narrow free-form health status wording there"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [
+        "### Candidate fixes to carry forward"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L7473-L7476"
+      ],
+      "notes": [
+        "Owner expectation: remove free-form health status"
+      ]
+    },
+    {
+      "seed_id": "seed-357",
+      "seed_type": "owner",
+      "canon_label_hint": "keep project_state:v1 narrow to UI restoration",
+      "exact_items": [
+        "Keep project_state:v1:{project_id} narrow: view selection, panel layout, editor/file-tree/chat shell restore state, no canonical blocked/attention truth"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [
+        "### Candidate fixes to carry forward"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L7477-L7481"
+      ],
+      "notes": [
+        "Owner expectation: no canonical blocked/attention truth in UI state record"
+      ]
+    },
+    {
+      "seed_id": "seed-358",
+      "seed_type": "owner",
+      "canon_label_hint": "required redb projection family keys and shapes",
+      "exact_items": [
+        "Add dedicated redb projections, for example: project_summary.v1:{project_id}, project_attention_item.v1:{project_id}:{attention_item_id}, optional project_attention_index.v1:{project_id} if needed for efficient active ordering/counts"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [
+        "### Candidate fixes to carry forward"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L7482-L7485"
+      ],
+      "notes": [
+        "Exact redb key patterns to define"
+      ]
+    },
+    {
+      "seed_id": "seed-359",
+      "seed_type": "owner",
+      "canon_label_hint": "required project_summary.v1 fields",
+      "exact_items": [
+        "Recommended project_summary fields: project_id, activity_state, attention_state, health_state, primary_owner_kind?, primary_reason_code?, primary_attention_item_id?, primary_object_ref?, active_run_count, background_run_count, blocked_run_count, attention_item_count, historical_run_count, projection_trust_state, summary_generated_at_utc, last_activity_at_utc"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [
+        "### Candidate fixes to carry forward"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L7486-L7502"
+      ],
+      "notes": [
+        "Exact field list for project_summary record"
+      ]
+    },
+    {
+      "seed_id": "seed-360",
+      "seed_type": "owner",
+      "canon_label_hint": "required project_attention_item.v1 fields",
+      "exact_items": [
+        "Recommended project_attention_item fields: attention_item_id, project_id, severity, owner_kind, reason_code, source_kind, source_object_ref, primary_route_payload_ref or inline route payload, secondary_route_payload?, projection_trust_state, dismissibility_kind, quiet_until_utc?, active, created_at_utc, updated_at_utc, resolved_at_utc?"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [
+        "### Candidate fixes to carry forward"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L7503-L7519"
+      ],
+      "notes": [
+        "Exact field list for project_attention_item record"
+      ]
+    },
+    {
+      "seed_id": "seed-361",
+      "seed_type": "owner",
+      "canon_label_hint": "project_attention_item lifecycle rule",
+      "exact_items": [
+        "Recommended lifecycle rule: project_summary is current-state only and overwritten by projector updates; project_attention_item rows should retain enough historical semantics to support active vs resolved/dismissed/quieted behavior without erasing audit lineage; if the canonical source object already owns durable history, the attention row may stay projection-level but must preserve a stable source_object_ref"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [
+        "### Candidate fixes to carry forward"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L7520-L7523"
+      ],
+      "notes": [
+        "Consumer expectation: preserve audit lineage in attention rows"
+      ]
+    },
+    {
+      "seed_id": "seed-362",
+      "seed_type": "owner",
+      "canon_label_hint": "project_summary projector rule",
+      "exact_items": [
+        "Recommended projector rule: project summary derives from canonical runtime/thread/wizard/usage/auth/source-control records and from active attention rows; it must not invent synthetic blocked states unsupported by canonical owners"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [
+        "### Candidate fixes to carry forward"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L7524-L7526"
+      ],
+      "notes": [
+        "Consumer expectation: no synthetic blocked states"
+      ]
+    },
+    {
+      "seed_id": "seed-363",
+      "seed_type": "owner",
+      "canon_label_hint": "missing canonical internal route_payload schema",
+      "exact_items": [
+        "There is still no canonical internal route_payload or equivalent schema in the contracts docs."
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md"
+      ],
+      "heading_hints": [
+        "### Contradictions / gaps surfaced"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L7578"
+      ],
+      "notes": [
+        "Consumer expectation: define in Contracts_V0"
+      ]
+    },
+    {
+      "seed_id": "seed-364",
+      "seed_type": "owner",
+      "canon_label_hint": "resume_url serialization without normalized route rule",
+      "exact_items": [
+        "resume_url is carried in storage/events for wizard and thread blocked flows, but there is no normalized rule for how equivalent non-wizard object routes are represented."
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [
+        "### Contradictions / gaps surfaced"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L7579"
+      ],
+      "notes": [
+        "Consumer expectation: normalize non-wizard routes"
+      ]
+    },
+    {
+      "seed_id": "seed-365",
+      "seed_type": "owner",
+      "canon_label_hint": "navigation command granularity inconsistent",
+      "exact_items": [
+        "Navigation-style commands are currently inconsistent in granularity: some are pure open/focus commands; some encode object refs directly; some carry filter state; some rely on ambient UI state"
+      ],
+      "affected_doc_hints": [
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "heading_hints": [
+        "### Contradictions / gaps surfaced"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L7580-L7584"
+      ],
+      "notes": [
+        "Consumer expectation: standardize command granularity"
+      ]
+    },
+    {
+      "seed_id": "seed-366",
+      "seed_type": "owner",
+      "canon_label_hint": "cmd.widget.* uses generic page field conflicting with typed routing",
+      "exact_items": [
+        "cmd.widget.* still uses a generic page: string, which now conflicts with the move toward stronger native-surface vocabulary and typed routing."
+      ],
+      "affected_doc_hints": [
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Widget_System.md"
+      ],
+      "heading_hints": [
+        "### Contradictions / gaps surfaced"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L7585"
+      ],
+      "notes": [
+        "Consumer expectation: replace with typed routing"
+      ]
+    },
+    {
+      "seed_id": "seed-367",
+      "seed_type": "owner",
+      "canon_label_hint": "canonical internal route payload minimum fields",
+      "exact_items": [
+        "Define one canonical internal route payload, separate from command IDs. Recommended minimum route payload fields: project_id?, workspace_tab_id?, destination_surface, destination_tab?, focused_run_id?, historical_mode?, thread_id?, wizard_id?, object_kind?, object_id?, record_id?"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "heading_hints": [
+        "### Candidate fixes to carry forward"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L7588-L7600"
+      ],
+      "notes": [
+        "Exact field list; separate from command IDs"
+      ]
+    },
+    {
+      "seed_id": "seed-368",
+      "seed_type": "owner",
+      "canon_label_hint": "Requested concrete-account ownership gap and requested_account_binding field",
+      "exact_items": [
+        "requested_account_policy already exists, effective_account_id already exists, but no canonical way to represent a requested concrete account on the requested side",
+        "requested_account_binding values: none | preferred | required",
+        "none: no concrete account was requested; preferred: a concrete account was requested as a preference, but fallback is allowed; required: a concrete account was explicitly pinned; fallback is not silent"
+      ],
+      "affected_doc_hints": [
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Multi-Account.md",
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/usage-feature.md"
+      ],
+      "heading_hints": [
+        "## Research Progress - 2026-03-16 - requested concrete-account ownership cluster"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L7847-L7920"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "seed-369",
+      "seed_type": "owner",
+      "canon_label_hint": "Execution_role / actor_kind missing from runtime records, usage records, surface payloads",
+      "exact_items": [
+        "execution_role / actor_kind missing from canonical runtime snapshots",
+        "execution_role / actor_kind missing from usage records and surface payloads",
+        "operational_identity block missing parallel to provider-account identity",
+        "account_switch_reason missing from canonical usage records",
+        "switch_event_ref or equivalent durable linkage missing from usage records",
+        "blocked/degraded reason family missing from effective-resolution record"
+      ],
+      "affected_doc_hints": [
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Multi-Account.md",
+        "Plans/Models_System.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "heading_hints": [
+        "## Research Progress - 2026-03-16 - GPT-5.3-Codex Identity / Projection Closure"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L7941-L7981"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "seed-370",
+      "seed_type": "owner",
+      "canon_label_hint": "Transport host identity vs upstream provider identity disambiguation",
+      "exact_items": [
+        "transport host identity and upstream provider identity still ambiguous in model/runtime examples",
+        "requested/effective identity renderers will keep colliding those concepts"
+      ],
+      "affected_doc_hints": [
+        "Plans/Models_System.md"
+      ],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L7955-L7967"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "seed-371",
+      "seed_type": "owner",
+      "canon_label_hint": "Schema extension: execution_role/actor_kind/operational_identity across all records",
+      "exact_items": [
+        "Add execution_role / actor_kind to canonical runtime records, attempt records, and usage records",
+        "Introduce operational_identity block parallel to provider-account identity",
+        "Extend canonical usage records with account_switch_reason? and switch_event_ref?",
+        "Add blocked/degraded reason fields and confidence/source hooks to effective-resolution record"
+      ],
+      "affected_doc_hints": [
+        "Plans/Prompt_Pipeline.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md",
+        "Plans/Multi-Account.md",
+        "Plans/Models_System.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "heading_hints": [
+        "### Candidate fixes to carry forward"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L7977-L7981"
+      ],
+      "notes": []
+    }
+  ]
+}
