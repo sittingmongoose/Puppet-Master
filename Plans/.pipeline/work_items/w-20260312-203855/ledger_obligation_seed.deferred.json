@@ -1,16 +1,10 @@
 {
-  "schema_id": "pm.ledger_obligation_seed.pass.v1",
+  "schema_id": "pm.ledger_obligation_seed.deferred.v1",
   "work_id": "w-20260312-203855",
-  "pass_number": 3,
-  "ranges_checked": [
-    "L3200-3600",
-    "L4800-5200",
-    "L11200-11600",
-    "L15200-15600"
-  ],
-  "material_count": 29,
-  "noise_count": 58,
-  "material": [
+  "reason": "pass_3_hard_cap_reached_with_material_changes",
+  "description": "Pass 3 (the hard cap) still found 29 material items across 4 verification ranges. The full ledger has not been exhaustively verified by re-check passes. Additional material may exist in unverified ranges.",
+  "pass_3_material_count": 29,
+  "pass_3_material_findings": [
     {
       "seed_id": "p3rA-3214",
       "seed_type": "owner",
@@ -872,5 +866,40 @@
       "notes": []
     }
   ],
-  "generated_at_utc": "2026-04-20T20:55:52.760046+00:00"
+  "unverified_ranges": [
+    "L1200-1600",
+    "L1600-2000",
+    "L2400-2800",
+    "L2800-3200",
+    "L3600-4000",
+    "L4000-4400",
+    "L4400-4800",
+    "L5200-5600",
+    "L6000-6400",
+    "L6400-6800",
+    "L6800-7200",
+    "L7200-7600",
+    "L8000-8400",
+    "L8400-8800",
+    "L8800-9200",
+    "L9200-9600",
+    "L10400-10800",
+    "L10800-11200",
+    "L11600-12000",
+    "L12400-12800",
+    "L12800-13200",
+    "L13200-13600",
+    "L14000-14400",
+    "L14400-14800",
+    "L14800-15200",
+    "L15600-16000",
+    "L16000-16400",
+    "L16400-16800",
+    "L16800-17200",
+    "L17200-17600",
+    "L17600-18000",
+    "L18000-18196"
+  ],
+  "recommended_action": "rerun Ledger Obligation Seed Extractor targeting unverified high-risk ranges using pass_3_material_findings as context",
+  "generated_at_utc": "2026-04-20T20:56:34.865959+00:00"
 }

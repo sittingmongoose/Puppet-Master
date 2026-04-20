@@ -5,9 +5,20 @@
   "topic_or_scope": "Orchestrator rewrite transfer-fidelity audit, legacy-canon cleanup readiness, and reconciliation prep",
   "status": "active",
   "created_at_utc": "2026-03-12T20:38:55Z",
-  "updated_at_utc": "2026-04-17T22:29:58Z",
+  "updated_at_utc": "2026-04-20T20:57:07.817433+00:00",
   "run_prefix": "r-20260312-203855",
   "next_run_seq": 17,
   "run_id": null,
-  "next_required_stage": "Canonical Obligations Builder"
+  "next_required_stage": "Canonical Obligations Builder",
+  "ledger_obligation_seed_summary": {
+    "seed_items_total": 594,
+    "owner_seed_items": 402,
+    "consumer_seed_items": 162,
+    "stale_retirement_seed_items": 28,
+    "docs_affected": 93,
+    "source_line_ranges_covered": 587,
+    "verification_passes_completed": 3,
+    "material_findings_deferred": 29,
+    "status": "blocked_deferred"
+  }
 }

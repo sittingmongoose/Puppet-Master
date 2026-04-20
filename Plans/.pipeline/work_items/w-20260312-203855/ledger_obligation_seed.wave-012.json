@@ -2,25 +2,18 @@
   "schema_id": "pm.ledger_obligation_seed.wave.v1",
   "work_id": "w-20260312-203855",
   "wave": "012",
-  "line_ranges_covered": [
-    "L17601-L18000",
-    "L18001-L18196"
-  ],
+  "line_range_covered": "L17601-L18196",
   "seed_items": [
     {
-      "seed_id": "seed-657",
-      "seed_type": "stale_retirement",
-      "canon_label_hint": "gap-008 stale contradictory survivors across multiple docs",
+      "seed_id": "w12c45-17601",
+      "seed_type": "owner",
+      "canon_label_hint": "gap-008 data-shape and stale survivors",
       "exact_items": [
-        "TierContext",
-        "tier_id",
-        "detached_window",
-        "result_id",
-        "artifact_kind",
-        "task_id",
-        "{ tool_name, invocation_summary, options }",
-        "No remaining gaps",
-        "restore points"
+        "gap-008 is overstated as missing_data_shape",
+        "owner and adjacent consumer docs already carry account-history and projection-health canon",
+        "unresolved work is over-summarized transfer centered on Plans/usage-feature.md",
+        "missing discoverable owner/consumer anchors",
+        "Exact stale contradictory survivors: TierContext, tier_id, detached_window, result_id, artifact_kind, task_id, { tool_name, invocation_summary, options }, No remaining gaps, restore points"
       ],
       "affected_doc_hints": [
         "Plans/storage-plan.md",
@@ -43,387 +36,188 @@
         "result_id",
         "artifact_kind",
         "task_id",
-        "{ tool_name, invocation_summary, options }",
+        "tool_name",
+        "invocation_summary",
+        "options",
         "No remaining gaps",
         "restore points"
       ],
       "source_evidence": [
-        "working_ledger.md:L17601-L17615"
+        "working_ledger.md:17601-17641"
       ],
       "notes": []
     },
     {
-      "seed_id": "seed-658",
+      "seed_id": "w12c45-17651",
       "seed_type": "owner",
-      "canon_label_hint": "gap-001: split owner anchors plus active TierContext/tier_id residue",
+      "canon_label_hint": "gap-001 through gap-008 blocker family audit",
       "exact_items": [
-        "gap-001 is no longer best described as missing_data_shape; owner docs already carry requested_account_binding, requested_account_policy, and tool_use_id; live blocker is split owner anchors plus active TierContext / tier_id survivor residue"
+        "gap-001: split owner anchors plus active TierContext / tier_id survivor residue",
+        "gap-002: missing-owner-heading problem in Plans/UI_Command_Catalog.md; detached_window and result_id remain stale survivors; absent owner anchors are sharper blocking defect",
+        "gap-003: blocks on missing project-state ownership and lifecycle-boundary semantics; artifact_kind and task_id are stale anti-pattern references",
+        "gap-004: stable; remaining defects are missing ### Cross-surface receipt record anchor, four unresolved receipt fields, and absent consumer anchors",
+        "gap-005 through gap-008: audit-stable; gap-007 carries live restore points contradiction in addition to missing structural headings"
       ],
       "affected_doc_hints": [
-        "Plans/Contracts_V0.md"
-      ],
-      "heading_hints": [],
-      "stale_tokens": [
-        "TierContext",
-        "tier_id"
-      ],
-      "source_evidence": [
-        "working_ledger.md:L17652"
-      ],
-      "notes": []
-    },
-    {
-      "seed_id": "seed-659",
-      "seed_type": "owner",
-      "canon_label_hint": "gap-002: missing owner heading anchors in UI_Command_Catalog plus stale survivors",
-      "exact_items": [
-        "gap-002 is primarily a missing-owner-heading problem in Plans/UI_Command_Catalog.md",
-        "detached_window and result_id remain real stale survivors",
-        "absent owner anchors are the sharper blocking defect"
-      ],
-      "affected_doc_hints": [
-        "Plans/UI_Command_Catalog.md"
-      ],
-      "heading_hints": [
-        "### 2.0 Command entry contract (doc-level)",
-        "Search-command routing",
-        "Canonical runtime recovery command ownership"
-      ],
-      "stale_tokens": [
-        "detached_window",
-        "result_id"
-      ],
-      "source_evidence": [
-        "working_ledger.md:L17653"
-      ],
-      "notes": []
-    },
-    {
-      "seed_id": "seed-660",
-      "seed_type": "owner",
-      "canon_label_hint": "gap-003: missing project-state ownership and lifecycle-boundary semantics",
-      "exact_items": [
-        "gap-003 still blocks on missing project-state ownership and lifecycle-boundary semantics",
-        "artifact_kind and task_id survive only as stale anti-pattern references and should not remain in exact-missing list"
-      ],
-      "affected_doc_hints": [
-        "Plans/storage-plan.md"
-      ],
-      "heading_hints": [
-        "### Required redb keys",
-        "### Restart and stale history"
-      ],
-      "stale_tokens": [
-        "artifact_kind",
-        "task_id"
-      ],
-      "source_evidence": [
-        "working_ledger.md:L17654"
-      ],
-      "notes": []
-    },
-    {
-      "seed_id": "seed-661",
-      "seed_type": "owner",
-      "canon_label_hint": "gap-004: missing ### Cross-surface receipt record anchor and four unresolved receipt fields",
-      "exact_items": [
-        "gap-004 remaining defects are the missing ### Cross-surface receipt record anchor, four unresolved receipt fields (run_id, pass_verdict, phase_plan_ref, requirements_quality_report_ref), and the absent consumer anchors"
-      ],
-      "affected_doc_hints": [
-        "Plans/storage-plan.md"
+        "Plans/Contracts_V0.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/storage-plan.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/usage-feature.md",
+        "Plans/Orchestrator_Page.md"
       ],
       "heading_hints": [
         "### Cross-surface receipt record"
       ],
-      "stale_tokens": [],
-      "source_evidence": [
-        "working_ledger.md:L17655"
-      ],
-      "notes": []
-    },
-    {
-      "seed_id": "seed-662",
-      "seed_type": "stale_retirement",
-      "canon_label_hint": "restore points live contradiction in FinalGUISpec (gap-007)",
-      "exact_items": [
-        "gap-007 still carries a live restore points contradiction in addition to missing structural headings"
-      ],
-      "affected_doc_hints": [
-        "Plans/FinalGUISpec.md"
-      ],
-      "heading_hints": [],
-      "stale_tokens": [
-        "restore points"
-      ],
-      "source_evidence": [
-        "working_ledger.md:L17656"
-      ],
-      "notes": []
-    },
-    {
-      "seed_id": "seed-663",
-      "seed_type": "owner",
-      "canon_label_hint": "UI_Command_Catalog missing exact canonical heading anchors: ### 2.0 Command entry contract (doc-level)",
-      "exact_items": [
-        "Plans/UI_Command_Catalog.md still lacks the exact ### 2.0 Command entry contract (doc-level), Search-command routing, and Canonical runtime recovery command ownership anchors even though real normalization content exists under ### 2.0A Promoted Section 15 command families"
-      ],
-      "affected_doc_hints": [
-        "Plans/UI_Command_Catalog.md"
-      ],
-      "heading_hints": [
-        "### 2.0 Command entry contract (doc-level)",
-        "### 2.0A Promoted Section 15 command families",
-        "Search-command routing",
-        "Canonical runtime recovery command ownership"
-      ],
-      "stale_tokens": [],
-      "source_evidence": [
-        "working_ledger.md:L17696"
-      ],
-      "notes": []
-    },
-    {
-      "seed_id": "seed-664",
-      "seed_type": "stale_retirement",
-      "canon_label_hint": "TierContext/tier_id residue in orchestrator-subagent-integration",
-      "exact_items": [
-        "Plans/orchestrator-subagent-integration.md still actively carries TierContext / tier_id residue"
-      ],
-      "affected_doc_hints": [
-        "Plans/orchestrator-subagent-integration.md"
-      ],
-      "heading_hints": [],
       "stale_tokens": [
         "TierContext",
-        "tier_id"
-      ],
-      "source_evidence": [
-        "working_ledger.md:L17697"
-      ],
-      "notes": []
-    },
-    {
-      "seed_id": "seed-665",
-      "seed_type": "stale_retirement",
-      "canon_label_hint": "detached_window in Contracts_V0.md",
-      "exact_items": [
-        "Plans/Contracts_V0.md still preserves detached_window"
-      ],
-      "affected_doc_hints": [
-        "Plans/Contracts_V0.md"
-      ],
-      "heading_hints": [],
-      "stale_tokens": [
-        "detached_window"
-      ],
-      "source_evidence": [
-        "working_ledger.md:L17697"
-      ],
-      "notes": []
-    },
-    {
-      "seed_id": "seed-666",
-      "seed_type": "stale_retirement",
-      "canon_label_hint": "stale tuple { tool_name, invocation_summary, options } in Plans/Tools.md",
-      "exact_items": [
-        "Plans/Tools.md still carries the stale tuple { tool_name, invocation_summary, options }"
-      ],
-      "affected_doc_hints": [
-        "Plans/Tools.md"
-      ],
-      "heading_hints": [],
-      "stale_tokens": [
-        "{ tool_name, invocation_summary, options }"
-      ],
-      "source_evidence": [
-        "working_ledger.md:L17698"
-      ],
-      "notes": []
-    },
-    {
-      "seed_id": "seed-667",
-      "seed_type": "stale_retirement",
-      "canon_label_hint": "No remaining gaps stale phrase in assistant-chat-design",
-      "exact_items": [
-        "Plans/assistant-chat-design.md still carries No remaining gaps"
-      ],
-      "affected_doc_hints": [
-        "Plans/assistant-chat-design.md"
-      ],
-      "heading_hints": [],
-      "stale_tokens": [
-        "No remaining gaps"
-      ],
-      "source_evidence": [
-        "working_ledger.md:L17698"
-      ],
-      "notes": []
-    },
-    {
-      "seed_id": "seed-668",
-      "seed_type": "stale_retirement",
-      "canon_label_hint": "restore points contradiction in FinalGUISpec.md",
-      "exact_items": [
-        "Plans/FinalGUISpec.md still carries the restore points contradiction"
-      ],
-      "affected_doc_hints": [
-        "Plans/FinalGUISpec.md"
-      ],
-      "heading_hints": [],
-      "stale_tokens": [
+        "tier_id",
+        "detached_window",
+        "result_id",
+        "artifact_kind",
+        "task_id",
         "restore points"
       ],
       "source_evidence": [
-        "working_ledger.md:L17698"
+        "working_ledger.md:17651-17681"
       ],
       "notes": []
     },
     {
-      "seed_id": "seed-669",
-      "seed_type": "owner",
-      "canon_label_hint": "GitHub_Integration broken reference to non-existent Orchestrator_Page.md#11",
+      "seed_id": "w12c45-17691",
+      "seed_type": "consumer",
+      "canon_label_hint": "blocker family precision re-audit",
       "exact_items": [
-        "Plans/GitHub_Integration.md still points to a non-existent Plans/Orchestrator_Page.md#11. Source Control boundary"
+        "historical_lineage_refs[] already present in Plans/storage-plan.md; removed from gap-003 exact-missing list",
+        "orchestrator.project_state.{project_id} still not present in Plans/storage-plan.md",
+        "Required owner headings ### Required redb keys and ### Restart and stale history not discoverable",
+        "Plans/storage-plan.md omits run_id from receipt minimum-fields list",
+        "Plans/storage-plan.md does not carry pass_verdict, phase_plan_ref, or requirements_quality_report_ref",
+        "Plans/usage-feature.md lacks named artifact drill-through, usage-attribution, export-taxonomy, account-history, and degrade-behavior consumer sections",
+        "Plans/UI_Command_Catalog.md lacks exact ### 2.0 Command entry contract (doc-level), Search-command routing, and Canonical runtime recovery command ownership anchors",
+        "Plans/orchestrator-subagent-integration.md carries TierContext / tier_id residue",
+        "Plans/Contracts_V0.md preserves detached_window",
+        "Plans/Tools.md carries stale tuple { tool_name, invocation_summary, options }",
+        "Plans/assistant-chat-design.md carries No remaining gaps",
+        "Plans/FinalGUISpec.md carries restore points contradiction",
+        "Plans/GitHub_Integration.md points to non-existent Plans/Orchestrator_Page.md#11. Source Control boundary"
       ],
       "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Contracts_V0.md",
+        "Plans/orchestrator-subagent-integration.md",
+        "Plans/Tools.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/Glossary.md",
+        "Plans/Orchestrator_Page.md",
         "Plans/GitHub_Integration.md",
-        "Plans/Orchestrator_Page.md"
+        "Plans/FinalGUISpec.md",
+        "Plans/interview-subagent-integration.md",
+        "Plans/human-in-the-loop.md"
       ],
       "heading_hints": [
-        "11. Source Control boundary"
+        "### Required redb keys",
+        "### Restart and stale history",
+        "### 2.0 Command entry contract (doc-level)",
+        "Search-command routing",
+        "Canonical runtime recovery command ownership",
+        "### 2.0A Promoted Section 15 command families"
       ],
-      "stale_tokens": [],
+      "stale_tokens": [
+        "TierContext",
+        "tier_id",
+        "detached_window",
+        "artifact_kind",
+        "task_id",
+        "tool_name",
+        "invocation_summary",
+        "options",
+        "No remaining gaps",
+        "restore points"
+      ],
       "source_evidence": [
-        "working_ledger.md:L17699"
+        "working_ledger.md:17691-17740"
       ],
       "notes": []
     },
     {
-      "seed_id": "seed-670",
-      "seed_type": "owner",
-      "canon_label_hint": "storage-plan missing receipt fields: run_id, pass_verdict, phase_plan_ref, requirements_quality_report_ref",
-      "exact_items": [
-        "Plans/storage-plan.md still omits run_id from the receipt minimum-fields list and still does not carry pass_verdict, phase_plan_ref, or requirements_quality_report_ref"
-      ],
-      "affected_doc_hints": [
-        "Plans/storage-plan.md"
-      ],
-      "heading_hints": [],
-      "stale_tokens": [],
-      "source_evidence": [
-        "working_ledger.md:L17694"
-      ],
-      "notes": []
-    },
-    {
-      "seed_id": "seed-671",
+      "seed_id": "w12c45-17747",
       "seed_type": "consumer",
-      "canon_label_hint": "usage-feature missing artifact drill-through, usage-attribution, export-taxonomy, account-history, degrade-behavior sections",
+      "canon_label_hint": "assistant-chat blocked-state precision refinement",
       "exact_items": [
-        "Plans/usage-feature.md still lacks the named artifact drill-through, usage-attribution, export-taxonomy, account-history, and degrade-behavior consumer sections"
+        "Plans/assistant-chat-design.md contains exact heading ## Unified Thread Blocked-State Lifecycle",
+        "Plans/assistant-chat-design.md contains ### Multi-episode display",
+        "Plans/assistant-chat-design.md does not carry blocked packet fields: blocked_sequence, approval_scope_key, report_ref, startup_recovered, action_available, escalation_level",
+        "Plans/FinalGUISpec.md contains exact consumer anchor ### 7.3 Shared route and open behavior",
+        "Live defects remain: owner-anchor absence, skeletal consumer carry-through, exact stale contradictory survivors"
       ],
       "affected_doc_hints": [
-        "Plans/usage-feature.md"
+        "Plans/assistant-chat-design.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Tools.md",
+        "Plans/human-in-the-loop.md"
       ],
       "heading_hints": [
-        "artifact drill-through",
-        "usage-attribution",
-        "export-taxonomy",
-        "account-history",
-        "degrade-behavior"
+        "## Unified Thread Blocked-State Lifecycle",
+        "### Multi-episode display",
+        "### 7.3 Shared route and open behavior"
       ],
       "stale_tokens": [],
       "source_evidence": [
-        "working_ledger.md:L17695"
+        "working_ledger.md:17747-17766"
       ],
       "notes": []
     },
     {
-      "seed_id": "seed-672",
+      "seed_id": "w12c45-17773",
       "seed_type": "consumer",
-      "canon_label_hint": "assistant-chat-design missing blocked_notice fields: blocked_sequence, approval_scope_key, report_ref, startup_recovered, action_available, escalation_level",
+      "canon_label_hint": "identity and consumer deficiency precision",
       "exact_items": [
-        "Plans/assistant-chat-design.md still does not carry the exact blocked packet fields blocked_sequence, approval_scope_key, report_ref, startup_recovered, action_available, or escalation_level"
+        "Plans/interview-subagent-integration.md contains ### Runtime identity visibility but required fields stop at requested_account_binding / operational_identity",
+        "Plans/interview-subagent-integration.md lacks requested_account_policy and tool_use_id",
+        "Plans/assistant-chat-design.md already carries tool_use_id",
+        "Plans/usage-feature.md lacks exact artifact drill-through section heading",
+        "Plans/Project_Output_Artifacts.md, Plans/Runtime_Artifacts_Panel.md, and Plans/interview-subagent-integration.md lack exact validation artifact lineage, bridge-field viewer, or validation/report section headings"
       ],
       "affected_doc_hints": [
-        "Plans/assistant-chat-design.md"
-      ],
-      "heading_hints": [],
-      "stale_tokens": [],
-      "source_evidence": [
-        "working_ledger.md:L17750"
-      ],
-      "notes": []
-    },
-    {
-      "seed_id": "seed-673",
-      "seed_type": "consumer",
-      "canon_label_hint": "interview-subagent-integration missing requested_account_policy and tool_use_id",
-      "exact_items": [
-        "Plans/interview-subagent-integration.md contains ### Runtime identity visibility but its required fields still stop at requested_account_binding / operational_identity and do not carry requested_account_policy or tool_use_id"
-      ],
-      "affected_doc_hints": [
-        "Plans/interview-subagent-integration.md"
-      ],
-      "heading_hints": [
-        "### Runtime identity visibility"
-      ],
-      "stale_tokens": [],
-      "source_evidence": [
-        "working_ledger.md:L17774"
-      ],
-      "notes": []
-    },
-    {
-      "seed_id": "seed-674",
-      "seed_type": "consumer",
-      "canon_label_hint": "usage-feature missing exact artifact drill-through section heading",
-      "exact_items": [
-        "Plans/usage-feature.md still does not contain an exact artifact drill-through section heading"
-      ],
-      "affected_doc_hints": [
-        "Plans/usage-feature.md"
-      ],
-      "heading_hints": [
-        "artifact drill-through section"
-      ],
-      "stale_tokens": [],
-      "source_evidence": [
-        "working_ledger.md:L17776"
-      ],
-      "notes": []
-    },
-    {
-      "seed_id": "seed-675",
-      "seed_type": "consumer",
-      "canon_label_hint": "Project_Output_Artifacts, Runtime_Artifacts_Panel, interview-subagent missing validation artifact lineage, bridge-field viewer, validation/report section headings",
-      "exact_items": [
-        "Plans/Project_Output_Artifacts.md, Plans/Runtime_Artifacts_Panel.md, and Plans/interview-subagent-integration.md still do not contain the exact validation artifact lineage, bridge-field viewer, or validation/report section headings"
-      ],
-      "affected_doc_hints": [
+        "Plans/interview-subagent-integration.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/usage-feature.md",
         "Plans/Project_Output_Artifacts.md",
-        "Plans/Runtime_Artifacts_Panel.md",
-        "Plans/interview-subagent-integration.md"
+        "Plans/Runtime_Artifacts_Panel.md"
       ],
       "heading_hints": [
+        "### Runtime identity visibility",
+        "artifact drill-through section",
         "validation artifact lineage",
         "bridge-field viewer",
         "validation/report section"
       ],
       "stale_tokens": [],
       "source_evidence": [
-        "working_ledger.md:L17777"
+        "working_ledger.md:17773-17792"
       ],
       "notes": []
     },
     {
-      "seed_id": "seed-676",
-      "seed_type": "consumer",
-      "canon_label_hint": "Tools.md, assistant-chat-design, usage-feature missing report_ref, startup_recovered, escalation_level from blocked-packet",
+      "seed_id": "w12c45-17800",
+      "seed_type": "owner",
+      "canon_label_hint": "blocked-episode canon consumer propagation",
       "exact_items": [
-        "Plans/Tools.md, Plans/assistant-chat-design.md, and Plans/usage-feature.md still do not carry report_ref, startup_recovered, or escalation_level through the blocked-packet consumer surfaces"
+        "Plans/Contracts_V0.md already carries report_ref in blocked-episode contract",
+        "Plans/Contracts_V0.md and Plans/Executor_Protocol.md already carry startup_recovered in runtime wake canon",
+        "Plans/Orchestrator_Page.md already carries escalation_level in concern/notification owner fields",
+        "Plans/Tools.md, Plans/assistant-chat-design.md, and Plans/usage-feature.md do not carry report_ref, startup_recovered, or escalation_level through blocked-packet consumer surfaces",
+        "action_available has no discoverable owner or consumer presence in live Plans docs"
       ],
       "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/Orchestrator_Page.md",
         "Plans/Tools.md",
         "Plans/assistant-chat-design.md",
         "Plans/usage-feature.md"
@@ -431,76 +225,101 @@
       "heading_hints": [],
       "stale_tokens": [],
       "source_evidence": [
-        "working_ledger.md:L17804"
+        "working_ledger.md:17800-17824"
       ],
       "notes": []
     },
     {
-      "seed_id": "seed-677",
-      "seed_type": "consumer",
-      "canon_label_hint": "action_available has no discoverable owner or consumer presence",
-      "exact_items": [
-        "action_available still does not have a discoverable owner or consumer presence in the live Plans docs"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [],
-      "stale_tokens": [],
-      "source_evidence": [
-        "working_ledger.md:L17805"
-      ],
-      "notes": []
-    },
-    {
-      "seed_id": "seed-678",
-      "seed_type": "consumer",
-      "canon_label_hint": "gap-008: missing requested/effective account identity carry-through and account-history section ownership",
-      "exact_items": [
-        "unresolved identity defect is the missing requested/effective account identity carry-through, runtime-role carry-through, and explicit usage/account-history section ownership"
-      ],
-      "affected_doc_hints": [
-        "Plans/usage-feature.md",
-        "Plans/interview-subagent-integration.md",
-        "Plans/orchestrator-subagent-integration.md"
-      ],
-      "heading_hints": [],
-      "stale_tokens": [],
-      "source_evidence": [
-        "working_ledger.md:L17835"
-      ],
-      "notes": []
-    },
-    {
-      "seed_id": "seed-679",
+      "seed_id": "w12c45-17831",
       "seed_type": "owner",
-      "canon_label_hint": "gap-001 exact partial-transfer section mappings in interview, usage-feature, orchestrator docs",
+      "canon_label_hint": "identity carrythrough and usage account-history",
       "exact_items": [
-        "gap-001 now points at Plans/interview-subagent-integration.md \u2014 ### Runtime identity visibility",
-        "gap-001 now points at Plans/usage-feature.md \u2014 ### Unified UsageRecord schema expectations as the actual usage-side partial-transfer section",
-        "gap-001 now points at Plans/orchestrator-subagent-integration.md \u2014 ### Subagent Selector as the real containing section for the narrower execution_unit_context packet"
+        "Plans/usage-feature.md already carries canonical account_id attribution in billing-identity tuple and unified UsageRecord schema",
+        "Plans/interview-subagent-integration.md carries requested_account_binding and operational_identity but omits requested_account_policy and tool_use_id",
+        "Plans/orchestrator-subagent-integration.md carries narrower execution_unit_context packet stopping at requested_account_id, effective_account_id, and operational_identity",
+        "Unresolved identity defect is missing requested/effective account identity carry-through, runtime-role carry-through, and explicit usage/account-history section ownership"
       ],
       "affected_doc_hints": [
+        "Plans/usage-feature.md",
+        "Plans/interview-subagent-integration.md",
+        "Plans/orchestrator-subagent-integration.md"
+      ],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:17831-17847"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "w12c45-17854",
+      "seed_type": "owner",
+      "canon_label_hint": "runtime-identity partial-transfer location mapping",
+      "exact_items": [
+        "gap-001 points at Plans/interview-subagent-integration.md \u2014 ### Runtime identity visibility as actual section",
+        "gap-001 points at Plans/usage-feature.md \u2014 ### Unified UsageRecord schema expectations as actual usage-side partial-transfer section",
+        "gap-001 points at Plans/orchestrator-subagent-integration.md \u2014 ### Subagent Selector as real containing section for narrower execution_unit_context packet",
+        "gap-008 points at real storage/usage/interview sections carrying partial account-history and requested/effective identity transfer"
+      ],
+      "affected_doc_hints": [
+        "Plans/orchestrator-subagent-integration.md",
         "Plans/interview-subagent-integration.md",
         "Plans/usage-feature.md",
-        "Plans/orchestrator-subagent-integration.md"
+        "Plans/storage-plan.md"
       ],
       "heading_hints": [
         "### Runtime identity visibility",
-        "### Unified `UsageRecord` schema expectations",
+        "### Unified UsageRecord schema expectations",
         "### Subagent Selector"
       ],
       "stale_tokens": [],
       "source_evidence": [
-        "working_ledger.md:L17855-L17857"
+        "working_ledger.md:17854-17873"
       ],
       "notes": []
     },
     {
-      "seed_id": "seed-680",
+      "seed_id": "w12c45-17880",
       "seed_type": "owner",
-      "canon_label_hint": "Contracts_V0 missing 5.1B anchor and execution_unit_context required fields",
+      "canon_label_hint": "audit convergence stop condition",
       "exact_items": [
-        "the exact owner anchor ### 5.1B Persona/Runtime Snapshot Payload Contract is still absent",
-        "the explicit execution_unit_context required-field list in Plans/Contracts_V0.md still omits requested_account_binding, requested_account_policy, and operational_identity"
+        "Wave 1 targeted structural/survivor subset around gap-002, gap-006, gap-007 and reconfirmed already-recorded missing owner headings plus existing detached_window, result_id, restore points, and broken #11. Source Control boundary reference",
+        "Wave 2 targeted storage/receipt/blocked subset around gap-003, gap-004, gap-005 and reconfirmed already-recorded missing anchors/fields plus already-known owner-vs-consumer split for blocked-packet fields",
+        "Neither wave added new exact missing field, command, status, cross-reference target, heading, stubbed transfer, over-summarized transfer, stale contradictory survivor, affected target, or blocker family"
+      ],
+      "affected_doc_hints": [
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Glossary.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/storage-plan.md",
+        "Plans/Project_Output_Artifacts.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/interview-subagent-integration.md",
+        "Plans/usage-feature.md",
+        "Plans/Tools.md",
+        "Plans/assistant-chat-design.md"
+      ],
+      "heading_hints": [],
+      "stale_tokens": [
+        "detached_window",
+        "result_id",
+        "restore points",
+        "#11. Source Control boundary"
+      ],
+      "source_evidence": [
+        "working_ledger.md:17880-17918"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "w12c46-18029",
+      "seed_type": "owner",
+      "canon_label_hint": "gap-001 runtime-identity contract",
+      "exact_items": [
+        "exact owner anchor `### 5.1B Persona/Runtime Snapshot Payload Contract` is absent",
+        "explicit `execution_unit_context` required-field list omits `requested_account_binding`, `requested_account_policy`, `operational_identity`"
       ],
       "affected_doc_hints": [
         "Plans/Contracts_V0.md"
@@ -510,17 +329,19 @@
       ],
       "stale_tokens": [],
       "source_evidence": [
-        "working_ledger.md:L18029"
+        "working_ledger.md:18029"
       ],
-      "notes": []
+      "notes": [
+        "requested/effective identity carry-through missing"
+      ]
     },
     {
-      "seed_id": "seed-681",
+      "seed_id": "w12c46-18030",
       "seed_type": "consumer",
-      "canon_label_hint": "UI_Command_Catalog broken reference to Orchestrator_Page.md#10 and live result_id",
+      "canon_label_hint": "gap-002 route-target command catalog",
       "exact_items": [
-        "Plans/UI_Command_Catalog.md still points at the non-existent Plans/Orchestrator_Page.md#10. Search, routing, and action policy",
-        "result_id remains live in cmd.search.open_result / cmd.search.replace_selected args rather than appearing only as stale residue"
+        "non-existent reference `Plans/Orchestrator_Page.md#10. Search, routing, and action policy`",
+        "`result_id` remains live in `cmd.search.open_result` / `cmd.search.replace_selected` args"
       ],
       "affected_doc_hints": [
         "Plans/UI_Command_Catalog.md",
@@ -533,19 +354,24 @@
         "result_id"
       ],
       "source_evidence": [
-        "working_ledger.md:L18030"
+        "working_ledger.md:18030"
       ],
-      "notes": []
+      "notes": [
+        "stale residue survivor"
+      ]
     },
     {
-      "seed_id": "seed-682",
+      "seed_id": "w12c46-18031",
       "seed_type": "owner",
-      "canon_label_hint": "assistant-chat-design blocked_notice missing escalation_level and action_available",
+      "canon_label_hint": "gap-005 blocked-notice and escalation carry-through",
       "exact_items": [
-        "the skeletal blocked_notice payload missing usage observability carry-through for escalation_level, missing action_available ownership, and the stale tuple / stale verdict survivors"
+        "skeletal `blocked_notice` payload",
+        "missing usage observability carry-through for `escalation_level`",
+        "missing `action_available` ownership"
       ],
       "affected_doc_hints": [
-        "Plans/assistant-chat-design.md"
+        "Plans/assistant-chat-design.md",
+        "Plans/usage-feature.md"
       ],
       "heading_hints": [],
       "stale_tokens": [
@@ -553,17 +379,18 @@
         "stale verdict"
       ],
       "source_evidence": [
-        "working_ledger.md:L18031"
+        "working_ledger.md:18031"
       ],
       "notes": []
     },
     {
-      "seed_id": "seed-683",
+      "seed_id": "w12c46-18032",
       "seed_type": "owner",
-      "canon_label_hint": "Glossary missing Orchestrator rewrite terms and Runtime and routing terms headings",
+      "canon_label_hint": "gap-006 glossary orchestrator terms",
       "exact_items": [
-        "Plans/Glossary.md still lacks ### Orchestrator rewrite terms / ### Runtime and routing terms",
-        "the live glossary still instantiates terms as two-column Term | Definition tables or inline bullets instead of the full help-entry field set (canonical_name, short_definition, why_it_matters, what_it_is_not, common_related_states, related_concepts, surface_examples)"
+        "missing `### Orchestrator rewrite terms` heading",
+        "missing `### Runtime and routing terms` heading",
+        "missing full help-entry field set: `canonical_name`, `short_definition`, `why_it_matters`, `what_it_is_not`, `common_related_states`, `related_concepts`, `surface_examples`"
       ],
       "affected_doc_hints": [
         "Plans/Glossary.md"
@@ -574,94 +401,220 @@
       ],
       "stale_tokens": [],
       "source_evidence": [
-        "working_ledger.md:L18032"
+        "working_ledger.md:18032"
       ],
       "notes": []
     },
     {
-      "seed_id": "seed-684",
+      "seed_id": "w12c46-18033",
       "seed_type": "consumer",
-      "canon_label_hint": "Broken Plans/Orchestrator_Page.md#11 Source Control boundary reference in 3 docs",
+      "canon_label_hint": "gap-007 orchestrator and gui broken references",
       "exact_items": [
-        "the broken Plans/Orchestrator_Page.md#11. Source Control boundary reference survives not only in Plans/GitHub_Integration.md but also in Plans/storage-plan.md and Plans/WorktreeGitImprovement.md"
+        "broken reference `Plans/Orchestrator_Page.md#11. Source Control boundary` in Plans/GitHub_Integration.md",
+        "same broken reference in Plans/storage-plan.md",
+        "same broken reference in Plans/WorktreeGitImprovement.md",
+        "`restore points` contradiction in Plans/FinalGUISpec.md"
       ],
       "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
         "Plans/GitHub_Integration.md",
         "Plans/storage-plan.md",
-        "Plans/WorktreeGitImprovement.md"
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/FinalGUISpec.md"
       ],
       "heading_hints": [
         "11. Source Control boundary"
       ],
       "stale_tokens": [],
       "source_evidence": [
-        "working_ledger.md:L18033"
+        "working_ledger.md:18033"
       ],
       "notes": []
     },
     {
-      "seed_id": "seed-685",
+      "seed_id": "w12c46-18074",
       "seed_type": "owner",
-      "canon_label_hint": "storage-plan missing discoverable Canonical records heading and Restart and stale history anchor",
+      "canon_label_hint": "gap-003 storage canonical records anchor",
       "exact_items": [
-        "Plans/storage-plan.md still lacks a discoverable Canonical records heading even though it contains inline canonical_record.v1:{project_id}:{record_id} authoritative container",
-        "Plans/Orchestrator_Page.md still points at the missing Plans/storage-plan.md#Canonical records anchor from three different sections",
-        "Plans/Contracts_V0.md still points at the missing Plans/storage-plan.md#Canonical records anchor",
-        "both Plans/Orchestrator_Page.md and Plans/WorktreeGitImprovement.md still point at the missing Plans/storage-plan.md#Restart and stale history anchor"
+        "missing discoverable `Canonical records` heading in Plans/storage-plan.md",
+        "missing `Plans/storage-plan.md#Canonical records` anchor referenced by Plans/Orchestrator_Page.md (three sections)"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "heading_hints": [
+        "Canonical records"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:18074"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "w12c46-18075",
+      "seed_type": "consumer",
+      "canon_label_hint": "gap-006 glossary broken reference",
+      "exact_items": [
+        "missing `Plans/Glossary.md#Orchestrator rewrite terms` anchor referenced by Plans/Orchestrator_Page.md history sections",
+        "missing anchor referenced by Plans/Orchestrator_Page.md concern sections"
+      ],
+      "affected_doc_hints": [
+        "Plans/Glossary.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "heading_hints": [
+        "Orchestrator rewrite terms"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:18075"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "w12c46-18114",
+      "seed_type": "consumer",
+      "canon_label_hint": "gap-003 storage restart history anchor",
+      "exact_items": [
+        "missing `Plans/storage-plan.md#Restart and stale history` anchor referenced by Plans/Orchestrator_Page.md",
+        "missing anchor referenced by Plans/WorktreeGitImprovement.md"
       ],
       "affected_doc_hints": [
         "Plans/storage-plan.md",
         "Plans/Orchestrator_Page.md",
-        "Plans/Contracts_V0.md",
-        "Plans/WorktreeGitImprovement.md"
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/Contracts_V0.md"
       ],
       "heading_hints": [
-        "Canonical records",
         "Restart and stale history"
       ],
       "stale_tokens": [],
       "source_evidence": [
-        "working_ledger.md:L18074-L18114"
+        "working_ledger.md:18114"
       ],
       "notes": []
     },
     {
-      "seed_id": "seed-686",
+      "seed_id": "w12c46-18115",
       "seed_type": "consumer",
-      "canon_label_hint": "Runtime_Artifacts_Panel broken reference to storage-plan#Cross-surface receipt record",
+      "canon_label_hint": "gap-004 receipt cross-surface record anchor",
       "exact_items": [
-        "Plans/Runtime_Artifacts_Panel.md still points directly at the missing Plans/storage-plan.md#Cross-surface receipt record anchor"
+        "missing `Plans/storage-plan.md#Cross-surface receipt record` anchor referenced directly by Plans/Runtime_Artifacts_Panel.md"
       ],
       "affected_doc_hints": [
-        "Plans/Runtime_Artifacts_Panel.md",
-        "Plans/storage-plan.md"
+        "Plans/storage-plan.md",
+        "Plans/Runtime_Artifacts_Panel.md"
       ],
       "heading_hints": [
         "Cross-surface receipt record"
       ],
       "stale_tokens": [],
       "source_evidence": [
-        "working_ledger.md:L18115"
+        "working_ledger.md:18115"
       ],
       "notes": []
     },
     {
-      "seed_id": "seed-687",
+      "seed_id": "w12c46-18116",
       "seed_type": "owner",
-      "canon_label_hint": "storage-plan missing orchestrator.project_state.{project_id} naming",
+      "canon_label_hint": "gap-007 restore points downgraded",
       "exact_items": [
-        "missing orchestrator.project_state.{project_id} naming"
+        "Plans/storage-plan.md cleanly separates runtime safe points from project-scoped restore points",
+        "Plans/FinalGUISpec.md explicitly forbids presenting safe points as restore points"
       ],
       "affected_doc_hints": [
         "Plans/storage-plan.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:18116"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "w12c46-18155",
+      "seed_type": "owner",
+      "canon_label_hint": "gap-001 carry-through audit",
+      "exact_items": [
+        "missing `5.1B` owner anchor",
+        "incomplete `execution_unit_context` required-field list",
+        "live `detached_window` / `result_id` survivors",
+        "skeletal `blocked_notice` payload",
+        "stale closure verdict"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/usage-feature.md",
+        "Plans/human-in-the-loop.md",
+        "Plans/Tools.md"
+      ],
+      "heading_hints": [],
+      "stale_tokens": [
+        "detached_window",
+        "result_id",
+        "closure verdict"
+      ],
+      "source_evidence": [
+        "working_ledger.md:18155"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "w12c46-18156",
+      "seed_type": "consumer",
+      "canon_label_hint": "gap-003-004-008 storage and receipt audit",
+      "exact_items": [
+        "missing storage/receipt headings",
+        "broken `Plans/storage-plan.md` anchor consumers",
+        "missing `orchestrator.project_state.{project_id}` naming",
+        "missing usage-side account-history / degrade sections"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Project_Output_Artifacts.md",
         "Plans/usage-feature.md"
       ],
       "heading_hints": [],
       "stale_tokens": [],
       "source_evidence": [
-        "working_ledger.md:L18156"
+        "working_ledger.md:18156"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "w12c46-18157",
+      "seed_type": "owner",
+      "canon_label_hint": "gap-006-007 glossary orchestrator audit",
+      "exact_items": [
+        "missing glossary/orchestrator owner headings",
+        "broken `Plans/Glossary.md#Orchestrator rewrite terms` reference",
+        "broken `Plans/Orchestrator_Page.md#11. Source Control boundary` reference"
+      ],
+      "affected_doc_hints": [
+        "Plans/Glossary.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "heading_hints": [
+        "Orchestrator rewrite terms",
+        "11. Source Control boundary"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:18157"
       ],
       "notes": []
     }
-  ]
+  ],
+  "summary": {
+    "items_this_wave": 22,
+    "docs_this_wave": 17
+  },
+  "generated_at_utc": "2026-04-20T20:44:09.504809+00:00"
 }
