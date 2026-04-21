@@ -2,8 +2,8 @@
   "schema_id": "pm.ledger_obligation_seed.v1",
   "work_id": "w-20260312-203855",
   "summary": {
-    "seed_items_total": 1048,
-    "owner_seed_items": 694,
+    "seed_items_total": 1047,
+    "owner_seed_items": 693,
     "consumer_seed_items": 289,
     "stale_retirement_seed_items": 63,
     "docs_affected": 98,
@@ -4736,7 +4736,8 @@
         "working_ledger.md:4869-4870"
       ],
       "notes": [
-        "global_or_cross_cutting_no_single_doc_hint"
+        "global_or_cross_cutting_no_single_doc_hint",
+        "needs_doc_discovery_in_canonical_obligations_builder"
       ]
     },
     {
@@ -4759,7 +4760,8 @@
         "working_ledger.md:4871-4872"
       ],
       "notes": [
-        "global_or_cross_cutting_no_single_doc_hint"
+        "global_or_cross_cutting_no_single_doc_hint",
+        "needs_doc_discovery_in_canonical_obligations_builder"
       ]
     },
     {
@@ -4781,7 +4783,8 @@
         "working_ledger.md:4873-4874"
       ],
       "notes": [
-        "global_or_cross_cutting_no_single_doc_hint"
+        "global_or_cross_cutting_no_single_doc_hint",
+        "needs_doc_discovery_in_canonical_obligations_builder"
       ]
     },
     {
@@ -4804,7 +4807,8 @@
         "working_ledger.md:4875-4876"
       ],
       "notes": [
-        "global_or_cross_cutting_no_single_doc_hint"
+        "global_or_cross_cutting_no_single_doc_hint",
+        "needs_doc_discovery_in_canonical_obligations_builder"
       ]
     },
     {
@@ -4827,7 +4831,8 @@
         "working_ledger.md:4877-4878"
       ],
       "notes": [
-        "global_or_cross_cutting_no_single_doc_hint"
+        "global_or_cross_cutting_no_single_doc_hint",
+        "needs_doc_discovery_in_canonical_obligations_builder"
       ]
     },
     {
@@ -4850,7 +4855,8 @@
         "working_ledger.md:4879-4880"
       ],
       "notes": [
-        "global_or_cross_cutting_no_single_doc_hint"
+        "global_or_cross_cutting_no_single_doc_hint",
+        "needs_doc_discovery_in_canonical_obligations_builder"
       ]
     },
     {
@@ -4931,7 +4937,8 @@
       ],
       "notes": [
         "recover, archive, prune, and remove must not blur together",
-        "global_or_cross_cutting_no_single_doc_hint"
+        "global_or_cross_cutting_no_single_doc_hint",
+        "needs_doc_discovery_in_canonical_obligations_builder"
       ]
     },
     {
@@ -4955,7 +4962,8 @@
       ],
       "notes": [
         "If any of those hold, the object should remain retained, suspect, or restoring, not cleanup_eligible",
-        "global_or_cross_cutting_no_single_doc_hint"
+        "global_or_cross_cutting_no_single_doc_hint",
+        "needs_doc_discovery_in_canonical_obligations_builder"
       ]
     },
     {
@@ -5058,7 +5066,8 @@
       ],
       "notes": [
         "glossary owns short canonical definitions; help entries own deeper explanation, examples, and related-concept links",
-        "global_or_cross_cutting_no_single_doc_hint"
+        "global_or_cross_cutting_no_single_doc_hint",
+        "needs_doc_discovery_in_canonical_obligations_builder"
       ]
     },
     {
@@ -14738,41 +14747,6 @@
       "notes": []
     },
     {
-      "seed_id": "w12c45-17880",
-      "seed_type": "owner",
-      "canon_label_hint": "audit convergence stop condition",
-      "exact_items": [
-        "Wave 1 targeted structural/survivor subset around gap-002, gap-006, gap-007 and reconfirmed already-recorded missing owner headings plus existing detached_window, result_id, restore points, and broken #11. Source Control boundary reference",
-        "Wave 2 targeted storage/receipt/blocked subset around gap-003, gap-004, gap-005 and reconfirmed already-recorded missing anchors/fields plus already-known owner-vs-consumer split for blocked-packet fields",
-        "Neither wave added new exact missing field, command, status, cross-reference target, heading, stubbed transfer, over-summarized transfer, stale contradictory survivor, affected target, or blocker family"
-      ],
-      "affected_doc_hints": [
-        "Plans/UI_Command_Catalog.md",
-        "Plans/Glossary.md",
-        "Plans/Orchestrator_Page.md",
-        "Plans/GitHub_Integration.md",
-        "Plans/FinalGUISpec.md",
-        "Plans/storage-plan.md",
-        "Plans/Project_Output_Artifacts.md",
-        "Plans/Runtime_Artifacts_Panel.md",
-        "Plans/interview-subagent-integration.md",
-        "Plans/usage-feature.md",
-        "Plans/Tools.md",
-        "Plans/assistant-chat-design.md"
-      ],
-      "heading_hints": [],
-      "stale_tokens": [
-        "detached_window",
-        "result_id",
-        "restore points",
-        "#11. Source Control boundary"
-      ],
-      "source_evidence": [
-        "working_ledger.md:17880-17918"
-      ],
-      "notes": []
-    },
-    {
       "seed_id": "w12c46-18029",
       "seed_type": "owner",
       "canon_label_hint": "gap-001 runtime-identity contract",
@@ -17559,7 +17533,8 @@
         "L4012-4013: corroboration/review personas should remain distinct from the original implementation persona whenever possible"
       ],
       "notes": [
-        "NEW obligation: Review/Corroboration must use separate persona identity than the one that produced original artifact; contract field needed to enforce this"
+        "NEW obligation: Review/Corroboration must use separate persona identity than the one that produced original artifact; contract field needed to enforce this",
+        "needs_doc_discovery_in_canonical_obligations_builder"
       ]
     },
     {
@@ -17607,7 +17582,8 @@
         "L4040-4049: Simple help must simplify explanation, not rename the model. Keep canonical names stable, explain them more simply in ELI5 mode, do not create parallel friendly object names that drift away from contracts"
       ],
       "notes": [
-        "NEW obligation: All help/ELI5 surfaces must not introduce alternate terms for model objects; semantic stability requirement for contracts"
+        "NEW obligation: All help/ELI5 surfaces must not introduce alternate terms for model objects; semantic stability requirement for contracts",
+        "needs_doc_discovery_in_canonical_obligations_builder"
       ]
     },
     {
@@ -17689,7 +17665,8 @@
         "L4080-4095: Expert and ELI5 variants should share the same concept skeleton, differ in phrasing density and assumptions, not in substance. Good difference: Expert is precise/compact/system-model language; ELI5 is plain-language with one concrete example. Bad difference: ELI5 introduces weaker or alternate semantics"
       ],
       "notes": [
-        "NEW consumer obligation: All Expert/ELI5 help variants must preserve semantic equivalence and model truth; cannot introduce alternate logic or weaken contract precision"
+        "NEW consumer obligation: All Expert/ELI5 help variants must preserve semantic equivalence and model truth; cannot introduce alternate logic or weaken contract precision",
+        "needs_doc_discovery_in_canonical_obligations_builder"
       ]
     },
     {
@@ -17901,7 +17878,8 @@
         "L4254-4266: Unresolved conditions should resurface based on severity and persistence, not on every heartbeat/update. Candidate cadence idea: immediate show on first activation, suppress duplicate noise while unchanged, resurface only when: severity increases, owner changes, blocked duration crosses threshold, new action becomes available, user returns focus after time away"
       ],
       "notes": [
-        "NEW consumer obligation: Orchestrator must implement resurfacing logic with these five conditions; cannot spam repetitive dismissible warnings indefinitely"
+        "NEW consumer obligation: Orchestrator must implement resurfacing logic with these five conditions; cannot spam repetitive dismissible warnings indefinitely",
+        "needs_doc_discovery_in_canonical_obligations_builder"
       ]
     },
     {
@@ -17923,7 +17901,8 @@
         "L4268-4276: Persistent blockers should not become invisible just because user dismissed a warning once. Good rule: advisory warnings may respect quiet/dismiss windows, real blocked states should remain represented until underlying truth changes. This aligns with earlier concern and blocked-state work: dismissed is presentation state, not semantic resolution; active blockers must not be dismissible into fake health"
       ],
       "notes": [
-        "NEW consumer obligation: Presentation layer cannot allow user dismissal to hide semantic blocked state; blocked enum must remain visible until underlying condition changes"
+        "NEW consumer obligation: Presentation layer cannot allow user dismissal to hide semantic blocked state; blocked enum must remain visible until underlying condition changes",
+        "needs_doc_discovery_in_canonical_obligations_builder"
       ]
     },
     {
@@ -17969,7 +17948,8 @@
         "L4416: 'Define one escalation ladder shared across Orchestrator, Dashboard, thread badges, and notifications.'"
       ],
       "notes": [
-        "New consumer obligation: all surfaces (Orchestrator, Dashboard, thread badges, notifications) must implement shared escalation contract with severity+blocking+owner+persistence logic"
+        "New consumer obligation: all surfaces (Orchestrator, Dashboard, thread badges, notifications) must implement shared escalation contract with severity+blocking+owner+persistence logic",
+        "needs_doc_discovery_in_canonical_obligations_builder"
       ]
     },
     {
@@ -17990,7 +17970,8 @@
         "L4427: 'resurfacing should respond to meaningful change, not spam the user on every scheduler tick'"
       ],
       "notes": [
-        "New field contract for concern/notification surfaces: must differentiate repeated-identical-event spam from meaningful-change resurfacing"
+        "New field contract for concern/notification surfaces: must differentiate repeated-identical-event spam from meaningful-change resurfacing",
+        "needs_doc_discovery_in_canonical_obligations_builder"
       ]
     },
     {
@@ -18011,7 +17992,8 @@
         "L4425: 'attention_required and blocked must remain distinct everywhere'"
       ],
       "notes": [
-        "New operational rule: blocked-state must be non-dismissible and durable; attention_required is separate advisory class"
+        "New operational rule: blocked-state must be non-dismissible and durable; attention_required is separate advisory class",
+        "needs_doc_discovery_in_canonical_obligations_builder"
       ]
     },
     {
@@ -18034,7 +18016,8 @@
         "L4448\u2013L4470: Tab-by-tab performance direction section"
       ],
       "notes": [
-        "New owner obligations: each dense tab must implement slice-based loading, virtualization, lazy expansion, and demand-loaded inspectors"
+        "New owner obligations: each dense tab must implement slice-based loading, virtualization, lazy expansion, and demand-loaded inspectors",
+        "global_or_cross_cutting_no_single_doc_hint"
       ]
     },
     {
@@ -18056,7 +18039,8 @@
         "L4474\u2013L4482: Generation-heavy graph direction section"
       ],
       "notes": [
-        "New UI contract: graph generations must have visibility controls defaulting to focused generation + nearby lineage, not fully expanded all-generations wall"
+        "New UI contract: graph generations must have visibility controls defaulting to focused generation + nearby lineage, not fully expanded all-generations wall",
+        "needs_doc_discovery_in_canonical_obligations_builder"
       ]
     },
     {
@@ -18080,7 +18064,8 @@
         "L4507\u2013L4512: Explicit list of missing Orchestrator-wide rules"
       ],
       "notes": [
-        "New owner obligation: Orchestrator must have explicit scale contract document covering all dense surfaces"
+        "New owner obligation: Orchestrator must have explicit scale contract document covering all dense surfaces",
+        "global_or_cross_cutting_no_single_doc_hint"
       ]
     },
     {
@@ -18101,7 +18086,8 @@
         "L4535\u2013L4551: Three-tier palette action classification"
       ],
       "notes": [
-        "New consumer obligation: command-palette visibility must be classified per action; palette visibility does not weaken confirmation requirements"
+        "New consumer obligation: command-palette visibility must be classified per action; palette visibility does not weaken confirmation requirements",
+        "needs_doc_discovery_in_canonical_obligations_builder"
       ]
     },
     {
@@ -18123,7 +18109,8 @@
         "L4555\u2013L4576: Bulk-action direction with good/bad classifications"
       ],
       "notes": [
-        "New system contract: bulk action policy must distinguish safe navigation-only bulk ops from risky live-mutation bulk ops"
+        "New system contract: bulk action policy must distinguish safe navigation-only bulk ops from risky live-mutation bulk ops",
+        "needs_doc_discovery_in_canonical_obligations_builder"
       ]
     },
     {
@@ -18144,7 +18131,8 @@
         "L4580\u2013L4595: Shortcut eligibility rules"
       ],
       "notes": [
-        "New UI constraint: keyboard shortcuts must stay narrowly scoped to navigation and non-destructive actions; dangerous runtime mutations excluded"
+        "New UI constraint: keyboard shortcuts must stay narrowly scoped to navigation and non-destructive actions; dangerous runtime mutations excluded",
+        "global_or_cross_cutting_no_single_doc_hint"
       ]
     },
     {
@@ -18164,7 +18152,8 @@
         "L4605\u2013L4616: Routing contract requiring unified payload model"
       ],
       "notes": [
-        "New consumer obligation: command palette, shortcuts, widgets, search, and deep-links must share one exact routing payload model to avoid system drift"
+        "New consumer obligation: command palette, shortcuts, widgets, search, and deep-links must share one exact routing payload model to avoid system drift",
+        "needs_doc_discovery_in_canonical_obligations_builder"
       ]
     },
     {
@@ -18184,7 +18173,8 @@
         "L4624\u2013L4633: Confirmation policy requirement"
       ],
       "notes": [
-        "New system invariant: palette/shortcut visibility does not bypass existing confirmation contracts"
+        "New system invariant: palette/shortcut visibility does not bypass existing confirmation contracts",
+        "needs_doc_discovery_in_canonical_obligations_builder"
       ]
     },
     {
@@ -18207,7 +18197,8 @@
         "L4658\u2013L4676: Five-state projection-trust contract"
       ],
       "notes": [
-        "New system concept: projection-trust must have exact operational states with specific action-gating implications; not just on/off"
+        "New system concept: projection-trust must have exact operational states with specific action-gating implications; not just on/off",
+        "global_or_cross_cutting_no_single_doc_hint"
       ]
     },
     {
@@ -18229,7 +18220,8 @@
         "L4679\u2013L4697: Three-tier action-gating thresholds"
       ],
       "notes": [
-        "New consumer obligation: action controls must gate on projection-trust state; stale/degraded surfaces must disable or narrow mutation controls"
+        "New consumer obligation: action controls must gate on projection-trust state; stale/degraded surfaces must disable or narrow mutation controls",
+        "needs_doc_discovery_in_canonical_obligations_builder"
       ]
     },
     {
@@ -18249,7 +18241,8 @@
         "L4705\u2013L4712: Canonical-validation runtime requirement"
       ],
       "notes": [
-        "New runtime invariant: write from stale projection must trigger revalidation; allowed_action_ids[] freshness is not assumed"
+        "New runtime invariant: write from stale projection must trigger revalidation; allowed_action_ids[] freshness is not assumed",
+        "global_or_cross_cutting_no_single_doc_hint"
       ]
     },
     {
@@ -18273,7 +18266,8 @@
         "L4716\u2013L4727: Exact UX disclosure fields and copy standards"
       ],
       "notes": [
-        "New record-envelope obligation: all Orchestrator surfaces must include freshness_state, last_updated_at, data_source_kind fields; degraded/gated actions must include reason fields"
+        "New record-envelope obligation: all Orchestrator surfaces must include freshness_state, last_updated_at, data_source_kind fields; degraded/gated actions must include reason fields",
+        "global_or_cross_cutting_no_single_doc_hint"
       ]
     },
     {
@@ -18293,7 +18287,8 @@
         "L4731\u2013L4741: Fallback ladder and strategy"
       ],
       "notes": [
-        "New consumer obligation: degraded surfaces must have explicit fallback to `Ledger`/`History`/exact record views; cannot simply hide or disable UI"
+        "New consumer obligation: degraded surfaces must have explicit fallback to `Ledger`/`History`/exact record views; cannot simply hide or disable UI",
+        "global_or_cross_cutting_no_single_doc_hint"
       ]
     },
     {
@@ -18315,7 +18310,8 @@
         "L4756\u2013L4763: Orchestrator-wide projection-trust contract requirements"
       ],
       "notes": [
-        "New owner obligation: must create unified projection-trust specification spanning all Orchestrator tabs"
+        "New owner obligation: must create unified projection-trust specification spanning all Orchestrator tabs",
+        "global_or_cross_cutting_no_single_doc_hint"
       ]
     },
     {
@@ -18336,7 +18332,8 @@
         "L4767\u2013L4771: Three critical do-not-forget rules"
       ],
       "notes": [
-        "New system invariant: blocked/recovery action display cannot assume projection freshness; Ledger is canonical fallback"
+        "New system invariant: blocked/recovery action display cannot assume projection freshness; Ledger is canonical fallback",
+        "global_or_cross_cutting_no_single_doc_hint"
       ]
     },
     {
@@ -18446,7 +18443,8 @@
         "L5342-5355"
       ],
       "notes": [
-        "global rule"
+        "global rule",
+        "needs_doc_discovery_in_canonical_obligations_builder"
       ]
     },
     {
@@ -18474,7 +18472,9 @@
       "source_evidence": [
         "L5385-5428"
       ],
-      "notes": []
+      "notes": [
+        "needs_doc_discovery_in_canonical_obligations_builder"
+      ]
     },
     {
       "seed_id": "dr2rD-5430",
@@ -18495,7 +18495,9 @@
       "source_evidence": [
         "L5430-5440"
       ],
-      "notes": []
+      "notes": [
+        "needs_doc_discovery_in_canonical_obligations_builder"
+      ]
     },
     {
       "seed_id": "dr2rD-5442",
@@ -18517,7 +18519,9 @@
       "source_evidence": [
         "L5442-5455"
       ],
-      "notes": []
+      "notes": [
+        "needs_doc_discovery_in_canonical_obligations_builder"
+      ]
     },
     {
       "seed_id": "dr3rA-6001",
@@ -18544,7 +18548,9 @@
       "source_evidence": [
         "L6001-6014"
       ],
-      "notes": []
+      "notes": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ]
     },
     {
       "seed_id": "dr3rA-6016",
@@ -18564,7 +18570,9 @@
       "source_evidence": [
         "L6016-6027"
       ],
-      "notes": []
+      "notes": [
+        "needs_doc_discovery_in_canonical_obligations_builder"
+      ]
     },
     {
       "seed_id": "dr3rA-6076",
@@ -18580,7 +18588,9 @@
       "source_evidence": [
         "L6081-6084"
       ],
-      "notes": []
+      "notes": [
+        "needs_doc_discovery_in_canonical_obligations_builder"
+      ]
     },
     {
       "seed_id": "dr3rA-6087",
@@ -18596,7 +18606,9 @@
       "source_evidence": [
         "L6087-6089"
       ],
-      "notes": []
+      "notes": [
+        "needs_doc_discovery_in_canonical_obligations_builder"
+      ]
     },
     {
       "seed_id": "dr3rA-6102",
@@ -18706,7 +18718,9 @@
       "source_evidence": [
         "L6243"
       ],
-      "notes": []
+      "notes": [
+        "needs_doc_discovery_in_canonical_obligations_builder"
+      ]
     },
     {
       "seed_id": "dr3rA-6258",
@@ -18725,7 +18739,9 @@
       "source_evidence": [
         "L6264-6266"
       ],
-      "notes": []
+      "notes": [
+        "needs_doc_discovery_in_canonical_obligations_builder"
+      ]
     },
     {
       "seed_id": "dr3rA-6268",
@@ -18746,7 +18762,9 @@
       "source_evidence": [
         "L6268"
       ],
-      "notes": []
+      "notes": [
+        "needs_doc_discovery_in_canonical_obligations_builder"
+      ]
     },
     {
       "seed_id": "dr3rA-6325",
@@ -18762,7 +18780,9 @@
       "source_evidence": [
         "L6340-6342"
       ],
-      "notes": []
+      "notes": [
+        "needs_doc_discovery_in_canonical_obligations_builder"
+      ]
     },
     {
       "seed_id": "dr3rA-6347",
@@ -18800,7 +18820,9 @@
       "source_evidence": [
         "L6354-6355"
       ],
-      "notes": []
+      "notes": [
+        "needs_doc_discovery_in_canonical_obligations_builder"
+      ]
     },
     {
       "seed_id": "dr3rA-6369",
@@ -18817,7 +18839,9 @@
       "source_evidence": [
         "L6345"
       ],
-      "notes": []
+      "notes": [
+        "needs_doc_discovery_in_canonical_obligations_builder"
+      ]
     },
     {
       "seed_id": "dr3rB-6462",
@@ -19183,7 +19207,8 @@
         "line 6813: manual_preferred_account_id now exists, but it still does not solve the broader missing requested_account_id asymmetry in runtime records"
       ],
       "notes": [
-        "identifies structural gap: manual_preferred_account_id is insufficient; requires requested_account_id"
+        "identifies structural gap: manual_preferred_account_id is insufficient; requires requested_account_id",
+        "global_or_cross_cutting_no_single_doc_hint"
       ]
     },
     {
@@ -19650,7 +19675,8 @@
         "line 6946: minority_advisory is now conceptually required by the research, but it still has no canonical stream/event name"
       ],
       "notes": [
-        "NEW required token: minority_advisory needs canonical stream name definition"
+        "NEW required token: minority_advisory needs canonical stream name definition",
+        "needs_doc_discovery_in_canonical_obligations_builder"
       ]
     },
     {
@@ -19955,7 +19981,9 @@
         "L7213",
         "L7254-7279"
       ],
-      "notes": []
+      "notes": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ]
     },
     {
       "seed_id": "dr3rD-7301",
@@ -20056,7 +20084,9 @@
       "source_evidence": [
         "L7388-7418"
       ],
-      "notes": []
+      "notes": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ]
     },
     {
       "seed_id": "dr3rD-7443",
@@ -27302,7 +27332,8 @@
         "L17525: Exact stale survivors still to retire include `TierContext`, `tier_id`, `detached_window`, `result_id`, `artifact_kind`, `task_id`, `{ tool_name, invocation_summary, options }`, `No remaining gaps`, and `restore points`."
       ],
       "notes": [
-        "Entry timestamp: 2026-04-16T02:02:50.628Z"
+        "Entry timestamp: 2026-04-16T02:02:50.628Z",
+        "global_or_cross_cutting_no_single_doc_hint"
       ]
     },
     {
@@ -27478,7 +27509,8 @@
         "L17554: Exact stale contradictory survivors still confirmed: `No remaining gaps`, `restore points`, `TierContext`, `tier_id`, `result_id`, `artifact_kind`, `task_id`, `{ tool_name, invocation_summary, options }`."
       ],
       "notes": [
-        "Entry timestamp: 2026-04-16T02:09:06.971Z"
+        "Entry timestamp: 2026-04-16T02:09:06.971Z",
+        "global_or_cross_cutting_no_single_doc_hint"
       ]
     },
     {
