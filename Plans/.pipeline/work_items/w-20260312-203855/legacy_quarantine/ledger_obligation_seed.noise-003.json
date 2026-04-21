@@ -1,0 +1,299 @@
+{
+  "schema_id": "pm.ledger_obligation_seed.noise.v1",
+  "work_id": "w-20260312-203855",
+  "pass_number": 3,
+  "noise_count": 58,
+  "noise": [
+    {
+      "seed_id": "p3rB-n-4804",
+      "reason_noise": "vague summary of storage normalization already known",
+      "source_evidence": "working_ledger.md:4804"
+    },
+    {
+      "seed_id": "p3rB-n-4806",
+      "reason_noise": "list of existing canonical records already documented; duplicate evidence",
+      "source_evidence": "working_ledger.md:4805-4812"
+    },
+    {
+      "seed_id": "p3rB-n-4814",
+      "reason_noise": "restatement of existing Contracts_V0 field conventions; weaker than material finding",
+      "source_evidence": "working_ledger.md:4814-4817"
+    },
+    {
+      "seed_id": "p3rB-n-4819",
+      "reason_noise": "rolled-up list of additional record families already mentioned; no exact schema/field requirements",
+      "source_evidence": "working_ledger.md:4819-4825"
+    },
+    {
+      "seed_id": "p3rB-n-4826",
+      "reason_noise": "vague problem statement without actionable requirement",
+      "source_evidence": "working_ledger.md:4826"
+    },
+    {
+      "seed_id": "p3rB-n-4883",
+      "reason_noise": "consequence of envelope pattern already captured",
+      "source_evidence": "working_ledger.md:4883-4890"
+    },
+    {
+      "seed_id": "p3rB-n-4893",
+      "reason_noise": "restatement of existing semantic vocabulary; duplicate coverage",
+      "source_evidence": "working_ledger.md:4893-4900"
+    },
+    {
+      "seed_id": "p3rB-n-4903",
+      "reason_noise": "vague gap summary without exact requirement",
+      "source_evidence": "working_ledger.md:4902-4905"
+    },
+    {
+      "seed_id": "p3rB-n-4907",
+      "reason_noise": "candidate fixes summary without new exact items; restates envelope pattern",
+      "source_evidence": "working_ledger.md:4907-4911"
+    },
+    {
+      "seed_id": "p3rB-n-4913",
+      "reason_noise": "do-not-forget details duplicate existing evidence",
+      "source_evidence": "working_ledger.md:4913-4916"
+    },
+    {
+      "seed_id": "p3rB-n-4928",
+      "reason_noise": "vague summary of worktree action implications; no exact token/state requirement",
+      "source_evidence": "working_ledger.md:4927-4935"
+    },
+    {
+      "seed_id": "p3rB-n-4937",
+      "reason_noise": "problem statement without actionable new requirement; sets up lifecycle split recommendation",
+      "source_evidence": "working_ledger.md:4937-4941"
+    },
+    {
+      "seed_id": "p3rB-n-5035",
+      "reason_noise": "boundary reinforcement already known; duplicate evidence of earlier Orchestrator/Source Control seam",
+      "source_evidence": "working_ledger.md:5034-5042"
+    },
+    {
+      "seed_id": "p3rB-n-5044",
+      "reason_noise": "consequence of lifecycle split already captured; duplicate evidence of historical preservation",
+      "source_evidence": "working_ledger.md:5044-5049"
+    },
+    {
+      "seed_id": "p3rB-n-5051",
+      "reason_noise": "confirmation policy consequence already known; duplicate evidence of confirmation gating",
+      "source_evidence": "working_ledger.md:5051-5057"
+    },
+    {
+      "seed_id": "p3rB-n-5059",
+      "reason_noise": "rolled-up contradiction summary; vague gap without exact requirement",
+      "source_evidence": "working_ledger.md:5059-5064"
+    },
+    {
+      "seed_id": "p3rB-n-5066",
+      "reason_noise": "candidate fixes summary restates lifecycle split already captured",
+      "source_evidence": "working_ledger.md:5066-5070"
+    },
+    {
+      "seed_id": "p3rB-n-5072",
+      "reason_noise": "do-not-forget details duplicate existing evidence",
+      "source_evidence": "working_ledger.md:5072-5075"
+    },
+    {
+      "seed_id": "p3rB-n-5086",
+      "reason_noise": "vague praise of existing docs without new requirement",
+      "source_evidence": "working_ledger.md:5086-5091"
+    },
+    {
+      "seed_id": "p3rB-n-5093",
+      "reason_noise": "vague summary that Glossary is lagging; setup for later requirement without exact items",
+      "source_evidence": "working_ledger.md:5093-5098"
+    },
+    {
+      "seed_id": "p3rB-n-5159",
+      "reason_noise": "praise of shared provider docs already established; vague confirmation",
+      "source_evidence": "working_ledger.md:5159-5167"
+    },
+    {
+      "seed_id": "p3rB-n-5181",
+      "reason_noise": "contradiction summary already captured in glossary gap; rolled-up gap statement",
+      "source_evidence": "working_ledger.md:5180-5187"
+    },
+    {
+      "seed_id": "p3rC-11200",
+      "reason_noise": "rolled-up summary of earlier findings about command envelope and navigation preconditions",
+      "source_evidence": "working_ledger.md:11200-11201"
+    },
+    {
+      "seed_id": "p3rC-11202",
+      "reason_noise": "restates existing UI_Wiring_Rules correlation_id issue with no new exact token or affected doc",
+      "source_evidence": "working_ledger.md:11202"
+    },
+    {
+      "seed_id": "p3rC-11204",
+      "reason_noise": "vague summary of schema/prose mismatch already identified; no new specific finding",
+      "source_evidence": "working_ledger.md:11204"
+    },
+    {
+      "seed_id": "p3rC-11207-11219",
+      "reason_noise": "impacted docs list for already-covered wiring seam; no new seed items introduced",
+      "source_evidence": "working_ledger.md:11207-11219"
+    },
+    {
+      "seed_id": "p3rC-11220-11243",
+      "reason_noise": "contradictions and candidate fixes for wiring seam already covered; rolling summary",
+      "source_evidence": "working_ledger.md:11220-11243"
+    },
+    {
+      "seed_id": "p3rC-11267-11301",
+      "reason_noise": "impacted docs, contradictions, and candidate fixes for GATE-010 seam already rolled up in material seed 11254",
+      "source_evidence": "working_ledger.md:11267-11301"
+    },
+    {
+      "seed_id": "p3rC-11327-11358",
+      "reason_noise": "impacted docs, contradictions, and candidate fixes for command catalog seam already covered in material seed 11309",
+      "source_evidence": "working_ledger.md:11327-11358"
+    },
+    {
+      "seed_id": "p3rC-11385-11416",
+      "reason_noise": "impacted docs, contradictions, and candidate fixes for storage/routing seam already rolled up in material seed 11368",
+      "source_evidence": "working_ledger.md:11385-11416"
+    },
+    {
+      "seed_id": "p3rC-11441-11475",
+      "reason_noise": "impacted docs, contradictions, and candidate fixes for Contracts_V0 seam already covered in material seed 11426",
+      "source_evidence": "working_ledger.md:11441-11475"
+    },
+    {
+      "seed_id": "p3rC-11496-11523",
+      "reason_noise": "impacted docs, contradictions, and candidate fixes for project-output seam already rolled up in material seed 11484",
+      "source_evidence": "working_ledger.md:11496-11523"
+    },
+    {
+      "seed_id": "p3rC-11524-11600",
+      "reason_noise": "GPT-5.3-Codex synthesis summary; rolled-up overview of closure findings already captured by individual research progress sections",
+      "source_evidence": "working_ledger.md:11524-11600"
+    },
+    {
+      "seed_id": "p3rD-15200",
+      "reason_noise": "rolled-up impacted docs summary with no new exact tokens or affected docs",
+      "source_evidence": "working_ledger.md:15200-15208"
+    },
+    {
+      "seed_id": "p3rD-15219",
+      "reason_noise": "candidate fixes summary without new exact token or obligation discovery",
+      "source_evidence": "working_ledger.md:15219-15223"
+    },
+    {
+      "seed_id": "p3rD-15225",
+      "reason_noise": "do-not-forget detail without new obligation or affected doc",
+      "source_evidence": "working_ledger.md:15225-15227"
+    },
+    {
+      "seed_id": "p3rD-15256",
+      "reason_noise": "duplicate impacted docs section already captured in material finding",
+      "source_evidence": "working_ledger.md:15256-15258"
+    },
+    {
+      "seed_id": "p3rD-15265",
+      "reason_noise": "candidate fixes summary restating owner cleanup without new exact tokens",
+      "source_evidence": "working_ledger.md:15265-15272"
+    },
+    {
+      "seed_id": "p3rD-15274",
+      "reason_noise": "do-not-forget detail without new material finding",
+      "source_evidence": "working_ledger.md:15274-15276"
+    },
+    {
+      "seed_id": "p3rD-15287",
+      "reason_noise": "rolled-up cleanup set lists already captured in broader material findings",
+      "source_evidence": "working_ledger.md:15287-15300"
+    },
+    {
+      "seed_id": "p3rD-15302",
+      "reason_noise": "cleanup classes summary without new exact obligations",
+      "source_evidence": "working_ledger.md:15302-15317"
+    },
+    {
+      "seed_id": "p3rD-15319",
+      "reason_noise": "do-not-forget detail status summary",
+      "source_evidence": "working_ledger.md:15319-15321"
+    },
+    {
+      "seed_id": "p3rD-15323",
+      "reason_noise": "vague summary that external audit confirms same pattern with no new exact obligations",
+      "source_evidence": "working_ledger.md:15323-15335"
+    },
+    {
+      "seed_id": "p3rD-15337",
+      "reason_noise": "priority merge and ordering summary without new material obligations",
+      "source_evidence": "working_ledger.md:15337-15366"
+    },
+    {
+      "seed_id": "p3rD-15368",
+      "reason_noise": "audit confirmation of known contradictions without new obligations",
+      "source_evidence": "working_ledger.md:15368-15378"
+    },
+    {
+      "seed_id": "p3rD-15380",
+      "reason_noise": "do-not-forget detail about audit direction",
+      "source_evidence": "working_ledger.md:15380-15382"
+    },
+    {
+      "seed_id": "p3rD-15419",
+      "reason_noise": "duplicate impacted docs already captured in material finding p3rD-15384",
+      "source_evidence": "working_ledger.md:15419-15426"
+    },
+    {
+      "seed_id": "p3rD-15428",
+      "reason_noise": "contradiction summary restating field-name and scope-language drift without new tokens",
+      "source_evidence": "working_ledger.md:15428-15434"
+    },
+    {
+      "seed_id": "p3rD-15436",
+      "reason_noise": "candidate fixes summary without new exact obligations",
+      "source_evidence": "working_ledger.md:15436-15440"
+    },
+    {
+      "seed_id": "p3rD-15442",
+      "reason_noise": "do-not-forget detail restating known mismatch",
+      "source_evidence": "working_ledger.md:15442-15444"
+    },
+    {
+      "seed_id": "p3rD-15472",
+      "reason_noise": "duplicate impacted docs already captured",
+      "source_evidence": "working_ledger.md:15472-15478"
+    },
+    {
+      "seed_id": "p3rD-15480",
+      "reason_noise": "contradiction summary restating field modernization without scope modernization",
+      "source_evidence": "working_ledger.md:15480-15485"
+    },
+    {
+      "seed_id": "p3rD-15487",
+      "reason_noise": "candidate fixes summary without new obligations",
+      "source_evidence": "working_ledger.md:15487-15491"
+    },
+    {
+      "seed_id": "p3rD-15493",
+      "reason_noise": "do-not-forget detail about upstream language source",
+      "source_evidence": "working_ledger.md:15493-15495"
+    },
+    {
+      "seed_id": "p3rD-15531",
+      "reason_noise": "duplicate impacted docs already captured in material finding",
+      "source_evidence": "working_ledger.md:15531-15539"
+    },
+    {
+      "seed_id": "p3rD-15541",
+      "reason_noise": "contradiction summary restating dual ontology already captured",
+      "source_evidence": "working_ledger.md:15541-15550"
+    },
+    {
+      "seed_id": "p3rD-15552",
+      "reason_noise": "candidate fixes summary without new exact obligations",
+      "source_evidence": "working_ledger.md:15552-15556"
+    },
+    {
+      "seed_id": "p3rD-15558",
+      "reason_noise": "do-not-forget detail restating upstream seam already captured",
+      "source_evidence": "working_ledger.md:15558-15563"
+    }
+  ],
+  "generated_at_utc": "2026-04-20T20:55:52.765968+00:00"
+}

@@ -1,0 +1,68 @@
+{
+  "schema_id": "pm.ledger_seed_completeness_report.v1",
+  "work_id": "w-20260312-203855",
+  "generated_at_utc": "2026-04-21T03:36:50.650270+00:00",
+  "status": "pass",
+  "checks": {
+    "1_deferred_resolved": "PASS \u2014 deferred.json status=resolved",
+    "2_material_deferred_zero": "PASS \u2014 material_findings_deferred=0",
+    "3_valid_seed_types": "PASS \u2014 2 owner|consumer items fixed",
+    "4_5_no_summary_poison": "PASS \u2014 dr8rD-17600b retained (false positive); no pure summary items remain",
+    "6_no_empty_exact_items": "PASS \u2014 p3rD-15278 populated; dr3rA-6193 moved to noise",
+    "7_all_have_source_evidence": "PASS \u2014 0 items with empty source_evidence",
+    "8_empty_doc_hints_annotated": "PASS \u2014 all 52 empty-doc items annotated in finalizer",
+    "9_meta_state_routing": "PASS \u2014 meta.status=active, next_required_stage=Canonical Obligations Builder",
+    "10_hotlist": "PASS \u2014 30/32 found exactly; 2 variant_only with justification"
+  },
+  "schema_issues_fixed": [
+    {
+      "seed_id": "dr8rD-17600b",
+      "action": "retained \u2014 specific field names are obligation-grade even when < 20 chars; heuristic false-positive"
+    },
+    {
+      "seed_id": "p3rD-15278",
+      "action": "exact_items populated from label + affected_doc_hints"
+    }
+  ],
+  "summary_poison_items_moved": [],
+  "invalid_seed_types_fixed": [
+    {
+      "seed_id": "w11c44-17303",
+      "old": "owner|consumer",
+      "new": "owner"
+    },
+    {
+      "seed_id": "w11c44-17448",
+      "action": "split into w11c44-17448-owner (owner) + w11c44-17448-consumer (consumer)"
+    }
+  ],
+  "empty_exact_items_moved": [
+    "dr3rA-6193"
+  ],
+  "empty_exact_items_populated": [
+    "p3rD-15278"
+  ],
+  "missing_hotlist_items": [],
+  "variant_only_hotlist_items": [
+    {
+      "token": "singleton Overseer",
+      "justification": "Concept represented via dual-overseer transition items: dr1rA-1327 (Dual-overseer governance model), w01c03-814 (Package vs Seam Overseer Authority), w01c04-010 (Terminology adoption of Seam/Lane/Overseer/Package). The singleton Overseer was the pre-rewrite single entity superseded by the package+seam overseer split."
+    },
+    {
+      "token": "phase_subagents",
+      "justification": "Concept represented via tier/phase execution model retirement: stale_retirement items covering TierContext, tier_id, and phase/task/subtask vocabulary retirement. phase_subagents are the per-phase execution units of the retired tier model, superseded by lane/package/seam worker nodes."
+    }
+  ],
+  "deferred_status": "resolved",
+  "final_seed_summary": {
+    "seed_items_total": 1047,
+    "owner_seed_items": 695,
+    "consumer_seed_items": 289,
+    "stale_retirement_seed_items": 63,
+    "docs_affected": 98,
+    "source_line_ranges_covered": 533,
+    "verification_passes_completed": 3,
+    "material_findings_deferred": 0
+  },
+  "next_required_stage": "Canonical Obligations Builder"
+}

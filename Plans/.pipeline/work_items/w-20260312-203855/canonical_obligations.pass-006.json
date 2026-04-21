@@ -1,0 +1,463 @@
+{
+  "schema_id": "pm.canonical_obligations.pass.v1",
+  "work_id": "w-20260312-203855",
+  "pass": "006",
+  "summary": {
+    "material_findings": 21,
+    "noise_findings": 4
+  },
+  "material_findings": [
+    {
+      "canon_label": "ATTEMPT-ID-SCOPED-RESOLUTION-MANDATORY",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "run-graph and orchestrator projections MUST resolve by `attempt_id` rather than only by `node_id`"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [
+        "Runtime Attempt / Safe Point / Queue Analysis Storage Addendum"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/storage-plan.md:L1157"
+      ],
+      "notes": [
+        "Storage requirement for attempt-level resolution rather than node-only indexing."
+      ]
+    },
+    {
+      "canon_label": "READY_SINCE_UTC_PROJECTION_SURVIVAL",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`ready_since_utc` must survive projection refresh while the node remains continuously ready"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [
+        "Runtime Attempt / Safe Point / Queue Analysis Storage Addendum"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/storage-plan.md:L1160"
+      ],
+      "notes": [
+        "Mandatory preservation of ready-state timestamp across refresh cycles for projector idempotence."
+      ]
+    },
+    {
+      "canon_label": "Replan generation lifecycle and stale attempt semantics",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "stale attempts from an older `replan_generation` must remain queryable for history but may not be resumed as active work"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [
+        "Runtime Attempt / Safe Point / Queue Analysis Storage Addendum"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/storage-plan.md:L1160"
+      ],
+      "notes": [
+        "Stale attempts remain queryable but never resumable."
+      ]
+    },
+    {
+      "canon_label": "QUEUE-ANALYSIS-APPEND-ONLY-OBSERVABILITY",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "queue-analysis records are append-only observability data; later projections may summarize them, but the canonical pass history must remain reconstructable"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [
+        "Runtime Attempt / Safe Point / Queue Analysis Storage Addendum"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/storage-plan.md:L1165"
+      ],
+      "notes": [
+        "Queue-analysis records are immutable append-only observability ledger."
+      ]
+    },
+    {
+      "canon_label": "Counter relationships and attempt cause tracking",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`attempt_count` is the ground-truth count of started attempts for a node in a run, including the first attempt. `retry_count` is derived display data only: `max(attempt_count - 1, 0)`. `attempt_count = initial_attempts + retry_attempts + resume_attempts + remediation_retry_attempts`."
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [
+        "Runtime Attempt / Safe Point / Queue Analysis Reconciliation Addendum"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/storage-plan.md:L1171-L1173"
+      ],
+      "notes": [
+        "attempt_count is immutable ground-truth; retry_count is derived display; sub-counters are additive decomposition."
+      ]
+    },
+    {
+      "canon_label": "ATTEMPT-ID-LINEAGE-JOINS-MANDATORY",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "projections that need lineage MUST join through `attempt_id` and the immutable attempt snapshot, not infer history from `retry_count` alone"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [
+        "Runtime Attempt / Safe Point / Queue Analysis Reconciliation Addendum"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/storage-plan.md:L1175"
+      ],
+      "notes": [
+        "Lineage queries must use attempt_id and immutable attempt snapshots."
+      ]
+    },
+    {
+      "canon_label": "BLOCKED-PROJECTIONS-REMAIN-HISTORICAL",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "blocked projections remain historical after resolution; unblocking does not overwrite prior blocked rows"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [
+        "Runtime Attempt / Safe Point / Queue Analysis Reconciliation Addendum"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/storage-plan.md:L1180"
+      ],
+      "notes": [
+        "Blocked state rows are immutable; unblocking creates new rows instead of rewriting history."
+      ]
+    },
+    {
+      "canon_label": "PROJECTION-TRUST-FALLBACK-FIELDS",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Required fields: projection_freshness, projection_health, last_projected_at_utc, projector_lag, degraded_reason_code, fallback_policy"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [
+        "Runtime Attempt / Safe Point / Queue Analysis Reconciliation Addendum"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/storage-plan.md:L1186-L1192"
+      ],
+      "notes": [
+        "Projection-trust contract now requires lag, degraded reason, and fallback policy fields."
+      ]
+    },
+    {
+      "canon_label": "PROJECTION-FRESHNESS-VS-ACTION-AUTHORITY-DISTINCTION",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Projection freshness is not the same thing as action authority. Projection-backed surfaces must degrade to direct-record views when trust drops."
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [
+        "Runtime Attempt / Safe Point / Queue Analysis Reconciliation Addendum"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/storage-plan.md:L1209-L1210"
+      ],
+      "notes": [
+        "Freshness and action authority are orthogonal; low trust requires direct-record fallback."
+      ]
+    },
+    {
+      "canon_label": "runtime_recovery_state_distinct_fields",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Restart and cleanup must keep `historical`, `archived`, and `removed` distinct. Missing live worktrees or lanes remain historically inspectable instead of disappearing."
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [
+        "Runtime Recovery Persistence and Restart Reconciliation Addendum"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/storage-plan.md:L1235-L1236"
+      ],
+      "notes": [
+        "Three distinct states remain mandatory across restart reconciliation."
+      ]
+    },
+    {
+      "canon_label": "HISTORICAL-LINEAGE-REFS-REQUIRED-FIELD",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Required fields: historical_lineage_refs[]"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [
+        "Runtime Recovery Persistence and Restart Reconciliation Addendum"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/storage-plan.md:L1227"
+      ],
+      "notes": [
+        "Historical record linkage requires explicit historical_lineage_refs[]."
+      ]
+    },
+    {
+      "canon_label": "SAFE-POINT-RESTORE-POINT-NAMESPACE-SEPARATION",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Safe points and restore points use distinct storage key prefixes: `sp:{run_id}:{node_id}:{attempt_id}:{safe_point_id}` vs `rp:{project_id}:{restore_point_id}`. These namespaces MUST NOT overlap and queries MUST use the correct prefix."
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [
+        "Safe-point vs restore-point namespace separation"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/storage-plan.md:L1259-L1266"
+      ],
+      "notes": [
+        "Safe-point and restore-point namespaces are explicitly isolated by storage prefix."
+      ]
+    },
+    {
+      "canon_label": "PERSONA_CONTROL_AND_COMPATIBILITY_DISCLOSURE",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Persona editor and Assistant Chat must surface requested vs effective persona, provider support states for each control, and provider-gap disclosure states Honored, Skipped, and Clamped with explicit provider naming when controls are ignored or clamped."
+      ],
+      "affected_doc_hints": [
+        "Plans/assistant-chat-design.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [
+        "Section 19 Persona Editor",
+        "Section 27 Persona Control in Assistant Chat"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/FinalGUISpec.md:L19-L19",
+        "Plans/assistant-chat-design.md:L1952-L2066"
+      ],
+      "notes": [
+        "Persona controls now have explicit requested/effective disclosure and provider-compatibility matrix requirements across editor and chat surfaces."
+      ]
+    },
+    {
+      "canon_label": "SHARED_BROWSER_CAPABLE_RENDERING_SURFACE_CONTRACT",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Browser-capable rendering is shared across Chat Panel, File Editor, Embedded Document Pane, Editor-tab Browser, Detached preview or browser windows, and Automation/Auth browser windows. Chat must support readable Markdown, native Mermaid cards with explicit error states, and must not execute arbitrary HTML. Bottom panel is not the canonical browser host."
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md",
+        "Plans/assistant-chat-design.md"
+      ],
+      "heading_hints": [
+        "Rendering Surface Addendum (2026-03-07)",
+        "28. Markdown and Mermaid Rendering in Chat and Planning Surfaces"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/FinalGUISpec.md:L2345-L2456",
+        "Plans/assistant-chat-design.md:L2067-L2097"
+      ],
+      "notes": [
+        "Rendering surfaces share a browser-capable contract but keep explicit security and ownership boundaries."
+      ]
+    },
+    {
+      "canon_label": "DASHBOARD_WIDGET_GRID_LAYOUT_CONTRACT",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "Dashboard uses a widget-grid with drag-to-reorder and grid-based resizing. Responsive columns are 2 below 1200px, 3 from 1200-1600px, and 4 above 1600px. Add Widget opens a Dashboard-compatible widget catalog, and persistence migrates from `dashboard_layout:v1` to `widget_layout:v1:dashboard`."
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [
+        "Appendix C Dashboard Widget Grid"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/FinalGUISpec.md:L2131-L2213"
+      ],
+      "notes": [
+        "Dashboard layout is now a widget grid with explicit responsive columns, add-widget flow, and new persistence key."
+      ]
+    },
+    {
+      "canon_label": "DOCKER_MANAGER_PANEL_AND_TEMPLATE_REPO_CONTRACT",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "Docker Manager is a first-class surface for Docker-related projects with template repo status bound to the canonical TemplateRepoStatus enum, Unraid controls when shared-profile scope is active, a structured-plus-raw ca_profile.xml editor that preserves passthrough XML, and repository creation that cannot be auto-approved by YOLO or autonomy modes."
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Containers_Registry_and_Unraid.md"
+      ],
+      "heading_hints": [
+        "Section 7.4.8A Docker Manager Panel"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/FinalGUISpec.md:L976-L996"
+      ],
+      "notes": [
+        "Docker Manager panel introduces explicit UI/state contract for template-repo management and Unraid controls."
+      ]
+    },
+    {
+      "canon_label": "worktree_thread_binding_lifecycle",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "Thread selector rows show a worktree icon only when bound. Tooltip includes branch name, status text, and worktree path. Icon colors differentiate clean, dirty, conflict, and stale projection states."
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md",
+        "Plans/assistant-chat-design.md"
+      ],
+      "heading_hints": [
+        "Worktree icon in thread selector"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/FinalGUISpec.md:L2588-L2602"
+      ],
+      "notes": [
+        "Worktree binding has explicit thread-selector indicator states in the GUI."
+      ]
+    },
+    {
+      "canon_label": "PERSONA_CONTROL_AND_COMPATIBILITY_DISCLOSURE",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Persona control in Assistant Chat includes manual, auto, and hybrid modes, natural-language persona invocation with turn vs session scope, aliases and fuzzy matching, effective persona display, and subagent display that must show effective persona name rather than generic role."
+      ],
+      "affected_doc_hints": [
+        "Plans/assistant-chat-design.md"
+      ],
+      "heading_hints": [
+        "27. Persona Control in Assistant Chat"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/assistant-chat-design.md:L1952-L2066"
+      ],
+      "notes": [
+        "Assistant chat owns persona mode, scope, display, and fuzzy-resolution behavior."
+      ]
+    },
+    {
+      "canon_label": "natural_language_mode_overlay_resolution",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Natural-language mode invocation resolves workflow identity and runtime posture separately. requested_mode_overlay and effective_mode_overlay are closed to none, plan, deep_plan, debug, interview, brainstorm, and crew. deep_plan MUST survive normalization and MUST NOT be discarded from runtime records."
+      ],
+      "affected_doc_hints": [
+        "Plans/assistant-chat-design.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Run_Modes.md"
+      ],
+      "heading_hints": [
+        "29. Natural-language Mode Invocation and Wizard Escalation"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/assistant-chat-design.md:L2098-L2204"
+      ],
+      "notes": [
+        "Mode overlay resolution gains stronger evidence and explicit deep_plan field preservation."
+      ]
+    },
+    {
+      "canon_label": "UNIFIED_THREAD_BLOCKED_STATE_LIFECYCLE",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Thread-blocked surfaces reuse the shared blocked packet instead of local ask-flow tuples. Required fields include blocked_notice, blocked_sequence, approval_scope_key, and allowed_action_ids[]. validation_blocked and remediation_ceiling_exceeded are ordinary blocked taxonomy members. Multiple blocked episodes render as separate system messages and resolving one must not collapse siblings."
+      ],
+      "affected_doc_hints": [
+        "Plans/assistant-chat-design.md",
+        "Plans/human-in-the-loop.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "heading_hints": [
+        "Unified Thread Blocked-State Lifecycle"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/assistant-chat-design.md:L2206-L2219"
+      ],
+      "notes": [
+        "Blocked-thread surfaces now share a canonical blocked packet and multi-episode rendering contract."
+      ]
+    },
+    {
+      "canon_label": "worktree_thread_binding_lifecycle",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Worktrees in Assistant define a 1:1 thread-worktree binding with header button, auto-create flow, title-based branch rename after chat.thread_title_generated, inverse lookup key worktree_binding_reverse, merge-back flow, pre-merge test gate, and 11 canonical seglog event types for binding and merge lifecycle."
+      ],
+      "affected_doc_hints": [
+        "Plans/assistant-chat-design.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [
+        "Worktrees in Assistant"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/assistant-chat-design.md:L2220-L2734"
+      ],
+      "notes": [
+        "Thread-scoped worktree binding now has stronger lifecycle, reverse-lookup storage schema, and title-based branch rename specifics."
+      ]
+    }
+  ],
+  "noise_findings": [
+    {
+      "source": "Plans/storage-plan.md",
+      "reason": "Pass 6 storage noise was clarification and prior ownership restatement outside the addendum core."
+    },
+    {
+      "source": "Plans/FinalGUISpec.md",
+      "reason": "Superseded blocked summaries, theme implementation detail, and already-captured planning/widget prose were non-material."
+    },
+    {
+      "source": "Plans/Orchestrator_Page.md + Plans/Run_Graph_View.md",
+      "reason": "Pass 6c was zero-change and confirmatory only."
+    },
+    {
+      "source": "Plans/assistant-chat-design.md",
+      "reason": "Change summaries, reference inventories, and advisory implementation sections were non-canonical."
+    }
+  ]
+}

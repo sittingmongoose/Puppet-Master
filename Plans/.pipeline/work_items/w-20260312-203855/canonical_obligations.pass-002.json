@@ -1,0 +1,912 @@
+{
+  "schema_id": "pm.canonical_obligations.pass.v1",
+  "work_id": "w-20260312-203855",
+  "pass": "002",
+  "summary": {
+    "material_findings": 34,
+    "noise_findings": 4
+  },
+  "material_findings": [
+    {
+      "canon_label": "ARTIFACT_IDENTITY_LINKAGE_TRIAD",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "artifact_id",
+        "logical_artifact_id?",
+        "linked_artifact_id?"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/Project_Output_Artifacts.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "heading_hints": [
+        "## 4. redb key and projector",
+        "runtime-artifact envelope"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/Runtime_Artifacts_Panel.md:L71-L74"
+      ],
+      "notes": [
+        "Stronger direct evidence for artifact identity triad and lineage-link semantics from the artifacts panel owner doc"
+      ],
+      "obligation_id": "obl-059"
+    },
+    {
+      "canon_label": "COST_USAGE_DUAL_NAVIGATION_OBLIGATION",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Show in Ledger",
+        "Show in Usage",
+        "cost_usage"
+      ],
+      "affected_doc_hints": [
+        "Plans/usage-feature.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/assistant-chat-design.md"
+      ],
+      "heading_hints": [
+        "## 6. reasoning_tokens and cost_usage"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/Runtime_Artifacts_Panel.md:L144-L156"
+      ],
+      "notes": [
+        "Adds dual-navigation obligations for cost_usage artifacts with thread-scoped vs app-wide routing"
+      ],
+      "obligation_id": "obl-094"
+    },
+    {
+      "canon_label": "BRIDGE_FIELD_CANONICAL_JOINS",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "attempt_id",
+        "provider_attempt_ref",
+        "usage_event_ref",
+        "workflow_refs",
+        "docker_refs",
+        "kubernetes_refs",
+        "Bridge fields remain joins rather than replacement primary keys"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "heading_hints": [
+        "## Cross-Surface Operation Receipt Linkage Addendum (2026-03-12)",
+        "bridge-field viewer"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/Runtime_Artifacts_Panel.md:L211-L230"
+      ],
+      "notes": [
+        "New direct owner-doc evidence for bridge-field governance over receipt-bearing artifacts"
+      ],
+      "obligation_id": "obl-082"
+    },
+    {
+      "canon_label": "RUNTIME_ARTIFACT_PROJECTOR_TYPE_DISPATCH",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "One seglog event type per artifact type",
+        "No single generic runtime_artifact event with a subtype field",
+        "type value is exactly one of the 19 event type names",
+        "Canonical 19 artifact types and event type names"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "heading_hints": [
+        "## 3. Mechanism: one event type per artifact type"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/Runtime_Artifacts_Panel.md:L32-L56"
+      ],
+      "notes": [
+        "Direct panel-doc evidence for per-type event dispatch, stronger than earlier storage-only references"
+      ],
+      "obligation_id": "obl-244"
+    },
+    {
+      "canon_label": "ARTIFACTS_PANEL_SIDE_PANEL_OWNERSHIP_BOUNDARY",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "single place to see everything agents produced",
+        "does not run agents; it lists, previews, and links",
+        "All artifact types listed are required for MVP; there are no optional types",
+        "owning target surface (browser session, terminal session, debugger surface, file diff, or usage surface) rather than to an artifact-local shell"
+      ],
+      "affected_doc_hints": [
+        "Plans/Project_Output_Artifacts.md",
+        "Plans/FileManager.md",
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "heading_hints": [
+        "## 1. Purpose and scope",
+        "## 5A. Debug investigation grouping, manifests, and exports"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/Runtime_Artifacts_Panel.md:L6-L8",
+        "Plans/Runtime_Artifacts_Panel.md:L110"
+      ],
+      "notes": [
+        "Formalizes Artifacts panel as passive listing/linking surface with routing back to canonical owners"
+      ],
+      "obligation_id": "obl-058"
+    },
+    {
+      "canon_label": "BROWSER_SESSION_ARTIFACT_REJOIN_OBLIGATION",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "recording created from workspace_preview or detached_preview retains the owning project/workspace/browser-session identity",
+        "actions such as Send to Chat, Open, or Focus Browser must route back to the owning canonical browser session"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "heading_hints": [
+        "## 8. Browser recordings"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/Runtime_Artifacts_Panel.md:L165-L178"
+      ],
+      "notes": [
+        "Adds explicit browser-session rejoin obligations for recorded artifacts"
+      ],
+      "obligation_id": "obl-083"
+    },
+    {
+      "canon_label": "Docker-Unraid Cost Bearing Receipt Linkage",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "captured and surface",
+        "pushed tags",
+        "digest(s)",
+        "registry host",
+        "target namespace/repository",
+        "platform list",
+        "sanitized logs path"
+      ],
+      "affected_doc_hints": [
+        "Plans/Containers_Registry_and_Unraid.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [
+        "## Build, run, preview, and publish flow",
+        "#### Tag template resolution contract"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/Containers_Registry_and_Unraid.md:L338-L346"
+      ],
+      "notes": [
+        "Adds container-publish receipt linkage details into canonical Usage/Ledger flow"
+      ],
+      "obligation_id": "obl-013"
+    },
+    {
+      "canon_label": "Runtime Provider Account Identity via DockerHub Effective Capability",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "effective_capabilities[]",
+        "namespaces:list",
+        "repositories:list",
+        "repositories:create",
+        "images:push",
+        "repositories:read_private",
+        "effective_account_identity",
+        "last_validation_host",
+        "requested_auth_mode",
+        "effective_auth_provider_state"
+      ],
+      "affected_doc_hints": [
+        "Plans/Containers_Registry_and_Unraid.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [
+        "### Requested vs effective auth state",
+        "#### Canonical DockerHub effective capability enum",
+        "Required state concepts"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/Containers_Registry_and_Unraid.md:L188-L221"
+      ],
+      "notes": [
+        "Adds closed-set effective capability and account-identity obligations for DockerHub/registry flows"
+      ],
+      "obligation_id": "obl-271"
+    },
+    {
+      "canon_label": "Blocked Remote Side-Effect Identity and Preserved Local Work",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "blocked_reason_code",
+        "allowed_action_ids[]",
+        "preserved_local_work",
+        "detail_ref",
+        "blocked",
+        "auth_expired",
+        "repo_creation_not_confirmed"
+      ],
+      "affected_doc_hints": [
+        "Plans/Containers_Registry_and_Unraid.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "heading_hints": [
+        "#### Missing-repository interruption and resume contract",
+        "#### Auto-push approval and canonical publish-reference contract",
+        "## Remote Side-Effect Blocked Payload Normalization (2026-03-09)"
+      ],
+      "stale_residue_to_retire": [
+        "reason_code (legacy, non-canonical)",
+        "recovery_options[] (legacy, non-canonical)"
+      ],
+      "source_evidence": [
+        "Plans/Containers_Registry_and_Unraid.md:L321-L337",
+        "Plans/Containers_Registry_and_Unraid.md:L777-L797"
+      ],
+      "notes": [
+        "Strong direct evidence for blocked payload normalization in remote side-effect flows"
+      ],
+      "obligation_id": "obl-003"
+    },
+    {
+      "canon_label": "Provider/Account Identity via Managed Unraid Template-Repo Context",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "maintainer_slug",
+        "DockerHub namespace by default",
+        "project_id",
+        "commit_status",
+        "push_status",
+        "template_repo_id",
+        "ca_profile.xml",
+        "PM-owned paths"
+      ],
+      "affected_doc_hints": [
+        "Plans/Containers_Registry_and_Unraid.md",
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [
+        "### Managed template-repo identity and lifecycle contract",
+        "#### Commit and push behavior",
+        "#### Transition rules",
+        "### `ca_profile.xml` behavior"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/Containers_Registry_and_Unraid.md:L579-L635",
+        "Plans/Containers_Registry_and_Unraid.md:L693-L715"
+      ],
+      "notes": [
+        "Adds managed template-repo lifecycle identity and PM-owned path obligations"
+      ],
+      "obligation_id": "obl-240"
+    },
+    {
+      "canon_label": "Docker Build/Run/Publish Approval Separation and Blocked Outcomes",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "cmd.orchestrator.build_run",
+        "cmd.orchestrator.push_image",
+        "push_policy = after_build",
+        "docker.publish.blocked",
+        "docker.publish.failed",
+        "docker.repository.create.confirmation_requested",
+        "external_publish_side_effect",
+        "A direct user click on Build approves build only",
+        "A direct user click on Push image approves image push only"
+      ],
+      "affected_doc_hints": [
+        "Plans/Containers_Registry_and_Unraid.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/newtools.md"
+      ],
+      "heading_hints": [
+        "### Publish flow",
+        "#### Publish execution, approval, and blocked-outcome contract",
+        "#### Auto-push approval and canonical publish-reference contract"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/Containers_Registry_and_Unraid.md:L306-L357"
+      ],
+      "notes": [
+        "Adds explicit approval separation and blocked-vs-failed semantics for container publishing"
+      ],
+      "obligation_id": "obl-012"
+    },
+    {
+      "canon_label": "GitHub Actions Runtime Identity and Account Binding",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "the panel consumes requested/effective runtime identity and account binding from the shared runtime contracts",
+        "it MUST NOT invent a GitHub-local auth badge schema"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/GitHub_API_Auth_and_Flows.md"
+      ],
+      "heading_hints": [
+        "## B.3 GitHub Actions Panel"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/GitHub_Integration.md:L293-L295"
+      ],
+      "notes": [
+        "Adds direct GitHub Actions panel identity-account binding obligations"
+      ],
+      "obligation_id": "obl-164"
+    },
+    {
+      "canon_label": "Actions Write Availability Degradation Blocking",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "mutating actions are offered only when `write_availability = writable`",
+        "degraded or stale states may remain inspectable but must disclose why writes are blocked"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md",
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "heading_hints": [
+        "## B.3 GitHub Actions Panel"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/GitHub_Integration.md:L294-L296"
+      ],
+      "notes": [
+        "Adds explicit write-availability gating and disclosure semantics for GitHub Actions surfaces"
+      ],
+      "obligation_id": "obl-066"
+    },
+    {
+      "canon_label": "Actions Workflow/Job/Admin Receipt Durability and Scoping",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "workflow/job/admin receipts are durable and project-scoped even when the action occurs outside an orchestrator run"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "heading_hints": [
+        "## B.3 GitHub Actions Panel"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/GitHub_Integration.md:L296-L297"
+      ],
+      "notes": [
+        "Adds explicit receipt durability/scoping for GitHub admin and workflow actions"
+      ],
+      "obligation_id": "obl-065"
+    },
+    {
+      "canon_label": "Actions Current Branch Freshness State Labels",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "stale labels MUST name the stale reason when known (for example auth drift, host disconnect, branch retarget, or refresh backlog)"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [
+        "### Current Branch"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/GitHub_Integration.md:L322-L323"
+      ],
+      "notes": [
+        "Strengthens stale-label diagnostic obligations for GitHub Actions branch views"
+      ],
+      "obligation_id": "obl-063"
+    },
+    {
+      "canon_label": "Actions Identity/Routing Preservation Across Context Pivots",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "pivots from Actions into diff/review/file/history preserve compare identity, compare origin, and the requested/effective GitHub identity snapshot captured for that workflow context",
+        "Current Branch never silently reinterprets a historical workflow run as belonging to the newly active branch just because the repo selection changed"
+      ],
+      "affected_doc_hints": [
+        "Plans/GitHub_API_Auth_and_Flows.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "heading_hints": [
+        "### Current Branch"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/GitHub_Integration.md:L324-L326"
+      ],
+      "notes": [
+        "Adds route/open identity preservation rules for GitHub context pivots"
+      ],
+      "obligation_id": "obl-064"
+    },
+    {
+      "canon_label": "Settings-side Workflow Authoring Deep-Link Stability",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "settings-side workflow authoring MUST deep-link back into GitHub Actions using stable repo/worktree/workflow identity rather than an ad hoc settings-only payload"
+      ],
+      "affected_doc_hints": [
+        "Plans/newtools.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [
+        "### Workflow authoring alignment"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/GitHub_Integration.md:L363-L364"
+      ],
+      "notes": [
+        "Adds explicit deep-link identity anchors for workflow authoring pivots"
+      ],
+      "obligation_id": "obl-289"
+    },
+    {
+      "canon_label": "GitHub Admin Actions Emit Durable Project-Scoped Receipts",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "GitHub admin actions such as secret/variable/environment CRUD, workflow pinning, and readiness checks MUST emit durable project-scoped receipts even when they are not attached to an orchestrator run"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/Permissions_System.md"
+      ],
+      "heading_hints": [
+        "### Workflow authoring alignment"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/GitHub_Integration.md:L364-L365"
+      ],
+      "notes": [
+        "Adds explicit receipt obligations for GitHub admin actions"
+      ],
+      "obligation_id": "obl-167"
+    },
+    {
+      "canon_label": "Remote Project Identity Contract Fields",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Every cross-surface handoff into GitHub/Source Control/FileManager carries, when applicable: `remote_project_ref`, `host_ref`, `repo_id`, `worktree_id?`, `path?`, `compare_session_id?` / `compare_origin?`"
+      ],
+      "affected_doc_hints": [
+        "Plans/FileManager.md",
+        "Plans/LSPSupport.md",
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [
+        "**Remote identity contract:**"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/GitHub_Integration.md:L487-L495"
+      ],
+      "notes": [
+        "Adds remote-identity handoff contract fields across GitHub/Source Control/FileManager pivots"
+      ],
+      "obligation_id": "obl-261"
+    },
+    {
+      "canon_label": "Remote-Aware Open in Source Control Stale-State Semantics",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "if only a historical receipt remains, open lands in a historical/stale view with reconnect/fetch actions instead of silently substituting a local checkout"
+      ],
+      "affected_doc_hints": [
+        "Plans/FileManager.md",
+        "Plans/LSPSupport.md"
+      ],
+      "heading_hints": [
+        "**Remote-aware Open in Source Control semantics:**"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/GitHub_Integration.md:L497-L499"
+      ],
+      "notes": [
+        "Adds explicit stale-state route/open semantics for GitHub-driven Source Control pivots"
+      ],
+      "obligation_id": "obl-262"
+    },
+    {
+      "canon_label": "PM-Mediated Write Staging for Remote Freshness Preservation",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "PM-mediated writes MUST stage the updated content into the remote-aware cache path before returning success so write-then-search freshness remains preserved even before watcher round-trips arrive"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/Tools.md",
+        "Plans/Wiring_Matrix.md"
+      ],
+      "heading_hints": [
+        "**Remote-aware Open in Source Control semantics:**"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/GitHub_Integration.md:L499-L500"
+      ],
+      "notes": [
+        "Adds explicit write-staging freshness-preservation obligations for remote-aware sources"
+      ],
+      "obligation_id": "obl-211"
+    },
+    {
+      "canon_label": "Deferred GitHub Context Recovery Binding Structure",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "recovery binding record: `project_id`, `focused_run_id?`, `wizard_id?`, `thread_id?`, `run_id?`, `node_id?`, `attempt_id?`, `account_id`, `credential_ref`, `login`, `resume_url?`, deferred payload ref, `blocked_sequence?`, `replan_generation?`, clearing status"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/GitHub_API_Auth_and_Flows.md"
+      ],
+      "heading_hints": [
+        "## Chat-driven external repo import (MVP)"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/GitHub_Integration.md:L945-L960"
+      ],
+      "notes": [
+        "Adds explicit recovery binding fields for deferred GitHub context recovery"
+      ],
+      "obligation_id": "obl-136"
+    },
+    {
+      "canon_label": "Deep-Link Recovery Must Use Canonical Route Identity",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Deep-link recovery must serialize canonical route identity rather than inventing a second routing model"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md"
+      ],
+      "heading_hints": [
+        "Behavioral rules:"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/GitHub_Integration.md:L1003"
+      ],
+      "notes": [
+        "Adds explicit route-identity requirement for deep-link recovery"
+      ],
+      "obligation_id": "obl-134"
+    },
+    {
+      "canon_label": "GitHub Reconnect Context Must Use Stable Internal Account Identity",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "GitHub reconnect context must use stable internal account identity rather than login-keyed recovery"
+      ],
+      "affected_doc_hints": [
+        "Plans/GitHub_API_Auth_and_Flows.md"
+      ],
+      "heading_hints": [
+        "Behavioral rules:"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/GitHub_Integration.md:L1004"
+      ],
+      "notes": [
+        "Adds direct account-identity stability requirement for reconnect/recovery flows"
+      ],
+      "obligation_id": "obl-168"
+    },
+    {
+      "canon_label": "Central Policy Engine: Canonical Order and Sequential Tool Dispatch",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Every agent-usable tool attempt MUST pass through one canonical policy engine",
+        "Canonical order: 1. resolve tool identity and permission 2. evaluate `allow` / `ask` / `deny` 3. if `ask`, resolve approval or headless fallback 4. apply FileSafe and other invocation validation 5. resolve terminal or shell binding for shell-capable actions 6. execute or reject 7. normalize the terminal outcome for persistence, analytics, and reveal-linkback behavior"
+      ],
+      "affected_doc_hints": [
+        "Plans/Executor_Protocol.md",
+        "Plans/FileSafe.md",
+        "Plans/storage-plan.md",
+        "Plans/CLI_Bridged_Providers.md"
+      ],
+      "heading_hints": [
+        "## 2.4.1 Central policy engine contract"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/Tools.md:L95-L108"
+      ],
+      "notes": [
+        "Adds explicit unified 7-step tool-policy engine contract across all tool invocation paths"
+      ],
+      "obligation_id": "obl-100"
+    },
+    {
+      "canon_label": "Tool Denial Runtime Blocked Payload Structure and Field Names",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Runtime-facing denial paths MUST expose: `blocked_reason_code`, `allowed_action_ids[]`, `executed_at_all`, prerequisite metadata needed to bind the exact recovery command, `failure_class?` only when the denial followed a classified attempt outcome",
+        "Tool-originated blocked payloads use `allowed_action_ids[]` only. Deprecated names MUST NOT appear in new tool contracts."
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/FileSafe.md"
+      ],
+      "heading_hints": [
+        "## Tool Denial Runtime Blocked Payload Consolidation Addendum (2026-03-09)",
+        "## Tool Field Name and Taxonomy Alignment"
+      ],
+      "stale_residue_to_retire": [
+        "Deprecated field names in tool denial payloads (not `allowed_actions` or other variants)"
+      ],
+      "source_evidence": [
+        "Plans/Tools.md:L1254-L1294"
+      ],
+      "notes": [
+        "Strong direct tool-owner evidence locking denial payload fields and canonical field names"
+      ],
+      "obligation_id": "obl-316"
+    },
+    {
+      "canon_label": "Mutation Capability Ownership and Recovery Contract",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Each tool definition MUST include `mutation_capable: bool` (default `false`). This remains the source of truth propagated into planning, safe-point, and recovery decisions.",
+        "Tool-originated blocked paths MUST NOT invent tool-private action arrays outside the canonical runtime action family"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "heading_hints": [
+        "## Tool Field Name and Taxonomy Alignment"
+      ],
+      "stale_residue_to_retire": [
+        "Tool-private action arrays outside canonical runtime action family"
+      ],
+      "source_evidence": [
+        "Plans/Tools.md:L1285-L1293"
+      ],
+      "notes": [
+        "Adds explicit mutation_capable metadata and runtime-action-family constraints for tool definitions"
+      ],
+      "obligation_id": "obl-196"
+    },
+    {
+      "canon_label": "MCP Owner-Doc Alignment: Tool Name Format and Wildcard Rules",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "MCP tool names use the owner-defined underscore-only format `{server_slug}_{tool_name}`",
+        "wildcard rules match the underscore form, for example `context7_*`",
+        "slash variants and mixed `_` / `/` examples are retired"
+      ],
+      "affected_doc_hints": [
+        "Plans/MCP_Integration.md",
+        "Plans/Permissions_System.md"
+      ],
+      "heading_hints": [
+        "## 8.6 MCP tool name format and wildcard rule"
+      ],
+      "stale_residue_to_retire": [
+        "Slash-separated MCP tool name aliases",
+        "Mixed `_` / `/` MCP naming examples"
+      ],
+      "source_evidence": [
+        "Plans/Tools.md:L981-L990"
+      ],
+      "notes": [
+        "Adds stronger naming and wildcard obligations for MCP-owned tool identity"
+      ],
+      "obligation_id": "obl-190"
+    },
+    {
+      "canon_label": "Web Tool Permission Four-Step Approval Ladder and Session Scope",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "question default `allow` only when HITL is available",
+        "read_only",
+        "plan",
+        "Approving webcrawl For Session auto-approves crawl/map/extract/fetch for the same host pattern",
+        "Approving webresearch For Session does NOT create broad allow for unrelated tools",
+        "MVP uses wildcard session approval for search/research; advanced query-pattern support is future only"
+      ],
+      "affected_doc_hints": [
+        "Plans/Permissions_System.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [
+        "## 10.7 Audit, error, and self-hosted rules"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/Tools.md:L1515-L1564"
+      ],
+      "notes": [
+        "Adds explicit session-scoped approval ladder semantics and bounded host-pattern cross-grants for web tools"
+      ],
+      "obligation_id": "obl-337"
+    },
+    {
+      "canon_label": "Firecrawl Provider Identity and Ledger Cost Linkage",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Firecrawl provider identity canon includes exact provider ID firecrawl, display name Firecrawl, default priority below Exa and Tavily and above DuckDuckGo, user-adjustable ordering, default-disabled state until API key or self-hosted URL is configured",
+        "Routing must remain cost-aware when multiple providers offer similar capability; static priority alone is insufficient, and the >100 credits warning plus 500 credits cap must remain aligned with routing."
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [
+        "## 10.1 Provider configuration",
+        "## 10.5 Credit and cost contract"
+      ],
+      "stale_residue_to_retire": [
+        "Static priority-only web routing"
+      ],
+      "source_evidence": [
+        "Plans/Tools.md:L1307-L1341",
+        "Plans/Tools.md:L1459-L1482"
+      ],
+      "notes": [
+        "Adds explicit provider-cost-aware routing obligations for Firecrawl and ledger credit linkage"
+      ],
+      "obligation_id": "obl-154"
+    },
+    {
+      "canon_label": "Route and Open Bindings: Web Tool Side-Panel Ownership and Tool Surface Identity",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Site Reader canon must require real browser interaction, reserve `Reading Site` for the PM-native Site Reader path, and prevent provider-routed fetch from reusing that reserved identity.",
+        "Natural-language web intents must hit the same dispatcher as slash commands, and site or page reading intents must resolve to webfetch rather than websearch or provider extract."
+      ],
+      "affected_doc_hints": [
+        "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [
+        "## 12. Web tool routing algorithm"
+      ],
+      "stale_residue_to_retire": [
+        "Provider-routed fetch reusing Site Reader identity",
+        "Reading intents resolving to websearch instead of webfetch",
+        "Slash commands and NL web intents using different dispatchers"
+      ],
+      "source_evidence": [
+        "Plans/Tools.md:L1677-L1727"
+      ],
+      "notes": [
+        "Adds reserved tool-surface identity and dispatcher parity obligations for web tools"
+      ],
+      "obligation_id": "obl-267"
+    },
+    {
+      "canon_label": "Canonical Usage/Ledger Linkage for Cost-Bearing Tool Activity",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "For the **tool usage widget** (per-tool count, latency, error rate): **Namespace:** `rollups` **Key:** `tool_usage.{window}` where **window** is one of the **canonical** values: `5h`, `7d`, `24h` (and optionally `1h`). The definitive list of window values is in storage-plan.md",
+        "Analytics scan aggregates `tool.invoked` events (fields: tool_name, latency_ms, success, error) into this structure so the Usage page can render the table without scanning seglog.",
+        "`error_count` is the number of `tool.invoked` events in the window where `success = false`. `tool.denied` events and FileSafe blocks are excluded from `tool_usage.{window}` rollups so the widget reflects executed tool calls only."
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [
+        "## 8.4 Redb keys for tool rollups (Usage widget)"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/Tools.md:L969-L976"
+      ],
+      "notes": [
+        "Adds exact rollup namespace/window semantics and denial exclusion for cost-bearing tool activity"
+      ],
+      "obligation_id": "obl-005"
+    },
+    {
+      "canon_label": "Tool Invocation Event Payload: Blocked and Denied Tool Packet Structure",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Required fields: `blocked_sequence`, `approval_scope_key`, `action_available`, `escalation_level`",
+        "Canonical events: `tool.invoked`, `tool.denied`",
+        "Escalation ladder: `info`, `warning`, `attention_required`, `blocked`, `system_notification`",
+        "Tool payloads keep blocked identity and action availability discoverable."
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "heading_hints": [
+        "## 8.0 Event payloads (seglog)"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/Tools.md:L866-L888"
+      ],
+      "notes": [
+        "Adds explicit blocked/denied tool event payload requirements and escalation ladder"
+      ],
+      "obligation_id": "obl-317"
+    },
+    {
+      "canon_label": "Batch Operations with Cost-Aware Host-Pattern Permission Flow",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Batch-level timeout is LOCKED as `individual_timeout \u00d7 min(url_count, 5)`, cap 600s (10 min)",
+        "one approval prompt covers the full batch and lists all unique domains in scope",
+        "For Session grants the listed domains for that session"
+      ],
+      "affected_doc_hints": [
+        "Plans/Permissions_System.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [
+        "## 13. Batch operations"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/Tools.md:L1729-L1770"
+      ],
+      "notes": [
+        "Adds explicit batch approval and host-pattern scope semantics for web tool operations"
+      ],
+      "obligation_id": "obl-084"
+    }
+  ],
+  "noise_findings": [
+    {
+      "reason": "Runtime_Artifacts_Panel restatements of artifact family split, existing required fields, and redb key scope are already covered by storage-plan/current canon",
+      "source_evidence": [
+        "Plans/Runtime_Artifacts_Panel.md:L17-L23",
+        "Plans/Runtime_Artifacts_Panel.md:L30-L31",
+        "Plans/Runtime_Artifacts_Panel.md:L59"
+      ]
+    },
+    {
+      "reason": "Containers/Registry GUI settings and credential-storage precedence are implementation/security detail already covered elsewhere; not net-new canonical obligations",
+      "source_evidence": [
+        "Plans/Containers_Registry_and_Unraid.md:L35-L87",
+        "Plans/Containers_Registry_and_Unraid.md:L175-L181"
+      ]
+    },
+    {
+      "reason": "GitHub auth flow, PR panel disabled states, and SSH/cache details largely restate existing GitHub/storage canon; pass 2 material already captured the stronger identity/routing pieces",
+      "source_evidence": [
+        "Plans/GitHub_Integration.md:L174-L194",
+        "Plans/GitHub_Integration.md:L205-L217",
+        "Plans/GitHub_Integration.md:L409-L430",
+        "Plans/GitHub_Integration.md:L551-L558"
+      ]
+    },
+    {
+      "reason": "Many Tools.md sections are inventory or implementation guidance; pass 2 material only kept the stronger owner/consumer contracts around policy engine, denial payloads, approvals, routing identity, and usage linkage",
+      "source_evidence": [
+        "Plans/Tools.md:L43-L62",
+        "Plans/Tools.md:L154-L174",
+        "Plans/Tools.md:L804-L814"
+      ]
+    }
+  ]
+}

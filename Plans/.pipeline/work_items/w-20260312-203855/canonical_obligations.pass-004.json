@@ -1,0 +1,1250 @@
+{
+  "schema_id": "pm.canonical_obligations.pass.v1",
+  "work_id": "w-20260312-203855",
+  "pass": "004",
+  "summary": {
+    "material_findings": 55,
+    "noise_findings": 4
+  },
+  "material_findings": [
+    {
+      "canon_label": "git_subprocess_mutation_integrity_post_stage_verification",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "After `git add`, PM MUST verify staged state with `git status --porcelain` before snapshot metadata is accepted as durable"
+      ],
+      "affected_doc_hints": [
+        "Plans/FileSafe.md",
+        "Plans/WorktreeGitImprovement.md"
+      ],
+      "heading_hints": [
+        "11.1.2a Optimistic concurrency for mutable rewrites"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/FileSafe.md:L1282-L1285"
+      ],
+      "notes": [
+        "Post-add staged-state verification is mandatory before snapshot metadata becomes durable."
+      ]
+    },
+    {
+      "canon_label": "filesafe_blocked_outcome_family_classification",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "classify as `blocked_reason_code = filesafe_blocked`"
+      ],
+      "affected_doc_hints": [
+        "Plans/FileSafe.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "heading_hints": [
+        "FileSafe Blocked Outcome Alignment Addendum (2026-03-09)"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/FileSafe.md:L2507-L2516"
+      ],
+      "notes": [
+        "FileSafe denials are first-class blocked outcomes, not generic execution failures."
+      ]
+    },
+    {
+      "canon_label": "filesafe_block_non_retryable_default",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`filesafe_blocked` is not retryable by default"
+      ],
+      "affected_doc_hints": [
+        "Plans/FileSafe.md",
+        "Plans/Executor_Protocol.md"
+      ],
+      "heading_hints": [
+        "FileSafe Runtime Blocked and Restore Override Consolidation Addendum (2026-03-09)"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/FileSafe.md:L2542-L2548"
+      ],
+      "notes": [
+        "FileSafe blocks default to non-retryable behavior."
+      ]
+    },
+    {
+      "canon_label": "blocked_outcome_family_and_action_ids",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "runtime-facing FileSafe blocks use canonical `blocked_reason_code` plus ordered `allowed_action_ids[]`"
+      ],
+      "affected_doc_hints": [
+        "Plans/FileSafe.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "heading_hints": [
+        "FileSafe Runtime Blocked and Restore Override Consolidation Addendum (2026-03-09)"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/FileSafe.md:L2535-L2539"
+      ],
+      "notes": [
+        "FileSafe blocked projections must use ordered allowed_action_ids[] rather than local recovery field variants."
+      ]
+    },
+    {
+      "canon_label": "filesafe_local_work_preservation_contract",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "when `requires_safe_point_restore = true`, the only legal rerun path is `restore_safe_point_then_retry`"
+      ],
+      "affected_doc_hints": [
+        "Plans/FileSafe.md",
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [
+        "FileSafe Runtime Blocked and Restore Override Consolidation Addendum (2026-03-09)"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/FileSafe.md:L2545-L2548"
+      ],
+      "notes": [
+        "Preserved local work after FileSafe block requires safe-point restore before retry."
+      ]
+    },
+    {
+      "canon_label": "filesafe_block_canonical_persistence",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "A FileSafe block is a persistent blocked runtime episode until resolved or superseded"
+      ],
+      "affected_doc_hints": [
+        "Plans/FileSafe.md",
+        "Plans/orchestrator-subagent-integration.md"
+      ],
+      "heading_hints": [
+        "FileSafe Runtime Blocked and Restore Override Consolidation Addendum (2026-03-09)"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/FileSafe.md:L2550-L2557"
+      ],
+      "notes": [
+        "FileSafe blocks persist as canonical blocked episodes and use canonical handoff reconstruction."
+      ]
+    },
+    {
+      "canon_label": "filesafe_approved_commands_exact_normalization",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`approved_commands` matching is exact after normalization (`trim` + collapse whitespace). Do not use prefix/substring matching."
+      ],
+      "affected_doc_hints": [
+        "Plans/FileSafe.md"
+      ],
+      "heading_hints": [
+        "12.6 Implementation-Ready Clarifications (resolved)"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/FileSafe.md:L1703-L1704"
+      ],
+      "notes": [
+        "Approved command matching is exact-after-normalization only."
+      ]
+    },
+    {
+      "canon_label": "filesafe_chained_command_per_segment_blocking",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "For multi-line or chained commands (`\\n`, `&&`, `;`, `||`, `|`), check each segment independently; if any segment is blocked, block the whole invocation"
+      ],
+      "affected_doc_hints": [
+        "Plans/FileSafe.md"
+      ],
+      "heading_hints": [
+        "12.6 Implementation-Ready Clarifications (resolved)"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/FileSafe.md:L1706-L1707"
+      ],
+      "notes": [
+        "Any blocked chained segment blocks the entire invocation."
+      ]
+    },
+    {
+      "canon_label": "Spec Lock schema validation as readiness precondition",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "spec_lock_requirements.schema_versions exactly matches Plans/Spec_Lock.json.schema_versions for every referenced key; If any referenced Spec Lock version key is missing or mismatched, Overseer MUST treat that node as not ready"
+      ],
+      "affected_doc_hints": [
+        ".puppet-master/project/plan_graph/nodes/"
+      ],
+      "heading_hints": [
+        "2. Deterministic readiness"
+      ],
+      "stale_residue_to_retire": [
+        "Earlier wording treating Spec Lock as advisory or cached without matching requirement; pre-lock draft decomposition degradation path must not apply post-lock"
+      ],
+      "source_evidence": [
+        "Plans/Executor_Protocol.md:L54-L59",
+        "Plans/Executor_Protocol.md:L64-L65"
+      ],
+      "notes": [
+        "Spec Lock mismatch blocks readiness deterministically; user-project nodes MUST NOT invent ad-hoc schema-version keys; this is stricter than prior node-readiness rules and provides enforcement boundary between draft and canonical graph execution"
+      ]
+    },
+    {
+      "canon_label": "Blocker integrity as graph-validation precondition",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Every blockers[] entry MUST resolve to an existing canonical node document. An unresolved blocker ID is invalid graph input and the node MUST be treated as not ready."
+      ],
+      "affected_doc_hints": [
+        ".puppet-master/project/plan_graph/nodes/"
+      ],
+      "heading_hints": [
+        "2. Deterministic readiness",
+        "Blocker integrity rule"
+      ],
+      "stale_residue_to_retire": [
+        "Earlier unresolved-blocker handling that was silent or treated as transient; graph_integrity failures must not degrade post lock"
+      ],
+      "source_evidence": [
+        "Plans/Executor_Protocol.md:L67-L69"
+      ],
+      "notes": [
+        "Invalid blocker IDs are hard `graph_integrity` failures after run.graph_canonical_locked, not silent degradation; readiness validation must verify blocker existence before scheduling"
+      ]
+    },
+    {
+      "canon_label": "Terminal state semantics for verified/done auto-marking",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "done and failed are terminal states for this protocol revision; When verifier_result.outcome == pass and evidence bundle exists and validates, Overseer MUST first set node status = verified, then immediately transition to status = done; The verified state is a schema-enforced transitional state"
+      ],
+      "affected_doc_hints": [
+        "plan_graph.schema.json",
+        "project_plan_node.schema.json"
+      ],
+      "heading_hints": [
+        "3. Canonical status lifecycle",
+        "4. Auto-marking rule"
+      ],
+      "stale_residue_to_retire": [
+        "Earlier wording that might allow skipping verified state; prior manual-mark-complete patterns"
+      ],
+      "source_evidence": [
+        "Plans/Executor_Protocol.md:L77-L102",
+        "Plans/Executor_Protocol.md:L3-L4"
+      ],
+      "notes": [
+        "Verified is mandatory intermediate state in schema; auto-marking eliminates manual-completion requirement; this creates deterministic completion path for passing verifications"
+      ]
+    },
+    {
+      "canon_label": "Deterministic ready-node scoring tuple with lane prioritization",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "canonical ready-node selection tuple is: scheduler_lane, manual_priority, transitive_unblock_count, ready_since_utc, node_id; scheduler_lane order is remediation > unblocker > normal; larger manual_priority wins; larger transitive_unblock_count wins; older ready_since_utc wins; lexicographically smaller node_id wins only as final tiebreak"
+      ],
+      "affected_doc_hints": [
+        "Plans/Run_Graph_View.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "heading_hints": [
+        "Runtime Scheduler Addendum (2026-03-08)",
+        "3. Deterministic score tuple"
+      ],
+      "stale_residue_to_retire": [
+        "Earlier pure-lexicographic node_id ordering as primary dispatch rule; no multi-factor scoring; no lane concept; no transitive-unblock calculation"
+      ],
+      "source_evidence": [
+        "Plans/Executor_Protocol.md:L234-L254",
+        "Plans/Executor_Protocol.md:L425-L433",
+        "Plans/Executor_Protocol.md:L537-L542",
+        "Plans/Executor_Protocol.md:L490-L500"
+      ],
+      "notes": [
+        "Lane prioritization (remediation > unblocker > normal) is NEW structural scoring dimension; transitive_unblock_count makes dependency graph shape relevant to dispatch order; ready_since_utc enables FIFO fairness within equal-priority; node_id relegated to final tiebreak only"
+      ]
+    },
+    {
+      "canon_label": "Classified failure families and blocked reason codes with retry matrix",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "failure_class families: provider_transient (3 retries, exponential backoff 1s/2s/4s), rate_limited (3 retries, Retry-After), structured_output_invalid (2 retries), verification_failed (0 retries), reviewer_findings (0), auth_expired (1 retry immediate), storage_io (1 retry), quota_exceeded (0), graph_integrity (0); blocked_reason_code families: permission_denied (0), user_declined (0), headless_ask_denied (0), filesafe_blocked (0), external_side_effect_blocked (0), replan_required (0); Generic retry without prior classification is prohibited"
+      ],
+      "affected_doc_hints": [
+        "Plans/Run_Modes.md",
+        "Plans/GitHub_API_Auth_and_Flows.md"
+      ],
+      "heading_hints": [
+        "7. Failure classes and retry entry points",
+        "7.1 Classified outcome matrix"
+      ],
+      "stale_residue_to_retire": [
+        "Earlier unclassified retry logic; generic blind retry; undifferentiated backoff between transient and rate-limit failures"
+      ],
+      "source_evidence": [
+        "Plans/Executor_Protocol.md:L290-L322",
+        "Plans/Executor_Protocol.md:L7-L7",
+        "Plans/Executor_Protocol.md:L440-L447",
+        "Plans/Executor_Protocol.md:L578-L581"
+      ],
+      "notes": [
+        "Matrix explicitly distinguishes failure_class from blocked_reason_code; retry policy is class-driven deterministically; rate_limited remains distinct from provider_transient for circuit-breaker purposes; auth_expired gets one immediate refresh-and-retry; quota_exceeded and graph_integrity are non-retryable terminal classes"
+      ]
+    },
+    {
+      "canon_label": "Doom-loop guard triple detection",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "If the same triple (tool_name, serialized_args_hash, error_message) is observed twice consecutively at the same nesting level, the executor MUST emit stop.identical_failure and terminate the run immediately"
+      ],
+      "affected_doc_hints": [
+        "Plans/Run_Modes.md"
+      ],
+      "heading_hints": [
+        "7.2 Doom-loop guard"
+      ],
+      "stale_residue_to_retire": [
+        "Earlier absence of identical-failure detection; prior assume-test cycles could loop indefinitely"
+      ],
+      "source_evidence": [
+        "Plans/Executor_Protocol.md:L324-L328"
+      ],
+      "notes": [
+        "NEW hard guard preventing retry loops on identical tool+args+error combinations; requires hashing serialized_args for deterministic comparison; run terminates with stop.identical_failure signal"
+      ]
+    },
+    {
+      "canon_label": "Signal handling and process lifecycle for subprocesses",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "PM entrypoints establish canonical shutdown root with signal.NotifyContext or equivalent once-owned signal fan-out before any managed subprocess is started; Provider processes receive SIGTERM/SIGINT with 5-second grace window; MCP and LSP subprocesses receive 3-second grace window; SIGHUP reloads config; All managed subprocesses run in isolated process groups"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [
+        "7.3 Signal handling and process lifecycle"
+      ],
+      "stale_residue_to_retire": [
+        "Earlier undefined subprocess termination semantics; no grace windows; no signal fan-out pattern; no process group isolation"
+      ],
+      "source_evidence": [
+        "Plans/Executor_Protocol.md:L330-L337"
+      ],
+      "notes": [
+        "Canonical signal handling requires once-owned fan-out root before subprocess launch; differentiated grace windows (5s for providers, 3s for MCP/LSP); SIGHUP config reload; isolated process groups prevent orphans"
+      ]
+    },
+    {
+      "canon_label": "Safe-point payload structure for worktree recovery",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "safe-point event payload MUST include: worktree_id (string?, ID of bound worktree, null if main repo), worktree_path (string?, absolute path on disk), worktree_branch (string?, branch checked out), worktree_dirty (bool, uncommitted changes at snapshot); Before any mutation-capable node attempt, executor MUST create or attach runtime safe point with properties: safe_point_id, run_id, node_id, attempt_id, worktree_path or execution root, refs to pre-attempt artifact/workspace baseline, active replan_generation"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/assistant-chat-design.md"
+      ],
+      "heading_hints": [
+        "8. Safe points",
+        "8.1 Worktree snapshot in safe-point payloads"
+      ],
+      "stale_residue_to_retire": [
+        "Earlier undefined safe-point schema; missing worktree binding fields; conflation of safe points with user-facing restore points"
+      ],
+      "source_evidence": [
+        "Plans/Executor_Protocol.md:L341-L372",
+        "Plans/Executor_Protocol.md:L8-L8"
+      ],
+      "notes": [
+        "Safe-point schema is normalized with worktree_id, worktree_path, worktree_branch, worktree_dirty; these are advisory and NOT canonical binding source (redb projection owns that); safe points are runtime recovery anchors only, not user-facing restore points"
+      ]
+    },
+    {
+      "canon_label": "Wakeup trigger coalescing and canonical wake_reason values",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Canonical wake_reason values are: node_completed, prerequisite_resolved, verification_completed, approval_resolved, clarification_resolved, auth_recovered, backoff_expired, remediation_completed, replan_applied, restore_completed, capacity_changed, startup_recovered, watchdog_recheck; If multiple triggers coalesce into one scheduler pass, persist first as wake_reason and rest as secondary_wake_reasons[]"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [
+        "5. Wakeup triggers",
+        "Runtime Scheduler Addendum (2026-03-08)"
+      ],
+      "stale_residue_to_retire": [
+        "Earlier undefined wake triggers; no coalescing semantics; no secondary_wake_reasons collection"
+      ],
+      "source_evidence": [
+        "Plans/Executor_Protocol.md:L269-L275",
+        "Plans/Executor_Protocol.md:L544-L559",
+        "Plans/Executor_Protocol.md:L435-L438"
+      ],
+      "notes": [
+        "Twelve canonical wake_reason enum values; multiple triggers coalesce into single scheduler pass with first reason recorded and others in secondary array; watchdog_recheck enables polling-only safe point without event storm"
+      ]
+    },
+    {
+      "canon_label": "Capacity-aware parallel dispatch with slot-shortage non-blocking",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "executor MUST select up to available_slots nodes per scheduler pass; available_slots derived from: run-level concurrency limit, active phase/task/subtask concurrency constraints, resource/provider saturation limits, remediation lane reservations; Selection is global across ready set, not level-by-level lexical dispatch; pure capacity shortage is non_selected_reason = capacity_deferred, not blocked state"
+      ],
+      "affected_doc_hints": [
+        "Plans/Run_Graph_View.md"
+      ],
+      "heading_hints": [
+        "4. Capacity-aware parallel dispatch",
+        "Runtime Scheduler / Recovery Reconciliation Addendum"
+      ],
+      "stale_residue_to_retire": [
+        "Earlier single-node dispatch; no capacity awareness; slot shortage treated as hard blocking rather than deferral"
+      ],
+      "source_evidence": [
+        "Plans/Executor_Protocol.md:L256-L267",
+        "Plans/Executor_Protocol.md:L502-L510",
+        "Plans/Executor_Protocol.md:L519-L520",
+        "Plans/Executor_Protocol.md:L593-L594"
+      ],
+      "notes": [
+        "Parallel dispatch selects multiple nodes respecting global capacity; availability computed from run ceiling, lane ceilings, saturation, and remediation reservations; capacity shortage creates non_selected_reason overlay, not blocked state; enables multi-slot fairness"
+      ]
+    },
+    {
+      "canon_label": "Worktree execution context handoff contract",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "Execution context handoff MUST include: working_directory (set to worktree root when bound), worktree_id (target worktree identifier), worktree_branch (branch name checked out), is_worktree (bool flag); Caller responsibilities: Orchestrator sets when launching DAE in lane-owned worktree; Assistant Chat sets when thread has bound worktree and user runs agent/plan/mode work; If is_worktree false/absent, defaults to project root; Executor responsibilities: File ops resolve to working_directory, Git ops target worktree, terminal starts in working_directory, LSP root uses worktree path when is_worktree true"
+      ],
+      "affected_doc_hints": [
+        "Plans/Run_Modes.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/FileManager.md",
+        "Plans/LSPSupport.md",
+        "Plans/Commands_System.md"
+      ],
+      "heading_hints": [
+        "Execution Context: Worktree Handoff"
+      ],
+      "stale_residue_to_retire": [
+        "Earlier undefined worktree context propagation; missing is_worktree flag; implicit project-root assumption without explicit binding"
+      ],
+      "source_evidence": [
+        "Plans/Executor_Protocol.md:L643-L668"
+      ],
+      "notes": [
+        "NEW section formalizing worktree context as first-class execution parameter; Orchestrator and Assistant Chat are callers responsible for setting fields; Executor applies rules consistently: file ops relative to working_directory, git ops to worktree, LSP root to worktree path; this replaces prior tier-based context semantics"
+      ]
+    },
+    {
+      "canon_label": "Execution unit context fields as authoritative dispatch packet",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "canonical dispatch/runtime packet carries execution_unit_context with authoritative fields: run_id (canonical run identity), node_id (canonical node identity), attempt_id (immutable local execution-attempt identity), lane_id (lane identity when lane-bound), package_id (package identity for orchestration joins), seam_id (seam identity when feature-scoped), worktree_id (durable worktree identity when execution runs in bound worktree), execution_role (canonical execution-role disclosure), requested_account_id (requested account before routing resolution), requested_account_binding (binding mode distinguishing preference from requirement), requested_account_policy (requested policy selection for routing/approvals), effective_account_id (effective resolved account identity), operational_identity (stable runtime identity for audit/joins), blocked_sequence (blocked-episode anchor when paused/recovered), allowed_action_ids[] (ordered blocked-action set)"
+      ],
+      "affected_doc_hints": [
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md"
+      ],
+      "heading_hints": [
+        "Authoritative execution_unit_context fields (Section 5)"
+      ],
+      "stale_residue_to_retire": [
+        "Earlier undefined execution packet schema; missing worktree_id, blocked_sequence, allowed_action_ids carrythrough; unclear requested-vs-effective account semantics in dispatch"
+      ],
+      "source_evidence": [
+        "Plans/Executor_Protocol.md:L110-L132"
+      ],
+      "notes": [
+        "Canonical execution_unit_context is first-class packet structure with fourteen fields; requested_account_binding distinguishes preference from requirement; blocked_sequence anchors recovery paths; allowed_action_ids carry through blocked-action set into recovery; this is NEW formalization replacing tier-based context"
+      ]
+    },
+    {
+      "canon_label": "Prerequisite-resolved cascade event and blocking projection clear",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "canonical prerequisite-resolution event: node.prerequisite_resolved \u2014 emitted when prerequisite node completes successfully, is dependency-satisfying via skip policy, or is force-resolved; payload: { source_node_id, resolved_prerequisite_id, target_node_ids[], resolution: 'completed' | 'skipped' | 'force_resolved' }; wake behavior: receiving this event triggers prerequisite re-evaluation on all target_node_ids; if all prerequisites resolved, runtime blocked projection clears and node transitions from blocked to pending/ready-eligible queue state in same scheduler wake"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/Run_Graph_View.md"
+      ],
+      "heading_hints": [
+        "6. Blocked-to-runnable cascade",
+        "Canonical Runtime Scheduler Reconciliation Addendum"
+      ],
+      "stale_residue_to_retire": [
+        "Earlier implicit dependency resolution; no explicit event payload; no target node broadcast; delayed re-evaluation across multiple passes"
+      ],
+      "source_evidence": [
+        "Plans/Executor_Protocol.md:L277-L288",
+        "Plans/Executor_Protocol.md:L561-L566",
+        "Plans/Executor_Protocol.md:L512-L516"
+      ],
+      "notes": [
+        "Canonical event name: node.prerequisite_resolved; payload includes source_node_id, resolved_prerequisite_id, target_node_ids[], resolution enum; synchronous same-wake re-evaluation; blocked projection clear happens before dispatch selection; no extra scheduler pass needed for direct unblock"
+      ]
+    },
+    {
+      "canon_label": "Node lifecycle versus runtime overlay separation",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Node lifecycle remains graph-progress contract (queued -> in_progress -> verify_pending -> verified -> done or failed); Runtime overlays include blocked, backoff, retrying, remediation, waiting-approval states; Rules: overlays do not replace canonical node lifecycle values; readiness consults both lifecycle state and active runtime overlays; waiting_approval represented through blocked/runtime records not by mutating node lifecycle taxonomy; safe-point and remediation state remain runtime overlays attached to attempts or blocked projections; This preserves one stable lifecycle contract for planning/graph semantics while allowing runtime recovery behavior richly observable"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/human-in-the-loop.md"
+      ],
+      "heading_hints": [
+        "Node lifecycle versus runtime overlays",
+        "Canonical Runtime Scheduler Reconciliation Addendum"
+      ],
+      "stale_residue_to_retire": [
+        "Earlier conflation of lifecycle status with runtime overlays; waiting_approval or blocked as node.status values; lifecycle semantics mutated by runtime state"
+      ],
+      "source_evidence": [
+        "Plans/Executor_Protocol.md:L476-L488"
+      ],
+      "notes": [
+        "NEW section clarifying architectural separation: node lifecycle is immutable graph-scoped, runtime overlays are mutable runtime-scoped; readiness checks both; this enables stable planning contracts while rich runtime observability"
+      ]
+    },
+    {
+      "canon_label": "Replan generation lifecycle and stale attempt semantics",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "replan_generation is per-run monotonic u32 counter starting at 0 for initial graph; Increments exactly 1 each time replan applied and canonical graph updated via run.graph_canonical_locked; Replan defined as any structural change to canonical graph (adding/removing/reordering nodes or edges); Attempts, safe points, blocked projections created under generation N become stale when generation increments to N+1; Stale attempts remain queryable for audit but never resumable; No practical maximum value"
+      ],
+      "affected_doc_hints": [
+        "Plans/Glossary.md",
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [
+        "Replan generation lifecycle"
+      ],
+      "stale_residue_to_retire": [
+        "Earlier undefined replan generation semantics; missing stale attempt handling; unclear generation increment triggers"
+      ],
+      "source_evidence": [
+        "Plans/Executor_Protocol.md:L631-L641"
+      ],
+      "notes": [
+        "NEW section formalizing replan_generation as atomic u32 counter; increments on run.graph_canonical_locked; stale attempts immutable but non-resumable; generation mismatch prevents node readiness; no practical max (unbounded u32)"
+      ]
+    },
+    {
+      "canon_label": "Attempt identity creation on every dispatch/resume",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Every dispatch creates or reuses a first-class attempt_id; Mutation-capable attempts and remediation apply steps MUST create runtime safe_point_id before execution; Every retry, resume-after-prerequisite, or safe-point-restored rerun creates new attempt_id; Prior attempts remain immutable historical records; Every dispatch creates new attempt_id; Retry, prerequisite resume, remediation rerun, safe-point-restored rerun always create new attempts"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/WorktreeGitImprovement.md"
+      ],
+      "heading_hints": [
+        "8. Safe points",
+        "Canonical Runtime Scheduler Reconciliation Addendum",
+        "Attempt identity rule"
+      ],
+      "stale_residue_to_retire": [
+        "Earlier attempt reuse patterns; missing safe-point carrythrough; unclear historical attempt immutability"
+      ],
+      "source_evidence": [
+        "Plans/Executor_Protocol.md:L359-L360",
+        "Plans/Executor_Protocol.md:L449-L451",
+        "Plans/Executor_Protocol.md:L531-L532",
+        "Plans/Executor_Protocol.md:L583-L586"
+      ],
+      "notes": [
+        "Every dispatch/resume creates new attempt_id; attempt count formula: automatic_retry + prerequisite_resume + manual_resume + remediation_retry + 1; stale attempts under old generation never resumable; prior attempts remain immutable audit trail"
+      ]
+    },
+    {
+      "canon_label": "Counter relationships and attempt cause tracking",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "attempt_count = automatic_retry_count + prerequisite_resume_count + manual_resume_count + remediation_retry_count + 1; Each sub-counter tracks attempts triggered by specific cause; Sum of all sub-counters plus initial attempt MUST equal attempt_count; Each sub-counter increments at attempt start, not completion; Independent policy counters MUST NOT be inferred by subtracting from attempt_count"
+      ],
+      "affected_doc_hints": [
+        "Plans/Decision_Policy.md",
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [
+        "Counter Relationships and Event Ordering Addendum"
+      ],
+      "stale_residue_to_retire": [
+        "Earlier undefined attempt counter composition; missing cause tracking; implicit inferred sub-counters"
+      ],
+      "source_evidence": [
+        "Plans/Executor_Protocol.md:L602-L620"
+      ],
+      "notes": [
+        "NEW section defining attempt_count as sum of four specific sub-counters plus 1 initial; each sub-counter is independent and tracks one cause; increment at attempt start not completion; forbids reverse-inference of sub-counters from totals"
+      ]
+    },
+    {
+      "canon_label": "Event ordering guarantees and deduplication",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Per-node sequential: All events for given node_id MUST be processed in emission order; event bus MUST NOT reorder within single node's event stream; Cross-node eventual: Events from different nodes have no guaranteed relative order; Consumers MUST be idempotent and tolerate out-of-order delivery; Deduplication: Event bus MUST deduplicate by (event_name, node_id, attempt_id, ts) tuple; duplicate deliveries silently dropped; Wakeup coalescing: Multiple wakeup triggers arriving within single scheduler pass window coalesced into one pass; wake_reason records first trigger; additional triggers logged but do not cause additional passes"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/Wiring_Matrix.md"
+      ],
+      "heading_hints": [
+        "Event ordering guarantees"
+      ],
+      "stale_residue_to_retire": [
+        "Earlier undefined event ordering semantics; missing deduplication; no coalescing rules"
+      ],
+      "source_evidence": [
+        "Plans/Executor_Protocol.md:L622-L629"
+      ],
+      "notes": [
+        "NEW section formalizing event ordering: per-node FIFO (strict), cross-node eventual (idempotent), deduplication by (name, node, attempt, ts), wakeup coalescing into one pass with secondary_wake_reasons"
+      ]
+    },
+    {
+      "canon_label": "Assistant chat mode worktree binding semantics",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "All assistant chat modes (Ask, Agent, Plan, Deep Plan, Debug) operate within thread's worktree when one is bound: Ask mode read-only context from worktree files; Agent mode file edits go to worktree; Plan/Deep Plan mode plans execute in worktree context; Debug mode debug operations target worktree; Mode transitions do not affect worktree binding \u2014 binding is thread-level, not mode-level"
+      ],
+      "affected_doc_hints": [
+        "Plans/Run_Modes.md",
+        "Plans/assistant-chat-design.md"
+      ],
+      "heading_hints": [
+        "Mode interaction"
+      ],
+      "stale_residue_to_retire": [
+        "Earlier undefined mode-worktree interaction; missing mode-specific context handling; unclear binding scope"
+      ],
+      "source_evidence": [
+        "Plans/Executor_Protocol.md:L711-L719"
+      ],
+      "notes": [
+        "NEW section specifying all five chat modes respect thread-level worktree binding; Ask mode still read-only; Agent/Plan modes read-write in worktree; binding persists across mode transitions (thread-level not mode-level)"
+      ]
+    },
+    {
+      "canon_label": "DispatchContext projection and normalization rules",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Canonical dispatch view is unified DispatchContext projection over execution_unit_context; Normalization rules: package_id canonical dispatch alias for work_package_id when older payloads carry longer name; seam_id canonical alias for feature_seam_id when older payloads carry longer name; investigation_id follows inv_{ulid} format and copied into dispatch projection when present; Behavioral rules: TierContext and tier_id stop acting as canonical execution scope; Downstream consumers join losslessly to attempt, worktree, permission, runtime records; Blocked-action carrythrough anchored to blocked-sequence lineage not ad hoc view context; Permission carry-through: requested/effective runtime identity, blocked action carrythrough"
+      ],
+      "affected_doc_hints": [
+        "Plans/Prompt_Pipeline.md"
+      ],
+      "heading_hints": [
+        "5.1 Unified DispatchContext schema"
+      ],
+      "stale_residue_to_retire": [
+        "Earlier tier_id as canonical scope; missing normalization from longer work_package_id/feature_seam_id names; no investigation_id carrythrough"
+      ],
+      "source_evidence": [
+        "Plans/Executor_Protocol.md:L134-L177"
+      ],
+      "notes": [
+        "NEW DispatchContext replaces tier-based scoping with package_id/seam_id/worktree_id; normalization enables backward compatibility with longer field names; investigation_id ulid format enables tracing; blocked-action carrythrough now anchored to blocked-sequence not view context"
+      ]
+    },
+    {
+      "canon_label": "INV-001-TOOL-CORRELATION-INTEGRITY",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "every `tool_use` MUST have exactly one matching `tool_result` with the same `tool_use_id` (no orphan tool events)"
+      ],
+      "affected_doc_hints": [
+        "Plans/CLI_Bridged_Providers.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "heading_hints": [
+        "INV-001 -- Tool correlation integrity (normalized streams + persisted events)"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/Architecture_Invariants.md:L22-L28"
+      ],
+      "notes": [
+        "Tool-use and tool-result streams must preserve strict 1:1 correlation by tool_use_id."
+      ]
+    },
+    {
+      "canon_label": "INV-015-MONETARY-MICRODOLLARS",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "All persisted and in-memory monetary cost values MUST be stored as integer microdollars (`u64`). Float types MUST NOT be used for cost storage or accumulation"
+      ],
+      "affected_doc_hints": [
+        "Plans/usage-feature.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "heading_hints": [
+        "INV-015 -- Monetary values are integer microdollars"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/Architecture_Invariants.md:L138-L145"
+      ],
+      "notes": [
+        "Monetary cost storage is integer-microdollar only."
+      ]
+    },
+    {
+      "canon_label": "INV-016-TOKEN-FIELDS-NO-AGGREGATION",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "The five canonical token fields (`input_tokens`, `output_tokens`, `cache_read_input_tokens`, `cache_creation_input_tokens`, `reasoning_tokens`) MUST be stored individually in every usage record. Pre-aggregation or collapsing at the storage or event layer is prohibited."
+      ],
+      "affected_doc_hints": [
+        "Plans/usage-feature.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "heading_hints": [
+        "INV-016 -- Token fields are never aggregated at storage layer"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/Architecture_Invariants.md:L148-L154"
+      ],
+      "notes": [
+        "Canonical token fields must remain discrete at storage/event layer."
+      ]
+    },
+    {
+      "canon_label": "INV-017-FILE-MUTATIONS-ATOMIC-PATTERN",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "All FileSafe-managed file write operations MUST use the atomic write pattern: write to a temp file, fsync, rename to the target path. Direct `os.WriteFile` or equivalent non-atomic write calls MUST NOT be used"
+      ],
+      "affected_doc_hints": [
+        "Plans/FileSafe.md",
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [
+        "INV-017 -- File mutations are atomic (temp-fsync-rename)"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/Architecture_Invariants.md:L157-L163"
+      ],
+      "notes": [
+        "FileSafe-managed file writes must use temp-fsync-rename atomic pattern."
+      ]
+    },
+    {
+      "canon_label": "INV-018-SEGLOG-CRC32-MANDATORY",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Every seglog record MUST include a CRC32 checksum. Checksum validation MUST occur on every read. A record that fails CRC32 validation MUST be skipped and a recovery event emitted."
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/Executor_Protocol.md"
+      ],
+      "heading_hints": [
+        "INV-018 -- Seglog CRC32 is mandatory"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/Architecture_Invariants.md:L166-L172"
+      ],
+      "notes": [
+        "Seglog records require CRC32 plus per-read validation and recovery-event emission on failure."
+      ]
+    },
+    {
+      "canon_label": "INVARIANT-A-DEBUG-OVERLAY-NOT-RUNTIME-MODE",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`debug` MUST exist only in overlay identity and UI label state. The canonical runtime-mode enum remains `ask | plan | regular | yolo`."
+      ],
+      "affected_doc_hints": [
+        "Plans/Run_Modes.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "heading_hints": [
+        "Invariant A -- Debug overlay is not a runtime mode"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/Architecture_Invariants.md:L208-L211"
+      ],
+      "notes": [
+        "Debug is overlay/UI label only, not a runtime-mode enum member."
+      ]
+    },
+    {
+      "canon_label": "INVARIANT-B-VISIBLE-EVIDENCE-INGRESS-ONLY",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Automatically collected Debug evidence MUST become visible Investigation Context or Runtime Artifacts state. PM MUST NOT rely on hidden prompt-only evidence injection for browser/debug payloads."
+      ],
+      "affected_doc_hints": [
+        "Plans/assistant-chat-design.md",
+        "Plans/storage-plan.md",
+        "Plans/Prompt_Pipeline.md"
+      ],
+      "heading_hints": [
+        "Invariant B -- Visible evidence ingress only"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/Architecture_Invariants.md:L213-L216"
+      ],
+      "notes": [
+        "Debug/browser evidence must enter through visible context/artifact surfaces, not hidden prompt-only injection."
+      ]
+    },
+    {
+      "canon_label": "INVARIANT-C-CROSS-SURFACE-INVESTIGATION-IDENTITY",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Any PM surface that participates in debugging MUST preserve `investigation_id` and, when applicable, `instrumentation_id` rather than minting surface-local debug identities that cannot be correlated later."
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/orchestrator-subagent-integration.md"
+      ],
+      "heading_hints": [
+        "Invariant C -- Cross-surface investigation identity"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/Architecture_Invariants.md:L218-L221"
+      ],
+      "notes": [
+        "Debugging surfaces must preserve investigation/instrumentation identity across surfaces."
+      ]
+    },
+    {
+      "canon_label": "crew_board_explicit_coordination",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "Crew-board coordination MUST remain attributable, inspectable, and task-scoped; hidden direct peer messaging is not a canonical runtime channel."
+      ],
+      "affected_doc_hints": [
+        "Plans/assistant-chat-design.md",
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [
+        "Crew-board coordination contracts"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/Contracts_V0.md:L1203-L1204"
+      ],
+      "notes": [
+        "Crew coordination must stay explicit and attributable, not hidden peer traffic."
+      ]
+    },
+    {
+      "canon_label": "Crew permission ceiling contract",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Crew members do not gain new authority through board traffic. Permissions, tools, skills, plugins, MCP access, and provider restrictions remain subject to the same requested/effective capability rules as any other child run."
+      ],
+      "affected_doc_hints": [
+        "Plans/Permissions_System.md",
+        "Plans/Skills_System.md"
+      ],
+      "heading_hints": [
+        "Crew-board coordination contracts"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/Contracts_V0.md:L1206-L1207"
+      ],
+      "notes": [
+        "Crew board traffic cannot widen child authority."
+      ]
+    },
+    {
+      "canon_label": "disposable_by_default_child_lifecycle",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "Disposable-by-default child lifecycle is canonical; resume/reopen behavior MUST be treated as an exception path, not the baseline continuity model."
+      ],
+      "affected_doc_hints": [
+        "Plans/assistant-memory-subsystem.md",
+        "Plans/assistant-chat-design.md"
+      ],
+      "heading_hints": [
+        "Retry, reroute, replacement, and resume"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/Contracts_V0.md:L1198-L1199"
+      ],
+      "notes": [
+        "Child lifecycle defaults to disposable; resume/reopen is exceptional."
+      ]
+    },
+    {
+      "canon_label": "retry_reroute_replacement_resume_semantic_distinction",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Runtime and storage contracts MUST preserve the semantic distinction between resume, retry, reroute, and replacement; projections MAY summarize them but MUST NOT collapse them into one generic retry/restart bucket."
+      ],
+      "affected_doc_hints": [
+        "Plans/Tools.md",
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [
+        "Retry, reroute, replacement, and resume"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/Contracts_V0.md:L1189-L1196"
+      ],
+      "notes": [
+        "Retry, reroute, replacement, and resume remain distinct canonical semantics."
+      ]
+    },
+    {
+      "canon_label": "child_projection_identity_preservation",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Any projection event that feeds chat, cards, groups, or batch summaries MUST preserve canonical child identity fields and MUST NOT demote child runs into anonymous status text."
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/assistant-chat-design.md"
+      ],
+      "heading_hints": [
+        "Child-run lifecycle and projection"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/Contracts_V0.md:L1184-L1185"
+      ],
+      "notes": [
+        "Child projections must keep lineage identity instead of anonymous status text."
+      ]
+    },
+    {
+      "canon_label": "child_to_parent_escalation_as_canonical_events",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Child-to-parent escalation and progress signals MUST remain canonical runtime events even when parent chat or crew UI projects them into higher-level summaries."
+      ],
+      "affected_doc_hints": [
+        "Plans/Tools.md",
+        "Plans/assistant-chat-design.md"
+      ],
+      "heading_hints": [
+        "Child-run lifecycle and projection"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/Contracts_V0.md:L1181-L1182"
+      ],
+      "notes": [
+        "Child escalation/progress stays canonical runtime, not optional UI decoration."
+      ]
+    },
+    {
+      "canon_label": "Blocked vs awaiting_parent semantic distinction",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`blocked` and `awaiting_parent` MUST remain distinct canonical runtime meanings across permissions, events, chat projection, and recovery."
+      ],
+      "affected_doc_hints": [
+        "Plans/Permissions_System.md",
+        "Plans/assistant-chat-design.md"
+      ],
+      "heading_hints": [
+        "Parent mediation and required-vs-optional dependency state"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/Contracts_V0.md:L1285-L1286"
+      ],
+      "notes": [
+        "blocked and awaiting_parent are non-interchangeable runtime states."
+      ]
+    },
+    {
+      "canon_label": "parent_mediation_required_for_child_escalation",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Parent orchestration MUST preserve required-vs-optional child dependency semantics and MUST mediate child-to-user escalation by default."
+      ],
+      "affected_doc_hints": [
+        "Plans/orchestrator-subagent-integration.md",
+        "Plans/assistant-chat-design.md"
+      ],
+      "heading_hints": [
+        "Parent mediation and required-vs-optional dependency state"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/Contracts_V0.md:L1282-L1283"
+      ],
+      "notes": [
+        "Parent mediates child escalation and preserves required/optional dependency semantics."
+      ]
+    },
+    {
+      "canon_label": "dynamic_context_shrinking_canonical_mechanism",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Dynamic context shrinking MUST preserve canonical source state and MUST operate on effective context only, not rewrite source-of-truth history."
+      ],
+      "affected_doc_hints": [
+        "Plans/Prompt_Pipeline.md",
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [
+        "Dynamic context shrinking and effective-context projection"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/Contracts_V0.md:L1271-L1272"
+      ],
+      "notes": [
+        "Context shrinking is effective-context projection only, not source-of-truth rewrite."
+      ]
+    },
+    {
+      "canon_label": "automatic_context_shrinking_scope_and_protection",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Automatic shrinking MUST respect protected current-working-set items and MUST NOT rewrite static system/provider/persona/tool-definition content."
+      ],
+      "affected_doc_hints": [
+        "Plans/Prompt_Pipeline.md"
+      ],
+      "heading_hints": [
+        "Dynamic context shrinking and effective-context projection"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/Contracts_V0.md:L1274-L1275"
+      ],
+      "notes": [
+        "Automatic shrinking is limited and cannot rewrite protected static context."
+      ]
+    },
+    {
+      "canon_label": "context_shrinking_events_additive_not_authoritative",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "Context-shrinking events MUST be additive effective-context projections and MUST NOT become the sole durable record of planning evidence or child outputs."
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/assistant-chat-design.md"
+      ],
+      "heading_hints": [
+        "Dynamic context shrinking and effective-context projection"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/Contracts_V0.md:L1277-L1278"
+      ],
+      "notes": [
+        "Context-shrinking events are supplementary, not authoritative history."
+      ]
+    },
+    {
+      "canon_label": "subagent_event_family_lineage_preservation",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "For every `subagent.*` event below, the payload MUST preserve the PM lineage envelope: `run_id`, `thread_id`, `agent_id`, `parent_run_id?`, `child_run_id?`, `parent_thread_id?`, requested and effective runtime descriptors when they differ"
+      ],
+      "affected_doc_hints": [
+        "Plans/orchestrator-subagent-integration.md",
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [
+        "Stable subagent and crew event families"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/Contracts_V0.md:L1214-L1223"
+      ],
+      "notes": [
+        "Subagent event families require full lineage envelope preservation."
+      ]
+    },
+    {
+      "canon_label": "crew_event_family_lineage_preservation",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "For every `crew.*` event below, the payload MUST preserve crew and child lineage together: `run_id`, `thread_id`, `crew_id`, `parent_run_id?`, `child_run_id?`, `member_agent_ids[]` where membership matters"
+      ],
+      "affected_doc_hints": [
+        "Plans/assistant-chat-design.md",
+        "Plans/orchestrator-subagent-integration.md"
+      ],
+      "heading_hints": [
+        "Stable subagent and crew event families"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/Contracts_V0.md:L1249-L1268"
+      ],
+      "notes": [
+        "Crew event families require preserved crew and child lineage."
+      ]
+    },
+    {
+      "canon_label": "canonical_runtime_event_precedence",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "No section in this file may present an earlier shorter enum set as the canonical value family."
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "heading_hints": [
+        "Canonical Runtime Taxonomy and Event Precedence Reconciliation Addendum"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/Contracts_V0.md:L1167-L1169"
+      ],
+      "notes": [
+        "Runtime event precedence is explicit and non-negotiable across projections."
+      ]
+    },
+    {
+      "canon_label": "scheduled_attempt_lineage_required_fields",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Required fields: `run_id`, `thread_id`, `node_id`, `attempt_id`, `scheduler_lane`, effective requested/effective model snapshot, effective permission snapshot identifier, `safe_point_id` when present, `remediation_root_id` / `remediation_parent_attempt_id` when present, `replan_generation`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Executor_Protocol.md"
+      ],
+      "heading_hints": [
+        "Runtime Scheduler / Attempt Lineage Contract Addendum"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/Contracts_V0.md:L1050-L1059"
+      ],
+      "notes": [
+        "attempt.started requires scheduler lane plus permission/model/safe-point/remediation lineage context."
+      ]
+    },
+    {
+      "canon_label": "attempt_completed_terminal_state_lineage",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Required fields: `run_id`, `thread_id`, `node_id`, `attempt_id`, terminal state, `failure_class` or success marker, retry count and backoff metadata, verification / reviewer result references when relevant, resolved lineage identifiers"
+      ],
+      "affected_doc_hints": [
+        "Plans/Executor_Protocol.md"
+      ],
+      "heading_hints": [
+        "Runtime Scheduler / Attempt Lineage Contract Addendum"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/Contracts_V0.md:L1060-L1068"
+      ],
+      "notes": [
+        "attempt.completed preserves failure classification, retry metadata, and verification/reviewer references."
+      ]
+    },
+    {
+      "canon_label": "tool_denied_scheduler_state_impact_fields",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`tool.denied` MUST carry canonical runtime mapping fields when the denial affects scheduler state: `blocked_reason_code`, `failure_class`, ordered `allowed_action_ids[]`, `headless_denied` boolean, effective permission snapshot identifier"
+      ],
+      "affected_doc_hints": [
+        "Plans/Tools.md",
+        "Plans/Executor_Protocol.md"
+      ],
+      "heading_hints": [
+        "Runtime Scheduler / Attempt Lineage Contract Addendum"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/Contracts_V0.md:L1096-L1105"
+      ],
+      "notes": [
+        "Scheduler-impacting tool.denied payloads require runtime mapping fields and permission snapshot identity."
+      ]
+    },
+    {
+      "canon_label": "safe_point_restoration_outcome_enum",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Canonical values for the `restore_outcome` field in `safe_point.restored` events: `restored_clean`, `restored_with_conflicts`, `restore_failed`, `restore_skipped`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Executor_Protocol.md",
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [
+        "Safe-point events"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/Contracts_V0.md:L927-L937"
+      ],
+      "notes": [
+        "safe_point.restored uses a closed restore_outcome enum with explicit conflict/failure/skip states."
+      ]
+    },
+    {
+      "canon_label": "remediation_resolution_enum_with_replan",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`remediation.resolved.resolution` value enum: (`fixed` | `superseded` | `abandoned` | `replan_required`). `remediation_ceiling_exceeded` remains a blocked-state outcome (`blocked_reason_code`), not a `remediation.resolved.resolution` value."
+      ],
+      "affected_doc_hints": [
+        "Plans/Executor_Protocol.md",
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [
+        "Remediation lineage events"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/Contracts_V0.md:L969-L972"
+      ],
+      "notes": [
+        "Remediation resolution includes replan_required; ceiling exceeded stays a blocked reason."
+      ]
+    }
+  ],
+  "noise_findings": [
+    {
+      "source": "Plans/FileSafe.md",
+      "reason": "Examples, module structure, testing guidance, and historical/process sections were not new canonical obligations."
+    },
+    {
+      "source": "Plans/Architecture_Invariants.md",
+      "reason": "INV-002 through INV-014 and validation prose were already covered or process-only."
+    },
+    {
+      "source": "Plans/Contracts_V0.md",
+      "reason": "Standard envelopes, auth identity restatements, UICommand/OpenSubject definitions, and non-material summaries were already represented."
+    },
+    {
+      "source": "Plans/Executor_Protocol.md",
+      "reason": "Repeated reconciliations, tables, and process text were noise once the latest addenda were captured."
+    }
+  ]
+}

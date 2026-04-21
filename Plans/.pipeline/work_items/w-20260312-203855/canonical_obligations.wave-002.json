@@ -1,0 +1,3240 @@
+{
+  "schema_id": "pm.canonical_obligations.wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave": "002",
+  "source_ranges": [
+    "Plans/Contracts_V0.md:L1-L400",
+    "Plans/Contracts_V0.md:L401-L800",
+    "Plans/Contracts_V0.md:L801-L1200",
+    "Plans/Contracts_V0.md:L1201-L1286",
+    "Plans/storage-plan.md:L1-L400",
+    "Plans/storage-plan.md:L401-L800",
+    "Plans/storage-plan.md:L801-L1200",
+    "Plans/storage-plan.md:L1201-L1299",
+    "Plans/FinalGUISpec.md:L1-L400",
+    "Plans/FinalGUISpec.md:L401-L800",
+    "Plans/FinalGUISpec.md:L801-L1200",
+    "Plans/FinalGUISpec.md:L1201-L1600",
+    "Plans/FinalGUISpec.md:L1601-L2000",
+    "Plans/FinalGUISpec.md:L2001-L2400",
+    "Plans/FinalGUISpec.md:L2401-L2800",
+    "Plans/FinalGUISpec.md:L2801-L3077"
+  ],
+  "summary": {
+    "obligations_total": 124,
+    "owner_obligations": 106,
+    "consumer_obligations": 17,
+    "stale_retirement_obligations": 1,
+    "docs_affected": 47
+  },
+  "obligations": [
+    {
+      "canon_label": "Assistant planning mode selector contract",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "planning-mode selector entry for `Plan`",
+        "planning-mode selector entry for `Deep Plan`",
+        "`Plan Thoroughness (PT)` control visible when either planning overlay is active",
+        "canonical labels: `Light`, `Balanced`, `Comprehensive`",
+        "default selection: `Balanced`"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [
+        "## Assistant Planning UX Addendum (2026-03-08)",
+        "### 1. Assistant Chat planning controls"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/FinalGUISpec.md:L2461-L2472"
+      ],
+      "notes": [
+        "Planning controls expose Plan and Deep Plan as selector entries; PT control is visible when either planning overlay is active; canonical PT labels are Light/Balanced/Comprehensive with Balanced as default"
+      ],
+      "obligation_id": "obl-001"
+    },
+    {
+      "canon_label": "Bottom panel browser role restrictions",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "The bottom panel is not the canonical host for normal browsing, HTML preview, or click-to-context workflows",
+        "Allowed bottom-panel browser-adjacent roles are: console/network summaries, downloads/trace/video progress, automation activity/step status, DevTools-adjacent panes"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Wiring_Matrix.md"
+      ],
+      "heading_hints": [
+        "## Rendering Surface Addendum"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/FinalGUISpec.md:L2410-L2417"
+      ],
+      "notes": [
+        "Bottom panel is not canonical browser host; allowed adjacent roles are console/network summaries, downloads, trace/video progress, automation activity, and DevTools-adjacent panes only"
+      ],
+      "obligation_id": "obl-002"
+    },
+    {
+      "canon_label": "Chat clipboard shortcuts parity",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "Chat composer clipboard shortcuts + context menu: Same behavior and parity as editor"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [
+        "## 16. Clipboard and Native Integration"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/FinalGUISpec.md:L2010"
+      ],
+      "notes": [
+        "Chat composer must mirror editor clipboard behavior and context menu for Ctrl/Cmd+A/C/X/V and Copy/Paste/Select All"
+      ],
+      "obligation_id": "obl-003"
+    },
+    {
+      "canon_label": "Child projection identity preservation contract",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "Required fields remain `child_run_id`, `parent_run_id`, `thread_id`, timestamp, attempt identity when relevant, and requested/effective persona/runtime descriptors",
+        "Any projection event that feeds chat, cards, groups, or batch summaries MUST preserve canonical child identity fields",
+        "MUST NOT demote child runs into anonymous status text"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md#canonical-child-run-records-and-batch-structure",
+        "Plans/assistant-chat-design.md#14-subagents--crew"
+      ],
+      "heading_hints": [
+        "### Child-run lifecycle and projection"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/Contracts_V0.md:L1184-L1185"
+      ],
+      "notes": [
+        "Consumer carry-through expectations: child identity fields must survive projection into chat/cards/summaries."
+      ],
+      "obligation_id": "obl-004"
+    },
+    {
+      "canon_label": "Consumer MUST NOT branch on transport class",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "Consumers MUST NOT branch on transport class",
+        "All provider output is consumed through the unified normalized stream"
+      ],
+      "affected_doc_hints": [
+        "Plans/Provider_OpenCode.md",
+        "Plans/CLI_Bridged_Providers.md"
+      ],
+      "heading_hints": [
+        "### 2.1 Provider transport taxonomy"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/Contracts_V0.md:L100"
+      ],
+      "notes": [
+        "Direct blocker on transport-specific branching in consumer code."
+      ],
+      "obligation_id": "obl-005"
+    },
+    {
+      "canon_label": "Custom no-text clipboard operations",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "Non-text Copy Path/Copy Value: Clipboard receives exact path/value via `ClipboardHelper` only"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [
+        "## 16. Clipboard and Native Integration"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/FinalGUISpec.md:L2013"
+      ],
+      "notes": [
+        "Copy Path and Copy Value use custom ClipboardHelper for non-text content; no standard clipboard text fallback"
+      ],
+      "obligation_id": "obl-006"
+    },
+    {
+      "canon_label": "Detachable panel snap-zone visual feedback and restore behavior",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "When a floating panel window is dragged near the main window edge: Proximity threshold: 25px from the main window edge",
+        "Visual cue: 2px accent strip (`Theme.accent-blue`) on the target edge",
+        "On drop: panel docks to that side; floating window closes",
+        "Snap animation: instant (no easing -- retro hard-edge aesthetic)"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [
+        "## 5. Panel System",
+        "### 5.4 Snap Zones"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/FinalGUISpec.md:L467-L474"
+      ],
+      "notes": [
+        "25px proximity threshold and instant snap animation required; visual accent-blue 2px stripe is feedback cue"
+      ],
+      "obligation_id": "obl-007"
+    },
+    {
+      "canon_label": "EventEnvelopeV1 upgrade contract",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "Writers SHOULD include `run_id` and `thread_id` whenever available",
+        "EventEnvelopeV1 does not require them",
+        "Readers MUST tolerate both envelopes",
+        "projectors SHOULD upgrade in-memory to `EventRecord` form"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md#EventEnvelopeV1",
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [
+        "### 1.3 EventEnvelopeV1 -- minimal compatibility envelope"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/Contracts_V0.md:L39-L54"
+      ],
+      "notes": [
+        "Establishes explicit tolerance boundary and upgrade expectation for consuming systems."
+      ],
+      "obligation_id": "obl-008"
+    },
+    {
+      "canon_label": "Panel detach/dock identity preservation contract",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "Per panel: **DOCKED** <-> **FLOATING**. Same Slint component is used inline when docked or as the root of a separate Slint `Window` when floating",
+        "shared data (chat messages, file tree) lives in Rust-owned records/projections. Exposed to Slint via properties/Models",
+        "Both docked and floating instances bind to the same Rust-backed properties via `Rc<VecModel<T>>` and Slint's `ModelNotify` for automatic propagation"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md",
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [
+        "## 5. Panel System",
+        "### 5.2 Panel State Machine",
+        "### 5.5 Slint Multi-Window Implementation"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/FinalGUISpec.md:L434-L481"
+      ],
+      "notes": [
+        "Both docked and floating instances must share same Rc<VecModel<T>> to maintain data sync across window boundaries"
+      ],
+      "obligation_id": "obl-009"
+    },
+    {
+      "canon_label": "Permission carry-through for account-scoped resolution",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "effective-account-scoped permission resolution must read `requested_account_binding` rather than a policy-only route",
+        "`effective_account_id` must remain available to approval and permission snapshots"
+      ],
+      "affected_doc_hints": [
+        "Plans/Prompt_Pipeline.md#6.4 Effective resolution record",
+        "Plans/Multi-Account.md"
+      ],
+      "heading_hints": [
+        "Permission carry-through"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/Contracts_V0.md:L428-L430"
+      ],
+      "notes": [
+        "Consumer carry-through expectation: binding distinguishes preference from requirement."
+      ],
+      "obligation_id": "obl-010"
+    },
+    {
+      "canon_label": "Project bar title-bar context display (non-primary switch)",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "the title bar may show compact current-project context, but it is not a project bar and does not own the multi-project shell model",
+        "project switching is a workspace-tab operation surfaced through the Projects view, project/session browser, command palette, and dedicated switch commands",
+        "the active workspace tab changes project by default"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md"
+      ],
+      "heading_hints": [
+        "### 3.4 Project Bar (Title Bar)"
+      ],
+      "stale_residue_to_retire": [
+        "title-bar dropdown/strip as the primary project-switch shell",
+        "shell semantics that assume only one active project context exists in the application at a time"
+      ],
+      "source_evidence": [
+        "Plans/FinalGUISpec.md:L177-L196"
+      ],
+      "notes": [
+        "Title bar displays context only; workspace-tab operations own project switching; multi-tab shell model is canonical"
+      ],
+      "obligation_id": "obl-012"
+    },
+    {
+      "canon_label": "ScrollBar and list virtualization anti-flickering",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "When new items are added to a `VecModel` (e.g., chat messages, terminal lines), preserve the current scroll position unless the user is scrolled to the bottom",
+        "If scrolled to bottom: auto-scroll to show new content",
+        "Implementation: Track `viewport-y` property on `ListView`; only update if at bottom threshold",
+        "Each item in a `VecModel` has a stable ID (not just an index) so that Slint can reconcile updates without destroying and recreating all items"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [
+        "## 11. Anti-Flickering and Scroll Preservation",
+        "### 11.2 Strategies"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/FinalGUISpec.md:L1537-L1556"
+      ],
+      "notes": [
+        "Stable ID model required to prevent Slint from re-rendering items; scroll position must be preserved unless at bottom"
+      ],
+      "obligation_id": "obl-017"
+    },
+    {
+      "canon_label": "Search result card widget search-then-read contract",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "Answer construction must preserve search-then-read behavior, final citations must come from the actual read path rather than raw search snippets alone",
+        "search-then-read behavior",
+        "final citations come from the actual read path",
+        "raw search snippets alone are not enough provenance for the final answer",
+        "chat may shortlist with search but must read chosen pages before citing them as final evidence"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [
+        "## 15. Promoted widget catalog (web tools, planning, question, operation cards)",
+        "### 15.2 Search result card widget"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/FinalGUISpec.md:L2858-L2872"
+      ],
+      "notes": [
+        "Search result cards use search-then-read contract; final citations come from actual read path (not search snippets alone); chat shortlists with search but must read pages before citing as final evidence"
+      ],
+      "obligation_id": "obl-018"
+    },
+    {
+      "canon_label": "Stale index state indicator with progress disclosure",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "When a sparse n-gram index build or refresh is in progress for any active project, the status bar shows an index-state indicator",
+        "Show only for work lasting >2 seconds so sub-second incremental updates do not flash",
+        "First build for a project: display `Building search index - first build may take several minutes` with progress percentage when available",
+        "If a stale-but-valid snapshot is still serving grep or Search, the indicator may show refresh progress, but the UI must not imply that Search is fully unindexed"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Tools.md",
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [
+        "### 3.2 Structural Zones",
+        "**Status bar - Indexing indicator:**"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/FinalGUISpec.md:L157-L166"
+      ],
+      "notes": [
+        "Status bar owns index-state indicator; stale snapshot must remain queryable while refresh progresses"
+      ],
+      "obligation_id": "obl-019"
+    },
+    {
+      "canon_label": "Terminal drag-and-drop workgroup/pane reorder contract",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "same-group pane reorder swaps leaf panes in the workgroup split tree",
+        "dropping a workgroup on the editor resolves to the focused leaf pane in that workgroup, falling back to the first leaf when needed",
+        "DnD cleanup must clear stale hover, opacity, and drag classes after rebuild or dragend so terminal panes do not remain visually dimmed",
+        "drag handlers for pane drop targets must work when the cursor is over pane-body content, not only over outer chrome"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Wiring_Matrix.md"
+      ],
+      "heading_hints": [
+        "#### Drag-and-drop contract"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/FinalGUISpec.md:L415-L425"
+      ],
+      "notes": [
+        "Terminal DnD must support pane/subtab/workgroup payloads; cleanup required to prevent visual dimming artifacts"
+      ],
+      "obligation_id": "obl-020"
+    },
+    {
+      "canon_label": "Terminal multi-window shared workspace contract",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "workgroups, subtabs, pane trees, and editor panel references persist as terminal workspace state",
+        "detached terminal windows preserve section identity and reconnect to the same logical workspace records when reattached",
+        "terminal layout controls belong to the terminal workspace and its inspector, not to ad-hoc chat-only widgets"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md",
+        "Plans/storage-plan.md",
+        "Plans/assistant-chat-design.md"
+      ],
+      "heading_hints": [
+        "### Terminal settings ownership"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/FinalGUISpec.md:L1042-L1053"
+      ],
+      "notes": [
+        "Terminal workspace state is canonical; detached windows must preserve section identity when reattached"
+      ],
+      "obligation_id": "obl-021"
+    },
+    {
+      "canon_label": "Terminal read-only copy/paste behavior",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "Terminal/log read-only output copy/paste behavior: Selection/copy works; paste is not treated as editable insertion"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [
+        "## 16. Clipboard and Native Integration"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/FinalGUISpec.md:L2012"
+      ],
+      "notes": [
+        "Terminal output is read-only for paste (no insertion); copy/selection works normally"
+      ],
+      "obligation_id": "obl-022"
+    },
+    {
+      "canon_label": "ABSOLUTE NAMING RULE",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Platform name is \"Puppet Master\" only",
+        "Use \"Puppet Master\" naming consistently throughout this document"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md"
+      ],
+      "heading_hints": [
+        "# Contracts V0 (Canonical)",
+        "Comment block: ABSOLUTE NAMING RULE"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/Contracts_V0.md:L12-L14"
+      ],
+      "notes": [
+        "Establishes deterministic naming constraint for entire system; canonically scoped."
+      ],
+      "obligation_id": "obl-028"
+    },
+    {
+      "canon_label": "Accessibility theme and focus indicator contract",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Basic theme is the primary accessibility-friendly option",
+        "No decorative effects (pixel grid, paper texture, scanlines)",
+        "WCAG AA compliant color palette (4.5:1 minimum contrast for all text)",
+        "System fonts designed for screen readability",
+        "Minimum 14px body text, 1.6 line height, 0.02em letter spacing",
+        "Retro Dark/Light: ACID_LIME 2px border on focus",
+        "Basic: High-contrast 2px ring with 2px offset in accent-blue"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [
+        "## 13. Accessibility",
+        "### 13.1 Basic Theme as Accessibility Option",
+        "### 13.2 Focus Indicators"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/FinalGUISpec.md:L1610-L1623"
+      ],
+      "notes": [
+        "Basic theme is canonical accessibility surface with no decorative effects; theme-specific focus indicators are deterministic per family (Retro uses ACID_LIME, Basic uses accent-blue); all themes must show visible focus indicators"
+      ],
+      "obligation_id": "obl-029"
+    },
+    {
+      "canon_label": "Activity Bar side-panel slot contract",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Search, File Manager, Source Control, GitHub Actions, Docker Manager, Artifacts, Chat, and Run & Debug occupy the single right-hand side-panel slot",
+        "Detachable side-panel surfaces return to the same right-hand slot when re-docked",
+        "None of those surfaces are described as canonical primary-content pages unless the statement is explicitly about a routed detail page launched from the surface"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/assistant-chat-design.md"
+      ],
+      "heading_hints": [
+        "## 4. Navigation Architecture",
+        "### 4.1 Activity Bar"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/FinalGUISpec.md:L244-L265"
+      ],
+      "notes": [
+        "Canonical shell rule: one side-panel slot shared by 8 surfaces with strict identity preservation on detach/re-dock"
+      ],
+      "obligation_id": "obl-030"
+    },
+    {
+      "canon_label": "Activity bar fixed-width constraint at all breakpoints",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Activity bar remains at 48px at all breakpoints",
+        "< 720px, it becomes the primary navigation mechanism, with panels opening as overlay drawers"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [
+        "## 12. Breakpoints and Responsive Design"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/FinalGUISpec.md:L1602"
+      ],
+      "notes": [
+        "Activity bar width is deterministic (48px), not fluid; at <720px viewport, primary navigation role and drawer overlay pattern are mandatory"
+      ],
+      "obligation_id": "obl-031"
+    },
+    {
+      "canon_label": "Activity bar icon order persistence",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`activity_bar_order:v1` = Ordered list of activity bar item IDs + separator position",
+        "On change (debounced 300ms)"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [
+        "### 15.1 redb Schema"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/FinalGUISpec.md:L1798"
+      ],
+      "notes": [
+        "Activity bar icon order and separator position are persisted per-session with 300ms debounce"
+      ],
+      "obligation_id": "obl-032"
+    },
+    {
+      "canon_label": "Activity payload bridge fields and receipt refs",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "node_id: Runtime node identity",
+        "attempt_id: Canonical local execution anchor",
+        "lane_id: Lane identity associated",
+        "package_id: Package identity associated",
+        "execution_role: Effective execution-role disclosure",
+        "effective_account_id: Effective account identity",
+        "operational_identity: Stable runtime identity for audit and joins",
+        "provider_attempt_ref: Provider-side bridge reference subordinate to attempt_id",
+        "usage_event_ref: Usage-side reference for accounting and evidence joins",
+        "receipt refs remain inspection and provenance links rather than route/open surrogates"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/Tools.md",
+        "Plans/Runtime_Artifacts_Panel.md"
+      ],
+      "heading_hints": [
+        "**activity payload**",
+        "**receipt refs** remain inspection and provenance links"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/storage-plan.md:L849-L864"
+      ],
+      "notes": [
+        "Bridge-field precedence must be explicit; inspect refs distinct from route/open contracts"
+      ],
+      "obligation_id": "obl-033"
+    },
+    {
+      "canon_label": "AuthPolicy auth method enum contract",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "ProviderAuthMethod = OAuthBrowser | OAuthDeviceCode | ApiKey | GoogleCredentials | CliInteractive",
+        "RequestedAuthMode = auto | oauth | api_key | device_code | google_credentials | cli_interactive"
+      ],
+      "affected_doc_hints": [
+        "Plans/GitHub_API_Auth_and_Flows.md",
+        "Plans/CLI_Bridged_Providers.md"
+      ],
+      "heading_hints": [
+        "### 4.2 AuthPolicy"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/Contracts_V0.md:L307-L311"
+      ],
+      "notes": [
+        "Canonical enum families for auth method selection per provider."
+      ],
+      "obligation_id": "obl-036"
+    },
+    {
+      "canon_label": "AuthState null-padding prohibition",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "account_id is present only when the selected runtime subject is account-backed",
+        "server-profile-backed rows omit `account_id` rather than null-padding it",
+        "Null-padding is not canonical"
+      ],
+      "affected_doc_hints": [
+        "Plans/Multi-Account.md"
+      ],
+      "heading_hints": [
+        "### 4.1 AuthState"
+      ],
+      "stale_residue_to_retire": [
+        "Null-padded account_id for non-account-backed subjects"
+      ],
+      "source_evidence": [
+        "Plans/Contracts_V0.md:L288-L298"
+      ],
+      "notes": [
+        "Strict conditional-presence rule; omit rather than backfill with placeholder values."
+      ],
+      "obligation_id": "obl-037"
+    },
+    {
+      "canon_label": "Billing entity conditional-requirement contract",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "requested_billing_entity_id and effective_billing_entity_id are conditionally required fields",
+        "A provider includes them only when billing entity selection exists and when the field is meaningful",
+        "fields are present only for provider flows that expose billing entity selection",
+        "the persisted selection field is present only when the effective quota bucket depends on entity selection"
+      ],
+      "affected_doc_hints": [
+        "Plans/Multi-Account.md"
+      ],
+      "heading_hints": [
+        "### Billing entity field contract"
+      ],
+      "stale_residue_to_retire": [
+        "Null-padding billing entity fields"
+      ],
+      "source_evidence": [
+        "Plans/Contracts_V0.md:L794-L805"
+      ],
+      "notes": [
+        "Stale residue: null-padding billing entity fields when selection doesn't exist."
+      ],
+      "obligation_id": "obl-038"
+    },
+    {
+      "canon_label": "Blocked state visual distinction taxonomy",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`attention_required` = Amber badge, Warning triangle icon, 'Needs input' label, tooltip 'This step needs your input to continue'",
+        "`blocked` = Red badge, Stop circle icon, 'Blocked' label, tooltip 'This step is blocked and cannot continue'",
+        "`waiting_approval` = Blue badge, User badge icon, 'Awaiting approval' label, tooltip 'This step is waiting for your approval'",
+        "`attention_required` and `blocked` MUST be visually distinct -- they represent different escalation levels",
+        "`attention_required` allows continued background work; `blocked` does not"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [
+        "## Blocked-State Visual Distinction and Recovery UX Addendum",
+        "### Blocked-state visual distinction"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/FinalGUISpec.md:L2748-L2756"
+      ],
+      "notes": [
+        "Blocked state taxonomy is deterministic with specific badge colors, icons, labels, and tooltips; attention_required and blocked are visually distinct (amber vs red); attention_required allows background work, blocked does not"
+      ],
+      "obligation_id": "obl-039"
+    },
+    {
+      "canon_label": "Blocked vs awaiting_parent semantic distinction",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Blocked state means external or runtime constraints prevent progress",
+        "`awaiting_parent` means the child is paused pending parent decision, clarification, context expansion, or user response",
+        "These are not interchangeable",
+        "`blocked` and `awaiting_parent` MUST remain distinct canonical runtime meanings across permissions, events, chat projection, and recovery"
+      ],
+      "affected_doc_hints": [
+        "Plans/Permissions_System.md#child-permission-ceiling-and-blocked-vs-awaiting-parent",
+        "Plans/assistant-chat-design.md#14-subagents--crew"
+      ],
+      "heading_hints": [
+        "### Parent mediation and required-vs-optional dependency state"
+      ],
+      "stale_residue_to_retire": [
+        "Conflated blocked and awaiting_parent states"
+      ],
+      "source_evidence": [
+        "Plans/Contracts_V0.md:L1285-L1286"
+      ],
+      "notes": [
+        "Stale residue: treating blocked and awaiting_parent as interchangeable; they carry distinct runtime semantics."
+      ],
+      "obligation_id": "obl-040"
+    },
+    {
+      "canon_label": "Blocking payload minimum requirements",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "blocked_reason_code",
+        "ordered `allowed_action_ids[]`",
+        "prerequisite metadata needed to bind the recovery command",
+        "preserved_local_work",
+        "requires_safe_point_restore?",
+        "failure_class?",
+        "detail_ref?"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Executor_Protocol.md"
+      ],
+      "heading_hints": [
+        "### Blocking payload rule"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/Contracts_V0.md:L1156-L1169"
+      ],
+      "notes": [
+        "Blocked identity semantics: every runtime-facing blocked event must expose this minimum set."
+      ],
+      "obligation_id": "obl-041"
+    },
+    {
+      "canon_label": "Browser and preview webview embedding conflict mitigation",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Use native child windows positioned within Slint layout areas, keep browser ownership editor/workspace-tab-first, and ensure bottom-panel browser-adjacent panes never become the canonical browser host"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [
+        "## 17. Risks and Mitigations"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/FinalGUISpec.md:L2040"
+      ],
+      "notes": [
+        "Browser and preview webviews use native child windows in Slint layout areas; browser ownership is editor/workspace-tab-first; bottom-panel panes are not canonical browser hosts"
+      ],
+      "obligation_id": "obl-042"
+    },
+    {
+      "canon_label": "Browser runtime capability-first contract",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "PM-managed pinned bundled CEF-class Chromium runtime on Windows, macOS, and Linux",
+        "native child-window embedding is the baseline host strategy; offscreen rendering is secondary",
+        "detached browser and detached DevTools windows are first-class surfaces linked to the owning browser session",
+        "GUI copy must not imply that the browser is only available through detached fallback windows or platform-specific system-webview assumptions",
+        "when the bundled browser runtime is damaged or unavailable, the UI must surface `runtime_unavailable` with remediation and keep source/native surfaces usable"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [
+        "## Rendering Surface Addendum"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/FinalGUISpec.md:L2430-L2434"
+      ],
+      "notes": [
+        "Browser is PM-managed bundled Chromium (CEF-class); native child-window embedding is baseline; detached browser/DevTools are first-class; GUI must not assume system-webview fallback; runtime_unavailable state must surface remediation"
+      ],
+      "obligation_id": "obl-043"
+    },
+    {
+      "canon_label": "Chat message memory bounding strategy",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Implement a soft cap (e.g., 5000 messages per thread); on exceeding, archive oldest messages to disk and show 'Load earlier messages' button"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [
+        "## 17. Risks and Mitigations"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/FinalGUISpec.md:L2032"
+      ],
+      "notes": [
+        "Chat memory cap is ~5000 messages per thread (soft); older messages are archived to disk; UI shows 'Load earlier messages' affordance"
+      ],
+      "obligation_id": "obl-044"
+    },
+    {
+      "canon_label": "Chat state persistence",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`chat_state:v1` = Unsent input text and active thread selection",
+        "On change (debounced 200ms)"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [
+        "### 15.1 redb Schema"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/FinalGUISpec.md:L1815"
+      ],
+      "notes": [
+        "Chat state persists unsent composer text and active thread selection with 200ms debounce"
+      ],
+      "obligation_id": "obl-045"
+    },
+    {
+      "canon_label": "Child lifecycle states canonical contract",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Canonical child lifecycle states are: `queued`, `running`, `awaiting_parent`, `blocked`, `complete`, `failed`, `cancelled`, `superseded`",
+        "Consumers MUST NOT invent incompatible parallel enums"
+      ],
+      "affected_doc_hints": [
+        "Plans/Tools.md#event-model",
+        "Plans/storage-plan.md#canonical-child-run-records-and-batch-structure"
+      ],
+      "heading_hints": [
+        "### Child-run lifecycle and projection"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/Contracts_V0.md:L1174-L1179"
+      ],
+      "notes": [
+        "Child identity and lineage are not optional metadata: they are part of the event contract."
+      ],
+      "obligation_id": "obl-046"
+    },
+    {
+      "canon_label": "Child-to-parent signal canonicity contract",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Child-to-parent signals are canonical runtime events, not ad hoc UI messages",
+        "At minimum the contract family includes: `progress`, `result`, `blocked`, `clarification_needed`, `context_expansion_requested`, `user_input_requested`, `failed`, `cancelled`",
+        "Parent orchestration may summarize, consolidate, or route these signals, but canonical event identity must remain intact"
+      ],
+      "affected_doc_hints": [
+        "Plans/Tools.md#event-model",
+        "Plans/assistant-chat-design.md#14-subagents--crew"
+      ],
+      "heading_hints": [
+        "### Child-run lifecycle and projection"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/Contracts_V0.md:L1181-L1182"
+      ],
+      "notes": [
+        "Consumer carry-through expectations: child signals remain canonical runtime events."
+      ],
+      "obligation_id": "obl-047"
+    },
+    {
+      "canon_label": "Concurrent blocked episodes UI treatment",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "The dashboard MUST show a count badge (e.g., 'N blocked') on the run card",
+        "Clicking the badge opens a filtered list of all currently blocked nodes, sorted by `blocked_sequence` descending",
+        "Each list item shows: node name, `blocked_reason_code` label, time since blocked, and the primary `allowed_action_ids[]` as action buttons",
+        "Multiple concurrent blocked episodes MUST NOT be collapsed into a single notification -- each blocked node is a distinct actionable item"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [
+        "## Blocked-State Visual Distinction and Recovery UX Addendum",
+        "### Concurrent blocked episodes"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/FinalGUISpec.md:L2764-L2768"
+      ],
+      "notes": [
+        "Dashboard shows count badge for multiple blocked nodes; clicking opens filtered list sorted by blocked_sequence (most recent first); each blocked node is distinct actionable item (no collapse)"
+      ],
+      "obligation_id": "obl-050"
+    },
+    {
+      "canon_label": "Context Detail Pane tab-per-thread persistence and source-of-truth contract",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Thread context details are a reusable editor-tab surface rather than a chat-side-panel usage view",
+        "`More Details` from the chat context hover module opens or focuses a thread-scoped Context Detail Pane in the editor-tab host",
+        "there is one open Context Detail Pane tab per thread; repeated opens focus the existing tab"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md",
+        "Plans/assistant-chat-design.md"
+      ],
+      "heading_hints": [
+        "#### Thread context detail realization"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/FinalGUISpec.md:L739-L750"
+      ],
+      "notes": [
+        "Context Detail Pane is editor-tab hosted, not chat-panel hosted; one tab per thread canonical"
+      ],
+      "obligation_id": "obl-051"
+    },
+    {
+      "canon_label": "Crew board coordination attribution and inspectability",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Crew-board coordination MUST remain attributable, inspectable, and task-scoped",
+        "Hidden direct peer messaging is not a canonical runtime channel"
+      ],
+      "affected_doc_hints": [
+        "Plans/assistant-chat-design.md#14-subagents--crew",
+        "Plans/storage-plan.md#canonical-child-run-records-and-batch-structure"
+      ],
+      "heading_hints": [
+        "### Crew-board coordination contracts"
+      ],
+      "stale_residue_to_retire": [
+        "Hidden direct peer messaging channels"
+      ],
+      "source_evidence": [
+        "Plans/Contracts_V0.md:L1201-L1204"
+      ],
+      "notes": [
+        "Stale residue: hidden direct peer channels instead of explicit crew-scoped coordination records."
+      ],
+      "obligation_id": "obl-053"
+    },
+    {
+      "canon_label": "Crew permission ceiling contract",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Crew members do not gain new authority through board traffic",
+        "Permissions, tools, skills, plugins, MCP access, and provider restrictions remain subject to the same requested/effective capability rules as any other child run",
+        "Crew coordination messages MUST NOT widen authority, permissions, or capability availability beyond the child's effective runtime envelope"
+      ],
+      "affected_doc_hints": [
+        "Plans/Permissions_System.md#child-permission-ceiling-and-blocked-vs-awaiting-parent",
+        "Plans/Skills_System.md#child-capability-subset-clarification"
+      ],
+      "heading_hints": [
+        "### Crew-board coordination contracts"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/Contracts_V0.md:L1206-L1207"
+      ],
+      "notes": [
+        "Blocked identity semantics: crew coordination must not widen capability beyond child effective envelope."
+      ],
+      "obligation_id": "obl-054"
+    },
+    {
+      "canon_label": "Cross-surface receipt record required fields",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "attempt_id",
+        "provider_attempt_ref",
+        "usage_event_ref",
+        "workflow_refs",
+        "docker_refs",
+        "kubernetes_refs",
+        "validation_pass_report",
+        "workflow_run_id",
+        "run_id",
+        "pass_verdict",
+        "phase_plan_ref",
+        "requirements_quality_report_ref"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "heading_hints": [
+        "### Cross-surface receipt record",
+        "Required fields:"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/storage-plan.md:L254-L267"
+      ],
+      "notes": [
+        "Receipt fields remain lineage-bearing rather than summary prose"
+      ],
+      "obligation_id": "obl-055"
+    },
+    {
+      "canon_label": "DAP debugger reliability and error handling",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Implement timeouts per DAP request (default 10s for evaluate, 30s for launch). Auto-restart crashed adapters once. Show clear error state in the Debugger surface when adapter is unresponsive. Cap concurrent debug sessions to 1 per project."
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [
+        "## 17. Risks and Mitigations"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/FinalGUISpec.md:L2041"
+      ],
+      "notes": [
+        "DAP request timeouts are 10s (evaluate) and 30s (launch); crashed adapters auto-restart once; unresponsive adapter state is displayed; max 1 debug session per project"
+      ],
+      "obligation_id": "obl-057"
+    },
+    {
+      "canon_label": "Dashboard card drag-and-drop MVP strategy",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Use a simple ordered-list model with drag-handle + click-to-swap as MVP; full drag-and-drop is enhancement"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [
+        "## 17. Risks and Mitigations"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/FinalGUISpec.md:L2034"
+      ],
+      "notes": [
+        "Dashboard card reordering uses ordered-list model with drag-handle and click-to-swap for MVP; full drag-and-drop is deferred as enhancement"
+      ],
+      "obligation_id": "obl-059"
+    },
+    {
+      "canon_label": "Dashboard widget grid layout persistence",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`widget_layout:v1:dashboard` = Canonical dashboard widget grid layout, positions, sizes, and widget IDs",
+        "On change (debounced 300ms)"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [
+        "### 15.1 redb Schema"
+      ],
+      "stale_residue_to_retire": [
+        "`dashboard_layout:v1` is a deprecated migration-read alias only; `widget_layout:v1:dashboard` is the canonical dashboard key after migration"
+      ],
+      "source_evidence": [
+        "Plans/FinalGUISpec.md:L1797"
+      ],
+      "notes": [
+        "`widget_layout:v1:dashboard` is canonical after migration; `dashboard_layout:v1` is deprecated read-only alias; grid layout persists widget positions, sizes, and IDs with 300ms debounce"
+      ],
+      "obligation_id": "obl-060"
+    },
+    {
+      "canon_label": "Dynamic context shrinking canonicity and source preservation",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Dynamic context shrinking MUST preserve canonical source state",
+        "MUST operate on effective context only, not rewrite source-of-truth history",
+        "The default automatic shrinking scope is tool results",
+        "Retrieved-context blocks and plan/report blocks remain user-configurable optional categories",
+        "Shrinking uses conservative automatic triggers based on staleness and context pressure, with current working set items protected from automatic shrinking"
+      ],
+      "affected_doc_hints": [
+        "Plans/Prompt_Pipeline.md#dynamic-context-shrinking",
+        "Plans/storage-plan.md#canonical-child-run-records-and-batch-structure"
+      ],
+      "heading_hints": [
+        "### Dynamic context shrinking and effective-context projection"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/Contracts_V0.md:L1269-L1275"
+      ],
+      "notes": [
+        "Stale residue: rewriting source history instead of operating on effective context only."
+      ],
+      "obligation_id": "obl-062"
+    },
+    {
+      "canon_label": "Dynamic context shrinking event additive contract",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Runtime projection may emit `subagent.context_shrunk` and `subagent.context_rehydrated` events",
+        "These events supplement, but do not replace, canonical child history and source references",
+        "Context-shrinking events MUST be additive effective-context projections",
+        "MUST NOT become the sole durable record of planning evidence or child outputs"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md#canonical-child-run-records-and-batch-structure",
+        "Plans/assistant-chat-design.md#17-context--truncation"
+      ],
+      "heading_hints": [
+        "### Dynamic context shrinking and effective-context projection"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/Contracts_V0.md:L1277-L1278"
+      ],
+      "notes": [
+        "Consumer carry-through expectations: shrinking events are projections, not source of truth."
+      ],
+      "obligation_id": "obl-063"
+    },
+    {
+      "canon_label": "Editor state and tab persistence per project",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`editor_state:v1:{project_id}` = Open tabs, active tab, scroll/cursor position per project",
+        "On change (debounced 500ms)"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [
+        "### 15.1 redb Schema"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/FinalGUISpec.md:L1800"
+      ],
+      "notes": [
+        "Editor state includes open tabs, active tab indicator, and scroll/cursor positions per project with 500ms debounce"
+      ],
+      "obligation_id": "obl-064"
+    },
+    {
+      "canon_label": "Event-driven blocked-state transition rule",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "When all runnable nodes are blocked, the runtime emits the relevant blocked/recovery events and the UI shows the corresponding persistent blocked-state banner or card immediately",
+        "The user can resume at any time after resolving blocks",
+        "Polling intervals are acceptable only for external systems without push delivery (for example GitHub Actions status refresh every 30s) and must be documented as freshness aids rather than canonical correctness logic"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [
+        "## Runtime Blocked, Queue, and Recovery GUI Reconciliation Addendum (2026-03-09)"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/FinalGUISpec.md:L2803-L2806"
+      ],
+      "notes": [
+        "Event-driven rule is canonical: UI reacts to runtime events (not timer-polling); blocked-state banners/cards appear immediately on event; polling allowed only for external systems without push (e.g., GitHub Actions 30s), documented as freshness aid not correctness logic"
+      ],
+      "obligation_id": "obl-065"
+    },
+    {
+      "canon_label": "Execution unit context snapshot required fields",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "run_id",
+        "node_id",
+        "attempt_id",
+        "lane_id",
+        "package_id",
+        "seam_id",
+        "worktree_id",
+        "execution_role",
+        "requested_account_id",
+        "requested_account_binding",
+        "requested_account_policy",
+        "effective_account_id",
+        "operational_identity",
+        "tool_use_id"
+      ],
+      "affected_doc_hints": [
+        "Plans/Executor_Protocol.md#Worktree-aware execution unit context"
+      ],
+      "heading_hints": [
+        "### 5.1B Persona/Runtime Snapshot Payload Contract",
+        "`execution_unit_context` is the authoritative runtime snapshot packet"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/Contracts_V0.md:L471-L493"
+      ],
+      "notes": [
+        "Execution identity: requested and effective account state stays explicit across runtime, approval, and usage surfaces."
+      ],
+      "obligation_id": "obl-066"
+    },
+    {
+      "canon_label": "File tree expansion and state persistence",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`filetree_state:v1:{project_id}` = Expanded folder set, local filter text, and tree scroll position",
+        "On change (debounced 300ms)"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [
+        "### 15.1 redb Schema"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/FinalGUISpec.md:L1801"
+      ],
+      "notes": [
+        "File tree expansion set, filter text, and scroll position persist per project with 300ms debounce"
+      ],
+      "obligation_id": "obl-068"
+    },
+    {
+      "canon_label": "Floating window model mutation single-writer rule",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "All model mutations go through `invoke_from_event_loop` on the main event loop (single writer). Floating windows receive updates via the same shared `Rc<VecModel>`. Never clone+replace the model; always mutate in-place."
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [
+        "## 17. Risks and Mitigations"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/FinalGUISpec.md:L2035"
+      ],
+      "notes": [
+        "VecModel mutations use single-writer pattern through invoke_from_event_loop; floating windows share Rc<VecModel> reference; in-place mutation is required (never clone+replace)"
+      ],
+      "obligation_id": "obl-071"
+    },
+    {
+      "canon_label": "Gemini provider entry separation",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "gemini and gemini_cli are separate provider entries",
+        "MUST NOT be collapsed into one mixed auth pool",
+        "There is no silent cross-provider fallback between `gemini` and `gemini_cli`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Multi-Account.md",
+        "Plans/rewrite-tie-in-memo.md"
+      ],
+      "heading_hints": [
+        "### 4.2 AuthPolicy"
+      ],
+      "stale_residue_to_retire": [
+        "Mixed gemini/gemini_cli auth pools"
+      ],
+      "source_evidence": [
+        "Plans/Contracts_V0.md:L323-L329"
+      ],
+      "notes": [
+        "Stale residue: collapsing separate provider entries into a single auth pool."
+      ],
+      "obligation_id": "obl-072"
+    },
+    {
+      "canon_label": "HITL approval persistence rules",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "unresolved blocked episodes survive restart and are rehydrated rather than reminted opportunistically",
+        "failed approval attempt or failed switch of recovery action remains historically material and must persist in records/history"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/Decision_Policy.md"
+      ],
+      "heading_hints": [
+        "### 6.2 Scope and persistence rules"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/Contracts_V0.md:L530-L531"
+      ],
+      "notes": [
+        "Blocked episodes are canonical runtime state, not ephemeral UI state."
+      ],
+      "obligation_id": "obl-073"
+    },
+    {
+      "canon_label": "HITLRequest canonical runtime identity anchor",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "run_id",
+        "node_id",
+        "blocked_sequence",
+        "attempt_id?",
+        "blocked_reason_code",
+        "allowed_action_ids[]",
+        "approval_scope_key",
+        "approver_identity?",
+        "detail_ref?",
+        "report_ref?"
+      ],
+      "affected_doc_hints": [
+        "Plans/human-in-the-loop.md#Canonical HITL request contract"
+      ],
+      "heading_hints": [
+        "## 6. HITLRequest"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/Contracts_V0.md:L495-L509"
+      ],
+      "notes": [
+        "blocked_sequence is the canonical approval anchor; pre-attempt blocked episodes must not invent attempt_id."
+      ],
+      "obligation_id": "obl-074"
+    },
+    {
+      "canon_label": "HTML preview webview embedding strategy",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Use `wry` or similar embeddable webview; ensure it sits in a separate native child window within the editor area. Fallback: render static HTML snapshots as images."
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [
+        "## 17. Risks and Mitigations"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/FinalGUISpec.md:L2038"
+      ],
+      "notes": [
+        "HTML preview uses embeddable webview (wry or equivalent) in separate native child window within editor area; static HTML snapshot images are fallback strategy"
+      ],
+      "obligation_id": "obl-075"
+    },
+    {
+      "canon_label": "Keyboard navigation focus order and affordances",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Focus order follows visual layout: Activity bar -> primary content -> side panel -> bottom panel -> status bar",
+        "Every list, table, and tree supports: Up/Down arrow navigation, Enter to select/activate, Escape to deselect/go back, Home/End to jump to first/last item",
+        "Type-ahead filtering where appropriate (thread list, project list, file tree)"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [
+        "### 13.3 Keyboard Navigation"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/FinalGUISpec.md:L1628-L1630"
+      ],
+      "notes": [
+        "Focus order is canonically sequenced (Activity bar first); list/tree navigation is deterministic with exact key bindings (Up/Down, Enter, Escape, Home/End); type-ahead is conditional ('where appropriate') requiring implementation judgment for specific containers"
+      ],
+      "obligation_id": "obl-076"
+    },
+    {
+      "canon_label": "LSP server lifecycle supervision keying",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Key server supervision by `(host_id, server_id, root_identity)`, launch lazily on file open, restart boundedly on crashes, and expose stale/degraded/unavailable state instead of silently mirroring remote projects locally"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [
+        "## 17. Risks and Mitigations"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/FinalGUISpec.md:L2036"
+      ],
+      "notes": [
+        "LSP server supervision uses compound key (host_id, server_id, root_identity); lazy launch on file open; bounded restart on crashes; stale/degraded/unavailable states are exposed (not silent fallbacks)"
+      ],
+      "obligation_id": "obl-077"
+    },
+    {
+      "canon_label": "Lazy view rendering via conditional if blocks",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Use conditional `if` blocks for lazy view rendering",
+        "Hidden views have zero runtime cost",
+        "Widget trees are destroyed when the condition becomes false and recreated when true"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [
+        "### 14.2 View Switching in Slint"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/FinalGUISpec.md:L1771-L1780"
+      ],
+      "notes": [
+        "View switching uses Slint's native `if` condition blocks; non-visible views have zero cost (not hidden/invisible); trees are destroyed and recreated on condition toggle"
+      ],
+      "obligation_id": "obl-078"
+    },
+    {
+      "canon_label": "Mandatory CRC32 per seglog record",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Every seglog record MUST include a CRC32 checksum",
+        "On read, CRC32 MUST be validated before the record is processed",
+        "If validation fails: the corrupt record is skipped, PM emits a recovery/integrity event"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/Architecture_Invariants.md",
+        "Plans/Executor_Protocol.md"
+      ],
+      "heading_hints": [
+        "## 2.2 seglog: format, writer, rotation",
+        "#### 2.2.1 Mandatory CRC32 per record"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/storage-plan.md:L166-L176"
+      ],
+      "notes": [
+        "Critical correctness requirement for seglog durability and recovery"
+      ],
+      "obligation_id": "obl-079"
+    },
+    {
+      "canon_label": "Migration rule for dashboard layout key",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "dashboard_layout:v1 is a deprecated migration-read alias only",
+        "widget_layout:v1:dashboard is the canonical dashboard key after migration",
+        "On first launch after migration, read from deprecated dashboard_layout:v1 only when the canonical key is absent, then write back to widget_layout:v1:dashboard"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [
+        "### 15.1 redb Schema",
+        "### 15.4 Startup Restore"
+      ],
+      "stale_residue_to_retire": [
+        "`dashboard_layout:v1`"
+      ],
+      "source_evidence": [
+        "Plans/FinalGUISpec.md:L1860, L1882"
+      ],
+      "notes": [
+        "One-time migration logic: read from deprecated `dashboard_layout:v1` only when `widget_layout:v1:dashboard` is absent, then migrate data forward to canonical key; old key is never written to after migration"
+      ],
+      "obligation_id": "obl-080"
+    },
+    {
+      "canon_label": "Minimum click/touch target sizing",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "All clickable/draggable controls must be at least 24px in height/width for reliable interaction"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [
+        "### 13.5 Minimum Touch/Click Targets"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/FinalGUISpec.md:L1642"
+      ],
+      "notes": [
+        "Clickable and draggable control sizing is deterministic minimum (24px); applies to all interactive elements without exception"
+      ],
+      "obligation_id": "obl-081"
+    },
+    {
+      "canon_label": "Multi-window lifecycle state machine",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "State machine in Rust manages window create/destroy. On floating window close -> dock or collapse; update layout state."
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [
+        "## 17. Risks and Mitigations"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/FinalGUISpec.md:L2022"
+      ],
+      "notes": [
+        "Window lifecycle is managed by Rust state machine; floating window close behavior must dock or collapse (not discard state); layout state must update on window transitions"
+      ],
+      "obligation_id": "obl-082"
+    },
+    {
+      "canon_label": "OpenSubject contract",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "subject_id",
+        "open_intent",
+        "open_intent closed to: open_source, open_preview, open_review"
+      ],
+      "affected_doc_hints": [
+        "Plans/FileManager.md",
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [
+        "### 7.4 OpenSubject"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/Contracts_V0.md:L692-L723"
+      ],
+      "notes": [
+        "Route/open subject rules: terminal, dev-session, and browser-session reveals normalize through route_target rather than overloading OpenSubject."
+      ],
+      "obligation_id": "obl-085"
+    },
+    {
+      "canon_label": "Orchestrator tab-first architecture with widget-composed Progress",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Orchestrator remains tab-first with `Progress`, `Seams`, `Node Graph`, `Evidence`, `History`, and `Ledger`",
+        "only `Progress` is widget-composed",
+        "`Seams`, `Node Graph`, `Evidence`, `History`, and `Ledger` are native views"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Widget_System.md"
+      ],
+      "heading_hints": [
+        "## 7. Views Specification",
+        "### 7.1 Orchestrator"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/FinalGUISpec.md:L688-L696"
+      ],
+      "notes": [
+        "Tab-first model preserved; only Progress tab uses widget composition; remaining 5 tabs are native views"
+      ],
+      "obligation_id": "obl-086"
+    },
+    {
+      "canon_label": "Panel dock state and layout persistence schema",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`layout:v1` = Panel dock state per panel (docked side + width, or floating position/size); center splits; bottom runtime-panel height; detached-window geometry; split ratios for terminal sections. Single JSON blob for atomic read/write.",
+        "On change (debounced 300ms)"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md",
+        "Plans/storage-plan.md",
+        "Plans/FileManager.md",
+        "Plans/LSPSupport.md"
+      ],
+      "heading_hints": [
+        "## 15. Persistence",
+        "### 15.1 redb Schema"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/FinalGUISpec.md:L1796"
+      ],
+      "notes": [
+        "`layout:v1` persists all panel positions, sizes, dock states, center/bottom splits, detached-window geometry, and terminal section ratios as a single JSON blob with 300ms debounce; atomic read/write is required"
+      ],
+      "obligation_id": "obl-088"
+    },
+    {
+      "canon_label": "Panel dock/undock and snap detection system",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Custom `PanelRegistry` in Rust handles dock/undock state machine, snap detection, window lifecycle. This is the most complex custom component and should be implemented early."
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [
+        "## 17. Risks and Mitigations"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/FinalGUISpec.md:L2025"
+      ],
+      "notes": [
+        "PanelRegistry is the canonical dock/undock state machine and snap detection system; marked as high-complexity requiring early implementation"
+      ],
+      "obligation_id": "obl-089"
+    },
+    {
+      "canon_label": "Parent mediation and required-vs-optional dependency contract",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Parent orchestration retains final mediation responsibility for child escalations, user questioning, and crew synthesis",
+        "Children do not directly interrogate the user by default",
+        "Required versus optional child dependency classification is part of the canonical runtime contract",
+        "Parent orchestration MUST preserve required-vs-optional child dependency semantics",
+        "MUST mediate child-to-user escalation by default"
+      ],
+      "affected_doc_hints": [
+        "Plans/orchestrator-subagent-integration.md#plan-mode-strategy--defaults",
+        "Plans/assistant-chat-design.md#14-subagents--crew"
+      ],
+      "heading_hints": [
+        "### Parent mediation and required-vs-optional dependency state"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/Contracts_V0.md:L1280-L1283"
+      ],
+      "notes": [
+        "Consumer carry-through expectations: parent mediates child escalations; children do not directly interrogate user."
+      ],
+      "obligation_id": "obl-090"
+    },
+    {
+      "canon_label": "Permission approval card four-tier ladder",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Permission canon must preserve the four-tier approval ladder: `deny`, `once`, `for session`, `always`",
+        "question default `allow` only when HITL is available",
+        "keep the six web tools ask-gated in read_only and plan presets: `websearch`, `webfetch`, `webextract`, `webresearch`, `webcrawl`, `webmap`",
+        "Approving webcrawl For Session auto-approves crawl/map/extract/fetch for the same host pattern",
+        "Approving webresearch For Session does NOT create broad allow for unrelated tools",
+        "MVP uses wildcard session approval for search/research; advanced query-pattern support is future only"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [
+        "## 15. Promoted widget catalog (web tools, planning, question, operation cards)",
+        "### 15.7 Permission approval card widget"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/FinalGUISpec.md:L3050-L3068"
+      ],
+      "notes": [
+        "Permission ladder is four-tier deterministic (deny/once/for_session/always); six web tools are ask-gated; webcrawl session approval auto-approves related tools for same host pattern; MVP uses wildcard session approval (advanced patterns deferred)"
+      ],
+      "obligation_id": "obl-091"
+    },
+    {
+      "canon_label": "Permission snapshot immutability and versioning",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "durable family: permission_snapshot_record.v1:{project_id}:{snapshot_id}",
+        "immutable link from attempt state: attempt_record.permission_snapshot_id",
+        "The snapshot record is written before the corresponding attempt becomes durable/dispatchable",
+        "The snapshot payload is immutable after creation",
+        "Later approval or policy changes create a new snapshot and a new attempt lineage entry; they do not rewrite the old one"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/Permissions_System.md",
+        "Plans/Executor_Protocol.md"
+      ],
+      "heading_hints": [
+        "## Permission Snapshot Storage and Safe-Point Namespace Addendum",
+        "### Permission snapshot storage"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/storage-plan.md:L1244-L1254"
+      ],
+      "notes": [
+        "Immutability enforced; later changes create new lineage entries rather than mutations"
+      ],
+      "obligation_id": "obl-092"
+    },
+    {
+      "canon_label": "Plan and TODO state canonical mutation contract",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Plan and Deep Plan must both project to a normalized TODO list",
+        "chat.plan_todo_updated must have an explicit owner-contract definition for durable normalized TODO mutation",
+        "Deep Plan edits must resync the TODO projection before execution",
+        "todowrite is not blanket auto-denied in ask/plan mode",
+        "chat.plan_todo_updated event carries canonical mutation record"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "heading_hints": [
+        "### 4.3 Plan and TODO state"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/storage-plan.md:L809-L838"
+      ],
+      "notes": [
+        "TODO state locked to explicit revision states and bounded revision history"
+      ],
+      "obligation_id": "obl-093"
+    },
+    {
+      "canon_label": "Planning panel sticky sidebar contract",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Plan and Deep Plan must both project to a normalized TODO list, with a named Q&A loop before Deep Plan execution and a locked TODO item schema/status set",
+        "TODO item schema: `todo_id`, `title`, `summary`, `status`, `dependencies[]`, `owner_hint`, `verification_hint`",
+        "TODO status enum: `pending | in_progress | completed | blocked | skipped | superseded`"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [
+        "## 15. Promoted widget catalog (web tools, planning, question, operation cards)",
+        "### 15.4 Planning panel widget (sticky sidebar)"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/FinalGUISpec.md:L2978-L2992"
+      ],
+      "notes": [
+        "Planning panel TODO schema is deterministic with locked fields and status enum; Q&A loop is named before Deep Plan execution; same TODO contract used by both Plan and Deep Plan"
+      ],
+      "obligation_id": "obl-094"
+    },
+    {
+      "canon_label": "Project state snapshot persistence",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`project_state:v1:{project_id}` = Per-project shell snapshot: editor tabs, file-tree expansion, chat thread selection, last active side-panel occupant, active view, language badges, requested/effective LSP selection summary, last-focused Search/Source Control refs, and remote-context summary",
+        "On change (debounced 300ms)"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [
+        "### 15.1 redb Schema"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/FinalGUISpec.md:L1803"
+      ],
+      "notes": [
+        "Project state is a comprehensive snapshot including shell layout, active view, language detection, LSP selection (requested and effective), and last-focused contexts with 300ms debounce"
+      ],
+      "obligation_id": "obl-097"
+    },
+    {
+      "canon_label": "Projection freshness and health distinct states",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "projection_freshness: current | refreshing | stale",
+        "projection_health: healthy | degraded | unavailable",
+        "stale and degraded are different states and must not collapse into one generic trust field",
+        "Projection-backed surfaces must degrade to direct-record views when trust drops"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "heading_hints": [
+        "Projection-state families must expose both freshness and health:",
+        "Rules:"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/storage-plan.md:L548-L554"
+      ],
+      "notes": [
+        "Action gating must respect projection trust before surfacing mutation actions"
+      ],
+      "obligation_id": "obl-098"
+    },
+    {
+      "canon_label": "Projector checkpoint durable advancement",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "checkpoints encode enough information to resume without duplicate semantic writes",
+        "sequence order, not file mtime, is the source of truth for replay ordering",
+        "checkpoint advancement is atomic with projector durability, not with UI refresh timing",
+        "projector checkpoints alone are insufficient for mutation/recovery replay"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "heading_hints": [
+        "**Checkpoint guarantees:**"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/storage-plan.md:L687-L693"
+      ],
+      "notes": [
+        "Runtime checkpoint markers must be separately durably emitted; projector checkpoints enable replay only"
+      ],
+      "obligation_id": "obl-099"
+    },
+    {
+      "canon_label": "Provider transport taxonomy enum contract",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "ProviderTransport = CliBridge | DirectApi | ServerBridge",
+        "CliBridge \u2192 CLI-bridged",
+        "DirectApi \u2192 direct-provider",
+        "ServerBridge \u2192 server-bridged"
+      ],
+      "affected_doc_hints": [
+        "Plans/CLI_Bridged_Providers.md",
+        "Plans/Provider_OpenCode.md",
+        "Plans/Tools.md"
+      ],
+      "heading_hints": [
+        "### 2.1 Provider transport taxonomy"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/Contracts_V0.md:L86-L94"
+      ],
+      "notes": [
+        "Canonical enum; normalized stream contract must apply identically regardless of transport class."
+      ],
+      "obligation_id": "obl-101"
+    },
+    {
+      "canon_label": "Remediation ceiling exceeded UX treatment",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "The node transitions to `blocked` with `blocked_reason_code: remediation_ceiling_exceeded`",
+        "The Run Graph View displays a red 'Remediation limit reached' banner on the node detail panel",
+        "Available actions presented to the user: **Replan**, **Manual fix**, **Abort node**",
+        "No automatic retry is permitted after ceiling is reached"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [
+        "## Blocked-State Visual Distinction and Recovery UX Addendum",
+        "### Remediation ceiling exceeded UX"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/FinalGUISpec.md:L2776-L2783"
+      ],
+      "notes": [
+        "Remediation ceiling transition uses blocked state with specific reason code; red banner shown in Run Graph; three explicit action options (Replan/Manual fix/Abort); no automatic retry after ceiling"
+      ],
+      "obligation_id": "obl-109"
+    },
+    {
+      "canon_label": "Requested/effective account identity fields contract",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "effective_account_id",
+        "effective_provider_identity",
+        "provider_account_id",
+        "execution_role",
+        "operational_identity",
+        "requested_account_id",
+        "requested_account_binding",
+        "requested_account_policy"
+      ],
+      "affected_doc_hints": [
+        "Plans/Prompt_Pipeline.md#6.4 Effective resolution record",
+        "Plans/Multi-Account.md#4.5 Selectable unit and runtime resolution"
+      ],
+      "heading_hints": [
+        "**requested/effective execution identity**",
+        "**AuthState account-backed identity fields**"
+      ],
+      "stale_residue_to_retire": [
+        "provider_account_id as canonical key (must remain subordinate to stable internal identity)"
+      ],
+      "source_evidence": [
+        "Plans/Contracts_V0.md:L401-L442"
+      ],
+      "notes": [
+        "Blocked identity semantics: provider_account_id must be retired as canonical or explicitly governed as provider-native metadata subordinate."
+      ],
+      "obligation_id": "obl-110"
+    },
+    {
+      "canon_label": "Required redb canonical keys and families",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "artifacts_index.v1:{project_id}:{artifact_id}",
+        "artifacts_project_state.v1:{project_id}",
+        "projector.checkpoint.runtime_artifacts:{project_id}",
+        "worktree_record.v1:{project_id}:{worktree_id}",
+        "lane_record.v1:{project_id}:{lane_id}",
+        "worktree_projection.v1:{project_id}:{worktree_id}",
+        "lane_projection.v1:{project_id}:{lane_id}",
+        "orchestrator.project_state.{project_id}"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/Runtime_Artifacts_Panel.md"
+      ],
+      "heading_hints": [
+        "### 2.3 redb: schema, migrations, key patterns",
+        "### Required redb keys"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/storage-plan.md:L243-L251"
+      ],
+      "notes": [
+        "Storage owns discoverable record families for runtime, receipt, and projection truth"
+      ],
+      "obligation_id": "obl-111"
+    },
+    {
+      "canon_label": "Runtime identity first-class keying rules",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "project_id is stable across path rebinding and restore operations",
+        "workspace_tab_id is distinct from project_id",
+        "browser_tab_id is distinct from preview_session_id",
+        "terminal_session_id owns exact PTY continuity",
+        "dev_session_id owns higher-level dev workflow continuity and MUST NOT replace terminal_session_id"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "heading_hints": [
+        "## 1. Definitions and concepts",
+        "Identity rules:"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/storage-plan.md:L50-L58"
+      ],
+      "notes": [
+        "Core identity semantics for runtime artifact keying and worktree/lane continuity"
+      ],
+      "obligation_id": "obl-113"
+    },
+    {
+      "canon_label": "SSH connection stability and recovery",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Keep-alive packets every 30s. On disconnect, retain local buffer contents and stale snapshot state, auto-retry once in a bounded way, then show an explicit `Reconnect` action. Never silently fall back to local execution for remote-mode projects."
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [
+        "## 17. Risks and Mitigations"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/FinalGUISpec.md:L2042"
+      ],
+      "notes": [
+        "SSH uses 30s keep-alive; on disconnect, local buffer and stale state are retained; bounded auto-retry once; explicit Reconnect action shown; no silent local fallback for remote-mode projects"
+      ],
+      "obligation_id": "obl-114"
+    },
+    {
+      "canon_label": "Safe-point vs restore-point namespace separation",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "safe_point: sp:{run_id}:{node_id}:{attempt_id}:{safe_point_id}",
+        "restore_point: rp:{project_id}:{restore_point_id}",
+        "These namespaces MUST NOT overlap",
+        "Queries for safe points MUST use sp: prefix",
+        "Queries for restore points MUST use rp: prefix"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "heading_hints": [
+        "### Safe-point vs restore-point namespace separation"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/storage-plan.md:L1257-L1267"
+      ],
+      "notes": [
+        "Runtime-internal vs user-facing scope distinction enforced at key prefix level"
+      ],
+      "obligation_id": "obl-115"
+    },
+    {
+      "canon_label": "Screen reader support and accessible properties",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Set `accessible-role` and `accessible-label` properties on all interactive components where available in Slint 1.15.1",
+        "Panel state (docked/floating) announced via accessible labels",
+        "Theme name available to assistive technology",
+        "Keyboard shortcuts prominently documented and discoverable via command palette"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [
+        "### 13.4 Screen Reader Support"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/FinalGUISpec.md:L1635-L1638"
+      ],
+      "notes": [
+        "Screen reader support is explicitly bounded by Slint 1.15.1 feature availability; panel state (docked/floating) must be announced; command palette is canonical for shortcut discovery"
+      ],
+      "obligation_id": "obl-116"
+    },
+    {
+      "canon_label": "Search panel state persistence",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`search_panel_state.v1:{project_id}` = Search side-panel UI state: last query, replacement text, toggles, include/exclude globs, expanded groups, selected result ref, and active query session ref",
+        "On change (debounced 250ms)"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [
+        "### 15.1 redb Schema"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/FinalGUISpec.md:L1802"
+      ],
+      "notes": [
+        "Search panel state includes query, replacement text, toggles, globs, expanded groups, and active session ref with 250ms debounce"
+      ],
+      "obligation_id": "obl-117"
+    },
+    {
+      "canon_label": "Search side-panel persistent query and result ownership",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Search owns query text, replacement text, include/exclude globs, regex/case/whole-word toggles, result grouping, and replace preview/apply flow",
+        "`cmd.search.show` is the canonical shortcut and command-palette entrypoint for this surface",
+        "Search result opens route through the canonical open-file contract rather than through feature-local payloads"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md",
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "heading_hints": [
+        "## 7. Views Specification",
+        "#### Search side-panel owner"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/FinalGUISpec.md:L1117-L1125"
+      ],
+      "notes": [
+        "Search is distinct from command-palette and File Manager search; persistent session state required"
+      ],
+      "obligation_id": "obl-118"
+    },
+    {
+      "canon_label": "SeglogHeader canonical record schema",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "version: u8",
+        "segment_generation: u32",
+        "event_type: string",
+        "sequence_id: u64",
+        "source_timestamp_ns?: u64",
+        "observed_timestamp_ns: u64",
+        "session_id?: string",
+        "project_id?: string",
+        "payload_length: u32",
+        "checksum_crc32: u32",
+        "compression: \"none\" | \"lz4\""
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "heading_hints": [
+        "#### 2.2.2 Concrete wire format"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/storage-plan.md:L191-L205"
+      ],
+      "notes": [
+        "Canonical payload codec is MessagePack; envelope must include both source and observed timestamps"
+      ],
+      "obligation_id": "obl-119"
+    },
+    {
+      "canon_label": "Settings page two-level sidebar navigation",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "24 tabs across 5 groups. Two-level sidebar navigation (left sidebar for groups, right area for selected tab) is mandatory. Group labels act as collapsible headers. Settings search bar at the top of the sidebar."
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [
+        "## 17. Risks and Mitigations"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/FinalGUISpec.md:L2029"
+      ],
+      "notes": [
+        "Settings page requires two-level sidebar (groups on left, tabs on right); 24 tabs across 5 groups is deterministic; group headers are collapsible; search bar is mandatory at sidebar top"
+      ],
+      "obligation_id": "obl-120"
+    },
+    {
+      "canon_label": "Settings unified navigation and tab registry",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "The unified Settings surface uses a two-level navigation model: category headers in the sidebar, then tabs within the selected category",
+        "tab count is large enough that group headers and in-sidebar search are mandatory",
+        "commands such as `Open setting: {name}` must jump to the correct tab and field"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [
+        "#### 7.4.9 Settings tab catalog"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/FinalGUISpec.md:L1000-L1030"
+      ],
+      "notes": [
+        "Settings must support command-palette jumps to specific tab/field; in-sidebar search required for 20+ tabs"
+      ],
+      "obligation_id": "obl-121"
+    },
+    {
+      "canon_label": "Shared TODO tracker and plan state contract",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "the sticky plan panel is the authoritative TODO tracker",
+        "inline chat updates are milestone-style, not a competing tracker",
+        "TODO statuses support at least `pending`, `in_progress`, `completed`, `blocked`, and `skipped`",
+        "the same TODO identity must survive single-agent, subagent, and crew execution",
+        "plan state transitions (`draft`, `approved`, `executing`, `completed`, `blocked`, `superseded`) must remain visible and restorable"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [
+        "## Assistant Planning UX Addendum (2026-03-08)",
+        "### 2. Plan vs Deep Plan visible behavior"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/FinalGUISpec.md:L2494-L2500"
+      ],
+      "notes": [
+        "Sticky plan panel is canonical TODO tracker (not inline chat); plan state transitions are visible and restorable; same TODO identity across single/subagent/crew execution"
+      ],
+      "obligation_id": "obl-122"
+    },
+    {
+      "canon_label": "Slint file organization and build contract",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "slint_build::compile(\"ui/app.slint\") in build.rs",
+        "Root component imports all views",
+        "All .slint files in ui/ directory"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [
+        "## 14. Slint File Organization",
+        "### 14.1 Directory Structure"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/FinalGUISpec.md:L1652-L1654"
+      ],
+      "notes": [
+        "Build.rs uses slint_build::compile; app.slint is root; all Slint sources must be in ui/ directory following the specified subdirectory structure (widgets/, views/, panels/, windows/)"
+      ],
+      "obligation_id": "obl-123"
+    },
+    {
+      "canon_label": "Source Control accordion layout with required subviews",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Source Control uses a vertically stacked collapsible accordion layout instead of horizontal tabs",
+        "Section order: Changes, Worktrees, Branches/Stash, History, Graph",
+        "Required subviews: `Changes`, `History`, `Graph`, `Worktrees`, `Branches / Stash`"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md",
+        "Plans/GitHub_Integration.md"
+      ],
+      "heading_hints": [
+        "## 7. Views Specification",
+        "### 7.2 Source Control",
+        "#### 7.2.1 Accordion layout"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/FinalGUISpec.md:L700-L717"
+      ],
+      "notes": [
+        "Source Control side-panel surface owns all five subviews; strict accordion ordering required"
+      ],
+      "obligation_id": "obl-124"
+    },
+    {
+      "canon_label": "Startup restore sequence and order",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Read `layout:v1` from redb and restore panel positions, sizes, dock states, and detached-terminal geometry",
+        "Read `theme:v1` from redb and apply theme",
+        "Read `widget_layout:v1:dashboard` and restore dashboard widget layout",
+        "Read `activity_bar_order:v1` and restore icon order",
+        "Read `editor_state:v1:{project}` and restore open tabs",
+        "Read `project_state:v1:{project_id}` and restore the active project-facing shell state",
+        "Read `terminal_layout.v1:{project_id}` plus linked terminal records and restore terminal section layout, tabs, pane tree, labels, and selected focus targets"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [
+        "### 15.4 Startup Restore"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/FinalGUISpec.md:L1880-L1886"
+      ],
+      "notes": [
+        "Startup restore has a strict sequence: layout, theme, dashboard widgets, activity bar, editor tabs, project state, then terminal layout with session linkage; each step is in numbered order and must not reorder"
+      ],
+      "obligation_id": "obl-125"
+    },
+    {
+      "canon_label": "Storage scope split: seglog vs redb vs OS credential store",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Secret -> OS credential store only",
+        "Global app state -> redb",
+        "Project state -> redb",
+        "Event ledger -> seglog"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/GitHub_API_Auth_and_Flows.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "heading_hints": [
+        "### Scope split"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/storage-plan.md:L273-L280"
+      ],
+      "notes": [
+        "PolicyRule:no_secrets_in_storage enforced at keying level"
+      ],
+      "obligation_id": "obl-126"
+    },
+    {
+      "canon_label": "Storage-owned rewrite contract: temp-file atomicity",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "All non-append durable-store rewrites MUST use same-directory temporary files and atomic promotion",
+        "create <target>.tmp.<random> in the target directory",
+        "fsync the temp file",
+        "rename/promote it into place",
+        "Failure to create/fsync/rename is a hard error; PM MUST NOT silently fall back to direct overwrite"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/FileSafe.md",
+        "Plans/GitHub_Integration.md"
+      ],
+      "heading_hints": [
+        "#### Storage-owned rewrite contract"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/storage-plan.md:L613-L620"
+      ],
+      "notes": [
+        "Critical durability contract for all durable-store replacements"
+      ],
+      "obligation_id": "obl-127"
+    },
+    {
+      "canon_label": "Subagent and crew event families canonical contract",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "For every `subagent.*` event, the payload MUST preserve the PM lineage envelope: run_id, thread_id, agent_id, parent_run_id?, child_run_id?, parent_thread_id?, requested and effective runtime descriptors",
+        "For every `crew.*` event, the payload MUST preserve crew and child lineage together: run_id, thread_id, crew_id, parent_run_id?, child_run_id?, member_agent_ids[]"
+      ],
+      "affected_doc_hints": [
+        "Plans/orchestrator-subagent-integration.md",
+        "Plans/Run_Modes.md"
+      ],
+      "heading_hints": [
+        "#### Stable subagent and crew event families",
+        "For every `subagent.*` event below"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/Contracts_V0.md:L1209-L1223"
+      ],
+      "notes": [
+        "Execution identity: child identity and lineage are not optional metadata."
+      ],
+      "obligation_id": "obl-128"
+    },
+    {
+      "canon_label": "Terminal operation card widget contract",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Inline mini-terminal and operation cards are locked to bounded inline previews, persistent per-command cards, narrative-order placement, and shared card anatomy",
+        "Terminal promotion and handoff are locked so interactive or long-running work binds to a stable terminal session while chat retains only bounded preview and audit ownership",
+        "Collapsed preview: 5 lines",
+        "Expanded preview: 15 lines",
+        "Persists after completion",
+        "status, cwd, command summary, elapsed time, exit code / truncation indicator",
+        "READ-ONLY and non-interactive",
+        "One card per command",
+        "Retries create a new terminal and therefore a new mini terminal card"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [
+        "## 15. Promoted widget catalog (web tools, planning, question, operation cards)",
+        "### 15.1 Terminal operation card widget"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/FinalGUISpec.md:L2820-L2851"
+      ],
+      "notes": [
+        "Terminal operation cards use bounded inline previews (5 lines collapsed, 15 expanded), persistent per-command, narrative-order placement, read-only display; retries create new card with new terminal session"
+      ],
+      "obligation_id": "obl-129"
+    },
+    {
+      "canon_label": "Terminal output event loop saturation mitigation",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "High-frequency terminal output (1000+ lines/sec) can saturate the event loop. Mitigation: Batch terminal updates with a 33ms (30fps) throttle timer; collect lines in a buffer and push them as a single VecModel update per frame."
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [
+        "## 17. Risks and Mitigations"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/FinalGUISpec.md:L2031"
+      ],
+      "notes": [
+        "Terminal output throttle is 33ms (30fps) for high-frequency streams (1000+ lines/sec); lines are batched and pushed as single VecModel update per frame"
+      ],
+      "obligation_id": "obl-130"
+    },
+    {
+      "canon_label": "Terminal restore identity preservation",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "terminal restore MUST preserve section, tab, and pane identity before attempting any session liveness verification",
+        "restored historical sessions may appear immediately, but live-state badges wait for verification",
+        "startup restore MUST prefer revealing prior selected terminal containers over creating new empty terminals automatically"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [
+        "### 15.4 Startup Restore"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/FinalGUISpec.md:L1894-L1896"
+      ],
+      "notes": [
+        "Terminal restore must preserve section/tab/pane identity first; liveness verification is deferred; prior-selected containers take precedence over new empty terminals"
+      ],
+      "obligation_id": "obl-131"
+    },
+    {
+      "canon_label": "Terminal virtualization and bounded memory model",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Virtualize visible lines only. Bounded ring buffers per pane (max 10k lines in memory); VecModel holds only the visible window (~500 lines) plus a small overscan buffer. On scroll, splice the VecModel from the ring buffer. Batch/throttle streaming updates (max 30fps). One PTY per pane."
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [
+        "## 17. Risks and Mitigations"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/FinalGUISpec.md:L2027"
+      ],
+      "notes": [
+        "Terminal virtualization uses bounded ring buffers (max 10k lines), visible VecModel window (~500 lines + overscan), scroll-based splice, 30fps throttle, and one PTY per pane for 4-split performance"
+      ],
+      "obligation_id": "obl-132"
+    },
+    {
+      "canon_label": "Terminal workspace decomposed key families",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "terminal_session.v1:{terminal_session_id}",
+        "terminal_layout.v1:{project_id}",
+        "terminal_history.v1:{terminal_session_id}",
+        "terminal_profile.v1:{profile_name}",
+        "terminal_env.v1:{project_id}",
+        "terminal_cwd.v1:{terminal_session_id}",
+        "terminal_scroll.v1:{terminal_session_id}",
+        "terminal_font.v1:global",
+        "terminal_color.v1:global"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Section15_MVP_Promoted_Features_Spec.md"
+      ],
+      "heading_hints": [
+        "### Canonical terminal persistence decomposition"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/storage-plan.md:L585-L598"
+      ],
+      "notes": [
+        "Storage-plan is canonical source for terminal persistence keys; FinalGUISpec \u00a715.1 terminal_state:v1 is subset alias"
+      ],
+      "obligation_id": "obl-133"
+    },
+    {
+      "canon_label": "Theme global property update batching",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Slint batches property changes within a single `invoke_from_event_loop` call; always set all theme properties in one callback"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [
+        "## 17. Risks and Mitigations"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/FinalGUISpec.md:L2033"
+      ],
+      "notes": [
+        "Theme property updates must be batched in a single invoke_from_event_loop call to avoid intermediate re-renders; never split theme property changes across multiple callbacks"
+      ],
+      "obligation_id": "obl-134"
+    },
+    {
+      "canon_label": "Theme token application and live/restart switching contract",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "**Live switch** for colors, spacing, borders, overlays: Slint's reactive property system propagates changes instantly",
+        "**Restart required** for font family change: Switching between Retro (Orbitron/Rajdhani) and Basic (system fonts) requires app restart because Slint loads fonts at initialization",
+        "**Within same family is live:** Switching between Retro Dark and Retro Light is instant (same fonts)"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [
+        "## 6. Theme System",
+        "### 6.4 Theme Switching"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/FinalGUISpec.md:L568-L573"
+      ],
+      "notes": [
+        "Font-family changes require restart; other theme switches are live; inter-family switches trigger restart requirement"
+      ],
+      "obligation_id": "obl-135"
+    },
+    {
+      "canon_label": "Theme variant persistence",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`theme:v1` = Current ThemeVariant enum value",
+        "On change"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [
+        "### 15.1 redb Schema"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/FinalGUISpec.md:L1799"
+      ],
+      "notes": [
+        "ThemeVariant is persisted immediately on change (no debounce)"
+      ],
+      "obligation_id": "obl-136"
+    },
+    {
+      "canon_label": "Token bucket field individual persistence contract",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "input_tokens",
+        "output_tokens",
+        "cache_read_input_tokens",
+        "cache_creation_input_tokens",
+        "reasoning_tokens",
+        "These fields are individually persisted",
+        "Storage-layer aggregation or collapse into a smaller field set is prohibited",
+        "total_tokens MAY be stored or derived for convenience, but it MUST NOT replace the individual token buckets"
+      ],
+      "affected_doc_hints": [
+        "Plans/usage-feature.md",
+        "Plans/Architecture_Invariants.md"
+      ],
+      "heading_hints": [
+        "### Token bucket contract"
+      ],
+      "stale_residue_to_retire": [
+        "Collapsed token fields into aggregate"
+      ],
+      "source_evidence": [
+        "Plans/Contracts_V0.md:L758-L771"
+      ],
+      "notes": [
+        "Stale residue: collapsing individual token buckets into smaller field set is prohibited."
+      ],
+      "obligation_id": "obl-137"
+    },
+    {
+      "canon_label": "Tool event authoritative payload fields contract",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "node_id",
+        "attempt_id",
+        "lane_id",
+        "package_id",
+        "execution_role",
+        "effective_account_id",
+        "operational_identity",
+        "tool_use_id",
+        "provider_attempt_ref",
+        "usage_event_ref"
+      ],
+      "affected_doc_hints": [
+        "Plans/Tools.md#8.0 Event payloads (seglog)",
+        "Plans/Runtime_Artifacts_Panel.md"
+      ],
+      "heading_hints": [
+        "## 3. Tool events (persisted)",
+        "**Authoritative payload fields** (tool.invoked)"
+      ],
+      "stale_residue_to_retire": [
+        "Analytics-thin tool events"
+      ],
+      "source_evidence": [
+        "Plans/Contracts_V0.md:L117-L158"
+      ],
+      "notes": [
+        "attempt_id is canonical local runtime anchor; bridge refs stay subordinate but explicit."
+      ],
+      "obligation_id": "obl-138"
+    },
+    {
+      "canon_label": "Tool usage analytics window aggregation",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "aggregate tool.invoked by tool_name over the window",
+        "count, p50/p95 ms, error_count",
+        "count only events where success = false",
+        "tool.denied events and FileSafe blocks do NOT contribute to tool_usage",
+        "widget reflects executed calls only"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/Tools.md"
+      ],
+      "heading_hints": [
+        "**Compute:** For 5h/7d:"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/storage-plan.md:L700-L703"
+      ],
+      "notes": [
+        "tool_usage aggregation excludes denied and blocked calls per Plans/Tools.md \u00a78.4"
+      ],
+      "obligation_id": "obl-139"
+    },
+    {
+      "canon_label": "UI scale contract",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "scale_range: [0.75, 1.5] (clamped)",
+        "presets: [0.75, 0.9, 1.0, 1.1]",
+        "UI scale MUST use Slint's native global/window scale factor as the **only** scaling path",
+        "Per-token manual scaling MUST NOT be ported to Slint view code"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md#7.4",
+        "Plans/rewrite-tie-in-memo.md#ui-scaling-migration"
+      ],
+      "heading_hints": [
+        "## 8. UI Scaling"
+      ],
+      "stale_residue_to_retire": [
+        "Per-token manual scaling (legacy Iced ScaledTokens multiplication layers)"
+      ],
+      "source_evidence": [
+        "Plans/Contracts_V0.md:L726-L747"
+      ],
+      "notes": [
+        "Stale residue: legacy Iced-era ScaledTokens multiplication approach must not be ported."
+      ],
+      "obligation_id": "obl-145"
+    },
+    {
+      "canon_label": "UICommand envelope structure contract",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "command_id",
+        "command_kind",
+        "args",
+        "context?",
+        "normalization?",
+        "command_kind is closed to: shell_view, navigation_wrapper, domain_action",
+        "normalization is closed to: wrapper, deprecated_alias"
+      ],
+      "affected_doc_hints": [
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Commands_System.md"
+      ],
+      "heading_hints": [
+        "## 7. UICommand",
+        "### 7.1 Assistant worktree command registrations"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/Contracts_V0.md:L556-L576"
+      ],
+      "notes": [
+        "Closed enums for command_kind and normalization; deprecated aliases point at alias_of_command_id."
+      ],
+      "obligation_id": "obl-146"
+    },
+    {
+      "canon_label": "Unsaved editor buffer recovery",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`editor_unsaved_buffer.v1:{project_id}:{document_id}` = Recoverable local unsaved buffer snapshot, capture metadata, host/path identity, and write-availability state at capture time",
+        "On change (debounced 500ms)",
+        "stores local unsaved buffer state only and MUST NOT imply that a remote write succeeded"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [
+        "### 15.1 redb Schema"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/FinalGUISpec.md:L1838-L1839, L1859"
+      ],
+      "notes": [
+        "Unsaved buffer snapshots are local-only; they do NOT imply remote write success; capture metadata includes host/path identity and write-availability state at capture time"
+      ],
+      "obligation_id": "obl-148"
+    },
+    {
+      "canon_label": "Usage attribution required fields contract",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "provider_id",
+        "model_id",
+        "account_id when the provider/runtime surface is account-backed",
+        "parent_run_id when usage is emitted by a child run",
+        "billing_entity_id when quota semantics depend on it",
+        "entitlement_class when provider routing, quota, or pricing semantics depend on it",
+        "cache_hit?",
+        "cache_strategy?"
+      ],
+      "affected_doc_hints": [
+        "Plans/usage-feature.md",
+        "Plans/Models_System.md",
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [
+        "### Usage attribution contract"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/Contracts_V0.md:L774-L792"
+      ],
+      "notes": [
+        "Consumer carry-through expectations: usage attribution keyed by canonical tuple (provider_id, model_id, account_id?, billing_entity_id?, entitlement_class?)."
+      ],
+      "obligation_id": "obl-149"
+    },
+    {
+      "canon_label": "Virtualized lists for large datasets",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Chat messages, file trees, log outputs, evidence lists, and other long lists use Slint's `ListView` with `VecModel`",
+        "For extremely large datasets (100k+ log lines), implement a custom `Model` trait backed by a ring buffer to keep memory bounded"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [
+        "### 14.3 Virtualized Lists"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/FinalGUISpec.md:L1783-L1784"
+      ],
+      "notes": [
+        "ListView with VecModel is canonical for lists; custom Model trait + ring buffer is required only for >100k lines (conditional on scale)"
+      ],
+      "obligation_id": "obl-150"
+    },
+    {
+      "canon_label": "Web and diff operation card widget lifecycle contract",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Operation cards are restricted to lifecycle-bearing operations, exclude other widget families, and use a locked card-level state machine reconciled against the 8-state agent/process taxonomy",
+        "card-level states: `pending`, `running`, `completed`, `failed`, `cancelled`, `blocked`, `starting`, `exited`",
+        "`blocked` is a card-level state entered from `running` and returned to `running` on unblock",
+        "`disconnected` and `restoring` are agent-session states and surface as card-level `blocked` with `blocked_reason_code`"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [
+        "## 15. Promoted widget catalog (web tools, planning, question, operation cards)",
+        "### 15.3 Web and diff operation card widget"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/FinalGUISpec.md:L2884, L2942-L2948, L2964-L2965"
+      ],
+      "notes": [
+        "Operation cards use 8-state lifecycle (pending/running/completed/failed/cancelled/blocked/starting/exited); blocked is card-level state; agent-session states (disconnected/restoring) surface as card-level blocked with reason code"
+      ],
+      "obligation_id": "obl-151"
+    },
+    {
+      "canon_label": "allowed_action_id canonical enum family",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "allowed_action_id enum: approve, decline, retry_now, resume_after_prerequisite, restore_safe_point_then_retry, start_fresh_attempt, replan, skip_node, abort_run, open_details"
+      ],
+      "affected_doc_hints": [
+        "Plans/Executor_Protocol.md",
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "heading_hints": [
+        "### Canonical enum families",
+        "`allowed_action_id`:"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/Contracts_V0.md:L1144-L1154"
+      ],
+      "notes": [
+        "Enum/contract mismatch: ordered allowed_action_ids[] must survive into approval UI."
+      ],
+      "obligation_id": "obl-152"
+    },
+    {
+      "canon_label": "blocked_reason_code canonical enum family",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "blocked_reason_code enum: permission_denied, user_declined, headless_ask_denied, filesafe_blocked, external_side_effect_blocked, replan_required, waiting_approval, clarification_blocked, worktree_conflict, dirty_worktree, plugin_hook_blocked, validation_blocked, remediation_ceiling_exceeded"
+      ],
+      "affected_doc_hints": [
+        "Plans/Executor_Protocol.md",
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [
+        "### Canonical enum families",
+        "`blocked_reason_code`:"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/Contracts_V0.md:L1129-L1142"
+      ],
+      "notes": [
+        "Enum/contract mismatch: No section may present a shorter enum set as canonical."
+      ],
+      "obligation_id": "obl-153"
+    },
+    {
+      "canon_label": "failure_class canonical enum family",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "failure_class enum: provider_transient, structured_output_invalid, verification_failed, reviewer_findings, auth_expired, storage_io, quota_exceeded, graph_integrity"
+      ],
+      "affected_doc_hints": [
+        "Plans/Executor_Protocol.md",
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [
+        "### Canonical enum families",
+        "`failure_class`:"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/Contracts_V0.md:L1119-L1128"
+      ],
+      "notes": [
+        "Enum/contract mismatch: No section in this file may present an earlier shorter enum set as the canonical value family."
+      ],
+      "obligation_id": "obl-154"
+    },
+    {
+      "canon_label": "node.blocked canonical event family",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "run_id",
+        "node_id",
+        "attempt_id?",
+        "blocked_reason_code",
+        "blocked_sequence",
+        "allowed_action_ids[]",
+        "preserved_local_work",
+        "detail_ref?",
+        "failure_class? (only when the block originated from a classified outcome)",
+        "run.node_blocked is a deprecated legacy alias",
+        "New producers MUST emit `node.blocked`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Executor_Protocol.md",
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [
+        "#### `node.blocked`"
+      ],
+      "stale_residue_to_retire": [
+        "run.node_blocked"
+      ],
+      "source_evidence": [
+        "Plans/Contracts_V0.md:L841-L859"
+      ],
+      "notes": [
+        "Stale residue: run.node_blocked is deprecated; new producers MUST emit node.blocked."
+      ],
+      "obligation_id": "obl-156"
+    },
+    {
+      "canon_label": "node.unblocked canonical event family",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "run_id",
+        "node_id",
+        "attempt_id?",
+        "blocked_sequence",
+        "resolution (the action that resolved the block)",
+        "run.node_unblocked is a deprecated legacy alias",
+        "New producers MUST emit `node.unblocked`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Executor_Protocol.md",
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [
+        "#### `node.unblocked`"
+      ],
+      "stale_residue_to_retire": [
+        "run.node_unblocked"
+      ],
+      "source_evidence": [
+        "Plans/Contracts_V0.md:L861-L873"
+      ],
+      "notes": [
+        "Stale residue: run.node_unblocked is deprecated; new producers MUST emit node.unblocked."
+      ],
+      "obligation_id": "obl-157"
+    },
+    {
+      "canon_label": "remediation.resolved canonical event family",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "run_id",
+        "node_id",
+        "remediation_root_id",
+        "child_attempt_id",
+        "resolution (`fixed` | `superseded` | `abandoned` | `replan_required`)",
+        "run.remediation_completed is a deprecated legacy alias",
+        "New producers MUST emit `remediation.resolved`",
+        "remediation_ceiling_exceeded remains a blocked-state outcome, not a remediation.resolved.resolution value"
+      ],
+      "affected_doc_hints": [
+        "Plans/Executor_Protocol.md",
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [
+        "#### `remediation.resolved`"
+      ],
+      "stale_residue_to_retire": [
+        "run.remediation_completed",
+        "remediation_ceiling_exceeded as remediation.resolved.resolution value"
+      ],
+      "source_evidence": [
+        "Plans/Contracts_V0.md:L959-L974"
+      ],
+      "notes": [
+        "Stale residue: run.remediation_completed is deprecated; remediation_ceiling_exceeded must not be a resolution value."
+      ],
+      "obligation_id": "obl-158"
+    },
+    {
+      "canon_label": "remediation.spawned canonical event family",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "run_id",
+        "node_id",
+        "remediation_root_id",
+        "child_attempt_id",
+        "remediation_generation",
+        "parent_failure_class",
+        "run.remediation_started is a deprecated legacy alias",
+        "New producers MUST emit `remediation.spawned`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Executor_Protocol.md",
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [
+        "#### `remediation.spawned`"
+      ],
+      "stale_residue_to_retire": [
+        "run.remediation_started"
+      ],
+      "source_evidence": [
+        "Plans/Contracts_V0.md:L942-L957"
+      ],
+      "notes": [
+        "Stale residue: run.remediation_started is deprecated; new producers MUST emit remediation.spawned."
+      ],
+      "obligation_id": "obl-159"
+    },
+    {
+      "canon_label": "restore_outcome enum contract",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "restored_clean",
+        "restored_with_conflicts",
+        "restore_failed",
+        "restore_skipped"
+      ],
+      "affected_doc_hints": [
+        "Plans/Executor_Protocol.md",
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [
+        "#### `restore_outcome` enum"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/Contracts_V0.md:L927-L937"
+      ],
+      "notes": [
+        "Canonical enum for safe_point.restored events; closed set of restore outcomes."
+      ],
+      "obligation_id": "obl-160"
+    },
+    {
+      "canon_label": "resume_url transport-only semantics",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "resume_url is serialized transport only and decodes to `route_target`",
+        "it is not a stronger parallel primitive",
+        "resume_url is serialized transport of `route_target`, not a second routing ontology"
+      ],
+      "affected_doc_hints": [
+        "Plans/Crosswalk.md"
+      ],
+      "heading_hints": [
+        "### 7.3 `route_target`"
+      ],
+      "stale_residue_to_retire": [
+        "resume_url as competing routing ontology"
+      ],
+      "source_evidence": [
+        "Plans/Contracts_V0.md:L676-L690"
+      ],
+      "notes": [
+        "Stale residue: treating resume_url as a second routing identity model instead of transport-only serialization."
+      ],
+      "obligation_id": "obl-161"
+    },
+    {
+      "canon_label": "retry vs reroute vs replacement vs resume semantic distinction",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "resume: continue the same paused or interrupted child without semantically resetting the task",
+        "retry: a new attempt in the same child lineage after failure, blockage, or interruption",
+        "reroute: same logical child task, different effective runtime surface or capability path",
+        "replacement: a new child because the old role, task shape, or specialization was wrong",
+        "Projections MAY summarize them but MUST NOT collapse them into one generic retry/restart bucket"
+      ],
+      "affected_doc_hints": [
+        "Plans/Tools.md#retry-reroute-replacement-and-cancel",
+        "Plans/storage-plan.md#canonical-child-run-records-and-batch-structure"
+      ],
+      "heading_hints": [
+        "### Retry, reroute, replacement, and resume"
+      ],
+      "stale_residue_to_retire": [
+        "Collapsed retry/restart bucket that conflates resume, retry, reroute, replacement"
+      ],
+      "source_evidence": [
+        "Plans/Contracts_V0.md:L1187-L1196"
+      ],
+      "notes": [
+        "Stale residue: collapsing distinct runtime concepts into one generic restart bucket."
+      ],
+      "obligation_id": "obl-162"
+    },
+    {
+      "canon_label": "route_target closed enum families",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "target_kind closed to: primary_view, side_panel, bottom_panel, embedded_surface, page_tab",
+        "subject_id closed to: doc:<document_id>, artifact:<artifact_id>",
+        "object_kind closed to: thread, message, wizard, usage_event, run, node, attempt, scheduler_pass, blocked_episode, safe_point, remediation, feature_seam, work_package, lane, worktree, concern, promotion, graph_patch, graph_generation, browser_session, terminal_section, terminal_tab, terminal_pane, terminal_session, dev_session",
+        "inspector_target closed to: summary, evidence, artifacts, history, reviews, usage, lineage, details"
+      ],
+      "affected_doc_hints": [
+        "Plans/Crosswalk.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [
+        "### 7.3 `route_target`"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/Contracts_V0.md:L622-L669"
+      ],
+      "notes": [
+        "Enum/contract mismatches: inspector_target is focus refinement only after selector identity is established."
+      ],
+      "obligation_id": "obl-164"
+    },
+    {
+      "canon_label": "route_target required fields and selectors",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "target_kind",
+        "project_id",
+        "subject_id or object_kind + object_id",
+        "Exactly one selector is required"
+      ],
+      "affected_doc_hints": [
+        "Plans/Crosswalk.md",
+        "Plans/FileManager.md"
+      ],
+      "heading_hints": [
+        "### 7.3 `route_target`"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "Plans/Contracts_V0.md:L599-L620"
+      ],
+      "notes": [
+        "Route/open subject rules: exactly one canonical primary selector is permitted."
+      ],
+      "obligation_id": "obl-165"
+    },
+    {
+      "canon_label": "scheduler.pass canonical event family",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "scheduler_pass_id (canonical identity -- analysis_id is a legacy alias)",
+        "run_id",
+        "thread_id",
+        "replan_generation",
+        "wake_reason",
+        "available_slots",
+        "ready_nodes[]",
+        "selected_nodes[] with per-node { node_id, score_tuple, lane }",
+        "non_selected_nodes[] with per-node { node_id, non_selected_reason }",
+        "run.scheduler_analysis is a deprecated legacy alias for this event",
+        "New producers MUST emit `scheduler.pass`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Executor_Protocol.md",
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [
+        "## Scheduler, Safe-Point, and Remediation Events Addendum (2026-03-08)",
+        "#### `scheduler.pass`"
+      ],
+      "stale_residue_to_retire": [
+        "run.scheduler_analysis"
+      ],
+      "source_evidence": [
+        "Plans/Contracts_V0.md:L813-L831"
+      ],
+      "notes": [
+        "Stale residue: run.scheduler_analysis is deprecated; new producers MUST emit scheduler.pass."
+      ],
+      "obligation_id": "obl-166"
+    },
+    {
+      "canon_label": "Restart and stale history state distinction",
+      "obligation_type": "stale_retirement",
+      "exact_tokens": [
+        "Restart and cleanup must keep historical, archived, and removed distinct",
+        "Missing live worktrees or lanes remain historically inspectable instead of disappearing",
+        "Projection trust remains explicit through projection_freshness and projection_health"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/Executor_Protocol.md"
+      ],
+      "heading_hints": [
+        "## Runtime Recovery Persistence and Restart Reconciliation Addendum (2026-03-09)",
+        "### Restart and stale history"
+      ],
+      "stale_residue_to_retire": [
+        "Collapsed generic trust field that combines stale and degraded",
+        "Auto-eviction of missing historical records without inspection capability"
+      ],
+      "source_evidence": [
+        "Plans/storage-plan.md:L1220-L1238"
+      ],
+      "notes": [
+        "Stale records remain discoverable; degraded-projection surfaces must remain distinct"
+      ],
+      "obligation_id": "obl-168"
+    }
+  ],
+  "discovered_doc_hints": [
+    "Plans/AGENTS.md",
+    "Plans/Architecture_Invariants.md",
+    "Plans/BinaryLocator_Spec.md",
+    "Plans/CLI_Bridged_Providers.md",
+    "Plans/Commands_System.md",
+    "Plans/Contracts_V0.md",
+    "Plans/Crosswalk.md",
+    "Plans/DRY_Rules.md",
+    "Plans/Decision_Policy.md",
+    "Plans/Executor_Protocol.md",
+    "Plans/FileManager.md",
+    "Plans/FileSafe.md",
+    "Plans/FinalGUISpec.md",
+    "Plans/GitHub_API_Auth_and_Flows.md",
+    "Plans/GitHub_Integration.md",
+    "Plans/LSPSupport.md",
+    "Plans/Models_System.md",
+    "Plans/Multi-Account.md",
+    "Plans/Orchestrator_Page.md",
+    "Plans/Permissions_System.md",
+    "Plans/Personas.md",
+    "Plans/Progression_Gates.md",
+    "Plans/Project_Output_Artifacts.md",
+    "Plans/Prompt_Pipeline.md",
+    "Plans/Provider_OpenCode.md",
+    "Plans/Run_Graph_View.md",
+    "Plans/Run_Modes.md",
+    "Plans/Runtime_Artifacts_Panel.md",
+    "Plans/Section15_MVP_Promoted_Features_Spec.md",
+    "Plans/Skills_System.md",
+    "Plans/Tools.md",
+    "Plans/UI_Command_Catalog.md",
+    "Plans/Widget_System.md",
+    "Plans/Wiring_Matrix.md",
+    "Plans/WorktreeGitImprovement.md",
+    "Plans/assistant-chat-design.md",
+    "Plans/assistant-memory-subsystem.md",
+    "Plans/chain-wizard-flexibility.md",
+    "Plans/decision_policy.md",
+    "Plans/evidence.schema.json",
+    "Plans/human-in-the-loop.md",
+    "Plans/newfeatures.md",
+    "Plans/newtools.md",
+    "Plans/orchestrator-subagent-integration.md",
+    "Plans/rewrite-tie-in-memo.md",
+    "Plans/storage-plan.md",
+    "Plans/usage-feature.md"
+  ],
+  "warnings": [
+    "Line L1107 explicitly flags stale transitional enum lists: 'This section is an exact compatibility mirror of the later canonical runtime contract so readers do not stop at stale transitional enum lists.'",
+    "Multiple deprecated event names (run.scheduler_analysis, run.node_blocked, run.node_unblocked, run.remediation_started, run.remediation_completed) found; new producers MUST use canonical names (scheduler.pass, node.blocked, node.unblocked, remediation.spawned, remediation.resolved).",
+    "Direct contradiction at L1167: 'No section in this file may present an earlier shorter enum set as the canonical value family.' This is a stale-residue obligation to audit earlier sections.",
+    "UI scale contract contains stale Iced-era migration residue (ScaledTokens) at L747; marked for retirement.",
+    "Null-padding prohibition appears repeatedly (L294-297, L802) indicating persistent stale practices in account/billing entity field handling.",
+    "Crew permission ceiling (L1206-1207) indicates prior over-permissioning patterns that must be audited.",
+    "Child lifecycle conflation (retry/reroute/replacement/resume) marked as stale residue at L1196; consumers likely conflating these semantics.",
+    "L309-L400 and L1200+ contain schema examples and enhancements section; primary obligations concentrated in L1-L300 and L585-L700",
+    "Web content caching persistence (L1276-L1299) references external owner contract; storage binding only",
+    "L194-196 contain stale residue about title-bar-owned project switching; current canonical model is workspace-tab-based",
+    "Terminal identity preservation for detached windows relies on shared Rc<VecModel<T>> contract; implementation must validate sync on window reconnect",
+    "Line 1807: SSH_remotes schema marks stale `ssh_connections:v1` for retirement but does not detail migration path",
+    "Line 1857: Browser state persistence schema replaces stale single-blob `browser_state:v1` model with multi-key structure; migration-read logic required",
+    "Line 2587: Worktree icon in thread selector uses stale 'status badge (running/blocked/attention)' terminology; blocks reference newer blocked/recovery taxonomy from later sections",
+    "Line 2694: Degraded draft warning rule references pre-lock planning state but canonical graph lock semantics are not locally defined in this range"
+  ]
+}
