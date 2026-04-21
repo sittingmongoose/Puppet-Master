@@ -1,55 +1,37 @@
-# Current State — w-20260312-203855
+# Work Item State — w-20260312-203855
 
-## Stage: Ledger Obligation Seed Extractor — BLOCKED (Deferred)
+## Status
+active
 
-**Status**: active  
-**Next required stage**: Canonical Obligations Builder (after deferred rerun)
+## Next Required Stage
+Canonical Obligations Builder
 
-## Ledger Obligation Seed Summary
+## Stage Completed
+Ledger Obligation Seed Deferred Resolver — all deferred material RESOLVED
 
-| Field | Value |
-|---|---|
-| seed_items_total | 594 |
-| owner_seed_items | 402 |
-| consumer_seed_items | 162 |
-| stale_retirement_seed_items | 28 |
-| docs_affected | 93 |
-| source_line_ranges_covered | 587 |
-| verification_passes_completed | 3 (hard cap) |
-| material_findings_deferred | 29 |
+## Summary
 
-## Wave Files Written
+| Metric | Value |
+|--------|-------|
+| seed_items_total | 1048 |
+| owner_seed_items | 694 |
+| consumer_seed_items | 289 |
+| stale_retirement_seed_items | 63 |
+| docs_affected | 98 |
+| source_line_ranges_covered | 534 |
+| verification_passes_completed | 3 |
+| material_findings_deferred | 0 |
 
-ledger_obligation_seed.wave-001.json through wave-012.json  
-Coverage: L1–L18196 (full ledger, 46 chunks × ~400 lines, 12 waves)
+## Deferred Resolver Progress
+- Deferred resolver waves completed: 8 (L1200–L18196 plus all 32 unverified high-risk ranges)
+- All 32 unverified ranges from pass-3 hard cap: RESOLVED
+- All 29 pass-3 deferred material items: ASSESSED AND MERGED
+- ledger_obligation_seed.deferred.json status: resolved
+- Seed grew from 594 items (original extractor output) to 1048 items
 
-## Verification Passes
+## Active Artifacts
+- `working_ledger.md` — source ledger, READ-ONLY
+- `ledger_obligation_seed.json` — FINAL seed, 1048 items, ready for Canonical Obligations Builder
 
-| Pass | Ranges | Material | Noise |
-|---|---|---|---|
-| pass-001 | L2000–2400, L5600–6000, L9600–10000, L13600–14000 | 22 | 20 |
-| pass-002 | L800–1200, L7600–8000, L10000–10400, L12000–12400 | 59 | 49 |
-| pass-003 | L3200–3600, L4800–5200, L11200–11600, L15200–15600 | 29 | 58 |
-
-Pass 3 reached the hard cap and still found 29 material items.  
-32 high-risk ranges remain unverified by re-check passes.
-
-## Deferred
-
-- ledger_obligation_seed.deferred.json contains the 29 pass-3 material findings
-- and 32 unverified ranges recommended for next run
-
-## Files Active
-
-- working_ledger.md — sole content source, READ-ONLY
-- ledger_obligation_seed.json — merged seed (594 items, 93 docs)
-- ledger_obligation_seed.wave-001..012.json — wave results
-- ledger_obligation_seed.pass-001..003.json — verification pass material
-- ledger_obligation_seed.noise-001..003.json — noise (not merged)
-- ledger_obligation_seed.deferred.json — deferred findings for next run
-- meta.json — control record
-
-## Legacy Quarantine
-
-All prior-run artifacts quarantined in legacy_quarantine/.  
-This run is a clean-slate extraction.
+## Next Stage
+Canonical Obligations Builder — consume ledger_obligation_seed.json as the sole seed source

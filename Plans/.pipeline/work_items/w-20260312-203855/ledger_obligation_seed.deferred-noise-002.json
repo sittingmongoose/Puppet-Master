@@ -1,0 +1,49 @@
+{
+  "schema_id": "pm.ledger_obligation_seed.deferred_noise.v1",
+  "work_id": "w-20260312-203855",
+  "resolve_number": 2,
+  "noise_count": 8,
+  "noise": [
+    {
+      "seed_id": "dr2rB-noise-4021",
+      "reason_noise": "Summary of already-covered dual-copy contract documented in Plans/Contracts_V0.md",
+      "source_evidence": "L4019-4028: The app already has a strong dual-copy rule: app-level Interaction Mode (Expert/ELI5) controls authored help/tooltip/interviewer copy; chat-level Chat ELI5 is separate"
+    },
+    {
+      "seed_id": "dr2rB-noise-4099",
+      "reason_noise": "Restatement of already-known project health indicators from FinalGUISpec",
+      "source_evidence": "L4107-4119: Current project health indicators are mostly repo/config existence checks: green = directory exists / repo intact / config valid; amber = stale config / missing optional files; red = missing directory / corrupt repo"
+    },
+    {
+      "seed_id": "dr2rB-noise-4183",
+      "reason_noise": "Weaker restatement of existing run state model already captured",
+      "source_evidence": "L4183-4187: If a project has no active runs but lots of historical runs, that is not itself a problem state. Better distinction: active workspace/project, recently active, archived/unregistered"
+    },
+    {
+      "seed_id": "dr2rB-noise-4210",
+      "reason_noise": "Rolled-up summary flagging gaps; not a direct obligation artifact",
+      "source_evidence": "L4210-4217: Contradictions/gaps surfaced section is audit summary, not seed material"
+    },
+    {
+      "seed_id": "dr2rB-noise-4331",
+      "reason_noise": "Summary/next-steps guidance for Help System, not direct obligation",
+      "source_evidence": "L4097-4103: Do-not-forget details section is guidance, not obligation"
+    },
+    {
+      "seed_id": "dr2rC-noise-4412",
+      "reason_noise": "Summary of already-documented escalation concern concept; no new exact token or field introduced",
+      "source_evidence": "L4412\u2013L4415: Example concern -> surface mapping (advisory, weak integration, blocking)"
+    },
+    {
+      "seed_id": "dr2rC-noise-4434",
+      "reason_noise": "Rolled-up contradiction/gap summary; context-dependent restatement of already-known performance scaling concern",
+      "source_evidence": "L4434\u2013L4437: 'Current graph-scale guidance is much stronger than...'"
+    },
+    {
+      "seed_id": "dr2rC-noise-4531",
+      "reason_noise": "Meta-summary of research progress; does not introduce new exact system obligation or token",
+      "source_evidence": "L4531\u2013L4533: 'Important rule: not all surfaces need the same trust threshold'"
+    }
+  ],
+  "generated_at_utc": "2026-04-20T21:22:02.588770+00:00"
+}
