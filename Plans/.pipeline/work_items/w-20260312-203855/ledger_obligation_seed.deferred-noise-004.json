@@ -1,0 +1,63 @@
+{
+  "schema_id": "pm.ledger_obligation_seed.deferred_noise.v1",
+  "work_id": "w-20260312-203855",
+  "wave": 4,
+  "noise_count": 11,
+  "noise": [
+    {
+      "seed_id": "dr4rC-noise-8815",
+      "reason_noise": "Duplicate affected doc list; same docs already reported in earlier HITL findings",
+      "source_evidence": "Lines 8814-8822: Planning impacted docs (human-in-the-loop, Contracts_V0, UI_Command_Catalog, storage-plan, downstream consumers) are already tracked"
+    },
+    {
+      "seed_id": "dr4rC-noise-8851",
+      "reason_noise": "Research progress summary header and doc list; does not introduce new seeds beyond section details",
+      "source_evidence": "Lines 8851-8866: 'Targeted docs read' section is context, not evidence of new obligations"
+    },
+    {
+      "seed_id": "dr4rC-noise-8869",
+      "reason_noise": "Rolled-up audit statement without specific new seeds",
+      "source_evidence": "Line 8869: 'Sonnet materially deepened the downstream cohort rather than merely echoing the Opus pass' is a finding summary, not specific obligation"
+    },
+    {
+      "seed_id": "dr4rC-noise-8918",
+      "reason_noise": "Candidate fix summary; actionable but does not isolate new exact field/token/obligation",
+      "source_evidence": "Lines 8918-8920: Broader integration directives without precise new seed items"
+    },
+    {
+      "seed_id": "dr4rC-noise-9020",
+      "reason_noise": "Adjacent owner docs pulled for contradiction checks; context list only",
+      "source_evidence": "Line 9021: 'adjacent owner docs pulled for contradiction checks' - enumeration of document scope, not new finding"
+    },
+    {
+      "seed_id": "dr4rC-noise-9025-figi",
+      "reason_noise": "High-level description of GUI/command conflicts; see dr4rC-9025 for specific cmd.orchestrator.switch_tab extraction",
+      "source_evidence": "Line 9025 main clause is vague; concrete conflict at line 9027 already extracted"
+    },
+    {
+      "seed_id": "dr4rC-noise-9062",
+      "reason_noise": "Candidate fixes summary at section end; already rolled into specific seeds",
+      "source_evidence": "Lines 9064-9070: High-level remediation language without new exact obligation not already captured"
+    },
+    {
+      "seed_id": "dr4rC-noise-9087",
+      "reason_noise": "Research scope/summary header",
+      "source_evidence": "Lines 9087-9099: Tool-event research context; specific findings extracted in dr4rC-9109, dr4rC-9145, etc."
+    },
+    {
+      "seed_id": "dr4rC-noise-9104",
+      "reason_noise": "Storage-plan already-better-aligned statement; descriptive observation, not new obligation",
+      "source_evidence": "Lines 9104-9108: Observation that storage-plan is closer to rewrite; no new token/field/obligation extracted"
+    },
+    {
+      "seed_id": "dr4rC-noise-9139",
+      "reason_noise": "Contradiction summary already captured in dr4rC-9150 (FileSafe block contradiction)",
+      "source_evidence": "Line 9140: 'tool.denied should not emit for FileSafe blocks... FileSafe blocks' is same contradiction as line 9150 extraction"
+    },
+    {
+      "seed_id": "dr4rC-noise-9163",
+      "reason_noise": "Research section header and doc read list",
+      "source_evidence": "Lines 9163-9170: Targeted docs and scope; specific findings extracted from this section"
+    }
+  ]
+}

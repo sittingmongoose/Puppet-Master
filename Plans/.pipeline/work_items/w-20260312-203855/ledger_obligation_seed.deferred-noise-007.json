@@ -1,0 +1,238 @@
+{
+  "schema_id": "pm.ledger_obligation_seed.deferred_noise.v1",
+  "work_id": "w-20260312-203855",
+  "wave": 7,
+  "noise_count": 46,
+  "noise": [
+    {
+      "seed_id": "dr7rA-noise-14808",
+      "reason_noise": "Impacted docs list restatement; same docs already named in material findings",
+      "source_evidence": "L14808-L14811: ### Impacted docs - just lists UI_Command_Catalog.md and FinalGUISpec.md already covered"
+    },
+    {
+      "seed_id": "dr7rA-noise-14822",
+      "reason_noise": "Candidate fixes summary; already captured in material findings",
+      "source_evidence": "L14822-L14830: ### Candidate fixes to carry forward - restates command catalog and FinalGUISpec fixes already noted"
+    },
+    {
+      "seed_id": "dr7rA-noise-14832",
+      "reason_noise": "Do-not-forget recap restatement; only reiterates prior findings",
+      "source_evidence": "L14832-L14834: ### Do-not-forget details - recaps command meaning labels and FinalGUISpec drift issues"
+    },
+    {
+      "seed_id": "dr7rA-noise-14838",
+      "reason_noise": "Targeted docs read planning header; skipped per task instructions",
+      "source_evidence": "L14838-L14843: ### Targeted docs read - planning header listing docs to read"
+    },
+    {
+      "seed_id": "dr7rA-noise-14867",
+      "reason_noise": "Impacted docs list restatement; maps to material findings already extracted",
+      "source_evidence": "L14867-L14874: ### Impacted docs - lists owner and consumer docs already covered in wiring schema material finding"
+    },
+    {
+      "seed_id": "dr7rA-noise-14881",
+      "reason_noise": "Candidate fixes summary; restates catalog/wiring/gates strategy already captured",
+      "source_evidence": "L14881-L14888: ### Candidate fixes - recommends keeping normalization in catalog, extending wiring model already noted"
+    },
+    {
+      "seed_id": "dr7rA-noise-14890",
+      "reason_noise": "Do-not-forget recap; only reiterates schema limitations already found",
+      "source_evidence": "L14890-L14892: ### Do-not-forget details - restates matrix/evidence schema limitation and fix strategy"
+    },
+    {
+      "seed_id": "dr7rA-noise-14896",
+      "reason_noise": "Targeted docs read planning header; skipped per task instructions",
+      "source_evidence": "L14896-L14900: ### Targeted docs read - planning header listing routing-adjacent docs"
+    },
+    {
+      "seed_id": "dr7rA-noise-14917",
+      "reason_noise": "Impacted docs list restatement; docs already covered in material findings",
+      "source_evidence": "L14917-L14922: ### Impacted docs - lists Crosswalk.md, usage-feature.md, FinalGUISpec.md, Orchestrator_Page.md"
+    },
+    {
+      "seed_id": "dr7rA-noise-14929",
+      "reason_noise": "Candidate fixes summary; already captured in material findings about duplicate numbering/sections",
+      "source_evidence": "L14929-L14933: ### Candidate fixes - restates treating duplicates as reconciliation tasks"
+    },
+    {
+      "seed_id": "dr7rA-noise-14935",
+      "reason_noise": "Do-not-forget recap; only reiterates prior spec-integrity findings",
+      "source_evidence": "L14935-L14937: ### Do-not-forget details - restates spec-integrity failures not design questions"
+    },
+    {
+      "seed_id": "dr7rA-noise-14941",
+      "reason_noise": "Targeted docs read planning header; skipped per task instructions",
+      "source_evidence": "L14941-L14946: ### Targeted docs read - planning header listing Contracts_V0.md, storage-plan.md, etc"
+    },
+    {
+      "seed_id": "dr7rA-noise-14963",
+      "reason_noise": "Impacted docs list restatement; owner-gap and consumer docs already noted in material",
+      "source_evidence": "L14963-L14971: ### Impacted docs - maps owner/consumer docs already captured"
+    },
+    {
+      "seed_id": "dr7rA-noise-14978",
+      "reason_noise": "Candidate fixes summary; already extracted as material owner obligation",
+      "source_evidence": "L14978-L14986: ### Candidate fixes - restates resume_url as transport, canonical route/object identity primary"
+    },
+    {
+      "seed_id": "dr7rA-noise-14989",
+      "reason_noise": "Do-not-forget recap; only reiterates owner-doc contradiction and chat anti-bypass rule",
+      "source_evidence": "L14989-L14991: ### Do-not-forget details - restates resume_url owner-doc contradiction"
+    },
+    {
+      "seed_id": "dr7rA-noise-14995",
+      "reason_noise": "Targeted docs read planning header; skipped per task instructions",
+      "source_evidence": "L14995-L15000: ### Targeted docs read - planning header listing ref-family docs"
+    },
+    {
+      "seed_id": "dr7rA-noise-15020",
+      "reason_noise": "Impacted docs list restatement; owner and consumer docs already captured in material",
+      "source_evidence": "L15020-L15027: ### Impacted docs - lists Contracts_V0.md, storage-plan.md, consumer docs already noted"
+    },
+    {
+      "seed_id": "dr7rA-noise-15034",
+      "reason_noise": "Candidate fixes summary; already captured in material ref-family split finding",
+      "source_evidence": "L15034-L15046: ### Candidate fixes - restates owner-doc distinction and ref family treatment"
+    },
+    {
+      "seed_id": "dr7rA-noise-15049",
+      "reason_noise": "Do-not-forget recap; only reiterates that split makes rewrite easier",
+      "source_evidence": "L15049-L15051: ### Do-not-forget details - restates ref-family split will ease rewrite"
+    },
+    {
+      "seed_id": "dr7rA-noise-15055",
+      "reason_noise": "Targeted docs read planning header; skipped per task instructions",
+      "source_evidence": "L15055-L15060: ### Targeted docs read - planning header listing blocked/thread/wizard docs"
+    },
+    {
+      "seed_id": "dr7rA-noise-15081",
+      "reason_noise": "Impacted docs list restatement; owner and consumer docs already noted in material",
+      "source_evidence": "L15081-L15089: ### Impacted docs - maps owner-gap and consumer docs already captured"
+    },
+    {
+      "seed_id": "dr7rA-noise-15098",
+      "reason_noise": "Candidate fixes summary; already extracted as material owner obligation for storage-plan reconciliation",
+      "source_evidence": "L15098-L15103: ### Candidate fixes - restates storage-plan reconciliation strategy"
+    },
+    {
+      "seed_id": "dr7rA-noise-15105",
+      "reason_noise": "Do-not-forget recap; only reiterates that this is routing/execution reconciliation meeting point",
+      "source_evidence": "L15105-L15107: ### Do-not-forget details - restates storage-plan lagging both route and execution-core"
+    },
+    {
+      "seed_id": "dr7rA-noise-15111",
+      "reason_noise": "Targeted docs read planning header; skipped per task instructions",
+      "source_evidence": "L15111-L15114: ### Targeted docs read - planning header for blocked-family contracts docs"
+    },
+    {
+      "seed_id": "dr7rA-noise-15142",
+      "reason_noise": "Impacted docs list restatement; docs already noted in material wizard.blocked finding",
+      "source_evidence": "L15142-L15147: ### Impacted docs - lists Contracts_V0.md, storage-plan.md, chat consumer"
+    },
+    {
+      "seed_id": "dr7rA-noise-15154",
+      "reason_noise": "Candidate fixes summary; already captured in material blocked-family contract mismatch finding",
+      "source_evidence": "L15154-L15164: ### Candidate fixes - restates cross-family blocked minimum and family-local additions"
+    },
+    {
+      "seed_id": "dr7rA-noise-15167",
+      "reason_noise": "Do-not-forget recap; only reiterates family-contract mismatch and chat strength",
+      "source_evidence": "L15167-L15169: ### Do-not-forget details - restates family-contract mismatch, chat already stronger"
+    },
+    {
+      "seed_id": "dr7rA-noise-15173",
+      "reason_noise": "Targeted docs read planning header; skipped per task instructions",
+      "source_evidence": "L15173-L15178: ### Targeted docs read - planning header for usage/evidence docs"
+    },
+    {
+      "seed_id": "dr7rB-noise-15200",
+      "reason_noise": "Impacted docs list header",
+      "source_evidence": "L15200-L15208"
+    },
+    {
+      "seed_id": "dr7rB-noise-15225",
+      "reason_noise": "Do-not-forget recap",
+      "source_evidence": "L15225-L15227"
+    },
+    {
+      "seed_id": "dr7rB-noise-15278",
+      "reason_noise": "Summary restatement of cleanup pattern",
+      "source_evidence": "L15278-L15283"
+    },
+    {
+      "seed_id": "dr7rB-noise-15287",
+      "reason_noise": "Priority class lists restatement",
+      "source_evidence": "L15287-L15321"
+    },
+    {
+      "seed_id": "dr7rB-noise-15323",
+      "reason_noise": "External audit integration recap",
+      "source_evidence": "L15323-L15382"
+    },
+    {
+      "seed_id": "dr7rD-noise-16001",
+      "reason_noise": "Rolled-up 'Do-not-forget' recap restating prior finding",
+      "source_evidence": "L16001-L16003: general recap without new obligation detail"
+    },
+    {
+      "seed_id": "dr7rD-noise-16007-16030",
+      "reason_noise": "Targeted docs read planning header \u2014 listing only",
+      "source_evidence": "L16007-L16030: list of 22 docs to be read"
+    },
+    {
+      "seed_id": "dr7rD-noise-16031-16032",
+      "reason_noise": "Vague summary of model pass results, not exact obligation",
+      "source_evidence": "L16031-L16032: convergence zone and delta signal statements"
+    },
+    {
+      "seed_id": "dr7rD-noise-16054-16093",
+      "reason_noise": "Impacted docs lists \u2014 no new obligation content",
+      "source_evidence": "L16054-L16093: primary and adjacent owner doc lists"
+    },
+    {
+      "seed_id": "dr7rD-noise-16094-16098",
+      "reason_noise": "Rolled-up audit verdict block summarizing model pass signal",
+      "source_evidence": "L16094-L16098: high-level summary of findings"
+    },
+    {
+      "seed_id": "dr7rD-noise-16099-16119",
+      "reason_noise": "Candidate fixes and do-not-forget recap, not execution obligations",
+      "source_evidence": "L16099-L16119: continuation planning and meta notes"
+    },
+    {
+      "seed_id": "dr7rD-noise-16121-16146",
+      "reason_noise": "Targeted docs read planning header \u2014 listing only",
+      "source_evidence": "L16121-L16146: another 22-doc read planning block"
+    },
+    {
+      "seed_id": "dr7rD-noise-16168-16238",
+      "reason_noise": "Impacted docs lists and rolled-up audit/do-not-forget recap",
+      "source_evidence": "L16168-L16238: doc lists, contradictions summary, fixes planning, do-not-forget notes"
+    },
+    {
+      "seed_id": "dr7rD-noise-16240-16265",
+      "reason_noise": "Targeted docs read planning header \u2014 listing only",
+      "source_evidence": "L16240-L16265: another 22-doc read planning block"
+    },
+    {
+      "seed_id": "dr7rD-noise-16282-16345",
+      "reason_noise": "Impacted docs lists and rolled-up audit/do-not-forget recap",
+      "source_evidence": "L16282-L16345: doc lists, contradictions summary, fixes planning, do-not-forget notes"
+    },
+    {
+      "seed_id": "dr7rD-noise-16348",
+      "reason_noise": "Research progress section header \u2014 organizational marker",
+      "source_evidence": "L16348: section heading"
+    },
+    {
+      "seed_id": "dr7rD-noise-16350-16354",
+      "reason_noise": "Targeted docs read planning header \u2014 listing only",
+      "source_evidence": "L16350-L16354: 3-doc focused read planning"
+    },
+    {
+      "seed_id": "dr7rD-noise-16379-16390",
+      "reason_noise": "Impacted docs lists \u2014 no new obligation content",
+      "source_evidence": "L16379-L16390: primary and adjacent owner doc lists"
+    }
+  ]
+}

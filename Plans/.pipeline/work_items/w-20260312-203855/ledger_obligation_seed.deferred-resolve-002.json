@@ -1,0 +1,1357 @@
+{
+  "schema_id": "pm.ledger_obligation_seed.deferred_resolve.v1",
+  "work_id": "w-20260312-203855",
+  "resolve_number": 2,
+  "ranges_checked": [
+    "L3600-4000",
+    "L4000-4400",
+    "L4400-4800",
+    "L5200-5600"
+  ],
+  "material_count": 56,
+  "noise_count": 8,
+  "material": [
+    {
+      "seed_id": "dr2rA-3701",
+      "seed_type": "stale_retirement",
+      "canon_label_hint": "Display Grammar for Override/Request/Execution Axes",
+      "exact_items": [
+        "Inherited from",
+        "Overridden by",
+        "Requested",
+        "Effective",
+        "Reason",
+        "Support"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [
+        "Recommended display grammar"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "L3701-3708"
+      ],
+      "notes": [
+        "New UI display grammar tokens"
+      ]
+    },
+    {
+      "seed_id": "dr2rA-3720",
+      "seed_type": "owner",
+      "canon_label_hint": "Settings Source Layer Presentation Rules",
+      "exact_items": [
+        "app default",
+        "project override",
+        "surface default",
+        "role policy",
+        "seam/package/node mapping",
+        "manual override",
+        "turn/session/run/task/subagent scoped override"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "heading_hints": [
+        "Source-layer direction"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "L3720-3736"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "dr2rA-3751",
+      "seed_type": "consumer",
+      "canon_label_hint": "Control Honored/Skipped/Clamped Display Pattern",
+      "exact_items": [
+        "Reasoning effort: High -> Skipped",
+        "Temperature: 0.2 -> Honored",
+        "Top-p: 1.0 -> Clamped to 0.9"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Models_System.md"
+      ],
+      "heading_hints": [
+        "Honored / skipped / clamped direction"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "L3759-3763"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "dr2rA-3770",
+      "seed_type": "consumer",
+      "canon_label_hint": "Surface-Specific Settings/Inspector/History Presentation Rules",
+      "exact_items": [
+        "Graph inspector",
+        "run detail",
+        "History",
+        "Ledger"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/History_Ledger_Spec.md"
+      ],
+      "heading_hints": [
+        "Surface-specific presentation direction"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "L3765-3778"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "dr2rA-3780",
+      "seed_type": "owner",
+      "canon_label_hint": "Worker Policy Display and Override Rules",
+      "exact_items": [
+        "worker policy",
+        "subagent",
+        "fresh_worker"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [
+        "Worker-policy implication"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "L3780-3787"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "dr2rA-3789",
+      "seed_type": "owner",
+      "canon_label_hint": "Multi-Account Effective Account Display Pattern",
+      "exact_items": [
+        "Account policy: Auto switch (Project policy)",
+        "Effective account: gemini-oauth-2",
+        "Switch reason: rate_limit_pressure"
+      ],
+      "affected_doc_hints": [
+        "Plans/Multi-Account.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [
+        "Multi-account implication"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "L3794-3797"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "dr2rA-3867",
+      "seed_type": "consumer",
+      "canon_label_hint": "Auto Resolver Metadata Emission Requirements",
+      "exact_items": [
+        "deterministic ranked candidate set",
+        "explanation metadata"
+      ],
+      "affected_doc_hints": [
+        "Plans/Personas.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "heading_hints": [
+        "Recommended resolver shape"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "L3867-3870"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "dr2rA-3872",
+      "seed_type": "owner",
+      "canon_label_hint": "Orchestrator Auto Resolver Actor Type Inputs",
+      "exact_items": [
+        "package overseer",
+        "seam overseer",
+        "node worker",
+        "verifier/reviewer",
+        "corroborator",
+        "graph patch planner",
+        "recovery actor"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/Personas.md"
+      ],
+      "heading_hints": [
+        "Candidate resolver inputs for Orchestrator"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "L3872-3879"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "dr2rA-3880",
+      "seed_type": "consumer",
+      "canon_label_hint": "Orchestrator Operation Type Resolver Inputs",
+      "exact_items": [
+        "implementation",
+        "review",
+        "integration",
+        "corroboration",
+        "recovery",
+        "planning/patching"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/Personas.md"
+      ],
+      "heading_hints": [
+        "work type / operation type"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "L3880-3886"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "dr2rA-3892",
+      "seed_type": "consumer",
+      "canon_label_hint": "Project Hints for Auto Resolver",
+      "exact_items": [
+        "language(s)",
+        "framework(s)",
+        "repo/domain traits",
+        "GUI-heavy vs backend-heavy vs infra-heavy indicators"
+      ],
+      "affected_doc_hints": [
+        "Plans/Models_System.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "heading_hints": [
+        "project hints"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "L3892-3896"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "dr2rA-3913",
+      "seed_type": "owner",
+      "canon_label_hint": "Orchestrator Actor-Type to Persona Mapping Policy",
+      "exact_items": [
+        "package overseer: execution/governance persona",
+        "seam overseer: integration/governance persona",
+        "node worker: implementation persona",
+        "verifier/reviewer: review persona",
+        "corroborator: review/challenge persona",
+        "recovery actor: troubleshooting/recovery persona",
+        "graph patch planner: planning/architecture persona"
+      ],
+      "affected_doc_hints": [
+        "Plans/Personas.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "heading_hints": [
+        "Orchestrator-specific direction"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "L3913-3929"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "dr2rA-3949",
+      "seed_type": "consumer",
+      "canon_label_hint": "Persona Selection Reason Patterns for UI",
+      "exact_items": [
+        "Package overseer default",
+        "Seam integration default",
+        "Node implementation match: Rust + backend",
+        "Review pass default",
+        "Recovery actor default",
+        "Provider fallback from preferred persona model"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Personas.md"
+      ],
+      "heading_hints": [
+        "Explanation / selection-reason direction"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "L3949-3961"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "dr2rA-3964",
+      "seed_type": "consumer",
+      "canon_label_hint": "Persona Override Scope Lifecycle Rules",
+      "exact_items": [
+        "turn",
+        "session",
+        "run",
+        "task",
+        "subagent"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/Personas.md"
+      ],
+      "heading_hints": [
+        "Scope / override lifecycle direction"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "L3963-3973"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "dr2rB-4000",
+      "seed_type": "owner",
+      "canon_label_hint": "Auto Resolver Output Contract",
+      "exact_items": [
+        "ranked candidate(s)",
+        "winning candidate",
+        "concise selection reason",
+        "fallback reason"
+      ],
+      "affected_doc_hints": [
+        "Plans/Personas.md"
+      ],
+      "heading_hints": [
+        "Auto resolver emission requirements",
+        "Persona resolution contract"
+      ],
+      "stale_tokens": [
+        "auto must never appear as opaque state"
+      ],
+      "source_evidence": [
+        "L4001-4007: Require each auto resolver to emit: ranked candidate(s), winning candidate, concise selection reason, fallback reason when the preferred candidate is not the effective one"
+      ],
+      "notes": [
+        "Consumer obligation: any persona field marked 'auto' must emit reason chain and winning candidate, not be stored as bare opaque 'auto' value"
+      ]
+    },
+    {
+      "seed_id": "dr2rB-4009",
+      "seed_type": "consumer",
+      "canon_label_hint": "Persona Historical Preservation",
+      "exact_items": [
+        "effective Persona",
+        "reason from time of execution",
+        "resolved effective Persona"
+      ],
+      "affected_doc_hints": [
+        "Plans/History_Preservation.md"
+      ],
+      "heading_hints": [
+        "Historical runs persona persistence"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "L4010-4011: historical runs must preserve the resolved effective Persona and reason from the time of execution"
+      ],
+      "notes": [
+        "Obligation: History/Ledger system must store resolved Persona + reason snapshot at run execution time, not recompute"
+      ]
+    },
+    {
+      "seed_id": "dr2rB-4012",
+      "seed_type": "owner",
+      "canon_label_hint": "Corroboration Persona Distinctness",
+      "exact_items": [
+        "corroboration personas",
+        "review personas",
+        "implementation persona"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Persona review contract"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "L4012-4013: corroboration/review personas should remain distinct from the original implementation persona whenever possible"
+      ],
+      "notes": [
+        "NEW obligation: Review/Corroboration must use separate persona identity than the one that produced original artifact; contract field needed to enforce this"
+      ]
+    },
+    {
+      "seed_id": "dr2rB-4021",
+      "seed_type": "owner",
+      "canon_label_hint": "Help System Three-Layer Contract",
+      "exact_items": [
+        "canonical term system",
+        "help entry system",
+        "contextual help system"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Glossary.md"
+      ],
+      "heading_hints": [
+        "Recommended help-system split",
+        "Help entry structure direction"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "L4030-4037: distinguish: canonical term system (stable object/state/action names), help entry system (dedicated explainer pages/cards), contextual help system (inline tooltips/badges)",
+        "L4052-4059: each dedicated help entry should have a small fixed template with fields: canonical name, short definition, why it matters, what it is not, common related states/actions, related concepts, surface examples"
+      ],
+      "notes": [
+        "NEW obligation layer: Help authoring must split canonical contract language from ELI5/simplified explanations and contextual inline help; single integrated help struct needed to formalize"
+      ]
+    },
+    {
+      "seed_id": "dr2rB-4040",
+      "seed_type": "consumer",
+      "canon_label_hint": "Help Content Stability Rule",
+      "exact_items": [
+        "keep canonical names stable",
+        "simple help must simplify explanation, not rename the model",
+        "do not create parallel friendly object names",
+        "do not rename without explicit product choice"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Core help principle"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "L4040-4049: Simple help must simplify explanation, not rename the model. Keep canonical names stable, explain them more simply in ELI5 mode, do not create parallel friendly object names that drift away from contracts"
+      ],
+      "notes": [
+        "NEW obligation: All help/ELI5 surfaces must not introduce alternate terms for model objects; semantic stability requirement for contracts"
+      ]
+    },
+    {
+      "seed_id": "dr2rB-4050",
+      "seed_type": "owner",
+      "canon_label_hint": "Dedicated Help Entry Concepts",
+      "exact_items": [
+        "Feature Seam",
+        "Work Package",
+        "Package Overseer",
+        "Seam Overseer",
+        "Weak Integration",
+        "Promotion",
+        "Corroboration",
+        "Graph Patch",
+        "Reopened",
+        "Revoked",
+        "requested vs effective runtime identity",
+        "safe point vs restore point",
+        "lane vs worktree",
+        "concern lifecycle"
+      ],
+      "affected_doc_hints": [
+        "Plans/Glossary.md"
+      ],
+      "heading_hints": [
+        "Which concepts need dedicated help entries"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "L4051-4061: Likely dedicated entries: Feature Seam, Work Package, Package Overseer, Seam Overseer, Weak Integration, Promotion, Corroboration, Graph Patch, Reopened, Revoked, requested vs effective runtime identity, safe point vs restore point, lane vs worktree, concern lifecycle. Reason: these are core rewrite concepts that will appear in multiple surfaces and cannot be re-explained ad hoc"
+      ],
+      "notes": [
+        "NEW owner obligation: Glossary.md must define formal help entries for these 14 distinct concept families; each requires canonical short definition + full help entry across Expert/ELI5"
+      ]
+    },
+    {
+      "seed_id": "dr2rB-4061",
+      "seed_type": "owner",
+      "canon_label_hint": "Related-Concept Linking Structure",
+      "exact_items": [
+        "Feature Seam <-> Work Package <-> Weak Integration <-> Seam Complete",
+        "Promotion <-> Revoked <-> Reopened",
+        "Corroboration <-> Concern <-> Review",
+        "Graph Patch <-> Generation Updated <-> Historical Path",
+        "Lane <-> Worktree <-> Cleanup Eligible <-> Archived/Removed",
+        "Requested <-> Effective <-> Skipped/Clamped"
+      ],
+      "affected_doc_hints": [
+        "Plans/Glossary.md"
+      ],
+      "heading_hints": [
+        "Related-concept linking direction"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "L4065-4078: Important related clusters: Feature Seam <-> Work Package <-> Weak Integration <-> Seam Complete; Promotion <-> Revoked <-> Reopened; Corroboration <-> Concern <-> Review; Graph Patch <-> Generation Updated <-> Historical Path; Lane <-> Worktree <-> Cleanup Eligible <-> Archived/Removed; Requested <-> Effective <-> Skipped/Clamped"
+      ],
+      "notes": [
+        "NEW owner obligation: Help/Glossary system must explicitly model these six related-concept link clusters as first-class navigation/reference relationships"
+      ]
+    },
+    {
+      "seed_id": "dr2rB-4080",
+      "seed_type": "consumer",
+      "canon_label_hint": "Expert vs ELI5 Parity Rule",
+      "exact_items": [
+        "Expert variant",
+        "ELI5 variant",
+        "same concept skeleton",
+        "differ in phrasing density and assumptions, not in substance"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Expert / ELI5 layering direction"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "L4080-4095: Expert and ELI5 variants should share the same concept skeleton, differ in phrasing density and assumptions, not in substance. Good difference: Expert is precise/compact/system-model language; ELI5 is plain-language with one concrete example. Bad difference: ELI5 introduces weaker or alternate semantics"
+      ],
+      "notes": [
+        "NEW consumer obligation: All Expert/ELI5 help variants must preserve semantic equivalence and model truth; cannot introduce alternate logic or weaken contract precision"
+      ]
+    },
+    {
+      "seed_id": "dr2rB-4108",
+      "seed_type": "owner",
+      "canon_label_hint": "Project Card Activity/Attention/Health Fields",
+      "exact_items": [
+        "Activity: idle | running | paused | queued | background_active",
+        "Attention: none | attention_required | blocked | degraded",
+        "Health: setup/config/repo integrity signal",
+        "project name",
+        "path",
+        "language/framework badges",
+        "activity status",
+        "attention status",
+        "primary blocked/attention reason",
+        "blocked owner / attention owner",
+        "pressure summary",
+        "last active / last opened"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "heading_hints": [
+        "Recommended top-level project card fields",
+        "Recommended status split"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "L4125-4140: Likely required fields: project name, path, language/framework badges, activity status, attention status, primary blocked/attention reason, blocked owner / attention owner when relevant, pressure summary, last active / last opened. Good compact model: Activity: idle | running | paused | queued | background_active; Attention: none | attention_required | blocked | degraded; Health: setup/config/repo integrity signal"
+      ],
+      "notes": [
+        "NEW owner obligation: Projects page card contract must split Activity/Attention/Health as three independent fields; project-summary projection must compute these from canonical state"
+      ]
+    },
+    {
+      "seed_id": "dr2rB-4141",
+      "seed_type": "owner",
+      "canon_label_hint": "Blocked-Owner Field Contract",
+      "exact_items": [
+        "dominant current owner of blocked state",
+        "owner kinds: Runtime | Package Overseer | Seam Overseer | Corroboration | Graph Patch | Recovery | User | External Resource",
+        "who/what is the project waiting on"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md"
+      ],
+      "heading_hints": [
+        "Blocked-owner direction"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "L4141-4155: When a project is in blocked/attention state, the Projects page should show the dominant current owner of that state. Owner kinds: Runtime, Package Overseer, Seam Overseer, Corroboration, Graph Patch, Recovery, User, External Resource. This should answer: who/what is the project waiting on?"
+      ],
+      "notes": [
+        "NEW owner obligation: Project card must compute and display singular blocked-owner enum value (not multiple concerns); must answer 'waiting on whom' question for user"
+      ]
+    },
+    {
+      "seed_id": "dr2rB-4160",
+      "seed_type": "owner",
+      "canon_label_hint": "Primary Attention Reason Field",
+      "exact_items": [
+        "primary attention reason",
+        "primary blocked reason",
+        "optional count badge for additional issues",
+        "Waiting on user approval",
+        "Seam integration blocked",
+        "Graph patch required",
+        "Recovery in progress",
+        "Provider/account pressure",
+        "Projection trust degraded"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md"
+      ],
+      "heading_hints": [
+        "Primary reason direction"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "L4156-4170: Show one primary attention reason / primary blocked reason with optional count badge for additional issues. Candidate examples: Waiting on user approval, Seam integration blocked, Graph patch required, Recovery in progress, Provider/account pressure, Projection trust degraded"
+      ],
+      "notes": [
+        "NEW owner obligation: Project card must reduce all concerns to ONE primary reason string; must not show badge storm; secondary count optional"
+      ]
+    },
+    {
+      "seed_id": "dr2rB-4175",
+      "seed_type": "owner",
+      "canon_label_hint": "Project Pressure Summary Field",
+      "exact_items": [
+        "provider/account pressure present",
+        "quota pressure severity",
+        "signal confidence",
+        "Gemini pressure: high",
+        "Account switch active",
+        "Quota signal: heuristic"
+      ],
+      "affected_doc_hints": [
+        "Plans/usage-feature.md"
+      ],
+      "heading_hints": [
+        "Pressure summary direction"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "L4171-4182: Project cards likely need compact pressure signals, not full usage details. Good compact summaries: provider/account pressure present, quota pressure severity, signal confidence. Example: Gemini pressure: high; Account switch active; Quota signal: heuristic"
+      ],
+      "notes": [
+        "NEW owner obligation: Project card must include provider_pressure and quota_pressure_level fields with compact string rendering"
+      ]
+    },
+    {
+      "seed_id": "dr2rB-4188",
+      "seed_type": "owner",
+      "canon_label_hint": "Project-Summary Projection Contract",
+      "exact_items": [
+        "project-summary projection",
+        "current active run state",
+        "dominant concern/blocked owner",
+        "highest-severity attention state",
+        "current pressure summary",
+        "health/config integrity"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [
+        "Relationship to Orchestrator"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "L4195-4204: Projects page should summarize from canonical project-level projections rather than inventing its own status model. Likely it needs a small project summary projection that rolls up: current active run state, dominant concern/blocked owner, highest-severity attention state, current pressure summary, health/config integrity"
+      ],
+      "notes": [
+        "NEW owner obligation: Orchestrator must emit project-summary projection schema with these six rolled-up fields; Projects page is consumer only"
+      ]
+    },
+    {
+      "seed_id": "dr2rB-4221",
+      "seed_type": "owner",
+      "canon_label_hint": "Escalation Ladder Definition",
+      "exact_items": [
+        "info",
+        "warning",
+        "attention_required",
+        "blocked",
+        "system_notification"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "heading_hints": [
+        "Recommended escalation ladder"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "L4235-4241: Define one shared progression: info (visible in local context/history only), warning (in-app banner/card/badge but not necessarily action-blocking), attention_required (user input helpful/needed but background progress may continue), blocked (cannot continue meaningfully until required action/precondition changes), system_notification (out-of-app signal)"
+      ],
+      "notes": [
+        "NEW owner obligation: All concerns/conditions must be assigned exactly one escalation level; must enforce progression rules globally"
+      ]
+    },
+    {
+      "seed_id": "dr2rB-4245",
+      "seed_type": "owner",
+      "canon_label_hint": "Escalation Surface Ladder Mapping",
+      "exact_items": [
+        "History: receives everything chronologically",
+        "Progress / Dashboard: show active warnings / attention / blocked states",
+        "badges: show compressed counts/severity markers",
+        "chat/thread surfaces: only for things that genuinely need user decision/input",
+        "system notifications: reserved for high-value, sparse events"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "heading_hints": [
+        "Surface ladder direction"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "L4243-4251: Recommended mapping: History receives everything chronologically; Progress/Dashboard show active warnings/attention/blocked states; badges show compressed counts/severity markers; chat/thread surfaces only for things that need user decision/input; system notifications reserved for high-value, sparse events"
+      ],
+      "notes": [
+        "NEW owner obligation: Each surface type must filter/transform concern stream by escalation level; routing rules must be formalized"
+      ]
+    },
+    {
+      "seed_id": "dr2rB-4254",
+      "seed_type": "consumer",
+      "canon_label_hint": "Resurfacing/Aging Rule for Unresolved Conditions",
+      "exact_items": [
+        "unresolved conditions resurface based on severity and persistence",
+        "suppress duplicate noise while unchanged",
+        "resurface when: severity increases, owner changes, blocked duration crosses threshold, new action becomes available, user returns focus after time away"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Resurfacing / aging direction"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "L4254-4266: Unresolved conditions should resurface based on severity and persistence, not on every heartbeat/update. Candidate cadence idea: immediate show on first activation, suppress duplicate noise while unchanged, resurface only when: severity increases, owner changes, blocked duration crosses threshold, new action becomes available, user returns focus after time away"
+      ],
+      "notes": [
+        "NEW consumer obligation: Orchestrator must implement resurfacing logic with these five conditions; cannot spam repetitive dismissible warnings indefinitely"
+      ]
+    },
+    {
+      "seed_id": "dr2rB-4269",
+      "seed_type": "consumer",
+      "canon_label_hint": "Blocked State Permanence Rule",
+      "exact_items": [
+        "dismissed is presentation state, not semantic resolution",
+        "active blockers must not be dismissible into fake health",
+        "advisory warnings may respect quiet/dismiss windows",
+        "real blocked states should remain represented until underlying truth changes"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Persistent blocker direction"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "L4268-4276: Persistent blockers should not become invisible just because user dismissed a warning once. Good rule: advisory warnings may respect quiet/dismiss windows, real blocked states should remain represented until underlying truth changes. This aligns with earlier concern and blocked-state work: dismissed is presentation state, not semantic resolution; active blockers must not be dismissible into fake health"
+      ],
+      "notes": [
+        "NEW consumer obligation: Presentation layer cannot allow user dismissal to hide semantic blocked state; blocked enum must remain visible until underlying condition changes"
+      ]
+    },
+    {
+      "seed_id": "dr2rB-4280",
+      "seed_type": "owner",
+      "canon_label_hint": "System Notification Scope Constraint",
+      "exact_items": [
+        "HITL approval required",
+        "run complete",
+        "major failure requiring attention",
+        "maybe severe rate-limit/pressure event when it materially stops progress",
+        "NOT: routine warnings, every blocked node in large run, repeated unresolved reminders without new information"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [
+        "System-notification direction"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "L4277-4287: System/tray notifications should stay narrow. Good candidates: HITL approval required, run complete, major failure requiring attention, maybe severe rate-limit/pressure event. Poor candidates: routine warnings, every blocked node in a large run, repeated unresolved reminders without new information"
+      ],
+      "notes": [
+        "NEW consumer obligation: System notification firing must be gated to sparse high-value events; must not send duplicate or low-severity toasts"
+      ]
+    },
+    {
+      "seed_id": "dr2rC-4418",
+      "seed_type": "owner",
+      "canon_label_hint": "Escalation ladder must be shared and condition-class-specific",
+      "exact_items": [
+        "escalation ladder shared across Orchestrator, Dashboard, thread badges, and notifications",
+        "escalation contract based on concern severity + blocking effect + owner + persistence"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Recommended rule",
+        "Candidate fixes to carry forward"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "L4416: 'Define one escalation ladder shared across Orchestrator, Dashboard, thread badges, and notifications.'"
+      ],
+      "notes": [
+        "New consumer obligation: all surfaces (Orchestrator, Dashboard, thread badges, notifications) must implement shared escalation contract with severity+blocking+owner+persistence logic"
+      ]
+    },
+    {
+      "seed_id": "dr2rC-4423",
+      "seed_type": "owner",
+      "canon_label_hint": "Resurfacing rules tied to change/persistence thresholds, not spam",
+      "exact_items": [
+        "resurfacing rules based on change/persistence thresholds rather than repeated identical events",
+        "resurfacing should respond to meaningful change, not spam the user on every scheduler tick"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Do-not-forget details"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "L4417: 'Add resurfacing rules based on change/persistence thresholds rather than repeated identical events.'",
+        "L4427: 'resurfacing should respond to meaningful change, not spam the user on every scheduler tick'"
+      ],
+      "notes": [
+        "New field contract for concern/notification surfaces: must differentiate repeated-identical-event spam from meaningful-change resurfacing"
+      ]
+    },
+    {
+      "seed_id": "dr2rC-4429",
+      "seed_type": "owner",
+      "canon_label_hint": "Distinct semantics: blocked-state persistence vs dismissible warning surfaces",
+      "exact_items": [
+        "blocked-state persistence semantically stronger than dismissible warning surfaces",
+        "attention_required and blocked must remain distinct everywhere"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Do-not-forget details"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "L4418: 'Keep blocked-state persistence semantically stronger than dismissible warning surfaces.'",
+        "L4425: 'attention_required and blocked must remain distinct everywhere'"
+      ],
+      "notes": [
+        "New operational rule: blocked-state must be non-dismissible and durable; attention_required is separate advisory class"
+      ]
+    },
+    {
+      "seed_id": "dr2rC-4443",
+      "seed_type": "owner",
+      "canon_label_hint": "Performance contract must cover all dense tabs: Seams, Node Graph, Evidence, History, Ledger, Progress",
+      "exact_items": [
+        "Seams: must use progressive disclosure rather than fully expanded seam/package/node trees",
+        "Evidence: evidence records and artifacts need independent virtualization/paging",
+        "History: should be chronological but windowed with explicit load-older / jump controls",
+        "Ledger: must be exact, but exact does not mean fully materialized at once",
+        "Progress: widgets should consume compact projections, not live-scan huge record sets per widget"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Tab-by-tab direction"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "L4448\u2013L4470: Tab-by-tab performance direction section"
+      ],
+      "notes": [
+        "New owner obligations: each dense tab must implement slice-based loading, virtualization, lazy expansion, and demand-loaded inspectors"
+      ]
+    },
+    {
+      "seed_id": "dr2rC-4476",
+      "seed_type": "owner",
+      "canon_label_hint": "Generation visibility defaults: current emphasized, superseded branches muted, overlays on demand",
+      "exact_items": [
+        "current generation emphasized",
+        "superseded branches visually muted",
+        "branch/rejoin overlays available on demand",
+        "minimap/search/focus-to-object remain generation-aware"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Generation-heavy graph direction"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "L4474\u2013L4482: Generation-heavy graph direction section"
+      ],
+      "notes": [
+        "New UI contract: graph generations must have visibility controls defaulting to focused generation + nearby lineage, not fully expanded all-generations wall"
+      ]
+    },
+    {
+      "seed_id": "dr2rC-4509",
+      "seed_type": "owner",
+      "canon_label_hint": "Orchestrator-wide scale contract: initial-slice-size, paging/search interplay, lazy expansion, cross-tab inspector loading, projection fallback",
+      "exact_items": [
+        "initial slice size",
+        "paging/search interplay",
+        "lazy expansion behavior",
+        "cross-tab inspector loading strategy",
+        "projection fallback behavior under large degraded datasets"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Contradictions / gaps surfaced",
+        "Candidate fixes to carry forward"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "L4507\u2013L4512: Explicit list of missing Orchestrator-wide rules"
+      ],
+      "notes": [
+        "New owner obligation: Orchestrator must have explicit scale contract document covering all dense surfaces"
+      ]
+    },
+    {
+      "seed_id": "dr2rC-4539",
+      "seed_type": "owner",
+      "canon_label_hint": "Palette action classification: palette-friendly, palette-allowed-but-guarded, palette-discouraged",
+      "exact_items": [
+        "palette-friendly: open/focus tab, jump to objects, open inspector/detail/history/ledger/evidence, run search, low-risk view/filter commands",
+        "palette-allowed but guarded: recover/retry/approve/decline/replan/restore/cleanup with canonical runtime semantics and confirmation rules",
+        "palette-discouraged: broad destructive bulk mutations with ambiguous target sets"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Recommended command-surface model"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "L4535\u2013L4551: Three-tier palette action classification"
+      ],
+      "notes": [
+        "New consumer obligation: command-palette visibility must be classified per action; palette visibility does not weaken confirmation requirements"
+      ]
+    },
+    {
+      "seed_id": "dr2rC-4560",
+      "seed_type": "owner",
+      "canon_label_hint": "Bulk actions: default to navigation/triage/low-risk, not live execution mutation",
+      "exact_items": [
+        "bulk actions should default to navigation, triage, and low-risk state updates",
+        "live execution mutations should stay narrow unless the runtime has an explicit safe batch semantic",
+        "good candidate bulk actions: navigate, open in History/Evidence/Ledger, acknowledge advisory concerns, archive/remove historical",
+        "bad default bulk actions: retry many nodes, apply graph patch to multiple scopes, approve multiple HITL/runtime blocked actions, cleanup/remove many live lanes/worktrees"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Bulk-action direction"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "L4555\u2013L4576: Bulk-action direction with good/bad classifications"
+      ],
+      "notes": [
+        "New system contract: bulk action policy must distinguish safe navigation-only bulk ops from risky live-mutation bulk ops"
+      ]
+    },
+    {
+      "seed_id": "dr2rC-4589",
+      "seed_type": "owner",
+      "canon_label_hint": "Shortcut policy: navigation, focus, search, inspector toggles, non-destructive actions only",
+      "exact_items": [
+        "shortcuts should stay useful but sparse",
+        "shortcuts primarily target navigation, focus, search, inspector toggles, and common non-destructive actions",
+        "good shortcut candidates: global Orchestrator search, next/previous tab, open/close right-side inspector, jump between current attention items, fit graph/focus/toggle generation overlay"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Shortcut direction"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "L4580\u2013L4595: Shortcut eligibility rules"
+      ],
+      "notes": [
+        "New UI constraint: keyboard shortcuts must stay narrowly scoped to navigation and non-destructive actions; dangerous runtime mutations excluded"
+      ]
+    },
+    {
+      "seed_id": "dr2rC-4611",
+      "seed_type": "owner",
+      "canon_label_hint": "Shared command routing contract: payload fields must work across palette, shortcuts, widgets, search, deep-links",
+      "exact_items": [
+        "shared payload fields: project_id, focused_run_id, destination tab/surface, selected object id and type, optional inspector target, optional filter payload",
+        "palette actions and deep links must route through same destination payload model"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Routing contract implication"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "L4605\u2013L4616: Routing contract requiring unified payload model"
+      ],
+      "notes": [
+        "New consumer obligation: command palette, shortcuts, widgets, search, and deep-links must share one exact routing payload model to avoid system drift"
+      ]
+    },
+    {
+      "seed_id": "dr2rC-4630",
+      "seed_type": "owner",
+      "canon_label_hint": "Confirmation policy must not be weakened by command discoverability",
+      "exact_items": [
+        "command discoverability does not weaken confirmation requirements",
+        "if action is strong confirmation, hard gate, non-reversible, or compensating-action-only, then palette and shortcut surfaces must still honor same gating and preview requirements"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Confirmation / safety implication"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "L4624\u2013L4633: Confirmation policy requirement"
+      ],
+      "notes": [
+        "New system invariant: palette/shortcut visibility does not bypass existing confirmation contracts"
+      ]
+    },
+    {
+      "seed_id": "dr2rC-4658",
+      "seed_type": "owner",
+      "canon_label_hint": "Projection-trust operational states: current, refreshing, stale, degraded, unavailable",
+      "exact_items": [
+        "current: projection is up to date enough for normal read + write interaction",
+        "refreshing: slightly behind but actively catching up; read is fine, write may still be fine",
+        "stale: data is old enough that mutation-bearing actions should narrow or require refetch",
+        "degraded: projector or dependency failure means surface may be incomplete or partially wrong",
+        "unavailable: projection cannot currently support that surface; UI must fall back or disable"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Recommended trust model"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "L4658\u2013L4676: Five-state projection-trust contract"
+      ],
+      "notes": [
+        "New system concept: projection-trust must have exact operational states with specific action-gating implications; not just on/off"
+      ]
+    },
+    {
+      "seed_id": "dr2rC-4682",
+      "seed_type": "owner",
+      "canon_label_hint": "Action-gating split: read-only allows refreshing/stale/degraded, mutation requires current or revalidation",
+      "exact_items": [
+        "low-risk read-only inspection: allowed on refreshing, often on stale, sometimes on degraded",
+        "precise navigation/deep-linking: usually allowed if target object identity valid",
+        "live mutation/approval/recovery/retry/cleanup: require current or direct canonical-runtime validation path",
+        "if surface is stale or degraded, GUI must not present mutation controls that imply hidden confidence"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Action-gating direction"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "L4679\u2013L4697: Three-tier action-gating thresholds"
+      ],
+      "notes": [
+        "New consumer obligation: action controls must gate on projection-trust state; stale/degraded surfaces must disable or narrow mutation controls"
+      ]
+    },
+    {
+      "seed_id": "dr2rC-4709",
+      "seed_type": "owner",
+      "canon_label_hint": "Canonical-validation rule: revalidate stale/degraded projection writes against authoritative runtime state",
+      "exact_items": [
+        "if write action is attempted from stale/degraded surface, runtime should either refuse with clear reason or perform authoritative revalidation against canonical/current runtime state before executing",
+        "GUI should never guess that previously visible allowed_action_ids[] set is still valid if blocked projection is stale"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Canonical-validation direction"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "L4705\u2013L4712: Canonical-validation runtime requirement"
+      ],
+      "notes": [
+        "New runtime invariant: write from stale projection must trigger revalidation; allowed_action_ids[] freshness is not assumed"
+      ]
+    },
+    {
+      "seed_id": "dr2rC-4720",
+      "seed_type": "owner",
+      "canon_label_hint": "UX disclosure grammar: freshness_state, last_updated_at, data_source_kind, degraded_reason, action_gate_reason fields required",
+      "exact_items": [
+        "freshness_state",
+        "last_updated_at",
+        "data_source_kind",
+        "degraded_reason",
+        "action_gate_reason",
+        "copy style: View may be stale, Projection degraded, Live actions unavailable until refresh, Showing canonical history slice"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "UX disclosure direction"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "L4716\u2013L4727: Exact UX disclosure fields and copy standards"
+      ],
+      "notes": [
+        "New record-envelope obligation: all Orchestrator surfaces must include freshness_state, last_updated_at, data_source_kind fields; degraded/gated actions must include reason fields"
+      ]
+    },
+    {
+      "seed_id": "dr2rC-4735",
+      "seed_type": "owner",
+      "canon_label_hint": "Fallback ladder: degrade toward exact record-backed inspection, not empty ambiguity",
+      "exact_items": [
+        "fallback ladder: widget summary -> native tab, rollup tab -> filtered record list, projection-derived inspector -> Ledger/History/exact record view via detail_ref",
+        "when trust drops, degrade toward exact record-backed inspection, not toward empty ambiguity"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Fallback direction"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "L4731\u2013L4741: Fallback ladder and strategy"
+      ],
+      "notes": [
+        "New consumer obligation: degraded surfaces must have explicit fallback to `Ledger`/`History`/exact record views; cannot simply hide or disable UI"
+      ]
+    },
+    {
+      "seed_id": "dr2rC-4759",
+      "seed_type": "owner",
+      "canon_label_hint": "Orchestrator-wide projection-trust contract with operational states, action thresholds, disclosure, fallback",
+      "exact_items": [
+        "one shared projection-trust contract with operational state meanings and action thresholds",
+        "all dense Orchestrator tabs must show freshness/last-updated/disclosure state",
+        "gate mutation controls on trusted projections or explicit runtime revalidation",
+        "standardize fallback toward record-backed views (History, Ledger, exact record inspectors) when projections degraded"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Candidate fixes to carry forward"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "L4756\u2013L4763: Orchestrator-wide projection-trust contract requirements"
+      ],
+      "notes": [
+        "New owner obligation: must create unified projection-trust specification spanning all Orchestrator tabs"
+      ]
+    },
+    {
+      "seed_id": "dr2rC-4769",
+      "seed_type": "owner",
+      "canon_label_hint": "Do-not-forget: stale visibility is not action authority, blocked/recovery controls are trust-sensitive, Ledger is stable fallback",
+      "exact_items": [
+        "stale visibility is not the same as action authority",
+        "blocked/recovery controls are especially sensitive because allowed_action_ids[] can go invalid if projection trust drops",
+        "Ledger and record inspectors should be the stable fallback when summary surfaces lose trust"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Do-not-forget details"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "L4767\u2013L4771: Three critical do-not-forget rules"
+      ],
+      "notes": [
+        "New system invariant: blocked/recovery action display cannot assume projection freshness; Ledger is canonical fallback"
+      ]
+    },
+    {
+      "seed_id": "dr2rD-5203",
+      "seed_type": "consumer",
+      "canon_label_hint": "assistant-chat-design.md integration",
+      "exact_items": [
+        "assistant-chat-design.md",
+        "interview-subagent-integration.md",
+        "chain-wizard-flexibility.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/assistant-chat-design.md",
+        "Plans/interview-subagent-integration.md",
+        "Plans/chain-wizard-flexibility.md"
+      ],
+      "heading_hints": [
+        "Shared Conversational-Actor / Runtime Identity Boundary"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "L5203-5220"
+      ],
+      "notes": [
+        "New affected docs"
+      ]
+    },
+    {
+      "seed_id": "dr2rD-5236",
+      "seed_type": "owner",
+      "canon_label_hint": "Conversational actor runtime identity semantics",
+      "exact_items": [
+        "thread_id",
+        "wizard_id",
+        "builder stage/run ids",
+        "bundle/review ids",
+        "orchestration run_id",
+        "attempt ids"
+      ],
+      "affected_doc_hints": [
+        "Plans/assistant-chat-design.md",
+        "Plans/interview-subagent-integration.md"
+      ],
+      "heading_hints": [
+        "Identity-model direction"
+      ],
+      "stale_tokens": [
+        "thread_id",
+        "wizard_id"
+      ],
+      "source_evidence": [
+        "L5236-5269"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "dr2rD-5274",
+      "seed_type": "consumer",
+      "canon_label_hint": "Export taxonomy and contract family",
+      "exact_items": [
+        "record export",
+        "bundle export",
+        "view export",
+        "export_id",
+        "export_kind",
+        "schema_version",
+        "project_id",
+        "focused_run_id",
+        "source_surface",
+        "generated_at_utc",
+        "filter_summary",
+        "included_record_ids[]",
+        "included_artifact_ids[]",
+        "included_file_paths[]",
+        "lineage_notes",
+        "trust_state_at_export"
+      ],
+      "affected_doc_hints": [
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/chain-wizard-flexibility.md"
+      ],
+      "heading_hints": [
+        "Export Contracts"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "L5293-5340"
+      ],
+      "notes": [
+        "New doc: Runtime_Artifacts_Panel.md"
+      ]
+    },
+    {
+      "seed_id": "dr2rD-5342",
+      "seed_type": "consumer",
+      "canon_label_hint": "Canonical-vs-derived export rule",
+      "exact_items": [
+        "export convenience",
+        "canonical source-of-truth"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Canonical-vs-derived rule"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "L5342-5355"
+      ],
+      "notes": [
+        "global rule"
+      ]
+    },
+    {
+      "seed_id": "dr2rD-5366",
+      "seed_type": "owner",
+      "canon_label_hint": "Notification escalation ladder with concern/owner/trust interaction",
+      "exact_items": [
+        "info",
+        "warning",
+        "attention_required",
+        "blocked",
+        "system_notification",
+        "blocked owner",
+        "concern severity",
+        "concern acknowledged"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Notifications / Escalation Interaction"
+      ],
+      "stale_tokens": [
+        "attention_required",
+        "blocked"
+      ],
+      "source_evidence": [
+        "L5385-5428"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "dr2rD-5430",
+      "seed_type": "consumer",
+      "canon_label_hint": "Notification routing surface model",
+      "exact_items": [
+        "History",
+        "Progress",
+        "Dashboard",
+        "thread/chat",
+        "system notification"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Routing / surface direction"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "L5430-5440"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "dr2rD-5442",
+      "seed_type": "owner",
+      "canon_label_hint": "Notification resurfacing trigger policy",
+      "exact_items": [
+        "severity increase",
+        "blocked owner change",
+        "advisory to execution-impacting transition",
+        "blocked duration threshold crossed",
+        "trust state improves",
+        "trust state degrades"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Resurfacing direction"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "L5442-5455"
+      ],
+      "notes": []
+    }
+  ],
+  "generated_at_utc": "2026-04-20T21:22:02.582322+00:00"
+}
