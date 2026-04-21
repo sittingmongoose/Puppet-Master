@@ -3,11 +3,11 @@
   "work_id": "w-20260312-203855",
   "summary": {
     "seed_items_total": 1047,
-    "owner_seed_items": 693,
+    "owner_seed_items": 695,
     "consumer_seed_items": 289,
     "stale_retirement_seed_items": 63,
     "docs_affected": 98,
-    "source_line_ranges_covered": 534,
+    "source_line_ranges_covered": 533,
     "verification_passes_completed": 3,
     "material_findings_deferred": 0
   },
@@ -14187,7 +14187,7 @@
     },
     {
       "seed_id": "w11c44-17303",
-      "seed_type": "owner|consumer",
+      "seed_type": "owner",
       "canon_label_hint": "Multi-doc same-file mixed-era layering",
       "exact_items": [
         "mixed-era layering where additive patches landed without fully retiring older framing"
@@ -14206,7 +14206,8 @@
         "working_ledger.md:17303-17304"
       ],
       "notes": [
-        "Each doc shows degree of mixed-era layering needing retirement of older framing"
+        "Each doc shows degree of mixed-era layering needing retirement of older framing",
+        "seed_type fixed: owner|consumer \u2192 owner; item is about owner-doc mixed-era layering"
       ]
     },
     {
@@ -14412,18 +14413,17 @@
       ]
     },
     {
-      "seed_id": "w11c44-17448",
-      "seed_type": "owner|consumer",
-      "canon_label_hint": "Identity, attribution, and blocked-policy specifics",
+      "seed_id": "w11c44-17448-owner",
+      "seed_type": "owner",
+      "canon_label_hint": "Identity, attribution, and blocked-policy ownership gaps",
       "exact_items": [
-        "`execution_role` absent in many key docs",
-        "`requested_account_id` absent where ledger expects it",
-        "`operational_identity` only partially transferred",
-        "account-switch / pressure families named but under-owned at contract level",
-        "`blocked_sequence` minting ownership still missing",
+        "execution_role absent in many key docs",
+        "requested_account_id absent where ledger expects it",
+        "operational_identity only partially transferred",
+        "blocked_sequence minting ownership still missing",
         "startup recovery handshake still incomplete",
         "DAE jail / approval policy gaps remain untransferred",
-        "usage lacks real switch-history / execution-role follow-through"
+        "account-switch / pressure families named but under-owned at contract level"
       ],
       "affected_doc_hints": [
         "Plans/Prompt_Pipeline.md",
@@ -14445,7 +14445,28 @@
         "working_ledger.md:17447-17457"
       ],
       "notes": [
-        "Identity layer fields and policies remain under-transferred across owner and consumer docs"
+        "split from w11c44-17448 (owner|consumer)"
+      ]
+    },
+    {
+      "seed_id": "w11c44-17448-consumer",
+      "seed_type": "consumer",
+      "canon_label_hint": "Identity, attribution, and blocked-policy consumer carry-through",
+      "exact_items": [
+        "usage lacks real switch-history / execution-role follow-through"
+      ],
+      "affected_doc_hints": [
+        "Plans/usage-feature.md"
+      ],
+      "heading_hints": [
+        "#### Identity / attribution / blocked-policy misses were reconfirmed with stronger specificity"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:17447-17457"
+      ],
+      "notes": [
+        "split from w11c44-17448 (owner|consumer)"
       ]
     },
     {
@@ -15723,7 +15744,19 @@
       "seed_id": "p3rD-15278",
       "seed_type": "owner",
       "canon_label_hint": "owner docs have stale base text with newer addenda still live",
-      "exact_items": [],
+      "exact_items": [
+        "Plans/Contracts_V0.md: stale base text with unretired additive patches (newer addenda live alongside un-retired older framing)",
+        "Plans/Crosswalk.md: stale base text with unretired additive patches (newer addenda live alongside un-retired older framing)",
+        "Plans/storage-plan.md: stale base text with unretired additive patches (newer addenda live alongside un-retired older framing)",
+        "Plans/human-in-the-loop.md: stale base text with unretired additive patches (newer addenda live alongside un-retired older framing)",
+        "Plans/Prompt_Pipeline.md: stale base text with unretired additive patches (newer addenda live alongside un-retired older framing)",
+        "Plans/Orchestrator_Page.md: stale base text with unretired additive patches (newer addenda live alongside un-retired older framing)",
+        "Plans/Run_Graph_View.md: stale base text with unretired additive patches (newer addenda live alongside un-retired older framing)",
+        "Plans/UI_Command_Catalog.md: stale base text with unretired additive patches (newer addenda live alongside un-retired older framing)",
+        "Plans/Widget_System.md: stale base text with unretired additive patches (newer addenda live alongside un-retired older framing)",
+        "Plans/FinalGUISpec.md: stale base text with unretired additive patches (newer addenda live alongside un-retired older framing)",
+        "Plans/usage-feature.md: stale base text with unretired additive patches (newer addenda live alongside un-retired older framing)"
+      ],
       "affected_doc_hints": [
         "Plans/Contracts_V0.md",
         "Plans/Crosswalk.md",
@@ -15744,7 +15777,9 @@
       "source_evidence": [
         "working_ledger.md:15278-15322"
       ],
-      "notes": []
+      "notes": [
+        "exact_items populated from canon_label_hint + affected_doc_hints; no new evidence invented"
+      ]
     },
     {
       "seed_id": "p3rD-15384",
@@ -18683,23 +18718,6 @@
       "stale_tokens": [],
       "source_evidence": [
         "L6198"
-      ],
-      "notes": [
-        "NEW doc"
-      ]
-    },
-    {
-      "seed_id": "dr3rA-6193",
-      "seed_type": "consumer",
-      "canon_label_hint": "Plans/orchestrator-subagent-integration.md in policy/authority cluster",
-      "exact_items": [],
-      "affected_doc_hints": [
-        "Plans/orchestrator-subagent-integration.md"
-      ],
-      "heading_hints": [],
-      "stale_tokens": [],
-      "source_evidence": [
-        "L6193"
       ],
       "notes": [
         "NEW doc"
