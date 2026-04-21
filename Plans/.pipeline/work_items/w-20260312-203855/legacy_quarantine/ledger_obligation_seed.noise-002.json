@@ -1,0 +1,351 @@
+{
+  "schema_id": "pm.ledger_obligation_seed.noise.v1",
+  "work_id": "w-20260312-203855",
+  "pass": "002",
+  "noise_items": [
+    {
+      "seed_id": "p2rA-800",
+      "reason_noise": "summary framing without exact implementation directive",
+      "source_evidence": [
+        "working_ledger.md:800"
+      ]
+    },
+    {
+      "seed_id": "p2rA-808",
+      "reason_noise": "vague rolled-up gap summary without exact token or affected doc",
+      "source_evidence": [
+        "working_ledger.md:808"
+      ]
+    },
+    {
+      "seed_id": "p2rA-819",
+      "reason_noise": "duplicate of existing item already captured in seed_id p2rA-816",
+      "source_evidence": [
+        "working_ledger.md:819-820"
+      ]
+    },
+    {
+      "seed_id": "p2rA-821",
+      "reason_noise": "planning framing about discussion seam selection, not obligation-grade evidence",
+      "source_evidence": [
+        "working_ledger.md:821-825"
+      ]
+    },
+    {
+      "seed_id": "p2rA-833",
+      "reason_noise": "meta-discussion instruction about ledger usage, not obligation requirement",
+      "source_evidence": [
+        "working_ledger.md:833"
+      ]
+    },
+    {
+      "seed_id": "p2rA-834",
+      "reason_noise": "vague framing guidance without exact design decision",
+      "source_evidence": [
+        "working_ledger.md:834-837"
+      ]
+    },
+    {
+      "seed_id": "p2rA-838",
+      "reason_noise": "high-level reconciliation target summary without exact obligation",
+      "source_evidence": [
+        "working_ledger.md:838-840"
+      ]
+    },
+    {
+      "seed_id": "p2rA-841",
+      "reason_noise": "clarification restatement of existing graph-view requirement",
+      "source_evidence": [
+        "working_ledger.md:841-843"
+      ]
+    },
+    {
+      "seed_id": "p2rA-860",
+      "reason_noise": "automation-first framing restating existing principle, no new obligation",
+      "source_evidence": [
+        "working_ledger.md:860-864"
+      ]
+    },
+    {
+      "seed_id": "p2rA-869",
+      "reason_noise": "planning framing requesting next subtopic, no obligation evidence",
+      "source_evidence": [
+        "working_ledger.md:869-870"
+      ]
+    },
+    {
+      "seed_id": "p2rA-881",
+      "reason_noise": "clarification restatement of existing persona/provider configuration pattern",
+      "source_evidence": [
+        "working_ledger.md:881-884"
+      ]
+    },
+    {
+      "seed_id": "p2rA-892",
+      "reason_noise": "planning framing about discussion order, not obligation requirement",
+      "source_evidence": [
+        "working_ledger.md:892-897"
+      ]
+    },
+    {
+      "seed_id": "p2rA-899",
+      "reason_noise": "list of affected docs without new obligation discovery",
+      "source_evidence": [
+        "working_ledger.md:899-913"
+      ]
+    },
+    {
+      "seed_id": "p2rA-915",
+      "reason_noise": "section header for decisions, not obligation evidence",
+      "source_evidence": [
+        "working_ledger.md:915"
+      ]
+    },
+    {
+      "seed_id": "p2rA-916",
+      "reason_noise": "mode declaration and prior resolutions, not new obligation",
+      "source_evidence": [
+        "working_ledger.md:916-922"
+      ]
+    },
+    {
+      "seed_id": "p2rA-924",
+      "reason_noise": "section header for open questions, not obligation evidence",
+      "source_evidence": [
+        "working_ledger.md:924"
+      ]
+    },
+    {
+      "seed_id": "p2rA-925",
+      "reason_noise": "corroboration handling clarification; weaker restatement of existing quorum model",
+      "source_evidence": [
+        "working_ledger.md:925-929"
+      ]
+    },
+    {
+      "seed_id": "p2rA-952",
+      "reason_noise": "list of remaining blind spots without exact obligation tokens",
+      "source_evidence": [
+        "working_ledger.md:952-962"
+      ]
+    },
+    {
+      "seed_id": "p2rA-963",
+      "reason_noise": "decision framing question without resolution or obligation",
+      "source_evidence": [
+        "working_ledger.md:963-966"
+      ]
+    },
+    {
+      "seed_id": "p2rA-967",
+      "reason_noise": "open question without resolution; already captured as item p2rA-809",
+      "source_evidence": [
+        "working_ledger.md:967-970"
+      ]
+    },
+    {
+      "seed_id": "p2rA-971",
+      "reason_noise": "open question without resolved obligation",
+      "source_evidence": [
+        "working_ledger.md:971"
+      ]
+    },
+    {
+      "seed_id": "p2rA-972",
+      "reason_noise": "open question options without decision; already captured in item p2rA-811",
+      "source_evidence": [
+        "working_ledger.md:972-975"
+      ]
+    },
+    {
+      "seed_id": "p2rA-976",
+      "reason_noise": "open question without resolved obligation",
+      "source_evidence": [
+        "working_ledger.md:976-981"
+      ]
+    },
+    {
+      "seed_id": "p2rA-996",
+      "reason_noise": "planning instruction requesting discussion step, not obligation",
+      "source_evidence": [
+        "working_ledger.md:996-997"
+      ]
+    },
+    {
+      "seed_id": "p2rA-1015",
+      "reason_noise": "planning instruction requesting discussion step, not obligation",
+      "source_evidence": [
+        "working_ledger.md:1015-1017"
+      ]
+    },
+    {
+      "seed_id": "p2rA-1018",
+      "reason_noise": "candidate shape for preservation; weaker framing than actual requirement",
+      "source_evidence": [
+        "working_ledger.md:1018-1023"
+      ]
+    },
+    {
+      "seed_id": "p2rA-1054",
+      "reason_noise": "open question about package-overseer scope; vague without resolution",
+      "source_evidence": [
+        "working_ledger.md:1054-1056"
+      ]
+    },
+    {
+      "seed_id": "p2rA-1058",
+      "reason_noise": "open question list about corroboration; already covered in item p2rA-811",
+      "source_evidence": [
+        "working_ledger.md:1058-1062"
+      ]
+    },
+    {
+      "seed_id": "p2rA-1064",
+      "reason_noise": "open question options without decision; already covered in item p2rA-827",
+      "source_evidence": [
+        "working_ledger.md:1064-1068"
+      ]
+    },
+    {
+      "seed_id": "p2rA-1069",
+      "reason_noise": "open question about legacy terminology without resolution",
+      "source_evidence": [
+        "working_ledger.md:1069"
+      ]
+    },
+    {
+      "seed_id": "p2rA-1070",
+      "reason_noise": "open question about Orchestrator mental model without resolution",
+      "source_evidence": [
+        "working_ledger.md:1070-1074"
+      ]
+    },
+    {
+      "seed_id": "p2rA-1075",
+      "reason_noise": "open question about page naming authority without resolution",
+      "source_evidence": [
+        "working_ledger.md:1075"
+      ]
+    },
+    {
+      "seed_id": "p2rA-1076",
+      "reason_noise": "reminder list of downstream topics without new obligation evidence",
+      "source_evidence": [
+        "working_ledger.md:1076-1079"
+      ]
+    },
+    {
+      "seed_id": "p2rA-1080",
+      "reason_noise": "planning framing about next design seam; weaker than actual design decisions",
+      "source_evidence": [
+        "working_ledger.md:1080-1086"
+      ]
+    },
+    {
+      "seed_id": "p2rA-1087",
+      "reason_noise": "planning constraint framing without exact obligation tokens",
+      "source_evidence": [
+        "working_ledger.md:1087-1092"
+      ]
+    },
+    {
+      "seed_id": "p2rA-1093",
+      "reason_noise": "settings-spec concern framing without exact obligation",
+      "source_evidence": [
+        "working_ledger.md:1093-1095"
+      ]
+    },
+    {
+      "seed_id": "p2rA-1119",
+      "reason_noise": "packetization note; administrative metadata not obligation evidence",
+      "source_evidence": [
+        "working_ledger.md:1119-1120"
+      ]
+    },
+    {
+      "seed_id": "p2rB-7620",
+      "reason_noise": "do-not-forget details are restatements",
+      "source_evidence": [
+        "working_ledger.md:7620-7625"
+      ]
+    },
+    {
+      "seed_id": "p2rB-7761",
+      "reason_noise": "readiness posture section is rolled-up summary",
+      "source_evidence": [
+        "working_ledger.md:7761-7835"
+      ]
+    },
+    {
+      "seed_id": "p2rB-7689",
+      "reason_noise": "do-not-forget details are restatements",
+      "source_evidence": [
+        "working_ledger.md:7689-7693"
+      ]
+    },
+    {
+      "seed_id": "p2rB-7755",
+      "reason_noise": "implementation reminders, not new material findings",
+      "source_evidence": [
+        "working_ledger.md:7755-7760"
+      ]
+    },
+    {
+      "seed_id": "p2rB-7983",
+      "reason_noise": "do-not-forget details are restatements of earlier points",
+      "source_evidence": [
+        "working_ledger.md:7983-7987"
+      ]
+    },
+    {
+      "seed_id": "p2rD-12017",
+      "reason_noise": "Rolled-up impacted docs and summary block for already-known routing seam",
+      "source_evidence": [
+        "working_ledger.md:12017-12046"
+      ]
+    },
+    {
+      "seed_id": "p2rD-12123",
+      "reason_noise": "Duplicate impacted docs and summary block - different line reference only",
+      "source_evidence": [
+        "working_ledger.md:12123-12150"
+      ]
+    },
+    {
+      "seed_id": "p2rD-12209",
+      "reason_noise": "Duplicate impacted docs for sub-selection seam - different line reference",
+      "source_evidence": [
+        "working_ledger.md:12209-12234"
+      ]
+    },
+    {
+      "seed_id": "p2rD-12272",
+      "reason_noise": "Duplicate impacted docs for migration pattern seam",
+      "source_evidence": [
+        "working_ledger.md:12272-12298"
+      ]
+    },
+    {
+      "seed_id": "p2rD-12345",
+      "reason_noise": "Section summary block listing docs already examined",
+      "source_evidence": [
+        "working_ledger.md:12345-12372"
+      ]
+    },
+    {
+      "seed_id": "p2rD-12374",
+      "reason_noise": "Rolled-up summary of contradictions/gaps without specific new evidence",
+      "source_evidence": [
+        "working_ledger.md:12374-12378"
+      ]
+    },
+    {
+      "seed_id": "p2rD-12379",
+      "reason_noise": "Candidate fixes and follow-on recommendations - planning guidance only",
+      "source_evidence": [
+        "working_ledger.md:12379-12395"
+      ]
+    }
+  ],
+  "generated_at_utc": "2026-04-20T20:51:19.378880+00:00"
+}

@@ -1,0 +1,621 @@
+{
+  "schema_id": "pm.ledger_obligation_seed.pass.v1",
+  "work_id": "w-20260312-203855",
+  "pass": "001",
+  "ranges_checked": [
+    "L2000-L2400",
+    "L5600-L6000",
+    "L9600-L10000",
+    "L13600-L14000"
+  ],
+  "material_count": 22,
+  "noise_count": 20,
+  "material_items": [
+    {
+      "seed_id": "p1rB-5602",
+      "seed_type": "consumer",
+      "canon_label_hint": "Search Routing and Deep-Link Payload Normalization - shared routing contract requirement",
+      "exact_items": [
+        "routing payload contract",
+        "destination_surface",
+        "focused_run_id",
+        "object_kind",
+        "object_id",
+        "shared routing/deep-link payload",
+        "route activation restore scope"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/usage-feature.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/chain-wizard-flexibility.md"
+      ],
+      "heading_hints": [
+        "## Research Progress - 2026-03-16 - Search Routing and Deep-Link Payload Normalization",
+        "### Candidate shared payload fields",
+        "### Object-kind direction",
+        "### Candidate fixes to carry forward"
+      ],
+      "stale_tokens": [
+        "resume_url",
+        "Show in Ledger",
+        "Show in Usage",
+        "ad hoc payloads per surface"
+      ],
+      "source_evidence": [
+        "working_ledger.md:5602-5754"
+      ],
+      "notes": [
+        "Defines required shared routing contract fields and object_kind vocabulary"
+      ]
+    },
+    {
+      "seed_id": "p1rB-5760",
+      "seed_type": "consumer",
+      "canon_label_hint": "Historical Semantic Consistency - cross-family lifecycle vocabulary",
+      "exact_items": [
+        "historical",
+        "stale_historical",
+        "superseded",
+        "revoked",
+        "reopened",
+        "archived",
+        "removed",
+        "remediation.resolved enum conflict"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/Contracts_V0.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/chain-wizard-flexibility.md"
+      ],
+      "heading_hints": [
+        "## Research Progress - 2026-03-16 - Historical Semantic Consistency Across Record Families",
+        "### Cross-family semantic core",
+        "### Important contradiction surfaced",
+        "### Remediation semantic direction",
+        "### Candidate fixes to carry forward"
+      ],
+      "stale_tokens": [
+        "blocked/recovery records",
+        "attempts/generations",
+        "family-local workflow states"
+      ],
+      "source_evidence": [
+        "working_ledger.md:5760-5911"
+      ],
+      "notes": [
+        "Identifies real semantic conflict in Contracts_V0.md remediation.resolved enum"
+      ]
+    },
+    {
+      "seed_id": "p1rB-5912",
+      "seed_type": "consumer",
+      "canon_label_hint": "Concern Record Structure - durable object family definition and interaction rules",
+      "exact_items": [
+        "concern_id",
+        "concern record family",
+        "scope_type",
+        "scope_id",
+        "origin_kind",
+        "resolution_kind",
+        "acknowledged_by",
+        "dismissed_by",
+        "source_refs",
+        "evidence_refs",
+        "blocked_episode_refs",
+        "promotion_refs",
+        "graph_patch_refs",
+        "recovery_refs"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/storage-plan.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/chain-wizard-flexibility.md"
+      ],
+      "heading_hints": [
+        "## Research Progress - 2026-03-16 - Concern Record Structure and Interaction Rules",
+        "### Concern vs adjacent object boundaries",
+        "### Recommended minimum concern shape",
+        "### Lifecycle direction"
+      ],
+      "stale_tokens": [
+        "review finding vs concern boundary",
+        "annotation vs concern boundary",
+        "blocked episode vs concern"
+      ],
+      "source_evidence": [
+        "working_ledger.md:5912-6000"
+      ],
+      "notes": [
+        "Defines canonical concern record family with complete envelope and payload shape"
+      ]
+    },
+    {
+      "seed_id": "p1rC-9693",
+      "seed_type": "owner",
+      "canon_label_hint": "blocked_sequence ownership and minting semantics",
+      "exact_items": [
+        "blocked_sequence",
+        "blocked episode",
+        "monotonic per { run_id, node_id }",
+        "starts at 1",
+        "increments only when the node transitions from non-blocked to a new blocked episode"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/human-in-the-loop.md",
+        "Plans/storage-plan.md",
+        "Plans/Decision_Policy.md"
+      ],
+      "heading_hints": [
+        "## Research Progress - 2026-03-16 - Blocked episode ownership and startup-recovery handshake",
+        "### Recommended owner decision"
+      ],
+      "stale_tokens": [
+        "request_id"
+      ],
+      "source_evidence": [
+        "working_ledger.md:9692-9707"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "p1rC-9709",
+      "seed_type": "consumer",
+      "canon_label_hint": "HITL/request bridge with blocked_sequence canonical priority",
+      "exact_items": [
+        "request_id",
+        "waiting_approval",
+        "blocked episode",
+        "request_id maps 1:1 to { run_id, node_id, blocked_sequence }"
+      ],
+      "affected_doc_hints": [
+        "Plans/human-in-the-loop.md",
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "heading_hints": [
+        "### Recommended HITL/request bridge"
+      ],
+      "stale_tokens": [
+        "request_id"
+      ],
+      "source_evidence": [
+        "working_ledger.md:9709-9716"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "p1rC-9718",
+      "seed_type": "owner",
+      "canon_label_hint": "startup-recovery handshake and blocked-episode rehydration",
+      "exact_items": [
+        "startup_recovered",
+        "wake_reason = startup_recovered",
+        "rehydrates existing unresolved episodes",
+        "does not mint new blocked episodes"
+      ],
+      "affected_doc_hints": [
+        "Plans/Executor_Protocol.md",
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [
+        "### Recommended startup-recovery handshake"
+      ],
+      "stale_tokens": [
+        "stale_historical"
+      ],
+      "source_evidence": [
+        "working_ledger.md:9718-9723"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "p1rC-9734",
+      "seed_type": "consumer",
+      "canon_label_hint": "storage-plan HITL/blocked-projection inconsistency",
+      "exact_items": [
+        "allowed_actions",
+        "blocked_sequence",
+        "allowed_action_ids[]"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "heading_hints": [
+        "### Contradictions / gaps surfaced"
+      ],
+      "stale_tokens": [
+        "allowed_actions",
+        "tier-local request payloads"
+      ],
+      "source_evidence": [
+        "working_ledger.md:9734-9735"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "p1rC-9736",
+      "seed_type": "consumer",
+      "canon_label_hint": "UI_Command_Catalog blocked-episode routing gap",
+      "exact_items": [
+        "blocked_sequence",
+        "request_id",
+        "canonical runtime actions"
+      ],
+      "affected_doc_hints": [
+        "Plans/UI_Command_Catalog.md",
+        "Plans/human-in-the-loop.md"
+      ],
+      "heading_hints": [
+        "### Contradictions / gaps surfaced"
+      ],
+      "stale_tokens": [
+        "request_id",
+        "graph-local HITL commands"
+      ],
+      "source_evidence": [
+        "working_ledger.md:9735"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "p1rC-9740",
+      "seed_type": "owner",
+      "canon_label_hint": "Contracts_V0 and Executor_Protocol joint ownership of blocked-episode lifecycle",
+      "exact_items": [
+        "blocked_sequence minting semantics",
+        "blocked-episode lifecycle",
+        "startup-recovery scheduler handshake"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/Decision_Policy.md"
+      ],
+      "heading_hints": [
+        "### Candidate fixes to carry forward"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:9740-9743"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "p1rC-9775",
+      "seed_type": "consumer",
+      "canon_label_hint": "Commands_System override_builtin contradiction with UI docs",
+      "exact_items": [
+        "reserved slash-command overrides",
+        "override_builtin",
+        "cmd.chat.run_user_command"
+      ],
+      "affected_doc_hints": [
+        "Plans/Commands_System.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "heading_hints": [
+        "### Key findings"
+      ],
+      "stale_tokens": [
+        "override_builtin"
+      ],
+      "source_evidence": [
+        "working_ledger.md:9775-9776"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "p1rC-9776",
+      "seed_type": "consumer",
+      "canon_label_hint": "ghost command IDs in Wiring_Matrix",
+      "exact_items": [
+        "cmd.chat.branch_from_restore",
+        "cmd.orchestrator.switch_tab",
+        "cmd.chat.run_user_command"
+      ],
+      "affected_doc_hints": [
+        "Plans/Wiring_Matrix.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Commands_System.md"
+      ],
+      "heading_hints": [
+        "### Key findings"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:9776-9777"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "p1rC-9777",
+      "seed_type": "consumer",
+      "canon_label_hint": "UI_Wiring_Rules cannot express dispatcher preconditions",
+      "exact_items": [
+        "freshness/health gating",
+        "permission gating",
+        "dynamic allowed_action_ids[]",
+        "mutation safety tiers",
+        "GATE-010"
+      ],
+      "affected_doc_hints": [
+        "Plans/UI_Wiring_Rules.md"
+      ],
+      "heading_hints": [
+        "### Key findings"
+      ],
+      "stale_tokens": [
+        "GATE-010"
+      ],
+      "source_evidence": [
+        "working_ledger.md:9778"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "p1rC-9779",
+      "seed_type": "consumer",
+      "canon_label_hint": "newtools ghost command and tool IDs without registration",
+      "exact_items": [
+        "cmd.orchestrator.preview_*",
+        "cmd.orchestrator.build_run",
+        "CustomHeadlessTool ToolID"
+      ],
+      "affected_doc_hints": [
+        "Plans/newtools.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [
+        "### Key findings"
+      ],
+      "stale_tokens": [
+        "CustomHeadlessTool"
+      ],
+      "source_evidence": [
+        "working_ledger.md:9779"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "p1rC-9780",
+      "seed_type": "consumer",
+      "canon_label_hint": "Project_Output_Artifacts identity-keying gaps",
+      "exact_items": [
+        "project/thread/run/attempt/account identity details",
+        "pass_verdict",
+        "glossary artifact type",
+        "evidence/<node_id>.json artifact type"
+      ],
+      "affected_doc_hints": [
+        "Plans/Project_Output_Artifacts.md"
+      ],
+      "heading_hints": [
+        "### Key findings"
+      ],
+      "stale_tokens": [
+        "pass_verdict"
+      ],
+      "source_evidence": [
+        "working_ledger.md:9780-9781"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "p1rC-9782",
+      "seed_type": "consumer",
+      "canon_label_hint": "FileManager path-only open contract blocks runtime-identity addendum",
+      "exact_items": [
+        "open-by-runtime-identity",
+        "generated://",
+        "evidence_record",
+        "attempt-native pivots"
+      ],
+      "affected_doc_hints": [
+        "Plans/FileManager.md",
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [
+        "### Key findings"
+      ],
+      "stale_tokens": [
+        "generated://",
+        "evidence_record"
+      ],
+      "source_evidence": [
+        "working_ledger.md:9782"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "p1rC-9783",
+      "seed_type": "consumer",
+      "canon_label_hint": "assistant-memory-subsystem storage-owner gaps",
+      "exact_items": [
+        "memory event families",
+        "AutoRunBoundary triggers",
+        "AutoMilestone triggers",
+        "attention_required thread state",
+        "HITL/dashboard CTA command families"
+      ],
+      "affected_doc_hints": [
+        "Plans/assistant-memory-subsystem.md",
+        "Plans/storage-plan.md",
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "heading_hints": [
+        "### Key findings"
+      ],
+      "stale_tokens": [
+        "attention_required",
+        "AutoRunBoundary",
+        "AutoMilestone"
+      ],
+      "source_evidence": [
+        "working_ledger.md:9783"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "p1rC-9785",
+      "seed_type": "consumer",
+      "canon_label_hint": "Glossary dead references and missing rewrite vocabulary",
+      "exact_items": [
+        "Overseer",
+        "execution_role",
+        "operational_identity",
+        "projection_freshness",
+        "projection_health",
+        "attention item",
+        "concern"
+      ],
+      "affected_doc_hints": [
+        "Plans/Glossary.md"
+      ],
+      "heading_hints": [
+        "### Key findings"
+      ],
+      "stale_tokens": [
+        "Overseer"
+      ],
+      "source_evidence": [
+        "working_ledger.md:9785"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "p1rC-9786",
+      "seed_type": "consumer",
+      "canon_label_hint": "Crosswalk structural integrity failures and missing rewrite-era owners",
+      "exact_items": [
+        "duplicate section numbering",
+        "orphaned addenda",
+        "wrong ContractRef",
+        "orchestrator-subagent-integration.md",
+        "runtime scheduler ownership",
+        "worktree lifecycle ownership"
+      ],
+      "affected_doc_hints": [
+        "Plans/Crosswalk.md"
+      ],
+      "heading_hints": [
+        "### Key findings"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:9786"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "p1rC-9787",
+      "seed_type": "owner",
+      "canon_label_hint": "Decision_Policy missing core blocked/startup/retry ownership",
+      "exact_items": [
+        "blocked_sequence minting",
+        "startup recovery sequencing",
+        "retry/remediation counter bindings",
+        "runtime blocked escalation",
+        "ready_since_utc restart policy"
+      ],
+      "affected_doc_hints": [
+        "Plans/Decision_Policy.md"
+      ],
+      "heading_hints": [
+        "### Key findings"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:9787"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "p1rC-9788",
+      "seed_type": "owner",
+      "canon_label_hint": "Run_Modes execution-model seam incompatibility",
+      "exact_items": [
+        "DAE jail",
+        "orchestrator worktree",
+        "Contribute(PR) single-branch isolation",
+        "mode resolution",
+        "account/role differences"
+      ],
+      "affected_doc_hints": [
+        "Plans/Run_Modes.md"
+      ],
+      "heading_hints": [
+        "### Key findings"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:9788"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "p1rC-9789",
+      "seed_type": "owner",
+      "canon_label_hint": "Progression_Gates governance coverage gaps",
+      "exact_items": [
+        "concern/corroboration/promotion/runtime blocked/governance flows",
+        "duplicated addenda"
+      ],
+      "affected_doc_hints": [
+        "Plans/Progression_Gates.md"
+      ],
+      "heading_hints": [
+        "### Key findings"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:9789"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "p1rC-9854",
+      "seed_type": "owner",
+      "canon_label_hint": "execution_unit_context owner split from TierContext",
+      "exact_items": [
+        "execution_unit_context",
+        "decomposition_context",
+        "selection_context",
+        "Prompt_Pipeline owner of effective-resolution",
+        "storage-plan owner of persisted execution records",
+        "Executor_Protocol owner of execution-scoped context"
+      ],
+      "affected_doc_hints": [
+        "Plans/Prompt_Pipeline.md",
+        "Plans/storage-plan.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/orchestrator-subagent-integration.md"
+      ],
+      "heading_hints": [
+        "### Recommended owner split"
+      ],
+      "stale_tokens": [
+        "TierContext"
+      ],
+      "source_evidence": [
+        "working_ledger.md:9854-9862"
+      ],
+      "notes": []
+    }
+  ],
+  "generated_at_utc": "2026-04-20T20:46:50.529907+00:00"
+}

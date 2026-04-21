@@ -1,15 +1,10 @@
 {
   "schema_id": "pm.ledger_obligation_seed.deferred.v1",
   "work_id": "w-20260312-203855",
-  "status": "resolved",
+  "timestamp_utc": "2026-04-21T17:49:55Z",
+  "reason": "deferred_material_resolved",
   "material_findings_deferred": 0,
   "unresolved_high_risk_ranges": [],
-  "resolved_at_utc": "2026-04-20T21:47:10.229419+00:00",
-  "resolved_by": "Ledger Obligation Seed Deferred Resolver",
-  "deferred_resolve_waves_completed": 8,
-  "notes": [
-    "All 32 unverified high-risk ranges from pass-3 hard cap resolved in waves 1-8",
-    "All 29 pass-3 deferred material items assessed and merged",
-    "Seed grew from 594 items (original extractor) to 1048 items after deferred resolver"
-  ]
+  "remaining_material_findings": [],
+  "status": "resolved"
 }
