@@ -2,82 +2,108 @@
   "schema_id": "pm.ledger_obligation_seed.pass.v1",
   "work_id": "w-20260312-203855",
   "pass_id": "pass-002",
-  "assigned_ranges": [
-    "working_ledger.md:L1201-L1687",
-    "working_ledger.md:L10401-L11055",
-    "working_ledger.md:L16348-L16798"
+  "reviewed_ranges": [
+    "working_ledger.md:L9692-L10153",
+    "working_ledger.md:L13246-L14293",
+    "working_ledger.md:L15633-L16793",
+    "working_ledger.md:L17525-L18157"
   ],
   "material_findings": [
     {
       "seed_type": "owner",
-      "canon_label_hint": "Automation-first defaults contradiction",
+      "canon_label_hint": "decision-policy restart/escalation bindings",
       "exact_items": [
-        "Automation-first direction is still materially unreconciled with surviving default behaviors: `regular`/HTE-by-default, `visual_mode = auto` preferring visible local runs, and approval-heavy/manual-default flows remain live assumptions in core policy/runtime docs."
+        "`retry/remediation counter bindings`",
+        "`runtime blocked escalation`",
+        "`ready_since_utc` restart policy"
       ],
       "affected_doc_hints": [
-        "Plans/Run_Modes.md",
-        "Plans/newtools.md",
-        "Plans/human-in-the-loop.md",
-        "Plans/Progression_Gates.md"
+        "Plans/Decision_Policy.md"
       ],
       "heading_hints": [
-        "## Cleanup Priorities"
+        "## Research Progress - 2026-03-16 - Opus owner-doc tranche synthesis"
       ],
       "stale_tokens": [],
       "source_evidence": [
-        "working_ledger.md:L1389-L1389",
-        "working_ledger.md:L1425-L1425",
-        "working_ledger.md:L1494-L1495",
-        "working_ledger.md:L1529-L1529",
-        "working_ledger.md:L1586-L1586"
+        "working_ledger.md:L9787-L9787"
       ],
-      "why_material": "new item"
+      "notes": [],
+      "reason": "Current seed already captures `blocked_sequence` minting and startup-recovery rules from this sentence, but it does not appear to capture the remaining unowned policy obligations called out here: retry/remediation counter binding, runtime blocked escalation, and `ready_since_utc` restart policy."
     },
     {
       "seed_type": "owner",
-      "canon_label_hint": "PM-managed roots visibility and registration gap",
+      "canon_label_hint": "crosswalk-post-references-duplicate-headings",
       "exact_items": [
-        "PM-owned git/file roots are still missing a canonical visibility/registration model across Source Control and Orchestrator surfaces; managed template repos, live-run artifact directories, and other PM-managed side-effect roots are not treated as first-class navigable SCM/runtime objects."
+        "`## References`",
+        "`3.13` appears twice",
+        "`3.14` appears twice",
+        "`3.15` appears twice",
+        "the duplicated headings appear after the `## References` block"
       ],
       "affected_doc_hints": [
-        "Plans/GitHub_Integration.md",
-        "Plans/WorktreeGitImprovement.md",
-        "Plans/Orchestrator_Page.md",
-        "Plans/FinalGUISpec.md",
-        "Plans/FileSafe.md",
-        "Plans/newtools.md"
-      ],
-      "heading_hints": [
-        "## Cleanup Priorities"
-      ],
-      "stale_tokens": [],
-      "source_evidence": [
-        "working_ledger.md:L1357-L1360",
-        "working_ledger.md:L1398-L1398",
-        "working_ledger.md:L1463-L1466"
-      ],
-      "why_material": "new item"
-    },
-    {
-      "seed_type": "owner",
-      "canon_label_hint": "Decision Log rewrite-era decision ledger gap",
-      "exact_items": [
-        "`Plans/Decision_Log.md` still is not functioning as the rewrite-era decision ledger: it only carries two `2026-02-27` OpenCode extraction entries and does not record the rewrite owner decisions already driving the Crosswalk/DRY cleanup, leaving no durable owner-traceability record for why rewrite ownership changed."
-      ],
-      "affected_doc_hints": [
-        "Plans/Decision_Log.md",
-        "Plans/Crosswalk.md",
-        "Plans/DRY_Rules.md"
+        "Plans/Crosswalk.md"
       ],
       "heading_hints": [
         "## Research Progress - 2026-03-17 - owner-traceability seam: Decision Log, DRY Rules, Crosswalk"
       ],
-      "stale_tokens": [],
-      "source_evidence": [
-        "working_ledger.md:L16356-L16363",
-        "working_ledger.md:L16395-L16419"
+      "stale_tokens": [
+        "`3.13`",
+        "`3.14`",
+        "`3.15`"
       ],
-      "why_material": "new item"
+      "source_evidence": [
+        "working_ledger.md:L16369-L16377"
+      ],
+      "notes": [],
+      "reason": "Current seed captures duplicate numbering in `Crosswalk.md`, but it does not preserve the materially stronger direct evidence that the duplicate headings occur after the `## References` block, which makes the structure/anchor break mechanically testable rather than just inferred."
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "ui-command-catalog-layout-only-route-pivots",
+      "exact_items": [
+        "`layout/UI state only`",
+        "`cmd.chat.open_thread_usage`",
+        "`cmd.chat.focus_thread_usage`",
+        "`cmd.source_control.select_worktree`",
+        "`cmd.artifacts.show_in_ledger`",
+        "`cmd.artifacts.show_in_usage`",
+        "`cmd.orchestrator.open_in_source_control`"
+      ],
+      "affected_doc_hints": [
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "heading_hints": [
+        "## Research Progress - 2026-03-17 - rewrite-root and GUI-drift seam: rewrite tie-in memo, UI command catalog, Final GUI spec"
+      ],
+      "stale_tokens": [
+        "`layout/UI state only`"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L16742-L16748"
+      ],
+      "notes": [],
+      "reason": "Current seed records the affected command IDs, but not the stronger direct evidence that these routed object-navigation commands are still classified as `layout/UI state only`, which is a sharper and more testable contract defect."
+    },
+    {
+      "seed_type": "stale_retirement",
+      "canon_label_hint": "ui-command-catalog-orchestrator-widget-tabs-phrase",
+      "exact_items": [
+        "`Orchestrator widget tabs`"
+      ],
+      "affected_doc_hints": [
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "heading_hints": [
+        "## Research Progress - 2026-03-17 - rewrite-root and GUI-drift seam: rewrite tie-in memo, UI command catalog, Final GUI spec"
+      ],
+      "stale_tokens": [
+        "`Orchestrator widget tabs`"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L16749-L16749"
+      ],
+      "notes": [],
+      "reason": "Current seed captures Progress-only hostability directionally, but it does not retain the catalog's exact stale phrase `Orchestrator widget tabs`, which is materially stronger direct evidence of the obsolete widgetized-Orchestrator model still being published."
     }
   ]
 }

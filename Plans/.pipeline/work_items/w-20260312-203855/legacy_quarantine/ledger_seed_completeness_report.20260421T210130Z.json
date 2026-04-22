@@ -2,7 +2,11 @@
   "schema_id": "pm.ledger_seed_completeness_report.v1",
   "work_id": "w-20260312-203855",
   "status": "pass",
-  "schema_issues_fixed": [],
+  "schema_issues_fixed": [
+    "Aligned ledger_obligation_seed.json next_required_stage to Canonical Obligations Builder",
+    "Aligned meta.json next_required_stage to Canonical Obligations Builder",
+    "Rewrote current_state.md to builder-ready gate-passed state"
+  ],
   "summary_poison_items_moved": [],
   "invalid_seed_types_fixed": [],
   "empty_exact_items_moved": [],

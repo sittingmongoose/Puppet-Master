@@ -1,0 +1,187 @@
+{
+  "schema_id": "pm.ledger_obligation_seed.pass.v1",
+  "work_id": "w-20260312-203855",
+  "pass_id": "pass-001",
+  "assigned_ranges": [
+    "working_ledger.md:L1201-L1687",
+    "working_ledger.md:L10401-L11055",
+    "working_ledger.md:L14401-L15199",
+    "working_ledger.md:L16348-L16798"
+  ],
+  "material_findings": [
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "FileSafe write scope assumes monolithic plan",
+      "exact_items": [
+        "FileSafe Part B (\u00a714.6) compiles role-specific context per Phase/Task/Subtask/Iteration",
+        "Write scope references \"files declared in the active plan\"",
+        "Sharded node graphs under `.puppet-master/project/plan_graph/` break this assumption"
+      ],
+      "affected_doc_hints": [
+        "Plans/FileSafe.md"
+      ],
+      "heading_hints": [
+        "## Runtime / Storage / Contract Impacts"
+      ],
+      "stale_tokens": [
+        "`Phase/Task/Subtask/Iteration`",
+        "`files declared in the active plan`"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L1273-L1273"
+      ],
+      "why_material": "new item"
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "New node/package/seam contract fields missing",
+      "exact_items": [
+        "`storage-plan.md` event schemas don't include `package_id`, `seam_id`, `lane_id`, `attempt_id`, or `effective_identity` fields"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [
+        "## Runtime / Storage / Contract Impacts"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L1275-L1275"
+      ],
+      "why_material": "stronger evidence"
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Lexicographic vs scored scheduler conflict",
+      "exact_items": [
+        "`selection_rule = \"lexicographic_node_id\"`"
+      ],
+      "affected_doc_hints": [
+        "Plans/plan_graph.schema.json",
+        "Plans/project_plan_graph_index.schema.json",
+        "Plans/Executor_Protocol.md"
+      ],
+      "heading_hints": [
+        "## Runtime / Storage / Contract Impacts"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L1377-L1378"
+      ],
+      "why_material": "new token"
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Terminology and ownership authorities missing 00-plans-index coverage",
+      "exact_items": [
+        "Extend `00-plans-index.md` with first-class ownership for feature seam, work package, package/seam overseers, promotion class, lane pool, contamination, and effective execution identity",
+        "Clarify which docs own execution truth vs projections vs UI-only overlays"
+      ],
+      "affected_doc_hints": [
+        "Plans/00-plans-index.md",
+        "Plans/Glossary.md",
+        "Plans/Crosswalk.md",
+        "Plans/Decision_Policy.md"
+      ],
+      "heading_hints": [
+        "## Cleanup Priorities"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L1409-L1411"
+      ],
+      "why_material": "new doc"
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Research Progress - 2026-03-16 - Bridge-field behavior for `provider_attempt_ref`, `usage_event_ref`, and receipts",
+      "heading_hints": [
+        "Research Progress - 2026-03-16 - Bridge-field behavior for `provider_attempt_ref`, `usage_event_ref`, and receipts"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L10511-L10524",
+        "working_ledger.md:L10543-L10556"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/usage-feature.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "exact_items": [
+        "start from `attempt_id`",
+        "follow `provider_attempt_ref` to provider/runtime trace and low-level execution evidence",
+        "follow `usage_event_ref` to canonical Usage/Ledger identity",
+        "follow receipt refs to Git/Actions/Docker/Kubernetes lineage",
+        "follow `artifact_id` / `linked_artifact_id` for renderable outputs and evidence objects",
+        "none of these bridge fields should become a replacement primary key",
+        "`provider_attempt_ref` does not replace `attempt_id`",
+        "`usage_event_ref` does not replace runtime identity",
+        "receipt refs do not replace artifact identity",
+        "Treat timestamp/run/thread fallback routing as compatibility behavior only when canonical bridge refs are absent."
+      ],
+      "stale_tokens": [],
+      "notes": [],
+      "why_material": "stronger evidence"
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Research Progress - 2026-03-16 - Runtime-artifact envelope minimum contract",
+      "heading_hints": [
+        "Research Progress - 2026-03-16 - Runtime-artifact envelope minimum contract"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L10619-L10638",
+        "working_ledger.md:L10648-L10653"
+      ],
+      "affected_doc_hints": [
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/storage-plan.md",
+        "Plans/FileManager.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Project_Output_Artifacts.md"
+      ],
+      "exact_items": [
+        "the runtime-artifact envelope should be attempt-native by default.",
+        "`artifact_id` is the canonical identity of the renderable artifact object itself.",
+        "`logical_artifact_id` and `linked_artifact_id` are lineage/navigation helpers, not replacements for runtime identity.",
+        "`attempt_id` should be present whenever the artifact came from a concrete execution attempt.",
+        "if there is no concrete attempt, the envelope should still carry the strongest available runtime anchor.",
+        "`tool_llm_trace`",
+        "`validation_test`",
+        "`failed_attempts`",
+        "`before_after_snapshot`"
+      ],
+      "stale_tokens": [],
+      "notes": [],
+      "why_material": "stronger evidence"
+    },
+    {
+      "target_seed_id": "seed-134",
+      "materiality": "adds new exact heading evidence",
+      "why_material": "Adds the exact heading `## References` plus direct ledger evidence that the duplicate Crosswalk headings occur after the references block, which is not represented in the merged seed.",
+      "additions": {
+        "exact_items": [
+          "the duplicated headings appear after the `## References` block, which breaks the document's own structure and weakens deterministic anchor targeting"
+        ]
+      },
+      "source_evidence": [
+        "working_ledger.md:L16377-L16377"
+      ]
+    },
+    {
+      "target_seed_id": "seed-296",
+      "materiality": "adds new exact stale token/evidence",
+      "why_material": "Adds a concrete stale Final GUI spec phrase not represented in the merged seed; current seed covers `Tiers`/widgetization/resume_url drift, but not the stale dashboard/current-task progress-bar model.",
+      "additions": {
+        "exact_items": [
+          "dashboard/current-task language still uses current tier / phase-task-subtask progress bars as if that were the canonical Orchestrator model"
+        ]
+      },
+      "source_evidence": [
+        "working_ledger.md:L16752-L16752"
+      ]
+    }
+  ]
+}

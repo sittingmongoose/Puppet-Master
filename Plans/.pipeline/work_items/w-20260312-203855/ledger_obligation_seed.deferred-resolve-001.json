@@ -2,76 +2,218 @@
   "schema_id": "pm.ledger_obligation_seed.deferred_resolve.v1",
   "work_id": "w-20260312-203855",
   "resolve_id": "deferred-resolve-001",
+  "reviewed_ranges": [
+    "working_ledger.md:L9692-L10091",
+    "working_ledger.md:L10092-L10153",
+    "working_ledger.md:L13246-L13645",
+    "working_ledger.md:L13646-L14045"
+  ],
   "material_findings": [
     {
-      "seed_type": "stale_retirement",
-      "canon_label_hint": "Assistant memory versus stateful system-prompt loop contradiction",
+      "seed_type": "owner",
+      "canon_label_hint": "execution_unit_context auth-mode fields",
       "exact_items": [
-        "`assistant-memory-subsystem.md` forbids Orchestrator memory via `NullMemoryProvider`, while `newfeatures.md` assumes a stateful system-prompt loop carrying execution state."
+        "`requested_auth_mode?`",
+        "`effective_auth_mode?`"
       ],
       "affected_doc_hints": [
-        "Plans/assistant-memory-subsystem.md",
-        "Plans/newfeatures.md"
+        "Plans/Executor_Protocol.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/storage-plan.md",
+        "Plans/orchestrator-subagent-integration.md",
+        "Plans/Contracts_V0.md"
       ],
       "heading_hints": [
-        "# Contradictions To Resolve"
+        "## Research Progress - 2026-03-16 - Execution-context owner split and `TierContext` replacement",
+        "## Research Progress - 2026-03-16 - Concrete executor-facing `execution_unit_context` field contract"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L9892-L9902",
+        "working_ledger.md:L10086-L10091"
+      ],
+      "reason": "Current seed captures broader `execution_unit_context` ownership and field-contract evidence, but it does not record `requested_auth_mode?` at all and does not preserve the stronger direct ledger evidence that auth-mode fields belong in the canonical execution/runtime identity packet."
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "EventEnvelopeV1 executor-contract looseness boundary",
+      "exact_items": [
+        "`EventEnvelopeV1`",
+        "writers only \"should\" include `run_id` / `thread_id`",
+        "executor-facing docs should not inherit that looseness for runtime dispatch contracts"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/Executor_Protocol.md"
+      ],
+      "heading_hints": [
+        "### Contradictions / gaps surfaced"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L10144-L10144"
+      ],
+      "reason": "The current seed captures stricter `execution_unit_context` requirements, but it does not retain this exact schema-level contradiction or the direct rule that executor-facing runtime dispatch contracts must not inherit `EventEnvelopeV1`'s weaker SHOULD-level `run_id`/`thread_id` guidance."
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "OpenSubject field ownership split",
+      "exact_items": [
+        "shell and scope belong to `route_target`",
+        "persistence/provenance belong to storage records and projections",
+        "transport/open realization belongs to the resolver that executes `OpenSubject`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/FileManager.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/Runtime_Artifacts_Panel.md"
+      ],
+      "heading_hints": [
+        "## Research Progress - 2026-03-17 - Exact minimum field set for `OpenSubject`"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L13268-L13271"
+      ],
+      "reason": "Current seed captures the minimum shape, exclusions, and open_intent semantics, but it does not preserve the ledger's direct ownership mapping for where excluded OpenSubject concerns belong."
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "route_target field-role rationales",
+      "exact_items": [
+        "`target_kind` is required because the route layer still needs to know what class of destination it is restoring, rather than infer everything from object identity",
+        "`focused_run_id` and `thread_id` remain route fields because they are scope restorers, not just object metadata",
+        "`tab_id` remains allowed because top-level tab restoration is part of route/focus behavior",
+        "`inspector_target` remains allowed because it is a reusable detail-focus field rather than per-surface noise"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "heading_hints": [
+        "## Research Progress - 2026-03-17 - Exact minimum field set for `route_target`"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L13353-L13356"
+      ],
+      "reason": "Current seed preserves the bounded route_target field list, but it does not keep the ledger's direct rationale for why these fields remain canonical route fields."
+    },
+    {
+      "seed_type": "stale_retirement",
+      "canon_label_hint": "route_target per-surface-state non-values",
+      "exact_items": [
+        "panel layout",
+        "browser tab state",
+        "widget layout"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md",
+        "Plans/assistant-chat-design.md"
+      ],
+      "heading_hints": [
+        "## Research Progress - 2026-03-17 - Exact minimum field set for `route_target`"
       ],
       "stale_tokens": [
-        "NullMemoryProvider",
-        "stateful system-prompt loop"
+        "panel layout",
+        "browser tab state",
+        "widget layout"
       ],
       "source_evidence": [
-        "working_ledger.md:L1321-L1321"
+        "working_ledger.md:L13371-L13376"
       ],
-      "notes": []
+      "reason": "Current seed records `active_subview` and other excluded route payload noise, but this ledger block still adds three exact per-surface state exclusions not yet represented in the merged seed."
+    },
+    {
+      "seed_type": "stale_retirement",
+      "canon_label_hint": "target_kind additional non-values",
+      "exact_items": [
+        "widget slot",
+        "browser tab id",
+        "workspace tab id"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [
+        "## Research Progress - 2026-03-17 - Exact `target_kind` vocabulary"
+      ],
+      "stale_tokens": [
+        "widget slot",
+        "browser tab id",
+        "workspace tab id"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L13458-L13462"
+      ],
+      "reason": "Current seed already carries four target_kind non-values from this section, but it does not retain these three additional exact exclusions from the same owner block."
     },
     {
       "seed_type": "owner",
-      "canon_label_hint": "Worktree-on versus no-worktrees contradiction",
+      "canon_label_hint": "selector precedence supporting fields are not selectors",
       "exact_items": [
-        "`chain-wizard-flexibility.md` still allows an explicit no-worktrees mode, while `WorktreeGitImprovement.md` still treats per-subtask worktrees as mandatory isolation."
+        "`tab_id`, `focused_run_id`, `thread_id`, and `inspector_target` never replace primary selector identity",
+        "`project_id` is required scope, not selector identity"
       ],
       "affected_doc_hints": [
-        "Plans/chain-wizard-flexibility.md",
-        "Plans/WorktreeGitImprovement.md"
+        "Plans/Contracts_V0.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/usage-feature.md",
+        "Plans/storage-plan.md"
       ],
       "heading_hints": [
-        "## Contradictions To Resolve",
-        "## Worktree / SCM / Parallelism Impacts"
+        "## Research Progress - 2026-03-17 - Selector precedence inside `route_target`"
       ],
       "stale_tokens": [],
       "source_evidence": [
-        "working_ledger.md:L1234-L1234",
-        "working_ledger.md:L1292-L1292",
-        "working_ledger.md:L1319-L1319"
+        "working_ledger.md:L13504-L13505"
       ],
-      "notes": []
+      "reason": "Current seed keeps the selector precedence order, but it does not preserve the ledger's direct non-selector rule for supporting fields and required scope."
     },
     {
-      "seed_type": "owner",
-      "canon_label_hint": "Tier-scoped approval gates lack package/seam completion model",
+      "seed_type": "stale_retirement",
+      "canon_label_hint": "resume_url additional excluded serialized fields",
       "exact_items": [
-        "Approval/gate docs remain tier-scoped: `human-in-the-loop.md` and `Progression_Gates.md` still key boundaries to phase/task/subtask completion, with no canonical package-complete or seam-complete gate model."
+        "shell layout state",
+        "panel widths",
+        "widget state",
+        "broad filter state"
       ],
       "affected_doc_hints": [
-        "Plans/human-in-the-loop.md",
-        "Plans/Progression_Gates.md"
+        "Plans/Contracts_V0.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/storage-plan.md",
+        "Plans/assistant-chat-design.md"
       ],
       "heading_hints": [
-        "## GUI / UX Impacts",
-        "## Runtime / Storage / Contract Impacts",
-        "## Suggested Research Follow-Ups"
+        "## Research Progress - 2026-03-17 - `resume_url` serialization boundaries"
       ],
-      "stale_tokens": [],
+      "stale_tokens": [
+        "shell layout state",
+        "panel widths",
+        "widget state",
+        "broad filter state"
+      ],
       "source_evidence": [
-        "working_ledger.md:L1265-L1265",
-        "working_ledger.md:L1272-L1272",
-        "working_ledger.md:L1333-L1333",
-        "working_ledger.md:L1372-L1372"
+        "working_ledger.md:L13566-L13569"
       ],
-      "notes": [
-        "Current merged seed covers adjacent HITL identity/boundary and Progression_Gates wiring issues, but does not already represent the specific missing package-complete/seam-complete gate canon across both docs with equal or stronger evidence."
-      ]
+      "reason": "Current seed records several bad serialized field classes and separately captures provider/account disclosure data, but it does not retain these four exact excluded serialization classes from the ledger."
     }
   ]
 }

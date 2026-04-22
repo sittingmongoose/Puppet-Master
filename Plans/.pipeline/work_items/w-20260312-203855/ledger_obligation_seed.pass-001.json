@@ -2,186 +2,578 @@
   "schema_id": "pm.ledger_obligation_seed.pass.v1",
   "work_id": "w-20260312-203855",
   "pass_id": "pass-001",
-  "assigned_ranges": [
-    "working_ledger.md:L1201-L1687",
-    "working_ledger.md:L10401-L11055",
-    "working_ledger.md:L14401-L15199",
-    "working_ledger.md:L16348-L16798"
+  "reviewed_ranges": [
+    "working_ledger.md:L9692-L10153",
+    "working_ledger.md:L13246-L14293",
+    "working_ledger.md:L15633-L16793",
+    "working_ledger.md:L17525-L18157"
   ],
   "material_findings": [
     {
       "seed_type": "owner",
-      "canon_label_hint": "FileSafe write scope assumes monolithic plan",
+      "canon_label_hint": "blocked-sequence minting invariants",
       "exact_items": [
-        "FileSafe Part B (\u00a714.6) compiles role-specific context per Phase/Task/Subtask/Iteration",
-        "Write scope references \"files declared in the active plan\"",
-        "Sharded node graphs under `.puppet-master/project/plan_graph/` break this assumption"
+        "monotonic per `{ run_id, node_id }`",
+        "starts at `1`",
+        "retain the same `blocked_sequence` for the same unresolved blocked prerequisite",
+        "mint a new `blocked_sequence` only after unblocked state or a genuinely new recovery episode"
       ],
       "affected_doc_hints": [
-        "Plans/FileSafe.md"
+        "Plans/Contracts_V0.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/Decision_Policy.md",
+        "Plans/storage-plan.md"
       ],
       "heading_hints": [
-        "## Runtime / Storage / Contract Impacts"
+        "## Research Progress - 2026-03-16 - Blocked episode ownership and startup-recovery handshake"
       ],
-      "stale_tokens": [
-        "`Phase/Task/Subtask/Iteration`",
-        "`files declared in the active plan`"
-      ],
+      "stale_tokens": [],
       "source_evidence": [
-        "working_ledger.md:L1273-L1273"
+        "working_ledger.md:L9693-L9707"
       ],
-      "why_material": "new item"
+      "notes": [],
+      "reason": "Current seed captures blocked-episode ownership broadly, but not the deterministic minting/reuse rules that make `blocked_sequence` stable and auditable."
     },
     {
       "seed_type": "owner",
-      "canon_label_hint": "New node/package/seam contract fields missing",
+      "canon_label_hint": "startup recovery no-remint/no-drop rules",
       "exact_items": [
-        "`storage-plan.md` event schemas don't include `package_id`, `seam_id`, `lane_id`, `attempt_id`, or `effective_identity` fields"
+        "`wake_reason = startup_recovered`",
+        "rehydrate existing unresolved blocked episodes",
+        "startup recovery must not mint new blocked episodes by itself",
+        "unrecoverable in-flight attempts become `stale_historical`",
+        "explicitly resolve/unblock externally satisfied blocked prerequisites instead of silently dropping them"
+      ],
+      "affected_doc_hints": [
+        "Plans/Executor_Protocol.md",
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [
+        "## Research Progress - 2026-03-16 - Blocked episode ownership and startup-recovery handshake"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L9718-L9723"
+      ],
+      "notes": [],
+      "reason": "Seed mentions startup-recovery ownership, but these restart semantics are materially stronger direct evidence about recovery correctness and silent block-loss prevention."
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "memory families need canonical registration",
+      "exact_items": [
+        "`memory event families`",
+        "`AutoRunBoundary` triggers",
+        "`AutoMilestone` triggers",
+        "`attention_required` thread state persistence",
+        "`HITL/dashboard CTA` command families"
+      ],
+      "affected_doc_hints": [
+        "Plans/assistant-memory-subsystem.md",
+        "Plans/storage-plan.md",
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "heading_hints": [
+        "## Research Progress - 2026-03-16 - Opus owner-doc tranche synthesis"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L9783-L9784",
+        "working_ledger.md:L9806-L9807",
+        "working_ledger.md:L9814-L9814",
+        "working_ledger.md:L9822-L9822"
+      ],
+      "notes": [],
+      "reason": "This assistant-memory registration gap does not appear in the current seed and is a concrete owner-registration obligation, not just another ghost-command restatement."
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "ui-wiring dispatcher precondition coverage",
+      "exact_items": [
+        "`freshness/health` gating",
+        "`permission` gating",
+        "dynamic `allowed_action_ids[]`",
+        "`mutation safety tiers`",
+        "`GATE-010` cannot verify these dispatcher contracts"
+      ],
+      "affected_doc_hints": [
+        "Plans/UI_Wiring_Rules.md",
+        "Plans/Progression_Gates.md",
+        "Plans/Wiring_Matrix.md"
+      ],
+      "heading_hints": [
+        "## Research Progress - 2026-03-16 - Opus owner-doc tranche synthesis"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L9778-L9779"
+      ],
+      "notes": [],
+      "reason": "Seed has generic GATE-010 coverage, but not this stronger direct evidence that specific runtime dispatcher preconditions are currently inexpressible and therefore unverifiable."
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "project-output-artifact enum/type mismatches",
+      "exact_items": [
+        "`pass_verdict` mismatches the wizard producer doc",
+        "`glossary` artifact type",
+        "`evidence/<node_id>.json` artifact type",
+        "artifact events and validation pass reports omit project/thread/run/attempt/account identity details"
+      ],
+      "affected_doc_hints": [
+        "Plans/Project_Output_Artifacts.md",
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [
+        "## Research Progress - 2026-03-16 - Opus owner-doc tranche synthesis"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L9781-L9782",
+        "working_ledger.md:L9827-L9827"
+      ],
+      "notes": [],
+      "reason": "Current seed covers some lineage fields elsewhere, but these direct SSOT mismatches on `pass_verdict` and interview-emitted artifact types are not captured."
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "run-modes execution-model conflict",
+      "exact_items": [
+        "`DAE` jail",
+        "orchestrator worktree",
+        "`Contribute(PR)` single-branch isolation",
+        "mode resolution remains identity-blind to account/role differences"
+      ],
+      "affected_doc_hints": [
+        "Plans/Run_Modes.md"
+      ],
+      "heading_hints": [
+        "## Research Progress - 2026-03-16 - Opus owner-doc tranche synthesis"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L9788-L9789"
+      ],
+      "notes": [],
+      "reason": "This execution-model conflict and identity-blind mode-resolution finding is not present in the current seed and is a concrete owner-doc gap."
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "execution-unit-context contract stratification",
+      "exact_items": [
+        "one strict mandatory core for executor correctness",
+        "one conditional family for blocked/remediation/recovery cases",
+        "one disclosure family for UI/audit convenience",
+        "`attempt.started` and the immutable provider handoff bundle should be isomorphic"
+      ],
+      "affected_doc_hints": [
+        "Plans/Executor_Protocol.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [
+        "## Research Progress - 2026-03-16 - Concrete executor-facing `execution_unit_context` field contract"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L10049-L10060",
+        "working_ledger.md:L10122-L10127",
+        "working_ledger.md:L10146-L10153"
+      ],
+      "notes": [],
+      "reason": "Seed already records the field list, but it does not capture the stronger contract structure and packet-isomorphism rule that the ledger states explicitly."
+    },
+    {
+      "seed_type": "stale_retirement",
+      "canon_label_hint": "resume_url account-disclosure exclusion",
+      "exact_items": [
+        "provider/account disclosure data"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/storage-plan.md",
+        "Plans/assistant-chat-design.md"
+      ],
+      "heading_hints": [
+        "## Research Progress - 2026-03-17 - `resume_url` serialization boundaries"
+      ],
+      "stale_tokens": [
+        "provider/account disclosure data"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L13565-L13570"
+      ],
+      "notes": [],
+      "reason": "The current seed excludes several `resume_url` payload classes but does not capture the ledger's direct prohibition on serializing provider/account disclosure data."
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "runtime lineage route host-scope details",
+      "exact_items": [
+        "`target_kind = page_tab`",
+        "`project_id = <project_id>`",
+        "`focused_run_id = <run_id>`",
+        "`tab_id = history`",
+        "`tab_id = node_graph`",
+        "`inspector_target = lineage`",
+        "`inspector_target = lineage | details`",
+        "`inspector_target = lineage | history`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [
+        "## Research Progress - 2026-03-17 - Concrete route normalization for runtime lineage objects"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L14045-L14115"
+      ],
+      "notes": [],
+      "reason": "The seed has a runtime-lineage routes entry, but it drops much of the ledger's direct route-hosting and run-scope evidence for scheduler pass, safe point, remediation, graph generation, and graph patch examples."
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "worktree and orchestration route host-scope details",
+      "exact_items": [
+        "`target_kind = side_panel`",
+        "`target_kind = page_tab`",
+        "`project_id = <project_id>`",
+        "`focused_run_id = <run_id>`",
+        "`tab_id = seams`",
+        "`tab_id = ledger`",
+        "`inspector_target = details | history | reviews`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/storage-plan.md",
+        "Plans/WorktreeGitImprovement.md"
+      ],
+      "heading_hints": [
+        "## Research Progress - 2026-03-17 - Concrete route normalization for Source Control and orchestration work objects"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L14131-L14195"
+      ],
+      "notes": [],
+      "reason": "The current seed includes object-kind examples for worktree/lane/seam/package/concern/promotion routes, but it omits several direct ledger lines that specify the hosting surface, run scope, and promotion/package tab-focus details."
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "architecture-invariants-runtime-boundaries",
+      "exact_items": [
+        "safe-point vs restore-point boundaries",
+        "graph-lock non-degradation",
+        "classification-before-policy",
+        "checkpoint-derived projection freshness",
+        "attempt-boundary identity freeze"
+      ],
+      "affected_doc_hints": [
+        "Plans/Architecture_Invariants.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/FileSafe.md",
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [
+        "## Research Progress - 2026-03-17 - GPT-5.2 remaining-partial tranche synthesis"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L16153-L16156"
+      ],
+      "notes": [],
+      "reason": "No seed item appears to capture this exact missing invariant set for `Architecture_Invariants.md`; existing seed references to that doc are unrelated."
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "filesafe-dae-enforcement-seam",
+      "exact_items": [
+        "post-approval arg mutation",
+        "context_files widening write scope",
+        "fail-open initialization paths",
+        "recovery_options[] vs allowed_action_ids[] schema drift"
+      ],
+      "affected_doc_hints": [
+        "Plans/FileSafe.md",
+        "Plans/Contracts_V0.md",
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "heading_hints": [
+        "## Research Progress - 2026-03-17 - GPT-5.2 remaining-partial tranche synthesis"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L16154-L16156"
+      ],
+      "notes": [],
+      "reason": "Current seed only shows a coarse tranche-summary token bundle touching `FileSafe.md`; this adds concrete FileSafe-specific enforcement defects."
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "miscplan-cleanup-vs-safe-point-contradiction",
+      "exact_items": [
+        "best-effort prepare/cleanup can still invalidate safe-point prerequisites",
+        "mtime-based evidence pruning can cut across attempt-lineage retention requirements"
+      ],
+      "affected_doc_hints": [
+        "Plans/MiscPlan.md",
+        "Plans/FileSafe.md",
+        "Plans/Executor_Protocol.md"
+      ],
+      "heading_hints": [
+        "## Research Progress - 2026-03-17 - GPT-5.2 remaining-partial tranche synthesis"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L16155-L16156"
+      ],
+      "notes": [],
+      "reason": "No seed item appears to preserve these exact `MiscPlan.md` cleanup-retention contradictions."
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "document-packaging-vs-artifact-ownership-split",
+      "exact_items": [
+        "docset-directory-as-canon",
+        "gate-enforcement claims",
+        "evidence/ namespace assumptions",
+        "seglog-first artifact ownership",
+        "actual verifier coverage"
+      ],
+      "affected_doc_hints": [
+        "Plans/Document_Packaging_Policy.md",
+        "Plans/Project_Output_Artifacts.md"
+      ],
+      "heading_hints": [
+        "## Research Progress - 2026-03-17 - GPT-5.2 remaining-partial tranche synthesis"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L16150-L16153"
+      ],
+      "notes": [],
+      "reason": "Seed coverage for `Document_Packaging_Policy.md` appears limited to a generic summary bundle; this is materially stronger owner-level evidence about packaging authority split."
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "binarylocator-opencode-launcher-gap",
+      "exact_items": [
+        "OpenCode launcher discovery",
+        "dangling `Spec_Lock` naming-rule claim"
+      ],
+      "affected_doc_hints": [
+        "Plans/BinaryLocator_Spec.md",
+        "Plans/CLI_Bridged_Providers.md",
+        "Plans/Provider_OpenCode.md"
+      ],
+      "heading_hints": [
+        "## Research Progress - 2026-03-17 - GPT-5.2 remaining-partial tranche synthesis"
+      ],
+      "stale_tokens": [
+        "Spec_Lock"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L16157-L16159"
+      ],
+      "notes": [],
+      "reason": "No seed item appears to capture these exact `BinaryLocator_Spec.md` defects."
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "opencode-bridge-identity-and-correlation-constraints",
+      "exact_items": [
+        "server-global SSE",
+        "fixed working-directory",
+        "session-scoped compaction and approvals",
+        "ephemeral session identity issues",
+        "session identity must stay provider-native",
+        "SSE correlation fields remain under-specified",
+        "requested/effective identity parity is weaker for server-bridged providers than for direct providers"
+      ],
+      "affected_doc_hints": [
+        "Plans/OpenCode_Deep_Extraction.md",
+        "Plans/OpenCode_Coverage_Matrix.md",
+        "Plans/Provider_OpenCode.md",
+        "Plans/CLI_Bridged_Providers.md",
+        "Plans/Provider_Stream_Mapping_External_Reference_A2A.md"
+      ],
+      "heading_hints": [
+        "## Research Progress - 2026-03-17 - GPT-5.4 remaining-partial tranche synthesis",
+        "## Research Progress - 2026-03-17 - GPT-5.2 remaining-partial tranche synthesis",
+        "## Research Progress - 2026-03-17 - GPT-5.3-Codex remaining-partial tranche synthesis"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L16041-L16043",
+        "working_ledger.md:L16157-L16160",
+        "working_ledger.md:L16275-L16277"
+      ],
+      "notes": [],
+      "reason": "I do not see a seed item with these concrete OpenCode bridge constraints; this is substantially stronger than the existing coarse synthesis coverage."
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "formatters-owner-boundary-defects",
+      "exact_items": [
+        "formatter-vs-LSP ownership",
+        "DAE non-triggering host writes",
+        "overlapping formatter detectors"
+      ],
+      "affected_doc_hints": [
+        "Plans/Formatters_System.md",
+        "Plans/LSPSupport.md"
+      ],
+      "heading_hints": [
+        "## Research Progress - 2026-03-17 - GPT-5.2 remaining-partial tranche synthesis",
+        "## Research Progress - 2026-03-17 - GPT-5.3-Codex remaining-partial tranche synthesis"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L16161-L16164",
+        "working_ledger.md:L16278-L16279"
+      ],
+      "notes": [],
+      "reason": "Seed coverage for `Formatters_System.md` appears only in a generic tranche-summary stale-token entry; these are direct owner-boundary defects."
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "plugins-mutation-bypass-and-namespace-collisions",
+      "exact_items": [
+        "post-permission mutation bypass",
+        "TOML namespace collisions for plugin tool IDs",
+        "mutation-capable mode bypass risk when policy keys remain name-based"
+      ],
+      "affected_doc_hints": [
+        "Plans/Plugins_System.md",
+        "Plans/Permissions_System.md"
+      ],
+      "heading_hints": [
+        "## Research Progress - 2026-03-17 - GPT-5.2 remaining-partial tranche synthesis"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L16162-L16164"
+      ],
+      "notes": [],
+      "reason": "No seed item appears to capture these exact `Plugins_System.md` bypass and namespace-collision defects."
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "lsp-telemetry-vs-ui-vs-applyedit-split",
+      "exact_items": [
+        "run-scoped `tool.*` telemetry",
+        "UI-session LSP interactions",
+        "mutation-capable apply-edit paths",
+        "multi-project/workspace-tab routing"
+      ],
+      "affected_doc_hints": [
+        "Plans/LSPSupport.md",
+        "Plans/Tools.md"
+      ],
+      "heading_hints": [
+        "## Research Progress - 2026-03-17 - GPT-5.2 remaining-partial tranche synthesis"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L16163-L16164"
+      ],
+      "notes": [],
+      "reason": "I do not see a seed item preserving this exact `LSPSupport.md` ownership split; existing seed coverage appears weaker and summary-only."
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "blocked_notice skeletal payload evidence",
+      "exact_items": [
+        "`blocked_notice`",
+        "`blocked_family`",
+        "`allowed_action_ids[]`",
+        "`blocked_sequence`",
+        "`approval_scope_key`"
+      ],
+      "affected_doc_hints": [
+        "Plans/assistant-chat-design.md"
+      ],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L17929-L17929"
+      ],
+      "notes": [],
+      "reason": "The seed records missing blocked-state fields, but this ledger line is materially stronger direct evidence because it states the live `blocked_notice` payload currently contains only `blocked_family` and `allowed_action_ids[]`, sharpening the gap for `blocked_sequence` and `approval_scope_key`."
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "usage blocked-attempt observability evidence",
+      "exact_items": [
+        "`blocked_reason_code`",
+        "`escalation_level`"
+      ],
+      "affected_doc_hints": [
+        "Plans/usage-feature.md"
+      ],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L17930-L17930"
+      ],
+      "notes": [],
+      "reason": "The seed notes missing `escalation_level`, but this line adds materially stronger direct evidence by naming the current usage-side fallback shape: blocked attempts are reported only by `blocked_reason_code` in the scheduler/recovery observability path."
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "glossary help-entry format evidence",
+      "exact_items": [
+        "`Term | Definition` tables",
+        "inline bullets",
+        "`canonical_name`",
+        "`short_definition`",
+        "`why_it_matters`",
+        "`what_it_is_not`",
+        "`common_related_states`",
+        "`related_concepts`",
+        "`surface_examples`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Glossary.md"
+      ],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L18032-L18032"
+      ],
+      "notes": [],
+      "reason": "The seed captures the missing help-entry field set, but this ledger line is materially stronger because it identifies the live defective structures now in use: two-column term tables and inline bullets instead of full help-entry rows."
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "canonical records heading discoverability evidence",
+      "exact_items": [
+        "`Canonical records for this feature set...`",
+        "`canonical_record.v1:{project_id}:{record_id}`",
+        "`Canonical records`"
       ],
       "affected_doc_hints": [
         "Plans/storage-plan.md"
       ],
       "heading_hints": [
-        "## Runtime / Storage / Contract Impacts"
+        "`Canonical records`"
       ],
       "stale_tokens": [],
       "source_evidence": [
-        "working_ledger.md:L1275-L1275"
+        "working_ledger.md:L18074-L18074"
       ],
-      "why_material": "stronger evidence"
-    },
-    {
-      "seed_type": "owner",
-      "canon_label_hint": "Lexicographic vs scored scheduler conflict",
-      "exact_items": [
-        "`selection_rule = \"lexicographic_node_id\"`"
-      ],
-      "affected_doc_hints": [
-        "Plans/plan_graph.schema.json",
-        "Plans/project_plan_graph_index.schema.json",
-        "Plans/Executor_Protocol.md"
-      ],
-      "heading_hints": [
-        "## Runtime / Storage / Contract Impacts"
-      ],
-      "stale_tokens": [],
-      "source_evidence": [
-        "working_ledger.md:L1377-L1378"
-      ],
-      "why_material": "new token"
-    },
-    {
-      "seed_type": "owner",
-      "canon_label_hint": "Terminology and ownership authorities missing 00-plans-index coverage",
-      "exact_items": [
-        "Extend `00-plans-index.md` with first-class ownership for feature seam, work package, package/seam overseers, promotion class, lane pool, contamination, and effective execution identity",
-        "Clarify which docs own execution truth vs projections vs UI-only overlays"
-      ],
-      "affected_doc_hints": [
-        "Plans/00-plans-index.md",
-        "Plans/Glossary.md",
-        "Plans/Crosswalk.md",
-        "Plans/Decision_Policy.md"
-      ],
-      "heading_hints": [
-        "## Cleanup Priorities"
-      ],
-      "stale_tokens": [],
-      "source_evidence": [
-        "working_ledger.md:L1409-L1411"
-      ],
-      "why_material": "new doc"
-    },
-    {
-      "seed_type": "owner",
-      "canon_label_hint": "Research Progress - 2026-03-16 - Bridge-field behavior for `provider_attempt_ref`, `usage_event_ref`, and receipts",
-      "heading_hints": [
-        "Research Progress - 2026-03-16 - Bridge-field behavior for `provider_attempt_ref`, `usage_event_ref`, and receipts"
-      ],
-      "source_evidence": [
-        "working_ledger.md:L10511-L10524",
-        "working_ledger.md:L10543-L10556"
-      ],
-      "affected_doc_hints": [
-        "Plans/storage-plan.md",
-        "Plans/Runtime_Artifacts_Panel.md",
-        "Plans/usage-feature.md",
-        "Plans/Orchestrator_Page.md",
-        "Plans/Contracts_V0.md"
-      ],
-      "exact_items": [
-        "start from `attempt_id`",
-        "follow `provider_attempt_ref` to provider/runtime trace and low-level execution evidence",
-        "follow `usage_event_ref` to canonical Usage/Ledger identity",
-        "follow receipt refs to Git/Actions/Docker/Kubernetes lineage",
-        "follow `artifact_id` / `linked_artifact_id` for renderable outputs and evidence objects",
-        "none of these bridge fields should become a replacement primary key",
-        "`provider_attempt_ref` does not replace `attempt_id`",
-        "`usage_event_ref` does not replace runtime identity",
-        "receipt refs do not replace artifact identity",
-        "Treat timestamp/run/thread fallback routing as compatibility behavior only when canonical bridge refs are absent."
-      ],
-      "stale_tokens": [],
       "notes": [],
-      "why_material": "stronger evidence"
-    },
-    {
-      "seed_type": "owner",
-      "canon_label_hint": "Research Progress - 2026-03-16 - Runtime-artifact envelope minimum contract",
-      "heading_hints": [
-        "Research Progress - 2026-03-16 - Runtime-artifact envelope minimum contract"
-      ],
-      "source_evidence": [
-        "working_ledger.md:L10619-L10638",
-        "working_ledger.md:L10648-L10653"
-      ],
-      "affected_doc_hints": [
-        "Plans/Runtime_Artifacts_Panel.md",
-        "Plans/storage-plan.md",
-        "Plans/FileManager.md",
-        "Plans/Contracts_V0.md",
-        "Plans/Project_Output_Artifacts.md"
-      ],
-      "exact_items": [
-        "the runtime-artifact envelope should be attempt-native by default.",
-        "`artifact_id` is the canonical identity of the renderable artifact object itself.",
-        "`logical_artifact_id` and `linked_artifact_id` are lineage/navigation helpers, not replacements for runtime identity.",
-        "`attempt_id` should be present whenever the artifact came from a concrete execution attempt.",
-        "if there is no concrete attempt, the envelope should still carry the strongest available runtime anchor.",
-        "`tool_llm_trace`",
-        "`validation_test`",
-        "`failed_attempts`",
-        "`before_after_snapshot`"
-      ],
-      "stale_tokens": [],
-      "notes": [],
-      "why_material": "stronger evidence"
-    },
-    {
-      "target_seed_id": "seed-134",
-      "materiality": "adds new exact heading evidence",
-      "why_material": "Adds the exact heading `## References` plus direct ledger evidence that the duplicate Crosswalk headings occur after the references block, which is not represented in the merged seed.",
-      "additions": {
-        "exact_items": [
-          "the duplicated headings appear after the `## References` block, which breaks the document's own structure and weakens deterministic anchor targeting"
-        ]
-      },
-      "source_evidence": [
-        "working_ledger.md:L16377-L16377"
-      ]
-    },
-    {
-      "target_seed_id": "seed-296",
-      "materiality": "adds new exact stale token/evidence",
-      "why_material": "Adds a concrete stale Final GUI spec phrase not represented in the merged seed; current seed covers `Tiers`/widgetization/resume_url drift, but not the stale dashboard/current-task progress-bar model.",
-      "additions": {
-        "exact_items": [
-          "dashboard/current-task language still uses current tier / phase-task-subtask progress bars as if that were the canonical Orchestrator model"
-        ]
-      },
-      "source_evidence": [
-        "working_ledger.md:L16752-L16752"
-      ]
+      "reason": "The seed records the missing `Canonical records` heading, but this line provides materially stronger direct evidence by showing the doc already has inline canonical-record prose plus the authoritative `canonical_record.v1:{project_id}:{record_id}` container, making the remaining defect specifically discoverability/heading drift rather than absent content."
     }
   ]
 }
