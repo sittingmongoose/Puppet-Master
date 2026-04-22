@@ -1,0 +1,384 @@
+{
+  "schema_id": "pm.ledger_obligation_seed.deferred_noise.v1",
+  "work_id": "w-20260312-203855",
+  "noise_id": "deferred-noise-003",
+  "reviewed_ranges": [
+    "working_ledger.md:L17525-L17924",
+    "working_ledger.md:L17925-L18157"
+  ],
+  "noise_findings": [
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "structural-owner-anchors-and-stale-survivors-already-merged",
+      "exact_items": [
+        "`orchestrator.project_state.{project_id}`",
+        "`### Required redb keys`",
+        "`### Restart and stale history`",
+        "`### 2.0 Command entry contract (doc-level)`",
+        "`Search-command routing`",
+        "`Canonical runtime recovery command ownership`",
+        "`TierContext`",
+        "`tier_id`",
+        "`detached_window`",
+        "`result_id`",
+        "`{ tool_name, invocation_summary, options }`",
+        "`No remaining gaps`",
+        "`Plans/Orchestrator_Page.md#11. Source Control boundary`"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Contracts_V0.md",
+        "Plans/orchestrator-subagent-integration.md",
+        "Plans/Tools.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/GitHub_Integration.md"
+      ],
+      "heading_hints": [
+        "`### Required redb keys`",
+        "`### Restart and stale history`",
+        "`### 2.0 Command entry contract (doc-level)`",
+        "`Search-command routing`",
+        "`Canonical runtime recovery command ownership`"
+      ],
+      "stale_tokens": [
+        "`TierContext`",
+        "`tier_id`",
+        "`detached_window`",
+        "`result_id`",
+        "`{ tool_name, invocation_summary, options }`",
+        "`No remaining gaps`",
+        "`Plans/Orchestrator_Page.md#11. Source Control boundary`"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L17693-L17699"
+      ],
+      "reason": "Duplicate of current-seed coverage already merged as exact owner-anchor and stale-survivor seed items; this subrange does not add a new token, heading, affected doc, or stronger direct evidence."
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "usage-feature-missing-sections-already-merged",
+      "exact_items": [
+        "`artifact drill-through section`",
+        "usage-attribution",
+        "export-taxonomy",
+        "account-history",
+        "degrade-behavior"
+      ],
+      "affected_doc_hints": [
+        "Plans/usage-feature.md"
+      ],
+      "heading_hints": [
+        "`artifact drill-through section`",
+        "usage-attribution",
+        "export-taxonomy",
+        "account-history",
+        "degrade-behavior"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L17695-L17695",
+        "working_ledger.md:L17776-L17776"
+      ],
+      "reason": "Duplicate of current-seed consumer findings already merged: the current seed already carries `artifact drill-through section` plus the named `usage-feature` missing consumer sections."
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "runtime-identity-partial-transfer-evidence-already-merged",
+      "exact_items": [
+        "`Plans/interview-subagent-integration.md` does contain `### Runtime identity visibility`, but its required fields still stop at `requested_account_binding` / `operational_identity` and do not carry `requested_account_policy` or `tool_use_id`.",
+        "`Plans/assistant-chat-design.md` already carries `tool_use_id`, so gap-001's consumer deficiency is sharper than a blanket \"missing everywhere\" claim.",
+        "`Plans/usage-feature.md` already carries canonical `account_id` attribution in both the billing-identity tuple and the unified `UsageRecord` schema.",
+        "`Plans/orchestrator-subagent-integration.md` still carries a narrower `execution_unit_context` packet that stops at `requested_account_id`, `effective_account_id`, and `operational_identity`.",
+        "`gap-001` now points at `Plans/interview-subagent-integration.md` \u2014 `### Runtime identity visibility`.",
+        "`gap-001` now points at `Plans/usage-feature.md` \u2014 `### Unified `UsageRecord` schema expectations`.",
+        "`gap-001` now points at `Plans/orchestrator-subagent-integration.md` \u2014 `### Subagent Selector`."
+      ],
+      "affected_doc_hints": [
+        "Plans/assistant-chat-design.md",
+        "Plans/interview-subagent-integration.md",
+        "Plans/orchestrator-subagent-integration.md",
+        "Plans/usage-feature.md"
+      ],
+      "heading_hints": [
+        "### Runtime identity visibility",
+        "### Unified `UsageRecord` schema expectations",
+        "### Subagent Selector"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L17774-L17775",
+        "working_ledger.md:L17832-L17835",
+        "working_ledger.md:L17855-L17857"
+      ],
+      "reason": "Duplicate of the stronger direct partial-transfer evidence already merged into the current seed, including the real live section mappings and field-level present-vs-missing split."
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "blocked-packet-owner-vs-consumer-split-already-merged",
+      "exact_items": [
+        "`Plans/assistant-chat-design.md` does contain the exact heading `## Unified Thread Blocked-State Lifecycle`.",
+        "`Plans/assistant-chat-design.md` also contains `### Multi-episode display`, so the blocked-notice flow is not missing wholesale.",
+        "`Plans/assistant-chat-design.md` still does not carry the exact blocked packet fields `blocked_sequence`, `approval_scope_key`, `report_ref`, `startup_recovered`, `action_available`, or `escalation_level`.",
+        "`Plans/Contracts_V0.md` already carries `report_ref` in the blocked-episode contract.",
+        "`Plans/Contracts_V0.md` and `Plans/Executor_Protocol.md` already carry `startup_recovered` in runtime wake canon.",
+        "`Plans/Orchestrator_Page.md` already carries `escalation_level` in the concern/notification owner fields.",
+        "`Plans/Tools.md`, `Plans/assistant-chat-design.md`, and `Plans/usage-feature.md` still do not carry `report_ref`, `startup_recovered`, or `escalation_level` through the blocked-packet consumer surfaces under audit.",
+        "`action_available` still does not have a discoverable owner or consumer presence in the live Plans docs."
+      ],
+      "affected_doc_hints": [
+        "Plans/assistant-chat-design.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Tools.md",
+        "Plans/usage-feature.md"
+      ],
+      "heading_hints": [
+        "## Unified Thread Blocked-State Lifecycle",
+        "### Multi-episode display"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L17748-L17750",
+        "working_ledger.md:L17801-L17805"
+      ],
+      "reason": "Already represented in current-seed blocked-packet findings: present assistant-chat headings, missing consumer carry-through fields, and owner-vs-consumer field split are all captured with equal or stronger direct evidence."
+    },
+    {
+      "seed_type": "stale_retirement",
+      "canon_label_hint": "restore-points-broad-claim-weaker-than-current-seed",
+      "exact_items": [
+        "`restore points`"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [],
+      "stale_tokens": [
+        "`restore points`"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L17656-L17656"
+      ],
+      "reason": "Weaker earlier restatement only. The current seed already carries the stronger direct downgrade that `restore points` is no longer an unresolved contradiction wholesale, but a structural-heading/broken-reference drift issue instead."
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "receipt/storage downgrades and remaining project-state naming already reflected",
+      "exact_items": [
+        "`run_id`",
+        "`phase_plan_ref`",
+        "`requirements_quality_report_ref`",
+        "`pass_verdict`",
+        "`project_summary.v1:{project_id}`",
+        "`orchestrator.project_state.{project_id}`"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/Project_Output_Artifacts.md"
+      ],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L17926-L17928"
+      ],
+      "reason": "Duplicate refinement: the current seed already reflects that `run_id`, `phase_plan_ref`, `requirements_quality_report_ref`, and `pass_verdict` are no longer unresolved in this blocker cluster, and it already carries the remaining `orchestrator.project_state.{project_id}` naming gap."
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "runtime identity owner anchor and required fields already merged",
+      "exact_items": [
+        "`### 5.1B Persona/Runtime Snapshot Payload Contract`",
+        "`execution_unit_context`",
+        "`requested_account_binding`",
+        "`requested_account_policy`",
+        "`operational_identity`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md"
+      ],
+      "heading_hints": [
+        "`### 5.1B Persona/Runtime Snapshot Payload Contract`"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L18029-L18029",
+        "working_ledger.md:L18155-L18155"
+      ],
+      "reason": "Duplicate: the current seed already contains this missing owner heading and the exact `execution_unit_context` required-field omission."
+    },
+    {
+      "seed_type": "stale_retirement",
+      "canon_label_hint": "search and blocked-state stale survivors already merged",
+      "exact_items": [
+        "`detached_window`",
+        "`result_id`",
+        "`cmd.search.open_result`",
+        "`cmd.search.replace_selected`",
+        "`{ tool_name, invocation_summary, options }`",
+        "`No remaining gaps`"
+      ],
+      "affected_doc_hints": [
+        "Plans/UI_Command_Catalog.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/Tools.md"
+      ],
+      "heading_hints": [],
+      "stale_tokens": [
+        "`detached_window`",
+        "`result_id`",
+        "`{ tool_name, invocation_summary, options }`",
+        "`No remaining gaps`"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L17931-L17931",
+        "working_ledger.md:L18030-L18030",
+        "working_ledger.md:L18117-L18117",
+        "working_ledger.md:L18155-L18155"
+      ],
+      "reason": "Duplicate/weaker restatement: the current seed already captures these stale survivors, including the live `result_id` command-arg residue and the stale tool ask tuple / closure verdict."
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "blocked notice and blocked-attempt observability already merged",
+      "exact_items": [
+        "`blocked_notice`",
+        "`blocked_family`",
+        "`allowed_action_ids[]`",
+        "`blocked_sequence`",
+        "`approval_scope_key`",
+        "`blocked_reason_code`",
+        "`escalation_level`",
+        "`action_available`"
+      ],
+      "affected_doc_hints": [
+        "Plans/assistant-chat-design.md",
+        "Plans/usage-feature.md",
+        "Plans/human-in-the-loop.md"
+      ],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L17929-L17930",
+        "working_ledger.md:L18031-L18031",
+        "working_ledger.md:L18117-L18117",
+        "working_ledger.md:L18155-L18155"
+      ],
+      "reason": "Duplicate: the current seed already contains the stronger direct payload-shape evidence for `blocked_notice`, the usage-side `blocked_reason_code` fallback, and the related ownership/carry-through gap."
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "glossary headings and help-entry format already merged",
+      "exact_items": [
+        "`### Orchestrator rewrite terms`",
+        "`### Runtime and routing terms`",
+        "`Term | Definition` tables",
+        "inline bullets",
+        "`canonical_name`",
+        "`short_definition`",
+        "`why_it_matters`",
+        "`what_it_is_not`",
+        "`common_related_states`",
+        "`related_concepts`",
+        "`surface_examples`",
+        "populated help-entry rows"
+      ],
+      "affected_doc_hints": [
+        "Plans/Glossary.md"
+      ],
+      "heading_hints": [
+        "`### Orchestrator rewrite terms`",
+        "`### Runtime and routing terms`"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L17932-L17932",
+        "working_ledger.md:L18032-L18032",
+        "working_ledger.md:L18075-L18075",
+        "working_ledger.md:L18157-L18157"
+      ],
+      "reason": "Duplicate: the current seed already carries both missing glossary owner headings and the stronger direct evidence that the live glossary still uses incomplete `Term | Definition` / bullet structures instead of full help-entry rows."
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "broken glossary/storage/source-control anchor consumers already merged",
+      "exact_items": [
+        "`Plans/Glossary.md#Orchestrator rewrite terms`",
+        "`Plans/storage-plan.md#Canonical records`",
+        "`Plans/storage-plan.md#Restart and stale history`",
+        "`Plans/storage-plan.md#Cross-surface receipt record`",
+        "`Plans/Orchestrator_Page.md#11. Source Control boundary`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/Glossary.md",
+        "Plans/storage-plan.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/GitHub_Integration.md"
+      ],
+      "heading_hints": [
+        "`Orchestrator rewrite terms`",
+        "`Canonical records`",
+        "`Restart and stale history`",
+        "`Cross-surface receipt record`",
+        "`11. Source Control boundary`"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L18074-L18075",
+        "working_ledger.md:L18114-L18115",
+        "working_ledger.md:L18157-L18157"
+      ],
+      "reason": "Duplicate: the current seed already contains these broken consumer anchors and affected docs; this subrange adds no new anchor, heading, or document target."
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "usage-feature missing named consumer sections already merged",
+      "exact_items": [
+        "`usage-attribution`",
+        "`export-taxonomy`",
+        "`account-history`",
+        "`degrade-behavior`"
+      ],
+      "affected_doc_hints": [
+        "Plans/usage-feature.md"
+      ],
+      "heading_hints": [
+        "`usage-attribution`",
+        "`export-taxonomy`",
+        "`account-history`",
+        "`degrade-behavior`"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L18156-L18156"
+      ],
+      "reason": "Duplicate: the current seed already preserves this exact missing section set, including the later reconfirmation of `account-history` / `degrade-behavior`."
+    },
+    {
+      "seed_type": "stale_retirement",
+      "canon_label_hint": "restore-points downgrade already merged",
+      "exact_items": [
+        "`restore points`",
+        "runtime safe points remain distinct from project-scoped restore points",
+        "remaining blocker is structural-heading and broken-reference drift"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [],
+      "stale_tokens": [
+        "`restore points`"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L18116-L18116"
+      ],
+      "reason": "Duplicate: the current seed already contains this downgrade as direct stale-retirement evidence, so this subrange does not introduce a new correction."
+    }
+  ]
+}

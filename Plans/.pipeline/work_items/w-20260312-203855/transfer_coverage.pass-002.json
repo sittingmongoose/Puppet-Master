@@ -1,0 +1,378 @@
+{
+  "schema_id": "pm.transfer_coverage.pass.v1",
+  "work_id": "w-20260312-203855",
+  "pass_id": "pass-002",
+  "groups": [
+    {
+      "group": "obl-001-obl-080",
+      "material_findings": [
+        {
+          "obligation_id": "obl-003",
+          "canon_label": "cross-tab-deep-links",
+          "change_type": "add_coverage_row",
+          "status": "partial",
+          "row_type": "owner",
+          "paths": [
+            "Plans/UI_Command_Catalog.md",
+            "Plans/Run_Graph_View.md"
+          ],
+          "evidence": [
+            "Plans/UI_Command_Catalog.md:L172-L175",
+            "Plans/Run_Graph_View.md:L40-L43"
+          ],
+          "required_action": "owner_create_or_rewrite",
+          "exact_items": [
+            "cross-tab deep links preserve `project_id`, `focused_run_id`, object identity, and inspector focus",
+            "evidence and artifact pivots route into native Evidence and Ledger targets using canonical route/open contracts"
+          ]
+        },
+        {
+          "obligation_id": "obl-005",
+          "canon_label": "evidence-artifacts-split",
+          "change_type": "add_coverage_row",
+          "status": "partial",
+          "row_type": "owner",
+          "paths": [
+            "Plans/FinalGUISpec.md",
+            "Plans/Runtime_Artifacts_Panel.md",
+            "Plans/Run_Graph_View.md"
+          ],
+          "evidence": [
+            "Plans/FinalGUISpec.md:L1157-L1163",
+            "Plans/Runtime_Artifacts_Panel.md:L8-L8",
+            "Plans/Run_Graph_View.md:L40-L43"
+          ],
+          "required_action": "owner_create_or_rewrite",
+          "exact_items": [
+            "Artifacts is the persistent side panel for runtime, build, browser, and review artifacts",
+            "the Artifacts panel is the single place to see verification evidence, screenshots, recordings, diffs, and other produced outputs",
+            "graph evidence/artifact pivots route into native Evidence and Ledger targets"
+          ]
+        },
+        {
+          "obligation_id": "obl-037",
+          "canon_label": "orchestrator versus source control action split",
+          "change_type": "add_coverage_row",
+          "status": "partial",
+          "row_type": "owner",
+          "paths": [
+            "Plans/Orchestrator_Page.md",
+            "Plans/GitHub_Integration.md"
+          ],
+          "evidence": [
+            "Plans/Orchestrator_Page.md:L15-L16",
+            "Plans/GitHub_Integration.md:L74-L83"
+          ],
+          "required_action": "owner_create_or_rewrite",
+          "exact_items": [
+            "Orchestrator explains why a `worktree-first` action matters, but concrete branch, diff, merge, and worktree actions stay in Source Control",
+            "Source Control owns worktree inventory, lineage, and recovery"
+          ]
+        },
+        {
+          "obligation_id": "obl-041",
+          "canon_label": "historical run mode behavior",
+          "change_type": "add_coverage_row",
+          "status": "partial",
+          "row_type": "consumer",
+          "paths": [
+            "Plans/Orchestrator_Page.md",
+            "Plans/UI_Command_Catalog.md"
+          ],
+          "evidence": [
+            "Plans/Orchestrator_Page.md:L9-L10",
+            "Plans/UI_Command_Catalog.md:L172-L175"
+          ],
+          "required_action": "consumer_propagation",
+          "exact_items": [
+            "current and historical views remain explicit",
+            "cross-tab deep links preserve `project_id`, `focused_run_id`, object identity, and inspector focus"
+          ]
+        },
+        {
+          "obligation_id": "obl-042",
+          "canon_label": "orchestrator search routing contract",
+          "change_type": "add_coverage_row",
+          "status": "partial",
+          "row_type": "owner",
+          "paths": [
+            "Plans/UI_Command_Catalog.md",
+            "Plans/Contracts_V0.md",
+            "Plans/Orchestrator_Page.md"
+          ],
+          "evidence": [
+            "Plans/UI_Command_Catalog.md:L569-L580",
+            "Plans/Contracts_V0.md:L602-L617",
+            "Plans/Orchestrator_Page.md:L6-L7"
+          ],
+          "required_action": "owner_create_or_rewrite",
+          "exact_items": [
+            "`cmd.search.open_result` opens a Search result through `route_target`",
+            "Search command routing resolves through `route_target` and preserves query-session state",
+            "`route_target` carries `project_id`, `focused_run_id`, `inspector_target`, and canonical selector identity"
+          ]
+        },
+        {
+          "obligation_id": "obl-065",
+          "canon_label": "record artifact separation",
+          "change_type": "add_coverage_row",
+          "status": "partial",
+          "row_type": "owner",
+          "paths": [
+            "Plans/Runtime_Artifacts_Panel.md",
+            "Plans/storage-plan.md"
+          ],
+          "evidence": [
+            "Plans/Runtime_Artifacts_Panel.md:L29-L31",
+            "Plans/Runtime_Artifacts_Panel.md:L63-L65",
+            "Plans/storage-plan.md:L238-L241"
+          ],
+          "required_action": "owner_create_or_rewrite",
+          "exact_items": [
+            "Project Plan Package and Runtime Artifacts remain distinct families",
+            "Runtime artifacts are attempt-native, bridge-aware records",
+            "Storage owns canonical records for runtime, receipt, and projection truth"
+          ]
+        },
+        {
+          "obligation_id": "obl-071",
+          "canon_label": "notification routing dimensions",
+          "change_type": "add_coverage_row",
+          "status": "partial",
+          "row_type": "consumer",
+          "paths": [
+            "Plans/FinalGUISpec.md",
+            "Plans/Orchestrator_Page.md"
+          ],
+          "evidence": [
+            "Plans/FinalGUISpec.md:L2678-L2684",
+            "Plans/FinalGUISpec.md:L2750-L2756",
+            "Plans/Orchestrator_Page.md:L12-L13"
+          ],
+          "required_action": "consumer_propagation",
+          "exact_items": [
+            "status surfaces distinguish `attention_required`, `blocked`, `retrying/backoff`, and `remediation`",
+            "`attention_required` and `blocked` are visually distinct escalation levels with canonical priority ordering",
+            "concern and notification surfaces keep `attention_required` and `blocked` distinct from health and activity"
+          ]
+        }
+      ],
+      "noise_findings": [],
+      "resolved_deferred_obligation_ids": [
+        "obl-003",
+        "obl-005",
+        "obl-037",
+        "obl-041",
+        "obl-042",
+        "obl-065",
+        "obl-071"
+      ],
+      "remaining_deferred_obligation_ids": [
+        "obl-007",
+        "obl-009",
+        "obl-010",
+        "obl-012",
+        "obl-013",
+        "obl-017",
+        "obl-018",
+        "obl-027",
+        "obl-029",
+        "obl-034",
+        "obl-036",
+        "obl-040",
+        "obl-043",
+        "obl-044",
+        "obl-045",
+        "obl-046",
+        "obl-047",
+        "obl-048",
+        "obl-050",
+        "obl-051",
+        "obl-052",
+        "obl-053",
+        "obl-054",
+        "obl-056",
+        "obl-060",
+        "obl-064",
+        "obl-069",
+        "obl-073",
+        "obl-075",
+        "obl-076",
+        "obl-077"
+      ]
+    },
+    {
+      "group": "obl-081-obl-160",
+      "material_findings": [
+        {
+          "obligation_id": "obl-118",
+          "coverage_id": "cov-242",
+          "path": "Plans/assistant-chat-design.md",
+          "change_type": "status_change",
+          "previous_status": "missing",
+          "new_status": "partial",
+          "evidence": [
+            "Plans/assistant-chat-design.md:L2206-L2213"
+          ],
+          "required_action": "owner_create_or_rewrite"
+        },
+        {
+          "obligation_id": "obl-143",
+          "coverage_id": "cov-357",
+          "path": "Plans/Progression_Gates.md",
+          "change_type": "stronger_direct_evidence",
+          "previous_status": "partial",
+          "new_status": "partial",
+          "evidence": [
+            "Plans/Progression_Gates.md:L192-L195",
+            "Plans/Progression_Gates.md:L241-L250",
+            "Plans/Progression_Gates.md:L289-L305"
+          ],
+          "required_action": "owner_create_or_rewrite"
+        },
+        {
+          "obligation_id": "obl-159",
+          "coverage_id": "cov-431",
+          "path": "Plans/FinalGUISpec.md",
+          "change_type": "status_change",
+          "previous_status": "missing",
+          "new_status": "partial",
+          "evidence": [
+            "Plans/FinalGUISpec.md:L728-L735",
+            "Plans/FinalGUISpec.md:L1800-L1805",
+            "Plans/FinalGUISpec.md:L1884-L1885"
+          ],
+          "required_action": "stale_retirement"
+        }
+      ],
+      "noise_findings": [],
+      "resolved_deferred_obligation_ids": [],
+      "remaining_deferred_obligation_ids": [
+        "obl-118",
+        "obl-143",
+        "obl-159"
+      ]
+    },
+    {
+      "group": "obl-161-obl-240",
+      "material_findings": [
+        {
+          "obligation_id": "obl-230",
+          "coverage_id": "cov-744",
+          "change_type": "status_change",
+          "path": "Plans/FinalGUISpec.md",
+          "from_status": "missing",
+          "to_status": "partial",
+          "evidence": [
+            "Plans/FinalGUISpec.md:L1844-L1845"
+          ],
+          "exact_items": [
+            "`account_pressure_episode.v1:{provider_id}:{account_id}:{episode_id}`",
+            "`account_switch_event.v1:{provider_id}:{event_id}`"
+          ],
+          "required_action": "owner_create_or_rewrite"
+        },
+        {
+          "obligation_id": "obl-232",
+          "coverage_id": "cov-753",
+          "change_type": "status_change",
+          "path": "Plans/FinalGUISpec.md",
+          "from_status": "missing",
+          "to_status": "partial",
+          "evidence": [
+            "Plans/FinalGUISpec.md:L1032-L1037",
+            "Plans/FinalGUISpec.md:L2220-L2230",
+            "Plans/FinalGUISpec.md:L2320-L2339"
+          ],
+          "exact_items": [
+            "requested state vs effective state vs inherited defaults",
+            "provider support states: `supported` / `partially supported` / `unsupported`",
+            "disclosure includes requested value, effective value, and reason",
+            "Orchestrator node/package/lane/seam mapping editors"
+          ],
+          "required_action": "owner_create_or_rewrite"
+        },
+        {
+          "obligation_id": "obl-197",
+          "coverage_id": "cov-620",
+          "change_type": "stronger_direct_evidence",
+          "path": "Plans/FinalGUISpec.md",
+          "evidence": [
+            "Plans/FinalGUISpec.md:L692-L694",
+            "Plans/FinalGUISpec.md:L728-L735"
+          ],
+          "exact_items": [
+            "only `Progress` is widget-composed",
+            "`Seams`, `Node Graph`, `Evidence`, `History`, and `Ledger` are native views",
+            "routed opens resolve through `route_target`",
+            "source opens resolve through `OpenSubject` or `OpenFile`",
+            "`resume_url` is serialized transport only"
+          ]
+        },
+        {
+          "obligation_id": "obl-225",
+          "change_type": "new_coverage_row",
+          "path": "Plans/FinalGUISpec.md",
+          "heading_hint": "### 7.1 Orchestrator",
+          "status": "partial",
+          "row_type": "consumer",
+          "evidence": [
+            "Plans/FinalGUISpec.md:L688-L694"
+          ],
+          "exact_items": [
+            "`Progress`",
+            "`Seams`",
+            "`Node Graph`",
+            "`Evidence`",
+            "`History`",
+            "`Ledger`",
+            "only `Progress` is widget-composed",
+            "`Seams`, `Node Graph`, `Evidence`, `History`, and `Ledger` are native views"
+          ],
+          "required_action": "consumer_propagation"
+        }
+      ],
+      "noise_findings": [],
+      "resolved_deferred_obligation_ids": [],
+      "remaining_deferred_obligation_ids": []
+    },
+    {
+      "group": "obl-241-obl-317",
+      "material_findings": [
+        {
+          "obligation_id": "obl-284",
+          "coverage_id": "cov-892",
+          "path": "Plans/usage-feature.md",
+          "change_type": "status_and_evidence_strengthened",
+          "from_status": "missing",
+          "to_status": "present",
+          "from_required_action": "consumer_propagation",
+          "to_required_action": "none",
+          "evidence": [
+            "Plans/usage-feature.md:L349-L349",
+            "Plans/usage-feature.md:L358-L358",
+            "Plans/usage-feature.md:L361-L361",
+            "Plans/usage-feature.md:L374-L375"
+          ],
+          "notes": "Direct section headings now cover usage attribution, export taxonomy, account history, and degrade behavior."
+        }
+      ],
+      "noise_findings": [],
+      "resolved_deferred_obligation_ids": [
+        "obl-284"
+      ],
+      "remaining_deferred_obligation_ids": []
+    }
+  ],
+  "material_findings_total": 15,
+  "resolved_deferred_obligation_ids": [
+    "obl-003",
+    "obl-005",
+    "obl-037",
+    "obl-041",
+    "obl-042",
+    "obl-065",
+    "obl-071",
+    "obl-284"
+  ]
+}

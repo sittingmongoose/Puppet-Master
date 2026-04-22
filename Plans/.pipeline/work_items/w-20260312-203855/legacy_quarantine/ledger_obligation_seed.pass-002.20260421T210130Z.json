@@ -1,0 +1,83 @@
+{
+  "schema_id": "pm.ledger_obligation_seed.pass.v1",
+  "work_id": "w-20260312-203855",
+  "pass_id": "pass-002",
+  "assigned_ranges": [
+    "working_ledger.md:L1201-L1687",
+    "working_ledger.md:L10401-L11055",
+    "working_ledger.md:L16348-L16798"
+  ],
+  "material_findings": [
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Automation-first defaults contradiction",
+      "exact_items": [
+        "Automation-first direction is still materially unreconciled with surviving default behaviors: `regular`/HTE-by-default, `visual_mode = auto` preferring visible local runs, and approval-heavy/manual-default flows remain live assumptions in core policy/runtime docs."
+      ],
+      "affected_doc_hints": [
+        "Plans/Run_Modes.md",
+        "Plans/newtools.md",
+        "Plans/human-in-the-loop.md",
+        "Plans/Progression_Gates.md"
+      ],
+      "heading_hints": [
+        "## Cleanup Priorities"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L1389-L1389",
+        "working_ledger.md:L1425-L1425",
+        "working_ledger.md:L1494-L1495",
+        "working_ledger.md:L1529-L1529",
+        "working_ledger.md:L1586-L1586"
+      ],
+      "why_material": "new item"
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "PM-managed roots visibility and registration gap",
+      "exact_items": [
+        "PM-owned git/file roots are still missing a canonical visibility/registration model across Source Control and Orchestrator surfaces; managed template repos, live-run artifact directories, and other PM-managed side-effect roots are not treated as first-class navigable SCM/runtime objects."
+      ],
+      "affected_doc_hints": [
+        "Plans/GitHub_Integration.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/FileSafe.md",
+        "Plans/newtools.md"
+      ],
+      "heading_hints": [
+        "## Cleanup Priorities"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L1357-L1360",
+        "working_ledger.md:L1398-L1398",
+        "working_ledger.md:L1463-L1466"
+      ],
+      "why_material": "new item"
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Decision Log rewrite-era decision ledger gap",
+      "exact_items": [
+        "`Plans/Decision_Log.md` still is not functioning as the rewrite-era decision ledger: it only carries two `2026-02-27` OpenCode extraction entries and does not record the rewrite owner decisions already driving the Crosswalk/DRY cleanup, leaving no durable owner-traceability record for why rewrite ownership changed."
+      ],
+      "affected_doc_hints": [
+        "Plans/Decision_Log.md",
+        "Plans/Crosswalk.md",
+        "Plans/DRY_Rules.md"
+      ],
+      "heading_hints": [
+        "## Research Progress - 2026-03-17 - owner-traceability seam: Decision Log, DRY Rules, Crosswalk"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L16356-L16363",
+        "working_ledger.md:L16395-L16419"
+      ],
+      "why_material": "new item"
+    }
+  ]
+}

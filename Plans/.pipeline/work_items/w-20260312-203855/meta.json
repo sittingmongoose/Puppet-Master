@@ -3,21 +3,11 @@
   "work_id": "w-20260312-203855",
   "mode": "migrated",
   "topic_or_scope": "Orchestrator rewrite transfer-fidelity audit, legacy-canon cleanup readiness, and reconciliation prep",
-  "status": "ready_for_planning",
+  "status": "blocked",
   "created_at_utc": "2026-03-12T20:38:55Z",
-  "updated_at_utc": "2026-04-21T19:40:45Z",
+  "updated_at_utc": "2026-04-22T01:03:45Z",
   "run_prefix": "r-20260312-203855",
   "next_run_seq": 17,
   "run_id": null,
-  "next_required_stage": "Coverage Matrix Builder",
-  "ledger_obligation_seed_summary": {
-    "seed_items_total": 369,
-    "owner_seed_items": 222,
-    "consumer_seed_items": 84,
-    "stale_retirement_seed_items": 63,
-    "docs_affected": 69,
-    "source_line_ranges_covered": 712,
-    "verification_passes_completed": 3,
-    "material_findings_deferred": 0
-  }
+  "next_required_stage": "Coverage Matrix Builder"
 }

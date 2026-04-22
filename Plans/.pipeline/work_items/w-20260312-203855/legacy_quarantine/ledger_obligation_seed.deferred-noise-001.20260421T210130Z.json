@@ -1,0 +1,11 @@
+{
+  "schema_id": "pm.ledger_obligation_seed.deferred_noise.v1",
+  "work_id": "w-20260312-203855",
+  "noise_id": "deferred-noise-001",
+  "noise_findings": [
+    {
+      "canon_label_hint": "active-agents.json versus seglog/redb source-of-truth conflict",
+      "reason": "Already covered by stronger merged-seed entries: seed-314 retires the tier-rooted `active-agents.json` execution model in `Plans/orchestrator-subagent-integration.md`, while seeds 223/251/318 assign canonical persisted execution/runtime ownership to `Plans/storage-plan.md` and explicitly say the orchestrator doc should stop owning canonical runtime state. The deferred item restates that same conflict with narrower evidence from `working_ledger.md:L1270-L1270` and `working_ledger.md:L1322-L1322`, so it is duplicate/weaker rather than a net-new material finding."
+    }
+  ]
+}
