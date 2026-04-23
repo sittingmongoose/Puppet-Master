@@ -1,0 +1,81 @@
+{
+  "schema_id": "pm.transfer_coverage.deferred.v1",
+  "work_id": "w-20260312-203855",
+  "summary": {
+    "deferred_rows_total": 3,
+    "doc_discovery_rows_total": 3,
+    "material_findings_total": 0
+  },
+  "deferred_rows": [
+    {
+      "coverage_id": "cov-034",
+      "source_obligation_ids": [
+        "obl-016"
+      ],
+      "canon_label": "Concern lifecycle states and semantics",
+      "row_type": "consumer",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "Lifecycle direction",
+      "status": "missing",
+      "exact_items": [
+        "accepted_risk is a resolution, not a dismissal",
+        "acknowledged and dismissed are operator/user presentation/governance actions",
+        "active remains default live state even if same concern seen multiple times",
+        "dismissed is not substitute for resolved",
+        "lifecycle: active, acknowledged, resolved, dismissed",
+        "resolved must carry exact resolution semantics"
+      ],
+      "stale_tokens": [],
+      "evidence": [],
+      "required_action": "consumer_propagation",
+      "reason": "No concrete concern-lifecycle owner section with accepted_risk / acknowledged / dismissed semantics exists in the current Plans docs; only scattered status and attention terms are present.",
+      "next_required_stage": "Coverage Matrix Builder"
+    },
+    {
+      "coverage_id": "cov-511",
+      "source_obligation_ids": [
+        "obl-215"
+      ],
+      "canon_label": "Unresolved multi-level provider/model precedence and overrides",
+      "row_type": "owner",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "Open Questions / Uncertainties",
+      "status": "missing",
+      "exact_items": [
+        "are seam/package/node provider-model settings hard constraints, defaults, or hints",
+        "can an overseer do direct node work, or only delegate/review",
+        "how are worktrees assigned for parallel nodes within the same package or seam",
+        "how do dynamic node personas interact with explicit node overrides and overseer-controlled delegation",
+        "if an overseer can do node work directly, does it use overseer-effective settings or node-effective settings",
+        "what happens to worktree ownership during remediation, corroboration, or graph-patch-triggered work",
+        "what is the provider/model precedence order across run, seam, package, node, overseer, and delegated-subagent levels"
+      ],
+      "stale_tokens": [],
+      "evidence": [],
+      "required_action": "owner_create_or_rewrite",
+      "reason": "No single concrete section resolves the combined provider/model precedence and parallel-node worktree-assignment questions; ownership is still split across Models_System, Executor_Protocol, and WorktreeGitImprovement without a definitive owner section.",
+      "next_required_stage": "Coverage Matrix Builder"
+    },
+    {
+      "coverage_id": "cov-526",
+      "source_obligation_ids": [
+        "obl-222"
+      ],
+      "canon_label": "Worktree ownership/allocation missing definition",
+      "row_type": "owner",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "Impacted Docs",
+      "status": "missing",
+      "exact_items": [
+        "current conversational preference is leaning toward package-based worktrees rather than per-node worktrees for scale/manageability reasons",
+        "current orchestration discussion has not yet defined whether worktrees are allocated/owned primarily per node, per package, per seam, or per remediation branch of work"
+      ],
+      "stale_tokens": [],
+      "evidence": [],
+      "required_action": "owner_create_or_rewrite",
+      "reason": "Current Plans docs do not define the worktree allocation strategy (per node, per package, per seam, or remediation branch) under a concrete owner heading.",
+      "next_required_stage": "Coverage Matrix Builder"
+    }
+  ],
+  "next_required_stage": "Coverage Matrix Builder"
+}

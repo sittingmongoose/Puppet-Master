@@ -1,0 +1,83 @@
+{
+  "schema_id": "pm.doc_discovery_resolution.wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-002",
+  "summary": {
+    "rows_in_wave": 5,
+    "rows_resolved": 5,
+    "rows_unresolved": 0
+  },
+  "resolutions": [
+    {
+      "coverage_id": "cov-090",
+      "source_obligation_ids": [
+        "obl-047"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Crosswalk.md",
+      "new_heading_hint": "### 3.1 Runtime orchestration ownership",
+      "resolution_basis": "cross-reference target",
+      "evidence": [
+        "Plans/Crosswalk.md:61-68"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-105",
+      "source_obligation_ids": [
+        "obl-060"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### 7.3 `route_target`",
+      "resolution_basis": "cross-reference target",
+      "evidence": [
+        "Plans/Contracts_V0.md:599-678"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-126",
+      "source_obligation_ids": [
+        "obl-069"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Contracts_V0.md",
+      "new_heading_hint": "### 7.3 `route_target` / ### 7.4 OpenSubject",
+      "resolution_basis": "cross-reference target",
+      "evidence": [
+        "Plans/Contracts_V0.md:599-722"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-141",
+      "source_obligation_ids": [
+        "obl-076"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/assistant-chat-design.md",
+      "new_heading_hint": "### W.12 File manager worktree context",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/assistant-chat-design.md:2647-2676"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-234",
+      "source_obligation_ids": [
+        "obl-110"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/storage-plan.md",
+      "new_heading_hint": "### Canonical records",
+      "resolution_basis": "owner surface",
+      "evidence": [
+        "Plans/storage-plan.md:240-299"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}
