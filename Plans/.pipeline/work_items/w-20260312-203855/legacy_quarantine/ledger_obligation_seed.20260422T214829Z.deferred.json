@@ -1,0 +1,19 @@
+{
+  "schema_id": "pm.ledger_obligation_seed.deferred.v1",
+  "work_id": "w-20260312-203855",
+  "deferred_after_pass": "pass-003",
+  "reviewed_ranges": [
+    "working_ledger.md:L9692-L10153",
+    "working_ledger.md:L13246-L14293",
+    "working_ledger.md:L15633-L16793",
+    "working_ledger.md:L17525-L18157"
+  ],
+  "material_findings_deferred": 0,
+  "unresolved_high_risk_ranges": [],
+  "status": "resolved",
+  "summary": {
+    "material_findings_deferred": 0,
+    "verification_passes_completed": 3
+  },
+  "next_required_stage": "Ledger Obligation Seed Finalizer"
+}

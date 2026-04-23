@@ -3,34 +3,709 @@
   "work_id": "w-20260312-203855",
   "wave_id": "wave-002",
   "covered_ranges": [
+    "working_ledger.md:L3201-L3600",
+    "working_ledger.md:L3601-L4000",
+    "working_ledger.md:L4001-L4400",
+    "working_ledger.md:L4401-L4800",
     "working_ledger.md:L4801-L5200",
     "working_ledger.md:L5201-L5600",
     "working_ledger.md:L5601-L6000",
-    "working_ledger.md:L6001-L6400",
-    "working_ledger.md:L6401-L6800",
-    "working_ledger.md:L6801-L7200",
-    "working_ledger.md:L7201-L7600",
-    "working_ledger.md:L7601-L8000",
-    "working_ledger.md:L8001-L8400",
-    "working_ledger.md:L8401-L8800",
-    "working_ledger.md:L8801-L9200",
-    "working_ledger.md:L9201-L9600"
+    "working_ledger.md:L6001-L6400"
   ],
-  "summary": {
-    "seed_items_total": 62,
-    "owner_seed_items": 41,
-    "consumer_seed_items": 6,
-    "stale_retirement_seed_items": 15,
-    "docs_affected": 33,
-    "source_line_ranges_covered": 12,
-    "verification_passes_completed": 0,
-    "material_findings_deferred": 0
-  },
   "seed_items": [
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "action policy matrix and hard-gate contracts",
+      "exact_items": [
+        "classify actions by both `confirmation level` and `reversibility`.",
+        "Candidate confirmation levels: `none`, `light`, `strong`, `hard_gate`.",
+        "Candidate reversibility classes: `immediate_undo`, `compensating_action_only`, `non_reversible`.",
+        "`hard_gate` should show: runtime-defined allowed actions; why the gate exists; exact consequence of each allowed action; no hidden alternative path.",
+        "Add a shared action policy matrix: action family; confirmation level; reversibility class; canonical recovery path.",
+        "Bind high-consequence runtime actions to canonical blocked/HITL command contracts where appropriate instead of ad hoc UI confirms.",
+        "destructive worktree/cleanup actions must preserve historical lineage even when the live object is removed",
+        "strong confirmations should be consequence-specific, not generic \"Are you sure?\""
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "### Recommended action classes",
+        "### Recommended confirmation payload rules",
+        "### Candidate fixes to carry forward",
+        "### Do-not-forget details"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L3214-L3225",
+        "working_ledger.md:L3286-L3300",
+        "working_ledger.md:L3339-L3353"
+      ],
+      "notes": [
+        "Owner carry-through: define the shared matrix and route high-consequence runtime actions through canonical blocked/HITL contracts.",
+        "Consumer carry-through: confirmation payloads must disclose consequences, reversibility, and lineage/restore semantics for destructive cleanup actions."
+      ]
+    },
+    {
+      "seed_type": "stale_retirement",
+      "canon_label_hint": "undo-restore-rollback label normalization",
+      "exact_items": [
+        "do not over-promise \"undo\" when the system really only supports compensating actions",
+        "The current docs sometimes use \"revert\", \"rollback\", \"restore\", and \"undo\" in different domains without a clear global distinction.",
+        "Normalize copy: `Undo` only for real undo.",
+        "Normalize copy: `Restore` / `Rollback` / `Retry from Safe Point` / `Reopen` for distinct cases."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "### Undo / post-action affordance direction",
+        "### Contradictions / gaps surfaced",
+        "### Candidate fixes to carry forward"
+      ],
+      "stale_tokens": [
+        "revert",
+        "rollback",
+        "restore",
+        "undo"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L3302-L3314",
+        "working_ledger.md:L3334-L3348"
+      ],
+      "notes": [
+        "Owner carry-through: retire overloaded action labels and normalize canonical copy.",
+        "Consumer carry-through: use `Undo` only when true immediate undo exists; otherwise use the more specific recovery/action label named in the ledger."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "shared record envelope and exact record shapes",
+      "exact_items": [
+        "use a shared record-envelope pattern across major governance/runtime record families",
+        "Candidate shared envelope fields: `record_id`, `record_kind`, `project_id`, `run_id?`, `seam_id?`, `package_id?`, `node_id?`, `attempt_id?`, `promotion_id?`, `concern_id?`, `lane_id?`, `worktree_id?`, `status`, `created_at_utc`, `created_by_kind`, `created_by_ref?`, `superseded_by_record_id?`, `source_refs[]`, `artifact_refs[]`, `evidence_refs[]`, `summary`, `detail_ref?`.",
+        "review record likely needs: `review_id`; review kind; target scope refs; requested/effective reviewer identity; review criteria/profile; findings summary; finding refs / concern refs; verdict / decision; linked artifacts/evidence; timestamps.",
+        "Packet should likely carry: claim/issue under test; target scope; why corroboration was triggered; evidence set / source refs; required quorum model; participating actor refs.",
+        "Result should likely carry: participant outputs; quorum result; accepted / not accepted / advisory-only result; resulting concern/promotion/patch implications.",
+        "Request should carry: patch point; triggering issue/concern refs; requested structural change summary; affected generation; requester identity.",
+        "Result should carry: old generation; new generation; invalidated path refs; new path refs; surviving/rejoined path refs; resulting concern/promotion/recovery implications.",
+        "Promotion record should likely include: promotion class; source scope and target scope refs; eligibility state at decision time; blocking refs / concern refs; review/corroboration refs; decision outcome; revocation/reopen lineage if it later changes.",
+        "Recovery record likely needs: recovery kind; target scope refs; trigger reason; preconditions; result; resulting attempt/run linkage; affected concern refs.",
+        "A state transition report looks useful as a shared exact record for consequential transitions: from state; to state; target object; actor/source; why transition occurred; prerequisite evidence / review / corroboration refs; resulting downstream obligations.",
+        "keep records and artifacts separate",
+        "Define exact minimum shapes for: review; corroboration request/result; graph patch request/result; promotion; recovery; state transition report."
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Contracts_V0.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Run_Graph_View.md"
+      ],
+      "heading_hints": [
+        "## Research Progress - 2026-03-16 - Exact Artifact / Record Shapes",
+        "### Recommended envelope direction",
+        "### Review record direction",
+        "### Corroboration record direction",
+        "### Graph patch record direction",
+        "### Promotion record direction",
+        "### Recovery record direction",
+        "### State transition report direction",
+        "### Artifact vs record distinction",
+        "### Candidate fixes to carry forward"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L3355-L3362",
+        "working_ledger.md:L3379-L3408",
+        "working_ledger.md:L3410-L3499",
+        "working_ledger.md:L3501-L3515",
+        "working_ledger.md:L3522-L3536"
+      ],
+      "notes": [
+        "Owner carry-through: define the record-envelope convention and the exact minimum record families named in the ledger.",
+        "Consumer carry-through: `Evidence` and `Artifacts` panes should remain distinct, and search/deep-link routing should rely on stable scope refs carried by the envelope."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "record-first orchestrator export contracts",
+      "exact_items": [
+        "distinguish: `record export`, `bundle export`, `view export`.",
+        "`Ledger export` should be record-shaped first, CSV/JSON second.",
+        "`Run export` should include a manifest that ties together: run metadata; exact records; linked artifacts/evidence; historical/superseded status flags where relevant.",
+        "every non-trivial Orchestrator export should include a manifest",
+        "Candidate manifest fields: `export_id`, `export_kind`, `project_id`, `run_id?`, `focused_run_id?`, `generated_at_utc`, `source_surface`, `filter_summary`, `record_counts`, `artifact_counts`, `included_record_ids[]`, `included_artifact_ids[]`, `status_notes`, `schema_version`.",
+        "exact-record surfaces should export canonical records, not UI-specific transformed rows",
+        "`Ledger` export should preserve canonical ids and structured fields",
+        "JSON/JSONL should remain close to canonical record structure",
+        "exporting an artifact alone should still preserve enough metadata to know what record/run/object it came from",
+        "Exports must preserve historical truth even when live backing objects no longer exist.",
+        "removed worktree or retired graph path still exports as record metadata with historical status",
+        "absence of a live backing file/worktree should not corrupt the exported record bundle",
+        "`view export` is still useful, but should be clearly labeled as a convenience format."
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/usage-feature.md",
+        "Plans/Widget_System.md"
+      ],
+      "heading_hints": [
+        "## Research Progress - 2026-03-16 - Export Contracts",
+        "### Recommended export split",
+        "### Recommended Orchestrator export families",
+        "### Manifest direction",
+        "### Record-shaped export rule",
+        "### Evidence / artifact export direction",
+        "### Historical / removed-object implication",
+        "### Filtered-view export direction",
+        "### Candidate fixes to carry forward"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L3538-L3545",
+        "working_ledger.md:L3561-L3609",
+        "working_ledger.md:L3611-L3645",
+        "working_ledger.md:L3651-L3660"
+      ],
+      "notes": [
+        "Owner carry-through: add the shared Orchestrator export manifest contract and define record-first exports for the named families.",
+        "Consumer carry-through: CSV/table exports remain convenience view exports, and evidence/artifact exports must not collapse into one undifferentiated package."
+      ]
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "override display grammar and historical runtime disclosure",
+      "exact_items": [
+        "treat these as three separate axes: `source axis`, `request axis`, `execution/result axis`.",
+        "Good canonical display groups: `Inherited from`, `Overridden by`, `Requested`, `Effective`, `Reason`, `Support`.",
+        "UI should show the winning source, not force the user to reconstruct precedence from docs",
+        "if requested == effective and nothing was skipped/clamped, compact display is fine",
+        "if they differ, the UI must expand/disclose the difference visibly",
+        "use explicit support chips or rows for runtime controls",
+        "`Settings` should answer: \"what will be requested if I run from here?\"",
+        "`Orchestrator / Graph inspector / run detail` should answer: \"what did this run/attempt request, what actually happened, and why?\"",
+        "`History` / `Ledger`: exact audit trail of requested/effective + reason + source snapshot refs",
+        "Historical run views should show the frozen requested/effective state from that run, not recompute from current settings.",
+        "compact surfaces should show deltas only when they matter",
+        "provider-gap disclosure (`honored` / `skipped` / `clamped`) is a third concept, not just another word for override"
+      ],
+      "affected_doc_hints": [
+        "Plans/Multi-Account.md",
+        "Plans/Models_System.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Personas.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [
+        "## Research Progress - 2026-03-16 - Settings Override Presentation",
+        "### Recommended conceptual split",
+        "### Recommended display grammar",
+        "### Source-layer direction",
+        "### Requested/effective direction",
+        "### Honored / skipped / clamped direction",
+        "### Surface-specific presentation direction",
+        "### Candidate fixes to carry forward",
+        "### Do-not-forget details"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L3662-L3671",
+        "working_ledger.md:L3686-L3700",
+        "working_ledger.md:L3701-L3718",
+        "working_ledger.md:L3720-L3749",
+        "working_ledger.md:L3751-L3778",
+        "working_ledger.md:L3799-L3833"
+      ],
+      "notes": [
+        "Owner carry-through: define the shared override-display grammar and extend it to worker policy, provider/model/persona/account surfaces.",
+        "Consumer carry-through: settings, runtime, progress, history, and usage surfaces must keep source/request/effective/support-state disclosures distinct and preserve frozen historical runtime state."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "deterministic orchestrator auto-persona resolver",
+      "exact_items": [
+        "keep one global precedence chain",
+        "require each surface auto resolver to emit a deterministic ranked candidate set plus explanation metadata",
+        "Candidate resolver inputs for Orchestrator should likely include: actor type; work type / operation type; scope level; project hints.",
+        "Good input priority inside the auto resolver: hard requirement from plan/tier/surface contract; actor-type bias; operation-type bias; scope-level bias; language/framework/domain hints; project default tendencies; final fallback.",
+        "actor type and operation type should dominate stack hints",
+        "if the preferred candidate is unavailable after capability/provider/model filtering, fall through deterministically to the next candidate",
+        "do not block solely because a preferred Persona is unavailable",
+        "do record: requested Persona; effective Persona; selection reason; skipped Persona controls where relevant",
+        "if two same-tier candidates remain and the system cannot choose deterministically, ask for clarification rather than speculating",
+        "The auto resolver should emit concise but structured reason text.",
+        "one short primary reason for compact UI; optional expanded explanation listing the strongest contributing hints",
+        "historical runs keep their frozen effective Persona state",
+        "Define a deterministic Orchestrator auto-resolver matrix by: actor type; operation type; scope; stack/domain hints.",
+        "Require each auto resolver to emit:"
+      ],
+      "affected_doc_hints": [
+        "Plans/Personas.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/interview-subagent-integration.md",
+        "Plans/Models_System.md",
+        "Plans/orchestrator-subagent-integration.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [
+        "## Research Progress - 2026-03-16 - Auto Persona Resolution Rules",
+        "### Recommended resolver shape",
+        "### Deterministic input priority direction",
+        "### Orchestrator-specific direction",
+        "### Fallback direction",
+        "### Clarification rule",
+        "### Explanation / selection-reason direction",
+        "### Scope / override lifecycle direction",
+        "### Cross-surface consistency direction",
+        "### Candidate fixes to carry forward"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L3835-L3843",
+        "working_ledger.md:L3867-L3908",
+        "working_ledger.md:L3913-L3947",
+        "working_ledger.md:L3949-L3974",
+        "working_ledger.md:L3975-L4000"
+      ],
+      "notes": [
+        "Owner carry-through: make the Orchestrator auto-resolver deterministic across actor type, operation type, scope, and stack/domain hints, and persist requested/effective/reason outputs.",
+        "Consumer carry-through: Chat/Interview/Builder/Orchestrator should still share the same effective resolution record and display grammar.",
+        "The covered range ends mid-item at `Require each auto resolver to emit:`; no continuation beyond L4000 was read."
+      ]
+    },
+    {
+      "seed_type": "stale_retirement",
+      "canon_label_hint": "opaque auto persona retirement",
+      "exact_items": [
+        "ranked candidate(s)",
+        "winning candidate",
+        "concise selection reason",
+        "fallback reason when the preferred candidate is not the effective one",
+        "Keep actor-type defaults stronger than stack hints.",
+        "Reuse the Interview-style deterministic resolver pattern for other surfaces where possible.",
+        "`auto` must never appear as an opaque state with no resolved Persona/reason.",
+        "historical runs must preserve the resolved effective Persona and reason from the time of execution.",
+        "corroboration/review personas should remain distinct from the original implementation persona whenever possible."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "### Do-not-forget details"
+      ],
+      "stale_tokens": [
+        "`auto`"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L4001-L4012"
+      ],
+      "notes": [
+        "Carry the resolved effective Persona and reason into historical records; do not preserve opaque `auto` as stored state.",
+        "No explicit FIDELITY-ID markers appear in this slice; preserve the exact evidence bullets instead."
+      ]
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "help entry contract",
+      "exact_items": [
+        "distinguish: `canonical term system`, `help entry system`, `contextual help system`",
+        "Simple help must simplify explanation, not rename the model.",
+        "Likely dedicated entries: `Feature Seam`; `Work Package`; `Package Overseer`; `Seam Overseer`; `Weak Integration`; `Promotion`; `Corroboration`; `Graph Patch`; `Reopened`; `Revoked`; requested vs effective runtime identity; safe point vs restore point; lane vs worktree; concern lifecycle.",
+        "each dedicated help entry should have a small fixed template",
+        "canonical name",
+        "short definition",
+        "why it matters",
+        "what it is not",
+        "common related states/actions",
+        "related concepts",
+        "surface examples / where you see it",
+        "expert and ELI5 variants should share the same concept skeleton",
+        "Glossary = canonical short definitions",
+        "Help entries = fuller explanations with examples and related links"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Glossary.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/Personas.md",
+        "Plans/Multi-Account.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "heading_hints": [
+        "## Research Progress - 2026-03-16 - Help System Contract",
+        "### Which concepts need dedicated help entries",
+        "### Help entry structure direction",
+        "### Expert / ELI5 layering direction",
+        "### Glossary implication"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L4013-L4022",
+        "working_ledger.md:L4031-L4054",
+        "working_ledger.md:L4056-L4073",
+        "working_ledger.md:L4082-L4098",
+        "working_ledger.md:L4109-L4119",
+        "working_ledger.md:L4131-L4146",
+        "working_ledger.md:L4148-L4151"
+      ],
+      "notes": [
+        "Carry canonical term stability through Expert/ELI5 help surfaces and contextual help.",
+        "Use `Plans/Glossary.md` as the canonical short-definition consumer, with richer help entries elsewhere."
+      ]
+    },
+    {
+      "seed_type": "stale_retirement",
+      "canon_label_hint": "help alias drift retirement",
+      "exact_items": [
+        "do not create parallel \u201cfriendly\u201d object names that drift away from contracts",
+        "do not rename it to something unrelated like \u201cFeature group\u201d unless the product explicitly chooses a user-facing alias system later",
+        "simple help must not mutate runtime truth or contract semantics"
+      ],
+      "affected_doc_hints": [
+        "Plans/Glossary.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "heading_hints": [
+        "## Research Progress - 2026-03-16 - Help System Contract",
+        "### Core help principle",
+        "### Do-not-forget details"
+      ],
+      "stale_tokens": [
+        "parallel \u201cfriendly\u201d object names",
+        "\u201cFeature group\u201d"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L4045-L4054",
+        "working_ledger.md:L4148-L4151"
+      ],
+      "notes": [
+        "Retire alias drift that renames canonical objects instead of simplifying their explanation."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "project blocked owner model",
+      "exact_items": [
+        "separate: `project health`, `project activity`, `project attention`",
+        "Likely required fields: project name; path; language/framework badges; activity status; attention status; primary blocked/attention reason; blocked owner / attention owner when relevant; pressure summary; last active / last opened",
+        "`Activity`: `idle | running | paused | queued | background_active`",
+        "`Attention`: `none | attention_required | blocked | degraded`",
+        "`Health`: setup/config/repo integrity signal",
+        "Owner kinds: `Runtime`; `Package Overseer`; `Seam Overseer`; `Corroboration`; `Graph Patch`; `Recovery`; `User`; `External Resource`",
+        "show one `primary attention reason` / `primary blocked reason`",
+        "project-summary projection rollup: current active run state; dominant concern/blocked owner; highest-severity attention state; current pressure summary; health/config integrity"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md",
+        "Plans/storage-plan.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/usage-feature.md",
+        "Plans/Multi-Account.md"
+      ],
+      "heading_hints": [
+        "## Research Progress - 2026-03-16 - Projects Page Blocked-Owner / Status Model",
+        "### Recommended status split",
+        "### Recommended top-level project card fields",
+        "### Blocked-owner direction",
+        "### Relationship to Orchestrator"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L4153-L4160",
+        "working_ledger.md:L4180-L4208",
+        "working_ledger.md:L4210-L4225",
+        "working_ledger.md:L4226-L4238",
+        "working_ledger.md:L4269-L4276",
+        "working_ledger.md:L4283-L4292",
+        "working_ledger.md:L4294-L4297"
+      ],
+      "notes": [
+        "Carry blocked owner and dominant reason through the project summary projection and onto the project card.",
+        "Keep background activity independent from blocked attention, and do not overload health as attention."
+      ]
+    },
+    {
+      "seed_type": "stale_retirement",
+      "canon_label_hint": "legacy project status retirement",
+      "exact_items": [
+        "Existing `orchestrator status` (`idle/running/paused`) is too weak on its own to explain why a project needs attention.",
+        "project cards should not imply that \u201chistorical project\u201d is a real semantic class unless the product introduces archiving",
+        "project health and project attention are different things and should not share one overloaded dot",
+        "a project with only historical runs is not inherently degraded or blocked"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md",
+        "Plans/storage-plan.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "heading_hints": [
+        "## Research Progress - 2026-03-16 - Projects Page Blocked-Owner / Status Model",
+        "### Active vs historical project posture",
+        "### Contradictions / gaps surfaced",
+        "### Do-not-forget details"
+      ],
+      "stale_tokens": [
+        "`orchestrator status` (`idle/running/paused`)",
+        "\u201chistorical project\u201d",
+        "one overloaded dot"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L4163-L4179",
+        "working_ledger.md:L4251-L4257",
+        "working_ledger.md:L4278-L4281",
+        "working_ledger.md:L4294-L4297"
+      ],
+      "notes": [
+        "Retire setup-centric single-status wording that obscures blocked owner, attention, and historical-only posture."
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "escalation owner carry-through",
+      "exact_items": [
+        "define one shared progression: `info`; `warning`; `attention_required`; `blocked`; `system_notification`",
+        "surface mapping: `History` receives everything chronologically; `Progress` / `Dashboard` show active warnings / attention / blocked states; badges show compressed counts/severity markers; chat/thread surfaces only for things that genuinely need user decision/input; system notifications reserved for high-value, sparse events",
+        "resurface only when: severity increases; owner changes; blocked duration crosses threshold; new action becomes available; user returns focus after time away",
+        "`dismissed` is presentation state, not semantic resolution",
+        "active blockers must not be dismissible into fake health",
+        "concern severity + blocking effect + owner + persistence decide escalation"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "heading_hints": [
+        "## Research Progress - 2026-03-16 - Notifications / Escalation Cadence",
+        "### Recommended escalation ladder",
+        "### Surface ladder direction",
+        "### Resurfacing / aging direction",
+        "### Persistent blocker direction",
+        "### Concern / blocked-owner implication"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L4299-L4306",
+        "working_ledger.md:L4319-L4337",
+        "working_ledger.md:L4339-L4350",
+        "working_ledger.md:L4352-L4365",
+        "working_ledger.md:L4366-L4374",
+        "working_ledger.md:L4398-L4405",
+        "working_ledger.md:L4411-L4419"
+      ],
+      "notes": [
+        "Carry owner and persistence through escalation decisions and resurfacing.",
+        "Keep `attention_required` and `blocked` distinct, and do not let dismissals erase active blocked truth."
+      ]
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "orchestrator scale contract",
+      "exact_items": [
+        "treat scale as a cross-tab contract, not just a graph-tab concern",
+        "`Node Graph`: keep the current culling + caching + throttled-update model; preserve old generations in the data model, but do not render every historical path at full fidelity all the time; use generation visibility controls, focus mode, and density-aware overlays",
+        "`Seams`: must use progressive disclosure; top-level seam rows should load compact rollups first; package lists and node problem lists should expand lazily",
+        "`Evidence`: evidence records and artifacts need independent virtualization/paging; heavy artifacts should stay metadata-first until opened; artifact previews should be demand-loaded",
+        "`History`: should be chronological but windowed; initial load should show a recent slice, with explicit load-older / jump controls; dense event bursts should be summarized when collapsed",
+        "`Ledger`: filtered query + paging + stable sort are required; export can retrieve more than the viewport, but normal browsing should stay slice-based",
+        "`Progress`: widgets should consume compact projections, not live-scan huge record sets per widget",
+        "every dense Orchestrator tab needs first-class summarization, filtering, and paging before it needs more visual chrome",
+        "Tie scale behavior to projection-trust state so degraded projections fail gracefully instead of pretending to be fully current."
+      ],
+      "affected_doc_hints": [
+        "Plans/Run_Graph_View.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/storage-plan.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "heading_hints": [
+        "## Research Progress - 2026-03-16 - Scale / Performance Model",
+        "### Tab-by-tab direction",
+        "### Concern / lane / record density implication",
+        "### Candidate fixes to carry forward"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L4422-L4429",
+        "working_ledger.md:L4450-L4465",
+        "working_ledger.md:L4466-L4490",
+        "working_ledger.md:L4491-L4500",
+        "working_ledger.md:L4501-L4518",
+        "working_ledger.md:L4529-L4538"
+      ],
+      "notes": [
+        "Skip the raw metric lines, but carry the cross-tab loading, paging, and fallback obligations into each Orchestrator consumer surface."
+      ]
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "command surface policy",
+      "exact_items": [
+        "`Ctrl+K` / `Ctrl+P` command palette",
+        "canonical `cmd.runtime.*` recovery command family",
+        "`allowed_action_ids[]` to canonical runtime commands rather than surface-local variants",
+        "palette-friendly: open/focus tab; jump to run/seam/package/node/lane/concern/review/patch/recovery object; open inspector/detail/history/ledger/evidence context; run search routes; execute low-risk view and filter commands",
+        "palette-allowed but guarded: recover / retry / approve / decline / replan / restore / cleanup actions that already have canonical runtime semantics and confirmation rules",
+        "bulk actions should default to navigation, triage, and low-risk state updates",
+        "shared payload fields: `project_id`; `focused_run_id`; destination tab/surface; selected object id and type; optional inspector target; optional filter payload",
+        "If an action is `strong` confirmation, `hard_gate`, `non_reversible`, or only `compensating_action_only`, then command palette and shortcut surfaces must still honor the same gating and preview requirements",
+        "Keep canonical runtime command ids authoritative for blocked/recovery actions on every surface"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Widget_System.md",
+        "Plans/WorktreeGitImprovement.md"
+      ],
+      "heading_hints": [
+        "## Research Progress - 2026-03-16 - Command Palette / Shortcuts / Bulk Actions",
+        "### Key findings",
+        "### Recommended command-surface model",
+        "### Bulk-action direction",
+        "### Routing contract implication",
+        "### Confirmation / safety implication",
+        "### Candidate fixes to carry forward"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L4541-L4548",
+        "working_ledger.md:L4550-L4557",
+        "working_ledger.md:L4565-L4579",
+        "working_ledger.md:L4580-L4595",
+        "working_ledger.md:L4620-L4630",
+        "working_ledger.md:L4632-L4641",
+        "working_ledger.md:L4658-L4668",
+        "working_ledger.md:L4669-L4672"
+      ],
+      "notes": [
+        "Carry one routing payload and one confirmation policy through palette, shortcuts, widgets, search, deep links, and object context menus."
+      ]
+    },
+    {
+      "seed_type": "stale_retirement",
+      "canon_label_hint": "bulk execution anti-pattern retirement",
+      "exact_items": [
+        "`Orchestrator_Page.md` already distinguishes retry posture and recovery classes well enough to avoid a fake one-button retry model.",
+        "bulk actions should be far narrower than bulk navigation",
+        "Bad default bulk actions: retry many nodes at once; apply graph patch to multiple scopes at once; approve multiple HITL/runtime blocked actions with one generic confirm; cleanup/remove many live lanes/worktrees without exact target preview",
+        "Orchestrator can expose deep links into those actions, but should not become the main place where raw Git/worktree batch cleanup is fired blindly",
+        "Current grouped/bulk navigation wording could be misread as license for broad bulk execution controls unless rewrite docs tighten it"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/WorktreeGitImprovement.md"
+      ],
+      "heading_hints": [
+        "## Research Progress - 2026-03-16 - Command Palette / Shortcuts / Bulk Actions",
+        "### Bulk-action direction",
+        "### Source Control / worktree implication",
+        "### Contradictions / gaps surfaced",
+        "### Do-not-forget details"
+      ],
+      "stale_tokens": [
+        "fake one-button retry model",
+        "surface-local variants",
+        "broad bulk execution controls"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L4556-L4558",
+        "working_ledger.md:L4580-L4595",
+        "working_ledger.md:L4643-L4646",
+        "working_ledger.md:L4648-L4656",
+        "working_ledger.md:L4669-L4672"
+      ],
+      "notes": [
+        "Retire surface-local command variants and bulk-execution interpretations that bypass canonical runtime semantics, previews, or exact target selection."
+      ]
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "projection trust execution policy",
+      "exact_items": [
+        "keep the earlier projection states and make them operational: `current`; `refreshing`; `stale`; `degraded`; `unavailable`",
+        "live mutation / approval / recovery / retry / cleanup: require `current` or a direct canonical-runtime validation path",
+        "If a surface is `stale` or `degraded`, the GUI must not present mutation controls that imply hidden confidence.",
+        "`Progress` should show visible freshness state and route users to native tabs for exact inspection when trust drops",
+        "`Ledger`: exact ledger browsing should remain available via slice-based record queries even when higher-level projections are unhealthy",
+        "if a write action is attempted from a stale/degraded surface, the runtime should either refuse with a clear reason or perform an authoritative revalidation against canonical/current runtime state before executing",
+        "Good shared fields: `freshness_state`; `last_updated_at`; `data_source_kind`; `degraded_reason?`; `action_gate_reason?`",
+        "fallback ladder: widget summary -> native tab; rollup tab -> filtered record list; projection-derived inspector -> `Ledger` / `History` / exact record view via `detail_ref`",
+        "Gate mutation controls on trusted projections or explicit runtime revalidation.",
+        "Standardize fallback toward record-backed views (`History`, `Ledger`, exact record inspectors) when projections are degraded."
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/usage-feature.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "heading_hints": [
+        "## Research Progress - 2026-03-16 - Projection Health / Stale-Data Trust Execution Policy",
+        "### Recommended trust model",
+        "### Action-gating direction",
+        "### Surface-specific direction",
+        "### Canonical-validation direction",
+        "### UX disclosure direction",
+        "### Fallback direction",
+        "### Candidate fixes to carry forward"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L4674-L4681",
+        "working_ledger.md:L4698-L4717",
+        "working_ledger.md:L4718-L4729",
+        "working_ledger.md:L4730-L4747",
+        "working_ledger.md:L4748-L4753",
+        "working_ledger.md:L4755-L4767",
+        "working_ledger.md:L4769-L4776",
+        "working_ledger.md:L4782-L4791"
+      ],
+      "notes": [
+        "Carry freshness, action gating, and record-backed fallback expectations through every Orchestrator consumer.",
+        "Treat `Ledger`/`History` as the stable exact-inspection fallback when projections lose trust."
+      ]
+    },
+    {
+      "seed_type": "stale_retirement",
+      "canon_label_hint": "visibility implies authority retirement",
+      "exact_items": [
+        "Some current wording still risks implying that if data is visible, it is safe to act on it, which is not defensible once projections can lag or degrade.",
+        "stale visibility is not the same as action authority",
+        "blocked/recovery controls are especially sensitive because `allowed_action_ids[]` can go invalid if projection trust drops"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "heading_hints": [
+        "## Research Progress - 2026-03-16 - Projection Health / Stale-Data Trust Execution Policy",
+        "### Contradictions / gaps surfaced",
+        "### Do-not-forget details"
+      ],
+      "stale_tokens": [
+        "if data is visible, it is safe to act on it",
+        "hidden confidence"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L4777-L4780",
+        "working_ledger.md:L4788-L4790"
+      ],
+      "notes": [
+        "Retire visibility-equals-authority assumptions; trust state must carry through to allowed actions and UI affordances."
+      ]
+    },
     {
       "seed_type": "owner",
       "canon_label_hint": "shared record envelope",
       "exact_items": [
+        "add one shared governance/runtime record-envelope pattern, then let each family add its own payload block",
         "`record_id`",
         "`record_kind`",
         "`schema_version`",
@@ -49,202 +724,196 @@
         "`related_record_refs[]`",
         "`lineage_refs[]`",
         "`actor_ref?`",
-        "`requested_effective_snapshot_refs?`"
+        "`requested_effective_snapshot_refs?`",
+        "Define a shared record-envelope contract for governance/runtime record families.",
+        "Keep artifacts and rendered summaries linked but separate from canonical records.",
+        "Require new first-class Orchestrator object families to reuse the envelope and shared status/lineage conventions.",
+        "`detail_ref` and `*_ref` conventions already exist and should be expanded, not replaced"
       ],
       "affected_doc_hints": [
         "Plans/storage-plan.md",
-        "Plans/Contracts_V0.md",
         "Plans/usage-feature.md"
       ],
       "heading_hints": [
-        "### Recommended normalization direction"
+        "### Recommended normalization direction",
+        "### Record vs artifact distinction",
+        "### Candidate fixes to carry forward",
+        "### Do-not-forget details"
       ],
       "stale_tokens": [],
       "source_evidence": [
-        "working_ledger.md:L4828-L4850"
+        "working_ledger.md:L4828-L4850",
+        "working_ledger.md:L4852-L4863",
+        "working_ledger.md:L4907-L4916"
       ],
       "notes": [
-        "Shared governance/runtime record-envelope fields are listed explicitly."
+        "the envelope should carry enough shared identity for search, export, and inspector routing without flattening family-specific meaning"
       ]
     },
     {
       "seed_type": "owner",
-      "canon_label_hint": "record artifact separation",
+      "canon_label_hint": "lane worktree boundary",
       "exact_items": [
-        "record and artifact must remain different objects"
-      ],
-      "affected_doc_hints": [
-        "Plans/storage-plan.md",
-        "Plans/usage-feature.md"
-      ],
-      "heading_hints": [
-        "### Record vs artifact distinction"
-      ],
-      "stale_tokens": [],
-      "source_evidence": [
-        "working_ledger.md:L4852-L4863"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "owner",
-      "canon_label_hint": "lane worktree states",
-      "exact_items": [
-        "`baseline`",
-        "`active`",
-        "`suspect`",
-        "`restoring`",
-        "`retained`",
-        "`cleanup_eligible`",
-        "`archived`",
-        "`removed`",
-        "`historical`",
-        "`live`",
-        "`dirty`",
-        "`conflict`",
-        "`orphaned`",
-        "`recovering`"
-      ],
-      "affected_doc_hints": [
-        "Plans/WorktreeGitImprovement.md",
-        "Plans/Orchestrator_Page.md",
-        "Plans/FinalGUISpec.md",
-        "Plans/storage-plan.md"
-      ],
-      "heading_hints": [
-        "### Recommended lane-oriented states",
-        "### Worktree-oriented state implication"
-      ],
-      "stale_tokens": [],
-      "source_evidence": [
-        "working_ledger.md:L4953-L4996"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "owner",
-      "canon_label_hint": "cleanup actions and gating",
-      "exact_items": [
-        "`recover`",
-        "`archive`",
-        "`prune`",
-        "`remove`",
+        "`recover`, `archive`, `prune`, and `remove` must not blur together",
+        "Cleanup must be gated by more than age.",
         "no active-run ownership",
         "no unresolved blocked recovery requiring that exact worktree",
         "no required safe-point restore targeting that worktree/baseline",
         "no unresolved conflict workflow the user still needs to inspect",
-        "no newer lineage operation depending on that lane/worktree still being live"
+        "no newer lineage operation depending on that lane/worktree still being live",
+        "Orchestrator owns lane-pool truth and cleanup posture in execution context",
+        "Source Control owns concrete worktree actions and compact inventory display",
+        "live cleanup must never erase run/lane/worktree lineage from `History`, `Ledger`, or graph-linked inspection",
+        "active-run ownership must be visible before destructive worktree actions"
       ],
       "affected_doc_hints": [
         "Plans/WorktreeGitImprovement.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/storage-plan.md",
         "Plans/Orchestrator_Page.md",
-        "Plans/FinalGUISpec.md",
-        "Plans/storage-plan.md"
+        "Plans/FinalGUISpec.md"
       ],
       "heading_hints": [
+        "## Research Progress - 2026-03-16 - Lane / Worktree Cleanup Lifecycle",
         "### Cleanup-action semantics",
-        "### Eligibility / gating direction"
+        "### Eligibility / gating direction",
+        "### Source Control vs Orchestrator boundary",
+        "### Historical-lineage rule",
+        "### Do-not-forget details"
       ],
       "stale_tokens": [],
       "source_evidence": [
-        "working_ledger.md:L4998-L5020"
+        "working_ledger.md:L4998-L5010",
+        "working_ledger.md:L5012-L5020",
+        "working_ledger.md:L5034-L5049",
+        "working_ledger.md:L5072-L5075"
       ],
-      "notes": []
+      "notes": [
+        "Source Control should default to compact current/live worktree rows with filters/toggles for: `retained`, `cleanup_eligible`, `archived/removed history`"
+      ]
     },
     {
-      "seed_type": "owner",
-      "canon_label_hint": "glossary canonical terms",
+      "seed_type": "stale_retirement",
+      "canon_label_hint": "glossary copy drift",
       "exact_items": [
-        "`Feature Seam`",
-        "`Work Package`",
-        "`Node`",
-        "`Package Overseer`",
-        "`Seam Overseer`",
-        "`Weak Integration`",
-        "`Promotion`",
-        "`Corroboration`",
-        "`Graph Patch`",
-        "`Graph Generation`",
-        "`Concern`",
-        "`Lane`",
-        "`Lane Pool`",
-        "`Worktree`",
-        "`Historical Run`",
-        "`Reopened`",
-        "`Revoked`",
-        "`Superseded`",
-        "`stale_historical`",
-        "`current`",
-        "`refreshing`",
-        "`stale`",
-        "`degraded`",
-        "`unavailable`",
-        "`lane` vs `worktree`",
-        "`record` vs `artifact`",
-        "`history` vs `ledger`",
-        "`requested` vs `effective`",
-        "`override` vs `requested`",
-        "`current` vs `historical`",
-        "`historical` vs `superseded`",
-        "`resolved` vs `dismissed` vs `acknowledged`",
-        "`retry from safe point` vs `start fresh attempt`",
-        "`archive` vs `remove` vs `prune`"
+        "Add explicit distinction guidance for the high-risk word pairs above.",
+        "Re-check `FinalGUISpec.md` and related UX docs later for copy that uses informal synonyms where canonical terms are now required.",
+        "`lane` vs `worktree`, `history` vs `ledger`, and `historical` vs `superseded` are especially drift-prone"
       ],
       "affected_doc_hints": [
-        "Plans/Glossary.md"
+        "Plans/Glossary.md",
+        "Plans/FinalGUISpec.md"
       ],
       "heading_hints": [
-        "### Terms that now need canonical glossary ownership",
-        "### Terms that need explicit distinction rules"
+        "## Research Progress - 2026-03-16 - Terminology / Help / Glossary Impact Sweep",
+        "### Terms that need explicit distinction rules",
+        "### GUI copy implication",
+        "### Candidate fixes to carry forward",
+        "### Do-not-forget details"
       ],
-      "stale_tokens": [],
+      "stale_tokens": [
+        "retry",
+        "old",
+        "completed",
+        "degraded",
+        "history"
+      ],
       "source_evidence": [
-        "working_ledger.md:L5100-L5140"
+        "working_ledger.md:L5128-L5140",
+        "working_ledger.md:L5170-L5198"
       ],
-      "notes": []
+      "notes": [
+        "The rewrite now needs a stronger cross-cutting copy discipline so the UI does not casually say the stale tokens when a more precise canonical term is required."
+      ]
     },
     {
       "seed_type": "owner",
-      "canon_label_hint": "shared runtime separate ontology",
+      "canon_label_hint": "glossary help ownership",
       "exact_items": [
-        "shared provider runtime does not imply shared execution ontology",
-        "`thread_id`",
-        "`wizard_id`",
-        "`run_id`",
-        "`allowed_action_ids[]`",
-        "`resume_url`",
+        "glossary owns short canonical definitions",
+        "help entries own deeper explanation, examples, and related-concept links",
+        "contextual help can simplify wording, but must not mutate the underlying semantics",
+        "`Weak Integration`",
+        "`Corroboration`",
+        "`Graph Patch`",
+        "`Promotion`",
+        "`Concern lifecycle`",
+        "`Lane vs Worktree`",
+        "`requested vs effective`",
+        "`safe point vs restore point`",
+        "`historical vs superseded vs revoked`",
+        "Use glossary definitions as the canonical short-definition source for future help entries."
+      ],
+      "affected_doc_hints": [
+        "Plans/Glossary.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Personas.md",
+        "Plans/Models_System.md",
+        "Plans/Multi-Account.md"
+      ],
+      "heading_hints": [
+        "## Research Progress - 2026-03-16 - Terminology / Help / Glossary Impact Sweep",
+        "### Help-system implication",
+        "### Candidate fixes to carry forward",
+        "### Do-not-forget details"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L5142-L5157",
+        "working_ledger.md:L5189-L5197"
+      ],
+      "notes": [
+        "the runtime/provider docs already provide a solid requested/effective foundation; do not reinvent that vocabulary"
+      ]
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "shared runtime parity",
+      "exact_items": [
+        "when multiple surfaces present the same active conversational/document-production run, they should consume the same underlying runtime state and expose the same requested/effective visibility fields",
+        "Interview chat surface and Interview activity pane share the same active run state",
+        "Builder and Interview reuse the shared agent activity pane",
+        "chat subagent blocks preserve persona/task/runtime identity in-thread rather than using a separate weaker model",
         "assistant/interviewer/builders share provider/account/runtime identity semantics with Orchestrator",
-        "but remain upstream conversational/document-production actors, not package/seam/node execution objects"
+        "but remain upstream conversational/document-production actors, not package/seam/node execution objects",
+        "Preserve distinct actor/run kinds in record/search/routing contracts.",
+        "Reuse one runtime-identity disclosure grammar across these surfaces without collapsing their lifecycle models.",
+        "Keep blocked/remediation taxonomy shared, while preserving actor-specific state machines and object identities."
       ],
       "affected_doc_hints": [
         "Plans/assistant-chat-design.md",
         "Plans/interview-subagent-integration.md",
         "Plans/chain-wizard-flexibility.md",
+        "Plans/FinalGUISpec.md",
         "Plans/Multi-Account.md",
         "Plans/Personas.md",
         "Plans/Models_System.md"
       ],
       "heading_hints": [
-        "### Identity-model direction",
-        "### Non-goal / anti-drift rule",
-        "### Candidate fixes to carry forward"
+        "## Research Progress - 2026-03-16 - Shared Conversational-Actor / Runtime Identity Boundary",
+        "### Shared-runtime surface parity direction",
+        "### Candidate fixes to carry forward",
+        "### Do-not-forget details"
       ],
       "stale_tokens": [],
       "source_evidence": [
-        "working_ledger.md:L5241-L5253",
-        "working_ledger.md:L5267-L5275",
-        "working_ledger.md:L5278-L5283",
-        "working_ledger.md:L5311-L5317"
+        "working_ledger.md:L5258-L5264",
+        "working_ledger.md:L5311-L5317",
+        "working_ledger.md:L5319-L5322"
       ],
-      "notes": []
+      "notes": [
+        "`thread_id`, `wizard_id`, bundle/review ids, and orchestration `run_id`/attempt ids must remain linkable but distinct"
+      ]
     },
     {
       "seed_type": "owner",
-      "canon_label_hint": "export taxonomy and manifest",
+      "canon_label_hint": "export manifest fields",
       "exact_items": [
+        "keep the earlier three export classes and sharpen them:",
         "`record export`",
         "`bundle export`",
         "`view export`",
+        "any non-trivial Orchestrator bundle export should carry a manifest",
         "`export_id`",
         "`export_kind`",
         "`schema_version`",
@@ -257,40 +926,61 @@
         "`included_artifact_ids[]`",
         "`included_file_paths[]?`",
         "`lineage_notes?`",
-        "`trust_state_at_export?`"
+        "`trust_state_at_export?`",
+        "Preserve canonical ids/refs in artifact and record exports; do not invent export-local shadow identity.",
+        "Add trust-state disclosure or canonical revalidation requirements for exports built from projections."
       ],
       "affected_doc_hints": [
+        "Plans/usage-feature.md",
+        "Plans/FinalGUISpec.md",
         "Plans/Orchestrator_Page.md",
         "Plans/storage-plan.md",
         "Plans/Runtime_Artifacts_Panel.md",
-        "Plans/usage-feature.md",
         "Plans/chain-wizard-flexibility.md"
       ],
       "heading_hints": [
+        "## Research Progress - 2026-03-16 - Export Contracts",
         "### Recommended export taxonomy",
-        "### Manifest direction"
+        "### Manifest direction",
+        "### Canonical-vs-derived rule",
+        "### Candidate fixes to carry forward",
+        "### Do-not-forget details"
       ],
       "stale_tokens": [],
       "source_evidence": [
-        "working_ledger.md:L5354-L5404"
+        "working_ledger.md:L5354-L5404",
+        "working_ledger.md:L5406-L5413",
+        "working_ledger.md:L5455-L5464"
       ],
-      "notes": []
+      "notes": [
+        "filtered JSON is not automatically a canonical record export",
+        "derived exports stay useful, but they must remain visibly derived"
+      ]
     },
     {
-      "seed_type": "consumer",
-      "canon_label_hint": "notification routing dimensions",
+      "seed_type": "owner",
+      "canon_label_hint": "blocked owner routing",
       "exact_items": [
-        "`info`",
-        "`warning`",
-        "`attention_required`",
-        "`blocked`",
-        "`system_notification`",
+        "concern severity alone should not drive escalation",
+        "escalation should be based on concern severity + execution impact + persistence + ownership",
+        "blocked owner influences both destination surface and notification style",
+        "`User`",
+        "`Package Overseer` / `Seam Overseer` / `Corroboration`",
+        "`Runtime` / `Recovery` / `Graph Patch`",
+        "`External Resource`",
+        "stale or degraded projections must not generate overconfident notifications",
+        "if a summary surface is `stale`",
+        "wording should disclose possible staleness",
+        "if a surface is `degraded`",
+        "avoid strong notification claims that rely on incomplete projections",
+        "Define notification routing using:",
         "severity",
         "execution impact",
         "blocked owner",
         "persistence",
         "projection trust",
-        "acknowledged concerns can reduce noise, but they must not create fake health when the runtime is still blocked"
+        "Allow quiet windows for advisory/pressure warnings, not for canonical blocked episodes that still require action.",
+        "Require degraded/stale disclosure or canonical revalidation before strong notification claims are emitted from projection-heavy surfaces."
       ],
       "affected_doc_hints": [
         "Plans/FinalGUISpec.md",
@@ -300,58 +990,33 @@
         "Plans/interview-subagent-integration.md"
       ],
       "heading_hints": [
-        "### Key findings",
+        "## Research Progress - 2026-03-16 - Notifications / Escalation Interaction with Concerns, Blocked Ownership, and Projection Trust",
+        "### Concern interaction direction",
+        "### Blocked-owner interaction direction",
+        "### Projection-trust interaction direction",
         "### Candidate fixes to carry forward",
         "### Do-not-forget details"
       ],
       "stale_tokens": [],
       "source_evidence": [
-        "working_ledger.md:L5475-L5488",
+        "working_ledger.md:L5493-L5504",
+        "working_ledger.md:L5506-L5518",
+        "working_ledger.md:L5520-L5533",
         "working_ledger.md:L5586-L5600"
       ],
-      "notes": []
+      "notes": [
+        "blocked owner is not just descriptive; it should help decide where and how the user is notified",
+        "projection trust should affect notification confidence, not only action gating"
+      ]
     },
     {
-      "seed_type": "owner",
-      "canon_label_hint": "routing payload contract",
+      "seed_type": "consumer",
+      "canon_label_hint": "shared routing payload",
       "exact_items": [
-        "`project_id`",
-        "`actor_run_kind?`",
-        "`focused_run_id?`",
-        "`thread_id?`",
-        "`wizard_id?`",
-        "`destination_surface`",
-        "`destination_tab?`",
-        "`object_kind?`",
-        "`object_id?`",
-        "`record_id?`",
-        "`artifact_id?`",
-        "`attempt_id?`",
-        "`lane_id?`",
-        "`worktree_id?`",
-        "`usage_event_ref?`",
-        "`filter_payload?`",
-        "`inspector_target?`",
-        "`scroll_target?`",
-        "`focus_behavior?`",
-        "`run`",
-        "`feature_seam`",
-        "`work_package`",
-        "`node`",
-        "`lane`",
-        "`worktree`",
-        "`concern`",
-        "`promotion`",
-        "`review`",
-        "`corroboration`",
-        "`graph_patch`",
-        "`recovery_record`",
-        "`blocked_episode`",
-        "`usage_record`",
-        "`artifact`",
-        "`thread`",
-        "`wizard`",
-        "`bundle`"
+        "Define one shared routing/deep-link payload for search, command palette, widget drill-downs, recovery links, and cross-surface pivots.",
+        "Shared routing fields listed in the ledger: `project_id`, `actor_run_kind?`, `focused_run_id?`, `thread_id?`, `wizard_id?`, `destination_surface`, `destination_tab?`, `object_kind?`, `object_id?`, `record_id?`, `artifact_id?`, `attempt_id?`, `lane_id?`, `worktree_id?`, `usage_event_ref?`, `filter_payload?`, `inspector_target?`, `scroll_target?`, `focus_behavior?`.",
+        "Object-kind vocabulary listed in the ledger: `run`, `feature_seam`, `work_package`, `node`, `lane`, `worktree`, `concern`, `promotion`, `review`, `corroboration`, `graph_patch`, `recovery_record`, `blocked_episode`, `usage_record`, `artifact`, `thread`, `wizard`, `bundle`.",
+        "Route-like commands/actions explicitly named in the ledger: `cmd.artifacts.open_panel`, `cmd.orchestrator.open_in_source_control`, `cmd.orchestrator.open_in_github_actions`, `cmd.orchestrator.open_in_docker_manager`, `Show in Ledger`, `Show in Usage`."
       ],
       "affected_doc_hints": [
         "Plans/FinalGUISpec.md",
@@ -363,27 +1028,33 @@
         "Plans/chain-wizard-flexibility.md"
       ],
       "heading_hints": [
-        "### Main normalization direction",
+        "## Research Progress - 2026-03-16 - Search Routing and Deep-Link Payload Normalization",
         "### Candidate shared payload fields",
-        "### Object-kind direction"
+        "### Object-kind direction",
+        "### Candidate fixes to carry forward"
       ],
       "stale_tokens": [],
       "source_evidence": [
-        "working_ledger.md:L5637-L5693"
+        "working_ledger.md:L5622-L5627",
+        "working_ledger.md:L5649-L5670",
+        "working_ledger.md:L5672-L5700",
+        "working_ledger.md:L5702-L5758"
       ],
-      "notes": []
+      "notes": [
+        "Carry-through: route activation should restore scope (`focused_run_id`, correct tab, filter payload, inspector target) rather than merely open a page.",
+        "Carry-through: `resume_url` and in-app search routes should decode to the same internal navigation model.",
+        "Carry-through: all \"Open in ...\" and \"Show in ...\" actions should become thin wrappers over the shared routing payload.",
+        "Carry-through: degraded target surfaces should fall back to canonical representations when possible, and persistent vs transient route activations must be distinguished."
+      ]
     },
     {
       "seed_type": "owner",
       "canon_label_hint": "historical semantic core",
       "exact_items": [
-        "`historical`",
-        "`stale_historical`",
-        "`superseded`",
-        "`revoked`",
-        "`reopened`",
-        "`archived`",
-        "`removed`"
+        "Cross-family historical terms listed in the ledger: `historical`, `stale_historical`, `superseded`, `revoked`, `reopened`, `archived`, `removed`.",
+        "Family-local workflows explicitly kept distinct: annotation `open -> addressed -> resolved`; concern `active -> acknowledged -> resolved -> dismissed`; wizard `attention_required` vs `blocked`.",
+        "Contract conflict called out for `Plans/Contracts_V0.md` `remediation.resolved`: `fixed|superseded|abandoned|replan_required` conflicts with `success|failed|ceiling_exceeded`.",
+        "Ledger/search/filter contracts are expected to preserve `current vs historical`, `superseded vs revoked`, `archived vs removed`, and `stale_historical vs merely historical`."
       ],
       "affected_doc_hints": [
         "Plans/storage-plan.md",
@@ -395,1843 +1066,255 @@
         "Plans/chain-wizard-flexibility.md"
       ],
       "heading_hints": [
+        "## Research Progress - 2026-03-16 - Historical Semantic Consistency Across Record Families",
         "### Cross-family semantic core",
+        "### Important contradiction surfaced",
         "### Candidate fixes to carry forward"
       ],
       "stale_tokens": [],
       "source_evidence": [
-        "working_ledger.md:L5789-L5812",
-        "working_ledger.md:L5894-L5905"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "stale_retirement",
-      "canon_label_hint": "remediation resolved enum conflict",
-      "exact_items": [
-        "`remediation.resolved`",
-        "`fixed`",
-        "`superseded`",
-        "`abandoned`",
-        "`replan_required`",
-        "`success`",
-        "`failed`",
-        "`ceiling_exceeded`"
-      ],
-      "affected_doc_hints": [
-        "Plans/Contracts_V0.md"
-      ],
-      "heading_hints": [
-        "### Important contradiction surfaced",
-        "### Remediation semantic direction"
-      ],
-      "stale_tokens": [
-        "`success`",
-        "`failed`",
-        "`ceiling_exceeded`"
-      ],
-      "source_evidence": [
-        "working_ledger.md:L5827-L5846"
+        "working_ledger.md:L5789-L5813",
+        "working_ledger.md:L5814-L5824",
+        "working_ledger.md:L5826-L5847",
+        "working_ledger.md:L5879-L5905"
       ],
       "notes": [
-        "Conflicting enum families are both recorded for `remediation.resolved`."
+        "Carry-through: consistency here means shared meaning, not one single lifecycle enum for every object family.",
+        "Carry-through: `resolved` needs family-local payload detail to stay meaningful.",
+        "Carry-through: reconcile `remediation.resolved` to one canonical lineage-aware enum rather than flattening to generic success/failure."
       ]
     },
     {
       "seed_type": "owner",
-      "canon_label_hint": "concern record core",
+      "canon_label_hint": "concern record contract",
       "exact_items": [
-        "`concern_id`",
-        "`project_id`",
-        "`run_id?`",
-        "`scope_type`",
-        "`scope_id`",
-        "`status`",
-        "`severity`",
-        "`category`",
-        "`summary`",
-        "`description?`",
-        "`owner_kind?`",
-        "`origin_kind`",
-        "`created_at_utc`",
-        "`updated_at_utc`",
-        "`first_observed_at_utc`",
-        "`last_observed_at_utc`",
-        "`resolution_kind?`",
-        "`resolution_rationale?`",
-        "`acknowledged_by?`",
-        "`acknowledged_at_utc?`",
-        "`dismissed_by?`",
-        "`dismissed_at_utc?`",
-        "`source_refs[]`",
-        "`evidence_refs[]`",
-        "`related_record_refs[]`",
-        "`lineage_refs[]`",
-        "`blocked_episode_refs[]?`",
-        "`promotion_refs[]?`",
-        "`graph_patch_refs[]?`",
-        "`recovery_refs[]?`",
-        "`active`",
-        "`acknowledged`",
-        "`resolved`",
-        "`dismissed`"
+        "Missing family evidence: the ledger says the local docs still do not define a canonical concern record family and that concerns need exact identity, lineage, source linking, status, and interaction rules.",
+        "Minimum concern fields listed in the ledger: `concern_id`, `project_id`, `run_id?`, `scope_type`, `scope_id`, `status`, `severity`, `category`, `summary`, `description?`, `owner_kind?`, `origin_kind`, `created_at_utc`, `updated_at_utc`, `first_observed_at_utc`, `last_observed_at_utc`, `resolution_kind?`, `resolution_rationale?`, `acknowledged_by?`, `acknowledged_at_utc?`, `dismissed_by?`, `dismissed_at_utc?`, `source_refs[]`, `evidence_refs[]`, `related_record_refs[]`, `lineage_refs[]`, `blocked_episode_refs[]?`, `promotion_refs[]?`, `graph_patch_refs[]?`, `recovery_refs[]?`.",
+        "Candidate `resolution_kind` values listed in the ledger: `fixed`, `accepted_risk`, `superseded`, `merged`, `split`, `invalidated`, `obsoleted_by_patch`, `obsoleted_by_recovery`.",
+        "Concern lineage rule set listed in the ledger: `merge`, `split`, and `superseded`; old concern ids remain queryable in Ledger/History and newer concerns carry lineage back to prior ids."
       ],
       "affected_doc_hints": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md",
         "Plans/storage-plan.md",
         "Plans/Contracts_V0.md",
-        "Plans/Orchestrator_Page.md",
-        "Plans/FinalGUISpec.md",
         "Plans/Crosswalk.md",
         "Plans/chain-wizard-flexibility.md"
       ],
       "heading_hints": [
+        "## Research Progress - 2026-03-16 - Concern Record Structure and Interaction Rules",
         "### Recommended minimum concern shape",
-        "### Lifecycle direction"
-      ],
-      "stale_tokens": [],
-      "source_evidence": [
-        "working_ledger.md:L5957-L5999"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "owner",
-      "canon_label_hint": "concern-lifecycle-contract",
-      "exact_items": [
-        "`resolution_kind`",
-        "`fixed`",
-        "`accepted_risk`",
-        "`superseded`",
-        "`merged`",
-        "`split`",
-        "`invalidated`",
-        "`obsoleted_by_patch`",
-        "`obsoleted_by_recovery`",
-        "`dismissed` is not a substitute for `resolved`",
-        "old concern ids remain queryable in Ledger/History after merge/split/supersession",
-        "blocked owner",
-        "concern owner"
-      ],
-      "affected_doc_hints": [
-        "Plans/Contracts_V0.md",
-        "Plans/storage-plan.md"
-      ],
-      "heading_hints": [
         "### Resolution-kind direction",
-        "### Merge / split / supersession direction",
-        "### Interaction with notifications and blocked routing"
-      ],
-      "stale_tokens": [],
-      "source_evidence": [
-        "working_ledger.md:L6001-L6014",
-        "working_ledger.md:L6016-L6027",
-        "working_ledger.md:L6076-L6084",
-        "working_ledger.md:L6091-L6095"
-      ],
-      "notes": [
-        "Concern lineage, resolution, and owner-separation rules are specified here."
-      ]
-    },
-    {
-      "seed_type": "owner",
-      "canon_label_hint": "concern-action-policy-table",
-      "exact_items": [
-        "`action`",
-        "`allowed_actor_kinds`",
-        "`confirmation_level`",
-        "`rationale_required`",
-        "`resulting_status_or_lineage`",
-        "`reversibility`",
-        "`audit_fields`",
-        "`acknowledge`",
-        "`resolve`",
-        "`dismiss`",
-        "`reopen`",
-        "`merge`",
-        "`split`",
-        "`supersede`",
-        "`hard_gate`",
-        "`compensating_action_only`"
-      ],
-      "affected_doc_hints": [
-        "Plans/FinalGUISpec.md",
-        "Plans/Widget_System.md",
-        "Plans/Contracts_V0.md",
-        "Plans/storage-plan.md",
-        "Plans/Orchestrator_Page.md"
-      ],
-      "heading_hints": [
-        "## Research Progress - 2026-03-16 - concern-action confirmation and reversibility cluster"
-      ],
-      "stale_tokens": [],
-      "source_evidence": [
-        "working_ledger.md:L6462-L6485",
-        "working_ledger.md:L6487-L6492"
-      ],
-      "notes": [
-        "Canonical concern action matrix and default reversibility rules are explicitly proposed."
-      ]
-    },
-    {
-      "seed_type": "owner",
-      "canon_label_hint": "shared-identity-disclosure-contract",
-      "exact_items": [
-        "Define one shared requested/effective identity disclosure contract",
-        "Define a shared requested/effective/provider/account identity disclosure pattern",
-        "`requested_*`",
-        "`effective_*`"
-      ],
-      "affected_doc_hints": [
-        "Plans/storage-plan.md",
-        "Plans/usage-feature.md",
-        "Plans/Contracts_V0.md",
-        "Plans/GitHub_API_Auth_and_Flows.md",
-        "Plans/GitHub_Integration.md",
-        "Plans/Run_Graph_View.md",
-        "Plans/Runtime_Artifacts_Panel.md"
-      ],
-      "heading_hints": [
         "### Candidate fixes to carry forward"
       ],
       "stale_tokens": [],
       "source_evidence": [
-        "working_ledger.md:L6162-L6168",
-        "working_ledger.md:L6306-L6314"
+        "working_ledger.md:L5924-L5936",
+        "working_ledger.md:L5957-L5988",
+        "working_ledger.md:L6001-L6028",
+        "working_ledger.md:L6029-L6057",
+        "working_ledger.md:L6076-L6100"
       ],
       "notes": [
-        "Shared identity disclosure is called for across graph, artifacts, auth, and usage surfaces."
+        "Carry-through: concern stays distinct from review finding, annotation, blocked episode, graph patch request, and recovery record while allowing cross-linking.",
+        "Carry-through: repeated sightings should usually update an existing concern using source/scope/category/lineage-aware heuristics or explicit governance action.",
+        "Carry-through: `acknowledged` is a noise-control state, not a semantic resolution; `accepted_risk` is a resolution, not a dismissal.",
+        "Carry-through: blocked owner and concern owner are related but distinct concepts."
       ]
     },
     {
       "seed_type": "stale_retirement",
-      "canon_label_hint": "persona-field-name-drift",
+      "canon_label_hint": "tier-era runtime terms",
       "exact_items": [
-        "`requested_persona_id`",
-        "`effective_persona_id`",
-        "`_persona_id`"
-      ],
-      "affected_doc_hints": [
-        "Plans/Contracts_V0.md",
-        "Plans/Orchestrator_Page.md",
-        "Plans/Personas.md"
-      ],
-      "heading_hints": [
-        "### Key findings",
-        "### Contradictions / gaps surfaced"
-      ],
-      "stale_tokens": [
-        "`requested_persona_id`",
-        "`effective_persona_id`",
-        "`_persona_id`"
-      ],
-      "source_evidence": [
-        "working_ledger.md:L6263-L6266",
-        "working_ledger.md:L6292-L6295",
-        "working_ledger.md:L6728-L6729",
-        "working_ledger.md:L6799-L6800",
-        "working_ledger.md:L7034-L7036"
-      ],
-      "notes": [
-        "These names are repeatedly called non-canonical or forbidden."
-      ]
-    },
-    {
-      "seed_type": "stale_retirement",
-      "canon_label_hint": "tier-era-token-retirement",
-      "exact_items": [
-        "`tier_id`",
-        "`run.tier_*`",
-        "`tier_tree`",
-        "`Tiers`",
-        "`plan_or_tier_default`",
-        "`select_for_tier()`",
-        "`tier_boundary`",
-        "`from_tier`",
-        "`to_tier`",
-        "`audit_kind = start_of_tier | end_of_tier`",
-        "`Overseer`"
+        "Rework storage/usage attribution to treat `seam_id`, `package_id`, `lane_id`, and `attempt_id` as first-class where the runtime model now requires them instead of centering `tier_id`.",
+        "Replace or deprecate tier-era event and widget assumptions: `run.tier_*` -> seam/package/lane-aware runtime events; `tier_tree` / `Tiers` ownership -> seam/worktree/package-native surfaces.",
+        "`HITLRequest` and blocked-flow thinking still lean on `tier_id` / `tier_type` in places while the runtime increasingly uses `node_id` and attempt-scoped records as canonical execution anchors.",
+        "`Orchestrator_Page.md` still specifies `Tiers` and widget/persistence contracts around that obsolete structure."
       ],
       "affected_doc_hints": [
         "Plans/storage-plan.md",
         "Plans/usage-feature.md",
-        "Plans/Orchestrator_Page.md",
-        "Plans/Widget_System.md",
-        "Plans/Prompt_Pipeline.md",
-        "Plans/Personas.md",
-        "Plans/Provider_Stream_Mapping_External_Reference_A2A.md"
-      ],
-      "heading_hints": [
-        "### Candidate fixes to carry forward",
-        "## Research Progress - 2026-03-16 - Sonnet Stream / A2A Schema Recheck",
-        "## Research Progress - 2026-03-16 - Sonnet Expanded Identity / Runtime SSOT Batch"
-      ],
-      "stale_tokens": [
-        "`tier_id`",
-        "`run.tier_*`",
-        "`tier_tree`",
-        "`Tiers`",
-        "`plan_or_tier_default`",
-        "`select_for_tier()`",
-        "`tier_boundary`",
-        "`from_tier`",
-        "`to_tier`",
-        "`audit_kind = start_of_tier | end_of_tier`",
-        "`Overseer`"
-      ],
-      "source_evidence": [
-        "working_ledger.md:L6168-L6172",
-        "working_ledger.md:L6608-L6610",
-        "working_ledger.md:L6768-L6772",
-        "working_ledger.md:L6798-L6800",
-        "working_ledger.md:L6898-L6903",
-        "working_ledger.md:L6936-L6940"
-      ],
-      "notes": [
-        "Tier-era persisted names and stream-schema categories are explicitly flagged for replacement or migration."
-      ]
-    },
-    {
-      "seed_type": "stale_retirement",
-      "canon_label_hint": "github-login-as-durable-key",
-      "exact_items": [
-        "`github_api:github.com/<login>`",
-        "`login`"
-      ],
-      "affected_doc_hints": [
-        "Plans/GitHub_API_Auth_and_Flows.md",
-        "Plans/GitHub_Integration.md"
-      ],
-      "heading_hints": [
-        "### Key findings",
-        "### Candidate fixes to carry forward"
-      ],
-      "stale_tokens": [
-        "`github_api:github.com/<login>`",
-        "`login`"
-      ],
-      "source_evidence": [
-        "working_ledger.md:L6346-L6349",
-        "working_ledger.md:L6700-L6703",
-        "working_ledger.md:L6739-L6742",
-        "working_ledger.md:L7026-L7029",
-        "working_ledger.md:L7060-L7061",
-        "working_ledger.md:L7068-L7070"
-      ],
-      "notes": [
-        "Login-keyed durable identity is repeatedly marked incompatible with stable internal account identity."
-      ]
-    },
-    {
-      "seed_type": "owner",
-      "canon_label_hint": "runtime-identity-bundle-and-actor-envelope",
-      "exact_items": [
-        "`requested_account_id?`",
-        "`effective_account_id?`",
-        "`actor_kind`",
-        "`execution_role`",
-        "`project_id`",
-        "`run_id?`",
-        "`attempt_id?`",
-        "`thread_id?`",
-        "`wizard_id?`",
-        "`interview_id?`"
-      ],
-      "affected_doc_hints": [
-        "Plans/Contracts_V0.md",
-        "Plans/storage-plan.md",
-        "Plans/CLI_Bridged_Providers.md",
-        "Plans/Prompt_Pipeline.md",
-        "Plans/Provider_OpenCode.md"
-      ],
-      "heading_hints": [
-        "### Candidate fixes to carry forward",
-        "## Research Progress - 2026-03-16 - GPT-5.3-Codex Contract / Actor Envelope Hotspot"
-      ],
-      "stale_tokens": [],
-      "source_evidence": [
-        "working_ledger.md:L6805-L6810",
-        "working_ledger.md:L6963-L6966",
-        "working_ledger.md:L7000-L7005"
-      ],
-      "notes": [
-        "Shared runtime identity and actor scope fields are explicitly enumerated."
-      ]
-    },
-    {
-      "seed_type": "owner",
-      "canon_label_hint": "account-switch-history-family",
-      "exact_items": [
-        "`account.switched`",
-        "`account_switch_reason`",
-        "`recent_switch_reason`",
-        "`manual_preferred_account_id`"
-      ],
-      "affected_doc_hints": [
-        "Plans/Contracts_V0.md",
-        "Plans/storage-plan.md",
-        "Plans/Multi-Account.md",
-        "Plans/usage-feature.md"
-      ],
-      "heading_hints": [
-        "### Key findings",
-        "### Candidate fixes to carry forward"
-      ],
-      "stale_tokens": [],
-      "source_evidence": [
-        "working_ledger.md:L6696-L6699",
-        "working_ledger.md:L6732-L6738",
-        "working_ledger.md:L6773-L6776",
-        "working_ledger.md:L6808-L6809",
-        "working_ledger.md:L6812-L6814"
-      ],
-      "notes": [
-        "A durable switch-history / pressure-episode family is directly requested."
-      ]
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "event-table-snapshot-alignment",
-      "exact_items": [
-        "`run.started`",
-        "`usage.event`",
-        "`hitl.*`",
-        "config-validation",
-        "shared snapshot object"
-      ],
-      "affected_doc_hints": [
-        "Plans/storage-plan.md",
-        "Plans/Contracts_V0.md",
-        "Plans/usage-feature.md"
-      ],
-      "heading_hints": [
-        "### Candidate fixes to carry forward",
-        "### Contradictions / gaps surfaced"
-      ],
-      "stale_tokens": [],
-      "source_evidence": [
-        "working_ledger.md:L6384-L6393",
-        "working_ledger.md:L6725-L6728",
-        "working_ledger.md:L6732-L6735"
-      ],
-      "notes": [
-        "Event rows are called weaker than surrounding normative snapshot requirements."
-      ]
-    },
-    {
-      "seed_type": "owner",
-      "canon_label_hint": "usage-event-ref-and-receipt-contract",
-      "exact_items": [
-        "`usage_event_ref`",
-        "`project_id`",
-        "`created_at_utc`",
-        "`orchestrator.receipt.{run_id}.{attempt_id}`",
-        "`Show in Usage`",
-        "`Show in Ledger`"
-      ],
-      "affected_doc_hints": [
-        "Plans/storage-plan.md",
-        "Plans/usage-feature.md",
-        "Plans/Runtime_Artifacts_Panel.md",
-        "Plans/Run_Graph_View.md",
-        "Plans/Orchestrator_Page.md"
-      ],
-      "heading_hints": [
-        "## Research Progress - 2026-03-16 - GPT-5.2 UI / Projection Follow-Through",
-        "## Research Progress - 2026-03-16 - GPT-5.3-Codex Contract / Actor Envelope Hotspot"
-      ],
-      "stale_tokens": [],
-      "source_evidence": [
-        "working_ledger.md:L6830-L6834",
-        "working_ledger.md:L6865-L6874",
-        "working_ledger.md:L6967-L6970",
-        "working_ledger.md:L7002-L7004"
-      ],
-      "notes": [
-        "A locator-grade `usage_event_ref` and receipt minimum fields are explicitly required for cross-surface pivots."
-      ]
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "command-routing-normalization",
-      "exact_items": [
-        "`request_id`",
-        "`blocked_sequence`",
-        "`cmd.runtime.*`",
-        "`cmd.orchestrator.open_in_*`",
-        "`cmd.graph.approve_hitl`",
-        "`deny_hitl`",
-        "`allowed_action_ids[]`"
-      ],
-      "affected_doc_hints": [
         "Plans/Run_Graph_View.md",
         "Plans/Orchestrator_Page.md",
-        "Plans/UI_Command_Catalog.md",
-        "Plans/Runtime_Artifacts_Panel.md"
-      ],
-      "heading_hints": [
-        "### Key findings",
-        "### Candidate fixes to carry forward"
-      ],
-      "stale_tokens": [],
-      "source_evidence": [
-        "working_ledger.md:L6704-L6708",
-        "working_ledger.md:L6730-L6744",
-        "working_ledger.md:L6971-L6975",
-        "working_ledger.md:L7004-L7005"
-      ],
-      "notes": [
-        "Run Graph and Orchestrator are explicitly called out as lagging command/catalog normalization."
-      ]
-    },
-    {
-      "seed_type": "owner",
-      "canon_label_hint": "projection-health-contract",
-      "exact_items": [
-        "`ProjectionHealth`",
-        "`projection_trust_state`",
-        "Add a shared projection-health / trust-state record family"
-      ],
-      "affected_doc_hints": [
-        "Plans/storage-plan.md",
-        "Plans/usage-feature.md",
         "Plans/Widget_System.md",
-        "Plans/Orchestrator_Page.md"
-      ],
-      "heading_hints": [
-        "## Research Progress - 2026-03-16 - GPT-5.2 UI / Projection Follow-Through",
-        "### Candidate fixes to carry forward"
-      ],
-      "stale_tokens": [],
-      "source_evidence": [
-        "working_ledger.md:L6845-L6849",
-        "working_ledger.md:L6872-L6877",
-        "working_ledger.md:L7179-L7181"
-      ],
-      "notes": [
-        "Shared trust/freshness state is requested for UI, widgets, and project-summary rollups."
-      ]
-    },
-    {
-      "seed_type": "owner",
-      "canon_label_hint": "help-depth-and-glossary-contract",
-      "exact_items": [
-        "`inline help`",
-        "`context help`",
-        "`canonical help entry`",
-        "canonical term names do not change between Expert and ELI5",
-        "`Feature Seam`",
-        "`Work Package`",
-        "`Package Overseer`",
-        "`Seam Overseer`",
-        "`Weak Integration`",
-        "`Promotion`",
-        "`Corroboration`",
-        "`Concern`",
-        "`Graph Patch`",
-        "`Graph Generation`",
-        "`Lane`",
-        "`requested vs effective`",
-        "`History vs Ledger`",
-        "`historical vs superseded vs revoked vs reopened`"
-      ],
-      "affected_doc_hints": [
-        "Plans/Glossary.md",
-        "Plans/FinalGUISpec.md",
-        "Plans/Orchestrator_Page.md",
-        "Plans/Run_Graph_View.md",
-        "Plans/Widget_System.md"
-      ],
-      "heading_hints": [
-        "## Research Progress - 2026-03-16 - help system contract and concept-depth cluster"
-      ],
-      "stale_tokens": [],
-      "source_evidence": [
-        "working_ledger.md:L6555-L6588",
-        "working_ledger.md:L6590-L6596"
-      ],
-      "notes": [
-        "Help-depth layers, glossary ownership, and stable term usage are explicitly specified."
-      ]
-    },
-    {
-      "seed_type": "owner",
-      "canon_label_hint": "widget-scope-and-persistence-contract",
-      "exact_items": [
-        "`Progress`",
-        "`Seams`",
-        "`Node Graph`",
-        "`Evidence`",
-        "`History`",
-        "`Ledger`",
-        "`router/page scope`",
-        "`tab scope`",
-        "`widget config`",
-        "`focused_run_id`",
-        "app default baseline",
-        "project-scoped override"
-      ],
-      "affected_doc_hints": [
-        "Plans/Widget_System.md",
-        "Plans/Orchestrator_Page.md",
-        "Plans/FinalGUISpec.md",
-        "Plans/storage-plan.md"
-      ],
-      "heading_hints": [
-        "## Research Progress - 2026-03-16 - widget persistence and filter-boundary cluster",
-        "## Research Progress - 2026-03-16 - widget persistence scope decision update"
-      ],
-      "stale_tokens": [],
-      "source_evidence": [
-        "working_ledger.md:L6653-L6670",
-        "working_ledger.md:L6672-L6676",
-        "working_ledger.md:L7085-L7100"
-      ],
-      "notes": [
-        "Progress-only hostability, scope-layer ownership, and app-default plus project-override persistence are directly stated."
-      ]
-    },
-    {
-      "seed_type": "stale_retirement",
-      "canon_label_hint": "widget-namespace-and-id-drift",
-      "exact_items": [
-        "`settings/multi_account.*`",
-        "`widget.multi_account`",
-        "`widget.terminal_output`",
-        "`widget.agent_terminal`",
-        "`dashboard_layout:v1`"
-      ],
-      "affected_doc_hints": [
-        "Plans/Widget_System.md",
-        "Plans/Orchestrator_Page.md"
-      ],
-      "heading_hints": [
-        "## Research Progress - 2026-03-16 - widget persistence and filter-boundary cluster",
-        "## Research Progress - 2026-03-16 - GPT-5.3-Codex GitHub / Orchestrator / Widget Hotspot"
-      ],
-      "stale_tokens": [
-        "`settings/multi_account.*`",
-        "`widget.multi_account`",
-        "`widget.terminal_output`",
-        "`widget.agent_terminal`",
-        "`dashboard_layout:v1`"
-      ],
-      "source_evidence": [
-        "working_ledger.md:L6622-L6625",
-        "working_ledger.md:L6650-L6651",
-        "working_ledger.md:L6841-L6844",
-        "working_ledger.md:L7040-L7044",
-        "working_ledger.md:L7073-L7074"
-      ],
-      "notes": [
-        "Legacy keyspace and split widget IDs are explicitly called contradictory or pre-rewrite."
-      ]
-    },
-    {
-      "seed_type": "owner",
-      "canon_label_hint": "stream-schema-versioned-migration",
-      "exact_items": [
-        "`governance_boundary`",
-        "`attempt_id`",
-        "`actor_kind`",
-        "blocked-owner context",
-        "package/seam/lane identity",
-        "`raw_observation`",
-        "`minority_advisory`"
-      ],
-      "affected_doc_hints": [
-        "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
-        "Plans/CLI_Bridged_Providers.md",
-        "Plans/Contracts_V0.md",
-        "Plans/Multi-Account.md",
-        "Plans/human-in-the-loop.md",
-        "Plans/Executor_Protocol.md",
-        "Plans/Architecture_Invariants.md"
-      ],
-      "heading_hints": [
-        "## Research Progress - 2026-03-16 - Sonnet Stream / A2A Schema Recheck"
-      ],
-      "stale_tokens": [],
-      "source_evidence": [
-        "working_ledger.md:L6897-L6916",
-        "working_ledger.md:L6936-L6947"
-      ],
-      "notes": [
-        "The stream layer is treated as requiring a versioned schema migration, not only prose cleanup."
-      ]
-    },
-    {
-      "seed_type": "owner",
-      "canon_label_hint": "governance-record-template-and-policy-objects",
-      "exact_items": [
-        "`concern`",
-        "`review`",
-        "`promotion`",
-        "`corroboration`",
-        "`graph-patch`",
-        "`recovery`",
-        "`superseded`",
-        "`revoked`",
-        "`reopened`"
-      ],
-      "affected_doc_hints": [
-        "Plans/storage-plan.md",
-        "Plans/Contracts_V0.md",
         "Plans/Decision_Policy.md",
         "Plans/Permissions_System.md",
-        "Plans/Architecture_Invariants.md"
+        "Plans/human-in-the-loop.md"
       ],
       "heading_hints": [
-        "### Candidate fixes to carry forward"
-      ],
-      "stale_tokens": [],
-      "source_evidence": [
-        "working_ledger.md:L6228-L6240",
-        "working_ledger.md:L6314-L6316"
-      ],
-      "notes": [
-        "Both policy objects and a shared governance-record template are explicitly requested."
-      ]
-    },
-    {
-      "seed_type": "owner",
-      "canon_label_hint": "github-recovery-context-and-binding",
-      "exact_items": [
-        "`account_id`",
-        "`credential_ref`",
-        "`cmd.github.connect`",
-        "`selected_repo_id`",
-        "`provider_accounts.*`",
-        "`auth_realm`"
-      ],
-      "affected_doc_hints": [
-        "Plans/GitHub_API_Auth_and_Flows.md",
-        "Plans/GitHub_Integration.md",
-        "Plans/UI_Command_Catalog.md",
-        "Plans/storage-plan.md"
-      ],
-      "heading_hints": [
-        "## Research Progress - 2026-03-16 - GPT-5.2 UI / Projection Follow-Through",
-        "## Research Progress - 2026-03-16 - GPT-5.3-Codex GitHub / Orchestrator / Widget Hotspot"
-      ],
-      "stale_tokens": [],
-      "source_evidence": [
-        "working_ledger.md:L6835-L6840",
-        "working_ledger.md:L7030-L7033",
-        "working_ledger.md:L7068-L7075"
-      ],
-      "notes": [
-        "GitHub reconnect and recovery flows are explicitly called under-keyed without these bindings."
-      ]
-    },
-    {
-      "seed_type": "owner",
-      "canon_label_hint": "project-summary-projection",
-      "exact_items": [
-        "`project_id`",
-        "`activity_state`",
-        "`idle | active | background_active | historical_only`",
-        "`attention_state`",
-        "`none | advisory | attention_required | blocked`",
-        "`health_state`",
-        "`healthy | degraded | blocked`",
-        "`primary_owner_kind?`",
-        "`primary_reason_code?`",
-        "`primary_object_ref?`",
-        "`active_run_count`",
-        "`blocked_run_count`",
-        "`attention_object_count`",
-        "`projection_trust_state`",
-        "`last_activity_at_utc`",
-        "`historical_run_count`",
-        "canonical active blocked episodes win over derived warnings",
-        "`blocked` outranks `attention_required`",
-        "`attention_required` outranks advisory pressure/noise"
-      ],
-      "affected_doc_hints": [
-        "Plans/FinalGUISpec.md",
-        "Plans/storage-plan.md",
-        "Plans/feature-list.md",
-        "Plans/Orchestrator_Page.md"
-      ],
-      "heading_hints": [
-        "## Research Progress - 2026-03-16 - project summary and blocked-owner model cluster"
-      ],
-      "stale_tokens": [],
-      "source_evidence": [
-        "working_ledger.md:L7167-L7193",
-        "working_ledger.md:L7195-L7199"
-      ],
-      "notes": [
-        "A minimum project-summary shape and precedence rule are explicitly proposed."
-      ]
-    },
-    {
-      "seed_type": "owner",
-      "canon_label_hint": "project_attention_item contract",
-      "exact_items": [
-        "Add a shared `project_attention_item` projection or equivalent normalized row model.",
-        "`attention_item_id`",
-        "`project_id`",
-        "`severity` (`advisory | attention_required | blocked`)",
-        "`owner_kind`",
-        "`reason_code`",
-        "`source_kind`",
-        "`source_object_ref`",
-        "`primary_route_payload`",
-        "`secondary_route_payload?`",
-        "`projection_trust_state`",
-        "`dismissibility_kind` (`none | quiet_only | dismissible`)",
-        "`active`",
-        "project attention rows should route through the same internal payload model as deep links/search/palette results",
-        "if an attention item is projection-derived rather than canonical-runtime-backed, the row should show that reduced trust explicitly"
-      ],
-      "affected_doc_hints": [
-        "Plans/Glossary.md",
-        "Plans/FinalGUISpec.md",
-        "Plans/storage-plan.md",
-        "Plans/assistant-chat-design.md"
-      ],
-      "heading_hints": [
-        "## Research Progress - 2026-03-16 - attention center and project-attention routing cluster",
-        "### Candidate fixes to carry forward"
-      ],
-      "stale_tokens": [],
-      "source_evidence": [
-        "working_ledger.md:L7253-L7279"
-      ],
-      "notes": [
-        "Attention-center/project-attention routing and disclosure requirements."
-      ]
-    },
-    {
-      "seed_type": "owner",
-      "canon_label_hint": "project_summary storage family",
-      "exact_items": [
-        "`project_summary.v1:{project_id}`",
-        "`project_attention_item.v1:{project_id}:{attention_item_id}`",
-        "`project_attention_index.v1:{project_id}`",
-        "`activity_state`",
-        "`attention_state`",
-        "`health_state`",
-        "`primary_owner_kind?`",
-        "`primary_reason_code?`",
-        "`primary_attention_item_id?`",
-        "`primary_object_ref?`",
-        "`projection_trust_state`",
-        "`summary_generated_at_utc`",
-        "`last_activity_at_utc`",
-        "`quiet_until_utc?`",
-        "`resolved_at_utc?`",
-        "`project_summary` is current-state only and overwritten by projector updates",
-        "`project_attention_item` rows should retain enough historical semantics to support active vs resolved/dismissed/quieted behavior without erasing audit lineage",
-        "it must not invent synthetic blocked states unsupported by canonical owners"
-      ],
-      "affected_doc_hints": [
-        "Plans/storage-plan.md",
-        "Plans/FinalGUISpec.md",
-        "Plans/Contracts_V0.md"
-      ],
-      "heading_hints": [
-        "## Research Progress - 2026-03-16 - project summary and attention storage contract cluster",
-        "### Candidate fixes to carry forward"
-      ],
-      "stale_tokens": [],
-      "source_evidence": [
-        "working_ledger.md:L7472-L7532"
-      ],
-      "notes": [
-        "Dedicated redb projection family and lifecycle rules."
-      ]
-    },
-    {
-      "seed_type": "owner",
-      "canon_label_hint": "route_payload normalization",
-      "exact_items": [
-        "Define one canonical internal route payload, separate from command IDs.",
-        "`project_id?`",
-        "`workspace_tab_id?`",
-        "`destination_surface`",
-        "`destination_tab?`",
-        "`focused_run_id?`",
-        "`historical_mode?`",
-        "`thread_id?`",
-        "`wizard_id?`",
-        "`object_kind?`",
-        "`object_id?`",
-        "`record_id?`",
-        "`artifact_id?`",
-        "`attempt_id?`",
-        "`lane_id?`",
-        "`worktree_id?`",
-        "`filter_payload?`",
-        "`inspector_target?`",
-        "`scroll_target?`",
-        "`focus_behavior?`",
-        "Treat `resume_url` as a serialized transport form of that route payload.",
-        "`cmd.panel.switch`"
-      ],
-      "affected_doc_hints": [
-        "Plans/UI_Command_Catalog.md",
-        "Plans/Contracts_V0.md",
-        "Plans/FinalGUISpec.md",
-        "Plans/assistant-chat-design.md",
-        "Plans/GitHub_Integration.md",
-        "Plans/Widget_System.md"
-      ],
-      "heading_hints": [
-        "## Research Progress - 2026-03-16 - route payload and `resume_url` normalization cluster",
-        "### Candidate fixes to carry forward"
-      ],
-      "stale_tokens": [],
-      "source_evidence": [
-        "working_ledger.md:L7577-L7624"
-      ],
-      "notes": [
-        "Shared routing payload and `resume_url` transport relationship."
-      ]
-    },
-    {
-      "seed_type": "stale_retirement",
-      "canon_label_hint": "generic page string routing",
-      "exact_items": [
-        "generic `page: string` payloads should be retired or constrained where they currently hide non-canonical tab naming",
-        "`cmd.widget.*` still uses a generic `page: string`"
-      ],
-      "affected_doc_hints": [
-        "Plans/UI_Command_Catalog.md",
-        "Plans/Widget_System.md"
-      ],
-      "heading_hints": [
-        "## Research Progress - 2026-03-16 - route payload and `resume_url` normalization cluster",
-        "### Contradictions / gaps surfaced",
-        "### Candidate fixes to carry forward"
+        "## Research Progress - 2026-03-16 - Gemini broader second-sweep delta cluster (identity, storage, UI ownership)",
+        "## Research Progress - 2026-03-16 - Gemini broader second-sweep delta cluster (policy, invariants, authority drift)",
+        "## Research Progress - 2026-03-16 - Opus broader second-sweep delta cluster (canonical contract drift and native-surface ownership)"
       ],
       "stale_tokens": [
-        "`page: string`"
+        "`tier_id`",
+        "`run.tier_*`",
+        "`tier_tree`",
+        "`Tiers`",
+        "`tier_type`"
       ],
       "source_evidence": [
-        "working_ledger.md:L7585-L7588",
-        "working_ledger.md:L7616-L7618"
+        "working_ledger.md:L6122-L6125",
+        "working_ledger.md:L6151-L6175",
+        "working_ledger.md:L6208-L6240",
+        "working_ledger.md:L6274-L6279",
+        "working_ledger.md:L6315-L6317"
       ],
-      "notes": []
+      "notes": [
+        "Carry-through: blocked/HITL/policy flows should re-anchor on canonical `node_id` and `attempt_id` identifiers.",
+        "Carry-through: `attempt_id` is increasingly a cross-surface anchor, not an optional artifact detail."
+      ]
     },
     {
       "seed_type": "owner",
-      "canon_label_hint": "requested concrete account fields",
+      "canon_label_hint": "identity disclosure contract",
       "exact_items": [
-        "`requested_account_id?`",
-        "`requested_account_binding?`",
-        "`none`",
-        "`preferred`",
-        "`required`",
-        "`attempt_record`",
-        "`tier_runtime_record`",
-        "`Requested account`",
-        "`Requested binding`",
-        "`Effective account`",
-        "`Switch reason`",
-        "`required` concrete-account requests should not silently degrade into ordinary switching behavior",
-        "`preferred` concrete-account requests should remain visible even when runtime legitimately switches away"
+        "Define one shared requested/effective identity disclosure contract reusable across graph detail, artifacts, GitHub/auth surfaces, and usage/account-pressure surfaces.",
+        "Canonical naming conflict called out in the ledger: downstream docs still normalize around `requested_persona_id` / `effective_persona_id` while `Plans/Contracts_V0.md` says those are not canonical persisted names.",
+        "Requested-side gap called out in the ledger: canonical contracts expose `requested_account_policy` but not an equally canonical `requested_account_id`.",
+        "GitHub identity flaw called out in the ledger: `login` still acts like a stable key, but canonical contracts want stable internal `account_id` plus display-only provider identity.",
+        "Event rows flagged for reconciliation with richer prose MUSTs: `run.started`, `usage.event`, `hitl.*`, and related runtime/config validation events."
       ],
       "affected_doc_hints": [
-        "Plans/Prompt_Pipeline.md",
         "Plans/Contracts_V0.md",
         "Plans/storage-plan.md",
-        "Plans/Multi-Account.md",
-        "Plans/FinalGUISpec.md",
-        "Plans/usage-feature.md"
-      ],
-      "heading_hints": [
-        "## Research Progress - 2026-03-16 - requested concrete-account ownership cluster",
-        "### Recommended contract direction",
-        "### Candidate fixes to carry forward"
-      ],
-      "stale_tokens": [],
-      "source_evidence": [
-        "working_ledger.md:L7871-L7925"
-      ],
-      "notes": [
-        "Requested-side concrete account representation and disclosure."
-      ]
-    },
-    {
-      "seed_type": "owner",
-      "canon_label_hint": "actor envelope runtime bundle",
-      "exact_items": [
-        "`actor_kind`",
-        "Add `actor_kind` / `execution_role` and actor-scoped refs to the shared runtime identity bundle, snapshots, and handoff objects.",
-        "Consolidate Prompt Pipeline onto one canonical handoff/runtime object that preserves thread/auth/account/switch data across dispatch boundaries.",
-        "Replace worker/verifier/page contracts with canonical runtime snapshot refs or inline canonical runtime bundles instead of ad hoc persona/provider/model strings."
-      ],
-      "affected_doc_hints": [
-        "Plans/Prompt_Pipeline.md",
-        "Plans/Multi-Account.md",
-        "Plans/Models_System.md",
-        "Plans/storage-plan.md",
-        "Plans/Orchestrator_Page.md",
-        "Plans/Run_Graph_View.md"
-      ],
-      "heading_hints": [
-        "## Research Progress - 2026-03-16 - GPT-5.4 Identity / Actor Envelope Deepening",
-        "### Candidate fixes to carry forward"
-      ],
-      "stale_tokens": [],
-      "source_evidence": [
-        "working_ledger.md:L7342-L7347"
-      ],
-      "notes": [
-        "Shared runtime identity and handoff ownership."
-      ]
-    },
-    {
-      "seed_type": "owner",
-      "canon_label_hint": "bridged correlation and capability parity",
-      "exact_items": [
-        "Add a versioned correlation block to bridged-provider normalized events and require actor/thread/attempt/lineage refs there.",
-        "Make bridged providers expose the same capability block expected of direct providers, or centralize that capability block for both classes.",
-        "Extend OpenCode and bridged request/runtime bundles with the full auth/account identity block plus explicit upstream-provider identity rules.",
-        "Re-anchor A2A scope away from tier-specific required keys and add actor/account/provenance/trust hints for stream consumers.",
-        "Add a versioned event/correlation context block for bridged runtimes and normalized streams.",
-        "Add a versioned stream/provider correlation block for actor/attempt/account/trust metadata.",
-        "Add explicit versioning/migration notes where A2A or bridged categories/fields must grow.",
-        "`origin` in bridged-provider requests is audit-only today; do not overload it into behavior-driving actor identity."
-      ],
-      "affected_doc_hints": [
-        "Plans/CLI_Bridged_Providers.md",
-        "Plans/Provider_OpenCode.md",
-        "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+        "Plans/usage-feature.md",
+        "Plans/GitHub_API_Auth_and_Flows.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Runtime_Artifacts_Panel.md",
         "Plans/Permissions_System.md"
       ],
       "heading_hints": [
-        "## Research Progress - 2026-03-16 - GPT-5.4 Bridged Runtime / Permissions / Trust Deepening",
-        "## Research Progress - 2026-03-16 - GPT-5.2 Bridge / OpenCode / Permission Scope Clarifications",
-        "## Research Progress - 2026-03-16 - GPT-5.3-Codex Provider / Permission Closure",
-        "### Candidate fixes to carry forward"
-      ],
-      "stale_tokens": [],
-      "source_evidence": [
-        "working_ledger.md:L7412-L7424",
-        "working_ledger.md:L7747-L7756",
-        "working_ledger.md:L8040-L8049"
-      ],
-      "notes": [
-        "Versioned bridged/provider correlation and parity requirements."
-      ]
-    },
-    {
-      "seed_type": "stale_retirement",
-      "canon_label_hint": "OpenCode thread_id collision",
-      "exact_items": [
-        "Move OpenCode session IDs to provider-native correlation fields and keep `thread_id` canonical to PM correlation.",
-        "OpenCode still misuses canonical `thread_id` for provider-native session identity.",
-        "canonical `thread_id` remains PM correlation",
-        "OpenCode session ID is still being treated as if it were that canonical field"
-      ],
-      "affected_doc_hints": [
-        "Plans/Provider_OpenCode.md",
-        "Plans/CLI_Bridged_Providers.md"
-      ],
-      "heading_hints": [
-        "## Research Progress - 2026-03-16 - GPT-5.2 Bridge / OpenCode / Permission Scope Clarifications",
-        "## Research Progress - 2026-03-16 - GPT-5.3-Codex Provider / Permission Closure",
-        "### Candidate fixes to carry forward"
+        "## Research Progress - 2026-03-16 - Gemini broader second-sweep delta cluster (identity, storage, UI ownership)",
+        "## Research Progress - 2026-03-16 - Opus broader second-sweep delta cluster (canonical contract drift and native-surface ownership)",
+        "## Research Progress - 2026-03-16 - Sonnet broader second-sweep delta cluster (requested-account asymmetry and event-schema precision)"
       ],
       "stale_tokens": [
-        "`thread_id`"
-      ],
-      "source_evidence": [
-        "working_ledger.md:L7706-L7709",
-        "working_ledger.md:L7747-L7749",
-        "working_ledger.md:L8001-L8004"
-      ],
-      "notes": [
-        "Canonical `thread_id` must not hold provider-native session identity."
-      ]
-    },
-    {
-      "seed_type": "owner",
-      "canon_label_hint": "approval scope and permission snapshot parity",
-      "exact_items": [
-        "Define an Approval Scope Key for permissions keyed by actor/lane/run/account context.",
-        "Upgrade permission snapshots to include requested/effective values, downgrade reasons, and identity context.",
-        "Reconcile `ask/plan` and `external_publish_side_effect` semantics in one canonical algorithm.",
-        "`external_publish_side_effect`",
-        "`ask/plan -> deny`"
-      ],
-      "affected_doc_hints": [
-        "Plans/Permissions_System.md",
-        "Plans/human-in-the-loop.md",
-        "Plans/Prompt_Pipeline.md",
-        "Plans/Contracts_V0.md",
-        "Plans/storage-plan.md"
-      ],
-      "heading_hints": [
-        "## Research Progress - 2026-03-16 - GPT-5.2 Bridge / OpenCode / Permission Scope Clarifications",
-        "## Research Progress - 2026-03-16 - GPT-5.3-Codex Provider / Permission Closure",
-        "### Candidate fixes to carry forward"
-      ],
-      "stale_tokens": [],
-      "source_evidence": [
-        "working_ledger.md:L7750-L7753",
-        "working_ledger.md:L8009-L8018",
-        "working_ledger.md:L8043-L8045"
-      ],
-      "notes": [
-        "Permission approval scoping and richer requested/effective disclosure."
-      ]
-    },
-    {
-      "seed_type": "owner",
-      "canon_label_hint": "operational identity disclosure",
-      "exact_items": [
-        "`execution_role`",
-        "`requested_operational_identity?`",
-        "`effective_operational_identity?`",
-        "`kind`",
-        "`requested_ref?`",
-        "`effective_ref?`",
-        "`selection_reason?`",
-        "`partial_capability?`",
-        "`github_api_account`",
-        "`registry_namespace`",
-        "`kubernetes_context`",
-        "operational identity may be displayed alongside provider/account identity",
-        "but it must not be implied to share the same ownership or token source unless the owning auth contract says so"
-      ],
-      "affected_doc_hints": [
-        "Plans/Multi-Account.md",
-        "Plans/Contracts_V0.md",
-        "Plans/Prompt_Pipeline.md",
-        "Plans/storage-plan.md",
-        "Plans/usage-feature.md"
-      ],
-      "heading_hints": [
-        "## Research Progress - 2026-03-16 - operational identity and actor-role disclosure cluster",
-        "### Recommended contract direction"
-      ],
-      "stale_tokens": [],
-      "source_evidence": [
-        "working_ledger.md:L8080-L8110"
-      ],
-      "notes": [
-        "Operational identity block parallel to provider/account identity."
-      ]
-    },
-    {
-      "seed_type": "owner",
-      "canon_label_hint": "account pressure and switch history",
-      "exact_items": [
-        "`account_pressure_episode`",
-        "`account_switch_event`",
-        "`episode_id`",
-        "`switch_event_id`",
-        "`project_id`",
-        "`provider_id`",
-        "`account_id`",
-        "`execution_role?`",
-        "`source_kind`",
-        "`signal_confidence`",
-        "`pressure_kind`",
-        "`projected_remaining?`",
-        "`reset_at?`",
-        "`started_at_utc`",
-        "`updated_at_utc`",
-        "`ended_at_utc?`",
-        "`status` (`active | cooled_down | resolved | invalidated`)",
-        "`requested_account_id?`",
-        "`requested_account_binding?`",
-        "`from_account_id?`",
-        "`to_account_id?`",
-        "`switch_reason`",
-        "`decision_kind` (`switched | stayed | blocked_no_backup | blocked_required_account | failed`)",
-        "`source_episode_id?`",
-        "`run_id?`",
-        "`attempt_id?`",
-        "`thread_id?`",
-        "`ts`",
-        "Keep `account_switch_reason` on effective/runtime snapshots as the current-run disclosure field.",
-        "Add append-only switch/pressure history families for durable audit and shared UI consumption."
-      ],
-      "affected_doc_hints": [
-        "Plans/Multi-Account.md",
-        "Plans/storage-plan.md",
-        "Plans/Contracts_V0.md",
-        "Plans/usage-feature.md",
-        "Plans/Prompt_Pipeline.md",
-        "Plans/FinalGUISpec.md"
-      ],
-      "heading_hints": [
-        "## Research Progress - 2026-03-16 - account switch-history and pressure-episode cluster",
-        "### Recommended contract direction",
-        "### Recommended fields",
-        "### Candidate fixes to carry forward"
-      ],
-      "stale_tokens": [],
-      "source_evidence": [
-        "working_ledger.md:L8187-L8252"
-      ],
-      "notes": [
-        "Append-only pressure and switching event family."
-      ]
-    },
-    {
-      "seed_type": "stale_retirement",
-      "canon_label_hint": "persona id vocabulary",
-      "exact_items": [
-        "stale `_persona_id` names remain in required worker identity fields",
-        "`requested_persona_id` / `effective_persona_id` remain embedded in consumer docs despite canonical prohibition."
-      ],
-      "affected_doc_hints": [
-        "Plans/Orchestrator_Page.md",
-        "Plans/Run_Graph_View.md",
-        "Plans/Contracts_V0.md"
-      ],
-      "heading_hints": [
-        "## Research Progress - 2026-03-16 - GPT-5.4 Identity / Actor Envelope Deepening",
-        "## Research Progress - 2026-03-16 - GPT-5.2 Identity Semantics / Role-Routing Clarifications",
-        "### Contradictions / gaps surfaced"
-      ],
-      "stale_tokens": [
-        "`_persona_id`",
         "`requested_persona_id`",
-        "`effective_persona_id`"
+        "`effective_persona_id`",
+        "GitHub `login` as a storage/routing key"
       ],
       "source_evidence": [
-        "working_ledger.md:L7314-L7317",
-        "working_ledger.md:L7673-L7678"
+        "working_ledger.md:L6118-L6121",
+        "working_ledger.md:L6148-L6153",
+        "working_ledger.md:L6177-L6179",
+        "working_ledger.md:L6263-L6270",
+        "working_ledger.md:L6291-L6314",
+        "working_ledger.md:L6318-L6323",
+        "working_ledger.md:L6339-L6349",
+        "working_ledger.md:L6367-L6392"
       ],
-      "notes": []
-    },
-    {
-      "seed_type": "stale_retirement",
-      "canon_label_hint": "tier vocabulary retirement",
-      "exact_items": [
-        "graph/use pivots still rely on `tier_id` where storage/receipts have moved to `attempt_id` + `usage_event_ref`",
-        "A2A still productizes `tier_boundary` and tier-audit semantics at the normalized stream layer",
-        "Replace permission tier-boundary language with runtime-overlay/blocked-state terminology and key approval cache scope by actor/run/lane/account context.",
-        "headless `ask -> deny unless HITL at current tier boundary` still leaks tier-era gating into what should now be normal blocked-overlay routing",
-        "GUI still claims or implies tier/task/subtask surfaces where rewrite-era seam/package/node surfaces are intended.",
-        "`tier_id`-keyed constructs"
-      ],
-      "affected_doc_hints": [
-        "Plans/Run_Graph_View.md",
-        "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
-        "Plans/Permissions_System.md",
-        "Plans/FinalGUISpec.md",
-        "Plans/orchestrator-subagent-integration.md",
-        "Plans/WorktreeGitImprovement.md"
-      ],
-      "heading_hints": [
-        "## Research Progress - 2026-03-16 - GPT-5.4 Identity / Actor Envelope Deepening",
-        "## Research Progress - 2026-03-16 - GPT-5.4 Bridged Runtime / Permissions / Trust Deepening",
-        "## Research Progress - 2026-03-16 - GPT-5.2 Bridge / OpenCode / Permission Scope Clarifications",
-        "## Research Progress - 2026-03-16 - Opus GUI / Surface Contract Deepening",
-        "## Research Progress - 2026-03-16 - Opus Orchestrator / Wizard / Worktree Drift Deepening"
-      ],
-      "stale_tokens": [
-        "`tier_id`",
-        "`tier_boundary`"
-      ],
-      "source_evidence": [
-        "working_ledger.md:L7315-L7317",
-        "working_ledger.md:L7380-L7383",
-        "working_ledger.md:L7416-L7417",
-        "working_ledger.md:L7721-L7721",
-        "working_ledger.md:L8299-L8300",
-        "working_ledger.md:L8388-L8392"
-      ],
-      "notes": []
+      "notes": [
+        "Carry-through: `effective_provider_identity` and display labels are audit/display fields, not routing keys.",
+        "Carry-through: stable internal account identity should be maintained inside each realm; the GitHub realm split stays intact.",
+        "Carry-through: `provider_account_id` needs an explicit relationship to `effective_account_id` / `effective_provider_identity` so it does not become a hidden second identity system."
+      ]
     },
     {
       "seed_type": "consumer",
-      "canon_label_hint": "GUI trust and route consumers",
+      "canon_label_hint": "artifact identity routing",
       "exact_items": [
-        "Add a concern-model GUI contract and projection-health / degraded-trust contract to `FinalGUISpec.md`.",
-        "Add projection-freshness gating and typed route payloads to `UI_Command_Catalog.md`.",
-        "Extend runtime-artifact envelopes and `cost_usage` linkage with canonical identity/trust/switch fields or refs.",
-        "Normalize GUI consumers onto canonical persona/account/role naming and stop allowing stale local variants.",
-        "`cost_usage`",
-        "Preview `trust_tier` and runtime projection trust must stay distinct."
+        "`Runtime_Artifacts_Panel.md` is missing `attempt_id` in its canonical id set.",
+        "Tighten artifact/file routing around stable object identity: support `attempt_id` and other runtime object ids directly; define read-only / historical / restricted-trust render behavior explicitly.",
+        "`FileManager.md` already wants identity-based artifact opening, but its open contract is still too path-first.",
+        "Add explicit projection freshness / degraded-trust states to storage-driven UI docs rather than assuming silently fresh projections."
       ],
       "affected_doc_hints": [
-        "Plans/FinalGUISpec.md",
-        "Plans/UI_Command_Catalog.md",
+        "Plans/FileManager.md",
         "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/storage-plan.md",
+        "Plans/Run_Graph_View.md",
         "Plans/Orchestrator_Page.md",
-        "Plans/Widget_System.md",
-        "Plans/usage-feature.md"
+        "Plans/Widget_System.md"
       ],
       "heading_hints": [
-        "## Research Progress - 2026-03-16 - Opus GUI / Surface Contract Deepening",
-        "### Candidate fixes to carry forward"
+        "## Research Progress - 2026-03-16 - Gemini broader second-sweep delta cluster (identity, storage, UI ownership)",
+        "## Research Progress - 2026-03-16 - Opus broader second-sweep delta cluster (canonical contract drift and native-surface ownership)",
+        "## Research Progress - 2026-03-16 - Sonnet broader second-sweep delta cluster (requested-account asymmetry and event-schema precision)"
       ],
       "stale_tokens": [],
       "source_evidence": [
-        "working_ledger.md:L8306-L8316"
+        "working_ledger.md:L6130-L6134",
+        "working_ledger.md:L6158-L6176",
+        "working_ledger.md:L6181-L6182",
+        "working_ledger.md:L6303-L6316",
+        "working_ledger.md:L6350-L6355",
+        "working_ledger.md:L6381-L6393"
       ],
       "notes": [
-        "Consumer-surface obligations for concern, trust, route payloads, and artifact linkage."
+        "Carry-through: historical-run rendering, idle widget rendering, and degraded projection gating need explicit surface-level contracts, not only storage-level notes.",
+        "Carry-through: widget/page specs need a chrome-level trust indicator and no-active-run states for Dashboard-hosted push widgets."
       ]
     },
     {
-      "seed_type": "consumer",
-      "canon_label_hint": "conversational HITL tooling consumers",
+      "seed_type": "owner",
+      "canon_label_hint": "policy authority invariants",
       "exact_items": [
-        "Add explicit auth/account/role disclosure sections to assistant and interview runtime contracts.",
-        "Add actor/lane/account identity and approver provenance to HITL request/resolution events.",
-        "Extend tool events with node/attempt/actor/account context and reconcile tool outcomes with canonical blocked codes.",
-        "Add thread-level switch/concern/trust surfacing paths rather than leaving those only to Orchestrator pages."
+        "Extend `Decision_Policy.md` with first-class policy objects and transitions for concerns, corroboration, promotions, and superseded/revoked/reopened states.",
+        "Require requested/effective identity fields in decision/permission records, not just runtime event records.",
+        "Add architecture invariants for canonical runtime object families, lane scheduler integrity, and mutation-safe-point enforcement.",
+        "Define intent-specific orchestration/worktree modes explicitly, including single-branch exceptions and contract-unification conflict policy."
       ],
       "affected_doc_hints": [
-        "Plans/assistant-chat-design.md",
-        "Plans/interview-subagent-integration.md",
-        "Plans/human-in-the-loop.md",
-        "Plans/Tools.md",
+        "Plans/Decision_Policy.md",
         "Plans/Permissions_System.md",
-        "Plans/Contracts_V0.md",
-        "Plans/Prompt_Pipeline.md"
-      ],
-      "heading_hints": [
-        "## Research Progress - 2026-03-16 - Opus Conversational / HITL / Tooling Deepening",
-        "### Candidate fixes to carry forward"
-      ],
-      "stale_tokens": [],
-      "source_evidence": [
-        "working_ledger.md:L8365-L8370"
-      ],
-      "notes": [
-        "Consumer contracts for conversational runtime disclosure, HITL provenance, and tool event attribution."
-      ]
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "orchestrator wizard worktree consumers",
-      "exact_items": [
-        "`tier_id`-keyed constructs",
-        "downstream wizard handoff still lacks requested/effective account, actor/role, and explicit isolation/worktree mode",
-        "stale \u201cno change to tier/subtask execution\u201d language still appears in summary tables where it can mislead implementers"
-      ],
-      "affected_doc_hints": [
-        "Plans/Executor_Protocol.md",
-        "Plans/orchestrator-subagent-integration.md",
+        "Plans/Architecture_Invariants.md",
         "Plans/chain-wizard-flexibility.md",
-        "Plans/WorktreeGitImprovement.md",
-        "Plans/Prompt_Pipeline.md",
-        "Plans/storage-plan.md"
-      ],
-      "heading_hints": [
-        "## Research Progress - 2026-03-16 - Opus Orchestrator / Wizard / Worktree Drift Deepening",
-        "### Key findings"
-      ],
-      "stale_tokens": [
-        "`tier_id`",
-        "tier/subtask execution"
-      ],
-      "source_evidence": [
-        "working_ledger.md:L8388-L8399"
-      ],
-      "notes": [
-        "Consumer-side orchestration and wizard/worktree drift evidence."
-      ]
-    },
-    {
-      "seed_type": "owner",
-      "canon_label_hint": "projection freshness/health owner fields",
-      "exact_items": [
-        "projection_freshness",
-        "projection_health",
-        "last_projected_at_utc",
-        "source_seq?",
-        "degraded_reason_code?",
-        "refresh_in_progress?"
-      ],
-      "affected_doc_hints": [
-        "Plans/storage-plan.md",
-        "Plans/Glossary.md",
-        "Plans/Contracts_V0.md",
-        "Plans/FinalGUISpec.md",
-        "Plans/Widget_System.md",
-        "Plans/Orchestrator_Page.md",
-        "Plans/Run_Graph_View.md"
-      ],
-      "heading_hints": [
-        "## Research Progress - 2026-03-16 - projection-freshness vocabulary and owner cluster"
-      ],
-      "stale_tokens": [],
-      "source_evidence": [
-        "working_ledger.md:L8447-L8472",
-        "working_ledger.md:L8490-L8497"
-      ],
-      "notes": [
-        "storage-plan.md is named as the owner of generic projection freshness/health projection fields"
-      ]
-    },
-    {
-      "seed_type": "stale_retirement",
-      "canon_label_hint": "projection trust retirement",
-      "exact_items": [
-        "projection trust",
-        "trust_tier"
-      ],
-      "affected_doc_hints": [
-        "Plans/storage-plan.md",
-        "Plans/Glossary.md",
-        "Plans/Contracts_V0.md",
-        "Plans/FinalGUISpec.md",
-        "Plans/Widget_System.md",
-        "Plans/Orchestrator_Page.md",
-        "Plans/Run_Graph_View.md"
-      ],
-      "heading_hints": [
-        "## Research Progress - 2026-03-16 - projection-freshness vocabulary and owner cluster"
-      ],
-      "stale_tokens": [
-        "projection trust"
-      ],
-      "source_evidence": [
-        "working_ledger.md:L8443-L8456",
-        "working_ledger.md:L8463-L8465",
-        "working_ledger.md:L8500-L8500"
-      ],
-      "notes": [
-        "trust_tier is reserved for preview/browser semantics only unless later explicitly renamed"
-      ]
-    },
-    {
-      "seed_type": "owner",
-      "canon_label_hint": "contracts snapshot and event owner map",
-      "exact_items": [
-        "requested_account_id",
-        "requested_account_binding",
-        "execution_role",
-        "operational-identity snapshot block names",
-        "account pressure / switch history"
-      ],
-      "affected_doc_hints": [
-        "Plans/Contracts_V0.md"
-      ],
-      "heading_hints": [
-        "## Research Progress - 2026-03-16 - remaining-owner-doc convergence cluster"
-      ],
-      "stale_tokens": [],
-      "source_evidence": [
-        "working_ledger.md:L8541-L8551"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "owner",
-      "canon_label_hint": "storage projection owner map",
-      "exact_items": [
-        "project_summary",
-        "project_attention_item",
-        "account pressure/switch episode records",
-        "projection freshness/health fields on projections"
-      ],
-      "affected_doc_hints": [
-        "Plans/storage-plan.md"
-      ],
-      "heading_hints": [
-        "## Research Progress - 2026-03-16 - remaining-owner-doc convergence cluster"
-      ],
-      "stale_tokens": [],
-      "source_evidence": [
-        "working_ledger.md:L8552-L8558"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "owner",
-      "canon_label_hint": "execution_unit_context canonical shape",
-      "exact_items": [
-        "execution_unit_context",
-        "decomposition_context",
-        "view_context",
-        "project_id",
-        "run_id",
-        "thread_id?",
-        "feature_seam_id?",
-        "work_package_id?",
-        "node_id",
-        "attempt_id",
-        "replan_generation",
-        "execution_role",
-        "scheduler_lane",
-        "manual_priority?",
-        "remediation_root_id?",
-        "remediation_parent_attempt_id?",
-        "safe_point_id?",
-        "lane_id?",
-        "worktree_id?",
-        "workspace_path",
-        "worktree_path?",
-        "snapshot_ref?",
-        "requested_account_policy?",
-        "requested_account_id?",
-        "requested_account_binding?",
-        "effective_account_id?",
-        "account_switch_reason?",
-        "operational_identity?",
-        "blocked_reason_code?",
-        "allowed_action_ids[]?",
-        "failure_class?",
-        "permission_snapshot_id?",
-        "model_snapshot_id?",
-        "provider_attempt_ref?"
-      ],
-      "affected_doc_hints": [
         "Plans/orchestrator-subagent-integration.md",
         "Plans/Executor_Protocol.md",
-        "Plans/storage-plan.md",
-        "Plans/Prompt_Pipeline.md",
-        "Plans/Contracts_V0.md",
-        "Plans/human-in-the-loop.md",
-        "Plans/Runtime_Artifacts_Panel.md",
-        "Plans/Tools.md",
+        "Plans/human-in-the-loop.md"
+      ],
+      "heading_hints": [
+        "## Research Progress - 2026-03-16 - Gemini broader second-sweep delta cluster (policy, invariants, authority drift)",
+        "### Candidate fixes to carry forward",
+        "### Do-not-forget details"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L6197-L6207",
+        "working_ledger.md:L6221-L6240",
+        "working_ledger.md:L6242-L6247"
+      ],
+      "notes": [
+        "Carry-through: `blocked_reason_code` remains the SSOT instead of ad hoc blocked strings.",
+        "Carry-through: `attempt_id` must stay unique per dispatch; retry/resume should not reuse old attempt ids.",
+        "Carry-through: acknowledged concerns must reduce noise without suppressing true blockers.",
+        "Carry-through: recovery snapshots in wizard-driven flows need enough intent/wizard-step state to avoid restoring into the wrong execution mode."
+      ]
+    },
+    {
+      "seed_type": "stale_retirement",
+      "canon_label_hint": "widget payload drift",
+      "exact_items": [
+        "Reclassify Orchestrator surfaces so only `Progress` is widget-composed and move non-Progress tabs onto native view-state contracts.",
+        "Widget commands and persistence keys still do not clearly enforce the native-tab boundary.",
+        "Add explicit trust/idle/historical rendering contracts to widget/page specs, including a chrome-level trust indicator and no-active-run states for Dashboard-hosted push widgets.",
+        "Tighten Run Graph and Orchestrator page schemas around canonical runtime objects (`node_id`, `attempt_id`, `lane_id`, `seam_id`, `package_id`) and add the missing governance object hooks/commands."
+      ],
+      "affected_doc_hints": [
+        "Plans/Widget_System.md",
         "Plans/Orchestrator_Page.md",
         "Plans/Run_Graph_View.md"
       ],
       "heading_hints": [
-        "## Research Progress - 2026-03-16 - Execution-context replacement shape"
-      ],
-      "stale_tokens": [],
-      "source_evidence": [
-        "working_ledger.md:L8692-L8742",
-        "working_ledger.md:L8762-L8775"
-      ],
-      "notes": [
-        "worker spawn, verification, remediation, recovery, coordination state, history, ledger, receipts, and graph/detail inspectors are stated to anchor to execution_unit_context"
-      ]
-    },
-    {
-      "seed_type": "stale_retirement",
-      "canon_label_hint": "TierContext and tier_id execution ownership retirement",
-      "exact_items": [
-        "TierContext",
-        "tier_id",
-        "legacy_decomposition_context",
-        "tier_runtime_record",
-        "persona_override_owner_id"
-      ],
-      "affected_doc_hints": [
-        "Plans/orchestrator-subagent-integration.md",
-        "Plans/Prompt_Pipeline.md",
-        "Plans/storage-plan.md",
-        "Plans/Executor_Protocol.md"
-      ],
-      "heading_hints": [
-        "## Research Progress - 2026-03-16 - Execution-core consolidation boundary",
-        "## Research Progress - 2026-03-16 - Execution-context replacement shape"
+        "## Research Progress - 2026-03-16 - Opus broader second-sweep delta cluster (canonical contract drift and native-surface ownership)",
+        "## Research Progress - 2026-03-16 - Sonnet broader second-sweep delta cluster (requested-account asymmetry and event-schema precision)"
       ],
       "stale_tokens": [
-        "TierContext",
-        "tier_id"
+        "generic `page: string` command payloads",
+        "tier-bound filters",
+        "non-Progress tabs as widget pages"
       ],
       "source_evidence": [
-        "working_ledger.md:L8646-L8656",
-        "working_ledger.md:L8757-L8779"
+        "working_ledger.md:L6271-L6279",
+        "working_ledger.md:L6300-L6317",
+        "working_ledger.md:L6350-L6355",
+        "working_ledger.md:L6378-L6399"
       ],
       "notes": [
-        "legacy_decomposition_context is named as a compatibility wrapper"
-      ]
-    },
-    {
-      "seed_type": "stale_retirement",
-      "canon_label_hint": "HITL legacy action fields and commands",
-      "exact_items": [
-        "allowed_actions[]",
-        "approve_continue",
-        "cmd.graph.approve_hitl",
-        "cmd.graph.deny_hitl"
-      ],
-      "affected_doc_hints": [
-        "Plans/human-in-the-loop.md",
-        "Plans/Contracts_V0.md",
-        "Plans/UI_Command_Catalog.md",
-        "Plans/storage-plan.md"
-      ],
-      "heading_hints": [
-        "## Research Progress - 2026-03-16 - Approval scope / HITL anchoring"
-      ],
-      "stale_tokens": [
-        "allowed_actions[]",
-        "approve_continue",
-        "cmd.graph.approve_hitl",
-        "cmd.graph.deny_hitl"
-      ],
-      "source_evidence": [
-        "working_ledger.md:L8792-L8798",
-        "working_ledger.md:L8825-L8827",
-        "working_ledger.md:L8844-L8849"
-      ],
-      "notes": [
-        "deprecated allowed_actions[] is stated to be compatibility-only and MUST NOT appear in new canonical schemas"
-      ]
-    },
-    {
-      "seed_type": "owner",
-      "canon_label_hint": "HITL blocked-episode approval anchors",
-      "exact_items": [
-        "waiting_approval",
-        "blocked_reason_code = waiting_approval",
-        "node.prerequisite_resolved",
-        "allowed_action_ids[]",
-        "cmd.runtime.*",
-        "run_id",
-        "node_id",
-        "blocked_sequence",
-        "attempt_id?",
-        "approval_scope_key"
-      ],
-      "affected_doc_hints": [
-        "Plans/human-in-the-loop.md",
-        "Plans/Contracts_V0.md",
-        "Plans/UI_Command_Catalog.md",
-        "Plans/storage-plan.md",
-        "Plans/assistant-chat-design.md",
-        "Plans/Orchestrator_Page.md",
-        "Plans/Run_Graph_View.md"
-      ],
-      "heading_hints": [
-        "## Research Progress - 2026-03-16 - Approval scope / HITL anchoring"
-      ],
-      "stale_tokens": [],
-      "source_evidence": [
-        "working_ledger.md:L8798-L8800",
-        "working_ledger.md:L8803-L8812",
-        "working_ledger.md:L8835-L8843"
-      ],
-      "notes": [
-        "approval is described as a blocked episode attached to canonical runtime execution"
-      ]
-    },
-    {
-      "seed_type": "owner",
-      "canon_label_hint": "wizard interview handoff runtime identity",
-      "exact_items": [
-        "project_id",
-        "thread_id",
-        "wizard_id",
-        "requested_persona?",
-        "effective_persona?",
-        "requested_platform?",
-        "effective_platform?",
-        "requested_model?",
-        "effective_model?",
-        "requested_account_policy?",
-        "requested_account_id?",
-        "requested_account_binding?",
-        "effective_account_id?",
-        "execution_role",
-        "operational_identity?",
-        "wizard_id -> run_id"
-      ],
-      "affected_doc_hints": [
-        "Plans/chain-wizard-flexibility.md",
-        "Plans/interview-subagent-integration.md",
-        "Plans/Prompt_Pipeline.md",
-        "Plans/Contracts_V0.md",
-        "Plans/assistant-chat-design.md",
-        "Plans/storage-plan.md",
-        "Plans/Orchestrator_Page.md",
-        "Plans/Run_Graph_View.md"
-      ],
-      "heading_hints": [
-        "## Research Progress - 2026-03-16 - Wizard and interview pre-run governance payloads"
-      ],
-      "stale_tokens": [],
-      "source_evidence": [
-        "working_ledger.md:L9215-L9241"
-      ],
-      "notes": [
-        "handoff payloads are stated to need the upstream subset of canonical runtime identity"
-      ]
-    },
-    {
-      "seed_type": "stale_retirement",
-      "canon_label_hint": "interview pseudo-tier coordination keys",
-      "exact_items": [
-        "thread_id: None",
-        "CrewCreator::Orchestrator { tier_id: format!(\"interview-phase-...\") }",
-        "to_tier_id: Some(format!(\"interview-phase-...\"))",
-        "tier_id"
-      ],
-      "affected_doc_hints": [
-        "Plans/interview-subagent-integration.md",
-        "Plans/Prompt_Pipeline.md"
-      ],
-      "heading_hints": [
-        "## Research Progress - 2026-03-16 - Wizard and interview pre-run governance payloads"
-      ],
-      "stale_tokens": [
-        "thread_id: None",
-        "tier_id"
-      ],
-      "source_evidence": [
-        "working_ledger.md:L9192-L9195",
-        "working_ledger.md:L9216-L9218",
-        "working_ledger.md:L9240-L9245"
-      ],
-      "notes": [
-        "interview-phase tier_id-style coordination keys are stated to be legacy/local labels only"
-      ]
-    },
-    {
-      "seed_type": "owner",
-      "canon_label_hint": "validation_pass_report lineage fields",
-      "exact_items": [
-        "validation_pass_report",
-        "workflow_run_id",
-        "wizard_id",
-        "project_id",
-        "thread_id?",
-        "phase_plan_ref?",
-        "staged_bundle_ref?",
-        "requirements_quality_report_ref?",
-        "effective_account_id?",
-        "execution_role",
-        "run_id?"
-      ],
-      "affected_doc_hints": [
-        "Plans/chain-wizard-flexibility.md",
-        "Plans/Project_Output_Artifacts.md",
-        "Plans/storage-plan.md",
-        "Plans/Contracts_V0.md",
-        "Plans/assistant-chat-design.md",
-        "Plans/Runtime_Artifacts_Panel.md",
-        "Plans/Orchestrator_Page.md",
-        "Plans/Run_Graph_View.md"
-      ],
-      "heading_hints": [
-        "## Research Progress - 2026-03-16 - Validation-pass report identity and lineage"
-      ],
-      "stale_tokens": [],
-      "source_evidence": [
-        "working_ledger.md:L9333-L9363",
-        "working_ledger.md:L9386-L9400"
-      ],
-      "notes": [
-        "launch receipt or promoted package ref is named as the bridge into launched execution"
-      ]
-    },
-    {
-      "seed_type": "owner",
-      "canon_label_hint": "tool and artifact runtime attribution fields",
-      "exact_items": [
-        "node_id?",
-        "attempt_id?",
-        "lane_id?",
-        "work_package_id?",
-        "feature_seam_id?",
-        "execution_role?",
-        "effective_account_id?",
-        "operational_identity?",
-        "artifact_id",
-        "usage_event_ref?"
-      ],
-      "affected_doc_hints": [
-        "Plans/Tools.md",
-        "Plans/Runtime_Artifacts_Panel.md",
-        "Plans/Contracts_V0.md",
-        "Plans/storage-plan.md",
-        "Plans/usage-feature.md",
-        "Plans/Orchestrator_Page.md",
-        "Plans/Run_Graph_View.md",
-        "Plans/assistant-chat-design.md"
-      ],
-      "heading_hints": [
-        "## Research Progress - 2026-03-16 - Tool-event and artifact runtime attribution"
-      ],
-      "stale_tokens": [],
-      "source_evidence": [
-        "working_ledger.md:L9100-L9125",
-        "working_ledger.md:L9146-L9156"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "stale_retirement",
-      "canon_label_hint": "artifact task_id legacy wording",
-      "exact_items": [
-        "task_id"
-      ],
-      "affected_doc_hints": [
-        "Plans/Runtime_Artifacts_Panel.md"
-      ],
-      "heading_hints": [
-        "## Research Progress - 2026-03-16 - Tool-event and artifact runtime attribution"
-      ],
-      "stale_tokens": [
-        "task_id"
-      ],
-      "source_evidence": [
-        "working_ledger.md:L9101-L9103",
-        "working_ledger.md:L9142-L9143",
-        "working_ledger.md:L9151-L9152"
-      ],
-      "notes": [
-        "task_id is stated to be legacy/decomposition wording unless a migration alias is explicitly needed"
-      ]
-    },
-    {
-      "seed_type": "owner",
-      "canon_label_hint": "artifact index and worktree lane storage families",
-      "exact_items": [
-        "artifacts_index.v1:{project_id}:{artifact_id}",
-        "artifacts_project_state.v1:{project_id}",
-        "projector.checkpoint.runtime_artifacts:{project_id}",
-        "worktree_record.v1:{project_id}:{worktree_id}",
-        "lane_record.v1:{project_id}:{lane_id}",
-        "worktree_projection.v1:{project_id}:{worktree_id}",
-        "lane_projection.v1:{project_id}:{lane_id}",
-        "orchestrator.receipt"
-      ],
-      "affected_doc_hints": [
-        "Plans/storage-plan.md",
-        "Plans/Runtime_Artifacts_Panel.md",
-        "Plans/WorktreeGitImprovement.md",
-        "Plans/Orchestrator_Page.md"
-      ],
-      "heading_hints": [
-        "## Research Progress - 2026-03-16 - Proposed storage families for worktree/lane and artifact index"
-      ],
-      "stale_tokens": [],
-      "source_evidence": [
-        "working_ledger.md:L9499-L9524",
-        "working_ledger.md:L9525-L9579",
-        "working_ledger.md:L9592-L9595"
-      ],
-      "notes": [
-        "orchestrator.receipt is stated to remain the cross-surface bridge record, not the substitute for these families"
-      ]
-    },
-    {
-      "seed_type": "stale_retirement",
-      "canon_label_hint": "underspecified artifact index and selected_worktree_id placeholder",
-      "exact_items": [
-        "artifacts_index:v1:{project_id}",
-        "selected_worktree_id?"
-      ],
-      "affected_doc_hints": [
-        "Plans/storage-plan.md",
-        "Plans/Runtime_Artifacts_Panel.md",
-        "Plans/WorktreeGitImprovement.md",
-        "Plans/Orchestrator_Page.md"
-      ],
-      "heading_hints": [
-        "## Research Progress - 2026-03-16 - Storage owner gaps for missing record/projection families",
-        "## Research Progress - 2026-03-16 - Proposed storage families for worktree/lane and artifact index"
-      ],
-      "stale_tokens": [
-        "artifacts_index:v1:{project_id}",
-        "selected_worktree_id?"
-      ],
-      "source_evidence": [
-        "working_ledger.md:L9454-L9459",
-        "working_ledger.md:L9587-L9590"
-      ],
-      "notes": [
-        "artifacts_index:v1:{project_id} is stated to be too underspecified as the sole canonical index contract"
+        "Carry-through: dashboard portability should stay attached to the right widget set, not be used as a reason to widgetize every Orchestrator tab.",
+        "Carry-through: event/addendum supersession should be explicit enough that implementers do not need to diff three addenda to know the final field set."
       ]
     }
   ]

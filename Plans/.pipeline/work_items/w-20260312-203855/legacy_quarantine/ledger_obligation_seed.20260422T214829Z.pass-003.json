@@ -1,0 +1,231 @@
+{
+  "schema_id": "pm.ledger_obligation_seed.pass.v1",
+  "work_id": "w-20260312-203855",
+  "pass_id": "pass-003",
+  "reviewed_ranges": [
+    "working_ledger.md:L9692-L10153",
+    "working_ledger.md:L13246-L14293",
+    "working_ledger.md:L15633-L16793",
+    "working_ledger.md:L17525-L18157"
+  ],
+  "material_findings": [
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "OpenSubject open_intent semantics",
+      "exact_items": [
+        "`open_intent` is the caller's direct purpose for opening the subject",
+        "the same subject can be opened as source, preview, or review entry"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/FileManager.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/Runtime_Artifacts_Panel.md"
+      ],
+      "heading_hints": [
+        "## Research Progress - 2026-03-17 - Exact minimum field set for `OpenSubject`"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L13253-L13253"
+      ],
+      "reason": "The current seed records `open_intent` and its enum values, but it does not capture the ledger's direct semantic rule for why `open_intent` belongs in `OpenSubject`."
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "target_kind semantics",
+      "exact_items": [
+        "`target_kind` tells the router what class of surface must host the target after scope restoration and target selection are applied",
+        "`primary_view` = full primary-content destinations",
+        "`side_panel` = activity-bar panel destinations",
+        "`bottom_panel` = bottom shell destinations",
+        "`embedded_surface` = embedded sub-surfaces inside larger views",
+        "`page_tab` = tab within a routed page that still needs explicit tab selection"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [
+        "## Research Progress - 2026-03-17 - Exact `target_kind` vocabulary"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L13434-L13453"
+      ],
+      "reason": "The current seed captures the `target_kind` enum values, but not the ledger's direct definitions of what each value means or the router-facing role of the field."
+    },
+    {
+      "seed_type": "stale_retirement",
+      "canon_label_hint": "target_kind non-values",
+      "exact_items": [
+        "docked vs floating",
+        "panel width",
+        "subview id",
+        "repo/worktree selection"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [
+        "## Research Progress - 2026-03-17 - Exact `target_kind` vocabulary"
+      ],
+      "stale_tokens": [
+        "docked vs floating",
+        "panel width",
+        "subview id",
+        "repo/worktree selection"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L13455-L13462"
+      ],
+      "reason": "The current seed records the `target_kind` enum, but it does not capture the ledger's explicit exclusions that prevent shell-realization and repo-selection state from being treated as `target_kind`."
+    },
+    {
+      "seed_type": "stale_retirement",
+      "canon_label_hint": "crosswalk-stale-primitive-values",
+      "exact_items": [
+        "`Primitive:WidgetCatalog`",
+        "`Orchestrator widget tabs`",
+        "`Primitive:OrchestratorPage`",
+        "six tabs with `Tiers`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Crosswalk.md"
+      ],
+      "heading_hints": [
+        "## Research Progress - 2026-03-17 - owner-traceability seam: Decision Log, DRY Rules, Crosswalk"
+      ],
+      "stale_tokens": [
+        "`Orchestrator widget tabs`",
+        "`Tiers`"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L16369-L16372"
+      ],
+      "reason": "Current seed records the affected Crosswalk primitives and duplicate numbering, but it does not retain the stronger direct evidence of the exact stale values those primitives still publish."
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "progression-gates-gate003-contractref-break",
+      "exact_items": [
+        "`GATE-003`",
+        "`ContractRef: Plans/Architecture_Invariants.md#INV-002, Plans/Architecture_Invariants.md#INV-010, SchemaID:evidence.schema.json`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Progression_Gates.md"
+      ],
+      "heading_hints": [
+        "## Research Progress - 2026-03-17 - owner-traceability seam: Progression Gates"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L16431-L16433",
+        "working_ledger.md:L16476-L16478"
+      ],
+      "reason": "Current seed keeps the invalid ContractRef line, but not the materially stronger direct evidence that the syntax break is in `GATE-003`, making the owner-doc defect directly locatable."
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "progression-gates-duplicate-runtime-recovery-addendum",
+      "exact_items": [
+        "`Runtime Recovery Canonicalization Gate Addendum`",
+        "appears twice with the same body"
+      ],
+      "affected_doc_hints": [
+        "Plans/Progression_Gates.md"
+      ],
+      "heading_hints": [
+        "## Research Progress - 2026-03-17 - owner-traceability seam: Progression Gates"
+      ],
+      "stale_tokens": [
+        "`Runtime Recovery Canonicalization Gate Addendum`"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L16439-L16442"
+      ],
+      "reason": "Current seed records the addendum title and related gate drift, but it does not preserve the stronger direct evidence that this addendum is duplicated verbatim inside the same owner doc."
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "usage-feature missing named consumer sections",
+      "exact_items": [
+        "usage-attribution",
+        "export-taxonomy",
+        "account-history",
+        "degrade-behavior"
+      ],
+      "affected_doc_hints": [
+        "Plans/usage-feature.md"
+      ],
+      "heading_hints": [
+        "usage-attribution",
+        "export-taxonomy",
+        "account-history",
+        "degrade-behavior"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L17695-L17695",
+        "working_ledger.md:L18156-L18156"
+      ],
+      "reason": "Current seed captures `artifact drill-through section` but does not preserve the other named `Plans/usage-feature.md` consumer sections still called out as missing; the later wave reconfirms the account-history/degrade subset."
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "runtime identity partial-transfer evidence",
+      "exact_items": [
+        "`Plans/assistant-chat-design.md` already carries `tool_use_id`.",
+        "`Plans/interview-subagent-integration.md` still carries `requested_account_binding` and `operational_identity`, but still omits `requested_account_policy` and `tool_use_id`.",
+        "`Plans/orchestrator-subagent-integration.md` still carries a narrower `execution_unit_context` packet that stops at `requested_account_id`, `effective_account_id`, and `operational_identity`.",
+        "`Plans/usage-feature.md` already carries canonical `account_id` attribution; the unresolved consumer gap is requested/effective identity carry-through, runtime-role carry-through, and explicit usage/account-history section ownership."
+      ],
+      "affected_doc_hints": [
+        "Plans/assistant-chat-design.md",
+        "Plans/interview-subagent-integration.md",
+        "Plans/orchestrator-subagent-integration.md",
+        "Plans/usage-feature.md"
+      ],
+      "heading_hints": [
+        "### Runtime identity visibility",
+        "### Unified `UsageRecord` schema expectations",
+        "### Subagent Selector"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L17774-L17775",
+        "working_ledger.md:L17832-L17835",
+        "working_ledger.md:L17855-L17858"
+      ],
+      "reason": "Current seed only keeps a generic heading/payload bundle for these consumers; it does not preserve this materially stronger direct evidence about which identity fields are already present versus still missing across the live consumer sections."
+    },
+    {
+      "seed_type": "stale_retirement",
+      "canon_label_hint": "restore-points contradiction downgraded",
+      "exact_items": [
+        "`restore points`",
+        "runtime safe points remain distinct from project-scoped restore points",
+        "remaining blocker is structural-heading and broken-reference drift"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [],
+      "stale_tokens": [
+        "`restore points`"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L18116-L18116"
+      ],
+      "reason": "Current seed still lists `restore points` as an exact stale contradictory survivor, but this ledger line explicitly downgrades that claim and says the unresolved issue is now heading/reference drift instead."
+    }
+  ]
+}
