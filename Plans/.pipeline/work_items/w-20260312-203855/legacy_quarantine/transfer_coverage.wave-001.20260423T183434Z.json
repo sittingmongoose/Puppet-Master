@@ -1,0 +1,3228 @@
+{
+  "schema_id": "pm.transfer_coverage.wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-001",
+  "coverage_rows": [
+    {
+      "coverage_id": "cov-001",
+      "source_obligation_ids": [
+        "obl-001"
+      ],
+      "canon_label": "legacy tier vocabulary",
+      "row_type": "stale_retirement",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "## Key Facts and Findings",
+      "status": "missing",
+      "exact_items": [
+        "existing `Tiers` tab should be replaced by a seam/package-oriented tab (name still open; likely `Seams` or equivalent)",
+        "replace `Tiers` with a seam/package-oriented tab",
+        "`Seams` (replacement for `Tiers`)",
+        "page-spec language still includes local event/type phrasing such as `PuppetMasterEvent::*` and a named AI foreman role (`Overseer`)",
+        "docs still preserve a first-class tier model (`Phase`, `Task`, `Subtask`, `Iteration`) at the same time they describe execution over graph nodes",
+        "`Plans/Run_Graph_View.md` describes the graph as live DAG execution, but node rendering still includes tier-type iconography and tier-oriented vocabulary",
+        "`Plans/FinalGUISpec.md` still references `phase/task/subtask` progress and mapping editors rather than package/seam governance surfaces"
+      ],
+      "stale_tokens": [
+        "Tiers",
+        "PuppetMasterEvent::*",
+        "Overseer",
+        "Phase",
+        "Task",
+        "Subtask",
+        "Iteration",
+        "phase/task/subtask"
+      ],
+      "evidence": [],
+      "required_action": "stale_retirement"
+    },
+    {
+      "coverage_id": "cov-002",
+      "source_obligation_ids": [
+        "obl-001"
+      ],
+      "canon_label": "legacy tier vocabulary",
+      "row_type": "stale_retirement",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "## Key Facts and Findings",
+      "status": "partial",
+      "exact_items": [
+        "existing `Tiers` tab should be replaced by a seam/package-oriented tab (name still open; likely `Seams` or equivalent)",
+        "replace `Tiers` with a seam/package-oriented tab",
+        "`Seams` (replacement for `Tiers`)",
+        "page-spec language still includes local event/type phrasing such as `PuppetMasterEvent::*` and a named AI foreman role (`Overseer`)",
+        "docs still preserve a first-class tier model (`Phase`, `Task`, `Subtask`, `Iteration`) at the same time they describe execution over graph nodes",
+        "`Plans/Run_Graph_View.md` describes the graph as live DAG execution, but node rendering still includes tier-type iconography and tier-oriented vocabulary",
+        "`Plans/FinalGUISpec.md` still references `phase/task/subtask` progress and mapping editors rather than package/seam governance surfaces"
+      ],
+      "stale_tokens": [
+        "Tiers",
+        "PuppetMasterEvent::*",
+        "Overseer",
+        "Phase",
+        "Task",
+        "Subtask",
+        "Iteration",
+        "phase/task/subtask"
+      ],
+      "evidence": [
+        "Plans/Run_Graph_View.md:7",
+        "Plans/Run_Graph_View.md:8"
+      ],
+      "required_action": "stale_retirement"
+    },
+    {
+      "coverage_id": "cov-003",
+      "source_obligation_ids": [
+        "obl-001"
+      ],
+      "canon_label": "legacy tier vocabulary",
+      "row_type": "stale_retirement",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "## Key Facts and Findings",
+      "status": "partial",
+      "exact_items": [
+        "existing `Tiers` tab should be replaced by a seam/package-oriented tab (name still open; likely `Seams` or equivalent)",
+        "replace `Tiers` with a seam/package-oriented tab",
+        "`Seams` (replacement for `Tiers`)",
+        "page-spec language still includes local event/type phrasing such as `PuppetMasterEvent::*` and a named AI foreman role (`Overseer`)",
+        "docs still preserve a first-class tier model (`Phase`, `Task`, `Subtask`, `Iteration`) at the same time they describe execution over graph nodes",
+        "`Plans/Run_Graph_View.md` describes the graph as live DAG execution, but node rendering still includes tier-type iconography and tier-oriented vocabulary",
+        "`Plans/FinalGUISpec.md` still references `phase/task/subtask` progress and mapping editors rather than package/seam governance surfaces"
+      ],
+      "stale_tokens": [
+        "Tiers",
+        "PuppetMasterEvent::*",
+        "Overseer",
+        "Phase",
+        "Task",
+        "Subtask",
+        "Iteration",
+        "phase/task/subtask"
+      ],
+      "evidence": [
+        "Plans/FinalGUISpec.md:692",
+        "Plans/FinalGUISpec.md:694",
+        "Plans/FinalGUISpec.md:1950"
+      ],
+      "required_action": "stale_retirement"
+    },
+    {
+      "coverage_id": "cov-004",
+      "source_obligation_ids": [
+        "obl-002"
+      ],
+      "canon_label": "tab-first orchestrator shell priority",
+      "row_type": "consumer",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "## Key Facts and Findings",
+      "status": "missing",
+      "exact_items": [
+        "Orchestrator should remain tab-first, not widget-first",
+        "Orchestrator widgets live inside the `Progress` tab",
+        "non-Orchestrator widgets should not be hostable on the Orchestrator page",
+        "widgets remain resizable/customizable, but tab-first structure remains primary"
+      ],
+      "stale_tokens": [
+        "widget-first"
+      ],
+      "evidence": [],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-005",
+      "source_obligation_ids": [
+        "obl-002"
+      ],
+      "canon_label": "tab-first orchestrator shell priority",
+      "row_type": "consumer",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "## Key Facts and Findings",
+      "status": "partial",
+      "exact_items": [
+        "Orchestrator should remain tab-first, not widget-first",
+        "Orchestrator widgets live inside the `Progress` tab",
+        "non-Orchestrator widgets should not be hostable on the Orchestrator page",
+        "widgets remain resizable/customizable, but tab-first structure remains primary"
+      ],
+      "stale_tokens": [
+        "widget-first"
+      ],
+      "evidence": [
+        "Plans/FinalGUISpec.md:692",
+        "Plans/FinalGUISpec.md:693",
+        "Plans/FinalGUISpec.md:694"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-006",
+      "source_obligation_ids": [
+        "obl-003"
+      ],
+      "canon_label": "node graph lineage display contract",
+      "row_type": "consumer",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "## Key Facts and Findings",
+      "status": "missing",
+      "exact_items": [
+        "`Node Graph Display` tab remains, but must evolve to show graph-patch lineage:",
+        "old invalidated/superseded nodes remain visible",
+        "old nodes stay clickable for historical detail",
+        "patched generations branch from the old path",
+        "live path may later rejoin surviving downstream nodes"
+      ],
+      "stale_tokens": [],
+      "evidence": [],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-007",
+      "source_obligation_ids": [
+        "obl-003"
+      ],
+      "canon_label": "node graph lineage display contract",
+      "row_type": "consumer",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "## Key Facts and Findings",
+      "status": "partial",
+      "exact_items": [
+        "`Node Graph Display` tab remains, but must evolve to show graph-patch lineage:",
+        "old invalidated/superseded nodes remain visible",
+        "old nodes stay clickable for historical detail",
+        "patched generations branch from the old path",
+        "live path may later rejoin surviving downstream nodes"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Graph_View.md:1",
+        "Plans/Run_Graph_View.md:21",
+        "Plans/Run_Graph_View.md:22"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-008",
+      "source_obligation_ids": [
+        "obl-004"
+      ],
+      "canon_label": "history vs ledger split",
+      "row_type": "consumer",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "## Key Facts and Findings",
+      "status": "missing",
+      "exact_items": [
+        "`History` and `Ledger` should remain separate:",
+        "`History` = chronological runtime story",
+        "`Ledger` = structured record inspection",
+        "`History` = chronological story/timeline of execution, governance, promotion, recovery, account switching, graph patches",
+        "`Ledger` = structured durable record inspection (attempts, reviews, corroboration, promotions, graph patches, recovery records, learnings, usage-linked receipts)"
+      ],
+      "stale_tokens": [],
+      "evidence": [],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-009",
+      "source_obligation_ids": [
+        "obl-005"
+      ],
+      "canon_label": "progress drill targets and seams hierarchy",
+      "row_type": "consumer",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "## Key Facts and Findings",
+      "status": "missing",
+      "exact_items": [
+        "Run Status -> `History`",
+        "Current Activity -> `Node Graph`",
+        "Attention / Blockers -> `Node Graph`",
+        "Seam Health -> `Seams`",
+        "Package Activity -> `Seams`",
+        "Promotion Queue -> `Ledger`",
+        "Worktree Lanes -> `Node Graph`",
+        "Account / Usage Pressure -> `Usage`",
+        "Recent Major Events -> `History`",
+        "Overseer Activity -> `Seams`",
+        "Corroboration Queue -> `Evidence`",
+        "Recovery State -> `Evidence`",
+        "Throughput / Capacity -> `History`",
+        "top level = `Feature Seams`",
+        "second level = `Work Packages`",
+        "nodes should appear as summaries/problem drill-ins rather than the default list shape",
+        "Seams detail panel should emphasize governance/completion/integration truth rather than raw node execution churn"
+      ],
+      "stale_tokens": [],
+      "evidence": [],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-010",
+      "source_obligation_ids": [
+        "obl-006"
+      ],
+      "canon_label": "node graph inspector fields",
+      "row_type": "consumer",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "## Key Facts and Findings",
+      "status": "missing",
+      "exact_items": [
+        "graph canvas + right-side detail inspector",
+        "requested/effective provider/model/effort/persona/account",
+        "usage/token/cost info",
+        "worker policy (agent/subagent, fresh/reused, spawn path)",
+        "retry/review/promotion state",
+        "lane/worktree/snapshot state",
+        "linked evidence/artifacts",
+        "clicking evidence/artifact links in graph detail should deep-link into the Evidence tab with target selection/filter applied"
+      ],
+      "stale_tokens": [],
+      "evidence": [],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-011",
+      "source_obligation_ids": [
+        "obl-006"
+      ],
+      "canon_label": "node graph inspector fields",
+      "row_type": "consumer",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "## Key Facts and Findings",
+      "status": "partial",
+      "exact_items": [
+        "graph canvas + right-side detail inspector",
+        "requested/effective provider/model/effort/persona/account",
+        "usage/token/cost info",
+        "worker policy (agent/subagent, fresh/reused, spawn path)",
+        "retry/review/promotion state",
+        "lane/worktree/snapshot state",
+        "linked evidence/artifacts",
+        "clicking evidence/artifact links in graph detail should deep-link into the Evidence tab with target selection/filter applied"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Graph_View.md:30",
+        "Plans/Run_Graph_View.md:31",
+        "Plans/Run_Graph_View.md:33",
+        "Plans/Run_Graph_View.md:34",
+        "Plans/Run_Graph_View.md:35",
+        "Plans/Run_Graph_View.md:43"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-012",
+      "source_obligation_ids": [
+        "obl-007"
+      ],
+      "canon_label": "evidence navigation contract",
+      "row_type": "consumer",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "## Key Facts and Findings",
+      "status": "missing",
+      "exact_items": [
+        "separate panes:",
+        "`Evidence` pane for verdicts/receipts/findings/reports",
+        "`Artifacts` pane for screenshots/recordings/diffs/reports/generated docs/etc.",
+        "evidence and artifacts should remain linked bidirectionally",
+        "usage-linked receipts are expected when relevant",
+        "clicking evidence/artifact links in graph detail should deep-link into the Evidence tab with target selection/filter applied",
+        "object/event focus should deep-link across Progress / Seams / Node Graph / Evidence / History / Ledger",
+        "deep links should carry selection/filter/focus context, not merely switch tabs",
+        "important objects/events should be deep-linkable across Progress / Seams / Node Graph / Evidence / History / Ledger",
+        "cross-tab navigation should preserve/filter/select the target context, not merely switch tabs"
+      ],
+      "stale_tokens": [],
+      "evidence": [],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-013",
+      "source_obligation_ids": [
+        "obl-008"
+      ],
+      "canon_label": "inspector to full-record routing",
+      "row_type": "consumer",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "## Key Facts and Findings",
+      "status": "missing",
+      "exact_items": [
+        "right-side inspectors should stay summary/action oriented",
+        "dense objects should open full-record views",
+        "attempt handoff artifacts",
+        "review records",
+        "corroboration records",
+        "graph patch requests",
+        "state transition reports",
+        "promotion records",
+        "recovery records"
+      ],
+      "stale_tokens": [],
+      "evidence": [],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-014",
+      "source_obligation_ids": [
+        "obl-009"
+      ],
+      "canon_label": "seams graph focus without live-sync",
+      "row_type": "consumer",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "## Key Facts and Findings",
+      "status": "missing",
+      "exact_items": [
+        "`Seams` and `Node Graph` should share focus context without hyperactive live-sync"
+      ],
+      "stale_tokens": [],
+      "evidence": [],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-015",
+      "source_obligation_ids": [
+        "obl-010"
+      ],
+      "canon_label": "state and action label canon",
+      "row_type": "owner",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "## Key Facts and Findings",
+      "status": "missing",
+      "exact_items": [
+        "prefer precise canonical terms in docs/runtime model",
+        "`Locally Complete`",
+        "`Seam Complete`",
+        "`Completion Blocked`",
+        "`Weak Integration`",
+        "`Promotion Blocked`",
+        "`Corroboration Requested`",
+        "`Challenge Accepted`",
+        "`Challenge Not Accepted`",
+        "`Advisory Concern Recorded`",
+        "`Graph Patch Requested`",
+        "`Graph Patch Applied`",
+        "`Generation Updated`"
+      ],
+      "stale_tokens": [],
+      "evidence": [],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-016",
+      "source_obligation_ids": [
+        "obl-011"
+      ],
+      "canon_label": "seam completion and promotion boundary semantics",
+      "row_type": "consumer",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "## Key Facts and Findings",
+      "status": "missing",
+      "exact_items": [
+        "`Weak Integration` should not be just a badge; Seams UI should summarize it visibly and group concerns under readable headings like:",
+        "`Wiring`",
+        "`Workflow`",
+        "`State`",
+        "`GUI`",
+        "`Design`",
+        "package issues should roll up to seam concerns only when they cross package/seam/user-visible boundaries or affect seam completion truth",
+        "seam completion should be presented distinctly from package completion and package-to-seam availability:",
+        "`Locally Complete`",
+        "`Available to Seam`",
+        "`Seam Complete`",
+        "promotions should be visible as explicit named boundaries:",
+        "`Lane to Package`",
+        "`Package to Seam`",
+        "`Seam Completion`",
+        "revocation/reopen semantics should be explicit and visible:",
+        "`Seam Completion Revoked`",
+        "`Reopened`",
+        "`Reopened by Patch`"
+      ],
+      "stale_tokens": [],
+      "evidence": [],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-017",
+      "source_obligation_ids": [
+        "obl-012"
+      ],
+      "canon_label": "blocked state fields",
+      "row_type": "owner",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "## Key Facts and Findings",
+      "status": "missing",
+      "exact_items": [
+        "blocked states should always expose:",
+        "blocked reason",
+        "blocked owner",
+        "time blocked",
+        "next step",
+        "blocked ownership should be normalized with stable labels:",
+        "`Runtime`",
+        "`Package Overseer`",
+        "`Seam Overseer`",
+        "`Corroboration`",
+        "`Graph Patch`",
+        "`Recovery`",
+        "`User`",
+        "`External Resource`"
+      ],
+      "stale_tokens": [],
+      "evidence": [],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-018",
+      "source_obligation_ids": [
+        "obl-013"
+      ],
+      "canon_label": "alert level and surface split",
+      "row_type": "consumer",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "## Key Facts and Findings",
+      "status": "missing",
+      "exact_items": [
+        "alert levels should roughly separate into:",
+        "`Info`",
+        "`Warning`",
+        "`Attention`",
+        "`Action Required`",
+        "Dashboard = summary/urgency",
+        "Orchestrator = detailed operational alert context",
+        "chat thread = only for situations that actually need user resolution/decision, not general warnings"
+      ],
+      "stale_tokens": [],
+      "evidence": [],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-019",
+      "source_obligation_ids": [
+        "obl-014"
+      ],
+      "canon_label": "event family and visibility taxonomy",
+      "row_type": "owner",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "## Key Facts and Findings",
+      "status": "missing",
+      "exact_items": [
+        "canonical event families should remain stable:",
+        "`seam.*`",
+        "`package.*`",
+        "`node.*`",
+        "`promotion.*`",
+        "`corroboration.*`",
+        "`graph_patch.*`",
+        "`recovery.*`",
+        "`account.*`",
+        "operator visibility should separate:",
+        "history-only events",
+        "badge-worthy events",
+        "attention-card-worthy conditions",
+        "chat-thread-worthy action-required cases",
+        "strong user-facing backbone events include:",
+        "block / completion / reopen / supersede",
+        "promotion blocked / promoted / revoked",
+        "graph patch requested / applied / generation updated",
+        "restore required / failed / completed",
+        "threshold crossed / account switched / account exhausted"
+      ],
+      "stale_tokens": [],
+      "evidence": [],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-020",
+      "source_obligation_ids": [
+        "obl-014"
+      ],
+      "canon_label": "event family and visibility taxonomy",
+      "row_type": "owner",
+      "path": "Plans/orchestrator-subagent-integration.md",
+      "heading_hint": "## Key Facts and Findings",
+      "status": "missing",
+      "exact_items": [
+        "canonical event families should remain stable:",
+        "`seam.*`",
+        "`package.*`",
+        "`node.*`",
+        "`promotion.*`",
+        "`corroboration.*`",
+        "`graph_patch.*`",
+        "`recovery.*`",
+        "`account.*`",
+        "operator visibility should separate:",
+        "history-only events",
+        "badge-worthy events",
+        "attention-card-worthy conditions",
+        "chat-thread-worthy action-required cases",
+        "strong user-facing backbone events include:",
+        "block / completion / reopen / supersede",
+        "promotion blocked / promoted / revoked",
+        "graph patch requested / applied / generation updated",
+        "restore required / failed / completed",
+        "threshold crossed / account switched / account exhausted"
+      ],
+      "stale_tokens": [],
+      "evidence": [],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-021",
+      "source_obligation_ids": [
+        "obl-015"
+      ],
+      "canon_label": "tab badge sparsity contract",
+      "row_type": "consumer",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "## Key Facts and Findings",
+      "status": "missing",
+      "exact_items": [
+        "badges should stay sparse and purposeful",
+        "`Progress` badge should represent meaningful attention/action-required count",
+        "other tabs should prefer targeted counts or simple dot-badges rather than noisy unread-like counters"
+      ],
+      "stale_tokens": [
+        "noisy unread-like counters"
+      ],
+      "evidence": [],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-022",
+      "source_obligation_ids": [
+        "obl-015"
+      ],
+      "canon_label": "tab badge sparsity contract",
+      "row_type": "consumer",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "## Key Facts and Findings",
+      "status": "missing",
+      "exact_items": [
+        "badges should stay sparse and purposeful",
+        "`Progress` badge should represent meaningful attention/action-required count",
+        "other tabs should prefer targeted counts or simple dot-badges rather than noisy unread-like counters"
+      ],
+      "stale_tokens": [
+        "noisy unread-like counters"
+      ],
+      "evidence": [],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-023",
+      "source_obligation_ids": [
+        "obl-016"
+      ],
+      "canon_label": "condition aging defaults",
+      "row_type": "consumer",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "## Key Facts and Findings",
+      "status": "missing",
+      "exact_items": [
+        "unresolved conditions stay on operational surfaces",
+        "resolved conditions fall back to History",
+        "recently resolved major items may linger briefly in summary surfaces",
+        "normal resolved operational items: about 15 minutes",
+        "major resolved items: until dismissed or up to 24 hours",
+        "future settings should use a simple policy-level control, not per-alert micro-configuration"
+      ],
+      "stale_tokens": [
+        "per-alert micro-configuration"
+      ],
+      "evidence": [],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-024",
+      "source_obligation_ids": [
+        "obl-016"
+      ],
+      "canon_label": "condition aging defaults",
+      "row_type": "consumer",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "## Key Facts and Findings",
+      "status": "missing",
+      "exact_items": [
+        "unresolved conditions stay on operational surfaces",
+        "resolved conditions fall back to History",
+        "recently resolved major items may linger briefly in summary surfaces",
+        "normal resolved operational items: about 15 minutes",
+        "major resolved items: until dismissed or up to 24 hours",
+        "future settings should use a simple policy-level control, not per-alert micro-configuration"
+      ],
+      "stale_tokens": [
+        "per-alert micro-configuration"
+      ],
+      "evidence": [],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-025",
+      "source_obligation_ids": [
+        "obl-017"
+      ],
+      "canon_label": "acknowledged dismissed resolved semantics",
+      "row_type": "owner",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "## Key Facts and Findings",
+      "status": "missing",
+      "exact_items": [
+        "`resolved` = underlying condition actually changed",
+        "`dismissed` = presentation hidden/acknowledged while underlying condition may still exist",
+        "active blockers must not be dismissible in a way that makes the system appear unblocked",
+        "`acknowledged` is distinct from both `resolved` and `dismissed`",
+        "intended for advisory/minor/non-blocking concerns that the user has explicitly seen/accepted",
+        "acknowledgment should reduce operational noise while preserving traceability",
+        "blockers requiring real action must not be acknowledgeable in place of resolution"
+      ],
+      "stale_tokens": [],
+      "evidence": [],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-026",
+      "source_obligation_ids": [
+        "obl-018"
+      ],
+      "canon_label": "concern record contract",
+      "row_type": "owner",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "## Key Facts and Findings",
+      "status": "missing",
+      "exact_items": [
+        "`concern` should be a first-class record, not just a field buried in review/alert logic",
+        "concern records should carry:",
+        "identity",
+        "scope",
+        "severity",
+        "category",
+        "owner",
+        "lifecycle state",
+        "meaning/summary",
+        "linkage to evidence/artifacts/history/source records",
+        "visibility/attention flags",
+        "likely concern lifecycle states:",
+        "`active`",
+        "`acknowledged`",
+        "`resolved`",
+        "`dismissed`",
+        "canonical concerns should be created by:",
+        "runtime",
+        "package overseer",
+        "seam overseer",
+        "corroboration outcome",
+        "graph patch/state-transition logic",
+        "workers may nominate findings but should not mint canonical concerns directly",
+        "all major surfaces should project the same concern model rather than inventing local versions",
+        "`Progress` = operational attention projection",
+        "`Seams` = integration/governance projection",
+        "`Evidence` = proof-backed concern projection",
+        "`History` = concern lifecycle timeline projection",
+        "`Ledger` = exact structured concern-record projection"
+      ],
+      "stale_tokens": [],
+      "evidence": [],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-027",
+      "source_obligation_ids": [
+        "obl-019"
+      ],
+      "canon_label": "widget projection contract",
+      "row_type": "owner",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "## Key Facts and Findings",
+      "status": "missing",
+      "exact_items": [
+        "orchestrator widgets should consume stable shared projections rather than raw event streams or bespoke queries",
+        "widget shell needs:",
+        "widget identity/type",
+        "scope",
+        "filter/sort/display config",
+        "projection ref",
+        "Required orchestrator projection families now identified:",
+        "Run Summary",
+        "Seam Summary",
+        "Package Summary",
+        "Node Summary",
+        "Promotion Summary",
+        "Lane / Worktree Summary",
+        "Concern Summary",
+        "Account / Usage Pressure",
+        "Recent Major Events",
+        "Corroboration Summary",
+        "Recovery Summary",
+        "Overseer Activity",
+        "`Run Summary`, `Seam Summary`, `Concern Summary`, `Account / Usage Pressure`, `Recent Major Events` should be broadly reusable across Orchestrator / Dashboard / Projects"
+      ],
+      "stale_tokens": [],
+      "evidence": [],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-028",
+      "source_obligation_ids": [
+        "obl-020"
+      ],
+      "canon_label": "filters saved views default sorts",
+      "row_type": "consumer",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "## Key Facts and Findings",
+      "status": "missing",
+      "exact_items": [
+        "each tab needs role-appropriate filters",
+        "Orchestrator should support saved views (at least per project) for tabs/filters/sort/grouping/widget layout",
+        "`Seams` default sort = most operationally problematic first",
+        "`History` default sort = newest first",
+        "`Ledger` default sort = newest first"
+      ],
+      "stale_tokens": [],
+      "evidence": [],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-029",
+      "source_obligation_ids": [
+        "obl-020"
+      ],
+      "canon_label": "filters saved views default sorts",
+      "row_type": "consumer",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "## Key Facts and Findings",
+      "status": "missing",
+      "exact_items": [
+        "each tab needs role-appropriate filters",
+        "Orchestrator should support saved views (at least per project) for tabs/filters/sort/grouping/widget layout",
+        "`Seams` default sort = most operationally problematic first",
+        "`History` default sort = newest first",
+        "`Ledger` default sort = newest first"
+      ],
+      "stale_tokens": [],
+      "evidence": [],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-030",
+      "source_obligation_ids": [
+        "obl-021"
+      ],
+      "canon_label": "usage owner carry-through",
+      "row_type": "consumer",
+      "path": "Plans/usage-feature.md",
+      "heading_hint": "## Key Facts and Findings",
+      "status": "missing",
+      "exact_items": [
+        "`Plans/usage-feature.md` is the strongest current owner for usage/quota/alerts/analytics/product-shape discussion.",
+        "`Plans/storage-plan.md` and `Plans/FinalGUISpec.md` also carry meaningful usage/runtime/event/GUI assumptions.",
+        "new multi-account failover / account-threshold / effective-account behavior should extend the existing usage model and projections",
+        "do not invent a second independent \"account pressure\" or \"quota\" subsystem beside Usage"
+      ],
+      "stale_tokens": [],
+      "evidence": [],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-031",
+      "source_obligation_ids": [
+        "obl-021"
+      ],
+      "canon_label": "usage owner carry-through",
+      "row_type": "consumer",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "## Key Facts and Findings",
+      "status": "missing",
+      "exact_items": [
+        "`Plans/usage-feature.md` is the strongest current owner for usage/quota/alerts/analytics/product-shape discussion.",
+        "`Plans/storage-plan.md` and `Plans/FinalGUISpec.md` also carry meaningful usage/runtime/event/GUI assumptions.",
+        "new multi-account failover / account-threshold / effective-account behavior should extend the existing usage model and projections",
+        "do not invent a second independent \"account pressure\" or \"quota\" subsystem beside Usage"
+      ],
+      "stale_tokens": [],
+      "evidence": [],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-032",
+      "source_obligation_ids": [
+        "obl-021"
+      ],
+      "canon_label": "usage owner carry-through",
+      "row_type": "consumer",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "## Key Facts and Findings",
+      "status": "missing",
+      "exact_items": [
+        "`Plans/usage-feature.md` is the strongest current owner for usage/quota/alerts/analytics/product-shape discussion.",
+        "`Plans/storage-plan.md` and `Plans/FinalGUISpec.md` also carry meaningful usage/runtime/event/GUI assumptions.",
+        "new multi-account failover / account-threshold / effective-account behavior should extend the existing usage model and projections",
+        "do not invent a second independent \"account pressure\" or \"quota\" subsystem beside Usage"
+      ],
+      "stale_tokens": [],
+      "evidence": [],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-033",
+      "source_obligation_ids": [
+        "obl-022"
+      ],
+      "canon_label": "cross-actor account health loop",
+      "row_type": "owner",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "## Key Facts and Findings",
+      "status": "missing",
+      "exact_items": [
+        "account selection / failover is not just an Orchestrator-node concern",
+        "any provider-using actor must participate in the same pre-send and post-send account-health loop",
+        "this explicitly includes assistant chat, interviewer, requirements-doc builder, overseers, node workers, and delegated workers",
+        "any completed provider interaction can update account health and trigger the next message/attempt to resolve onto a different account",
+        "assistant, interviewer, requirements-doc-builder, and PRD builder should share provider/account/usage/runtime identity behavior, but they are not orchestration nodes/packages/seams",
+        "chat-thread resolution surfaces for blocked/HITL/critical Orchestrator events should not be projected backwards onto normal assistant/interviewer/requirements-builder conversation in the same way",
+        "those conversational actors already operate directly in chat, so they share runtime identity/account/usage behavior without needing the same Orchestrator-style resolution-thread pattern for ordinary interaction"
+      ],
+      "stale_tokens": [],
+      "evidence": [],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-034",
+      "source_obligation_ids": [
+        "obl-023"
+      ],
+      "canon_label": "upstream document handoff chain",
+      "row_type": "owner",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "## Key Facts and Findings",
+      "status": "missing",
+      "exact_items": [
+        "collaborative ideation / viability / approach discussion",
+        "then more structured questioning to close gaps and lock decisions",
+        "then generation of more traditional requirements documents/artifacts",
+        "interviewer follows a similar conversational-to-structured pattern, but moves topic-by-topic and ultimately produces documents/artifacts shaped for the node/contract system",
+        "the broader handoff chain described by the user is:",
+        "requirements-doc-builder artifacts",
+        "interview flow artifacts",
+        "PRD-builder artifacts",
+        "conversion into graph-plan inputs",
+        "handoff to Orchestrator",
+        "human review exists at both document-production stages in that upstream flow"
+      ],
+      "stale_tokens": [],
+      "evidence": [],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-035",
+      "source_obligation_ids": [
+        "obl-024"
+      ],
+      "canon_label": "attempt handoff artifact contract",
+      "row_type": "owner",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "## Key Facts and Findings",
+      "status": "missing",
+      "exact_items": [
+        "the old structured-attempt-handoff pattern should be retained in the new model",
+        "each failed node attempt should leave a structured receipt/handoff artifact:",
+        "what it did",
+        "what changed",
+        "why it failed/blocked",
+        "what to try next",
+        "default retry model should use a fresh agent/subagent for the next attempt",
+        "retries should remain policy-driven with budgets/caps; not blind infinite looping",
+        "some failures should route to remediation, graph patch, or block/HITL instead of simple retry",
+        "each attempt should likely produce at least:",
+        "what was attempted",
+        "what changed / artifacts produced",
+        "checks/tests/review outcome",
+        "contamination / restore state if relevant",
+        "recommended next action",
+        "reusable learnings/patterns when appropriate",
+        "\"JSON-like\" is too vague; the design still needs to pin down:",
+        "whether these artifacts are literally JSON/JSONL/redb-backed records/projections",
+        "what concrete project-scoped paths or storage domains own them",
+        "how a worker actually receives the handoff packet (inline prompt block, referenced artifact, fetched context, or mixed model)",
+        "canonical handoff/retry memory should be structured runtime records, not loose markdown logs",
+        "worker-facing handoff should be a synthesized bounded packet assembled from canonical records, not full raw history"
+      ],
+      "stale_tokens": [],
+      "evidence": [],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-036",
+      "source_obligation_ids": [
+        "obl-024"
+      ],
+      "canon_label": "attempt handoff artifact contract",
+      "row_type": "owner",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "## Key Facts and Findings",
+      "status": "partial",
+      "exact_items": [
+        "the old structured-attempt-handoff pattern should be retained in the new model",
+        "each failed node attempt should leave a structured receipt/handoff artifact:",
+        "what it did",
+        "what changed",
+        "why it failed/blocked",
+        "what to try next",
+        "default retry model should use a fresh agent/subagent for the next attempt",
+        "retries should remain policy-driven with budgets/caps; not blind infinite looping",
+        "some failures should route to remediation, graph patch, or block/HITL instead of simple retry",
+        "each attempt should likely produce at least:",
+        "what was attempted",
+        "what changed / artifacts produced",
+        "checks/tests/review outcome",
+        "contamination / restore state if relevant",
+        "recommended next action",
+        "reusable learnings/patterns when appropriate",
+        "\"JSON-like\" is too vague; the design still needs to pin down:",
+        "whether these artifacts are literally JSON/JSONL/redb-backed records/projections",
+        "what concrete project-scoped paths or storage domains own them",
+        "how a worker actually receives the handoff packet (inline prompt block, referenced artifact, fetched context, or mixed model)",
+        "canonical handoff/retry memory should be structured runtime records, not loose markdown logs",
+        "worker-facing handoff should be a synthesized bounded packet assembled from canonical records, not full raw history"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FinalGUISpec.md:1378"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-037",
+      "source_obligation_ids": [
+        "obl-025"
+      ],
+      "canon_label": "fresh-iteration memory separation",
+      "row_type": "owner",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "## Key Facts and Findings",
+      "status": "missing",
+      "exact_items": [
+        "each iteration starts fresh",
+        "memory persists through explicit artifacts rather than hidden context",
+        "the loop reads:",
+        "current task/plan state",
+        "append-only progress log / learnings",
+        "persistent reusable-pattern summary",
+        "repo state / git history",
+        "separate:",
+        "task state / completion truth",
+        "append-only execution learnings",
+        "reusable pattern memory",
+        "do not rely on one giant conversational thread as the only continuity mechanism"
+      ],
+      "stale_tokens": [],
+      "evidence": [],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-038",
+      "source_obligation_ids": [
+        "obl-026"
+      ],
+      "canon_label": "runtime storage stack",
+      "row_type": "owner",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "## Key Facts and Findings",
+      "status": "missing",
+      "exact_items": [
+        "`seglog` = canonical append-only event source",
+        "`redb` = durable KV state / checkpoints / projections / rollups",
+        "`Tantivy` = search index",
+        "JSONL mirror = disposable projector output, not canonical truth",
+        "persistence(events) = seglog",
+        "layout/settings/state = redb",
+        "canonical truth for these new orchestration artifacts should fit the documented stack:",
+        "event/source-of-truth aspects in seglog",
+        "projected/current-state/read-optimized aspects in redb",
+        "export/inspection views as JSON/JSONL only when the user requests them from UI surfaces like Orchestrator",
+        "avoid making loose JSON files the canonical source",
+        "\"optional JSON\" wording should be removed from the design language unless JSON export is explicitly about manual inspection/export, not canonical storage"
+      ],
+      "stale_tokens": [
+        "optional JSON"
+      ],
+      "evidence": [],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-039",
+      "source_obligation_ids": [
+        "obl-026"
+      ],
+      "canon_label": "runtime storage stack",
+      "row_type": "owner",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "## Key Facts and Findings",
+      "status": "missing",
+      "exact_items": [
+        "`seglog` = canonical append-only event source",
+        "`redb` = durable KV state / checkpoints / projections / rollups",
+        "`Tantivy` = search index",
+        "JSONL mirror = disposable projector output, not canonical truth",
+        "persistence(events) = seglog",
+        "layout/settings/state = redb",
+        "canonical truth for these new orchestration artifacts should fit the documented stack:",
+        "event/source-of-truth aspects in seglog",
+        "projected/current-state/read-optimized aspects in redb",
+        "export/inspection views as JSON/JSONL only when the user requests them from UI surfaces like Orchestrator",
+        "avoid making loose JSON files the canonical source",
+        "\"optional JSON\" wording should be removed from the design language unless JSON export is explicitly about manual inspection/export, not canonical storage"
+      ],
+      "stale_tokens": [
+        "optional JSON"
+      ],
+      "evidence": [],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-040",
+      "source_obligation_ids": [
+        "obl-027"
+      ],
+      "canon_label": "execution policy settings",
+      "row_type": "owner",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "## Key Facts and Findings",
+      "status": "missing",
+      "exact_items": [
+        "GUI should let the user choose whether retries use:",
+        "a fresh agent/subagent (default)",
+        "the same agent/subagent retaining prior context",
+        "GUI should also let the user choose whether node execution uses:",
+        "subagents by default",
+        "full agents instead of subagents",
+        "worker kind and retry-context policy are separate settings, not one combined toggle",
+        "the next settings/UI seam must cover:",
+        "agent vs subagent",
+        "fresh vs reused retry worker",
+        "overseer delegation on/off",
+        "delegated-worker provider/model/effort policy",
+        "consistent requested-vs-effective identity display across chat actors and orchestration actors",
+        "prefer `overseer-spawned node worker` over the vaguer term `delegated worker`"
+      ],
+      "stale_tokens": [
+        "delegated worker"
+      ],
+      "evidence": [],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-041",
+      "source_obligation_ids": [
+        "obl-028"
+      ],
+      "canon_label": "page runtime contract",
+      "row_type": "consumer",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "## Key Facts and Findings",
+      "status": "missing",
+      "exact_items": [
+        "`Plans/Orchestrator_Page.md` is the UI/page-shell owner for a single-page six-tab Orchestrator surface: `Progress`, `Tiers`, `Node Graph Display`, `Evidence`, `History`, `Ledger`.",
+        "`Plans/orchestrator-subagent-integration.md` treats Orchestrator as the primary consumer of canonical runtime scheduler contracts, not as a schema owner.",
+        "event-driven wakeups, not steady-state polling, are the authoritative execution/update model",
+        "orchestrator must consume canonical runtime fields and event names from shared contracts",
+        "worktree-native isolation is explicitly required; file-lease orchestration is explicitly rejected",
+        "`Plans/orchestrator-subagent-integration.md` says Puppet Master orchestrator consumes sharded-only plan graphs and executes headless from `.puppet-master/project/plan_graph/index.json` and node shards",
+        "required execution inputs include plan-graph index and node shard files",
+        "the page doc already admits unresolved data-source ownership gaps and explicitly says the UI must bind to upstream owners rather than minting local compatibility fields",
+        "canonical event naming should be shared across runtime and UI projections; Orchestrator should not invent a shadow event language"
+      ],
+      "stale_tokens": [],
+      "evidence": [],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-042",
+      "source_obligation_ids": [
+        "obl-028"
+      ],
+      "canon_label": "page runtime contract",
+      "row_type": "consumer",
+      "path": "Plans/orchestrator-subagent-integration.md",
+      "heading_hint": "## Key Facts and Findings",
+      "status": "partial",
+      "exact_items": [
+        "`Plans/Orchestrator_Page.md` is the UI/page-shell owner for a single-page six-tab Orchestrator surface: `Progress`, `Tiers`, `Node Graph Display`, `Evidence`, `History`, `Ledger`.",
+        "`Plans/orchestrator-subagent-integration.md` treats Orchestrator as the primary consumer of canonical runtime scheduler contracts, not as a schema owner.",
+        "event-driven wakeups, not steady-state polling, are the authoritative execution/update model",
+        "orchestrator must consume canonical runtime fields and event names from shared contracts",
+        "worktree-native isolation is explicitly required; file-lease orchestration is explicitly rejected",
+        "`Plans/orchestrator-subagent-integration.md` says Puppet Master orchestrator consumes sharded-only plan graphs and executes headless from `.puppet-master/project/plan_graph/index.json` and node shards",
+        "required execution inputs include plan-graph index and node shard files",
+        "the page doc already admits unresolved data-source ownership gaps and explicitly says the UI must bind to upstream owners rather than minting local compatibility fields",
+        "canonical event naming should be shared across runtime and UI projections; Orchestrator should not invent a shadow event language"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/orchestrator-subagent-integration.md:6037"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-043",
+      "source_obligation_ids": [
+        "obl-029"
+      ],
+      "canon_label": "graph governance layering",
+      "row_type": "owner",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "## Key Facts and Findings",
+      "status": "missing",
+      "exact_items": [
+        "hybrid is acceptable only if graph execution remains canonical and tiers become a derived human-facing lens",
+        "hybrid becomes dangerous if tiers and graph both retain execution authority",
+        "keep the canonical graph as execution truth",
+        "introduce bounded, coherent subgraph groupings (`work packages`) rather than one global overseer agent",
+        "assign local overseers to work packages",
+        "keep the global orchestrator runtime deterministic and above those overseers",
+        "when an overseer finds missing work / wiring / design correctness issues, two additional subagents should be spawned to check whether the overseer's concern is valid before remediation or graph-change action proceeds",
+        "there should be both a `work package overseer`",
+        "and a `same-feature-seam overseer`",
+        "feature seam first-class rather than informal metadata only",
+        "if integration is weak, the feature seam is not complete",
+        "package completion is therefore necessary but not sufficient for seam completion"
+      ],
+      "stale_tokens": [],
+      "evidence": [],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-044",
+      "source_obligation_ids": [
+        "obl-030"
+      ],
+      "canon_label": "execution settings inheritance matrix",
+      "row_type": "owner",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "## Key Facts and Findings",
+      "status": "missing",
+      "exact_items": [
+        "node personas should be auto-selected from node work/type",
+        "node persona override should exist as a global node-worker policy override, not a per-node setting",
+        "`feature seam`, `work package`, and `node` should each have independent provider/model/effort settings with defaults plus overrideability",
+        "settings should define whether work-package overseers may spawn subagents for node work",
+        "if overseer-spawned node subagents are enabled, their provider/model/effort must be configurable",
+        "package-based worktrees feel more manageable than per-node worktrees at expected node counts",
+        "if a package uses a bounded pool of mutable worktrees, dependent nodes inside the same package may require careful lane/ordering rules so downstream nodes see the right upstream state"
+      ],
+      "stale_tokens": [],
+      "evidence": [],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-045",
+      "source_obligation_ids": [
+        "obl-031"
+      ],
+      "canon_label": "hitl chat surfacing",
+      "row_type": "consumer",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "## Key Facts and Findings",
+      "status": "missing",
+      "exact_items": [
+        "HITL is explicitly off by default; automation is the normal system behavior",
+        "if HITL blocks or a critical failure / decision occurs, the issue must surface in:",
+        "Dashboard",
+        "Orchestrator page",
+        "a spawned agent/thread in the chat window",
+        "Dashboard and Orchestrator should direct the user to the chat thread for decision/resolution details",
+        "the chat thread should present the issue/decision and allow the user to choose how to resolve it"
+      ],
+      "stale_tokens": [],
+      "evidence": [],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-046",
+      "source_obligation_ids": [
+        "obl-032"
+      ],
+      "canon_label": "worktree and per-project gui gaps",
+      "row_type": "consumer",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "## Key Facts and Findings",
+      "status": "missing",
+      "exact_items": [
+        "worktrees should be visible in the Orchestrator page and likely also in Source Control",
+        "Source Control side panel is relatively small, though tabs can be added if needed",
+        "Orchestrator-managed worktrees should likely be separated from other worktrees (user-created or assistant-created)",
+        "multiple projects/repos can be running Orchestrator concurrently",
+        "presented orchestration data is per project",
+        "there is also a project page that shows current status of each project",
+        "projects can have different settings/themes/snapshots/etc.",
+        "data/storage shape should be per-project so orchestration state remains isolated",
+        "no documented GUI surface yet for `work package`",
+        "no documented GUI surface yet for `feature seam`",
+        "no documented seam-level acceptance / weak-integration / corroboration review affordance yet",
+        "worktree visibility/controls likely need coordination across Orchestrator and Source Control, not isolated ownership in only one surface",
+        "worktree UI likely needs partitioning/filtering between orchestrator-owned worktrees and non-orchestrator worktrees due to scale and panel-size constraints",
+        "dashboard/project-summary surfaces also need per-project aggregation without collapsing project-local orchestration state into one global pool"
+      ],
+      "stale_tokens": [],
+      "evidence": [],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-047",
+      "source_obligation_ids": [
+        "obl-032"
+      ],
+      "canon_label": "worktree and per-project gui gaps",
+      "row_type": "consumer",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "## Key Facts and Findings",
+      "status": "missing",
+      "exact_items": [
+        "worktrees should be visible in the Orchestrator page and likely also in Source Control",
+        "Source Control side panel is relatively small, though tabs can be added if needed",
+        "Orchestrator-managed worktrees should likely be separated from other worktrees (user-created or assistant-created)",
+        "multiple projects/repos can be running Orchestrator concurrently",
+        "presented orchestration data is per project",
+        "there is also a project page that shows current status of each project",
+        "projects can have different settings/themes/snapshots/etc.",
+        "data/storage shape should be per-project so orchestration state remains isolated",
+        "no documented GUI surface yet for `work package`",
+        "no documented GUI surface yet for `feature seam`",
+        "no documented seam-level acceptance / weak-integration / corroboration review affordance yet",
+        "worktree visibility/controls likely need coordination across Orchestrator and Source Control, not isolated ownership in only one surface",
+        "worktree UI likely needs partitioning/filtering between orchestrator-owned worktrees and non-orchestrator worktrees due to scale and panel-size constraints",
+        "dashboard/project-summary surfaces also need per-project aggregation without collapsing project-local orchestration state into one global pool"
+      ],
+      "stale_tokens": [],
+      "evidence": [],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-048",
+      "source_obligation_ids": [
+        "obl-032"
+      ],
+      "canon_label": "worktree and per-project gui gaps",
+      "row_type": "consumer",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "## Key Facts and Findings",
+      "status": "missing",
+      "exact_items": [
+        "worktrees should be visible in the Orchestrator page and likely also in Source Control",
+        "Source Control side panel is relatively small, though tabs can be added if needed",
+        "Orchestrator-managed worktrees should likely be separated from other worktrees (user-created or assistant-created)",
+        "multiple projects/repos can be running Orchestrator concurrently",
+        "presented orchestration data is per project",
+        "there is also a project page that shows current status of each project",
+        "projects can have different settings/themes/snapshots/etc.",
+        "data/storage shape should be per-project so orchestration state remains isolated",
+        "no documented GUI surface yet for `work package`",
+        "no documented GUI surface yet for `feature seam`",
+        "no documented seam-level acceptance / weak-integration / corroboration review affordance yet",
+        "worktree visibility/controls likely need coordination across Orchestrator and Source Control, not isolated ownership in only one surface",
+        "worktree UI likely needs partitioning/filtering between orchestrator-owned worktrees and non-orchestrator worktrees due to scale and panel-size constraints",
+        "dashboard/project-summary surfaces also need per-project aggregation without collapsing project-local orchestration state into one global pool"
+      ],
+      "stale_tokens": [],
+      "evidence": [],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-049",
+      "source_obligation_ids": [
+        "obl-033"
+      ],
+      "canon_label": "packet contradiction tokens",
+      "row_type": "stale_retirement",
+      "path": "Plans/Executor_Protocol.md",
+      "heading_hint": "5. Node execution fields",
+      "status": "partial",
+      "exact_items": [
+        "`TierContext`",
+        "`tier_id`",
+        "`github_api:github.com/<login>`",
+        "`approve_continue`"
+      ],
+      "stale_tokens": [
+        "TierContext",
+        "tier_id",
+        "github_api:github.com/<login>",
+        "approve_continue"
+      ],
+      "evidence": [
+        "Plans/Executor_Protocol.md:172"
+      ],
+      "required_action": "stale_retirement"
+    },
+    {
+      "coverage_id": "cov-050",
+      "source_obligation_ids": [
+        "obl-033"
+      ],
+      "canon_label": "packet contradiction tokens",
+      "row_type": "stale_retirement",
+      "path": "Plans/GitHub_API_Auth_and_Flows.md",
+      "heading_hint": "5. Node execution fields",
+      "status": "partial",
+      "exact_items": [
+        "`TierContext`",
+        "`tier_id`",
+        "`github_api:github.com/<login>`",
+        "`approve_continue`"
+      ],
+      "stale_tokens": [
+        "TierContext",
+        "tier_id",
+        "github_api:github.com/<login>",
+        "approve_continue"
+      ],
+      "evidence": [
+        "Plans/GitHub_API_Auth_and_Flows.md:59"
+      ],
+      "required_action": "stale_retirement"
+    },
+    {
+      "coverage_id": "cov-051",
+      "source_obligation_ids": [
+        "obl-033"
+      ],
+      "canon_label": "packet contradiction tokens",
+      "row_type": "stale_retirement",
+      "path": "Plans/UI_Command_Catalog.md",
+      "heading_hint": "5. Node execution fields",
+      "status": "partial",
+      "exact_items": [
+        "`TierContext`",
+        "`tier_id`",
+        "`github_api:github.com/<login>`",
+        "`approve_continue`"
+      ],
+      "stale_tokens": [
+        "TierContext",
+        "tier_id",
+        "github_api:github.com/<login>",
+        "approve_continue"
+      ],
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:650"
+      ],
+      "required_action": "stale_retirement"
+    },
+    {
+      "coverage_id": "cov-052",
+      "source_obligation_ids": [
+        "obl-033"
+      ],
+      "canon_label": "packet contradiction tokens",
+      "row_type": "stale_retirement",
+      "path": "Plans/orchestrator-subagent-integration.md",
+      "heading_hint": "5. Node execution fields",
+      "status": "partial",
+      "exact_items": [
+        "`TierContext`",
+        "`tier_id`",
+        "`github_api:github.com/<login>`",
+        "`approve_continue`"
+      ],
+      "stale_tokens": [
+        "TierContext",
+        "tier_id",
+        "github_api:github.com/<login>",
+        "approve_continue"
+      ],
+      "evidence": [
+        "Plans/orchestrator-subagent-integration.md:79"
+      ],
+      "required_action": "stale_retirement"
+    },
+    {
+      "coverage_id": "cov-053",
+      "source_obligation_ids": [
+        "obl-034"
+      ],
+      "canon_label": "packet emission contradiction gate",
+      "row_type": "owner",
+      "path": "Plans/Executor_Protocol.md",
+      "heading_hint": "## Gaps / Problems Identified",
+      "status": "missing",
+      "exact_items": [
+        "`packet_plan.json` currently contains at least four survivor/residue contradictions where the same token appears in both required-survivor and stale-retire sets",
+        "packet emission must not proceed until those target-level contradictions are repaired in packet-planning inputs"
+      ],
+      "stale_tokens": [],
+      "evidence": [],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-054",
+      "source_obligation_ids": [
+        "obl-034"
+      ],
+      "canon_label": "packet emission contradiction gate",
+      "row_type": "owner",
+      "path": "Plans/GitHub_API_Auth_and_Flows.md",
+      "heading_hint": "## Gaps / Problems Identified",
+      "status": "missing",
+      "exact_items": [
+        "`packet_plan.json` currently contains at least four survivor/residue contradictions where the same token appears in both required-survivor and stale-retire sets",
+        "packet emission must not proceed until those target-level contradictions are repaired in packet-planning inputs"
+      ],
+      "stale_tokens": [],
+      "evidence": [],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-055",
+      "source_obligation_ids": [
+        "obl-034"
+      ],
+      "canon_label": "packet emission contradiction gate",
+      "row_type": "owner",
+      "path": "Plans/UI_Command_Catalog.md",
+      "heading_hint": "## Gaps / Problems Identified",
+      "status": "missing",
+      "exact_items": [
+        "`packet_plan.json` currently contains at least four survivor/residue contradictions where the same token appears in both required-survivor and stale-retire sets",
+        "packet emission must not proceed until those target-level contradictions are repaired in packet-planning inputs"
+      ],
+      "stale_tokens": [],
+      "evidence": [],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-056",
+      "source_obligation_ids": [
+        "obl-034"
+      ],
+      "canon_label": "packet emission contradiction gate",
+      "row_type": "owner",
+      "path": "Plans/orchestrator-subagent-integration.md",
+      "heading_hint": "## Gaps / Problems Identified",
+      "status": "missing",
+      "exact_items": [
+        "`packet_plan.json` currently contains at least four survivor/residue contradictions where the same token appears in both required-survivor and stale-retire sets",
+        "packet emission must not proceed until those target-level contradictions are repaired in packet-planning inputs"
+      ],
+      "stale_tokens": [],
+      "evidence": [],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-057",
+      "source_obligation_ids": [
+        "obl-035"
+      ],
+      "canon_label": "separate lifecycle enums by object",
+      "row_type": "owner",
+      "path": "Plans/orchestrator-subagent-integration.md",
+      "heading_hint": "## Gaps / Problems Identified",
+      "status": "missing",
+      "exact_items": [
+        "node, work package, feature seam, promotion, and worktree lane should each have their own lifecycle rather than one universal status enum",
+        "transitions should be deterministic and event-driven"
+      ],
+      "stale_tokens": [
+        "one universal status enum"
+      ],
+      "evidence": [],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-058",
+      "source_obligation_ids": [
+        "obl-035"
+      ],
+      "canon_label": "separate lifecycle enums by object",
+      "row_type": "owner",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "## Gaps / Problems Identified",
+      "status": "missing",
+      "exact_items": [
+        "node, work package, feature seam, promotion, and worktree lane should each have their own lifecycle rather than one universal status enum",
+        "transitions should be deterministic and event-driven"
+      ],
+      "stale_tokens": [
+        "one universal status enum"
+      ],
+      "evidence": [],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-059",
+      "source_obligation_ids": [
+        "obl-036"
+      ],
+      "canon_label": "multi-account cooldown and pool selection policy",
+      "row_type": "owner",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "## Gaps / Problems Identified",
+      "status": "missing",
+      "exact_items": [
+        "multi-account policy should support cooldown and retry-budget concepts, not just threshold + priority",
+        "account selection should probably operate on a provider+role+namespace/pool snapshot rather than raw global account lists",
+        "settings/UI likely need pool/account metadata and quota-pressure visibility in addition to simple threshold controls"
+      ],
+      "stale_tokens": [],
+      "evidence": [],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-060",
+      "source_obligation_ids": [
+        "obl-037"
+      ],
+      "canon_label": "provider capability fallback signals",
+      "row_type": "owner",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "## Gaps / Problems Identified",
+      "status": "missing",
+      "exact_items": [
+        "browser-based relogin/rotation likely needs to be supported as a real provider capability, not dismissed",
+        "log parsing may be necessary as a supplemental signal in practice",
+        "manual `set active` remains valuable as an override/control setting, not the default execution model"
+      ],
+      "stale_tokens": [],
+      "evidence": [],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-061",
+      "source_obligation_ids": [
+        "obl-038"
+      ],
+      "canon_label": "child record fields",
+      "row_type": "owner",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "## Gaps / Problems Identified",
+      "status": "missing",
+      "exact_items": [
+        "canonical persisted objects should likely include at least `project`, `run`, `feature_seam`, `work_package`, `node`, `attempt`, `lane`, `snapshot`, `promotion`, `review`, `resolution_thread`, and `event`",
+        "requested vs effective execution identity, including effective account selection/fallback, should be persisted at attempt level",
+        "`attempt` should persist identity, actor type, requested vs effective provider/model/effort/persona/account, resolution/fallback metadata, lane/snapshot linkage, lifecycle/result, and evidence refs",
+        "`lane` should persist project/package linkage, worktree binding, lifecycle, contamination state, safe-point linkage, ancestry, and ownership/display grouping for UI separation",
+        "`promotion` should persist promotion class, source/target linkage, eligibility/blocking/HITL state, decision/result, and evidence/review/corroboration linkage",
+        "`review` should persist scope, review type, actor linkage, verdict/severity/blocking, findings, evidence, and timestamps",
+        "`resolution_thread` should persist trigger linkage, resolution kind, issue summary, allowed actions, status, and UI/chat linkage"
+      ],
+      "stale_tokens": [],
+      "evidence": [],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-062",
+      "source_obligation_ids": [
+        "obl-039"
+      ],
+      "canon_label": "parent record fields",
+      "row_type": "owner",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "## Gaps / Problems Identified",
+      "status": "missing",
+      "exact_items": [
+        "`project` should primarily own identity, repo/project settings/theme/account-policy linkage, active-run pointers, and coarse project status",
+        "`run` should own execution-session identity/lifecycle, graph linkage, run-level settings snapshot, and active pointers/rollup posture",
+        "`feature_seam` should own membership, lifecycle, requested settings, overseer/governance state, seam-promotion state, and seam evidence linkage",
+        "`work_package` should own membership, lifecycle, requested settings, overseer/delegation/worktree policy refs, baseline lane state, package-governance state, promotion linkage, and package evidence linkage"
+      ],
+      "stale_tokens": [],
+      "evidence": [],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-063",
+      "source_obligation_ids": [
+        "obl-040"
+      ],
+      "canon_label": "stewardship carry-through",
+      "row_type": "owner",
+      "path": "Plans/orchestrator-subagent-integration.md",
+      "heading_hint": "## Packetization Notes",
+      "status": "partial",
+      "exact_items": [
+        "Preserve `status`, `run_prefix`, `next_run_seq`, and `run_id` during stewardship refreshes.",
+        "If recovery proceeds, apply owner-doc corrections first, then consumer and mirror cleanup, then rerun fidelity audit.",
+        "Track requested vs effective runtime identity if persona/provider/model fallback becomes part of the Orchestrator discussion.",
+        "Watch for event-name drift, local shadow schemas, and UI-layer redefinitions of runtime semantics."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/orchestrator-subagent-integration.md:25"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-064",
+      "source_obligation_ids": [
+        "obl-040"
+      ],
+      "canon_label": "stewardship carry-through",
+      "row_type": "owner",
+      "path": "Plans/human-in-the-loop.md",
+      "heading_hint": "## Packetization Notes",
+      "status": "partial",
+      "exact_items": [
+        "Preserve `status`, `run_prefix`, `next_run_seq`, and `run_id` during stewardship refreshes.",
+        "If recovery proceeds, apply owner-doc corrections first, then consumer and mirror cleanup, then rerun fidelity audit.",
+        "Track requested vs effective runtime identity if persona/provider/model fallback becomes part of the Orchestrator discussion.",
+        "Watch for event-name drift, local shadow schemas, and UI-layer redefinitions of runtime semantics."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/human-in-the-loop.md:26"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-065",
+      "source_obligation_ids": [
+        "obl-040"
+      ],
+      "canon_label": "stewardship carry-through",
+      "row_type": "owner",
+      "path": "Plans/usage-feature.md",
+      "heading_hint": "## Packetization Notes",
+      "status": "partial",
+      "exact_items": [
+        "Preserve `status`, `run_prefix`, `next_run_seq`, and `run_id` during stewardship refreshes.",
+        "If recovery proceeds, apply owner-doc corrections first, then consumer and mirror cleanup, then rerun fidelity audit.",
+        "Track requested vs effective runtime identity if persona/provider/model fallback becomes part of the Orchestrator discussion.",
+        "Watch for event-name drift, local shadow schemas, and UI-layer redefinitions of runtime semantics."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/usage-feature.md:309"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-066",
+      "source_obligation_ids": [
+        "obl-040"
+      ],
+      "canon_label": "stewardship carry-through",
+      "row_type": "owner",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "## Packetization Notes",
+      "status": "partial",
+      "exact_items": [
+        "Preserve `status`, `run_prefix`, `next_run_seq`, and `run_id` during stewardship refreshes.",
+        "If recovery proceeds, apply owner-doc corrections first, then consumer and mirror cleanup, then rerun fidelity audit.",
+        "Track requested vs effective runtime identity if persona/provider/model fallback becomes part of the Orchestrator discussion.",
+        "Watch for event-name drift, local shadow schemas, and UI-layer redefinitions of runtime semantics."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FinalGUISpec.md:1819"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-067",
+      "source_obligation_ids": [
+        "obl-040"
+      ],
+      "canon_label": "stewardship carry-through",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "## Packetization Notes",
+      "status": "partial",
+      "exact_items": [
+        "Preserve `status`, `run_prefix`, `next_run_seq`, and `run_id` during stewardship refreshes.",
+        "If recovery proceeds, apply owner-doc corrections first, then consumer and mirror cleanup, then rerun fidelity audit.",
+        "Track requested vs effective runtime identity if persona/provider/model fallback becomes part of the Orchestrator discussion.",
+        "Watch for event-name drift, local shadow schemas, and UI-layer redefinitions of runtime semantics."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:52"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-068",
+      "source_obligation_ids": [
+        "obl-040"
+      ],
+      "canon_label": "stewardship carry-through",
+      "row_type": "owner",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "## Packetization Notes",
+      "status": "partial",
+      "exact_items": [
+        "Preserve `status`, `run_prefix`, `next_run_seq`, and `run_id` during stewardship refreshes.",
+        "If recovery proceeds, apply owner-doc corrections first, then consumer and mirror cleanup, then rerun fidelity audit.",
+        "Track requested vs effective runtime identity if persona/provider/model fallback becomes part of the Orchestrator discussion.",
+        "Watch for event-name drift, local shadow schemas, and UI-layer redefinitions of runtime semantics."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:263"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-069",
+      "source_obligation_ids": [
+        "obl-041"
+      ],
+      "canon_label": "tier era terms",
+      "row_type": "stale_retirement",
+      "path": "Plans/orchestrator-subagent-integration.md",
+      "heading_hint": "## Highest-Impact Docs",
+      "status": "partial",
+      "exact_items": [
+        "`TierContext`",
+        "`TierType`",
+        "`select_for_tier`",
+        "`tier_id`",
+        "`phase_id`",
+        "`task_id`",
+        "`tier_runtime_record`",
+        "`<phase>/<task>/<subtask>`",
+        "`Phase/Task/Subtask/Iteration`",
+        "`Tiers tab`",
+        "`widget.tier_tree`",
+        "`widget.progress_bars`"
+      ],
+      "stale_tokens": [
+        "TierContext",
+        "TierType",
+        "select_for_tier",
+        "tier_id",
+        "phase_id",
+        "task_id",
+        "tier_runtime_record",
+        "<phase>/<task>/<subtask>",
+        "Phase/Task/Subtask/Iteration",
+        "Tiers tab",
+        "widget.tier_tree",
+        "widget.progress_bars"
+      ],
+      "evidence": [
+        "Plans/orchestrator-subagent-integration.md:30",
+        "Plans/orchestrator-subagent-integration.md:79",
+        "Plans/orchestrator-subagent-integration.md:212",
+        "Plans/orchestrator-subagent-integration.md:3446",
+        "Plans/orchestrator-subagent-integration.md:5670",
+        "Plans/orchestrator-subagent-integration.md:5811"
+      ],
+      "required_action": "stale_retirement"
+    },
+    {
+      "coverage_id": "cov-070",
+      "source_obligation_ids": [
+        "obl-041"
+      ],
+      "canon_label": "tier era terms",
+      "row_type": "stale_retirement",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "## Highest-Impact Docs",
+      "status": "missing",
+      "exact_items": [
+        "`TierContext`",
+        "`TierType`",
+        "`select_for_tier`",
+        "`tier_id`",
+        "`phase_id`",
+        "`task_id`",
+        "`tier_runtime_record`",
+        "`<phase>/<task>/<subtask>`",
+        "`Phase/Task/Subtask/Iteration`",
+        "`Tiers tab`",
+        "`widget.tier_tree`",
+        "`widget.progress_bars`"
+      ],
+      "stale_tokens": [
+        "TierContext",
+        "TierType",
+        "select_for_tier",
+        "tier_id",
+        "phase_id",
+        "task_id",
+        "tier_runtime_record",
+        "<phase>/<task>/<subtask>",
+        "Phase/Task/Subtask/Iteration",
+        "Tiers tab",
+        "widget.tier_tree",
+        "widget.progress_bars"
+      ],
+      "evidence": [],
+      "required_action": "stale_retirement"
+    },
+    {
+      "coverage_id": "cov-071",
+      "source_obligation_ids": [
+        "obl-041"
+      ],
+      "canon_label": "tier era terms",
+      "row_type": "stale_retirement",
+      "path": "Plans/Executor_Protocol.md",
+      "heading_hint": "## Highest-Impact Docs",
+      "status": "partial",
+      "exact_items": [
+        "`TierContext`",
+        "`TierType`",
+        "`select_for_tier`",
+        "`tier_id`",
+        "`phase_id`",
+        "`task_id`",
+        "`tier_runtime_record`",
+        "`<phase>/<task>/<subtask>`",
+        "`Phase/Task/Subtask/Iteration`",
+        "`Tiers tab`",
+        "`widget.tier_tree`",
+        "`widget.progress_bars`"
+      ],
+      "stale_tokens": [
+        "TierContext",
+        "TierType",
+        "select_for_tier",
+        "tier_id",
+        "phase_id",
+        "task_id",
+        "tier_runtime_record",
+        "<phase>/<task>/<subtask>",
+        "Phase/Task/Subtask/Iteration",
+        "Tiers tab",
+        "widget.tier_tree",
+        "widget.progress_bars"
+      ],
+      "evidence": [
+        "Plans/Executor_Protocol.md:172"
+      ],
+      "required_action": "stale_retirement"
+    },
+    {
+      "coverage_id": "cov-072",
+      "source_obligation_ids": [
+        "obl-041"
+      ],
+      "canon_label": "tier era terms",
+      "row_type": "stale_retirement",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "## Highest-Impact Docs",
+      "status": "missing",
+      "exact_items": [
+        "`TierContext`",
+        "`TierType`",
+        "`select_for_tier`",
+        "`tier_id`",
+        "`phase_id`",
+        "`task_id`",
+        "`tier_runtime_record`",
+        "`<phase>/<task>/<subtask>`",
+        "`Phase/Task/Subtask/Iteration`",
+        "`Tiers tab`",
+        "`widget.tier_tree`",
+        "`widget.progress_bars`"
+      ],
+      "stale_tokens": [
+        "TierContext",
+        "TierType",
+        "select_for_tier",
+        "tier_id",
+        "phase_id",
+        "task_id",
+        "tier_runtime_record",
+        "<phase>/<task>/<subtask>",
+        "Phase/Task/Subtask/Iteration",
+        "Tiers tab",
+        "widget.tier_tree",
+        "widget.progress_bars"
+      ],
+      "evidence": [],
+      "required_action": "stale_retirement"
+    },
+    {
+      "coverage_id": "cov-073",
+      "source_obligation_ids": [
+        "obl-041"
+      ],
+      "canon_label": "tier era terms",
+      "row_type": "stale_retirement",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "## Highest-Impact Docs",
+      "status": "partial",
+      "exact_items": [
+        "`TierContext`",
+        "`TierType`",
+        "`select_for_tier`",
+        "`tier_id`",
+        "`phase_id`",
+        "`task_id`",
+        "`tier_runtime_record`",
+        "`<phase>/<task>/<subtask>`",
+        "`Phase/Task/Subtask/Iteration`",
+        "`Tiers tab`",
+        "`widget.tier_tree`",
+        "`widget.progress_bars`"
+      ],
+      "stale_tokens": [
+        "TierContext",
+        "TierType",
+        "select_for_tier",
+        "tier_id",
+        "phase_id",
+        "task_id",
+        "tier_runtime_record",
+        "<phase>/<task>/<subtask>",
+        "Phase/Task/Subtask/Iteration",
+        "Tiers tab",
+        "widget.tier_tree",
+        "widget.progress_bars"
+      ],
+      "evidence": [
+        "Plans/FinalGUISpec.md:2161"
+      ],
+      "required_action": "stale_retirement"
+    },
+    {
+      "coverage_id": "cov-074",
+      "source_obligation_ids": [
+        "obl-041"
+      ],
+      "canon_label": "tier era terms",
+      "row_type": "stale_retirement",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "## Highest-Impact Docs",
+      "status": "partial",
+      "exact_items": [
+        "`TierContext`",
+        "`TierType`",
+        "`select_for_tier`",
+        "`tier_id`",
+        "`phase_id`",
+        "`task_id`",
+        "`tier_runtime_record`",
+        "`<phase>/<task>/<subtask>`",
+        "`Phase/Task/Subtask/Iteration`",
+        "`Tiers tab`",
+        "`widget.tier_tree`",
+        "`widget.progress_bars`"
+      ],
+      "stale_tokens": [
+        "TierContext",
+        "TierType",
+        "select_for_tier",
+        "tier_id",
+        "phase_id",
+        "task_id",
+        "tier_runtime_record",
+        "<phase>/<task>/<subtask>",
+        "Phase/Task/Subtask/Iteration",
+        "Tiers tab",
+        "widget.tier_tree",
+        "widget.progress_bars"
+      ],
+      "evidence": [
+        "Plans/Run_Graph_View.md:41"
+      ],
+      "required_action": "stale_retirement"
+    },
+    {
+      "coverage_id": "cov-075",
+      "source_obligation_ids": [
+        "obl-041"
+      ],
+      "canon_label": "tier era terms",
+      "row_type": "stale_retirement",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "## Highest-Impact Docs",
+      "status": "missing",
+      "exact_items": [
+        "`TierContext`",
+        "`TierType`",
+        "`select_for_tier`",
+        "`tier_id`",
+        "`phase_id`",
+        "`task_id`",
+        "`tier_runtime_record`",
+        "`<phase>/<task>/<subtask>`",
+        "`Phase/Task/Subtask/Iteration`",
+        "`Tiers tab`",
+        "`widget.tier_tree`",
+        "`widget.progress_bars`"
+      ],
+      "stale_tokens": [
+        "TierContext",
+        "TierType",
+        "select_for_tier",
+        "tier_id",
+        "phase_id",
+        "task_id",
+        "tier_runtime_record",
+        "<phase>/<task>/<subtask>",
+        "Phase/Task/Subtask/Iteration",
+        "Tiers tab",
+        "widget.tier_tree",
+        "widget.progress_bars"
+      ],
+      "evidence": [],
+      "required_action": "stale_retirement"
+    },
+    {
+      "coverage_id": "cov-076",
+      "source_obligation_ids": [
+        "obl-041"
+      ],
+      "canon_label": "tier era terms",
+      "row_type": "stale_retirement",
+      "path": "Plans/Project_Output_Artifacts.md",
+      "heading_hint": "## Highest-Impact Docs",
+      "status": "partial",
+      "exact_items": [
+        "`TierContext`",
+        "`TierType`",
+        "`select_for_tier`",
+        "`tier_id`",
+        "`phase_id`",
+        "`task_id`",
+        "`tier_runtime_record`",
+        "`<phase>/<task>/<subtask>`",
+        "`Phase/Task/Subtask/Iteration`",
+        "`Tiers tab`",
+        "`widget.tier_tree`",
+        "`widget.progress_bars`"
+      ],
+      "stale_tokens": [
+        "TierContext",
+        "TierType",
+        "select_for_tier",
+        "tier_id",
+        "phase_id",
+        "task_id",
+        "tier_runtime_record",
+        "<phase>/<task>/<subtask>",
+        "Phase/Task/Subtask/Iteration",
+        "Tiers tab",
+        "widget.tier_tree",
+        "widget.progress_bars"
+      ],
+      "evidence": [
+        "Plans/Project_Output_Artifacts.md:19",
+        "Plans/Project_Output_Artifacts.md:103"
+      ],
+      "required_action": "stale_retirement"
+    },
+    {
+      "coverage_id": "cov-077",
+      "source_obligation_ids": [
+        "obl-042"
+      ],
+      "canon_label": "ui routing migration",
+      "row_type": "consumer",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "## GUI / UX Impacts",
+      "status": "missing",
+      "exact_items": [
+        "Tiers tab is obsolete as specified.",
+        "Specify the navigation contract: which widget click leads where, which overseer's thread opens, how lane context is carried through the navigation.",
+        "Determine what replaces `widget.tier_tree`, phase-grouped run-graph layouts, and singular current-task/current-worktree widgets.",
+        "Replace or demote tiers-first widgets and layouts.",
+        "Define one attention-routing model for blocked work, optional HITL, and side-effect approvals.",
+        "Tiers\u2192Packages or similar rename plus content respec."
+      ],
+      "stale_tokens": [],
+      "evidence": [],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-078",
+      "source_obligation_ids": [
+        "obl-042"
+      ],
+      "canon_label": "ui routing migration",
+      "row_type": "consumer",
+      "path": "Plans/Widget_System.md",
+      "heading_hint": "## GUI / UX Impacts",
+      "status": "missing",
+      "exact_items": [
+        "Tiers tab is obsolete as specified.",
+        "Specify the navigation contract: which widget click leads where, which overseer's thread opens, how lane context is carried through the navigation.",
+        "Determine what replaces `widget.tier_tree`, phase-grouped run-graph layouts, and singular current-task/current-worktree widgets.",
+        "Replace or demote tiers-first widgets and layouts.",
+        "Define one attention-routing model for blocked work, optional HITL, and side-effect approvals.",
+        "Tiers\u2192Packages or similar rename plus content respec."
+      ],
+      "stale_tokens": [],
+      "evidence": [],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-079",
+      "source_obligation_ids": [
+        "obl-042"
+      ],
+      "canon_label": "ui routing migration",
+      "row_type": "consumer",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "## GUI / UX Impacts",
+      "status": "missing",
+      "exact_items": [
+        "Tiers tab is obsolete as specified.",
+        "Specify the navigation contract: which widget click leads where, which overseer's thread opens, how lane context is carried through the navigation.",
+        "Determine what replaces `widget.tier_tree`, phase-grouped run-graph layouts, and singular current-task/current-worktree widgets.",
+        "Replace or demote tiers-first widgets and layouts.",
+        "Define one attention-routing model for blocked work, optional HITL, and side-effect approvals.",
+        "Tiers\u2192Packages or similar rename plus content respec."
+      ],
+      "stale_tokens": [],
+      "evidence": [],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-080",
+      "source_obligation_ids": [
+        "obl-042"
+      ],
+      "canon_label": "ui routing migration",
+      "row_type": "consumer",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "## GUI / UX Impacts",
+      "status": "missing",
+      "exact_items": [
+        "Tiers tab is obsolete as specified.",
+        "Specify the navigation contract: which widget click leads where, which overseer's thread opens, how lane context is carried through the navigation.",
+        "Determine what replaces `widget.tier_tree`, phase-grouped run-graph layouts, and singular current-task/current-worktree widgets.",
+        "Replace or demote tiers-first widgets and layouts.",
+        "Define one attention-routing model for blocked work, optional HITL, and side-effect approvals.",
+        "Tiers\u2192Packages or similar rename plus content respec."
+      ],
+      "stale_tokens": [],
+      "evidence": [],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-081",
+      "source_obligation_ids": [
+        "obl-042"
+      ],
+      "canon_label": "ui routing migration",
+      "row_type": "consumer",
+      "path": "Plans/assistant-chat-design.md",
+      "heading_hint": "## GUI / UX Impacts",
+      "status": "missing",
+      "exact_items": [
+        "Tiers tab is obsolete as specified.",
+        "Specify the navigation contract: which widget click leads where, which overseer's thread opens, how lane context is carried through the navigation.",
+        "Determine what replaces `widget.tier_tree`, phase-grouped run-graph layouts, and singular current-task/current-worktree widgets.",
+        "Replace or demote tiers-first widgets and layouts.",
+        "Define one attention-routing model for blocked work, optional HITL, and side-effect approvals.",
+        "Tiers\u2192Packages or similar rename plus content respec."
+      ],
+      "stale_tokens": [],
+      "evidence": [],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-082",
+      "source_obligation_ids": [
+        "obl-042"
+      ],
+      "canon_label": "ui routing migration",
+      "row_type": "consumer",
+      "path": "Plans/UI_Command_Catalog.md",
+      "heading_hint": "## GUI / UX Impacts",
+      "status": "missing",
+      "exact_items": [
+        "Tiers tab is obsolete as specified.",
+        "Specify the navigation contract: which widget click leads where, which overseer's thread opens, how lane context is carried through the navigation.",
+        "Determine what replaces `widget.tier_tree`, phase-grouped run-graph layouts, and singular current-task/current-worktree widgets.",
+        "Replace or demote tiers-first widgets and layouts.",
+        "Define one attention-routing model for blocked work, optional HITL, and side-effect approvals.",
+        "Tiers\u2192Packages or similar rename plus content respec."
+      ],
+      "stale_tokens": [],
+      "evidence": [],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-083",
+      "source_obligation_ids": [
+        "obl-043"
+      ],
+      "canon_label": "gates and hitl boundaries",
+      "row_type": "consumer",
+      "path": "Plans/Progression_Gates.md",
+      "heading_hint": "## Runtime / Storage / Contract Impacts",
+      "status": "missing",
+      "exact_items": [
+        "Gates are currently tier-scoped. Need to be redefined around package completion or seam transitions.",
+        "HITL approval model assumes tier boundaries.",
+        "Redefine approval gates for package-complete and seam-complete events rather than phase/task/subtask boundaries.",
+        "Automation-first default conflicts with existing settings defaults.",
+        "Reconcile automation-first with existing settings and gates.",
+        "`regular`/HTE-by-default",
+        "`visual_mode = auto`",
+        "`tier_boundary_approval`"
+      ],
+      "stale_tokens": [
+        "tier_boundary_approval"
+      ],
+      "evidence": [],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-084",
+      "source_obligation_ids": [
+        "obl-043"
+      ],
+      "canon_label": "gates and hitl boundaries",
+      "row_type": "consumer",
+      "path": "Plans/human-in-the-loop.md",
+      "heading_hint": "## Runtime / Storage / Contract Impacts",
+      "status": "partial",
+      "exact_items": [
+        "Gates are currently tier-scoped. Need to be redefined around package completion or seam transitions.",
+        "HITL approval model assumes tier boundaries.",
+        "Redefine approval gates for package-complete and seam-complete events rather than phase/task/subtask boundaries.",
+        "Automation-first default conflicts with existing settings defaults.",
+        "Reconcile automation-first with existing settings and gates.",
+        "`regular`/HTE-by-default",
+        "`visual_mode = auto`",
+        "`tier_boundary_approval`"
+      ],
+      "stale_tokens": [
+        "tier_boundary_approval"
+      ],
+      "evidence": [
+        "Plans/human-in-the-loop.md:73"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-085",
+      "source_obligation_ids": [
+        "obl-043"
+      ],
+      "canon_label": "gates and hitl boundaries",
+      "row_type": "consumer",
+      "path": "Plans/Run_Modes.md",
+      "heading_hint": "## Runtime / Storage / Contract Impacts",
+      "status": "missing",
+      "exact_items": [
+        "Gates are currently tier-scoped. Need to be redefined around package completion or seam transitions.",
+        "HITL approval model assumes tier boundaries.",
+        "Redefine approval gates for package-complete and seam-complete events rather than phase/task/subtask boundaries.",
+        "Automation-first default conflicts with existing settings defaults.",
+        "Reconcile automation-first with existing settings and gates.",
+        "`regular`/HTE-by-default",
+        "`visual_mode = auto`",
+        "`tier_boundary_approval`"
+      ],
+      "stale_tokens": [
+        "tier_boundary_approval"
+      ],
+      "evidence": [],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-086",
+      "source_obligation_ids": [
+        "obl-043"
+      ],
+      "canon_label": "gates and hitl boundaries",
+      "row_type": "consumer",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "## Runtime / Storage / Contract Impacts",
+      "status": "missing",
+      "exact_items": [
+        "Gates are currently tier-scoped. Need to be redefined around package completion or seam transitions.",
+        "HITL approval model assumes tier boundaries.",
+        "Redefine approval gates for package-complete and seam-complete events rather than phase/task/subtask boundaries.",
+        "Automation-first default conflicts with existing settings defaults.",
+        "Reconcile automation-first with existing settings and gates.",
+        "`regular`/HTE-by-default",
+        "`visual_mode = auto`",
+        "`tier_boundary_approval`"
+      ],
+      "stale_tokens": [
+        "tier_boundary_approval"
+      ],
+      "evidence": [],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-087",
+      "source_obligation_ids": [
+        "obl-043"
+      ],
+      "canon_label": "gates and hitl boundaries",
+      "row_type": "consumer",
+      "path": "Plans/Permissions_System.md",
+      "heading_hint": "## Runtime / Storage / Contract Impacts",
+      "status": "missing",
+      "exact_items": [
+        "Gates are currently tier-scoped. Need to be redefined around package completion or seam transitions.",
+        "HITL approval model assumes tier boundaries.",
+        "Redefine approval gates for package-complete and seam-complete events rather than phase/task/subtask boundaries.",
+        "Automation-first default conflicts with existing settings defaults.",
+        "Reconcile automation-first with existing settings and gates.",
+        "`regular`/HTE-by-default",
+        "`visual_mode = auto`",
+        "`tier_boundary_approval`"
+      ],
+      "stale_tokens": [
+        "tier_boundary_approval"
+      ],
+      "evidence": [],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-088",
+      "source_obligation_ids": [
+        "obl-043"
+      ],
+      "canon_label": "gates and hitl boundaries",
+      "row_type": "consumer",
+      "path": "Plans/Project_Output_Artifacts.md",
+      "heading_hint": "## Runtime / Storage / Contract Impacts",
+      "status": "missing",
+      "exact_items": [
+        "Gates are currently tier-scoped. Need to be redefined around package completion or seam transitions.",
+        "HITL approval model assumes tier boundaries.",
+        "Redefine approval gates for package-complete and seam-complete events rather than phase/task/subtask boundaries.",
+        "Automation-first default conflicts with existing settings defaults.",
+        "Reconcile automation-first with existing settings and gates.",
+        "`regular`/HTE-by-default",
+        "`visual_mode = auto`",
+        "`tier_boundary_approval`"
+      ],
+      "stale_tokens": [
+        "tier_boundary_approval"
+      ],
+      "evidence": [],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-089",
+      "source_obligation_ids": [
+        "obl-044"
+      ],
+      "canon_label": "execution identity contract",
+      "row_type": "owner",
+      "path": "Plans/Multi-Account.md",
+      "heading_hint": "## Settings / Provider / Persona / Account Impacts",
+      "status": "partial",
+      "exact_items": [
+        "Missing the concept of \"Effective Identity\" (lane-specific auth) in storage and evidence.",
+        "Needs to define \"Overseer\" personas and their relation to Lanes.",
+        "Model selection might need to be lane-aware (e.g., a \"Security Lane\" might enforce a specific model).",
+        "No canonical `requested_account` / `effective_account` shape in the main runtime identity contracts, even where requested/effective Persona and model fields are already standardized.",
+        "Add requested/effective account, overseer role, worktree/lane, and fallback reason fields to the canonical runtime snapshot.",
+        "`requested_auth_mode` / `effective_capabilities[]` / `effective_account_identity`",
+        "Per-project/per-package configuration scope is thin."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Multi-Account.md:21"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-090",
+      "source_obligation_ids": [
+        "obl-044"
+      ],
+      "canon_label": "execution identity contract",
+      "row_type": "owner",
+      "path": "Plans/Personas.md",
+      "heading_hint": "## Settings / Provider / Persona / Account Impacts",
+      "status": "partial",
+      "exact_items": [
+        "Missing the concept of \"Effective Identity\" (lane-specific auth) in storage and evidence.",
+        "Needs to define \"Overseer\" personas and their relation to Lanes.",
+        "Model selection might need to be lane-aware (e.g., a \"Security Lane\" might enforce a specific model).",
+        "No canonical `requested_account` / `effective_account` shape in the main runtime identity contracts, even where requested/effective Persona and model fields are already standardized.",
+        "Add requested/effective account, overseer role, worktree/lane, and fallback reason fields to the canonical runtime snapshot.",
+        "`requested_auth_mode` / `effective_capabilities[]` / `effective_account_identity`",
+        "Per-project/per-package configuration scope is thin."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Personas.md:271"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-091",
+      "source_obligation_ids": [
+        "obl-044"
+      ],
+      "canon_label": "execution identity contract",
+      "row_type": "owner",
+      "path": "Plans/Models_System.md",
+      "heading_hint": "## Settings / Provider / Persona / Account Impacts",
+      "status": "partial",
+      "exact_items": [
+        "Missing the concept of \"Effective Identity\" (lane-specific auth) in storage and evidence.",
+        "Needs to define \"Overseer\" personas and their relation to Lanes.",
+        "Model selection might need to be lane-aware (e.g., a \"Security Lane\" might enforce a specific model).",
+        "No canonical `requested_account` / `effective_account` shape in the main runtime identity contracts, even where requested/effective Persona and model fields are already standardized.",
+        "Add requested/effective account, overseer role, worktree/lane, and fallback reason fields to the canonical runtime snapshot.",
+        "`requested_auth_mode` / `effective_capabilities[]` / `effective_account_identity`",
+        "Per-project/per-package configuration scope is thin."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Models_System.md:61",
+        "Plans/Models_System.md:529",
+        "Plans/Models_System.md:538"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-092",
+      "source_obligation_ids": [
+        "obl-044"
+      ],
+      "canon_label": "execution identity contract",
+      "row_type": "owner",
+      "path": "Plans/GitHub_Integration.md",
+      "heading_hint": "## Settings / Provider / Persona / Account Impacts",
+      "status": "partial",
+      "exact_items": [
+        "Missing the concept of \"Effective Identity\" (lane-specific auth) in storage and evidence.",
+        "Needs to define \"Overseer\" personas and their relation to Lanes.",
+        "Model selection might need to be lane-aware (e.g., a \"Security Lane\" might enforce a specific model).",
+        "No canonical `requested_account` / `effective_account` shape in the main runtime identity contracts, even where requested/effective Persona and model fields are already standardized.",
+        "Add requested/effective account, overseer role, worktree/lane, and fallback reason fields to the canonical runtime snapshot.",
+        "`requested_auth_mode` / `effective_capabilities[]` / `effective_account_identity`",
+        "Per-project/per-package configuration scope is thin."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/GitHub_Integration.md:293"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-093",
+      "source_obligation_ids": [
+        "obl-044"
+      ],
+      "canon_label": "execution identity contract",
+      "row_type": "owner",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "## Settings / Provider / Persona / Account Impacts",
+      "status": "partial",
+      "exact_items": [
+        "Missing the concept of \"Effective Identity\" (lane-specific auth) in storage and evidence.",
+        "Needs to define \"Overseer\" personas and their relation to Lanes.",
+        "Model selection might need to be lane-aware (e.g., a \"Security Lane\" might enforce a specific model).",
+        "No canonical `requested_account` / `effective_account` shape in the main runtime identity contracts, even where requested/effective Persona and model fields are already standardized.",
+        "Add requested/effective account, overseer role, worktree/lane, and fallback reason fields to the canonical runtime snapshot.",
+        "`requested_auth_mode` / `effective_capabilities[]` / `effective_account_identity`",
+        "Per-project/per-package configuration scope is thin."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:523",
+        "Plans/storage-plan.md:746",
+        "Plans/storage-plan.md:777"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-094",
+      "source_obligation_ids": [
+        "obl-045"
+      ],
+      "canon_label": "dual overseer model",
+      "row_type": "owner",
+      "path": "Plans/orchestrator-subagent-integration.md",
+      "heading_hint": "## Contradictions To Resolve",
+      "status": "partial",
+      "exact_items": [
+        "Single Overseer vs. package + seam overseers.",
+        "Define the dual-overseer governance model (package overseer + seam overseer) in a canonical doc.",
+        "Include: spawning rules, validation subagent pair, escalation paths, persona/model assignment.",
+        "Lock package overseer vs seam overseer authority, spawning rules, corroboration/review responsibilities, and identity/model assignment."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/orchestrator-subagent-integration.md:6150"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-095",
+      "source_obligation_ids": [
+        "obl-045"
+      ],
+      "canon_label": "dual overseer model",
+      "row_type": "owner",
+      "path": "Plans/Executor_Protocol.md",
+      "heading_hint": "## Contradictions To Resolve",
+      "status": "missing",
+      "exact_items": [
+        "Single Overseer vs. package + seam overseers.",
+        "Define the dual-overseer governance model (package overseer + seam overseer) in a canonical doc.",
+        "Include: spawning rules, validation subagent pair, escalation paths, persona/model assignment.",
+        "Lock package overseer vs seam overseer authority, spawning rules, corroboration/review responsibilities, and identity/model assignment."
+      ],
+      "stale_tokens": [],
+      "evidence": [],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-096",
+      "source_obligation_ids": [
+        "obl-045"
+      ],
+      "canon_label": "dual overseer model",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "## Contradictions To Resolve",
+      "status": "missing",
+      "exact_items": [
+        "Single Overseer vs. package + seam overseers.",
+        "Define the dual-overseer governance model (package overseer + seam overseer) in a canonical doc.",
+        "Include: spawning rules, validation subagent pair, escalation paths, persona/model assignment.",
+        "Lock package overseer vs seam overseer authority, spawning rules, corroboration/review responsibilities, and identity/model assignment."
+      ],
+      "stale_tokens": [],
+      "evidence": [],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-097",
+      "source_obligation_ids": [
+        "obl-045"
+      ],
+      "canon_label": "dual overseer model",
+      "row_type": "owner",
+      "path": "Plans/Personas.md",
+      "heading_hint": "## Contradictions To Resolve",
+      "status": "missing",
+      "exact_items": [
+        "Single Overseer vs. package + seam overseers.",
+        "Define the dual-overseer governance model (package overseer + seam overseer) in a canonical doc.",
+        "Include: spawning rules, validation subagent pair, escalation paths, persona/model assignment.",
+        "Lock package overseer vs seam overseer authority, spawning rules, corroboration/review responsibilities, and identity/model assignment."
+      ],
+      "stale_tokens": [],
+      "evidence": [],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-098",
+      "source_obligation_ids": [
+        "obl-046"
+      ],
+      "canon_label": "lane worktree mapping",
+      "row_type": "owner",
+      "path": "Plans/WorktreeGitImprovement.md",
+      "heading_hint": "## Worktree / SCM / Parallelism Impacts",
+      "status": "partial",
+      "exact_items": [
+        "The per-subtask worktree model is too granular and slow. Parallel toggles vs Lane pools need reconciliation.",
+        "Cleanup and contamination models are weak. \"Safe points\" need to be rigorously defined against worktree state.",
+        "\"Lane Mapping:\" How do we map \"Lanes\" to \"Worktrees\" exactly? Is it 1:1, or dynamic allocation?",
+        "Determine whether lanes get 1:1 dedicated worktrees, draw from a pool, or use a hybrid.",
+        "Contamination is a major gap.",
+        "Specify package-based worktree lane pools.",
+        "Normalize safe-point / restore-point / rollback / contamination terminology.",
+        "PM-owned worktrees are invisible."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/WorktreeGitImprovement.md:566"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-099",
+      "source_obligation_ids": [
+        "obl-046"
+      ],
+      "canon_label": "lane worktree mapping",
+      "row_type": "owner",
+      "path": "Plans/MiscPlan.md",
+      "heading_hint": "## Worktree / SCM / Parallelism Impacts",
+      "status": "partial",
+      "exact_items": [
+        "The per-subtask worktree model is too granular and slow. Parallel toggles vs Lane pools need reconciliation.",
+        "Cleanup and contamination models are weak. \"Safe points\" need to be rigorously defined against worktree state.",
+        "\"Lane Mapping:\" How do we map \"Lanes\" to \"Worktrees\" exactly? Is it 1:1, or dynamic allocation?",
+        "Determine whether lanes get 1:1 dedicated worktrees, draw from a pool, or use a hybrid.",
+        "Contamination is a major gap.",
+        "Specify package-based worktree lane pools.",
+        "Normalize safe-point / restore-point / rollback / contamination terminology.",
+        "PM-owned worktrees are invisible."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/MiscPlan.md:1251"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-100",
+      "source_obligation_ids": [
+        "obl-046"
+      ],
+      "canon_label": "lane worktree mapping",
+      "row_type": "owner",
+      "path": "Plans/FileSafe.md",
+      "heading_hint": "## Worktree / SCM / Parallelism Impacts",
+      "status": "partial",
+      "exact_items": [
+        "The per-subtask worktree model is too granular and slow. Parallel toggles vs Lane pools need reconciliation.",
+        "Cleanup and contamination models are weak. \"Safe points\" need to be rigorously defined against worktree state.",
+        "\"Lane Mapping:\" How do we map \"Lanes\" to \"Worktrees\" exactly? Is it 1:1, or dynamic allocation?",
+        "Determine whether lanes get 1:1 dedicated worktrees, draw from a pool, or use a hybrid.",
+        "Contamination is a major gap.",
+        "Specify package-based worktree lane pools.",
+        "Normalize safe-point / restore-point / rollback / contamination terminology.",
+        "PM-owned worktrees are invisible."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FileSafe.md:1278"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-101",
+      "source_obligation_ids": [
+        "obl-046"
+      ],
+      "canon_label": "lane worktree mapping",
+      "row_type": "owner",
+      "path": "Plans/newtools.md",
+      "heading_hint": "## Worktree / SCM / Parallelism Impacts",
+      "status": "missing",
+      "exact_items": [
+        "The per-subtask worktree model is too granular and slow. Parallel toggles vs Lane pools need reconciliation.",
+        "Cleanup and contamination models are weak. \"Safe points\" need to be rigorously defined against worktree state.",
+        "\"Lane Mapping:\" How do we map \"Lanes\" to \"Worktrees\" exactly? Is it 1:1, or dynamic allocation?",
+        "Determine whether lanes get 1:1 dedicated worktrees, draw from a pool, or use a hybrid.",
+        "Contamination is a major gap.",
+        "Specify package-based worktree lane pools.",
+        "Normalize safe-point / restore-point / rollback / contamination terminology.",
+        "PM-owned worktrees are invisible."
+      ],
+      "stale_tokens": [],
+      "evidence": [],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-102",
+      "source_obligation_ids": [
+        "obl-046"
+      ],
+      "canon_label": "lane worktree mapping",
+      "row_type": "owner",
+      "path": "Plans/GitHub_Integration.md",
+      "heading_hint": "## Worktree / SCM / Parallelism Impacts",
+      "status": "missing",
+      "exact_items": [
+        "The per-subtask worktree model is too granular and slow. Parallel toggles vs Lane pools need reconciliation.",
+        "Cleanup and contamination models are weak. \"Safe points\" need to be rigorously defined against worktree state.",
+        "\"Lane Mapping:\" How do we map \"Lanes\" to \"Worktrees\" exactly? Is it 1:1, or dynamic allocation?",
+        "Determine whether lanes get 1:1 dedicated worktrees, draw from a pool, or use a hybrid.",
+        "Contamination is a major gap.",
+        "Specify package-based worktree lane pools.",
+        "Normalize safe-point / restore-point / rollback / contamination terminology.",
+        "PM-owned worktrees are invisible."
+      ],
+      "stale_tokens": [],
+      "evidence": [],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-103",
+      "source_obligation_ids": [
+        "obl-047"
+      ],
+      "canon_label": "terminology owners",
+      "row_type": "owner",
+      "path": "Plans/Glossary.md",
+      "heading_hint": "## Cleanup Priorities",
+      "status": "missing",
+      "exact_items": [
+        "Need to adopt Seam/Lane/Overseer/Package terminology.",
+        "Crosswalk and Glossary have near-zero coverage of overseer (package or seam), work package, feature seam, lane, attempt, or effective identity.",
+        "Extend `Glossary.md`, `Crosswalk.md`, `Decision_Policy.md`, and `00-plans-index.md` with first-class ownership for feature seam, work package, package/seam overseers, promotion class, lane pool, contamination, and effective execution identity."
+      ],
+      "stale_tokens": [],
+      "evidence": [],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-104",
+      "source_obligation_ids": [
+        "obl-047"
+      ],
+      "canon_label": "terminology owners",
+      "row_type": "owner",
+      "path": "Plans/Crosswalk.md",
+      "heading_hint": "## Cleanup Priorities",
+      "status": "partial",
+      "exact_items": [
+        "Need to adopt Seam/Lane/Overseer/Package terminology.",
+        "Crosswalk and Glossary have near-zero coverage of overseer (package or seam), work package, feature seam, lane, attempt, or effective identity.",
+        "Extend `Glossary.md`, `Crosswalk.md`, `Decision_Policy.md`, and `00-plans-index.md` with first-class ownership for feature seam, work package, package/seam overseers, promotion class, lane pool, contamination, and effective execution identity."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Crosswalk.md:92"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-105",
+      "source_obligation_ids": [
+        "obl-047"
+      ],
+      "canon_label": "terminology owners",
+      "row_type": "owner",
+      "path": "Plans/Decision_Policy.md",
+      "heading_hint": "## Cleanup Priorities",
+      "status": "missing",
+      "exact_items": [
+        "Need to adopt Seam/Lane/Overseer/Package terminology.",
+        "Crosswalk and Glossary have near-zero coverage of overseer (package or seam), work package, feature seam, lane, attempt, or effective identity.",
+        "Extend `Glossary.md`, `Crosswalk.md`, `Decision_Policy.md`, and `00-plans-index.md` with first-class ownership for feature seam, work package, package/seam overseers, promotion class, lane pool, contamination, and effective execution identity."
+      ],
+      "stale_tokens": [],
+      "evidence": [],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-106",
+      "source_obligation_ids": [
+        "obl-047"
+      ],
+      "canon_label": "terminology owners",
+      "row_type": "owner",
+      "path": "Plans/00-plans-index.md",
+      "heading_hint": "## Cleanup Priorities",
+      "status": "missing",
+      "exact_items": [
+        "Need to adopt Seam/Lane/Overseer/Package terminology.",
+        "Crosswalk and Glossary have near-zero coverage of overseer (package or seam), work package, feature seam, lane, attempt, or effective identity.",
+        "Extend `Glossary.md`, `Crosswalk.md`, `Decision_Policy.md`, and `00-plans-index.md` with first-class ownership for feature seam, work package, package/seam overseers, promotion class, lane pool, contamination, and effective execution identity."
+      ],
+      "stale_tokens": [],
+      "evidence": [],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-107",
+      "source_obligation_ids": [
+        "obl-048"
+      ],
+      "canon_label": "runtime schema fields",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "## Runtime / Storage / Contract Impacts",
+      "status": "partial",
+      "exact_items": [
+        "Add node_id, package_id, seam_id, lane_id, attempt_id, effective_identity to addressing and event schemas.",
+        "Event schemas don't include package_id, seam_id, lane_id, attempt_id, or effective_identity fields.",
+        "Add package/seam/lane/worktree/account identity fields to the canonical runtime/event/envelope contracts.",
+        "Run envelope / instruction bundle needs node-identity alongside or replacing tier-identity.",
+        "No coherent `packages` namespace, no lane-pool registry, weak or absent `project_id` scoping in many event and artifact contracts, and insufficient usage/evidence attribution fields for multi-package runs."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:121",
+        "Plans/Contracts_V0.md:124",
+        "Plans/Contracts_V0.md:177"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-108",
+      "source_obligation_ids": [
+        "obl-048"
+      ],
+      "canon_label": "runtime schema fields",
+      "row_type": "owner",
+      "path": "Plans/Executor_Protocol.md",
+      "heading_hint": "## Runtime / Storage / Contract Impacts",
+      "status": "partial",
+      "exact_items": [
+        "Add node_id, package_id, seam_id, lane_id, attempt_id, effective_identity to addressing and event schemas.",
+        "Event schemas don't include package_id, seam_id, lane_id, attempt_id, or effective_identity fields.",
+        "Add package/seam/lane/worktree/account identity fields to the canonical runtime/event/envelope contracts.",
+        "Run envelope / instruction bundle needs node-identity alongside or replacing tier-identity.",
+        "No coherent `packages` namespace, no lane-pool registry, weak or absent `project_id` scoping in many event and artifact contracts, and insufficient usage/evidence attribution fields for multi-package runs."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Executor_Protocol.md:46",
+        "Plans/Executor_Protocol.md:120"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-109",
+      "source_obligation_ids": [
+        "obl-048"
+      ],
+      "canon_label": "runtime schema fields",
+      "row_type": "owner",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "## Runtime / Storage / Contract Impacts",
+      "status": "partial",
+      "exact_items": [
+        "Add node_id, package_id, seam_id, lane_id, attempt_id, effective_identity to addressing and event schemas.",
+        "Event schemas don't include package_id, seam_id, lane_id, attempt_id, or effective_identity fields.",
+        "Add package/seam/lane/worktree/account identity fields to the canonical runtime/event/envelope contracts.",
+        "Run envelope / instruction bundle needs node-identity alongside or replacing tier-identity.",
+        "No coherent `packages` namespace, no lane-pool registry, weak or absent `project_id` scoping in many event and artifact contracts, and insufficient usage/evidence attribution fields for multi-package runs."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:51",
+        "Plans/storage-plan.md:287",
+        "Plans/storage-plan.md:854"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-110",
+      "source_obligation_ids": [
+        "obl-048"
+      ],
+      "canon_label": "runtime schema fields",
+      "row_type": "owner",
+      "path": "Plans/Prompt_Pipeline.md",
+      "heading_hint": "## Runtime / Storage / Contract Impacts",
+      "status": "partial",
+      "exact_items": [
+        "Add node_id, package_id, seam_id, lane_id, attempt_id, effective_identity to addressing and event schemas.",
+        "Event schemas don't include package_id, seam_id, lane_id, attempt_id, or effective_identity fields.",
+        "Add package/seam/lane/worktree/account identity fields to the canonical runtime/event/envelope contracts.",
+        "Run envelope / instruction bundle needs node-identity alongside or replacing tier-identity.",
+        "No coherent `packages` namespace, no lane-pool registry, weak or absent `project_id` scoping in many event and artifact contracts, and insufficient usage/evidence attribution fields for multi-package runs."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Prompt_Pipeline.md:56",
+        "Plans/Prompt_Pipeline.md:57"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-111",
+      "source_obligation_ids": [
+        "obl-048"
+      ],
+      "canon_label": "runtime schema fields",
+      "row_type": "owner",
+      "path": "Plans/plan_graph.schema.json",
+      "heading_hint": "## Runtime / Storage / Contract Impacts",
+      "status": "partial",
+      "exact_items": [
+        "Add node_id, package_id, seam_id, lane_id, attempt_id, effective_identity to addressing and event schemas.",
+        "Event schemas don't include package_id, seam_id, lane_id, attempt_id, or effective_identity fields.",
+        "Add package/seam/lane/worktree/account identity fields to the canonical runtime/event/envelope contracts.",
+        "Run envelope / instruction bundle needs node-identity alongside or replacing tier-identity.",
+        "No coherent `packages` namespace, no lane-pool registry, weak or absent `project_id` scoping in many event and artifact contracts, and insufficient usage/evidence attribution fields for multi-package runs."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/plan_graph.schema.json:63"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-112",
+      "source_obligation_ids": [
+        "obl-048"
+      ],
+      "canon_label": "runtime schema fields",
+      "row_type": "owner",
+      "path": "Plans/project_plan_node.schema.json",
+      "heading_hint": "## Runtime / Storage / Contract Impacts",
+      "status": "partial",
+      "exact_items": [
+        "Add node_id, package_id, seam_id, lane_id, attempt_id, effective_identity to addressing and event schemas.",
+        "Event schemas don't include package_id, seam_id, lane_id, attempt_id, or effective_identity fields.",
+        "Add package/seam/lane/worktree/account identity fields to the canonical runtime/event/envelope contracts.",
+        "Run envelope / instruction bundle needs node-identity alongside or replacing tier-identity.",
+        "No coherent `packages` namespace, no lane-pool registry, weak or absent `project_id` scoping in many event and artifact contracts, and insufficient usage/evidence attribution fields for multi-package runs."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/project_plan_node.schema.json:8"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-113",
+      "source_obligation_ids": [
+        "obl-048"
+      ],
+      "canon_label": "runtime schema fields",
+      "row_type": "owner",
+      "path": "Plans/project_plan_graph_index.schema.json",
+      "heading_hint": "## Runtime / Storage / Contract Impacts",
+      "status": "partial",
+      "exact_items": [
+        "Add node_id, package_id, seam_id, lane_id, attempt_id, effective_identity to addressing and event schemas.",
+        "Event schemas don't include package_id, seam_id, lane_id, attempt_id, or effective_identity fields.",
+        "Add package/seam/lane/worktree/account identity fields to the canonical runtime/event/envelope contracts.",
+        "Run envelope / instruction bundle needs node-identity alongside or replacing tier-identity.",
+        "No coherent `packages` namespace, no lane-pool registry, weak or absent `project_id` scoping in many event and artifact contracts, and insufficient usage/evidence attribution fields for multi-package runs."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/project_plan_graph_index.schema.json:26"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-114",
+      "source_obligation_ids": [
+        "obl-048"
+      ],
+      "canon_label": "runtime schema fields",
+      "row_type": "owner",
+      "path": "Plans/usage-feature.md",
+      "heading_hint": "## Runtime / Storage / Contract Impacts",
+      "status": "partial",
+      "exact_items": [
+        "Add node_id, package_id, seam_id, lane_id, attempt_id, effective_identity to addressing and event schemas.",
+        "Event schemas don't include package_id, seam_id, lane_id, attempt_id, or effective_identity fields.",
+        "Add package/seam/lane/worktree/account identity fields to the canonical runtime/event/envelope contracts.",
+        "Run envelope / instruction bundle needs node-identity alongside or replacing tier-identity.",
+        "No coherent `packages` namespace, no lane-pool registry, weak or absent `project_id` scoping in many event and artifact contracts, and insufficient usage/evidence attribution fields for multi-package runs."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/usage-feature.md:525"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-115",
+      "source_obligation_ids": [
+        "obl-049"
+      ],
+      "canon_label": "lexicographic lock",
+      "row_type": "stale_retirement",
+      "path": "Plans/plan_graph.schema.json",
+      "heading_hint": "## Runtime / Storage / Contract Impacts",
+      "status": "partial",
+      "exact_items": [
+        "`selection_rule = \"lexicographic_node_id\"`",
+        "lexicographic node selection"
+      ],
+      "stale_tokens": [
+        "selection_rule = \"lexicographic_node_id\"",
+        "lexicographic node selection"
+      ],
+      "evidence": [
+        "Plans/plan_graph.schema.json:44"
+      ],
+      "required_action": "stale_retirement"
+    },
+    {
+      "coverage_id": "cov-116",
+      "source_obligation_ids": [
+        "obl-049"
+      ],
+      "canon_label": "lexicographic lock",
+      "row_type": "stale_retirement",
+      "path": "Plans/project_plan_node.schema.json",
+      "heading_hint": "## Runtime / Storage / Contract Impacts",
+      "status": "missing",
+      "exact_items": [
+        "`selection_rule = \"lexicographic_node_id\"`",
+        "lexicographic node selection"
+      ],
+      "stale_tokens": [
+        "selection_rule = \"lexicographic_node_id\"",
+        "lexicographic node selection"
+      ],
+      "evidence": [],
+      "required_action": "stale_retirement"
+    },
+    {
+      "coverage_id": "cov-117",
+      "source_obligation_ids": [
+        "obl-049"
+      ],
+      "canon_label": "lexicographic lock",
+      "row_type": "stale_retirement",
+      "path": "Plans/project_plan_graph_index.schema.json",
+      "heading_hint": "## Runtime / Storage / Contract Impacts",
+      "status": "partial",
+      "exact_items": [
+        "`selection_rule = \"lexicographic_node_id\"`",
+        "lexicographic node selection"
+      ],
+      "stale_tokens": [
+        "selection_rule = \"lexicographic_node_id\"",
+        "lexicographic node selection"
+      ],
+      "evidence": [
+        "Plans/project_plan_graph_index.schema.json:63"
+      ],
+      "required_action": "stale_retirement"
+    },
+    {
+      "coverage_id": "cov-118",
+      "source_obligation_ids": [
+        "obl-049"
+      ],
+      "canon_label": "lexicographic lock",
+      "row_type": "stale_retirement",
+      "path": "Plans/Executor_Protocol.md",
+      "heading_hint": "## Runtime / Storage / Contract Impacts",
+      "status": "missing",
+      "exact_items": [
+        "`selection_rule = \"lexicographic_node_id\"`",
+        "lexicographic node selection"
+      ],
+      "stale_tokens": [
+        "selection_rule = \"lexicographic_node_id\"",
+        "lexicographic node selection"
+      ],
+      "evidence": [],
+      "required_action": "stale_retirement"
+    },
+    {
+      "coverage_id": "cov-119",
+      "source_obligation_ids": [
+        "obl-050"
+      ],
+      "canon_label": "blocked payload drift",
+      "row_type": "stale_retirement",
+      "path": "Plans/Executor_Protocol.md",
+      "heading_hint": "## Runtime / Storage / Contract Impacts",
+      "status": "missing",
+      "exact_items": [
+        "`reason_code`",
+        "`recovery_options[]`",
+        "`allowed_actions`",
+        "`blocked_reason`",
+        "`Retry/Replan/Reopen/Approve/Deny`"
+      ],
+      "stale_tokens": [
+        "reason_code",
+        "recovery_options[]",
+        "allowed_actions",
+        "blocked_reason",
+        "Retry/Replan/Reopen/Approve/Deny"
+      ],
+      "evidence": [],
+      "required_action": "stale_retirement"
+    },
+    {
+      "coverage_id": "cov-120",
+      "source_obligation_ids": [
+        "obl-050"
+      ],
+      "canon_label": "blocked payload drift",
+      "row_type": "stale_retirement",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "## Runtime / Storage / Contract Impacts",
+      "status": "partial",
+      "exact_items": [
+        "`reason_code`",
+        "`recovery_options[]`",
+        "`allowed_actions`",
+        "`blocked_reason`",
+        "`Retry/Replan/Reopen/Approve/Deny`"
+      ],
+      "stale_tokens": [
+        "reason_code",
+        "recovery_options[]",
+        "allowed_actions",
+        "blocked_reason",
+        "Retry/Replan/Reopen/Approve/Deny"
+      ],
+      "evidence": [
+        "Plans/Contracts_V0.md:255"
+      ],
+      "required_action": "stale_retirement"
+    },
+    {
+      "coverage_id": "cov-121",
+      "source_obligation_ids": [
+        "obl-050"
+      ],
+      "canon_label": "blocked payload drift",
+      "row_type": "stale_retirement",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "## Runtime / Storage / Contract Impacts",
+      "status": "missing",
+      "exact_items": [
+        "`reason_code`",
+        "`recovery_options[]`",
+        "`allowed_actions`",
+        "`blocked_reason`",
+        "`Retry/Replan/Reopen/Approve/Deny`"
+      ],
+      "stale_tokens": [
+        "reason_code",
+        "recovery_options[]",
+        "allowed_actions",
+        "blocked_reason",
+        "Retry/Replan/Reopen/Approve/Deny"
+      ],
+      "evidence": [],
+      "required_action": "stale_retirement"
+    },
+    {
+      "coverage_id": "cov-122",
+      "source_obligation_ids": [
+        "obl-050"
+      ],
+      "canon_label": "blocked payload drift",
+      "row_type": "stale_retirement",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "## Runtime / Storage / Contract Impacts",
+      "status": "missing",
+      "exact_items": [
+        "`reason_code`",
+        "`recovery_options[]`",
+        "`allowed_actions`",
+        "`blocked_reason`",
+        "`Retry/Replan/Reopen/Approve/Deny`"
+      ],
+      "stale_tokens": [
+        "reason_code",
+        "recovery_options[]",
+        "allowed_actions",
+        "blocked_reason",
+        "Retry/Replan/Reopen/Approve/Deny"
+      ],
+      "evidence": [],
+      "required_action": "stale_retirement"
+    },
+    {
+      "coverage_id": "cov-123",
+      "source_obligation_ids": [
+        "obl-050"
+      ],
+      "canon_label": "blocked payload drift",
+      "row_type": "stale_retirement",
+      "path": "Plans/newtools.md",
+      "heading_hint": "## Runtime / Storage / Contract Impacts",
+      "status": "missing",
+      "exact_items": [
+        "`reason_code`",
+        "`recovery_options[]`",
+        "`allowed_actions`",
+        "`blocked_reason`",
+        "`Retry/Replan/Reopen/Approve/Deny`"
+      ],
+      "stale_tokens": [
+        "reason_code",
+        "recovery_options[]",
+        "allowed_actions",
+        "blocked_reason",
+        "Retry/Replan/Reopen/Approve/Deny"
+      ],
+      "evidence": [],
+      "required_action": "stale_retirement"
+    }
+  ]
+}

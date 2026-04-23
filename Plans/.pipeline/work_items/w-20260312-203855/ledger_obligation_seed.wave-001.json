@@ -1,1951 +1,1655 @@
 {
   "schema_id": "pm.ledger_obligation_seed.wave.v1",
   "work_id": "w-20260312-203855",
-  "wave_id": "wave-001",
+  "wave": 1,
   "covered_ranges": [
     "working_ledger.md:L1-L400",
     "working_ledger.md:L401-L800",
     "working_ledger.md:L801-L1200",
-    "working_ledger.md:L1201-L1600",
-    "working_ledger.md:L1601-L2000",
-    "working_ledger.md:L2001-L2400",
-    "working_ledger.md:L2401-L2800",
-    "working_ledger.md:L2801-L3200"
+    "working_ledger.md:L1201-L1600"
   ],
   "seed_items": [
     {
-      "seed_type": "stale_retirement",
-      "canon_label_hint": "packet contradiction tokens",
+      "seed_type": "owner",
+      "canon_label_hint": "Orchestrator Tab Structure Redesign - Replace Tiers",
       "exact_items": [
-        "`TierContext`",
-        "`tier_id`",
-        "`github_api:github.com/<login>`",
-        "`approve_continue`"
+        "existing `Tiers` tab should be replaced by a seam/package-oriented tab (name still open; likely `Seams` or equivalent)",
+        "keep tabs separate: `Progress`, `Seams` (replacement for `Tiers`), `Node Graph`, `Evidence`, `History`, `Ledger`"
+      ],
+      "affected_doc_hints": [
+        "Orchestrator page shell",
+        "UI redesign documentation"
+      ],
+      "heading_hints": [
+        "Key Facts and Findings"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L32",
+        "working_ledger.md:L60-L66"
+      ],
+      "notes": [
+        "Tiers tab is legacy, must be replaced with Seams tab; breaking change to Orchestrator interface"
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Node Graph Display - Historical Lineage Preservation",
+      "exact_items": [
+        "old invalidated/superseded nodes remain visible",
+        "old nodes stay clickable for historical detail",
+        "patched generations branch from the old path",
+        "live path may later rejoin surviving downstream nodes"
+      ],
+      "affected_doc_hints": [
+        "Node Graph Display tab",
+        "graph-patch lineage"
+      ],
+      "heading_hints": [
+        "Key Facts and Findings"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L33-L37"
+      ],
+      "notes": [
+        "Node Graph must preserve superseded node history and patch lineage"
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Progress Tab Widget Hosting Requirements",
+      "exact_items": [
+        "Orchestrator widgets live inside the `Progress` tab",
+        "some orchestrator widgets may also be hostable on Dashboard",
+        "non-Orchestrator widgets should not be hostable on the Orchestrator page"
+      ],
+      "affected_doc_hints": [
+        "Orchestrator page",
+        "Dashboard",
+        "Progress tab"
+      ],
+      "heading_hints": [
+        "Widget-system implication clarified"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L42-L44"
+      ],
+      "notes": [
+        "Widget hosting policy: Orchestrator widgets in Progress tab only, some may cross to Dashboard"
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Evidence Tab Redesign - Separate Panes",
+      "exact_items": [
+        "separate panes: `Evidence` pane for verdicts/receipts/findings/reports, `Artifacts` pane for screenshots/recordings/diffs/reports/generated docs/etc.",
+        "evidence and artifacts should remain linked bidirectionally"
+      ],
+      "affected_doc_hints": [
+        "Evidence tab"
+      ],
+      "heading_hints": [
+        "Evidence tab redesign direction"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L121-L125"
+      ],
+      "notes": [
+        "Evidence tab must split Evidence and Artifacts into separate panes with bidirectional linking"
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Seams Tab Structure - Hierarchical Organization",
+      "exact_items": [
+        "top level = `Feature Seams`",
+        "second level = `Work Packages`",
+        "nodes should appear as summaries/problem drill-ins rather than the default list shape",
+        "Seams detail panel should emphasize governance/completion/integration truth rather than raw node execution churn"
+      ],
+      "affected_doc_hints": [
+        "Seams tab",
+        "Seams detail panel"
+      ],
+      "heading_hints": [
+        "Seams-tab structure direction"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L107-L110"
+      ],
+      "notes": [
+        "Seams tab must use hierarchical structure: Feature Seams > Work Packages > nodes as problem summaries"
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Node Graph Detail Inspector Requirements",
+      "exact_items": [
+        "graph canvas + right-side detail inspector",
+        "detail inspector should expose: requested/effective provider/model/effort/persona/account, usage/token/cost info, worker policy (agent/subagent, fresh/reused, spawn path), retry/review/promotion state, lane/worktree/snapshot state, linked evidence/artifacts"
+      ],
+      "affected_doc_hints": [
+        "Node Graph tab",
+        "detail inspector"
+      ],
+      "heading_hints": [
+        "Node Graph tab direction"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L112-L119"
+      ],
+      "notes": [
+        "Detail inspector is required with specific fields: provider, model, effort, persona, account, usage/token/cost, worker policy, retry state, lane state, linked items"
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "History vs Ledger Distinction - Explicit Contract",
+      "exact_items": [
+        "`History` = chronological story/timeline of execution, governance, promotion, recovery, account switching, graph patches",
+        "`Ledger` = structured durable record inspection (attempts, reviews, corroboration, promotions, graph patches, recovery records, learnings, usage-linked receipts)"
+      ],
+      "affected_doc_hints": [
+        "History tab",
+        "Ledger tab"
+      ],
+      "heading_hints": [
+        "History vs Ledger distinction"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L127-L129"
+      ],
+      "notes": [
+        "History and Ledger must remain separate: History is timeline/story, Ledger is structured records"
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Cross-Tab Navigation with Deep Links",
+      "exact_items": [
+        "object/event focus should deep-link across Progress / Seams / Node Graph / Evidence / History / Ledger",
+        "deep links should carry selection/filter/focus context, not merely switch tabs",
+        "`Seams` and `Node Graph` should share focus context without hyperactive live-sync"
+      ],
+      "affected_doc_hints": [
+        "Progress",
+        "Seams",
+        "Node Graph",
+        "Evidence",
+        "History",
+        "Ledger"
+      ],
+      "heading_hints": [
+        "Cross-tab navigation"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L141-L144"
+      ],
+      "notes": [
+        "Cross-tab deep links are a real contract requirement, must carry context not just switch tabs"
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Canonical Copy/Labels and State Labels",
+      "exact_items": [
+        "likely canonical tab/object labels: `Seams`, `Feature Seam`, `Work Package`, `Package Overseer`, `Seam Overseer`",
+        "likely user-facing state/action labels: `Locally Complete`, `Seam Complete`, `Completion Blocked`, `Weak Integration`, `Promotion Blocked`, `Promotion Revoked`, `Corroboration Requested`, `Challenge Accepted`, `Challenge Not Accepted`, `Advisory Concern Recorded`, `Graph Patch Requested`, `Graph Patch Applied`, `Generation Updated`"
+      ],
+      "affected_doc_hints": [
+        "docs/runtime model",
+        "UI labels"
+      ],
+      "heading_hints": [
+        "Copy/labels direction"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L145-L166"
+      ],
+      "notes": [
+        "Canonical terms must be used precisely in docs and runtime model"
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Weak Integration Concerns - UI Grouping Requirements",
+      "exact_items": [
+        "`Weak Integration` should not be just a badge; Seams UI should summarize it visibly and group concerns under readable headings: Wiring, Workflow, State, GUI, Design",
+        "package issues should roll up to seam concerns only when they cross package/seam/user-visible boundaries or affect seam completion truth"
+      ],
+      "affected_doc_hints": [
+        "Seams UI"
+      ],
+      "heading_hints": [
+        "Additional UI/copy direction"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L172-L178"
+      ],
+      "notes": [
+        "Weak Integration must be visible and grouped by concern category, not just a badge"
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Seam Completion Presentation - Distinct Boundaries",
+      "exact_items": [
+        "seam completion should be presented distinctly from package completion and package-to-seam availability: `Locally Complete`, `Available to Seam`, `Seam Complete`",
+        "promotions should be visible as explicit named boundaries: `Lane to Package`, `Package to Seam`, `Seam Completion`"
+      ],
+      "affected_doc_hints": [
+        "Seams UI",
+        "completion state labels"
+      ],
+      "heading_hints": [
+        "Additional UI/copy direction"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L179-L186"
+      ],
+      "notes": [
+        "Completion state distinctions are mandatory: Locally Complete vs Available to Seam vs Seam Complete"
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Revocation and Reopen Semantics - Explicit Visibility",
+      "exact_items": [
+        "revocation/reopen semantics should be explicit and visible: `Promotion Revoked`, `Seam Completion Revoked`, `Reopened`, `Reopened by Patch`, `Reopened by New Evidence`"
+      ],
+      "affected_doc_hints": [
+        "UI labels",
+        "state transitions"
+      ],
+      "heading_hints": [
+        "Additional UI/copy direction"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L187-L192"
+      ],
+      "notes": [
+        "Revocation and reopen states must be explicit and labeled distinctly"
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Blocked States - Mandatory Information Exposure",
+      "exact_items": [
+        "blocked states should always expose: blocked reason, blocked owner, time blocked, next step",
+        "blocked ownership should be normalized with stable labels: `Runtime`, `Package Overseer`, `Seam Overseer`, `Corroboration`, `Graph Patch`, `Recovery`, `User`, `External Resource`"
+      ],
+      "affected_doc_hints": [
+        "blocked state UI",
+        "ownership labels"
+      ],
+      "heading_hints": [
+        "Additional UI/copy direction"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L193-L206"
+      ],
+      "notes": [
+        "Blocked states must always show reason, owner, time, and next step"
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Alert Level Classification",
+      "exact_items": [
+        "alert levels should roughly separate into: `Info`, `Warning`, `Attention`, `Action Required`",
+        "Dashboard = summary/urgency",
+        "Orchestrator = detailed operational alert context"
+      ],
+      "affected_doc_hints": [
+        "Dashboard",
+        "Orchestrator",
+        "alert model"
+      ],
+      "heading_hints": [
+        "Alert / attention model direction"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L207-L214"
+      ],
+      "notes": [
+        "Alert levels must follow classification: Info, Warning, Attention, Action Required"
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Canonical Event Families",
+      "exact_items": [
+        "canonical event families should remain stable: `seam.*`, `package.*`, `node.*`, `promotion.*`, `corroboration.*`, `graph_patch.*`, `recovery.*`, `account.*`",
+        "operator visibility should separate: history-only events, badge-worthy events, attention-card-worthy conditions, chat-thread-worthy action-required cases"
+      ],
+      "affected_doc_hints": [
+        "event model",
+        "operator visibility"
+      ],
+      "heading_hints": [
+        "Event/UI mapping direction"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L217-L230"
+      ],
+      "notes": [
+        "Event family names must remain stable, visibility classification is mandatory"
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Concern Model - First-Class Record Requirements",
+      "exact_items": [
+        "`concern` should be a first-class record, not just a field buried in review/alert logic",
+        "concern records should carry: identity, scope, severity, category, owner, lifecycle state, meaning/summary, linkage to evidence/artifacts/history/source records, visibility/attention flags",
+        "likely concern lifecycle states: `active`, `acknowledged`, `resolved`, `dismissed`"
+      ],
+      "affected_doc_hints": [
+        "concern model",
+        "record structure"
+      ],
+      "heading_hints": [
+        "Concern-model direction"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L258-L274"
+      ],
+      "notes": [
+        "Concerns must be first-class records with specific fields and lifecycle states"
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Concern Creation Authority and Resolution Rules",
+      "exact_items": [
+        "canonical concerns should be created by: runtime, package overseer, seam overseer, corroboration outcome, graph patch/state-transition logic",
+        "workers may nominate findings but should not mint canonical concerns directly",
+        "concern records should update/escalate/downgrade when the same underlying issue persists rather than duplicating endlessly",
+        "resolution must track underlying truth changes, not mere presentation changes"
+      ],
+      "affected_doc_hints": [
+        "concern model",
+        "runtime logic",
+        "worker policy"
+      ],
+      "heading_hints": [
+        "Concern creation/resolution direction"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L276-L284"
+      ],
+      "notes": [
+        "Only specific actors may mint concerns; workers nominate only; deduplication logic required"
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Shared Concern Projection Across Surfaces",
+      "exact_items": [
+        "all major surfaces should project the same concern model rather than inventing local versions",
+        "`Progress` = operational attention projection, `Seams` = integration/governance projection, `Evidence` = proof-backed concern projection, `History` = concern lifecycle timeline projection, `Ledger` = exact structured concern-record projection"
+      ],
+      "affected_doc_hints": [
+        "Progress",
+        "Seams",
+        "Evidence",
+        "History",
+        "Ledger"
+      ],
+      "heading_hints": [
+        "Shared concern projection rule"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L285-L291"
+      ],
+      "notes": [
+        "Same concern model must be projected across all surfaces, not invented locally per surface"
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Required Orchestrator Projection Families",
+      "exact_items": [
+        "required orchestrator projection families: Run Summary, Seam Summary, Package Summary, Node Summary, Promotion Summary, Lane / Worktree Summary, Concern Summary, Account / Usage Pressure, Recent Major Events, Corroboration Summary, Recovery Summary, Overseer Activity"
+      ],
+      "affected_doc_hints": [
+        "Orchestrator projections",
+        "widget data contracts"
+      ],
+      "heading_hints": [
+        "Required orchestrator projection families"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L315-L327"
+      ],
+      "notes": [
+        "These are mandatory projection families for Orchestrator widgets"
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Projection Freshness Health States",
+      "exact_items": [
+        "projection health states should conceptually include: `current`, `refreshing`, `stale`, `failed`",
+        "projection health becomes an operational concern when it undermines trust in blocked/promotion/recovery/patch/account-pressure truth"
+      ],
+      "affected_doc_hints": [
+        "projection model",
+        "operational concerns"
+      ],
+      "heading_hints": [
+        "Projection freshness direction",
+        "Projection degradation policy"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L331-L341"
+      ],
+      "notes": [
+        "Projection health must track freshness and trigger operational concerns when critical"
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Action Gating Under Degraded Projections",
+      "exact_items": [
+        "actions that change execution/promotion/recovery/approval truth require fresh-enough projection state",
+        "observational/navigation/export actions generally remain safe",
+        "UI should explain gating inline: what is stale, why it matters, what the user can do next"
+      ],
+      "affected_doc_hints": [
+        "action model",
+        "UI gating logic"
+      ],
+      "heading_hints": [
+        "Action-gating direction under degraded projections"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L342-L348"
+      ],
+      "notes": [
+        "Action gating is mandatory when projections are stale; UI must explain reasons"
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Direct Record Actionability Requirements",
+      "exact_items": [
+        "most trustworthy action-capable direct records: promotion record, graph patch record + state transition report, recovery/restore record, concern record for acknowledge/dismiss style actions",
+        "direct record views that allow action should explicitly show: currentness, generation match, superseded yes/no, actionable yes/no"
+      ],
+      "affected_doc_hints": [
+        "Ledger",
+        "direct record views"
+      ],
+      "heading_hints": [
+        "Direct-record actionability direction"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L353-L363"
+      ],
+      "notes": [
+        "Only specific record types support action; each must show currentness and actionability"
+      ]
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Tab-Badge Sparse Design Requirements",
+      "exact_items": [
+        "badges should stay sparse and purposeful",
+        "`Progress` badge should represent meaningful attention/action-required count",
+        "other tabs should prefer targeted counts or simple dot-badges rather than noisy unread-like counters"
+      ],
+      "affected_doc_hints": [
+        "Orchestrator tabs",
+        "badge design"
+      ],
+      "heading_hints": [
+        "Tab-badge direction"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L237-L240"
+      ],
+      "notes": [
+        "Tab badge design must be sparse; only meaningful counts or dot-badges"
+      ]
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Condition Aging and Display Lifetime Policy",
+      "exact_items": [
+        "unresolved conditions stay on operational surfaces",
+        "resolved conditions fall back to History",
+        "recently resolved major items may linger briefly in summary surfaces",
+        "current recommended default lifetimes: normal resolved operational items about 15 minutes, major resolved items until dismissed or up to 24 hours"
+      ],
+      "affected_doc_hints": [
+        "operational surfaces",
+        "History",
+        "condition lifecycle"
+      ],
+      "heading_hints": [
+        "Condition-aging direction"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L241-L248"
+      ],
+      "notes": [
+        "Condition aging policy: 15 min normal, 24 hr major, future settings should use policy-level control"
+      ]
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Alert State Semantics - Resolved vs Dismissed",
+      "exact_items": [
+        "`resolved` = underlying condition actually changed",
+        "`dismissed` = presentation hidden/acknowledged while underlying condition may still exist",
+        "active blockers must not be dismissible in a way that makes the system appear unblocked"
+      ],
+      "affected_doc_hints": [
+        "alert state model",
+        "blocker handling"
+      ],
+      "heading_hints": [
+        "Alert-state semantics"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L249-L252"
+      ],
+      "notes": [
+        "Resolved and dismissed are distinct; blockers must not be dismissible if truly unresolved"
+      ]
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Acknowledgement Model - Distinct from Resolution",
+      "exact_items": [
+        "`acknowledged` is distinct from both `resolved` and `dismissed`",
+        "intended for advisory/minor/non-blocking concerns that the user has explicitly seen/accepted",
+        "acknowledgment should reduce operational noise while preserving traceability",
+        "blockers requiring real action must not be acknowledgeable in place of resolution"
+      ],
+      "affected_doc_hints": [
+        "acknowledgement model",
+        "concern lifecycle"
+      ],
+      "heading_hints": [
+        "Acknowledgement model direction"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L253-L257"
+      ],
+      "notes": [
+        "Acknowledged is third state distinct from resolved/dismissed; only for advisory items"
+      ]
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Concern Action Model - User Facing Actions",
+      "exact_items": [
+        "user-facing concern actions should stay narrow: open / focus / open evidence / open history / open ledger, acknowledge / dismiss where allowed, open resolution thread, approve / reject only when tied to true manual/HITL boundaries"
+      ],
+      "affected_doc_hints": [
+        "concern UI",
+        "action model"
+      ],
+      "heading_hints": [
+        "Concern action-model direction"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L292-L297"
+      ],
+      "notes": [
+        "User actions must be narrow/focused, not generic buttons"
+      ]
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Inspector vs Full-Record Action Split",
+      "exact_items": [
+        "side inspectors should remain summary/action-light",
+        "heavy/high-consequence actions and dense records belong in full-record views"
+      ],
+      "affected_doc_hints": [
+        "inspector UI",
+        "full-record views"
+      ],
+      "heading_hints": [
+        "Inspector vs full-record action split"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L305-L307"
+      ],
+      "notes": [
+        "Inspectors stay light; heavy actions belong in full-record views"
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Widget Data Contract Requirements",
+      "exact_items": [
+        "orchestrator widgets should consume stable shared projections rather than raw event streams or bespoke queries",
+        "widget shell needs: widget identity/type, scope, filter/sort/display config, projection ref"
+      ],
+      "affected_doc_hints": [
+        "widget system",
+        "data contracts"
+      ],
+      "heading_hints": [
+        "Widget-system data-contract direction"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L308-L314"
+      ],
+      "notes": [
+        "Widgets must use stable projections with specific required fields"
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Projection Reuse Strategy - Cross Surface Scope",
+      "exact_items": [
+        "`Run Summary`, `Seam Summary`, `Concern Summary`, `Account / Usage Pressure`, `Recent Major Events` should be broadly reusable across Orchestrator / Dashboard / Projects",
+        "more operational/dense summaries stay primarily Orchestrator-facing"
+      ],
+      "affected_doc_hints": [
+        "Orchestrator",
+        "Dashboard",
+        "Projects"
+      ],
+      "heading_hints": [
+        "Projection reuse split"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L328-L330"
+      ],
+      "notes": [
+        "Some projections are cross-product reusable; others stay Orchestrator-only"
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Dashboard Projects Orchestrator Surface Split",
+      "exact_items": [
+        "Dashboard = summary/urgency/entry points",
+        "Orchestrator = operational depth",
+        "Projects page = multi-project summary/management surface, richer than a tiny status list but still summary-first",
+        "Project cards should show compact orchestrator/attention/usage pressure state and one primary blocked owner/reason when blocked"
+      ],
+      "affected_doc_hints": [
+        "Dashboard",
+        "Projects page",
+        "Orchestrator"
+      ],
+      "heading_hints": [
+        "Dashboard / Projects / Orchestrator split direction"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L371-L375"
+      ],
+      "notes": [
+        "Each surface has distinct scope: Dashboard = summary/urgency, Orchestrator = depth, Projects = multi-project management"
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Usage and Multi-Account Surface Split",
+      "exact_items": [
+        "Projects page shows coarse account/usage pressure summary only",
+        "Dashboard shows cross-project pressure that matters operationally",
+        "Orchestrator shows execution-specific provider/account pressure context",
+        "Usage page needs account-level breakdown, role usage view, and switch history, but full Usage-page redesign is intentionally out of scope"
+      ],
+      "affected_doc_hints": [
+        "Projects page",
+        "Dashboard",
+        "Orchestrator",
+        "Usage page"
+      ],
+      "heading_hints": [
+        "Usage/multi-account surface split"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L376-L380"
+      ],
+      "notes": [
+        "Usage page redesign is explicitly out of scope; each surface shows different pressure views"
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Settings Categorization and Multi-Account Organization",
+      "exact_items": [
+        "multi-account belongs with provider/model setup, not in an isolated orchestrator-only settings area",
+        "current likely major settings groupings: `Providers & Models`, `Execution Identity`, `Governance`, `Workers`, `Recovery`, `HITL`"
+      ],
+      "affected_doc_hints": [
+        "Settings page",
+        "Providers & Models",
+        "multi-account setup"
+      ],
+      "heading_hints": [
+        "Settings categorization direction"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L381-L389"
+      ],
+      "notes": [
+        "Multi-account is NOT orchestrator-only; belongs with provider/model settings"
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Settings Scope Hierarchy",
+      "exact_items": [
+        "`App / Global` = broad product defaults/catalogs/capabilities",
+        "`Project` = main execution policy owner",
+        "`Seam` = meaningful feature-level overrides only",
+        "`Package` = useful local execution/recovery overrides",
+        "`Node` = rare targeted override only",
+        "`Actor / Role` = cross-cutting provider/account/persona/worker policy",
+        "`Runtime only` = computed truth, not user configuration"
+      ],
+      "affected_doc_hints": [
+        "Settings hierarchy",
+        "configuration scopes"
+      ],
+      "heading_hints": [
+        "Settings scope hierarchy direction"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L390-L397"
+      ],
+      "notes": [
+        "Settings must follow strict scope hierarchy; Project is main policy owner"
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Orchestrator page six-tab structure ownership",
+      "exact_items": [
+        "Orchestrator page with six tabs: Progress, Tiers, Node Graph Display, Evidence, History, Ledger",
+        "Plans/Orchestrator_Page.md is the UI/page-shell owner for six-tab Orchestrator surface"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md"
+      ],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L581"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Runtime contract consumption by Orchestrator",
+      "exact_items": [
+        "Plans/orchestrator-subagent-integration.md treats Orchestrator as the primary consumer of canonical runtime scheduler contracts, not as a schema owner",
+        "orchestrator-subagent-integration.md says Puppet Master orchestrator consumes sharded-only plan graphs and executes headless from .puppet-master/project/plan_graph/index.json and node shards"
+      ],
+      "affected_doc_hints": [
+        "Plans/orchestrator-subagent-integration.md",
+        ".puppet-master/project/plan_graph/index.json"
+      ],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L582",
+        "working_ledger.md:L589"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Storage stack ownership for canonical persistence",
+      "exact_items": [
+        "Plans/storage-plan.md declares: seglog = canonical append-only event source, redb = durable KV state / checkpoints / projections / rollups, Tantivy = search index, JSONL mirror = disposable projector output",
+        "Plans/FinalGUISpec.md aligns: persistence(events) = seglog, layout/settings/state = redb"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L513-L520"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Usage feature and multi-account behavior ownership",
+      "exact_items": [
+        "Plans/usage-feature.md is the strongest current owner for usage/quota/alerts/analytics/product-shape discussion",
+        "Plans/storage-plan.md and Plans/FinalGUISpec.md carry meaningful usage/runtime/event/GUI assumptions"
+      ],
+      "affected_doc_hints": [
+        "Plans/usage-feature.md",
+        "Plans/storage-plan.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L418-L419"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Orchestrator consumer of required execution inputs",
+      "exact_items": [
+        "required execution inputs include plan-graph index and node shard files",
+        "scheduling model explicitly talks about runnable graph nodes, DAG readiness, and dispatch from a global ready set"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L590-L591"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "All provider-using actors must participate in account-health loop",
+      "exact_items": [
+        "any provider-using actor must participate in the same pre-send and post-send account-health loop",
+        "this explicitly includes assistant chat, interviewer, requirements-doc builder, overseers, node workers, and delegated workers"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L434-L435"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Orchestrator must consume canonical runtime contracts without redefining",
+      "exact_items": [
+        "event-driven wakeups, not steady-state polling, are the authoritative execution/update model",
+        "orchestrator must consume canonical runtime fields and event names from shared contracts",
+        "page-spec language must remove shadow event/schema ownership from the page layer and tighten it around projections and controls only"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L583-L585",
+        "working_ledger.md:L676"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "stale_retirement",
+      "canon_label_hint": "Tier-based execution model contradictions",
+      "exact_items": [
+        "TierContext, tier_id in Plans/Executor_Protocol.md#5. Node execution fields",
+        "tier_id in Plans/orchestrator-subagent-integration.md#Tier-Level Subagent Strategy"
       ],
       "affected_doc_hints": [
         "Plans/Executor_Protocol.md",
-        "Plans/GitHub_API_Auth_and_Flows.md",
-        "Plans/UI_Command_Catalog.md",
         "Plans/orchestrator-subagent-integration.md"
       ],
       "heading_hints": [
         "5. Node execution fields",
-        "Token handling and storage (hard rules)",
-        "Canonical Runtime Recovery Command Consolidation (2026-03-09)",
         "Tier-Level Subagent Strategy"
       ],
       "stale_tokens": [
         "TierContext",
-        "tier_id",
-        "github_api:github.com/<login>",
+        "tier_id"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L684",
+        "working_ledger.md:L687"
+      ],
+      "notes": [
+        "Survivor/stale-retire contradiction in packet_plan.json"
+      ]
+    },
+    {
+      "seed_type": "stale_retirement",
+      "canon_label_hint": "Stale GitHub API token handling field",
+      "exact_items": [
+        "github_api:github.com/<login> in Plans/GitHub_API_Auth_and_Flows.md#Token handling and storage (hard rules)"
+      ],
+      "affected_doc_hints": [
+        "Plans/GitHub_API_Auth_and_Flows.md"
+      ],
+      "heading_hints": [
+        "Token handling and storage (hard rules)"
+      ],
+      "stale_tokens": [
+        "github_api:github.com/<login>"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L685"
+      ],
+      "notes": [
+        "Survivor/stale-retire contradiction in packet_plan.json"
+      ]
+    },
+    {
+      "seed_type": "stale_retirement",
+      "canon_label_hint": "Stale UI command catalog field",
+      "exact_items": [
+        "approve_continue in Plans/UI_Command_Catalog.md#Canonical Runtime Recovery Command Consolidation (2026-03-09)"
+      ],
+      "affected_doc_hints": [
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "heading_hints": [
+        "Canonical Runtime Recovery Command Consolidation (2026-03-09)"
+      ],
+      "stale_tokens": [
         "approve_continue"
       ],
       "source_evidence": [
-        "working_ledger.md:L680-L691",
-        "working_ledger.md:L684-L687"
+        "working_ledger.md:L686"
       ],
       "notes": [
-        "`packet_plan.json` currently contains at least four survivor/residue contradictions where the same token appears in both required-survivor and stale-retire sets."
+        "Survivor/stale-retire contradiction in packet_plan.json"
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Persisted object ownership and field shapes",
+      "exact_items": [
+        "canonical persisted objects should likely include at least: project, run, feature_seam, work_package, node, attempt, lane, snapshot, promotion, review, resolution_thread, and event",
+        "project should primarily own identity, repo/project settings/theme/account-policy linkage, active-run pointers, and coarse project status",
+        "run should own execution-session identity/lifecycle, graph linkage, run-level settings snapshot, and active pointers/rollup posture",
+        "feature_seam should own membership, lifecycle, requested settings, overseer/governance state, seam-promotion state, and seam evidence linkage",
+        "work_package should own membership, lifecycle, requested settings, overseer/delegation/worktree policy refs, baseline lane state, package-governance state, promotion linkage, and package evidence linkage"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L782",
+        "working_ledger.md:L796-L799"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Child record field-shape ownership for execution objects",
+      "exact_items": [
+        "attempt should persist identity, actor type, requested vs effective provider/model/effort/persona/account, resolution/fallback metadata, lane/snapshot linkage, lifecycle/result, and evidence refs",
+        "lane should persist project/package linkage, worktree binding, lifecycle, contamination state, safe-point linkage, ancestry, and ownership/display grouping for UI separation",
+        "promotion should persist promotion class, source/target linkage, eligibility/blocking/HITL state, decision/result, and evidence/review/corroboration linkage",
+        "review should persist scope, review type, actor linkage, verdict/severity/blocking, findings, evidence, and timestamps",
+        "resolution_thread should persist trigger linkage, resolution kind, issue summary, allowed actions, status, and UI/chat linkage"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L788-L792"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Settings/config gap: provider/model definition levels",
+      "exact_items": [
+        "current discussion implies provider/model settings at node, work package, feature seam, overseer, and delegated-subagent levels",
+        "current docs under discussion have not yet been reconciled around that model"
+      ],
+      "affected_doc_hints": [
+        "Plans/usage-feature.md",
+        "Plans/storage-plan.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/orchestrator-subagent-integration.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "heading_hints": [
+        "Impacted Docs"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L802-L804"
+      ],
+      "notes": [
+        "Explicit reconciliation gap identified between multiple levels needing provider/model settings"
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Worktree ownership/allocation missing definition",
+      "exact_items": [
+        "current orchestration discussion has not yet defined whether worktrees are allocated/owned primarily per node, per package, per seam, or per remediation branch of work",
+        "current conversational preference is leaning toward package-based worktrees rather than per-node worktrees for scale/manageability reasons"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Impacted Docs"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L805-L807"
+      ],
+      "notes": [
+        "Open design decision with preference toward package-based allocation"
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Governing layer architecture undefined",
+      "exact_items": [
+        "whether the governing layer is an always-on planner/overseer agent, a deterministic scheduler plus short-lived agents, or a mixed model",
+        "how graph decomposition preserves bounded agent context without recreating tier authority as a second execution model"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Impacted Docs"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L808-L810"
+      ],
+      "notes": [
+        "Critical control-plane design gap"
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Orchestrator authority boundary undefined",
+      "exact_items": [
+        "what distinct authority belongs to package overseer vs feature-seam overseer so they do not become redundant or conflicting co-governors",
+        "what is Orchestrator allowed to own: page layout and controls, view-model / projections, run control intents, but probably not canonical runtime enums, event semantics, or scheduler truth"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Impacted Docs"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L814-L820"
+      ],
+      "notes": [
+        "Boundary definition required for governance model clarity"
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Missing Orchestrator seam scope decision",
+      "exact_items": [
+        "primary discussion seam not yet decided: page/surface design, runtime state model, cross-surface lineage and receipts, or blocked/recovery/remediation UX"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md"
+      ],
+      "heading_hints": [
+        "Impacted Docs"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L821-L825"
+      ],
+      "notes": [
+        "Primary design decision must precede reconciliation"
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Candidate field definitions for promotion classes",
+      "exact_items": [
+        "lane_to_package promotion: accepted lane result becomes package baseline",
+        "package_to_seam_available promotion: package becomes available as a trusted seam contribution",
+        "seam_complete promotion: seam is marked complete"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md"
+      ],
+      "heading_hints": [
+        "Candidate Fixes / Design Directions"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L856-L859"
+      ],
+      "notes": [
+        "Explicit promotion state transitions emerging"
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Provider/model selection configuration levels",
+      "exact_items": [
+        "provider/model selection likely needs distinct defaults or overrides at: run/global context, feature seam, work package, node, work package overseer, feature seam overseer, overseer-delegated node worker",
+        "requested vs effective provider/model must remain visible at all levels where fallback/override can occur"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Candidate Fixes / Design Directions"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L871-L880"
+      ],
+      "notes": [
+        "Multi-level configuration precedence required"
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Missing seam-level acceptance criteria formalization",
+      "exact_items": [
+        "turn weak integration into explicit seam-level acceptance criteria and failure classes",
+        "candidate seam-level acceptance dimensions: operability, state coherence, workflow completeness, UX coherence, architectural coherence",
+        "candidate seam-level failure classes: GUI/runtime mismatch, incomplete end-to-end flow, cross-package state mismatch, contract drift, technically wired but operationally unusable, local-pass/global-fail composition, missing degraded/recovery behavior, inconsistent UX semantics, cross-seam architecture drift, invisible governance / missing operator affordances"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md"
+      ],
+      "heading_hints": [
+        "Open Questions / Uncertainties"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L996-L1014"
+      ],
+      "notes": [
+        "Acceptance criteria and failure classes must be formalized as owner obligation"
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Seam review loop behavior specification gap",
+      "exact_items": [
+        "define concrete seam review loop behavior",
+        "include trigger points, checks performed, corroboration thresholds, and emitted artifacts",
+        "candidate seam review loop shape: review at package-completion boundaries, review at integration-edge / cross-package boundary crossings, review before seam completion, review when package overseer raises a high-impact challenge",
+        "candidate seam review outputs: seam review verdict, failure classes with severity, evidence bundle / rationale, remediation-node recommendation or graph-patch recommendation, corroboration requirement and outcome when invoked"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md"
+      ],
+      "heading_hints": [
+        "Open Questions / Uncertainties"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L1015-L1028"
+      ],
+      "notes": [
+        "Required for seam governance formalization"
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Unresolved multi-level provider/model precedence and overrides",
+      "exact_items": [
+        "what is the provider/model precedence order across run, seam, package, node, overseer, and delegated-subagent levels",
+        "are seam/package/node provider-model settings hard constraints, defaults, or hints",
+        "can an overseer do direct node work, or only delegate/review",
+        "if an overseer can do node work directly, does it use overseer-effective settings or node-effective settings",
+        "how do dynamic node personas interact with explicit node overrides and overseer-controlled delegation",
+        "how are worktrees assigned for parallel nodes within the same package or seam",
+        "what happens to worktree ownership during remediation, corroboration, or graph-patch-triggered work"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Open Questions / Uncertainties"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L1029-L1036"
+      ],
+      "notes": [
+        "Core configuration and precedence model undefined"
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Multi-account auto-switch configuration requirement",
+      "exact_items": [
+        "there likely needs to be a user-configurable threshold that determines when automatic account switching occurs",
+        "multi-account auto-switch should be on by default for every execution role that uses a provider: node workers, overseers, assistant, interviewer, requirements-doc builder, effectively any provider-using execution actor",
+        "user wants thresholding/policy granularity by: provider, account, execution role",
+        "user highlighted real-world account heterogeneity even within the same provider: different accounts can have different quotas, rate limits, and policy constraints; same-provider accounts may not be fungible and may need distinct switching rules/thresholds"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Open Questions / Uncertainties"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L1096-L1111"
+      ],
+      "notes": [
+        "Settings requirement for multi-account support with provider-account-role granularity"
       ]
     },
     {
       "seed_type": "consumer",
-      "canon_label_hint": "page runtime contract",
+      "canon_label_hint": "Consumer expectations for overseer behavior",
       "exact_items": [
-        "`Plans/Orchestrator_Page.md` is the UI/page-shell owner for a single-page six-tab Orchestrator surface: `Progress`, `Tiers`, `Node Graph Display`, `Evidence`, `History`, `Ledger`.",
-        "`Plans/orchestrator-subagent-integration.md` treats Orchestrator as the primary consumer of canonical runtime scheduler contracts, not as a schema owner.",
-        "event-driven wakeups, not steady-state polling, are the authoritative execution/update model",
-        "orchestrator must consume canonical runtime fields and event names from shared contracts",
-        "worktree-native isolation is explicitly required; file-lease orchestration is explicitly rejected",
-        "`Plans/orchestrator-subagent-integration.md` says Puppet Master orchestrator consumes sharded-only plan graphs and executes headless from `.puppet-master/project/plan_graph/index.json` and node shards",
-        "required execution inputs include plan-graph index and node shard files",
-        "the page doc already admits unresolved data-source ownership gaps and explicitly says the UI must bind to upstream owners rather than minting local compatibility fields",
-        "canonical event naming should be shared across runtime and UI projections; Orchestrator should not invent a shadow event language"
+        "overseers may critique or challenge package outcomes, but newly discovered work must become explicit remediation nodes or graph-patch requests",
+        "quorum/corroboration agents may be used before accepting an overseer challenge for high-impact gaps"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md"
+      ],
+      "heading_hints": [
+        "Candidate Fixes / Design Directions"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L853-L854"
+      ],
+      "notes": [
+        "Consumer must understand overseer approval flow"
+      ]
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Consumer expectations for promotion gate focus",
+      "exact_items": [
+        "lane_to_package gates focus on local correctness, uncontaminated lane state, required automated verification/review, and promotable package outputs",
+        "package_to_seam_available gates focus on trusted package baseline, package-level evidence, acceptable package-overseer verdict, and seam-consumable outputs",
+        "seam_complete gates focus on integration review, absence of unresolved major/critical findings, seam evidence, workflow completeness, GUI/runtime alignment, and no pending corroboration/remediation"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md"
+      ],
+      "heading_hints": [
+        "Candidate Fixes / Design Directions"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L866-L868"
+      ],
+      "notes": [
+        "Consumer must understand promotion gate criteria and boundaries"
+      ]
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Consumer expectation for graph view scale and navigation",
+      "exact_items": [
+        "the graph should show the full lineage, including historical branches and patched fork/rejoin paths",
+        "the graph is expected to handle very large scale (thousands of nodes)",
+        "zoom + pan + minimap are expected to be primary navigation tools; full-graph visibility should not be replaced by default collapsing of history",
+        "seam and package boundaries should be visible as toggleable overlays",
+        "node visuals should carry execution/governance state",
+        "edge/path visuals should carry structure/lineage meaning",
+        "boundaries should carry grouping only, not duplicate state/severity semantics"
+      ],
+      "affected_doc_hints": [
+        "Plans/Run_Graph_View.md"
+      ],
+      "heading_hints": [
+        "Open Questions / Uncertainties"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L930-L937"
+      ],
+      "notes": [
+        "Consumer expectations for graph feature set and visual semantics"
+      ]
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Consumer expectation for graph search and focus behavior",
+      "exact_items": [
+        "graph search/focus should support: seam, package, node, lane, generation",
+        "focus should pan/zoom to target regions while preserving full-graph context rather than replacing the graph with a separate local-only view"
+      ],
+      "affected_doc_hints": [
+        "Plans/Run_Graph_View.md"
+      ],
+      "heading_hints": [
+        "Open Questions / Uncertainties"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L945-L951"
+      ],
+      "notes": [
+        "Consumer navigational expectations defined"
+      ]
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Consumer expectation for multi-surface notification of blocking/HITL/critical events",
+      "exact_items": [
+        "blocked/HITL/critical promotion states must surface on Dashboard, Orchestrator, and a spawned chat thread"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [
+        "Candidate Fixes / Design Directions"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L864"
+      ],
+      "notes": [
+        "Consumer expectation for cross-surface notifications"
+      ]
+    },
+    {
+      "seed_type": "stale_retirement",
+      "canon_label_hint": "Legacy 'Overseer' terminology to retire or clarify",
+      "exact_items": [
+        "Is `Overseer` still an intended user-visible / doc-visible concept, or legacy phrasing that should be collapsed into Orchestrator/runtime language?"
       ],
       "affected_doc_hints": [
         "Plans/Orchestrator_Page.md",
         "Plans/orchestrator-subagent-integration.md"
       ],
       "heading_hints": [
-        "## Key Facts and Findings",
-        "## Gaps / Problems Identified"
-      ],
-      "stale_tokens": [],
-      "source_evidence": [
-        "working_ledger.md:L580-L590",
-        "working_ledger.md:L583-L587",
-        "working_ledger.md:L672-L676",
-        "working_ledger.md:L714-L717"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "stale_retirement",
-      "canon_label_hint": "legacy tier vocabulary",
-      "exact_items": [
-        "existing `Tiers` tab should be replaced by a seam/package-oriented tab (name still open; likely `Seams` or equivalent)",
-        "replace `Tiers` with a seam/package-oriented tab",
-        "`Seams` (replacement for `Tiers`)",
-        "page-spec language still includes local event/type phrasing such as `PuppetMasterEvent::*` and a named AI foreman role (`Overseer`)",
-        "docs still preserve a first-class tier model (`Phase`, `Task`, `Subtask`, `Iteration`) at the same time they describe execution over graph nodes",
-        "`Plans/Run_Graph_View.md` describes the graph as live DAG execution, but node rendering still includes tier-type iconography and tier-oriented vocabulary",
-        "`Plans/FinalGUISpec.md` still references `phase/task/subtask` progress and mapping editors rather than package/seam governance surfaces"
-      ],
-      "affected_doc_hints": [
-        "Plans/Orchestrator_Page.md",
-        "Plans/Run_Graph_View.md",
-        "Plans/FinalGUISpec.md"
-      ],
-      "heading_hints": [
-        "## Key Facts and Findings",
-        "## Gaps / Problems Identified"
+        "Open Questions / Uncertainties"
       ],
       "stale_tokens": [
-        "Tiers",
-        "PuppetMasterEvent::*",
-        "Overseer",
-        "Phase",
-        "Task",
-        "Subtask",
-        "Iteration",
-        "phase/task/subtask"
+        "Overseer"
       ],
       "source_evidence": [
-        "working_ledger.md:L29-L40",
-        "working_ledger.md:L55-L58",
-        "working_ledger.md:L60-L75",
-        "working_ledger.md:L665-L669",
-        "working_ledger.md:L674-L677"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "usage owner carry-through",
-      "exact_items": [
-        "`Plans/usage-feature.md` is the strongest current owner for usage/quota/alerts/analytics/product-shape discussion.",
-        "`Plans/storage-plan.md` and `Plans/FinalGUISpec.md` also carry meaningful usage/runtime/event/GUI assumptions.",
-        "new multi-account failover / account-threshold / effective-account behavior should extend the existing usage model and projections",
-        "do not invent a second independent \"account pressure\" or \"quota\" subsystem beside Usage"
-      ],
-      "affected_doc_hints": [
-        "Plans/usage-feature.md",
-        "Plans/storage-plan.md",
-        "Plans/FinalGUISpec.md"
-      ],
-      "heading_hints": [
-        "## Key Facts and Findings"
-      ],
-      "stale_tokens": [],
-      "source_evidence": [
-        "working_ledger.md:L417-L431"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "owner",
-      "canon_label_hint": "runtime storage stack",
-      "exact_items": [
-        "`seglog` = canonical append-only event source",
-        "`redb` = durable KV state / checkpoints / projections / rollups",
-        "`Tantivy` = search index",
-        "JSONL mirror = disposable projector output, not canonical truth",
-        "persistence(events) = seglog",
-        "layout/settings/state = redb",
-        "canonical truth for these new orchestration artifacts should fit the documented stack:",
-        "event/source-of-truth aspects in seglog",
-        "projected/current-state/read-optimized aspects in redb",
-        "export/inspection views as JSON/JSONL only when the user requests them from UI surfaces like Orchestrator",
-        "avoid making loose JSON files the canonical source",
-        "\"optional JSON\" wording should be removed from the design language unless JSON export is explicitly about manual inspection/export, not canonical storage"
-      ],
-      "affected_doc_hints": [
-        "Plans/storage-plan.md",
-        "Plans/FinalGUISpec.md"
-      ],
-      "heading_hints": [
-        "## Key Facts and Findings"
-      ],
-      "stale_tokens": [
-        "optional JSON"
-      ],
-      "source_evidence": [
-        "working_ledger.md:L512-L537"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "owner",
-      "canon_label_hint": "execution policy settings",
-      "exact_items": [
-        "GUI should let the user choose whether retries use:",
-        "a fresh agent/subagent (default)",
-        "the same agent/subagent retaining prior context",
-        "GUI should also let the user choose whether node execution uses:",
-        "subagents by default",
-        "full agents instead of subagents",
-        "worker kind and retry-context policy are separate settings, not one combined toggle",
-        "the next settings/UI seam must cover:",
-        "agent vs subagent",
-        "fresh vs reused retry worker",
-        "overseer delegation on/off",
-        "delegated-worker provider/model/effort policy",
-        "consistent requested-vs-effective identity display across chat actors and orchestration actors",
-        "prefer `overseer-spawned node worker` over the vaguer term `delegated worker`"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "## Key Facts and Findings"
-      ],
-      "stale_tokens": [
-        "delegated worker"
-      ],
-      "source_evidence": [
-        "working_ledger.md:L537-L557"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "owner",
-      "canon_label_hint": "blocked state fields",
-      "exact_items": [
-        "blocked states should always expose:",
-        "blocked reason",
-        "blocked owner",
-        "time blocked",
-        "next step",
-        "blocked ownership should be normalized with stable labels:",
-        "`Runtime`",
-        "`Package Overseer`",
-        "`Seam Overseer`",
-        "`Corroboration`",
-        "`Graph Patch`",
-        "`Recovery`",
-        "`User`",
-        "`External Resource`"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "## Key Facts and Findings"
-      ],
-      "stale_tokens": [],
-      "source_evidence": [
-        "working_ledger.md:L193-L206"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "owner",
-      "canon_label_hint": "concern record contract",
-      "exact_items": [
-        "`concern` should be a first-class record, not just a field buried in review/alert logic",
-        "concern records should carry:",
-        "identity",
-        "scope",
-        "severity",
-        "category",
-        "owner",
-        "lifecycle state",
-        "meaning/summary",
-        "linkage to evidence/artifacts/history/source records",
-        "visibility/attention flags",
-        "likely concern lifecycle states:",
-        "`active`",
-        "`acknowledged`",
-        "`resolved`",
-        "`dismissed`",
-        "canonical concerns should be created by:",
-        "runtime",
-        "package overseer",
-        "seam overseer",
-        "corroboration outcome",
-        "graph patch/state-transition logic",
-        "workers may nominate findings but should not mint canonical concerns directly",
-        "all major surfaces should project the same concern model rather than inventing local versions",
-        "`Progress` = operational attention projection",
-        "`Seams` = integration/governance projection",
-        "`Evidence` = proof-backed concern projection",
-        "`History` = concern lifecycle timeline projection",
-        "`Ledger` = exact structured concern-record projection"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "## Key Facts and Findings"
-      ],
-      "stale_tokens": [],
-      "source_evidence": [
-        "working_ledger.md:L258-L291"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "evidence navigation contract",
-      "exact_items": [
-        "separate panes:",
-        "`Evidence` pane for verdicts/receipts/findings/reports",
-        "`Artifacts` pane for screenshots/recordings/diffs/reports/generated docs/etc.",
-        "evidence and artifacts should remain linked bidirectionally",
-        "usage-linked receipts are expected when relevant",
-        "clicking evidence/artifact links in graph detail should deep-link into the Evidence tab with target selection/filter applied",
-        "object/event focus should deep-link across Progress / Seams / Node Graph / Evidence / History / Ledger",
-        "deep links should carry selection/filter/focus context, not merely switch tabs",
-        "important objects/events should be deep-linkable across Progress / Seams / Node Graph / Evidence / History / Ledger",
-        "cross-tab navigation should preserve/filter/select the target context, not merely switch tabs"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "## Key Facts and Findings"
-      ],
-      "stale_tokens": [],
-      "source_evidence": [
-        "working_ledger.md:L121-L127",
-        "working_ledger.md:L141-L144",
-        "working_ledger.md:L404-L417"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "owner",
-      "canon_label_hint": "widget projection contract",
-      "exact_items": [
-        "orchestrator widgets should consume stable shared projections rather than raw event streams or bespoke queries",
-        "widget shell needs:",
-        "widget identity/type",
-        "scope",
-        "filter/sort/display config",
-        "projection ref",
-        "Required orchestrator projection families now identified:",
-        "Run Summary",
-        "Seam Summary",
-        "Package Summary",
-        "Node Summary",
-        "Promotion Summary",
-        "Lane / Worktree Summary",
-        "Concern Summary",
-        "Account / Usage Pressure",
-        "Recent Major Events",
-        "Corroboration Summary",
-        "Recovery Summary",
-        "Overseer Activity",
-        "`Run Summary`, `Seam Summary`, `Concern Summary`, `Account / Usage Pressure`, `Recent Major Events` should be broadly reusable across Orchestrator / Dashboard / Projects"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "## Key Facts and Findings"
-      ],
-      "stale_tokens": [],
-      "source_evidence": [
-        "working_ledger.md:L308-L330"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "owner",
-      "canon_label_hint": "child record fields",
-      "exact_items": [
-        "canonical persisted objects should likely include at least `project`, `run`, `feature_seam`, `work_package`, `node`, `attempt`, `lane`, `snapshot`, `promotion`, `review`, `resolution_thread`, and `event`",
-        "requested vs effective execution identity, including effective account selection/fallback, should be persisted at attempt level",
-        "`attempt` should persist identity, actor type, requested vs effective provider/model/effort/persona/account, resolution/fallback metadata, lane/snapshot linkage, lifecycle/result, and evidence refs",
-        "`lane` should persist project/package linkage, worktree binding, lifecycle, contamination state, safe-point linkage, ancestry, and ownership/display grouping for UI separation",
-        "`promotion` should persist promotion class, source/target linkage, eligibility/blocking/HITL state, decision/result, and evidence/review/corroboration linkage",
-        "`review` should persist scope, review type, actor linkage, verdict/severity/blocking, findings, evidence, and timestamps",
-        "`resolution_thread` should persist trigger linkage, resolution kind, issue summary, allowed actions, status, and UI/chat linkage"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "## Gaps / Problems Identified"
-      ],
-      "stale_tokens": [],
-      "source_evidence": [
-        "working_ledger.md:L781-L792"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "owner",
-      "canon_label_hint": "parent record fields",
-      "exact_items": [
-        "`project` should primarily own identity, repo/project settings/theme/account-policy linkage, active-run pointers, and coarse project status",
-        "`run` should own execution-session identity/lifecycle, graph linkage, run-level settings snapshot, and active pointers/rollup posture",
-        "`feature_seam` should own membership, lifecycle, requested settings, overseer/governance state, seam-promotion state, and seam evidence linkage",
-        "`work_package` should own membership, lifecycle, requested settings, overseer/delegation/worktree policy refs, baseline lane state, package-governance state, promotion linkage, and package evidence linkage"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "## Gaps / Problems Identified"
-      ],
-      "stale_tokens": [],
-      "source_evidence": [
-        "working_ledger.md:L793-L799"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "hitl chat surfacing",
-      "exact_items": [
-        "HITL is explicitly off by default; automation is the normal system behavior",
-        "if HITL blocks or a critical failure / decision occurs, the issue must surface in:",
-        "Dashboard",
-        "Orchestrator page",
-        "a spawned agent/thread in the chat window",
-        "Dashboard and Orchestrator should direct the user to the chat thread for decision/resolution details",
-        "the chat thread should present the issue/decision and allow the user to choose how to resolve it"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "## Key Facts and Findings"
-      ],
-      "stale_tokens": [],
-      "source_evidence": [
-        "working_ledger.md:L635-L645"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "owner",
-      "canon_label_hint": "stewardship carry-through",
-      "exact_items": [
-        "Preserve `status`, `run_prefix`, `next_run_seq`, and `run_id` during stewardship refreshes.",
-        "If recovery proceeds, apply owner-doc corrections first, then consumer and mirror cleanup, then rerun fidelity audit.",
-        "Track requested vs effective runtime identity if persona/provider/model fallback becomes part of the Orchestrator discussion.",
-        "Watch for event-name drift, local shadow schemas, and UI-layer redefinitions of runtime semantics."
-      ],
-      "affected_doc_hints": [
-        "Plans/orchestrator-subagent-integration.md",
-        "Plans/human-in-the-loop.md",
-        "Plans/usage-feature.md",
-        "Plans/FinalGUISpec.md",
-        "Plans/Contracts_V0.md",
-        "Plans/storage-plan.md"
-      ],
-      "heading_hints": [
-        "## Packetization Notes",
-        "## Do-Not-Forget Details"
-      ],
-      "stale_tokens": [],
-      "source_evidence": [
-        "working_ledger.md:L1124-L1135",
-        "working_ledger.md:L1141-L1155"
+        "working_ledger.md:L1069"
       ],
       "notes": [
-        "Treat the listed same-file supersession hotspots as canon-collapse targets."
+        "Terminology audit required; consider consolidation into Orchestrator/runtime language"
       ]
     },
     {
       "seed_type": "owner",
-      "canon_label_hint": "terminology owners",
+      "canon_label_hint": "Glossary and Crosswalk Missing Definitions",
       "exact_items": [
-        "Need to adopt Seam/Lane/Overseer/Package terminology.",
-        "Crosswalk and Glossary have near-zero coverage of overseer (package or seam), work package, feature seam, lane, attempt, or effective identity.",
-        "Extend `Glossary.md`, `Crosswalk.md`, `Decision_Policy.md`, and `00-plans-index.md` with first-class ownership for feature seam, work package, package/seam overseers, promotion class, lane pool, contamination, and effective execution identity."
+        "Glossary.md has zero definitions for overseer (package or seam), work package, feature seam, lane, attempt, effective identity",
+        "Crosswalk and Glossary have near-zero coverage of overseer (package or seam), work package, feature seam, lane, attempt, or effective identity"
       ],
       "affected_doc_hints": [
         "Plans/Glossary.md",
-        "Plans/Crosswalk.md",
-        "Plans/Decision_Policy.md",
-        "Plans/00-plans-index.md"
+        "Plans/Crosswalk.md"
       ],
       "heading_hints": [
-        "## Cleanup Priorities",
-        "## Highest-Impact Docs"
+        "Highest-Impact Docs",
+        "Suggested Research Follow-Ups"
       ],
       "stale_tokens": [],
       "source_evidence": [
-        "working_ledger.md:L1230-L1231",
-        "working_ledger.md:L1256-L1257",
-        "working_ledger.md:L1362-L1365",
-        "working_ledger.md:L1409-L1411",
-        "working_ledger.md:L1515-L1517"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "owner",
-      "canon_label_hint": "runtime schema fields",
-      "exact_items": [
-        "Add node_id, package_id, seam_id, lane_id, attempt_id, effective_identity to addressing and event schemas.",
-        "Event schemas don't include package_id, seam_id, lane_id, attempt_id, or effective_identity fields.",
-        "Add package/seam/lane/worktree/account identity fields to the canonical runtime/event/envelope contracts.",
-        "Run envelope / instruction bundle needs node-identity alongside or replacing tier-identity.",
-        "No coherent `packages` namespace, no lane-pool registry, weak or absent `project_id` scoping in many event and artifact contracts, and insufficient usage/evidence attribution fields for multi-package runs."
-      ],
-      "affected_doc_hints": [
-        "Plans/Contracts_V0.md",
-        "Plans/Executor_Protocol.md",
-        "Plans/storage-plan.md",
-        "Plans/Prompt_Pipeline.md",
-        "Plans/plan_graph.schema.json",
-        "Plans/project_plan_node.schema.json",
-        "Plans/project_plan_graph_index.schema.json",
-        "Plans/usage-feature.md"
-      ],
-      "heading_hints": [
-        "## Runtime / Storage / Contract Impacts",
-        "## Cleanup Priorities"
-      ],
-      "stale_tokens": [],
-      "source_evidence": [
-        "working_ledger.md:L1274-L1275",
-        "working_ledger.md:L1307-L1310",
-        "working_ledger.md:L1383-L1385",
-        "working_ledger.md:L1404-L1407",
-        "working_ledger.md:L1483-L1490",
-        "working_ledger.md:L1510-L1513",
-        "working_ledger.md:L1556-L1559"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "owner",
-      "canon_label_hint": "execution identity contract",
-      "exact_items": [
-        "Missing the concept of \"Effective Identity\" (lane-specific auth) in storage and evidence.",
-        "Needs to define \"Overseer\" personas and their relation to Lanes.",
-        "Model selection might need to be lane-aware (e.g., a \"Security Lane\" might enforce a specific model).",
-        "No canonical `requested_account` / `effective_account` shape in the main runtime identity contracts, even where requested/effective Persona and model fields are already standardized.",
-        "Add requested/effective account, overseer role, worktree/lane, and fallback reason fields to the canonical runtime snapshot.",
-        "`requested_auth_mode` / `effective_capabilities[]` / `effective_account_identity`",
-        "Per-project/per-package configuration scope is thin."
-      ],
-      "affected_doc_hints": [
-        "Plans/Multi-Account.md",
-        "Plans/Personas.md",
-        "Plans/Models_System.md",
-        "Plans/GitHub_Integration.md",
-        "Plans/storage-plan.md"
-      ],
-      "heading_hints": [
-        "## Settings / Provider / Persona / Account Impacts",
-        "## Suggested Research Follow-Ups"
-      ],
-      "stale_tokens": [],
-      "source_evidence": [
-        "working_ledger.md:L1204-L1212",
-        "working_ledger.md:L1280-L1285",
-        "working_ledger.md:L1386-L1392",
-        "working_ledger.md:L1492-L1499",
-        "working_ledger.md:L1538-L1538"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "owner",
-      "canon_label_hint": "dual overseer model",
-      "exact_items": [
-        "Single Overseer vs. package + seam overseers.",
-        "Define the dual-overseer governance model (package overseer + seam overseer) in a canonical doc.",
-        "Include: spawning rules, validation subagent pair, escalation paths, persona/model assignment.",
-        "Lock package overseer vs seam overseer authority, spawning rules, corroboration/review responsibilities, and identity/model assignment."
-      ],
-      "affected_doc_hints": [
-        "Plans/orchestrator-subagent-integration.md",
-        "Plans/Executor_Protocol.md",
-        "Plans/Contracts_V0.md",
-        "Plans/Personas.md"
-      ],
-      "heading_hints": [
-        "## Contradictions To Resolve",
-        "## Suggested Research Follow-Ups"
-      ],
-      "stale_tokens": [],
-      "source_evidence": [
-        "working_ledger.md:L1209-L1210",
-        "working_ledger.md:L1317-L1334",
-        "working_ledger.md:L1424-L1435",
-        "working_ledger.md:L1528-L1539"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "owner",
-      "canon_label_hint": "lane worktree mapping",
-      "exact_items": [
-        "The per-subtask worktree model is too granular and slow. Parallel toggles vs Lane pools need reconciliation.",
-        "Cleanup and contamination models are weak. \"Safe points\" need to be rigorously defined against worktree state.",
-        "\"Lane Mapping:\" How do we map \"Lanes\" to \"Worktrees\" exactly? Is it 1:1, or dynamic allocation?",
-        "Determine whether lanes get 1:1 dedicated worktrees, draw from a pool, or use a hybrid.",
-        "Contamination is a major gap.",
-        "Specify package-based worktree lane pools.",
-        "Normalize safe-point / restore-point / rollback / contamination terminology.",
-        "PM-owned worktrees are invisible."
-      ],
-      "affected_doc_hints": [
-        "Plans/WorktreeGitImprovement.md",
-        "Plans/MiscPlan.md",
-        "Plans/FileSafe.md",
-        "Plans/newtools.md",
-        "Plans/GitHub_Integration.md"
-      ],
-      "heading_hints": [
-        "## Worktree / SCM / Parallelism Impacts",
-        "## Suggested Research Follow-Ups",
-        "## Contradictions To Resolve"
-      ],
-      "stale_tokens": [],
-      "source_evidence": [
-        "working_ledger.md:L1214-L1220",
-        "working_ledger.md:L1234-L1244",
-        "working_ledger.md:L1287-L1294",
-        "working_ledger.md:L1329-L1330",
-        "working_ledger.md:L1394-L1400",
-        "working_ledger.md:L1436-L1437",
-        "working_ledger.md:L1500-L1506",
-        "working_ledger.md:L1539-L1539",
-        "working_ledger.md:L1566-L1569"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "ui routing migration",
-      "exact_items": [
-        "Tiers tab is obsolete as specified.",
-        "Specify the navigation contract: which widget click leads where, which overseer's thread opens, how lane context is carried through the navigation.",
-        "Determine what replaces `widget.tier_tree`, phase-grouped run-graph layouts, and singular current-task/current-worktree widgets.",
-        "Replace or demote tiers-first widgets and layouts.",
-        "Define one attention-routing model for blocked work, optional HITL, and side-effect approvals.",
-        "Tiers\u2192Packages or similar rename plus content respec."
-      ],
-      "affected_doc_hints": [
-        "Plans/FinalGUISpec.md",
-        "Plans/Widget_System.md",
-        "Plans/Orchestrator_Page.md",
-        "Plans/Run_Graph_View.md",
-        "Plans/assistant-chat-design.md",
-        "Plans/UI_Command_Catalog.md"
-      ],
-      "heading_hints": [
-        "## GUI / UX Impacts",
-        "## Cleanup Priorities",
-        "## Suggested Research Follow-Ups"
-      ],
-      "stale_tokens": [],
-      "source_evidence": [
-        "working_ledger.md:L1176-L1188",
-        "working_ledger.md:L1261-L1266",
-        "working_ledger.md:L1302-L1305",
-        "working_ledger.md:L1332-L1334",
-        "working_ledger.md:L1367-L1374",
-        "working_ledger.md:L1413-L1416",
-        "working_ledger.md:L1473-L1479",
-        "working_ledger.md:L1519-L1521",
-        "working_ledger.md:L1561-L1564",
-        "working_ledger.md:L1576-L1586"
+        "working_ledger.md:L1256",
+        "working_ledger.md:L1231"
       ],
       "notes": [
-        "Dashboard \u2192 Orchestrator \u2192 chat-thread routing is an explicit carry-through seam."
+        "Terminology authority gap blocking consistent usage across all other docs"
       ]
     },
     {
-      "seed_type": "consumer",
-      "canon_label_hint": "gates and hitl boundaries",
+      "seed_type": "owner",
+      "canon_label_hint": "Tier Hierarchy Permanence vs Node-Graph Canon Contradiction",
       "exact_items": [
-        "Gates are currently tier-scoped. Need to be redefined around package completion or seam transitions.",
-        "HITL approval model assumes tier boundaries.",
-        "Redefine approval gates for package-complete and seam-complete events rather than phase/task/subtask boundaries.",
-        "Automation-first default conflicts with existing settings defaults.",
-        "Reconcile automation-first with existing settings and gates.",
-        "`regular`/HTE-by-default",
-        "`visual_mode = auto`",
-        "`tier_boundary_approval`"
+        "newfeatures.md \u00a71.1-1.2 explicitly state 'four-tier hierarchy' and 'no new tiers'",
+        "chain-wizard-flexibility.md \u00a711 declares sharded node graph as canonical output",
+        "These are mutually exclusive execution models"
       ],
       "affected_doc_hints": [
-        "Plans/Progression_Gates.md",
-        "Plans/human-in-the-loop.md",
-        "Plans/Run_Modes.md",
-        "Plans/FinalGUISpec.md",
-        "Plans/Permissions_System.md",
-        "Plans/Project_Output_Artifacts.md"
+        "Plans/newfeatures.md",
+        "Plans/chain-wizard-flexibility.md"
       ],
       "heading_hints": [
-        "## Runtime / Storage / Contract Impacts",
-        "## Contradictions To Resolve",
-        "## Suggested Research Follow-Ups",
-        "## Settings / Provider / Persona / Account Impacts"
+        "Contradictions To Resolve"
       ],
       "stale_tokens": [
-        "tier_boundary_approval"
+        "four-tier hierarchy",
+        "Phase/Task/Subtask/Iteration"
       ],
       "source_evidence": [
-        "working_ledger.md:L1200-L1202",
-        "working_ledger.md:L1265-L1265",
-        "working_ledger.md:L1320-L1333",
-        "working_ledger.md:L1389-L1392",
-        "working_ledger.md:L1425-L1440",
-        "working_ledger.md:L1494-L1498",
-        "working_ledger.md:L1540-L1541",
-        "working_ledger.md:L1571-L1574",
-        "working_ledger.md:L1586-L1586"
+        "working_ledger.md:L1276",
+        "working_ledger.md:L1317"
       ],
-      "notes": []
+      "notes": [
+        "P0 blocking execution model conflict requiring resolution"
+      ]
     },
     {
-      "seed_type": "stale_retirement",
-      "canon_label_hint": "tier era terms",
+      "seed_type": "owner",
+      "canon_label_hint": "Orchestrator Split-Brain: Body vs Addenda",
       "exact_items": [
-        "`TierContext`",
-        "`TierType`",
-        "`select_for_tier`",
-        "`tier_id`",
-        "`phase_id`",
-        "`task_id`",
-        "`tier_runtime_record`",
-        "`<phase>/<task>/<subtask>`",
-        "`Phase/Task/Subtask/Iteration`",
-        "`Tiers tab`",
-        "`widget.tier_tree`",
-        "`widget.progress_bars`"
+        "orchestrator-subagent-integration.md body defines TierContext, TierType, select_for_tier, and tier_id-keyed active-agents.json state file",
+        "8 addenda bolt on persona/effective-runtime, scheduler, and remediation concepts but never replace the tier-rooted execution model",
+        "Addenda never replace TierContext/TierType/select_for_tier"
       ],
       "affected_doc_hints": [
-        "Plans/orchestrator-subagent-integration.md",
-        "Plans/Contracts_V0.md",
-        "Plans/Executor_Protocol.md",
-        "Plans/storage-plan.md",
-        "Plans/FinalGUISpec.md",
-        "Plans/Run_Graph_View.md",
-        "Plans/Orchestrator_Page.md",
-        "Plans/Project_Output_Artifacts.md"
+        "Plans/orchestrator-subagent-integration.md"
       ],
       "heading_hints": [
-        "## Highest-Impact Docs",
-        "## Runtime / Storage / Contract Impacts",
-        "## Cleanup Priorities",
-        "## GUI / UX Impacts"
+        "Highest-Impact Docs",
+        "P0 \u2014 Blocking execution model conflicts"
       ],
       "stale_tokens": [
         "TierContext",
         "TierType",
         "select_for_tier",
-        "tier_id",
-        "phase_id",
-        "task_id",
-        "tier_runtime_record",
-        "<phase>/<task>/<subtask>",
-        "Phase/Task/Subtask/Iteration",
-        "Tiers tab",
-        "widget.tier_tree",
-        "widget.progress_bars"
+        "tier_id"
       ],
       "source_evidence": [
-        "working_ledger.md:L1158-L1174",
-        "working_ledger.md:L1194-L1200",
-        "working_ledger.md:L1252-L1255",
-        "working_ledger.md:L1270-L1274",
-        "working_ledger.md:L1297-L1305",
-        "working_ledger.md:L1342-L1350",
-        "working_ledger.md:L1448-L1456",
-        "working_ledger.md:L1551-L1574",
-        "working_ledger.md:L1578-L1584"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "stale_retirement",
-      "canon_label_hint": "blocked payload drift",
-      "exact_items": [
-        "`reason_code`",
-        "`recovery_options[]`",
-        "`allowed_actions`",
-        "`blocked_reason`",
-        "`Retry/Replan/Reopen/Approve/Deny`"
-      ],
-      "affected_doc_hints": [
-        "Plans/Executor_Protocol.md",
-        "Plans/Contracts_V0.md",
-        "Plans/Orchestrator_Page.md",
-        "Plans/storage-plan.md",
-        "Plans/newtools.md"
-      ],
-      "heading_hints": [
-        "## Runtime / Storage / Contract Impacts",
-        "## Cleanup Priorities"
-      ],
-      "stale_tokens": [
-        "reason_code",
-        "recovery_options[]",
-        "allowed_actions",
-        "blocked_reason",
-        "Retry/Replan/Reopen/Approve/Deny"
-      ],
-      "source_evidence": [
-        "working_ledger.md:L1384-L1385",
-        "working_ledger.md:L1418-L1420",
-        "working_ledger.md:L1487-L1488",
-        "working_ledger.md:L1510-L1511",
-        "working_ledger.md:L1594-L1597"
+        "working_ledger.md:L1252",
+        "working_ledger.md:L1298"
       ],
       "notes": [
-        "Canonical counterparts called out in the same ranges are `allowed_action_ids[]`, `blocked_reason_code`, and `cmd.runtime.*` action families."
+        "Core body still tier-canonical while addenda are node-adjacent; requires single coherent execution model section"
       ]
     },
     {
       "seed_type": "stale_retirement",
-      "canon_label_hint": "lexicographic lock",
+      "canon_label_hint": "FinalGUISpec Tier-Scoped Widgets Obsolete",
       "exact_items": [
-        "`selection_rule = \"lexicographic_node_id\"`",
-        "lexicographic node selection"
+        "Tiers tab obsolete as specified",
+        "widget.tier_tree renders Phase/Task/Subtask tree with state badges",
+        "widget.progress_bars renders 3 phase-scoped bars",
+        "These widgets have no package/seam/lane counterpart in the catalog"
       ],
       "affected_doc_hints": [
-        "Plans/plan_graph.schema.json",
-        "Plans/project_plan_node.schema.json",
-        "Plans/project_plan_graph_index.schema.json",
+        "Plans/FinalGUISpec.md",
+        "Plans/Widget_System.md"
+      ],
+      "heading_hints": [
+        "GUI / UX Impacts",
+        "P1 \u2014 Misleading GUI/widget specs"
+      ],
+      "stale_tokens": [
+        "Tiers tab",
+        "widget.tier_tree",
+        "widget.progress_bars",
+        "phase/task/subtask progress bars"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L1261",
+        "working_ledger.md:L1302-L1305"
+      ],
+      "notes": [
+        "22 addenda accumulated; tab name and navigation model assume defunct linear phase progression"
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "active-agents.json vs seglog/redb Split Brain",
+      "exact_items": [
+        "active-agents.json is a flat JSON file for agent tracking",
+        "storage plan and addenda reference seglog/redb as canonical event stores",
+        "Two sources of truth = split-brain risk",
+        "The system cannot have two sources of truth for execution state"
+      ],
+      "affected_doc_hints": [
+        "Plans/orchestrator-subagent-integration.md",
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [
+        "Runtime / Storage / Contract Impacts",
+        "Contradictions To Resolve"
+      ],
+      "stale_tokens": [
+        "active-agents.json",
+        "tier_id-keyed state file"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L1238-L1239",
+        "working_ledger.md:L1270",
+        "working_ledger.md:L1322"
+      ],
+      "notes": [
+        "State Authority contradiction unresolved"
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Tier-Based Path Contracts Require Migration",
+      "exact_items": [
+        "Contracts_V0.md and Executor_Protocol.md use tier-based paths for addressing",
+        "Canonical pathing <phase>/<task>/<subtask> is embedded in contracts",
+        "No package-id or seam-id pathing exists"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
         "Plans/Executor_Protocol.md"
       ],
       "heading_hints": [
-        "## Runtime / Storage / Contract Impacts",
-        "## Contradictions To Resolve",
-        "## Cleanup Priorities"
+        "Runtime / Storage / Contract Impacts",
+        "P2 \u2014 Contract/storage field gaps"
       ],
       "stale_tokens": [
-        "selection_rule = \"lexicographic_node_id\"",
-        "lexicographic node selection"
+        "<phase>/<task>/<subtask>",
+        "tier-based paths"
       ],
       "source_evidence": [
-        "working_ledger.md:L1377-L1380",
-        "working_ledger.md:L1404-L1406",
-        "working_ledger.md:L1424-L1424",
-        "working_ledger.md:L1453-L1456",
-        "working_ledger.md:L1483-L1485",
-        "working_ledger.md:L1510-L1512",
-        "working_ledger.md:L1528-L1528",
-        "working_ledger.md:L1590-L1592"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "owner",
-      "canon_label_hint": "runtime identity keys",
-      "exact_items": [
-        "`project_id`",
-        "`attempt_id`",
-        "`package_id`",
-        "`seam_id`",
-        "`lane_id`",
-        "`worktree_id`",
-        "`safe_point_id`",
-        "`promotion_class`",
-        "requested/effective account fields"
-      ],
-      "affected_doc_hints": [
-        "Plans/Contracts_V0.md",
-        "Plans/storage-plan.md",
-        "Plans/plan_graph.schema.json",
-        "Plans/project_plan_node.schema.json",
-        "Plans/test_strategy.schema.json",
-        "Plans/evidence.schema.json",
-        "Plans/gui_automation_manifest.schema.json"
-      ],
-      "heading_hints": [
-        "## Runtime / Storage / Contract Impacts"
-      ],
-      "stale_tokens": [],
-      "source_evidence": [
-        "working_ledger.md:L1606-L1607",
-        "working_ledger.md:L1790-L1796"
+        "working_ledger.md:L1271",
+        "working_ledger.md:L1308"
       ],
       "notes": [
-        "Many contracts have `run_id`, maybe `node_id`, but still lack these fields."
+        "P2 priority: Add node_id, package_id, seam_id, lane_id, attempt_id, effective_identity to addressing"
       ]
     },
     {
-      "seed_type": "stale_retirement",
-      "canon_label_hint": "persona id field names",
+      "seed_type": "owner",
+      "canon_label_hint": "Memory Prohibition vs Stateful Orchestration",
       "exact_items": [
-        "`requested_persona_id`",
-        "`effective_persona_id`"
+        "assistant-memory-subsystem.md uses NullMemoryProvider for Orchestrator",
+        "newfeatures.md implies a system-prompt loop carrying state",
+        "If Orchestrator has no memory, how does it maintain coherence across packages?"
       ],
       "affected_doc_hints": [
-        "Plans/Orchestrator_Page.md",
-        "Plans/Contracts_V0.md",
-        "Plans/Personas.md"
+        "Plans/assistant-memory-subsystem.md",
+        "Plans/newfeatures.md"
       ],
       "heading_hints": [
-        "## Contradictions To Resolve",
-        "### Contradictions / gaps surfaced"
+        "Contradictions To Resolve"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L1236-L1237",
+        "working_ledger.md:L1321"
+      ],
+      "notes": [
+        "Automation-first default vs manual HITL expectations pulling in opposite directions"
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Worktree Strategy Contradiction: On vs Off",
+      "exact_items": [
+        "chain-wizard-flexibility.md mentions 'explicit no-worktrees'",
+        "WorktreeGitImprovement.md details per-subtask worktrees as mandatory",
+        "This contradiction is fundamental to isolation strategy"
+      ],
+      "affected_doc_hints": [
+        "Plans/chain-wizard-flexibility.md",
+        "Plans/WorktreeGitImprovement.md"
+      ],
+      "heading_hints": [
+        "Contradictions To Resolve",
+        "Worktree / SCM / Parallelism Impacts"
       ],
       "stale_tokens": [
-        "`requested_persona_id`",
-        "`effective_persona_id`"
+        "per-subtask worktrees",
+        "tier_id-keyed branching"
       ],
       "source_evidence": [
-        "working_ledger.md:L1677-L1679",
-        "working_ledger.md:L1717-L1720",
-        "working_ledger.md:L2041-L2043",
-        "working_ledger.md:L2108-L2110"
+        "working_ledger.md:L1234",
+        "working_ledger.md:L1292",
+        "working_ledger.md:L1319"
       ],
       "notes": [
-        "`Contracts_V0.md` explicitly prohibits those names as canonical fields."
+        "No doc defines when each applies; contamination policy is weak for cross-lane reuse"
       ]
     },
     {
-      "seed_type": "stale_retirement",
-      "canon_label_hint": "blocked action array names",
+      "seed_type": "owner",
+      "canon_label_hint": "FileSafe Monolithic Plan vs Sharded Node Graph",
       "exact_items": [
-        "`allowed_actions[]`",
-        "`allowed_action_ids[]`"
+        "FileSafe write scope references 'files declared in the active plan' \u2014 singular",
+        "Sharded node graphs under .puppet-master/project/plan_graph/ break this assumption",
+        "Write-scope resolution is undefined for multi-node concurrent execution"
       ],
       "affected_doc_hints": [
-        "Plans/Contracts_V0.md",
-        "Plans/human-in-the-loop.md",
-        "Plans/Project_Output_Artifacts.md"
+        "Plans/FileSafe.md"
       ],
       "heading_hints": [
-        "## Runtime / Storage / Contract Impacts",
-        "## Contradictions To Resolve"
+        "Runtime / Storage / Contract Impacts",
+        "Contradictions To Resolve"
       ],
       "stale_tokens": [
-        "`allowed_actions[]`",
-        "`allowed_action_ids[]`"
+        "Phase/Task/Subtask/Iteration",
+        "monolithic plan"
       ],
       "source_evidence": [
-        "working_ledger.md:L1732-L1735",
-        "working_ledger.md:L1786-L1789",
-        "working_ledger.md:L1868-L1870"
+        "working_ledger.md:L1273",
+        "working_ledger.md:L1323"
       ],
       "notes": [
-        "blocked action IDs cannot be wired safely while both `allowed_actions[]` and `allowed_action_ids[]` remain canonical."
+        "P0 blocking: strict hierarchy prevents package-based planning"
       ]
     },
     {
-      "seed_type": "stale_retirement",
-      "canon_label_hint": "tier-era runtime tokens",
+      "seed_type": "consumer",
+      "canon_label_hint": "Storage Event Schema Missing Lane/Package Fields",
       "exact_items": [
-        "`Tiers`",
-        "`Phase/Task/Subtask`",
-        "`Phase/Task/Subtask/Iteration`",
-        "`TierTree`",
-        "`tier_type`",
-        "`View in Tiers`",
-        "`tier_id`",
-        "`tier` / `subtask`"
+        "Storage-plan event names lack new fields",
+        "39 node/graph references exist but event schemas don't include package_id, seam_id, lane_id, attempt_id, or effective_identity fields"
       ],
       "affected_doc_hints": [
-        "Plans/Orchestrator_Page.md",
-        "Plans/Run_Graph_View.md",
-        "Plans/WorktreeGitImprovement.md",
-        "Plans/Widget_System.md",
-        "Plans/Prompt_Pipeline.md",
-        "Plans/Models_System.md",
-        "Plans/Personas.md",
-        "Plans/usage-feature.md"
+        "Plans/storage-plan.md"
       ],
       "heading_hints": [
-        "## Highest-Impact Docs",
-        "## GUI / UX Impacts",
-        "## Research Progress - 2026-03-16 - Widget System Contract"
+        "Runtime / Storage / Contract Impacts",
+        "P2 \u2014 Contract/storage field gaps"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L1275",
+        "working_ledger.md:L1309"
+      ],
+      "notes": [
+        "Event schemas require node-identity alongside or replacing tier-identity"
+      ]
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Prompt Pipeline Tier Identity Embedded",
+      "exact_items": [
+        "Prompt_Pipeline.md \u00a71.2 embeds tier/mode in the run envelope and instruction bundle",
+        "No node-identity, package-identity, or lane-identity fields exist"
+      ],
+      "affected_doc_hints": [
+        "Plans/Prompt_Pipeline.md"
+      ],
+      "heading_hints": [
+        "Runtime / Storage / Contract Impacts"
       ],
       "stale_tokens": [
-        "`Tiers`",
-        "`Phase/Task/Subtask`",
-        "`Phase/Task/Subtask/Iteration`",
-        "`TierTree`",
-        "`tier_type`",
-        "`View in Tiers`",
-        "`tier_id`",
-        "`tier` / `subtask`"
+        "tier/mode"
       ],
       "source_evidence": [
-        "working_ledger.md:L1717-L1725",
-        "working_ledger.md:L1742-L1755",
-        "working_ledger.md:L1764-L1767",
-        "working_ledger.md:L1824-L1828",
-        "working_ledger.md:L2022-L2024",
-        "working_ledger.md:L2076-L2088",
-        "working_ledger.md:L2169-L2177",
-        "working_ledger.md:L2270-L2278"
-      ],
-      "notes": [
-        "UI still presents `Tiers` as a primary mental model."
-      ]
-    },
-    {
-      "seed_type": "owner",
-      "canon_label_hint": "overseer authority split",
-      "exact_items": [
-        "singular `Overseer`",
-        "one `Overseer`",
-        "single Overseer",
-        "package overseer + seam overseer",
-        "package overseer plus seam overseer split"
-      ],
-      "affected_doc_hints": [
-        "Plans/Executor_Protocol.md",
-        "Plans/Orchestrator_Page.md",
-        "Plans/Personas.md",
-        "Plans/Prompt_Pipeline.md",
-        "Plans/Provider_Stream_Mapping_External_Reference_A2A.md"
-      ],
-      "heading_hints": [
-        "## Contradictions To Resolve",
-        "## Highest-Impact Docs",
-        "## Settings / Provider / Persona / Account Impacts"
-      ],
-      "stale_tokens": [
-        "singular `Overseer`",
-        "one `Overseer`",
-        "single Overseer"
-      ],
-      "source_evidence": [
-        "working_ledger.md:L1613-L1618",
-        "working_ledger.md:L1673-L1675",
-        "working_ledger.md:L1717-L1725",
-        "working_ledger.md:L1747-L1750",
-        "working_ledger.md:L1807-L1808"
-      ],
-      "notes": [
-        "ownership of scheduling, review, recovery, and promotion becomes ambiguous if both persist."
-      ]
-    },
-    {
-      "seed_type": "owner",
-      "canon_label_hint": "account identity bundle",
-      "exact_items": [
-        "`requested_account_policy`",
-        "no canonical requested concrete-account anchor exists when a user pins a specific account",
-        "`effective_account_id`",
-        "`effective_provider_identity`",
-        "requested/effective account identity and fallback reason",
-        "execution-entity, lane, package, and effective-account dimensions"
-      ],
-      "affected_doc_hints": [
-        "Plans/Multi-Account.md",
-        "Plans/Prompt_Pipeline.md",
-        "Plans/Contracts_V0.md",
-        "Plans/Models_System.md",
-        "Plans/Personas.md",
-        "Plans/CLI_Bridged_Providers.md",
-        "Plans/Provider_OpenCode.md",
-        "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
-        "Plans/Permissions_System.md"
-      ],
-      "heading_hints": [
-        "## Settings / Provider / Persona / Account Impacts",
-        "## Research Progress - 2026-03-16 - Opus Identity / Runtime Batch"
-      ],
-      "stale_tokens": [],
-      "source_evidence": [
-        "working_ledger.md:L1804-L1814",
-        "working_ledger.md:L2009-L2027",
-        "working_ledger.md:L2048-L2055"
-      ],
-      "notes": [
-        "Add one canonical requested-side concrete-account field to the requested/effective runtime identity bundle, while retaining `requested_account_policy` as the routing rule rather than the selected account."
-      ]
-    },
-    {
-      "seed_type": "stale_retirement",
-      "canon_label_hint": "provider identity stable keys",
-      "exact_items": [
-        "`provider_account_id`",
-        "`login`",
-        "`account_id`"
-      ],
-      "affected_doc_hints": [
-        "Plans/usage-feature.md",
-        "Plans/storage-plan.md",
-        "Plans/GitHub_API_Auth_and_Flows.md",
-        "Plans/GitHub_Integration.md",
-        "Plans/Multi-Account.md"
-      ],
-      "heading_hints": [
-        "## Research Progress - 2026-03-16 - Opus Identity / Runtime Batch",
-        "## Research Progress - 2026-03-16 - GPT-5.4 Hotspot Recheck"
-      ],
-      "stale_tokens": [
-        "`provider_account_id`",
-        "`login`"
-      ],
-      "source_evidence": [
-        "working_ledger.md:L2014-L2017",
-        "working_ledger.md:L2050-L2052",
-        "working_ledger.md:L2085-L2095",
-        "working_ledger.md:L2108-L2113",
-        "working_ledger.md:L2115-L2123"
-      ],
-      "notes": [
-        "Replace GitHub `login` as a stable key with internal `account_id`, while keeping `login` as provider-native disclosure metadata."
-      ]
-    },
-    {
-      "seed_type": "stale_retirement",
-      "canon_label_hint": "runtime action family names",
-      "exact_items": [
-        "`cmd.graph.*`",
-        "`cmd.runtime.*`"
-      ],
-      "affected_doc_hints": [
-        "Plans/UI_Command_Catalog.md",
-        "Plans/Wiring_Matrix.md",
-        "Plans/Run_Graph_View.md",
-        "Plans/human-in-the-loop.md"
-      ],
-      "heading_hints": [
-        "## GUI / UX Impacts",
-        "## Contradictions To Resolve"
-      ],
-      "stale_tokens": [
-        "`cmd.graph.*`"
-      ],
-      "source_evidence": [
-        "working_ledger.md:L1681-L1683",
-        "working_ledger.md:L1772-L1775"
-      ],
-      "notes": [
-        "old `cmd.graph.*` recovery actions coexist with canonical `cmd.runtime.*`, and current command envelopes cannot express seam/package/lane promotion actions."
-      ]
-    },
-    {
-      "seed_type": "owner",
-      "canon_label_hint": "existing storage keys",
-      "exact_items": [
-        "`orchestrator.receipt.{run_id}.{attempt_id}`",
-        "`source_control.project_state.{project_id}`",
-        "`selected_worktree_id?`",
-        "`repo_id`",
-        "`worktree_id`",
-        "branch",
-        "commit-range",
-        "workflow refs"
-      ],
-      "affected_doc_hints": [
-        "Plans/storage-plan.md",
-        "Plans/Run_Graph_View.md"
-      ],
-      "heading_hints": [
-        "## Research Progress - 2026-03-16 - Source Control / Worktree Handshake"
-      ],
-      "stale_tokens": [],
-      "source_evidence": [
-        "working_ledger.md:L1933-L1936"
-      ],
-      "notes": [
-        "`Run_Graph_View` already requires historical SCM/worktree lineage to remain visible when live targets no longer exist."
-      ]
-    },
-    {
-      "seed_type": "owner",
-      "canon_label_hint": "orchestrator source-control boundary",
-      "exact_items": [
-        "`Orchestrator` owns package lane-pool operational truth for the active run",
-        "`Source Control` owns repo/worktree execution and inspection operations",
-        "open",
-        "compare",
-        "diff/history/graph",
-        "recover",
-        "archive/prune/remove when policy permits",
-        "explicit disabled reasons for destructive actions",
-        "Orchestrator CTAs should route into Source Control for Git-native operations with exact project/run/package/lane/worktree context preserved."
-      ],
-      "affected_doc_hints": [
-        "Plans/Orchestrator_Page.md",
-        "Plans/WorktreeGitImprovement.md",
-        "Plans/GitHub_Integration.md",
-        "Plans/FinalGUISpec.md",
-        "Plans/MiscPlan.md",
-        "Plans/storage-plan.md",
-        "Plans/Run_Graph_View.md"
-      ],
-      "heading_hints": [
-        "## Research Progress - 2026-03-16 - Source Control / Worktree Handshake"
-      ],
-      "stale_tokens": [],
-      "source_evidence": [
-        "working_ledger.md:L1942-L1960"
-      ],
-      "notes": [
-        "Orchestrator should be the stronger lane/worktree operations overview."
-      ]
-    },
-    {
-      "seed_type": "owner",
-      "canon_label_hint": "lane lifecycle vocabulary",
-      "exact_items": [
-        "`Feature Seam`",
-        "`Work Package`",
-        "`Lane`",
-        "`Worktree`",
-        "`baseline`",
-        "`active`",
-        "`suspect`",
-        "`restoring`",
-        "`retained`",
-        "`cleanup_eligible`",
-        "`archived`",
-        "`removed`",
-        "`historical`"
-      ],
-      "affected_doc_hints": [
-        "Plans/Orchestrator_Page.md",
-        "Plans/WorktreeGitImprovement.md",
-        "Plans/GitHub_Integration.md",
-        "Plans/MiscPlan.md",
-        "Plans/storage-plan.md",
-        "Plans/Run_Graph_View.md"
-      ],
-      "heading_hints": [
-        "## Research Progress - 2026-03-16 - Source Control / Worktree Handshake"
-      ],
-      "stale_tokens": [],
-      "source_evidence": [
-        "working_ledger.md:L1961-L1991"
-      ],
-      "notes": [
-        "`historical` is record truth and can coexist with `archived` or `removed`."
-      ]
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "historical lineage retention",
-      "exact_items": [
-        "historical run/package/node/lane references MUST survive after live worktree cleanup",
-        "a missing live worktree must render as `historical/retired/removed`, not disappear",
-        "`worktree_id`",
-        "path snapshot",
-        "branch snapshot",
-        "compare target / commit-range snapshot",
-        "owning package/lane identity when applicable",
-        "`dirty_worktree`",
-        "`worktree_conflict`"
-      ],
-      "affected_doc_hints": [
-        "Plans/Run_Graph_View.md",
-        "Plans/storage-plan.md",
-        "Plans/WorktreeGitImprovement.md",
-        "Plans/Orchestrator_Page.md",
-        "Plans/GitHub_Integration.md"
-      ],
-      "heading_hints": [
-        "### Historical reference rule",
-        "### Do-not-forget details"
-      ],
-      "stale_tokens": [],
-      "source_evidence": [
-        "working_ledger.md:L2148-L2151",
-        "working_ledger.md:L2153-L2167",
-        "working_ledger.md:L2195-L2198"
-      ],
-      "notes": [
-        "`dirty_worktree` and `worktree_conflict` remain runtime truth, not Source Control-local statuses."
-      ]
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "worktree-first asymmetry",
-      "exact_items": [
-        "`Source Control` stays `worktree-first`.",
-        "`Worktrees` as the primary subview/object list rather than flipping to a lane-first list.",
-        "`Orchestrator` should remain package/seam/lane-first and treat worktrees as backing execution assets shown in context.",
-        "owning package",
-        "owning lane",
-        "run reference when relevant",
-        "lifecycle state",
-        "blocked/recovery state when relevant",
-        "Do not rename Source Control objects so aggressively that `worktree` becomes hidden or secondary there."
-      ],
-      "affected_doc_hints": [
-        "Plans/GitHub_Integration.md",
-        "Plans/Orchestrator_Page.md",
-        "Plans/FinalGUISpec.md"
-      ],
-      "heading_hints": [
-        "## Research Progress - 2026-03-16 - Terminology Decision"
-      ],
-      "stale_tokens": [],
-      "source_evidence": [
-        "working_ledger.md:L2207-L2243"
-      ],
-      "notes": [
-        "The surfaces therefore stay intentionally asymmetric."
-      ]
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "source control panel constraint",
-      "exact_items": [
-        "The `Source Control` panel is narrow/small and should be treated as a constrained side-panel surface, not a broad information canvas.",
-        "one strong primary line",
-        "compact status chips/icons",
-        "expandable row/detail affordances",
-        "deep-link out to wider surfaces when context gets too large"
-      ],
-      "affected_doc_hints": [
-        "Plans/GitHub_Integration.md",
-        "Plans/FinalGUISpec.md"
-      ],
-      "heading_hints": [
-        "## Research Progress - 2026-03-16 - Source Control Panel Constraint"
-      ],
-      "stale_tokens": [],
-      "source_evidence": [
-        "working_ledger.md:L2245-L2260"
-      ],
-      "notes": [
-        "Do not assume package/lane/run/worktree metadata can all be shown at full fidelity at once in the panel."
-      ]
-    },
-    {
-      "seed_type": "owner",
-      "canon_label_hint": "widget boundary and hostability",
-      "exact_items": [
-        "`Dashboard`",
-        "`Usage`",
-        "`Orchestrator / Progress`",
-        "`Orchestrator / Seams`",
-        "`Orchestrator / Node Graph`",
-        "`Orchestrator / Evidence`",
-        "`Orchestrator / History`",
-        "`Orchestrator / Ledger`",
-        "only `Progress` should behave like a widget canvas on the Orchestrator page"
-      ],
-      "affected_doc_hints": [
-        "Plans/Widget_System.md",
-        "Plans/Orchestrator_Page.md",
-        "Plans/FinalGUISpec.md"
-      ],
-      "heading_hints": [
-        "## Research Progress - 2026-03-16 - Widget System Contract",
-        "### Recommended widget boundary",
-        "### Hostability direction"
-      ],
-      "stale_tokens": [],
-      "source_evidence": [
-        "working_ledger.md:L2276-L2300",
-        "working_ledger.md:L2336-L2345",
-        "working_ledger.md:L2377-L2383"
-      ],
-      "notes": [
-        "widgets are allowed on `Dashboard`, `Usage`, and `Orchestrator / Progress`."
-      ]
-    },
-    {
-      "seed_type": "stale_retirement",
-      "canon_label_hint": "widget legacy tokens and layout keys",
-      "exact_items": [
-        "`widget.tier_tree`",
-        "`widget.current_task`",
-        "`widget.completed_prose`",
-        "`widget.agent_terminal`",
-        "`TierChanged`",
-        "`IterationStart`",
-        "`Progress`",
-        "`widget_layout:v1:orchestrator:tiers`",
-        "`widget_layout:v1:orchestrator:evidence`",
-        "`widget_layout:v1:orchestrator:history`",
-        "`widget_layout:v1:orchestrator:ledger`"
-      ],
-      "affected_doc_hints": [
-        "Plans/Widget_System.md",
-        "Plans/Orchestrator_Page.md"
-      ],
-      "heading_hints": [
-        "## Research Progress - 2026-03-16 - Widget System Contract",
-        "### Persistence impact"
-      ],
-      "stale_tokens": [
-        "`widget.tier_tree`",
-        "`widget.current_task`",
-        "`widget.completed_prose`",
-        "`widget.agent_terminal`",
-        "`TierChanged`",
-        "`IterationStart`",
-        "`Progress`",
-        "`widget_layout:v1:orchestrator:tiers`",
-        "`widget_layout:v1:orchestrator:evidence`",
-        "`widget_layout:v1:orchestrator:history`",
-        "`widget_layout:v1:orchestrator:ledger`"
-      ],
-      "source_evidence": [
-        "working_ledger.md:L2270-L2278",
-        "working_ledger.md:L2306-L2308",
-        "working_ledger.md:L2346-L2358"
-      ],
-      "notes": [
-        "Move all widget data contracts off legacy tier events and onto stable projections / canonical records."
-      ]
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "widget projection semantics",
-      "exact_items": [
-        "current run summary",
-        "current activity projection",
-        "attention/blocker projection",
-        "seam health projection",
-        "package activity projection",
-        "promotion queue projection",
-        "lane/worktree projection",
-        "account/usage pressure projection",
-        "recent major events projection",
-        "page/tab filters",
-        "widget presentation config",
-        "compact vs expanded view",
-        "item count",
-        "sort mode",
-        "whether to show durations or cost",
-        "custom object model",
-        "custom state classification rules",
-        "widget-local definitions of blocked/completed/integration status",
-        "page-native semantics win over widget-local semantics"
-      ],
-      "affected_doc_hints": [
-        "Plans/Widget_System.md",
-        "Plans/Orchestrator_Page.md",
-        "Plans/FinalGUISpec.md",
-        "Plans/usage-feature.md"
-      ],
-      "heading_hints": [
-        "### Stable data-contract direction",
-        "### Widget filter / persistence direction",
-        "### Candidate fixes to carry forward"
-      ],
-      "stale_tokens": [],
-      "source_evidence": [
-        "working_ledger.md:L2302-L2335",
-        "working_ledger.md:L2377-L2383"
-      ],
-      "notes": [
-        "widget config must not invent alternate scoping semantics that diverge from the tab's canonical projection rules."
-      ]
-    },
-    {
-      "seed_type": "owner",
-      "canon_label_hint": "seglog canonical storage",
-      "exact_items": [
-        "`seglog` is canonical"
-      ],
-      "affected_doc_hints": [
-        "Plans/storage-plan.md",
-        "Plans/usage-feature.md",
-        "Plans/FinalGUISpec.md",
-        "Plans/Orchestrator_Page.md",
-        "Plans/Contracts_V0.md"
-      ],
-      "heading_hints": [
-        "## Research Progress - 2026-03-16 - Projection Freshness / Stale-Trust Model",
-        "### Key findings"
-      ],
-      "stale_tokens": [],
-      "source_evidence": [
-        "working_ledger.md:L2389-L2400"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "projection trust contract",
-      "exact_items": [
-        "`current`",
-        "`refreshing`",
-        "`stale`",
-        "`degraded`",
-        "`unavailable`",
-        "`trust state`",
-        "`last updated time`",
-        "`degraded/stale reason when not current`",
-        "`whether actions are partially gated`",
-        "`History`",
-        "`Ledger`",
-        "direct evidence/record inspectors",
-        "Orchestrator",
-        "Usage",
-        "Source Control",
-        "other projection-backed surfaces"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "### Recommended trust-state model",
-        "### Fallback-view direction",
-        "### UI contract direction",
-        "### Candidate fixes to carry forward"
-      ],
-      "stale_tokens": [],
-      "source_evidence": [
-        "working_ledger.md:L2414-L2426",
-        "working_ledger.md:L2441-L2456",
-        "working_ledger.md:L2458-L2469",
-        "working_ledger.md:L2476-L2487"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "projection trust gating",
-      "exact_items": [
-        "`current`: all normal actions allowed",
-        "`refreshing`: allow normal read actions; mutating actions may continue if backed by runtime truth rather than stale page cache",
-        "`stale`: allow inspection and historical navigation; require refresh or direct runtime revalidation before sensitive live actions",
-        "`degraded`: restrict to safe inspection and canonical recovery paths; do not allow ambiguous live actions",
-        "`unavailable`: route to record-backed fallback views or explicit recovery/refresh actions",
-        "page state must not silently stand in for runtime state when freshness/trust is insufficient"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "### Action-gating direction"
-      ],
-      "stale_tokens": [],
-      "source_evidence": [
-        "working_ledger.md:L2428-L2439"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "owner",
-      "canon_label_hint": "orchestrator run focus state",
-      "exact_items": [
-        "`active_run_id?`",
-        "`focused_run_id?`",
-        "`focus_mode = live | historical`",
-        "`orchestrator.project_state.{project_id}`",
-        "`last_live_run_id?`",
-        "`selected_tab`",
-        "per-tab view state refs",
-        "`auto_return_to_live = false` by default"
-      ],
-      "affected_doc_hints": [
-        "Plans/Orchestrator_Page.md",
-        "Plans/Run_Graph_View.md",
-        "Plans/storage-plan.md",
-        "Plans/FinalGUISpec.md",
-        "Plans/Widget_System.md"
-      ],
-      "heading_hints": [
-        "## Research Progress - 2026-03-16 - Multi-Run Behavior Inside One Project",
-        "### Recommended run-focus model",
-        "### Persistence direction",
-        "### Candidate fixes to carry forward"
-      ],
-      "stale_tokens": [],
-      "source_evidence": [
-        "working_ledger.md:L2521-L2532",
-        "working_ledger.md:L2581-L2595",
-        "working_ledger.md:L2624-L2632"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "historical run mode behavior",
-      "exact_items": [
-        "`Historical Run Mode`",
-        "all tabs clearly show the focused historical `run_id`",
-        "the page displays a persistent banner/chip that the user is viewing historical data",
-        "controls that only make sense for the active run are disabled or removed",
-        "pause / resume / cancel active execution",
-        "live retry / remediation commands",
-        "approval/recovery actions that require current runtime state",
-        "any command that implies mutating the current live run context",
-        "do not forcibly yank focus away from the historical run",
-        "switch to live run",
-        "all Orchestrator tabs share the same focused `run_id`",
-        "Cross-tab deep links must preserve focused `run_id` so History -> Graph -> Evidence -> Ledger stays coherent"
-      ],
-      "affected_doc_hints": [
-        "Plans/Orchestrator_Page.md",
-        "Plans/Run_Graph_View.md",
-        "Plans/storage-plan.md",
-        "Plans/FinalGUISpec.md",
-        "Plans/Widget_System.md"
-      ],
-      "heading_hints": [
-        "### Historical-run mode direction",
-        "### Current-run mode direction",
-        "### Cross-tab behavior direction",
-        "### Do-not-forget details"
-      ],
-      "stale_tokens": [],
-      "source_evidence": [
-        "working_ledger.md:L2536-L2555",
-        "working_ledger.md:L2557-L2568",
-        "working_ledger.md:L2597-L2605",
-        "working_ledger.md:L2634-L2637"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "owner",
-      "canon_label_hint": "orchestrator search targets",
-      "exact_items": [
-        "run",
-        "seam",
-        "package",
-        "node",
-        "lane / worktree",
-        "concern",
-        "promotion",
-        "review",
-        "corroboration",
-        "graph patch",
-        "recovery / safe-point object where applicable",
-        "evidence/artifact when directly addressable"
-      ],
-      "affected_doc_hints": [
-        "Plans/Orchestrator_Page.md",
-        "Plans/Run_Graph_View.md",
-        "Plans/storage-plan.md",
-        "Plans/FinalGUISpec.md",
-        "Plans/Widget_System.md"
-      ],
-      "heading_hints": [
-        "## Research Progress - 2026-03-16 - Search Across Orchestrator Tabs",
-        "### Recommended search model"
-      ],
-      "stale_tokens": [],
-      "source_evidence": [
-        "working_ledger.md:L2665-L2685"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "orchestrator search routing",
-      "exact_items": [
-        "`Orchestrator search`",
-        "`tab-local search`",
-        "`focused_run_id`",
-        "destination tab",
-        "selected object id",
-        "optional filter payload",
-        "optional inspector/detail target",
-        "`Search in this tab`",
-        "`Search Orchestrator`",
-        "search results",
-        "command palette results",
-        "cross-tab deep links",
-        "`Show in ...` actions",
-        "the UI should disclose that the focused run changed because of the search result"
-      ],
-      "affected_doc_hints": [
-        "Plans/Orchestrator_Page.md",
-        "Plans/Run_Graph_View.md",
-        "Plans/storage-plan.md",
-        "Plans/FinalGUISpec.md",
-        "Plans/Widget_System.md"
-      ],
-      "heading_hints": [
-        "### Routing contract direction",
-        "### Focused-run interaction",
-        "### Global vs local search distinction",
-        "### Command palette integration direction",
-        "### Candidate fixes to carry forward"
-      ],
-      "stale_tokens": [],
-      "source_evidence": [
-        "working_ledger.md:L2687-L2700",
-        "working_ledger.md:L2702-L2712",
-        "working_ledger.md:L2713-L2730",
-        "working_ledger.md:L2764-L2777"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "owner",
-      "canon_label_hint": "record semantic vocabulary",
-      "exact_items": [
-        "separate `time status`, `replacement status`, and `validity status`",
-        "`historical`",
-        "`stale_historical`",
-        "`superseded`",
-        "`revoked`",
-        "`reopened`",
-        "`archived`",
-        "`removed`",
-        "`Historical`",
-        "`Superseded by Generation 4`",
-        "`Promotion Revoked`",
-        "`Reopened by New Evidence`",
-        "`Worktree Removed`",
-        "`Archived`"
-      ],
-      "affected_doc_hints": [
-        "Plans/storage-plan.md",
-        "Plans/Contracts_V0.md",
-        "Plans/Run_Graph_View.md",
-        "Plans/Orchestrator_Page.md",
-        "Plans/FinalGUISpec.md"
-      ],
-      "heading_hints": [
-        "## Research Progress - 2026-03-16 - Historical vs Current Record Semantics",
-        "### Recommended semantic split",
-        "### UI direction",
-        "### Candidate fixes to carry forward"
-      ],
-      "stale_tokens": [],
-      "source_evidence": [
-        "working_ledger.md:L2801-L2830",
-        "working_ledger.md:L2872-L2887",
-        "working_ledger.md:L2895-L2905"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "stale_retirement",
-      "canon_label_hint": "historical semantics stale labels",
-      "exact_items": [
-        "generic \"old\" state",
-        "`superseded by newer run`"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "### Recommended semantic split",
-        "## Research Progress - 2026-03-16 - Project-Level Run Relationship Clarification",
-        "### Candidate fixes to carry forward"
-      ],
-      "stale_tokens": [
-        "old",
-        "superseded by newer run"
-      ],
-      "source_evidence": [
-        "working_ledger.md:L2802-L2810",
-        "working_ledger.md:L2968-L2971"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "run relationship semantics",
-      "exact_items": [
-        "`historical run`",
-        "`related run`",
-        "`derived run`",
-        "`retry/recovery run`",
-        "same project does not mean related",
-        "same repo does not mean related",
-        "temporal order does not mean related",
-        "History should default to chronological project run history, not lineage history",
-        "`superseded`, `revoked`, `reopened`, etc. should apply only where real object lineage/validity relationships exist, not to arbitrary project runs"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "## Research Progress - 2026-03-16 - Project-Level Run Relationship Clarification",
-        "### Recommended run-semantics split",
-        "### UI direction",
-        "### Historical semantics refinement"
-      ],
-      "stale_tokens": [],
-      "source_evidence": [
-        "working_ledger.md:L2933-L2956",
-        "working_ledger.md:L2962-L2967"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "owner",
-      "canon_label_hint": "concern object split",
-      "exact_items": [
-        "`concern record`",
-        "`concern source event/ref`",
-        "`concern projection`"
-      ],
-      "affected_doc_hints": [
-        "Plans/Orchestrator_Page.md",
-        "Plans/storage-plan.md",
-        "Plans/Contracts_V0.md",
-        "Plans/FinalGUISpec.md",
-        "Plans/Run_Graph_View.md"
-      ],
-      "heading_hints": [
-        "## Research Progress - 2026-03-16 - Concern Record Lifecycle / Details",
-        "### Recommended concern object split"
-      ],
-      "stale_tokens": [],
-      "source_evidence": [
-        "working_ledger.md:L2996-L3005"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "owner",
-      "canon_label_hint": "concern record fields",
-      "exact_items": [
-        "`concern_id`",
-        "`project_id`",
-        "`run_id?`",
-        "`seam_id?`",
-        "`package_id?`",
-        "`node_id?`",
-        "`attempt_id?`",
-        "`lane_id?`",
-        "`worktree_id?`",
-        "`category`",
-        "`severity`",
-        "`status`",
-        "`summary`",
-        "`detail_ref?`",
-        "`owner_kind`",
-        "`owner_ref?`",
-        "`created_by_kind`",
-        "`created_by_ref?`",
-        "`first_seen_at_utc`",
-        "`last_seen_at_utc`",
-        "`resolved_at_utc?`",
-        "`dismissed_at_utc?`",
-        "`acknowledged_at_utc?`",
-        "`source_refs[]`",
-        "`evidence_refs[]`",
-        "`artifact_refs[]`",
-        "`review_refs[]`",
-        "`corroboration_refs[]`",
-        "`graph_patch_refs[]`",
-        "`recovery_refs[]`",
-        "`parent_concern_id?`",
-        "`superseded_by_concern_id?`",
-        "`merged_into_concern_id?`",
-        "`split_from_concern_id?`",
-        "`visibility_level`",
-        "`attention_level`",
-        "`chatworthy`",
-        "`blocking_effect?`"
-      ],
-      "affected_doc_hints": [
-        "Plans/Orchestrator_Page.md",
-        "Plans/storage-plan.md",
-        "Plans/Contracts_V0.md",
-        "Plans/FinalGUISpec.md",
-        "Plans/Run_Graph_View.md"
-      ],
-      "heading_hints": [
-        "### Recommended minimum concern record shape"
-      ],
-      "stale_tokens": [],
-      "source_evidence": [
-        "working_ledger.md:L3007-L3050"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "owner",
-      "canon_label_hint": "concern lifecycle lineage",
-      "exact_items": [
-        "`active`",
-        "`acknowledged`",
-        "`resolved`",
-        "`dismissed`",
-        "`resolution_kind`",
-        "`fixed`",
-        "`accepted_risk`",
-        "`superseded`",
-        "`merged`",
-        "`split`",
-        "`invalidated`",
-        "`obsoleted_by_patch`",
-        "`obsoleted_by_recovery`",
-        "update existing concern",
-        "append sources/evidence",
-        "allow severity/attention escalation",
-        "split into child concerns with lineage links",
-        "merge into one retained concern id",
-        "close/redirect the merged-away ids explicitly"
-      ],
-      "affected_doc_hints": [
-        "Plans/Orchestrator_Page.md",
-        "Plans/storage-plan.md",
-        "Plans/Contracts_V0.md",
-        "Plans/FinalGUISpec.md",
-        "Plans/Run_Graph_View.md"
-      ],
-      "heading_hints": [
-        "### Lifecycle direction",
-        "### Merge / split / supersession direction",
-        "### Candidate fixes to carry forward"
-      ],
-      "stale_tokens": [],
-      "source_evidence": [
-        "working_ledger.md:L3069-L3108",
-        "working_ledger.md:L3176-L3181"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "owner",
-      "canon_label_hint": "concern ownership authority",
-      "exact_items": [
-        "concern owner for follow-up",
-        "concern creator/source",
-        "concern resolver",
-        "`Runtime`",
-        "`Package Overseer`",
-        "`Seam Overseer`",
-        "`Corroboration`",
-        "`Graph Patch`",
-        "`Recovery`",
-        "`User`",
-        "`External Resource`",
-        "A concern should be allowed to change owner over time without changing identity."
-      ],
-      "affected_doc_hints": [
-        "Plans/Orchestrator_Page.md",
-        "Plans/storage-plan.md",
-        "Plans/Contracts_V0.md",
-        "Plans/FinalGUISpec.md",
-        "Plans/Run_Graph_View.md"
-      ],
-      "heading_hints": [
-        "### Concern ownership / authority direction"
-      ],
-      "stale_tokens": [],
-      "source_evidence": [
-        "working_ledger.md:L3129-L3143"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "concern routing surfaces",
-      "exact_items": [
-        "operational concern summary -> `Progress` or `Seams`",
-        "proof/evidence-heavy concern -> `Evidence`",
-        "exact concern record / merge-split lineage -> `Ledger`",
-        "lifecycle story -> `History`",
-        "focused run implications",
-        "target tab",
-        "selected concern id",
-        "related object context",
-        "`Progress`",
-        "`Seams`",
-        "`Evidence`",
-        "`History`",
-        "`Ledger`"
-      ],
-      "affected_doc_hints": [
-        "Plans/Orchestrator_Page.md",
-        "Plans/storage-plan.md",
-        "Plans/Contracts_V0.md",
-        "Plans/FinalGUISpec.md",
-        "Plans/Run_Graph_View.md"
-      ],
-      "heading_hints": [
-        "### Search / routing direction",
-        "### UI direction"
-      ],
-      "stale_tokens": [],
-      "source_evidence": [
-        "working_ledger.md:L3145-L3168"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "action confirmation rule",
-      "exact_items": [
-        "cancel run -> confirmation"
-      ],
-      "affected_doc_hints": [
-        "Plans/FinalGUISpec.md",
-        "Plans/Orchestrator_Page.md",
-        "Plans/storage-plan.md",
-        "Plans/WorktreeGitImprovement.md",
-        "Plans/MiscPlan.md",
-        "Plans/Contracts_V0.md"
-      ],
-      "heading_hints": [
-        "## Research Progress - 2026-03-16 - Action Confirmation / Undo Policy",
-        "### Key findings"
-      ],
-      "stale_tokens": [],
-      "source_evidence": [
-        "working_ledger.md:L3188-L3200"
+        "working_ledger.md:L1274"
       ],
       "notes": []
     }

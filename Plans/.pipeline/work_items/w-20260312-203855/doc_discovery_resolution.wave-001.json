@@ -1,0 +1,78 @@
+{
+  "schema_id": "pm.doc_discovery_resolution.wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-001",
+  "summary": {
+    "rows_in_wave": 5,
+    "rows_resolved": 4,
+    "rows_unresolved": 1
+  },
+  "resolutions": [
+    {
+      "coverage_id": "cov-005",
+      "source_obligation_ids": [
+        "obl-003"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Multi-Account.md",
+      "new_heading_hint": "## 1. Purpose and scope",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/Multi-Account.md:12-19"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-033",
+      "source_obligation_ids": [
+        "obl-015"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "### 7.5 Project and attention surfaces",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:1110-1114"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-050",
+      "source_obligation_ids": [
+        "obl-026"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Orchestrator_Page.md",
+      "new_heading_hint": "### Search, routing, and action policy",
+      "resolution_basis": "cross-reference target",
+      "evidence": [
+        "Plans/Orchestrator_Page.md:6-10"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-089",
+      "source_obligation_ids": [
+        "obl-046"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/orchestrator-subagent-integration.md",
+      "new_heading_hint": "## Rewrite alignment (2026-02-21)",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/orchestrator-subagent-integration.md:28-41"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": [
+    {
+      "coverage_id": "cov-034",
+      "source_obligation_ids": [
+        "obl-016"
+      ],
+      "reason": "No concrete concern-lifecycle owner section with accepted_risk / acknowledged / dismissed semantics exists in the current Plans docs; only scattered status and attention terms are present.",
+      "next_required_stage": "Audit Mode"
+    }
+  ]
+}

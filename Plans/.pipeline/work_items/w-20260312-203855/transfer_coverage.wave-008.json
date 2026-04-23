@@ -1,0 +1,587 @@
+{
+  "schema_id": "pm.transfer_coverage.wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-008",
+  "coverage_rows": [
+    {
+      "coverage_id": "cov-924",
+      "source_obligation_ids": [
+        "obl-351"
+      ],
+      "canon_label": "History vs Ledger Distinction - Explicit Contract",
+      "row_type": "owner",
+      "path": "History tab",
+      "heading_hint": "History vs Ledger distinction",
+      "status": "missing",
+      "exact_items": [
+        "`History` = chronological story/timeline of execution, governance, promotion, recovery, account switching, graph patches",
+        "`Ledger` = structured durable record inspection (attempts, reviews, corroboration, promotions, graph patches, recovery records, learnings, usage-linked receipts)"
+      ],
+      "stale_tokens": [],
+      "evidence": [],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-925",
+      "source_obligation_ids": [
+        "obl-351"
+      ],
+      "canon_label": "History vs Ledger Distinction - Explicit Contract",
+      "row_type": "owner",
+      "path": "Ledger tab",
+      "heading_hint": "History vs Ledger distinction",
+      "status": "missing",
+      "exact_items": [
+        "`History` = chronological story/timeline of execution, governance, promotion, recovery, account switching, graph patches",
+        "`Ledger` = structured durable record inspection (attempts, reviews, corroboration, promotions, graph patches, recovery records, learnings, usage-linked receipts)"
+      ],
+      "stale_tokens": [],
+      "evidence": [],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-926",
+      "source_obligation_ids": [
+        "obl-352"
+      ],
+      "canon_label": "Lane vs Worktree Lifecycle Split",
+      "row_type": "owner",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "Lane / Worktree Cleanup Lifecycle",
+      "status": "missing",
+      "exact_items": [
+        "Define distinct lane and worktree lifecycle states, with explicit mapping but no forced identity collapse",
+        "lane = orchestration lineage object, worktree = concrete Git/filesystem backing object",
+        "treat lane lifecycle and worktree lifecycle as related but non-identical"
+      ],
+      "stale_tokens": [],
+      "evidence": [],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-927",
+      "source_obligation_ids": [
+        "obl-352"
+      ],
+      "canon_label": "Lane vs Worktree Lifecycle Split",
+      "row_type": "owner",
+      "path": "Plans/WorktreeGitImprovement.md",
+      "heading_hint": "Lane / Worktree Cleanup Lifecycle",
+      "status": "partial",
+      "exact_items": [
+        "Define distinct lane and worktree lifecycle states, with explicit mapping but no forced identity collapse",
+        "lane = orchestration lineage object, worktree = concrete Git/filesystem backing object",
+        "treat lane lifecycle and worktree lifecycle as related but non-identical"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/WorktreeGitImprovement.md:543"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-928",
+      "source_obligation_ids": [
+        "obl-353"
+      ],
+      "canon_label": "Memory Prohibition vs Stateful Orchestration",
+      "row_type": "owner",
+      "path": "Plans/assistant-memory-subsystem.md",
+      "heading_hint": "Contradictions To Resolve",
+      "status": "partial",
+      "exact_items": [
+        "If Orchestrator has no memory, how does it maintain coherence across packages?",
+        "assistant-memory-subsystem.md uses NullMemoryProvider for Orchestrator",
+        "newfeatures.md implies a system-prompt loop carrying state"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/assistant-memory-subsystem.md:49"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-929",
+      "source_obligation_ids": [
+        "obl-353"
+      ],
+      "canon_label": "Memory Prohibition vs Stateful Orchestration",
+      "row_type": "owner",
+      "path": "Plans/newfeatures.md",
+      "heading_hint": "Contradictions To Resolve",
+      "status": "missing",
+      "exact_items": [
+        "If Orchestrator has no memory, how does it maintain coherence across packages?",
+        "assistant-memory-subsystem.md uses NullMemoryProvider for Orchestrator",
+        "newfeatures.md implies a system-prompt loop carrying state"
+      ],
+      "stale_tokens": [],
+      "evidence": [],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-930",
+      "source_obligation_ids": [
+        "obl-354"
+      ],
+      "canon_label": "Missing Canonical records heading in storage-plan",
+      "row_type": "owner",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "Canonical records",
+      "status": "present",
+      "exact_items": [
+        "Canonical records",
+        "Plans/storage-plan.md#Canonical records anchor (missing discoverable heading)"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:240"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-931",
+      "source_obligation_ids": [
+        "obl-355"
+      ],
+      "canon_label": "Missing Orchestrator seam scope decision",
+      "row_type": "owner",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "Impacted Docs",
+      "status": "missing",
+      "exact_items": [
+        "primary discussion seam not yet decided: page/surface design, runtime state model, cross-surface lineage and receipts, or blocked/recovery/remediation UX"
+      ],
+      "stale_tokens": [],
+      "evidence": [],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-932",
+      "source_obligation_ids": [
+        "obl-356"
+      ],
+      "canon_label": "Missing Persona/Runtime Snapshot Payload Contract heading",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "### 5.1B Persona/Runtime Snapshot Payload Contract",
+      "status": "partial",
+      "exact_items": [
+        "### 5.1B Persona/Runtime Snapshot Payload Contract",
+        "execution_unit_context required-field list in Plans/Contracts_V0.md omits requested_account_binding, requested_account_policy, and operational_identity"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:471",
+        "Plans/Contracts_V0.md:484",
+        "Plans/Contracts_V0.md:485",
+        "Plans/Contracts_V0.md:487"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-933",
+      "source_obligation_ids": [
+        "obl-357"
+      ],
+      "canon_label": "Missing canonical route validation and rejection rules",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "Research Progress - 2026-03-17 - Canonical route validation and rejection rules",
+      "status": "missing",
+      "exact_items": [
+        "reject when `inspector_target` is present but no object selector exists",
+        "reject when `line` or `range` appears in `route_target`",
+        "reject when `object_id` is present without `object_kind`",
+        "reject when `object_kind` is present without `object_id`",
+        "reject when `project_id` is missing",
+        "reject when `tab_id` conflicts with `target_kind`",
+        "reject when both `subject_id` and `object_kind/object_id` are supplied as competing primary selectors",
+        "reject when no primary selector exists",
+        "reject when per-surface state appears in `route_target`",
+        "route layer must normalize legacy/special-case ids before validation rather than accepting them as ad hoc top-level fields"
+      ],
+      "stale_tokens": [],
+      "evidence": [],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-934",
+      "source_obligation_ids": [
+        "obl-358"
+      ],
+      "canon_label": "Missing canonicalization of route_target and OpenSubject contracts",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md (Primary owner gap)",
+      "heading_hint": "Research Progress - 2026-03-17 - Exact owner-doc insertion points for route/open contracts",
+      "status": "partial",
+      "exact_items": [
+        "Add explicit route validation rules to `Contracts_V0.md`",
+        "Define `resume_url` as serialized `route_target` transport in `Contracts_V0.md`",
+        "Define the canonical `inspector_target` enum as: summary, evidence, artifacts, history, reviews, usage, lineage, details",
+        "Define the canonical `object_kind` enum in `Contracts_V0.md`",
+        "Define the canonical `object_kind` enum in `Contracts_V0.md` as: thread, message, wizard, usage_event, run, node, attempt, scheduler_pass, blocked_episode, safe_point, remediation, feature_seam, work_package, lane, worktree, concern, promotion, graph_patch, graph_generation",
+        "Define the closed `inspector_target` enum in `Contracts_V0.md`",
+        "Keep wizard-step detail as a narrow serialized anchor, not a new top-level base route field",
+        "Put the classification rule directly in `Contracts_V0.md`",
+        "State the allowed serialized data classes directly"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:633-658",
+        "Plans/Contracts_V0.md:660-668",
+        "Plans/Contracts_V0.md:676"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-935",
+      "source_obligation_ids": [
+        "obl-358"
+      ],
+      "canon_label": "Missing canonicalization of route_target and OpenSubject contracts",
+      "row_type": "owner",
+      "path": "Plans/Crosswalk.md (Primitive boundary declaration)",
+      "heading_hint": "Research Progress - 2026-03-17 - Exact owner-doc insertion points for route/open contracts",
+      "status": "missing",
+      "exact_items": [
+        "Add explicit route validation rules to `Contracts_V0.md`",
+        "Define `resume_url` as serialized `route_target` transport in `Contracts_V0.md`",
+        "Define the canonical `inspector_target` enum as: summary, evidence, artifacts, history, reviews, usage, lineage, details",
+        "Define the canonical `object_kind` enum in `Contracts_V0.md`",
+        "Define the canonical `object_kind` enum in `Contracts_V0.md` as: thread, message, wizard, usage_event, run, node, attempt, scheduler_pass, blocked_episode, safe_point, remediation, feature_seam, work_package, lane, worktree, concern, promotion, graph_patch, graph_generation",
+        "Define the closed `inspector_target` enum in `Contracts_V0.md`",
+        "Keep wizard-step detail as a narrow serialized anchor, not a new top-level base route field",
+        "Put the classification rule directly in `Contracts_V0.md`",
+        "State the allowed serialized data classes directly"
+      ],
+      "stale_tokens": [],
+      "evidence": [],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-936",
+      "source_obligation_ids": [
+        "obl-358"
+      ],
+      "canon_label": "Missing canonicalization of route_target and OpenSubject contracts",
+      "row_type": "owner",
+      "path": "Plans/FinalGUISpec.md (Consumer)",
+      "heading_hint": "Research Progress - 2026-03-17 - Exact owner-doc insertion points for route/open contracts",
+      "status": "missing",
+      "exact_items": [
+        "Add explicit route validation rules to `Contracts_V0.md`",
+        "Define `resume_url` as serialized `route_target` transport in `Contracts_V0.md`",
+        "Define the canonical `inspector_target` enum as: summary, evidence, artifacts, history, reviews, usage, lineage, details",
+        "Define the canonical `object_kind` enum in `Contracts_V0.md`",
+        "Define the canonical `object_kind` enum in `Contracts_V0.md` as: thread, message, wizard, usage_event, run, node, attempt, scheduler_pass, blocked_episode, safe_point, remediation, feature_seam, work_package, lane, worktree, concern, promotion, graph_patch, graph_generation",
+        "Define the closed `inspector_target` enum in `Contracts_V0.md`",
+        "Keep wizard-step detail as a narrow serialized anchor, not a new top-level base route field",
+        "Put the classification rule directly in `Contracts_V0.md`",
+        "State the allowed serialized data classes directly"
+      ],
+      "stale_tokens": [],
+      "evidence": [],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-937",
+      "source_obligation_ids": [
+        "obl-358"
+      ],
+      "canon_label": "Missing canonicalization of route_target and OpenSubject contracts",
+      "row_type": "owner",
+      "path": "Plans/UI_Command_Catalog.md (Consumer)",
+      "heading_hint": "Research Progress - 2026-03-17 - Exact owner-doc insertion points for route/open contracts",
+      "status": "missing",
+      "exact_items": [
+        "Add explicit route validation rules to `Contracts_V0.md`",
+        "Define `resume_url` as serialized `route_target` transport in `Contracts_V0.md`",
+        "Define the canonical `inspector_target` enum as: summary, evidence, artifacts, history, reviews, usage, lineage, details",
+        "Define the canonical `object_kind` enum in `Contracts_V0.md`",
+        "Define the canonical `object_kind` enum in `Contracts_V0.md` as: thread, message, wizard, usage_event, run, node, attempt, scheduler_pass, blocked_episode, safe_point, remediation, feature_seam, work_package, lane, worktree, concern, promotion, graph_patch, graph_generation",
+        "Define the closed `inspector_target` enum in `Contracts_V0.md`",
+        "Keep wizard-step detail as a narrow serialized anchor, not a new top-level base route field",
+        "Put the classification rule directly in `Contracts_V0.md`",
+        "State the allowed serialized data classes directly"
+      ],
+      "stale_tokens": [],
+      "evidence": [],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-938",
+      "source_obligation_ids": [
+        "obl-358"
+      ],
+      "canon_label": "Missing canonicalization of route_target and OpenSubject contracts",
+      "row_type": "owner",
+      "path": "Plans/storage-plan.md (Consumer)",
+      "heading_hint": "Research Progress - 2026-03-17 - Exact owner-doc insertion points for route/open contracts",
+      "status": "missing",
+      "exact_items": [
+        "Add explicit route validation rules to `Contracts_V0.md`",
+        "Define `resume_url` as serialized `route_target` transport in `Contracts_V0.md`",
+        "Define the canonical `inspector_target` enum as: summary, evidence, artifacts, history, reviews, usage, lineage, details",
+        "Define the canonical `object_kind` enum in `Contracts_V0.md`",
+        "Define the canonical `object_kind` enum in `Contracts_V0.md` as: thread, message, wizard, usage_event, run, node, attempt, scheduler_pass, blocked_episode, safe_point, remediation, feature_seam, work_package, lane, worktree, concern, promotion, graph_patch, graph_generation",
+        "Define the closed `inspector_target` enum in `Contracts_V0.md`",
+        "Keep wizard-step detail as a narrow serialized anchor, not a new top-level base route field",
+        "Put the classification rule directly in `Contracts_V0.md`",
+        "State the allowed serialized data classes directly"
+      ],
+      "stale_tokens": [],
+      "evidence": [],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-939",
+      "source_obligation_ids": [
+        "obl-359"
+      ],
+      "canon_label": "Missing named `OpenSubject` primitive for identity-based opening",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "Research Progress - 2026-03-17 - Artifact preview identity versus navigation primitive ownership",
+      "status": "partial",
+      "exact_items": [
+        "Introduce `OpenSubject` as the named identity-open contract consumed by FileManager and assistant chat",
+        "Keep `OpenFile` strictly path/editor scoped",
+        "Put the named `route_target` and `OpenSubject` contracts in `Plans/Contracts_V0.md`",
+        "Put the primitive boundary declaration for route-target and subject-open navigation in `Plans/Crosswalk.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:705",
+        "Plans/Contracts_V0.md:722"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-940",
+      "source_obligation_ids": [
+        "obl-359"
+      ],
+      "canon_label": "Missing named `OpenSubject` primitive for identity-based opening",
+      "row_type": "owner",
+      "path": "Plans/Crosswalk.md",
+      "heading_hint": "Research Progress - 2026-03-17 - Artifact preview identity versus navigation primitive ownership",
+      "status": "missing",
+      "exact_items": [
+        "Introduce `OpenSubject` as the named identity-open contract consumed by FileManager and assistant chat",
+        "Keep `OpenFile` strictly path/editor scoped",
+        "Put the named `route_target` and `OpenSubject` contracts in `Plans/Contracts_V0.md`",
+        "Put the primitive boundary declaration for route-target and subject-open navigation in `Plans/Crosswalk.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-941",
+      "source_obligation_ids": [
+        "obl-359"
+      ],
+      "canon_label": "Missing named `OpenSubject` primitive for identity-based opening",
+      "row_type": "owner",
+      "path": "Plans/FileManager.md",
+      "heading_hint": "Research Progress - 2026-03-17 - Artifact preview identity versus navigation primitive ownership",
+      "status": "partial",
+      "exact_items": [
+        "Introduce `OpenSubject` as the named identity-open contract consumed by FileManager and assistant chat",
+        "Keep `OpenFile` strictly path/editor scoped",
+        "Put the named `route_target` and `OpenSubject` contracts in `Plans/Contracts_V0.md`",
+        "Put the primitive boundary declaration for route-target and subject-open navigation in `Plans/Crosswalk.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FileManager.md:312",
+        "Plans/FileManager.md:320"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-942",
+      "source_obligation_ids": [
+        "obl-359"
+      ],
+      "canon_label": "Missing named `OpenSubject` primitive for identity-based opening",
+      "row_type": "owner",
+      "path": "Plans/assistant-chat-design.md",
+      "heading_hint": "Research Progress - 2026-03-17 - Artifact preview identity versus navigation primitive ownership",
+      "status": "partial",
+      "exact_items": [
+        "Introduce `OpenSubject` as the named identity-open contract consumed by FileManager and assistant chat",
+        "Keep `OpenFile` strictly path/editor scoped",
+        "Put the named `route_target` and `OpenSubject` contracts in `Plans/Contracts_V0.md`",
+        "Put the primitive boundary declaration for route-target and subject-open navigation in `Plans/Crosswalk.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/assistant-chat-design.md:905"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-943",
+      "source_obligation_ids": [
+        "obl-360"
+      ],
+      "canon_label": "Missing object-kind identity rules and field exclusions",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "Research Progress - 2026-03-17 - Hard rule for `subject_id` vs `object_kind`",
+      "status": "partial",
+      "exact_items": [
+        "Everything else routes through `object_kind` + `object_id`",
+        "The canonical `subject_id` families remain: doc:<document_id>, artifact:<artifact_id>",
+        "Use `object_kind` + `object_id` for all runtime, governance, conversational, and workflow objects",
+        "Use `subject_id` only when the target is canonical renderable/openable content",
+        "tier, tier_id, raw widget ids, panel ids, and serialization tokens do not belong in `object_kind`"
+      ],
+      "stale_tokens": [
+        "tier_id as route navigation identity",
+        "usage_event_ref as top-level route field"
+      ],
+      "evidence": [
+        "Plans/Contracts_V0.md:715",
+        "Plans/Contracts_V0.md:629",
+        "Plans/Contracts_V0.md:722"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-944",
+      "source_obligation_ids": [
+        "obl-360"
+      ],
+      "canon_label": "Missing object-kind identity rules and field exclusions",
+      "row_type": "owner",
+      "path": "Plans/Crosswalk.md",
+      "heading_hint": "Research Progress - 2026-03-17 - Hard rule for `subject_id` vs `object_kind`",
+      "status": "missing",
+      "exact_items": [
+        "Everything else routes through `object_kind` + `object_id`",
+        "The canonical `subject_id` families remain: doc:<document_id>, artifact:<artifact_id>",
+        "Use `object_kind` + `object_id` for all runtime, governance, conversational, and workflow objects",
+        "Use `subject_id` only when the target is canonical renderable/openable content",
+        "tier, tier_id, raw widget ids, panel ids, and serialization tokens do not belong in `object_kind`"
+      ],
+      "stale_tokens": [
+        "tier_id as route navigation identity",
+        "usage_event_ref as top-level route field"
+      ],
+      "evidence": [],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-945",
+      "source_obligation_ids": [
+        "obl-360"
+      ],
+      "canon_label": "Missing object-kind identity rules and field exclusions",
+      "row_type": "owner",
+      "path": "Plans/Glossary.md",
+      "heading_hint": "Research Progress - 2026-03-17 - Hard rule for `subject_id` vs `object_kind`",
+      "status": "missing",
+      "exact_items": [
+        "Everything else routes through `object_kind` + `object_id`",
+        "The canonical `subject_id` families remain: doc:<document_id>, artifact:<artifact_id>",
+        "Use `object_kind` + `object_id` for all runtime, governance, conversational, and workflow objects",
+        "Use `subject_id` only when the target is canonical renderable/openable content",
+        "tier, tier_id, raw widget ids, panel ids, and serialization tokens do not belong in `object_kind`"
+      ],
+      "stale_tokens": [
+        "tier_id as route navigation identity",
+        "usage_event_ref as top-level route field"
+      ],
+      "evidence": [],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-946",
+      "source_obligation_ids": [
+        "obl-361"
+      ],
+      "canon_label": "Missing orchestrator glossary headings and incomplete help-entry structure",
+      "row_type": "owner",
+      "path": "Plans/Glossary.md",
+      "heading_hint": "### Orchestrator rewrite terms",
+      "status": "partial",
+      "exact_items": [
+        "### Orchestrator rewrite terms",
+        "### Runtime and routing terms",
+        "canonical_name, short_definition, why_it_matters, what_it_is_not, common_related_states, related_concepts, surface_examples"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Glossary.md:33",
+        "Plans/Glossary.md:77"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-947",
+      "source_obligation_ids": [
+        "obl-362"
+      ],
+      "canon_label": "Missing requested-side concrete account field",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "",
+      "status": "partial",
+      "exact_items": [
+        "No parallel requested-side concrete account field exists when downstream docs need to guess how explicit account pinning is represented; Prompt_Pipeline.md and Contracts_V0.md carry requested_account_policy but no concrete account field"
+      ],
+      "stale_tokens": [
+        "requested_account_policy"
+      ],
+      "evidence": [
+        "Plans/Contracts_V0.md:419"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-948",
+      "source_obligation_ids": [
+        "obl-362"
+      ],
+      "canon_label": "Missing requested-side concrete account field",
+      "row_type": "owner",
+      "path": "Plans/Prompt_Pipeline.md",
+      "heading_hint": "",
+      "status": "partial",
+      "exact_items": [
+        "No parallel requested-side concrete account field exists when downstream docs need to guess how explicit account pinning is represented; Prompt_Pipeline.md and Contracts_V0.md carry requested_account_policy but no concrete account field"
+      ],
+      "stale_tokens": [
+        "requested_account_policy"
+      ],
+      "evidence": [
+        "Plans/Prompt_Pipeline.md:513"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-949",
+      "source_obligation_ids": [
+        "obl-363"
+      ],
+      "canon_label": "Missing seam-level acceptance criteria formalization",
+      "row_type": "owner",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "Open Questions / Uncertainties",
+      "status": "missing",
+      "exact_items": [
+        "candidate seam-level acceptance dimensions: operability, state coherence, workflow completeness, UX coherence, architectural coherence",
+        "candidate seam-level failure classes: GUI/runtime mismatch, incomplete end-to-end flow, cross-package state mismatch, contract drift, technically wired but operationally unusable, local-pass/global-fail composition, missing degraded/recovery behavior, inconsistent UX semantics, cross-seam architecture drift, invisible governance / missing operator affordances",
+        "turn weak integration into explicit seam-level acceptance criteria and failure classes"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md: heading 'Open Questions / Uncertainties' not found; file contains 19 lines with only section headers for Scope, Search/routing, Current/historical, Concern/notification, Source Control boundary, and glossary references"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    }
+  ]
+}
