@@ -11,8 +11,10 @@ Interview-phase launches share the runtime identity packet with Orchestrator whi
 - The handoff from wizard/interview planning into execution MUST carry `project_id`, `thread_id`, `wizard_id`, requested/effective runtime identity, and `execution_role`.
 - The same handoff MUST expose an explicit launched-run bridge so review, resume, and drill-through land on the run that actually executes the approved work.
 - Provider-native delegation syntax remains interoperability-only; the canonical handoff is the PM child-run packet.
+ContractRef: Primitive:RuntimeIdentity, Primitive:ExecutionContext, ContractName:Plans/Orchestrator_Page.md
 
 ### validation_pass_report bridge
 - `validation_pass_report` remains an upstream artifact tied to canonical receipt lineage rather than a local replacement record.
 - Validation/governance lineage MUST preserve `phase_plan_ref`, `requirements_quality_report_ref`, `workflow_run_id`, `pass_verdict`, and the launched-run bridge.
 - Preview, validation, and resume surfaces reuse that shared lineage instead of reconstructing joins from filenames or timestamps.
+ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Contracts_V0.md

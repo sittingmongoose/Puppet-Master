@@ -74,6 +74,7 @@ Every runtime handoff includes:
 - `effective_account_id`: the account actually available after capability/permission check.
 - These MUST be emitted as a pair in runtime records so inspectors and resumption can distinguish intent from capability.
 - Account switch history (lineage) is preserved in `account_switch_lineage[]` so recovery knows the path that led to the current effective account.
+ContractRef: Primitive:RuntimeIdentity, Primitive:ExecutionContext, ContractName:Plans/GitHub_API_Auth_and_Flows.md, ContractName:Plans/Multi-Account.md
 
 ### Concern record family, lifecycle, and deferred visibility
 
@@ -87,6 +88,7 @@ Every runtime handoff includes:
   - UI does not display escalation stack internals unless the active user is the escalation owner or the operation is in audit mode.
   - Help/notification surfaces MUST reference concern_id but MAY defer showing blocked_sequence/episode details until the concern is stable (no new escalations for N seconds).
   - Shared help entries (e.g., timeout, auth failure, model unavailable) pivot on `concern_class` and `concern_reason` to provide general guidance, not episode specifics.
+ContractRef: Primitive:ConcernRecord, ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/human-in-the-loop.md
 
 ### route_target, OpenSubject, and command normalization
 
