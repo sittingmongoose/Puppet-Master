@@ -18194,3 +18194,51 @@ Optional later expansion only if a real cross-surface need appears:
   - This invocation kept `planning_blockers = 0`, `fix_backlog_items = 8`, `total_gaps = 8`, `docs_affected = 20`, and `underlying_gap_evidence_count = 62`.
   - The repaired blocker split held: no gap needed reclassification back to `planning`, and no resolved gap could be removed from the backlog.
   - Because the inventory is stable and planning blockers remain zero, the next useful stage is `Ledger Condenser`.
+
+## Entry
+- timestamp_utc: 2026-04-23T21:50:53Z
+- stage: Audit Mode
+- finding_type: contract
+- summary: Audited the three remaining unresolved transfer-coverage blockers (`cov-034`, `cov-511`, `cov-526`) against the live Plans docs and confirmed that all three remain unresolved owner-definition gaps rather than missing evidence-collection gaps.
+- exact_items:
+  - `cov-034` / `obl-016` remains unresolved because the ledger requires a canonical concern-lifecycle owner section with explicit `active` / `acknowledged` / `resolved` / `dismissed` semantics, `resolution_kind` coverage including `accepted_risk`, and a concern-action confirmation matrix, but the live docs only expose fragments: `Plans/Orchestrator_Page.md:12-13` keeps concern and notification surfaces distinct from health/activity, `Plans/storage-plan.md:294` lists `concern_record.v1`, `Plans/GUI_Rebuild_Requirements_Checklist.md:31` calls for first-class concern lifecycle and lineage, and `Plans/Contracts_V0.md:649` only names `concern` as a routable object. Exact ledger evidence remains at `working_ledger.md:L3070-L3092`, `working_ledger.md:L3170-L3182`, `working_ledger.md:L5990-L6015`, and `working_ledger.md:L6442-L6490`.
+  - `cov-511` / `obl-215` remains unresolved because the ledger requires one coherent owner section covering provider/model precedence across run, seam, package, node, overseer, and delegated-subagent levels together with parallel-node worktree assignment and ownership transitions, but the live docs split the topic without closing it: `Plans/Models_System.md:58-80` defines run/persona/surface/default priority only, `Plans/Executor_Protocol.md:134-178` defines `DispatchContext.provider_id` / `model_id` without precedence rules, and `Plans/WorktreeGitImprovement.md:78-161` keeps the legacy tier-keyed worktree model without a package/seam/lane allocation owner. Exact ledger evidence remains at `working_ledger.md:L1030`, `working_ledger.md:L1035-L1036`, and `working_ledger.md:L1283-L1290`.
+  - `cov-526` / `obl-222` remains unresolved because the ledger requires a concrete worktree allocation strategy (per node, per package, per seam, or remediation branch) plus contamination/reuse/cleanup rules, but the live docs still stop short of that owner section: `Plans/Crosswalk.md:88-94` assigns lane/worktree ownership boundaries, `Plans/WorktreeGitImprovement.md:62-66` and `Plans/WorktreeGitImprovement.md:78-80` retain the worktree plan without defining allocation strategy, and `Plans/orchestrator-subagent-integration.md:28-41` plus later authority wording require identity alignment without specifying how lanes/worktrees are allocated. Exact ledger evidence remains at `working_ledger.md:L806`, `working_ledger.md:L1036`, `working_ledger.md:L1289`, and `working_ledger.md:L1539`.
+- impacted_docs:
+  - `Plans/storage-plan.md`
+  - `Plans/Contracts_V0.md`
+  - `Plans/Orchestrator_Page.md`
+  - `Plans/GUI_Rebuild_Requirements_Checklist.md`
+  - `Plans/Models_System.md`
+  - `Plans/Executor_Protocol.md`
+  - `Plans/WorktreeGitImprovement.md`
+  - `Plans/Crosswalk.md`
+  - `Plans/orchestrator-subagent-integration.md`
+  - `Plans/Glossary.md`
+  - `Plans/GitHub_Integration.md`
+- evidence_refs:
+  - `working_ledger.md:L806`
+  - `working_ledger.md:L1030`
+  - `working_ledger.md:L1035-L1036`
+  - `working_ledger.md:L1283-L1290`
+  - `working_ledger.md:L1539`
+  - `working_ledger.md:L3070-L3092`
+  - `working_ledger.md:L3170-L3182`
+  - `working_ledger.md:L5990-L6015`
+  - `working_ledger.md:L6442-L6490`
+  - `Plans/storage-plan.md:294`
+  - `Plans/Contracts_V0.md:649`
+  - `Plans/Orchestrator_Page.md:12-13`
+  - `Plans/GUI_Rebuild_Requirements_Checklist.md:31`
+  - `Plans/Models_System.md:58-80`
+  - `Plans/Executor_Protocol.md:134-178`
+  - `Plans/WorktreeGitImprovement.md:62-66`
+  - `Plans/WorktreeGitImprovement.md:78-80`
+  - `Plans/Crosswalk.md:88-94`
+  - `Plans/orchestrator-subagent-integration.md:28-41`
+- supersedes_prior: yes
+- notes:
+  - This invocation closes the bounded audit on the three deferred coverage blockers left after doc-discovery resolution (`17` resolved, `3` unresolved).
+  - The remaining blockers are exact owner-definition gaps, not unresolved search or verification gaps; further audit waves would restate the same missing sections unless the docs change.
+  - Highest-pressure docs for condensation are `Plans/storage-plan.md`, `Plans/Contracts_V0.md`, `Plans/Models_System.md`, `Plans/Executor_Protocol.md`, `Plans/WorktreeGitImprovement.md`, `Plans/Crosswalk.md`, and `Plans/Orchestrator_Page.md`.
+  - The ledger is ready for condensation.

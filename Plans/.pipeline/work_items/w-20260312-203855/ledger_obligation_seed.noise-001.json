@@ -2,152 +2,59 @@
   "schema_id": "pm.ledger_obligation_seed.noise.v1",
   "work_id": "w-20260312-203855",
   "pass": 1,
+  "noise_findings_total": 8,
   "noise_findings": [
     {
-      "canon_label_hint": "Non-Orchestrator Conversational Actors - Account/Identity Sharing",
+      "reason": "duplicate_or_weaker",
       "source_evidence": [
-        "working_ledger.md:L420-L452"
-      ],
-      "reason": "already represented - duplicates seed-003 account-health loop coverage for provider-using actors"
+        "working_ledger.md:L2986-L2995",
+        "working_ledger.md:L5991-L5995"
+      ]
     },
     {
-      "canon_label_hint": "Non-Orchestrator Actor Account Health Loop Integration",
+      "reason": "duplicate_or_weaker",
       "source_evidence": [
-        "working_ledger.md:L429-L436"
-      ],
-      "reason": "already represented - overlaps existing usage/account continuity seeds and does not add a new exact obligation"
+        "working_ledger.md:L3084-L3092",
+        "working_ledger.md:L6003-L6011"
+      ]
     },
     {
-      "canon_label_hint": "Sub-selection and inspector_target guidance",
+      "reason": "duplicate_or_weaker",
       "source_evidence": [
-        "working_ledger.md:L12151-L12233"
-      ],
-      "reason": "already represented - elaborates on existing route_target and OpenSubject field/selector rules"
+        "working_ledger.md:L3094-L3108",
+        "working_ledger.md:L6016-L6039"
+      ]
     },
     {
-      "canon_label_hint": "Migration pattern for route_target implementation",
+      "reason": "summary_only",
       "source_evidence": [
-        "working_ledger.md:L12235-L12297"
-      ],
-      "reason": "already represented - implementation guidance only, no new obligation-grade item"
+        "working_ledger.md:L3170-L3181",
+        "working_ledger.md:L6086-L6100"
+      ]
     },
     {
-      "canon_label_hint": "Refreshed canonical object_kind vocabulary",
+      "reason": "duplicate_or_weaker",
       "source_evidence": [
-        "working_ledger.md:L13621-L13704"
-      ],
-      "reason": "already represented - overlaps existing object_kind and route normalization seeds"
+        "working_ledger.md:L10362-L10417"
+      ]
     },
     {
-      "canon_label_hint": "Exact inspector_target vocabulary",
+      "reason": "duplicate_or_weaker",
       "source_evidence": [
-        "working_ledger.md:L13705-L13759"
-      ],
-      "reason": "already represented - overlaps existing route_target/OpenSubject vocabulary seeds"
+        "working_ledger.md:L8791-L8850"
+      ]
     },
     {
-      "canon_label_hint": "Hard rule for subject_id vs object_kind",
+      "reason": "duplicate_or_weaker",
       "source_evidence": [
-        "working_ledger.md:L13760-L13831"
-      ],
-      "reason": "already represented - covered by selector precedence and subject_id family seeds"
+        "working_ledger.md:L8851-L8919"
+      ]
     },
     {
-      "canon_label_hint": "Canonical route validation and rejection rules",
+      "reason": "duplicate_or_weaker",
       "source_evidence": [
-        "working_ledger.md:L14202-L14246"
-      ],
-      "reason": "already represented - covered by route validation/rejection seed items"
-    },
-    {
-      "canon_label_hint": "Exact tab_id role and vocabulary",
-      "source_evidence": [
-        "working_ledger.md:L14247-L14298"
-      ],
-      "reason": "already represented - tab_id vocabulary already captured in route/open contract seeds"
-    },
-    {
-      "canon_label_hint": "Routing owner-doc adoption map",
-      "source_evidence": [
-        "working_ledger.md:L14354-L14431"
-      ],
-      "reason": "already represented - owner-doc placement already captured by route_target/OpenSubject ownership seeds"
-    },
-    {
-      "canon_label_hint": "Routing collision with tier-era consumer docs",
-      "source_evidence": [
-        "working_ledger.md:L14432-L14498"
-      ],
-      "reason": "already represented - stale tier-era consumer collisions already captured across Orchestrator/usage/worktree seeds"
-    },
-    {
-      "canon_label_hint": "Usage surfaces versus object-first routing",
-      "source_evidence": [
-        "working_ledger.md:L14499-L14542"
-      ],
-      "reason": "already represented - usage routing and tier_id stale survivors already captured"
-    },
-    {
-      "canon_label_hint": "Worktree and SCM routing consumers",
-      "source_evidence": [
-        "working_ledger.md:L14590-L14638"
-      ],
-      "reason": "already represented - worktree routing and tier-era SCM survivors already captured"
-    },
-    {
-      "canon_label_hint": "Exact owner-doc insertion points for route/open contracts",
-      "source_evidence": [
-        "working_ledger.md:L14733-L14786"
-      ],
-      "reason": "already represented - route_target and OpenSubject owner placement already captured"
-    },
-    {
-      "canon_label_hint": "Broad research synthesis sections restating known patterns",
-      "source_evidence": [
-        "working_ledger.md:L16005-L17205"
-      ],
-      "reason": "metric-summary - cumulative audit and reconciliation framing, not new obligation-grade items"
-    },
-    {
-      "canon_label_hint": "Exact missing owner-heading defects in Orchestrator/UI/Glossary owner anchors",
-      "source_evidence": [
-        "working_ledger.md:L17699-L17700",
-        "working_ledger.md:L18030",
-        "working_ledger.md:L18033"
-      ],
-      "reason": "already represented - exact broken anchors and stale result_id survivors already exist in seeds 005/179 and related route/open seeds"
-    },
-    {
-      "canon_label_hint": "Storage missing receipt minimum fields and ancestry tracking",
-      "source_evidence": [
-        "working_ledger.md:L17693-L17694",
-        "working_ledger.md:L17716",
-        "working_ledger.md:L18024"
-      ],
-      "reason": "already represented - receipt fields, storage anchors, and record ownership already captured in existing storage-plan seeds"
-    },
-    {
-      "canon_label_hint": "Stale command family survivors and contradictory command artifacts",
-      "source_evidence": [
-        "working_ledger.md:L17547-L17550",
-        "working_ledger.md:L17698-L17699",
-        "working_ledger.md:L18033"
-      ],
-      "reason": "already represented - stale result_id, detached_window, TierContext/tier_id, and related survivors already captured"
-    },
-    {
-      "canon_label_hint": "Missing artifact / project state / lifecycle ownership in primary consumers",
-      "source_evidence": [
-        "working_ledger.md:L17378",
-        "working_ledger.md:L17430",
-        "working_ledger.md:L17692",
-        "working_ledger.md:L17695"
-      ],
-      "reason": "already represented - project state, blocked-owner taxonomy, usage attribution, and related ownership gaps are already in the merged seed"
+        "working_ledger.md:L17380-L17418"
+      ]
     }
-  ],
-  "summary": {
-    "noise_findings_total": 19,
-    "reason": "verification_pass_one_no_material_changes"
-  }
+  ]
 }

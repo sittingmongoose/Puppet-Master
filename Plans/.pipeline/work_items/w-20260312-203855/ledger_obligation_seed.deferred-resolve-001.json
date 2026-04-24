@@ -1,0 +1,61 @@
+{
+  "schema_id": "pm.ledger_obligation_seed.deferred_resolve.v1",
+  "work_id": "w-20260312-203855",
+  "wave": 1,
+  "material_findings_resolved_total": 2,
+  "material_findings": [
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Deferred concern visibility and blocking contract",
+      "exact_items": [
+        "Add `visibility_level`, `attention_level`, `chatworthy`, and `blocking_effect?` to the concern-family contract",
+        "Keep `blocking_effect` explicitly separate from `severity`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [
+        "### Recommended minimum concern record shape",
+        "### Category / severity direction"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L3046-L3050",
+        "working_ledger.md:L3065-L3067"
+      ],
+      "notes": [
+        "Resolved from deferred material: adds a distinct concern attention/visibility field family.",
+        "Resolved from deferred material: keeps blocking_effect semantically independent from severity."
+      ],
+      "seed_id": "seed-067"
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Deferred concern owner-surface taxonomy",
+      "exact_items": [
+        "Define concern owner surfaces across `Runtime`, `Package Overseer`, `Seam Overseer`, `Corroboration`, `Graph Patch`, `Recovery`, `User`, and `External Resource`",
+        "Treat `concern resolver` as distinct from owner/source roles",
+        "Allow concern ownership reassignment without changing concern identity"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "heading_hints": [
+        "### Concern ownership / authority direction"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L3133-L3143"
+      ],
+      "notes": [
+        "Resolved from deferred material using direct ledger evidence for exact owner-kind token set and resolver role.",
+        "Affected doc hints inherited from deferred worklist because the verified range is cross-cutting but not doc-named inline."
+      ],
+      "seed_id": "seed-068"
+    }
+  ],
+  "status": "resolved"
+}
