@@ -3,1664 +3,649 @@
   "work_id": "w-20260312-203855",
   "wave_id": "wave-001",
   "summary": {
-    "planning_blockers": 67,
-    "fix_backlog_items": 0,
-    "total_gaps": 67,
-    "docs_affected": 11,
-    "canon_items_affected": 67,
-    "top_pressure_docs": [
-      "Plans/Contracts_V0.md",
-      "Plans/FinalGUISpec.md",
-      "Plans/Orchestrator_Page.md",
-      "Plans/Widget_System.md",
-      "Plans/storage-plan.md",
-      "Plans/Glossary.md",
-      "Plans/orchestrator-subagent-integration.md",
-      "Plans/Run_Graph_View.md",
-      "Plans/assistant-chat-design.md",
-      "Plans/GitHub_Integration.md"
-    ],
-    "dominant_gap_classes": [
-      "missing_structural_heading",
-      "missing_cross_reference",
-      "missing_data_shape",
-      "stubbed_consumer_propagation",
-      "stale_contradictory_survivor",
-      "stubbed_owner_section"
-    ],
-    "underlying_gap_evidence_count": 71
+    "gaps_total": 23,
+    "planning_blockers": 0,
+    "fix_backlog_items": 23
   },
   "open_gaps": [
     {
       "gap_id": "gap-001",
-      "severity": "blocker",
-      "blocker_type": "planning",
-      "gap_class": "stubbed_consumer_propagation",
-      "description": "Acknowledgement Model - Distinct from Resolution: 2 missing and 0 partial coverage row(s) remain.",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_structural_heading",
+      "description": "Owner-first fidelity recovery order remains unresolved across 3 coverage row(s).",
       "affected_targets": [
         {
-          "path": "acknowledgement model",
-          "heading": "Acknowledgement model direction"
+          "path": "Plans/Contracts_V0.md",
+          "heading": ""
         },
         {
-          "path": "concern lifecycle",
-          "heading": "Acknowledgement model direction"
+          "path": "Plans/storage-plan.md",
+          "heading": ""
+        },
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": ""
         }
       ],
       "exact_missing_items": [
-        "`acknowledged` is distinct from both `resolved` and `dismissed`",
-        "acknowledgment should reduce operational noise while preserving traceability",
-        "blockers requiring real action must not be acknowledgeable in place of resolution",
-        "intended for advisory/minor/non-blocking concerns that the user has explicitly seen/accepted"
+        "Apply owner-doc corrections before consumer and mirror cleanup",
+        "Rerun fidelity audit only after owner and consumer corrections are in place"
       ],
-      "blocking_reason": "Mutation planning is still unsafe because the target owner/consumer surface is ambiguous or doc discovery is still required.",
-      "next_resolution_stage": "Research Mode"
+      "blocking_reason": "Target docs are known, but the required structural section or owner slot is still absent.",
+      "next_resolution_stage": "Reconciliation Planner"
     },
     {
       "gap_id": "gap-002",
-      "severity": "blocker",
-      "blocker_type": "planning",
-      "gap_class": "stubbed_consumer_propagation",
-      "description": "Alert State Semantics - Resolved vs Dismissed: 2 missing and 0 partial coverage row(s) remain.",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stale_contradictory_survivor",
+      "description": "Retire tier-era canon and shadow fields remains unresolved across 4 coverage row(s).",
       "affected_targets": [
         {
-          "path": "alert state model",
-          "heading": "Alert-state semantics"
-        },
-        {
-          "path": "blocker handling",
-          "heading": "Alert-state semantics"
-        }
-      ],
-      "exact_missing_items": [
-        "`dismissed` = presentation hidden/acknowledged while underlying condition may still exist",
-        "`resolved` = underlying condition actually changed",
-        "active blockers must not be dismissible in a way that makes the system appear unblocked"
-      ],
-      "blocking_reason": "Mutation planning is still unsafe because the target owner/consumer surface is ambiguous or doc discovery is still required.",
-      "next_resolution_stage": "Research Mode"
-    },
-    {
-      "gap_id": "gap-003",
-      "severity": "blocker",
-      "blocker_type": "planning",
-      "gap_class": "stubbed_consumer_propagation",
-      "description": "All provider-using actors must participate in account-health loop: 1 missing and 0 partial coverage row(s) remain.",
-      "affected_targets": [
-        {
-          "path": "__DOC_DISCOVERY_REQUIRED__",
-          "heading": ""
-        }
-      ],
-      "exact_missing_items": [
-        "any provider-using actor must participate in the same pre-send and post-send account-health loop",
-        "this explicitly includes assistant chat, interviewer, requirements-doc builder, overseers, node workers, and delegated workers"
-      ],
-      "blocking_reason": "Mutation planning is still unsafe because the target owner/consumer surface is ambiguous or doc discovery is still required.",
-      "next_resolution_stage": "Research Mode"
-    },
-    {
-      "gap_id": "gap-012",
-      "severity": "blocker",
-      "blocker_type": "planning",
-      "gap_class": "stubbed_consumer_propagation",
-      "description": "Concern Action Model - User Facing Actions: 2 missing and 0 partial coverage row(s) remain.",
-      "affected_targets": [
-        {
-          "path": "action model",
-          "heading": "Concern action-model direction"
-        },
-        {
-          "path": "concern UI",
-          "heading": "Concern action-model direction"
-        }
-      ],
-      "exact_missing_items": [
-        "user-facing concern actions should stay narrow: open / focus / open evidence / open history / open ledger, acknowledge / dismiss where allowed, open resolution thread, approve / reject only when tied to true manual/HITL boundaries"
-      ],
-      "blocking_reason": "Mutation planning is still unsafe because the target owner/consumer surface is ambiguous or doc discovery is still required.",
-      "next_resolution_stage": "Research Mode"
-    },
-    {
-      "gap_id": "gap-013",
-      "severity": "blocker",
-      "blocker_type": "planning",
-      "gap_class": "missing_data_shape",
-      "description": "Concern blocked owner distinct from concern owner: 1 missing and 0 partial coverage row(s) remain.",
-      "affected_targets": [
-        {
-          "path": "__DOC_DISCOVERY_REQUIRED__",
-          "heading": "Interaction with notifications and blocked routing"
-        }
-      ],
-      "exact_missing_items": [
-        "blocked owner = who/what is currently blocking progress",
-        "blocked owner should remain separate from concern owner",
-        "concern owner = who is responsible for concern",
-        "those may overlap but are not same field"
-      ],
-      "blocking_reason": "Mutation planning is still unsafe because the target owner/consumer surface is ambiguous or doc discovery is still required.",
-      "next_resolution_stage": "Research Mode"
-    },
-    {
-      "gap_id": "gap-014",
-      "severity": "blocker",
-      "blocker_type": "planning",
-      "gap_class": "stubbed_consumer_propagation",
-      "description": "Concern lifecycle states and semantics: 1 missing and 0 partial coverage row(s) remain.",
-      "affected_targets": [
-        {
-          "path": "__DOC_DISCOVERY_REQUIRED__",
-          "heading": "Lifecycle direction"
-        }
-      ],
-      "exact_missing_items": [
-        "accepted_risk is a resolution, not a dismissal",
-        "acknowledged and dismissed are operator/user presentation/governance actions",
-        "active remains default live state even if same concern seen multiple times",
-        "dismissed is not substitute for resolved",
-        "lifecycle: active, acknowledged, resolved, dismissed",
-        "resolved must carry exact resolution semantics"
-      ],
-      "blocking_reason": "Mutation planning is still unsafe because the target owner/consumer surface is ambiguous or doc discovery is still required.",
-      "next_resolution_stage": "Research Mode"
-    },
-    {
-      "gap_id": "gap-015",
-      "severity": "blocker",
-      "blocker_type": "planning",
-      "gap_class": "stubbed_consumer_propagation",
-      "description": "Condition Aging and Display Lifetime Policy: 3 missing and 0 partial coverage row(s) remain.",
-      "affected_targets": [
-        {
-          "path": "History",
-          "heading": "Condition-aging direction"
-        },
-        {
-          "path": "condition lifecycle",
-          "heading": "Condition-aging direction"
-        },
-        {
-          "path": "operational surfaces",
-          "heading": "Condition-aging direction"
-        }
-      ],
-      "exact_missing_items": [
-        "current recommended default lifetimes: normal resolved operational items about 15 minutes, major resolved items until dismissed or up to 24 hours",
-        "recently resolved major items may linger briefly in summary surfaces",
-        "resolved conditions fall back to History",
-        "unresolved conditions stay on operational surfaces"
-      ],
-      "blocking_reason": "Mutation planning is still unsafe because the target owner/consumer surface is ambiguous or doc discovery is still required.",
-      "next_resolution_stage": "Research Mode"
-    },
-    {
-      "gap_id": "gap-021",
-      "severity": "blocker",
-      "blocker_type": "planning",
-      "gap_class": "missing_data_shape",
-      "description": "Contracts_V0.md forbids _persona_id names: 2 missing and 0 partial coverage row(s) remain.",
-      "affected_targets": [
-        {
-          "path": "Plans/Contracts_V0.md",
-          "heading": ""
-        },
-        {
-          "path": "UI/runtime docs",
-          "heading": ""
-        }
-      ],
-      "exact_missing_items": [
-        "Contracts_V0.md forbids _persona_id canonical names while downstream UI/runtime docs still consume or display them",
-        "_persona_id"
-      ],
-      "blocking_reason": "Mutation planning is still unsafe because the target owner/consumer surface is ambiguous or doc discovery is still required.",
-      "next_resolution_stage": "Research Mode"
-    },
-    {
-      "gap_id": "gap-024",
-      "severity": "blocker",
-      "blocker_type": "planning",
-      "gap_class": "missing_cross_reference",
-      "description": "Deep-link and route persistence semantics: 1 missing and 0 partial coverage row(s) remain.",
-      "affected_targets": [
-        {
-          "path": "__DOC_DISCOVERY_REQUIRED__",
-          "heading": "Persistence implication"
-        }
-      ],
-      "exact_missing_items": [
-        "explicit search navigation to historical run likely should update persisted Orchestrator focused-run state",
-        "hover previews or temporary compare pivots should not necessarily rewrite persistent state",
-        "some route activations should update stored view state; others should be transient focus changes only"
-      ],
-      "blocking_reason": "Mutation planning is still unsafe because the target owner/consumer surface is ambiguous or doc discovery is still required.",
-      "next_resolution_stage": "Research Mode"
-    },
-    {
-      "gap_id": "gap-037",
-      "severity": "blocker",
-      "blocker_type": "planning",
-      "gap_class": "stubbed_consumer_propagation",
-      "description": "Inspector vs Full-Record Action Split: 2 missing and 0 partial coverage row(s) remain.",
-      "affected_targets": [
-        {
-          "path": "full-record views",
-          "heading": "Inspector vs full-record action split"
-        },
-        {
-          "path": "inspector UI",
-          "heading": "Inspector vs full-record action split"
-        }
-      ],
-      "exact_missing_items": [
-        "heavy/high-consequence actions and dense records belong in full-record views",
-        "side inspectors should remain summary/action-light"
-      ],
-      "blocking_reason": "Mutation planning is still unsafe because the target owner/consumer surface is ambiguous or doc discovery is still required.",
-      "next_resolution_stage": "Research Mode"
-    },
-    {
-      "gap_id": "gap-044",
-      "severity": "blocker",
-      "blocker_type": "planning",
-      "gap_class": "stubbed_consumer_propagation",
-      "description": "Orchestrator consumer of required execution inputs: 1 missing and 0 partial coverage row(s) remain.",
-      "affected_targets": [
-        {
-          "path": "__DOC_DISCOVERY_REQUIRED__",
-          "heading": ""
-        }
-      ],
-      "exact_missing_items": [
-        "required execution inputs include plan-graph index and node shard files",
-        "scheduling model explicitly talks about runnable graph nodes, DAG readiness, and dispatch from a global ready set"
-      ],
-      "blocking_reason": "Mutation planning is still unsafe because the target owner/consumer surface is ambiguous or doc discovery is still required.",
-      "next_resolution_stage": "Research Mode"
-    },
-    {
-      "gap_id": "gap-045",
-      "severity": "blocker",
-      "blocker_type": "planning",
-      "gap_class": "missing_data_shape",
-      "description": "Orchestrator must consume canonical runtime contracts without redefining: 1 missing and 0 partial coverage row(s) remain.",
-      "affected_targets": [
-        {
-          "path": "__DOC_DISCOVERY_REQUIRED__",
-          "heading": ""
-        }
-      ],
-      "exact_missing_items": [
-        "event-driven wakeups, not steady-state polling, are the authoritative execution/update model",
-        "orchestrator must consume canonical runtime fields and event names from shared contracts",
-        "page-spec language must remove shadow event/schema ownership from the page layer and tighten it around projections and controls only"
-      ],
-      "blocking_reason": "Mutation planning is still unsafe because the target owner/consumer surface is ambiguous or doc discovery is still required.",
-      "next_resolution_stage": "Research Mode"
-    },
-    {
-      "gap_id": "gap-058",
-      "severity": "blocker",
-      "blocker_type": "planning",
-      "gap_class": "missing_cross_reference",
-      "description": "Routing during degraded projection states: 1 missing and 0 partial coverage row(s) remain.",
-      "affected_targets": [
-        {
-          "path": "__DOC_DISCOVERY_REQUIRED__",
-          "heading": "Trust / stale-data implication"
-        }
-      ],
-      "exact_missing_items": [
-        "deep link to concern during projection degradation might route to exact record view / Ledger-backed inspector instead of normal rollup tab presentation",
-        "if target surface is degraded, route should land on canonical fallback representation when possible rather than fail opaque"
-      ],
-      "blocking_reason": "Mutation planning is still unsafe because the target owner/consumer surface is ambiguous or doc discovery is still required.",
-      "next_resolution_stage": "Research Mode"
-    },
-    {
-      "gap_id": "gap-067",
-      "severity": "blocker",
-      "blocker_type": "planning",
-      "gap_class": "missing_data_shape",
-      "description": "UI and command mapping for Search Results and Attention Items: 1 missing and 0 partial coverage row(s) remain.",
-      "affected_targets": [
-        {
-          "path": "__DOC_DISCOVERY_REQUIRED__",
-          "heading": "Candidate Fixes / Design Directions"
-        }
-      ],
-      "exact_missing_items": [
-        "Search results need route targets (OpenSubject fields)",
-        "Attention items (concerns, blocked items, wizard triggers) need route targets and action command mapping",
-        "Concern actions must map to canonical route targets and approved commands",
-        "Blocked item actions must map to canonical runtime command targets"
-      ],
-      "blocking_reason": "Mutation planning is still unsafe because the target owner/consumer surface is ambiguous or doc discovery is still required.",
-      "next_resolution_stage": "Research Mode"
-    },
-    {
-      "gap_id": "gap-074",
-      "severity": "blocker",
-      "blocker_type": "planning",
-      "gap_class": "stubbed_consumer_propagation",
-      "description": "Working directory / project-identity context in chat and interviews: 1 missing and 0 partial coverage row(s) remain.",
-      "affected_targets": [
-        {
-          "path": "__DOC_DISCOVERY_REQUIRED__",
-          "heading": ""
-        }
-      ],
-      "exact_missing_items": [
-        "project identity must be available in chat/interview execution contexts",
-        "working directory from worktree/lane selection must be propagated through provisioned environments"
-      ],
-      "blocking_reason": "Mutation planning is still unsafe because the target owner/consumer surface is ambiguous or doc discovery is still required.",
-      "next_resolution_stage": "Research Mode"
-    },
-    {
-      "gap_id": "gap-094",
-      "severity": "blocker",
-      "blocker_type": "planning",
-      "gap_class": "missing_structural_heading",
-      "description": "Action Gating Under Degraded Projections: 2 missing and 0 partial coverage row(s) remain.",
-      "affected_targets": [
-        {
-          "path": "UI gating logic",
-          "heading": "Action-gating direction under degraded projections"
-        },
-        {
-          "path": "action model",
-          "heading": "Action-gating direction under degraded projections"
-        }
-      ],
-      "exact_missing_items": [
-        "UI should explain gating inline: what is stale, why it matters, what the user can do next",
-        "actions that change execution/promotion/recovery/approval truth require fresh-enough projection state",
-        "observational/navigation/export actions generally remain safe"
-      ],
-      "blocking_reason": "Mutation planning is still unsafe because the target owner/consumer surface is ambiguous or doc discovery is still required.",
-      "next_resolution_stage": "Research Mode"
-    },
-    {
-      "gap_id": "gap-095",
-      "severity": "blocker",
-      "blocker_type": "planning",
-      "gap_class": "missing_structural_heading",
-      "description": "Alert Level Classification: 3 missing and 0 partial coverage row(s) remain.",
-      "affected_targets": [
-        {
-          "path": "Dashboard",
-          "heading": "Alert / attention model direction"
-        },
-        {
-          "path": "Orchestrator",
-          "heading": "Alert / attention model direction"
-        },
-        {
-          "path": "alert model",
-          "heading": "Alert / attention model direction"
-        }
-      ],
-      "exact_missing_items": [
-        "Dashboard = summary/urgency",
-        "Orchestrator = detailed operational alert context",
-        "alert levels should roughly separate into: `Info`, `Warning`, `Attention`, `Action Required`"
-      ],
-      "blocking_reason": "Mutation planning is still unsafe because the target owner/consumer surface is ambiguous or doc discovery is still required.",
-      "next_resolution_stage": "Research Mode"
-    },
-    {
-      "gap_id": "gap-096",
-      "severity": "blocker",
-      "blocker_type": "planning",
-      "gap_class": "missing_structural_heading",
-      "description": "Blocked States - Mandatory Information Exposure: 2 missing and 0 partial coverage row(s) remain.",
-      "affected_targets": [
-        {
-          "path": "blocked state UI",
-          "heading": "Additional UI/copy direction"
-        },
-        {
-          "path": "ownership labels",
-          "heading": "Additional UI/copy direction"
-        }
-      ],
-      "exact_missing_items": [
-        "blocked ownership should be normalized with stable labels: `Runtime`, `Package Overseer`, `Seam Overseer`, `Corroboration`, `Graph Patch`, `Recovery`, `User`, `External Resource`",
-        "blocked states should always expose: blocked reason, blocked owner, time blocked, next step"
-      ],
-      "blocking_reason": "Mutation planning is still unsafe because the target owner/consumer surface is ambiguous or doc discovery is still required.",
-      "next_resolution_stage": "Research Mode"
-    },
-    {
-      "gap_id": "gap-102",
-      "severity": "blocker",
-      "blocker_type": "planning",
-      "gap_class": "stubbed_owner_section",
-      "description": "Candidate fix: Govern provider_account_id: 1 missing and 0 partial coverage row(s) remain.",
-      "affected_targets": [
-        {
-          "path": "storage/usage docs",
-          "heading": ""
-        }
-      ],
-      "exact_missing_items": [
-        "Add a governance rule for provider_account_id: either retire it or explicitly define it as provider-native metadata subordinate to stable internal effective_account_id",
-        "provider_account_id"
-      ],
-      "blocking_reason": "Mutation planning is still unsafe because the target owner/consumer surface is ambiguous or doc discovery is still required.",
-      "next_resolution_stage": "Research Mode"
-    },
-    {
-      "gap_id": "gap-104",
-      "severity": "blocker",
-      "blocker_type": "planning",
-      "gap_class": "missing_structural_heading",
-      "description": "Canonical Copy/Labels and State Labels: 2 missing and 0 partial coverage row(s) remain.",
-      "affected_targets": [
-        {
-          "path": "UI labels",
-          "heading": "Copy/labels direction"
-        },
-        {
-          "path": "docs/runtime model",
-          "heading": "Copy/labels direction"
-        }
-      ],
-      "exact_missing_items": [
-        "likely canonical tab/object labels: `Seams`, `Feature Seam`, `Work Package`, `Package Overseer`, `Seam Overseer`",
-        "likely user-facing state/action labels: `Locally Complete`, `Seam Complete`, `Completion Blocked`, `Weak Integration`, `Promotion Blocked`, `Promotion Revoked`, `Corroboration Requested`, `Challenge Accepted`, `Challenge Not Accepted`, `Advisory Concern Recorded`, `Graph Patch Requested`, `Graph Patch Applied`, `Generation Updated`"
-      ],
-      "blocking_reason": "Mutation planning is still unsafe because the target owner/consumer surface is ambiguous or doc discovery is still required.",
-      "next_resolution_stage": "Research Mode"
-    },
-    {
-      "gap_id": "gap-105",
-      "severity": "blocker",
-      "blocker_type": "planning",
-      "gap_class": "missing_structural_heading",
-      "description": "Canonical Event Families: 2 missing and 0 partial coverage row(s) remain.",
-      "affected_targets": [
-        {
-          "path": "event model",
-          "heading": "Event/UI mapping direction"
-        },
-        {
-          "path": "operator visibility",
-          "heading": "Event/UI mapping direction"
-        }
-      ],
-      "exact_missing_items": [
-        "canonical event families should remain stable: `seam.*`, `package.*`, `node.*`, `promotion.*`, `corroboration.*`, `graph_patch.*`, `recovery.*`, `account.*`",
-        "operator visibility should separate: history-only events, badge-worthy events, attention-card-worthy conditions, chat-thread-worthy action-required cases"
-      ],
-      "blocking_reason": "Mutation planning is still unsafe because the target owner/consumer surface is ambiguous or doc discovery is still required.",
-      "next_resolution_stage": "Research Mode"
-    },
-    {
-      "gap_id": "gap-106",
-      "severity": "blocker",
-      "blocker_type": "planning",
-      "gap_class": "missing_cross_reference",
-      "description": "Child record field-shape ownership for execution objects: 1 missing and 0 partial coverage row(s) remain.",
-      "affected_targets": [
-        {
-          "path": "__DOC_DISCOVERY_REQUIRED__",
-          "heading": ""
-        }
-      ],
-      "exact_missing_items": [
-        "attempt should persist identity, actor type, requested vs effective provider/model/effort/persona/account, resolution/fallback metadata, lane/snapshot linkage, lifecycle/result, and evidence refs",
-        "lane should persist project/package linkage, worktree binding, lifecycle, contamination state, safe-point linkage, ancestry, and ownership/display grouping for UI separation",
-        "promotion should persist promotion class, source/target linkage, eligibility/blocking/HITL state, decision/result, and evidence/review/corroboration linkage",
-        "resolution_thread should persist trigger linkage, resolution kind, issue summary, allowed actions, status, and UI/chat linkage",
-        "review should persist scope, review type, actor linkage, verdict/severity/blocking, findings, evidence, and timestamps"
-      ],
-      "blocking_reason": "Mutation planning is still unsafe because the target owner/consumer surface is ambiguous or doc discovery is still required.",
-      "next_resolution_stage": "Research Mode"
-    },
-    {
-      "gap_id": "gap-120",
-      "severity": "blocker",
-      "blocker_type": "planning",
-      "gap_class": "missing_structural_heading",
-      "description": "Concern Creation Authority and Resolution Rules: 3 missing and 0 partial coverage row(s) remain.",
-      "affected_targets": [
-        {
-          "path": "concern model",
-          "heading": "Concern creation/resolution direction"
-        },
-        {
-          "path": "runtime logic",
-          "heading": "Concern creation/resolution direction"
-        },
-        {
-          "path": "worker policy",
-          "heading": "Concern creation/resolution direction"
-        }
-      ],
-      "exact_missing_items": [
-        "canonical concerns should be created by: runtime, package overseer, seam overseer, corroboration outcome, graph patch/state-transition logic",
-        "concern records should update/escalate/downgrade when the same underlying issue persists rather than duplicating endlessly",
-        "resolution must track underlying truth changes, not mere presentation changes",
-        "workers may nominate findings but should not mint canonical concerns directly"
-      ],
-      "blocking_reason": "Mutation planning is still unsafe because the target owner/consumer surface is ambiguous or doc discovery is still required.",
-      "next_resolution_stage": "Research Mode"
-    },
-    {
-      "gap_id": "gap-121",
-      "severity": "blocker",
-      "blocker_type": "planning",
-      "gap_class": "missing_cross_reference",
-      "description": "Concern Model - First-Class Record Requirements: 2 missing and 0 partial coverage row(s) remain.",
-      "affected_targets": [
-        {
-          "path": "concern model",
-          "heading": "Concern-model direction"
-        },
-        {
-          "path": "record structure",
-          "heading": "Concern-model direction"
-        }
-      ],
-      "exact_missing_items": [
-        "`concern` should be a first-class record, not just a field buried in review/alert logic",
-        "concern records should carry: identity, scope, severity, category, owner, lifecycle state, meaning/summary, linkage to evidence/artifacts/history/source records, visibility/attention flags",
-        "likely concern lifecycle states: `active`, `acknowledged`, `resolved`, `dismissed`"
-      ],
-      "blocking_reason": "Mutation planning is still unsafe because the target owner/consumer surface is ambiguous or doc discovery is still required.",
-      "next_resolution_stage": "Research Mode"
-    },
-    {
-      "gap_id": "gap-124",
-      "severity": "blocker",
-      "blocker_type": "planning",
-      "gap_class": "missing_structural_heading",
-      "description": "Concern resolution_kind values and merge/split/supersession: 1 missing and 0 partial coverage row(s) remain.",
-      "affected_targets": [
-        {
-          "path": "__DOC_DISCOVERY_REQUIRED__",
-          "heading": "Merge / split / supersession direction"
-        }
-      ],
-      "exact_missing_items": [
-        "merge: several concern records collapse into surviving concern with lineage refs from old ones",
-        "newer concern should carry lineage back to prior ids",
-        "old concern ids remain queryable in Ledger/History after merge/split/supersession",
-        "resolution_kind candidates: fixed, accepted_risk, superseded, merged, split, invalidated, obsoleted_by_patch, obsoleted_by_recovery",
-        "split: one concern reframed into multiple precise concerns; original resolves with resolution_kind=split",
-        "superseded: concern replaced by newer concern or broader canonical object framing"
-      ],
-      "blocking_reason": "Mutation planning is still unsafe because the target owner/consumer surface is ambiguous or doc discovery is still required.",
-      "next_resolution_stage": "Research Mode"
-    },
-    {
-      "gap_id": "gap-125",
-      "severity": "blocker",
-      "blocker_type": "planning",
-      "gap_class": "missing_cross_reference",
-      "description": "Concern source-update and interaction with other families: 1 missing and 0 partial coverage row(s) remain.",
-      "affected_targets": [
-        {
-          "path": "__DOC_DISCOVERY_REQUIRED__",
-          "heading": "Interaction with other families"
-        }
-      ],
-      "exact_missing_items": [
-        "blocked episodes can: reference concern when concern becomes execution-blocking; should not be replaced by concern record",
-        "corroboration can: validate concern, downgrade to advisory/minor, leave unresolved minority concern",
-        "do not merge automatically just because summaries look similar; use source/scope/category/lineage-aware heuristics or explicit governance action",
-        "graph patch can: resolve concern, obsolete concern, split into more precise post-patch concerns",
-        "recovery can: resolve concern, create follow-on concern if recovery exposes new issue",
-        "repeated sightings of same underlying issue should usually update existing concern rather than minting duplicates",
-        "review findings may nominate or update concerns but review record remains distinct"
-      ],
-      "blocking_reason": "Mutation planning is still unsafe because the target owner/consumer surface is ambiguous or doc discovery is still required.",
-      "next_resolution_stage": "Research Mode"
-    },
-    {
-      "gap_id": "gap-127",
-      "severity": "blocker",
-      "blocker_type": "planning",
-      "gap_class": "missing_data_shape",
-      "description": "Contracts_V0.md canonical ownership and downstream weakness: 2 missing and 0 partial coverage row(s) remain.",
-      "affected_targets": [
-        {
-          "path": "Plans/Contracts_V0.md",
-          "heading": ""
-        },
-        {
-          "path": "usage/storage/UI docs",
-          "heading": ""
-        }
-      ],
-      "exact_missing_items": [
-        "Contracts_V0.md is now the clearest canonical owner for requested/effective runtime identity naming, but its downstream consumers remain materially weaker: requested/effective account identity is still asymmetric, addendum consolidation is incomplete, downstream usage/storage/UI docs still weaken or rename the canonical field set"
-      ],
-      "blocking_reason": "Mutation planning is still unsafe because the target owner/consumer surface is ambiguous or doc discovery is still required.",
-      "next_resolution_stage": "Research Mode"
-    },
-    {
-      "gap_id": "gap-139",
-      "severity": "blocker",
-      "blocker_type": "planning",
-      "gap_class": "missing_cross_reference",
-      "description": "Critical detail: Requested-account anchor blocks historical analysis: 1 missing and 0 partial coverage row(s) remain.",
-      "affected_targets": [
-        {
-          "path": "Runtime identity/audit docs",
-          "heading": ""
-        }
-      ],
-      "exact_missing_items": [
-        "The missing requested-side account anchor is not just a UX gap; it blocks durable historical requested-vs-effective analysis"
-      ],
-      "blocking_reason": "Mutation planning is still unsafe because the target owner/consumer surface is ambiguous or doc discovery is still required.",
-      "next_resolution_stage": "Research Mode"
-    },
-    {
-      "gap_id": "gap-141",
-      "severity": "blocker",
-      "blocker_type": "planning",
-      "gap_class": "missing_cross_reference",
-      "description": "Cross-Tab Navigation with Deep Links: 6 missing and 0 partial coverage row(s) remain.",
-      "affected_targets": [
-        {
-          "path": "Evidence",
-          "heading": "Cross-tab navigation"
-        },
-        {
-          "path": "History",
-          "heading": "Cross-tab navigation"
-        },
-        {
-          "path": "Ledger",
-          "heading": "Cross-tab navigation"
-        },
-        {
-          "path": "Node Graph",
-          "heading": "Cross-tab navigation"
-        },
-        {
-          "path": "Progress",
-          "heading": "Cross-tab navigation"
-        },
-        {
-          "path": "Seams",
-          "heading": "Cross-tab navigation"
-        }
-      ],
-      "exact_missing_items": [
-        "`Seams` and `Node Graph` should share focus context without hyperactive live-sync",
-        "deep links should carry selection/filter/focus context, not merely switch tabs",
-        "object/event focus should deep-link across Progress / Seams / Node Graph / Evidence / History / Ledger"
-      ],
-      "blocking_reason": "Mutation planning is still unsafe because the target owner/consumer surface is ambiguous or doc discovery is still required.",
-      "next_resolution_stage": "Research Mode"
-    },
-    {
-      "gap_id": "gap-145",
-      "severity": "blocker",
-      "blocker_type": "planning",
-      "gap_class": "missing_structural_heading",
-      "description": "Dashboard Projects Orchestrator Surface Split: 3 missing and 0 partial coverage row(s) remain.",
-      "affected_targets": [
-        {
-          "path": "Dashboard",
-          "heading": "Dashboard / Projects / Orchestrator split direction"
-        },
-        {
-          "path": "Orchestrator",
-          "heading": "Dashboard / Projects / Orchestrator split direction"
-        },
-        {
-          "path": "Projects page",
-          "heading": "Dashboard / Projects / Orchestrator split direction"
-        }
-      ],
-      "exact_missing_items": [
-        "Dashboard = summary/urgency/entry points",
-        "Orchestrator = operational depth",
-        "Project cards should show compact orchestrator/attention/usage pressure state and one primary blocked owner/reason when blocked",
-        "Projects page = multi-project summary/management surface, richer than a tiny status list but still summary-first"
-      ],
-      "blocking_reason": "Mutation planning is still unsafe because the target owner/consumer surface is ambiguous or doc discovery is still required.",
-      "next_resolution_stage": "Research Mode"
-    },
-    {
-      "gap_id": "gap-148",
-      "severity": "blocker",
-      "blocker_type": "planning",
-      "gap_class": "missing_structural_heading",
-      "description": "Direct Record Actionability Requirements: 2 missing and 0 partial coverage row(s) remain.",
-      "affected_targets": [
-        {
-          "path": "Ledger",
-          "heading": "Direct-record actionability direction"
-        },
-        {
-          "path": "direct record views",
-          "heading": "Direct-record actionability direction"
-        }
-      ],
-      "exact_missing_items": [
-        "direct record views that allow action should explicitly show: currentness, generation match, superseded yes/no, actionable yes/no",
-        "most trustworthy action-capable direct records: promotion record, graph patch record + state transition report, recovery/restore record, concern record for acknowledge/dismiss style actions"
-      ],
-      "blocking_reason": "Mutation planning is still unsafe because the target owner/consumer surface is ambiguous or doc discovery is still required.",
-      "next_resolution_stage": "Research Mode"
-    },
-    {
-      "gap_id": "gap-150",
-      "severity": "blocker",
-      "blocker_type": "planning",
-      "gap_class": "missing_structural_heading",
-      "description": "Multi-account auto-switch configuration requirement: 1 missing and 0 partial coverage row(s) remain.",
-      "affected_targets": [
-        {
-          "path": "__DOC_DISCOVERY_REQUIRED__",
-          "heading": "Open Questions / Uncertainties"
-        }
-      ],
-      "exact_missing_items": [
-        "multi-account auto-switch should be on by default for every execution role that uses a provider: node workers, overseers, assistant, interviewer, requirements-doc builder, effectively any provider-using execution actor",
-        "there likely needs to be a user-configurable threshold that determines when automatic account switching occurs",
-        "user highlighted real-world account heterogeneity even within the same provider: different accounts can have different quotas, rate limits, and policy constraints; same-provider accounts may not be fungible and may need distinct switching rules/thresholds",
-        "user wants thresholding/policy granularity by: provider, account, execution role"
-      ],
-      "blocking_reason": "Mutation planning is still unsafe because the target owner/consumer surface is ambiguous or doc discovery is still required.",
-      "next_resolution_stage": "Research Mode"
-    },
-    {
-      "gap_id": "gap-151",
-      "severity": "blocker",
-      "blocker_type": "planning",
-      "gap_class": "missing_cross_reference",
-      "description": "Node Graph Detail Inspector Requirements: 2 missing and 0 partial coverage row(s) remain.",
-      "affected_targets": [
-        {
-          "path": "Node Graph tab",
-          "heading": "Node Graph tab direction"
-        },
-        {
-          "path": "detail inspector",
-          "heading": "Node Graph tab direction"
-        }
-      ],
-      "exact_missing_items": [
-        "detail inspector should expose: requested/effective provider/model/effort/persona/account, usage/token/cost info, worker policy (agent/subagent, fresh/reused, spawn path), retry/review/promotion state, lane/worktree/snapshot state, linked evidence/artifacts",
-        "graph canvas + right-side detail inspector"
-      ],
-      "blocking_reason": "Mutation planning is still unsafe because the target owner/consumer surface is ambiguous or doc discovery is still required.",
-      "next_resolution_stage": "Research Mode"
-    },
-    {
-      "gap_id": "gap-152",
-      "severity": "blocker",
-      "blocker_type": "planning",
-      "gap_class": "missing_structural_heading",
-      "description": "Node Graph Display - Historical Lineage Preservation: 2 missing and 0 partial coverage row(s) remain.",
-      "affected_targets": [
-        {
-          "path": "Node Graph Display tab",
-          "heading": "Key Facts and Findings"
-        },
-        {
-          "path": "graph-patch lineage",
-          "heading": "Key Facts and Findings"
-        }
-      ],
-      "exact_missing_items": [
-        "live path may later rejoin surviving downstream nodes",
-        "old invalidated/superseded nodes remain visible",
-        "old nodes stay clickable for historical detail",
-        "patched generations branch from the old path"
-      ],
-      "blocking_reason": "Mutation planning is still unsafe because the target owner/consumer surface is ambiguous or doc discovery is still required.",
-      "next_resolution_stage": "Research Mode"
-    },
-    {
-      "gap_id": "gap-154",
-      "severity": "blocker",
-      "blocker_type": "planning",
-      "gap_class": "missing_structural_heading",
-      "description": "Object-kind vocabulary for routing and search: 1 missing and 0 partial coverage row(s) remain.",
-      "affected_targets": [
-        {
-          "path": "__DOC_DISCOVERY_REQUIRED__",
-          "heading": "Object-kind direction"
-        }
-      ],
-      "exact_missing_items": [
-        "object kinds: run, feature_seam, work_package, node, lane, worktree, concern, promotion, review, corroboration, graph_patch, recovery_record, blocked_episode, usage_record, artifact, thread, wizard, bundle"
-      ],
-      "blocking_reason": "Mutation planning is still unsafe because the target owner/consumer surface is ambiguous or doc discovery is still required.",
-      "next_resolution_stage": "Research Mode"
-    },
-    {
-      "gap_id": "gap-157",
-      "severity": "blocker",
-      "blocker_type": "planning",
-      "gap_class": "missing_structural_heading",
-      "description": "Orchestrator Tab Structure Redesign - Replace Tiers: 2 missing and 0 partial coverage row(s) remain.",
-      "affected_targets": [
-        {
-          "path": "Orchestrator page shell",
-          "heading": "Key Facts and Findings"
-        },
-        {
-          "path": "UI redesign documentation",
-          "heading": "Key Facts and Findings"
-        }
-      ],
-      "exact_missing_items": [
-        "existing `Tiers` tab should be replaced by a seam/package-oriented tab (name still open; likely `Seams` or equivalent)",
-        "keep tabs separate: `Progress`, `Seams` (replacement for `Tiers`), `Node Graph`, `Evidence`, `History`, `Ledger`"
-      ],
-      "blocking_reason": "Mutation planning is still unsafe because the target owner/consumer surface is ambiguous or doc discovery is still required.",
-      "next_resolution_stage": "Research Mode"
-    },
-    {
-      "gap_id": "gap-158",
-      "severity": "blocker",
-      "blocker_type": "planning",
-      "gap_class": "missing_data_shape",
-      "description": "Orchestrator authority boundary undefined: 1 missing and 0 partial coverage row(s) remain.",
-      "affected_targets": [
-        {
-          "path": "__DOC_DISCOVERY_REQUIRED__",
-          "heading": "Impacted Docs"
-        }
-      ],
-      "exact_missing_items": [
-        "what distinct authority belongs to package overseer vs feature-seam overseer so they do not become redundant or conflicting co-governors",
-        "what is Orchestrator allowed to own: page layout and controls, view-model / projections, run control intents, but probably not canonical runtime enums, event semantics, or scheduler truth"
-      ],
-      "blocking_reason": "Mutation planning is still unsafe because the target owner/consumer surface is ambiguous or doc discovery is still required.",
-      "next_resolution_stage": "Research Mode"
-    },
-    {
-      "gap_id": "gap-163",
-      "severity": "blocker",
-      "blocker_type": "planning",
-      "gap_class": "missing_cross_reference",
-      "description": "Persisted object ownership and field shapes: 1 missing and 0 partial coverage row(s) remain.",
-      "affected_targets": [
-        {
-          "path": "__DOC_DISCOVERY_REQUIRED__",
-          "heading": ""
-        }
-      ],
-      "exact_missing_items": [
-        "canonical persisted objects should likely include at least: project, run, feature_seam, work_package, node, attempt, lane, snapshot, promotion, review, resolution_thread, and event",
-        "feature_seam should own membership, lifecycle, requested settings, overseer/governance state, seam-promotion state, and seam evidence linkage",
-        "project should primarily own identity, repo/project settings/theme/account-policy linkage, active-run pointers, and coarse project status",
-        "run should own execution-session identity/lifecycle, graph linkage, run-level settings snapshot, and active pointers/rollup posture",
-        "work_package should own membership, lifecycle, requested settings, overseer/delegation/worktree policy refs, baseline lane state, package-governance state, promotion linkage, and package evidence linkage"
-      ],
-      "blocking_reason": "Mutation planning is still unsafe because the target owner/consumer surface is ambiguous or doc discovery is still required.",
-      "next_resolution_stage": "Research Mode"
-    },
-    {
-      "gap_id": "gap-164",
-      "severity": "blocker",
-      "blocker_type": "planning",
-      "gap_class": "missing_structural_heading",
-      "description": "Progress Tab Widget Hosting Requirements: 3 missing and 0 partial coverage row(s) remain.",
-      "affected_targets": [
-        {
-          "path": "Dashboard",
-          "heading": "Widget-system implication clarified"
-        },
-        {
-          "path": "Orchestrator page",
-          "heading": "Widget-system implication clarified"
-        },
-        {
-          "path": "Progress tab",
-          "heading": "Widget-system implication clarified"
-        }
-      ],
-      "exact_missing_items": [
-        "Orchestrator widgets live inside the `Progress` tab",
-        "non-Orchestrator widgets should not be hostable on the Orchestrator page",
-        "some orchestrator widgets may also be hostable on Dashboard"
-      ],
-      "blocking_reason": "Mutation planning is still unsafe because the target owner/consumer surface is ambiguous or doc discovery is still required.",
-      "next_resolution_stage": "Research Mode"
-    },
-    {
-      "gap_id": "gap-167",
-      "severity": "blocker",
-      "blocker_type": "planning",
-      "gap_class": "missing_structural_heading",
-      "description": "Projection Freshness Health States: 2 missing and 0 partial coverage row(s) remain.",
-      "affected_targets": [
-        {
-          "path": "operational concerns",
-          "heading": "Projection degradation policy"
-        },
-        {
-          "path": "projection model",
-          "heading": "Projection degradation policy"
-        }
-      ],
-      "exact_missing_items": [
-        "projection health becomes an operational concern when it undermines trust in blocked/promotion/recovery/patch/account-pressure truth",
-        "projection health states should conceptually include: `current`, `refreshing`, `stale`, `failed`"
-      ],
-      "blocking_reason": "Mutation planning is still unsafe because the target owner/consumer surface is ambiguous or doc discovery is still required.",
-      "next_resolution_stage": "Research Mode"
-    },
-    {
-      "gap_id": "gap-168",
-      "severity": "blocker",
-      "blocker_type": "planning",
-      "gap_class": "missing_structural_heading",
-      "description": "Projection Reuse Strategy - Cross Surface Scope: 3 missing and 0 partial coverage row(s) remain.",
-      "affected_targets": [
-        {
-          "path": "Dashboard",
-          "heading": "Projection reuse split"
-        },
-        {
-          "path": "Orchestrator",
-          "heading": "Projection reuse split"
-        },
-        {
-          "path": "Projects",
-          "heading": "Projection reuse split"
-        }
-      ],
-      "exact_missing_items": [
-        "`Run Summary`, `Seam Summary`, `Concern Summary`, `Account / Usage Pressure`, `Recent Major Events` should be broadly reusable across Orchestrator / Dashboard / Projects",
-        "more operational/dense summaries stay primarily Orchestrator-facing"
-      ],
-      "blocking_reason": "Mutation planning is still unsafe because the target owner/consumer surface is ambiguous or doc discovery is still required.",
-      "next_resolution_stage": "Research Mode"
-    },
-    {
-      "gap_id": "gap-174",
-      "severity": "blocker",
-      "blocker_type": "planning",
-      "gap_class": "missing_structural_heading",
-      "description": "Provider/model selection configuration levels: 1 missing and 0 partial coverage row(s) remain.",
-      "affected_targets": [
-        {
-          "path": "__DOC_DISCOVERY_REQUIRED__",
-          "heading": "Candidate Fixes / Design Directions"
-        }
-      ],
-      "exact_missing_items": [
-        "provider/model selection likely needs distinct defaults or overrides at: run/global context, feature seam, work package, node, work package overseer, feature seam overseer, overseer-delegated node worker",
-        "requested vs effective provider/model must remain visible at all levels where fallback/override can occur"
-      ],
-      "blocking_reason": "Mutation planning is still unsafe because the target owner/consumer surface is ambiguous or doc discovery is still required.",
-      "next_resolution_stage": "Research Mode"
-    },
-    {
-      "gap_id": "gap-180",
-      "severity": "blocker",
-      "blocker_type": "planning",
-      "gap_class": "missing_data_shape",
-      "description": "Required Orchestrator Projection Families: 2 missing and 0 partial coverage row(s) remain.",
-      "affected_targets": [
-        {
-          "path": "Orchestrator projections",
-          "heading": "Required orchestrator projection families"
-        },
-        {
-          "path": "widget data contracts",
-          "heading": "Required orchestrator projection families"
-        }
-      ],
-      "exact_missing_items": [
-        "required orchestrator projection families: Run Summary, Seam Summary, Package Summary, Node Summary, Promotion Summary, Lane / Worktree Summary, Concern Summary, Account / Usage Pressure, Recent Major Events, Corroboration Summary, Recovery Summary, Overseer Activity"
-      ],
-      "blocking_reason": "Mutation planning is still unsafe because the target owner/consumer surface is ambiguous or doc discovery is still required.",
-      "next_resolution_stage": "Research Mode"
-    },
-    {
-      "gap_id": "gap-181",
-      "severity": "blocker",
-      "blocker_type": "planning",
-      "gap_class": "missing_structural_heading",
-      "description": "Research follow-up: Normalize recovery vocabulary: 1 missing and 0 partial coverage row(s) remain.",
-      "affected_targets": [
-        {
-          "path": "Recovery/remediation docs",
-          "heading": "Normalize recovery vocabulary across safe point, restore point, rollback, contamination, and retry"
-        }
-      ],
-      "exact_missing_items": [
-        "Normalize recovery vocabulary across safe point, restore point, rollback, contamination, and retry - concepts partially modernized but still inconsistently named and scoped",
-        "contamination",
-        "restore point",
-        "retry",
-        "rollback",
-        "safe point"
-      ],
-      "blocking_reason": "Mutation planning is still unsafe because the target owner/consumer surface is ambiguous or doc discovery is still required.",
-      "next_resolution_stage": "Research Mode"
-    },
-    {
-      "gap_id": "gap-182",
-      "severity": "blocker",
-      "blocker_type": "planning",
-      "gap_class": "missing_structural_heading",
-      "description": "Research follow-up: Separate plan from mutable runtime state: 1 missing and 0 partial coverage row(s) remain.",
-      "affected_targets": [
-        {
-          "path": "Plan/storage docs",
-          "heading": "Separate plan structure from mutable runtime state"
-        }
-      ],
-      "exact_missing_items": [
-        "Separate plan structure from mutable runtime state - runtime truth split across plan shards, JSON sidecars, and event/projection docs"
-      ],
-      "blocking_reason": "Mutation planning is still unsafe because the target owner/consumer surface is ambiguous or doc discovery is still required.",
-      "next_resolution_stage": "Research Mode"
-    },
-    {
-      "gap_id": "gap-183",
-      "severity": "blocker",
-      "blocker_type": "planning",
-      "gap_class": "missing_structural_heading",
-      "description": "Research follow-up: Specify package-based worktree lane pools end-to-end: 1 missing and 0 partial coverage row(s) remain.",
-      "affected_targets": [
-        {
-          "path": "SCM docs, UI docs, recovery policy docs",
-          "heading": "Specify package-based worktree lane pools end-to-end"
-        }
-      ],
-      "exact_missing_items": [
-        "Specify package-based worktree lane pools end-to-end - SCM, Source Control UI, Orchestrator UI, and recovery policy all depend on it, but no single canonical lane-pool model exists"
-      ],
-      "blocking_reason": "Mutation planning is still unsafe because the target owner/consumer surface is ambiguous or doc discovery is still required.",
-      "next_resolution_stage": "Research Mode"
-    },
-    {
-      "gap_id": "gap-184",
-      "severity": "blocker",
-      "blocker_type": "planning",
-      "gap_class": "missing_structural_heading",
-      "description": "Revocation and Reopen Semantics - Explicit Visibility: 2 missing and 0 partial coverage row(s) remain.",
-      "affected_targets": [
-        {
-          "path": "UI labels",
-          "heading": "Additional UI/copy direction"
-        },
-        {
-          "path": "state transitions",
-          "heading": "Additional UI/copy direction"
-        }
-      ],
-      "exact_missing_items": [
-        "revocation/reopen semantics should be explicit and visible: `Promotion Revoked`, `Seam Completion Revoked`, `Reopened`, `Reopened by Patch`, `Reopened by New Evidence`"
-      ],
-      "blocking_reason": "Mutation planning is still unsafe because the target owner/consumer surface is ambiguous or doc discovery is still required.",
-      "next_resolution_stage": "Research Mode"
-    },
-    {
-      "gap_id": "gap-186",
-      "severity": "blocker",
-      "blocker_type": "planning",
-      "gap_class": "missing_data_shape",
-      "description": "Runtime contract consumption by Orchestrator: 2 missing and 0 partial coverage row(s) remain.",
-      "affected_targets": [
-        {
-          "path": ".puppet-master/project/plan_graph/index.json",
+          "path": "Plans/Executor_Protocol.md",
           "heading": ""
         },
         {
           "path": "Plans/orchestrator-subagent-integration.md",
           "heading": ""
+        },
+        {
+          "path": "Plans/human-in-the-loop.md",
+          "heading": ""
+        },
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "heading": ""
         }
       ],
       "exact_missing_items": [
-        "Plans/orchestrator-subagent-integration.md treats Orchestrator as the primary consumer of canonical runtime scheduler contracts, not as a schema owner",
-        "orchestrator-subagent-integration.md says Puppet Master orchestrator consumes sharded-only plan graphs and executes headless from .puppet-master/project/plan_graph/index.json and node shards"
+        "Retire TierContext/tier_id/TierType/Tiers/Phase-Task-Subtask runtime canon",
+        "Retire allowed_actions[] / reason_code / recovery_options[] survivors from live blocked/HITL contracts"
       ],
-      "blocking_reason": "Mutation planning is still unsafe because the target owner/consumer surface is ambiguous or doc discovery is still required.",
-      "next_resolution_stage": "Research Mode"
+      "blocking_reason": "Legacy or contradictory residue remains live and still conflicts with the desired canon.",
+      "next_resolution_stage": "Reconciliation Planner"
     },
     {
-      "gap_id": "gap-189",
-      "severity": "blocker",
-      "blocker_type": "planning",
-      "gap_class": "missing_structural_heading",
-      "description": "Seam Completion Presentation - Distinct Boundaries: 2 missing and 0 partial coverage row(s) remain.",
-      "affected_targets": [
-        {
-          "path": "Seams UI",
-          "heading": "Additional UI/copy direction"
-        },
-        {
-          "path": "completion state labels",
-          "heading": "Additional UI/copy direction"
-        }
-      ],
-      "exact_missing_items": [
-        "promotions should be visible as explicit named boundaries: `Lane to Package`, `Package to Seam`, `Seam Completion`",
-        "seam completion should be presented distinctly from package completion and package-to-seam availability: `Locally Complete`, `Available to Seam`, `Seam Complete`"
-      ],
-      "blocking_reason": "Mutation planning is still unsafe because the target owner/consumer surface is ambiguous or doc discovery is still required.",
-      "next_resolution_stage": "Research Mode"
-    },
-    {
-      "gap_id": "gap-191",
-      "severity": "blocker",
-      "blocker_type": "planning",
-      "gap_class": "missing_structural_heading",
-      "description": "Seams Tab Structure - Hierarchical Organization: 2 missing and 0 partial coverage row(s) remain.",
-      "affected_targets": [
-        {
-          "path": "Seams detail panel",
-          "heading": "Seams-tab structure direction"
-        },
-        {
-          "path": "Seams tab",
-          "heading": "Seams-tab structure direction"
-        }
-      ],
-      "exact_missing_items": [
-        "Seams detail panel should emphasize governance/completion/integration truth rather than raw node execution churn",
-        "nodes should appear as summaries/problem drill-ins rather than the default list shape",
-        "second level = `Work Packages`",
-        "top level = `Feature Seams`"
-      ],
-      "blocking_reason": "Mutation planning is still unsafe because the target owner/consumer surface is ambiguous or doc discovery is still required.",
-      "next_resolution_stage": "Research Mode"
-    },
-    {
-      "gap_id": "gap-192",
-      "severity": "blocker",
-      "blocker_type": "planning",
-      "gap_class": "missing_structural_heading",
-      "description": "Settings Categorization and Multi-Account Organization: 3 missing and 0 partial coverage row(s) remain.",
-      "affected_targets": [
-        {
-          "path": "Providers & Models",
-          "heading": "Settings categorization direction"
-        },
-        {
-          "path": "Settings page",
-          "heading": "Settings categorization direction"
-        },
-        {
-          "path": "multi-account setup",
-          "heading": "Settings categorization direction"
-        }
-      ],
-      "exact_missing_items": [
-        "current likely major settings groupings: `Providers & Models`, `Execution Identity`, `Governance`, `Workers`, `Recovery`, `HITL`",
-        "multi-account belongs with provider/model setup, not in an isolated orchestrator-only settings area"
-      ],
-      "blocking_reason": "Mutation planning is still unsafe because the target owner/consumer surface is ambiguous or doc discovery is still required.",
-      "next_resolution_stage": "Research Mode"
-    },
-    {
-      "gap_id": "gap-194",
-      "severity": "blocker",
-      "blocker_type": "planning",
-      "gap_class": "missing_structural_heading",
-      "description": "Settings Scope Hierarchy: 2 missing and 0 partial coverage row(s) remain.",
-      "affected_targets": [
-        {
-          "path": "Settings hierarchy",
-          "heading": "Settings scope hierarchy direction"
-        },
-        {
-          "path": "configuration scopes",
-          "heading": "Settings scope hierarchy direction"
-        }
-      ],
-      "exact_missing_items": [
-        "`Actor / Role` = cross-cutting provider/account/persona/worker policy",
-        "`App / Global` = broad product defaults/catalogs/capabilities",
-        "`Node` = rare targeted override only",
-        "`Package` = useful local execution/recovery overrides",
-        "`Project` = main execution policy owner",
-        "`Runtime only` = computed truth, not user configuration",
-        "`Seam` = meaningful feature-level overrides only"
-      ],
-      "blocking_reason": "Mutation planning is still unsafe because the target owner/consumer surface is ambiguous or doc discovery is still required.",
-      "next_resolution_stage": "Research Mode"
-    },
-    {
-      "gap_id": "gap-195",
-      "severity": "blocker",
-      "blocker_type": "planning",
-      "gap_class": "missing_structural_heading",
-      "description": "Settings scopes too coarse: 2 missing and 0 partial coverage row(s) remain.",
-      "affected_targets": [
-        {
-          "path": "Configuration/policy scope docs",
-          "heading": "Settings scopes are still too coarse"
-        },
-        {
-          "path": "Settings docs",
-          "heading": "Settings scopes are still too coarse"
-        }
-      ],
-      "exact_missing_items": [
-        "Global/project toggles are common, but package/seam/lane/run/account-aware settings or policy scopes are mostly absent"
-      ],
-      "blocking_reason": "Mutation planning is still unsafe because the target owner/consumer surface is ambiguous or doc discovery is still required.",
-      "next_resolution_stage": "Research Mode"
-    },
-    {
-      "gap_id": "gap-197",
-      "severity": "blocker",
-      "blocker_type": "planning",
-      "gap_class": "missing_structural_heading",
-      "description": "Shared Concern Projection Across Surfaces: 5 missing and 0 partial coverage row(s) remain.",
-      "affected_targets": [
-        {
-          "path": "Evidence",
-          "heading": "Shared concern projection rule"
-        },
-        {
-          "path": "History",
-          "heading": "Shared concern projection rule"
-        },
-        {
-          "path": "Ledger",
-          "heading": "Shared concern projection rule"
-        },
-        {
-          "path": "Progress",
-          "heading": "Shared concern projection rule"
-        },
-        {
-          "path": "Seams",
-          "heading": "Shared concern projection rule"
-        }
-      ],
-      "exact_missing_items": [
-        "`Progress` = operational attention projection, `Seams` = integration/governance projection, `Evidence` = proof-backed concern projection, `History` = concern lifecycle timeline projection, `Ledger` = exact structured concern-record projection",
-        "all major surfaces should project the same concern model rather than inventing local versions"
-      ],
-      "blocking_reason": "Mutation planning is still unsafe because the target owner/consumer surface is ambiguous or doc discovery is still required.",
-      "next_resolution_stage": "Research Mode"
-    },
-    {
-      "gap_id": "gap-210",
-      "severity": "blocker",
-      "blocker_type": "planning",
-      "gap_class": "missing_structural_heading",
-      "description": "Unresolved multi-level provider/model precedence and overrides: 1 missing and 0 partial coverage row(s) remain.",
-      "affected_targets": [
-        {
-          "path": "__DOC_DISCOVERY_REQUIRED__",
-          "heading": "Open Questions / Uncertainties"
-        }
-      ],
-      "exact_missing_items": [
-        "are seam/package/node provider-model settings hard constraints, defaults, or hints",
-        "can an overseer do direct node work, or only delegate/review",
-        "how are worktrees assigned for parallel nodes within the same package or seam",
-        "how do dynamic node personas interact with explicit node overrides and overseer-controlled delegation",
-        "if an overseer can do node work directly, does it use overseer-effective settings or node-effective settings",
-        "what happens to worktree ownership during remediation, corroboration, or graph-patch-triggered work",
-        "what is the provider/model precedence order across run, seam, package, node, overseer, and delegated-subagent levels"
-      ],
-      "blocking_reason": "Mutation planning is still unsafe because the target owner/consumer surface is ambiguous or doc discovery is still required.",
-      "next_resolution_stage": "Research Mode"
-    },
-    {
-      "gap_id": "gap-211",
-      "severity": "blocker",
-      "blocker_type": "planning",
-      "gap_class": "missing_structural_heading",
-      "description": "Usage and Multi-Account Surface Split: 4 missing and 0 partial coverage row(s) remain.",
-      "affected_targets": [
-        {
-          "path": "Dashboard",
-          "heading": "Usage/multi-account surface split"
-        },
-        {
-          "path": "Orchestrator",
-          "heading": "Usage/multi-account surface split"
-        },
-        {
-          "path": "Projects page",
-          "heading": "Usage/multi-account surface split"
-        },
-        {
-          "path": "Usage page",
-          "heading": "Usage/multi-account surface split"
-        }
-      ],
-      "exact_missing_items": [
-        "Dashboard shows cross-project pressure that matters operationally",
-        "Orchestrator shows execution-specific provider/account pressure context",
-        "Projects page shows coarse account/usage pressure summary only",
-        "Usage page needs account-level breakdown, role usage view, and switch history, but full Usage-page redesign is intentionally out of scope"
-      ],
-      "blocking_reason": "Mutation planning is still unsafe because the target owner/consumer surface is ambiguous or doc discovery is still required.",
-      "next_resolution_stage": "Research Mode"
-    },
-    {
-      "gap_id": "gap-214",
-      "severity": "blocker",
-      "blocker_type": "planning",
-      "gap_class": "missing_structural_heading",
-      "description": "Weak Integration Concerns - UI Grouping Requirements: 1 missing and 0 partial coverage row(s) remain.",
-      "affected_targets": [
-        {
-          "path": "Seams UI",
-          "heading": "Additional UI/copy direction"
-        }
-      ],
-      "exact_missing_items": [
-        "`Weak Integration` should not be just a badge; Seams UI should summarize it visibly and group concerns under readable headings: Wiring, Workflow, State, GUI, Design",
-        "package issues should roll up to seam concerns only when they cross package/seam/user-visible boundaries or affect seam completion truth"
-      ],
-      "blocking_reason": "Mutation planning is still unsafe because the target owner/consumer surface is ambiguous or doc discovery is still required.",
-      "next_resolution_stage": "Research Mode"
-    },
-    {
-      "gap_id": "gap-215",
-      "severity": "blocker",
-      "blocker_type": "planning",
+      "gap_id": "gap-003",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
       "gap_class": "missing_data_shape",
-      "description": "Widget Data Contract Requirements: 2 missing and 0 partial coverage row(s) remain.",
+      "description": "Requested/effective account identity contract remains unresolved across 5 coverage row(s).",
       "affected_targets": [
         {
-          "path": "data contracts",
-          "heading": "Widget-system data-contract direction"
+          "path": "Plans/Multi-Account.md",
+          "heading": ""
         },
         {
-          "path": "widget system",
-          "heading": "Widget-system data-contract direction"
+          "path": "Plans/Prompt_Pipeline.md",
+          "heading": ""
+        },
+        {
+          "path": "Plans/CLI_Bridged_Providers.md",
+          "heading": ""
+        },
+        {
+          "path": "Plans/Permissions_System.md",
+          "heading": ""
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": ""
         }
       ],
       "exact_missing_items": [
-        "orchestrator widgets should consume stable shared projections rather than raw event streams or bespoke queries",
-        "widget shell needs: widget identity/type, scope, filter/sort/display config, projection ref"
+        "Add requested_account_id alongside requested_account_policy",
+        "Add requested_account_binding and govern provider_account_id as subordinate provider-native metadata",
+        "Carry requested/effective account identity through runtime, bridged-provider, and permission envelopes"
       ],
-      "blocking_reason": "Mutation planning is still unsafe because the target owner/consumer surface is ambiguous or doc discovery is still required.",
-      "next_resolution_stage": "Research Mode"
+      "blocking_reason": "Required data shape, field semantics, or record structure is still absent or incomplete.",
+      "next_resolution_stage": "Reconciliation Planner"
     },
     {
-      "gap_id": "gap-217",
-      "severity": "blocker",
-      "blocker_type": "planning",
-      "gap_class": "missing_cross_reference",
-      "description": "Worktree ownership/allocation missing definition: 1 missing and 0 partial coverage row(s) remain.",
+      "gap_id": "gap-004",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "Shared governance/runtime record envelope remains unresolved across 3 coverage row(s).",
       "affected_targets": [
         {
-          "path": "__DOC_DISCOVERY_REQUIRED__",
-          "heading": "Impacted Docs"
+          "path": "Plans/storage-plan.md",
+          "heading": ""
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": ""
+        },
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": ""
         }
       ],
       "exact_missing_items": [
-        "current conversational preference is leaning toward package-based worktrees rather than per-node worktrees for scale/manageability reasons",
-        "current orchestration discussion has not yet defined whether worktrees are allocated/owned primarily per node, per package, per seam, or per remediation branch of work"
+        "Define one shared record envelope with canonical lineage refs and artifact/evidence refs",
+        "Keep record objects distinct from artifacts and rendered summaries"
       ],
-      "blocking_reason": "Mutation planning is still unsafe because the target owner/consumer surface is ambiguous or doc discovery is still required.",
-      "next_resolution_stage": "Research Mode"
+      "blocking_reason": "Required data shape, field semantics, or record structure is still absent or incomplete.",
+      "next_resolution_stage": "Reconciliation Planner"
     },
     {
-      "gap_id": "gap-230",
-      "severity": "blocker",
-      "blocker_type": "planning",
+      "gap_id": "gap-005",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
       "gap_class": "missing_data_shape",
-      "description": "concern action policy matrix ownership: 6 missing and 0 partial coverage row(s) remain.",
+      "description": "Export taxonomy and manifest contract remains unresolved across 3 coverage row(s).",
+      "affected_targets": [
+        {
+          "path": "Plans/usage-feature.md",
+          "heading": ""
+        },
+        {
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "heading": ""
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": ""
+        }
+      ],
+      "exact_missing_items": [
+        "Define record export, bundle export, and view export as distinct export classes",
+        "Require export manifests with export_id/export_kind/project scope/included ids/trust-state disclosure"
+      ],
+      "blocking_reason": "Required data shape, field semantics, or record structure is still absent or incomplete.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-006",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "Concern record family definition remains unresolved across 4 coverage row(s).",
       "affected_targets": [
         {
           "path": "Plans/Contracts_V0.md",
-          "heading": "Candidate fixes to carry forward"
-        },
-        {
-          "path": "Plans/FinalGUISpec.md",
-          "heading": "Candidate fixes to carry forward"
-        },
-        {
-          "path": "Plans/Orchestrator_Page.md",
-          "heading": "Candidate fixes to carry forward"
-        },
-        {
-          "path": "Plans/Widget_System.md",
-          "heading": "Candidate fixes to carry forward"
+          "heading": ""
         },
         {
           "path": "Plans/storage-plan.md",
-          "heading": "Candidate fixes to carry forward"
-        },
-        {
-          "path": "future concern-specific record/action docs",
-          "heading": "Candidate fixes to carry forward"
-        }
-      ],
-      "exact_missing_items": [
-        "Add a canonical concern action policy table with at least: action, allowed_actor_kinds, confirmation_level, rationale_required, resulting_status_or_lineage, reversibility, audit_fields",
-        "dismissing a banner",
-        "removing a widget",
-        "widget removal lightweight undo window"
-      ],
-      "blocking_reason": "Mutation planning is still unsafe because the target owner/consumer surface is ambiguous or doc discovery is still required.",
-      "next_resolution_stage": "Research Mode"
-    },
-    {
-      "gap_id": "gap-247",
-      "severity": "blocker",
-      "blocker_type": "planning",
-      "gap_class": "missing_cross_reference",
-      "description": "help system contract three-depth model: 6 missing and 0 partial coverage row(s) remain.",
-      "affected_targets": [
-        {
-          "path": "Plans/FinalGUISpec.md",
-          "heading": "Candidate fixes to carry forward"
-        },
-        {
-          "path": "Plans/Glossary.md",
-          "heading": "Candidate fixes to carry forward"
+          "heading": ""
         },
         {
           "path": "Plans/Orchestrator_Page.md",
-          "heading": "Candidate fixes to carry forward"
+          "heading": ""
+        },
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": ""
+        }
+      ],
+      "exact_missing_items": [
+        "Concern is a first-class durable record distinct from review finding, annotation, blocked episode, and graph patch request",
+        "Define concern_id/project_id/run and scope refs, evidence/source refs, lineage refs, severity/category/status, and governance metadata"
+      ],
+      "blocking_reason": "Required data shape, field semantics, or record structure is still absent or incomplete.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-007",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "Concern lifecycle and resolution kinds remains unresolved across 3 coverage row(s).",
+      "affected_targets": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": ""
+        },
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": ""
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": ""
+        }
+      ],
+      "exact_missing_items": [
+        "Use active/acknowledged/resolved/dismissed as concern lifecycle states",
+        "Use fixed/accepted_risk/superseded/merged/split/invalidated/obsoleted_by_patch/obsoleted_by_recovery as resolution_kind values"
+      ],
+      "blocking_reason": "Required data shape, field semantics, or record structure is still absent or incomplete.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-008",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "Concern routing and object-first search behavior remains unresolved across 2 coverage row(s).",
+      "affected_targets": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": ""
+        },
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": ""
+        }
+      ],
+      "exact_missing_items": [
+        "Concern search results must route as object-first results with focused-run and target-tab context",
+        "Concern drill-downs must preserve selected concern id and related object context"
+      ],
+      "blocking_reason": "Required data shape, field semantics, or record structure is still absent or incomplete.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-009",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "Concern action policy and authority model remains unresolved across 3 coverage row(s).",
+      "affected_targets": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": ""
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": ""
+        },
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": ""
+        }
+      ],
+      "exact_missing_items": [
+        "Define actor authority, confirmation, rationale, reversibility, and audit fields for concern actions",
+        "Keep acknowledged, dismissed, resolved, and structural lineage edits as distinct actions"
+      ],
+      "blocking_reason": "Required data shape, field semantics, or record structure is still absent or incomplete.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-010",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "Concern linkage to adjacent families remains unresolved across 3 coverage row(s).",
+      "affected_targets": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": ""
         },
         {
           "path": "Plans/Run_Graph_View.md",
-          "heading": "Candidate fixes to carry forward"
+          "heading": ""
         },
         {
-          "path": "Plans/Widget_System.md",
-          "heading": "Candidate fixes to carry forward"
-        },
-        {
-          "path": "future Orchestrator help-entry docs or copy inventories",
-          "heading": "Candidate fixes to carry forward"
+          "path": "Plans/Contracts_V0.md",
+          "heading": ""
         }
       ],
       "exact_missing_items": [
-        "Define a three-depth help contract: inline help (short tooltip/badge explainer/field helper text), context help (richer popover/side panel/surface-local explainer with examples and related concepts), canonical help entry (dedicated glossary/help article for durable cross-surface concepts)",
-        "Tiers, Phase/Task/Subtask, Overseer wording as foreman shorthand",
-        "legacy tier wording still present in docs"
+        "Expose review_refs, corroboration_refs, graph_patch_refs, recovery_refs, blocked_episode_refs, and promotion_refs on concerns",
+        "Allow blocked episodes to reference concerns without replacing concern identity"
       ],
-      "blocking_reason": "Mutation planning is still unsafe because the target owner/consumer surface is ambiguous or doc discovery is still required.",
-      "next_resolution_stage": "Research Mode"
+      "blocking_reason": "Required data shape, field semantics, or record structure is still absent or incomplete.",
+      "next_resolution_stage": "Reconciliation Planner"
     },
     {
-      "gap_id": "gap-254",
-      "severity": "blocker",
-      "blocker_type": "planning",
-      "gap_class": "missing_cross_reference",
-      "description": "project attention item projection contract: 5 missing and 0 partial coverage row(s) remain.",
+      "gap_id": "gap-011",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_structural_heading",
+      "description": "Promotion classes and gate evidence remains unresolved across 3 coverage row(s).",
       "affected_targets": [
         {
-          "path": "Plans/FinalGUISpec.md",
-          "heading": "Candidate fixes to carry forward"
+          "path": "Plans/Progression_Gates.md",
+          "heading": ""
         },
         {
-          "path": "Plans/Glossary.md",
-          "heading": "Candidate fixes to carry forward"
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": ""
         },
         {
-          "path": "Plans/assistant-chat-design.md",
-          "heading": "Candidate fixes to carry forward"
+          "path": "Plans/Contracts_V0.md",
+          "heading": ""
+        }
+      ],
+      "exact_missing_items": [
+        "Define lane_to_package, package_to_seam_available, and seam_complete promotions",
+        "Attach exact gate/evidence expectations to each promotion class"
+      ],
+      "blocking_reason": "Target docs are known, but the required structural section or owner slot is still absent.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-012",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "Focused run and historical routing contract remains unresolved across 3 coverage row(s).",
+      "affected_targets": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": ""
+        },
+        {
+          "path": "Plans/Run_Graph_View.md",
+          "heading": ""
         },
         {
           "path": "Plans/storage-plan.md",
-          "heading": "Candidate fixes to carry forward"
-        },
-        {
-          "path": "future Projects/attention-center docs",
-          "heading": "Candidate fixes to carry forward"
+          "heading": ""
         }
       ],
       "exact_missing_items": [
-        "Add a shared project_attention_item projection or equivalent normalized row model with minimum shape: attention_item_id, project_id, severity (advisory|attention_required|blocked), owner_kind, reason_code, source_kind, source_object_ref, primary_route_payload, secondary_route_payload?, projection_trust_state, created_at_utc, updated_at_utc, dismissibility_kind (none|quiet_only|dismissible), active",
-        "attention_center exists in glossary with no concrete payload/schema"
+        "Use active_run_id/focused_run_id with focus_mode = live | historical",
+        "Keep cross-tab deep links and search pivots coherent on the focused run"
       ],
-      "blocking_reason": "Mutation planning is still unsafe because the target owner/consumer surface is ambiguous or doc discovery is still required.",
-      "next_resolution_stage": "Research Mode"
+      "blocking_reason": "Consumer-facing propagation is only partial or missing in the named docs.",
+      "next_resolution_stage": "Reconciliation Planner"
     },
     {
-      "gap_id": "gap-289",
-      "severity": "blocker",
-      "blocker_type": "planning",
-      "gap_class": "stale_contradictory_survivor",
-      "description": "Historical/Superseded/Revoked State Semantics Split: 8 missing and 0 partial coverage row(s) remain.",
-      "affected_targets": [
-        {
-          "path": "Orchestrator/UI docs",
-          "heading": "Candidate application by object family"
-        },
-        {
-          "path": "attempt records",
-          "heading": "Candidate application by object family"
-        },
-        {
-          "path": "concern records",
-          "heading": "Candidate application by object family"
-        },
-        {
-          "path": "graph patches",
-          "heading": "Candidate application by object family"
-        },
-        {
-          "path": "lane/worktree objects",
-          "heading": "Candidate application by object family"
-        },
-        {
-          "path": "promotion records",
-          "heading": "Candidate application by object family"
-        },
-        {
-          "path": "recovery records",
-          "heading": "Candidate application by object family"
-        },
-        {
-          "path": "storage docs",
-          "heading": "Candidate application by object family"
-        }
-      ],
-      "exact_missing_items": [
-        "Add explicit successor/predecessor links where `superseded` is possible",
-        "Define a shared record-semantic vocabulary applied across: attempts, promotions, concerns, graph patches, recovery records, lane/worktree objects",
-        "Keep visibility policy (`archived`, hidden from default lists) separate from semantic state (`historical`, `revoked`, `superseded`)",
-        "`stale_historical` is specifically stronger than plain `historical`; it carries non-resumable/non-live semantics",
-        "distinct concepts: `historical`, `stale_historical`, `superseded`, `revoked`, `reopened`, `archived`, `deleted` / `removed`",
-        "separate `time status`, `replacement status`, and `validity status`",
-        "ad hoc color or disappearance",
-        "conceptual but not contract-level",
-        "generic 'old' state",
-        "one shared semantic glossary"
-      ],
-      "blocking_reason": "Mutation planning is still unsafe because the target owner/consumer surface is ambiguous or doc discovery is still required.",
-      "next_resolution_stage": "Research Mode"
-    },
-    {
-      "gap_id": "gap-293",
-      "severity": "blocker",
-      "blocker_type": "planning",
-      "gap_class": "stale_contradictory_survivor",
-      "description": "Package-based lane pools missing as canonical concept: 3 missing and 0 partial coverage row(s) remain.",
+      "gap_id": "gap-013",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "Source Control and worktree handshake remains unresolved across 4 coverage row(s).",
       "affected_targets": [
         {
           "path": "Plans/GitHub_Integration.md",
-          "heading": "Package-based lane pools are still missing as a canonical concept"
+          "heading": ""
         },
         {
           "path": "Plans/WorktreeGitImprovement.md",
-          "heading": "Package-based lane pools are still missing as a canonical concept"
+          "heading": ""
         },
         {
-          "path": "SCM docs",
-          "heading": "Package-based lane pools are still missing as a canonical concept"
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": ""
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": ""
         }
       ],
       "exact_missing_items": [
-        "Package-based lane pools are still missing as a canonical concept; GPT-5.4 found subtask/tier worktrees, branch-per-run flows, and direct merge/PR assumptions across SCM docs, but no stable lane-pool model"
+        "Keep Orchestrator as lane-pool operational truth and Source Control as concrete repo/worktree operator",
+        "Show owning package/lane/run refs plus lifecycle and blocked/recovery state on worktree rows"
       ],
-      "blocking_reason": "Mutation planning is still unsafe because the target owner/consumer surface is ambiguous or doc discovery is still required.",
-      "next_resolution_stage": "Research Mode"
+      "blocking_reason": "Consumer-facing propagation is only partial or missing in the named docs.",
+      "next_resolution_stage": "Reconciliation Planner"
     },
     {
-      "gap_id": "gap-329",
-      "severity": "blocker",
-      "blocker_type": "planning",
-      "gap_class": "missing_cross_reference",
-      "description": "Evidence Tab Redesign - Separate Panes: 1 missing and 0 partial coverage row(s) remain.",
+      "gap_id": "gap-014",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "Projection trust and action gating remains unresolved across 4 coverage row(s).",
       "affected_targets": [
         {
-          "path": "Evidence tab",
-          "heading": "Evidence tab redesign direction"
+          "path": "Plans/storage-plan.md",
+          "heading": ""
+        },
+        {
+          "path": "Plans/usage-feature.md",
+          "heading": ""
+        },
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": ""
+        },
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": ""
         }
       ],
       "exact_missing_items": [
-        "evidence and artifacts should remain linked bidirectionally",
-        "separate panes: `Evidence` pane for verdicts/receipts/findings/reports, `Artifacts` pane for screenshots/recordings/diffs/reports/generated docs/etc."
+        "Use current/refreshing/stale/degraded/unavailable projection states",
+        "Gate sensitive actions on current or direct canonical revalidation and fall back to record-backed views when degraded"
       ],
-      "blocking_reason": "Mutation planning is still unsafe because the target owner/consumer surface is ambiguous or doc discovery is still required.",
-      "next_resolution_stage": "Research Mode"
+      "blocking_reason": "Required data shape, field semantics, or record structure is still absent or incomplete.",
+      "next_resolution_stage": "Reconciliation Planner"
     },
     {
-      "gap_id": "gap-343",
-      "severity": "blocker",
-      "blocker_type": "planning",
+      "gap_id": "gap-015",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "Progress-only widget hostability remains unresolved across 3 coverage row(s).",
+      "affected_targets": [
+        {
+          "path": "Plans/Widget_System.md",
+          "heading": ""
+        },
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": ""
+        },
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": ""
+        }
+      ],
+      "exact_missing_items": [
+        "Restrict widget-composed Orchestrator surface to Progress",
+        "Persist orchestrator:progress layout separately from Dashboard and Usage"
+      ],
+      "blocking_reason": "Consumer-facing propagation is only partial or missing in the named docs.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-016",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
       "gap_class": "missing_structural_heading",
-      "description": "Governing layer architecture undefined: 1 missing and 0 partial coverage row(s) remain.",
+      "description": "Shared escalation ladder remains unresolved across 3 coverage row(s).",
       "affected_targets": [
         {
-          "path": "__DOC_DISCOVERY_REQUIRED__",
-          "heading": "Impacted Docs"
-        }
-      ],
-      "exact_missing_items": [
-        "how graph decomposition preserves bounded agent context without recreating tier authority as a second execution model",
-        "whether the governing layer is an always-on planner/overseer agent, a deterministic scheduler plus short-lived agents, or a mixed model"
-      ],
-      "blocking_reason": "Mutation planning is still unsafe because the target owner/consumer surface is ambiguous or doc discovery is still required.",
-      "next_resolution_stage": "Research Mode"
-    },
-    {
-      "gap_id": "gap-345",
-      "severity": "blocker",
-      "blocker_type": "planning",
-      "gap_class": "missing_cross_reference",
-      "description": "History vs Ledger Distinction - Explicit Contract: 2 missing and 0 partial coverage row(s) remain.",
-      "affected_targets": [
-        {
-          "path": "History tab",
-          "heading": "History vs Ledger distinction"
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": ""
         },
         {
-          "path": "Ledger tab",
-          "heading": "History vs Ledger distinction"
+          "path": "Plans/FinalGUISpec.md",
+          "heading": ""
+        },
+        {
+          "path": "Plans/usage-feature.md",
+          "heading": ""
         }
       ],
       "exact_missing_items": [
-        "`History` = chronological story/timeline of execution, governance, promotion, recovery, account switching, graph patches",
-        "`Ledger` = structured durable record inspection (attempts, reviews, corroboration, promotions, graph patches, recovery records, learnings, usage-linked receipts)"
+        "Define one escalation ladder shared across Orchestrator, Dashboard, thread badges, and notifications",
+        "Keep attention_required distinct from blocked and resurface persistent blockers on meaningful change/persistence"
       ],
-      "blocking_reason": "Mutation planning is still unsafe because the target owner/consumer surface is ambiguous or doc discovery is still required.",
-      "next_resolution_stage": "Research Mode"
+      "blocking_reason": "Target docs are known, but the required structural section or owner slot is still absent.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-017",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_structural_heading",
+      "description": "Orchestrator-wide scale contract remains unresolved across 2 coverage row(s).",
+      "affected_targets": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": ""
+        },
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": ""
+        }
+      ],
+      "exact_missing_items": [
+        "Make slice-based loading, virtualization, lazy expansion, and demand-loaded inspectors mandatory across dense tabs",
+        "Treat scale as a cross-tab contract, not a graph-tab-only concern"
+      ],
+      "blocking_reason": "Target docs are known, but the required structural section or owner slot is still absent.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-018",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "Action-surface policy remains unresolved across 3 coverage row(s).",
+      "affected_targets": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": ""
+        },
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "heading": ""
+        },
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": ""
+        }
+      ],
+      "exact_missing_items": [
+        "Classify actions by navigation vs mutation, palette visibility, shortcut eligibility, multi-target safety, and confirmation/reversibility",
+        "Default bulk actions to navigation and triage rather than live execution mutation"
+      ],
+      "blocking_reason": "Consumer-facing propagation is only partial or missing in the named docs.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-019",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "Lane vs worktree lifecycle split remains unresolved across 2 coverage row(s).",
+      "affected_targets": [
+        {
+          "path": "Plans/WorktreeGitImprovement.md",
+          "heading": ""
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": ""
+        }
+      ],
+      "exact_missing_items": [
+        "Model lane lifecycle and worktree lifecycle as related but non-identical",
+        "Gate cleanup on runtime/recovery/lineage checks rather than age alone",
+        "Preserve historical lane/worktree records after archive/prune/remove"
+      ],
+      "blocking_reason": "Required data shape, field semantics, or record structure is still absent or incomplete.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-020",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_cross_reference",
+      "description": "Glossary and help governance remains unresolved across 3 coverage row(s).",
+      "affected_targets": [
+        {
+          "path": "Plans/Glossary.md",
+          "heading": ""
+        },
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": ""
+        },
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": ""
+        }
+      ],
+      "exact_missing_items": [
+        "Expand Glossary.md to cover rewrite-critical objects, states, and trust terms",
+        "Define inline help, context help, and canonical help entry layers while keeping canonical term names stable"
+      ],
+      "blocking_reason": "Required routing, glossary, or cross-reference wiring is still absent or incomplete.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-021",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "Shared conversational/runtime boundary remains unresolved across 3 coverage row(s).",
+      "affected_targets": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "heading": ""
+        },
+        {
+          "path": "Plans/interview-subagent-integration.md",
+          "heading": ""
+        },
+        {
+          "path": "Plans/Multi-Account.md",
+          "heading": ""
+        }
+      ],
+      "exact_missing_items": [
+        "Assistant/chat/interview/builder actors share provider/runtime identity semantics with Orchestrator",
+        "They remain distinct actor/run kinds rather than package/seam/node execution objects"
+      ],
+      "blocking_reason": "Required data shape, field semantics, or record structure is still absent or incomplete.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-022",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "Notification routing policy remains unresolved across 3 coverage row(s).",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": ""
+        },
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": ""
+        },
+        {
+          "path": "Plans/usage-feature.md",
+          "heading": ""
+        }
+      ],
+      "exact_missing_items": [
+        "Route notifications using severity, execution impact, blocked owner, persistence, and projection trust",
+        "Allow quiet windows for advisory warnings but not for canonical blocked episodes"
+      ],
+      "blocking_reason": "Required data shape, field semantics, or record structure is still absent or incomplete.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-023",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "Canonical route payload remains unresolved across 4 coverage row(s).",
+      "affected_targets": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": ""
+        },
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": ""
+        },
+        {
+          "path": "Plans/UI_Command_Catalog.md",
+          "heading": ""
+        },
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "heading": ""
+        }
+      ],
+      "exact_missing_items": [
+        "Use one shared routing/deep-link payload for search, palette, widgets, recovery links, and cross-surface pivots",
+        "Treat resume_url as serialized transport of that route payload"
+      ],
+      "blocking_reason": "Required data shape, field semantics, or record structure is still absent or incomplete.",
+      "next_resolution_stage": "Reconciliation Planner"
     }
   ]
 }

@@ -1,0 +1,47 @@
+{
+  "schema_id": "pm.ledger_obligation_seed.pass.v1",
+  "work_id": "w-20260312-203855",
+  "pass": 3,
+  "material_findings_total": 2,
+  "material_findings": [
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Deferred concern visibility and blocking contract",
+      "exact_items": [
+        "Add visibility_level, attention_level, chatworthy, and blocking_effect to the concern-family contract",
+        "Keep blocking_effect explicitly separate from severity"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L3046-L3050",
+        "working_ledger.md:L3065-L3067"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Deferred concern owner-surface taxonomy",
+      "exact_items": [
+        "Define concern owner surfaces across Runtime, Package Overseer, Seam Overseer, Corroboration, Graph Patch, Recovery, User, and External Resource",
+        "Treat resolver surface as distinct from creator/source surface"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L3129-L3143"
+      ],
+      "notes": []
+    }
+  ],
+  "status": "deferred_after_hard_cap"
+}

@@ -1,4 +1,7 @@
-- coverage matrix builder blocked
-- deferred coverage rows = 3
-- blockers = cov-034 (obl-016), cov-511 (obl-215), cov-526 (obl-222)
-- next stage = Coverage Matrix Builder
+planning_blockers = 0
+fix_backlog_items = 68
+total_gaps = 68
+docs_affected = 35
+canon_items_affected = 68
+underlying_gap_evidence_count = 257
+next stage = Ready Check

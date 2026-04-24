@@ -3,1222 +3,590 @@
   "work_id": "w-20260312-203855",
   "wave_id": "wave-003",
   "summary": {
+    "gaps_total": 22,
     "planning_blockers": 0,
-    "fix_backlog_items": 50,
-    "total_gaps": 50,
-    "docs_affected": 42,
-    "canon_items_affected": 50,
-    "top_pressure_docs": [
-      "Plans/storage-plan.md",
-      "Plans/FinalGUISpec.md",
-      "Plans/Decision_Policy.md",
-      "Plans/Orchestrator_Page.md",
-      "Plans/GitHub_Integration.md",
-      "Plans/Contracts_V0.md",
-      "Plans/WorktreeGitImprovement.md",
-      "Plans/GitHub_API_Auth_and_Flows.md",
-      "Plans/Executor_Protocol.md",
-      "Plans/interview-subagent-integration.md"
-    ],
-    "dominant_gap_classes": [
-      "stale_contradictory_survivor"
-    ],
-    "underlying_gap_evidence_count": 53
+    "fix_backlog_items": 22
   },
   "open_gaps": [
     {
-      "gap_id": "gap-276",
+      "gap_id": "gap-047",
       "severity": "major",
       "blocker_type": "fix_backlog",
-      "gap_class": "stale_contradictory_survivor",
-      "description": "Contamination policy vocabulary gap: 2 missing and 0 partial coverage row(s) remain.",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "Progress widget catalog and drill mappings remains unresolved across 3 coverage row(s).",
       "affected_targets": [
         {
-          "path": "Plans/GitHub_Integration.md",
-          "heading": "Contamination policy is still a vocabulary gap"
-        },
-        {
-          "path": "Plans/WorktreeGitImprovement.md",
-          "heading": "Contamination policy is still a vocabulary gap"
-        }
-      ],
-      "exact_missing_items": [
-        "Contamination policy is still a vocabulary gap; safe-point language exists in newer addenda, but contamination classification, restore-before-reuse, and lane quarantine semantics are mostly absent from the main SCM/worktree contracts",
-        "contamination classification",
-        "lane quarantine semantics",
-        "restore-before-reuse"
-      ],
-      "blocking_reason": "The stale or contradictory survivor is already known and needs planned retirement across concrete target docs.",
-      "next_resolution_stage": "Reconciliation Planner"
-    },
-    {
-      "gap_id": "gap-277",
-      "severity": "major",
-      "blocker_type": "fix_backlog",
-      "gap_class": "stale_contradictory_survivor",
-      "description": "Contracts_V0.md stale HITL section: 1 missing and 0 partial coverage row(s) remain.",
-      "affected_targets": [
-        {
-          "path": "Plans/Contracts_V0.md",
-          "heading": "## Research Progress - 2026-03-17 - owner-contract seam: Contracts_V0 runtime identity, blocked identity, route/open ownership"
-        }
-      ],
-      "exact_missing_items": [
-        "section 1.1 EventRecord - stale run.tier_started and run.tier_completed among events",
-        "section 6. HITLRequest - stale approval model using request_id, tier_id, tier_type, request_kind = tier_boundary_approval, allowed_actions[]",
-        "request_kind",
-        "run.tier_completed",
-        "run.tier_started",
-        "tier_id",
-        "tier_type"
-      ],
-      "blocking_reason": "The stale or contradictory survivor is already known and needs planned retirement across concrete target docs.",
-      "next_resolution_stage": "Reconciliation Planner"
-    },
-    {
-      "gap_id": "gap-278",
-      "severity": "major",
-      "blocker_type": "fix_backlog",
-      "gap_class": "stale_contradictory_survivor",
-      "description": "Fallback behavior contradictory in core docs: 2 missing and 0 partial coverage row(s) remain.",
-      "affected_targets": [
-        {
-          "path": "Plans/GitHub_API_Auth_and_Flows.md",
-          "heading": "Fallback behavior is contradictory in core docs"
-        },
-        {
-          "path": "Plans/GitHub_Integration.md",
-          "heading": "Fallback behavior is contradictory in core docs"
-        }
-      ],
-      "exact_missing_items": [
-        "Docker/media/provider flows usually stop at provider/model, not account-resolution lineage",
-        "GitHub auth retry rules conflict with multi-account failover expectations",
-        "Persona fallback split between bare-context run and canonical fallback Persona",
-        "auth retry rules",
-        "bare-context run"
-      ],
-      "blocking_reason": "The stale or contradictory survivor is already known and needs planned retirement across concrete target docs.",
-      "next_resolution_stage": "Reconciliation Planner"
-    },
-    {
-      "gap_id": "gap-279",
-      "severity": "major",
-      "blocker_type": "fix_backlog",
-      "gap_class": "stale_contradictory_survivor",
-      "description": "FinalGUISpec Tier-Scoped Widgets Obsolete: 2 missing and 0 partial coverage row(s) remain.",
-      "affected_targets": [
-        {
-          "path": "Plans/FinalGUISpec.md",
-          "heading": "GUI / UX Impacts"
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": ""
         },
         {
           "path": "Plans/Widget_System.md",
-          "heading": "GUI / UX Impacts"
-        }
-      ],
-      "exact_missing_items": [
-        "These widgets have no package/seam/lane counterpart in the catalog",
-        "Tiers tab obsolete as specified",
-        "widget.progress_bars renders 3 phase-scoped bars",
-        "widget.tier_tree renders Phase/Task/Subtask tree with state badges",
-        "Tiers tab",
-        "phase/task/subtask progress bars",
-        "widget.progress_bars",
-        "widget.tier_tree"
-      ],
-      "blocking_reason": "The stale or contradictory survivor is already known and needs planned retirement across concrete target docs.",
-      "next_resolution_stage": "Reconciliation Planner"
-    },
-    {
-      "gap_id": "gap-280",
-      "severity": "major",
-      "blocker_type": "fix_backlog",
-      "gap_class": "stale_contradictory_survivor",
-      "description": "FinalGUISpec.md Appendix C widgetization and Orchestrator tabs: 1 missing and 0 partial coverage row(s) remain.",
-      "affected_targets": [
+          "heading": ""
+        },
         {
           "path": "Plans/FinalGUISpec.md",
-          "heading": "## Research Progress - 2026-03-17 - rewrite-root and GUI-drift seam: rewrite tie-in memo, UI command catalog, Final GUI spec"
-        }
-      ],
-      "exact_missing_items": [
-        "Appendix C still expands widgetization around Dashboard and references Orchestrator tabs through widget system",
-        "Orchestrator tabs"
-      ],
-      "blocking_reason": "The stale or contradictory survivor is already known and needs planned retirement across concrete target docs.",
-      "next_resolution_stage": "Reconciliation Planner"
-    },
-    {
-      "gap_id": "gap-281",
-      "severity": "major",
-      "blocker_type": "fix_backlog",
-      "gap_class": "stale_contradictory_survivor",
-      "description": "FinalGUISpec.md Settings tier-oriented language: 1 missing and 0 partial coverage row(s) remain.",
-      "affected_targets": [
-        {
-          "path": "Plans/FinalGUISpec.md",
-          "heading": "## Research Progress - 2026-03-17 - rewrite-root and GUI-drift seam: rewrite tie-in memo, UI command catalog, Final GUI spec"
-        }
-      ],
-      "exact_missing_items": [
-        "Settings tab inventory still includes Tiers and tier-oriented settings language",
-        "Tiers"
-      ],
-      "blocking_reason": "The stale or contradictory survivor is already known and needs planned retirement across concrete target docs.",
-      "next_resolution_stage": "Reconciliation Planner"
-    },
-    {
-      "gap_id": "gap-282",
-      "severity": "major",
-      "blocker_type": "fix_backlog",
-      "gap_class": "stale_contradictory_survivor",
-      "description": "FinalGUISpec.md Tiers view and tier-centric language: 1 missing and 0 partial coverage row(s) remain.",
-      "affected_targets": [
-        {
-          "path": "Plans/FinalGUISpec.md",
-          "heading": "## Research Progress - 2026-03-17 - rewrite-root and GUI-drift seam: rewrite tie-in memo, UI command catalog, Final GUI spec"
-        }
-      ],
-      "exact_missing_items": [
-        "dashboard/current-task language uses current tier / phase-task-subtask progress bars",
-        "section 7.7 Tiers still exists as primary content surface",
-        "view inventory still lists Tiers as a primary view",
-        "Tiers"
-      ],
-      "blocking_reason": "The stale or contradictory survivor is already known and needs planned retirement across concrete target docs.",
-      "next_resolution_stage": "Reconciliation Planner"
-    },
-    {
-      "gap_id": "gap-283",
-      "severity": "major",
-      "blocker_type": "fix_backlog",
-      "gap_class": "stale_contradictory_survivor",
-      "description": "FinalGUISpec.md wizard_attention_required resume_url navigation: 1 missing and 0 partial coverage row(s) remain.",
-      "affected_targets": [
-        {
-          "path": "Plans/FinalGUISpec.md",
-          "heading": "## Research Progress - 2026-03-17 - rewrite-root and GUI-drift seam: rewrite tie-in memo, UI command catalog, Final GUI spec"
-        }
-      ],
-      "exact_missing_items": [
-        "wizard_attention_required still treats resume_url as primary navigation object",
-        "resume_url"
-      ],
-      "blocking_reason": "The stale or contradictory survivor is already known and needs planned retirement across concrete target docs.",
-      "next_resolution_stage": "Reconciliation Planner"
-    },
-    {
-      "gap_id": "gap-284",
-      "severity": "major",
-      "blocker_type": "fix_backlog",
-      "gap_class": "stale_contradictory_survivor",
-      "description": "GATE-007/GATE-008 missing from gate registry with no tombstone/reserved handling: 3 missing and 0 partial coverage row(s) remain.",
-      "affected_targets": [
-        {
-          "path": "Plans/Decision_Policy.md",
-          "heading": "Gate-registry integrity is still behind the runtime model"
-        },
-        {
-          "path": "Plans/Progression_Gates.md",
-          "heading": "Gate-registry integrity is still behind the runtime model"
-        },
-        {
-          "path": "Plans/Run_Modes.md",
-          "heading": "Gate-registry integrity is still behind the runtime model"
-        }
-      ],
-      "exact_missing_items": [
-        "GATE-007 / GATE-008 are missing from registry with no tombstone/reserved handling",
-        "duplicated addenda in gate docs part of wider append-only correction pattern",
-        "gate-registry integrity is still behind runtime model",
-        "unnumbered runtime/governance gate families remain",
-        "duplicated addenda",
-        "missing GATE-007",
-        "missing GATE-008",
-        "unnumbered gate families"
-      ],
-      "blocking_reason": "The stale or contradictory survivor is already known and needs planned retirement across concrete target docs.",
-      "next_resolution_stage": "Reconciliation Planner"
-    },
-    {
-      "gap_id": "gap-285",
-      "severity": "major",
-      "blocker_type": "fix_backlog",
-      "gap_class": "stale_contradictory_survivor",
-      "description": "GUI_Rebuild_Requirements_Checklist.md stale pass conditions: 1 missing and 0 partial coverage row(s) remain.",
-      "affected_targets": [
-        {
-          "path": "Plans/GUI_Rebuild_Requirements_Checklist.md",
-          "heading": "Key findings"
-        }
-      ],
-      "exact_missing_items": [
-        "also lists command families that now need revalidation against the newer runtime recovery and route/open model",
-        "marks as PASS several things that are only PASS relative to stale upstream docs: Orchestrator single page with 6 tabs including `Tiers`, cross-cutting widget system coverage for old Orchestrator widget tabs",
-        "Orchestrator single page with 6 tabs"
-      ],
-      "blocking_reason": "The stale or contradictory survivor is already known and needs planned retirement across concrete target docs.",
-      "next_resolution_stage": "Reconciliation Planner"
-    },
-    {
-      "gap_id": "gap-286",
-      "severity": "major",
-      "blocker_type": "fix_backlog",
-      "gap_class": "stale_contradictory_survivor",
-      "description": "Gemini-only docs requiring rewrite or continued ordered model sequence: 18 missing and 0 partial coverage row(s) remain.",
-      "affected_targets": [
-        {
-          "path": "Plans/BinaryLocator_Spec.md",
-          "heading": "Research Progress - 2026-03-16 - Opus final Gemini-only tranche synthesis"
-        },
-        {
-          "path": "Plans/CLI_Bridged_Providers.md",
-          "heading": "Research Progress - 2026-03-16 - Opus final Gemini-only tranche synthesis"
-        },
-        {
-          "path": "Plans/DRY_Rules.md",
-          "heading": "Research Progress - 2026-03-16 - Opus final Gemini-only tranche synthesis"
-        },
-        {
-          "path": "Plans/Decision_Log.md",
-          "heading": "Research Progress - 2026-03-16 - Opus final Gemini-only tranche synthesis"
-        },
-        {
-          "path": "Plans/Executor_Protocol.md",
-          "heading": "Research Progress - 2026-03-16 - Opus final Gemini-only tranche synthesis"
-        },
-        {
-          "path": "Plans/Formatters_System.md",
-          "heading": "Research Progress - 2026-03-16 - Opus final Gemini-only tranche synthesis"
-        },
-        {
-          "path": "Plans/Glossary.md",
-          "heading": "Research Progress - 2026-03-16 - Opus final Gemini-only tranche synthesis"
-        },
-        {
-          "path": "Plans/Multi-Account.md",
-          "heading": "Research Progress - 2026-03-16 - Opus final Gemini-only tranche synthesis"
-        },
-        {
-          "path": "Plans/OpenCode_Coverage_Matrix.md",
-          "heading": "Research Progress - 2026-03-16 - Opus final Gemini-only tranche synthesis"
-        },
-        {
-          "path": "Plans/Orchestrator_Page.md",
-          "heading": "Research Progress - 2026-03-16 - Opus final Gemini-only tranche synthesis"
-        },
-        {
-          "path": "Plans/Plugins_System.md",
-          "heading": "Research Progress - 2026-03-16 - Opus final Gemini-only tranche synthesis"
-        },
-        {
-          "path": "Plans/Run_Modes.md",
-          "heading": "Research Progress - 2026-03-16 - Opus final Gemini-only tranche synthesis"
-        },
-        {
-          "path": "Plans/Section15_MVP_Promoted_Features_Spec.md",
-          "heading": "Research Progress - 2026-03-16 - Opus final Gemini-only tranche synthesis"
-        },
-        {
-          "path": "Plans/Skills_System.md",
-          "heading": "Research Progress - 2026-03-16 - Opus final Gemini-only tranche synthesis"
-        },
-        {
-          "path": "Plans/Tools.md",
-          "heading": "Research Progress - 2026-03-16 - Opus final Gemini-only tranche synthesis"
-        },
-        {
-          "path": "Plans/feature-list.md",
-          "heading": "Research Progress - 2026-03-16 - Opus final Gemini-only tranche synthesis"
-        },
-        {
-          "path": "Plans/newfeatures.md",
-          "heading": "Research Progress - 2026-03-16 - Opus final Gemini-only tranche synthesis"
-        },
-        {
-          "path": "Plans/rewrite-tie-in-memo.md",
-          "heading": "Research Progress - 2026-03-16 - Opus final Gemini-only tranche synthesis"
-        }
-      ],
-      "exact_missing_items": [
-        "BinaryLocator_Spec.md looks stale around OpenCode launcher ownership, dead four-tier naming references, process/session-scope wording",
-        "DRY_Rules.md cross-checking surfaced exact duplicate and mislabeled sections in owner docs",
-        "Decision_Log.md is functionally empty for rewrite era, does not capture major accepted design decisions",
-        "Formatters_System.md has unresolved ownership splits with LSP formatting, under-specified DAE behavior, custom formatter subprocess/FileSafe bypass risk, unregistered format.* events",
-        "OpenCode_Coverage_Matrix.md no longer broad enough to audit rewrite concerns, omits multi-account/runtime-correlation coverage, contains stale fix recommendations",
-        "Plugins_System.md has severe hook/schema split, missing mutation_capable on plugin tools, in-process execution ambiguity, prompt/param hooks bypassing run-mode safety",
-        "Skills_System.md assumes HTE-style tool reachability, lacks DAE delivery/bundling, lacks proper introspection/listing surface",
-        "feature-list.md carries tier-era execution framing, old widget inventories, stale shell terminology, promoted-feature phasing contradictions",
-        "newfeatures.md carries tier-era framing that would actively mislead implementation readers",
-        "rewrite-tie-in-memo.md is stale, predates seams/packages/lanes/overseers, scopes identity too narrowly",
-        "HTE-style tool reachability assumption",
-        "dead OpenCode launcher ownership references",
-        "four-tier naming references",
-        "old widget inventories",
-        "promoted-feature phasing contradictions",
-        "stale shell terminology",
-        "tier-era execution framing in feature docs"
-      ],
-      "blocking_reason": "The stale or contradictory survivor is already known and needs planned retirement across concrete target docs.",
-      "next_resolution_stage": "Reconciliation Planner"
-    },
-    {
-      "gap_id": "gap-287",
-      "severity": "major",
-      "blocker_type": "fix_backlog",
-      "gap_class": "stale_contradictory_survivor",
-      "description": "GitHub account identity not aligned with canonical model: 2 missing and 0 partial coverage row(s) remain.",
-      "affected_targets": [
-        {
-          "path": "Plans/GitHub_API_Auth_and_Flows.md",
-          "heading": ""
-        },
-        {
-          "path": "Plans/GitHub_Integration.md",
           "heading": ""
         }
       ],
       "exact_missing_items": [
-        "GitHub_API_Auth_and_Flows.md still keys storage/routing on mutable login; GitHub_Integration.md still lacks a strong requested/effective GitHub account display/routing contract across project/workspace surfaces",
-        "mutable login"
+        "Transfer the 13-widget Progress catalog with default drill targets",
+        "Transfer state/action labels, alert taxonomy, event taxonomy, and condition-aging policy"
       ],
-      "blocking_reason": "The stale or contradictory survivor is already known and needs planned retirement across concrete target docs.",
+      "blocking_reason": "Consumer-facing propagation is only partial or missing in the named docs.",
       "next_resolution_stage": "Reconciliation Planner"
     },
     {
-      "gap_id": "gap-288",
+      "gap_id": "gap-048",
       "severity": "major",
       "blocker_type": "fix_backlog",
-      "gap_class": "stale_contradictory_survivor",
-      "description": "GitHub docs preserve realm isolation but fail stable account binding: 2 missing and 0 partial coverage row(s) remain.",
+      "gap_class": "missing_structural_heading",
+      "description": "Settings, persona, and resolver model remains unresolved across 3 coverage row(s).",
       "affected_targets": [
         {
-          "path": "Plans/GitHub_API_Auth_and_Flows.md",
+          "path": "Plans/Prompt_Pipeline.md",
           "heading": ""
         },
-        {
-          "path": "Plans/GitHub_Integration.md",
-          "heading": ""
-        }
-      ],
-      "exact_missing_items": [
-        "GitHub auth docs preserve realm isolation correctly, but still fail to bind GitHub identity to stable internal account_id plus disclosure-only provider metadata"
-      ],
-      "blocking_reason": "The stale or contradictory survivor is already known and needs planned retirement across concrete target docs.",
-      "next_resolution_stage": "Reconciliation Planner"
-    },
-    {
-      "gap_id": "gap-290",
-      "severity": "major",
-      "blocker_type": "fix_backlog",
-      "gap_class": "stale_contradictory_survivor",
-      "description": "Legacy 'Overseer' terminology to retire or clarify: 1 missing and 0 partial coverage row(s) remain.",
-      "affected_targets": [
-        {
-          "path": "Plans/Orchestrator_Page.md",
-          "heading": "Open Questions / Uncertainties"
-        }
-      ],
-      "exact_missing_items": [
-        "Is `Overseer` still an intended user-visible / doc-visible concept, or legacy phrasing that should be collapsed into Orchestrator/runtime language?",
-        "Overseer"
-      ],
-      "blocking_reason": "The stale or contradictory survivor is already known and needs planned retirement across concrete target docs.",
-      "next_resolution_stage": "Reconciliation Planner"
-    },
-    {
-      "gap_id": "gap-291",
-      "severity": "major",
-      "blocker_type": "fix_backlog",
-      "gap_class": "stale_contradictory_survivor",
-      "description": "OpenCode thread_id canonical identity collision: 2 missing and 0 partial coverage row(s) remain.",
-      "affected_targets": [
-        {
-          "path": "Plans/CLI_Bridged_Providers.md",
-          "heading": "Key findings"
-        },
-        {
-          "path": "Plans/Provider_OpenCode.md",
-          "heading": "Key findings"
-        }
-      ],
-      "exact_missing_items": [
-        "GPT-5.2 sharpened that OpenCode session IDs belong in provider-native correlation, not in canonical `thread_id`",
-        "it maps canonical `thread_id` to an OpenCode session ID",
-        "while `CLI_Bridged_Providers.md` treats `thread_id` as the stable PM correlation id and separately allows provider-native identifiers",
-        "thread_id for OpenCode session"
-      ],
-      "blocking_reason": "The stale or contradictory survivor is already known and needs planned retirement across concrete target docs.",
-      "next_resolution_stage": "Reconciliation Planner"
-    },
-    {
-      "gap_id": "gap-292",
-      "severity": "major",
-      "blocker_type": "fix_backlog",
-      "gap_class": "stale_contradictory_survivor",
-      "description": "Orchestrator_Page.md stale tab/widget structure: 1 missing and 0 partial coverage row(s) remain.",
-      "affected_targets": [
-        {
-          "path": "Plans/Orchestrator_Page.md",
-          "heading": "Key findings"
-        }
-      ],
-      "exact_missing_items": [
-        "still defines Evidence, History, and Ledger as widget tabs rather than native tabs",
-        "still defines a six-tab page with `Tiers`",
-        "still describes Progress widgets in phase/task/subtask terms",
-        "still makes `Tiers` the second tab and centers `widget.tier_tree`",
-        "still says tabs `1, 2, 4, 5, 6` are widget-based",
-        "Tiers",
-        "phase/task/subtask",
-        "widget.current_task",
-        "widget.tier_tree"
-      ],
-      "blocking_reason": "The stale or contradictory survivor is already known and needs planned retirement across concrete target docs.",
-      "next_resolution_stage": "Reconciliation Planner"
-    },
-    {
-      "gap_id": "gap-294",
-      "severity": "major",
-      "blocker_type": "fix_backlog",
-      "gap_class": "stale_contradictory_survivor",
-      "description": "Panel layout state overloaded in project state contract: 2 missing and 0 partial coverage row(s) remain.",
-      "affected_targets": [
-        {
-          "path": "Plans/Orchestrator_Page.md",
-          "heading": ""
-        },
-        {
-          "path": "Plans/storage-plan.md",
-          "heading": ""
-        }
-      ],
-      "exact_missing_items": [
-        "project_state is still used to store panel layout restoration; should be narrow UI-only state carrying view context, not deep functional definitions"
-      ],
-      "blocking_reason": "The stale or contradictory survivor is already known and needs planned retirement across concrete target docs.",
-      "next_resolution_stage": "Reconciliation Planner"
-    },
-    {
-      "gap_id": "gap-295",
-      "severity": "major",
-      "blocker_type": "fix_backlog",
-      "gap_class": "stale_contradictory_survivor",
-      "description": "Persistence model incomplete for recovery: 2 missing and 0 partial coverage row(s) remain.",
-      "affected_targets": [
-        {
-          "path": "Plans/Decision_Policy.md",
-          "heading": ""
-        },
-        {
-          "path": "Plans/storage-plan.md",
-          "heading": ""
-        }
-      ],
-      "exact_missing_items": [
-        "Restart-time recovery logic has no clear persistence model for interrupts-triggered state (e.g., is attempt stale_historical, rehydrated, or startup_recovered after restart)"
-      ],
-      "blocking_reason": "The stale or contradictory survivor is already known and needs planned retirement across concrete target docs.",
-      "next_resolution_stage": "Reconciliation Planner"
-    },
-    {
-      "gap_id": "gap-296",
-      "severity": "major",
-      "blocker_type": "fix_backlog",
-      "gap_class": "stale_contradictory_survivor",
-      "description": "Persona model remains incompletely owner-documented: 2 missing and 0 partial coverage row(s) remain.",
-      "affected_targets": [
         {
           "path": "Plans/Models_System.md",
           "heading": ""
         },
         {
-          "path": "Plans/Personas.md",
+          "path": "Plans/FinalGUISpec.md",
           "heading": ""
         }
       ],
       "exact_missing_items": [
-        "Canonical persona identity and binding still lack true owner documentation; Personas.md still carries tier-era names and fallback-only framing"
+        "Define the three-axis settings model source/request/execution",
+        "Define display grammar, worker-policy display, resolver inputs, deterministic resolver matrix, and resolver emit shape"
       ],
-      "blocking_reason": "The stale or contradictory survivor is already known and needs planned retirement across concrete target docs.",
+      "blocking_reason": "Target docs are known, but the required structural section or owner slot is still absent.",
       "next_resolution_stage": "Reconciliation Planner"
     },
     {
-      "gap_id": "gap-297",
+      "gap_id": "gap-049",
       "severity": "major",
       "blocker_type": "fix_backlog",
-      "gap_class": "stale_contradictory_survivor",
-      "description": "Prompt pipeline identity disclosure contract inadequate: 1 missing and 0 partial coverage row(s) remain.",
+      "gap_class": "missing_data_shape",
+      "description": "Identity and blocked-policy transfer cluster remains unresolved across 9 coverage row(s).",
       "affected_targets": [
         {
           "path": "Plans/Prompt_Pipeline.md",
           "heading": ""
-        }
-      ],
-      "exact_missing_items": [
-        "Prompt_Pipeline.md lacks real disclosure of effective vs requested identity when policy downgrades or account switches occur during run"
-      ],
-      "blocking_reason": "The stale or contradictory survivor is already known and needs planned retirement across concrete target docs.",
-      "next_resolution_stage": "Reconciliation Planner"
-    },
-    {
-      "gap_id": "gap-298",
-      "severity": "major",
-      "blocker_type": "fix_backlog",
-      "gap_class": "stale_contradictory_survivor",
-      "description": "Promotion/feedback cycle still keyed to old request model: 1 missing and 0 partial coverage row(s) remain.",
-      "affected_targets": [
-        {
-          "path": "Plans/Promotion_Cycle.md",
-          "heading": ""
-        }
-      ],
-      "exact_missing_items": [
-        "Promotion records and feedback cycles still use tier/request keys instead of blocked-sequence/attempt/runtime-native keys"
-      ],
-      "blocking_reason": "The stale or contradictory survivor is already known and needs planned retirement across concrete target docs.",
-      "next_resolution_stage": "Reconciliation Planner"
-    },
-    {
-      "gap_id": "gap-299",
-      "severity": "major",
-      "blocker_type": "fix_backlog",
-      "gap_class": "stale_contradictory_survivor",
-      "description": "Rescue path handling buried in edge-case docs: 2 missing and 0 partial coverage row(s) remain.",
-      "affected_targets": [
-        {
-          "path": "Plans/Decision_Policy.md",
-          "heading": ""
         },
-        {
-          "path": "Plans/Executor_Protocol.md",
-          "heading": ""
-        }
-      ],
-      "exact_missing_items": [
-        "Rescue path and safe-point recovery naming is scattered across Decision_Policy, Executor_Protocol, and Recovery_Model docs; no central owner"
-      ],
-      "blocking_reason": "The stale or contradictory survivor is already known and needs planned retirement across concrete target docs.",
-      "next_resolution_stage": "Reconciliation Planner"
-    },
-    {
-      "gap_id": "gap-300",
-      "severity": "major",
-      "blocker_type": "fix_backlog",
-      "gap_class": "stale_contradictory_survivor",
-      "description": "Runtime mode naming inconsistent with attempt/node concepts: 1 missing and 0 partial coverage row(s) remain.",
-      "affected_targets": [
-        {
-          "path": "Plans/Run_Modes.md",
-          "heading": ""
-        }
-      ],
-      "exact_missing_items": [
-        "Run_Modes.md uses stale request/tier framing instead of attempt/node/execution-unit framing"
-      ],
-      "blocking_reason": "The stale or contradictory survivor is already known and needs planned retirement across concrete target docs.",
-      "next_resolution_stage": "Reconciliation Planner"
-    },
-    {
-      "gap_id": "gap-301",
-      "severity": "major",
-      "blocker_type": "fix_backlog",
-      "gap_class": "stale_contradictory_survivor",
-      "description": "Safe-point recovery model incomplete: 1 missing and 0 partial coverage row(s) remain.",
-      "affected_targets": [
-        {
-          "path": "Plans/Decision_Policy.md",
-          "heading": ""
-        }
-      ],
-      "exact_missing_items": [
-        "Safe-point semantics lack clear rehydration contract and recovery decision logic"
-      ],
-      "blocking_reason": "The stale or contradictory survivor is already known and needs planned retirement across concrete target docs.",
-      "next_resolution_stage": "Reconciliation Planner"
-    },
-    {
-      "gap_id": "gap-302",
-      "severity": "major",
-      "blocker_type": "fix_backlog",
-      "gap_class": "stale_contradictory_survivor",
-      "description": "Safety and recovery policies split across multiple docs: 3 missing and 0 partial coverage row(s) remain.",
-      "affected_targets": [
-        {
-          "path": "Plans/Decision_Policy.md",
-          "heading": ""
-        },
-        {
-          "path": "Plans/Executor_Protocol.md",
-          "heading": ""
-        },
-        {
-          "path": "Plans/Progression_Gates.md",
-          "heading": ""
-        }
-      ],
-      "exact_missing_items": [
-        "Retry policy, recovery policy, and decision policy remain scattered; no single owner deciding interaction and precedence"
-      ],
-      "blocking_reason": "The stale or contradictory survivor is already known and needs planned retirement across concrete target docs.",
-      "next_resolution_stage": "Reconciliation Planner"
-    },
-    {
-      "gap_id": "gap-303",
-      "severity": "major",
-      "blocker_type": "fix_backlog",
-      "gap_class": "stale_contradictory_survivor",
-      "description": "Subject identity and preview handling collision: 2 missing and 0 partial coverage row(s) remain.",
-      "affected_targets": [
         {
           "path": "Plans/Contracts_V0.md",
           "heading": ""
         },
         {
-          "path": "Plans/Orchestrator_Page.md",
-          "heading": ""
-        }
-      ],
-      "exact_missing_items": [
-        "Subject_id usage collides with preview_trust_state; Orchestrator docs assume subject=preview-root but Contracts_V0 does not define exact tie-in"
-      ],
-      "blocking_reason": "The stale or contradictory survivor is already known and needs planned retirement across concrete target docs.",
-      "next_resolution_stage": "Reconciliation Planner"
-    },
-    {
-      "gap_id": "gap-304",
-      "severity": "major",
-      "blocker_type": "fix_backlog",
-      "gap_class": "stale_contradictory_survivor",
-      "description": "Tier-context object and worker identity confusion: 2 missing and 0 partial coverage row(s) remain.",
-      "affected_targets": [
-        {
-          "path": "Plans/interview-subagent-integration.md",
+          "path": "Plans/Tools.md",
           "heading": ""
         },
         {
-          "path": "Plans/orchestrator-subagent-integration.md",
-          "heading": ""
-        }
-      ],
-      "exact_missing_items": [
-        "TierContext still used in interview-subagent-integration.md and orchestrator-subagent-integration.md as execution context and worker identity source, mixing execution scope and actor identity"
-      ],
-      "blocking_reason": "The stale or contradictory survivor is already known and needs planned retirement across concrete target docs.",
-      "next_resolution_stage": "Reconciliation Planner"
-    },
-    {
-      "gap_id": "gap-305",
-      "severity": "major",
-      "blocker_type": "fix_backlog",
-      "gap_class": "stale_contradictory_survivor",
-      "description": "Tier-keyed HITL request model misalignment: 2 missing and 0 partial coverage row(s) remain.",
-      "affected_targets": [
-        {
-          "path": "Plans/human-in-the-loop.md",
+          "path": "Plans/GitHub_API_Auth_and_Flows.md",
           "heading": ""
         },
         {
-          "path": "Plans/storage-plan.md",
+          "path": "Plans/Architecture_Invariants.md",
           "heading": ""
-        }
-      ],
-      "exact_missing_items": [
-        "HITL request records still keyed by request_id and tier_id; does not map to blocked-sequence/attempt/node-native execution keys"
-      ],
-      "blocking_reason": "The stale or contradictory survivor is already known and needs planned retirement across concrete target docs.",
-      "next_resolution_stage": "Reconciliation Planner"
-    },
-    {
-      "gap_id": "gap-306",
-      "severity": "major",
-      "blocker_type": "fix_backlog",
-      "gap_class": "stale_contradictory_survivor",
-      "description": "Tool integration schema ownership split: 2 missing and 0 partial coverage row(s) remain.",
-      "affected_targets": [
+        },
+        {
+          "path": "Plans/Run_Modes.md",
+          "heading": ""
+        },
         {
           "path": "Plans/Executor_Protocol.md",
           "heading": ""
         },
         {
-          "path": "Plans/Tools.md",
+          "path": "Plans/human-in-the-loop.md",
           "heading": ""
-        }
-      ],
-      "exact_missing_items": [
-        "Tool schemas and invocation records split between Tools.md, Executor_Protocol.md, and tool-specific docs; no central ownership of run-time tool identity or usage trace"
-      ],
-      "blocking_reason": "The stale or contradictory survivor is already known and needs planned retirement across concrete target docs.",
-      "next_resolution_stage": "Reconciliation Planner"
-    },
-    {
-      "gap_id": "gap-307",
-      "severity": "major",
-      "blocker_type": "fix_backlog",
-      "gap_class": "stale_contradictory_survivor",
-      "description": "Usage event schema incomplete for full runtime trace: 1 missing and 0 partial coverage row(s) remain.",
-      "affected_targets": [
+        },
         {
           "path": "Plans/usage-feature.md",
           "heading": ""
         }
       ],
       "exact_missing_items": [
-        "Usage event records do not capture full runtime attribution (attempt_id, thread_id, effective account) needed for audit/billing integration"
+        "Transfer execution_role, requested_account_id, operational_identity, account-switch and pressure ownership, blocked_sequence minting, startup recovery handshake, and DAE jail/approval policy into owner and consumer docs",
+        "Carry usage switch-history and usage execution-role follow-through"
       ],
-      "blocking_reason": "The stale or contradictory survivor is already known and needs planned retirement across concrete target docs.",
+      "blocking_reason": "Required data shape, field semantics, or record structure is still absent or incomplete.",
       "next_resolution_stage": "Reconciliation Planner"
     },
     {
-      "gap_id": "gap-308",
+      "gap_id": "gap-050",
       "severity": "major",
       "blocker_type": "fix_backlog",
-      "gap_class": "stale_contradictory_survivor",
-      "description": "Widget inventory and shell routing collision: 2 missing and 0 partial coverage row(s) remain.",
+      "gap_class": "missing_data_shape",
+      "description": "Coverage blocker concern lifecycle owner section remains unresolved across 4 coverage row(s).",
       "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": ""
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": ""
+        },
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": ""
+        },
+        {
+          "path": "Plans/GUI_Rebuild_Requirements_Checklist.md",
+          "heading": ""
+        }
+      ],
+      "exact_missing_items": [
+        "Create one canonical concern-lifecycle owner section with explicit active/acknowledged/resolved/dismissed semantics",
+        "Carry resolution_kind including accepted_risk and a concern-action confirmation matrix into that owner section"
+      ],
+      "blocking_reason": "Required data shape, field semantics, or record structure is still absent or incomplete.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-051",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_structural_heading",
+      "description": "Coverage blocker provider/model precedence owner section remains unresolved across 3 coverage row(s).",
+      "affected_targets": [
+        {
+          "path": "Plans/Models_System.md",
+          "heading": ""
+        },
+        {
+          "path": "Plans/Executor_Protocol.md",
+          "heading": ""
+        },
+        {
+          "path": "Plans/WorktreeGitImprovement.md",
+          "heading": ""
+        }
+      ],
+      "exact_missing_items": [
+        "Define one owner section covering provider/model precedence across run, seam, package, node, overseer, and delegated-subagent levels",
+        "Tie that section to parallel-node worktree assignment and ownership transitions"
+      ],
+      "blocking_reason": "Target docs are known, but the required structural section or owner slot is still absent.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-052",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_structural_heading",
+      "description": "Coverage blocker worktree allocation strategy remains unresolved across 3 coverage row(s).",
+      "affected_targets": [
+        {
+          "path": "Plans/Crosswalk.md",
+          "heading": ""
+        },
+        {
+          "path": "Plans/WorktreeGitImprovement.md",
+          "heading": ""
+        },
+        {
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "heading": ""
+        }
+      ],
+      "exact_missing_items": [
+        "Define concrete worktree allocation strategy",
+        "Define contamination, reuse, and cleanup rules for that strategy"
+      ],
+      "blocking_reason": "Target docs are known, but the required structural section or owner slot is still absent.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-053",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "Concern owner vs creator vs resolver separation remains unresolved across 2 coverage row(s).",
+      "affected_targets": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": ""
+        },
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": ""
+        }
+      ],
+      "exact_missing_items": [
+        "Separate concern owner_kind/owner_ref from created_by_kind/created_by_ref and resolver authority",
+        "Allow ownership changes without changing concern identity"
+      ],
+      "blocking_reason": "Required data shape, field semantics, or record structure is still absent or incomplete.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-054",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "Concern source-event vs record vs projection split remains unresolved across 3 coverage row(s).",
+      "affected_targets": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": ""
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": ""
+        },
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": ""
+        }
+      ],
+      "exact_missing_items": [
+        "Distinguish concern_source_event_ref, concern_record, and concern_projection as separate structural layers"
+      ],
+      "blocking_reason": "Required data shape, field semantics, or record structure is still absent or incomplete.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-055",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "Dismissed vs resolved rationale enforcement remains unresolved across 2 coverage row(s).",
+      "affected_targets": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": ""
+        },
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": ""
+        }
+      ],
+      "exact_missing_items": [
+        "Require distinct dismissal rationale and resolution rationale rules",
+        "Treat accepted_risk as a resolution path rather than dismissal"
+      ],
+      "blocking_reason": "Consumer-facing propagation is only partial or missing in the named docs.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-056",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "Runtime attribution ownership split remains unresolved across 2 coverage row(s).",
+      "affected_targets": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": ""
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": ""
+        }
+      ],
+      "exact_missing_items": [
+        "Let Contracts_V0 own cross-family attribution packet shape",
+        "Let storage-plan own persistence and projection of attempt/usage/receipt/artifact joins"
+      ],
+      "blocking_reason": "Required data shape, field semantics, or record structure is still absent or incomplete.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-057",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "Bridge-field precedence for attempt/provider/usage/receipt joins remains unresolved across 3 coverage row(s).",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": ""
+        },
+        {
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "heading": ""
+        },
+        {
+          "path": "Plans/usage-feature.md",
+          "heading": ""
+        }
+      ],
+      "exact_missing_items": [
+        "Use attempt_id as local anchor, provider_attempt_ref as provider/runtime bridge, usage_event_ref as usage bridge, and receipt refs as external side-effect lineage bridge",
+        "None of those bridge fields replace the primary local key"
+      ],
+      "blocking_reason": "Required data shape, field semantics, or record structure is still absent or incomplete.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-058",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "Approval scope key and approver identity remains unresolved across 3 coverage row(s).",
+      "affected_targets": [
+        {
+          "path": "Plans/human-in-the-loop.md",
+          "heading": ""
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": ""
+        },
+        {
+          "path": "Plans/Executor_Protocol.md",
+          "heading": ""
+        }
+      ],
+      "exact_missing_items": [
+        "Separate blocked-episode approval scope from session-wide policy scope",
+        "Persist durable approver identity fields on approval and rejection events"
+      ],
+      "blocking_reason": "Required data shape, field semantics, or record structure is still absent or incomplete.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-059",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "Projection fields for startup rehydration remains unresolved across 2 coverage row(s).",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": ""
+        },
+        {
+          "path": "Plans/WorktreeGitImprovement.md",
+          "heading": ""
+        }
+      ],
+      "exact_missing_items": [
+        "Carry blocked_reason_code and lifecycle state in worktree projections for startup recovery",
+        "Carry dirty_state and conflict_state in worktree projections"
+      ],
+      "blocking_reason": "Required data shape, field semantics, or record structure is still absent or incomplete.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-060",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "Artifacts index exact indexed fields remains unresolved across 2 coverage row(s).",
+      "affected_targets": [
+        {
+          "path": "Plans/storage-plan.md",
+          "heading": ""
+        },
+        {
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "heading": ""
+        }
+      ],
+      "exact_missing_items": [
+        "Index attempt_id and thread_id in artifact index families to preserve attempt-native artifact routing"
+      ],
+      "blocking_reason": "Required data shape, field semantics, or record structure is still absent or incomplete.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-061",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "Concern update heuristics remains unresolved across 2 coverage row(s).",
+      "affected_targets": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": ""
+        },
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": ""
+        }
+      ],
+      "exact_missing_items": [
+        "Use source/scope/category/lineage-aware heuristics when deciding whether repeated sightings update an existing concern or create a new one"
+      ],
+      "blocking_reason": "Required data shape, field semantics, or record structure is still absent or incomplete.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-062",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "Help entry template and related-concept clusters remains unresolved across 2 coverage row(s).",
+      "affected_targets": [
+        {
+          "path": "Plans/Glossary.md",
+          "heading": ""
+        },
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": ""
+        }
+      ],
+      "exact_missing_items": [
+        "Define a dedicated help-entry template and related-concept linking clusters"
+      ],
+      "blocking_reason": "Consumer-facing propagation is only partial or missing in the named docs.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-063",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_structural_heading",
+      "description": "Blocked-owner eight-kind taxonomy and escalation ladder surfaces remains unresolved across 3 coverage row(s).",
+      "affected_targets": [
+        {
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": ""
+        },
         {
           "path": "Plans/FinalGUISpec.md",
           "heading": ""
         },
         {
-          "path": "Plans/Widget_System.md",
+          "path": "Plans/usage-feature.md",
           "heading": ""
         }
       ],
       "exact_missing_items": [
-        "Widget_System.md still lists old Orchestrator widgets (tier_tree, progress_bars with phase framing) that no longer belong; cross-referenced by FinalGUISpec"
+        "Define an explicit blocked-owner 8-kind taxonomy and 5-level escalation ladder with surface mapping"
       ],
-      "blocking_reason": "The stale or contradictory survivor is already known and needs planned retirement across concrete target docs.",
+      "blocking_reason": "Target docs are known, but the required structural section or owner slot is still absent.",
       "next_resolution_stage": "Reconciliation Planner"
     },
     {
-      "gap_id": "gap-309",
+      "gap_id": "gap-064",
       "severity": "major",
       "blocker_type": "fix_backlog",
-      "gap_class": "stale_contradictory_survivor",
-      "description": "Wiring matrix missing route verification rules: 2 missing and 0 partial coverage row(s) remain.",
+      "gap_class": "missing_structural_heading",
+      "description": "Route/open compatibility-only fallback marking remains unresolved across 3 coverage row(s).",
       "affected_targets": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": ""
+        },
+        {
+          "path": "Plans/Crosswalk.md",
+          "heading": ""
+        },
         {
           "path": "Plans/Wiring_Matrix.md",
           "heading": ""
-        },
-        {
-          "path": "Plans/Wiring_Matrix.schema.json",
-          "heading": ""
         }
       ],
       "exact_missing_items": [
-        "Wiring_Matrix.md schema does not encode preconditions, forbidden combinations, or verification rules for route-aware command dispatch"
+        "Mark timestamp/run/thread fallback logic as compatibility-only inside route/open contracts",
+        "Keep ref-family split explicit when route/open normalization is transferred"
       ],
-      "blocking_reason": "The stale or contradictory survivor is already known and needs planned retirement across concrete target docs.",
+      "blocking_reason": "Target docs are known, but the required structural section or owner slot is still absent.",
       "next_resolution_stage": "Reconciliation Planner"
     },
     {
-      "gap_id": "gap-310",
+      "gap_id": "gap-065",
       "severity": "major",
       "blocker_type": "fix_backlog",
-      "gap_class": "stale_contradictory_survivor",
-      "description": "Worktree/lane lifecycle not owned by storage: 2 missing and 0 partial coverage row(s) remain.",
+      "gap_class": "missing_data_shape",
+      "description": "Artifact envelope routing preference remains unresolved across 3 coverage row(s).",
       "affected_targets": [
         {
-          "path": "Plans/GitHub_Integration.md",
+          "path": "Plans/Runtime_Artifacts_Panel.md",
           "heading": ""
         },
         {
-          "path": "Plans/storage-plan.md",
-          "heading": ""
-        }
-      ],
-      "exact_missing_items": [
-        "Worktree lifecycle (creation, contamination, quarantine, restoration) is assumed in SCM and Orchestrator docs but not registered as canonical storage family"
-      ],
-      "blocking_reason": "The stale or contradictory survivor is already known and needs planned retirement across concrete target docs.",
-      "next_resolution_stage": "Reconciliation Planner"
-    },
-    {
-      "gap_id": "gap-311",
-      "severity": "major",
-      "blocker_type": "fix_backlog",
-      "gap_class": "stale_contradictory_survivor",
-      "description": "Worktree/lane restoration contradiction: 2 missing and 0 partial coverage row(s) remain.",
-      "affected_targets": [
-        {
-          "path": "Plans/WorktreeGitImprovement.md",
+          "path": "Plans/usage-feature.md",
           "heading": ""
         },
-        {
-          "path": "Plans/storage-plan.md",
-          "heading": ""
-        }
-      ],
-      "exact_missing_items": [
-        "WorktreeGitImprovement.md contradicts storage-plan.md on whether contaminated worktrees are restored in place or replaced with fresh clones"
-      ],
-      "blocking_reason": "The stale or contradictory survivor is already known and needs planned retirement across concrete target docs.",
-      "next_resolution_stage": "Reconciliation Planner"
-    },
-    {
-      "gap_id": "gap-312",
-      "severity": "major",
-      "blocker_type": "fix_backlog",
-      "gap_class": "stale_contradictory_survivor",
-      "description": "Worktree staging area permission/contamination separation: 1 missing and 0 partial coverage row(s) remain.",
-      "affected_targets": [
-        {
-          "path": "Plans/WorktreeGitImprovement.md",
-          "heading": ""
-        }
-      ],
-      "exact_missing_items": [
-        "Worktree/staging-area permission model and contamination/isolation model are not cleanly separated in WorktreeGitImprovement.md"
-      ],
-      "blocking_reason": "The stale or contradictory survivor is already known and needs planned retirement across concrete target docs.",
-      "next_resolution_stage": "Reconciliation Planner"
-    },
-    {
-      "gap_id": "gap-313",
-      "severity": "major",
-      "blocker_type": "fix_backlog",
-      "gap_class": "stale_contradictory_survivor",
-      "description": "Existing run detection and restart logic contradiction: 2 missing and 0 partial coverage row(s) remain.",
-      "affected_targets": [
-        {
-          "path": "Plans/Decision_Policy.md",
-          "heading": ""
-        },
-        {
-          "path": "Plans/WorktreeGitImprovement.md",
-          "heading": ""
-        }
-      ],
-      "exact_missing_items": [
-        "Existence detection for worktrees and checkout state during restart does not specify stale_historical vs rehydrated vs fresh_start_recovery logic"
-      ],
-      "blocking_reason": "The stale or contradictory survivor is already known and needs planned retirement across concrete target docs.",
-      "next_resolution_stage": "Reconciliation Planner"
-    },
-    {
-      "gap_id": "gap-314",
-      "severity": "major",
-      "blocker_type": "fix_backlog",
-      "gap_class": "stale_contradictory_survivor",
-      "description": "Package-to-lane assignment and scheduling collision: 1 missing and 0 partial coverage row(s) remain.",
-      "affected_targets": [
         {
           "path": "Plans/Orchestrator_Page.md",
           "heading": ""
         }
       ],
       "exact_missing_items": [
-        "Package/seam/lane scheduling does not define tier-era precedent for assignment and rebalance rules"
+        "Prefer usage_event_ref rather than timestamp heuristics when routing cost-bearing artifacts to Usage and Ledger",
+        "Require runtime artifacts summarizing external operations to carry receipt linkage"
       ],
-      "blocking_reason": "The stale or contradictory survivor is already known and needs planned retirement across concrete target docs.",
+      "blocking_reason": "Required data shape, field semantics, or record structure is still absent or incomplete.",
       "next_resolution_stage": "Reconciliation Planner"
     },
     {
-      "gap_id": "gap-315",
+      "gap_id": "gap-066",
       "severity": "major",
       "blocker_type": "fix_backlog",
-      "gap_class": "stale_contradictory_survivor",
-      "description": "Execution role semantics and precedence rules: 1 missing and 0 partial coverage row(s) remain.",
+      "gap_class": "missing_data_shape",
+      "description": "Lane cleanup lineage fields remains unresolved across 2 coverage row(s).",
       "affected_targets": [
         {
-          "path": "Plans/Contracts_V0.md",
-          "heading": ""
-        }
-      ],
-      "exact_missing_items": [
-        "Execution role (executor, overseer, reviewer, delegate, worker) lacks canonical ownership and precedence rules for concurrent execution"
-      ],
-      "blocking_reason": "The stale or contradictory survivor is already known and needs planned retirement across concrete target docs.",
-      "next_resolution_stage": "Reconciliation Planner"
-    },
-    {
-      "gap_id": "gap-316",
-      "severity": "major",
-      "blocker_type": "fix_backlog",
-      "gap_class": "stale_contradictory_survivor",
-      "description": "Interview phase pseudo-tier aliasing anti-pattern: 1 missing and 0 partial coverage row(s) remain.",
-      "affected_targets": [
-        {
-          "path": "Plans/interview-subagent-integration.md",
-          "heading": ""
-        }
-      ],
-      "exact_missing_items": [
-        "interview-phase-* pseudo-tier ids are extracted from tier_id at runtime, creating hidden migration tripwire"
-      ],
-      "blocking_reason": "The stale or contradictory survivor is already known and needs planned retirement across concrete target docs.",
-      "next_resolution_stage": "Reconciliation Planner"
-    },
-    {
-      "gap_id": "gap-317",
-      "severity": "major",
-      "blocker_type": "fix_backlog",
-      "gap_class": "stale_contradictory_survivor",
-      "description": "Request ID keying anti-pattern in HITL model: 1 missing and 0 partial coverage row(s) remain.",
-      "affected_targets": [
-        {
-          "path": "Plans/human-in-the-loop.md",
-          "heading": ""
-        }
-      ],
-      "exact_missing_items": [
-        "Approval request keying on request_id instead of run_id/blocked_sequence creates artificial scope boundary and breaks multi-actor/multi-lane scenarios"
-      ],
-      "blocking_reason": "The stale or contradictory survivor is already known and needs planned retirement across concrete target docs.",
-      "next_resolution_stage": "Reconciliation Planner"
-    },
-    {
-      "gap_id": "gap-318",
-      "severity": "major",
-      "blocker_type": "fix_backlog",
-      "gap_class": "stale_contradictory_survivor",
-      "description": "Extract_tier_id() hidden migration tripwire: 2 missing and 0 partial coverage row(s) remain.",
-      "affected_targets": [
-        {
-          "path": "Plans/interview-subagent-integration.md",
+          "path": "Plans/storage-plan.md",
           "heading": ""
         },
         {
-          "path": "Plans/orchestrator-subagent-integration.md",
+          "path": "Plans/WorktreeGitImprovement.md",
           "heading": ""
         }
       ],
       "exact_missing_items": [
-        "extract_tier_id() parsing tier_id from run_id or node_name creates hidden dependency that would silently drop named worktrees during restart repopulation"
+        "Keep package/work-package linkage and cleanup/archive lineage explicit in lane_record and lane_projection families"
       ],
-      "blocking_reason": "The stale or contradictory survivor is already known and needs planned retirement across concrete target docs.",
+      "blocking_reason": "Required data shape, field semantics, or record structure is still absent or incomplete.",
       "next_resolution_stage": "Reconciliation Planner"
     },
     {
-      "gap_id": "gap-319",
+      "gap_id": "gap-067",
       "severity": "major",
       "blocker_type": "fix_backlog",
-      "gap_class": "stale_contradictory_survivor",
-      "description": "Approval cascade cascade stale request-centric rule set: 1 missing and 0 partial coverage row(s) remain.",
-      "affected_targets": [
-        {
-          "path": "Plans/human-in-the-loop.md",
-          "heading": ""
-        }
-      ],
-      "exact_missing_items": [
-        "Approval cascade and rejection cascade rules in human-in-the-loop.md are keyed to request_kind and tier_id instead of blocked-sequence identity"
-      ],
-      "blocking_reason": "The stale or contradictory survivor is already known and needs planned retirement across concrete target docs.",
-      "next_resolution_stage": "Reconciliation Planner"
-    },
-    {
-      "gap_id": "gap-320",
-      "severity": "major",
-      "blocker_type": "fix_backlog",
-      "gap_class": "stale_contradictory_survivor",
-      "description": "Resume-point and safe-point coordinate system misalignment: 2 missing and 0 partial coverage row(s) remain.",
+      "gap_class": "missing_data_shape",
+      "description": "Deferred concern visibility and blocking contract remains unresolved across 3 coverage row(s).",
       "affected_targets": [
         {
           "path": "Plans/Contracts_V0.md",
-          "heading": ""
+          "heading": "### Recommended minimum concern record shape"
         },
         {
-          "path": "Plans/Decision_Policy.md",
-          "heading": ""
-        }
-      ],
-      "exact_missing_items": [
-        "resume_url, resume_point, safe_point, and checkpoint naming are used interchangeably but lack canonical coordinate system"
-      ],
-      "blocking_reason": "The stale or contradictory survivor is already known and needs planned retirement across concrete target docs.",
-      "next_resolution_stage": "Reconciliation Planner"
-    },
-    {
-      "gap_id": "gap-321",
-      "severity": "major",
-      "blocker_type": "fix_backlog",
-      "gap_class": "stale_contradictory_survivor",
-      "description": "Overseer decision scope and authority model incomplete: 1 missing and 0 partial coverage row(s) remain.",
-      "affected_targets": [
-        {
-          "path": "Plans/orchestrator-subagent-integration.md",
-          "heading": ""
-        }
-      ],
-      "exact_missing_items": [
-        "Overseer (singular or dual?) decision authority, scope (tier/run/node/lane?), and tiebreaker rules are not formalized"
-      ],
-      "blocking_reason": "The stale or contradictory survivor is already known and needs planned retirement across concrete target docs.",
-      "next_resolution_stage": "Reconciliation Planner"
-    },
-    {
-      "gap_id": "gap-322",
-      "severity": "major",
-      "blocker_type": "fix_backlog",
-      "gap_class": "stale_contradictory_survivor",
-      "description": "Concern/blockage lifecycle and dismissibility model incomplete: 2 missing and 0 partial coverage row(s) remain.",
-      "affected_targets": [
+          "path": "Plans/Orchestrator_Page.md",
+          "heading": "### Recommended minimum concern record shape"
+        },
         {
           "path": "Plans/FinalGUISpec.md",
-          "heading": ""
+          "heading": "### Recommended minimum concern record shape"
+        }
+      ],
+      "exact_missing_items": [
+        "Add `visibility_level`, `attention_level`, `chatworthy`, and `blocking_effect?` to the concern-family contract",
+        "Keep `blocking_effect` explicitly separate from `severity`"
+      ],
+      "blocking_reason": "Required data shape, field semantics, or record structure is still absent or incomplete.",
+      "next_resolution_stage": "Reconciliation Planner"
+    },
+    {
+      "gap_id": "gap-068",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_data_shape",
+      "description": "Deferred concern owner-surface taxonomy remains unresolved across 2 coverage row(s).",
+      "affected_targets": [
+        {
+          "path": "Plans/Contracts_V0.md",
+          "heading": "### Concern ownership / authority direction"
         },
         {
           "path": "Plans/Orchestrator_Page.md",
-          "heading": ""
+          "heading": "### Concern ownership / authority direction"
         }
       ],
       "exact_missing_items": [
-        "Concerns and blockers still lack canonical dismissibility/acknowledgement rules and lifecycle transitions"
+        "Define concern owner surfaces across `Runtime`, `Package Overseer`, `Seam Overseer`, `Corroboration`, `Graph Patch`, `Recovery`, `User`, and `External Resource`",
+        "Treat `concern resolver` as distinct from owner/source roles",
+        "Allow concern ownership reassignment without changing concern identity"
       ],
-      "blocking_reason": "The stale or contradictory survivor is already known and needs planned retirement across concrete target docs.",
-      "next_resolution_stage": "Reconciliation Planner"
-    },
-    {
-      "gap_id": "gap-323",
-      "severity": "major",
-      "blocker_type": "fix_backlog",
-      "gap_class": "stale_contradictory_survivor",
-      "description": "Provider switch and fallback retry semantics contradiction: 2 missing and 0 partial coverage row(s) remain.",
-      "affected_targets": [
-        {
-          "path": "Plans/GitHub_API_Auth_and_Flows.md",
-          "heading": ""
-        },
-        {
-          "path": "Plans/GitHub_Integration.md",
-          "heading": ""
-        }
-      ],
-      "exact_missing_items": [
-        "GitHub auth and provider switch retry semantics contradict; one doc says retry, another says failover"
-      ],
-      "blocking_reason": "The stale or contradictory survivor is already known and needs planned retirement across concrete target docs.",
-      "next_resolution_stage": "Reconciliation Planner"
-    },
-    {
-      "gap_id": "gap-324",
-      "severity": "major",
-      "blocker_type": "fix_backlog",
-      "gap_class": "stale_contradictory_survivor",
-      "description": "Cross-layer evidence vocabulary collision: 2 missing and 0 partial coverage row(s) remain.",
-      "affected_targets": [
-        {
-          "path": "Plans/Contracts_V0.md",
-          "heading": ""
-        },
-        {
-          "path": "Plans/evidence.schema.json",
-          "heading": ""
-        }
-      ],
-      "exact_missing_items": [
-        "Evidence schema uses `evidence_kind`, evidence docs use `evidence_type`, audit docs use `audit_category`; no unified vocabulary"
-      ],
-      "blocking_reason": "The stale or contradictory survivor is already known and needs planned retirement across concrete target docs.",
-      "next_resolution_stage": "Reconciliation Planner"
-    },
-    {
-      "gap_id": "gap-325",
-      "severity": "major",
-      "blocker_type": "fix_backlog",
-      "gap_class": "stale_contradictory_survivor",
-      "description": "Resume_url as de facto stronger contract than route_target: 3 missing and 0 partial coverage row(s) remain.",
-      "affected_targets": [
-        {
-          "path": "Plans/Contracts_V0.md",
-          "heading": "Contradictions / gaps surfaced"
-        },
-        {
-          "path": "Plans/UI_Command_Catalog.md",
-          "heading": "Contradictions / gaps surfaced"
-        },
-        {
-          "path": "Plans/storage-plan.md",
-          "heading": "Contradictions / gaps surfaced"
-        }
-      ],
-      "exact_missing_items": [
-        "resume_url in practice carries more information than route_target, creating parallel shadow navigation contract",
-        "resume_url"
-      ],
-      "blocking_reason": "The stale or contradictory survivor is already known and needs planned retirement across concrete target docs.",
-      "next_resolution_stage": "Reconciliation Planner"
-    },
-    {
-      "gap_id": "gap-326",
-      "severity": "major",
-      "blocker_type": "fix_backlog",
-      "gap_class": "stale_contradictory_survivor",
-      "description": "storage-plan.md tier-era and request-era pieces: 1 missing and 0 partial coverage row(s) remain.",
-      "affected_targets": [
-        {
-          "path": "Plans/storage-plan.md",
-          "heading": "## Research Progress - 2026-03-17 - owner-contract seam: storage-plan mixed runtime eras"
-        }
-      ],
-      "exact_missing_items": [
-        "event tables keyed to tier_id",
-        "evidence_record keyed by run_id, tier_id, evidence_id",
-        "hitl.approval_requested, hitl.approved, hitl.rejected, hitl.cancelled with request_id, tier_id, tier_type, allowed_actions",
-        "run.tier_started, run.tier_completed",
-        "tier_runtime_record",
-        "usage_record keyed by run_id, tier_id, attempt_id?, usage_sequence",
-        "run.tier_completed",
-        "run.tier_started",
-        "tier_id"
-      ],
-      "blocking_reason": "The stale or contradictory survivor is already known and needs planned retirement across concrete target docs.",
-      "next_resolution_stage": "Reconciliation Planner"
-    },
-    {
-      "gap_id": "gap-327",
-      "severity": "major",
-      "blocker_type": "fix_backlog",
-      "gap_class": "stale_contradictory_survivor",
-      "description": "tier-based execution models and tier-keyed coordination objects: 6 missing and 0 partial coverage row(s) remain.",
-      "affected_targets": [
-        {
-          "path": "Plans/WorktreeGitImprovement.md",
-          "heading": "## Research Progress - 2026-03-16 - Execution-context owner split and `TierContext` replacement"
-        },
-        {
-          "path": "Plans/chain-wizard-flexibility.md",
-          "heading": "## Research Progress - 2026-03-16 - Execution-context owner split and `TierContext` replacement"
-        },
-        {
-          "path": "Plans/human-in-the-loop.md",
-          "heading": "## Research Progress - 2026-03-16 - Execution-context owner split and `TierContext` replacement"
-        },
-        {
-          "path": "Plans/interview-subagent-integration.md",
-          "heading": "## Research Progress - 2026-03-16 - Execution-context owner split and `TierContext` replacement"
-        },
-        {
-          "path": "Plans/orchestrator-subagent-integration.md",
-          "heading": "## Research Progress - 2026-03-16 - Execution-context owner split and `TierContext` replacement"
-        },
-        {
-          "path": "Plans/storage-plan.md",
-          "heading": "## Research Progress - 2026-03-16 - Execution-context owner split and `TierContext` replacement"
-        }
-      ],
-      "exact_missing_items": [
-        "Contribute(PR) must be treated as stable-branch ownership policy, not as claim that isolated worktrees never exist",
-        "TierContext object must be retired as canonical execution owner",
-        "extract_tier_id() is hidden migration tripwire that would silently drop lane/node-named worktrees during restart repopulation",
-        "interview-phase-* pseudo-tier ids must be replaced with canonical thread/project/run/attempt identity",
-        "tier-keyed HITL request/storage shapes must move to blocked-sequence/episode model",
-        "tier-rooted active coordination structs (ActiveAgent, tier-specific structs) cannot carry rewrite's full execution identity or concern model",
-        "tier_id ownership for routing must be replaced with node/attempt/worktree/package/seam native keys",
-        "TierContext",
-        "extract_tier_id()",
-        "interview-phase-*",
-        "pseudo-tier execution keys",
-        "tier-keyed request payloads",
-        "tier-rooted coordination",
-        "tier_id as execution routing key",
-        "tier_type"
-      ],
-      "blocking_reason": "The stale or contradictory survivor is already known and needs planned retirement across concrete target docs.",
+      "blocking_reason": "Required data shape, field semantics, or record structure is still absent or incomplete.",
       "next_resolution_stage": "Reconciliation Planner"
     }
   ]
