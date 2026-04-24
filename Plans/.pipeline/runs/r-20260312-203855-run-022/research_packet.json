@@ -1,9 +1,9 @@
 {
   "schema_id": "pm.research_packet.v2",
   "work_id": "w-20260312-203855",
-  "run_id": "r-20260312-203855-run-023",
+  "run_id": "r-20260312-203855-run-022",
   "run_prefix": "r-20260312-203855",
-  "created_at_utc": "2026-04-24T20:39:39.682+00:00",
+  "created_at_utc": "2026-04-24T20:27:08.026+00:00",
   "source_stage": "Packet Builder",
   "built_from": {
     "meta": "Plans/.pipeline/work_items/w-20260312-203855/meta.json",
@@ -19,14 +19,13 @@
     "operations": {
       "file_end:append": 3,
       "file_end:replace_section": 3,
-      "heading:insert_after": 2,
-      "heading:replace_section": 33,
+      "heading:insert_after": 3,
+      "heading:replace_section": 32,
       "json_object_path:replace_section": 1
     }
   },
   "decisions": [
     "Target-025 remains limited to Progress-only hostability/layout linkage in Widget_System.md.",
-    "Target-025 now rewrites the existing owner section in Plans/Widget_System.md instead of inserting a duplicate section after ## 3.",
     "Targets-026, -028, and -033 now target existing owner headings instead of ambiguous FILE_START placeholders.",
     "Target-029 rewrites the existing owner section in Plans/chain-wizard.md; it is no longer a create-file mutation target.",
     "Target-030 replaces the existing route_aware_verification schema object in place instead of attempting to add a duplicate property.",
@@ -439,8 +438,8 @@
       "anchors": [
         {
           "anchor_type": "heading",
-          "operation": "replace_section",
-          "anchor": "## 4. Orchestrator Progress widget scope and catalog linkage",
+          "operation": "insert_after",
+          "anchor": "## 3. Layout persistence",
           "content_markdown": "## 4. Orchestrator Progress widget scope and catalog linkage\n\nOrchestrator widget composition is restricted to `Progress`. `Seams`, `Node Graph`, `Evidence`, `History`, and `Ledger` remain native views and are not composed into Widgets via the widget catalog or consumer system.\n\nThe Orchestrator UI composes exactly one consumer widget: the `Progress` widget with ID `widget-orchestrator-progress`. This widget occupies a dedicated layout space within the Orchestrator UI and receives orchestrator-native runtime events, progress markers, and node-level state.\n\n### Catalog source and drill linkage\n\nThe Progress widget ID (`widget-orchestrator-progress`) is defined in the current promoted widget catalog in `Plans/FinalGUISpec.md` (\u00a7 C.2, C.4). Widget_System does not invent or name additional widget cards; it consumes the named catalog source directly.\n\nDrill-through and linkage semantics (progress \u2192 node, progress \u2192 lane, progress \u2192 evidence) are owned by the Orchestrator UI and by the FinalGUISpec consumer contract, not by Widget_System hostability rules.\n"
         }
       ]

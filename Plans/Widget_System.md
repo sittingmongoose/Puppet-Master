@@ -49,15 +49,3 @@ The Orchestrator UI composes exactly one consumer widget: the `Progress` widget 
 The Progress widget ID (`widget-orchestrator-progress`) is defined in the current promoted widget catalog in `Plans/FinalGUISpec.md` (§ C.2, C.4). Widget_System does not invent or name additional widget cards; it consumes the named catalog source directly.
 
 Drill-through and linkage semantics (progress → node, progress → lane, progress → evidence) are owned by the Orchestrator UI and by the FinalGUISpec consumer contract, not by Widget_System hostability rules.
-## 4. Orchestrator Progress widget scope and catalog linkage
-
-Orchestrator widget composition is restricted to `Progress`. `Seams`, `Node Graph`, `Evidence`, `History`, and `Ledger` remain native views and MUST NOT be rewritten as widget canvases.
-
-Rules:
-- persist the Orchestrator `Progress` layout separately from Dashboard and Usage widget layouts
-- the named current widget catalog source for Progress-linked widgets is `Plans/FinalGUISpec.md` Appendix C (`### C.2`, `### C.3`, and `### C.4`)
-- `Plans/Widget_System.md` consumes those named widget IDs and their hostability rules; it does not invent additional unnamed legacy widget entries
-- widget drill actions still route through canonical commands and `route_target` / `OpenSubject` contracts rather than widget-local navigation
-- Dashboard grid behavior, add-widget filtering, and the current named widget IDs remain shell-owned in `Plans/FinalGUISpec.md`
-
-ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/UI_Command_Catalog.md
