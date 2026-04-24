@@ -465,131 +465,22 @@ ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md#7
 
 ### Subagent Configuration
 ```yaml
-# .puppet-master/config.yaml (additions)
+## Execution unit context and worktree allocation strategy
 
-subagentConfig:
-  enableTierSubagents: true
+### Canonical runtime context
+- Execution units are canonical runtime containers for node execution.
+- Each execution unit holds `execution_role`, `operational_identity`, `run_id`, `node_id`, and `lane_id`.
+- Execution units are immutable once created; policy changes require a new execution unit.
 
-  executionLimits:
-    maxNestingDepth: 4
-    maxTotalSpawnedAgents: 99
-    maxToolRoundsPerAgent: 200
-    maxConcurrentCrewsPerPlatform: 4
-    maxConcurrentAgentsPerCrew: 8
-    maxTotalActiveAgents: 32
+### Worktree allocation strategy
+- Worktree allocation is a lane-level decision, not a node-level decision.
+- The lane allocates worktrees based on execution strategy and storage policy.
+- Nodes execute within allocated worktrees; worktree switching is prohibited within a single execution unit.
 
-  taskEnvelopeDefaults:
-    timeoutMs: inherit_parent_remaining_budget
-
-  tierOverrides:
-    phase:
-      default: ["project-manager"]
-      architecture: ["architect-reviewer", "project-manager"]
-      product: ["product-manager", "project-manager"]
-    task:
-      rust: ["rust-engineer"]
-      python: ["python-pro"]
-      javascript: ["javascript-pro"]
-      typescript: ["typescript-pro"]
-      backend: ["backend-developer"]
-      frontend: ["frontend-developer"]
-      mobile: ["mobile-developer"]
-    subtask:
-      testing: ["test-automator"]
-      documentation: ["technical-writer"]
-      review: ["code-reviewer"]
-    iteration:
-      errors: ["debugger"]
-      review: ["code-reviewer"]
-      testing: ["qa-expert"]
-
-  disabledSubagents: []
-  requiredSubagents: []
-```
-
-ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Executor_Protocol.md
-
-`executionLimits` is the SSOT for global subagent concurrency and budget defaults. Surface-specific caps such as interview reviewer limits may narrow these values, but MUST NOT widen them.
-
-ContractRef: ContractName:Plans/interview-subagent-integration.md, ContractName:Plans/Crosswalk.md
-
-PM-native internal orchestration scope:
-- parent-child control, timeout propagation, cancellation, and crew coordination stay under PM runtime contracts
-- bridged-provider or A2A material may inform adapter translation only
-- no external bridge contract may replace PM lineage, requested/effective state, or audit visibility
-
-ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Contracts_V0.md
-
-#### Child effective authority and timeout contract
-
-Child execution is parent-clamped at dispatch time:
-- child runs inherit the parent's effective tool policy, write scope, runtime/account surface restrictions, and remaining budget as hard upper bounds
-- child-specific requests MAY narrow those bounds, but they MUST NOT widen them
-- the orchestrator snapshots the effective child authority in spawn/start metadata so audit, cancellation, and budget enforcement operate on the same frozen view
-
-ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/Contracts_V0.md
-
-Envelope schema (per task):
-- `timeoutMs` (u64): maximum wall-clock milliseconds for the child task. Default: `inherit_parent_remaining_budget`.
-- `parentRemainingBudgetMs` (u64): the parent's remaining budget at dispatch time, computed as `parent_timeout - parent_elapsed`.
-
-ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Architecture_Invariants.md
-
-Propagation rules:
-- `timeoutMs` defaults to the parent's remaining budget (`parentRemainingBudgetMs`)
-- per-task overrides MAY narrow the timeout (`timeoutMs < parentRemainingBudgetMs`)
-- per-task overrides MUST NOT exceed the parent's remaining budget; if a requested `timeoutMs` exceeds `parentRemainingBudgetMs`, the orchestrator clamps it and emits a diagnostic warning
-- at each nesting level, `parentRemainingBudgetMs` is recalculated from the dispatching agent's own remaining budget, not from the original root budget
-- before child dispatch, budget preflight checks evaluate the estimated request cost against the child-visible remaining run/session budgets; an over-budget request fails closed with `kill.budget_exceeded` and the child is not started
-- after a provider response, actual cost recording MAY terminate the child with `done.budget_exceeded` when cumulative run or session spend crosses budget, but the usage record is durably written before teardown
-
-ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/Executor_Protocol.md
-
-Enforcement:
-- when `timeoutMs` expires, the orchestrator sends cancellation to the child task
-- provider processes get a 5-second grace period; MCP and LSP helper surfaces get a 3-second grace period before forceful teardown
-- timeout expiration produces a structured `done.task_timeout` terminal record with the child's task identity, elapsed time, and effective timeout value
-
-ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Run_Modes.md
-
-#### Shell and runtime isolation contract
-
-Shell and runtime isolation is enforced at the orchestrator level. These rules are implementation contracts, not advisory governance.
-
-ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Permissions_System.md
-
-Scope rules:
-- each agent tree receives its own shell instance set; shell instances MUST NOT be shared across agent trees
-- environment variables MUST NOT leak across session, agent, or crew boundaries; each shell instance starts with a clean environment derived from project configuration, not inherited from sibling or parent runtime mutations
-- the orchestrator retains full visibility into child communication and shell/runtime identity for audit, diagnostics, and cancellation
-
-ContractRef: ContractName:Plans/Architecture_Invariants.md, ContractName:Plans/storage-plan.md
-
-Lifecycle rules:
-- shell instances are created at agent-tree spawn time and destroyed at agent-tree teardown
-- if a shell instance crashes or becomes unresponsive, the orchestrator MUST NOT silently reuse a sibling shell; it creates a new isolated shell or fails the task with a structured error
-- shell teardown at agent-tree completion MUST clean up child processes, temporary files, and environment state associated with that shell instance
-
-ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Run_Modes.md
-
-#### Child teardown and deallocation
-
-
-#### Task tool contract alignment
-
-Orchestrator delegation uses the shared `task` contract rather than an orchestration-local lifecycle.
-
-ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Permissions_System.md
-
-Child lifecycle:
-`pending → running → completed | failed | cancelled | timed_out`
-
-Alignment rules:
-- resume reuses the same `delegated_session_id`
-- `owner_hint` resolves by exact match against `crew.roles`; on no match the current session remains the owner
-- hidden or unavailable subagents are not advertised as choices
-- nested `task` remains denied by default
-- retries are parent-owned policy rather than child self-retry behavior
+### Compatibility retirement
+- Legacy TierContext, tier_id, TierType, and tier-based pause vocabulary are deprecated.
+- Tier concepts are not used in execution unit context or worktree allocation.
+- Use execution_unit_context and lane-level policy instead.
 ## Benefits
 
 1. **Dynamic Adaptation:** Automatically selects appropriate subagents based on project context

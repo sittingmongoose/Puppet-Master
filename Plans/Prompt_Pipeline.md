@@ -389,9 +389,6 @@ ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Multi-Accoun
 ### 6.1 Expanded pre-prompt resolution stages
 
 Before final prompt payload emission, the runtime MUST resolve the following in order:
-
-ContractRef: ContractName:Plans/Skills_System.md, ContractName:Plans/Tools.md, ContractName:Plans/Provider_OpenCode.md
-
 1. surface context and workflow overlay
 2. requested provider entry and requested runtime controls
 3. provider family and runtime-platform candidate set
@@ -402,8 +399,6 @@ ContractRef: ContractName:Plans/Skills_System.md, ContractName:Plans/Tools.md, C
 8. PM-owned MCP/tool availability
 9. instruction bundle assembly
 10. final run snapshot freeze and provider handoff
-
-ContractRef: ContractName:Plans/Skills_System.md, ContractName:Plans/Tools.md, ContractName:Plans/Provider_OpenCode.md
 
 ### 6.2 Selection-source enumeration
 
@@ -419,8 +414,6 @@ ContractRef: ContractName:Plans/Skills_System.md, ContractName:Plans/Tools.md, C
 
 The runtime MUST also persist a human-readable `selection_reason` suitable for detailed inspectors and audit history.
 
-ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md
-
 ### 6.2.1 Canonical requested-Persona precedence
 
 Requested Persona precedence remains unchanged:
@@ -433,24 +426,37 @@ Requested Persona precedence remains unchanged:
 
 Runtime/provider selection occurs after requested Persona resolution and MUST NOT rewrite the winning requested-Persona source.
 
-ContractRef: ContractName:Plans/Personas.md, ContractName:Plans/Decision_Policy.md, ContractName:Plans/Contracts_V0.md
-
 ### 6.2.2 Runtime, account, and profile resolution stages
 
 Provider/runtime resolution rules:
-- `requested_platform` and `effective_platform` identify the concrete provider entry or runtime surface selected for execution.
-- `provider_family_id` is additive and groups equivalent or pooled runtime surfaces without replacing the concrete provider entry.
-- account-backed providers resolve an effective account row.
-- server-bridged providers resolve an effective `connection_profile_id`.
-- providers whose quota semantics depend on billing or organization context may also resolve an effective billing/entity bucket.
+- `requested_platform` and `effective_platform` identify the concrete provider entry or runtime surface selected for execution
+- `provider_family_id` is additive and groups equivalent or pooled runtime surfaces without replacing the concrete provider entry
+- account-backed providers resolve an effective account row
+- server-bridged providers resolve an effective `connection_profile_id`
+- providers whose quota semantics depend on billing or organization context may also resolve an effective billing/entity bucket
 
 Examples:
-- `Gemini` direct and `Gemini CLI` are separate runtime surfaces that may belong to the same family pool.
-- `Codex` resolves separate account rows for `ChatGPT` and `API key` auth families.
-- `GitHub Copilot` resolves one auth-backed account row plus a selected billing entity when premium-request semantics require it.
-- `OpenCode` resolves a managed or attached server profile rather than an account row.
+- `Gemini` direct and `Gemini CLI` are separate runtime surfaces that may belong to the same family pool
+- `Codex` resolves separate account rows for `ChatGPT` and `API key` auth families
+- `GitHub Copilot` resolves one auth-backed account row plus a selected billing entity when premium-request semantics require it
+- `OpenCode` resolves a managed or attached server profile rather than an account row
 
-ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Provider_OpenCode.md
+### 6.2A Settings, persona, and resolver model
+
+Runtime resolution depends on:
+- Active persona (role, scope, available tools)
+- Resolver chain (user → coordinator → escalation owner → DAE)
+- Requested/effective account identity (for provider and permission scoping)
+- execution_role and operational_identity (for attribution)
+- blocked_sequence and approval state (for recovery path)
+
+Rules:
+- Persona is NOT an actor kind; it is a role and scope selection within a single actor (e.g., chat assistant can switch personas but remains "assistant").
+- Resolver chain is determined by approval_scope_key and execution_role, not by tier or persona.
+- Requested/effective account identity is resolved BEFORE persona selection so that provider/model choices are scoped to the available account.
+- operational_identity is derived from execution_role + requested/effective account; it remains canonical for usage attribution and approval scoping.
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Personas.md
 
 ### 6.3 Natural-language Persona invocation in prompt assembly
 
@@ -464,86 +470,49 @@ It MUST NOT be used to silently rewrite:
 
 Those selections remain explicit policy or configuration decisions surfaced through Agent-Config and runtime inspectors.
 
-ContractRef: ContractName:Plans/Personas.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Multi-Account.md
+### 6.4 Effective resolution record
 
-<a id="EFFECTIVE-RESOLUTION-RECORD"></a>
-The frozen requested/effective runtime snapshot MUST preserve these canonical base fields:
-
-ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/usage-feature.md
-
-- `requested_platform`
-- `effective_platform`
-- `requested_model`
-- `effective_model`
-- `requested_auth_mode`
-- `effective_auth_mode`
-- `effective_account_id`
-- `effective_provider_identity`
-
-Additive runtime-disclosure fields MAY include:
-- `provider_family_id`
-- `connection_profile_id`
-- `requested_runtime_platform_id`
-- `effective_runtime_platform_id`
-- `requested_model_provider_id`
-- `effective_model_provider_id`
-- `requested_billing_entity_id`
-- `effective_billing_entity_id`
-- `effective_billing_entity_label`
-- `effective_entitlement_class`
-- `effective_project_id`
-- `account_switch_reason`
-- `usage_signal_confidence`
-
-ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/usage-feature.md
+Effective resolution record captures:
+```
+{
+  resolution_id: string,
+  attempt_id: string,
+  persona: string,
+  requested_account_id?: string,
+  effective_account_id: string,
+  execution_role: string,
+  operational_identity: string,
+  resolver_chain: ResolverFrame[],
+  blocked_sequence?: number,
+  approval_id?: string,
+  model: string,
+  model_variant?: string,
+  provider: string,
+  trace_level: string,
+  created_utc: string,
+  wizard_lineage?: WizardFrame[]
+}
+```
 
 Rules:
-- additive fields MUST NOT shadow or rename the canonical base fields.
-- the frozen snapshot is captured before provider handoff and is not recomputed from later UI state.
-- if the provider internally re-routes to another effective model or runtime surface, the actual outcome is captured as runtime/event evidence while the frozen requested snapshot remains auditable.
-- `selectable_unit_id` remains a scheduler/debug artifact and MUST NOT be promoted into the base frozen record.
+- Effective resolution record is immutable once created.
+- resolver_chain shows the canonical decision path; audit trails and replay logic must traverse resolver_chain, not run history.
+- wizard_lineage is a list of wizard invocations (including persona/settings selections) that led to this resolution.
+- approval_id and blocked_sequence survive resolution reuse and approval reuse across attempts.
+- model selection is final per resolution_id; no mid-resolution model switching.
 
-ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Models_System.md, ContractName:Plans/CLI_Bridged_Providers.md
+ContractRef: ContractName:Plans/Contracts_V0.md §Requested/effective account, ContractName:Plans/chain-wizard-flexibility.md
 
-ContractRef: Plans/Contracts_V0.md#4. Auth contracts, Plans/Multi-Account.md#4.5 Selectable unit and runtime resolution
-
-Required fields:
-- requested_account_id
-- requested_account_binding
-- requested_account_policy
-- execution_role
-- operational_identity
-
-Canonical terms and values:
-- requested_account_id
-- requested_account_binding
-- requested_account_policy
-- execution_role
-- operational_identity
-
-Labels:
-- requested account
-- effective account
-- effective resolution
-
-Behavioral rules:
-- Prompt assembly must preserve both requested and effective execution identity.
-- Binding must distinguish preference from requirement so fallback behavior stays deterministic.
-
-Permission carry-through:
-- effective identity must remain available to downstream permission and approval flows
 ### 6.5 PM-native skills, MCP, and instruction assembly
 
 Skill/tool/MCP resolution is part of the prompt pipeline, not a provider-specific afterthought.
 
 Required rules:
-- PM resolves skills from the PM registry and compatibility roots before provider execution begins.
-- skill readiness is computed from `required_tool_refs` and `optional_tool_refs` plus permission state.
-- PM-owned MCP availability is computed before run handoff and may generate CLI adapter config for bridged runtimes when required.
-- provider-native skill or MCP files are optional projections. They are never the canonical runtime source of truth.
-- bundling the selected PM-native skill content is mandatory for runtime correctness; the `skill` tool is the on-demand augmentation path.
-
-ContractRef: ContractName:Plans/Skills_System.md, ContractName:Plans/Tools.md, ContractName:Plans/MiscPlan.md
+- PM resolves skills from the PM registry and compatibility roots before provider execution begins
+- skill readiness is computed from `required_tool_refs` and `optional_tool_refs` plus permission state
+- PM-owned MCP availability is computed before run handoff and may generate CLI adapter config for bridged runtimes when required
+- provider-native skill or MCP files are optional projections and are never the canonical runtime source of truth
+- bundling the selected PM-native skill content is mandatory for runtime correctness; the `skill` tool is the on-demand augmentation path
 
 ### 6.6 UI transparency requirement
 
@@ -551,101 +520,46 @@ Before the run starts, Agent-Config and other detailed inspectors MUST be able t
 
 After the run starts, the frozen snapshot and any observed provider deviations MUST remain visible without heuristically recomputing the original decision.
 
-ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md, ContractName:Plans/usage-feature.md
-## Remediation and Retry Metadata Addendum (2026-03-08)
+### Runtime Attempt Snapshot and Handoff Bundle
 
-Prompt assembly must carry the minimum metadata needed for deterministic remediation, retry, and audit behavior without widening execution authority.
-
-Required runtime metadata when applicable:
-- `failure_class`
-- `blocked_reason_code`
-- `retry_count`
-- `safe_point_id`
-- `remediation_root_id`
-- `remediation_parent_attempt_id`
-- `replan_generation`
-- `wake_reason` when a run is resumed from blocked/backoff/remediation state
+Each attempt creates a snapshot:
+```
+{
+  attempt_id: string,
+  blocked_sequence: number,
+  resolution_id: string,
+  execution_unit_context: {
+    execution_unit_id: string,
+    execution_unit_type: 'run' | 'seam' | 'package' | 'node' | 'overseer' | 'delegated_subagent',
+    execution_role: string
+  },
+  requested_account_id?: string,
+  effective_account_id: string,
+  operational_identity: string,
+  approval_scope_key: string,
+  blocked_episode_id: string,
+  wizard_lineage: WizardFrame[],
+  safe_points: SafePoint[],
+  usage_attribution: UsageAttribution,
+  evidence_refs: EvidenceRef[],
+  created_utc: string,
+  handoff_destination?: string
+}
+```
 
 Rules:
-- this metadata is for observability and deterministic continuation, not for speculative prompt stuffing
-- child/remediation runs may narrow inherited context but must preserve lineage metadata needed for replay/debugging
-- prompt assembly must not silently drop remediation lineage between parent attempt and remediation child
+- attempt_id is unique per blocked_sequence increment.
+- wizard_lineage is cumulative; it preserves all wizard invocations across attempt retries within the same blocked_episode.
+- safe_points are deterministic checkpoints that allow resume from a specific state without replay.
+- usage_attribution links to the canonical usage event record in seglog/ledger, not ephemeral provider tokens.
+- Handoff bundles reference this snapshot plus execution output, concerns, artifacts, and route/open artifacts.
 
-Acceptance criteria:
-- remediation/retry runs receive the lineage metadata needed to continue coherently
-- prompt assembly does not become the hidden source of truth; canonical truth remains in event/storage contracts
+ContractRef: ContractName:Plans/runtime_safe_points.md, ContractName:Plans/usage-feature.md, ContractName:Plans/storage-plan.md
+
 ## Runtime Attempt Snapshot and Handoff Consolidation Addendum (2026-03-09)
 
 This addendum is retained as historical reconciliation context only.
 
-Canonical runtime handoff fields and rules now live in `## Runtime Attempt Snapshot and Handoff Bundle`, which is the single owner section for the immutable handoff bundle.
+Canonical runtime handoff fields and rules now live in `### Runtime Attempt Snapshot and Handoff Bundle` inside `## 6. Effective Persona and Runtime Resolution Pipeline (2026-03-06)`.
 
-ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/assistant-memory-subsystem.md
-
-The runtime handoff bundle is the continuity contract for child runs, retries, reroutes, and resumes.
-
-ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-memory-subsystem.md, ContractName:Plans/Contracts_V0.md
-
-Required bundle contents:
-- parent and child lineage identifiers
-- task statement and success criteria
-- required versus optional dependency classification
-- requested and effective Persona/runtime/model/effort state
-- effective permission ceiling and compatible capability set
-- current working-set refs in full fidelity
-- focused or pinned refs in full fidelity unless explicitly muted
-- shrunk dynamic blocks in their current shrunk form plus source refs for rehydration
-- current retrieval injection state when enabled
-- current Context Lens shaping state when relevant
-- explicit statement that Assistant memory is excluded
-
-ContractRef: ContractName:Plans/Personas.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/Skills_System.md, ContractName:Plans/Plugins_System.md
-
-Handoff rules:
-- children do not blindly inherit the parent prompt or the parent Persona.
-- children receive a reconstructed bundle derived from canonical source state plus current effective shaping state.
-- if a child needs deeper detail from a shrunk block, the runtime may rehydrate from canonical source refs.
-- resume rebuilds from canonical state plus current shaping state; it does not trust only the last transmitted prompt.
-- completed disposable children are not the default continuity mechanism for later work; later work normally spawns a fresh child.
-
-ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-memory-subsystem.md, ContractName:Plans/Tools.md
-
-ContractRef: Plans/Executor_Protocol.md#Worktree-aware execution unit context, Plans/orchestrator-subagent-integration.md#Tier Context
-
-Required fields:
-- run_id
-- node_id
-- attempt_id
-- lane_id
-- package_id
-- seam_id
-- worktree_id
-- execution_role
-- requested_account_id
-- effective_account_id
-- operational_identity
-- tool_use_id
-
-Canonical terms and values:
-- execution_unit_context
-- run_id
-- node_id
-- attempt_id
-- lane_id
-- package_id
-- seam_id
-- worktree_id
-- execution_role
-- requested_account_id
-- effective_account_id
-- operational_identity
-
-Labels:
-- attempt snapshot
-
-Behavioral rules:
-- Handoff bundles must carry lossless runtime identity rather than tier-era scope.
-- Downstream consumers must be able to reconcile tool, attempt, artifact, and account identity from the bundle.
-
-Permission carry-through:
-- effective account and execution role must survive the handoff bundle
+Nothing in this historical note may override the owner section in §6.

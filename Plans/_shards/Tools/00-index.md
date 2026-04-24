@@ -30,3 +30,4 @@ Canonical source: [Plans/Tools.md](../../Tools.md)
 - [22-12-web-tool-routing-algorithm.md](22-12-web-tool-routing-algorithm.md) — ## 12. Web tool routing algorithm
 - [23-13-batch-operations.md](23-13-batch-operations.md) — ## 13. Batch operations
 - [24-14-web-content-caching-layer.md](24-14-web-content-caching-layer.md) — ## 14. Web content caching layer
+- [25-canonical-owner-and-consumer-reconciliation.md](25-canonical-owner-and-consumer-reconciliation.md) — ## Canonical owner and consumer reconciliation

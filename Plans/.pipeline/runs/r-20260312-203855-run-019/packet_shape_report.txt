@@ -1,0 +1,21 @@
+pm.packet_shape_report.v1
+work_id: w-20260312-203855
+run_id: r-20260312-203855-run-019
+status: pass
+packet_written: yes
+targets_total: 36
+doc_intents_total: 36
+docs_touched: 35
+create_intents: 1
+update_intents: 35
+operations:
+- file_end:append = 2
+- file_start:replace_file = 1
+- heading:insert_after = 11
+- heading:replace_section = 35
+notes:
+- all 36 reconciliation targets remain executable doc_intents with content_markdown
+- target-016, target-024, and target-032 now include local ContractRef blocks for verifier contractref lint compliance
+- target-029 remains a create-file mutation target
+- target-030 remains a full-file replacement mutation target
+next_required_stage: Scribe

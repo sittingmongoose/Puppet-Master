@@ -1,6 +1,6 @@
 {
   "source_path": "Plans/Tools.md",
-  "source_sha256": "9f3a0a33cf254a2eb0d4e0b40d467b0050079c2d231a1c1e45a94e0a092cfee1",
+  "source_sha256": "8b590eb388d314f2f23dbc07bc557b9685801f810165e76cbfab817b575ff8f7",
   "split_rule": {
     "primary": "## outside fences",
     "fallback": "line-count-200",
@@ -174,6 +174,13 @@
       "end_line": 1805,
       "segment_sha256": "88da1c5f653db93bcf93baf53d317fc2b8ba82e9d2dc176dbeee1241d72c8fc2",
       "heading": "## 14. Web content caching layer"
+    },
+    {
+      "dest_path": "Plans/_shards/Tools/25-canonical-owner-and-consumer-reconciliation.md",
+      "start_line": 1806,
+      "end_line": 1844,
+      "segment_sha256": "8d3e3ff58fe3055b7f7785bd2218717694bbad82e9035b0bfa736b3f182b7495",
+      "heading": "## Canonical owner and consumer reconciliation"
     }
   ]
 }

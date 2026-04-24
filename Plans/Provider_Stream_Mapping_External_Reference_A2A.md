@@ -327,3 +327,29 @@ Rules:
 - upstream provider/session continuity uses a separate `provider_attempt_ref?`
 - provider/session IDs MUST NOT be reused as runtime `attempt_id`
 - reconnect flows may observe or resume streaming for the same runtime attempt but MUST NOT create hidden provider-local retry identity
+## Canonical data-shape reconciliation
+
+Provider/A2A normalization MUST keep provider-native correlation separate from Puppet Master runtime identity.
+
+Rules:
+- upstream OpenCode or bridge session identifiers MUST be stored in provider-native correlation fields and MUST NOT be copied into canonical `thread_id`
+- runtime `attempt_id` remains the local execution identity even when a provider exposes its own session or reconnect identifiers
+- provider correlation fields are bridge-only joins for observation, resume, approval lookup, and auditability
+
+### Required data shape
+
+Required fields:
+- provider-native correlation fields for upstream session and conversation identifiers
+- `provider_attempt_ref?`
+- `approval_scope_key`
+
+`approval_scope_key` is the canonical approval-scope packet for this bridge surface and MUST be derived from:
+- actor identity
+- `lane_id?`
+- `run_id?`
+- requested account context
+
+Behavioral rules:
+- permissions, HITL, doom-loop protection, and session approval caching MUST reuse the same `approval_scope_key`
+- approval lookup MUST resolve through `approval_scope_key` plus provider-native correlation fields rather than through `thread_id`
+

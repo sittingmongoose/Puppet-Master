@@ -195,29 +195,28 @@ ContractRef: ContractName:Plans/orchestrator-subagent-integration.md
 
 When implementing:
 
-1. **Config:** Add HITL flags to the same config that the runtime uses for approval/blocking policy; ensure GUI reads and writes the same fields.
-2. **GUI settings:** Provide HITL as a setting in the GUI with approval-policy controls that map to runtime blocked episodes rather than to tier-only toggles.
-3. **Runtime loop:** When a node/package/seam approval prerequisite is reached, transition to `waiting_approval` and do not advance until the user resolves the blocked episode.
-4. **Dashboard CtAs:** When paused for approval, add a warning or Call to Action on the Dashboard that prompts the user to interact. This CtA is addressable via the Assistant (see assistant-chat-design.md) or via a direct Dashboard control.
-5. **Persistence:** If the app is closed while paused for approval, on restore the run should still expose the same blocked episode so the user can approve, decline, retry, skip, or abort after reopening.
-ContractRef: ContractName:Plans/newfeatures.md, ContractName:Plans/storage-plan.md
+1. **Config:** Keep approval/blocking policy in the shared runtime config so GUI and runtime resolve the same blocked episode state.
+2. **Runtime loop:** When a node reaches an approval prerequisite, transition into the canonical blocked episode flow and wait for a runtime action rather than a tier-local pause flag.
+3. **Persistence:** Persist and restore the same blocked episode so restart, retry, skip, abort, and recovery actions stay attached to the original runtime identity.
+4. **Dashboard CtAs:** Surface the blocked episode through Dashboard and Assistant without rewriting its identity or action set.
 
-**Seglog:** Emit approval/blocking events when the runtime enters `waiting_approval` and when the user resolves the blocked episode. This makes approval history replayable and auditable.
-ContractRef: ContractName:Plans/Contracts_V0.md#EventRecord
+### Restart recovery and blocked-episode continuity
+- `blocked_sequence` is canonical per `run_id` + `node_id` blocked episode and MUST survive restart without being reminted.
+- `request_id` may remain as a compatibility handle, but it is subordinate to the blocked-episode identity.
+- Restart recovery restores unresolved blocked episodes together with `execution_role`, `requested_account_id`, `operational_identity`, account-switch/pressure lineage, and the startup recovery handshake that explains why the episode is still actionable.
+- Usage switch-history and execution-role follow-through stay attached to the same blocked episode so approval history, policy history, and usage history remain joinable.
 
-**redb:** Persist blocked/approval state in redb using canonical runtime identity: `run_id`, `node_id`, `blocked_sequence`, `attempt_id?`, `blocked_reason_code`, ordered `allowed_action_ids[]`, outcome state, and timestamps/rationale as applicable. On restore, read this state so the UI shows the same actionable blocked episode rather than a generic paused state.
-ContractRef: ContractName:Plans/storage-plan.md
+### Approval Scope Key and provider-native correlation
+- `approval_scope_key` is the durable blocked-episode scope key across actor, lane, run, node, and account context.
+- The same scope key is reused across permissions, HITL, doom-loop handling, and session approval caching.
+- Provider-native session or attempt identifiers live in dedicated correlation fields; canonical thread identity is not overloaded to carry provider correlation.
+- Approval scope for one blocked episode is distinct from any broader session-wide policy scope.
+- Approval and rejection events persist durable approver identity fields so audit history records who resolved the blocked episode.
 
-## Optional: Interview Flow
-
-This plan does not define HITL for the **interview** flow (Scope, Architecture, UX, etc.). If interview-phase-level HITL is added later, it should:
-- Reuse the same **concept** (pause at boundary, human approves, then continue).
-- Use a separate setting (e.g. "HITL at interview phase") and interview-phase boundaries from Plans/interview-subagent-integration.md, so orchestrator tiers and interview phases remain separate and DRY.
-
----
-
-*Document created for planning only; no code changes.*
-
+### Tier-era compatibility retirement
+- Phase, task, and subtask labels may remain visible as derived grouping copy, but they are not the canonical runtime approval scope.
+- Legacy tier-era runtime vocabulary is compatibility-only and MUST NOT own blocked, recovery, or approval semantics.
+- The canonical HITL contract stays bound to runtime blocked episodes, ordered runtime actions, and stable approver identity instead of older tier-shaped pause terminology.
 ## HITL Retry and Safe-Point Clarification Addendum (2026-03-08)
 
 ### 1. HITL resolution wakes the scheduler

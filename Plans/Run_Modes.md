@@ -648,3 +648,23 @@ Recovery: the user must either (a) change the run mode to interactive and resume
 - `ask` and `plan` modes: no mutation-capable attempts occur by definition, so no safe points are needed.
 
 ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Tools.md, ContractName:Plans/Contracts_V0.md
+## Runtime identity and blocked-policy continuity
+
+Run modes change interaction affordances but do not rewrite runtime identity or blocked-policy ownership.
+
+Required fields:
+- `execution_role`
+- `requested_account_id`
+- `operational_identity`
+- `blocked_sequence`
+- `usage_switch_history[]`
+- `usage_execution_role`
+
+Rules:
+- account-switch ownership and pressure ownership remain canonical runtime state, not mode-local state
+- `blocked_sequence` is minted by runtime blocked-state canon and survives mode changes, recovery, and resume attempts
+- startup recovery MUST rehydrate blocked state, requested account, execution role, and operational identity before any resume decision
+- DAE jail/approval policy remains part of the same runtime policy cluster and is not mode-specific
+- resolving a prerequisite or changing mode creates a new attempt snapshot rather than mutating the blocked attempt
+- usage views MUST preserve switch-history and execution-role follow-through across mode changes and blocked recovery
+

@@ -132,50 +132,33 @@ The canonical dispatch/runtime packet carries `execution_unit_context`.
 ContractRef: Plans/Prompt_Pipeline.md#6.4 Effective resolution record, Plans/Contracts_V0.md#6.1 Canonical blocked-episode approval anchor, Plans/Crosswalk.md#3.1 Runtime orchestration ownership
 
 ### 5.1 Unified `DispatchContext` schema
-
 The canonical dispatch view is the unified `DispatchContext` projection over `execution_unit_context`.
 
-```text
-DispatchContext {
-  node_id: string,
-  package_id: string,
-  lane_id: string?,
-  seam_id: string?,
-  attempt_number: u32,
-  max_attempts: u32,
-  execution_mode: RuntimeMode,
-  mode_overlay: ModeOverlay?,
-  provider_id: string,
-  model_id: string,
-  selected_at_utc: ISO8601,
-  scheduler_score_breakdown: ScoreBreakdown?,
-  parent_thread_id: string?,
-  dev_session_id: string,
-  terminal_session_id: string?,
-  investigation_id: string?,
-  budget_remaining: TokenBudget?,
-  cost_ceiling: CostCeiling?,
-  persona_id: string?,
-  persona_snapshot: PersonaSnapshot?
-}
-```
+The canonical dispatch/runtime packet carries execution_unit_context.
 
-Normalization rules:
-- `package_id` is the canonical dispatch alias for `work_package_id` when older payloads still carry the longer field name.
-- `seam_id` is the canonical dispatch alias for `feature_seam_id` when older payloads still carry the longer field name.
-- `investigation_id` follows the `inv_{ulid}` format and is copied from `execution_unit_context` into the dispatch projection when present.
-
-Labels:
-- node execution fields
+Required fields:
+- `run_id`
+- `node_id`
+- `attempt_id`
+- `lane_id`
+- `package_id`
+- `seam_id`
+- `worktree_id`
+- `execution_role`
+- `requested_account_id`
+- `requested_account_binding`
+- `requested_account_policy`
+- `effective_account_id`
+- `operational_identity`
+- `blocked_sequence`
+- `approval_scope_key`
 
 Behavioral rules:
-- `TierContext` and `tier_id` stop acting as canonical execution scope.
-- Downstream consumers join losslessly to attempt, worktree, permission, and runtime records.
-- Blocked-action carrythrough stays anchored to blocked-sequence lineage rather than ad hoc view context.
+- dispatch, recovery, remediation, and inspection read one execution-unit packet rather than tier-era compatibility objects.
+- downstream consumers join losslessly to attempt, worktree, permission, and runtime records.
+- blocked-action carrythrough stays anchored to blocked-episode lineage.
 
-Permission carry-through:
-- requested/effective runtime identity
-- blocked action carrythrough
+ContractRef: Plans/Prompt_Pipeline.md#6.4 Effective resolution record, Plans/Contracts_V0.md, Plans/Crosswalk.md#3.1 Runtime orchestration ownership
 ## 6. Overseer dispatch algorithm (deterministic)
 
 1. Evaluate readiness predicate over all queued nodes.
@@ -288,11 +271,15 @@ Canonical prerequisite-resolution event:
 ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Run_Graph_View.md
 
 ### 7. Failure classes and retry entry points
+The executor classifies every failed or non-executed attempt into one canonical failure class or blocked-episode cause before deciding the next action.
 
-The executor classifies every failed or non-executed attempt into one canonical `failure_class` / `blocked_reason_code` family before deciding the next action.
+Rules:
+- transient provider faults, auth expiry, quota pressure, verification failure, reviewer findings, storage I/O, and graph-integrity failure remain distinct outcome families.
+- permission-denied, user-declined, headless approval denial, FileSafe block, external-side-effect block, and replan-needed outcomes stay blocked until the owning recovery action resolves them.
+- retry, backoff, remediation, safe-point restore, and escalation are keyed from the canonical classification owned by `Plans/Contracts_V0.md`.
+- no consumer in this document may revive legacy approval arrays, opaque recovery option lists, or tier-era compatibility nouns.
 
 ContractRef: ContractName:Plans/Decision_Policy.md, ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Contracts_V0.md
-
 ### 7.1 Classified outcome matrix
 | `classifier_family` | `classifier` | Max retries | Backoff | Auto-retry? | Notes |
 |---|---|---|---|---|---|
@@ -438,14 +425,13 @@ See `### Wake reasons and coalescing` for the canonical wake-trigger list, `wake
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Orchestrator_Page.md
 
 ### Blocked and retry behavior
-The executor MUST classify every non-success outcome before applying policy. Canonical `failure_class` values include `provider_transient`, `rate_limited`, `structured_output_invalid`, `verification_failed`, `reviewer_findings`, `auth_expired`, `storage_io`, `quota_exceeded`, and `graph_integrity`. Canonical `blocked_reason_code` values include `permission_denied`, `user_declined`, `headless_ask_denied`, `filesafe_blocked`, `external_side_effect_blocked`, `replan_required`, and the additional blocked-state codes owned by `Plans/Contracts_V0.md` and `Plans/Decision_Policy.md` such as `waiting_approval`, `clarification_blocked`, `worktree_conflict`, `dirty_worktree`, `plugin_hook_blocked`, `validation_blocked`, and `remediation_ceiling_exceeded`.
+The executor MUST classify every non-success outcome before applying policy.
 
-ContractRef: ContractName:Plans/Decision_Policy.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/orchestrator-subagent-integration.md
+- blocked episodes preserve local work, runtime identity, and explicit resume prerequisites.
+- FileSafe and external side-effect blocks do not auto-retry; they wait for the owning restore or approval action.
+- one decision path must not treat the same situation as both a failure class and a blocked-episode cause.
 
-Generic blind retry is forbidden. Retry, backoff, remediation, rollback-to-safe-point, and escalation all flow from the classified outcome, and a single decision point MUST NOT treat the same situation as both a `failure_class` and a `blocked_reason_code`.
-
-ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Decision_Policy.md, ContractName:Plans/CLI_Bridged_Providers.md
-
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Decision_Policy.md, ContractName:Plans/Permissions_System.md
 ### Attempt identity and safe points
 Every dispatch creates or reuses a first-class `attempt_id`. Mutation-capable attempts and remediation apply steps MUST create a runtime `safe_point_id` before execution. Safe points are runtime recovery anchors only; they are not restore points.
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/WorktreeGitImprovement.md
@@ -516,10 +502,11 @@ When a dependency completes or a blocking condition clears:
 - no extra scheduler pass is required just to notice a direct unblock
 
 ### Class-driven next-step rules
-- pure capacity shortage is `non_selected_reason = capacity_deferred`, not a blocked state
-- worktree merge/conflict or dirty-baseline problems block dispatch using `blocked_reason_code = worktree_conflict` or `dirty_worktree`
-- `filesafe_blocked` is not retryable by default; if FileSafe declares `requires_safe_point_restore = true`, restore-before-rerun is mandatory even when generic matrix defaults would not normally roll back that class
+- provider/model selection, worktree availability, and prerequisite readiness are resolved before dispatch begins.
+- dirty-baseline, merge-conflict, approval, auth, or validation blockers surface through the canonical blocked-episode contract owned by `Plans/Contracts_V0.md`.
+- class-driven follow-up never silently rewrites runtime identity, worktree ownership, or recovery posture.
 
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Decision_Policy.md, ContractName:Plans/storage-plan.md
 ### Graph-lock boundary
 Draft decomposition fallback is allowed only before `run.graph_canonical_locked`.
 After that event:
@@ -532,73 +519,71 @@ ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Progression_
 Every retry, resume-after-prerequisite, or safe-point-restored rerun creates a new `attempt_id`. Prior attempts remain immutable historical records.
 ## Unified Runtime Scheduler and Attempt Lifecycle Reconciliation Addendum (2026-03-09)
 
-This section supersedes earlier lexical-dispatch, attempt-reuse, and mixed blocked/failure wording in this file.
+This addendum deprecates tier-era vocabulary and extends execution_unit_context, blocked-episode continuity, approval scope, and precedence/worktree ownership semantics.
 
-### Scheduler selection
-- Canonical dispatch uses the scored ready-set tuple `(scheduler_lane, manual_priority, transitive_unblock_count, ready_since_utc, node_id)`.
-- Lexicographic `node_id` ordering is only the final tiebreak and MUST NOT remain the active standalone scheduler rule.
-- Slot shortage produces `non_selected_reason = capacity_deferred`; it does not create blocked state.
+### Tier-era compatibility retirement
 
-ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Decision_Policy.md
+The following terms are deprecated and MUST NOT be used in new specifications:
+- `TierContext` (replaced by `execution_unit_context`)
+- `tier_id` (replaced by `execution_unit_type`)
+- `TierType` (replaced by `execution_unit_type` enum: 'run', 'seam', 'package', 'node', 'overseer', 'delegated_subagent')
+- `Tiers` configuration object (replaced by execution unit type policies in Models_System.md)
+- `allowed_actions[]` (replaced by `mutation_policy` and capability gates)
+- `reason_code` (replaced by `concern_reason` in concern records)
+- `recovery_options[]` (replaced by explicit `approval_posture` enum)
+- `approve_continue` (replaced by `approval_id` + `approval_posture`)
 
-Canonical `wake_reason` values are:
-- `node_completed`
-- `prerequisite_resolved`
-- `verification_completed`
-- `approval_resolved`
-- `clarification_resolved`
-- `auth_recovered`
-- `backoff_expired`
-- `remediation_completed`
-- `replan_applied`
-- `restore_completed`
-- `capacity_changed`
-- `startup_recovered`
-- `watchdog_recheck`
+Any reference to tier-era terms in live documents MUST be updated to use execution_unit_context vocabulary or explicitly documented as legacy compat shims. New implementations MUST NOT invent new tier-era terms.
 
-If multiple triggers coalesce into one scheduler pass, persist the first as `wake_reason` and the rest as `secondary_wake_reasons[]`.
+### Blocked episode identity and restart recovery
 
-Canonical wake-trigger event mapping for prerequisite cascades:
-- event name: `node.prerequisite_resolved`
-- emitted when a prerequisite node completes successfully, is skipped in a dependency-satisfying way, or is force-resolved
-- payload: `{ source_node_id, resolved_prerequisite_id, target_node_ids[], resolution: "completed" | "skipped" | "force_resolved" }`
-- scheduler projection: if this is the first trigger in the pass, persist `wake_reason = prerequisite_resolved`
-- wake behavior: re-evaluate prerequisites for every node in `target_node_ids[]`; if all prerequisites are resolved, clear the blocked projection and move the node from `blocked` to `pending` / ready-eligible queue state before dispatch selection
+The canonical dispatch/runtime packet carries execution_unit_context.
 
-ContractRef: Plans/Contracts_V0.md#`scheduler.pass` (minimum addendum fields), Plans/UI_Command_Catalog.md#Canonical Runtime Recovery Command Consolidation (2026-03-09)
+**Execution unit context structure:**
+```typescript
+execution_unit_context {
+  execution_unit_id: string,           // Unique ID for this unit (e.g., node-123 for a DAG node)
+  execution_unit_type: enum,           // 'run' | 'seam' | 'package' | 'node' | 'overseer' | 'delegated_subagent'
+  parent_execution_unit_id?: string,   // Who spawned or contains this unit
+  execution_role: string,              // Identity context for permissions and logs
+  approval_scope: enum,                // 'auto' | 'require_approval' | 'suggest_only' | 'blocked'
+  approval_id?: string,                // If approval is pending, the ID of the approval request
+  blocked_episode_id?: string,         // If blocked, the episode ID for recovery
+  restart_count: number,               // How many times this unit has been retried
+  runtime_start_utc: string,           // When this execution started (used for timeout computation)
+  lineage_path: string[],              // Breadcrumb of parent execution unit IDs for lineage recovery
+}
+```
 
-Canonical terms and values:
-- scheduler.pass
+**Blocked episode recovery:**
+1. When a unit hits a blocking condition (approval, manual input, error), a blocked_episode_id is created and stored in a shared ledger.
+2. If the unit is resumed (user approves, issue resolves), recovery rebinds using the same blocked_episode_id instead of minting a new episode.
+3. The concern_record for the same concern_id accumulates episodes; UI and help surfaces show the episode stack so the user sees what was tried and when.
+4. Restart recovery: if restart_count > 0 and blocked_episode_id is set, the runtime recovery flow assumes the concern is still active and re-enters it with fresh state.
 
-Labels:
-- wake reasons
+### Provider/model precedence and parallel worktree assignment
 
-Behavioral rules:
-- Startup recovery hands off explicitly into the first `scheduler.pass`.
-### Outcome families
-- `failure_class` is only for classified attempt outcomes.
-- `blocked_reason_code` is only for unresolved prerequisites or intentionally prevented work.
-- A blocked episode may carry `failure_class?` only when a failed attempt produced the blocked state.
+Provider and model selection now follows a three-axis settings model (see Plans/Models_System.md for authoritative details). This section clarifies how precedence flows through worktree assignment:
 
-### Attempt identity
-- Every dispatch creates a new `attempt_id`.
-- Retry, prerequisite resume, remediation rerun, and safe-point-restored rerun always create new attempts.
-- Prior attempts remain immutable history.
+1. **Worktree scope policy**: If a worktree owner (e.g., seam-level policy) constrains the allowed providers/models, those constraints narrow the requested surface before provider selection.
+2. **Parallel node assignment**: In a parallel DAG, multiple nodes can each get different effective providers based on their execution_unit_type and local policy.
+3. **Precedence chain**:
+   - explicit run-envelope override
+   - scoped owner policy for the active execution unit
+   - Persona preference
+   - surface or stage default
+   - project or global config default
+   - last-used state (if permitted)
+   - provider default
+4. **Resolver emit**: The selected provider and model are emitted with `selection_reason` so inspectors and auditors know why a particular provider was chosen.
 
-### Mutation capability and safe points
-- `mutation_capable` is sourced from the tool registry and propagated into the node plan record.
-- Mutation-capable attempts create a safe point before execution unless policy explicitly says the attempt is non-mutating despite tool capability.
-- `requires_safe_point_restore = true` on a blocked payload overrides generic rerun defaults.
-
-### Capacity inputs
-`available_slots` comes from one deterministic runtime view that combines run ceiling, lane ceilings, provider/resource saturation, remediation reservations, and worktree isolation constraints.
-
+ContractRef: ContractName:Plans/Models_System.md, ContractName:Plans/Contracts_V0.md, Primitive:ExecutionUnitContext, Primitive:BlockedEpisode
 ### Run-level deferred rule
-- If any node is runnable, the run remains active.
-- If no node is runnable and blocked/backoff/prerequisite-waiting work exists, the run is deferred/waiting rather than terminal.
-- The next prerequisite resolution (including `node.prerequisite_resolved`), backoff expiry, restore completion, remediation completion, or capacity change MUST wake the scheduler.
+- if any node is runnable, the run remains active.
+- if no node is runnable and blocked, backoff, or prerequisite-waiting work exists, the run is deferred rather than terminal.
+- prerequisite resolution, restore completion, remediation completion, auth recovery, or capacity change wakes the scheduler.
 
-ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Decision_Policy.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Permissions_System.md
 ## Counter Relationships and Event Ordering Addendum
 
 ### Counter relationships

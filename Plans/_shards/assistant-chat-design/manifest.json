@@ -1,6 +1,6 @@
 {
   "source_path": "Plans/assistant-chat-design.md",
-  "source_sha256": "cf5f59722d16a7294be99477e2bd354f51682ccbf27f941de260e0cbeaad0fdf",
+  "source_sha256": "8207e6e2431f53f57b06e78c1b324b1a3ce3b075d7a83f8a102127d1d32dc855",
   "split_rule": {
     "primary": "## outside fences",
     "fallback": "line-count-200",
@@ -258,6 +258,13 @@
       "end_line": 2734,
       "segment_sha256": "18b20b640b6ea36c5668238c582df83a9aa818058fa2213d6520925ab210f682",
       "heading": "## Worktrees in Assistant"
+    },
+    {
+      "dest_path": "Plans/_shards/assistant-chat-design/37-shared-actor-boundary-route-payload-and-blocked-notice-packet.md",
+      "start_line": 2735,
+      "end_line": 2750,
+      "segment_sha256": "41472d68dd1c148595ad1ca7bb40ce1c2b917c41678bcbb86a22f1ea00e1bd32",
+      "heading": "## Shared actor-boundary, route payload, and blocked_notice packet"
     }
   ]
 }

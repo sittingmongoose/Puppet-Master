@@ -169,9 +169,168 @@ Replay/rebuild rules:
 ContractRef: ContractName:Plans/Architecture_Invariants.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Contracts_V0.md
 
 ### 2.3 redb: schema, migrations, key patterns
-Canonical records for runtime-artifact, worktree or lane, and receipt-linked projections are storage owned.
 
+#### Canonical records
+- Canonical records are the single source of truth for run, node, lane, and execution state.
+- Canonical records are immutable once committed; corrections require a new record with explicit lineage.
+- All canonical records include `created_at_utc`, `updated_at_utc`, and `created_by` for audit.
+
+#### Required redb keys
+- `run:<run_id>`: Run context and policy.
+- `node:<node_id>`: Node definition and execution state.
+- `lane:<lane_id>`: Lane lifecycle and worktree allocation.
+- `execution_unit:<execution_unit_id>`: Execution unit context and identity.
+- `receipt:<receipt_id>`: Execution receipt and artifact linkage.
+
+#### Cross-surface receipt record
+- Receipt records bind execution results to canonical run, node, and lane identity.
+- Receipts include `execution_unit_id`, `result_summary`, `artifacts`, and `evidence_ref`.
+- Dashboard, CLI, and API surfaces query receipt records to display execution results.
+
+#### Projection freshness, health, and startup rehydration
+- Projections are derived from canonical records and events.
+- Projection freshness is tracked per projection type; stale projections are recomputed at startup.
+- Startup rehydration restores projections from seglog and redb canonical records.
+
+#### Account pressure, history, and runtime attribution
+- Account pressure metrics are stored per account and updated at node/lane boundaries.
+- History records (account-level and execution-level) are immutable and linked to canonical run/node identity.
+- Runtime attribution tracks which actor/role executed each node or phase.
+
+#### Artifacts index, export manifests, and route/open linkage
+- Artifacts are indexed by artifact ID and linked to run, node, and receipt records.
+- Export manifests bind artifact collections to project deliverables.
+- Route/open linkage documents which route args and open contracts were active during execution.
+
+#### Worktree/lane lifecycle, handshake, and cleanup lineage
+- Worktree lifecycle records track allocation, usage, and reclamation events.
+- Handshake records document the Source Control → Orchestrator worktree allocation contract.
+- Cleanup lineage ensures stale worktrees are eventually removed and audited.
+
+#### Naming and migration rules
+- Schema keys follow `entity_type:entity_id:sub_key` patterns for consistency.
+- Migrations are versioned and idempotent; old schema versions must be supported for at least one major release.
+- Deprecation is explicit and documented in migration notes.
 ### Canonical records
+Storage owns one shared record envelope with canonical lineage refs plus artifact/evidence refs. Record objects remain distinct from rendered views, mirrors, exports, and summaries.
+
+Required record families include:
+- `attempt_record.v1:{project_id}:{node_id}:{attempt_number}`
+- `blocked_projection.v1:{project_id}:{node_id}`
+- `concern_record.v1:{project_id}:{concern_id}`
+- `worktree_record.v1:{project_id}:{worktree_id}`
+- `worktree_projection.v1:{project_id}:{worktree_id}`
+- `lane_record.v1:{project_id}:{lane_id}`
+- `lane_projection.v1:{project_id}:{lane_id}`
+- `project_summary.v1:{project_id}`
+- `project_attention_item.v1:{project_id}:{attention_item_id}`
+- `account_pressure_episode.v1:{provider_id}:{account_id}:{episode_id}`
+- `account_switch_event.v1:{provider_id}:{event_id}`
+
+Concern canon:
+- concern is a first-class durable record distinct from review findings, annotations, blocked episodes, and graph patch requests
+- lifecycle states are `active`, `acknowledged`, `resolved`, and `dismissed`
+- `resolution_kind` values are `fixed`, `accepted_risk`, `superseded`, `merged`, `split`, `invalidated`, `obsoleted_by_patch`, and `obsoleted_by_recovery`
+- source-event refs, concern records, and concern projections are separate structural layers rather than one collapsed object
+
+Historical vocabulary stays explicit: `historical`, `stale_historical`, `superseded`, `revoked`, `reopened`, `archived`, and `removed` are shared storage terms, while family-local workflow states remain family-local.
+
+### Required redb keys
+- `artifacts_index.v1:{project_id}:{artifact_id}`
+- `artifacts_project_state.v1:{project_id}`
+- `projector.checkpoint.runtime_artifacts:{project_id}`
+- `attempt_record.v1:{project_id}:{node_id}:{attempt_number}`
+- `blocked_projection.v1:{project_id}:{node_id}`
+- `concern_record.v1:{project_id}:{concern_id}`
+- `project_summary.v1:{project_id}`
+- `project_attention_item.v1:{project_id}:{attention_item_id}`
+- `worktree_record.v1:{project_id}:{worktree_id}`
+- `worktree_projection.v1:{project_id}:{worktree_id}`
+- `lane_record.v1:{project_id}:{lane_id}`
+- `lane_projection.v1:{project_id}:{lane_id}`
+- `account_pressure_episode.v1:{provider_id}:{account_id}:{episode_id}`
+- `account_switch_event.v1:{provider_id}:{event_id}`
+
+### Cross-surface receipt record
+Required fields:
+- `attempt_id`
+- `provider_attempt_ref`
+- `usage_event_ref`
+- `workflow_refs`
+- `docker_refs`
+- `kubernetes_refs`
+- `validation_pass_report`
+- `workflow_run_id`
+- `run_id`
+- `pass_verdict`
+- `phase_plan_ref`
+- `requirements_quality_report_ref`
+
+Rules:
+- `attempt_id` is the primary local anchor.
+- `provider_attempt_ref` is the provider/runtime bridge, `usage_event_ref` is the usage bridge, and receipt refs are the external side-effect lineage bridge; none of them replace the local key.
+- Runtime artifacts are attempt-native by default and stay joinable to receipts, usage, workflow, and validation lineage.
+- Artifact open flows resolve by `artifact_id` first and then by linked envelope refs.
+
+### Scope split
+| Scope | Store | What belongs here |
+|---|---|---|
+| Secret | OS credential store only | GitHub API tokens, Docker PATs, browser-login derived credentials, registry/helper secrets |
+| Global app state | redb | shared Source Control defaults, Actions defaults, Docker Manager defaults, hidden-subview policy |
+| Project state | redb | selected repo/worktree, panel subviews, pinned workflows, selected runtime/context, requested auth mode, template repo state |
+| Event ledger | seglog | auth validation, blocked/recovery outcomes, workflow actions, publish results, runtime receipts, cross-surface linkage |
+
+### Projection freshness, health, and startup rehydration
+Projection-state families expose both axes:
+- `projection_freshness = current | refreshing | stale`
+- `projection_health = healthy | degraded | unavailable`
+
+Rules:
+- freshness and health are different axes and do not collapse into one trust field
+- sensitive actions require `current` projection state or direct canonical revalidation
+- degraded views fall back to record-backed reads instead of implying data loss
+- startup rehydration keeps `blocked_reason_code`, lifecycle state, `dirty_state`, and `conflict_state` on worktree projections so unresolved runtime state can be restored deterministically
+- `project_summary` carries `activity_state`, `attention_state`, `health_state`, owner, and projection-trust disclosure, while canonical blocked episodes outrank weaker derived warnings
+- `project_attention_item` carries the primary route payload and projection-trust disclosure for Orchestrator, Dashboard, and notification consumers
+
+### Account pressure, history, and runtime attribution
+Storage owns append-only `account_pressure_episode` and `account_switch_event` families. Usage, History, Ledger, and Orchestrator consume those same durable events.
+
+Storage also owns persistence and projection for one shared runtime attribution packet across tool events, runtime artifacts, receipts, and usage records. The packet carries run/attempt/thread/node/artifact/provider/usage anchors plus execution/runtime identity, including requested/effective account state and operational identity.
+
+### Artifacts index, export manifests, and route/open linkage
+Storage owns distinct export classes:
+- record export
+- bundle export
+- view export
+
+Every export manifest carries `export_id`, `export_kind`, project scope, included ids, and trust-state disclosure.
+
+Artifacts storage rules:
+- `artifacts_index`, `artifacts_project_state`, and `projector.checkpoint.runtime_artifacts` are rebuildable from canonical runtime evidence
+- artifact index families index `attempt_id` and `thread_id` so attempt-native routing survives projection rebuilds
+- runtime artifacts that summarize external operations carry receipt linkage
+- canonical route/open ownership stays with the shared route/open contracts; storage persists the joins and lookup fields needed for those routes
+
+### Worktree/lane lifecycle, handshake, and cleanup lineage
+Storage owns the lane/worktree split.
+
+Rules:
+- lane lifecycle and worktree lifecycle are related but not identical
+- worktree records expose owning package/work-package, lane, run, lifecycle, and blocked/recovery state needed by Source Control and Orchestrator handshakes
+- cleanup is gated by runtime, recovery, and lineage checks rather than age alone
+- contamination, reuse, and cleanup decisions remain explicit and auditable
+- historical lane/worktree records survive archive, prune, remove, and cleanup operations
+- lane and worktree families keep cleanup/archive lineage explicit so later audits can trace how an execution environment was reused or retired
+
+### Naming and migration rules
+Storage migrations are forward-only and monotonic.
+
+Required rules:
+- new fields are additive first; destructive renames require a migration note in the same section that introduces them
+- stable semantic names stay aligned across runtime, persistence, and events unless an explicit translation layer is defined
+- account/profile-backed runtime records and server-profile-backed runtime records stay distinct durable shapes even when surfaced through one GUI ontology
+- consumer docs follow owner-first reconciliation order: owner correction here first, then consumer propagation, then fidelity audit rerun### Canonical records
 Storage owns discoverable record families for runtime, receipt, and projection truth.
 
 ### Required redb keys

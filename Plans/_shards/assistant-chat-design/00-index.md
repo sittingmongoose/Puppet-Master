@@ -42,3 +42,4 @@ Canonical source: [Plans/assistant-chat-design.md](../../assistant-chat-design.m
 - [34-29-natural-language-mode-invocation-and-wizard-escalation-2026-03-08.md](34-29-natural-language-mode-invocation-and-wizard-escalation-2026-03-08.md) — ## 29. Natural-language Mode Invocation and Wizard Escalation (2026-03-08)
 - [35-unified-thread-blocked-state-lifecycle.md](35-unified-thread-blocked-state-lifecycle.md) — ## Unified Thread Blocked-State Lifecycle
 - [36-worktrees-in-assistant.md](36-worktrees-in-assistant.md) — ## Worktrees in Assistant
+- [37-shared-actor-boundary-route-payload-and-blocked-notice-packet.md](37-shared-actor-boundary-route-payload-and-blocked-notice-packet.md) — ## Shared actor-boundary, route payload, and blocked_notice packet

@@ -23,7 +23,62 @@ ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md
 
 ---
 
-## 1. Canonical model identifier
+## Provider/model precedence and settings resolution
+
+This section is the single owner section for provider/model precedence across run, seam, package, node, overseer, and delegated-subagent scope.
+
+### Three-axis settings model
+
+Settings resolution is always described on three axes:
+- `source`: where a candidate value came from (`manual_override`, `persona_preference`, `surface_default`, `scope_policy`, `config_default`, `provider_default`).
+- `request`: the value explicitly requested for this run or child run.
+- `execution`: the value actually handed to the selected provider/runtime after capability checks, worktree assignment, and policy gating.
+
+The display grammar MUST preserve the distinction between requested and effective values for provider, model, variant, effort, auth mode, and account identity.
+
+### Deterministic precedence by scope
+
+The canonical precedence chain is:
+1. explicit run-envelope override
+2. scoped owner policy for the active execution unit (`run`, `seam`, `package`, `node`, `overseer`, or delegated subagent)
+3. Persona preference
+4. surface or stage default
+5. project or global config default
+6. last-used state where the surface explicitly permits it
+7. provider default
+
+Rules:
+- the same inputs and availability set MUST produce the same effective result
+- scope-specific policy MAY narrow or pin provider/model choices, but it MUST still emit requested versus effective values
+- parallel-node worktree assignment participates in precedence when a worktree owner constrains the allowed provider/model surface for that node
+- ownership transitions between overseer and delegated-subagent levels MUST emit a fresh resolver record instead of silently inheriting stale effective state
+
+### Resolver inputs and emit shape
+
+Resolver inputs MUST include:
+- requested Persona and run-envelope overrides
+- surface/stage defaults
+- scope owner policy (`run`, `seam`, `package`, `node`, `overseer`, delegated-subagent)
+- capability snapshot and model metadata
+- account/profile availability
+- worktree assignment and execution-role context
+- permission ceiling and mutation policy
+
+The resolver MUST emit one shared record containing at least:
+- `requested_platform`, `effective_platform`
+- `requested_model`, `effective_model`
+- `requested_variant`, `effective_variant`
+- `requested_auth_mode`, `effective_auth_mode`
+- `requested_account_id?`, `effective_account_id?`
+- `execution_role`
+- `selection_reason`
+- `resolver_matrix_entry`
+- `worker_policy_display`
+- `skipped_persona_controls[]`
+
+That emit shape is consumed by runtime snapshots, inspectors, and owner transitions; later sections in this document elaborate, but do not replace, this owner section.
+
+---## 1. Canonical model identifier
 <a id="MODEL-ID"></a>
 
 ### 1.1 Format
@@ -840,3 +895,56 @@ Minimum Default Crew settings model:
 - immediate normalization of the whole crew to Copilot when any member selects Copilot
 
 ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/CLI_Bridged_Providers.md
+
+## Provider/model precedence and settings resolution
+
+The orchestrator supports multiple AI providers (OpenAI, Anthropic, GitHub Copilot, etc.) and multiple models within each provider. Provider and model selection is governed by a three-axis settings model and a precedence chain.
+
+### Three-axis settings model
+
+1. **Persona axis**: Users select a Persona (e.g., "Code Analyzer", "Documentation Writer") which carries default preferences for model, provider, and mutation_policy.
+2. **Execution Unit Type axis**: Different execution unit types (run, node, delegated_subagent) can have scoped policies (e.g., "use GPT-4 for run-level analysis, but Claude for node-level code generation").
+3. **Scope axis**: Settings can be scoped to worktree, project, or global level; settings at a tighter scope override broader scopes.
+
+### Precedence chain for provider/model selection
+
+When a unit needs to select a provider and model, resolve in this order:
+
+1. **Explicit run-envelope override**: If the run was launched with `--provider=X --model=Y`, use those.
+2. **Scoped owner policy**: If the active execution_unit_type has a policy (e.g., "node-type uses Copilot"), apply it.
+3. **Persona preference**: Use the active Persona's default model and provider.
+4. **Surface or stage default**: If the UI surface or execution stage has a default (e.g., "code review prefers GPT-4"), use it.
+5. **Project or global config default**: Fallback to project-wide or global settings.
+6. **Last-used state**: If permitted by settings, use the model/provider from the previous run of the same type.
+7. **Provider default**: Use the provider's canonical default model.
+
+### Settings resolution and override semantics
+
+- **Conservative policy**: Use only settings tier 1 (explicit override) or tier 3+ (canonical defaults); do not apply stage defaults or persona preferences.
+- **Standard policy** (default): Use tiers 1-5 (explicit override through project defaults); respect all configuration.
+- **Aggressive policy**: Use all tiers 1-7; auto-select the cheapest or fastest model if multiple are available and equally suitable.
+
+### Provider capability and cost gating
+
+- **Capability check**: Before selecting a provider, verify it supports the required model and inference parameters (context length, output length, reasoning mode, etc.).
+- **Cost gating**: If a model exceeds the active Persona's cost budget, skip it and move to the next in the precedence chain.
+- **Fallback**: If all preferred models exceed budget or are unavailable, emit a concern (not a silent failure) and suggest cheaper alternatives or escalation.
+
+### Selection reason and audit trail
+
+When a provider and model are selected, emit a `selection_reason` object:
+```typescript
+selection_reason {
+  selected_provider: string,           // e.g., 'openai', 'anthropic', 'github'
+  selected_model: string,              // e.g., 'gpt-4', 'claude-3-opus'
+  precedence_tier: number,             // 1-7 indicating which tier was applied
+  fallback_reason?: string,            // If a fallback was triggered (capability, cost, unavailability)
+  alternatives: Array,                 // Other models that were considered and why they were skipped
+  selection_time_utc: string,          // When the decision was made
+  execution_unit_id: string,           // Tied to the unit making the selection
+}
+```
+
+This metadata is logged so inspectors and auditors can trace why a particular model was chosen and what constraints were active.
+
+ContractRef: Primitive:Persona, Primitive:ExecutionUnitContext, ContractName:Plans/Executor_Protocol.md

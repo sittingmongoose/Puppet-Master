@@ -1,59 +1,29 @@
 ## 4. Integration: File Manager, editor, and chat
 
 - File Manager, editor, and chat share the **same project context**.
-- @ mention resolution uses the same file list as the File Manager (single source of truth for "project files").
-- **Clicking a file path or code block in chat opens the file in the editor**; see §5.
+- `@` mention resolution uses the same file list as the File Manager (single source of truth for project files).
+- Clicking a file path or code block in chat opens the file in the editor; see §5.
 
 ### 4.1 Open-file contract
 
-Source-open behavior uses two canonical contracts.
+FileManager is the canonical owner of the file-open and artifact-storage contract. When a file is opened (via GUI, CLI, or internal routing), the following rules apply:
 
-### OpenFile
-`OpenFile` remains the path-based editor open contract.
+1. **Identity-based routing**: If the file path includes a route_target scheme (e.g., `github://owner/repo/file.md`), the open request is resolved through the shared route/open semantics in Contracts_V0.md, not a raw filesystem read.
+2. **Worktree binding**: Opened files are bound to the active worktree via an execution_unit_context; artifacts opened in different worktrees have separate identity chains.
+3. **Artifact-by-identity**: Artifacts (outputs, logs, diffs) are stored by content hash and indexed by (concern_id, route_target, artifact_type, timestamp); raw paths are deprecated.
+4. **Open-file visibility**: The open-file list visible in the GUI is filtered by the active execution_role and the current approval_scope. Files opened in restricted approval scopes are not shown to unprivileged users.
 
-Required fields are:
-- `path`
-- `line?`
-- `range?`
-- `target_group?`
+### Route/open rules
 
-`OpenSubject` is the identity-native source-open contract.
+- **File open**: Resolve route_target scheme and permissions, then bind to worktree and execution_unit_context.
+- **Artifact open**: Query artifact storage by (concern_id, route_target, artifact_type) and check visibility rules.
+- **Help open**: Open help entries via the shared help/OpenSubject routing in Contracts_V0.md.
+- **Concern open**: Open a concern episode by concern_id and blocked_episode_id; show the escalation stack and relevant artifacts.
 
-Required fields are:
-- `subject_id`
-- `open_intent`
+### Error recovery in file/artifact access
 
-Rules:
-- `subject_id` is closed to `doc:<document_id>` and `artifact:<artifact_id>`
-- `OpenSubject` resolves to the best source realization, including `OpenFile` or a transient `generated://<artifact_id>` buffer
-- `OpenSubject` is used for artifact-backed and generated subjects that do not have a stable workspace path
-- `OpenFile` remains the canonical contract for real workspace documents
+If a file path is broken or a route_target is unreachable:
+- Log a visibility deferral (do not fail the entire run).
+- Emit a navigable error in the concern record so the user can inspect what went wrong.
+- Provide a fallback route (e.g., workspace://project/concern) for results if the primary route was unavailable.
 
-ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md
-
-Route/open rules:
-- shell navigation uses `route_target`
-- source realization uses `OpenSubject` or `OpenFile`
-- `resume_url` is serialized transport only and does not replace the canonical route/open split
-
-ContractRef: ContractName:Plans/Crosswalk.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/assistant-chat-design.md
-
-#### Thread context detail documents
-
-The thread-scoped Context Detail Pane may be realized as a generated editor-tab document.
-
-Rules:
-- shell destination and focus are owned by `route_target`
-- generated document realization for the Context Detail Pane uses the canonical `OpenSubject` path rather than raw-path guessing
-- repeated opens for the same thread reuse the existing tab identity instead of opening duplicate tabs
-- the implementation may back the tab with a generated document id rather than a workspace file path, but the route/open split remains canonical
-
-ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/assistant-chat-design.md
-
-ContractRef: Plans/Contracts_V0.md#7.4 `OpenSubject`
-
-Labels:
-- Open Subject
-
-Behavioral rules:
-- File/open surfaces must use `subject_id` only for canonical openable content families.

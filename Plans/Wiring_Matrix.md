@@ -471,3 +471,18 @@ ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/UI_Com
 | `cmd.search.clear_all_remote_caches` | RemoteCacheManager `evict_all` | User confirms global clear | remove all remote cache roots |
 
 ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md, ContractName:Plans/GitHub_Integration.md
+## Route-aware wiring reconciliation
+
+### Route-aware navigation and open-contract rows
+- Route awareness in wiring decisions means that wiring producer/consumer pairs MUST be compatible with the same route shape and open-contract set.
+- Producers advertise the route args they emit; consumers declare route args they require.
+- Incompatible route shapes fail early in graph validation, not at runtime.
+- Open-contract rows capture which contracts remain unresolved and must be carried forward in runtime handshakes.
+
+### Verification evidence hooks
+- Evidence verification references wiring matrix rows via `wiring_matrix_ref` to document which wiring decisions were validated.
+- Validation passes (e.g. GATE-010 route-aware verification) attach to specific wiring rows, not to file paths or config identifiers.
+
+### Compatibility-only fallback marking
+- Legacy wiring rows that are marked as compatibility-only MUST NOT participate in active graph construction.
+- Compatibility-only rows remain visible for audit and migration tracking but are skipped during wiring validation.

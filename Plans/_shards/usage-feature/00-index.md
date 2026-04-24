@@ -17,11 +17,10 @@ Canonical source: [Plans/usage-feature.md](../../usage-feature.md)
 - [09-data-and-backend-conceptual.md](09-data-and-backend-conceptual.md) — ## Data and Backend (conceptual)
 - [10-gui-placement-options.md](10-gui-placement-options.md) — ## GUI Placement Options
 - [11-gaps-current-state-vs-desired.md](11-gaps-current-state-vs-desired.md) — ## Gaps (Current State vs. Desired)
-- [12-potential-problems.md](12-potential-problems.md) — ## Potential Problems
-- [13-enhancements-beyond-minimum.md](13-enhancements-beyond-minimum.md) — ## Enhancements (Beyond Minimum)
-- [14-out-of-scope-for-this-plan.md](14-out-of-scope-for-this-plan.md) — ## Out of Scope for This Plan
-- [15-success-criteria.md](15-success-criteria.md) — ## Success Criteria
-- [16-version-history.md](16-version-history.md) — ## Version History
-- [17-widget-composed-page-layout-addendum-2026-02-23.md](17-widget-composed-page-layout-addendum-2026-02-23.md) — ## Widget-Composed Page Layout (Addendum -- 2026-02-23)
-- [18-runtime-scheduler-recovery-observability-addendum-2026-03-09.md](18-runtime-scheduler-recovery-observability-addendum-2026-03-09.md) — ## Runtime Scheduler / Recovery Observability Addendum (2026-03-09)
-- [19-source-control-github-actions-and-docker-manager-cost-attribution-addendum-2026-03-12.md](19-source-control-github-actions-and-docker-manager-cost-attribution-addendum-2026-03-12.md) — ## Source Control, GitHub Actions, and Docker Manager Cost Attribution Addendum (2026-03-12)
+- [12-enhancements-beyond-minimum.md](12-enhancements-beyond-minimum.md) — ## Enhancements (Beyond Minimum)
+- [13-out-of-scope-for-this-plan.md](13-out-of-scope-for-this-plan.md) — ## Out of Scope for This Plan
+- [14-success-criteria.md](14-success-criteria.md) — ## Success Criteria
+- [15-version-history.md](15-version-history.md) — ## Version History
+- [16-widget-composed-page-layout-addendum-2026-02-23.md](16-widget-composed-page-layout-addendum-2026-02-23.md) — ## Widget-Composed Page Layout (Addendum -- 2026-02-23)
+- [17-runtime-scheduler-recovery-observability-addendum-2026-03-09.md](17-runtime-scheduler-recovery-observability-addendum-2026-03-09.md) — ## Runtime Scheduler / Recovery Observability Addendum (2026-03-09)
+- [18-source-control-github-actions-and-docker-manager-cost-attribution-addendum-2026-03-12.md](18-source-control-github-actions-and-docker-manager-cost-attribution-addendum-2026-03-12.md) — ## Source Control, GitHub Actions, and Docker Manager Cost Attribution Addendum (2026-03-12)

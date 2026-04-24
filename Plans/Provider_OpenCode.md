@@ -59,6 +59,24 @@ ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/CLI_Bridged_
 
 ---
 
+## Canonical data-shape reconciliation
+
+This section owns OpenCode correlation and approval-scope alignment with PM runtime canon.
+
+### Required data shape
+
+Rules:
+- PM lineage fields such as `thread_id`, `run_id`, `parent_run_id`, and `child_run_id` remain canonical PM identity
+- OpenCode session ids are provider-native correlation fields only and MUST NOT replace canonical `thread_id` or any PM lineage field
+- OpenCode correlation fields MAY be preserved on normalized provider events, storage records, and diagnostic surfaces, but they remain subordinate to PM runtime identity
+- approval reuse for OpenCode-mediated work keys from the same canonical `approval_scope_key` used by permissions, HITL, doom-loop protection, and session approval caching
+- `approval_scope_key` spans actor kind, execution role, lane/package/run context, account or server-profile context, and the concrete external-side-effect target when one exists
+- attached or managed OpenCode server profiles participate in approval scoping and correlation as runtime context; they do not become replacement thread identity
+
+This owner section governs later mapping detail in §§6.1 and 557+.
+
+---
+
 ## 4. Architecture Overview
 
 ### 4.1 OpenCode Server Model

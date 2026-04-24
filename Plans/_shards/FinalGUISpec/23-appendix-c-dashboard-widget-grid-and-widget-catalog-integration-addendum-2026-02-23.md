@@ -22,23 +22,30 @@ ContractRef: ContractName:Plans/Widget_System.md#3
 
 ### C.2 Default Dashboard Widget Layout
 
-The default layout preserves the current section 7.2 card set, mapped to Widget Catalog IDs:
+The default dashboard layout includes:
+- **widget-orchestrator-progress** (ID: `orch-progress-v1`): Shows current run progress, node execution status, and lane state.
+- **widget-active-lanes** (ID: `lanes-view-v1`): Lists active lanes and worktree allocation state.
+- **widget-recent-results** (ID: `results-v1`): Shows recent execution results and artifact links.
 
-| Col | Row | Old Card Name (section 7.2) | Widget Catalog ID | Default Size |
-|-----|-----|---------------------------|-------------------|-------------|
-| 0 | 0 | Orchestrator Status | `widget.orchestrator_status` | 2x1 |
-| 2 | 0 | Current Task | `widget.current_task` | 2x1 |
-| 0 | 1 | Progress | `widget.progress_bars` | 4x1 |
-| 0 | 2 | Calls to Action | `widget.cta_stack` | 2x2 |
-| 2 | 2 | Terminal Output | `widget.terminal_output` | 2x2 |
-| 0 | 4 | Interview Panel | `widget.interview_panel` | 1x2 |
-| 1 | 4 | Error Display | `widget.error_display` | 1x2 |
-| 2 | 4 | Platform Quota | `widget.budget_donuts` | 2x2 |
+### C.3 Add-Widget Flow on Dashboard
 
-This matches the current Iced Dashboard layout. On first load, this default is applied. Users can then customize.
+Users add widgets via:
+1. Dashboard menu → "Add Widget"
+2. Select from named widget catalog (see C.4)
+3. Confirm placement and sizing
+4. Widget appears on dashboard with default configuration
 
-ContractRef: ContractName:Plans/Widget_System.md#6.3
+### C.4 Widget Catalog vs. Core Widget Catalog
 
+The current **named widget catalog** includes:
+- `widget-orchestrator-progress`: Orchestrator progress view (Puppet Master native).
+- `widget-active-lanes`: Active lane browser (Puppet Master native).
+- `widget-recent-results`: Recent result summary (Puppet Master native).
+- `widget-custom-metrics`: User-defined metric display (user-generated, optional).
+
+**Core widgets** are Puppet Master-owned and part of the default installation. **Custom widgets** are user-generated and optional.
+
+Widget_System consumes this named catalog directly; it does not invent new widget IDs or synthesize missing entries.
 ### C.3 Add-Widget Flow on Dashboard
 
 The Dashboard has an explicit **"Add Widget"** control:

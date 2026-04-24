@@ -1,0 +1,24 @@
+pm.packet_shape_report.v1
+work_id: w-20260312-203855
+run_id: r-20260312-203855-run-020
+status: pass
+packet_written: yes
+targets_total: 36
+doc_intents_total: 36
+docs_touched: 35
+create_intents: 2
+update_intents: 34
+operations:
+- file_end:append = 3
+- file_end:replace_section = 2
+- file_start:insert_at_start = 2
+- heading:insert_after = 3
+- heading:replace_section = 26
+- json_object_path:add_schema_property = 1
+notes:
+- all 36 reconciliation targets remain executable mutation doc_intents
+- target-029 and target-032 are create mutation targets
+- target-030 now emits json_object_path:add_schema_property instead of full-file replacement
+- packet assembled from three bounded target chunks without reconciliation-plan repairs
+- target-024 uses the current UI command anchor and survivor set from the planned reconciliation target
+next_required_stage: Scribe

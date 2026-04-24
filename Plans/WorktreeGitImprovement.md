@@ -131,18 +131,54 @@ ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/Architecture_Inv
 - **Gap:** `list_worktrees` only sets `branch` when it sees a `branch refs/heads/...` line. Detached HEAD worktrees yield empty `branch`; `merge_worktree` would then call `git merge ""`.
 - **Fix:** When parsing porcelain output, treat missing branch as "detached". In `merge_worktree`, if source_branch is empty, skip merge or merge by commit hash and document behavior.
 
-### 2.7 worktree_exists is path-only
-Recovery and path validation must preserve historical state instead of collapsing missing worktrees into disappearance.
+### 2.8 Lane/worktree lifecycle, storage families, and historical vocabulary
 
-Required fields:
-- `historical`
-- `archived`
-- `removed`
-- `historical_lineage_refs[]`
+#### Lane and worktree lifecycle
+- Lanes own worktrees through explicit allocation and handshake.
+- Worktrees are allocated at lane start and reclaimed at lane end (implicit or explicit).
+- Storage families define data layout and cleanup rules; worktrees may span multiple storage families.
+
+#### Source Control to Orchestrator handshake
+- When a lane requests a worktree, Source Control MUST confirm allocation, provide the worktree path, and publish any applicable storage metadata.
+- Orchestrator records the handshake in the ledger so restart and recovery can reuse the same worktree.
+- Stale worktrees (allocated but not reclaimed) are eligible for cleanup via storage housekeeping.
+
+#### Provider/model precedence and worktree allocation strategy
+- Worktree allocation strategy is determined by lane policy, not by individual nodes.
+- Multiple providers may offer worktree allocation; the lane selects a primary provider and routes all allocations through that provider.
+- Fallback providers are secondary; they are used only if the primary provider is unavailable.
+### Source Control to Orchestrator handshake
+Source Control is the concrete repo/worktree operator, while Orchestrator remains the lane-pool operational truth.
+
+Required row fields:
+- owning package reference
+- `lane_id`
+- `run_id`
+- `worktree_id`
+- lifecycle state
+- blocked/recovery state
 
 Rules:
-- Recovery text references `Plans/storage-plan.md#Restart and stale history`.
-- Missing live worktrees remain inspectable through historical lineage.
+- worktree rows MUST show owning package, lane, and run references together with lifecycle and blocked/recovery state
+- Source Control actions operate on concrete repositories and worktrees but MUST report results back through canonical lane/worktree records
+- Orchestrator decisions about reuse, cleanup, retry, and recovery consume the same lane/worktree records rather than side files
+
+### Provider/model precedence and worktree allocation strategy
+Provider/model selection and worktree allocation are one ownership surface because allocation follows the effective execution scope.
+
+Precedence order:
+- delegated subagent
+- overseer
+- node
+- work package
+- seam
+- run
+
+Allocation rules:
+- parallel nodes receive distinct worktree allocations unless they explicitly reuse an existing clean allocation owned by the same effective scope
+- contamination, dirty-state, conflict-state, blocked recovery, or lineage mismatch disqualify reuse and force a new allocation or explicit repair
+- cleanup only occurs after lineage-safe completion or archival and MUST preserve the historical record of the lane/worktree pair
+- ownership transitions between scopes MUST update the effective provider/model choice together with the lane/worktree assignment record
 ### 2.9 PR creation after restart uses main repo branch
 
 - **Gap:** After restart, `get_node_worktree(node_id)` is `None`. `create_node_pr` then uses `git_manager.current_branch()` for head_branch, so the PR is created from the main repo branch, not the worktree branch.

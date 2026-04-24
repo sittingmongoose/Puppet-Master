@@ -1,13 +1,12 @@
 ## SSOT References (DRY)
 
-The following canonical documents govern this spec. This document MUST NOT redefine
-schemas or contracts owned by those sources; it adds the IDE UX layer on top of them.
+The following canonical documents govern this spec. This document MUST NOT redefine schemas or contracts owned by those sources; it adds the IDE UX layer on top of them.
 
 ContractRef: ContractName:Plans/DRY_Rules.md, PolicyRule:Decision_Policy.md§2
 
 | Reference | Purpose |
 |---|---|
-| `Plans/Spec_Lock.json` | Locked decisions (github_operations, auth_model) |
+| `Plans/Spec_Lock.json` | Locked decisions (`github_operations`, `auth_model`) |
 | `Plans/DRY_Rules.md` | DRY + ContractRef rule (canonical) |
 | `Plans/Contracts_V0.md` | Canonical contracts: EventRecord, UICommand, AuthState |
 | `Plans/Glossary.md` | Canonical terminology |
@@ -22,8 +21,7 @@ ContractRef: ContractName:Plans/DRY_Rules.md, PolicyRule:Decision_Policy.md§2
 | `Plans/Crosswalk.md` | Primitive ownership boundaries |
 | `Plans/storage-plan.md` | redb/seglog/Tantivy storage rules |
 
-> This document intentionally does **not** redefine `AuthState`, `AuthPolicy`, `AuthEvent`,
-> GitHub device-code polling semantics, token storage rules, or GitHub API call contracts.
+> This document intentionally does **not** redefine `AuthState`, `AuthPolicy`, `AuthEvent`, GitHub device-code polling semantics, token storage rules, or GitHub API call contracts.
 > Those are canonical in `Plans/GitHub_API_Auth_and_Flows.md` and `Plans/Contracts_V0.md`.
 
 ---

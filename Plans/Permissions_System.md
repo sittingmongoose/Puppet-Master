@@ -24,6 +24,33 @@ ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md
 
 ---
 
+## Canonical data-shape reconciliation
+
+This section owns the permission-facing identity and approval correlation shape.
+
+### Required data shape
+
+Permission, approval, and blocked-state envelopes MUST preserve:
+- `requested_account_id`
+- `requested_account_policy`
+- `requested_account_binding`
+- `effective_account_id`
+- `effective_provider_identity`
+- `execution_role`
+- `operational_identity`
+- `approval_scope_key`
+
+Rules:
+- stable requested/effective account identity MUST survive permission evaluation, approval reuse, blocked episodes, and historical replay
+- `provider_account_id`, OpenCode session ids, and other provider-native handles are additive correlation fields only; they MUST NOT replace canonical `thread_id`, `run_id`, or stable account identity
+- `approval_scope_key` is the reusable approval join key across permissions, HITL, doom-loop protection, and session approval caching
+- `approval_scope_key` is derived from actor kind, execution role, lane/package/run context, requested/effective account context, and the concrete external-side-effect target when one exists
+- exact scope-key match is required for approval reuse unless a durable project/global rule is explicitly created
+
+This owner section governs later acceptance criteria and addenda; later sections elaborate but do not replace this shape.
+
+---
+
 ## 1. Definitions and scope
 ### 1.1 Path normalization invariants
 

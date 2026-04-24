@@ -219,3 +219,11 @@ ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/sto
 Any PM surface that participates in debugging MUST preserve `investigation_id` and, when applicable, `instrumentation_id` rather than minting surface-local debug identities that cannot be correlated later.
 
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/orchestrator-subagent-integration.md
+
+## INV-019 -- Runtime identity and blocked-policy continuity
+**Rule:** Canonical runtime identity and blocked-state policy MUST survive dispatch, restart recovery, approval, and usage attribution without being reminted or collapsed into provider-native aliases.
+- `execution_role`, `requested_account_id`, requested/effective operational identity, and account-switch lineage remain part of the shared runtime packet and every blocked/recovery handoff.
+- `blocked_sequence` is the canonical blocked-episode anchor; startup recovery rebinds unresolved blocked episodes to the preserved runtime identity instead of minting a new episode.
+- DAE jail posture, approval posture, usage switch-history, and execution-role follow-through remain continuous across retries, resumes, restores, and recovered attempts.
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/GitHub_API_Auth_and_Flows.md
