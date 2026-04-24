@@ -52,49 +52,31 @@ This file uses primitive names as **routing labels** only; detailed schemas belo
 
 ContractRef: ContractName:Contracts_V0.md, SchemaID:Spec_Lock.json
 
----
+Primitive:RouteTarget / Primitive:OpenSubject
 
-## 3. Ownership boundaries
+Route targets and open subjects are the canonical way to name destinations and inspection points across GUI, CLI, help, and underlying services. This section clarifies the boundary: ownership and canonical semantics live in Plans/Contracts_V0.md; this section explains how surfaces navigate them.
 
-Ownership boundaries are explicit so downstream docs cannot re-own orchestration canon accidentally.
+#### Route target navigation rules
+1. CLI `-r`/`--route` and GUI "Save" buttons resolve route_target strings through a cascade:
+   - `file://...` → local file system (requires file permissions)
+   - `github://owner/repo/path` → GitHub repository (requires auth and branch access)
+   - `workspace://project/concern` → internal workspace (always allowed, creates if absent)
+   - `share://sharepoint-url` or `notion://...` → external service (depends on integration availability)
+2. If route is ambiguous (e.g., `~/output` with no scheme), the active Persona's default route is used.
+3. Crosswalk does not own the decision; it documents how the decision made in Contracts_V0.md and Models_System.md flows through to the UI.
 
-### 3.1 Runtime orchestration ownership
-Canonical runtime orchestration ownership is:
-- `Executor_Protocol.md` owns dispatch-time execution context and runtime role boundaries
-- `Contracts_V0.md` owns persisted contract shapes, blocked-episode identity, command envelopes, `route_target`, and `OpenSubject`
-- `storage-plan.md` owns durable record and projection families
-- `Prompt_Pipeline.md` owns requested/effective runtime identity resolution semantics
-
-ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md
-
-### 3.2 Orchestrator ownership
-Canonical Orchestrator ownership is:
-- node graph is the execution model
-- `Feature Seam` and `Work Package` are graph-owned objects
-- `Node` is the smallest executable unit
-- `Package Overseer` and `Seam Overseer` are governance roles; runtime remains the canonical owner of readiness, blockers, transitions, retry budgets, and dispatch
-
-ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/Run_Graph_View.md
+#### Open subject navigation rules
+1. GUI "Open" and "Inspect" buttons normalize open requests to an OpenSubject and route through the orchestrator's concern/help/artifact resolution.
+2. Subject types: `file`, `concern`, `help_entry`, `project_state`, `run`, `artifact_storage`.
+3. Crosswalk describes which surfaces can open which types; canonical ownership rules are in Contracts_V0.md.
 
 ### 3.3 Navigation and source-open ownership
-Canonical navigation/source-open ownership is:
-- `Contracts_V0.md` owns `route_target` and `OpenSubject`
-- `FileManager.md` owns `OpenFile`
-- `storage-plan.md` owns persisted subject identity and restore joins
-- `FinalGUISpec.md` owns shell realization and destination-surface behavior
-
-ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md
+The source control lane, worktree, and open-file system are owned by the FileManager. However, navigation through opened files (following includes, tracing references) remains a GUI responsibility coordinated through open/route semantics.
 
 ### 3.4 Source Control and lane/worktree ownership
+FileManager owns the git/worktree model and lane assignments. Crosswalk clarifies when navigation crosses lanes and how that affects artifact visibility and approval scope.
 
-Canonical source-control ownership is:
-- Source Control is worktree-first and compact
-- Orchestrator is lane/package/seam operational view
-- `worktree` remains the concrete Git/filesystem backing object
-- `lane` is the primary operational orchestration object bound to package execution and historical lineage
-
-ContractRef: ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/Orchestrator_Page.md
-
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Models_System.md, ContractName:Plans/FileManager.md
 ### 3.5 Assistant thread worktree binding ownership
 
 Thread-to-worktree binding is owned by `Plans/assistant-chat-design.md`.

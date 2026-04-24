@@ -1,0 +1,15 @@
+pm.verifier_report.v1
+work_id: w-20260312-203855
+run_id: r-20260312-203855-run-019
+preflight_status: PASS
+validated_spans: 49
+targets_total: 36
+doc_intents_total: 36
+comparison_mode: normalized text, ignoring ContractRef lines
+
+preflight_summary: all emitted mutation targets are present in the live docs
+
+run_gates_exit_code: 0
+run_gates_output:
+(no output)
+

@@ -26,8 +26,93 @@ Other plans MUST reference these contracts rather than redefining them.
 
 ContractRef: ContractName:Plans/Contracts_V0.md
 
----
+## Cross-surface runtime, concern, and route/open contracts
 
+This section is the single canonical owner for runtime identity, concern/episode lifecycle, route_target primitives, and OpenSubject routing semantics across all surfaces and execution contexts.
+
+### Fidelity recovery order
+
+1. **Execution context**: execution_role, requested_account_id, and approval_id persist as a recovery triplet through every retry, restart, and resume.
+2. **Concern lifecycle**: concern_id and blocked_sequence form the immutable anchor for concern recovery; no new episode is minted during restart.
+3. **Route and open**: route_target and OpenSubject identity remain stable even when the underlying provider or execution unit changes.
+4. **Approval scope**: approval_id scope is tied to the execution_unit_context level (run, seam, package, node) and does not spill across unit boundaries without explicit cascade request.
+
+### Shared governance and runtime record envelope
+
+Every runtime handoff includes:
+```
+{
+  execution_context: {
+    execution_role: string,
+    execution_unit_id: string,
+    execution_unit_type: 'run' | 'seam' | 'package' | 'node' | 'overseer' | 'delegated_subagent'
+  },
+  concern_record: {
+    concern_id: string,
+    blocked_sequence: number,
+    blocked_episode_id: string,
+    escalation_stack: EscalationFrame[],
+    approval_posture: 'auto' | 'require_approval' | 'suggest_only' | 'blocked',
+    approval_id?: string,
+    approval_deadline_utc?: string
+  },
+  runtime_identity: {
+    requested_account_id?: string,
+    effective_account_id: string,
+    execution_role: string,
+    account_switch_lineage: string[],
+    runtime_start_utc: string,
+    restart_count: number
+  },
+  dae_jail_posture: 'open' | 'audit' | 'restricted' | 'locked'
+}
+```
+
+### Requested/effective account and execution identity
+
+- `requested_account_id`: what the user or prior stage asked for (may be null).
+- `effective_account_id`: the account actually available after capability/permission check.
+- These MUST be emitted as a pair in runtime records so inspectors and resumption can distinguish intent from capability.
+- Account switch history (lineage) is preserved in `account_switch_lineage[]` so recovery knows the path that led to the current effective account.
+
+### Concern record family, lifecycle, and deferred visibility
+
+- A concern (issue, error, escalation) is not a transaction; it is a **lineage of episodes**.
+- Each episode has:
+  - `concern_id` (shared across all episodes for the same root issue)
+  - `blocked_episode_id` (unique per episode)
+  - `blocked_sequence` (0, 1, 2, ... monotonic for each concern_id)
+  - `escalation_stack`: list of escalation frames showing who tried to resolve it and when.
+- Visibility rules:
+  - UI does not display escalation stack internals unless the active user is the escalation owner or the operation is in audit mode.
+  - Help/notification surfaces MUST reference concern_id but MAY defer showing blocked_sequence/episode details until the concern is stable (no new escalations for N seconds).
+  - Shared help entries (e.g., timeout, auth failure, model unavailable) pivot on `concern_class` and `concern_reason` to provide general guidance, not episode specifics.
+
+### route_target, OpenSubject, and command normalization
+
+- **route_target**: path or resource identifier for where output or side-effects are directed. Examples:
+  - `file:///path/to/output.json` (local file)
+  - `github://owner/repo/issues/123` (GitHub issue)
+  - `workspace://project/concern` (local workspace concern)
+- **OpenSubject**: resource or concern that is being opened/inspected. Must carry:
+  - `subject_type`: 'file' | 'concern' | 'help_entry' | 'project_state' | 'run'
+  - `subject_id`: the canonical ID or path
+  - `effective_route_target`: after permission/availability checks, where the open actually resolves
+- Command normalization: CLI, GUI, and Help surfaces all normalize route and open requests to a shared record so the orchestrator can handle them uniformly.
+
+### Blocked episode, approval scope, and compatibility fallback
+
+- A **blocked episode** occurs when execution is paused for approval, manual input, or recovery.
+- `approval_scope` is tied to execution_unit_context:
+  - `run` scope: approval gates the entire run and all children.
+  - `node` scope: approval gates one node within a DAG.
+  - `delegated_subagent` scope: approval gates an agent invocation but not the parent orchestrator.
+- Fallback behavior:
+  - If approval service is unavailable, the default posture (`approve_mode` from settings) is applied; no silent failure.
+  - If runtime identity is unresolvable, escalate to the execution_role's escalation chain rather than failing the entire run.
+  - If route_target is unreachable, log a visibility deferral and continue with a default route; do not block execution.
+
+ContractRef: Primitive:ExecutionContext, Primitive:ConcernRecord, Primitive:ApprovalScope, Primitive:RouteTarget, Primitive:OpenSubject, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Crosswalk.md
 ## 1. Events (persisted)
 
 ### 1.1 Assistant worktree seglog events

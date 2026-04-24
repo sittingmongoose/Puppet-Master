@@ -1,0 +1,1376 @@
+{
+  "schema_id": "pm.reconciliation_plan.v1",
+  "work_id": "w-20260312-203855",
+  "summary": {
+    "targets_total": 36,
+    "docs_touched": 35,
+    "coverage_rows_mapped": 210,
+    "gap_ids_mapped": 68,
+    "targets_requiring_new_owner_heading": 28,
+    "targets_using_full_owner_container": 21
+  },
+  "targets": [
+    {
+      "target_id": "target-001",
+      "path": "Plans/Architecture_Invariants.md",
+      "mapped_owner_heading": "## INV-019 -- Runtime identity and blocked-policy continuity",
+      "live_anchor": "FILE_START",
+      "action": "create_owner_section",
+      "must_create_owner_heading": true,
+      "required_structural_headings": [
+        "## INV-019 -- Runtime identity and blocked-policy continuity"
+      ],
+      "replace_scope": "full_owner_container",
+      "exact_survivors": [],
+      "forbidden_strings": [],
+      "coverage_row_ids": [
+        "cov-158"
+      ],
+      "gap_ids": [
+        "gap-049"
+      ],
+      "notes": [
+        "Own the cross-cutting runtime identity and blocked-policy continuity rules as a new invariant rather than burying them in a consumer doc."
+      ]
+    },
+    {
+      "target_id": "target-002",
+      "path": "Plans/CLI_Bridged_Providers.md",
+      "mapped_owner_heading": "## Canonical data-shape reconciliation",
+      "live_anchor": "FILE_START",
+      "action": "create_owner_section",
+      "must_create_owner_heading": true,
+      "required_structural_headings": [
+        "## Canonical data-shape reconciliation",
+        "### Required data shape"
+      ],
+      "replace_scope": "full_owner_container",
+      "exact_survivors": [],
+      "forbidden_strings": [],
+      "coverage_row_ids": [
+        "cov-010"
+      ],
+      "gap_ids": [
+        "gap-003"
+      ],
+      "notes": [
+        "Doc-scoped target covers 1 coverage row(s) and 1 fix-backlog gap(s).",
+        "Dominant unresolved class: missing_data_shape."
+      ]
+    },
+    {
+      "target_id": "target-003",
+      "path": "Plans/Contracts_V0.md",
+      "mapped_owner_heading": "## Cross-surface runtime, concern, and route/open contracts",
+      "live_anchor": "FILE_START",
+      "action": "reconcile_mixed_owner_consumer",
+      "must_create_owner_heading": true,
+      "required_structural_headings": [
+        "## Cross-surface runtime, concern, and route/open contracts",
+        "### Fidelity recovery order",
+        "### Shared governance and runtime record envelope",
+        "### Requested/effective account and execution identity",
+        "### Concern record family, lifecycle, and deferred visibility",
+        "### route_target, OpenSubject, and command normalization",
+        "### Blocked episode, approval scope, and compatibility fallback"
+      ],
+      "replace_scope": "full_owner_container",
+      "exact_survivors": [],
+      "forbidden_strings": [],
+      "coverage_row_ids": [
+        "cov-001",
+        "cov-012",
+        "cov-014",
+        "cov-019",
+        "cov-023",
+        "cov-029",
+        "cov-033",
+        "cov-036",
+        "cov-070",
+        "cov-075",
+        "cov-085",
+        "cov-088",
+        "cov-109",
+        "cov-114",
+        "cov-122",
+        "cov-126",
+        "cov-130",
+        "cov-140",
+        "cov-155",
+        "cov-164",
+        "cov-173",
+        "cov-175",
+        "cov-180",
+        "cov-186",
+        "cov-193",
+        "cov-199",
+        "cov-207",
+        "cov-210"
+      ],
+      "gap_ids": [
+        "gap-001",
+        "gap-003",
+        "gap-004",
+        "gap-006",
+        "gap-007",
+        "gap-009",
+        "gap-010",
+        "gap-011",
+        "gap-023",
+        "gap-024",
+        "gap-027",
+        "gap-028",
+        "gap-034",
+        "gap-037",
+        "gap-039",
+        "gap-040",
+        "gap-041",
+        "gap-045",
+        "gap-049",
+        "gap-050",
+        "gap-053",
+        "gap-054",
+        "gap-056",
+        "gap-058",
+        "gap-061",
+        "gap-064",
+        "gap-067",
+        "gap-068"
+      ],
+      "notes": [
+        "Create one top-level owner section so auth, concern, route/open, and blocked contracts stop competing for ownership."
+      ]
+    },
+    {
+      "target_id": "target-004",
+      "path": "Plans/Crosswalk.md",
+      "mapped_owner_heading": "Primitive:RouteTarget / Primitive:OpenSubject",
+      "live_anchor": "## 2. Primitive index (definitions are DRY)",
+      "action": "rewrite_owner_section",
+      "must_create_owner_heading": true,
+      "required_structural_headings": [
+        "Primitive:RouteTarget / Primitive:OpenSubject",
+        "### 3.3 Navigation and source-open ownership",
+        "### 3.4 Source Control and lane/worktree ownership"
+      ],
+      "replace_scope": "local_anchor_section",
+      "exact_survivors": [
+        "### 3.3 Navigation and source-open ownership",
+        "### 3.4 Source Control and lane/worktree ownership"
+      ],
+      "forbidden_strings": [],
+      "coverage_row_ids": [
+        "cov-123",
+        "cov-141",
+        "cov-170",
+        "cov-200"
+      ],
+      "gap_ids": [
+        "gap-039",
+        "gap-045",
+        "gap-052",
+        "gap-064"
+      ],
+      "notes": [
+        "Crosswalk should only clarify boundary ownership and compatibility limits, not become a second owner for route/open or worktree canon."
+      ]
+    },
+    {
+      "target_id": "target-005",
+      "path": "Plans/Executor_Protocol.md",
+      "mapped_owner_heading": "### Blocked episode identity and restart recovery",
+      "live_anchor": "## Unified Runtime Scheduler and Attempt Lifecycle Reconciliation Addendum (2026-03-09)",
+      "action": "reconcile_mixed_owner_consumer",
+      "must_create_owner_heading": true,
+      "required_structural_headings": [
+        "### Tier-era compatibility retirement",
+        "### Blocked episode identity and restart recovery",
+        "### Provider/model precedence and parallel worktree assignment"
+      ],
+      "replace_scope": "local_anchor_section",
+      "exact_survivors": [
+        "The canonical dispatch/runtime packet carries execution_unit_context."
+      ],
+      "forbidden_strings": [
+        "TierContext",
+        "tier_id",
+        "TierType",
+        "Tiers",
+        "allowed_actions[]",
+        "reason_code",
+        "recovery_options[]",
+        "approve_continue"
+      ],
+      "coverage_row_ids": [
+        "cov-004",
+        "cov-105",
+        "cov-107",
+        "cov-160",
+        "cov-168",
+        "cov-187"
+      ],
+      "gap_ids": [
+        "gap-002",
+        "gap-033",
+        "gap-034",
+        "gap-049",
+        "gap-051",
+        "gap-058"
+      ],
+      "notes": [
+        "Retire tier-era runtime vocabulary, then extend execution_unit_context, blocked-episode continuity, approval scope, and precedence/worktree ownership in one owner container."
+      ]
+    },
+    {
+      "target_id": "target-006",
+      "path": "Plans/FileManager.md",
+      "mapped_owner_heading": "### 4.1 Open-file contract",
+      "live_anchor": "### 4.1 Open-file contract",
+      "action": "rewrite_owner_section",
+      "must_create_owner_heading": false,
+      "required_structural_headings": [
+        "### 4.1 Open-file contract",
+        "### Route/open rules",
+        "## Runtime Artifact Open-by-Identity Consolidation Addendum (2026-03-09)"
+      ],
+      "replace_scope": "local_anchor_section",
+      "exact_survivors": [
+        "### 4.1 Open-file contract",
+        "## Runtime Artifact Open-by-Identity Consolidation Addendum (2026-03-09)"
+      ],
+      "forbidden_strings": [],
+      "coverage_row_ids": [
+        "cov-120",
+        "cov-124",
+        "cov-127"
+      ],
+      "gap_ids": [
+        "gap-038",
+        "gap-039",
+        "gap-040"
+      ],
+      "notes": [
+        "Keep FileManager path-based, but tighten its references to route_target/OpenSubject and artifact-by-identity routing."
+      ]
+    },
+    {
+      "target_id": "target-007",
+      "path": "Plans/FinalGUISpec.md",
+      "mapped_owner_heading": "## 7. Views Specification",
+      "live_anchor": "## 7. Views Specification",
+      "action": "reconcile_mixed_owner_consumer",
+      "must_create_owner_heading": false,
+      "required_structural_headings": [
+        "### 7.1 Orchestrator",
+        "### 7.3 Shared route and open behavior",
+        "### 7.4 Settings and inspectors",
+        "### 7.5 Project and attention surfaces",
+        "### Concern, escalation, notification, and help surfaces"
+      ],
+      "replace_scope": "local_anchor_section",
+      "exact_survivors": [
+        "### 7.1 Orchestrator",
+        "### 7.3 Shared route and open behavior",
+        "### 7.4 Settings and inspectors"
+      ],
+      "forbidden_strings": [],
+      "coverage_row_ids": [
+        "cov-022",
+        "cov-027",
+        "cov-030",
+        "cov-047",
+        "cov-050",
+        "cov-052",
+        "cov-055",
+        "cov-058",
+        "cov-062",
+        "cov-067",
+        "cov-071",
+        "cov-079",
+        "cov-082",
+        "cov-086",
+        "cov-090",
+        "cov-096",
+        "cov-128",
+        "cov-139",
+        "cov-150",
+        "cov-153",
+        "cov-179",
+        "cov-197",
+        "cov-209"
+      ],
+      "gap_ids": [
+        "gap-006",
+        "gap-008",
+        "gap-009",
+        "gap-014",
+        "gap-015",
+        "gap-016",
+        "gap-017",
+        "gap-018",
+        "gap-020",
+        "gap-022",
+        "gap-023",
+        "gap-025",
+        "gap-026",
+        "gap-027",
+        "gap-028",
+        "gap-030",
+        "gap-040",
+        "gap-044",
+        "gap-047",
+        "gap-048",
+        "gap-055",
+        "gap-063",
+        "gap-067"
+      ],
+      "notes": [
+        "Treat later addenda as consumers; the owner rewrite here should define the visible route/open, escalation, concern, and project-attention behavior."
+      ]
+    },
+    {
+      "target_id": "target-008",
+      "path": "Plans/GUI_Rebuild_Requirements_Checklist.md",
+      "mapped_owner_heading": "## Concern lifecycle verification checklist",
+      "live_anchor": "FILE_START",
+      "action": "create_owner_section",
+      "must_create_owner_heading": true,
+      "required_structural_headings": [
+        "## Concern lifecycle verification checklist"
+      ],
+      "replace_scope": "full_owner_container",
+      "exact_survivors": [],
+      "forbidden_strings": [],
+      "coverage_row_ids": [
+        "cov-166"
+      ],
+      "gap_ids": [
+        "gap-050"
+      ],
+      "notes": [
+        "Promote the summary checklist row into a concrete lifecycle verification section with accepted_risk and confirmation semantics."
+      ]
+    },
+    {
+      "target_id": "target-009",
+      "path": "Plans/GitHub_API_Auth_and_Flows.md",
+      "mapped_owner_heading": "## Canonical data-shape reconciliation",
+      "live_anchor": "FILE_START",
+      "action": "create_owner_section",
+      "must_create_owner_heading": true,
+      "required_structural_headings": [
+        "## Canonical data-shape reconciliation",
+        "### Required data shape"
+      ],
+      "replace_scope": "full_owner_container",
+      "exact_survivors": [],
+      "forbidden_strings": [],
+      "coverage_row_ids": [
+        "cov-097",
+        "cov-157"
+      ],
+      "gap_ids": [
+        "gap-031",
+        "gap-049"
+      ],
+      "notes": [
+        "Doc-scoped target covers 2 coverage row(s) and 2 fix-backlog gap(s).",
+        "Dominant unresolved class: missing_data_shape."
+      ]
+    },
+    {
+      "target_id": "target-010",
+      "path": "Plans/GitHub_Integration.md",
+      "mapped_owner_heading": "## Canonical owner and consumer reconciliation",
+      "live_anchor": "FILE_START",
+      "action": "reconcile_mixed_owner_consumer",
+      "must_create_owner_heading": true,
+      "required_structural_headings": [
+        "## Canonical owner and consumer reconciliation",
+        "### Consumer propagation"
+      ],
+      "replace_scope": "full_owner_container",
+      "exact_survivors": [],
+      "forbidden_strings": [],
+      "coverage_row_ids": [
+        "cov-040",
+        "cov-098"
+      ],
+      "gap_ids": [
+        "gap-013",
+        "gap-031"
+      ],
+      "notes": [
+        "Doc-scoped target covers 2 coverage row(s) and 2 fix-backlog gap(s).",
+        "Dominant unresolved class: stubbed_consumer_propagation."
+      ]
+    },
+    {
+      "target_id": "target-011",
+      "path": "Plans/Glossary.md",
+      "mapped_owner_heading": "## 2. Core terms",
+      "live_anchor": "## 2. Core terms",
+      "action": "reconcile_mixed_owner_consumer",
+      "must_create_owner_heading": false,
+      "required_structural_headings": [
+        "### Orchestrator rewrite terms",
+        "### Runtime and routing terms",
+        "### Projection freshness and health terms",
+        "### Help architecture and project status terms",
+        "### Help-entry template and related-concept clusters"
+      ],
+      "replace_scope": "local_anchor_section",
+      "exact_survivors": [
+        "### Orchestrator rewrite terms",
+        "### Runtime and routing terms"
+      ],
+      "forbidden_strings": [],
+      "coverage_row_ids": [
+        "cov-061",
+        "cov-095",
+        "cov-137",
+        "cov-194"
+      ],
+      "gap_ids": [
+        "gap-020",
+        "gap-030",
+        "gap-044",
+        "gap-062"
+      ],
+      "notes": [
+        "Append missing help, projection, and project-status vocabulary as first-class glossary families."
+      ]
+    },
+    {
+      "target_id": "target-012",
+      "path": "Plans/Models_System.md",
+      "mapped_owner_heading": "## Provider/model precedence and settings resolution",
+      "live_anchor": "FILE_START",
+      "action": "create_owner_section",
+      "must_create_owner_heading": true,
+      "required_structural_headings": [
+        "## Provider/model precedence and settings resolution"
+      ],
+      "replace_scope": "full_owner_container",
+      "exact_survivors": [],
+      "forbidden_strings": [],
+      "coverage_row_ids": [
+        "cov-152",
+        "cov-167"
+      ],
+      "gap_ids": [
+        "gap-048",
+        "gap-051"
+      ],
+      "notes": [
+        "Own the three-axis settings model and scope-specific provider/model precedence in one top-level section near the start of the file."
+      ]
+    },
+    {
+      "target_id": "target-013",
+      "path": "Plans/Multi-Account.md",
+      "mapped_owner_heading": "## Canonical data-shape reconciliation",
+      "live_anchor": "FILE_START",
+      "action": "create_owner_section",
+      "must_create_owner_heading": true,
+      "required_structural_headings": [
+        "## Canonical data-shape reconciliation",
+        "### Required data shape"
+      ],
+      "replace_scope": "full_owner_container",
+      "exact_survivors": [],
+      "forbidden_strings": [],
+      "coverage_row_ids": [
+        "cov-008",
+        "cov-066"
+      ],
+      "gap_ids": [
+        "gap-003",
+        "gap-021"
+      ],
+      "notes": [
+        "Doc-scoped target covers 2 coverage row(s) and 2 fix-backlog gap(s).",
+        "Dominant unresolved class: missing_data_shape."
+      ]
+    },
+    {
+      "target_id": "target-014",
+      "path": "Plans/Orchestrator_Page.md",
+      "mapped_owner_heading": "## 1. Scope and canonical model",
+      "live_anchor": "## 1. Scope and canonical model",
+      "action": "reconcile_mixed_owner_consumer",
+      "must_create_owner_heading": false,
+      "required_structural_headings": [
+        "### Search, routing, and action policy",
+        "### Current vs historical run behavior",
+        "### Concern and notification model",
+        "### Project summary, attention, and escalation",
+        "### Source Control boundary",
+        "### glossary/help references"
+      ],
+      "replace_scope": "local_anchor_section",
+      "exact_survivors": [
+        "### Search, routing, and action policy",
+        "### Current vs historical run behavior",
+        "### Concern and notification model",
+        "### Source Control boundary",
+        "### glossary/help references"
+      ],
+      "forbidden_strings": [],
+      "coverage_row_ids": [
+        "cov-003",
+        "cov-015",
+        "cov-021",
+        "cov-024",
+        "cov-026",
+        "cov-028",
+        "cov-031",
+        "cov-035",
+        "cov-037",
+        "cov-042",
+        "cov-046",
+        "cov-049",
+        "cov-051",
+        "cov-054",
+        "cov-056",
+        "cov-063",
+        "cov-068",
+        "cov-078",
+        "cov-081",
+        "cov-093",
+        "cov-138",
+        "cov-148",
+        "cov-165",
+        "cov-174",
+        "cov-177",
+        "cov-178",
+        "cov-192",
+        "cov-195",
+        "cov-196",
+        "cov-204",
+        "cov-208",
+        "cov-211"
+      ],
+      "gap_ids": [
+        "gap-001",
+        "gap-004",
+        "gap-006",
+        "gap-007",
+        "gap-008",
+        "gap-009",
+        "gap-010",
+        "gap-011",
+        "gap-012",
+        "gap-013",
+        "gap-014",
+        "gap-015",
+        "gap-016",
+        "gap-017",
+        "gap-018",
+        "gap-020",
+        "gap-022",
+        "gap-025",
+        "gap-026",
+        "gap-029",
+        "gap-044",
+        "gap-047",
+        "gap-050",
+        "gap-053",
+        "gap-054",
+        "gap-055",
+        "gap-061",
+        "gap-062",
+        "gap-063",
+        "gap-065",
+        "gap-067",
+        "gap-068"
+      ],
+      "notes": [
+        "Keep the existing orchestrator surface headings, but reconcile owner and consumer semantics underneath them."
+      ]
+    },
+    {
+      "target_id": "target-015",
+      "path": "Plans/Permissions_System.md",
+      "mapped_owner_heading": "## Canonical data-shape reconciliation",
+      "live_anchor": "FILE_START",
+      "action": "create_owner_section",
+      "must_create_owner_heading": true,
+      "required_structural_headings": [
+        "## Canonical data-shape reconciliation",
+        "### Required data shape"
+      ],
+      "replace_scope": "full_owner_container",
+      "exact_survivors": [],
+      "forbidden_strings": [],
+      "coverage_row_ids": [
+        "cov-011",
+        "cov-102"
+      ],
+      "gap_ids": [
+        "gap-003",
+        "gap-032"
+      ],
+      "notes": [
+        "Doc-scoped target covers 2 coverage row(s) and 2 fix-backlog gap(s).",
+        "Dominant unresolved class: missing_data_shape."
+      ]
+    },
+    {
+      "target_id": "target-016",
+      "path": "Plans/Progression_Gates.md",
+      "mapped_owner_heading": "## Route-aware progression and packet verification gates",
+      "live_anchor": "FILE_START",
+      "action": "reconcile_mixed_owner_consumer",
+      "must_create_owner_heading": true,
+      "required_structural_headings": [
+        "## Route-aware progression and packet verification gates",
+        "### Promotion classes and required evidence",
+        "### Route-aware wiring evidence",
+        "### route_target/OpenSubject packet checks",
+        "### Compatibility fallback and contradiction-fail rules"
+      ],
+      "replace_scope": "full_owner_container",
+      "exact_survivors": [
+        "## GATE-010 -- Wiring matrix validation",
+        "## GATE-014 -- Document Set packaging verification"
+      ],
+      "forbidden_strings": [],
+      "coverage_row_ids": [
+        "cov-034",
+        "cov-132",
+        "cov-144"
+      ],
+      "gap_ids": [
+        "gap-011",
+        "gap-042",
+        "gap-045"
+      ],
+      "notes": [
+        "Unify promotion evidence, route-aware wiring checks, and route/open packet verification under one owner section."
+      ]
+    },
+    {
+      "target_id": "target-017",
+      "path": "Plans/Prompt_Pipeline.md",
+      "mapped_owner_heading": "### 6.2A Settings, persona, and resolver model",
+      "live_anchor": "## 6. Effective Persona and Runtime Resolution Pipeline (2026-03-06)",
+      "action": "rewrite_owner_section",
+      "must_create_owner_heading": true,
+      "required_structural_headings": [
+        "### 6.2A Settings, persona, and resolver model",
+        "### 6.4 Effective resolution record",
+        "### Runtime Attempt Snapshot and Handoff Bundle"
+      ],
+      "replace_scope": "local_anchor_section",
+      "exact_survivors": [
+        "## 6. Effective Persona and Runtime Resolution Pipeline (2026-03-06)",
+        "## Runtime Attempt Snapshot and Handoff Consolidation Addendum (2026-03-09)"
+      ],
+      "forbidden_strings": [],
+      "coverage_row_ids": [
+        "cov-009",
+        "cov-084",
+        "cov-087",
+        "cov-103",
+        "cov-136",
+        "cov-151",
+        "cov-154"
+      ],
+      "gap_ids": [
+        "gap-003",
+        "gap-027",
+        "gap-028",
+        "gap-033",
+        "gap-043",
+        "gap-048",
+        "gap-049"
+      ],
+      "notes": [
+        "Keep the persona/runtime pipeline, but promote the missing resolver, requested/effective identity, execution_unit_context, and wizard lineage rules into explicit owner subsections."
+      ]
+    },
+    {
+      "target_id": "target-018",
+      "path": "Plans/Provider_OpenCode.md",
+      "mapped_owner_heading": "## Canonical data-shape reconciliation",
+      "live_anchor": "FILE_START",
+      "action": "create_owner_section",
+      "must_create_owner_heading": true,
+      "required_structural_headings": [
+        "## Canonical data-shape reconciliation",
+        "### Required data shape"
+      ],
+      "replace_scope": "full_owner_container",
+      "exact_survivors": [],
+      "forbidden_strings": [],
+      "coverage_row_ids": [
+        "cov-099"
+      ],
+      "gap_ids": [
+        "gap-032"
+      ],
+      "notes": [
+        "Doc-scoped target covers 1 coverage row(s) and 1 fix-backlog gap(s).",
+        "Dominant unresolved class: missing_data_shape."
+      ]
+    },
+    {
+      "target_id": "target-019",
+      "path": "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+      "mapped_owner_heading": "## Canonical data-shape reconciliation",
+      "live_anchor": "FILE_START",
+      "action": "create_owner_section",
+      "must_create_owner_heading": true,
+      "required_structural_headings": [
+        "## Canonical data-shape reconciliation",
+        "### Required data shape"
+      ],
+      "replace_scope": "full_owner_container",
+      "exact_survivors": [],
+      "forbidden_strings": [],
+      "coverage_row_ids": [
+        "cov-100"
+      ],
+      "gap_ids": [
+        "gap-032"
+      ],
+      "notes": [
+        "Doc-scoped target covers 1 coverage row(s) and 1 fix-backlog gap(s).",
+        "Dominant unresolved class: missing_data_shape."
+      ]
+    },
+    {
+      "target_id": "target-020",
+      "path": "Plans/Run_Graph_View.md",
+      "mapped_owner_heading": "## 3. Node detail inspector",
+      "live_anchor": "## 3. Node detail inspector",
+      "action": "extend_consumer_section",
+      "must_create_owner_heading": false,
+      "required_structural_headings": [
+        "## 3. Node detail inspector",
+        "## 4. Data model and identity"
+      ],
+      "replace_scope": "full_owner_container",
+      "exact_survivors": [
+        "## 3. Node detail inspector",
+        "## 4. Data model and identity"
+      ],
+      "forbidden_strings": [],
+      "coverage_row_ids": [
+        "cov-032",
+        "cov-038"
+      ],
+      "gap_ids": [
+        "gap-010",
+        "gap-012"
+      ],
+      "notes": [
+        "Extend the final graph sections so concern adjacency and focused-run routing consume the same canonical objects as owner docs."
+      ]
+    },
+    {
+      "target_id": "target-021",
+      "path": "Plans/Run_Modes.md",
+      "mapped_owner_heading": "## Runtime identity and blocked-policy continuity",
+      "live_anchor": "FILE_START",
+      "action": "create_owner_section",
+      "must_create_owner_heading": true,
+      "required_structural_headings": [
+        "## Runtime identity and blocked-policy continuity"
+      ],
+      "replace_scope": "full_owner_container",
+      "exact_survivors": [],
+      "forbidden_strings": [],
+      "coverage_row_ids": [
+        "cov-159"
+      ],
+      "gap_ids": [
+        "gap-049"
+      ],
+      "notes": [
+        "Add one owner section for execution_role, requested_account_id, operational_identity, blocked sequencing, recovery, DAE policy, and usage follow-through."
+      ]
+    },
+    {
+      "target_id": "target-022",
+      "path": "Plans/Runtime_Artifacts_Panel.md",
+      "mapped_owner_heading": "### 4A Artifacts index families and projector checkpoints",
+      "live_anchor": "## 4. redb key and projector",
+      "action": "rewrite_owner_section",
+      "must_create_owner_heading": true,
+      "required_structural_headings": [
+        "### 4A Artifacts index families and projector checkpoints",
+        "### 4B Runtime-artifact envelope and attribution packet",
+        "### 5B Export taxonomy and manifests"
+      ],
+      "replace_scope": "local_anchor_section",
+      "exact_survivors": [
+        "## Cross-Surface Operation Receipt Linkage Addendum (2026-03-12)"
+      ],
+      "forbidden_strings": [],
+      "coverage_row_ids": [
+        "cov-017",
+        "cov-111",
+        "cov-117",
+        "cov-119",
+        "cov-183",
+        "cov-191",
+        "cov-202"
+      ],
+      "gap_ids": [
+        "gap-005",
+        "gap-035",
+        "gap-037",
+        "gap-038",
+        "gap-057",
+        "gap-060",
+        "gap-065"
+      ],
+      "notes": [
+        "Use the redb/projector and receipt-linkage sections as the bounded owner container for artifact indexing, attribution, export, and receipt routing."
+      ]
+    },
+    {
+      "target_id": "target-023",
+      "path": "Plans/Tools.md",
+      "mapped_owner_heading": "## Canonical owner and consumer reconciliation",
+      "live_anchor": "FILE_START",
+      "action": "reconcile_mixed_owner_consumer",
+      "must_create_owner_heading": true,
+      "required_structural_headings": [
+        "## Canonical owner and consumer reconciliation",
+        "### Consumer propagation",
+        "### Required data shape"
+      ],
+      "replace_scope": "full_owner_container",
+      "exact_survivors": [],
+      "forbidden_strings": [],
+      "coverage_row_ids": [
+        "cov-116",
+        "cov-147",
+        "cov-156"
+      ],
+      "gap_ids": [
+        "gap-037",
+        "gap-046",
+        "gap-049"
+      ],
+      "notes": [
+        "Doc-scoped target covers 3 coverage row(s) and 3 fix-backlog gap(s).",
+        "Dominant unresolved class: missing_data_shape."
+      ]
+    },
+    {
+      "target_id": "target-024",
+      "path": "Plans/UI_Command_Catalog.md",
+      "mapped_owner_heading": "### Canonical route payload and route/open tail rules",
+      "live_anchor": "### 2.0B Action-surface policy",
+      "action": "reconcile_mixed_owner_consumer",
+      "must_create_owner_heading": true,
+      "required_structural_headings": [
+        "### 2.0B Action-surface policy",
+        "### Canonical route payload and route/open tail rules",
+        "### Command normalization model",
+        "### Tier-era compatibility retirement"
+      ],
+      "replace_scope": "local_anchor_section",
+      "exact_survivors": [
+        "### 2.0 Command entry contract (doc-level)",
+        "### Recovery command definitions"
+      ],
+      "forbidden_strings": [
+        "TierContext",
+        "tier_id",
+        "TierType",
+        "Tiers",
+        "allowed_actions[]",
+        "reason_code",
+        "recovery_options[]",
+        "approve_continue"
+      ],
+      "coverage_row_ids": [
+        "cov-007",
+        "cov-057",
+        "cov-072",
+        "cov-129",
+        "cov-142"
+      ],
+      "gap_ids": [
+        "gap-002",
+        "gap-018",
+        "gap-023",
+        "gap-041",
+        "gap-045"
+      ],
+      "notes": [
+        "Consolidate action-surface policy, route payload ownership, command normalization, and stale recovery vocabulary retirement into one bounded command owner span."
+      ]
+    },
+    {
+      "target_id": "target-025",
+      "path": "Plans/Widget_System.md",
+      "mapped_owner_heading": "## 4. Orchestrator Progress widget scope and catalog linkage",
+      "live_anchor": "## 3. Layout persistence",
+      "action": "extend_consumer_section",
+      "must_create_owner_heading": true,
+      "required_structural_headings": [
+        "## 2. Hostability and data contracts",
+        "## 3. Layout persistence",
+        "## 4. Orchestrator Progress widget scope and catalog linkage"
+      ],
+      "replace_scope": "local_anchor_section",
+      "exact_survivors": [
+        "## 2. Hostability and data contracts",
+        "## 3. Layout persistence"
+      ],
+      "forbidden_strings": [],
+      "coverage_row_ids": [
+        "cov-048"
+      ],
+      "gap_ids": [
+        "gap-015"
+      ],
+      "notes": [
+        "Keep Widget_System consumer-only: it owns Progress-only hostability, the dedicated orchestrator:progress layout split, and explicit linkage to the promoted catalog source.",
+        "Do not require Widget_System to restate unnamed legacy widget entries; it should consume the current named catalog and drill/linkage source from FinalGUISpec instead of inventing missing widget names."
+      ]
+    },
+    {
+      "target_id": "target-026",
+      "path": "Plans/Wiring_Matrix.md",
+      "mapped_owner_heading": "## Route-aware wiring reconciliation",
+      "live_anchor": "## Route-aware wiring reconciliation",
+      "action": "reconcile_mixed_owner_consumer",
+      "must_create_owner_heading": false,
+      "required_structural_headings": [
+        "## Route-aware wiring reconciliation",
+        "### Route-aware navigation and open-contract rows",
+        "### Verification evidence hooks",
+        "### Compatibility-only fallback marking"
+      ],
+      "replace_scope": "full_owner_container",
+      "exact_survivors": [
+        "## 4. Verification",
+        "## Runtime Recovery Producer / Consumer Wiring"
+      ],
+      "forbidden_strings": [],
+      "coverage_row_ids": [
+        "cov-131",
+        "cov-143",
+        "cov-201"
+      ],
+      "gap_ids": [
+        "gap-042",
+        "gap-045",
+        "gap-064"
+      ],
+      "notes": [
+        "Use the existing owner section instead of a FILE_START placeholder so packet generation targets a real heading and preserves the existing route/open reconciliation container."
+      ]
+    },
+    {
+      "target_id": "target-027",
+      "path": "Plans/WorktreeGitImprovement.md",
+      "mapped_owner_heading": "### 2.8 Lane/worktree lifecycle, storage families, and historical vocabulary",
+      "live_anchor": "### 2.7 worktree_exists is path-only",
+      "action": "reconcile_mixed_owner_consumer",
+      "must_create_owner_heading": true,
+      "required_structural_headings": [
+        "### 2.8 Lane/worktree lifecycle, storage families, and historical vocabulary",
+        "### Source Control to Orchestrator handshake",
+        "### Provider/model precedence and worktree allocation strategy"
+      ],
+      "replace_scope": "local_anchor_section",
+      "exact_survivors": [
+        "## 4. GUI for Git & Worktrees"
+      ],
+      "forbidden_strings": [],
+      "coverage_row_ids": [
+        "cov-041",
+        "cov-059",
+        "cov-076",
+        "cov-113",
+        "cov-169",
+        "cov-171",
+        "cov-189",
+        "cov-206"
+      ],
+      "gap_ids": [
+        "gap-013",
+        "gap-019",
+        "gap-024",
+        "gap-036",
+        "gap-051",
+        "gap-052",
+        "gap-059",
+        "gap-066"
+      ],
+      "notes": [
+        "Expand the existing lifecycle and GUI sections into explicit lane/worktree storage, handshake, and allocation policy owners."
+      ]
+    },
+    {
+      "target_id": "target-028",
+      "path": "Plans/assistant-chat-design.md",
+      "mapped_owner_heading": "## Shared actor-boundary, route payload, and blocked_notice packet",
+      "live_anchor": "## Shared actor-boundary, route payload, and blocked_notice packet",
+      "action": "reconcile_mixed_owner_consumer",
+      "must_create_owner_heading": false,
+      "required_structural_headings": [
+        "## Shared actor-boundary, route payload, and blocked_notice packet",
+        "### Actor boundary and runtime identity",
+        "### Canonical route payload",
+        "### blocked_notice packet"
+      ],
+      "replace_scope": "full_owner_container",
+      "exact_survivors": [],
+      "forbidden_strings": [],
+      "coverage_row_ids": [
+        "cov-064",
+        "cov-073",
+        "cov-145"
+      ],
+      "gap_ids": [
+        "gap-021",
+        "gap-023",
+        "gap-046"
+      ],
+      "notes": [
+        "Target the existing owner section directly so packet generation rewrites the live EOF container instead of using an ambiguous FILE_START anchor."
+      ]
+    },
+    {
+      "target_id": "target-029",
+      "path": "Plans/chain-wizard.md",
+      "mapped_owner_heading": "## Wizard and launched-run lineage reconciliation",
+      "live_anchor": "## Wizard and launched-run lineage reconciliation",
+      "action": "rewrite_owner_section",
+      "must_create_owner_heading": false,
+      "required_structural_headings": [
+        "## Wizard and launched-run lineage reconciliation",
+        "### Required data shape"
+      ],
+      "replace_scope": "full_owner_container",
+      "exact_survivors": [],
+      "forbidden_strings": [],
+      "coverage_row_ids": [
+        "cov-135"
+      ],
+      "gap_ids": [
+        "gap-043"
+      ],
+      "notes": [
+        "The live file is readable and already contains the owner heading plus Required data shape, so reconciliation should rewrite that existing owner section instead of emitting a create-file mutation."
+      ]
+    },
+    {
+      "target_id": "target-030",
+      "path": "Plans/evidence.schema.json",
+      "mapped_owner_heading": "route_aware_verification",
+      "live_anchor": "route_aware_verification",
+      "action": "extend_schema_object",
+      "must_create_owner_heading": false,
+      "required_structural_headings": [],
+      "replace_scope": "full_owner_container",
+      "exact_survivors": [],
+      "forbidden_strings": [],
+      "coverage_row_ids": [
+        "cov-133"
+      ],
+      "gap_ids": [
+        "gap-042"
+      ],
+      "notes": [
+        "The route_aware_verification schema property already exists; reconcile that named object in place and refresh its gate-aware shape instead of attempting to add the property again."
+      ]
+    },
+    {
+      "target_id": "target-031",
+      "path": "Plans/human-in-the-loop.md",
+      "mapped_owner_heading": "### Restart recovery and blocked-episode continuity",
+      "live_anchor": "## Implementation Hooks (Planning Only)",
+      "action": "reconcile_mixed_owner_consumer",
+      "must_create_owner_heading": true,
+      "required_structural_headings": [
+        "### Restart recovery and blocked-episode continuity",
+        "### Approval Scope Key and provider-native correlation",
+        "### Tier-era compatibility retirement"
+      ],
+      "replace_scope": "local_anchor_section",
+      "exact_survivors": [
+        "### Canonical HITL request contract",
+        "## Shared approval-ladder alignment (2026-04-04)"
+      ],
+      "forbidden_strings": [
+        "TierContext",
+        "tier_id",
+        "TierType",
+        "Tiers",
+        "allowed_actions[]",
+        "reason_code",
+        "recovery_options[]",
+        "approve_continue"
+      ],
+      "coverage_row_ids": [
+        "cov-006",
+        "cov-101",
+        "cov-108",
+        "cov-161",
+        "cov-185"
+      ],
+      "gap_ids": [
+        "gap-002",
+        "gap-032",
+        "gap-034",
+        "gap-049",
+        "gap-058"
+      ],
+      "notes": [
+        "Unify blocked-episode identity, approval scope, provider correlation, and tier-compatibility retirement in the canonical HITL contract."
+      ]
+    },
+    {
+      "target_id": "target-032",
+      "path": "Plans/interview-subagent-integration.md",
+      "mapped_owner_heading": "## Interview runtime boundary and handoff lineage",
+      "live_anchor": "## Change Summary",
+      "action": "rewrite_owner_section",
+      "must_create_owner_heading": true,
+      "required_structural_headings": [
+        "## Interview runtime boundary and handoff lineage"
+      ],
+      "replace_scope": "local_anchor_section",
+      "exact_survivors": [
+        "## Change Summary"
+      ],
+      "forbidden_strings": [],
+      "coverage_row_ids": [
+        "cov-065",
+        "cov-134"
+      ],
+      "gap_ids": [
+        "gap-021",
+        "gap-043"
+      ],
+      "notes": [
+        "The file already exists but the owner heading does not; rewrite the leading local section anchored at Change Summary so the owner section is created without emitting a create-file mutation."
+      ]
+    },
+    {
+      "target_id": "target-033",
+      "path": "Plans/orchestrator-subagent-integration.md",
+      "mapped_owner_heading": "## Execution unit context and worktree allocation strategy",
+      "live_anchor": "## Execution unit context and worktree allocation strategy",
+      "action": "reconcile_mixed_owner_consumer",
+      "must_create_owner_heading": false,
+      "required_structural_headings": [
+        "## Execution unit context and worktree allocation strategy",
+        "### Canonical runtime context",
+        "### Worktree allocation strategy",
+        "### Compatibility retirement"
+      ],
+      "replace_scope": "full_owner_container",
+      "exact_survivors": [],
+      "forbidden_strings": [
+        "TierContext",
+        "tier_id",
+        "TierType",
+        "Tiers",
+        "allowed_actions[]",
+        "reason_code",
+        "recovery_options[]",
+        "approve_continue"
+      ],
+      "coverage_row_ids": [
+        "cov-005",
+        "cov-104",
+        "cov-172"
+      ],
+      "gap_ids": [
+        "gap-002",
+        "gap-033",
+        "gap-052"
+      ],
+      "notes": [
+        "Target the existing owner section directly so packet generation rewrites the live execution-unit/worktree container instead of using an ambiguous FILE_START anchor."
+      ]
+    },
+    {
+      "target_id": "target-034",
+      "path": "Plans/storage-plan.md",
+      "mapped_owner_heading": "### 2.3 redb: schema, migrations, key patterns",
+      "live_anchor": "### 2.3 redb: schema, migrations, key patterns",
+      "action": "reconcile_mixed_owner_consumer",
+      "must_create_owner_heading": false,
+      "required_structural_headings": [
+        "### Canonical records",
+        "### Required redb keys",
+        "### Cross-surface receipt record",
+        "### Projection freshness, health, and startup rehydration",
+        "### Account pressure, history, and runtime attribution",
+        "### Artifacts index, export manifests, and route/open linkage",
+        "### Worktree/lane lifecycle, handshake, and cleanup lineage",
+        "### Naming and migration rules"
+      ],
+      "replace_scope": "local_anchor_section",
+      "exact_survivors": [
+        "### Canonical records",
+        "### Required redb keys",
+        "### Cross-surface receipt record",
+        "### Scope split",
+        "### Naming and migration rules"
+      ],
+      "forbidden_strings": [],
+      "coverage_row_ids": [
+        "cov-002",
+        "cov-013",
+        "cov-018",
+        "cov-020",
+        "cov-025",
+        "cov-039",
+        "cov-043",
+        "cov-044",
+        "cov-060",
+        "cov-074",
+        "cov-077",
+        "cov-080",
+        "cov-091",
+        "cov-094",
+        "cov-106",
+        "cov-110",
+        "cov-112",
+        "cov-115",
+        "cov-121",
+        "cov-125",
+        "cov-163",
+        "cov-176",
+        "cov-181",
+        "cov-182",
+        "cov-188",
+        "cov-190",
+        "cov-205"
+      ],
+      "gap_ids": [
+        "gap-001",
+        "gap-004",
+        "gap-005",
+        "gap-006",
+        "gap-007",
+        "gap-012",
+        "gap-013",
+        "gap-014",
+        "gap-019",
+        "gap-024",
+        "gap-025",
+        "gap-026",
+        "gap-029",
+        "gap-030",
+        "gap-033",
+        "gap-035",
+        "gap-036",
+        "gap-037",
+        "gap-038",
+        "gap-039",
+        "gap-050",
+        "gap-054",
+        "gap-056",
+        "gap-057",
+        "gap-059",
+        "gap-060",
+        "gap-066"
+      ],
+      "notes": [
+        "Use the storage schema section as the single bounded owner container for records, projections, receipts, history, and worktree lifecycle reconciliation."
+      ]
+    },
+    {
+      "target_id": "target-035",
+      "path": "Plans/usage-feature.md",
+      "mapped_owner_heading": "## Gaps (Current State vs. Desired)",
+      "live_anchor": "## Gaps (Current State vs. Desired)",
+      "action": "reconcile_mixed_owner_consumer",
+      "must_create_owner_heading": false,
+      "required_structural_headings": [
+        "### Canonical usage pipeline",
+        "### Billing identity, attribution, and pricing metadata",
+        "#### export taxonomy",
+        "#### account history",
+        "#### artifact drill-through section",
+        "#### help surfaces",
+        "#### projection-health-aware degrade behavior",
+        "### Unified UsageRecord schema expectations",
+        "### Blocked-state and escalation surfaces"
+      ],
+      "replace_scope": "local_anchor_section",
+      "exact_survivors": [
+        "### Canonical usage pipeline",
+        "### Billing identity, attribution, and pricing metadata",
+        "### Unified UsageRecord schema expectations"
+      ],
+      "forbidden_strings": [],
+      "coverage_row_ids": [
+        "cov-016",
+        "cov-045",
+        "cov-053",
+        "cov-069",
+        "cov-089",
+        "cov-092",
+        "cov-118",
+        "cov-146",
+        "cov-162",
+        "cov-184",
+        "cov-198",
+        "cov-203"
+      ],
+      "gap_ids": [
+        "gap-005",
+        "gap-014",
+        "gap-016",
+        "gap-022",
+        "gap-028",
+        "gap-029",
+        "gap-037",
+        "gap-046",
+        "gap-049",
+        "gap-057",
+        "gap-063",
+        "gap-065"
+      ],
+      "notes": [
+        "Extend the existing gaps/usage canon instead of scattering blocked, export, and attribution rules into narrative sections."
+      ]
+    },
+    {
+      "target_id": "target-036",
+      "path": "Plans/FinalGUISpec.md",
+      "mapped_owner_heading": "### C.2 Default Dashboard Widget Layout",
+      "live_anchor": "### C.2 Default Dashboard Widget Layout",
+      "action": "extend_consumer_section",
+      "must_create_owner_heading": false,
+      "required_structural_headings": [
+        "### C.2 Default Dashboard Widget Layout",
+        "### C.3 Add-Widget Flow on Dashboard",
+        "### C.4 Widget Catalog vs. Core Widget Catalog"
+      ],
+      "replace_scope": "local_anchor_section",
+      "exact_survivors": [
+        "### C.2 Default Dashboard Widget Layout",
+        "### C.3 Add-Widget Flow on Dashboard",
+        "### C.4 Widget Catalog vs. Core Widget Catalog"
+      ],
+      "forbidden_strings": [],
+      "coverage_row_ids": [
+        "cov-149"
+      ],
+      "gap_ids": [
+        "gap-047"
+      ],
+      "notes": [
+        "Use the existing C.2 widget ID table as the named catalog source for current Progress widgets and bind default drill/linkage semantics here rather than forcing Widget_System to invent missing card names.",
+        "Widget_System should consume this catalog source explicitly; FinalGUISpec remains the only touched doc that already names the current promoted widget IDs."
+      ]
+    }
+  ],
+  "next_required_stage": "Packet Builder"
+}

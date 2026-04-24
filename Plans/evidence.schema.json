@@ -20,31 +20,63 @@
     "checks"
   ],
   "properties": {
-    "schema_id": {"type": "string", "const": "pm.evidence.schema.v1"},
-    "evidence_id": {"type": "string", "minLength": 1},
-    "created_at_utc": {"type": "string", "minLength": 1},
+    "schema_id": {
+      "type": "string",
+      "const": "pm.evidence.schema.v1"
+    },
+    "evidence_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "created_at_utc": {
+      "type": "string",
+      "minLength": 1
+    },
     "node": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["node_id"],
+      "required": [
+        "node_id"
+      ],
       "properties": {
-        "node_id": {"type": "string", "minLength": 1},
-        "graph_id": {"type": "string"},
-        "graph_scope": {"type": "string"}
+        "node_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "graph_id": {
+          "type": "string"
+        },
+        "graph_scope": {
+          "type": "string"
+        }
       }
     },
-    "summary": {"type": "string", "minLength": 1},
+    "summary": {
+      "type": "string",
+      "minLength": 1
+    },
     "commands_run": {
       "type": "array",
       "items": {
         "type": "object",
         "additionalProperties": false,
-        "required": ["cmd", "exit_code"],
+        "required": [
+          "cmd",
+          "exit_code"
+        ],
         "properties": {
-          "cmd": {"type": "string"},
-          "exit_code": {"type": "integer"},
-          "stdout_excerpt": {"type": "string"},
-          "stderr_excerpt": {"type": "string"}
+          "cmd": {
+            "type": "string"
+          },
+          "exit_code": {
+            "type": "integer"
+          },
+          "stdout_excerpt": {
+            "type": "string"
+          },
+          "stderr_excerpt": {
+            "type": "string"
+          }
         }
       }
     },
@@ -53,20 +85,39 @@
       "items": {
         "type": "object",
         "additionalProperties": false,
-        "required": ["tool_id", "count"],
+        "required": [
+          "tool_id",
+          "count"
+        ],
         "properties": {
-          "tool_id": {"type": "string", "minLength": 1},
-          "count": {"type": "integer", "minimum": 0},
-          "denied_count": {"type": "integer", "minimum": 0},
-          "error_count": {"type": "integer", "minimum": 0},
-          "note": {"type": "string"}
+          "tool_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "count": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "denied_count": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "error_count": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "note": {
+            "type": "string"
+          }
         }
       }
     },
     "events": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["event_refs"],
+      "required": [
+        "event_refs"
+      ],
       "properties": {
         "event_refs": {
           "type": "array",
@@ -74,11 +125,26 @@
           "items": {
             "type": "object",
             "additionalProperties": false,
-            "required": ["source", "ref"],
+            "required": [
+              "source",
+              "ref"
+            ],
             "properties": {
-              "source": {"type": "string", "enum": ["seglog", "jsonl", "other"]},
-              "ref": {"type": "string", "minLength": 1},
-              "note": {"type": "string"}
+              "source": {
+                "type": "string",
+                "enum": [
+                  "seglog",
+                  "jsonl",
+                  "other"
+                ]
+              },
+              "ref": {
+                "type": "string",
+                "minLength": 1
+              },
+              "note": {
+                "type": "string"
+              }
             }
           }
         }
@@ -89,30 +155,59 @@
       "items": {
         "type": "object",
         "additionalProperties": false,
-        "required": ["path", "change_type"],
+        "required": [
+          "path",
+          "change_type"
+        ],
         "properties": {
-          "path": {"type": "string", "minLength": 1},
+          "path": {
+            "type": "string",
+            "minLength": 1
+          },
           "change_type": {
             "type": "string",
-            "enum": ["added", "modified", "deleted", "renamed"]
+            "enum": [
+              "added",
+              "modified",
+              "deleted",
+              "renamed"
+            ]
           },
-          "additions": {"type": "integer", "minimum": 0},
-          "deletions": {"type": "integer", "minimum": 0},
-          "note": {"type": "string"}
+          "additions": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "deletions": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "note": {
+            "type": "string"
+          }
         }
       }
     },
     "contract_refs_satisfied": {
       "type": "array",
-      "items": {"type": "string", "minLength": 1}
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
     },
     "reproducibility": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["snapshot_ref"],
+      "required": [
+        "snapshot_ref"
+      ],
       "properties": {
-        "snapshot_ref": {"type": "string", "minLength": 1},
-        "note": {"type": "string"}
+        "snapshot_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "note": {
+          "type": "string"
+        }
       }
     },
     "artifacts": {
@@ -120,11 +215,19 @@
       "items": {
         "type": "object",
         "additionalProperties": false,
-        "required": ["path"],
+        "required": [
+          "path"
+        ],
         "properties": {
-          "path": {"type": "string"},
-          "sha256": {"type": "string"},
-          "note": {"type": "string"}
+          "path": {
+            "type": "string"
+          },
+          "sha256": {
+            "type": "string"
+          },
+          "note": {
+            "type": "string"
+          }
         }
       }
     },
@@ -133,17 +236,75 @@
       "items": {
         "type": "object",
         "additionalProperties": false,
-        "required": ["name", "result"],
+        "required": [
+          "name",
+          "result"
+        ],
         "properties": {
-          "name": {"type": "string"},
-          "result": {"type": "string", "enum": ["PASS", "FAIL"]},
-          "details": {"type": "string"},
+          "name": {
+            "type": "string"
+          },
+          "result": {
+            "type": "string",
+            "enum": [
+              "PASS",
+              "FAIL"
+            ]
+          },
+          "details": {
+            "type": "string"
+          },
           "contract_refs": {
             "type": "array",
-            "items": {"type": "string"}
+            "items": {
+              "type": "string"
+            }
           }
         }
       }
+    },
+    "route_aware_verification": {
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "gate_id",
+    "result"
+  ],
+  "properties": {
+    "gate_id": {
+      "type": "string",
+      "const": "GATE-010"
+    },
+    "result": {
+      "type": "string",
+      "enum": [
+        "PASS",
+        "FAIL"
+      ]
+    },
+    "wiring_matrix_ref": {
+      "type": "string",
+      "minLength": 1
+    },
+    "route_args_verified": {
+      "type": "boolean"
+    },
+    "wrapper_normalization_verified": {
+      "type": "boolean"
+    },
+    "stale_revalidation_verified": {
+      "type": "boolean"
+    },
+    "admissibility_verified": {
+      "type": "boolean"
+    },
+    "correlation_passthrough_verified": {
+      "type": "boolean"
+    },
+    "details": {
+      "type": "string"
     }
+  }
+}
   }
 }

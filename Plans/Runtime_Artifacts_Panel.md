@@ -56,41 +56,79 @@ Behavioral rules:
 
 ## 4. redb key and projector
 
-**redb key:** `artifacts_index:v1:{project_id}`. Per-project only; not global; not per-run.
+### 4A Artifacts index families and projector checkpoints
 
-**Projector:** A projector (or equivalent) reads seglog events whose `type` starts with `runtime_artifact.` (or lists the 19 types explicitly) and writes/updates the per-project artifacts index. No payload.artifact_type discriminator; type is given by event `type`.
+Artifacts are grouped into families:
+- **Evidence family**: captured state, observations, and decision points during execution (prompts, completions, logs, evaluations).
+- **Runtime family**: snapshots, safe points, concern records, approval decisions, and blocked episode state.
+- **Usage family**: token counts, model calls, provider interactions, cost estimates, and rate-limit records.
+- **Route/Open family**: external side-effects (file writes, PR opens, issue comments), route/open artifacts, and completion refs.
 
-Runtime artifacts are attempt-native, bridge-aware records.
+Each family is indexed by:
+- artifact_type (evidence_snippet, runtime_snapshot, usage_event, route_artifact, etc.)
+- artifact_id (ULID)
+- attempt_id (links to runtime attempt)
+- blocked_sequence (links to concern episode)
+- created_utc
+- family_tag
 
-ContractRef: Plans/storage-plan.md#Cross-surface receipt record, Plans/usage-feature.md#Cost_usage runtime artifact and Show in Ledger / Show in Usage, Plans/Project_Output_Artifacts.md#10. Validation Pass Report Artifacts
+Projector checkpoints are deterministic snapshots created after each major phase (setup, resolve, execute, promote):
+```
+{
+  checkpoint_id: string,
+  checkpoint_phase: 'setup' | 'resolve' | 'execute' | 'promote',
+  attempt_id: string,
+  blocked_sequence: number,
+  artifact_families_present: string[],
+  artifact_count_by_family: Record<string, number>,
+  created_utc: string,
+  previous_checkpoint_id?: string
+}
+```
 
-**runtime-artifact envelope**
+Rules:
+- Checkpoint chain is immutable; each checkpoint links to the prior checkpoint in the attempt.
+- Artifact discovery and playback must use checkpoint bookmarks rather than linear scan.
+- Checkpoints survive blocked episodes and approval gates.
 
-| Field | Requirement |
-| --- | --- |
-| `artifact_id` | Stable artifact identity for one runtime artifact record. |
-| `artifact_type` | Canonical runtime-artifact family discriminator. |
-| `logical_artifact_id?` | Stable logical identity shared across linked artifact revisions when applicable. |
-| `linked_artifact_id?` | Direct lineage pointer to a related runtime artifact. |
-| `attempt_id` | Canonical local execution anchor for the artifact. |
-| `provider_attempt_ref` | Provider-side bridge reference that remains subordinate to `attempt_id`. |
-| `usage_event_ref` | Usage-side reference for accounting and evidence joins. |
-| `workflow_refs` | Workflow lineage bundle when workflow-linked execution is involved. |
-| `docker_refs` | Container/runtime lineage bundle when Docker-linked execution is involved. |
-| `kubernetes_refs` | Cluster/workload lineage bundle when Kubernetes-linked execution is involved. |
-| `created_at_utc` | Canonical artifact creation timestamp. |
-| `summary` | Human-readable artifact summary. |
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md
 
-Labels:
-- artifact id
-- attempt id
+### 4B Runtime-artifact envelope and attribution packet
 
-Behavioral rules:
-- `artifact_type` is the canonical runtime-artifact family discriminator; `artifact_kind` is not canonical in this envelope.
-- `attempt_id` is the canonical local execution anchor.
-- Bridge refs remain joins rather than replacement primary keys.
-- Timestamp/run/thread fallback is compatibility-only when bridge refs are absent.
-- Artifact open flows resolve through identity plus route/open contracts rather than feature-local path guessing.
+Every artifact carries a runtime envelope:
+```
+{
+  artifact_id: string,
+  artifact_type: string,
+  attempt_id: string,
+  blocked_sequence: number,
+  blocked_episode_id: string,
+  execution_unit_context: {
+    execution_unit_id: string,
+    execution_unit_type: 'run' | 'seam' | 'package' | 'node',
+    execution_role: string
+  },
+  requested_account_id?: string,
+  effective_account_id: string,
+  operational_identity: string,
+  approval_scope_key: string,
+  resolution_id?: string,
+  usage_event_ref?: string,
+  provider_attempt_ref?: string,
+  route_target?: string,
+  created_utc: string,
+  expires_utc?: string
+}
+```
+
+Attribution packet rules:
+- Every artifact is attributed to canonical execution_role and operational_identity, not to provider handles or session tokens.
+- Artifacts may include provider correlation fields (provider_attempt_ref, OpenCode session id) as join keys but not as replacement identity.
+- approval_scope_key is preserved across artifact families so approval reuse, HITL lookup, and doom-loop protection work coherently.
+- blocked_sequence links artifacts into concern episode clusters; artifacts from the same episode share a blocked_episode_id.
+
+ContractRef: ContractName:Plans/Contracts_V0.md §Concern record family
+
 ## 5A. Debug investigation grouping, manifests, and exports
 
 Runtime artifacts may participate in a shared Debug investigation without changing artifact-family ownership.
@@ -101,17 +139,11 @@ Required cross-artifact grouping fields are:
 - `evidence_role?` (`baseline`, `repro`, `diagnosis`, `fix`, `verification`, `cleanup`)
 - `verification_strength?` (`none`, `weak`, `strong`)
 
-ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/assistant-chat-design.md
-
 Grouping rules:
 - any runtime artifact may be grouped under an investigation when `investigation_id` is present
 - investigation grouping does not invent a new artifact family; it is an index and navigation layer over the canonical artifact records
 - `context_snapshot`, `tool_llm_trace`, `failed_attempts`, `restore_point`, `before_after_snapshot`, and `subagent_lineage` are required participants for Debug Mode when emitted
-- artifact open/focus actions must route to the owning target surface (browser session, terminal session, debugger surface, file diff, or usage surface) rather than to an artifact-local shell
-
-ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/UI_Command_Catalog.md
-
-Investigation bundle export is summary-first and pointer-based.
+- artifact open/focus actions must route to the owning target surface rather than to an artifact-local shell
 
 Required bundle manifest fields are:
 - `schema_id = pm.investigation_bundle.schema.v1`
@@ -126,15 +158,48 @@ Required bundle manifest fields are:
 - `cleanup_state`
 - `redaction_and_omission_summary`
 
-ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Prompt_Pipeline.md
-
 Export and import rules:
 - raw screenshots, traces, logs, recordings, and diffs remain stored and opened through the shared runtime-artifact system; the bundle manifest references them instead of duplicating bytes inline
 - exporting an investigation writes `runtime_artifact.document` or equivalent manifest-linked metadata plus `debug.investigation.exported`
 - importing a bundle creates an `imported_bundle` debug target and preserves provenance about the external source rather than pretending the bundle is a live local runtime target
 - redacted, revoked, blocked, expired, and omitted items remain visible in the manifest summary so users can tell what was or was not carried forward
 
-ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/GitHub_Integration.md
+### 5B Export taxonomy and manifests
+
+Export manifests capture artifact taxonomy for external delivery and audit:
+```
+{
+  export_id: string,
+  export_scope: 'run' | 'concern' | 'evidence' | 'usage' | 'approval',
+  blocked_sequence?: number,
+  artifact_families: string[],
+  artifacts: {
+    artifact_id: string,
+    artifact_type: string,
+    export_format: 'json' | 'markdown' | 'html' | 'pdf',
+    content_hash: string,
+    size_bytes: number,
+    created_utc: string
+  }[],
+  canonical_identity: {
+    execution_unit_id: string,
+    attempt_id: string,
+    blocked_episode_id: string,
+    operational_identity: string
+  },
+  created_utc: string,
+  signed?: boolean,
+  signature_key_id?: string
+}
+```
+
+Export rules:
+- Exports MUST preserve canonical identity fields so recipients can verify lineage and attribution.
+- Artifacts in exports MUST retain their runtime envelopes; removal of envelope fields constitutes tampering.
+- Export manifests are versioned; historical exports remain accessible even if taxonomy changes.
+- Exports may be signed using the project's signing key for audit compliance.
+
+ContractRef: ContractName:Plans/Decision_Policy.md §Export and audit, ContractName:Plans/Glossary.md
 
 ## 6. reasoning_tokens and cost_usage
 **reasoning_tokens:** Required in the usage/cost_usage schema (integer, minimum 0). In the UI, display the field only when value > 0.

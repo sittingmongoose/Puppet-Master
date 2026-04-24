@@ -1,0 +1,71 @@
+run_id: r-20260312-203855-run-018
+preflight: PASS
+mutation_targets_checked: 36
+
+preflight_results:
+PASS target-001 Plans/Architecture_Invariants.md anchor[1] file_end:append
+PASS target-002 Plans/CLI_Bridged_Providers.md anchor[1] heading:replace_section
+PASS target-003 Plans/Contracts_V0.md anchor[1] heading:replace_section
+PASS target-004 Plans/Crosswalk.md anchor[1] heading:replace_section
+PASS target-004 Plans/Crosswalk.md anchor[2] heading:replace_section
+PASS target-004 Plans/Crosswalk.md anchor[3] heading:replace_section
+PASS target-005 Plans/Executor_Protocol.md anchor[1] heading:replace_section
+PASS target-005 Plans/Executor_Protocol.md anchor[2] heading:replace_section
+PASS target-005 Plans/Executor_Protocol.md anchor[3] heading:replace_section
+PASS target-005 Plans/Executor_Protocol.md anchor[4] heading:replace_section
+PASS target-005 Plans/Executor_Protocol.md anchor[5] heading:replace_section
+PASS target-006 Plans/FileManager.md anchor[1] heading:replace_section
+PASS target-007 Plans/FinalGUISpec.md anchor[1] heading:replace_section
+PASS target-007 Plans/FinalGUISpec.md anchor[2] heading:replace_section
+PASS target-007 Plans/FinalGUISpec.md anchor[3] heading:insert_after
+PASS target-007 Plans/FinalGUISpec.md anchor[4] heading:replace_section
+PASS target-008 Plans/GUI_Rebuild_Requirements_Checklist.md anchor[1] heading:replace_section
+PASS target-009 Plans/GitHub_API_Auth_and_Flows.md anchor[1] heading:replace_section
+PASS target-010 Plans/GitHub_Integration.md anchor[1] heading:replace_section
+PASS target-011 Plans/Glossary.md anchor[1] heading:replace_section
+PASS target-012 Plans/Models_System.md anchor[1] heading:replace_section
+PASS target-013 Plans/Multi-Account.md anchor[1] heading:replace_section
+PASS target-014 Plans/Orchestrator_Page.md anchor[1] heading:replace_section
+PASS target-015 Plans/Permissions_System.md anchor[1] heading:replace_section
+PASS target-016 Plans/Progression_Gates.md anchor[1] heading:insert_after
+PASS target-017 Plans/Prompt_Pipeline.md anchor[1] heading:replace_section
+PASS target-017 Plans/Prompt_Pipeline.md anchor[2] heading:replace_section
+PASS target-018 Plans/Provider_OpenCode.md anchor[1] heading:replace_section
+PASS target-019 Plans/Provider_Stream_Mapping_External_Reference_A2A.md anchor[1] heading:insert_after
+PASS target-020 Plans/Run_Graph_View.md anchor[1] heading:replace_section
+PASS target-020 Plans/Run_Graph_View.md anchor[2] heading:replace_section
+PASS target-021 Plans/Run_Modes.md anchor[1] heading:insert_after
+PASS target-022 Plans/Runtime_Artifacts_Panel.md anchor[1] heading:replace_section
+PASS target-022 Plans/Runtime_Artifacts_Panel.md anchor[2] heading:replace_section
+PASS target-023 Plans/Tools.md anchor[1] heading:insert_after
+PASS target-024 Plans/UI_Command_Catalog.md anchor[1] heading:replace_section
+PASS target-024 Plans/UI_Command_Catalog.md anchor[2] heading:replace_section
+PASS target-025 Plans/Widget_System.md anchor[1] heading:insert_after
+PASS target-026 Plans/Wiring_Matrix.md anchor[1] heading:insert_after
+PASS target-027 Plans/WorktreeGitImprovement.md anchor[1] heading:insert_after
+PASS target-028 Plans/assistant-chat-design.md anchor[1] heading:insert_after
+PASS target-029 Plans/chain-wizard.md anchor[1] file_end:append
+PASS target-030 Plans/evidence.schema.json anchor[1] file_start:replace_file
+PASS target-031 Plans/human-in-the-loop.md anchor[1] heading:replace_section
+PASS target-032 Plans/interview-subagent-integration.md anchor[1] heading:insert_after
+PASS target-033 Plans/orchestrator-subagent-integration.md anchor[1] heading:insert_after
+PASS target-034 Plans/storage-plan.md anchor[1] heading:replace_section
+PASS target-035 Plans/usage-feature.md anchor[1] heading:replace_section
+PASS target-036 Plans/FinalGUISpec.md anchor[1] heading:replace_section
+
+run_gates: FAIL
+exit_code: 1
+
+run_gates_output:
+[contractref] Plans/Progression_Gates.md:34: operational requirement missing ContractRef block
+[contractref] Plans/Progression_Gates.md:40: operational requirement missing ContractRef block
+[contractref] Plans/Progression_Gates.md:44: operational requirement missing ContractRef block
+[contractref] Plans/Progression_Gates.md:53: operational requirement missing ContractRef block
+[contractref] Plans/Progression_Gates.md:64: operational requirement missing ContractRef block
+[contractref] Plans/UI_Command_Catalog.md:71: operational requirement missing ContractRef block
+[contractref] Plans/UI_Command_Catalog.md:74: operational requirement missing ContractRef block
+[contractref] Plans/UI_Command_Catalog.md:94: operational requirement missing ContractRef block
+[contractref] Plans/UI_Command_Catalog.md:96: operational requirement missing ContractRef block
+[contractref] Plans/interview-subagent-integration.md:2275: operational requirement missing ContractRef block
+[contractref] Plans/interview-subagent-integration.md:2276: operational requirement missing ContractRef block
+[contractref] Plans/interview-subagent-integration.md:2281: operational requirement missing ContractRef block

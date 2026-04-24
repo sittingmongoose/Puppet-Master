@@ -41,11 +41,78 @@ Rules:
 - `route_target` owns canonical open and focus identity.
 - command normalization remains discoverable at the doc-level contract.
 
-### Search-command routing
-Search commands preserve query-session state and route selected results through `route_target` rather than feature-local navigation payloads.
+### 2.0B Action-surface policy
 
-### Canonical runtime recovery command ownership
-Runtime recovery commands stay anchored to the shared blocked and runtime contracts instead of UI-local action tables.
+Actions available on the UI are scoped by:
+- User role and execution_role (from Permissions_System.md)
+- Active run mode (automate, interactive, diagnostic)
+- Concern state and blocked_sequence
+- approval_scope_key and approval_id context
+- DAE jail posture
+
+Rules:
+- User cannot take an action unless the approval_scope_key allows it AND the operation is not contradicted by blocked_sequence or DAE jail posture.
+- Run mode changes, approval decisions, and blocked recovery are Orchestrator-owned; UI surfaces them but does not make the decision locally.
+- Actions that trigger external side-effects (file mutations, provider calls, route/open ops) MUST route through Permissions and route/open contracts.
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Permissions_System.md
+
+### Canonical route payload and route/open tail rules
+
+UI commands that route or open MUST preserve:
+- `route_target`: destination for output or side-effect (file path, GitHub issue URL, workspace concern, etc.)
+- `OpenSubject`: resource being opened (file, concern, help entry, project state)
+- `execution_unit_context`: which run, seam, package, or node is executing the command
+- `approval_scope_key`: reusable approval join key
+- `operational_identity`: attribution
+
+Route side-effect rules:
+- File mutations go through FileSafe and route/open guards before execution.
+- Provider mutations (PRs, issue comments) go through Permissions and provider-identity checks.
+- Route completion refs are immutable once recorded; they form an audit trail of what was actually modified.
+- If route_target becomes unreachable between command build and execution, the UI displays an error and does not attempt fallback mutation.
+
+### Command normalization model
+
+All UI commands (button clicks, keyboard shortcuts, context menu items) normalize to a standard record:
+```
+{
+  command_id: string,
+  command_type: 'action' | 'navigation' | 'state_change' | 'modal',
+  source_surface: 'graph' | 'inspector' | 'approval_modal' | 'logs' | 'menu' | 'shortcut',
+  target_scope: 'run' | 'node' | 'concern' | 'evidence' | 'artifact',
+  target_id: string,
+  action_intent: string,
+  parameters: Record<string, any>,
+  route_target?: string,
+  open_subject?: OpenSubject,
+  execution_unit_context?: ExecutionUnitContext,
+  approval_scope_key: string,
+  operational_identity: string,
+  created_utc: string
+}
+```
+
+Rules:
+- Commands from keyboard, menu, and context are all normalized to this record.
+- CLI commands and programmatic API calls use the same record format for Orchestrator ingestion.
+- Command normalization preserves user intent without rewriting route_target or OpenSubject.
+
+ContractRef: ContractName:Plans/Contracts_V0.md §route_target and OpenSubject, ContractName:Plans/FileSafe.md
+
+### Tier-era compatibility retirement
+
+Legacy compatibility layer MUST be removed:
+- `TierContext` is not used in UI commands; all context is in `execution_unit_context`.
+- `tier_id` field is not present in any command or payload.
+- `Tiers` enum is not referenced in commands or models.
+- `Phase-Task-Subtask` runtime canon is retired; execution units are `run`, `seam`, `package`, `node`, `overseer`, or `delegated_subagent`.
+- `allowed_actions[]` array with tier-specific rules is replaced with `approval_scope_key` and permission lookups.
+- `reason_code` and `recovery_options[]` are retired; blocked recovery reasons and options are stored in the canonical `blocked_episode` record.
+- `approve_continue` action is replaced with explicit approval decision through `Permissions_System.md§PERM-ACTIONS`.
+
+ContractRef: ContractName:Plans/Architecture_Invariants.md, ContractName:Plans/Executor_Protocol.md
+
 ### 2.0.1 Acceptance hooks contract (wiring verification)
 Every command listed in this catalog MUST be verifiable through the wiring matrix (`Plans/Wiring_Matrix.md`, schema: `Plans/Wiring_Matrix.schema.json`). Specifically:
 
@@ -629,11 +696,16 @@ Required command metadata:
 - `alias_of_command_id`
 - `approval_scope_key`
 - `allowed_action_ids[]`
+- `route_target`
+- `open_subject?`
+- `ref_family?`
 
 Canonical terms and values:
 - command_kind
 - normalization
 - approval_scope_key
+- route_target
+- ref_family
 
 Labels:
 - Approve
@@ -645,12 +717,12 @@ Labels:
 - Resolve
 
 Behavioral rules:
-- Blocked-state recovery buttons and menu entries map from `allowed_action_ids[]` to canonical `cmd.runtime.*` commands.
-- No surface may introduce a thread-local, graph-local, or provider-local recovery command family for the same action semantics.
-- approve_continue is legacy vocabulary and must not survive as canonical action naming.
-- Recovery commands must bind to blocked-episode identity rather than request-level or tier-level surrogates.
-- Normalization metadata must survive for wrappers and deprecated aliases.
+- blocked-state recovery buttons and menu entries map from `allowed_action_ids[]` to canonical `cmd.runtime.*` commands
+- no surface may introduce a thread-local, graph-local, or provider-local recovery command family for the same action semantics
+- recovery commands must bind to blocked-episode identity rather than request-level surrogates
+- normalization metadata must survive for wrappers and deprecated aliases
+- selector precedence and scoped resolver behavior follow the canonical route payload rules above
+- timestamp/run/thread fallback is compatibility-only when stronger route identity is unavailable
 
 Permission carry-through:
 - ordered `allowed_action_ids[]`
-- ordered `allowed_action_ids[]` drive visible recovery command affordances

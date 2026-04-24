@@ -40,6 +40,37 @@ ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, PolicyRule:no_secrets_
 
 ---
 
+## Canonical data-shape reconciliation
+
+This section owns the canonical requested/effective account identity contract for all provider-using actors.
+
+### Required data shape
+
+Every runtime, bridged-provider, and permission-facing envelope that carries account identity MUST preserve:
+- `requested_account_id`
+- `requested_account_policy`
+- `requested_account_binding`
+- `effective_account_id`
+- `effective_provider_identity`
+- `execution_role`
+- `operational_identity`
+
+Rules:
+- `account_id` is the stable durable identity.
+- `provider_account_id`, `login`, and other provider-native handles are subordinate provider metadata only; they MUST NOT replace stable canonical identity.
+- requested/effective account identity MUST remain visible through runtime resolution, bridged-provider envelopes, historical snapshots, and permission or approval consumers.
+- `requested_account_binding` is the canonical selector for `none`, `preferred`, or `required`; fallback behavior keys from binding rather than ad hoc provider heuristics.
+- same-provider rows are not interchangeable when auth family, billing context, or runtime surface differs.
+
+Shared actor/runtime boundary:
+- assistant, chat, interview, builder, and other conversational actors share the same provider/runtime identity semantics as Orchestrator-managed execution.
+- those actors remain distinct actor/run kinds; they are not renamed into package, seam, or node execution objects.
+- cross-surface consumers may reuse the same requested/effective identity envelope, but they MUST preserve actor kind and execution context instead of collapsing them into orchestration-only terms.
+
+This owner section governs later account-resolution detail in §§4.5 and 7.
+
+---
+
 ## 3. Assessment: what we have and gaps (filled)
 
 **Question:** Do we have what we need to reverse-engineer multi-account and apply it to Puppet Master for all covered providers?

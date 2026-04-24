@@ -28,110 +28,67 @@ ContractRef: Invariant:INV-010
 ---
 
 ## 2. Core terms
-The glossary keeps one `canonical term system`, one `contextual help system`, and one `dedicated help-entry contract`.
 
 ### Orchestrator rewrite terms
-#### Seams
-- canonical_name: `Seams`
-- short_definition: `Seams` are the rewrite-era coordination boundary between related `Feature Seam` and `Work Package` groups.
-- why it matters: `Seams` are used to explain `project health`, `project activity`, and `project attention` without collapsing rewrite vocabulary.
-- what it is not: `Seams` are not a replacement name for every package or lane.
-- common_related_states: `historical`, `stale_historical`, `superseded`, `revoked`, `reopened`, `archived`, `removed`
-- related_concepts: `Feature Seam`, `Work Package`, `Package Overseer`, `Seam Overseer`
-- surface_examples: Orchestrator, History, Run Graph
 
-#### Feature Seam
-- canonical_name: `Feature Seam`
-- short_definition: `Feature Seam` is the named coordination boundary for a coherent feature group within a `Seam`.
-- why it matters: `Feature Seam` keeps feature-group scope explicit without collapsing into `Work Package` identity.
-- what it is not: `Feature Seam` is not a runtime execution unit; it is a coordination and ownership boundary only.
-- common_related_states: `historical`, `archived`, `removed`
-- related_concepts: `Seams`, `Work Package`, `Seam Overseer`
-- surface_examples: Orchestrator, Run Graph
+**Execution Unit**: A discrete unit of work in the orchestrator (run, seam, package, node, overseer, or delegated subagent). Each has its own execution_unit_context, approval scope, and restart history. Not to be confused with Tier (deprecated).
 
-#### Work Package
-- canonical_name: `Work Package`
-- short_definition: `Work Package` is the atomic deliverable unit owned by a `Feature Seam`.
-- why it matters: `Work Package` provides the granularity boundary for scheduling, retry, and acceptance within a feature group.
-- what it is not: `Work Package` is not a lane or an attempt; it does not replace runtime execution identity.
-- common_related_states: `historical`, `archived`, `removed`, `superseded`, `reopened`
-- related_concepts: `Feature Seam`, `Package Overseer`, `Seams`
-- surface_examples: Orchestrator, Run Graph
+**Execution Role**: The identity context (user, service account, or agent) under which a unit executes. Tied to permissions, quotas, and escalation chains.
 
-#### Package Overseer
-- canonical_name: `Package Overseer`
-- short_definition: `Package Overseer` is the AI role responsible for coordinating and completing one `Work Package`.
-- why it matters: Explicit overseer roles keep responsibility assignment inspectable and auditable.
-- what it is not: `Package Overseer` is not a user-facing label; it is a runtime coordination role.
-- related_concepts: `Work Package`, `Seam Overseer`, `Seams`
-- surface_examples: Orchestrator, Run Graph
+**Concern**: An issue, error, or escalation that blocks or affects execution. Concerns form a lineage of episodes; each episode is tied to a specific execution attempt.
 
-#### Seam Overseer
-- canonical_name: `Seam Overseer`
-- short_definition: `Seam Overseer` is the AI role responsible for coordinating all `Work Package` progress within a `Feature Seam`.
-- why it matters: Seam-level oversight keeps cross-package coordination traceable without collapsing into run-level identity.
-- what it is not: `Seam Overseer` is not a user-facing label; it is a runtime coordination role.
-- related_concepts: `Feature Seam`, `Package Overseer`, `Seams`
-- surface_examples: Orchestrator, Run Graph
+**Blocked Episode**: One instance of a concern being blocked (e.g., waiting for approval, encountering an error, retrying). Identified by blocked_episode_id; multiple episodes can exist within a single concern_id.
+
+**Escalation Stack**: The chain of escalation frames showing who tried to resolve a concern, when, and what the outcome was. Escalations are not removed; they form an audit trail.
+
+**Approval Scope**: The execution_unit_context level at which an approval decision gates further execution (run scope, node scope, delegated_subagent scope). An approval at one scope does not bypass approvals at a different scope.
+
+**Approval Posture**: The policy for how approval decisions are handled (auto-approve, require_approval, suggest_only, or blocked). Tied to execution_unit_context or Persona settings.
 
 ### Runtime and routing terms
-#### route_target
-- canonical_name: `route_target`
-- short_definition: `route_target` is the shared navigation and focus contract.
-- why it matters: runtime and routing views must align on one contract instead of feature-local open payloads.
-- what it is not: `route_target` is not a shell-layout or transport-only alias.
-- common_related_states: navigation remains distinct from `historical`, `archived`, and `removed` state overlays.
-- related_concepts: `target_kind`, `object_kind`, `inspector_target`, `subject_id`, `resume_url`
-- surface_examples: Search, Orchestrator, File Manager
 
-#### target_kind
-- canonical_name: `target_kind`
-- short_definition: `target_kind` is the destination class field of `route_target`, classifying the shell surface or panel receiving the routed object.
-- why it matters: consumers must know which surface class to activate before resolving object identity.
-- what it is not: `target_kind` is not an object type; it describes destination surface class only.
-- related_concepts: `route_target`, `object_kind`, `inspector_target`
-- surface_examples: Orchestrator, File Manager, Side Panel
+**Route Target**: A destination for output or side-effects (file://, github://, workspace://, share://, etc.). Resolved through a cascading resolver and permission checks.
 
-#### object_kind
-- canonical_name: `object_kind`
-- short_definition: `object_kind` classifies the domain entity being routed when a `subject_id` is not used.
-- why it matters: explicit object typing keeps routing deterministic across surfaces without relying on implicit inference.
-- what it is not: `object_kind` is not a `target_kind`; it classifies the domain entity, not the destination surface.
-- related_concepts: `route_target`, `target_kind`, `subject_id`
-- surface_examples: Orchestrator, Run Graph, Artifacts Panel
+**OpenSubject**: A resource or concern being opened/inspected (file, concern, help_entry, project_state, run, artifact_storage). Normalized into a shared routing model so all surfaces handle them uniformly.
 
-#### inspector_target
-- canonical_name: `inspector_target`
-- short_definition: `inspector_target` is the focus refinement field of `route_target` that specifies which inspector tab or subsurface to activate after identity is resolved.
-- why it matters: deep-linking into artifact details, usage, lineage, and evidence requires a stable sub-surface selector.
-- what it is not: `inspector_target` is not an identity field; it refines focus after the primary selector resolves.
-- related_concepts: `route_target`, `target_kind`, `subject_id`
-- surface_examples: Artifacts Panel, Run Graph, Orchestrator
+**Runtime Identity**: The execution context including requested_account_id, effective_account_id, execution_role, and account_switch_lineage. Persistent across retries and restarts.
 
-#### subject_id
-- canonical_name: `subject_id`
-- short_definition: `subject_id` is the canonical primary selector for renderable or openable content in `route_target`.
-- why it matters: document and artifact families share one selector namespace; routing surfaces must not invent parallel identity fields.
-- what it is not: `subject_id` is not a general entity selector; it is bounded to `doc:` and `artifact:` families only.
-- related_concepts: `route_target`, `object_kind`, `inspector_target`
-- surface_examples: File Manager, Artifacts Panel
+**Account Switch Lineage**: The ordered list of account IDs that the execution has switched through, with metadata (switch_reason, switch_time_utc). Used for recovery and auditing.
 
-#### resume_url
-- canonical_name: `resume_url`
-- short_definition: `resume_url` is the serialized transport form of `route_target`, used for deep-linking and cross-surface handoff.
-- why it matters: a stable serialized form of route identity enables bookmark, share, and session-restore without reimplementing routing semantics.
-- what it is not: `resume_url` is not a stronger parallel primitive; it decodes to `route_target` and carries no additional routing authority.
-- related_concepts: `route_target`, `subject_id`, `target_kind`
-- surface_examples: Session restore, deep-link handoff, Orchestrator-to-Assistant handoff
-## 3. Anti-drift documents
-- **Spec Lock** -- `Plans/Spec_Lock.json`; locked decisions that MUST NOT drift.
-- **Crosswalk** -- `Plans/Crosswalk.md`; ownership boundaries for primitives.
-- **Progression gates** -- `Plans/Progression_Gates.md`; deterministic verification requirements.
+**Artifact**: An output or byproduct of execution (log, diff, output, input, trace). Indexed by (concern_id, route_target, artifact_type, timestamp) and tied to the execution unit that produced it.
 
-ContractRef: SchemaID:Spec_Lock.json, Gate:GATE-003, Gate:GATE-009, PolicyRule:Decision_Policy.md§1
+### Projection freshness and health terms
 
----
+**Projection Freshness**: How recently the UI's state representation was synchronized with the execution backend. A projection can be "fresh" (< 1s old), "warm" (< 30s), or "stale" (> 30s). UI updates are gated by freshness; a stale projection triggers a refresh.
 
+**Projection Health**: A synthetic metric combining execution unit status, concern count, escalation depth, and approval pending state. Ranges from 'green' (no concerns, all units progressing) to 'yellow' (concerns present but recoverable) to 'red' (blocked or unrecoverable state).
+
+**Help Architecture**: The system for providing contextual guidance (help entries, suggested actions, escalation advice) based on active concern, execution_unit_type, and concern_reason. Help entries are canonical and reusable across surfaces.
+
+### Help architecture and project status terms
+
+**Help Entry**: A reusable guidance document addressing a specific concern_reason or execution problem. Indexed by concern_class and concern_reason so the orchestrator can look up relevant help without requiring human navigation.
+
+**Project Status**: A summary projection of all runs, concerns, and escalations for an active project. Includes breakdowns by concern_class, approval posture, and resolution state (active, resolved, dismissed).
+
+**Suggested Action**: An auto-generated recommendation based on the active concern, historical outcomes, and available Personas or providers. Not mandatory; users can ignore or override.
+
+### Help-entry template and related-concept clusters
+
+**Template Structure**: Each help entry has:
+```
+- Title (concern_reason or execution problem name)
+- Canonical Definition (what this issue means)
+- Common Causes (why it happens)
+- Recovery Steps (what to try, in order)
+- Escalation Path (who to contact if recovery fails)
+- Related Entries (other help topics that interact with this one)
+- Evidence Links (where to find logs, traces, or debug info)
+```
+
+**Concept Clusters**: Help entries are grouped by concern_class (e.g., 'auth', 'timeout', 'approval', 'data') so users can browse related topics.
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/FinalGUISpec.md
 ## 4. Evidence
 - **Evidence bundle** -- a structured record of commands/checks/artifacts that demonstrates a requirement is met.
 
