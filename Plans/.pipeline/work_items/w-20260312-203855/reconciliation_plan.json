@@ -6,7 +6,7 @@
     "docs_touched": 35,
     "coverage_rows_mapped": 210,
     "gap_ids_mapped": 68,
-    "targets_requiring_new_owner_heading": 28,
+    "targets_requiring_new_owner_heading": 22,
     "targets_using_full_owner_container": 21
   },
   "targets": [
@@ -911,19 +911,15 @@
       "target_id": "target-025",
       "path": "Plans/Widget_System.md",
       "mapped_owner_heading": "## 4. Orchestrator Progress widget scope and catalog linkage",
-      "live_anchor": "## 3. Layout persistence",
-      "action": "extend_consumer_section",
-      "must_create_owner_heading": true,
+      "live_anchor": "## 4. Orchestrator Progress widget scope and catalog linkage",
+      "action": "rewrite_owner_section",
+      "must_create_owner_heading": false,
       "required_structural_headings": [
-        "## 2. Hostability and data contracts",
-        "## 3. Layout persistence",
-        "## 4. Orchestrator Progress widget scope and catalog linkage"
+        "## 4. Orchestrator Progress widget scope and catalog linkage",
+        "### Catalog source and drill linkage"
       ],
-      "replace_scope": "local_anchor_section",
-      "exact_survivors": [
-        "## 2. Hostability and data contracts",
-        "## 3. Layout persistence"
-      ],
+      "replace_scope": "full_owner_container",
+      "exact_survivors": [],
       "forbidden_strings": [],
       "coverage_row_ids": [
         "cov-048"
@@ -933,7 +929,8 @@
       ],
       "notes": [
         "Keep Widget_System consumer-only: it owns Progress-only hostability, the dedicated orchestrator:progress layout split, and explicit linkage to the promoted catalog source.",
-        "Do not require Widget_System to restate unnamed legacy widget entries; it should consume the current named catalog and drill/linkage source from FinalGUISpec instead of inventing missing widget names."
+        "Do not require Widget_System to restate unnamed legacy widget entries; it should consume the current named catalog and drill/linkage source from FinalGUISpec instead of inventing missing widget names.",
+        "Live doc already contains the owner heading plus a stale duplicate same-heading tail; reconcile in place from the first ## 4 owner heading through the full owner container instead of inserting after ## 3."
       ]
     },
     {

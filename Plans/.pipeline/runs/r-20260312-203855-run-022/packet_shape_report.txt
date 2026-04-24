@@ -1,6 +1,6 @@
 pm.packet_shape_report.v1
 work_id: w-20260312-203855
-run_id: r-20260312-203855-run-023
+run_id: r-20260312-203855-run-022
 status: pass
 packet_written: yes
 targets_total: 36
@@ -11,14 +11,13 @@ update_intents: 36
 operations:
 - file_end:append = 3
 - file_end:replace_section = 3
-- heading:insert_after = 2
-- heading:replace_section = 33
+- heading:insert_after = 3
+- heading:replace_section = 32
 - json_object_path:replace_section = 1
 notes:
 - all 36 reconciliation targets remain executable mutation doc_intents
-- target-025 now rewrites the existing Widget_System owner section in place instead of inserting after ## 3
 - targets-026, -028, and -033 now use explicit live owner-heading anchors instead of FILE_START placeholders
 - targets-029 and -032 are update mutations against existing files, not create-file mutations
 - target-030 now emits json_object_path:replace_section for the existing route_aware_verification schema object
-- packet assembled from bounded mutation targets without reconciliation-plan repairs
+- packet assembled from three bounded target chunks without reconciliation-plan repairs
 next_required_stage: Scribe
