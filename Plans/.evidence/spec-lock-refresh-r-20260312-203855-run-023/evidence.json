@@ -1,0 +1,112 @@
+{
+  "schema_id": "pm.evidence.schema.v1",
+  "evidence_id": "evidence-spec-lock-refresh-r-20260312-203855-run-023",
+  "created_at_utc": "2026-04-24T21:01:51.069+00:00",
+  "node": {
+    "node_id": "normalizer-spec-lock-refresh",
+    "graph_scope": "r-20260312-203855-run-023"
+  },
+  "summary": "Refreshed Spec Lock canonical SSOT hashes after run-023 ContractRef repair, appended the required auto_decisions row, and reran the final normalization checks.",
+  "commands_run": [
+    {
+      "cmd": "refresh Plans/Spec_Lock.json canonical_ssot_hashes and append Plans/auto_decisions.jsonl row",
+      "exit_code": 0,
+      "stdout_excerpt": "Plans/Contracts_V0.md\nPlans/Executor_Protocol.md\nPlans/GitHub_API_Auth_and_Flows.md\nPlans/UI_Command_Catalog.md\nPlans/interview-subagent-integration.md"
+    },
+    {
+      "cmd": "python3 scripts/pm-plans-verify.py validate-auto-decisions",
+      "exit_code": 0,
+      "stdout_excerpt": ""
+    },
+    {
+      "cmd": "python3 scripts/pm-plans-verify.py verify-spec-lock",
+      "exit_code": 0,
+      "stdout_excerpt": ""
+    }
+  ],
+  "tool_calls": [
+    {
+      "tool_id": "normalizer.refresh_spec_lock",
+      "count": 1,
+      "note": "Deterministically refreshed Spec Lock and recorded auto decision for verified hash drift."
+    }
+  ],
+  "events": {
+    "event_refs": [
+      {
+        "source": "jsonl",
+        "ref": "Plans/auto_decisions.jsonl#dec-2026-04-24-r-20260312-203855-run-023-spec-lock-refresh",
+        "note": "Decision row appended as required by the Spec Lock update protocol."
+      }
+    ]
+  },
+  "files_changed": [
+    {
+      "path": "Plans/Spec_Lock.json",
+      "change_type": "modified",
+      "note": "Refreshed canonical_ssot_hashes for all pinned files."
+    },
+    {
+      "path": "Plans/auto_decisions.jsonl",
+      "change_type": "modified",
+      "note": "Appended one deterministic decision row for the Spec Lock refresh."
+    },
+    {
+      "path": "Plans/.evidence/spec-lock-refresh-r-20260312-203855-run-023/evidence.json",
+      "change_type": "added",
+      "note": "Spec Lock refresh evidence bundle."
+    }
+  ],
+  "contract_refs_satisfied": [
+    "SchemaID:Spec_Lock.json#canonical_ssot_hashes",
+    "PolicyRule:Decision_Policy.md#spec-lock-update-protocol",
+    "SchemaID:auto_decisions.schema.json",
+    "SchemaID:evidence.schema.json",
+    "Gate:GATE-002"
+  ],
+  "reproducibility": {
+    "snapshot_ref": "r-20260312-203855-run-023",
+    "note": "Generated from the active research packet and current canonical SSOT files after ContractRef repair."
+  },
+  "artifacts": [
+    {
+      "path": "Plans/.pipeline/change_manifest.json",
+      "sha256": "67df65cf620c8513ca5227c7df45c0917c1e816678f9ce8af9e5ac4ae1a813b0"
+    },
+    {
+      "path": "Plans/.pipeline/runs/r-20260312-203855-run-023/change_manifest.json",
+      "sha256": "67df65cf620c8513ca5227c7df45c0917c1e816678f9ce8af9e5ac4ae1a813b0"
+    },
+    {
+      "path": "Plans/.pipeline/research_packet.json",
+      "sha256": "007364b724be7c657d64cfa73b0b85138ea477c8089cb34bb84242f60215048c"
+    },
+    {
+      "path": "Plans/Spec_Lock.json",
+      "sha256": "d390dedf2b4cfa9498fac8e883f59490c7579fb516f88ef9112dadd04524c66a"
+    },
+    {
+      "path": "Plans/auto_decisions.jsonl",
+      "sha256": "7866ebeb42bbcc3f901a98d4eb170fd8a13bc406b146d0506ed75b5e9a194c84"
+    }
+  ],
+  "checks": [
+    {
+      "name": "validate-auto-decisions",
+      "result": "PASS",
+      "details": "",
+      "contract_refs": [
+        "SchemaID:auto_decisions.schema.json"
+      ]
+    },
+    {
+      "name": "verify-spec-lock",
+      "result": "PASS",
+      "details": "",
+      "contract_refs": [
+        "SchemaID:Spec_Lock.json#canonical_ssot_hashes",
+        "Gate:GATE-002"
+      ]
+    }
+  ]
+}

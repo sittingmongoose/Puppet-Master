@@ -532,8 +532,10 @@ The following terms are deprecated and MUST NOT be used in new specifications:
 - `reason_code` (replaced by `concern_reason` in concern records)
 - `recovery_options[]` (replaced by explicit `approval_posture` enum)
 - `approve_continue` (replaced by `approval_id` + `approval_posture`)
+ContractRef: Primitive:ExecutionUnitContext, ContractName:Plans/Models_System.md, ContractName:Plans/Contracts_V0.md
 
 Any reference to tier-era terms in live documents MUST be updated to use execution_unit_context vocabulary or explicitly documented as legacy compat shims. New implementations MUST NOT invent new tier-era terms.
+ContractRef: Primitive:ExecutionUnitContext, ContractName:Plans/Models_System.md, ContractName:Plans/Contracts_V0.md
 
 ### Blocked episode identity and restart recovery
 

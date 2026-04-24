@@ -55,6 +55,7 @@ ContractRef: SchemaID:Spec_Lock.json#github_operations, Primitive:PatchPipeline,
 ### Required data shape
 
 The GitHub OAuth/PAT auth context MUST include these fields in the runtime identity record:
+ContractRef: Primitive:RuntimeIdentity, Primitive:ExecutionContext, ContractName:Plans/Contracts_V0.md
 
 ```typescript
 GitHub_AuthContext {

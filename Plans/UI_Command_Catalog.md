@@ -65,6 +65,7 @@ UI commands that route or open MUST preserve:
 - `execution_unit_context`: which run, seam, package, or node is executing the command
 - `approval_scope_key`: reusable approval join key
 - `operational_identity`: attribution
+ContractRef: Primitive:RouteTarget, Primitive:OpenSubject, Primitive:ExecutionContext, ContractName:Plans/Permissions_System.md, ContractName:Plans/Contracts_V0.md
 
 Route side-effect rules:
 - File mutations go through FileSafe and route/open guards before execution.

@@ -5,14 +5,6 @@ mutation_targets_validated: 36
 validated_spans: 42
 contractref_comparison_mode: ignore lines starting with ContractRef:
 missing_targets: 0
-run_gates_exit_code: 1
+run_gates_exit_code: 0
 run_gates_output:
-[contractref] Plans/Contracts_V0.md:75: operational requirement missing ContractRef block
-[contractref] Plans/Contracts_V0.md:88: operational requirement missing ContractRef block
-[contractref] Plans/Executor_Protocol.md:526: operational requirement missing ContractRef block
-[contractref] Plans/Executor_Protocol.md:536: operational requirement missing ContractRef block
-[contractref] Plans/GitHub_API_Auth_and_Flows.md:57: operational requirement missing ContractRef block
-[contractref] Plans/UI_Command_Catalog.md:62: operational requirement missing ContractRef block
-[contractref] Plans/interview-subagent-integration.md:24: operational requirement missing ContractRef block
-[contractref] Plans/interview-subagent-integration.md:25: operational requirement missing ContractRef block
-[contractref] Plans/interview-subagent-integration.md:30: operational requirement missing ContractRef block
+

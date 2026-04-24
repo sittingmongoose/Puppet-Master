@@ -1,0 +1,84 @@
+{
+  "schema_id": "pm.contractref_repair_report.v1",
+  "work_id": "w-20260312-203855",
+  "run_id": "r-20260312-203855-run-023",
+  "status": "complete",
+  "failures_from_verifier": [
+    "Plans/Contracts_V0.md:75",
+    "Plans/Contracts_V0.md:88",
+    "Plans/Executor_Protocol.md:526",
+    "Plans/Executor_Protocol.md:536",
+    "Plans/GitHub_API_Auth_and_Flows.md:57",
+    "Plans/UI_Command_Catalog.md:62",
+    "Plans/interview-subagent-integration.md:24",
+    "Plans/interview-subagent-integration.md:25",
+    "Plans/interview-subagent-integration.md:30"
+  ],
+  "repairs_applied": [
+    {
+      "path": "Plans/Contracts_V0.md",
+      "original_line_hint": 75,
+      "requirement_text": "These MUST be emitted as a pair in runtime records so inspectors and resumption can distinguish intent from capability.",
+      "contractref_added": "ContractRef: Primitive:RuntimeIdentity, Primitive:ExecutionContext, ContractName:Plans/GitHub_API_Auth_and_Flows.md, ContractName:Plans/Multi-Account.md",
+      "notes": "Added a local ContractRef immediately after the requested/effective account identity bullet cluster."
+    },
+    {
+      "path": "Plans/Contracts_V0.md",
+      "original_line_hint": 88,
+      "requirement_text": "Help/notification surfaces MUST reference concern_id but MAY defer showing blocked_sequence/episode details until the concern is stable (no new escalations for N seconds).",
+      "contractref_added": "ContractRef: Primitive:ConcernRecord, ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/human-in-the-loop.md",
+      "notes": "Added a local ContractRef immediately after the concern visibility rule cluster."
+    },
+    {
+      "path": "Plans/Executor_Protocol.md",
+      "original_line_hint": 526,
+      "requirement_text": "The following terms are deprecated and MUST NOT be used in new specifications:",
+      "contractref_added": "ContractRef: Primitive:ExecutionUnitContext, ContractName:Plans/Models_System.md, ContractName:Plans/Contracts_V0.md",
+      "notes": "Added a local ContractRef immediately after the deprecated term list."
+    },
+    {
+      "path": "Plans/Executor_Protocol.md",
+      "original_line_hint": 536,
+      "requirement_text": "Any reference to tier-era terms in live documents MUST be updated to use execution_unit_context vocabulary or explicitly documented as legacy compat shims. New implementations MUST NOT invent new tier-era terms.",
+      "contractref_added": "ContractRef: Primitive:ExecutionUnitContext, ContractName:Plans/Models_System.md, ContractName:Plans/Contracts_V0.md",
+      "notes": "Added a paragraph-local ContractRef directly after the tier-era compatibility requirement."
+    },
+    {
+      "path": "Plans/GitHub_API_Auth_and_Flows.md",
+      "original_line_hint": 57,
+      "requirement_text": "The GitHub OAuth/PAT auth context MUST include these fields in the runtime identity record:",
+      "contractref_added": "ContractRef: Primitive:RuntimeIdentity, Primitive:ExecutionContext, ContractName:Plans/Contracts_V0.md",
+      "notes": "Added a local ContractRef immediately after the auth-context requirement introduction."
+    },
+    {
+      "path": "Plans/UI_Command_Catalog.md",
+      "original_line_hint": 62,
+      "requirement_text": "UI commands that route or open MUST preserve:",
+      "contractref_added": "ContractRef: Primitive:RouteTarget, Primitive:OpenSubject, Primitive:ExecutionContext, ContractName:Plans/Permissions_System.md, ContractName:Plans/Contracts_V0.md",
+      "notes": "Added a local ContractRef directly under the preserved route payload list."
+    },
+    {
+      "path": "Plans/interview-subagent-integration.md",
+      "original_line_hint": 24,
+      "requirement_text": "The handoff from wizard/interview planning into execution MUST carry `project_id`, `thread_id`, `wizard_id`, requested/effective runtime identity, and `execution_role`.",
+      "contractref_added": "ContractRef: Primitive:RuntimeIdentity, Primitive:ExecutionContext, ContractName:Plans/Orchestrator_Page.md",
+      "notes": "One local ContractRef block covers the entire wizard/interview handoff requirement cluster."
+    },
+    {
+      "path": "Plans/interview-subagent-integration.md",
+      "original_line_hint": 25,
+      "requirement_text": "The same handoff MUST expose an explicit launched-run bridge so review, resume, and drill-through land on the run that actually executes the approved work.",
+      "contractref_added": "ContractRef: Primitive:RuntimeIdentity, Primitive:ExecutionContext, ContractName:Plans/Orchestrator_Page.md",
+      "notes": "Shared the same local ContractRef block used for the adjacent handoff requirement cluster."
+    },
+    {
+      "path": "Plans/interview-subagent-integration.md",
+      "original_line_hint": 30,
+      "requirement_text": "Validation/governance lineage MUST preserve `phase_plan_ref`, `requirements_quality_report_ref`, `workflow_run_id`, `pass_verdict`, and the launched-run bridge.",
+      "contractref_added": "ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Contracts_V0.md",
+      "notes": "Added a local ContractRef directly after the validation_pass_report lineage rule cluster."
+    }
+  ],
+  "unrepaired_failures": [],
+  "next_required_stage": "Normalizer"
+}
