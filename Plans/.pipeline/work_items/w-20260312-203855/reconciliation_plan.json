@@ -1059,11 +1059,12 @@
       "target_id": "batch-3-models-provider-precedence",
       "path": "Plans/Models_System.md",
       "mapped_owner_heading": "## Provider/model precedence and settings resolution",
-      "live_anchor": "## 0. Scope and SSOT status",
+      "live_anchor": "## Provider/model precedence and settings resolution",
       "action": "owner_create_or_rewrite",
       "must_create_owner_heading": false,
       "required_structural_headings": [
         "## Provider/model precedence and settings resolution",
+        "### Scope and owner boundaries",
         "### Three-axis settings model",
         "### Deterministic precedence by scope",
         "### Resolver inputs and emit shape"
@@ -1086,7 +1087,7 @@
       "exact_stale_tokens_to_retire": [],
       "exact_acceptance_checks": [
         "heading present: ## Provider/model precedence and settings resolution",
-        "structural headings present: ### Three-axis settings model | ### Deterministic precedence by scope | ### Resolver inputs and emit shape",
+        "structural headings present: ### Scope and owner boundaries | ### Three-axis settings model | ### Deterministic precedence by scope | ### Resolver inputs and emit shape",
         "cov-152: Define the three-axis settings model source/request/execution",
         "cov-152: Define display grammar, worker-policy display, resolver inputs, deterministic resolver matrix, and resolver emit shape",
         "cov-167: Define one owner section covering provider/model precedence across run, seam, package, node, overseer, and delegated-subagent levels",
@@ -1094,9 +1095,9 @@
       ],
       "forbidden_strings": [],
       "notes": [
-        "Rewrite the first `## Provider/model precedence and settings resolution` owner section near file start; leave the later similarly named addendum section untouched unless explicitly cross-referenced.",
-        "Split reason: Keep Models_System as one owner section because both gaps belong to the same new provider/model precedence section and jointly define settings resolution plus scope precedence.",
-        "Repair note: use the unique predecessor heading `## 0. Scope and SSOT status` as the live anchor so Packet Builder targets the first owner section and not the later addendum with the same owner heading."
+        "Rewrite the now-unique canonical owner section `## Provider/model precedence and settings resolution` in place; the later material is disambiguated under `## Provider/model selection policy and audit addendum`.",
+        "Split reason: keep this as a single reconciliation target because cov-152 and cov-167 remain co-owned by the same canonical owner section and are now safely anchorable without dropping preamble obligations.",
+        "Layout repair made this packetizable as a heading-based exact owner-section rewrite by introducing `### Scope and owner boundaries` for the former untitled cov-167 content and restoring a clear owner-section end at `## 1. Canonical model identifier`."
       ],
       "required_actions": [
         "owner_create_or_rewrite"

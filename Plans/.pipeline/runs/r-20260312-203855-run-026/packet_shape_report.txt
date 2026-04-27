@@ -1,6 +1,6 @@
 pm.packet_shape_report.v1
 work_id: w-20260312-203855
-run_id: r-20260312-203855-run-027
+run_id: r-20260312-203855-run-026
 status: pass
 packet_written: yes
 targets_total: 71
@@ -14,8 +14,8 @@ operations:
 - json_object_path:replace_section = 1
 notes:
 - all 71 reconciliation targets remain executable mutation doc_intents
-- packet verification passed cleanly on pass-001 after repairing forbidden-string retirement payloads for executor-tier-era-compatibility-retirement and hitl-tier-era-compatibility-retirement
-- repaired targets now preserve stale-token retirement semantics without reintroducing forbidden tier-era vocabulary into content_markdown
-- run-027 preserves the previously normalized heading:replace_section payload shapes from run-026
+- packet verification passed cleanly on pass-001 after normalizing all malformed heading:replace_section payloads
+- run-026 removes the mixed ancestor/sibling/body-only replace_section shapes that blocked Scribe on run-025
 - the three storage-plan creation targets remain valid unique-anchor insert_after mutations
+- packet assembled from bounded mutation bundles without reconciliation-plan repairs
 next_required_stage: Scribe

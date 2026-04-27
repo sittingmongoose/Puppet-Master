@@ -1,0 +1,15 @@
+{
+  "schema_id": "pm.reconciliation_plan_pass.v1",
+  "work_id": "w-20260312-203855",
+  "pass": "pass-003",
+  "status": "clean",
+  "verified_scope": [
+    "batch-3-models-provider-precedence"
+  ],
+  "material_findings": [],
+  "preserved_coverage_row_ids": [
+    "cov-152",
+    "cov-167"
+  ],
+  "summary": "Clean after layout repair. The Models_System provider/model precedence target is again safely planable and packetizable as one exact owner-section rewrite."
+}

@@ -1,20 +1,22 @@
 {
   "schema_id": "pm.scribe_apply_report.v1",
   "work_id": "w-20260312-203855",
-  "run_id": "r-20260312-203855-run-024",
+  "run_id": "r-20260312-203855-run-027",
   "status": "blocked",
   "triage_class": "reconciliation_plan_defect",
   "docs_touched": [],
   "targets_applied": [],
   "targets_blocked": [
-    "batch-3-models-provider-precedence",
-    "target-034::storage-fidelity-recovery-order",
-    "target-034::storage-concern-records",
-    "target-034::storage-historical-semantics"
+    "target-025",
+    "target-036",
+    "batch-5b-usage-billing-identity-attribution-pricing-metadata",
+    "batch-5b-usage-export-taxonomy"
   ],
   "exact_blockers": [
-    "Plans/Models_System.md: anchor `## Provider/model precedence and settings resolution` matches two live headings (lines 26 and 899), so `batch-3-models-provider-precedence` cannot be applied to a unique exact span.",
-    "Plans/storage-plan.md: `target-034::storage-fidelity-recovery-order`, `target-034::storage-concern-records`, and `target-034::storage-historical-semantics` all use `heading:insert_after` against the same live anchor `### 2.3 redb: schema, migrations, key patterns`, creating conflicting same-anchor mutations without an explicit ordered apply scope."
+    "Active-run checks passed for run `r-20260312-203855-run-027`, and the packet plus packet-shape artifacts match, but the packet contains overlapping same-file `heading:replace_section` targets that Scribe cannot apply safely.",
+    "`Plans/Widget_System.md` has an owner-section replacement `target-025` on `## 4. Orchestrator Progress widget scope and catalog linkage` spanning lines 41-51, while nested child replacement `target-036` on `### Catalog source and drill linkage` spans lines 47-51 inside the same owner block.",
+    "`Plans/usage-feature.md` has parent replacement `batch-5b-usage-billing-identity-attribution-pricing-metadata` spanning lines 293-317, while nested child replacement `batch-5b-usage-export-taxonomy` spans lines 298-301 inside that same parent block.",
+    "Because these packet targets overlap on live spans, Scribe would have to guess precedence or mutate packet intent to continue, so the blocker routes to Reconciliation Planner."
   ],
   "next_required_stage": "Reconciliation Planner"
 }

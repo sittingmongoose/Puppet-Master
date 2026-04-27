@@ -1,0 +1,21 @@
+{
+  "schema_id": "pm.reconciliation_plan_wave.v1",
+  "work_id": "w-20260312-203855",
+  "phase": "post-layout-redraft",
+  "status": "complete",
+  "targets_replanned": [
+    "batch-3-models-provider-precedence"
+  ],
+  "source_inputs": [
+    "Plans/.pipeline/work_items/w-20260312-203855/packetizable_layout_repair_report.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/reconciliation_plan.json"
+  ],
+  "material_findings": [
+    "Models_System provider/model precedence owner section is unique again and now has a unique `### Scope and owner boundaries` child heading for the former untitled owner preamble.",
+    "The later duplicate section is renamed to `## Provider/model selection policy and audit addendum`, so the canonical owner heading is now safe for packetizable owner-section replacement."
+  ],
+  "preserved_coverage_row_ids": [
+    "cov-152",
+    "cov-167"
+  ]
+}

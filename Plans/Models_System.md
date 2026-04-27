@@ -25,7 +25,12 @@ ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md
 
 ## Provider/model precedence and settings resolution
 
+### Scope and owner boundaries
+
 This section is the single owner section for provider/model precedence across run, seam, package, node, overseer, and delegated-subagent scope.
+
+- Parallel-node worktree assignment may narrow the allowed provider/model surface for a node, but it does not replace the requested-versus-effective resolver record.
+- Ownership transitions between overseer and delegated-subagent levels must stay in this owner section so later addenda elaborate the policy without replacing the canonical resolver contract.
 
 ### Three-axis settings model
 
@@ -78,7 +83,9 @@ The resolver MUST emit one shared record containing at least:
 
 That emit shape is consumed by runtime snapshots, inspectors, and owner transitions; later sections in this document elaborate, but do not replace, this owner section.
 
----## 1. Canonical model identifier
+---
+
+## 1. Canonical model identifier
 <a id="MODEL-ID"></a>
 
 ### 1.1 Format
@@ -896,11 +903,11 @@ Minimum Default Crew settings model:
 
 ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/CLI_Bridged_Providers.md
 
-## Provider/model precedence and settings resolution
+## Provider/model selection policy and audit addendum
 
-The orchestrator supports multiple AI providers (OpenAI, Anthropic, GitHub Copilot, etc.) and multiple models within each provider. Provider and model selection is governed by a three-axis settings model and a precedence chain.
+This addendum elaborates how the canonical provider/model precedence owner section is surfaced through user-facing policy, capability gating, and audit trail details.
 
-### Three-axis settings model
+### Persona, execution-unit, and scope policy inputs
 
 1. **Persona axis**: Users select a Persona (e.g., "Code Analyzer", "Documentation Writer") which carries default preferences for model, provider, and mutation_policy.
 2. **Execution Unit Type axis**: Different execution unit types (run, node, delegated_subagent) can have scoped policies (e.g., "use GPT-4 for run-level analysis, but Claude for node-level code generation").
