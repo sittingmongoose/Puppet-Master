@@ -1,6 +1,9 @@
-Reconciliation Planner blocked
-run_id: r-20260312-203855-run-024
+work_id: w-20260312-203855
+run_id: r-20260312-203855-run-027
+Scribe blocked
+triage_class: reconciliation_plan_defect
 exact blockers:
-- `batch-3-models-provider-precedence` is not repairable within reconciliation planning alone: the live doc duplicates both the owner heading `## Provider/model precedence and settings resolution` and the first `### Three-axis settings model` block, while part of the cov-167 obligation lives in the untitled owner-section preamble before any unique subheading.
-- Because of that layout, no bounded reconciliation split can preserve the full fidelity-recovery obligations for cov-152 and cov-167 and also become safely packetizable with the current mutation shapes (`heading:replace_section`, `heading:insert_after`, `json_object_path:replace_section`).
+- `Plans/Widget_System.md` contains overlapping packet targets: `target-025` replaces owner section `## 4. Orchestrator Progress widget scope and catalog linkage` across lines 41-51 while `target-036` also replaces nested child section `### Catalog source and drill linkage` across lines 47-51.
+- `Plans/usage-feature.md` contains overlapping packet targets: `batch-5b-usage-billing-identity-attribution-pricing-metadata` replaces lines 293-317 while nested child target `batch-5b-usage-export-taxonomy` also replaces lines 298-301 inside that same parent section.
+- Because the active run-027 packet asks Scribe to perform overlapping same-file `heading:replace_section` mutations, Scribe cannot serialize the writes safely without guessing precedence or altering packet intent.
 next required stage: Reconciliation Planner

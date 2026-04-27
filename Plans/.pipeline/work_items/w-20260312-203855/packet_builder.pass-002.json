@@ -1,90 +1,9 @@
 {
   "schema_id": "pm.packet_builder_pass.v1",
   "work_id": "w-20260312-203855",
-  "run_id": "r-20260312-203855-run-024",
+  "run_id": "r-20260312-203855-run-026",
   "pass": "pass-002",
-  "status": "material",
-  "material_findings": [
-    {
-      "target_id": "target-025",
-      "issue": "missing required enclosing owner/container headings",
-      "fix": "promote to explicit owner-section rewrite shape"
-    },
-    {
-      "target_id": "target-024a",
-      "issue": "missing required enclosing heading",
-      "fix": "prepend required policy heading"
-    },
-    {
-      "target_id": "target-033a",
-      "issue": "missing execution/worktree parent heading",
-      "fix": "prepend required parent heading"
-    },
-    {
-      "target_id": "target-033b",
-      "issue": "missing execution/worktree parent heading",
-      "fix": "prepend required parent heading"
-    },
-    {
-      "target_id": "target-033c",
-      "issue": "missing execution/worktree parent heading",
-      "fix": "prepend required parent heading"
-    },
-    {
-      "target_id": "target-003-s01-contracts-fidelity-recovery-order",
-      "issue": "missing Contracts_V0 parent heading",
-      "fix": "prepend required parent heading"
-    },
-    {
-      "target_id": "target-003-s02-contracts-runtime-envelope",
-      "issue": "missing Contracts_V0 parent heading",
-      "fix": "prepend required parent heading"
-    },
-    {
-      "target_id": "target-003-s03-contracts-account-identity",
-      "issue": "missing Contracts_V0 parent heading",
-      "fix": "prepend required parent heading"
-    },
-    {
-      "target_id": "target-003-s04-contracts-concern-contracts",
-      "issue": "missing Contracts_V0 parent heading",
-      "fix": "prepend required parent heading"
-    },
-    {
-      "target_id": "target-003-s05-contracts-route-open",
-      "issue": "missing Contracts_V0 parent heading",
-      "fix": "prepend required parent heading"
-    },
-    {
-      "target_id": "target-003-s06-contracts-blocked-approval",
-      "issue": "missing Contracts_V0 parent heading",
-      "fix": "prepend required parent heading"
-    },
-    {
-      "target_id": "target-023a",
-      "issue": "missing Tools parent heading",
-      "fix": "prepend required parent heading"
-    },
-    {
-      "target_id": "target-023b",
-      "issue": "missing Tools parent heading",
-      "fix": "prepend required parent heading"
-    },
-    {
-      "target_id": "target-034::storage-fidelity-recovery-order",
-      "issue": "invalid self-anchored insert_after",
-      "fix": "anchor after live 2.3 storage heading"
-    },
-    {
-      "target_id": "target-034::storage-concern-records",
-      "issue": "invalid self-anchored insert_after",
-      "fix": "anchor after live 2.3 storage heading"
-    },
-    {
-      "target_id": "target-034::storage-historical-semantics",
-      "issue": "invalid self-anchored insert_after",
-      "fix": "anchor after live 2.3 storage heading"
-    }
-  ],
-  "noise_findings": []
+  "status": "clean",
+  "material_findings": [],
+  "summary": "No additional packet corrections were needed after pass-001 clean."
 }

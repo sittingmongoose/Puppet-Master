@@ -1,0 +1,62 @@
+{
+  "schema_id": "pm.packetizable_layout_repair_report.v1",
+  "work_id": "w-20260312-203855",
+  "run_id": "r-20260312-203855-run-024",
+  "status": "complete",
+  "blocked_targets_repaired": [
+    "batch-3-models-provider-precedence"
+  ],
+  "docs_touched": [
+    "Plans/Models_System.md"
+  ],
+  "layout_defects_found": [
+    {
+      "path": "Plans/Models_System.md",
+      "defect_type": "duplicate_owner_heading",
+      "details": "The file contained two `## Provider/model precedence and settings resolution` headings, which made heading-based packet targeting ambiguous."
+    },
+    {
+      "path": "Plans/Models_System.md",
+      "defect_type": "duplicate_child_heading",
+      "details": "The file contained two `### Three-axis settings model` headings with different semantics, which made bounded child-heading targeting ambiguous."
+    },
+    {
+      "path": "Plans/Models_System.md",
+      "defect_type": "untitled_owner_preamble",
+      "details": "Owner-scope canon for run/seam/package/node/overseer/delegated-subagent scope, parallel-node worktree assignment, and ownership transitions lived in untitled preamble text directly under the owner heading."
+    },
+    {
+      "path": "Plans/Models_System.md",
+      "defect_type": "ambiguous_anchor",
+      "details": "The canonical owner section ended in malformed `---## 1. Canonical model identifier` markup, which blurred the owner-section boundary needed for bounded packet replacement."
+    }
+  ],
+  "repairs_applied": [
+    {
+      "path": "Plans/Models_System.md",
+      "repair": "Added `### Scope and owner boundaries` and moved/restated the owner-scope preamble there so the canonical owner content has a unique child anchor.",
+      "canonical_heading": "## Provider/model precedence and settings resolution",
+      "safe_anchor_after_repair": "### Scope and owner boundaries"
+    },
+    {
+      "path": "Plans/Models_System.md",
+      "repair": "Kept the early owner section as canonical and left exactly one `### Three-axis settings model` heading under it.",
+      "canonical_heading": "## Provider/model precedence and settings resolution",
+      "safe_anchor_after_repair": "### Three-axis settings model"
+    },
+    {
+      "path": "Plans/Models_System.md",
+      "repair": "Renamed the later duplicate owner section to `## Provider/model selection policy and audit addendum` and renamed its duplicated child heading to `### Persona, execution-unit, and scope policy inputs` so its unique addendum content remains preserved without colliding with canonical anchors.",
+      "canonical_heading": "## Provider/model selection policy and audit addendum",
+      "safe_anchor_after_repair": "### Persona, execution-unit, and scope policy inputs"
+    },
+    {
+      "path": "Plans/Models_System.md",
+      "repair": "Split malformed `---## 1. Canonical model identifier` markup into a horizontal rule plus a separate `## 1. Canonical model identifier` heading so the canonical owner section has a clear bounded end.",
+      "canonical_heading": "## Provider/model precedence and settings resolution",
+      "safe_anchor_after_repair": "## 1. Canonical model identifier"
+    }
+  ],
+  "unresolved_layout_blockers": [],
+  "next_required_stage": "Reconciliation Planner"
+}

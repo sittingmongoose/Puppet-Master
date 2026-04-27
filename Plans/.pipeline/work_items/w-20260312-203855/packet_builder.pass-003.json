@@ -1,10 +1,9 @@
 {
   "schema_id": "pm.packet_builder_pass.v1",
   "work_id": "w-20260312-203855",
-  "run_id": "r-20260312-203855-run-024",
+  "run_id": "r-20260312-203855-run-026",
   "pass": "pass-003",
   "status": "clean",
   "material_findings": [],
-  "noise_findings": [],
-  "summary": "All 71 reconciliation targets are preserved exactly once and packet shape validation is clean after final anchor and owner-section rewrites."
+  "summary": "No additional packet corrections were needed after pass-001 clean."
 }
