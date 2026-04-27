@@ -1,0 +1,3107 @@
+{
+  "schema_id": "pm.fidelity_recovery_wave.v1",
+  "work_id": "w-20260312-203855",
+  "run_id": "r-20260312-203855-run-023",
+  "phase": "worklist",
+  "status": "complete",
+  "source_fidelity_report": "Plans/.pipeline/ledger_fidelity_report.txt",
+  "batch_files": [
+    "fidelity_worklist/batch-1.json",
+    "fidelity_worklist/batch-2.json",
+    "fidelity_worklist/batch-3.json",
+    "fidelity_worklist/batch-4.json",
+    "fidelity_worklist/batch-5a.json",
+    "fidelity_worklist/batch-5b.json",
+    "fidelity_worklist/batch-5c.json"
+  ],
+  "gap_rows_total": 161,
+  "worklist_groups_total": 69,
+  "docs_touched": [
+    "Plans/Contracts_V0.md",
+    "Plans/Executor_Protocol.md",
+    "Plans/FileManager.md",
+    "Plans/FinalGUISpec.md",
+    "Plans/GitHub_API_Auth_and_Flows.md",
+    "Plans/Glossary.md",
+    "Plans/Models_System.md",
+    "Plans/Multi-Account.md",
+    "Plans/Orchestrator_Page.md",
+    "Plans/Permissions_System.md",
+    "Plans/Prompt_Pipeline.md",
+    "Plans/Provider_OpenCode.md",
+    "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+    "Plans/Run_Graph_View.md",
+    "Plans/Run_Modes.md",
+    "Plans/Runtime_Artifacts_Panel.md",
+    "Plans/Tools.md",
+    "Plans/UI_Command_Catalog.md",
+    "Plans/Widget_System.md",
+    "Plans/Wiring_Matrix.md",
+    "Plans/evidence.schema.json",
+    "Plans/human-in-the-loop.md",
+    "Plans/interview-subagent-integration.md",
+    "Plans/orchestrator-subagent-integration.md",
+    "Plans/storage-plan.md",
+    "Plans/usage-feature.md"
+  ],
+  "unresolved": [],
+  "batches": [
+    {
+      "batch": "batch-1",
+      "gap_rows_total": 3,
+      "worklist_groups": [
+        {
+          "group_id": "batch-1-cov-005-compatibility_retirement",
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "mapped_owner_heading": "## Execution unit context and worktree allocation strategy",
+          "live_anchor": "### Compatibility retirement",
+          "action_family": "compatibility_retirement",
+          "coverage_row_ids": [
+            "cov-005"
+          ],
+          "fidelity_gap_refs": [
+            "cov-005"
+          ],
+          "required_actions": [
+            "stale_retirement"
+          ],
+          "exact_required_items": [
+            "Retire TierContext/tier_id/TierType/Tiers/Phase-Task-Subtask runtime canon",
+            "Retire allowed_actions[] / reason_code / recovery_options[] survivors from live blocked/HITL contracts"
+          ],
+          "exact_stale_tokens_to_retire": [
+            "TierContext",
+            "tier_id",
+            "TierType",
+            "Tiers",
+            "allowed_actions[]",
+            "reason_code",
+            "recovery_options[]",
+            "approve_continue"
+          ],
+          "split_reason": "Split target-033 because stale-token retirement belongs in the compatibility-retirement subcontainer, separate from context/worktree rewrite tasks."
+        },
+        {
+          "group_id": "batch-1-cov-104-runtime_context_canonicalization",
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "mapped_owner_heading": "## Execution unit context and worktree allocation strategy",
+          "live_anchor": "### Canonical runtime context",
+          "action_family": "runtime_context_canonicalization",
+          "coverage_row_ids": [
+            "cov-104"
+          ],
+          "fidelity_gap_refs": [
+            "cov-104"
+          ],
+          "required_actions": [
+            "owner_create_or_rewrite"
+          ],
+          "exact_required_items": [
+            "Introduce execution_unit_context as canonical runtime-facing context object",
+            "Demote TierContext to a derived or compatibility-only selection/decomposition helper",
+            "Anchor worker spawn, recovery, remediation, coordination, and UI inspection to execution_unit_context"
+          ],
+          "exact_stale_tokens_to_retire": [
+            "TierContext",
+            "tier_id"
+          ],
+          "split_reason": "Split target-033 because execution_unit_context canon replacement is a distinct runtime-context rewrite and should not be merged with retirement or worktree rules."
+        },
+        {
+          "group_id": "batch-1-cov-172-worktree_allocation_strategy",
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "mapped_owner_heading": "## Execution unit context and worktree allocation strategy",
+          "live_anchor": "### Worktree allocation strategy",
+          "action_family": "worktree_allocation_strategy",
+          "coverage_row_ids": [
+            "cov-172"
+          ],
+          "fidelity_gap_refs": [
+            "cov-172"
+          ],
+          "required_actions": [
+            "owner_create_or_rewrite"
+          ],
+          "exact_required_items": [
+            "Define concrete worktree allocation strategy",
+            "Define contamination, reuse, and cleanup rules for that strategy"
+          ],
+          "exact_stale_tokens_to_retire": [],
+          "split_reason": "Split target-033 because concrete worktree strategy rules are their own owner subcontainer and need isolation from context canon and retirement edits."
+        }
+      ],
+      "unresolved": []
+    },
+    {
+      "batch": "batch-2",
+      "gap_rows_total": 1,
+      "worklist_groups": [
+        {
+          "group_id": "wg-ui-command-catalog-tier-era-retirement",
+          "path": "Plans/UI_Command_Catalog.md",
+          "mapped_owner_heading": "### Tier-era compatibility retirement",
+          "live_anchor": "### 2.0B Action-surface policy",
+          "action_family": "stale_retirement",
+          "coverage_row_ids": [
+            "cov-007"
+          ],
+          "fidelity_gap_refs": [
+            "cov-007"
+          ],
+          "required_actions": [
+            "stale_retirement"
+          ],
+          "exact_required_items": [
+            "Retire TierContext/tier_id/TierType/Tiers/Phase-Task-Subtask runtime canon",
+            "Retire allowed_actions[] / reason_code / recovery_options[] survivors from live blocked/HITL contracts"
+          ],
+          "exact_stale_tokens_to_retire": [
+            "TierContext",
+            "tier_id",
+            "TierType",
+            "Tiers",
+            "allowed_actions[]",
+            "reason_code",
+            "recovery_options[]",
+            "approve_continue"
+          ],
+          "split_reason": "Existing reconciliation target target-024 is over-compressed for this batch row because it combines action-surface policy, route payload ownership, command normalization, and stale-vocabulary retirement. For cov-007, the concrete owner container is the required structural heading '### Tier-era compatibility retirement' under live anchor '### 2.0B Action-surface policy'."
+        }
+      ],
+      "unresolved": []
+    },
+    {
+      "batch": "batch-3",
+      "gap_rows_total": 73,
+      "worklist_groups": [
+        {
+          "group_id": "batch-3-finalgui-7-1-orchestrator",
+          "path": "Plans/FinalGUISpec.md",
+          "mapped_owner_heading": "### 7.1 Orchestrator",
+          "live_anchor": "## 7. Views Specification",
+          "action_family": "orchestrator-view-contracts",
+          "coverage_row_ids": [
+            "cov-047",
+            "cov-050",
+            "cov-055",
+            "cov-058",
+            "cov-096",
+            "cov-150"
+          ],
+          "fidelity_gap_refs": [
+            "cov-047",
+            "cov-050",
+            "cov-055",
+            "cov-058",
+            "cov-096",
+            "cov-150"
+          ],
+          "required_actions": [
+            "consumer_propagation",
+            "owner_create_or_rewrite"
+          ],
+          "exact_required_items": [
+            "Use current/refreshing/stale/degraded/unavailable projection states",
+            "Gate sensitive actions on current or direct canonical revalidation and fall back to record-backed views when degraded",
+            "Restrict widget-composed Orchestrator surface to Progress",
+            "Persist orchestrator:progress layout separately from Dashboard and Usage",
+            "Make slice-based loading, virtualization, lazy expansion, and demand-loaded inspectors mandatory across dense tabs",
+            "Treat scale as a cross-tab contract, not a graph-tab-only concern",
+            "Classify actions by navigation vs mutation, palette visibility, shortcut eligibility, multi-target safety, and confirmation/reversibility",
+            "Default bulk actions to navigation and triage rather than live execution mutation",
+            "Split projection_freshness from projection_health",
+            "Reserve trust_tier for preview/browser semantics and tie action gating to both axes",
+            "Transfer the 13-widget Progress catalog with default drill targets",
+            "Transfer state/action labels, alert taxonomy, event taxonomy, and condition-aging policy"
+          ],
+          "exact_stale_tokens_to_retire": [
+            "trust_tier"
+          ],
+          "split_reason": "Split the large Views Specification target into the Orchestrator subcontainer so view-scale, widget, action-surface, and projection-health rules can be recovered together without mixing route or help work."
+        },
+        {
+          "group_id": "batch-3-finalgui-7-3-route-open",
+          "path": "Plans/FinalGUISpec.md",
+          "mapped_owner_heading": "### 7.3 Shared route and open behavior",
+          "live_anchor": "## 7. Views Specification",
+          "action_family": "route-and-open-contracts",
+          "coverage_row_ids": [
+            "cov-027",
+            "cov-071",
+            "cov-128"
+          ],
+          "fidelity_gap_refs": [
+            "cov-027",
+            "cov-071",
+            "cov-128"
+          ],
+          "required_actions": [
+            "consumer_propagation",
+            "owner_create_or_rewrite"
+          ],
+          "exact_required_items": [
+            "Concern search results must route as object-first results with focused-run and target-tab context",
+            "Concern drill-downs must preserve selected concern id and related object context",
+            "Use one shared routing/deep-link payload for search, palette, widgets, recovery links, and cross-surface pivots",
+            "Treat resume_url as serialized transport of that route payload",
+            "Keep route_target small with subject_id or object_kind/object_id identity",
+            "Limit subject_id families to doc:/artifact:, keep inspector_target secondary, and override only necessary destination/context state"
+          ],
+          "exact_stale_tokens_to_retire": [],
+          "split_reason": "Split route/open behavior from other GUI work because these rows all govern shared deep-link payloads, object-first concern routing, and route_target boundaries."
+        },
+        {
+          "group_id": "batch-3-finalgui-7-4-settings-inspectors",
+          "path": "Plans/FinalGUISpec.md",
+          "mapped_owner_heading": "### 7.4 Settings and inspectors",
+          "live_anchor": "## 7. Views Specification",
+          "action_family": "settings-and-identity-contracts",
+          "coverage_row_ids": [
+            "cov-086",
+            "cov-090",
+            "cov-153"
+          ],
+          "fidelity_gap_refs": [
+            "cov-086",
+            "cov-090",
+            "cov-153"
+          ],
+          "required_actions": [
+            "owner_create_or_rewrite"
+          ],
+          "exact_required_items": [
+            "Model requested_account_id separately from requested_account_policy",
+            "Add requested_account_binding with none/preferred/required semantics and display Requested account / Requested binding / Effective account / Switch reason",
+            "Carry execution_role plus requested/effective operational identity in shared runtime identity",
+            "Project them into effective-resolution, attempt, usage, and inspector surfaces",
+            "Define the three-axis settings model source/request/execution",
+            "Define display grammar, worker-policy display, resolver inputs, deterministic resolver matrix, and resolver emit shape"
+          ],
+          "exact_stale_tokens_to_retire": [],
+          "split_reason": "Split settings/inspector recovery into its own subcontainer because requested-account, execution-role, and resolver-display rules belong to the settings/inspector owner slice."
+        },
+        {
+          "group_id": "batch-3-finalgui-7-5-project-attention",
+          "path": "Plans/FinalGUISpec.md",
+          "mapped_owner_heading": "### 7.5 Project and attention surfaces",
+          "live_anchor": "## 7. Views Specification",
+          "action_family": "project-attention-projections",
+          "coverage_row_ids": [
+            "cov-079",
+            "cov-082"
+          ],
+          "fidelity_gap_refs": [
+            "cov-079",
+            "cov-082"
+          ],
+          "required_actions": [
+            "owner_create_or_rewrite"
+          ],
+          "exact_required_items": [
+            "Define project_summary with activity_state, attention_state, health_state, owner, and projection trust disclosure",
+            "Give canonical blocked episodes precedence over weaker derived warnings",
+            "Define project_attention_item with primary route payload and projection trust disclosure",
+            "Keep attention rows consumable across Orchestrator, Dashboard, and notifications"
+          ],
+          "exact_stale_tokens_to_retire": [],
+          "split_reason": "Split project-summary and attention projections into the dedicated project/attention surface container so those reusable projection contracts stay isolated from broader concern/help surface work."
+        },
+        {
+          "group_id": "batch-3-finalgui-concern-escalation-help",
+          "path": "Plans/FinalGUISpec.md",
+          "mapped_owner_heading": "### Concern, escalation, notification, and help surfaces",
+          "live_anchor": "## 7. Views Specification",
+          "action_family": "concern-escalation-help-contracts",
+          "coverage_row_ids": [
+            "cov-022",
+            "cov-030",
+            "cov-052",
+            "cov-062",
+            "cov-067",
+            "cov-139",
+            "cov-179",
+            "cov-197",
+            "cov-209"
+          ],
+          "fidelity_gap_refs": [
+            "cov-022",
+            "cov-030",
+            "cov-052",
+            "cov-062",
+            "cov-067",
+            "cov-139",
+            "cov-179",
+            "cov-197",
+            "cov-209"
+          ],
+          "required_actions": [
+            "owner_create_or_rewrite",
+            "consumer_propagation"
+          ],
+          "exact_required_items": [
+            "Concern is a first-class durable record distinct from review finding, annotation, blocked episode, and graph patch request",
+            "Define concern_id/project_id/run and scope refs, evidence/source refs, lineage refs, severity/category/status, and governance metadata",
+            "Define actor authority, confirmation, rationale, reversibility, and audit fields for concern actions",
+            "Keep acknowledged, dismissed, resolved, and structural lineage edits as distinct actions",
+            "Define one escalation ladder shared across Orchestrator, Dashboard, thread badges, and notifications",
+            "Keep attention_required distinct from blocked and resurface persistent blockers on meaningful change/persistence",
+            "Expand Glossary.md to cover rewrite-critical objects, states, and trust terms",
+            "Define inline help, context help, and canonical help entry layers while keeping canonical term names stable",
+            "Route notifications using severity, execution impact, blocked owner, persistence, and projection trust",
+            "Allow quiet windows for advisory warnings but not for canonical blocked episodes",
+            "Define dedicated help-entry architecture with related-concept linking",
+            "Define project activity_state, project attention_state, blocked-owner taxonomy, escalation ladder, and resurfacing/aging rules",
+            "Require distinct dismissal rationale and resolution rationale rules",
+            "Treat accepted_risk as a resolution path rather than dismissal",
+            "Define an explicit blocked-owner 8-kind taxonomy and 5-level escalation ladder with surface mapping",
+            "Add `visibility_level`, `attention_level`, `chatworthy`, and `blocking_effect?` to the concern-family contract",
+            "Keep `blocking_effect` explicitly separate from `severity`"
+          ],
+          "exact_stale_tokens_to_retire": [],
+          "split_reason": "Split concern, escalation, notification, and help rows into the dedicated surface container because they define one tightly coupled policy cluster distinct from routing, settings, and projection-view scaffolding."
+        },
+        {
+          "group_id": "batch-3-github-data-shape",
+          "path": "Plans/GitHub_API_Auth_and_Flows.md",
+          "mapped_owner_heading": "### Required data shape",
+          "live_anchor": "FILE_START",
+          "action_family": "github-identity-and-blocked-policy",
+          "coverage_row_ids": [
+            "cov-097",
+            "cov-157"
+          ],
+          "fidelity_gap_refs": [
+            "cov-097",
+            "cov-157"
+          ],
+          "required_actions": [
+            "owner_create_or_rewrite"
+          ],
+          "exact_required_items": [
+            "Replace login-keyed durable GitHub identity with stable account_id / credential_ref",
+            "Add recovery context payload and trust/degraded-state gating for GitHub mutations",
+            "Transfer execution_role, requested_account_id, operational_identity, account-switch and pressure ownership, blocked_sequence minting, startup recovery handshake, and DAE jail/approval policy into owner and consumer docs",
+            "Carry usage switch-history and usage execution-role follow-through"
+          ],
+          "exact_stale_tokens_to_retire": [],
+          "split_reason": "Keep the GitHub doc as one concrete required-data-shape group because both gaps target the same new owner section for stable account identity and blocked-policy transfer."
+        },
+        {
+          "group_id": "batch-3-glossary-orchestrator-help",
+          "path": "Plans/Glossary.md",
+          "mapped_owner_heading": "### Orchestrator rewrite terms",
+          "live_anchor": "## 2. Core terms",
+          "action_family": "glossary-help-governance",
+          "coverage_row_ids": [
+            "cov-061"
+          ],
+          "fidelity_gap_refs": [
+            "cov-061"
+          ],
+          "required_actions": [
+            "consumer_propagation"
+          ],
+          "exact_required_items": [
+            "Expand Glossary.md to cover rewrite-critical objects, states, and trust terms",
+            "Define inline help, context help, and canonical help entry layers while keeping canonical term names stable"
+          ],
+          "exact_stale_tokens_to_retire": [],
+          "split_reason": "Split Glossary help-governance vocabulary into the orchestrator rewrite terms container so base term-layer definitions are not mixed with projection or template-specific additions."
+        },
+        {
+          "group_id": "batch-3-glossary-projection-terms",
+          "path": "Plans/Glossary.md",
+          "mapped_owner_heading": "### Projection freshness and health terms",
+          "live_anchor": "## 2. Core terms",
+          "action_family": "projection-lexicon",
+          "coverage_row_ids": [
+            "cov-095"
+          ],
+          "fidelity_gap_refs": [
+            "cov-095"
+          ],
+          "required_actions": [
+            "owner_create_or_rewrite"
+          ],
+          "exact_required_items": [
+            "Split projection_freshness from projection_health",
+            "Reserve trust_tier for preview/browser semantics and tie action gating to both axes"
+          ],
+          "exact_stale_tokens_to_retire": [
+            "trust_tier"
+          ],
+          "split_reason": "Split projection freshness/health terminology into its dedicated glossary container because it carries the only stale-token retirement in this doc and should be reconciled independently."
+        },
+        {
+          "group_id": "batch-3-glossary-help-status",
+          "path": "Plans/Glossary.md",
+          "mapped_owner_heading": "### Help architecture and project status terms",
+          "live_anchor": "## 2. Core terms",
+          "action_family": "help-and-status-lexicon",
+          "coverage_row_ids": [
+            "cov-137"
+          ],
+          "fidelity_gap_refs": [
+            "cov-137"
+          ],
+          "required_actions": [
+            "owner_create_or_rewrite"
+          ],
+          "exact_required_items": [
+            "Define dedicated help-entry architecture with related-concept linking",
+            "Define project activity_state, project attention_state, blocked-owner taxonomy, escalation ladder, and resurfacing/aging rules"
+          ],
+          "exact_stale_tokens_to_retire": [],
+          "split_reason": "Split help architecture and project-status taxonomy into its named glossary container to isolate the status/escalation vocabulary family from template mechanics."
+        },
+        {
+          "group_id": "batch-3-glossary-help-template",
+          "path": "Plans/Glossary.md",
+          "mapped_owner_heading": "### Help-entry template and related-concept clusters",
+          "live_anchor": "## 2. Core terms",
+          "action_family": "help-entry-template-lexicon",
+          "coverage_row_ids": [
+            "cov-194"
+          ],
+          "fidelity_gap_refs": [
+            "cov-194"
+          ],
+          "required_actions": [
+            "consumer_propagation"
+          ],
+          "exact_required_items": [
+            "Define a dedicated help-entry template and related-concept linking clusters"
+          ],
+          "exact_stale_tokens_to_retire": [],
+          "split_reason": "Split the help-entry template cluster into its own glossary container because it is a concrete reusable pattern rather than a general term-definition pass."
+        },
+        {
+          "group_id": "batch-3-models-provider-precedence",
+          "path": "Plans/Models_System.md",
+          "mapped_owner_heading": "## Provider/model precedence and settings resolution",
+          "live_anchor": "FILE_START",
+          "action_family": "provider-model-precedence",
+          "coverage_row_ids": [
+            "cov-152",
+            "cov-167"
+          ],
+          "fidelity_gap_refs": [
+            "cov-152",
+            "cov-167"
+          ],
+          "required_actions": [
+            "owner_create_or_rewrite"
+          ],
+          "exact_required_items": [
+            "Define the three-axis settings model source/request/execution",
+            "Define display grammar, worker-policy display, resolver inputs, deterministic resolver matrix, and resolver emit shape",
+            "Define one owner section covering provider/model precedence across run, seam, package, node, overseer, and delegated-subagent levels",
+            "Tie that section to parallel-node worktree assignment and ownership transitions"
+          ],
+          "exact_stale_tokens_to_retire": [],
+          "split_reason": "Keep Models_System as one owner section because both gaps belong to the same new provider/model precedence section and jointly define settings resolution plus scope precedence."
+        },
+        {
+          "group_id": "batch-3-multi-account-data-shape",
+          "path": "Plans/Multi-Account.md",
+          "mapped_owner_heading": "### Required data shape",
+          "live_anchor": "FILE_START",
+          "action_family": "account-identity-boundary",
+          "coverage_row_ids": [
+            "cov-008",
+            "cov-066"
+          ],
+          "fidelity_gap_refs": [
+            "cov-008",
+            "cov-066"
+          ],
+          "required_actions": [
+            "owner_create_or_rewrite"
+          ],
+          "exact_required_items": [
+            "Add requested_account_id alongside requested_account_policy",
+            "Add requested_account_binding and govern provider_account_id as subordinate provider-native metadata",
+            "Carry requested/effective account identity through runtime, bridged-provider, and permission envelopes",
+            "Assistant/chat/interview/builder actors share provider/runtime identity semantics with Orchestrator",
+            "They remain distinct actor/run kinds rather than package/seam/node execution objects"
+          ],
+          "exact_stale_tokens_to_retire": [
+            "provider_account_id"
+          ],
+          "split_reason": "Keep Multi-Account as one required-data-shape group because both rows establish the same canonical account-identity and conversational/runtime boundary contract."
+        },
+        {
+          "group_id": "batch-3-orchestrator-canonical-model",
+          "path": "Plans/Orchestrator_Page.md",
+          "mapped_owner_heading": "## 1. Scope and canonical model",
+          "live_anchor": "## 1. Scope and canonical model",
+          "action_family": "canonical-model-foundation",
+          "coverage_row_ids": [
+            "cov-003",
+            "cov-015",
+            "cov-021",
+            "cov-024",
+            "cov-165",
+            "cov-174",
+            "cov-177",
+            "cov-208",
+            "cov-211"
+          ],
+          "fidelity_gap_refs": [
+            "cov-003",
+            "cov-015",
+            "cov-021",
+            "cov-024",
+            "cov-165",
+            "cov-174",
+            "cov-177",
+            "cov-208",
+            "cov-211"
+          ],
+          "required_actions": [
+            "owner_create_or_rewrite"
+          ],
+          "exact_required_items": [
+            "Apply owner-doc corrections before consumer and mirror cleanup",
+            "Rerun fidelity audit only after owner and consumer corrections are in place",
+            "Define one shared record envelope with canonical lineage refs and artifact/evidence refs",
+            "Keep record objects distinct from artifacts and rendered summaries",
+            "Concern is a first-class durable record distinct from review finding, annotation, blocked episode, and graph patch request",
+            "Define concern_id/project_id/run and scope refs, evidence/source refs, lineage refs, severity/category/status, and governance metadata",
+            "Use active/acknowledged/resolved/dismissed as concern lifecycle states",
+            "Use fixed/accepted_risk/superseded/merged/split/invalidated/obsoleted_by_patch/obsoleted_by_recovery as resolution_kind values",
+            "Create one canonical concern-lifecycle owner section with explicit active/acknowledged/resolved/dismissed semantics",
+            "Carry resolution_kind including accepted_risk and a concern-action confirmation matrix into that owner section",
+            "Separate concern owner_kind/owner_ref from created_by_kind/created_by_ref and resolver authority",
+            "Allow ownership changes without changing concern identity",
+            "Distinguish concern_source_event_ref, concern_record, and concern_projection as separate structural layers",
+            "Add `visibility_level`, `attention_level`, `chatworthy`, and `blocking_effect?` to the concern-family contract",
+            "Keep `blocking_effect` explicitly separate from `severity`",
+            "Define concern owner surfaces across `Runtime`, `Package Overseer`, `Seam Overseer`, `Corroboration`, `Graph Patch`, `Recovery`, `User`, and `External Resource`",
+            "Treat `concern resolver` as distinct from owner/source roles",
+            "Allow concern ownership reassignment without changing concern identity"
+          ],
+          "exact_stale_tokens_to_retire": [],
+          "split_reason": "Split the hotspot owner rewrite into a canonical-model foundation group so envelope, concern identity, lifecycle, and deferred-owner semantics are defined before downstream surface propagation work."
+        },
+        {
+          "group_id": "batch-3-orchestrator-search-routing-action",
+          "path": "Plans/Orchestrator_Page.md",
+          "mapped_owner_heading": "### Search, routing, and action policy",
+          "live_anchor": "## 1. Scope and canonical model",
+          "action_family": "search-routing-action",
+          "coverage_row_ids": [
+            "cov-026",
+            "cov-028",
+            "cov-046",
+            "cov-049",
+            "cov-056",
+            "cov-148",
+            "cov-204"
+          ],
+          "fidelity_gap_refs": [
+            "cov-026",
+            "cov-028",
+            "cov-046",
+            "cov-049",
+            "cov-056",
+            "cov-148",
+            "cov-204"
+          ],
+          "required_actions": [
+            "consumer_propagation",
+            "owner_create_or_rewrite"
+          ],
+          "exact_required_items": [
+            "Concern search results must route as object-first results with focused-run and target-tab context",
+            "Concern drill-downs must preserve selected concern id and related object context",
+            "Define actor authority, confirmation, rationale, reversibility, and audit fields for concern actions",
+            "Keep acknowledged, dismissed, resolved, and structural lineage edits as distinct actions",
+            "Use current/refreshing/stale/degraded/unavailable projection states",
+            "Gate sensitive actions on current or direct canonical revalidation and fall back to record-backed views when degraded",
+            "Restrict widget-composed Orchestrator surface to Progress",
+            "Persist orchestrator:progress layout separately from Dashboard and Usage",
+            "Classify actions by navigation vs mutation, palette visibility, shortcut eligibility, multi-target safety, and confirmation/reversibility",
+            "Default bulk actions to navigation and triage rather than live execution mutation",
+            "Transfer the 13-widget Progress catalog with default drill targets",
+            "Transfer state/action labels, alert taxonomy, event taxonomy, and condition-aging policy",
+            "Prefer usage_event_ref rather than timestamp heuristics when routing cost-bearing artifacts to Usage and Ledger",
+            "Require runtime artifacts summarizing external operations to carry receipt linkage"
+          ],
+          "exact_stale_tokens_to_retire": [],
+          "split_reason": "Split routing/action rows into the named search-and-action container because object-first concern routing, widget drill behavior, projection gating, and artifact routing form one operator-facing policy cluster."
+        },
+        {
+          "group_id": "batch-3-orchestrator-current-vs-historical",
+          "path": "Plans/Orchestrator_Page.md",
+          "mapped_owner_heading": "### Current vs historical run behavior",
+          "live_anchor": "## 1. Scope and canonical model",
+          "action_family": "run-history-routing",
+          "coverage_row_ids": [
+            "cov-037",
+            "cov-093"
+          ],
+          "fidelity_gap_refs": [
+            "cov-037",
+            "cov-093"
+          ],
+          "required_actions": [
+            "consumer_propagation",
+            "owner_create_or_rewrite"
+          ],
+          "exact_required_items": [
+            "Use active_run_id/focused_run_id with focus_mode = live | historical",
+            "Keep cross-tab deep links and search pivots coherent on the focused run",
+            "Add append-only account_pressure_episode and account_switch_event families",
+            "Let Usage, History, Ledger, and Orchestrator consume the same durable event family"
+          ],
+          "exact_stale_tokens_to_retire": [],
+          "split_reason": "Split focused-run and pressure-history rules into the historical-behavior container because both rows govern time-scoped routing and durable run/account history behavior."
+        },
+        {
+          "group_id": "batch-3-orchestrator-concern-notification",
+          "path": "Plans/Orchestrator_Page.md",
+          "mapped_owner_heading": "### Concern and notification model",
+          "live_anchor": "## 1. Scope and canonical model",
+          "action_family": "concern-notification-model",
+          "coverage_row_ids": [
+            "cov-031",
+            "cov-068",
+            "cov-178",
+            "cov-192"
+          ],
+          "fidelity_gap_refs": [
+            "cov-031",
+            "cov-068",
+            "cov-178",
+            "cov-192"
+          ],
+          "required_actions": [
+            "consumer_propagation"
+          ],
+          "exact_required_items": [
+            "Expose review_refs, corroboration_refs, graph_patch_refs, recovery_refs, blocked_episode_refs, and promotion_refs on concerns",
+            "Allow blocked episodes to reference concerns without replacing concern identity",
+            "Route notifications using severity, execution impact, blocked owner, persistence, and projection trust",
+            "Allow quiet windows for advisory warnings but not for canonical blocked episodes",
+            "Require distinct dismissal rationale and resolution rationale rules",
+            "Treat accepted_risk as a resolution path rather than dismissal",
+            "Use source/scope/category/lineage-aware heuristics when deciding whether repeated sightings update an existing concern or create a new one"
+          ],
+          "exact_stale_tokens_to_retire": [],
+          "split_reason": "Split linked-concern and notification rows into the concern/notification container because linkage, routing policy, rationale handling, and update heuristics all operate on the same concern lifecycle surface."
+        },
+        {
+          "group_id": "batch-3-orchestrator-project-attention",
+          "path": "Plans/Orchestrator_Page.md",
+          "mapped_owner_heading": "### Project summary, attention, and escalation",
+          "live_anchor": "## 1. Scope and canonical model",
+          "action_family": "project-attention-escalation",
+          "coverage_row_ids": [
+            "cov-051",
+            "cov-054",
+            "cov-078",
+            "cov-081",
+            "cov-138",
+            "cov-196"
+          ],
+          "fidelity_gap_refs": [
+            "cov-051",
+            "cov-054",
+            "cov-078",
+            "cov-081",
+            "cov-138",
+            "cov-196"
+          ],
+          "required_actions": [
+            "owner_create_or_rewrite"
+          ],
+          "exact_required_items": [
+            "Define one escalation ladder shared across Orchestrator, Dashboard, thread badges, and notifications",
+            "Keep attention_required distinct from blocked and resurface persistent blockers on meaningful change/persistence",
+            "Make slice-based loading, virtualization, lazy expansion, and demand-loaded inspectors mandatory across dense tabs",
+            "Treat scale as a cross-tab contract, not a graph-tab-only concern",
+            "Define project_summary with activity_state, attention_state, health_state, owner, and projection trust disclosure",
+            "Give canonical blocked episodes precedence over weaker derived warnings",
+            "Define project_attention_item with primary route payload and projection trust disclosure",
+            "Keep attention rows consumable across Orchestrator, Dashboard, and notifications",
+            "Define dedicated help-entry architecture with related-concept linking",
+            "Define project activity_state, project attention_state, blocked-owner taxonomy, escalation ladder, and resurfacing/aging rules",
+            "Define an explicit blocked-owner 8-kind taxonomy and 5-level escalation ladder with surface mapping"
+          ],
+          "exact_stale_tokens_to_retire": [],
+          "split_reason": "Split project-summary, attention, scale, and escalation rows into the project/attention container because they jointly define shared project-state surfaces and escalation taxonomy."
+        },
+        {
+          "group_id": "batch-3-orchestrator-source-control",
+          "path": "Plans/Orchestrator_Page.md",
+          "mapped_owner_heading": "### Source Control boundary",
+          "live_anchor": "## 1. Scope and canonical model",
+          "action_family": "source-control-and-promotion",
+          "coverage_row_ids": [
+            "cov-035",
+            "cov-042"
+          ],
+          "fidelity_gap_refs": [
+            "cov-035",
+            "cov-042"
+          ],
+          "required_actions": [
+            "owner_create_or_rewrite",
+            "consumer_propagation"
+          ],
+          "exact_required_items": [
+            "Define lane_to_package, package_to_seam_available, and seam_complete promotions",
+            "Attach exact gate/evidence expectations to each promotion class",
+            "Keep Orchestrator as lane-pool operational truth and Source Control as concrete repo/worktree operator",
+            "Show owning package/lane/run refs plus lifecycle and blocked/recovery state on worktree rows"
+          ],
+          "exact_stale_tokens_to_retire": [],
+          "split_reason": "Split promotion and worktree-handshake rows into the Source Control boundary container because both gaps define concrete repository/worktree transitions and their gate evidence."
+        },
+        {
+          "group_id": "batch-3-orchestrator-help-references",
+          "path": "Plans/Orchestrator_Page.md",
+          "mapped_owner_heading": "### glossary/help references",
+          "live_anchor": "## 1. Scope and canonical model",
+          "action_family": "glossary-help-references",
+          "coverage_row_ids": [
+            "cov-063",
+            "cov-195"
+          ],
+          "fidelity_gap_refs": [
+            "cov-063",
+            "cov-195"
+          ],
+          "required_actions": [
+            "consumer_propagation"
+          ],
+          "exact_required_items": [
+            "Expand Glossary.md to cover rewrite-critical objects, states, and trust terms",
+            "Define inline help, context help, and canonical help entry layers while keeping canonical term names stable",
+            "Define a dedicated help-entry template and related-concept linking clusters"
+          ],
+          "exact_stale_tokens_to_retire": [],
+          "split_reason": "Split help/governance references into the dedicated glossary/help container because those rows are documentation-support contracts rather than runtime behavior rules."
+        },
+        {
+          "group_id": "batch-3-prompt-settings-resolver",
+          "path": "Plans/Prompt_Pipeline.md",
+          "mapped_owner_heading": "### 6.2A Settings, persona, and resolver model",
+          "live_anchor": "## 6. Effective Persona and Runtime Resolution Pipeline (2026-03-06)",
+          "action_family": "settings-identity-resolver",
+          "coverage_row_ids": [
+            "cov-009",
+            "cov-084",
+            "cov-151"
+          ],
+          "fidelity_gap_refs": [
+            "cov-009",
+            "cov-084",
+            "cov-151"
+          ],
+          "required_actions": [
+            "owner_create_or_rewrite"
+          ],
+          "exact_required_items": [
+            "Add requested_account_id alongside requested_account_policy",
+            "Add requested_account_binding and govern provider_account_id as subordinate provider-native metadata",
+            "Carry requested/effective account identity through runtime, bridged-provider, and permission envelopes",
+            "Model requested_account_id separately from requested_account_policy",
+            "Add requested_account_binding with none/preferred/required semantics and display Requested account / Requested binding / Effective account / Switch reason",
+            "Define the three-axis settings model source/request/execution",
+            "Define display grammar, worker-policy display, resolver inputs, deterministic resolver matrix, and resolver emit shape"
+          ],
+          "exact_stale_tokens_to_retire": [
+            "provider_account_id"
+          ],
+          "split_reason": "Split requested/effective identity and resolver-display rows into the explicit 6.2A owner section because they define the core settings and account-resolution model."
+        },
+        {
+          "group_id": "batch-3-prompt-effective-resolution",
+          "path": "Plans/Prompt_Pipeline.md",
+          "mapped_owner_heading": "### 6.4 Effective resolution record",
+          "live_anchor": "## 6. Effective Persona and Runtime Resolution Pipeline (2026-03-06)",
+          "action_family": "effective-resolution-runtime-identity",
+          "coverage_row_ids": [
+            "cov-087",
+            "cov-103",
+            "cov-154"
+          ],
+          "fidelity_gap_refs": [
+            "cov-087",
+            "cov-103",
+            "cov-154"
+          ],
+          "required_actions": [
+            "owner_create_or_rewrite"
+          ],
+          "exact_required_items": [
+            "Carry execution_role plus requested/effective operational identity in shared runtime identity",
+            "Project them into effective-resolution, attempt, usage, and inspector surfaces",
+            "Introduce execution_unit_context as canonical runtime-facing context object",
+            "Demote TierContext to a derived or compatibility-only selection/decomposition helper",
+            "Anchor worker spawn, recovery, remediation, coordination, and UI inspection to execution_unit_context",
+            "Transfer execution_role, requested_account_id, operational_identity, account-switch and pressure ownership, blocked_sequence minting, startup recovery handshake, and DAE jail/approval policy into owner and consumer docs",
+            "Carry usage switch-history and usage execution-role follow-through"
+          ],
+          "exact_stale_tokens_to_retire": [
+            "TierContext",
+            "tier_id"
+          ],
+          "split_reason": "Split execution-role, execution_unit_context, and blocked-policy transfer work into the effective-resolution record container because these rows all govern the canonical runtime identity record emitted by the resolver pipeline."
+        },
+        {
+          "group_id": "batch-3-prompt-handoff-lineage",
+          "path": "Plans/Prompt_Pipeline.md",
+          "mapped_owner_heading": "### Runtime Attempt Snapshot and Handoff Bundle",
+          "live_anchor": "## 6. Effective Persona and Runtime Resolution Pipeline (2026-03-06)",
+          "action_family": "handoff-lineage",
+          "coverage_row_ids": [
+            "cov-136"
+          ],
+          "fidelity_gap_refs": [
+            "cov-136"
+          ],
+          "required_actions": [
+            "owner_create_or_rewrite"
+          ],
+          "exact_required_items": [
+            "Extend wizard/interview handoff with project/thread/wizard/runtime identity and execution_role",
+            "Extend validation_pass_report with planning/governance lineage and an explicit bridge into the launched run"
+          ],
+          "exact_stale_tokens_to_retire": [],
+          "split_reason": "Split wizard/interview handoff lineage into the handoff bundle container because it is a standalone lineage contract layered on top of the settings/resolution owner model."
+        },
+        {
+          "group_id": "batch-3-evidence-route-aware",
+          "path": "Plans/evidence.schema.json",
+          "mapped_owner_heading": "route_aware_verification",
+          "live_anchor": "route_aware_verification",
+          "action_family": "route-aware-gate-evidence",
+          "coverage_row_ids": [
+            "cov-133"
+          ],
+          "fidelity_gap_refs": [
+            "cov-133"
+          ],
+          "required_actions": [
+            "consumer_propagation"
+          ],
+          "exact_required_items": [
+            "Expand Wiring Matrix and GATE-010 to verify route args, wrapper normalization, stale revalidation, admissibility, and correlation passthrough",
+            "Add structured gate-specific evidence details for route-aware verification"
+          ],
+          "exact_stale_tokens_to_retire": [],
+          "split_reason": "Keep the schema hotspot as one in-place object update because the reconciliation plan already isolates a single route_aware_verification object for this missing evidence shape."
+        }
+      ],
+      "unresolved": []
+    },
+    {
+      "batch": "batch-4",
+      "gap_rows_total": 22,
+      "worklist_groups": [
+        {
+          "group_id": "group-permissions-required-data-shape",
+          "path": "Plans/Permissions_System.md",
+          "mapped_owner_heading": "### Required data shape",
+          "live_anchor": "FILE_START",
+          "action_family": "create_owner_section",
+          "coverage_row_ids": [
+            "cov-011",
+            "cov-102"
+          ],
+          "fidelity_gap_refs": [
+            "cov-011",
+            "cov-102"
+          ],
+          "required_actions": [
+            "owner_create_or_rewrite"
+          ],
+          "exact_required_items": [
+            "Add requested_account_id alongside requested_account_policy",
+            "Add requested_account_binding and govern provider_account_id as subordinate provider-native metadata",
+            "Carry requested/effective account identity through runtime, bridged-provider, and permission envelopes",
+            "Move OpenCode session IDs to provider-native correlation fields instead of canonical thread_id",
+            "Define Approval Scope Key across actor/lane/run/account context and reuse it across permissions, HITL, doom-loop, and session approval caching"
+          ],
+          "exact_stale_tokens_to_retire": [
+            "provider_account_id"
+          ],
+          "split_reason": "Same target-015 owner container; both rows belong under the data-shape subsection.",
+          "rows": [
+            {
+              "coverage_id": "cov-011",
+              "path": "Plans/Permissions_System.md",
+              "live_status": "still missing",
+              "required_action": "owner_create_or_rewrite",
+              "exact_items": [
+                "Add requested_account_id alongside requested_account_policy",
+                "Add requested_account_binding and govern provider_account_id as subordinate provider-native metadata",
+                "Carry requested/effective account identity through runtime, bridged-provider, and permission envelopes"
+              ],
+              "stale_tokens": [
+                "provider_account_id"
+              ]
+            },
+            {
+              "coverage_id": "cov-102",
+              "path": "Plans/Permissions_System.md",
+              "live_status": "still partial",
+              "required_action": "owner_create_or_rewrite",
+              "exact_items": [
+                "Move OpenCode session IDs to provider-native correlation fields instead of canonical thread_id",
+                "Define Approval Scope Key across actor/lane/run/account context and reuse it across permissions, HITL, doom-loop, and session approval caching"
+              ],
+              "stale_tokens": []
+            }
+          ]
+        },
+        {
+          "group_id": "group-runtime-artifacts-export-taxonomy",
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "mapped_owner_heading": "### 5B Export taxonomy and manifests",
+          "live_anchor": "## 4. redb key and projector",
+          "action_family": "rewrite_owner_section",
+          "coverage_row_ids": [
+            "cov-017"
+          ],
+          "fidelity_gap_refs": [
+            "cov-017"
+          ],
+          "required_actions": [
+            "owner_create_or_rewrite"
+          ],
+          "exact_required_items": [
+            "Define record export, bundle export, and view export as distinct export classes",
+            "Require export manifests with export_id/export_kind/project scope/included ids/trust-state disclosure"
+          ],
+          "exact_stale_tokens_to_retire": [],
+          "split_reason": "Split target-022 by required structural headings; export taxonomy/manifests is isolated in 5B.",
+          "rows": [
+            {
+              "coverage_id": "cov-017",
+              "path": "Plans/Runtime_Artifacts_Panel.md",
+              "live_status": "still partial",
+              "required_action": "owner_create_or_rewrite",
+              "exact_items": [
+                "Define record export, bundle export, and view export as distinct export classes",
+                "Require export manifests with export_id/export_kind/project scope/included ids/trust-state disclosure"
+              ],
+              "stale_tokens": []
+            }
+          ]
+        },
+        {
+          "group_id": "group-run-graph-concern-linkage",
+          "path": "Plans/Run_Graph_View.md",
+          "mapped_owner_heading": "## 3. Node detail inspector",
+          "live_anchor": "## 3. Node detail inspector",
+          "action_family": "extend_consumer_section",
+          "coverage_row_ids": [
+            "cov-032"
+          ],
+          "fidelity_gap_refs": [
+            "cov-032"
+          ],
+          "required_actions": [
+            "consumer_propagation"
+          ],
+          "exact_required_items": [
+            "Expose review_refs, corroboration_refs, graph_patch_refs, recovery_refs, blocked_episode_refs, and promotion_refs on concerns",
+            "Allow blocked episodes to reference concerns without replacing concern identity"
+          ],
+          "exact_stale_tokens_to_retire": [],
+          "split_reason": "Split target-020 across its two existing consumer sections; concern adjacency extends node detail inspector.",
+          "rows": [
+            {
+              "coverage_id": "cov-032",
+              "path": "Plans/Run_Graph_View.md",
+              "live_status": "still partial",
+              "required_action": "consumer_propagation",
+              "exact_items": [
+                "Expose review_refs, corroboration_refs, graph_patch_refs, recovery_refs, blocked_episode_refs, and promotion_refs on concerns",
+                "Allow blocked episodes to reference concerns without replacing concern identity"
+              ],
+              "stale_tokens": []
+            }
+          ]
+        },
+        {
+          "group_id": "group-run-graph-focused-routing",
+          "path": "Plans/Run_Graph_View.md",
+          "mapped_owner_heading": "## 4. Data model and identity",
+          "live_anchor": "## 4. Data model and identity",
+          "action_family": "extend_consumer_section",
+          "coverage_row_ids": [
+            "cov-038"
+          ],
+          "fidelity_gap_refs": [
+            "cov-038"
+          ],
+          "required_actions": [
+            "consumer_propagation"
+          ],
+          "exact_required_items": [
+            "Use active_run_id/focused_run_id with focus_mode = live | historical",
+            "Keep cross-tab deep links and search pivots coherent on the focused run"
+          ],
+          "exact_stale_tokens_to_retire": [],
+          "split_reason": "Split target-020 across its two existing consumer sections; focused/historical routing belongs in data model and identity.",
+          "rows": [
+            {
+              "coverage_id": "cov-038",
+              "path": "Plans/Run_Graph_View.md",
+              "live_status": "still missing",
+              "required_action": "consumer_propagation",
+              "exact_items": [
+                "Use active_run_id/focused_run_id with focus_mode = live | historical",
+                "Keep cross-tab deep links and search pivots coherent on the focused run"
+              ],
+              "stale_tokens": []
+            }
+          ]
+        },
+        {
+          "group_id": "group-interview-runtime-boundary",
+          "path": "Plans/interview-subagent-integration.md",
+          "mapped_owner_heading": "## Interview runtime boundary and handoff lineage",
+          "live_anchor": "## Change Summary",
+          "action_family": "rewrite_owner_section",
+          "coverage_row_ids": [
+            "cov-065",
+            "cov-134"
+          ],
+          "fidelity_gap_refs": [
+            "cov-065",
+            "cov-134"
+          ],
+          "required_actions": [
+            "owner_create_or_rewrite"
+          ],
+          "exact_required_items": [
+            "Assistant/chat/interview/builder actors share provider/runtime identity semantics with Orchestrator",
+            "They remain distinct actor/run kinds rather than package/seam/node execution objects",
+            "Extend wizard/interview handoff with project/thread/wizard/runtime identity and execution_role",
+            "Extend validation_pass_report with planning/governance lineage and an explicit bridge into the launched run"
+          ],
+          "exact_stale_tokens_to_retire": [],
+          "split_reason": "No split; both interview rows map to the same owner heading in target-032.",
+          "rows": [
+            {
+              "coverage_id": "cov-065",
+              "path": "Plans/interview-subagent-integration.md",
+              "live_status": "still missing",
+              "required_action": "owner_create_or_rewrite",
+              "exact_items": [
+                "Assistant/chat/interview/builder actors share provider/runtime identity semantics with Orchestrator",
+                "They remain distinct actor/run kinds rather than package/seam/node execution objects"
+              ],
+              "stale_tokens": []
+            },
+            {
+              "coverage_id": "cov-134",
+              "path": "Plans/interview-subagent-integration.md",
+              "live_status": "still missing",
+              "required_action": "owner_create_or_rewrite",
+              "exact_items": [
+                "Extend wizard/interview handoff with project/thread/wizard/runtime identity and execution_role",
+                "Extend validation_pass_report with planning/governance lineage and an explicit bridge into the launched run"
+              ],
+              "stale_tokens": []
+            }
+          ]
+        },
+        {
+          "group_id": "group-provider-opencode-required-data-shape",
+          "path": "Plans/Provider_OpenCode.md",
+          "mapped_owner_heading": "### Required data shape",
+          "live_anchor": "FILE_START",
+          "action_family": "create_owner_section",
+          "coverage_row_ids": [
+            "cov-099"
+          ],
+          "fidelity_gap_refs": [
+            "cov-099"
+          ],
+          "required_actions": [
+            "owner_create_or_rewrite"
+          ],
+          "exact_required_items": [
+            "Move OpenCode session IDs to provider-native correlation fields instead of canonical thread_id",
+            "Define Approval Scope Key across actor/lane/run/account context and reuse it across permissions, HITL, doom-loop, and session approval caching"
+          ],
+          "exact_stale_tokens_to_retire": [],
+          "split_reason": "No split; target-018 creates one canonical data-shape owner section.",
+          "rows": [
+            {
+              "coverage_id": "cov-099",
+              "path": "Plans/Provider_OpenCode.md",
+              "live_status": "still partial",
+              "required_action": "owner_create_or_rewrite",
+              "exact_items": [
+                "Move OpenCode session IDs to provider-native correlation fields instead of canonical thread_id",
+                "Define Approval Scope Key across actor/lane/run/account context and reuse it across permissions, HITL, doom-loop, and session approval caching"
+              ],
+              "stale_tokens": []
+            }
+          ]
+        },
+        {
+          "group_id": "group-provider-a2a-required-data-shape",
+          "path": "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+          "mapped_owner_heading": "### Required data shape",
+          "live_anchor": "FILE_START",
+          "action_family": "create_owner_section",
+          "coverage_row_ids": [
+            "cov-100"
+          ],
+          "fidelity_gap_refs": [
+            "cov-100"
+          ],
+          "required_actions": [
+            "owner_create_or_rewrite"
+          ],
+          "exact_required_items": [
+            "Move OpenCode session IDs to provider-native correlation fields instead of canonical thread_id",
+            "Define Approval Scope Key across actor/lane/run/account context and reuse it across permissions, HITL, doom-loop, and session approval caching"
+          ],
+          "exact_stale_tokens_to_retire": [],
+          "split_reason": "No split; target-019 creates one canonical data-shape owner section.",
+          "rows": [
+            {
+              "coverage_id": "cov-100",
+              "path": "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+              "live_status": "still missing",
+              "required_action": "owner_create_or_rewrite",
+              "exact_items": [
+                "Move OpenCode session IDs to provider-native correlation fields instead of canonical thread_id",
+                "Define Approval Scope Key across actor/lane/run/account context and reuse it across permissions, HITL, doom-loop, and session approval caching"
+              ],
+              "stale_tokens": []
+            }
+          ]
+        },
+        {
+          "group_id": "group-runtime-artifacts-index-families",
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "mapped_owner_heading": "### 4A Artifacts index families and projector checkpoints",
+          "live_anchor": "## 4. redb key and projector",
+          "action_family": "rewrite_owner_section",
+          "coverage_row_ids": [
+            "cov-111",
+            "cov-191"
+          ],
+          "fidelity_gap_refs": [
+            "cov-111",
+            "cov-191"
+          ],
+          "required_actions": [
+            "owner_create_or_rewrite"
+          ],
+          "exact_required_items": [
+            "Register artifacts_index, artifacts_project_state, and runtime_artifacts projector checkpoint families",
+            "Make the artifact index rebuildable from canonical runtime evidence",
+            "Index attempt_id and thread_id in artifact index families to preserve attempt-native artifact routing"
+          ],
+          "exact_stale_tokens_to_retire": [],
+          "split_reason": "Split target-022 by required structural headings; index/projector rows belong in 4A.",
+          "rows": [
+            {
+              "coverage_id": "cov-111",
+              "path": "Plans/Runtime_Artifacts_Panel.md",
+              "live_status": "still partial",
+              "required_action": "owner_create_or_rewrite",
+              "exact_items": [
+                "Register artifacts_index, artifacts_project_state, and runtime_artifacts projector checkpoint families",
+                "Make the artifact index rebuildable from canonical runtime evidence"
+              ],
+              "stale_tokens": []
+            },
+            {
+              "coverage_id": "cov-191",
+              "path": "Plans/Runtime_Artifacts_Panel.md",
+              "live_status": "still partial",
+              "required_action": "owner_create_or_rewrite",
+              "exact_items": [
+                "Index attempt_id and thread_id in artifact index families to preserve attempt-native artifact routing"
+              ],
+              "stale_tokens": []
+            }
+          ]
+        },
+        {
+          "group_id": "group-tools-required-data-shape",
+          "path": "Plans/Tools.md",
+          "mapped_owner_heading": "### Required data shape",
+          "live_anchor": "FILE_START",
+          "action_family": "reconcile_mixed_owner_consumer",
+          "coverage_row_ids": [
+            "cov-116",
+            "cov-156"
+          ],
+          "fidelity_gap_refs": [
+            "cov-116",
+            "cov-156"
+          ],
+          "required_actions": [
+            "owner_create_or_rewrite"
+          ],
+          "exact_required_items": [
+            "Share one attribution family across tool events, runtime artifacts, receipts, and usage records",
+            "Carry run/attempt/thread/node/artifact/provider/usage anchors plus execution/runtime identity fields",
+            "Transfer execution_role, requested_account_id, operational_identity, account-switch and pressure ownership, blocked_sequence minting, startup recovery handshake, and DAE jail/approval policy into owner and consumer docs",
+            "Carry usage switch-history and usage execution-role follow-through"
+          ],
+          "exact_stale_tokens_to_retire": [],
+          "split_reason": "Split target-023 so owner data-shape rows stay separate from consumer propagation.",
+          "rows": [
+            {
+              "coverage_id": "cov-116",
+              "path": "Plans/Tools.md",
+              "live_status": "still partial",
+              "required_action": "owner_create_or_rewrite",
+              "exact_items": [
+                "Share one attribution family across tool events, runtime artifacts, receipts, and usage records",
+                "Carry run/attempt/thread/node/artifact/provider/usage anchors plus execution/runtime identity fields"
+              ],
+              "stale_tokens": []
+            },
+            {
+              "coverage_id": "cov-156",
+              "path": "Plans/Tools.md",
+              "live_status": "still missing",
+              "required_action": "owner_create_or_rewrite",
+              "exact_items": [
+                "Transfer execution_role, requested_account_id, operational_identity, account-switch and pressure ownership, blocked_sequence minting, startup recovery handshake, and DAE jail/approval policy into owner and consumer docs",
+                "Carry usage switch-history and usage execution-role follow-through"
+              ],
+              "stale_tokens": []
+            }
+          ]
+        },
+        {
+          "group_id": "group-runtime-artifacts-envelope-attribution",
+          "path": "Plans/Runtime_Artifacts_Panel.md",
+          "mapped_owner_heading": "### 4B Runtime-artifact envelope and attribution packet",
+          "live_anchor": "## 4. redb key and projector",
+          "action_family": "rewrite_owner_section",
+          "coverage_row_ids": [
+            "cov-117",
+            "cov-119",
+            "cov-183",
+            "cov-202"
+          ],
+          "fidelity_gap_refs": [
+            "cov-117",
+            "cov-119",
+            "cov-183",
+            "cov-202"
+          ],
+          "required_actions": [
+            "owner_create_or_rewrite"
+          ],
+          "exact_required_items": [
+            "Share one attribution family across tool events, runtime artifacts, receipts, and usage records",
+            "Carry run/attempt/thread/node/artifact/provider/usage anchors plus execution/runtime identity fields",
+            "Make runtime artifacts attempt-native by default with artifact identity, routing refs, content refs, and provider/usage linkage",
+            "Resolve artifact open flows by artifact_id and then by linked envelope refs",
+            "Use attempt_id as local anchor, provider_attempt_ref as provider/runtime bridge, usage_event_ref as usage bridge, and receipt refs as external side-effect lineage bridge",
+            "None of those bridge fields replace the primary local key",
+            "Prefer usage_event_ref rather than timestamp heuristics when routing cost-bearing artifacts to Usage and Ledger",
+            "Require runtime artifacts summarizing external operations to carry receipt linkage"
+          ],
+          "exact_stale_tokens_to_retire": [],
+          "split_reason": "Split target-022 by required structural headings; attribution, envelope, bridge-field, and receipt-routing rules belong in 4B.",
+          "rows": [
+            {
+              "coverage_id": "cov-117",
+              "path": "Plans/Runtime_Artifacts_Panel.md",
+              "live_status": "still partial",
+              "required_action": "owner_create_or_rewrite",
+              "exact_items": [
+                "Share one attribution family across tool events, runtime artifacts, receipts, and usage records",
+                "Carry run/attempt/thread/node/artifact/provider/usage anchors plus execution/runtime identity fields"
+              ],
+              "stale_tokens": []
+            },
+            {
+              "coverage_id": "cov-119",
+              "path": "Plans/Runtime_Artifacts_Panel.md",
+              "live_status": "still partial",
+              "required_action": "owner_create_or_rewrite",
+              "exact_items": [
+                "Make runtime artifacts attempt-native by default with artifact identity, routing refs, content refs, and provider/usage linkage",
+                "Resolve artifact open flows by artifact_id and then by linked envelope refs"
+              ],
+              "stale_tokens": []
+            },
+            {
+              "coverage_id": "cov-183",
+              "path": "Plans/Runtime_Artifacts_Panel.md",
+              "live_status": "still partial",
+              "required_action": "owner_create_or_rewrite",
+              "exact_items": [
+                "Use attempt_id as local anchor, provider_attempt_ref as provider/runtime bridge, usage_event_ref as usage bridge, and receipt refs as external side-effect lineage bridge",
+                "None of those bridge fields replace the primary local key"
+              ],
+              "stale_tokens": []
+            },
+            {
+              "coverage_id": "cov-202",
+              "path": "Plans/Runtime_Artifacts_Panel.md",
+              "live_status": "still partial",
+              "required_action": "owner_create_or_rewrite",
+              "exact_items": [
+                "Prefer usage_event_ref rather than timestamp heuristics when routing cost-bearing artifacts to Usage and Ledger",
+                "Require runtime artifacts summarizing external operations to carry receipt linkage"
+              ],
+              "stale_tokens": []
+            }
+          ]
+        },
+        {
+          "group_id": "group-filemanager-artifact-open-by-identity",
+          "path": "Plans/FileManager.md",
+          "mapped_owner_heading": "## Runtime Artifact Open-by-Identity Consolidation Addendum (2026-03-09)",
+          "live_anchor": "### 4.1 Open-file contract",
+          "action_family": "rewrite_owner_section",
+          "coverage_row_ids": [
+            "cov-120"
+          ],
+          "fidelity_gap_refs": [
+            "cov-120"
+          ],
+          "required_actions": [
+            "owner_create_or_rewrite"
+          ],
+          "exact_required_items": [
+            "Make runtime artifacts attempt-native by default with artifact identity, routing refs, content refs, and provider/usage linkage",
+            "Resolve artifact open flows by artifact_id and then by linked envelope refs"
+          ],
+          "exact_stale_tokens_to_retire": [],
+          "split_reason": "Split target-006 because runtime-artifact open-by-identity work belongs in the addendum, not the route/open subsection.",
+          "rows": [
+            {
+              "coverage_id": "cov-120",
+              "path": "Plans/FileManager.md",
+              "live_status": "still partial",
+              "required_action": "owner_create_or_rewrite",
+              "exact_items": [
+                "Make runtime artifacts attempt-native by default with artifact identity, routing refs, content refs, and provider/usage linkage",
+                "Resolve artifact open flows by artifact_id and then by linked envelope refs"
+              ],
+              "stale_tokens": []
+            }
+          ]
+        },
+        {
+          "group_id": "group-filemanager-route-open-rules",
+          "path": "Plans/FileManager.md",
+          "mapped_owner_heading": "### Route/open rules",
+          "live_anchor": "### 4.1 Open-file contract",
+          "action_family": "rewrite_owner_section",
+          "coverage_row_ids": [
+            "cov-124",
+            "cov-127"
+          ],
+          "fidelity_gap_refs": [
+            "cov-124",
+            "cov-127"
+          ],
+          "required_actions": [
+            "owner_create_or_rewrite"
+          ],
+          "exact_required_items": [
+            "Let Contracts_V0 own canonical route_target and OpenSubject contracts",
+            "Keep Crosswalk limited to primitive boundary ownership and FileManager OpenFile narrow and path-based",
+            "Keep route_target small with subject_id or object_kind/object_id identity",
+            "Limit subject_id families to doc:/artifact:, keep inspector_target secondary, and override only necessary destination/context state"
+          ],
+          "exact_stale_tokens_to_retire": [],
+          "split_reason": "Split target-006 because route_target/OpenSubject narrowing belongs in Route/open rules, separate from artifact open-by-identity.",
+          "rows": [
+            {
+              "coverage_id": "cov-124",
+              "path": "Plans/FileManager.md",
+              "live_status": "still partial",
+              "required_action": "owner_create_or_rewrite",
+              "exact_items": [
+                "Let Contracts_V0 own canonical route_target and OpenSubject contracts",
+                "Keep Crosswalk limited to primitive boundary ownership and FileManager OpenFile narrow and path-based"
+              ],
+              "stale_tokens": []
+            },
+            {
+              "coverage_id": "cov-127",
+              "path": "Plans/FileManager.md",
+              "live_status": "still missing",
+              "required_action": "owner_create_or_rewrite",
+              "exact_items": [
+                "Keep route_target small with subject_id or object_kind/object_id identity",
+                "Limit subject_id families to doc:/artifact:, keep inspector_target secondary, and override only necessary destination/context state"
+              ],
+              "stale_tokens": []
+            }
+          ]
+        },
+        {
+          "group_id": "group-tools-consumer-propagation",
+          "path": "Plans/Tools.md",
+          "mapped_owner_heading": "### Consumer propagation",
+          "live_anchor": "FILE_START",
+          "action_family": "reconcile_mixed_owner_consumer",
+          "coverage_row_ids": [
+            "cov-147"
+          ],
+          "fidelity_gap_refs": [
+            "cov-147"
+          ],
+          "required_actions": [
+            "consumer_propagation"
+          ],
+          "exact_required_items": [
+            "Expand blocked_notice beyond blocked_family and allowed_action_ids[]",
+            "Carry escalation_level, action_available ownership, and usage observability through blocked surfaces"
+          ],
+          "exact_stale_tokens_to_retire": [
+            "allowed_action_ids[]"
+          ],
+          "split_reason": "Split target-023 so consumer blocked-notice propagation remains separate from owner data-shape recovery.",
+          "rows": [
+            {
+              "coverage_id": "cov-147",
+              "path": "Plans/Tools.md",
+              "live_status": "still partial",
+              "required_action": "consumer_propagation",
+              "exact_items": [
+                "Expand blocked_notice beyond blocked_family and allowed_action_ids[]",
+                "Carry escalation_level, action_available ownership, and usage observability through blocked surfaces"
+              ],
+              "stale_tokens": [
+                "allowed_action_ids[]"
+              ]
+            }
+          ]
+        },
+        {
+          "group_id": "group-run-modes-identity-blocked-policy",
+          "path": "Plans/Run_Modes.md",
+          "mapped_owner_heading": "## Runtime identity and blocked-policy continuity",
+          "live_anchor": "FILE_START",
+          "action_family": "create_owner_section",
+          "coverage_row_ids": [
+            "cov-159"
+          ],
+          "fidelity_gap_refs": [
+            "cov-159"
+          ],
+          "required_actions": [
+            "owner_create_or_rewrite"
+          ],
+          "exact_required_items": [
+            "Transfer execution_role, requested_account_id, operational_identity, account-switch and pressure ownership, blocked_sequence minting, startup recovery handshake, and DAE jail/approval policy into owner and consumer docs",
+            "Carry usage switch-history and usage execution-role follow-through"
+          ],
+          "exact_stale_tokens_to_retire": [],
+          "split_reason": "No split; target-021 defines a single owner section.",
+          "rows": [
+            {
+              "coverage_id": "cov-159",
+              "path": "Plans/Run_Modes.md",
+              "live_status": "still missing",
+              "required_action": "owner_create_or_rewrite",
+              "exact_items": [
+                "Transfer execution_role, requested_account_id, operational_identity, account-switch and pressure ownership, blocked_sequence minting, startup recovery handshake, and DAE jail/approval policy into owner and consumer docs",
+                "Carry usage switch-history and usage execution-role follow-through"
+              ],
+              "stale_tokens": []
+            }
+          ]
+        }
+      ],
+      "unresolved": []
+    },
+    {
+      "batch": "batch-5a",
+      "gap_rows_total": 38,
+      "worklist_groups": [
+        {
+          "group_id": "contracts-fidelity-recovery-order",
+          "path": "Plans/Contracts_V0.md",
+          "mapped_owner_heading": "### Fidelity recovery order",
+          "live_anchor": "FILE_START",
+          "action_family": "fidelity_recovery_order",
+          "coverage_row_ids": [
+            "cov-001"
+          ],
+          "fidelity_gap_refs": [
+            "cov-001"
+          ],
+          "required_actions": [
+            "owner_create_or_rewrite"
+          ],
+          "exact_required_items": [
+            "Apply owner-doc corrections before consumer and mirror cleanup",
+            "Rerun fidelity audit only after owner and consumer corrections are in place"
+          ],
+          "exact_stale_tokens_to_retire": [],
+          "split_reason": "Split target-003 by required_structural_headings; owner-first recovery order is isolated into the fidelity recovery subsection.",
+          "rows": [
+            {
+              "coverage_id": "cov-001",
+              "path": "Plans/Contracts_V0.md",
+              "live_status": "still missing",
+              "required_action": "owner_create_or_rewrite",
+              "exact_items": [
+                "Apply owner-doc corrections before consumer and mirror cleanup",
+                "Rerun fidelity audit only after owner and consumer corrections are in place"
+              ],
+              "stale_tokens": []
+            }
+          ]
+        },
+        {
+          "group_id": "contracts-runtime-envelope",
+          "path": "Plans/Contracts_V0.md",
+          "mapped_owner_heading": "### Shared governance and runtime record envelope",
+          "live_anchor": "FILE_START",
+          "action_family": "runtime_envelope_and_attribution",
+          "coverage_row_ids": [
+            "cov-014",
+            "cov-075",
+            "cov-114",
+            "cov-180"
+          ],
+          "fidelity_gap_refs": [
+            "cov-014",
+            "cov-075",
+            "cov-114",
+            "cov-180"
+          ],
+          "required_actions": [
+            "owner_create_or_rewrite"
+          ],
+          "exact_required_items": [
+            "Define one shared record envelope with canonical lineage refs and artifact/evidence refs",
+            "Keep record objects distinct from artifacts and rendered summaries",
+            "Define shared historical vocabulary: historical, stale_historical, superseded, revoked, reopened, archived, removed",
+            "Keep family-local workflow states distinct and reconcile remediation.resolved enum conflict",
+            "Share one attribution family across tool events, runtime artifacts, receipts, and usage records",
+            "Carry run/attempt/thread/node/artifact/provider/usage anchors plus execution/runtime identity fields",
+            "Let Contracts_V0 own cross-family attribution packet shape",
+            "Let storage-plan own persistence and projection of attempt/usage/receipt/artifact joins"
+          ],
+          "exact_stale_tokens_to_retire": [],
+          "split_reason": "Split target-003 by required_structural_headings; attribution packet ownership is the packet-shape companion to the shared governance/runtime envelope subsection.",
+          "rows": [
+            {
+              "coverage_id": "cov-014",
+              "path": "Plans/Contracts_V0.md",
+              "live_status": "still partial",
+              "required_action": "owner_create_or_rewrite",
+              "exact_items": [
+                "Define one shared record envelope with canonical lineage refs and artifact/evidence refs",
+                "Keep record objects distinct from artifacts and rendered summaries"
+              ],
+              "stale_tokens": []
+            },
+            {
+              "coverage_id": "cov-075",
+              "path": "Plans/Contracts_V0.md",
+              "live_status": "still missing",
+              "required_action": "owner_create_or_rewrite",
+              "exact_items": [
+                "Define shared historical vocabulary: historical, stale_historical, superseded, revoked, reopened, archived, removed",
+                "Keep family-local workflow states distinct and reconcile remediation.resolved enum conflict"
+              ],
+              "stale_tokens": []
+            },
+            {
+              "coverage_id": "cov-114",
+              "path": "Plans/Contracts_V0.md",
+              "live_status": "still partial",
+              "required_action": "owner_create_or_rewrite",
+              "exact_items": [
+                "Share one attribution family across tool events, runtime artifacts, receipts, and usage records",
+                "Carry run/attempt/thread/node/artifact/provider/usage anchors plus execution/runtime identity fields"
+              ],
+              "stale_tokens": []
+            },
+            {
+              "coverage_id": "cov-180",
+              "path": "Plans/Contracts_V0.md",
+              "live_status": "still partial",
+              "required_action": "owner_create_or_rewrite",
+              "exact_items": [
+                "Let Contracts_V0 own cross-family attribution packet shape",
+                "Let storage-plan own persistence and projection of attempt/usage/receipt/artifact joins"
+              ],
+              "stale_tokens": []
+            }
+          ]
+        },
+        {
+          "group_id": "contracts-account-identity",
+          "path": "Plans/Contracts_V0.md",
+          "mapped_owner_heading": "### Requested/effective account and execution identity",
+          "live_anchor": "FILE_START",
+          "action_family": "account_identity_and_execution",
+          "coverage_row_ids": [
+            "cov-012",
+            "cov-085",
+            "cov-088"
+          ],
+          "fidelity_gap_refs": [
+            "cov-012",
+            "cov-085",
+            "cov-088"
+          ],
+          "required_actions": [
+            "owner_create_or_rewrite"
+          ],
+          "exact_required_items": [
+            "Add requested_account_id alongside requested_account_policy",
+            "Add requested_account_binding and govern provider_account_id as subordinate provider-native metadata",
+            "Carry requested/effective account identity through runtime, bridged-provider, and permission envelopes",
+            "Model requested_account_id separately from requested_account_policy",
+            "Add requested_account_binding with none/preferred/required semantics and display Requested account / Requested binding / Effective account / Switch reason",
+            "Carry execution_role plus requested/effective operational identity in shared runtime identity",
+            "Project them into effective-resolution, attempt, usage, and inspector surfaces"
+          ],
+          "exact_stale_tokens_to_retire": [
+            "provider_account_id"
+          ],
+          "split_reason": "Split target-003 by required_structural_headings; execution_role and operational identity propagation belong in the identity subsection.",
+          "rows": [
+            {
+              "coverage_id": "cov-012",
+              "path": "Plans/Contracts_V0.md",
+              "live_status": "still partial",
+              "required_action": "owner_create_or_rewrite",
+              "exact_items": [
+                "Add requested_account_id alongside requested_account_policy",
+                "Add requested_account_binding and govern provider_account_id as subordinate provider-native metadata",
+                "Carry requested/effective account identity through runtime, bridged-provider, and permission envelopes"
+              ],
+              "stale_tokens": [
+                "provider_account_id"
+              ]
+            },
+            {
+              "coverage_id": "cov-085",
+              "path": "Plans/Contracts_V0.md",
+              "live_status": "still partial",
+              "required_action": "owner_create_or_rewrite",
+              "exact_items": [
+                "Model requested_account_id separately from requested_account_policy",
+                "Add requested_account_binding with none/preferred/required semantics and display Requested account / Requested binding / Effective account / Switch reason"
+              ],
+              "stale_tokens": []
+            },
+            {
+              "coverage_id": "cov-088",
+              "path": "Plans/Contracts_V0.md",
+              "live_status": "still partial",
+              "required_action": "owner_create_or_rewrite",
+              "exact_items": [
+                "Carry execution_role plus requested/effective operational identity in shared runtime identity",
+                "Project them into effective-resolution, attempt, usage, and inspector surfaces"
+              ],
+              "stale_tokens": []
+            }
+          ]
+        },
+        {
+          "group_id": "contracts-concern-contracts",
+          "path": "Plans/Contracts_V0.md",
+          "mapped_owner_heading": "### Concern record family, lifecycle, and deferred visibility",
+          "live_anchor": "FILE_START",
+          "action_family": "concern_contracts",
+          "coverage_row_ids": [
+            "cov-019",
+            "cov-023",
+            "cov-029",
+            "cov-033",
+            "cov-164",
+            "cov-173",
+            "cov-175",
+            "cov-193",
+            "cov-207",
+            "cov-210"
+          ],
+          "fidelity_gap_refs": [
+            "cov-019",
+            "cov-023",
+            "cov-029",
+            "cov-033",
+            "cov-164",
+            "cov-173",
+            "cov-175",
+            "cov-193",
+            "cov-207",
+            "cov-210"
+          ],
+          "required_actions": [
+            "owner_create_or_rewrite",
+            "consumer_propagation"
+          ],
+          "exact_required_items": [
+            "Concern is a first-class durable record distinct from review finding, annotation, blocked episode, and graph patch request",
+            "Define concern_id/project_id/run and scope refs, evidence/source refs, lineage refs, severity/category/status, and governance metadata",
+            "Use active/acknowledged/resolved/dismissed as concern lifecycle states",
+            "Use fixed/accepted_risk/superseded/merged/split/invalidated/obsoleted_by_patch/obsoleted_by_recovery as resolution_kind values",
+            "Define actor authority, confirmation, rationale, reversibility, and audit fields for concern actions",
+            "Keep acknowledged, dismissed, resolved, and structural lineage edits as distinct actions",
+            "Expose review_refs, corroboration_refs, graph_patch_refs, recovery_refs, blocked_episode_refs, and promotion_refs on concerns",
+            "Allow blocked episodes to reference concerns without replacing concern identity",
+            "Create one canonical concern-lifecycle owner section with explicit active/acknowledged/resolved/dismissed semantics",
+            "Carry resolution_kind including accepted_risk and a concern-action confirmation matrix into that owner section",
+            "Separate concern owner_kind/owner_ref from created_by_kind/created_by_ref and resolver authority",
+            "Allow ownership changes without changing concern identity",
+            "Distinguish concern_source_event_ref, concern_record, and concern_projection as separate structural layers",
+            "Use source/scope/category/lineage-aware heuristics when deciding whether repeated sightings update an existing concern or create a new one",
+            "Add `visibility_level`, `attention_level`, `chatworthy`, and `blocking_effect?` to the concern-family contract",
+            "Keep `blocking_effect` explicitly separate from `severity`",
+            "Define concern owner surfaces across `Runtime`, `Package Overseer`, `Seam Overseer`, `Corroboration`, `Graph Patch`, `Recovery`, `User`, and `External Resource`",
+            "Treat `concern resolver` as distinct from owner/source roles",
+            "Allow concern ownership reassignment without changing concern identity"
+          ],
+          "exact_stale_tokens_to_retire": [],
+          "split_reason": "Split target-003 by required_structural_headings; owner-surface taxonomy is concern-family ownership canon.",
+          "rows": [
+            {
+              "coverage_id": "cov-019",
+              "path": "Plans/Contracts_V0.md",
+              "live_status": "still missing",
+              "required_action": "owner_create_or_rewrite",
+              "exact_items": [
+                "Concern is a first-class durable record distinct from review finding, annotation, blocked episode, and graph patch request",
+                "Define concern_id/project_id/run and scope refs, evidence/source refs, lineage refs, severity/category/status, and governance metadata"
+              ],
+              "stale_tokens": []
+            },
+            {
+              "coverage_id": "cov-023",
+              "path": "Plans/Contracts_V0.md",
+              "live_status": "still partial",
+              "required_action": "owner_create_or_rewrite",
+              "exact_items": [
+                "Use active/acknowledged/resolved/dismissed as concern lifecycle states",
+                "Use fixed/accepted_risk/superseded/merged/split/invalidated/obsoleted_by_patch/obsoleted_by_recovery as resolution_kind values"
+              ],
+              "stale_tokens": []
+            },
+            {
+              "coverage_id": "cov-029",
+              "path": "Plans/Contracts_V0.md",
+              "live_status": "still missing",
+              "required_action": "owner_create_or_rewrite",
+              "exact_items": [
+                "Define actor authority, confirmation, rationale, reversibility, and audit fields for concern actions",
+                "Keep acknowledged, dismissed, resolved, and structural lineage edits as distinct actions"
+              ],
+              "stale_tokens": []
+            },
+            {
+              "coverage_id": "cov-033",
+              "path": "Plans/Contracts_V0.md",
+              "live_status": "still partial",
+              "required_action": "consumer_propagation",
+              "exact_items": [
+                "Expose review_refs, corroboration_refs, graph_patch_refs, recovery_refs, blocked_episode_refs, and promotion_refs on concerns",
+                "Allow blocked episodes to reference concerns without replacing concern identity"
+              ],
+              "stale_tokens": []
+            },
+            {
+              "coverage_id": "cov-164",
+              "path": "Plans/Contracts_V0.md",
+              "live_status": "still missing",
+              "required_action": "owner_create_or_rewrite",
+              "exact_items": [
+                "Create one canonical concern-lifecycle owner section with explicit active/acknowledged/resolved/dismissed semantics",
+                "Carry resolution_kind including accepted_risk and a concern-action confirmation matrix into that owner section"
+              ],
+              "stale_tokens": []
+            },
+            {
+              "coverage_id": "cov-173",
+              "path": "Plans/Contracts_V0.md",
+              "live_status": "still missing",
+              "required_action": "owner_create_or_rewrite",
+              "exact_items": [
+                "Separate concern owner_kind/owner_ref from created_by_kind/created_by_ref and resolver authority",
+                "Allow ownership changes without changing concern identity"
+              ],
+              "stale_tokens": []
+            },
+            {
+              "coverage_id": "cov-175",
+              "path": "Plans/Contracts_V0.md",
+              "live_status": "still missing",
+              "required_action": "owner_create_or_rewrite",
+              "exact_items": [
+                "Distinguish concern_source_event_ref, concern_record, and concern_projection as separate structural layers"
+              ],
+              "stale_tokens": []
+            },
+            {
+              "coverage_id": "cov-193",
+              "path": "Plans/Contracts_V0.md",
+              "live_status": "still missing",
+              "required_action": "consumer_propagation",
+              "exact_items": [
+                "Use source/scope/category/lineage-aware heuristics when deciding whether repeated sightings update an existing concern or create a new one"
+              ],
+              "stale_tokens": []
+            },
+            {
+              "coverage_id": "cov-207",
+              "path": "Plans/Contracts_V0.md",
+              "live_status": "still missing",
+              "required_action": "owner_create_or_rewrite",
+              "exact_items": [
+                "Add `visibility_level`, `attention_level`, `chatworthy`, and `blocking_effect?` to the concern-family contract",
+                "Keep `blocking_effect` explicitly separate from `severity`"
+              ],
+              "stale_tokens": []
+            },
+            {
+              "coverage_id": "cov-210",
+              "path": "Plans/Contracts_V0.md",
+              "live_status": "still missing",
+              "required_action": "owner_create_or_rewrite",
+              "exact_items": [
+                "Define concern owner surfaces across `Runtime`, `Package Overseer`, `Seam Overseer`, `Corroboration`, `Graph Patch`, `Recovery`, `User`, and `External Resource`",
+                "Treat `concern resolver` as distinct from owner/source roles",
+                "Allow concern ownership reassignment without changing concern identity"
+              ],
+              "stale_tokens": []
+            }
+          ]
+        },
+        {
+          "group_id": "contracts-route-open",
+          "path": "Plans/Contracts_V0.md",
+          "mapped_owner_heading": "### route_target, OpenSubject, and command normalization",
+          "live_anchor": "FILE_START",
+          "action_family": "route_open_and_promotions",
+          "coverage_row_ids": [
+            "cov-036",
+            "cov-070",
+            "cov-122",
+            "cov-140",
+            "cov-199"
+          ],
+          "fidelity_gap_refs": [
+            "cov-036",
+            "cov-070",
+            "cov-122",
+            "cov-140",
+            "cov-199"
+          ],
+          "required_actions": [
+            "owner_create_or_rewrite"
+          ],
+          "exact_required_items": [
+            "Define lane_to_package, package_to_seam_available, and seam_complete promotions",
+            "Attach exact gate/evidence expectations to each promotion class",
+            "Use one shared routing/deep-link payload for search, palette, widgets, recovery links, and cross-surface pivots",
+            "Treat resume_url as serialized transport of that route payload",
+            "Let Contracts_V0 own canonical route_target and OpenSubject contracts",
+            "Keep Crosswalk limited to primitive boundary ownership and FileManager OpenFile narrow and path-based",
+            "Carry selector precedence, reject rules, closed tab_id vocabulary, scoped resolver rules, route examples, ref-family split, and resume_url demotion into live route/open docs",
+            "Carry Primitive:RouteTarget/OpenSubject and wrapper/canonical normalization into crosswalk and wiring docs",
+            "Mark timestamp/run/thread fallback logic as compatibility-only inside route/open contracts",
+            "Keep ref-family split explicit when route/open normalization is transferred"
+          ],
+          "exact_stale_tokens_to_retire": [],
+          "split_reason": "Split target-003 by required_structural_headings; compatibility-only route/open fallback marking belongs in the route/open subsection.",
+          "rows": [
+            {
+              "coverage_id": "cov-036",
+              "path": "Plans/Contracts_V0.md",
+              "live_status": "still missing",
+              "required_action": "owner_create_or_rewrite",
+              "exact_items": [
+                "Define lane_to_package, package_to_seam_available, and seam_complete promotions",
+                "Attach exact gate/evidence expectations to each promotion class"
+              ],
+              "stale_tokens": []
+            },
+            {
+              "coverage_id": "cov-070",
+              "path": "Plans/Contracts_V0.md",
+              "live_status": "still partial",
+              "required_action": "owner_create_or_rewrite",
+              "exact_items": [
+                "Use one shared routing/deep-link payload for search, palette, widgets, recovery links, and cross-surface pivots",
+                "Treat resume_url as serialized transport of that route payload"
+              ],
+              "stale_tokens": []
+            },
+            {
+              "coverage_id": "cov-122",
+              "path": "Plans/Contracts_V0.md",
+              "live_status": "still partial",
+              "required_action": "owner_create_or_rewrite",
+              "exact_items": [
+                "Let Contracts_V0 own canonical route_target and OpenSubject contracts",
+                "Keep Crosswalk limited to primitive boundary ownership and FileManager OpenFile narrow and path-based"
+              ],
+              "stale_tokens": []
+            },
+            {
+              "coverage_id": "cov-140",
+              "path": "Plans/Contracts_V0.md",
+              "live_status": "still missing",
+              "required_action": "owner_create_or_rewrite",
+              "exact_items": [
+                "Carry selector precedence, reject rules, closed tab_id vocabulary, scoped resolver rules, route examples, ref-family split, and resume_url demotion into live route/open docs",
+                "Carry Primitive:RouteTarget/OpenSubject and wrapper/canonical normalization into crosswalk and wiring docs"
+              ],
+              "stale_tokens": []
+            },
+            {
+              "coverage_id": "cov-199",
+              "path": "Plans/Contracts_V0.md",
+              "live_status": "still missing",
+              "required_action": "owner_create_or_rewrite",
+              "exact_items": [
+                "Mark timestamp/run/thread fallback logic as compatibility-only inside route/open contracts",
+                "Keep ref-family split explicit when route/open normalization is transferred"
+              ],
+              "stale_tokens": []
+            }
+          ]
+        },
+        {
+          "group_id": "contracts-blocked-approval",
+          "path": "Plans/Contracts_V0.md",
+          "mapped_owner_heading": "### Blocked episode, approval scope, and compatibility fallback",
+          "live_anchor": "FILE_START",
+          "action_family": "blocked_episode_and_approval",
+          "coverage_row_ids": [
+            "cov-155",
+            "cov-186"
+          ],
+          "fidelity_gap_refs": [
+            "cov-155",
+            "cov-186"
+          ],
+          "required_actions": [
+            "owner_create_or_rewrite"
+          ],
+          "exact_required_items": [
+            "Transfer execution_role, requested_account_id, operational_identity, account-switch and pressure ownership, blocked_sequence minting, startup recovery handshake, and DAE jail/approval policy into owner and consumer docs",
+            "Carry usage switch-history and usage execution-role follow-through",
+            "Separate blocked-episode approval scope from session-wide policy scope",
+            "Persist durable approver identity fields on approval and rejection events"
+          ],
+          "exact_stale_tokens_to_retire": [],
+          "split_reason": "Split target-003 by required_structural_headings; approval-scope and approver-identity canon belong in the blocked-episode subsection.",
+          "rows": [
+            {
+              "coverage_id": "cov-155",
+              "path": "Plans/Contracts_V0.md",
+              "live_status": "still partial",
+              "required_action": "owner_create_or_rewrite",
+              "exact_items": [
+                "Transfer execution_role, requested_account_id, operational_identity, account-switch and pressure ownership, blocked_sequence minting, startup recovery handshake, and DAE jail/approval policy into owner and consumer docs",
+                "Carry usage switch-history and usage execution-role follow-through"
+              ],
+              "stale_tokens": []
+            },
+            {
+              "coverage_id": "cov-186",
+              "path": "Plans/Contracts_V0.md",
+              "live_status": "still partial",
+              "required_action": "owner_create_or_rewrite",
+              "exact_items": [
+                "Separate blocked-episode approval scope from session-wide policy scope",
+                "Persist durable approver identity fields on approval and rejection events"
+              ],
+              "stale_tokens": []
+            }
+          ]
+        },
+        {
+          "group_id": "storage-canonical-records",
+          "path": "Plans/storage-plan.md",
+          "mapped_owner_heading": "### Canonical records",
+          "live_anchor": "### 2.3 redb: schema, migrations, key patterns",
+          "action_family": "canonical_records",
+          "coverage_row_ids": [
+            "cov-002",
+            "cov-020",
+            "cov-074",
+            "cov-163"
+          ],
+          "fidelity_gap_refs": [
+            "cov-002",
+            "cov-020",
+            "cov-074",
+            "cov-163"
+          ],
+          "required_actions": [
+            "owner_create_or_rewrite"
+          ],
+          "exact_required_items": [
+            "Apply owner-doc corrections before consumer and mirror cleanup",
+            "Rerun fidelity audit only after owner and consumer corrections are in place",
+            "Concern is a first-class durable record distinct from review finding, annotation, blocked episode, and graph patch request",
+            "Define concern_id/project_id/run and scope refs, evidence/source refs, lineage refs, severity/category/status, and governance metadata",
+            "Define shared historical vocabulary: historical, stale_historical, superseded, revoked, reopened, archived, removed",
+            "Keep family-local workflow states distinct and reconcile remediation.resolved enum conflict",
+            "Create one canonical concern-lifecycle owner section with explicit active/acknowledged/resolved/dismissed semantics",
+            "Carry resolution_kind including accepted_risk and a concern-action confirmation matrix into that owner section"
+          ],
+          "exact_stale_tokens_to_retire": [],
+          "split_reason": "Split target-034 by required_structural_headings; concern lifecycle owner-section blockers belong in the canonical-records subsection.",
+          "rows": [
+            {
+              "coverage_id": "cov-002",
+              "path": "Plans/storage-plan.md",
+              "live_status": "still missing",
+              "required_action": "owner_create_or_rewrite",
+              "exact_items": [
+                "Apply owner-doc corrections before consumer and mirror cleanup",
+                "Rerun fidelity audit only after owner and consumer corrections are in place"
+              ],
+              "stale_tokens": []
+            },
+            {
+              "coverage_id": "cov-020",
+              "path": "Plans/storage-plan.md",
+              "live_status": "still partial",
+              "required_action": "owner_create_or_rewrite",
+              "exact_items": [
+                "Concern is a first-class durable record distinct from review finding, annotation, blocked episode, and graph patch request",
+                "Define concern_id/project_id/run and scope refs, evidence/source refs, lineage refs, severity/category/status, and governance metadata"
+              ],
+              "stale_tokens": []
+            },
+            {
+              "coverage_id": "cov-074",
+              "path": "Plans/storage-plan.md",
+              "live_status": "still partial",
+              "required_action": "owner_create_or_rewrite",
+              "exact_items": [
+                "Define shared historical vocabulary: historical, stale_historical, superseded, revoked, reopened, archived, removed",
+                "Keep family-local workflow states distinct and reconcile remediation.resolved enum conflict"
+              ],
+              "stale_tokens": []
+            },
+            {
+              "coverage_id": "cov-163",
+              "path": "Plans/storage-plan.md",
+              "live_status": "still partial",
+              "required_action": "owner_create_or_rewrite",
+              "exact_items": [
+                "Create one canonical concern-lifecycle owner section with explicit active/acknowledged/resolved/dismissed semantics",
+                "Carry resolution_kind including accepted_risk and a concern-action confirmation matrix into that owner section"
+              ],
+              "stale_tokens": []
+            }
+          ]
+        },
+        {
+          "group_id": "storage-projection-focus",
+          "path": "Plans/storage-plan.md",
+          "mapped_owner_heading": "### Projection freshness, health, and startup rehydration",
+          "live_anchor": "### 2.3 redb: schema, migrations, key patterns",
+          "action_family": "projection_focus_and_health",
+          "coverage_row_ids": [
+            "cov-039",
+            "cov-094"
+          ],
+          "fidelity_gap_refs": [
+            "cov-039",
+            "cov-094"
+          ],
+          "required_actions": [
+            "consumer_propagation",
+            "owner_create_or_rewrite"
+          ],
+          "exact_required_items": [
+            "Use active_run_id/focused_run_id with focus_mode = live | historical",
+            "Keep cross-tab deep links and search pivots coherent on the focused run",
+            "Split projection_freshness from projection_health",
+            "Reserve trust_tier for preview/browser semantics and tie action gating to both axes"
+          ],
+          "exact_stale_tokens_to_retire": [
+            "trust_tier"
+          ],
+          "split_reason": "Split target-034 by required_structural_headings; projection_freshness versus projection_health belongs directly in the projection/rehydration subsection.",
+          "rows": [
+            {
+              "coverage_id": "cov-039",
+              "path": "Plans/storage-plan.md",
+              "live_status": "still missing",
+              "required_action": "consumer_propagation",
+              "exact_items": [
+                "Use active_run_id/focused_run_id with focus_mode = live | historical",
+                "Keep cross-tab deep links and search pivots coherent on the focused run"
+              ],
+              "stale_tokens": []
+            },
+            {
+              "coverage_id": "cov-094",
+              "path": "Plans/storage-plan.md",
+              "live_status": "still partial",
+              "required_action": "owner_create_or_rewrite",
+              "exact_items": [
+                "Split projection_freshness from projection_health",
+                "Reserve trust_tier for preview/browser semantics and tie action gating to both axes"
+              ],
+              "stale_tokens": [
+                "trust_tier"
+              ]
+            }
+          ]
+        },
+        {
+          "group_id": "storage-runtime-attribution",
+          "path": "Plans/storage-plan.md",
+          "mapped_owner_heading": "### Account pressure, history, and runtime attribution",
+          "live_anchor": "### 2.3 redb: schema, migrations, key patterns",
+          "action_family": "runtime_context_and_attribution",
+          "coverage_row_ids": [
+            "cov-106",
+            "cov-181"
+          ],
+          "fidelity_gap_refs": [
+            "cov-106",
+            "cov-181"
+          ],
+          "required_actions": [
+            "owner_create_or_rewrite"
+          ],
+          "exact_required_items": [
+            "Introduce execution_unit_context as canonical runtime-facing context object",
+            "Demote TierContext to a derived or compatibility-only selection/decomposition helper",
+            "Anchor worker spawn, recovery, remediation, coordination, and UI inspection to execution_unit_context",
+            "Let Contracts_V0 own cross-family attribution packet shape",
+            "Let storage-plan own persistence and projection of attempt/usage/receipt/artifact joins"
+          ],
+          "exact_stale_tokens_to_retire": [
+            "TierContext",
+            "tier_id"
+          ],
+          "split_reason": "Split target-034 by required_structural_headings; storage ownership of attribution persistence/projection belongs in the runtime-attribution subsection.",
+          "rows": [
+            {
+              "coverage_id": "cov-106",
+              "path": "Plans/storage-plan.md",
+              "live_status": "still missing",
+              "required_action": "owner_create_or_rewrite",
+              "exact_items": [
+                "Introduce execution_unit_context as canonical runtime-facing context object",
+                "Demote TierContext to a derived or compatibility-only selection/decomposition helper",
+                "Anchor worker spawn, recovery, remediation, coordination, and UI inspection to execution_unit_context"
+              ],
+              "stale_tokens": [
+                "TierContext",
+                "tier_id"
+              ]
+            },
+            {
+              "coverage_id": "cov-181",
+              "path": "Plans/storage-plan.md",
+              "live_status": "still partial",
+              "required_action": "owner_create_or_rewrite",
+              "exact_items": [
+                "Let Contracts_V0 own cross-family attribution packet shape",
+                "Let storage-plan own persistence and projection of attempt/usage/receipt/artifact joins"
+              ],
+              "stale_tokens": []
+            }
+          ]
+        },
+        {
+          "group_id": "storage-artifact-route-linkage",
+          "path": "Plans/storage-plan.md",
+          "mapped_owner_heading": "### Artifacts index, export manifests, and route/open linkage",
+          "live_anchor": "### 2.3 redb: schema, migrations, key patterns",
+          "action_family": "artifact_route_linkage",
+          "coverage_row_ids": [
+            "cov-121",
+            "cov-125"
+          ],
+          "fidelity_gap_refs": [
+            "cov-121",
+            "cov-125"
+          ],
+          "required_actions": [
+            "owner_create_or_rewrite"
+          ],
+          "exact_required_items": [
+            "Make runtime artifacts attempt-native by default with artifact identity, routing refs, content refs, and provider/usage linkage",
+            "Resolve artifact open flows by artifact_id and then by linked envelope refs",
+            "Let Contracts_V0 own canonical route_target and OpenSubject contracts",
+            "Keep Crosswalk limited to primitive boundary ownership and FileManager OpenFile narrow and path-based"
+          ],
+          "exact_stale_tokens_to_retire": [],
+          "split_reason": "Split target-034 by required_structural_headings; storage-side route/open linkage belongs in the artifacts/route-linkage subsection.",
+          "rows": [
+            {
+              "coverage_id": "cov-121",
+              "path": "Plans/storage-plan.md",
+              "live_status": "still partial",
+              "required_action": "owner_create_or_rewrite",
+              "exact_items": [
+                "Make runtime artifacts attempt-native by default with artifact identity, routing refs, content refs, and provider/usage linkage",
+                "Resolve artifact open flows by artifact_id and then by linked envelope refs"
+              ],
+              "stale_tokens": []
+            },
+            {
+              "coverage_id": "cov-125",
+              "path": "Plans/storage-plan.md",
+              "live_status": "still partial",
+              "required_action": "owner_create_or_rewrite",
+              "exact_items": [
+                "Let Contracts_V0 own canonical route_target and OpenSubject contracts",
+                "Keep Crosswalk limited to primitive boundary ownership and FileManager OpenFile narrow and path-based"
+              ],
+              "stale_tokens": []
+            }
+          ]
+        },
+        {
+          "group_id": "storage-worktree-lane",
+          "path": "Plans/storage-plan.md",
+          "mapped_owner_heading": "### Worktree/lane lifecycle, handshake, and cleanup lineage",
+          "live_anchor": "### 2.3 redb: schema, migrations, key patterns",
+          "action_family": "worktree_lane_lifecycle",
+          "coverage_row_ids": [
+            "cov-043",
+            "cov-112",
+            "cov-205"
+          ],
+          "fidelity_gap_refs": [
+            "cov-043",
+            "cov-112",
+            "cov-205"
+          ],
+          "required_actions": [
+            "consumer_propagation",
+            "owner_create_or_rewrite"
+          ],
+          "exact_required_items": [
+            "Keep Orchestrator as lane-pool operational truth and Source Control as concrete repo/worktree operator",
+            "Show owning package/lane/run refs plus lifecycle and blocked/recovery state on worktree rows",
+            "Register worktree_record/worktree_projection and lane_record/lane_projection families",
+            "Use worktree_id as durable filesystem/git identity and lane_id as operational lineage identity",
+            "Keep package/work-package linkage and cleanup/archive lineage explicit in lane_record and lane_projection families"
+          ],
+          "exact_stale_tokens_to_retire": [],
+          "split_reason": "Split target-034 by required_structural_headings; cleanup/archive lineage fields belong in the worktree/lane lifecycle subsection.",
+          "rows": [
+            {
+              "coverage_id": "cov-043",
+              "path": "Plans/storage-plan.md",
+              "live_status": "still partial",
+              "required_action": "consumer_propagation",
+              "exact_items": [
+                "Keep Orchestrator as lane-pool operational truth and Source Control as concrete repo/worktree operator",
+                "Show owning package/lane/run refs plus lifecycle and blocked/recovery state on worktree rows"
+              ],
+              "stale_tokens": []
+            },
+            {
+              "coverage_id": "cov-112",
+              "path": "Plans/storage-plan.md",
+              "live_status": "still partial",
+              "required_action": "owner_create_or_rewrite",
+              "exact_items": [
+                "Register worktree_record/worktree_projection and lane_record/lane_projection families",
+                "Use worktree_id as durable filesystem/git identity and lane_id as operational lineage identity"
+              ],
+              "stale_tokens": []
+            },
+            {
+              "coverage_id": "cov-205",
+              "path": "Plans/storage-plan.md",
+              "live_status": "still partial",
+              "required_action": "owner_create_or_rewrite",
+              "exact_items": [
+                "Keep package/work-package linkage and cleanup/archive lineage explicit in lane_record and lane_projection families"
+              ],
+              "stale_tokens": []
+            }
+          ]
+        }
+      ],
+      "unresolved": []
+    },
+    {
+      "batch": "batch-5b",
+      "gap_rows_total": 22,
+      "worklist_groups": [
+        {
+          "group_id": "hitl-tier-era-compatibility-retirement",
+          "path": "Plans/human-in-the-loop.md",
+          "mapped_owner_heading": "### Tier-era compatibility retirement",
+          "live_anchor": "## Implementation Hooks (Planning Only)",
+          "action_family": "stale_retirement",
+          "coverage_row_ids": [
+            "cov-006"
+          ],
+          "fidelity_gap_refs": [
+            "cov-006"
+          ],
+          "required_actions": [
+            "stale_retirement"
+          ],
+          "exact_required_items": [
+            "Retire TierContext/tier_id/TierType/Tiers/Phase-Task-Subtask runtime canon",
+            "Retire allowed_actions[] / reason_code / recovery_options[] survivors from live blocked/HITL contracts"
+          ],
+          "exact_stale_tokens_to_retire": [
+            "TierContext",
+            "tier_id",
+            "TierType",
+            "Tiers",
+            "allowed_actions[]",
+            "reason_code",
+            "recovery_options[]",
+            "approve_continue"
+          ],
+          "live_statuses": [
+            "still partial"
+          ],
+          "rows": [
+            {
+              "coverage_id": "cov-006",
+              "path": "Plans/human-in-the-loop.md",
+              "live_status": "still partial",
+              "required_action": "stale_retirement",
+              "exact_items": [
+                "Retire TierContext/tier_id/TierType/Tiers/Phase-Task-Subtask runtime canon",
+                "Retire allowed_actions[] / reason_code / recovery_options[] survivors from live blocked/HITL contracts"
+              ],
+              "stale_tokens": [
+                "TierContext",
+                "tier_id",
+                "TierType",
+                "Tiers",
+                "allowed_actions[]",
+                "reason_code",
+                "recovery_options[]",
+                "approve_continue"
+              ]
+            }
+          ],
+          "split_reason": "reconciliation_plan requires a dedicated Tier-era compatibility retirement subsection, and cov-006 is the stale-token retirement row for this doc."
+        },
+        {
+          "group_id": "hitl-restart-recovery-blocked-episode-continuity",
+          "path": "Plans/human-in-the-loop.md",
+          "mapped_owner_heading": "### Restart recovery and blocked-episode continuity",
+          "live_anchor": "## Implementation Hooks (Planning Only)",
+          "action_family": "owner_create_or_rewrite",
+          "coverage_row_ids": [
+            "cov-161"
+          ],
+          "fidelity_gap_refs": [
+            "cov-161"
+          ],
+          "required_actions": [
+            "owner_create_or_rewrite"
+          ],
+          "exact_required_items": [
+            "Transfer execution_role, requested_account_id, operational_identity, account-switch and pressure ownership, blocked_sequence minting, startup recovery handshake, and DAE jail/approval policy into owner and consumer docs",
+            "Carry usage switch-history and usage execution-role follow-through"
+          ],
+          "exact_stale_tokens_to_retire": [],
+          "live_statuses": [
+            "still partial"
+          ],
+          "rows": [
+            {
+              "coverage_id": "cov-161",
+              "path": "Plans/human-in-the-loop.md",
+              "live_status": "still partial",
+              "required_action": "owner_create_or_rewrite",
+              "exact_items": [
+                "Transfer execution_role, requested_account_id, operational_identity, account-switch and pressure ownership, blocked_sequence minting, startup recovery handshake, and DAE jail/approval policy into owner and consumer docs",
+                "Carry usage switch-history and usage execution-role follow-through"
+              ],
+              "stale_tokens": []
+            }
+          ],
+          "split_reason": "cov-161 carries blocked-sequence, startup-recovery, approval-policy, and identity transfer work into the HITL restart-recovery subsection."
+        },
+        {
+          "group_id": "usage-export-taxonomy",
+          "path": "Plans/usage-feature.md",
+          "mapped_owner_heading": "#### export taxonomy",
+          "live_anchor": "## Gaps (Current State vs. Desired)",
+          "action_family": "owner_create_or_rewrite",
+          "coverage_row_ids": [
+            "cov-016"
+          ],
+          "fidelity_gap_refs": [
+            "cov-016"
+          ],
+          "required_actions": [
+            "owner_create_or_rewrite"
+          ],
+          "exact_required_items": [
+            "Define record export, bundle export, and view export as distinct export classes",
+            "Require export manifests with export_id/export_kind/project scope/included ids/trust-state disclosure"
+          ],
+          "exact_stale_tokens_to_retire": [],
+          "live_statuses": [
+            "still missing"
+          ],
+          "rows": [
+            {
+              "coverage_id": "cov-016",
+              "path": "Plans/usage-feature.md",
+              "live_status": "still missing",
+              "required_action": "owner_create_or_rewrite",
+              "exact_items": [
+                "Define record export, bundle export, and view export as distinct export classes",
+                "Require export manifests with export_id/export_kind/project scope/included ids/trust-state disclosure"
+              ],
+              "stale_tokens": []
+            }
+          ],
+          "split_reason": "cov-016 directly defines export classes and manifest fields, matching the export taxonomy local owner container."
+        },
+        {
+          "group_id": "usage-projection-health-aware-degrade-behavior",
+          "path": "Plans/usage-feature.md",
+          "mapped_owner_heading": "#### projection-health-aware degrade behavior",
+          "live_anchor": "## Gaps (Current State vs. Desired)",
+          "action_family": "consumer_propagation",
+          "coverage_row_ids": [
+            "cov-045"
+          ],
+          "fidelity_gap_refs": [
+            "cov-045"
+          ],
+          "required_actions": [
+            "consumer_propagation"
+          ],
+          "exact_required_items": [
+            "Use current/refreshing/stale/degraded/unavailable projection states",
+            "Gate sensitive actions on current or direct canonical revalidation and fall back to record-backed views when degraded"
+          ],
+          "exact_stale_tokens_to_retire": [],
+          "live_statuses": [
+            "still partial"
+          ],
+          "rows": [
+            {
+              "coverage_id": "cov-045",
+              "path": "Plans/usage-feature.md",
+              "live_status": "still partial",
+              "required_action": "consumer_propagation",
+              "exact_items": [
+                "Use current/refreshing/stale/degraded/unavailable projection states",
+                "Gate sensitive actions on current or direct canonical revalidation and fall back to record-backed views when degraded"
+              ],
+              "stale_tokens": []
+            }
+          ],
+          "split_reason": "cov-045 is specifically about projection states, sensitive-action gating, and degraded fallbacks."
+        },
+        {
+          "group_id": "usage-billing-identity-attribution-pricing-metadata",
+          "path": "Plans/usage-feature.md",
+          "mapped_owner_heading": "### Billing identity, attribution, and pricing metadata",
+          "live_anchor": "## Gaps (Current State vs. Desired)",
+          "action_family": "owner_create_or_rewrite",
+          "coverage_row_ids": [
+            "cov-089",
+            "cov-118"
+          ],
+          "fidelity_gap_refs": [
+            "cov-089",
+            "cov-118"
+          ],
+          "required_actions": [
+            "owner_create_or_rewrite"
+          ],
+          "exact_required_items": [
+            "Carry execution_role plus requested/effective operational identity in shared runtime identity",
+            "Project them into effective-resolution, attempt, usage, and inspector surfaces",
+            "Share one attribution family across tool events, runtime artifacts, receipts, and usage records",
+            "Carry run/attempt/thread/node/artifact/provider/usage anchors plus execution/runtime identity fields"
+          ],
+          "exact_stale_tokens_to_retire": [],
+          "live_statuses": [
+            "still missing",
+            "still partial"
+          ],
+          "rows": [
+            {
+              "coverage_id": "cov-089",
+              "path": "Plans/usage-feature.md",
+              "live_status": "still missing",
+              "required_action": "owner_create_or_rewrite",
+              "exact_items": [
+                "Carry execution_role plus requested/effective operational identity in shared runtime identity",
+                "Project them into effective-resolution, attempt, usage, and inspector surfaces"
+              ],
+              "stale_tokens": []
+            },
+            {
+              "coverage_id": "cov-118",
+              "path": "Plans/usage-feature.md",
+              "live_status": "still partial",
+              "required_action": "owner_create_or_rewrite",
+              "exact_items": [
+                "Share one attribution family across tool events, runtime artifacts, receipts, and usage records",
+                "Carry run/attempt/thread/node/artifact/provider/usage anchors plus execution/runtime identity fields"
+              ],
+              "stale_tokens": []
+            }
+          ],
+          "split_reason": "cov-089 and cov-118 both extend shared runtime identity and attribution metadata across usage-facing surfaces."
+        },
+        {
+          "group_id": "usage-account-history",
+          "path": "Plans/usage-feature.md",
+          "mapped_owner_heading": "#### account history",
+          "live_anchor": "## Gaps (Current State vs. Desired)",
+          "action_family": "owner_create_or_rewrite",
+          "coverage_row_ids": [
+            "cov-092",
+            "cov-162"
+          ],
+          "fidelity_gap_refs": [
+            "cov-092",
+            "cov-162"
+          ],
+          "required_actions": [
+            "owner_create_or_rewrite"
+          ],
+          "exact_required_items": [
+            "Add append-only account_pressure_episode and account_switch_event families",
+            "Let Usage, History, Ledger, and Orchestrator consume the same durable event family",
+            "Transfer execution_role, requested_account_id, operational_identity, account-switch and pressure ownership, blocked_sequence minting, startup recovery handshake, and DAE jail/approval policy into owner and consumer docs",
+            "Carry usage switch-history and usage execution-role follow-through"
+          ],
+          "exact_stale_tokens_to_retire": [],
+          "live_statuses": [
+            "still missing"
+          ],
+          "rows": [
+            {
+              "coverage_id": "cov-092",
+              "path": "Plans/usage-feature.md",
+              "live_status": "still missing",
+              "required_action": "owner_create_or_rewrite",
+              "exact_items": [
+                "Add append-only account_pressure_episode and account_switch_event families",
+                "Let Usage, History, Ledger, and Orchestrator consume the same durable event family"
+              ],
+              "stale_tokens": []
+            },
+            {
+              "coverage_id": "cov-162",
+              "path": "Plans/usage-feature.md",
+              "live_status": "still missing",
+              "required_action": "owner_create_or_rewrite",
+              "exact_items": [
+                "Transfer execution_role, requested_account_id, operational_identity, account-switch and pressure ownership, blocked_sequence minting, startup recovery handshake, and DAE jail/approval policy into owner and consumer docs",
+                "Carry usage switch-history and usage execution-role follow-through"
+              ],
+              "stale_tokens": []
+            }
+          ],
+          "split_reason": "cov-092 and cov-162 both require durable account-switch and account-pressure history with usage follow-through."
+        },
+        {
+          "group_id": "usage-artifact-drill-through-section",
+          "path": "Plans/usage-feature.md",
+          "mapped_owner_heading": "#### artifact drill-through section",
+          "live_anchor": "## Gaps (Current State vs. Desired)",
+          "action_family": "owner_create_or_rewrite",
+          "coverage_row_ids": [
+            "cov-184",
+            "cov-203"
+          ],
+          "fidelity_gap_refs": [
+            "cov-184",
+            "cov-203"
+          ],
+          "required_actions": [
+            "owner_create_or_rewrite"
+          ],
+          "exact_required_items": [
+            "Use attempt_id as local anchor, provider_attempt_ref as provider/runtime bridge, usage_event_ref as usage bridge, and receipt refs as external side-effect lineage bridge",
+            "None of those bridge fields replace the primary local key",
+            "Prefer usage_event_ref rather than timestamp heuristics when routing cost-bearing artifacts to Usage and Ledger",
+            "Require runtime artifacts summarizing external operations to carry receipt linkage"
+          ],
+          "exact_stale_tokens_to_retire": [],
+          "live_statuses": [
+            "still partial"
+          ],
+          "rows": [
+            {
+              "coverage_id": "cov-184",
+              "path": "Plans/usage-feature.md",
+              "live_status": "still partial",
+              "required_action": "owner_create_or_rewrite",
+              "exact_items": [
+                "Use attempt_id as local anchor, provider_attempt_ref as provider/runtime bridge, usage_event_ref as usage bridge, and receipt refs as external side-effect lineage bridge",
+                "None of those bridge fields replace the primary local key"
+              ],
+              "stale_tokens": []
+            },
+            {
+              "coverage_id": "cov-203",
+              "path": "Plans/usage-feature.md",
+              "live_status": "still partial",
+              "required_action": "owner_create_or_rewrite",
+              "exact_items": [
+                "Prefer usage_event_ref rather than timestamp heuristics when routing cost-bearing artifacts to Usage and Ledger",
+                "Require runtime artifacts summarizing external operations to carry receipt linkage"
+              ],
+              "stale_tokens": []
+            }
+          ],
+          "split_reason": "cov-184 and cov-203 both refine artifact/receipt lineage and routing fields used for usage and ledger drill-through."
+        },
+        {
+          "group_id": "usage-help-surfaces",
+          "path": "Plans/usage-feature.md",
+          "mapped_owner_heading": "#### help surfaces",
+          "live_anchor": "## Gaps (Current State vs. Desired)",
+          "action_family": "consumer_propagation",
+          "coverage_row_ids": [
+            "cov-069"
+          ],
+          "fidelity_gap_refs": [
+            "cov-069"
+          ],
+          "required_actions": [
+            "consumer_propagation"
+          ],
+          "exact_required_items": [
+            "Route notifications using severity, execution impact, blocked owner, persistence, and projection trust",
+            "Allow quiet windows for advisory warnings but not for canonical blocked episodes"
+          ],
+          "exact_stale_tokens_to_retire": [],
+          "live_statuses": [
+            "still missing"
+          ],
+          "rows": [
+            {
+              "coverage_id": "cov-069",
+              "path": "Plans/usage-feature.md",
+              "live_status": "still missing",
+              "required_action": "consumer_propagation",
+              "exact_items": [
+                "Route notifications using severity, execution impact, blocked owner, persistence, and projection trust",
+                "Allow quiet windows for advisory warnings but not for canonical blocked episodes"
+              ],
+              "stale_tokens": []
+            }
+          ],
+          "split_reason": "cov-069 is the notification-routing and quiet-window policy row, which fits the help/notification surfaces subsection."
+        },
+        {
+          "group_id": "usage-blocked-state-and-escalation-surfaces",
+          "path": "Plans/usage-feature.md",
+          "mapped_owner_heading": "### Blocked-state and escalation surfaces",
+          "live_anchor": "## Gaps (Current State vs. Desired)",
+          "action_family": "mixed_owner_consumer",
+          "coverage_row_ids": [
+            "cov-053",
+            "cov-146",
+            "cov-198"
+          ],
+          "fidelity_gap_refs": [
+            "cov-053",
+            "cov-146",
+            "cov-198"
+          ],
+          "required_actions": [
+            "owner_create_or_rewrite",
+            "consumer_propagation"
+          ],
+          "exact_required_items": [
+            "Define one escalation ladder shared across Orchestrator, Dashboard, thread badges, and notifications",
+            "Keep attention_required distinct from blocked and resurface persistent blockers on meaningful change/persistence",
+            "Expand blocked_notice beyond blocked_family and allowed_action_ids[]",
+            "Carry escalation_level, action_available ownership, and usage observability through blocked surfaces",
+            "Define an explicit blocked-owner 8-kind taxonomy and 5-level escalation ladder with surface mapping"
+          ],
+          "exact_stale_tokens_to_retire": [
+            "allowed_action_ids[]"
+          ],
+          "live_statuses": [
+            "still partial"
+          ],
+          "rows": [
+            {
+              "coverage_id": "cov-053",
+              "path": "Plans/usage-feature.md",
+              "live_status": "still partial",
+              "required_action": "owner_create_or_rewrite",
+              "exact_items": [
+                "Define one escalation ladder shared across Orchestrator, Dashboard, thread badges, and notifications",
+                "Keep attention_required distinct from blocked and resurface persistent blockers on meaningful change/persistence"
+              ],
+              "stale_tokens": []
+            },
+            {
+              "coverage_id": "cov-146",
+              "path": "Plans/usage-feature.md",
+              "live_status": "still partial",
+              "required_action": "consumer_propagation",
+              "exact_items": [
+                "Expand blocked_notice beyond blocked_family and allowed_action_ids[]",
+                "Carry escalation_level, action_available ownership, and usage observability through blocked surfaces"
+              ],
+              "stale_tokens": [
+                "allowed_action_ids[]"
+              ]
+            },
+            {
+              "coverage_id": "cov-198",
+              "path": "Plans/usage-feature.md",
+              "live_status": "still partial",
+              "required_action": "owner_create_or_rewrite",
+              "exact_items": [
+                "Define an explicit blocked-owner 8-kind taxonomy and 5-level escalation ladder with surface mapping"
+              ],
+              "stale_tokens": []
+            }
+          ],
+          "split_reason": "cov-053, cov-146, and cov-198 all expand the blocked/escalation ladder, taxonomy, and blocked_notice observability surfaces."
+        },
+        {
+          "group_id": "executor-tier-era-compatibility-retirement",
+          "path": "Plans/Executor_Protocol.md",
+          "mapped_owner_heading": "### Tier-era compatibility retirement",
+          "live_anchor": "## Unified Runtime Scheduler and Attempt Lifecycle Reconciliation Addendum (2026-03-09)",
+          "action_family": "owner_create_or_rewrite",
+          "coverage_row_ids": [
+            "cov-105"
+          ],
+          "fidelity_gap_refs": [
+            "cov-105"
+          ],
+          "required_actions": [
+            "owner_create_or_rewrite"
+          ],
+          "exact_required_items": [
+            "Introduce execution_unit_context as canonical runtime-facing context object",
+            "Demote TierContext to a derived or compatibility-only selection/decomposition helper",
+            "Anchor worker spawn, recovery, remediation, coordination, and UI inspection to execution_unit_context"
+          ],
+          "exact_stale_tokens_to_retire": [
+            "TierContext",
+            "tier_id"
+          ],
+          "live_statuses": [
+            "still partial"
+          ],
+          "rows": [
+            {
+              "coverage_id": "cov-105",
+              "path": "Plans/Executor_Protocol.md",
+              "live_status": "still partial",
+              "required_action": "owner_create_or_rewrite",
+              "exact_items": [
+                "Introduce execution_unit_context as canonical runtime-facing context object",
+                "Demote TierContext to a derived or compatibility-only selection/decomposition helper",
+                "Anchor worker spawn, recovery, remediation, coordination, and UI inspection to execution_unit_context"
+              ],
+              "stale_tokens": [
+                "TierContext",
+                "tier_id"
+              ]
+            }
+          ],
+          "split_reason": "cov-105 introduces execution_unit_context while demoting TierContext/tier_id, so it belongs in the tier-era retirement subsection."
+        },
+        {
+          "group_id": "executor-blocked-episode-identity-and-restart-recovery",
+          "path": "Plans/Executor_Protocol.md",
+          "mapped_owner_heading": "### Blocked episode identity and restart recovery",
+          "live_anchor": "## Unified Runtime Scheduler and Attempt Lifecycle Reconciliation Addendum (2026-03-09)",
+          "action_family": "owner_create_or_rewrite",
+          "coverage_row_ids": [
+            "cov-107",
+            "cov-160",
+            "cov-187"
+          ],
+          "fidelity_gap_refs": [
+            "cov-107",
+            "cov-160",
+            "cov-187"
+          ],
+          "required_actions": [
+            "owner_create_or_rewrite"
+          ],
+          "exact_required_items": [
+            "Make blocked_sequence canonical per run_id/node_id blocked episode",
+            "Restore unresolved blocked episodes on restart without reminting them",
+            "Keep request_id as subordinate compatibility handle only",
+            "Transfer execution_role, requested_account_id, operational_identity, account-switch and pressure ownership, blocked_sequence minting, startup recovery handshake, and DAE jail/approval policy into owner and consumer docs",
+            "Carry usage switch-history and usage execution-role follow-through",
+            "Separate blocked-episode approval scope from session-wide policy scope",
+            "Persist durable approver identity fields on approval and rejection events"
+          ],
+          "exact_stale_tokens_to_retire": [],
+          "live_statuses": [
+            "still partial",
+            "still missing"
+          ],
+          "rows": [
+            {
+              "coverage_id": "cov-107",
+              "path": "Plans/Executor_Protocol.md",
+              "live_status": "still partial",
+              "required_action": "owner_create_or_rewrite",
+              "exact_items": [
+                "Make blocked_sequence canonical per run_id/node_id blocked episode",
+                "Restore unresolved blocked episodes on restart without reminting them",
+                "Keep request_id as subordinate compatibility handle only"
+              ],
+              "stale_tokens": []
+            },
+            {
+              "coverage_id": "cov-160",
+              "path": "Plans/Executor_Protocol.md",
+              "live_status": "still partial",
+              "required_action": "owner_create_or_rewrite",
+              "exact_items": [
+                "Transfer execution_role, requested_account_id, operational_identity, account-switch and pressure ownership, blocked_sequence minting, startup recovery handshake, and DAE jail/approval policy into owner and consumer docs",
+                "Carry usage switch-history and usage execution-role follow-through"
+              ],
+              "stale_tokens": []
+            },
+            {
+              "coverage_id": "cov-187",
+              "path": "Plans/Executor_Protocol.md",
+              "live_status": "still missing",
+              "required_action": "owner_create_or_rewrite",
+              "exact_items": [
+                "Separate blocked-episode approval scope from session-wide policy scope",
+                "Persist durable approver identity fields on approval and rejection events"
+              ],
+              "stale_tokens": []
+            }
+          ],
+          "split_reason": "cov-107, cov-160, and cov-187 all extend blocked-episode continuity, restart recovery, approval scope separation, and durable approver identity in one subsection."
+        },
+        {
+          "group_id": "executor-provider-model-precedence-and-parallel-worktree-assignment",
+          "path": "Plans/Executor_Protocol.md",
+          "mapped_owner_heading": "### Provider/model precedence and parallel worktree assignment",
+          "live_anchor": "## Unified Runtime Scheduler and Attempt Lifecycle Reconciliation Addendum (2026-03-09)",
+          "action_family": "owner_create_or_rewrite",
+          "coverage_row_ids": [
+            "cov-168"
+          ],
+          "fidelity_gap_refs": [
+            "cov-168"
+          ],
+          "required_actions": [
+            "owner_create_or_rewrite"
+          ],
+          "exact_required_items": [
+            "Define one owner section covering provider/model precedence across run, seam, package, node, overseer, and delegated-subagent levels",
+            "Tie that section to parallel-node worktree assignment and ownership transitions"
+          ],
+          "exact_stale_tokens_to_retire": [],
+          "live_statuses": [
+            "still partial"
+          ],
+          "rows": [
+            {
+              "coverage_id": "cov-168",
+              "path": "Plans/Executor_Protocol.md",
+              "live_status": "still partial",
+              "required_action": "owner_create_or_rewrite",
+              "exact_items": [
+                "Define one owner section covering provider/model precedence across run, seam, package, node, overseer, and delegated-subagent levels",
+                "Tie that section to parallel-node worktree assignment and ownership transitions"
+              ],
+              "stale_tokens": []
+            }
+          ],
+          "split_reason": "cov-168 is explicitly the precedence/worktree ownership row named by the required structural headings."
+        },
+        {
+          "group_id": "wiring-route-aware-navigation-and-open-contract-rows",
+          "path": "Plans/Wiring_Matrix.md",
+          "mapped_owner_heading": "### Route-aware navigation and open-contract rows",
+          "live_anchor": "## Route-aware wiring reconciliation",
+          "action_family": "owner_create_or_rewrite",
+          "coverage_row_ids": [
+            "cov-143"
+          ],
+          "fidelity_gap_refs": [
+            "cov-143"
+          ],
+          "required_actions": [
+            "owner_create_or_rewrite"
+          ],
+          "exact_required_items": [
+            "Carry selector precedence, reject rules, closed tab_id vocabulary, scoped resolver rules, route examples, ref-family split, and resume_url demotion into live route/open docs",
+            "Carry Primitive:RouteTarget/OpenSubject and wrapper/canonical normalization into crosswalk and wiring docs"
+          ],
+          "exact_stale_tokens_to_retire": [],
+          "live_statuses": [
+            "still missing"
+          ],
+          "rows": [
+            {
+              "coverage_id": "cov-143",
+              "path": "Plans/Wiring_Matrix.md",
+              "live_status": "still missing",
+              "required_action": "owner_create_or_rewrite",
+              "exact_items": [
+                "Carry selector precedence, reject rules, closed tab_id vocabulary, scoped resolver rules, route examples, ref-family split, and resume_url demotion into live route/open docs",
+                "Carry Primitive:RouteTarget/OpenSubject and wrapper/canonical normalization into crosswalk and wiring docs"
+              ],
+              "stale_tokens": []
+            }
+          ],
+          "split_reason": "cov-143 is the route/open contract refinement owner row for selector precedence, normalization, and ref-family rules."
+        },
+        {
+          "group_id": "wiring-verification-evidence-hooks",
+          "path": "Plans/Wiring_Matrix.md",
+          "mapped_owner_heading": "### Verification evidence hooks",
+          "live_anchor": "## Route-aware wiring reconciliation",
+          "action_family": "consumer_propagation",
+          "coverage_row_ids": [
+            "cov-131"
+          ],
+          "fidelity_gap_refs": [
+            "cov-131"
+          ],
+          "required_actions": [
+            "consumer_propagation"
+          ],
+          "exact_required_items": [
+            "Expand Wiring Matrix and GATE-010 to verify route args, wrapper normalization, stale revalidation, admissibility, and correlation passthrough",
+            "Add structured gate-specific evidence details for route-aware verification"
+          ],
+          "exact_stale_tokens_to_retire": [],
+          "live_statuses": [
+            "still partial"
+          ],
+          "rows": [
+            {
+              "coverage_id": "cov-131",
+              "path": "Plans/Wiring_Matrix.md",
+              "live_status": "still partial",
+              "required_action": "consumer_propagation",
+              "exact_items": [
+                "Expand Wiring Matrix and GATE-010 to verify route args, wrapper normalization, stale revalidation, admissibility, and correlation passthrough",
+                "Add structured gate-specific evidence details for route-aware verification"
+              ],
+              "stale_tokens": []
+            }
+          ],
+          "split_reason": "cov-131 expands gate verification coverage and structured route-aware evidence requirements."
+        },
+        {
+          "group_id": "wiring-compatibility-only-fallback-marking",
+          "path": "Plans/Wiring_Matrix.md",
+          "mapped_owner_heading": "### Compatibility-only fallback marking",
+          "live_anchor": "## Route-aware wiring reconciliation",
+          "action_family": "owner_create_or_rewrite",
+          "coverage_row_ids": [
+            "cov-201"
+          ],
+          "fidelity_gap_refs": [
+            "cov-201"
+          ],
+          "required_actions": [
+            "owner_create_or_rewrite"
+          ],
+          "exact_required_items": [
+            "Mark timestamp/run/thread fallback logic as compatibility-only inside route/open contracts",
+            "Keep ref-family split explicit when route/open normalization is transferred"
+          ],
+          "exact_stale_tokens_to_retire": [],
+          "live_statuses": [
+            "still missing"
+          ],
+          "rows": [
+            {
+              "coverage_id": "cov-201",
+              "path": "Plans/Wiring_Matrix.md",
+              "live_status": "still missing",
+              "required_action": "owner_create_or_rewrite",
+              "exact_items": [
+                "Mark timestamp/run/thread fallback logic as compatibility-only inside route/open contracts",
+                "Keep ref-family split explicit when route/open normalization is transferred"
+              ],
+              "stale_tokens": []
+            }
+          ],
+          "split_reason": "cov-201 explicitly marks route/open timestamp-run-thread fallback logic as compatibility-only."
+        }
+      ],
+      "unresolved": []
+    },
+    {
+      "batch": "batch-5c",
+      "gap_rows_total": 2,
+      "worklist_groups": [
+        {
+          "group_id": "target-025",
+          "path": "Plans/Widget_System.md",
+          "mapped_owner_heading": "## 4. Orchestrator Progress widget scope and catalog linkage",
+          "live_anchor": "## 4. Orchestrator Progress widget scope and catalog linkage",
+          "action_family": "rewrite_owner_section",
+          "coverage_row_ids": [
+            "cov-048"
+          ],
+          "fidelity_gap_refs": [
+            "cov-048"
+          ],
+          "required_actions": [
+            "consumer_propagation"
+          ],
+          "exact_required_items": [
+            "Restrict widget-composed Orchestrator surface to Progress",
+            "Persist orchestrator:progress layout separately from Dashboard and Usage"
+          ],
+          "exact_stale_tokens_to_retire": [],
+          "split_reason": "Split from the other Widget_System batch row because this repair is the hostability/layout boundary. Original gap row: cov-048 at Plans/Widget_System.md with live_status 'still partial'."
+        },
+        {
+          "group_id": "target-036",
+          "path": "Plans/FinalGUISpec.md",
+          "mapped_owner_heading": "### C.2 Default Dashboard Widget Layout",
+          "live_anchor": "### C.2 Default Dashboard Widget Layout",
+          "action_family": "extend_consumer_section",
+          "coverage_row_ids": [
+            "cov-149"
+          ],
+          "fidelity_gap_refs": [
+            "cov-149"
+          ],
+          "required_actions": [
+            "consumer_propagation"
+          ],
+          "exact_required_items": [
+            "Transfer the 13-widget Progress catalog with default drill targets",
+            "Transfer state/action labels, alert taxonomy, event taxonomy, and condition-aging policy"
+          ],
+          "exact_stale_tokens_to_retire": [],
+          "split_reason": "Split from the other Widget_System batch row because this repair is the catalog/taxonomy boundary, and reconciliation_plan.json maps cov-149 to FinalGUISpec target-036. Original gap row: cov-149 at Plans/Widget_System.md with live_status 'still missing'."
+        }
+      ],
+      "unresolved": []
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "schema_id": "pm.reconciliation_plan_pass.v1",
+  "work_id": "w-20260312-203855",
+  "pass": "pass-001",
+  "status": "clean",
+  "verified_scope": [
+    "batch-3-models-provider-precedence",
+    "target-034::storage-fidelity-recovery-order",
+    "target-034::storage-concern-records",
+    "target-034::storage-historical-semantics"
+  ],
+  "material_findings": [],
+  "preserved_coverage_row_ids": [
+    "cov-002",
+    "cov-020",
+    "cov-074",
+    "cov-152",
+    "cov-163",
+    "cov-167"
+  ],
+  "acceptance_check_counts": {
+    "batch-3-models-provider-precedence": 6,
+    "target-034::storage-fidelity-recovery-order": 2,
+    "target-034::storage-concern-records": 4,
+    "target-034::storage-historical-semantics": 2
+  },
+  "summary": "Repaired reconciliation scope verified cleanly: Models_System owner section now uses a unique predecessor anchor, and the three storage-plan split targets now use distinct unique local anchors without same-anchor conflicts."
+}

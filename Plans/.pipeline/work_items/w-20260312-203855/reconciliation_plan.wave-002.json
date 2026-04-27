@@ -1,0 +1,38 @@
+{
+  "schema_id": "pm.reconciliation_plan_wave.v1",
+  "work_id": "w-20260312-203855",
+  "phase": "target-repair",
+  "status": "complete",
+  "targets_repaired": [
+    "batch-3-models-provider-precedence",
+    "target-034::storage-fidelity-recovery-order",
+    "target-034::storage-concern-records",
+    "target-034::storage-historical-semantics"
+  ],
+  "repairs": [
+    {
+      "target_id": "batch-3-models-provider-precedence",
+      "change": "live_anchor retargeted from FILE_START to `## 0. Scope and SSOT status` to uniquely bind the first provider/model precedence owner section"
+    },
+    {
+      "target_id": "target-034::storage-concern-records",
+      "change": "live_anchor retargeted to unique local heading `#### Canonical records`"
+    },
+    {
+      "target_id": "target-034::storage-historical-semantics",
+      "change": "live_anchor retargeted to unique local heading `#### Required redb keys`"
+    },
+    {
+      "target_id": "target-034::storage-fidelity-recovery-order",
+      "change": "live_anchor retargeted to unique local heading `#### Naming and migration rules`"
+    }
+  ],
+  "preserved_coverage_row_ids": [
+    "cov-002",
+    "cov-020",
+    "cov-074",
+    "cov-152",
+    "cov-163",
+    "cov-167"
+  ]
+}

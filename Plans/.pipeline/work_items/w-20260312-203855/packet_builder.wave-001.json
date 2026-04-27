@@ -1,0 +1,19 @@
+{
+  "schema_id": "pm.packet_builder_wave.v1",
+  "work_id": "w-20260312-203855",
+  "source_run_id": "r-20260312-203855-run-024",
+  "new_run_id": "r-20260312-203855-run-025",
+  "phase": "worklist",
+  "status": "complete",
+  "source_reconciliation_plan": "Plans/.pipeline/work_items/w-20260312-203855/reconciliation_plan.json",
+  "summary": {
+    "targets_total": 71,
+    "docs_touched": 26,
+    "repaired_targets_in_scope": [
+      "batch-3-models-provider-precedence",
+      "target-034::storage-fidelity-recovery-order",
+      "target-034::storage-concern-records",
+      "target-034::storage-historical-semantics"
+    ]
+  }
+}
