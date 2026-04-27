@@ -1,0 +1,15 @@
+{
+  "schema_id": "pm.packet_builder_pass.v1",
+  "work_id": "w-20260312-203855",
+  "run_id": "r-20260312-203855-run-025",
+  "pass": "pass-001",
+  "status": "blocked",
+  "material_findings": [
+    {
+      "target_id": "batch-3-models-provider-precedence",
+      "issue": "Repaired reconciliation target is not safely expressible in the current packet mutation schema.",
+      "fix": "Return to Reconciliation Planner with a target shape that Packet Builder can encode without ambiguous owner-heading replacement or duplicate insertion."
+    }
+  ],
+  "summary": "Blocked on one unrecoverable target-shape defect after repaired-scope packetization review. Storage split-target repairs are packetizable; Models_System provider/model precedence is not."
+}

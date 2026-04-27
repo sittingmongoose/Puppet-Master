@@ -1,0 +1,49 @@
+{
+  "schema_id": "pm.fidelity_recovery_pass.v1",
+  "work_id": "w-20260312-203855",
+  "run_id": "r-20260312-203855-run-023",
+  "pass": "pass-001",
+  "status": "material_changes_found",
+  "bundle_reviews": [
+    {
+      "bundle": "A",
+      "material_findings": [
+        {
+          "target_id": "target-036",
+          "issue": "cov-149 targeted the wrong doc path relative to transfer_coverage path Plans/Widget_System.md."
+        },
+        {
+          "target_id": "batch-3-finalgui-concern-escalation-help",
+          "issue": "cov-209 lacked the exact heading anchor `### Recommended minimum concern record shape` in required_structural_headings."
+        }
+      ]
+    },
+    {
+      "bundle": "B",
+      "material_findings": [
+        {
+          "target_id": "wave-003-contracts-v0",
+          "issue": "False-positive reviewer expansion to non-gap rows; not carried forward as a material merge item."
+        },
+        {
+          "target_id": "wave-003-storage-plan",
+          "issue": "False-positive reviewer expansion to non-gap rows; not carried forward as a material merge item."
+        }
+      ]
+    },
+    {
+      "bundle": "C",
+      "material_findings": []
+    },
+    {
+      "bundle": "D",
+      "material_findings": []
+    }
+  ],
+  "material_findings_merged": [
+    "cov-149 path correction prepared",
+    "cov-209 heading anchor added"
+  ],
+  "noise_findings": [],
+  "summary": "Initial verification surfaced two real target-shape issues and one false-positive reviewer expansion to already-present rows."
+}

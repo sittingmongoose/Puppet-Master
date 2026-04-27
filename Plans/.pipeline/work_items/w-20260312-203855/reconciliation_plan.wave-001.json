@@ -1,0 +1,25 @@
+{
+  "schema_id": "pm.reconciliation_plan_wave.v1",
+  "work_id": "w-20260312-203855",
+  "phase": "worklist-repair",
+  "status": "complete",
+  "source_priority": "fidelity_recovery_plan",
+  "targets_in_scope": [
+    "batch-3-models-provider-precedence",
+    "target-034::storage-fidelity-recovery-order",
+    "target-034::storage-concern-records",
+    "target-034::storage-historical-semantics"
+  ],
+  "scribe_blockers": [
+    "Plans/Models_System.md duplicated owner heading for provider/model precedence",
+    "Plans/storage-plan.md same-anchor insert collision at `### 2.3 redb: schema, migrations, key patterns`"
+  ],
+  "coverage_row_ids": [
+    "cov-002",
+    "cov-020",
+    "cov-074",
+    "cov-152",
+    "cov-163",
+    "cov-167"
+  ]
+}

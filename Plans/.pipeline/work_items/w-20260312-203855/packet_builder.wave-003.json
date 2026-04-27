@@ -1,0 +1,16 @@
+{
+  "schema_id": "pm.packet_builder_wave.v1",
+  "work_id": "w-20260312-203855",
+  "source_run_id": "r-20260312-203855-run-023",
+  "new_run_id": "r-20260312-203855-run-024",
+  "phase": "final-merge",
+  "status": "complete",
+  "packet_targets_total": 71,
+  "doc_intents_total": 26,
+  "material_fixes_merged": [
+    "storage-plan split target anchors moved from self-anchored insert_after to the live 2.3 heading anchor",
+    "required parent structural headings injected for split Contracts_V0, Tools, and execution/worktree targets",
+    "target-025 retargeted to a heading-based in-place owner-section rewrite",
+    "batch-3-models-provider-precedence retargeted from file_start to the explicit owner heading"
+  ]
+}

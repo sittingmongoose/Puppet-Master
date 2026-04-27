@@ -1,0 +1,22 @@
+pm.packet_shape_report.v1
+work_id: w-20260312-203855
+run_id: r-20260312-203855-run-024
+status: pass
+packet_written: yes
+targets_total: 71
+doc_intents_total: 26
+docs_touched: 26
+create_intents: 0
+update_intents: 26
+operations:
+- heading:insert_after = 4
+- heading:replace_section = 66
+- json_object_path:replace_section = 1
+notes:
+- all 71 reconciliation targets remain executable mutation doc_intents
+- packet verification passed cleanly on pass-003 after merging pass-001 and pass-002 material fixes
+- target-025 now rewrites the existing Widget_System owner section preamble in place without duplicating the owner heading
+- batch-3-models-provider-precedence now targets the explicit owner heading instead of file_start
+- storage-plan split subsection inserts now anchor after the live `### 2.3 redb: schema, migrations, key patterns` heading
+- packet assembled from bounded mutation bundles without reconciliation-plan repairs
+next_required_stage: Scribe

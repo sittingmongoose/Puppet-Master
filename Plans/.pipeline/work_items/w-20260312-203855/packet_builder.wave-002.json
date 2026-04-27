@@ -1,0 +1,31 @@
+{
+  "schema_id": "pm.packet_builder_wave.v1",
+  "work_id": "w-20260312-203855",
+  "source_run_id": "r-20260312-203855-run-024",
+  "new_run_id": "r-20260312-203855-run-025",
+  "phase": "repair-scope-packetization",
+  "status": "blocked",
+  "doc_results": [
+    {
+      "path": "Plans/storage-plan.md",
+      "status": "complete",
+      "targets_packetized": [
+        "target-034::storage-fidelity-recovery-order",
+        "target-034::storage-concern-records",
+        "target-034::storage-historical-semantics"
+      ],
+      "blocked_targets": []
+    },
+    {
+      "path": "Plans/Models_System.md",
+      "status": "blocked",
+      "targets_packetized": [],
+      "blocked_targets": [
+        "batch-3-models-provider-precedence"
+      ]
+    }
+  ],
+  "exact_blockers": [
+    "batch-3-models-provider-precedence cannot be encoded safely in the current packet schema: the live doc needs a unique predecessor anchor (`## 0. Scope and SSOT status`) plus an exact rewrite of the following owner section `## Provider/model precedence and settings resolution`, but Packet Builder can only emit `heading:replace_section`, `heading:insert_after`, or `json_object_path:replace_section`."
+  ]
+}

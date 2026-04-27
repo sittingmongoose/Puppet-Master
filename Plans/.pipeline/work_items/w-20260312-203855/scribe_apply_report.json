@@ -1,51 +1,20 @@
 {
   "schema_id": "pm.scribe_apply_report.v1",
   "work_id": "w-20260312-203855",
-  "run_id": "r-20260312-203855-run-023",
-  "status": "complete",
-  "triage_class": null,
-  "docs_touched": [
-    "Plans/Widget_System.md"
+  "run_id": "r-20260312-203855-run-024",
+  "status": "blocked",
+  "triage_class": "reconciliation_plan_defect",
+  "docs_touched": [],
+  "targets_applied": [],
+  "targets_blocked": [
+    "batch-3-models-provider-precedence",
+    "target-034::storage-fidelity-recovery-order",
+    "target-034::storage-concern-records",
+    "target-034::storage-historical-semantics"
   ],
-  "targets_applied": [
-    "target-001",
-    "target-002",
-    "target-003",
-    "target-004",
-    "target-005",
-    "target-006",
-    "target-007",
-    "target-008",
-    "target-009",
-    "target-010",
-    "target-011",
-    "target-012",
-    "target-013",
-    "target-014",
-    "target-015",
-    "target-016",
-    "target-017",
-    "target-018",
-    "target-019",
-    "target-020",
-    "target-021",
-    "target-022",
-    "target-023",
-    "target-024",
-    "target-025",
-    "target-026",
-    "target-027",
-    "target-028",
-    "target-029",
-    "target-030",
-    "target-031",
-    "target-032",
-    "target-033",
-    "target-034",
-    "target-035",
-    "target-036"
+  "exact_blockers": [
+    "Plans/Models_System.md: anchor `## Provider/model precedence and settings resolution` matches two live headings (lines 26 and 899), so `batch-3-models-provider-precedence` cannot be applied to a unique exact span.",
+    "Plans/storage-plan.md: `target-034::storage-fidelity-recovery-order`, `target-034::storage-concern-records`, and `target-034::storage-historical-semantics` all use `heading:insert_after` against the same live anchor `### 2.3 redb: schema, migrations, key patterns`, creating conflicting same-anchor mutations without an explicit ordered apply scope."
   ],
-  "targets_blocked": [],
-  "exact_blockers": [],
-  "next_required_stage": "Normalizer"
+  "next_required_stage": "Reconciliation Planner"
 }
