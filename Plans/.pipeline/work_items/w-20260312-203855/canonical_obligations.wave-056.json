@@ -1,0 +1,1512 @@
+{
+  "schema_id": "pm.canonical_obligations_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-056",
+  "seed_groups": [
+    "seedgrp-221",
+    "seedgrp-222",
+    "seedgrp-223",
+    "seedgrp-224"
+  ],
+  "obligation_candidates": [
+    {
+      "source_seed_ids": [
+        "seed-3301"
+      ],
+      "source_shard_ids": [
+        "shard-0050"
+      ],
+      "canon_label": "Plans/Crosswalk.md",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "`Plans/Crosswalk.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Crosswalk.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L9801-L9802"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-3302"
+      ],
+      "source_shard_ids": [
+        "shard-0050"
+      ],
+      "canon_label": "structurally unreliable as a boundary/precedence map right when rewrite-era ownership disputes a",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "structurally unreliable as a boundary/precedence map right when rewrite-era ownership disputes are peaking."
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L9801-L9803"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-3303"
+      ],
+      "source_shard_ids": [
+        "shard-0050"
+      ],
+      "canon_label": "Plans/Decision_Policy.md",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "`Plans/Decision_Policy.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Decision_Policy.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L9804"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-3304"
+      ],
+      "source_shard_ids": [
+        "shard-0050"
+      ],
+      "canon_label": "still missing the deterministic policies that executor/storage/runtime surfaces now assume exist",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "still missing the deterministic policies that executor/storage/runtime surfaces now assume exist."
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L9805"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-3305"
+      ],
+      "source_shard_ids": [
+        "shard-0050"
+      ],
+      "canon_label": "Plans/newtools.md",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "`Plans/newtools.md` and `Plans/assistant-memory-subsystem.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/newtools.md",
+        "Plans/assistant-memory-subsystem.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L9805-L9806"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-3306"
+      ],
+      "source_shard_ids": [
+        "shard-0050"
+      ],
+      "canon_label": "Contradictions / gaps surfaced",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "The command/wiring/documentation stack now has multiple hard ghost-ID failures, not just naming drift."
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [
+        "Contradictions / gaps surfaced"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L9810"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-3307"
+      ],
+      "source_shard_ids": [
+        "shard-0050"
+      ],
+      "canon_label": "Contradictions / gaps surfaced",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Several owner docs claim EventRecord/runtime alignment but still omit project/thread/run/attempt/account identity in their own schemas."
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [
+        "Contradictions / gaps surfaced"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L9811"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-3308"
+      ],
+      "source_shard_ids": [
+        "shard-0050"
+      ],
+      "canon_label": "Contradictions / gaps surfaced",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Rewrite-era governance and runtime terms still have no canonical glossary owner, even while multiple docs explicitly point readers there."
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [
+        "Contradictions / gaps surfaced"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L9811-L9812"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-3309"
+      ],
+      "source_shard_ids": [
+        "shard-0050"
+      ],
+      "canon_label": "newtools.md",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "New supporting docs (`newtools.md`, `assistant-memory-subsystem.md`) are now independently inventing command/event families faster than the canonical owners are registering them."
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [
+        "Contradictions / gaps surfaced"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L9812-L9814"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-3310"
+      ],
+      "source_shard_ids": [
+        "shard-0050"
+      ],
+      "canon_label": "cmd.chat.*",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "Reconcile reserved slash-command override policy into one canonical rule and register all real `cmd.chat.*` / `cmd.orchestrator.*` IDs in the catalog before more UI wiring lands."
+      ],
+      "affected_doc_hints": [
+        "layout_blocker_target_known_from_notes"
+      ],
+      "heading_hints": [
+        "Candidate fixes to carry forward"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L9817"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-3311"
+      ],
+      "source_shard_ids": [
+        "shard-0050"
+      ],
+      "canon_label": "Project_Output_Artifacts.md",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Upgrade `Project_Output_Artifacts.md` and adjacent artifact/event owners to carry canonical project/thread/run/attempt/account lineage, and align pass-report enums/fields with wizard/interview producers."
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [
+        "Candidate fixes to carry forward"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L9818"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-3312"
+      ],
+      "source_shard_ids": [
+        "shard-0050"
+      ],
+      "canon_label": "Candidate fixes to carry forward",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "Add the missing runtime-identity open path to FileManager and align evidence/artifact keys with attempt-native records."
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [
+        "Candidate fixes to carry forward"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L9819"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-3313"
+      ],
+      "source_shard_ids": [
+        "shard-0050"
+      ],
+      "canon_label": "Glossary.md",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "Promote missing rewrite vocabulary into `Glossary.md` and repair dead forward references before more docs keep depending on a glossary that lacks the terms."
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [
+        "Candidate fixes to carry forward"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L9819-L9820"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-3314"
+      ],
+      "source_shard_ids": [
+        "shard-0050"
+      ],
+      "canon_label": "Candidate fixes to carry forward",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "Repair Crosswalk/Progression Gates structural issues and add rewrite-era runtime/governance primitives/gates rather than leaving them in prose addenda."
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [
+        "Candidate fixes to carry forward"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L9820-L9821"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-3315"
+      ],
+      "source_shard_ids": [
+        "shard-0050"
+      ],
+      "canon_label": "Candidate fixes to carry forward",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Register memory and live-preview/build event families, new doctor checks, and new ToolIDs in the canonical storage/tool/command owners instead of leaving them stranded in supporting docs."
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [
+        "Candidate fixes to carry forward"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L9820-L9822"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-3316"
+      ],
+      "source_shard_ids": [
+        "shard-0050"
+      ],
+      "canon_label": "Project_Output_Artifacts.md",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "`Project_Output_Artifacts.md` still does not align with interview-emitted `glossary` / `evidence/<node_id>.json` artifact types."
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [
+        "Do-not-forget details"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L9827"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-3317"
+      ],
+      "source_shard_ids": [
+        "shard-0050"
+      ],
+      "canon_label": "Overseer",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`Overseer` is currently a dead glossary reference in multiple rewrite-owner docs."
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [
+        "Do-not-forget details"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L9828"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-3318"
+      ],
+      "source_shard_ids": [
+        "shard-0050"
+      ],
+      "canon_label": "Plans/Prompt_Pipeline.md",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "`Plans/Prompt_Pipeline.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Prompt_Pipeline.md"
+      ],
+      "heading_hints": [
+        "Targeted docs read"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L9828-L9834"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-3319"
+      ],
+      "source_shard_ids": [
+        "shard-0050"
+      ],
+      "canon_label": "Plans/storage-plan.md",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "`Plans/storage-plan.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [
+        "Targeted docs read"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L9835"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-3320"
+      ],
+      "source_shard_ids": [
+        "shard-0050"
+      ],
+      "canon_label": "Plans/Executor_Protocol.md",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "`Plans/Executor_Protocol.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Executor_Protocol.md"
+      ],
+      "heading_hints": [
+        "Targeted docs read"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L9836"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-3321"
+      ],
+      "source_shard_ids": [
+        "shard-0050"
+      ],
+      "canon_label": "Plans/orchestrator-subagent-integration.md",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "`Plans/orchestrator-subagent-integration.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/orchestrator-subagent-integration.md"
+      ],
+      "heading_hints": [
+        "Targeted docs read"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L9837"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-3322"
+      ],
+      "source_shard_ids": [
+        "shard-0050"
+      ],
+      "canon_label": "TierContext",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "The owner split is now explicit enough to stop treating this as a vague \u201creplace `TierContext`\u201d task."
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [
+        "Key findings"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L9840"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-3323"
+      ],
+      "source_shard_ids": [
+        "shard-0050"
+      ],
+      "canon_label": "Prompt_Pipeline.md",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`Prompt_Pipeline.md` already owns the canonical effective-resolution contract through the `effective resolution record`. It defines requested/effective persona/platform/model/auth/account fields and the required selection metadata."
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [
+        "Key findings"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L9840-L9841"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-3324"
+      ],
+      "source_shard_ids": [
+        "shard-0050"
+      ],
+      "canon_label": "requested/effective persona/platform/model",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "canonical runtime identity (`requested/effective persona/platform/model`)"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [
+        "Key findings"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L9851"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-3325"
+      ],
+      "source_shard_ids": [
+        "shard-0050"
+      ],
+      "canon_label": "Executor_Protocol.md",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`Executor_Protocol.md` has already moved toward node-native execution and runtime blocked overlays, which makes the tier-shaped `TierContext` even less defensible as a canonical execution object."
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [
+        "Key findings"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L9852"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-3326"
+      ],
+      "source_shard_ids": [
+        "shard-0050"
+      ],
+      "canon_label": "Plans/Prompt_Pipeline.md",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`Plans/Prompt_Pipeline.md` should remain the owner of the effective-resolution field family."
+      ],
+      "affected_doc_hints": [
+        "Plans/Prompt_Pipeline.md"
+      ],
+      "heading_hints": [
+        "Recommended owner split"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L9855"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-3327"
+      ],
+      "source_shard_ids": [
+        "shard-0050"
+      ],
+      "canon_label": "Plans/storage-plan.md",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`Plans/storage-plan.md` should remain the owner of persisted execution/runtime record families."
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [
+        "Recommended owner split"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L9855-L9857"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-3328"
+      ],
+      "source_shard_ids": [
+        "shard-0050"
+      ],
+      "canon_label": "Plans/Executor_Protocol.md",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`Plans/Executor_Protocol.md` should own which execution-scoped context is required for scheduler/executor correctness."
+      ],
+      "affected_doc_hints": [
+        "Plans/Executor_Protocol.md"
+      ],
+      "heading_hints": [
+        "Recommended owner split"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L9857-L9859"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-3329"
+      ],
+      "source_shard_ids": [
+        "shard-0050"
+      ],
+      "canon_label": "Recommended owner split",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "It should define the minimum execution-unit identity/runtime anchors needed for dispatch, retry, blocked handling, and receipts."
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [
+        "Recommended owner split"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L9860"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-3330"
+      ],
+      "source_shard_ids": [
+        "shard-0050"
+      ],
+      "canon_label": "Plans/orchestrator-subagent-integration.md",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`Plans/orchestrator-subagent-integration.md` should stop owning a canonical mixed runtime object."
+      ],
+      "affected_doc_hints": [
+        "Plans/orchestrator-subagent-integration.md"
+      ],
+      "heading_hints": [
+        "Recommended owner split"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L9861"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-3331"
+      ],
+      "source_shard_ids": [
+        "shard-0050"
+      ],
+      "canon_label": "Recommended owner split",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "It should consume canonical execution/runtime context by reference and keep only selection/decomposition helpers that are local to subagent policy."
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [
+        "Recommended owner split"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L9862"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-3332"
+      ],
+      "source_shard_ids": [
+        "shard-0050"
+      ],
+      "canon_label": "Canonical `execution_unit_context` minimum shape",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "execution ownership:"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [
+        "Canonical `execution_unit_context` minimum shape"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L9881"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-3333"
+      ],
+      "source_shard_ids": [
+        "shard-0050"
+      ],
+      "canon_label": "workspace_ref",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`workspace_ref` or canonical path ref"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [
+        "Canonical `execution_unit_context` minimum shape"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L9890"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-3334"
+      ],
+      "source_shard_ids": [
+        "shard-0050"
+      ],
+      "canon_label": "Recommended derived `decomposition_context` / `selection_context`",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "This object is allowed to stay tier-shaped if the integration policy still wants phase/task/subtask/iteration selectors, but it should no longer pretend to be the canonical runtime context."
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [
+        "Recommended derived `decomposition_context` / `selection_context`"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L9925"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-3335"
+      ],
+      "source_shard_ids": [
+        "shard-0050"
+      ],
+      "canon_label": "Plans/orchestrator-subagent-integration.md",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "`Plans/orchestrator-subagent-integration.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/orchestrator-subagent-integration.md"
+      ],
+      "heading_hints": [
+        "Impacted docs"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L9928"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-3336"
+      ],
+      "source_shard_ids": [
+        "shard-0050"
+      ],
+      "canon_label": "Plans/Executor_Protocol.md",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "`Plans/Executor_Protocol.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Executor_Protocol.md"
+      ],
+      "heading_hints": [
+        "Impacted docs"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L9929"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-3337"
+      ],
+      "source_shard_ids": [
+        "shard-0050"
+      ],
+      "canon_label": "Plans/storage-plan.md",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "`Plans/storage-plan.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [
+        "Impacted docs"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L9930"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-3338"
+      ],
+      "source_shard_ids": [
+        "shard-0050"
+      ],
+      "canon_label": "Plans/Prompt_Pipeline.md",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "`Plans/Prompt_Pipeline.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Prompt_Pipeline.md"
+      ],
+      "heading_hints": [
+        "Impacted docs"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L9931"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-3339"
+      ],
+      "source_shard_ids": [
+        "shard-0050"
+      ],
+      "canon_label": "Plans/Orchestrator_Page.md",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "`Plans/Orchestrator_Page.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md"
+      ],
+      "heading_hints": [
+        "Impacted docs"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L9933"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-3340"
+      ],
+      "source_shard_ids": [
+        "shard-0050"
+      ],
+      "canon_label": "Plans/Run_Graph_View.md",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "`Plans/Run_Graph_View.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Run_Graph_View.md"
+      ],
+      "heading_hints": [
+        "Impacted docs"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L9934"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-3341"
+      ],
+      "source_shard_ids": [
+        "shard-0050"
+      ],
+      "canon_label": "Plans/human-in-the-loop.md",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "`Plans/human-in-the-loop.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/human-in-the-loop.md"
+      ],
+      "heading_hints": [
+        "Impacted docs"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L9935"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-3342"
+      ],
+      "source_shard_ids": [
+        "shard-0050"
+      ],
+      "canon_label": "Plans/Runtime_Artifacts_Panel.md",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "`Plans/Runtime_Artifacts_Panel.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Runtime_Artifacts_Panel.md"
+      ],
+      "heading_hints": [
+        "Impacted docs"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L9936"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-3343"
+      ],
+      "source_shard_ids": [
+        "shard-0050"
+      ],
+      "canon_label": "storage-plan.md",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`storage-plan.md` still publishes both `attempt_record` and `tier_runtime_record`, but only the attempt record is close to the rewrite-era execution unit; the tier runtime record still reflects old tier-shaped progress ownership."
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [
+        "Contradictions / gaps surfaced"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L9939"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-3344"
+      ],
+      "source_shard_ids": [
+        "shard-0050"
+      ],
+      "canon_label": "Prompt_Pipeline.md",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "`Prompt_Pipeline.md` already has a strong effective-resolution schema, but the integration doc duplicates a thinner subset of those fields directly on `TierContext`."
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [
+        "Contradictions / gaps surfaced"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L9940"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-3345"
+      ],
+      "source_shard_ids": [
+        "shard-0050"
+      ],
+      "canon_label": "orchestrator-subagent-integration.md",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "`orchestrator-subagent-integration.md` constructs `TierContext` without clear run/node/attempt/lane identity, which means downstream hook, artifact, and retry logic can inherit a context object that is not a trustworthy canonical anchor."
+      ],
+      "affected_doc_hints": [
+        "layout_blocker_target_known_from_notes"
+      ],
+      "heading_hints": [
+        "Contradictions / gaps surfaced"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L9941"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-3346"
+      ],
+      "source_shard_ids": [
+        "shard-0050"
+      ],
+      "canon_label": "execution_unit_context",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Introduce `execution_unit_context` as the canonical runtime-facing context object and make `TierContext` explicitly derived or compatibility-only."
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [
+        "Candidate fixes to carry forward"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L9945"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-3347"
+      ],
+      "source_shard_ids": [
+        "shard-0050"
+      ],
+      "canon_label": "Candidate fixes to carry forward",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Move all requested/effective runtime identity field definitions back behind the owner split:"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [
+        "Candidate fixes to carry forward"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L9946"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-3348"
+      ],
+      "source_shard_ids": [
+        "shard-0050"
+      ],
+      "canon_label": "Prompt_Pipeline.md",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "`Prompt_Pipeline.md` defines field family and meaning"
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [
+        "Candidate fixes to carry forward"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L9946-L9947"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-3349"
+      ],
+      "source_shard_ids": [
+        "shard-0050"
+      ],
+      "canon_label": "storage-plan.md",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "`storage-plan.md` defines persistence/projection"
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [
+        "Candidate fixes to carry forward"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L9946-L9948"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-3350"
+      ],
+      "source_shard_ids": [
+        "shard-0050"
+      ],
+      "canon_label": "Candidate fixes to carry forward",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "executor docs define required presence at dispatch/runtime boundaries"
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [
+        "Candidate fixes to carry forward"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L9949"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-3351"
+      ],
+      "source_shard_ids": [
+        "shard-0050"
+      ],
+      "canon_label": "tier_runtime_record",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Recast `tier_runtime_record` as a current-view/runtime-overlay projection rather than the canonical execution owner."
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [
+        "Candidate fixes to carry forward"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L9950"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-3352"
+      ],
+      "source_shard_ids": [
+        "shard-0050"
+      ],
+      "canon_label": "Do-not-forget details",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "This seam is now mostly an ownership cleanup, not a concept invention problem."
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [
+        "Do-not-forget details"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L9956"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-3353"
+      ],
+      "source_shard_ids": [
+        "shard-0050"
+      ],
+      "canon_label": "TierContext",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "If `TierContext` survives at all, it should survive as a derived selection/view helper, not as the thing that owns canonical runtime identity."
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [
+        "Do-not-forget details"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L9961"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-3354"
+      ],
+      "source_shard_ids": [
+        "shard-0050"
+      ],
+      "canon_label": "Plans/Run_Graph_View.md",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "`Plans/Run_Graph_View.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Run_Graph_View.md"
+      ],
+      "heading_hints": [
+        "Targeted docs read"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L9966"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-3355"
+      ],
+      "source_shard_ids": [
+        "shard-0050"
+      ],
+      "canon_label": "Plans/Orchestrator_Page.md",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "`Plans/Orchestrator_Page.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md"
+      ],
+      "heading_hints": [
+        "Targeted docs read"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L9967"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-3356"
+      ],
+      "source_shard_ids": [
+        "shard-0050"
+      ],
+      "canon_label": "Plans/human-in-the-loop.md",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "`Plans/human-in-the-loop.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/human-in-the-loop.md"
+      ],
+      "heading_hints": [
+        "Targeted docs read"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L9968"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-3357"
+      ],
+      "source_shard_ids": [
+        "shard-0050"
+      ],
+      "canon_label": "Plans/storage-plan.md",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "spot-checks against `Plans/storage-plan.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [
+        "Targeted docs read"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L9969"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-3358"
+      ],
+      "source_shard_ids": [
+        "shard-0050"
+      ],
+      "canon_label": "Key findings",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "The downstream surface docs still expose the old tier-shaped correlation model much more strongly than the runtime/storage direction now supports."
+      ],
+      "affected_doc_hints": [
+        "layout_blocker_target_known_from_notes"
+      ],
+      "heading_hints": [
+        "Key findings"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L9972"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-3359"
+      ],
+      "source_shard_ids": [
+        "shard-0050"
+      ],
+      "canon_label": "Orchestrator_Page.md",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "`Orchestrator_Page.md` still describes the page as `Progress / Tiers / Node Graph / Evidence / History / Ledger`, and many data-source rows still bind live state to:"
+      ],
+      "affected_doc_hints": [
+        "layout_blocker_target_known_from_notes"
+      ],
+      "heading_hints": [
+        "Key findings"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L9979"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-3360"
+      ],
+      "source_shard_ids": [
+        "shard-0050"
+      ],
+      "canon_label": "tier_runtime_record",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "The surface docs are therefore already behaving as if `tier_runtime_record` is canonical, even though the stronger rewrite direction is:"
+      ],
+      "affected_doc_hints": [
+        "layout_blocker_target_known_from_notes"
+      ],
+      "heading_hints": [
+        "Key findings"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L9986"
+      ],
+      "notes": []
+    }
+  ],
+  "represented_seed_ids": [
+    "seed-3301",
+    "seed-3302",
+    "seed-3303",
+    "seed-3304",
+    "seed-3305",
+    "seed-3306",
+    "seed-3307",
+    "seed-3308",
+    "seed-3309",
+    "seed-3310",
+    "seed-3311",
+    "seed-3312",
+    "seed-3313",
+    "seed-3314",
+    "seed-3315",
+    "seed-3316",
+    "seed-3317",
+    "seed-3318",
+    "seed-3319",
+    "seed-3320",
+    "seed-3321",
+    "seed-3322",
+    "seed-3323",
+    "seed-3324",
+    "seed-3325",
+    "seed-3326",
+    "seed-3327",
+    "seed-3328",
+    "seed-3329",
+    "seed-3330",
+    "seed-3331",
+    "seed-3332",
+    "seed-3333",
+    "seed-3334",
+    "seed-3335",
+    "seed-3336",
+    "seed-3337",
+    "seed-3338",
+    "seed-3339",
+    "seed-3340",
+    "seed-3341",
+    "seed-3342",
+    "seed-3343",
+    "seed-3344",
+    "seed-3345",
+    "seed-3346",
+    "seed-3347",
+    "seed-3348",
+    "seed-3349",
+    "seed-3350",
+    "seed-3351",
+    "seed-3352",
+    "seed-3353",
+    "seed-3354",
+    "seed-3355",
+    "seed-3356",
+    "seed-3357",
+    "seed-3358",
+    "seed-3359",
+    "seed-3360"
+  ],
+  "represented_source_shard_ids": [
+    "shard-0050"
+  ],
+  "deferred_seed_ids": [],
+  "noise_seed_ids": [],
+  "affected_doc_discovery_notes": []
+}

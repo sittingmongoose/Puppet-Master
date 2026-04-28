@@ -1,0 +1,1053 @@
+{
+  "schema_id": "pm.transfer_coverage_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-117",
+  "row_groups": [
+    "rowgrp-0465",
+    "rowgrp-0466",
+    "rowgrp-0467",
+    "rowgrp-0468"
+  ],
+  "coverage_rows": [
+    {
+      "coverage_id": "cov-02607",
+      "source_obligation_ids": [
+        "obl-2527"
+      ],
+      "source_seed_ids": [
+        "seed-3162"
+      ],
+      "source_shard_ids": [
+        "shard-0048"
+      ],
+      "canon_label": "orchestrator.receipt",
+      "row_type": "layout_blocker",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "Candidate fixes to carry forward",
+      "status": "missing",
+      "exact_items": [
+        "Keep `orchestrator.receipt` as the cross-surface bridge object, but stop letting it impersonate missing lifecycle records for artifacts or worktrees."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-02617",
+      "source_obligation_ids": [
+        "obl-2537"
+      ],
+      "source_seed_ids": [
+        "seed-3176"
+      ],
+      "source_shard_ids": [
+        "shard-0048"
+      ],
+      "canon_label": "Recommended artifact-index storage family",
+      "row_type": "layout_blocker",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "Recommended artifact-index storage family",
+      "status": "missing",
+      "exact_items": [
+        "optional UI/projector cursor/filter/health metadata if needed"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-02621",
+      "source_obligation_ids": [
+        "obl-2541"
+      ],
+      "source_seed_ids": [
+        "seed-3180"
+      ],
+      "source_shard_ids": [
+        "shard-0048"
+      ],
+      "canon_label": "Recommended artifact-index storage family",
+      "row_type": "layout_blocker",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "Recommended artifact-index storage family",
+      "status": "missing",
+      "exact_items": [
+        "the index is a projection for lookup/filter/navigation"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-02624",
+      "source_obligation_ids": [
+        "obl-2544"
+      ],
+      "source_seed_ids": [
+        "seed-3183"
+      ],
+      "source_shard_ids": [
+        "shard-0048"
+      ],
+      "canon_label": "Recommended worktree/lane storage family",
+      "row_type": "layout_blocker",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "Recommended worktree/lane storage family",
+      "status": "missing",
+      "exact_items": [
+        "Keep Source Control worktree-first at the UI level, but storage needs both durable worktree identity and lane lineage."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-02635",
+      "source_obligation_ids": [
+        "obl-2555"
+      ],
+      "source_seed_ids": [
+        "seed-3194"
+      ],
+      "source_shard_ids": [
+        "shard-0048"
+      ],
+      "canon_label": "orchestrator.receipt",
+      "row_type": "layout_blocker",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "Ownership guidance",
+      "status": "missing",
+      "exact_items": [
+        "`orchestrator.receipt` should remain the cross-surface bridge record, not the substitute for these families."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-02641",
+      "source_obligation_ids": [
+        "obl-2561"
+      ],
+      "source_seed_ids": [
+        "seed-3204"
+      ],
+      "source_shard_ids": [
+        "shard-0048"
+      ],
+      "canon_label": "Do-not-forget details",
+      "row_type": "layout_blocker",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "Do-not-forget details",
+      "status": "missing",
+      "exact_items": [
+        "Source Control being worktree-first in UI does not remove the need for lane lineage in storage"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-02651",
+      "source_obligation_ids": [
+        "obl-2571"
+      ],
+      "source_seed_ids": [
+        "seed-3219"
+      ],
+      "source_shard_ids": [
+        "shard-0049"
+      ],
+      "canon_label": "Key findings",
+      "row_type": "layout_blocker",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "Key findings",
+      "status": "missing",
+      "exact_items": [
+        "moving surfaces to canonical route payloads and runtime actions"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-02652",
+      "source_obligation_ids": [
+        "obl-2572"
+      ],
+      "source_seed_ids": [
+        "seed-3220"
+      ],
+      "source_shard_ids": [
+        "shard-0049"
+      ],
+      "canon_label": "Key findings",
+      "row_type": "layout_blocker",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "Key findings",
+      "status": "missing",
+      "exact_items": [
+        "tab/layout/help/glossary cleanup"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-02662",
+      "source_obligation_ids": [
+        "obl-2582"
+      ],
+      "source_seed_ids": [
+        "seed-3230"
+      ],
+      "source_shard_ids": [
+        "shard-0049"
+      ],
+      "canon_label": "Updated working classification",
+      "row_type": "layout_blocker",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "Updated working classification",
+      "status": "missing",
+      "exact_items": [
+        "Orchestrator tab/page retargeting"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-02663",
+      "source_obligation_ids": [
+        "obl-2583"
+      ],
+      "source_seed_ids": [
+        "seed-3231"
+      ],
+      "source_shard_ids": [
+        "shard-0049"
+      ],
+      "canon_label": "Updated working classification",
+      "row_type": "layout_blocker",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "Updated working classification",
+      "status": "missing",
+      "exact_items": [
+        "Source Control vs Orchestrator surface cleanup"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-02665",
+      "source_obligation_ids": [
+        "obl-2585"
+      ],
+      "source_seed_ids": [
+        "seed-3233"
+      ],
+      "source_shard_ids": [
+        "shard-0049"
+      ],
+      "canon_label": "Updated working classification",
+      "row_type": "layout_blocker",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "Updated working classification",
+      "status": "missing",
+      "exact_items": [
+        "concern/search/attention/project-summary surface alignment"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-02673",
+      "source_obligation_ids": [
+        "obl-2593"
+      ],
+      "source_seed_ids": [
+        "seed-3247"
+      ],
+      "source_shard_ids": [
+        "shard-0049"
+      ],
+      "canon_label": "blocked_sequence",
+      "row_type": "layout_blocker",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "Recommended owner decision",
+      "status": "missing",
+      "exact_items": [
+        "`blocked_sequence` should be owned by the runtime scheduler/executor layer, not by UI/HITL/chat/storage."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-02676",
+      "source_obligation_ids": [
+        "obl-2596"
+      ],
+      "source_seed_ids": [
+        "seed-3250"
+      ],
+      "source_shard_ids": [
+        "shard-0049"
+      ],
+      "canon_label": "request_id",
+      "row_type": "layout_blocker",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "Recommended HITL/request bridge",
+      "status": "missing",
+      "exact_items": [
+        "if the blocked reason needs an approval prompt surface, the system may also mint a stable `request_id`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-02678",
+      "source_obligation_ids": [
+        "obl-2598"
+      ],
+      "source_seed_ids": [
+        "seed-3252"
+      ],
+      "source_shard_ids": [
+        "shard-0049"
+      ],
+      "canon_label": "request_id",
+      "row_type": "layout_blocker",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "Recommended HITL/request bridge",
+      "status": "missing",
+      "exact_items": [
+        "Approval commands should route by blocked episode identity; any retained `request_id` is lookup metadata, not the canonical recovery target."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-02695",
+      "source_obligation_ids": [
+        "obl-2615"
+      ],
+      "source_seed_ids": [
+        "seed-3280"
+      ],
+      "source_shard_ids": [
+        "shard-0049"
+      ],
+      "canon_label": "Key findings",
+      "row_type": "layout_blocker",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "Key findings",
+      "status": "missing",
+      "exact_items": [
+        "Command / wiring ownership is materially weaker than the downstream surface docs assumed:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-02706",
+      "source_obligation_ids": [
+        "obl-2626"
+      ],
+      "source_seed_ids": [
+        "seed-3291"
+      ],
+      "source_shard_ids": [
+        "shard-0049"
+      ],
+      "canon_label": "Crosswalk.md",
+      "row_type": "layout_blocker",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "Key findings",
+      "status": "missing",
+      "exact_items": [
+        "`Crosswalk.md` is structurally broken (duplicate section numbering, orphaned addenda, wrong ContractRef) and still does not route major rewrite-era owners such as `orchestrator-subagent-integration.md`, runtime scheduler ownership, or worktree lifecycle ownership."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-02714",
+      "source_obligation_ids": [
+        "obl-2634"
+      ],
+      "source_seed_ids": [
+        "seed-3300"
+      ],
+      "source_shard_ids": [
+        "shard-0050"
+      ],
+      "canon_label": "now a visible blocker because multiple docs point to definitions that do not exist.",
+      "row_type": "layout_blocker",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "now a visible blocker because multiple docs point to definitions that do not exist."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-02725",
+      "source_obligation_ids": [
+        "obl-2644"
+      ],
+      "source_seed_ids": [
+        "seed-3310"
+      ],
+      "source_shard_ids": [
+        "shard-0050"
+      ],
+      "canon_label": "cmd.chat.*",
+      "row_type": "layout_blocker",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "Candidate fixes to carry forward",
+      "status": "missing",
+      "exact_items": [
+        "Reconcile reserved slash-command override policy into one canonical rule and register all real `cmd.chat.*` / `cmd.orchestrator.*` IDs in the catalog before more UI wiring lands."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-02748",
+      "source_obligation_ids": [
+        "obl-2667"
+      ],
+      "source_seed_ids": [
+        "seed-3345"
+      ],
+      "source_shard_ids": [
+        "shard-0050"
+      ],
+      "canon_label": "orchestrator-subagent-integration.md",
+      "row_type": "layout_blocker",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "Contradictions / gaps surfaced",
+      "status": "missing",
+      "exact_items": [
+        "`orchestrator-subagent-integration.md` constructs `TierContext` without clear run/node/attempt/lane identity, which means downstream hook, artifact, and retry logic can inherit a context object that is not a trustworthy canonical anchor."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-02758",
+      "source_obligation_ids": [
+        "obl-2677"
+      ],
+      "source_seed_ids": [
+        "seed-3358"
+      ],
+      "source_shard_ids": [
+        "shard-0050"
+      ],
+      "canon_label": "Key findings",
+      "row_type": "layout_blocker",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "Key findings",
+      "status": "missing",
+      "exact_items": [
+        "The downstream surface docs still expose the old tier-shaped correlation model much more strongly than the runtime/storage direction now supports."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-02759",
+      "source_obligation_ids": [
+        "obl-2678"
+      ],
+      "source_seed_ids": [
+        "seed-3359"
+      ],
+      "source_shard_ids": [
+        "shard-0050"
+      ],
+      "canon_label": "Orchestrator_Page.md",
+      "row_type": "layout_blocker",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "Key findings",
+      "status": "missing",
+      "exact_items": [
+        "`Orchestrator_Page.md` still describes the page as `Progress / Tiers / Node Graph / Evidence / History / Ledger`, and many data-source rows still bind live state to:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-02760",
+      "source_obligation_ids": [
+        "obl-2679"
+      ],
+      "source_seed_ids": [
+        "seed-3360"
+      ],
+      "source_shard_ids": [
+        "shard-0050"
+      ],
+      "canon_label": "tier_runtime_record",
+      "row_type": "layout_blocker",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "Key findings",
+      "status": "missing",
+      "exact_items": [
+        "The surface docs are therefore already behaving as if `tier_runtime_record` is canonical, even though the stronger rewrite direction is:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-02765",
+      "source_obligation_ids": [
+        "obl-2684"
+      ],
+      "source_seed_ids": [
+        "seed-3365"
+      ],
+      "source_shard_ids": [
+        "shard-0050"
+      ],
+      "canon_label": "Recommended compatibility boundary",
+      "row_type": "layout_blocker",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "Recommended compatibility boundary",
+      "status": "missing",
+      "exact_items": [
+        "what should the progress tree / compact terminal / high-level tab badges display right now"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-02768",
+      "source_obligation_ids": [
+        "obl-2687"
+      ],
+      "source_seed_ids": [
+        "seed-3368"
+      ],
+      "source_shard_ids": [
+        "shard-0051"
+      ],
+      "canon_label": "Practical routing/correlation rule",
+      "row_type": "layout_blocker",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "Practical routing/correlation rule",
+      "status": "missing",
+      "exact_items": [
+        "Canonical mutation and audit actions should route by:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-02770",
+      "source_obligation_ids": [
+        "obl-2689"
+      ],
+      "source_seed_ids": [
+        "seed-3375"
+      ],
+      "source_shard_ids": [
+        "shard-0051"
+      ],
+      "canon_label": "Orchestrator_Page.md",
+      "row_type": "layout_blocker",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "Contradictions / gaps surfaced",
+      "status": "missing",
+      "exact_items": [
+        "`Orchestrator_Page.md` still describes tab 2 as `Tiers` and uses tier-keyed widgets/event rows even though the rewrite direction is now `Seams` plus node/package/seam/lane-native execution objects."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-02772",
+      "source_obligation_ids": [
+        "obl-2691"
+      ],
+      "source_seed_ids": [
+        "seed-3377"
+      ],
+      "source_shard_ids": [
+        "shard-0051"
+      ],
+      "canon_label": "tier_id",
+      "row_type": "layout_blocker",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "Candidate fixes to carry forward",
+      "status": "missing",
+      "exact_items": [
+        "Update surface specs so tier/group views carry pointers to canonical execution objects instead of using `tier_id` as the primary mutation/audit key."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-02774",
+      "source_obligation_ids": [
+        "obl-2693"
+      ],
+      "source_seed_ids": [
+        "seed-3379"
+      ],
+      "source_shard_ids": [
+        "shard-0051"
+      ],
+      "canon_label": "Candidate fixes to carry forward",
+      "row_type": "layout_blocker",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "Candidate fixes to carry forward",
+      "status": "missing",
+      "exact_items": [
+        "Recast HITL surface state around blocked-episode identity first, with tier labels as explanatory metadata rather than canonical targeting."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-02775",
+      "source_obligation_ids": [
+        "obl-2694"
+      ],
+      "source_seed_ids": [
+        "seed-3380"
+      ],
+      "source_shard_ids": [
+        "shard-0051"
+      ],
+      "canon_label": "Do-not-forget details",
+      "row_type": "layout_blocker",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "Do-not-forget details",
+      "status": "missing",
+      "exact_items": [
+        "This is now a surface-drift problem, not just a storage problem."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-02789",
+      "source_obligation_ids": [
+        "obl-2708"
+      ],
+      "source_seed_ids": [
+        "seed-3398"
+      ],
+      "source_shard_ids": [
+        "shard-0051"
+      ],
+      "canon_label": "3. Mandatory requested/effective runtime snapshots by reference",
+      "row_type": "layout_blocker",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "3. Mandatory requested/effective runtime snapshots by reference",
+      "status": "missing",
+      "exact_items": [
+        "executor/runtime/UI surfaces all need the same truth; these should be carried by stable refs or canonical embedded snapshot fragments, not rederived from prompt text or surface config later"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-02792",
+      "source_obligation_ids": [
+        "obl-2711"
+      ],
+      "source_seed_ids": [
+        "seed-3401"
+      ],
+      "source_shard_ids": [
+        "shard-0051"
+      ],
+      "canon_label": "5. Optional but strongly recommended disclosure fields",
+      "row_type": "layout_blocker",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "5. Optional but strongly recommended disclosure fields",
+      "status": "missing",
+      "exact_items": [
+        "useful for UI/ledger/history/debuggability, but not required to make dispatch valid:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-02793",
+      "source_obligation_ids": [
+        "obl-2712"
+      ],
+      "source_seed_ids": [
+        "seed-3402"
+      ],
+      "source_shard_ids": [
+        "shard-0051"
+      ],
+      "canon_label": "5. Optional but strongly recommended disclosure fields",
+      "row_type": "layout_blocker",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "5. Optional but strongly recommended disclosure fields",
+      "status": "missing",
+      "exact_items": [
+        "these improve explanation, routing, and cross-surface joins, but the executor can still be correct without all of them being present on every attempt snapshot"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-02800",
+      "source_obligation_ids": [
+        "obl-2719"
+      ],
+      "source_seed_ids": [
+        "seed-3417"
+      ],
+      "source_shard_ids": [
+        "shard-0051"
+      ],
+      "canon_label": "execution_unit_context",
+      "row_type": "layout_blocker",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "Candidate fixes to carry forward",
+      "status": "missing",
+      "exact_items": [
+        "Add an explicit `execution_unit_context` section to `Executor_Protocol.md` that names:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-02823",
+      "source_obligation_ids": [
+        "obl-2742"
+      ],
+      "source_seed_ids": [
+        "seed-3453"
+      ],
+      "source_shard_ids": [
+        "shard-0052"
+      ],
+      "canon_label": "Candidate fixes to carry forward",
+      "row_type": "layout_blocker",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "Candidate fixes to carry forward",
+      "status": "missing",
+      "exact_items": [
+        "Update worker/detail surface docs so \u201cworker identity\u201d shows:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-02826",
+      "source_obligation_ids": [
+        "obl-2745"
+      ],
+      "source_seed_ids": [
+        "seed-3456"
+      ],
+      "source_shard_ids": [
+        "shard-0052"
+      ],
+      "canon_label": "operational_identity",
+      "row_type": "layout_blocker",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "Do-not-forget details",
+      "status": "missing",
+      "exact_items": [
+        "The strongest existing anchor for `operational_identity` is the receipt/bridge family, not the persona snapshot family."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-02841",
+      "source_obligation_ids": [
+        "obl-2760"
+      ],
+      "source_seed_ids": [
+        "seed-3483"
+      ],
+      "source_shard_ids": [
+        "shard-0052"
+      ],
+      "canon_label": "Crosswalk.md",
+      "row_type": "layout_blocker",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "Key findings",
+      "status": "missing",
+      "exact_items": [
+        "`Crosswalk.md` still has duplicate section numbering, a wrong `Primitive:` ContractRef, missing \u00a72 index entries for appended primitives, and orphaned source-control/GitHub-actions/docker surfaces outside the normal routing structure."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-02842",
+      "source_obligation_ids": [
+        "obl-2761"
+      ],
+      "source_seed_ids": [
+        "seed-3484"
+      ],
+      "source_shard_ids": [
+        "shard-0052"
+      ],
+      "canon_label": "Progression_Gates.md",
+      "row_type": "layout_blocker",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "Key findings",
+      "status": "missing",
+      "exact_items": [
+        "`Progression_Gates.md` contains duplicate addenda, unnumbered runtime/governance gate families, missing GATE-007 / GATE-008 placeholders, and a material collision where GATE-012 BLOCKED semantics collapse wizard `attention_required` and true wizard `blocked` escalation into the same gate state."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-02871",
+      "source_obligation_ids": [
+        "obl-2790"
+      ],
+      "source_seed_ids": [
+        "seed-3525"
+      ],
+      "source_shard_ids": [
+        "shard-0052"
+      ],
+      "canon_label": "Candidate fixes to carry forward",
+      "row_type": "layout_blocker",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "Candidate fixes to carry forward",
+      "status": "missing",
+      "exact_items": [
+        "collapse duplicate runtime/gate addenda into one numbered canonical section per owner."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-02889",
+      "source_obligation_ids": [
+        "obl-2807"
+      ],
+      "source_seed_ids": [
+        "seed-3548"
+      ],
+      "source_shard_ids": [
+        "shard-0052"
+      ],
+      "canon_label": "storage-plan.md",
+      "row_type": "layout_blocker",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "Key findings",
+      "status": "missing",
+      "exact_items": [
+        "`storage-plan.md` is the strongest current anchor:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-02901",
+      "source_obligation_ids": [
+        "obl-2819"
+      ],
+      "source_seed_ids": [
+        "seed-3565"
+      ],
+      "source_shard_ids": [
+        "shard-0053"
+      ],
+      "canon_label": "Impacted docs",
+      "row_type": "layout_blocker",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "Impacted docs",
+      "status": "missing",
+      "exact_items": [
+        "likely surface consumers:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-02902",
+      "source_obligation_ids": [
+        "obl-2820"
+      ],
+      "source_seed_ids": [
+        "seed-3569"
+      ],
+      "source_shard_ids": [
+        "shard-0053"
+      ],
+      "canon_label": "attempt_id",
+      "row_type": "layout_blocker",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "Contradictions / gaps surfaced",
+      "status": "missing",
+      "exact_items": [
+        "runtime artifacts still have no normalized place for `attempt_id`, `node_id`, `execution_role`, `provider_attempt_ref`, or `operational_identity`, even though cross-surface receipt linkage already depends on that level of identity."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    }
+  ]
+}

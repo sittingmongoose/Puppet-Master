@@ -1,0 +1,1526 @@
+{
+  "schema_id": "pm.canonical_obligations_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-098",
+  "seed_groups": [
+    "seedgrp-389",
+    "seedgrp-390",
+    "seedgrp-391",
+    "seedgrp-392"
+  ],
+  "obligation_candidates": [
+    {
+      "source_seed_ids": [
+        "seed-5821"
+      ],
+      "source_shard_ids": [
+        "shard-0079"
+      ],
+      "canon_label": "Candidate fixes to carry forward",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Reconcile graph and Orchestrator approval actions onto canonical runtime commands."
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [
+        "Candidate fixes to carry forward"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L15667"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-5822"
+      ],
+      "source_shard_ids": [
+        "shard-0079"
+      ],
+      "canon_label": "request_id",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "Remove `request_id` as the primary action target from graph command payloads."
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [
+        "Candidate fixes to carry forward"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L15668"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-5823"
+      ],
+      "source_shard_ids": [
+        "shard-0079"
+      ],
+      "canon_label": "Candidate fixes to carry forward",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "Reconcile Orchestrator live-status dependencies so request-centric HITL bindings stop competing with blocked-projection bindings."
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [
+        "Candidate fixes to carry forward"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L15670"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-5824"
+      ],
+      "source_shard_ids": [
+        "shard-0079"
+      ],
+      "canon_label": "Do-not-forget details",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "This seam is now purely consumer-side. The runtime command layer already has the stronger model."
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [
+        "Do-not-forget details"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L15673"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-5825"
+      ],
+      "source_shard_ids": [
+        "shard-0079"
+      ],
+      "canon_label": "UI_Command_Catalog.md",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "`UI_Command_Catalog.md` currently contradicts itself within the same approval/recovery area."
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [
+        "Do-not-forget details"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L15673-L15674"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-5826"
+      ],
+      "source_shard_ids": [
+        "shard-0079"
+      ],
+      "canon_label": "Plans/human-in-the-loop.md",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "`Plans/human-in-the-loop.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/human-in-the-loop.md"
+      ],
+      "heading_hints": [
+        "Targeted docs read"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L15673-L15679"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-5827"
+      ],
+      "source_shard_ids": [
+        "shard-0079"
+      ],
+      "canon_label": "request_id",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "canonical HITL request contract is `request_id` + `tier_id` + `tier_type` + `request_kind`"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [
+        "Key findings"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L15687"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-5828"
+      ],
+      "source_shard_ids": [
+        "shard-0079"
+      ],
+      "canon_label": "request_id",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "replay/restore and command dispatch are deterministic across `request_id`"
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [
+        "Key findings"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L15688"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-5829"
+      ],
+      "source_shard_ids": [
+        "shard-0079"
+      ],
+      "canon_label": "blocked_reason_code",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "canonical runtime-facing fields are `blocked_reason_code`, ordered `allowed_action_ids[]`, `blocked_sequence`, preserved-local-work, prerequisite metadata, and `detail_ref?`"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [
+        "Key findings"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L15693"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-5830"
+      ],
+      "source_shard_ids": [
+        "shard-0079"
+      ],
+      "canon_label": "allowed_actions[]",
+      "obligation_type": "stale_retirement",
+      "exact_tokens": [
+        "deprecated field names such as `allowed_actions[]` must not appear in new canonical schemas"
+      ],
+      "affected_doc_hints": [
+        "needs_doc_discovery_in_canonical_obligations_builder"
+      ],
+      "heading_hints": [
+        "Key findings"
+      ],
+      "stale_residue_to_retire": [
+        "allowed_actions[]"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L15694"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-5831"
+      ],
+      "source_shard_ids": [
+        "shard-0079"
+      ],
+      "canon_label": "Key findings",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "persistence should be through canonical blocked/runtime records"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [
+        "Key findings"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L15695"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-5832"
+      ],
+      "source_shard_ids": [
+        "shard-0079"
+      ],
+      "canon_label": "Key findings",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "visible labels must bind to the shared runtime recovery commands"
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [
+        "Key findings"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L15696"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-5833"
+      ],
+      "source_shard_ids": [
+        "shard-0079"
+      ],
+      "canon_label": "Impacted docs",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Primary owner doc:"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [
+        "Impacted docs"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L15699"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-5834"
+      ],
+      "source_shard_ids": [
+        "shard-0079"
+      ],
+      "canon_label": "Plans/human-in-the-loop.md",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "`Plans/human-in-the-loop.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/human-in-the-loop.md"
+      ],
+      "heading_hints": [
+        "Impacted docs"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L15699-L15700"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-5835"
+      ],
+      "source_shard_ids": [
+        "shard-0079"
+      ],
+      "canon_label": "Contradictions / gaps surfaced",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "This is now a document-structure problem as much as a design problem: the later correction needs clear precedence over the earlier sections."
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [
+        "Contradictions / gaps surfaced"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L15705"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-5836"
+      ],
+      "source_shard_ids": [
+        "shard-0079"
+      ],
+      "canon_label": "Candidate fixes to carry forward",
+      "obligation_type": "stale_retirement",
+      "exact_tokens": [
+        "Treat the earlier request-centric text as retired or compatibility-only rather than leaving it as live canonical base prose."
+      ],
+      "affected_doc_hints": [
+        "needs_doc_discovery_in_canonical_obligations_builder"
+      ],
+      "heading_hints": [
+        "Candidate fixes to carry forward"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L15708"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-5837"
+      ],
+      "source_shard_ids": [
+        "shard-0079"
+      ],
+      "canon_label": "Do-not-forget details",
+      "obligation_type": "stale_retirement",
+      "exact_tokens": [
+        "Reconciliation must retire or rewrite the earlier sections, not merely append another addendum."
+      ],
+      "affected_doc_hints": [
+        "needs_doc_discovery_in_canonical_obligations_builder"
+      ],
+      "heading_hints": [
+        "Do-not-forget details"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L15717"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-5838"
+      ],
+      "source_shard_ids": [
+        "shard-0079"
+      ],
+      "canon_label": "Plans/UI_Command_Catalog.md",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "`Plans/UI_Command_Catalog.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "heading_hints": [
+        "Targeted docs read"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L15717-L15722"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-5839"
+      ],
+      "source_shard_ids": [
+        "shard-0079"
+      ],
+      "canon_label": "Plans/Run_Graph_View.md",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "`Plans/Run_Graph_View.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Run_Graph_View.md"
+      ],
+      "heading_hints": [
+        "Targeted docs read"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L15717-L15723"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-5840"
+      ],
+      "source_shard_ids": [
+        "shard-0079"
+      ],
+      "canon_label": "Key findings",
+      "obligation_type": "stale_retirement",
+      "exact_tokens": [
+        "they are stale against the canonical runtime command model"
+      ],
+      "affected_doc_hints": [
+        "needs_doc_discovery_in_canonical_obligations_builder"
+      ],
+      "heading_hints": [
+        "Key findings"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L15727"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-5841"
+      ],
+      "source_shard_ids": [
+        "shard-0079"
+      ],
+      "canon_label": "Key findings",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "Both are already contradicted by the runtime command consolidation:"
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [
+        "Key findings"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L15735"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-5842"
+      ],
+      "source_shard_ids": [
+        "shard-0079"
+      ],
+      "canon_label": "Impacted docs",
+      "obligation_type": "stale_retirement",
+      "exact_tokens": [
+        "Primary stale/inconsistent consumers:"
+      ],
+      "affected_doc_hints": [
+        "needs_doc_discovery_in_canonical_obligations_builder"
+      ],
+      "heading_hints": [
+        "Impacted docs"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L15740"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-5843"
+      ],
+      "source_shard_ids": [
+        "shard-0079"
+      ],
+      "canon_label": "Plans/UI_Command_Catalog.md",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "`Plans/UI_Command_Catalog.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "heading_hints": [
+        "Impacted docs"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L15740-L15741"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-5844"
+      ],
+      "source_shard_ids": [
+        "shard-0079"
+      ],
+      "canon_label": "Plans/Run_Graph_View.md",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "`Plans/Run_Graph_View.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Run_Graph_View.md"
+      ],
+      "heading_hints": [
+        "Impacted docs"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L15740-L15742"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-5845"
+      ],
+      "source_shard_ids": [
+        "shard-0079"
+      ],
+      "canon_label": "Contradictions / gaps surfaced",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "The command catalog and the graph spec cannot both be correct."
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [
+        "Contradictions / gaps surfaced"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L15746"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-5846"
+      ],
+      "source_shard_ids": [
+        "shard-0079"
+      ],
+      "canon_label": "Candidate fixes to carry forward",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "Remove the graph-specific approval command contract as a primary action model."
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [
+        "Candidate fixes to carry forward"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L15750"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-5847"
+      ],
+      "source_shard_ids": [
+        "shard-0079"
+      ],
+      "canon_label": "Candidate fixes to carry forward",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Reconcile graph approval controls as wrappers over canonical runtime commands."
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [
+        "Candidate fixes to carry forward"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L15751"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-5848"
+      ],
+      "source_shard_ids": [
+        "shard-0079"
+      ],
+      "canon_label": "cmd.runtime.approve",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "If graph-local wrappers remain for UX readability, their normalization target and arg derivation must be explicit and consistent with `cmd.runtime.approve` / `cmd.runtime.decline`."
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [
+        "Candidate fixes to carry forward"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L15752"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-5849"
+      ],
+      "source_shard_ids": [
+        "shard-0079"
+      ],
+      "canon_label": "Do-not-forget details",
+      "obligation_type": "stale_retirement",
+      "exact_tokens": [
+        "It is one of the clearest examples where the stale approval model is now breaking exact command contracts."
+      ],
+      "affected_doc_hints": [
+        "needs_doc_discovery_in_canonical_obligations_builder"
+      ],
+      "heading_hints": [
+        "Do-not-forget details"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L15756"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-5850"
+      ],
+      "source_shard_ids": [
+        "shard-0079"
+      ],
+      "canon_label": "Plans/Orchestrator_Page.md",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "`Plans/Orchestrator_Page.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md"
+      ],
+      "heading_hints": [
+        "Targeted docs read"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L15756-L15761"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-5851"
+      ],
+      "source_shard_ids": [
+        "shard-0079"
+      ],
+      "canon_label": "Plans/Run_Graph_View.md",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "`Plans/Run_Graph_View.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Run_Graph_View.md"
+      ],
+      "heading_hints": [
+        "Targeted docs read"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L15756-L15762"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-5852"
+      ],
+      "source_shard_ids": [
+        "shard-0079"
+      ],
+      "canon_label": "Plans/storage-plan.md",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "`Plans/storage-plan.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [
+        "Targeted docs read"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L15763"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-5853"
+      ],
+      "source_shard_ids": [
+        "shard-0079"
+      ],
+      "canon_label": "Plans/Contracts_V0.md",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "`Plans/Contracts_V0.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md"
+      ],
+      "heading_hints": [
+        "Targeted docs read"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L15764"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-5854"
+      ],
+      "source_shard_ids": [
+        "shard-0079"
+      ],
+      "canon_label": "Key findings",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "The owner docs already provide a stronger canonical runtime source set:"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [
+        "Key findings"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L15783"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-5855"
+      ],
+      "source_shard_ids": [
+        "shard-0079"
+      ],
+      "canon_label": "Key findings",
+      "obligation_type": "stale_retirement",
+      "exact_tokens": [
+        "Both consumer docs already consume some of the newer runtime lineage concepts in later sections, which makes the early event-source tables internally stale rather than merely incomplete."
+      ],
+      "affected_doc_hints": [
+        "needs_doc_discovery_in_canonical_obligations_builder"
+      ],
+      "heading_hints": [
+        "Key findings"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L15792"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-5856"
+      ],
+      "source_shard_ids": [
+        "shard-0079"
+      ],
+      "canon_label": "Impacted docs",
+      "obligation_type": "stale_retirement",
+      "exact_tokens": [
+        "Primary stale consumers:"
+      ],
+      "affected_doc_hints": [
+        "needs_doc_discovery_in_canonical_obligations_builder"
+      ],
+      "heading_hints": [
+        "Impacted docs"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L15792-L15795"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-5857"
+      ],
+      "source_shard_ids": [
+        "shard-0079"
+      ],
+      "canon_label": "Plans/Orchestrator_Page.md",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "`Plans/Orchestrator_Page.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md"
+      ],
+      "heading_hints": [
+        "Impacted docs"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L15795-L15796"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-5858"
+      ],
+      "source_shard_ids": [
+        "shard-0079"
+      ],
+      "canon_label": "Plans/Run_Graph_View.md",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "`Plans/Run_Graph_View.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Run_Graph_View.md"
+      ],
+      "heading_hints": [
+        "Impacted docs"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L15795-L15797"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-5859"
+      ],
+      "source_shard_ids": [
+        "shard-0079"
+      ],
+      "canon_label": "Impacted docs",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Strong owner docs:"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [
+        "Impacted docs"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L15798"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-5860"
+      ],
+      "source_shard_ids": [
+        "shard-0079"
+      ],
+      "canon_label": "Plans/storage-plan.md",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "`Plans/storage-plan.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [
+        "Impacted docs"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L15798-L15799"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-5861"
+      ],
+      "source_shard_ids": [
+        "shard-0079"
+      ],
+      "canon_label": "Plans/Contracts_V0.md",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "`Plans/Contracts_V0.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md"
+      ],
+      "heading_hints": [
+        "Impacted docs"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L15798-L15800"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-5862"
+      ],
+      "source_shard_ids": [
+        "shard-0080"
+      ],
+      "canon_label": "Contradictions / gaps surfaced",
+      "obligation_type": "stale_retirement",
+      "exact_tokens": [
+        "The same consumer docs now rely on canonical blocked/scheduler/remediation lineage in one section and legacy tier-event push streams in another."
+      ],
+      "affected_doc_hints": [
+        "needs_doc_discovery_in_canonical_obligations_builder"
+      ],
+      "heading_hints": [
+        "Contradictions / gaps surfaced"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L15803"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-5863"
+      ],
+      "source_shard_ids": [
+        "shard-0080"
+      ],
+      "canon_label": "TierChanged",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "That split keeps teaching implementers that `TierChanged` and `UserInteractionRequired` are the primary operational truth even though the runtime/storage owner docs have already moved to canonical event and projection families."
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [
+        "Contradictions / gaps surfaced"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L15803-L15804"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-5864"
+      ],
+      "source_shard_ids": [
+        "shard-0080"
+      ],
+      "canon_label": "Candidate fixes to carry forward",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Reconcile the live-status source tables in graph and Orchestrator docs so they consume canonical runtime records/projections first."
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [
+        "Candidate fixes to carry forward"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L15811"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-5865"
+      ],
+      "source_shard_ids": [
+        "shard-0080"
+      ],
+      "canon_label": "TierChanged",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "Reconcile worker output and evidence update rules so they align with attempt/node/runtime lineage rather than `TierChanged`-driven active-tier state."
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [
+        "Candidate fixes to carry forward"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L15813"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-5866"
+      ],
+      "source_shard_ids": [
+        "shard-0080"
+      ],
+      "canon_label": "Do-not-forget details",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "This seam is now a consumer-doc sourcing problem, not a missing-runtime-contract problem."
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [
+        "Do-not-forget details"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L15816"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-5867"
+      ],
+      "source_shard_ids": [
+        "shard-0080"
+      ],
+      "canon_label": "Do-not-forget details",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "The owner docs already have the stronger source model."
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [
+        "Do-not-forget details"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L15816-L15817"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-5868"
+      ],
+      "source_shard_ids": [
+        "shard-0080"
+      ],
+      "canon_label": "Plans/Run_Graph_View.md",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "`Plans/Run_Graph_View.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Run_Graph_View.md"
+      ],
+      "heading_hints": [
+        "Targeted docs read"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L15817-L15822"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-5869"
+      ],
+      "source_shard_ids": [
+        "shard-0080"
+      ],
+      "canon_label": "GraphNode",
+      "obligation_type": "stale_retirement",
+      "exact_tokens": [
+        "The base `GraphNode` struct still preserves stale fields as if they were core model state:"
+      ],
+      "affected_doc_hints": [
+        "needs_doc_discovery_in_canonical_obligations_builder"
+      ],
+      "heading_hints": [
+        "Key findings"
+      ],
+      "stale_residue_to_retire": [
+        "GraphNode"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L15828"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-5870"
+      ],
+      "source_shard_ids": [
+        "shard-0080"
+      ],
+      "canon_label": "Key findings",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "Later addenda already require the stronger model:"
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [
+        "Key findings"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L15838"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-5871"
+      ],
+      "source_shard_ids": [
+        "shard-0080"
+      ],
+      "canon_label": "Impacted docs",
+      "obligation_type": "stale_retirement",
+      "exact_tokens": [
+        "Primary stale consumer:"
+      ],
+      "affected_doc_hints": [
+        "needs_doc_discovery_in_canonical_obligations_builder"
+      ],
+      "heading_hints": [
+        "Impacted docs"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L15848"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-5872"
+      ],
+      "source_shard_ids": [
+        "shard-0080"
+      ],
+      "canon_label": "Plans/Run_Graph_View.md",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "`Plans/Run_Graph_View.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Run_Graph_View.md"
+      ],
+      "heading_hints": [
+        "Impacted docs"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L15848-L15849"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-5873"
+      ],
+      "source_shard_ids": [
+        "shard-0080"
+      ],
+      "canon_label": "hitl_request_id",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`hitl_request_id` is now especially out of place because the same doc later centers `blocked_sequence` and canonical runtime commands."
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [
+        "Contradictions / gaps surfaced"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L15855"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-5874"
+      ],
+      "source_shard_ids": [
+        "shard-0080"
+      ],
+      "canon_label": "tier_type",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "`tier_type` still appears as a core node UI field even though the broader rewrite direction is to demote tier/phase labels to derived or compatibility-only view context."
+      ],
+      "affected_doc_hints": [
+        "layout_blocker_target_known_from_notes"
+      ],
+      "heading_hints": [
+        "Contradictions / gaps surfaced"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L15856"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-5875"
+      ],
+      "source_shard_ids": [
+        "shard-0080"
+      ],
+      "canon_label": "GraphNode",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "Reconcile the base `GraphNode` and `GraphNodeUI` contracts to the later runtime-lineage model."
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [
+        "Candidate fixes to carry forward"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L15856-L15859"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-5876"
+      ],
+      "source_shard_ids": [
+        "shard-0080"
+      ],
+      "canon_label": "Candidate fixes to carry forward",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Reconcile the HITL callback model so graph actions normalize through canonical runtime action targets rather than graph-local request callbacks."
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [
+        "Candidate fixes to carry forward"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L15862"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-5877"
+      ],
+      "source_shard_ids": [
+        "shard-0080"
+      ],
+      "canon_label": "Do-not-forget details",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "The later addenda already define the stronger direction; the base model has not caught up."
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [
+        "Do-not-forget details"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L15866"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-5878"
+      ],
+      "source_shard_ids": [
+        "shard-0080"
+      ],
+      "canon_label": "Plans/Orchestrator_Page.md",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "`Plans/Orchestrator_Page.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md"
+      ],
+      "heading_hints": [
+        "Targeted docs read"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L15866-L15871"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-5879"
+      ],
+      "source_shard_ids": [
+        "shard-0080"
+      ],
+      "canon_label": "Progress",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "The `Progress` tab is already correctly identified as widget-composed, but its default widget contract is still strongly tier-era."
+      ],
+      "affected_doc_hints": [
+        "layout_blocker_target_known_from_notes"
+      ],
+      "heading_hints": [
+        "Key findings"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L15866-L15874"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-5880"
+      ],
+      "source_shard_ids": [
+        "shard-0080"
+      ],
+      "canon_label": "Key findings",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "So the widget layer is now lagging the rest of the page\u2019s own rewrite direction."
+      ],
+      "affected_doc_hints": [
+        "layout_blocker_target_known_from_notes"
+      ],
+      "heading_hints": [
+        "Key findings"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L15888"
+      ],
+      "notes": []
+    }
+  ],
+  "represented_seed_ids": [
+    "seed-5821",
+    "seed-5822",
+    "seed-5823",
+    "seed-5824",
+    "seed-5825",
+    "seed-5826",
+    "seed-5827",
+    "seed-5828",
+    "seed-5829",
+    "seed-5830",
+    "seed-5831",
+    "seed-5832",
+    "seed-5833",
+    "seed-5834",
+    "seed-5835",
+    "seed-5836",
+    "seed-5837",
+    "seed-5838",
+    "seed-5839",
+    "seed-5840",
+    "seed-5841",
+    "seed-5842",
+    "seed-5843",
+    "seed-5844",
+    "seed-5845",
+    "seed-5846",
+    "seed-5847",
+    "seed-5848",
+    "seed-5849",
+    "seed-5850",
+    "seed-5851",
+    "seed-5852",
+    "seed-5853",
+    "seed-5854",
+    "seed-5855",
+    "seed-5856",
+    "seed-5857",
+    "seed-5858",
+    "seed-5859",
+    "seed-5860",
+    "seed-5861",
+    "seed-5862",
+    "seed-5863",
+    "seed-5864",
+    "seed-5865",
+    "seed-5866",
+    "seed-5867",
+    "seed-5868",
+    "seed-5869",
+    "seed-5870",
+    "seed-5871",
+    "seed-5872",
+    "seed-5873",
+    "seed-5874",
+    "seed-5875",
+    "seed-5876",
+    "seed-5877",
+    "seed-5878",
+    "seed-5879",
+    "seed-5880"
+  ],
+  "represented_source_shard_ids": [
+    "shard-0079",
+    "shard-0080"
+  ],
+  "deferred_seed_ids": [],
+  "noise_seed_ids": [],
+  "affected_doc_discovery_notes": []
+}

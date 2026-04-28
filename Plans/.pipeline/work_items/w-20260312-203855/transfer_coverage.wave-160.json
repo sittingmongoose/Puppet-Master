@@ -1,0 +1,1117 @@
+{
+  "schema_id": "pm.transfer_coverage_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-160",
+  "row_groups": [
+    "rowgrp-0637",
+    "rowgrp-0638",
+    "rowgrp-0639",
+    "rowgrp-0640"
+  ],
+  "coverage_rows": [
+    {
+      "coverage_id": "cov-03708",
+      "source_obligation_ids": [
+        "obl-3558"
+      ],
+      "source_seed_ids": [
+        "seed-4798"
+      ],
+      "source_shard_ids": [
+        "shard-0066"
+      ],
+      "canon_label": "Key findings",
+      "row_type": "stale_retirement",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "Key findings",
+      "status": "missing",
+      "exact_items": [
+        "Deprecated alias metadata should remain explicit and separate because it implies lifecycle/removal expectations that wrapper commands do not have."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "stale_retirement",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-03718",
+      "source_obligation_ids": [
+        "obl-3568"
+      ],
+      "source_seed_ids": [
+        "seed-4814"
+      ],
+      "source_shard_ids": [
+        "shard-0066"
+      ],
+      "canon_label": "Candidate fixes to carry forward",
+      "row_type": "stale_retirement",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "Candidate fixes to carry forward",
+      "status": "missing",
+      "exact_items": [
+        "deprecated aliases resolve to real canonical command IDs"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "stale_retirement",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-03798",
+      "source_obligation_ids": [
+        "obl-3648"
+      ],
+      "source_seed_ids": [
+        "seed-4940"
+      ],
+      "source_shard_ids": [
+        "shard-0068"
+      ],
+      "canon_label": "subject_id",
+      "row_type": "stale_retirement",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "Candidate fixes to carry forward",
+      "status": "missing",
+      "exact_items": [
+        "Normalize legacy/special-case IDs into `subject_id` or `object_kind/object_id`."
+      ],
+      "stale_tokens": [
+        "subject_id",
+        "object_kind/object_id"
+      ],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "stale_retirement",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-03863",
+      "source_obligation_ids": [
+        "obl-3713"
+      ],
+      "source_seed_ids": [
+        "seed-5091"
+      ],
+      "source_shard_ids": [
+        "shard-0070"
+      ],
+      "canon_label": "Key findings",
+      "row_type": "stale_retirement",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "Key findings",
+      "status": "missing",
+      "exact_items": [
+        "The highest-value pattern is that several \u201cowner-of-owners\u201d docs remain structurally stale and now actively amplify drift:"
+      ],
+      "stale_tokens": [
+        "owner-of-owners"
+      ],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "stale_retirement",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-03864",
+      "source_obligation_ids": [
+        "obl-3714"
+      ],
+      "source_seed_ids": [
+        "seed-5092"
+      ],
+      "source_shard_ids": [
+        "shard-0070"
+      ],
+      "canon_label": "00-plans-index.md",
+      "row_type": "stale_retirement",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "Key findings",
+      "status": "missing",
+      "exact_items": [
+        "`00-plans-index.md` still has missing SSOT rows, stranded addendum-to-plan-map updates, and stale routing around Crosswalk, Multi-Account, GitHub auth, and feature-list."
+      ],
+      "stale_tokens": [
+        "00-plans-index.md"
+      ],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "stale_retirement",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-03865",
+      "source_obligation_ids": [
+        "obl-3715"
+      ],
+      "source_seed_ids": [
+        "seed-5093"
+      ],
+      "source_shard_ids": [
+        "shard-0070"
+      ],
+      "canon_label": "rewrite-tie-in-memo.md",
+      "row_type": "stale_retirement",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "Key findings",
+      "status": "missing",
+      "exact_items": [
+        "`rewrite-tie-in-memo.md` is itself a stale rewrite root: it still omits seams/packages/lanes/overseers, scopes requested/effective identity too narrowly, and does not nominate several current owner docs that now carry rewrite-critical contracts."
+      ],
+      "stale_tokens": [
+        "rewrite-tie-in-memo.md"
+      ],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "stale_retirement",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-03866",
+      "source_obligation_ids": [
+        "obl-3716"
+      ],
+      "source_seed_ids": [
+        "seed-5094"
+      ],
+      "source_shard_ids": [
+        "shard-0070"
+      ],
+      "canon_label": "feature-list.md",
+      "row_type": "stale_retirement",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "Key findings",
+      "status": "missing",
+      "exact_items": [
+        "`feature-list.md` / `newfeatures.md` still preserve tier-era execution, old widget/tab assumptions, stale recovery models, and promoted-feature phasing contradictions that would mislead implementers who treat them as current."
+      ],
+      "stale_tokens": [
+        "feature-list.md",
+        "newfeatures.md"
+      ],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "stale_retirement",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-03873",
+      "source_obligation_ids": [
+        "obl-3723"
+      ],
+      "source_seed_ids": [
+        "seed-5101"
+      ],
+      "source_shard_ids": [
+        "shard-0070"
+      ],
+      "canon_label": "Section15_MVP_Promoted_Features_Spec.md",
+      "row_type": "stale_retirement",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "Key findings",
+      "status": "missing",
+      "exact_items": [
+        "`Section15_MVP_Promoted_Features_Spec.md` still points at stale Final GUI body text, missing project/session browser and attention-center surface ownership, and ungated promoted-feature command families."
+      ],
+      "stale_tokens": [
+        "Section15_MVP_Promoted_Features_Spec.md"
+      ],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "stale_retirement",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-03917",
+      "source_obligation_ids": [
+        "obl-3763"
+      ],
+      "source_seed_ids": [
+        "seed-5221"
+      ],
+      "source_shard_ids": [
+        "shard-0072"
+      ],
+      "canon_label": "Key findings",
+      "row_type": "stale_retirement",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "Key findings",
+      "status": "missing",
+      "exact_items": [
+        "The route layer must normalize legacy/special-case ids before validation rather than accepting them as ad hoc top-level fields."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "stale_retirement",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-03987",
+      "source_obligation_ids": [
+        "obl-3833"
+      ],
+      "source_seed_ids": [
+        "seed-5323",
+        "seed-5724",
+        "seed-5814",
+        "seed-5856"
+      ],
+      "source_shard_ids": [
+        "shard-0073",
+        "shard-0078",
+        "shard-0079"
+      ],
+      "canon_label": "Impacted docs",
+      "row_type": "stale_retirement",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "Impacted docs",
+      "status": "missing",
+      "exact_items": [
+        "Primary stale consumers:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "stale_retirement",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-03990",
+      "source_obligation_ids": [
+        "obl-3836"
+      ],
+      "source_seed_ids": [
+        "seed-5332"
+      ],
+      "source_shard_ids": [
+        "shard-0073"
+      ],
+      "canon_label": "Tiers",
+      "row_type": "stale_retirement",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "Contradictions / gaps surfaced",
+      "status": "missing",
+      "exact_items": [
+        "`Tiers` survives as a primary Orchestrator tab and as a primary GUI page concept in stale consumer docs even though the rewrite direction is `Seams` plus `Node Graph`, with tiers reduced to derived view context."
+      ],
+      "stale_tokens": [
+        "Tiers",
+        "Seams",
+        "Node Graph"
+      ],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "stale_retirement",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-03992",
+      "source_obligation_ids": [
+        "obl-3838"
+      ],
+      "source_seed_ids": [
+        "seed-5334"
+      ],
+      "source_shard_ids": [
+        "shard-0073"
+      ],
+      "canon_label": "Tiers",
+      "row_type": "stale_retirement",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "Candidate fixes to carry forward",
+      "status": "missing",
+      "exact_items": [
+        "Replace stale `Tiers` tab/page assumptions with the rewrite tab model:"
+      ],
+      "stale_tokens": [
+        "Tiers"
+      ],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "stale_retirement",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-03996",
+      "source_obligation_ids": [
+        "obl-3842"
+      ],
+      "source_seed_ids": [
+        "seed-5338"
+      ],
+      "source_shard_ids": [
+        "shard-0073"
+      ],
+      "canon_label": "FinalGUISpec.md",
+      "row_type": "stale_retirement",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "Do-not-forget details",
+      "status": "missing",
+      "exact_items": [
+        "`FinalGUISpec.md` will keep reintroducing stale page assumptions until the owner docs are reconciled first."
+      ],
+      "stale_tokens": [
+        "FinalGUISpec.md"
+      ],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "stale_retirement",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-04002",
+      "source_obligation_ids": [
+        "obl-3848"
+      ],
+      "source_seed_ids": [
+        "seed-5345"
+      ],
+      "source_shard_ids": [
+        "shard-0073"
+      ],
+      "canon_label": "Key findings",
+      "row_type": "stale_retirement",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "Key findings",
+      "status": "missing",
+      "exact_items": [
+        "The stale part:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "stale_retirement",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-04006",
+      "source_obligation_ids": [
+        "obl-3852"
+      ],
+      "source_seed_ids": [
+        "seed-5349",
+        "seed-5367",
+        "seed-5388",
+        "seed-5871",
+        "seed-5881"
+      ],
+      "source_shard_ids": [
+        "shard-0073",
+        "shard-0074",
+        "shard-0080"
+      ],
+      "canon_label": "Impacted docs",
+      "row_type": "stale_retirement",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "Impacted docs",
+      "status": "missing",
+      "exact_items": [
+        "Primary stale consumer:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "stale_retirement",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-04010",
+      "source_obligation_ids": [
+        "obl-3856"
+      ],
+      "source_seed_ids": [
+        "seed-5357"
+      ],
+      "source_shard_ids": [
+        "shard-0073"
+      ],
+      "canon_label": "cost_usage",
+      "row_type": "stale_retirement",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "Contradictions / gaps surfaced",
+      "status": "missing",
+      "exact_items": [
+        "The duplicated `cost_usage` section raises reconciliation risk because one copy can be updated while the other stays stale."
+      ],
+      "stale_tokens": [
+        "cost_usage"
+      ],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "stale_retirement",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-04024",
+      "source_obligation_ids": [
+        "obl-3870"
+      ],
+      "source_seed_ids": [
+        "seed-5380"
+      ],
+      "source_shard_ids": [
+        "shard-0073"
+      ],
+      "canon_label": "FileManager.md",
+      "row_type": "stale_retirement",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "Do-not-forget details",
+      "status": "missing",
+      "exact_items": [
+        "`FileManager.md` is now the main stale consumer for this seam."
+      ],
+      "stale_tokens": [
+        "FileManager.md"
+      ],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "stale_retirement",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-04036",
+      "source_obligation_ids": [
+        "obl-3882"
+      ],
+      "source_seed_ids": [
+        "seed-5401"
+      ],
+      "source_shard_ids": [
+        "shard-0074"
+      ],
+      "canon_label": "WorktreeGitImprovement.md",
+      "row_type": "stale_retirement",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "Do-not-forget details",
+      "status": "missing",
+      "exact_items": [
+        "`WorktreeGitImprovement.md` already contains the correct surface boundary. The stale part is the identity anchor, not the product boundary."
+      ],
+      "stale_tokens": [
+        "WorktreeGitImprovement.md"
+      ],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "stale_retirement",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-04051",
+      "source_obligation_ids": [
+        "obl-3897"
+      ],
+      "source_seed_ids": [
+        "seed-5425"
+      ],
+      "source_shard_ids": [
+        "shard-0074"
+      ],
+      "canon_label": "task_id",
+      "row_type": "stale_retirement",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "Candidate fixes to carry forward",
+      "status": "missing",
+      "exact_items": [
+        "Reconcile runtime-artifact identity language away from stale `task_id` framing and toward runtime/object identity."
+      ],
+      "stale_tokens": [
+        "task_id"
+      ],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "stale_retirement",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-04055",
+      "source_obligation_ids": [
+        "obl-3901"
+      ],
+      "source_seed_ids": [
+        "seed-5429"
+      ],
+      "source_shard_ids": [
+        "shard-0074"
+      ],
+      "canon_label": "Key findings",
+      "row_type": "stale_retirement",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "Key findings",
+      "status": "missing",
+      "exact_items": [
+        "a bounded set of stale consumer reconciliations"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "stale_retirement",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-04087",
+      "source_obligation_ids": [
+        "obl-3933"
+      ],
+      "source_seed_ids": [
+        "seed-5465"
+      ],
+      "source_shard_ids": [
+        "shard-0074"
+      ],
+      "canon_label": "Crosswalk.md",
+      "row_type": "stale_retirement",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "Contradictions / gaps surfaced",
+      "status": "missing",
+      "exact_items": [
+        "`Crosswalk.md` also still carries stale Orchestrator ownership text:"
+      ],
+      "stale_tokens": [
+        "Crosswalk.md"
+      ],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "stale_retirement",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-04089",
+      "source_obligation_ids": [
+        "obl-3935"
+      ],
+      "source_seed_ids": [
+        "seed-5467"
+      ],
+      "source_shard_ids": [
+        "shard-0074"
+      ],
+      "canon_label": "Contradictions / gaps surfaced",
+      "row_type": "stale_retirement",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "Contradictions / gaps surfaced",
+      "status": "missing",
+      "exact_items": [
+        "that stale primitive text will conflict with the rewrite tab model during reconciliation"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "stale_retirement",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-04094",
+      "source_obligation_ids": [
+        "obl-3940"
+      ],
+      "source_seed_ids": [
+        "seed-5472"
+      ],
+      "source_shard_ids": [
+        "shard-0074"
+      ],
+      "canon_label": "OrchestratorPage",
+      "row_type": "stale_retirement",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "Candidate fixes to carry forward",
+      "status": "missing",
+      "exact_items": [
+        "update stale `OrchestratorPage` boundary text to the rewrite tab model"
+      ],
+      "stale_tokens": [
+        "OrchestratorPage"
+      ],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "stale_retirement",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-04101",
+      "source_obligation_ids": [
+        "obl-3947"
+      ],
+      "source_seed_ids": [
+        "seed-5481"
+      ],
+      "source_shard_ids": [
+        "shard-0075"
+      ],
+      "canon_label": "Tiers",
+      "row_type": "stale_retirement",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "stale page and tab assumptions around `Tiers` and widgetized Orchestrator surfaces"
+      ],
+      "stale_tokens": [
+        "Tiers"
+      ],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "stale_retirement",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-04106",
+      "source_obligation_ids": [
+        "obl-3952"
+      ],
+      "source_seed_ids": [
+        "seed-5488"
+      ],
+      "source_shard_ids": [
+        "shard-0075"
+      ],
+      "canon_label": "FinalGUISpec.md",
+      "row_type": "stale_retirement",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "Contradictions / gaps surfaced",
+      "status": "missing",
+      "exact_items": [
+        "`FinalGUISpec.md` still preserves `Tiers` as both a page concept and a settings grouping label, which will keep reintroducing stale vocabulary."
+      ],
+      "stale_tokens": [
+        "FinalGUISpec.md",
+        "Tiers"
+      ],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "stale_retirement",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-04109",
+      "source_obligation_ids": [
+        "obl-3955"
+      ],
+      "source_seed_ids": [
+        "seed-5491"
+      ],
+      "source_shard_ids": [
+        "shard-0075"
+      ],
+      "canon_label": "Tiers",
+      "row_type": "stale_retirement",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "Candidate fixes to carry forward",
+      "status": "missing",
+      "exact_items": [
+        "replace stale `Tiers` primary-surface language with the rewrite Orchestrator tab model"
+      ],
+      "stale_tokens": [
+        "Tiers"
+      ],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "stale_retirement",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-04132",
+      "source_obligation_ids": [
+        "obl-3978"
+      ],
+      "source_seed_ids": [
+        "seed-5529"
+      ],
+      "source_shard_ids": [
+        "shard-0075"
+      ],
+      "canon_label": "Key findings",
+      "row_type": "stale_retirement",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "Key findings",
+      "status": "missing",
+      "exact_items": [
+        "Several routing-adjacent docs now have plain spec-integrity defects in addition to stale model assumptions."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "stale_retirement",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-04138",
+      "source_obligation_ids": [
+        "obl-3984"
+      ],
+      "source_seed_ids": [
+        "seed-5539"
+      ],
+      "source_shard_ids": [
+        "shard-0075"
+      ],
+      "canon_label": "Tiers",
+      "row_type": "stale_retirement",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "Candidate fixes to carry forward",
+      "status": "missing",
+      "exact_items": [
+        "Remove stale `Tiers` page/tab structures from `FinalGUISpec.md` and `Orchestrator_Page.md` in the same reconciliation tranche so they do not keep cross-referencing each other."
+      ],
+      "stale_tokens": [
+        "Tiers",
+        "FinalGUISpec.md",
+        "Orchestrator_Page.md"
+      ],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "stale_retirement",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-04146",
+      "source_obligation_ids": [
+        "obl-3992"
+      ],
+      "source_seed_ids": [
+        "seed-5555",
+        "seed-5777"
+      ],
+      "source_shard_ids": [
+        "shard-0075",
+        "shard-0078"
+      ],
+      "canon_label": "Impacted docs",
+      "row_type": "stale_retirement",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "Impacted docs",
+      "status": "missing",
+      "exact_items": [
+        "Strong stale consumers:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "stale_retirement",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-04170",
+      "source_obligation_ids": [
+        "obl-4016"
+      ],
+      "source_seed_ids": [
+        "seed-5599"
+      ],
+      "source_shard_ids": [
+        "shard-0076"
+      ],
+      "canon_label": "Key findings",
+      "row_type": "stale_retirement",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "Key findings",
+      "status": "missing",
+      "exact_items": [
+        "The stale pieces are still structural, not incidental:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "stale_retirement",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-04175",
+      "source_obligation_ids": [
+        "obl-4021"
+      ],
+      "source_seed_ids": [
+        "seed-5609"
+      ],
+      "source_shard_ids": [
+        "shard-0076"
+      ],
+      "canon_label": "tier_runtime_record",
+      "row_type": "stale_retirement",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "Candidate fixes to carry forward",
+      "status": "missing",
+      "exact_items": [
+        "stale `tier_runtime_record` framing is reduced to derived compatibility state or replaced by rewrite-era execution-context projections"
+      ],
+      "stale_tokens": [
+        "tier_runtime_record"
+      ],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "stale_retirement",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-04188",
+      "source_obligation_ids": [
+        "obl-4034"
+      ],
+      "source_seed_ids": [
+        "seed-5637"
+      ],
+      "source_shard_ids": [
+        "shard-0077"
+      ],
+      "canon_label": "Strong stale consumers:",
+      "row_type": "stale_retirement",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "Strong stale consumers:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "stale_retirement",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-04199",
+      "source_obligation_ids": [
+        "obl-4045"
+      ],
+      "source_seed_ids": [
+        "seed-5652"
+      ],
+      "source_shard_ids": [
+        "shard-0077"
+      ],
+      "canon_label": "Contradictions / gaps surfaced",
+      "row_type": "stale_retirement",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "Contradictions / gaps surfaced",
+      "status": "missing",
+      "exact_items": [
+        "This is no longer only \u201cstorage is stale in places.\u201d The document now carries multiple overlapping canonicality layers from different rewrite stages."
+      ],
+      "stale_tokens": [
+        "storage is stale in places."
+      ],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "stale_retirement",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-04201",
+      "source_obligation_ids": [
+        "obl-4047"
+      ],
+      "source_seed_ids": [
+        "seed-5654"
+      ],
+      "source_shard_ids": [
+        "shard-0077"
+      ],
+      "canon_label": "Contradictions / gaps surfaced",
+      "row_type": "stale_retirement",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "Contradictions / gaps surfaced",
+      "status": "missing",
+      "exact_items": [
+        "The strongest runtime model is already present in the file; the problem is that older canon has not been retired."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "stale_retirement",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-04203",
+      "source_obligation_ids": [
+        "obl-4049"
+      ],
+      "source_seed_ids": [
+        "seed-5656"
+      ],
+      "source_shard_ids": [
+        "shard-0077"
+      ],
+      "canon_label": "Candidate fixes to carry forward",
+      "row_type": "stale_retirement",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "Candidate fixes to carry forward",
+      "status": "missing",
+      "exact_items": [
+        "Retire or explicitly compatibility-label the older tier/HITL request-era tables instead of letting them stand as live canon beside the newer runtime sections."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "stale_retirement",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-04204",
+      "source_obligation_ids": [
+        "obl-4050"
+      ],
+      "source_seed_ids": [
+        "seed-5657"
+      ],
+      "source_shard_ids": [
+        "shard-0077"
+      ],
+      "canon_label": "Do-not-forget details",
+      "row_type": "stale_retirement",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "Do-not-forget details",
+      "status": "missing",
+      "exact_items": [
+        "Later stronger sections already exist; the cleanup problem is retirement and unification, not invention."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "stale_retirement",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-04207",
+      "source_obligation_ids": [
+        "obl-4053"
+      ],
+      "source_seed_ids": [
+        "seed-5660"
+      ],
+      "source_shard_ids": [
+        "shard-0077"
+      ],
+      "canon_label": "Key findings",
+      "row_type": "stale_retirement",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "Key findings",
+      "status": "missing",
+      "exact_items": [
+        "older base text still remains live and keeps teaching the stale model"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "stale_retirement",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-04222",
+      "source_obligation_ids": [
+        "obl-4068"
+      ],
+      "source_seed_ids": [
+        "seed-5675"
+      ],
+      "source_shard_ids": [
+        "shard-0077"
+      ],
+      "canon_label": "Remaining cleanup classes",
+      "row_type": "stale_retirement",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "Remaining cleanup classes",
+      "status": "missing",
+      "exact_items": [
+        "stale consumer cleanup"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "stale_retirement",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-04224",
+      "source_obligation_ids": [
+        "obl-4070"
+      ],
+      "source_seed_ids": [
+        "seed-5677"
+      ],
+      "source_shard_ids": [
+        "shard-0077"
+      ],
+      "canon_label": "PuppetMasterEvent::*",
+      "row_type": "stale_retirement",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "Remaining cleanup classes",
+      "status": "missing",
+      "exact_items": [
+        "legacy `PuppetMasterEvent::*` source tables"
+      ],
+      "stale_tokens": [
+        "PuppetMasterEvent::*"
+      ],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "stale_retirement",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-04229",
+      "source_obligation_ids": [
+        "obl-4075"
+      ],
+      "source_seed_ids": [
+        "seed-5682"
+      ],
+      "source_shard_ids": [
+        "shard-0077"
+      ],
+      "canon_label": "Key findings",
+      "row_type": "stale_retirement",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "Key findings",
+      "status": "missing",
+      "exact_items": [
+        "stale consumers are mostly downstream reflections of those owner failures"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "stale_retirement",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    }
+  ]
+}

@@ -1,0 +1,1411 @@
+{
+  "schema_id": "pm.transfer_coverage_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-005",
+  "row_groups": [
+    "rowgrp-0017",
+    "rowgrp-0018",
+    "rowgrp-0019",
+    "rowgrp-0020"
+  ],
+  "coverage_rows": [
+    {
+      "coverage_id": "cov-00306",
+      "source_obligation_ids": [
+        "obl-0305"
+      ],
+      "source_seed_ids": [
+        "seed-0306"
+      ],
+      "source_shard_ids": [
+        "shard-0005"
+      ],
+      "canon_label": "Plans/Contracts_V0.md",
+      "row_type": "consumer",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "Impacted Docs",
+      "status": "partial",
+      "exact_items": [
+        "`Plans/Contracts_V0.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:14",
+        "Plans/Contracts_V0.md:322"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-00388",
+      "source_obligation_ids": [
+        "obl-0387"
+      ],
+      "source_seed_ids": [
+        "seed-0392"
+      ],
+      "source_shard_ids": [
+        "shard-0006"
+      ],
+      "canon_label": "Plans/Contracts_V0.md",
+      "row_type": "consumer",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "Do-Not-Forget Details",
+      "status": "partial",
+      "exact_items": [
+        "`Plans/Contracts_V0.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:14",
+        "Plans/Contracts_V0.md:971"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-00411",
+      "source_obligation_ids": [
+        "obl-0410"
+      ],
+      "source_seed_ids": [
+        "seed-0415"
+      ],
+      "source_shard_ids": [
+        "shard-0006"
+      ],
+      "canon_label": "Plans/Contracts_V0.md",
+      "row_type": "consumer",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "Runtime / Storage / Contract Impacts",
+      "status": "present",
+      "exact_items": [
+        "`Plans/Contracts_V0.md` / `Plans/Executor_Protocol.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:14",
+        "Plans/Contracts_V0.md:702",
+        "Plans/Contracts_V0.md:25",
+        "Plans/Contracts_V0.md:158",
+        "Plans/Contracts_V0.md:1"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00480",
+      "source_obligation_ids": [
+        "obl-0471"
+      ],
+      "source_seed_ids": [
+        "seed-0476"
+      ],
+      "source_shard_ids": [
+        "shard-0007"
+      ],
+      "canon_label": "Plans/orchestrator-subagent-integration.md",
+      "row_type": "consumer",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "Highest-Impact Docs",
+      "status": "present",
+      "exact_items": [
+        "**`Plans/orchestrator-subagent-integration.md` + `Plans/Executor_Protocol.md` + `Plans/Contracts_V0.md`**"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:1515",
+        "Plans/Contracts_V0.md:702",
+        "Plans/Contracts_V0.md:14",
+        "Plans/Contracts_V0.md:322"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00539",
+      "source_obligation_ids": [
+        "obl-0521"
+      ],
+      "source_seed_ids": [
+        "seed-0526"
+      ],
+      "source_shard_ids": [
+        "shard-0008"
+      ],
+      "canon_label": "Plans/Contracts_V0.md",
+      "row_type": "consumer",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "Highest-Impact Docs",
+      "status": "present",
+      "exact_items": [
+        "**`Plans/Contracts_V0.md` + `Plans/Executor_Protocol.md` + `Plans/Orchestrator_Page.md`**"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:14",
+        "Plans/Contracts_V0.md:702",
+        "Plans/Contracts_V0.md:841",
+        "Plans/Contracts_V0.md:322"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00592",
+      "source_obligation_ids": [
+        "obl-0562"
+      ],
+      "source_seed_ids": [
+        "seed-0567"
+      ],
+      "source_shard_ids": [
+        "shard-0008"
+      ],
+      "canon_label": "Plans/Orchestrator_Page.md",
+      "row_type": "consumer",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "Highest-Impact Docs",
+      "status": "present",
+      "exact_items": [
+        "**`Plans/Orchestrator_Page.md` + `Plans/Executor_Protocol.md` + `Plans/Contracts_V0.md`**"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:841",
+        "Plans/Contracts_V0.md:702",
+        "Plans/Contracts_V0.md:14",
+        "Plans/Contracts_V0.md:322"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00630",
+      "source_obligation_ids": [
+        "obl-0592"
+      ],
+      "source_seed_ids": [
+        "seed-0597",
+        "seed-0674"
+      ],
+      "source_shard_ids": [
+        "shard-0009",
+        "shard-0010"
+      ],
+      "canon_label": "Plans/Contracts_V0.md",
+      "row_type": "consumer",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "Cleanup Priorities",
+      "status": "partial",
+      "exact_items": [
+        "`Plans/Contracts_V0.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:14",
+        "Plans/Contracts_V0.md:11"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-00660",
+      "source_obligation_ids": [
+        "obl-0622"
+      ],
+      "source_seed_ids": [
+        "seed-0627"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "canon_label": "Plans/Contracts_V0.md",
+      "row_type": "consumer",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "Highest-Impact Docs",
+      "status": "partial",
+      "exact_items": [
+        "`Plans/Contracts_V0.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:14",
+        "Plans/Contracts_V0.md:322"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-00694",
+      "source_obligation_ids": [
+        "obl-0645"
+      ],
+      "source_seed_ids": [
+        "seed-0651"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "canon_label": "Plans/Contracts_V0.md",
+      "row_type": "consumer",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "Runtime / Storage / Contract Impacts",
+      "status": "present",
+      "exact_items": [
+        "`Plans/Contracts_V0.md` vs `Plans/Orchestrator_Page.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:14",
+        "Plans/Contracts_V0.md:841",
+        "Plans/Contracts_V0.md:25",
+        "Plans/Contracts_V0.md:158",
+        "Plans/Contracts_V0.md:1"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00697",
+      "source_obligation_ids": [
+        "obl-0647"
+      ],
+      "source_seed_ids": [
+        "seed-0653"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "canon_label": "Plans/Contracts_V0.md",
+      "row_type": "consumer",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "Runtime / Storage / Contract Impacts",
+      "status": "present",
+      "exact_items": [
+        "`Plans/Contracts_V0.md` vs `Plans/human-in-the-loop.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:14",
+        "Plans/Contracts_V0.md:814",
+        "Plans/Contracts_V0.md:25",
+        "Plans/Contracts_V0.md:158",
+        "Plans/Contracts_V0.md:1"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00734",
+      "source_obligation_ids": [
+        "obl-0673"
+      ],
+      "source_seed_ids": [
+        "seed-0695"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "canon_label": "Plans/Contracts_V0.md",
+      "row_type": "consumer",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "Contradictions To Resolve",
+      "status": "present",
+      "exact_items": [
+        "docs involved: `Plans/Contracts_V0.md`, `Plans/Orchestrator_Page.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:14",
+        "Plans/Contracts_V0.md:841",
+        "Plans/Contracts_V0.md:322",
+        "Plans/Contracts_V0.md:63"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00737",
+      "source_obligation_ids": [
+        "obl-0675"
+      ],
+      "source_seed_ids": [
+        "seed-0698"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "canon_label": "Plans/Contracts_V0.md",
+      "row_type": "consumer",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "Contradictions To Resolve",
+      "status": "present",
+      "exact_items": [
+        "docs involved: `Plans/Contracts_V0.md`, `Plans/human-in-the-loop.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:14",
+        "Plans/Contracts_V0.md:814",
+        "Plans/Contracts_V0.md:322",
+        "Plans/Contracts_V0.md:63"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00804",
+      "source_obligation_ids": [
+        "obl-0736"
+      ],
+      "source_seed_ids": [
+        "seed-0764",
+        "seed-0885",
+        "seed-1009",
+        "seed-1040",
+        "seed-1077",
+        "seed-1103",
+        "seed-1372",
+        "seed-1417",
+        "seed-1626",
+        "seed-1651",
+        "seed-1676",
+        "seed-1722",
+        "seed-1750",
+        "seed-1787",
+        "seed-1827",
+        "seed-1929",
+        "seed-2043",
+        "seed-2072",
+        "seed-2120",
+        "seed-2232",
+        "seed-2294",
+        "seed-2315",
+        "seed-2356",
+        "seed-2421",
+        "seed-2453",
+        "seed-2482",
+        "seed-2518",
+        "seed-2548",
+        "seed-2570",
+        "seed-2634",
+        "seed-2688",
+        "seed-2717",
+        "seed-2783",
+        "seed-2812",
+        "seed-2983",
+        "seed-3025",
+        "seed-3103",
+        "seed-3239",
+        "seed-3382",
+        "seed-3426",
+        "seed-3544",
+        "seed-4002",
+        "seed-4061",
+        "seed-4257",
+        "seed-4289",
+        "seed-4313",
+        "seed-4342",
+        "seed-4399",
+        "seed-4684",
+        "seed-4723",
+        "seed-4753",
+        "seed-4787",
+        "seed-4823",
+        "seed-5006",
+        "seed-5186",
+        "seed-5405",
+        "seed-5452",
+        "seed-5541",
+        "seed-5567",
+        "seed-5593",
+        "seed-5613",
+        "seed-5718",
+        "seed-5741",
+        "seed-5765",
+        "seed-5791",
+        "seed-5853",
+        "seed-6237"
+      ],
+      "source_shard_ids": [
+        "shard-0011",
+        "shard-0012",
+        "shard-0014",
+        "shard-0015",
+        "shard-0016",
+        "shard-0017",
+        "shard-0024",
+        "shard-0029",
+        "shard-0030",
+        "shard-0031",
+        "shard-0032",
+        "shard-0033",
+        "shard-0034",
+        "shard-0035",
+        "shard-0036",
+        "shard-0037",
+        "shard-0038",
+        "shard-0039",
+        "shard-0040",
+        "shard-0041",
+        "shard-0042",
+        "shard-0043",
+        "shard-0044",
+        "shard-0046",
+        "shard-0047",
+        "shard-0049",
+        "shard-0051",
+        "shard-0052",
+        "shard-0057",
+        "shard-0058",
+        "shard-0060",
+        "shard-0061",
+        "shard-0062",
+        "shard-0065",
+        "shard-0066",
+        "shard-0069",
+        "shard-0071",
+        "shard-0074",
+        "shard-0075",
+        "shard-0076",
+        "shard-0077",
+        "shard-0078",
+        "shard-0079",
+        "shard-0083"
+      ],
+      "canon_label": "Plans/Contracts_V0.md",
+      "row_type": "consumer",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "Targeted docs read",
+      "status": "present",
+      "exact_items": [
+        "`Plans/Contracts_V0.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:14",
+        "Plans/Contracts_V0.md:322",
+        "Plans/Contracts_V0.md:191"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-01586",
+      "source_obligation_ids": [
+        "obl-1517"
+      ],
+      "source_seed_ids": [
+        "seed-1695",
+        "seed-1765",
+        "seed-1805",
+        "seed-1839",
+        "seed-2302",
+        "seed-2331",
+        "seed-2466",
+        "seed-2558",
+        "seed-2578",
+        "seed-2700",
+        "seed-2798",
+        "seed-2824",
+        "seed-3001",
+        "seed-3038",
+        "seed-3114",
+        "seed-3254",
+        "seed-3406",
+        "seed-3441",
+        "seed-3500",
+        "seed-3560",
+        "seed-3603",
+        "seed-3647",
+        "seed-3682",
+        "seed-3715",
+        "seed-3751",
+        "seed-3820",
+        "seed-3914",
+        "seed-3953",
+        "seed-3984",
+        "seed-4009",
+        "seed-4046",
+        "seed-4072",
+        "seed-4101",
+        "seed-4158",
+        "seed-4196",
+        "seed-4225",
+        "seed-4244",
+        "seed-4269",
+        "seed-4300",
+        "seed-4329",
+        "seed-4356",
+        "seed-4384",
+        "seed-4413",
+        "seed-4476",
+        "seed-4506",
+        "seed-4540",
+        "seed-4564",
+        "seed-4589",
+        "seed-4619",
+        "seed-4667",
+        "seed-4702",
+        "seed-4734",
+        "seed-4766",
+        "seed-4801",
+        "seed-4841",
+        "seed-4874",
+        "seed-4897",
+        "seed-4930",
+        "seed-4951",
+        "seed-4971",
+        "seed-4994",
+        "seed-5015",
+        "seed-5038",
+        "seed-5058",
+        "seed-5171",
+        "seed-5189",
+        "seed-5204",
+        "seed-5222",
+        "seed-5242",
+        "seed-5262",
+        "seed-5329",
+        "seed-5352",
+        "seed-5372",
+        "seed-5395",
+        "seed-5415",
+        "seed-5461",
+        "seed-5553",
+        "seed-5579",
+        "seed-5604",
+        "seed-5618",
+        "seed-5730",
+        "seed-5754",
+        "seed-5776",
+        "seed-5797",
+        "seed-5861",
+        "seed-6184",
+        "seed-6220",
+        "seed-6239",
+        "seed-6263",
+        "seed-6283",
+        "seed-6306",
+        "seed-6333",
+        "seed-6368",
+        "seed-6398"
+      ],
+      "source_shard_ids": [
+        "shard-0031",
+        "shard-0032",
+        "shard-0033",
+        "shard-0038",
+        "shard-0040",
+        "shard-0041",
+        "shard-0042",
+        "shard-0043",
+        "shard-0044",
+        "shard-0045",
+        "shard-0046",
+        "shard-0047",
+        "shard-0049",
+        "shard-0051",
+        "shard-0052",
+        "shard-0053",
+        "shard-0054",
+        "shard-0055",
+        "shard-0056",
+        "shard-0057",
+        "shard-0058",
+        "shard-0059",
+        "shard-0060",
+        "shard-0061",
+        "shard-0062",
+        "shard-0063",
+        "shard-0064",
+        "shard-0065",
+        "shard-0066",
+        "shard-0067",
+        "shard-0068",
+        "shard-0069",
+        "shard-0070",
+        "shard-0071",
+        "shard-0072",
+        "shard-0073",
+        "shard-0074",
+        "shard-0075",
+        "shard-0076",
+        "shard-0078",
+        "shard-0079",
+        "shard-0082",
+        "shard-0083",
+        "shard-0084",
+        "shard-0085"
+      ],
+      "canon_label": "Plans/Contracts_V0.md",
+      "row_type": "consumer",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "Impacted docs",
+      "status": "partial",
+      "exact_items": [
+        "`Plans/Contracts_V0.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:14",
+        "Plans/Contracts_V0.md:322"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-01769",
+      "source_obligation_ids": [
+        "obl-1700"
+      ],
+      "source_seed_ids": [
+        "seed-1947",
+        "seed-2059",
+        "seed-2091"
+      ],
+      "source_shard_ids": [
+        "shard-0034",
+        "shard-0035"
+      ],
+      "canon_label": "Plans/Contracts_V0.md",
+      "row_type": "consumer",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "Highest-risk impacted docs",
+      "status": "partial",
+      "exact_items": [
+        "`Plans/Contracts_V0.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:14",
+        "Plans/Contracts_V0.md:322"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-02087",
+      "source_obligation_ids": [
+        "obl-2009"
+      ],
+      "source_seed_ids": [
+        "seed-2375",
+        "seed-2409",
+        "seed-2538"
+      ],
+      "source_shard_ids": [
+        "shard-0039",
+        "shard-0041"
+      ],
+      "canon_label": "Plans/Contracts_V0.md",
+      "row_type": "consumer",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "Highest-risk impacted docs",
+      "status": "present",
+      "exact_items": [
+        "`Plans/Contracts_V0.md` + `Plans/storage-plan.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:14",
+        "Plans/Contracts_V0.md:340",
+        "Plans/Contracts_V0.md:322"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-02941",
+      "source_obligation_ids": [
+        "obl-2858"
+      ],
+      "source_seed_ids": [
+        "seed-3619"
+      ],
+      "source_shard_ids": [
+        "shard-0053"
+      ],
+      "canon_label": "Plans/storage-plan.md",
+      "row_type": "consumer",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "Targeted docs read",
+      "status": "present",
+      "exact_items": [
+        "spot-checks against `Plans/storage-plan.md` and `Plans/Contracts_V0.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:340",
+        "Plans/Contracts_V0.md:14",
+        "Plans/Contracts_V0.md:322",
+        "Plans/Contracts_V0.md:191"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-03290",
+      "source_obligation_ids": [
+        "obl-3198"
+      ],
+      "source_seed_ids": [
+        "seed-4180"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "canon_label": "Plans/*.md",
+      "row_type": "consumer",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "Do-not-forget details",
+      "status": "present",
+      "exact_items": [
+        "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:225",
+        "Plans/Contracts_V0.md:14",
+        "Plans/Contracts_V0.md:322",
+        "Plans/Contracts_V0.md:387",
+        "Plans/Contracts_V0.md:1105",
+        "Plans/Contracts_V0.md:5",
+        "Plans/Contracts_V0.md:371",
+        "Plans/Contracts_V0.md:19",
+        "Plans/Contracts_V0.md:71",
+        "Plans/Contracts_V0.md:971"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-03517",
+      "source_obligation_ids": [
+        "obl-3368"
+      ],
+      "source_seed_ids": [
+        "seed-4493",
+        "seed-5295",
+        "seed-6777",
+        "seed-6917",
+        "seed-7200"
+      ],
+      "source_shard_ids": [
+        "shard-0063",
+        "shard-0073",
+        "shard-0089",
+        "shard-0090",
+        "shard-0092"
+      ],
+      "canon_label": "Plans/Contracts_V0.md",
+      "row_type": "consumer",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "`Plans/Contracts_V0.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:14"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-03949",
+      "source_obligation_ids": [
+        "obl-3795"
+      ],
+      "source_seed_ids": [
+        "seed-5272"
+      ],
+      "source_shard_ids": [
+        "shard-0072"
+      ],
+      "canon_label": "Plans/Contracts_V0.md",
+      "row_type": "consumer",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "Key findings",
+      "status": "present",
+      "exact_items": [
+        "`Plans/Contracts_V0.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:14",
+        "Plans/Contracts_V0.md:1426"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-04048",
+      "source_obligation_ids": [
+        "obl-3894"
+      ],
+      "source_seed_ids": [
+        "seed-5422"
+      ],
+      "source_shard_ids": [
+        "shard-0074"
+      ],
+      "canon_label": "route_target",
+      "row_type": "consumer",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "Candidate fixes to carry forward",
+      "status": "present",
+      "exact_items": [
+        "Put the named `route_target` and `OpenSubject` contracts in `Plans/Contracts_V0.md`."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:253",
+        "Plans/Contracts_V0.md:14",
+        "Plans/Contracts_V0.md:1",
+        "Plans/Contracts_V0.md:25"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-04058",
+      "source_obligation_ids": [
+        "obl-3904"
+      ],
+      "source_seed_ids": [
+        "seed-5432"
+      ],
+      "source_shard_ids": [
+        "shard-0074"
+      ],
+      "canon_label": "Plans/Contracts_V0.md",
+      "row_type": "consumer",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "Reconciliation strata",
+      "status": "partial",
+      "exact_items": [
+        "`Plans/Contracts_V0.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:14",
+        "Plans/Contracts_V0.md:687"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-04209",
+      "source_obligation_ids": [
+        "obl-4055"
+      ],
+      "source_seed_ids": [
+        "seed-5662"
+      ],
+      "source_shard_ids": [
+        "shard-0077"
+      ],
+      "canon_label": "Plans/Contracts_V0.md",
+      "row_type": "consumer",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "Highest-priority owner cleanup set",
+      "status": "present",
+      "exact_items": [
+        "`Plans/Contracts_V0.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:14",
+        "Plans/Contracts_V0.md:7",
+        "Plans/Contracts_V0.md:11"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-04233",
+      "source_obligation_ids": [
+        "obl-4079"
+      ],
+      "source_seed_ids": [
+        "seed-5686"
+      ],
+      "source_shard_ids": [
+        "shard-0077"
+      ],
+      "canon_label": "Plans/Contracts_V0.md",
+      "row_type": "consumer",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "Priority merge",
+      "status": "partial",
+      "exact_items": [
+        "`Plans/Contracts_V0.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:14",
+        "Plans/Contracts_V0.md:64"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-04429",
+      "source_obligation_ids": [
+        "obl-4262"
+      ],
+      "source_seed_ids": [
+        "seed-6087"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "canon_label": "39",
+      "row_type": "consumer",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "Do-not-forget details",
+      "status": "present",
+      "exact_items": [
+        "Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:8",
+        "Plans/Contracts_V0.md:12",
+        "Plans/Contracts_V0.md:14",
+        "Plans/Contracts_V0.md:322",
+        "Plans/Contracts_V0.md:371",
+        "Plans/Contracts_V0.md:99",
+        "Plans/Contracts_V0.md:1103",
+        "Plans/Contracts_V0.md:971"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-04744",
+      "source_obligation_ids": [
+        "obl-4459"
+      ],
+      "source_seed_ids": [
+        "seed-6451"
+      ],
+      "source_shard_ids": [
+        "shard-0086"
+      ],
+      "canon_label": "Plans/Contracts_V0.md",
+      "row_type": "consumer",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "Targeted docs checked for coverage convergence",
+      "status": "present",
+      "exact_items": [
+        "`Plans/Contracts_V0.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:14",
+        "Plans/Contracts_V0.md:322",
+        "Plans/Contracts_V0.md:8"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-04772",
+      "source_obligation_ids": [
+        "obl-4487"
+      ],
+      "source_seed_ids": [
+        "seed-6479"
+      ],
+      "source_shard_ids": [
+        "shard-0086"
+      ],
+      "canon_label": "Plans/Contracts_V0.md",
+      "row_type": "consumer",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "Docs clearly implicated",
+      "status": "partial",
+      "exact_items": [
+        "`Plans/Contracts_V0.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:14",
+        "Plans/Contracts_V0.md:322"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-04810",
+      "source_obligation_ids": [
+        "obl-4525"
+      ],
+      "source_seed_ids": [
+        "seed-6517"
+      ],
+      "source_shard_ids": [
+        "shard-0086"
+      ],
+      "canon_label": "Plans/Contracts_V0.md",
+      "row_type": "consumer",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "MUST CHANGE",
+      "status": "present",
+      "exact_items": [
+        "`Plans/Contracts_V0.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:14",
+        "Plans/Contracts_V0.md:136"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-04851",
+      "source_obligation_ids": [
+        "obl-4566"
+      ],
+      "source_seed_ids": [
+        "seed-6558"
+      ],
+      "source_shard_ids": [
+        "shard-0086"
+      ],
+      "canon_label": "Plans/Contracts_V0.md",
+      "row_type": "consumer",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "Same-file supersession hot list",
+      "status": "partial",
+      "exact_items": [
+        "`Plans/Contracts_V0.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:14",
+        "Plans/Contracts_V0.md:1410"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-04885",
+      "source_obligation_ids": [
+        "obl-4600"
+      ],
+      "source_seed_ids": [
+        "seed-6592"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "canon_label": "Plans/Contracts_V0.md",
+      "row_type": "consumer",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "Cluster C - Identity / attribution / owner-doc transfer misses",
+      "status": "present",
+      "exact_items": [
+        "`Plans/Contracts_V0.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:14",
+        "Plans/Contracts_V0.md:508",
+        "Plans/Contracts_V0.md:19",
+        "Plans/Contracts_V0.md:153",
+        "Plans/Contracts_V0.md:11",
+        "Plans/Contracts_V0.md:192"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-04890",
+      "source_obligation_ids": [
+        "obl-4605"
+      ],
+      "source_seed_ids": [
+        "seed-6597"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "canon_label": "Plans/Contracts_V0.md",
+      "row_type": "consumer",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "Cluster D - Route / open-subject / bridge-field refinement misses",
+      "status": "present",
+      "exact_items": [
+        "`Plans/Contracts_V0.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:14",
+        "Plans/Contracts_V0.md:508",
+        "Plans/Contracts_V0.md:187",
+        "Plans/Contracts_V0.md:992"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-04909",
+      "source_obligation_ids": [
+        "obl-4622"
+      ],
+      "source_seed_ids": [
+        "seed-6614"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "canon_label": "Plans/Contracts_V0.md",
+      "row_type": "consumer",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "Cluster F - Same-file supersession failures",
+      "status": "present",
+      "exact_items": [
+        "`Plans/Contracts_V0.md`, `Plans/storage-plan.md`, `Plans/FinalGUISpec.md`, `Plans/UI_Command_Catalog.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:14",
+        "Plans/Contracts_V0.md:340",
+        "Plans/Contracts_V0.md:641",
+        "Plans/Contracts_V0.md:841",
+        "Plans/Contracts_V0.md:508"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-04918",
+      "source_obligation_ids": [
+        "obl-4628"
+      ],
+      "source_seed_ids": [
+        "seed-6620"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "canon_label": "route_target",
+      "row_type": "consumer",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "Contradictions and false positives to exclude",
+      "status": "present",
+      "exact_items": [
+        "`route_target`, `OpenSubject`, `command_kind`, `normalizes_to_contract`, `target_kind`, `object_kind`, and `inspector_target` are already present in `Plans/Contracts_V0.md`."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:253",
+        "Plans/Contracts_V0.md:863",
+        "Plans/Contracts_V0.md:879",
+        "Plans/Contracts_V0.md:554",
+        "Plans/Contracts_V0.md:923",
+        "Plans/Contracts_V0.md:919",
+        "Plans/Contracts_V0.md:14",
+        "Plans/Contracts_V0.md:13"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-04924",
+      "source_obligation_ids": [
+        "obl-4634"
+      ],
+      "source_seed_ids": [
+        "seed-6626"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "canon_label": "Plans/Contracts_V0.md",
+      "row_type": "consumer",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "Impacted docs and likely owner order",
+      "status": "present",
+      "exact_items": [
+        "`Plans/Contracts_V0.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:14",
+        "Plans/Contracts_V0.md:322",
+        "Plans/Contracts_V0.md:7",
+        "Plans/Contracts_V0.md:5"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-04965",
+      "source_obligation_ids": [
+        "obl-4671"
+      ],
+      "source_seed_ids": [
+        "seed-6663"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "canon_label": "Plans/Contracts_V0.md",
+      "row_type": "consumer",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "Concern/governance record and confirmation policy transfer is weaker than the earlier synthesis stated",
+      "status": "present",
+      "exact_items": [
+        "`Plans/Contracts_V0.md`, `Plans/storage-plan.md`, `Plans/Decision_Policy.md`, `Plans/FinalGUISpec.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:14",
+        "Plans/Contracts_V0.md:340",
+        "Plans/Contracts_V0.md:225",
+        "Plans/Contracts_V0.md:641",
+        "Plans/Contracts_V0.md:35",
+        "Plans/Contracts_V0.md:75",
+        "Plans/Contracts_V0.md:23",
+        "Plans/Contracts_V0.md:192",
+        "Plans/Contracts_V0.md:680",
+        "Plans/Contracts_V0.md:1470",
+        "Plans/Contracts_V0.md:1585",
+        "Plans/Contracts_V0.md:900"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-04991",
+      "source_obligation_ids": [
+        "obl-4684"
+      ],
+      "source_seed_ids": [
+        "seed-6676"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "canon_label": "Plans/Contracts_V0.md",
+      "row_type": "consumer",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "Route / bridge / normalization misses remain refinement-heavy but are more specific now",
+      "status": "present",
+      "exact_items": [
+        "`Plans/Contracts_V0.md`, `Plans/storage-plan.md`, `Plans/UI_Command_Catalog.md`, `Plans/Crosswalk.md`, `Plans/Wiring_Matrix.md`, `Plans/Progression_Gates.md`, `Plans/FileManager.md`, `Plans/Project_Output_Artifacts.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:14",
+        "Plans/Contracts_V0.md:340",
+        "Plans/Contracts_V0.md:841",
+        "Plans/Contracts_V0.md:882",
+        "Plans/Contracts_V0.md:836",
+        "Plans/Contracts_V0.md:981",
+        "Plans/Contracts_V0.md:465",
+        "Plans/Contracts_V0.md:187",
+        "Plans/Contracts_V0.md:25",
+        "Plans/Contracts_V0.md:192",
+        "Plans/Contracts_V0.md:282",
+        "Plans/Contracts_V0.md:1237"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-05007",
+      "source_obligation_ids": [
+        "obl-4692"
+      ],
+      "source_seed_ids": [
+        "seed-6684"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "canon_label": "Plans/Prompt_Pipeline.md",
+      "row_type": "consumer",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "Identity / attribution / blocked-policy misses were reconfirmed with stronger specificity",
+      "status": "present",
+      "exact_items": [
+        "`Plans/Prompt_Pipeline.md`, `Plans/Contracts_V0.md`, `Plans/Tools.md`, `Plans/GitHub_API_Auth_and_Flows.md`, `Plans/orchestrator-subagent-integration.md`, `Plans/Architecture_Invariants.md`, `Plans/Run_Modes.md`, `Plans/Executor_Protocol.md`, `Plans/human-in-the-loop.md`, `Plans/usage-feature.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:571",
+        "Plans/Contracts_V0.md:14",
+        "Plans/Contracts_V0.md:378",
+        "Plans/Contracts_V0.md:624",
+        "Plans/Contracts_V0.md:1515",
+        "Plans/Contracts_V0.md:1071",
+        "Plans/Contracts_V0.md:1526",
+        "Plans/Contracts_V0.md:702",
+        "Plans/Contracts_V0.md:814",
+        "Plans/Contracts_V0.md:602",
+        "Plans/Contracts_V0.md:19",
+        "Plans/Contracts_V0.md:153"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-05027",
+      "source_obligation_ids": [
+        "obl-4704"
+      ],
+      "source_seed_ids": [
+        "seed-6696"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "canon_label": "Plans/Contracts_V0.md",
+      "row_type": "consumer",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "Reconciliation posture after rerun",
+      "status": "present",
+      "exact_items": [
+        "1. `Plans/Contracts_V0.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:14",
+        "Plans/Contracts_V0.md:687",
+        "Plans/Contracts_V0.md:285",
+        "Plans/Contracts_V0.md:12"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-05058",
+      "source_obligation_ids": [
+        "obl-4733"
+      ],
+      "source_seed_ids": [
+        "seed-6726"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "canon_label": "Plans/Contracts_V0.md",
+      "row_type": "consumer",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "Entry",
+      "status": "present",
+      "exact_items": [
+        "`Plans/Contracts_V0.md` still preserves forbidden `detached_window` in the closed `target_kind` enum."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:14",
+        "Plans/Contracts_V0.md:554",
+        "Plans/Contracts_V0.md:5",
+        "Plans/Contracts_V0.md:322",
+        "Plans/Contracts_V0.md:621"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-05075",
+      "source_obligation_ids": [
+        "obl-4749"
+      ],
+      "source_seed_ids": [
+        "seed-6742",
+        "seed-6821",
+        "seed-6862",
+        "seed-6976"
+      ],
+      "source_shard_ids": [
+        "shard-0088",
+        "shard-0089",
+        "shard-0090"
+      ],
+      "canon_label": "Plans/Contracts_V0.md:778-806",
+      "row_type": "consumer",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "Entry",
+      "status": "partial",
+      "exact_items": [
+        "`Plans/Contracts_V0.md:778-806`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:621"
+      ],
+      "required_action": "consumer_propagation"
+    }
+  ]
+}

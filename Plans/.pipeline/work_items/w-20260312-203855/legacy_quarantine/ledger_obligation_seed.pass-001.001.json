@@ -1,0 +1,163 @@
+{
+  "schema_id": "pm.ledger_obligation_seed.pass.v1",
+  "work_id": "w-20260312-203855",
+  "pass": 1,
+  "material_findings_total": 8,
+  "material_findings": [
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Concern owner vs creator vs resolver separation",
+      "exact_items": [
+        "Separate concern owner_kind/owner_ref from created_by_kind/created_by_ref and resolver authority",
+        "Allow ownership changes without changing concern identity"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L3129-L3143"
+      ],
+      "notes": [],
+      "seed_id": "seed-053"
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Concern source-event vs record vs projection split",
+      "exact_items": [
+        "Distinguish concern_source_event_ref, concern_record, and concern_projection as separate structural layers"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L2996-L3005"
+      ],
+      "notes": [],
+      "seed_id": "seed-054"
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Dismissed vs resolved rationale enforcement",
+      "exact_items": [
+        "Require distinct dismissal rationale and resolution rationale rules",
+        "Treat accepted_risk as a resolution path rather than dismissal"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L3075-L3092",
+        "working_ledger.md:L6001-L6014"
+      ],
+      "notes": [],
+      "seed_id": "seed-055"
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Runtime attribution ownership split",
+      "exact_items": [
+        "Let Contracts_V0 own cross-family attribution packet shape",
+        "Let storage-plan own persistence and projection of attempt/usage/receipt/artifact joins"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L10440-L10454"
+      ],
+      "notes": [],
+      "seed_id": "seed-056"
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Bridge-field precedence for attempt/provider/usage/receipt joins",
+      "exact_items": [
+        "Use attempt_id as local anchor, provider_attempt_ref as provider/runtime bridge, usage_event_ref as usage bridge, and receipt refs as external side-effect lineage bridge",
+        "None of those bridge fields replace the primary local key"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/usage-feature.md"
+      ],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L10486-L10525"
+      ],
+      "notes": [],
+      "seed_id": "seed-057"
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Approval scope key and approver identity",
+      "exact_items": [
+        "Separate blocked-episode approval scope from session-wide policy scope",
+        "Persist durable approver identity fields on approval and rejection events"
+      ],
+      "affected_doc_hints": [
+        "Plans/human-in-the-loop.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Executor_Protocol.md"
+      ],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L8829-L8843"
+      ],
+      "notes": [],
+      "seed_id": "seed-058"
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Projection fields for startup rehydration",
+      "exact_items": [
+        "Carry blocked_reason_code and lifecycle state in worktree projections for startup recovery",
+        "Carry dirty_state and conflict_state in worktree projections"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/WorktreeGitImprovement.md"
+      ],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L9549-L9557"
+      ],
+      "notes": [],
+      "seed_id": "seed-059"
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Artifacts index exact indexed fields",
+      "exact_items": [
+        "Index attempt_id and thread_id in artifact index families to preserve attempt-native artifact routing"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/Runtime_Artifacts_Panel.md"
+      ],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L9512-L9518"
+      ],
+      "notes": [],
+      "seed_id": "seed-060"
+    }
+  ],
+  "status": "material_changes_found"
+}

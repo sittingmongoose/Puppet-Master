@@ -1,0 +1,1827 @@
+{
+  "schema_id": "pm.ledger_obligation_seed_shard_result.v1",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-0087",
+  "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0087-L017201-L017400.md",
+  "source_line_range": "L017201-L017400",
+  "seed_candidates": [
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Do-not-forget details",
+      "exact_items": [
+        "This packet must be a canon-collapse pass, not a light additive pass."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Do-not-forget details"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0087",
+      "source_evidence": [
+        "working_ledger.md:L17202"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "stale_retirement",
+      "canon_label_hint": "Do-not-forget details",
+      "exact_items": [
+        "Owner docs must go first, primary stale consumers second, mirrors and checklists after."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Do-not-forget details"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0087",
+      "source_evidence": [
+        "working_ledger.md:L17203"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "stale_retirement",
+      "canon_label_hint": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+      "exact_items": [
+        "`Plans/Section15_MVP_Promoted_Features_Spec.md` remains verification-only unless upstream reconciliation reveals direct stale references that require edits."
+      ],
+      "affected_doc_hints": [
+        "Plans/Section15_MVP_Promoted_Features_Spec.md"
+      ],
+      "heading_hints": [
+        "Do-not-forget details"
+      ],
+      "stale_tokens": [
+        "Plans/Section15_MVP_Promoted_Features_Spec.md"
+      ],
+      "source_shard_id": "shard-0087",
+      "source_evidence": [
+        "working_ledger.md:L17203-L17204"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Scope and method",
+      "exact_items": [
+        "Constraint for this pass: do **not** edit planning docs directly; use the existing work-item ledger plus current canonical docs."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Scope and method"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0087",
+      "source_evidence": [
+        "working_ledger.md:L17204-L17210"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "Scope and method",
+      "exact_items": [
+        "prior direct reads of current owner docs and late-straggler route/records slices"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Scope and method"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0087",
+      "source_evidence": [
+        "working_ledger.md:L17214"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "Scope and method",
+      "exact_items": [
+        "UX / flow / action-surface behavior"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Scope and method"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0087",
+      "source_evidence": [
+        "working_ledger.md:L17214-L17216"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Scope and method",
+      "exact_items": [
+        "state / storage / command / audit-trail behavior"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Scope and method"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0087",
+      "source_evidence": [
+        "working_ledger.md:L17217"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Scope and method",
+      "exact_items": [
+        "cross-doc consistency / precedence / terminology / routing ownership"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Scope and method"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0087",
+      "source_evidence": [
+        "working_ledger.md:L17219"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Raw findings themes before deduplication",
+      "exact_items": [
+        "project-summary, escalation, blocked-owner, and resurfacing rules"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Raw findings themes before deduplication"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0087",
+      "source_evidence": [
+        "working_ledger.md:L17226"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "Raw findings themes before deduplication",
+      "exact_items": [
+        "projection-trust UI/gating/fallback rules"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Raw findings themes before deduplication"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0087",
+      "source_evidence": [
+        "working_ledger.md:L17226-L17227"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "Raw findings themes before deduplication",
+      "exact_items": [
+        "route/open-subject/bridge-field refinement and verification rules"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Raw findings themes before deduplication"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0087",
+      "source_evidence": [
+        "working_ledger.md:L17230"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "route_target",
+      "exact_items": [
+        "Example pattern: `route_target` / `OpenSubject` exist, but precedence, reject rules, examples, and scoped-resolution rules are still missing."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Recurring drift patterns"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0087",
+      "source_evidence": [
+        "working_ledger.md:L17236"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Recurring drift patterns",
+      "exact_items": [
+        "Owner docs were updated, but **consumer docs were not canon-collapsed**."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Recurring drift patterns"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0087",
+      "source_evidence": [
+        "working_ledger.md:L17236-L17237"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "stale_retirement",
+      "canon_label_hint": "Recurring drift patterns",
+      "exact_items": [
+        "Same-file supersession remains a major source of stale implementation guidance."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Recurring drift patterns"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0087",
+      "source_evidence": [
+        "working_ledger.md:L17237-L17238"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Recurring drift patterns",
+      "exact_items": [
+        "Storage or key registration landed without the **field schema / value-shape contract**."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Recurring drift patterns"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0087",
+      "source_evidence": [
+        "working_ledger.md:L17238-L17239"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "Recurring drift patterns",
+      "exact_items": [
+        "UI/behavior docs often contain the top-level statement, but not the **operational policy layer** implementation agents would need."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Recurring drift patterns"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0087",
+      "source_evidence": [
+        "working_ledger.md:L17238-L17240"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/Widget_System.md",
+      "exact_items": [
+        "`Plans/Widget_System.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Widget_System.md"
+      ],
+      "heading_hints": [
+        "Cluster A - Orchestrator UI / Progress / notification / projection behavior"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0087",
+      "source_evidence": [
+        "working_ledger.md:L17246"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/Orchestrator_Page.md",
+      "exact_items": [
+        "`Plans/Orchestrator_Page.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md"
+      ],
+      "heading_hints": [
+        "Cluster A - Orchestrator UI / Progress / notification / projection behavior"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0087",
+      "source_evidence": [
+        "working_ledger.md:L17248"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "Cluster A - Orchestrator UI / Progress / notification / projection behavior",
+      "exact_items": [
+        "Missing the fuller blocked-owner taxonomy, resurfacing/aging rules, concern action policy details, projection fallback ladder, saved-view / sort-default behavior, historical-mode behavior, search scope/switch disclosure, and dense-tab scale rules."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Cluster A - Orchestrator UI / Progress / notification / projection behavior"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0087",
+      "source_evidence": [
+        "working_ledger.md:L17249"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/FinalGUISpec.md",
+      "exact_items": [
+        "`Plans/FinalGUISpec.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [
+        "Cluster A - Orchestrator UI / Progress / notification / projection behavior"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0087",
+      "source_evidence": [
+        "working_ledger.md:L17249-L17250"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "Cluster A - Orchestrator UI / Progress / notification / projection behavior",
+      "exact_items": [
+        "Missing shared escalation ladder semantics, system-notification narrowing rules, project-card blocked-owner / primary-reason / pressure-summary details, settings display grammar, help-system structure, and action-surface / shortcut / context-menu policy."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Cluster A - Orchestrator UI / Progress / notification / projection behavior"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0087",
+      "source_evidence": [
+        "working_ledger.md:L17249-L17251"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/storage-plan.md",
+      "exact_items": [
+        "`Plans/storage-plan.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [
+        "Cluster B - Storage / governance / record-schema transfer misses"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0087",
+      "source_evidence": [
+        "working_ledger.md:L17251-L17254"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "project_summary.v1",
+      "exact_items": [
+        "Still missing field schemas for `project_summary.v1`, `project_attention_item.v1`, `account_pressure_episode.v1`, `account_switch_event.v1`, and broader governance/runtime record-envelope families."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Cluster B - Storage / governance / record-schema transfer misses"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0087",
+      "source_evidence": [
+        "working_ledger.md:L17251-L17255"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/Runtime_Artifacts_Panel.md",
+      "exact_items": [
+        "`Plans/Runtime_Artifacts_Panel.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Runtime_Artifacts_Panel.md"
+      ],
+      "heading_hints": [
+        "Cluster B - Storage / governance / record-schema transfer misses"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0087",
+      "source_evidence": [
+        "working_ledger.md:L17255-L17257"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/Prompt_Pipeline.md",
+      "exact_items": [
+        "`Plans/Prompt_Pipeline.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Prompt_Pipeline.md"
+      ],
+      "heading_hints": [
+        "Cluster C - Identity / attribution / owner-doc transfer misses"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0087",
+      "source_evidence": [
+        "working_ledger.md:L17261"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Cluster C - Identity / attribution / owner-doc transfer misses",
+      "exact_items": [
+        "Missing a unified execution-role and operational/account identity layer."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Cluster C - Identity / attribution / owner-doc transfer misses"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0087",
+      "source_evidence": [
+        "working_ledger.md:L17262"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/Contracts_V0.md",
+      "exact_items": [
+        "`Plans/Contracts_V0.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md"
+      ],
+      "heading_hints": [
+        "Cluster C - Identity / attribution / owner-doc transfer misses"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0087",
+      "source_evidence": [
+        "working_ledger.md:L17262-L17263"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "execution_role",
+      "exact_items": [
+        "Missing `execution_role` in attempt/runtime packet families and still incomplete around blocked-family minimums and ref-family separation."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Cluster C - Identity / attribution / owner-doc transfer misses"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0087",
+      "source_evidence": [
+        "working_ledger.md:L17262-L17264"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/Tools.md",
+      "exact_items": [
+        "`Plans/Tools.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Tools.md"
+      ],
+      "heading_hints": [
+        "Cluster C - Identity / attribution / owner-doc transfer misses"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0087",
+      "source_evidence": [
+        "working_ledger.md:L17264-L17265"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/GitHub_API_Auth_and_Flows.md",
+      "exact_items": [
+        "`Plans/GitHub_API_Auth_and_Flows.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/GitHub_API_Auth_and_Flows.md"
+      ],
+      "heading_hints": [
+        "Cluster C - Identity / attribution / owner-doc transfer misses"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0087",
+      "source_evidence": [
+        "working_ledger.md:L17267"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/orchestrator-subagent-integration.md",
+      "exact_items": [
+        "`Plans/orchestrator-subagent-integration.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/orchestrator-subagent-integration.md"
+      ],
+      "heading_hints": [
+        "Cluster C - Identity / attribution / owner-doc transfer misses"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0087",
+      "source_evidence": [
+        "working_ledger.md:L17269"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/Contracts_V0.md",
+      "exact_items": [
+        "`Plans/Contracts_V0.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md"
+      ],
+      "heading_hints": [
+        "Cluster D - Route / open-subject / bridge-field refinement misses"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0087",
+      "source_evidence": [
+        "working_ledger.md:L17270-L17273"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "Cluster D - Route / open-subject / bridge-field refinement misses",
+      "exact_items": [
+        "Base route/open primitives landed, but missing:"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Cluster D - Route / open-subject / bridge-field refinement misses"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0087",
+      "source_evidence": [
+        "working_ledger.md:L17270-L17274"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "Cluster D - Route / open-subject / bridge-field refinement misses",
+      "exact_items": [
+        "concrete route examples"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Cluster D - Route / open-subject / bridge-field refinement misses"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0087",
+      "source_evidence": [
+        "working_ledger.md:L17279"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/UI_Command_Catalog.md",
+      "exact_items": [
+        "`Plans/UI_Command_Catalog.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "heading_hints": [
+        "Cluster D - Route / open-subject / bridge-field refinement misses"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0087",
+      "source_evidence": [
+        "working_ledger.md:L17281"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "command_kind",
+      "exact_items": [
+        "Missing per-command `command_kind` / normalization metadata and still lacks the canonicalized navigation-family treatment implied by the ledger."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Cluster D - Route / open-subject / bridge-field refinement misses"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0087",
+      "source_evidence": [
+        "working_ledger.md:L17282"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/FileManager.md",
+      "exact_items": [
+        "`Plans/FileManager.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/FileManager.md"
+      ],
+      "heading_hints": [
+        "Cluster D - Route / open-subject / bridge-field refinement misses"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0087",
+      "source_evidence": [
+        "working_ledger.md:L17282-L17283"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/Wiring_Matrix.md",
+      "exact_items": [
+        "`Plans/Wiring_Matrix.md`, `Plans/Progression_Gates.md`, `evidence.schema.json`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Wiring_Matrix.md",
+        "Plans/Progression_Gates.md"
+      ],
+      "heading_hints": [
+        "Cluster D - Route / open-subject / bridge-field refinement misses"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0087",
+      "source_evidence": [
+        "working_ledger.md:L17285"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "Cluster D - Route / open-subject / bridge-field refinement misses",
+      "exact_items": [
+        "Route-aware schema/gate/evidence extensions remain incomplete relative to the ledger's normalized routing model."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Cluster D - Route / open-subject / bridge-field refinement misses"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0087",
+      "source_evidence": [
+        "working_ledger.md:L17286"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/chain-wizard-flexibility.md",
+      "exact_items": [
+        "`Plans/chain-wizard-flexibility.md`, `Plans/FinalGUISpec.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/chain-wizard-flexibility.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [
+        "Cluster D - Route / open-subject / bridge-field refinement misses"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0087",
+      "source_evidence": [
+        "working_ledger.md:L17287"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "resume_url",
+      "exact_items": [
+        "Still preserve `resume_url` as a primary routing primitive in places that should treat it as derived transport only."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Cluster D - Route / open-subject / bridge-field refinement misses"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0087",
+      "source_evidence": [
+        "working_ledger.md:L17288"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/WorktreeGitImprovement.md",
+      "exact_items": [
+        "`Plans/WorktreeGitImprovement.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/WorktreeGitImprovement.md"
+      ],
+      "heading_hints": [
+        "Cluster E - Lifecycle / glossary / help / terminology transfer misses"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0087",
+      "source_evidence": [
+        "working_ledger.md:L17291"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Cluster E - Lifecycle / glossary / help / terminology transfer misses",
+      "exact_items": [
+        "Missing full lane/worktree lifecycle vocabularies, cleanup semantics, gating checks, and transition rules."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Cluster E - Lifecycle / glossary / help / terminology transfer misses"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0087",
+      "source_evidence": [
+        "working_ledger.md:L17292"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/Glossary.md",
+      "exact_items": [
+        "`Plans/Glossary.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Glossary.md"
+      ],
+      "heading_hints": [
+        "Cluster E - Lifecycle / glossary / help / terminology transfer misses"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0087",
+      "source_evidence": [
+        "working_ledger.md:L17292-L17293"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/FinalGUISpec.md",
+      "exact_items": [
+        "`Plans/FinalGUISpec.md` / glossary/help surfaces"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [
+        "Cluster E - Lifecycle / glossary / help / terminology transfer misses"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0087",
+      "source_evidence": [
+        "working_ledger.md:L17295"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Cluster E - Lifecycle / glossary / help / terminology transfer misses",
+      "exact_items": [
+        "Missing help-entry template, related-concept linking, and distinction rules for high-risk term pairs."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Cluster E - Lifecycle / glossary / help / terminology transfer misses"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0087",
+      "source_evidence": [
+        "working_ledger.md:L17296"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/human-in-the-loop.md",
+      "exact_items": [
+        "`Plans/human-in-the-loop.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/human-in-the-loop.md"
+      ],
+      "heading_hints": [
+        "Cluster F - Same-file supersession failures"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0087",
+      "source_evidence": [
+        "working_ledger.md:L17296-L17299"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/usage-feature.md",
+      "exact_items": [
+        "`Plans/usage-feature.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/usage-feature.md"
+      ],
+      "heading_hints": [
+        "Cluster F - Same-file supersession failures"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0087",
+      "source_evidence": [
+        "working_ledger.md:L17301"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/Contracts_V0.md",
+      "exact_items": [
+        "`Plans/Contracts_V0.md`, `Plans/storage-plan.md`, `Plans/FinalGUISpec.md`, `Plans/UI_Command_Catalog.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "heading_hints": [
+        "Cluster F - Same-file supersession failures"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0087",
+      "source_evidence": [
+        "working_ledger.md:L17303"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "Additional buildability gaps surfaced during the audit",
+      "exact_items": [
+        "owner-doc primitive boundaries that remain prose-only rather than formalized (for example navigation identity / route-target ownership)"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Additional buildability gaps surfaced during the audit"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0087",
+      "source_evidence": [
+        "working_ledger.md:L17308"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Additional buildability gaps surfaced during the audit",
+      "exact_items": [
+        "evidence/gate schemas that cannot yet structurally prove the richer routing/normalization behavior"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Additional buildability gaps surfaced during the audit"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0087",
+      "source_evidence": [
+        "working_ledger.md:L17308-L17309"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Additional buildability gaps surfaced during the audit",
+      "exact_items": [
+        "cases where a doc implies a stronger shared contract should exist but does not clearly own it"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Additional buildability gaps surfaced during the audit"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0087",
+      "source_evidence": [
+        "working_ledger.md:L17308-L17310"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Additional buildability gaps surfaced during the audit",
+      "exact_items": [
+        "These should be treated as **secondary** findings behind the ledger-backed missed-transfer set above."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Additional buildability gaps surfaced during the audit"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0087",
+      "source_evidence": [
+        "working_ledger.md:L17311"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Contradictions and false positives to exclude",
+      "exact_items": [
+        "Do **not** treat these as missing transfer:"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Contradictions and false positives to exclude"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0087",
+      "source_evidence": [
+        "working_ledger.md:L17314"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "route_target",
+      "exact_items": [
+        "`route_target`, `OpenSubject`, `command_kind`, `normalizes_to_contract`, `target_kind`, `object_kind`, and `inspector_target` are already present in `Plans/Contracts_V0.md`."
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md"
+      ],
+      "heading_hints": [
+        "Contradictions and false positives to exclude"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0087",
+      "source_evidence": [
+        "working_ledger.md:L17314-L17315"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "requested_account_id",
+      "exact_items": [
+        "`requested_account_id`, `requested_account_binding`, and `operational_identity` are not wholly absent from the current plan set."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Contradictions and false positives to exclude"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0087",
+      "source_evidence": [
+        "working_ledger.md:L17314-L17316"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "account_pressure_episode",
+      "exact_items": [
+        "`account_pressure_episode` and `account_switch_event` key families already exist as registered families; the missing transfer is the schema/detail layer."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Contradictions and false positives to exclude"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0087",
+      "source_evidence": [
+        "working_ledger.md:L17317"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "projection_freshness",
+      "exact_items": [
+        "`projection_freshness` and `projection_health` already exist; the missing transfer is the operational UI/gating/fallback layer, not simply \"invent trust states.\""
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Contradictions and false positives to exclude"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0087",
+      "source_evidence": [
+        "working_ledger.md:L17317-L17318"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "Contradictions and false positives to exclude",
+      "exact_items": [
+        "Route/open auditing must stay focused on **refinement omissions**, not on re-claiming absence of primitives that already landed."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Contradictions and false positives to exclude"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0087",
+      "source_evidence": [
+        "working_ledger.md:L17318-L17319"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Impacted docs and likely owner order",
+      "exact_items": [
+        "Primary owner docs for reconciliation:"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Impacted docs and likely owner order"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0087",
+      "source_evidence": [
+        "working_ledger.md:L17318-L17322"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/Contracts_V0.md",
+      "exact_items": [
+        "`Plans/Contracts_V0.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md"
+      ],
+      "heading_hints": [
+        "Impacted docs and likely owner order"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0087",
+      "source_evidence": [
+        "working_ledger.md:L17322-L17323"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/storage-plan.md",
+      "exact_items": [
+        "`Plans/storage-plan.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [
+        "Impacted docs and likely owner order"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0087",
+      "source_evidence": [
+        "working_ledger.md:L17322-L17324"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/Prompt_Pipeline.md",
+      "exact_items": [
+        "`Plans/Prompt_Pipeline.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Prompt_Pipeline.md"
+      ],
+      "heading_hints": [
+        "Impacted docs and likely owner order"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0087",
+      "source_evidence": [
+        "working_ledger.md:L17325"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/Orchestrator_Page.md",
+      "exact_items": [
+        "`Plans/Orchestrator_Page.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md"
+      ],
+      "heading_hints": [
+        "Impacted docs and likely owner order"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0087",
+      "source_evidence": [
+        "working_ledger.md:L17326"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/FinalGUISpec.md",
+      "exact_items": [
+        "`Plans/FinalGUISpec.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [
+        "Impacted docs and likely owner order"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0087",
+      "source_evidence": [
+        "working_ledger.md:L17327"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/UI_Command_Catalog.md",
+      "exact_items": [
+        "`Plans/UI_Command_Catalog.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "heading_hints": [
+        "Impacted docs and likely owner order"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0087",
+      "source_evidence": [
+        "working_ledger.md:L17328"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/Glossary.md",
+      "exact_items": [
+        "`Plans/Glossary.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Glossary.md"
+      ],
+      "heading_hints": [
+        "Impacted docs and likely owner order"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0087",
+      "source_evidence": [
+        "working_ledger.md:L17329"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/WorktreeGitImprovement.md",
+      "exact_items": [
+        "`Plans/WorktreeGitImprovement.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/WorktreeGitImprovement.md"
+      ],
+      "heading_hints": [
+        "Impacted docs and likely owner order"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0087",
+      "source_evidence": [
+        "working_ledger.md:L17330"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Impacted docs and likely owner order",
+      "exact_items": [
+        "Primary consumer cleanup docs:"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Impacted docs and likely owner order"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0087",
+      "source_evidence": [
+        "working_ledger.md:L17331"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/human-in-the-loop.md",
+      "exact_items": [
+        "`Plans/human-in-the-loop.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/human-in-the-loop.md"
+      ],
+      "heading_hints": [
+        "Impacted docs and likely owner order"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0087",
+      "source_evidence": [
+        "working_ledger.md:L17331-L17332"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/usage-feature.md",
+      "exact_items": [
+        "`Plans/usage-feature.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/usage-feature.md"
+      ],
+      "heading_hints": [
+        "Impacted docs and likely owner order"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0087",
+      "source_evidence": [
+        "working_ledger.md:L17331-L17333"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/FileManager.md",
+      "exact_items": [
+        "`Plans/FileManager.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/FileManager.md"
+      ],
+      "heading_hints": [
+        "Impacted docs and likely owner order"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0087",
+      "source_evidence": [
+        "working_ledger.md:L17334"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/orchestrator-subagent-integration.md",
+      "exact_items": [
+        "`Plans/orchestrator-subagent-integration.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/orchestrator-subagent-integration.md"
+      ],
+      "heading_hints": [
+        "Impacted docs and likely owner order"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0087",
+      "source_evidence": [
+        "working_ledger.md:L17335"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/Runtime_Artifacts_Panel.md",
+      "exact_items": [
+        "`Plans/Runtime_Artifacts_Panel.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Runtime_Artifacts_Panel.md"
+      ],
+      "heading_hints": [
+        "Impacted docs and likely owner order"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0087",
+      "source_evidence": [
+        "working_ledger.md:L17336"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/chain-wizard-flexibility.md",
+      "exact_items": [
+        "`Plans/chain-wizard-flexibility.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/chain-wizard-flexibility.md"
+      ],
+      "heading_hints": [
+        "Impacted docs and likely owner order"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0087",
+      "source_evidence": [
+        "working_ledger.md:L17337"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/assistant-chat-design.md",
+      "exact_items": [
+        "`Plans/assistant-chat-design.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/assistant-chat-design.md"
+      ],
+      "heading_hints": [
+        "Impacted docs and likely owner order"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0087",
+      "source_evidence": [
+        "working_ledger.md:L17338"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Impacted docs and likely owner order",
+      "exact_items": [
+        "Verification / mirror followers should remain downstream of owner reconciliation."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Impacted docs and likely owner order"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0087",
+      "source_evidence": [
+        "working_ledger.md:L17339"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Candidate reconciliation direction",
+      "exact_items": [
+        "1. Reconcile owner contracts and schemas first."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Candidate reconciliation direction"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0087",
+      "source_evidence": [
+        "working_ledger.md:L17339-L17342"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Candidate reconciliation direction",
+      "exact_items": [
+        "3. Reconcile routing, blocked-family, and attribution flows end-to-end across owner + consumer docs."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Candidate reconciliation direction"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0087",
+      "source_evidence": [
+        "working_ledger.md:L17342-L17344"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Candidate reconciliation direction",
+      "exact_items": [
+        "4. Update mirrors/checklists only after owner/consumer canon is stable."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Candidate reconciliation direction"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0087",
+      "source_evidence": [
+        "working_ledger.md:L17344-L17345"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Do-not-forget implementation risks",
+      "exact_items": [
+        "Missing field schemas will cause different implementation agents to invent incompatible shapes."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Do-not-forget implementation risks"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0087",
+      "source_evidence": [
+        "working_ledger.md:L17345-L17348"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "Do-not-forget implementation risks",
+      "exact_items": [
+        "Same-file mixed canon will cause later implementation work to pick contradictory behavior depending on which section is read."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Do-not-forget implementation risks"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0087",
+      "source_evidence": [
+        "working_ledger.md:L17348-L17349"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "Do-not-forget implementation risks",
+      "exact_items": [
+        "Missing route/ref-family boundaries will invite shadow routing and ad hoc payloads that gates cannot verify."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Do-not-forget implementation risks"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0087",
+      "source_evidence": [
+        "working_ledger.md:L17348-L17350"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Do-not-forget implementation risks",
+      "exact_items": [
+        "Missing blocked-owner / escalation / resurfacing rules will produce inconsistent UX and inconsistent persistence semantics."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Do-not-forget implementation risks"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0087",
+      "source_evidence": [
+        "working_ledger.md:L17350-L17351"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Do-not-forget implementation risks",
+      "exact_items": [
+        "Missing cleanup/lifecycle rules will produce destructive ambiguity between archive/remove/prune/recover behaviors."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Do-not-forget implementation risks"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0087",
+      "source_evidence": [
+        "working_ledger.md:L17351-L17352"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Scope and method",
+      "exact_items": [
+        "This rerun was requested specifically to re-check the transfer audit with **smaller chunked subauditors**, because several owner/consumer docs are too large for one subauditor to read cleanly end-to-end."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Scope and method"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0087",
+      "source_evidence": [
+        "working_ledger.md:L17352-L17357"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "What changed from the earlier synthesis",
+      "exact_items": [
+        "The rerun did **not** overturn the prior conclusion that the major issue is incomplete ledger transfer rather than missing whole primitives."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "What changed from the earlier synthesis"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0087",
+      "source_evidence": [
+        "working_ledger.md:L17365"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "What changed from the earlier synthesis",
+      "exact_items": [
+        "What it did add was **more precise line-grounded misses** inside those clusters."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "What changed from the earlier synthesis"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0087",
+      "source_evidence": [
+        "working_ledger.md:L17365-L17366"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "What changed from the earlier synthesis",
+      "exact_items": [
+        "detailed rules, examples, field schemas, or operational policies often did not"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "What changed from the earlier synthesis"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0087",
+      "source_evidence": [
+        "working_ledger.md:L17369"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/Orchestrator_Page.md",
+      "exact_items": [
+        "`Plans/Orchestrator_Page.md` / `Plans/Widget_System.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/Widget_System.md"
+      ],
+      "heading_hints": [
+        "Early Orchestrator surface details that were more under-transferred than the earlier synthesis made explicit"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0087",
+      "source_evidence": [
+        "working_ledger.md:L17374"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Early Orchestrator surface details that were more under-transferred than the earlier synthesis m",
+      "exact_items": [
+        "The **13-widget Progress catalog** is not just \"underspecified\" - it is effectively absent as a named catalog."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Early Orchestrator surface details that were more under-transferred than the earlier synthesis made explicit"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0087",
+      "source_evidence": [
+        "working_ledger.md:L17375"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Early Orchestrator surface details that were more under-transferred than the earlier synthesis m",
+      "exact_items": [
+        "The **default widget drill-target mappings** are also absent."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Early Orchestrator surface details that were more under-transferred than the earlier synthesis made explicit"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0087",
+      "source_evidence": [
+        "working_ledger.md:L17376"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/Orchestrator_Page.md",
+      "exact_items": [
+        "`Plans/Orchestrator_Page.md` / `Plans/FinalGUISpec.md` / `Plans/Glossary.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Glossary.md"
+      ],
+      "heading_hints": [
+        "Early Orchestrator surface details that were more under-transferred than the earlier synthesis made explicit"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0087",
+      "source_evidence": [
+        "working_ledger.md:L17377"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/Orchestrator_Page.md",
+      "exact_items": [
+        "`Plans/Orchestrator_Page.md` / `Plans/FinalGUISpec.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [
+        "Historical mode / search / trust behavior sharpened"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0087",
+      "source_evidence": [
+        "working_ledger.md:L17381"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "focused_run_id",
+      "exact_items": [
+        "page-wide shared `focused_run_id` coherence across tabs"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Historical mode / search / trust behavior sharpened"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0087",
+      "source_evidence": [
+        "working_ledger.md:L17385"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Historical mode / search / trust behavior sharpened",
+      "exact_items": [
+        "default search scope = focused run, widening to project/all-runs, and required disclosure when search changes focused run"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Historical mode / search / trust behavior sharpened"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0087",
+      "source_evidence": [
+        "working_ledger.md:L17387"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Historical mode / search / trust behavior sharpened",
+      "exact_items": [
+        "explicit fallback hierarchy to History/Ledger under projection degradation"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Historical mode / search / trust behavior sharpened"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0087",
+      "source_evidence": [
+        "working_ledger.md:L17389"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/Contracts_V0.md",
+      "exact_items": [
+        "`Plans/Contracts_V0.md`, `Plans/storage-plan.md`, `Plans/Decision_Policy.md`, `Plans/FinalGUISpec.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md",
+        "Plans/Decision_Policy.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [
+        "Concern/governance record and confirmation policy transfer is weaker than the earlier synthesis stated"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0087",
+      "source_evidence": [
+        "working_ledger.md:L17392"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Concern/governance record and confirmation policy transfer is weaker than the earlier synthesis ",
+      "exact_items": [
+        "The rerun makes it clear that the concern/action/governance tranche is missing not just \"some schemas\", but the following concrete families:"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Concern/governance record and confirmation policy transfer is weaker than the earlier synthesis stated"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0087",
+      "source_evidence": [
+        "working_ledger.md:L17393"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Concern/governance record and confirmation policy transfer is weaker than the earlier synthesis ",
+      "exact_items": [
+        "concern record canonical field set"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Concern/governance record and confirmation policy transfer is weaker than the earlier synthesis stated"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0087",
+      "source_evidence": [
+        "working_ledger.md:L17393-L17394"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Concern/governance record and confirmation policy transfer is weaker than the earlier synthesis ",
+      "exact_items": [
+        "concern owner-kind enum"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Concern/governance record and confirmation policy transfer is weaker than the earlier synthesis stated"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0087",
+      "source_evidence": [
+        "working_ledger.md:L17397"
+      ],
+      "notes": []
+    }
+  ],
+  "noise_items": [],
+  "uncertain_items": [],
+  "covered_shard_id": "shard-0087"
+}

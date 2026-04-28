@@ -1,0 +1,589 @@
+{
+  "schema_id": "pm.ledger_obligation_seed_shard_result.v1",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-0015",
+  "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0015-L002801-L003000.md",
+  "source_line_range": "L002801-L003000",
+  "seed_candidates": [
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "These should not collapse into a generic \"old\" state.",
+      "exact_items": [
+        "These should not collapse into a generic \"old\" state."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0015",
+      "source_evidence": [
+        "working_ledger.md:L2810"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Recommended semantic split",
+      "exact_items": [
+        "replaced by a newer canonical successor for the same semantic slot"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Recommended semantic split"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0015",
+      "source_evidence": [
+        "working_ledger.md:L2821"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "archived",
+      "exact_items": [
+        "`archived` is visibility/operational-surface policy"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Important distinction examples"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0015",
+      "source_evidence": [
+        "working_ledger.md:L2840"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Candidate application by object family",
+      "exact_items": [
+        "should also expose when an attempt is superseded by later remediation/graph generation"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Candidate application by object family"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0015",
+      "source_evidence": [
+        "working_ledger.md:L2848"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Candidate application by object family",
+      "exact_items": [
+        "need explicit distinction between:"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Candidate application by object family"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0015",
+      "source_evidence": [
+        "working_ledger.md:L2850"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Candidate application by object family",
+      "exact_items": [
+        "still needs historical semantics:"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Candidate application by object family"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0015",
+      "source_evidence": [
+        "working_ledger.md:L2857"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Candidate application by object family",
+      "exact_items": [
+        "restore attempts and recovery episodes need current vs historical semantics"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Candidate application by object family"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0015",
+      "source_evidence": [
+        "working_ledger.md:L2865"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Candidate application by object family",
+      "exact_items": [
+        "failed or abandoned recovery attempts should remain visible without masquerading as current recovery truth"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Candidate application by object family"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0015",
+      "source_evidence": [
+        "working_ledger.md:L2866"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Candidate application by object family",
+      "exact_items": [
+        "archival policy should be separate from semantic validity"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Candidate application by object family"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0015",
+      "source_evidence": [
+        "working_ledger.md:L2870"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "UI direction",
+      "exact_items": [
+        "the UI should show these semantics explicitly and consistently, not infer them ad hoc by color or disappearance"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "UI direction"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0015",
+      "source_evidence": [
+        "working_ledger.md:L2874"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Candidate fixes to carry forward",
+      "exact_items": [
+        "Define a shared record-semantic vocabulary applied across:"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Candidate fixes to carry forward"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0015",
+      "source_evidence": [
+        "working_ledger.md:L2896"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "superseded",
+      "exact_items": [
+        "Add explicit successor/predecessor links where `superseded` is possible."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Candidate fixes to carry forward"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0015",
+      "source_evidence": [
+        "working_ledger.md:L2903"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Do-not-forget details",
+      "exact_items": [
+        "old graph paths should remain visible and clickable even when superseded."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Do-not-forget details"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0015",
+      "source_evidence": [
+        "working_ledger.md:L2909"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Confirmed clarification",
+      "exact_items": [
+        "neither should imply lineage or semantic succession relative to the other unless an explicit relationship exists"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Confirmed clarification"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0015",
+      "source_evidence": [
+        "working_ledger.md:L2920"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "historical run",
+      "exact_items": [
+        "`historical run` must not imply:"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Implications"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0015",
+      "source_evidence": [
+        "working_ledger.md:L2923"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "historical",
+      "exact_items": [
+        "`historical` at the run level should mean only:"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Implications"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0015",
+      "source_evidence": [
+        "working_ledger.md:L2928"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Implications",
+      "exact_items": [
+        "Relationship must be explicit, not inferred from same-project membership."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Implications"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0015",
+      "source_evidence": [
+        "working_ledger.md:L2931"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "UI direction",
+      "exact_items": [
+        "History should default to chronological project run history, not lineage history."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "UI direction"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0015",
+      "source_evidence": [
+        "working_ledger.md:L2949"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "UI direction",
+      "exact_items": [
+        "If there is no explicit relationship, runs should appear as separate entries only."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "UI direction"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0015",
+      "source_evidence": [
+        "working_ledger.md:L2950"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "UI direction",
+      "exact_items": [
+        "If explicit relationships are introduced later, the UI may add:"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "UI direction"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0015",
+      "source_evidence": [
+        "working_ledger.md:L2951"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "UI direction",
+      "exact_items": [
+        "But those must be explicit metadata, not inferred by heuristics."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "UI direction"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0015",
+      "source_evidence": [
+        "working_ledger.md:L2956"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Search / routing implication",
+      "exact_items": [
+        "Search results should preserve run identity exactly and avoid collapsing similarly named seams/packages/nodes across unrelated runs."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Search / routing implication"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0015",
+      "source_evidence": [
+        "working_ledger.md:L2959"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "Search / routing implication",
+      "exact_items": [
+        "Cross-run navigation should switch focus to the selected run, not imply that the selected object is part of the currently focused run's lineage."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Search / routing implication"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0015",
+      "source_evidence": [
+        "working_ledger.md:L2960"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "superseded",
+      "exact_items": [
+        "`superseded`, `revoked`, `reopened`, etc. should apply only where real object lineage/validity relationships exist, not to arbitrary project runs."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Historical semantics refinement"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0015",
+      "source_evidence": [
+        "working_ledger.md:L2966"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Candidate fixes to carry forward",
+      "exact_items": [
+        "Add explicit run-relationship metadata if the product later wants cross-run derivation/continuation concepts."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Candidate fixes to carry forward"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0015",
+      "source_evidence": [
+        "working_ledger.md:L2970"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/Orchestrator_Page.md",
+      "exact_items": [
+        "`Plans/Orchestrator_Page.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md"
+      ],
+      "heading_hints": [
+        "Targeted docs read"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0015",
+      "source_evidence": [
+        "working_ledger.md:L2976"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/storage-plan.md",
+      "exact_items": [
+        "`Plans/storage-plan.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [
+        "Targeted docs read"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0015",
+      "source_evidence": [
+        "working_ledger.md:L2977"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/Contracts_V0.md",
+      "exact_items": [
+        "`Plans/Contracts_V0.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md"
+      ],
+      "heading_hints": [
+        "Targeted docs read"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0015",
+      "source_evidence": [
+        "working_ledger.md:L2978"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/FinalGUISpec.md",
+      "exact_items": [
+        "`Plans/FinalGUISpec.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [
+        "Targeted docs read"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0015",
+      "source_evidence": [
+        "working_ledger.md:L2979"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/Run_Graph_View.md",
+      "exact_items": [
+        "`Plans/Run_Graph_View.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Run_Graph_View.md"
+      ],
+      "heading_hints": [
+        "Targeted docs read"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0015",
+      "source_evidence": [
+        "working_ledger.md:L2980"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Key findings",
+      "exact_items": [
+        "canonical concern creators are runtime / package overseer / seam overseer / corroboration outcome / graph patch logic"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Key findings"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0015",
+      "source_evidence": [
+        "working_ledger.md:L2987"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Key findings",
+      "exact_items": [
+        "workers may nominate but should not mint canonical concerns directly"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Key findings"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0015",
+      "source_evidence": [
+        "working_ledger.md:L2988"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Key findings",
+      "exact_items": [
+        "explicit canonical record schema"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Key findings"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0015",
+      "source_evidence": [
+        "working_ledger.md:L2991"
+      ],
+      "notes": []
+    }
+  ],
+  "noise_items": [
+    {
+      "item": "- separate `time status`, `replacement status`, and `validity status`",
+      "source_evidence": [
+        "working_ledger.md:L2814"
+      ],
+      "reason": "metric/status/count/family or process line without concrete obligation-grade evidence"
+    }
+  ],
+  "uncertain_items": [],
+  "covered_shard_id": "shard-0015"
+}

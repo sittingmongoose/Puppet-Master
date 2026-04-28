@@ -1,0 +1,1713 @@
+{
+  "schema_id": "pm.canonical_obligations.wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave": 1,
+  "summary": {
+    "obligations_total": 68,
+    "represented_seed_ids_total": 68,
+    "noise_seed_ids_total": 0,
+    "deferred_seed_ids_total": 0
+  },
+  "obligations": [
+    {
+      "obligation_id": "obl-001",
+      "source_seed_ids": [
+        "seed-001"
+      ],
+      "canon_label": "Owner-first fidelity recovery order",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Apply owner-doc corrections before consumer and mirror cleanup",
+        "Rerun fidelity audit only after owner and consumer corrections are in place"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L1121-L1155"
+      ],
+      "notes": []
+    },
+    {
+      "obligation_id": "obl-002",
+      "source_seed_ids": [
+        "seed-002"
+      ],
+      "canon_label": "Retire tier-era canon and shadow fields",
+      "obligation_type": "stale_retirement",
+      "exact_tokens": [
+        "Retire TierContext/tier_id/TierType/Tiers/Phase-Task-Subtask runtime canon",
+        "Retire allowed_actions[] / reason_code / recovery_options[] survivors from live blocked/HITL contracts"
+      ],
+      "affected_doc_hints": [
+        "Plans/Executor_Protocol.md",
+        "Plans/orchestrator-subagent-integration.md",
+        "Plans/human-in-the-loop.md",
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [
+        "TierContext",
+        "tier_id",
+        "TierType",
+        "Tiers",
+        "allowed_actions[]",
+        "reason_code",
+        "recovery_options[]",
+        "approve_continue"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L672-L691",
+        "working_ledger.md:L1677-L1679",
+        "working_ledger.md:L1782-L1789"
+      ],
+      "notes": []
+    },
+    {
+      "obligation_id": "obl-003",
+      "source_seed_ids": [
+        "seed-003"
+      ],
+      "canon_label": "Requested/effective account identity contract",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Add requested_account_id alongside requested_account_policy",
+        "Add requested_account_binding and govern provider_account_id as subordinate provider-native metadata",
+        "Carry requested/effective account identity through runtime, bridged-provider, and permission envelopes"
+      ],
+      "affected_doc_hints": [
+        "Plans/Multi-Account.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/CLI_Bridged_Providers.md",
+        "Plans/Permissions_System.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [
+        "provider_account_id"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L2010-L2055",
+        "working_ledger.md:L2077-L2124"
+      ],
+      "notes": []
+    },
+    {
+      "obligation_id": "obl-004",
+      "source_seed_ids": [
+        "seed-004"
+      ],
+      "canon_label": "Shared governance/runtime record envelope",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Define one shared record envelope with canonical lineage refs and artifact/evidence refs",
+        "Keep record objects distinct from artifacts and rendered summaries"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L3380-L3406",
+        "working_ledger.md:L4828-L4850"
+      ],
+      "notes": []
+    },
+    {
+      "obligation_id": "obl-005",
+      "source_seed_ids": [
+        "seed-005"
+      ],
+      "canon_label": "Export taxonomy and manifest contract",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Define record export, bundle export, and view export as distinct export classes",
+        "Require export manifests with export_id/export_kind/project scope/included ids/trust-state disclosure"
+      ],
+      "affected_doc_hints": [
+        "Plans/usage-feature.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L3561-L3618",
+        "working_ledger.md:L5354-L5404"
+      ],
+      "notes": []
+    },
+    {
+      "obligation_id": "obl-006",
+      "source_seed_ids": [
+        "seed-006"
+      ],
+      "canon_label": "Concern record family definition",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Concern is a first-class durable record distinct from review finding, annotation, blocked episode, and graph patch request",
+        "Define concern_id/project_id/run and scope refs, evidence/source refs, lineage refs, severity/category/status, and governance metadata"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L2984-L3050",
+        "working_ledger.md:L5957-L5988"
+      ],
+      "notes": []
+    },
+    {
+      "obligation_id": "obl-007",
+      "source_seed_ids": [
+        "seed-007"
+      ],
+      "canon_label": "Concern lifecycle and resolution kinds",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Use active/acknowledged/resolved/dismissed as concern lifecycle states",
+        "Use fixed/accepted_risk/superseded/merged/split/invalidated/obsoleted_by_patch/obsoleted_by_recovery as resolution_kind values"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L3069-L3093",
+        "working_ledger.md:L6001-L6014"
+      ],
+      "notes": []
+    },
+    {
+      "obligation_id": "obl-008",
+      "source_seed_ids": [
+        "seed-008"
+      ],
+      "canon_label": "Concern routing and object-first search behavior",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "Concern search results must route as object-first results with focused-run and target-tab context",
+        "Concern drill-downs must preserve selected concern id and related object context"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L3145-L3156"
+      ],
+      "notes": []
+    },
+    {
+      "obligation_id": "obl-009",
+      "source_seed_ids": [
+        "seed-009"
+      ],
+      "canon_label": "Concern action policy and authority model",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Define actor authority, confirmation, rationale, reversibility, and audit fields for concern actions",
+        "Keep acknowledged, dismissed, resolved, and structural lineage edits as distinct actions"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/Contracts_V0.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L6463-L6486",
+        "working_ledger.md:L3129-L3143"
+      ],
+      "notes": []
+    },
+    {
+      "obligation_id": "obl-010",
+      "source_seed_ids": [
+        "seed-010"
+      ],
+      "canon_label": "Concern linkage to adjacent families",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "Expose review_refs, corroboration_refs, graph_patch_refs, recovery_refs, blocked_episode_refs, and promotion_refs on concerns",
+        "Allow blocked episodes to reference concerns without replacing concern identity"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L3109-L3127",
+        "working_ledger.md:L6040-L6056"
+      ],
+      "notes": []
+    },
+    {
+      "obligation_id": "obl-011",
+      "source_seed_ids": [
+        "seed-011"
+      ],
+      "canon_label": "Promotion classes and gate evidence",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Define lane_to_package, package_to_seam_available, and seam_complete promotions",
+        "Attach exact gate/evidence expectations to each promotion class"
+      ],
+      "affected_doc_hints": [
+        "Plans/Progression_Gates.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L848-L870"
+      ],
+      "notes": []
+    },
+    {
+      "obligation_id": "obl-012",
+      "source_seed_ids": [
+        "seed-012"
+      ],
+      "canon_label": "Focused run and historical routing contract",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "Use active_run_id/focused_run_id with focus_mode = live | historical",
+        "Keep cross-tab deep links and search pivots coherent on the focused run"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L2521-L2633",
+        "working_ledger.md:L2665-L2777"
+      ],
+      "notes": []
+    },
+    {
+      "obligation_id": "obl-013",
+      "source_seed_ids": [
+        "seed-013"
+      ],
+      "canon_label": "Source Control and worktree handshake",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "Keep Orchestrator as lane-pool operational truth and Source Control as concrete repo/worktree operator",
+        "Show owning package/lane/run refs plus lifecycle and blocked/recovery state on worktree rows"
+      ],
+      "affected_doc_hints": [
+        "Plans/GitHub_Integration.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L1943-L1995",
+        "working_ledger.md:L2153-L2243"
+      ],
+      "notes": []
+    },
+    {
+      "obligation_id": "obl-014",
+      "source_seed_ids": [
+        "seed-014"
+      ],
+      "canon_label": "Projection trust and action gating",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "Use current/refreshing/stale/degraded/unavailable projection states",
+        "Gate sensitive actions on current or direct canonical revalidation and fall back to record-backed views when degraded"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L2414-L2487",
+        "working_ledger.md:L4699-L4786"
+      ],
+      "notes": []
+    },
+    {
+      "obligation_id": "obl-015",
+      "source_seed_ids": [
+        "seed-015"
+      ],
+      "canon_label": "Progress-only widget hostability",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "Restrict widget-composed Orchestrator surface to Progress",
+        "Persist orchestrator:progress layout separately from Dashboard and Usage"
+      ],
+      "affected_doc_hints": [
+        "Plans/Widget_System.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L2271-L2383",
+        "working_ledger.md:L6654-L6669",
+        "working_ledger.md:L7085-L7100"
+      ],
+      "notes": []
+    },
+    {
+      "obligation_id": "obl-016",
+      "source_seed_ids": [
+        "seed-016"
+      ],
+      "canon_label": "Shared escalation ladder",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Define one escalation ladder shared across Orchestrator, Dashboard, thread badges, and notifications",
+        "Keep attention_required distinct from blocked and resurface persistent blockers on meaningful change/persistence"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/usage-feature.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L4412-L4420"
+      ],
+      "notes": []
+    },
+    {
+      "obligation_id": "obl-017",
+      "source_seed_ids": [
+        "seed-017"
+      ],
+      "canon_label": "Orchestrator-wide scale contract",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Make slice-based loading, virtualization, lazy expansion, and demand-loaded inspectors mandatory across dense tabs",
+        "Treat scale as a cross-tab contract, not a graph-tab-only concern"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L4451-L4453",
+        "working_ledger.md:L4530-L4534"
+      ],
+      "notes": []
+    },
+    {
+      "obligation_id": "obl-018",
+      "source_seed_ids": [
+        "seed-018"
+      ],
+      "canon_label": "Action-surface policy",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "Classify actions by navigation vs mutation, palette visibility, shortcut eligibility, multi-target safety, and confirmation/reversibility",
+        "Default bulk actions to navigation and triage rather than live execution mutation"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L4566-L4578",
+        "working_ledger.md:L4659-L4667"
+      ],
+      "notes": []
+    },
+    {
+      "obligation_id": "obl-019",
+      "source_seed_ids": [
+        "seed-019"
+      ],
+      "canon_label": "Lane vs worktree lifecycle split",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Model lane lifecycle and worktree lifecycle as related but non-identical",
+        "Gate cleanup on runtime/recovery/lineage checks rather than age alone",
+        "Preserve historical lane/worktree records after archive/prune/remove"
+      ],
+      "affected_doc_hints": [
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L4943-L5067"
+      ],
+      "notes": []
+    },
+    {
+      "obligation_id": "obl-020",
+      "source_seed_ids": [
+        "seed-020"
+      ],
+      "canon_label": "Glossary and help governance",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "Expand Glossary.md to cover rewrite-critical objects, states, and trust terms",
+        "Define inline help, context help, and canonical help entry layers while keeping canonical term names stable"
+      ],
+      "affected_doc_hints": [
+        "Plans/Glossary.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L5100-L5140",
+        "working_ledger.md:L6555-L6563"
+      ],
+      "notes": []
+    },
+    {
+      "obligation_id": "obl-021",
+      "source_seed_ids": [
+        "seed-021"
+      ],
+      "canon_label": "Shared conversational/runtime boundary",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Assistant/chat/interview/builder actors share provider/runtime identity semantics with Orchestrator",
+        "They remain distinct actor/run kinds rather than package/seam/node execution objects"
+      ],
+      "affected_doc_hints": [
+        "Plans/assistant-chat-design.md",
+        "Plans/interview-subagent-integration.md",
+        "Plans/Multi-Account.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L5225-L5253"
+      ],
+      "notes": []
+    },
+    {
+      "obligation_id": "obl-022",
+      "source_seed_ids": [
+        "seed-022"
+      ],
+      "canon_label": "Notification routing policy",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "Route notifications using severity, execution impact, blocked owner, persistence, and projection trust",
+        "Allow quiet windows for advisory warnings but not for canonical blocked episodes"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/usage-feature.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L5493-L5595"
+      ],
+      "notes": []
+    },
+    {
+      "obligation_id": "obl-023",
+      "source_seed_ids": [
+        "seed-023"
+      ],
+      "canon_label": "Canonical route payload",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Use one shared routing/deep-link payload for search, palette, widgets, recovery links, and cross-surface pivots",
+        "Treat resume_url as serialized transport of that route payload"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/assistant-chat-design.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L5637-L5693",
+        "working_ledger.md:L7588-L7618"
+      ],
+      "notes": []
+    },
+    {
+      "obligation_id": "obl-024",
+      "source_seed_ids": [
+        "seed-024"
+      ],
+      "canon_label": "Historical semantic consistency",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Define shared historical vocabulary: historical, stale_historical, superseded, revoked, reopened, archived, removed",
+        "Keep family-local workflow states distinct and reconcile remediation.resolved enum conflict"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/Contracts_V0.md",
+        "Plans/WorktreeGitImprovement.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L5789-L5910"
+      ],
+      "notes": []
+    },
+    {
+      "obligation_id": "obl-025",
+      "source_seed_ids": [
+        "seed-025"
+      ],
+      "canon_label": "Project summary projection",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Define project_summary with activity_state, attention_state, health_state, owner, and projection trust disclosure",
+        "Give canonical blocked episodes precedence over weaker derived warnings"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L7168-L7187"
+      ],
+      "notes": []
+    },
+    {
+      "obligation_id": "obl-026",
+      "source_seed_ids": [
+        "seed-026"
+      ],
+      "canon_label": "Project attention projection",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Define project_attention_item with primary route payload and projection trust disclosure",
+        "Keep attention rows consumable across Orchestrator, Dashboard, and notifications"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L7254-L7279",
+        "working_ledger.md:L7482-L7524"
+      ],
+      "notes": []
+    },
+    {
+      "obligation_id": "obl-027",
+      "source_seed_ids": [
+        "seed-027"
+      ],
+      "canon_label": "Requested concrete-account fields",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Model requested_account_id separately from requested_account_policy",
+        "Add requested_account_binding with none/preferred/required semantics and display Requested account / Requested binding / Effective account / Switch reason"
+      ],
+      "affected_doc_hints": [
+        "Plans/Multi-Account.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Contracts_V0.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L7863-L7919"
+      ],
+      "notes": []
+    },
+    {
+      "obligation_id": "obl-028",
+      "source_seed_ids": [
+        "seed-028"
+      ],
+      "canon_label": "Execution role and operational identity",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Carry execution_role plus requested/effective operational identity in shared runtime identity",
+        "Project them into effective-resolution, attempt, usage, and inspector surfaces"
+      ],
+      "affected_doc_hints": [
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Contracts_V0.md",
+        "Plans/usage-feature.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L8080-L8139",
+        "working_ledger.md:L10184-L10246"
+      ],
+      "notes": []
+    },
+    {
+      "obligation_id": "obl-029",
+      "source_seed_ids": [
+        "seed-029"
+      ],
+      "canon_label": "Account switch and pressure history",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Add append-only account_pressure_episode and account_switch_event families",
+        "Let Usage, History, Ledger, and Orchestrator consume the same durable event family"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L8188-L8251"
+      ],
+      "notes": []
+    },
+    {
+      "obligation_id": "obl-030",
+      "source_seed_ids": [
+        "seed-030"
+      ],
+      "canon_label": "Projection freshness vs projection health",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Split projection_freshness from projection_health",
+        "Reserve trust_tier for preview/browser semantics and tie action gating to both axes"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/Glossary.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [
+        "trust_tier"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L8447-L8497"
+      ],
+      "notes": []
+    },
+    {
+      "obligation_id": "obl-031",
+      "source_seed_ids": [
+        "seed-031"
+      ],
+      "canon_label": "GitHub stable account identity",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Replace login-keyed durable GitHub identity with stable account_id / credential_ref",
+        "Add recovery context payload and trust/degraded-state gating for GitHub mutations"
+      ],
+      "affected_doc_hints": [
+        "Plans/GitHub_API_Auth_and_Flows.md",
+        "Plans/GitHub_Integration.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L7069-L7075"
+      ],
+      "notes": []
+    },
+    {
+      "obligation_id": "obl-032",
+      "source_seed_ids": [
+        "seed-032"
+      ],
+      "canon_label": "Provider-native correlation and approval scope",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Move OpenCode session IDs to provider-native correlation fields instead of canonical thread_id",
+        "Define Approval Scope Key across actor/lane/run/account context and reuse it across permissions, HITL, doom-loop, and session approval caching"
+      ],
+      "affected_doc_hints": [
+        "Plans/Provider_OpenCode.md",
+        "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+        "Plans/human-in-the-loop.md",
+        "Plans/Permissions_System.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L7413-L7418",
+        "working_ledger.md:L7748-L7753",
+        "working_ledger.md:L8367-L8369"
+      ],
+      "notes": []
+    },
+    {
+      "obligation_id": "obl-033",
+      "source_seed_ids": [
+        "seed-033"
+      ],
+      "canon_label": "execution_unit_context canonical replacement",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Introduce execution_unit_context as canonical runtime-facing context object",
+        "Demote TierContext to a derived or compatibility-only selection/decomposition helper",
+        "Anchor worker spawn, recovery, remediation, coordination, and UI inspection to execution_unit_context"
+      ],
+      "affected_doc_hints": [
+        "Plans/Prompt_Pipeline.md",
+        "Plans/orchestrator-subagent-integration.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [
+        "TierContext",
+        "tier_id"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L8655-L8775",
+        "working_ledger.md:L9854-L9954"
+      ],
+      "notes": []
+    },
+    {
+      "obligation_id": "obl-034",
+      "source_seed_ids": [
+        "seed-034"
+      ],
+      "canon_label": "Blocked episode identity and restart recovery",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Make blocked_sequence canonical per run_id/node_id blocked episode",
+        "Restore unresolved blocked episodes on restart without reminting them",
+        "Keep request_id as subordinate compatibility handle only"
+      ],
+      "affected_doc_hints": [
+        "Plans/Executor_Protocol.md",
+        "Plans/human-in-the-loop.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L9693-L9724"
+      ],
+      "notes": []
+    },
+    {
+      "obligation_id": "obl-035",
+      "source_seed_ids": [
+        "seed-035"
+      ],
+      "canon_label": "Artifacts index and projector storage",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Register artifacts_index, artifacts_project_state, and runtime_artifacts projector checkpoint families",
+        "Make the artifact index rebuildable from canonical runtime evidence"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/Runtime_Artifacts_Panel.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L9499-L9524"
+      ],
+      "notes": []
+    },
+    {
+      "obligation_id": "obl-036",
+      "source_seed_ids": [
+        "seed-036"
+      ],
+      "canon_label": "Worktree and lane storage families",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Register worktree_record/worktree_projection and lane_record/lane_projection families",
+        "Use worktree_id as durable filesystem/git identity and lane_id as operational lineage identity"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/WorktreeGitImprovement.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L9525-L9595"
+      ],
+      "notes": []
+    },
+    {
+      "obligation_id": "obl-037",
+      "source_seed_ids": [
+        "seed-037"
+      ],
+      "canon_label": "Shared runtime attribution packet",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Share one attribution family across tool events, runtime artifacts, receipts, and usage records",
+        "Carry run/attempt/thread/node/artifact/provider/usage anchors plus execution/runtime identity fields"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md",
+        "Plans/Tools.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/usage-feature.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L10392-L10417"
+      ],
+      "notes": []
+    },
+    {
+      "obligation_id": "obl-038",
+      "source_seed_ids": [
+        "seed-038"
+      ],
+      "canon_label": "Runtime-artifact envelope",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Make runtime artifacts attempt-native by default with artifact identity, routing refs, content refs, and provider/usage linkage",
+        "Resolve artifact open flows by artifact_id and then by linked envelope refs"
+      ],
+      "affected_doc_hints": [
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/FileManager.md",
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L10590-L10646"
+      ],
+      "notes": []
+    },
+    {
+      "obligation_id": "obl-039",
+      "source_seed_ids": [
+        "seed-039"
+      ],
+      "canon_label": "route_target and OpenSubject ownership",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Let Contracts_V0 own canonical route_target and OpenSubject contracts",
+        "Keep Crosswalk limited to primitive boundary ownership and FileManager OpenFile narrow and path-based"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/FileManager.md",
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L13100-L13145"
+      ],
+      "notes": []
+    },
+    {
+      "obligation_id": "obl-040",
+      "source_seed_ids": [
+        "seed-040"
+      ],
+      "canon_label": "route_target shape and boundaries",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Keep route_target small with subject_id or object_kind/object_id identity",
+        "Limit subject_id families to doc:/artifact:, keep inspector_target secondary, and override only necessary destination/context state"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/FileManager.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L11964-L12179",
+        "working_ledger.md:L12675-L12687"
+      ],
+      "notes": []
+    },
+    {
+      "obligation_id": "obl-041",
+      "source_seed_ids": [
+        "seed-041"
+      ],
+      "canon_label": "Command normalization model",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Distinguish shell_view, navigation_wrapper, and domain_action commands",
+        "Declare wrapper normalization metadata separately from deprecated alias metadata"
+      ],
+      "affected_doc_hints": [
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L12821-L13031"
+      ],
+      "notes": []
+    },
+    {
+      "obligation_id": "obl-042",
+      "source_seed_ids": [
+        "seed-042"
+      ],
+      "canon_label": "Route-aware wiring and gate evidence",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "Expand Wiring Matrix and GATE-010 to verify route args, wrapper normalization, stale revalidation, admissibility, and correlation passthrough",
+        "Add structured gate-specific evidence details for route-aware verification"
+      ],
+      "affected_doc_hints": [
+        "Plans/Wiring_Matrix.md",
+        "Plans/Progression_Gates.md",
+        "Plans/evidence.schema.json"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L11227-L11295"
+      ],
+      "notes": []
+    },
+    {
+      "obligation_id": "obl-043",
+      "source_seed_ids": [
+        "seed-043"
+      ],
+      "canon_label": "Wizard/interview and validation lineage",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Extend wizard/interview handoff with project/thread/wizard/runtime identity and execution_role",
+        "Extend validation_pass_report with planning/governance lineage and an explicit bridge into the launched run"
+      ],
+      "affected_doc_hints": [
+        "Plans/interview-subagent-integration.md",
+        "Plans/chain-wizard.md",
+        "Plans/Prompt_Pipeline.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L9223-L9241",
+        "working_ledger.md:L9387-L9399"
+      ],
+      "notes": []
+    },
+    {
+      "obligation_id": "obl-044",
+      "source_seed_ids": [
+        "seed-044"
+      ],
+      "canon_label": "Help architecture and project status taxonomy",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Define dedicated help-entry architecture with related-concept linking",
+        "Define project activity_state, project attention_state, blocked-owner taxonomy, escalation ladder, and resurfacing/aging rules"
+      ],
+      "affected_doc_hints": [
+        "Plans/Glossary.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L17419-L17433"
+      ],
+      "notes": []
+    },
+    {
+      "obligation_id": "obl-045",
+      "source_seed_ids": [
+        "seed-045"
+      ],
+      "canon_label": "Tail route/open refinement gaps",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Carry selector precedence, reject rules, closed tab_id vocabulary, scoped resolver rules, route examples, ref-family split, and resume_url demotion into live route/open docs",
+        "Carry Primitive:RouteTarget/OpenSubject and wrapper/canonical normalization into crosswalk and wiring docs"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/Progression_Gates.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L17272-L17288",
+        "working_ledger.md:L17435-L17445"
+      ],
+      "notes": []
+    },
+    {
+      "obligation_id": "obl-046",
+      "source_seed_ids": [
+        "seed-046"
+      ],
+      "canon_label": "Blocked notice and usage observability gaps",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "Expand blocked_notice beyond blocked_family and allowed_action_ids[]",
+        "Carry escalation_level, action_available ownership, and usage observability through blocked surfaces"
+      ],
+      "affected_doc_hints": [
+        "Plans/assistant-chat-design.md",
+        "Plans/usage-feature.md",
+        "Plans/Tools.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [
+        "allowed_action_ids[]"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L17929-L17932",
+        "working_ledger.md:L18031-L18033"
+      ],
+      "notes": []
+    },
+    {
+      "obligation_id": "obl-047",
+      "source_seed_ids": [
+        "seed-047"
+      ],
+      "canon_label": "Progress widget catalog and drill mappings",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "Transfer the 13-widget Progress catalog with default drill targets",
+        "Transfer state/action labels, alert taxonomy, event taxonomy, and condition-aging policy"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/Widget_System.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L17373-L17379"
+      ],
+      "notes": []
+    },
+    {
+      "obligation_id": "obl-048",
+      "source_seed_ids": [
+        "seed-048"
+      ],
+      "canon_label": "Settings, persona, and resolver model",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Define the three-axis settings model source/request/execution",
+        "Define display grammar, worker-policy display, resolver inputs, deterministic resolver matrix, and resolver emit shape"
+      ],
+      "affected_doc_hints": [
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Models_System.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L17406-L17418"
+      ],
+      "notes": []
+    },
+    {
+      "obligation_id": "obl-049",
+      "source_seed_ids": [
+        "seed-049"
+      ],
+      "canon_label": "Identity and blocked-policy transfer cluster",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Transfer execution_role, requested_account_id, operational_identity, account-switch and pressure ownership, blocked_sequence minting, startup recovery handshake, and DAE jail/approval policy into owner and consumer docs",
+        "Carry usage switch-history and usage execution-role follow-through"
+      ],
+      "affected_doc_hints": [
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Tools.md",
+        "Plans/GitHub_API_Auth_and_Flows.md",
+        "Plans/Architecture_Invariants.md",
+        "Plans/Run_Modes.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/human-in-the-loop.md",
+        "Plans/usage-feature.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L17447-L17458"
+      ],
+      "notes": []
+    },
+    {
+      "obligation_id": "obl-050",
+      "source_seed_ids": [
+        "seed-050"
+      ],
+      "canon_label": "Coverage blocker concern lifecycle owner section",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Create one canonical concern-lifecycle owner section with explicit active/acknowledged/resolved/dismissed semantics",
+        "Carry resolution_kind including accepted_risk and a concern-action confirmation matrix into that owner section"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/GUI_Rebuild_Requirements_Checklist.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L18202-L18205"
+      ],
+      "notes": []
+    },
+    {
+      "obligation_id": "obl-051",
+      "source_seed_ids": [
+        "seed-051"
+      ],
+      "canon_label": "Coverage blocker provider/model precedence owner section",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Define one owner section covering provider/model precedence across run, seam, package, node, overseer, and delegated-subagent levels",
+        "Tie that section to parallel-node worktree assignment and ownership transitions"
+      ],
+      "affected_doc_hints": [
+        "Plans/Models_System.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/WorktreeGitImprovement.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L18205-L18206"
+      ],
+      "notes": []
+    },
+    {
+      "obligation_id": "obl-052",
+      "source_seed_ids": [
+        "seed-052"
+      ],
+      "canon_label": "Coverage blocker worktree allocation strategy",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Define concrete worktree allocation strategy",
+        "Define contamination, reuse, and cleanup rules for that strategy"
+      ],
+      "affected_doc_hints": [
+        "Plans/Crosswalk.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/orchestrator-subagent-integration.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L18206-L18207"
+      ],
+      "notes": []
+    },
+    {
+      "obligation_id": "obl-053",
+      "source_seed_ids": [
+        "seed-053"
+      ],
+      "canon_label": "Concern owner vs creator vs resolver separation",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Separate concern owner_kind/owner_ref from created_by_kind/created_by_ref and resolver authority",
+        "Allow ownership changes without changing concern identity"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L3129-L3143"
+      ],
+      "notes": []
+    },
+    {
+      "obligation_id": "obl-054",
+      "source_seed_ids": [
+        "seed-054"
+      ],
+      "canon_label": "Concern source-event vs record vs projection split",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Distinguish concern_source_event_ref, concern_record, and concern_projection as separate structural layers"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L2996-L3005"
+      ],
+      "notes": []
+    },
+    {
+      "obligation_id": "obl-055",
+      "source_seed_ids": [
+        "seed-055"
+      ],
+      "canon_label": "Dismissed vs resolved rationale enforcement",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "Require distinct dismissal rationale and resolution rationale rules",
+        "Treat accepted_risk as a resolution path rather than dismissal"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L3075-L3092",
+        "working_ledger.md:L6001-L6014"
+      ],
+      "notes": []
+    },
+    {
+      "obligation_id": "obl-056",
+      "source_seed_ids": [
+        "seed-056"
+      ],
+      "canon_label": "Runtime attribution ownership split",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Let Contracts_V0 own cross-family attribution packet shape",
+        "Let storage-plan own persistence and projection of attempt/usage/receipt/artifact joins"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L10440-L10454"
+      ],
+      "notes": []
+    },
+    {
+      "obligation_id": "obl-057",
+      "source_seed_ids": [
+        "seed-057"
+      ],
+      "canon_label": "Bridge-field precedence for attempt/provider/usage/receipt joins",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Use attempt_id as local anchor, provider_attempt_ref as provider/runtime bridge, usage_event_ref as usage bridge, and receipt refs as external side-effect lineage bridge",
+        "None of those bridge fields replace the primary local key"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/usage-feature.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L10486-L10525"
+      ],
+      "notes": []
+    },
+    {
+      "obligation_id": "obl-058",
+      "source_seed_ids": [
+        "seed-058"
+      ],
+      "canon_label": "Approval scope key and approver identity",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Separate blocked-episode approval scope from session-wide policy scope",
+        "Persist durable approver identity fields on approval and rejection events"
+      ],
+      "affected_doc_hints": [
+        "Plans/human-in-the-loop.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Executor_Protocol.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L8829-L8843"
+      ],
+      "notes": []
+    },
+    {
+      "obligation_id": "obl-059",
+      "source_seed_ids": [
+        "seed-059"
+      ],
+      "canon_label": "Projection fields for startup rehydration",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Carry blocked_reason_code and lifecycle state in worktree projections for startup recovery",
+        "Carry dirty_state and conflict_state in worktree projections"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/WorktreeGitImprovement.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L9549-L9557"
+      ],
+      "notes": []
+    },
+    {
+      "obligation_id": "obl-060",
+      "source_seed_ids": [
+        "seed-060"
+      ],
+      "canon_label": "Artifacts index exact indexed fields",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Index attempt_id and thread_id in artifact index families to preserve attempt-native artifact routing"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/Runtime_Artifacts_Panel.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L9512-L9518"
+      ],
+      "notes": []
+    },
+    {
+      "obligation_id": "obl-061",
+      "source_seed_ids": [
+        "seed-061"
+      ],
+      "canon_label": "Concern update heuristics",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "Use source/scope/category/lineage-aware heuristics when deciding whether repeated sightings update an existing concern or create a new one"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L6029-L6038"
+      ],
+      "notes": []
+    },
+    {
+      "obligation_id": "obl-062",
+      "source_seed_ids": [
+        "seed-062"
+      ],
+      "canon_label": "Help entry template and related-concept clusters",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "Define a dedicated help-entry template and related-concept linking clusters"
+      ],
+      "affected_doc_hints": [
+        "Plans/Glossary.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L17419-L17424"
+      ],
+      "notes": []
+    },
+    {
+      "obligation_id": "obl-063",
+      "source_seed_ids": [
+        "seed-063"
+      ],
+      "canon_label": "Blocked-owner eight-kind taxonomy and escalation ladder surfaces",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Define an explicit blocked-owner 8-kind taxonomy and 5-level escalation ladder with surface mapping"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/usage-feature.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L17425-L17433"
+      ],
+      "notes": []
+    },
+    {
+      "obligation_id": "obl-064",
+      "source_seed_ids": [
+        "seed-064"
+      ],
+      "canon_label": "Route/open compatibility-only fallback marking",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Mark timestamp/run/thread fallback logic as compatibility-only inside route/open contracts",
+        "Keep ref-family split explicit when route/open normalization is transferred"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/Crosswalk.md",
+        "Plans/Wiring_Matrix.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L17435-L17445"
+      ],
+      "notes": []
+    },
+    {
+      "obligation_id": "obl-065",
+      "source_seed_ids": [
+        "seed-065"
+      ],
+      "canon_label": "Artifact envelope routing preference",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Prefer usage_event_ref rather than timestamp heuristics when routing cost-bearing artifacts to Usage and Ledger",
+        "Require runtime artifacts summarizing external operations to carry receipt linkage"
+      ],
+      "affected_doc_hints": [
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/usage-feature.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L10525-L10531"
+      ],
+      "notes": []
+    },
+    {
+      "obligation_id": "obl-066",
+      "source_seed_ids": [
+        "seed-066"
+      ],
+      "canon_label": "Lane cleanup lineage fields",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Keep package/work-package linkage and cleanup/archive lineage explicit in lane_record and lane_projection families"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/WorktreeGitImprovement.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L9530-L9563"
+      ],
+      "notes": []
+    },
+    {
+      "obligation_id": "obl-067",
+      "source_seed_ids": [
+        "seed-067"
+      ],
+      "canon_label": "Deferred concern visibility and blocking contract",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Add `visibility_level`, `attention_level`, `chatworthy`, and `blocking_effect?` to the concern-family contract",
+        "Keep `blocking_effect` explicitly separate from `severity`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [
+        "### Recommended minimum concern record shape",
+        "### Category / severity direction"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L3046-L3050",
+        "working_ledger.md:L3065-L3067"
+      ],
+      "notes": [
+        "Resolved from deferred material: adds a distinct concern attention/visibility field family.",
+        "Resolved from deferred material: keeps blocking_effect semantically independent from severity."
+      ]
+    },
+    {
+      "obligation_id": "obl-068",
+      "source_seed_ids": [
+        "seed-068"
+      ],
+      "canon_label": "Deferred concern owner-surface taxonomy",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Define concern owner surfaces across `Runtime`, `Package Overseer`, `Seam Overseer`, `Corroboration`, `Graph Patch`, `Recovery`, `User`, and `External Resource`",
+        "Treat `concern resolver` as distinct from owner/source roles",
+        "Allow concern ownership reassignment without changing concern identity"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "heading_hints": [
+        "### Concern ownership / authority direction"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L3133-L3143"
+      ],
+      "notes": [
+        "Resolved from deferred material using direct ledger evidence for exact owner-kind token set and resolver role.",
+        "Affected doc hints inherited from deferred worklist because the verified range is cross-cutting but not doc-named inline."
+      ]
+    }
+  ],
+  "represented_seed_ids": [
+    "seed-001",
+    "seed-002",
+    "seed-003",
+    "seed-004",
+    "seed-005",
+    "seed-006",
+    "seed-007",
+    "seed-008",
+    "seed-009",
+    "seed-010",
+    "seed-011",
+    "seed-012",
+    "seed-013",
+    "seed-014",
+    "seed-015",
+    "seed-016",
+    "seed-017",
+    "seed-018",
+    "seed-019",
+    "seed-020",
+    "seed-021",
+    "seed-022",
+    "seed-023",
+    "seed-024",
+    "seed-025",
+    "seed-026",
+    "seed-027",
+    "seed-028",
+    "seed-029",
+    "seed-030",
+    "seed-031",
+    "seed-032",
+    "seed-033",
+    "seed-034",
+    "seed-035",
+    "seed-036",
+    "seed-037",
+    "seed-038",
+    "seed-039",
+    "seed-040",
+    "seed-041",
+    "seed-042",
+    "seed-043",
+    "seed-044",
+    "seed-045",
+    "seed-046",
+    "seed-047",
+    "seed-048",
+    "seed-049",
+    "seed-050",
+    "seed-051",
+    "seed-052",
+    "seed-053",
+    "seed-054",
+    "seed-055",
+    "seed-056",
+    "seed-057",
+    "seed-058",
+    "seed-059",
+    "seed-060",
+    "seed-061",
+    "seed-062",
+    "seed-063",
+    "seed-064",
+    "seed-065",
+    "seed-066",
+    "seed-067",
+    "seed-068"
+  ],
+  "noise_seed_ids": [],
+  "deferred_seed_ids": []
+}

@@ -1,0 +1,1398 @@
+{
+  "schema_id": "pm.ledger_obligation_seed_shard_result.v1",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-0060",
+  "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0060-L011801-L012000.md",
+  "source_line_range": "L011801-L012000",
+  "seed_candidates": [
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "Once normalized, Dashboard, thread badges, and blocked notices should stop behaving like separat",
+      "exact_items": [
+        "Once normalized, Dashboard, thread badges, and blocked notices should stop behaving like separate navigation systems."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0060",
+      "source_evidence": [
+        "working_ledger.md:L11802"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/Crosswalk.md",
+      "exact_items": [
+        "`Plans/Crosswalk.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Crosswalk.md"
+      ],
+      "heading_hints": [
+        "Targeted docs read"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0060",
+      "source_evidence": [
+        "working_ledger.md:L11807"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/Contracts_V0.md",
+      "exact_items": [
+        "`Plans/Contracts_V0.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md"
+      ],
+      "heading_hints": [
+        "Targeted docs read"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0060",
+      "source_evidence": [
+        "working_ledger.md:L11808"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/FileManager.md",
+      "exact_items": [
+        "`Plans/FileManager.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/FileManager.md"
+      ],
+      "heading_hints": [
+        "Targeted docs read"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0060",
+      "source_evidence": [
+        "working_ledger.md:L11809"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/storage-plan.md",
+      "exact_items": [
+        "`Plans/storage-plan.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [
+        "Targeted docs read"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0060",
+      "source_evidence": [
+        "working_ledger.md:L11810"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "Key findings",
+      "exact_items": [
+        "route target / internal navigation payload"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Key findings"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0060",
+      "source_evidence": [
+        "working_ledger.md:L11819"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "storage-plan.md",
+      "exact_items": [
+        "`storage-plan.md` owns subject identity for preview/doc/artifact restore"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Key findings"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0060",
+      "source_evidence": [
+        "working_ledger.md:L11824"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "Key findings",
+      "exact_items": [
+        "surface docs keep inventing local navigation semantics on top"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Key findings"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0060",
+      "source_evidence": [
+        "working_ledger.md:L11825"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Key findings",
+      "exact_items": [
+        "The likely stable ownership split now looks much clearer:"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Key findings"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0060",
+      "source_evidence": [
+        "working_ledger.md:L11826"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Crosswalk.md",
+      "exact_items": [
+        "`Crosswalk.md`: introduces routing primitives and owner boundaries"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Key findings"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0060",
+      "source_evidence": [
+        "working_ledger.md:L11827"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "Contracts_V0.md",
+      "exact_items": [
+        "`Contracts_V0.md`: owns canonical route-target / subject-open contract shapes"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Key findings"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0060",
+      "source_evidence": [
+        "working_ledger.md:L11827-L11828"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "storage-plan.md",
+      "exact_items": [
+        "`storage-plan.md`: owns persisted subject identity and restore/projection joins"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Key findings"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0060",
+      "source_evidence": [
+        "working_ledger.md:L11827-L11829"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Key findings",
+      "exact_items": [
+        "consumer docs: only describe how their surfaces use the shared primitives"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Key findings"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0060",
+      "source_evidence": [
+        "working_ledger.md:L11831"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/Crosswalk.md",
+      "exact_items": [
+        "`Plans/Crosswalk.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Crosswalk.md"
+      ],
+      "heading_hints": [
+        "Impacted docs"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0060",
+      "source_evidence": [
+        "working_ledger.md:L11831-L11835"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/Contracts_V0.md",
+      "exact_items": [
+        "`Plans/Contracts_V0.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md"
+      ],
+      "heading_hints": [
+        "Impacted docs"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0060",
+      "source_evidence": [
+        "working_ledger.md:L11836"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/FileManager.md",
+      "exact_items": [
+        "`Plans/FileManager.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/FileManager.md"
+      ],
+      "heading_hints": [
+        "Impacted docs"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0060",
+      "source_evidence": [
+        "working_ledger.md:L11837"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/storage-plan.md",
+      "exact_items": [
+        "`Plans/storage-plan.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [
+        "Impacted docs"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0060",
+      "source_evidence": [
+        "working_ledger.md:L11838"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Impacted docs",
+      "exact_items": [
+        "Cross-owner docs implicated by this seam:"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Impacted docs"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0060",
+      "source_evidence": [
+        "working_ledger.md:L11839"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/FinalGUISpec.md",
+      "exact_items": [
+        "`Plans/FinalGUISpec.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [
+        "Impacted docs"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0060",
+      "source_evidence": [
+        "working_ledger.md:L11839-L11840"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/UI_Command_Catalog.md",
+      "exact_items": [
+        "`Plans/UI_Command_Catalog.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "heading_hints": [
+        "Impacted docs"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0060",
+      "source_evidence": [
+        "working_ledger.md:L11839-L11841"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/assistant-chat-design.md",
+      "exact_items": [
+        "`Plans/assistant-chat-design.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/assistant-chat-design.md"
+      ],
+      "heading_hints": [
+        "Impacted docs"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0060",
+      "source_evidence": [
+        "working_ledger.md:L11842"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/Runtime_Artifacts_Panel.md",
+      "exact_items": [
+        "`Plans/Runtime_Artifacts_Panel.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Runtime_Artifacts_Panel.md"
+      ],
+      "heading_hints": [
+        "Impacted docs"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0060",
+      "source_evidence": [
+        "working_ledger.md:L11843"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/Orchestrator_Page.md",
+      "exact_items": [
+        "`Plans/Orchestrator_Page.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md"
+      ],
+      "heading_hints": [
+        "Impacted docs"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0060",
+      "source_evidence": [
+        "working_ledger.md:L11844"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "Contradictions / gaps surfaced",
+      "exact_items": [
+        "The Crosswalk is supposed to prevent exactly this kind of ownership drift, but currently leaves the route/subject problem unclaimed."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Contradictions / gaps surfaced"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0060",
+      "source_evidence": [
+        "working_ledger.md:L11847"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "Contradictions / gaps surfaced",
+      "exact_items": [
+        "Neighboring primitives are already fragmented because no owner doc says where route payloads stop, where subject identity starts, and where file-path opening is merely one realization."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Contradictions / gaps surfaced"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0060",
+      "source_evidence": [
+        "working_ledger.md:L11848"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "OpenFile",
+      "exact_items": [
+        "`OpenFile` is currently acting like a surrogate navigation primitive because the real primitive has no owner."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Contradictions / gaps surfaced"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0060",
+      "source_evidence": [
+        "working_ledger.md:L11848-L11849"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "Candidate fixes to carry forward",
+      "exact_items": [
+        "Add a new Crosswalk primitive for route-target navigation and likely another for subject-open/open-by-identity, or make one primitive explicitly cover both layers if kept tight."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Candidate fixes to carry forward"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0060",
+      "source_evidence": [
+        "working_ledger.md:L11849-L11852"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Contracts_V0.md",
+      "exact_items": [
+        "Make `Contracts_V0.md` the concrete shape owner for those primitives."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Candidate fixes to carry forward"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0060",
+      "source_evidence": [
+        "working_ledger.md:L11849-L11853"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "FileManager.md",
+      "exact_items": [
+        "Narrow `FileManager.md` to consumer/realization ownership:"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Candidate fixes to carry forward"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0060",
+      "source_evidence": [
+        "working_ledger.md:L11853-L11854"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "Candidate fixes to carry forward",
+      "exact_items": [
+        "editor/tab/buffer behavior"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Candidate fixes to carry forward"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0060",
+      "source_evidence": [
+        "working_ledger.md:L11854-L11856"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "storage-plan.md",
+      "exact_items": [
+        "Keep `storage-plan.md` as the owner of persisted subject identity, projector-derived joins, and restore semantics."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Candidate fixes to carry forward"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0060",
+      "source_evidence": [
+        "working_ledger.md:L11858"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Do-not-forget details",
+      "exact_items": [
+        "This is one of the most actionable owner fixes found in this routing tranche."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Do-not-forget details"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0060",
+      "source_evidence": [
+        "working_ledger.md:L11858-L11861"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Do-not-forget details",
+      "exact_items": [
+        "The conceptual work is largely done; the missing piece is declaring the owner split in the docs that are supposed to stop duplication."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Do-not-forget details"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0060",
+      "source_evidence": [
+        "working_ledger.md:L11861-L11862"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "Do-not-forget details",
+      "exact_items": [
+        "If Crosswalk does not absorb this, future reconciliation will likely keep slipping back into per-surface local routing prose."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Do-not-forget details"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0060",
+      "source_evidence": [
+        "working_ledger.md:L11862-L11863"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/Contracts_V0.md",
+      "exact_items": [
+        "`Plans/Contracts_V0.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md"
+      ],
+      "heading_hints": [
+        "Targeted docs read"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0060",
+      "source_evidence": [
+        "working_ledger.md:L11862-L11868"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/Crosswalk.md",
+      "exact_items": [
+        "`Plans/Crosswalk.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Crosswalk.md"
+      ],
+      "heading_hints": [
+        "Targeted docs read"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0060",
+      "source_evidence": [
+        "working_ledger.md:L11869"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/FileManager.md",
+      "exact_items": [
+        "`Plans/FileManager.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/FileManager.md"
+      ],
+      "heading_hints": [
+        "Targeted docs read"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0060",
+      "source_evidence": [
+        "working_ledger.md:L11870"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/storage-plan.md",
+      "exact_items": [
+        "`Plans/storage-plan.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [
+        "Targeted docs read"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0060",
+      "source_evidence": [
+        "working_ledger.md:L11871"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "Key findings",
+      "exact_items": [
+        "The nearby owner docs point toward a layered design, not a single monolithic \u201copen/navigation\u201d contract."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Key findings"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0060",
+      "source_evidence": [
+        "working_ledger.md:L11874"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Contracts_V0.md",
+      "exact_items": [
+        "`Contracts_V0.md` already wants a small reusable command envelope, which argues for a shared target object under `UICommand.args` rather than every command inventing its own payload."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Key findings"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0060",
+      "source_evidence": [
+        "working_ledger.md:L11874-L11875"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "FileManager.md",
+      "exact_items": [
+        "`FileManager.md` still legitimately needs a path-based `OpenFile { path... }` contract for real workspace documents."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Key findings"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0060",
+      "source_evidence": [
+        "working_ledger.md:L11874-L11876"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "storage-plan.md",
+      "exact_items": [
+        "`storage-plan.md` already owns subject identity (`doc:<document_id>`, `artifact:<artifact_id>`) and restore rules, which argues for an identity-native contract above path opening, not a replacement of path opening."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Key findings"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0060",
+      "source_evidence": [
+        "working_ledger.md:L11877"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "route_target",
+      "exact_items": [
+        "one shared canonical `route_target` object"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Key findings"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0060",
+      "source_evidence": [
+        "working_ledger.md:L11879"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Key findings",
+      "exact_items": [
+        "specialized operations that consume it, especially:"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Key findings"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0060",
+      "source_evidence": [
+        "working_ledger.md:L11880"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "Recommended shape",
+      "exact_items": [
+        "canonical target/scope object used by navigation/open/focus actions"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Recommended shape"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0060",
+      "source_evidence": [
+        "working_ledger.md:L11888"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "subject_id",
+      "exact_items": [
+        "`subject_id` required"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Recommended shape"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0060",
+      "source_evidence": [
+        "working_ledger.md:L11904"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Recommended shape",
+      "exact_items": [
+        "resolves through canonical subject/open rules"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Recommended shape"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0060",
+      "source_evidence": [
+        "working_ledger.md:L11905"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "generated://",
+      "exact_items": [
+        "may realize as workspace document, transient `generated://` buffer, or routed non-editor surface"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Recommended shape"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0060",
+      "source_evidence": [
+        "working_ledger.md:L11906"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "Recommended shape",
+      "exact_items": [
+        "remains the right tool for real file opens and code-navigation clicks when a canonical workspace path is already known"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Recommended shape"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0060",
+      "source_evidence": [
+        "working_ledger.md:L11909"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/Contracts_V0.md",
+      "exact_items": [
+        "`Plans/Contracts_V0.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md"
+      ],
+      "heading_hints": [
+        "Impacted docs"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0060",
+      "source_evidence": [
+        "working_ledger.md:L11915"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/Crosswalk.md",
+      "exact_items": [
+        "`Plans/Crosswalk.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Crosswalk.md"
+      ],
+      "heading_hints": [
+        "Impacted docs"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0060",
+      "source_evidence": [
+        "working_ledger.md:L11916"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/FileManager.md",
+      "exact_items": [
+        "`Plans/FileManager.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/FileManager.md"
+      ],
+      "heading_hints": [
+        "Impacted docs"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0060",
+      "source_evidence": [
+        "working_ledger.md:L11917"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Impacted docs",
+      "exact_items": [
+        "Cross-owner docs implicated by this seam:"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Impacted docs"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0060",
+      "source_evidence": [
+        "working_ledger.md:L11918"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/storage-plan.md",
+      "exact_items": [
+        "`Plans/storage-plan.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [
+        "Impacted docs"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0060",
+      "source_evidence": [
+        "working_ledger.md:L11918-L11919"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/UI_Command_Catalog.md",
+      "exact_items": [
+        "`Plans/UI_Command_Catalog.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "heading_hints": [
+        "Impacted docs"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0060",
+      "source_evidence": [
+        "working_ledger.md:L11918-L11920"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/FinalGUISpec.md",
+      "exact_items": [
+        "`Plans/FinalGUISpec.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [
+        "Impacted docs"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0060",
+      "source_evidence": [
+        "working_ledger.md:L11921"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/assistant-chat-design.md",
+      "exact_items": [
+        "`Plans/assistant-chat-design.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/assistant-chat-design.md"
+      ],
+      "heading_hints": [
+        "Impacted docs"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0060",
+      "source_evidence": [
+        "working_ledger.md:L11922"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/Runtime_Artifacts_Panel.md",
+      "exact_items": [
+        "`Plans/Runtime_Artifacts_Panel.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Runtime_Artifacts_Panel.md"
+      ],
+      "heading_hints": [
+        "Impacted docs"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0060",
+      "source_evidence": [
+        "working_ledger.md:L11923"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Primitive:RouteTarget",
+      "exact_items": [
+        "Add `Primitive:RouteTarget` and likely `Primitive:OpenSubject` to `Crosswalk.md`."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Candidate fixes to carry forward"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0060",
+      "source_evidence": [
+        "working_ledger.md:L11931"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "route_target",
+      "exact_items": [
+        "Add concrete `route_target` and `OpenSubject` shapes to `Contracts_V0.md`."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Candidate fixes to carry forward"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0060",
+      "source_evidence": [
+        "working_ledger.md:L11932"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "cmd.nav.*",
+      "exact_items": [
+        "Use `cmd.nav.*` or equivalent wrappers to route through `route_target` without forcing every consumer doc to restate the model."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Candidate fixes to carry forward"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0060",
+      "source_evidence": [
+        "working_ledger.md:L11934"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "Do-not-forget details",
+      "exact_items": [
+        "This should let current docs reconcile incrementally instead of forcing a single disruptive replacement of every existing open/navigation rule."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Do-not-forget details"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0060",
+      "source_evidence": [
+        "working_ledger.md:L11941"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/Contracts_V0.md",
+      "exact_items": [
+        "`Plans/Contracts_V0.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md"
+      ],
+      "heading_hints": [
+        "Targeted docs read"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0060",
+      "source_evidence": [
+        "working_ledger.md:L11946"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/UI_Command_Catalog.md",
+      "exact_items": [
+        "`Plans/UI_Command_Catalog.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "heading_hints": [
+        "Targeted docs read"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0060",
+      "source_evidence": [
+        "working_ledger.md:L11947"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/assistant-chat-design.md",
+      "exact_items": [
+        "`Plans/assistant-chat-design.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/assistant-chat-design.md"
+      ],
+      "heading_hints": [
+        "Targeted docs read"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0060",
+      "source_evidence": [
+        "working_ledger.md:L11948"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/Orchestrator_Page.md",
+      "exact_items": [
+        "`Plans/Orchestrator_Page.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md"
+      ],
+      "heading_hints": [
+        "Targeted docs read"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0060",
+      "source_evidence": [
+        "working_ledger.md:L11949"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/Runtime_Artifacts_Panel.md",
+      "exact_items": [
+        "`Plans/Runtime_Artifacts_Panel.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Runtime_Artifacts_Panel.md"
+      ],
+      "heading_hints": [
+        "Targeted docs read"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0060",
+      "source_evidence": [
+        "working_ledger.md:L11950"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/storage-plan.md",
+      "exact_items": [
+        "`Plans/storage-plan.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [
+        "Targeted docs read"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0060",
+      "source_evidence": [
+        "working_ledger.md:L11951"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "route_target",
+      "exact_items": [
+        "The app already uses many identifiers in navigation payloads, but most of them should not become top-level canonical `route_target` fields."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Key findings"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0060",
+      "source_evidence": [
+        "working_ledger.md:L11954"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "route_target",
+      "exact_items": [
+        "If `route_target` simply absorbs every current surface-local field (`artifact_id`, `usage_event_ref`, `wizard_step`, `message_id`, `workflow_run_id`, etc.), it will recreate the same drift problem in a new place."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Key findings"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0060",
+      "source_evidence": [
+        "working_ledger.md:L11955"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Key findings",
+      "exact_items": [
+        "keep the canonical target object small"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Key findings"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0060",
+      "source_evidence": [
+        "working_ledger.md:L11956-L11957"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Key findings",
+      "exact_items": [
+        "This means many existing ad hoc payloads should collapse into a smaller vocabulary rather than being copied verbatim into the new contract."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Key findings"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0060",
+      "source_evidence": [
+        "working_ledger.md:L11962"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Recommended minimum field set",
+      "exact_items": [
+        "Required:"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Recommended minimum field set"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0060",
+      "source_evidence": [
+        "working_ledger.md:L11965"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Recommended minimum field set",
+      "exact_items": [
+        "Canonical target selector:"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Recommended minimum field set"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0060",
+      "source_evidence": [
+        "working_ledger.md:L11972"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "What should NOT be base `route_target` fields by default",
+      "exact_items": [
+        "These should normally normalize into:"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "What should NOT be base `route_target` fields by default"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0060",
+      "source_evidence": [
+        "working_ledger.md:L11992"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "inspector_target",
+      "exact_items": [
+        "`inspector_target` only when the field is really a detail-pane selection, not the main identity"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "What should NOT be base `route_target` fields by default"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0060",
+      "source_evidence": [
+        "working_ledger.md:L11996"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "Example normalization direction",
+      "exact_items": [
+        "artifact deep-link:"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Example normalization direction"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0060",
+      "source_evidence": [
+        "working_ledger.md:L11999"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "subject_id = artifact:<artifact_id>",
+      "exact_items": [
+        "`subject_id = artifact:<artifact_id>`"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Example normalization direction"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0060",
+      "source_evidence": [
+        "working_ledger.md:L12000"
+      ],
+      "notes": []
+    }
+  ],
+  "noise_items": [],
+  "uncertain_items": [],
+  "covered_shard_id": "shard-0060"
+}

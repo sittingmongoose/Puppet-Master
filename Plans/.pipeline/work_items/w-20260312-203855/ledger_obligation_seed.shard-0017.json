@@ -1,0 +1,580 @@
+{
+  "schema_id": "pm.ledger_obligation_seed_shard_result.v1",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-0017",
+  "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0017-L003201-L003400.md",
+  "source_line_range": "L003201-L003400",
+  "seed_candidates": [
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "What is missing is a shared policy for Orchestrator/runtime actions specifically.",
+      "exact_items": [
+        "What is missing is a shared policy for Orchestrator/runtime actions specifically."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0017",
+      "source_evidence": [
+        "working_ledger.md:L3206"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "which actions need no confirmation",
+      "exact_items": [
+        "which actions need no confirmation"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0017",
+      "source_evidence": [
+        "working_ledger.md:L3206-L3208"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "which need light confirmation",
+      "exact_items": [
+        "which need light confirmation"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0017",
+      "source_evidence": [
+        "working_ledger.md:L3209"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "which need strong confirmation",
+      "exact_items": [
+        "which need strong confirmation"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0017",
+      "source_evidence": [
+        "working_ledger.md:L3210"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Working interpretation",
+      "exact_items": [
+        "should show scope and consequence clearly"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Working interpretation"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0017",
+      "source_evidence": [
+        "working_ledger.md:L3237"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "Working interpretation",
+      "exact_items": [
+        "actions that must go through a canonical approval/blocked flow and cannot be bypassed by generic UI confirmation"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Working interpretation"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0017",
+      "source_evidence": [
+        "working_ledger.md:L3239"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "Reversibility direction",
+      "exact_items": [
+        "example class: reversible local presentation/layout actions, some editor-level reverts"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Reversibility direction"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0017",
+      "source_evidence": [
+        "working_ledger.md:L3245"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "Recommended action-family mapping",
+      "exact_items": [
+        "open/focus/navigate/deep-link"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Recommended action-family mapping"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0017",
+      "source_evidence": [
+        "working_ledger.md:L3262"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "Recommended action-family mapping",
+      "exact_items": [
+        "tab-local filter/sort/search changes"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Recommended action-family mapping"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0017",
+      "source_evidence": [
+        "working_ledger.md:L3264"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Recommended action-family mapping",
+      "exact_items": [
+        "graph patch application when it changes canonical graph generation"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Recommended action-family mapping"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0017",
+      "source_evidence": [
+        "working_ledger.md:L3282"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "light",
+      "exact_items": [
+        "`light` confirm should show:"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Recommended confirmation payload rules"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0017",
+      "source_evidence": [
+        "working_ledger.md:L3287"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "strong",
+      "exact_items": [
+        "`strong` confirm should show:"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Recommended confirmation payload rules"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0017",
+      "source_evidence": [
+        "working_ledger.md:L3290"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "hard_gate",
+      "exact_items": [
+        "`hard_gate` should show:"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Recommended confirmation payload rules"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0017",
+      "source_evidence": [
+        "working_ledger.md:L3296"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Recommended confirmation payload rules",
+      "exact_items": [
+        "why the gate exists"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Recommended confirmation payload rules"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0017",
+      "source_evidence": [
+        "working_ledger.md:L3298"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "strong",
+      "exact_items": [
+        "merge/split should be `strong`"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Concern / promotion / graph-patch implications"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0017",
+      "source_evidence": [
+        "working_ledger.md:L3319"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "strong",
+      "exact_items": [
+        "revoke should likely be `strong`"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Concern / promotion / graph-patch implications"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0017",
+      "source_evidence": [
+        "working_ledger.md:L3322"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "hard_gate",
+      "exact_items": [
+        "apply accepted patch should likely be `hard_gate` or runtime-controlled strong action because it changes canonical graph generation"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Concern / promotion / graph-patch implications"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0017",
+      "source_evidence": [
+        "working_ledger.md:L3325"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "Source Control / cleanup implications",
+      "exact_items": [
+        "narrow Source Control panel means destructive actions there should likely route through compact but clear confirmation patterns, not giant forms"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Source Control / cleanup implications"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0017",
+      "source_evidence": [
+        "working_ledger.md:L3328"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Source Control / cleanup implications",
+      "exact_items": [
+        "worktree prune/remove and cleanup actions should disclose:"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Source Control / cleanup implications"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0017",
+      "source_evidence": [
+        "working_ledger.md:L3329"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Candidate fixes to carry forward",
+      "exact_items": [
+        "Add a shared action policy matrix:"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Candidate fixes to carry forward"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0017",
+      "source_evidence": [
+        "working_ledger.md:L3340"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Candidate fixes to carry forward",
+      "exact_items": [
+        "canonical recovery path"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Candidate fixes to carry forward"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0017",
+      "source_evidence": [
+        "working_ledger.md:L3344"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "Candidate fixes to carry forward",
+      "exact_items": [
+        "Bind high-consequence runtime actions to canonical blocked/HITL command contracts where appropriate instead of ad hoc UI confirms."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Candidate fixes to carry forward"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0017",
+      "source_evidence": [
+        "working_ledger.md:L3348"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Do-not-forget details",
+      "exact_items": [
+        "confirmation is not the same as authorization; some actions require runtime/HITL gating, not just a modal"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Do-not-forget details"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0017",
+      "source_evidence": [
+        "working_ledger.md:L3351"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Do-not-forget details",
+      "exact_items": [
+        "destructive worktree/cleanup actions must preserve historical lineage even when the live object is removed"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Do-not-forget details"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0017",
+      "source_evidence": [
+        "working_ledger.md:L3352"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Do-not-forget details",
+      "exact_items": [
+        "strong confirmations should be consequence-specific, not generic \"Are you sure?\""
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Do-not-forget details"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0017",
+      "source_evidence": [
+        "working_ledger.md:L3353"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/storage-plan.md",
+      "exact_items": [
+        "`Plans/storage-plan.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [
+        "Targeted docs read"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0017",
+      "source_evidence": [
+        "working_ledger.md:L3358"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/Orchestrator_Page.md",
+      "exact_items": [
+        "`Plans/Orchestrator_Page.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md"
+      ],
+      "heading_hints": [
+        "Targeted docs read"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0017",
+      "source_evidence": [
+        "working_ledger.md:L3359"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/Contracts_V0.md",
+      "exact_items": [
+        "`Plans/Contracts_V0.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md"
+      ],
+      "heading_hints": [
+        "Targeted docs read"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0017",
+      "source_evidence": [
+        "working_ledger.md:L3360"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/FinalGUISpec.md",
+      "exact_items": [
+        "`Plans/FinalGUISpec.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [
+        "Targeted docs read"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0017",
+      "source_evidence": [
+        "working_ledger.md:L3361"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/Run_Graph_View.md",
+      "exact_items": [
+        "`Plans/Run_Graph_View.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Run_Graph_View.md"
+      ],
+      "heading_hints": [
+        "Targeted docs read"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0017",
+      "source_evidence": [
+        "working_ledger.md:L3362"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Key findings",
+      "exact_items": [
+        "parent-summary artifact vs evidence summary"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Key findings"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0017",
+      "source_evidence": [
+        "working_ledger.md:L3367"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Key findings",
+      "exact_items": [
+        "preview subjects can be document-backed or artifact-backed"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Key findings"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0017",
+      "source_evidence": [
+        "working_ledger.md:L3368"
+      ],
+      "notes": []
+    }
+  ],
+  "noise_items": [
+    {
+      "item": "- concrete consequence summary",
+      "source_evidence": [
+        "working_ledger.md:L3293"
+      ],
+      "reason": "metric/status/count/family or process line without concrete obligation-grade evidence"
+    },
+    {
+      "item": "- exact records belong in Ledger while summary/inspection lives elsewhere",
+      "source_evidence": [
+        "working_ledger.md:L3369"
+      ],
+      "reason": "metric/status/count/family or process line without concrete obligation-grade evidence"
+    },
+    {
+      "item": "- `status`",
+      "source_evidence": [
+        "working_ledger.md:L3396"
+      ],
+      "reason": "metric/status/count/family or process line without concrete obligation-grade evidence"
+    }
+  ],
+  "uncertain_items": [],
+  "covered_shard_id": "shard-0017"
+}

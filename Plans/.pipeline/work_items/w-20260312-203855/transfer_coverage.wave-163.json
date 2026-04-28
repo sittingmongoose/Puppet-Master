@@ -1,0 +1,210 @@
+{
+  "schema_id": "pm.transfer_coverage_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-163",
+  "row_groups": [
+    "rowgrp-0649"
+  ],
+  "coverage_rows": [
+    {
+      "coverage_id": "cov-05320",
+      "source_obligation_ids": [
+        "obl-4967"
+      ],
+      "source_seed_ids": [
+        "seed-7108"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "canon_label": "Entry",
+      "row_type": "stale_retirement",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "Entry",
+      "status": "missing",
+      "exact_items": [
+        "Follow-up Wave 3 rechecked the storage/receipt/account-history cluster and added no new exact missing field, heading, stale survivor, affected target, or blocker family beyond the wave-one refinements."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "stale_retirement",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-05321",
+      "source_obligation_ids": [
+        "obl-4968"
+      ],
+      "source_seed_ids": [
+        "seed-7109"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "canon_label": "Entry",
+      "row_type": "stale_retirement",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "Entry",
+      "status": "missing",
+      "exact_items": [
+        "Follow-up Wave 4 rechecked the route/open, blocked-action, and projection-health consumer surfaces and added no new exact missing field, heading, stale survivor, affected target, or blocker family beyond the current blocker wording."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "stale_retirement",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-05343",
+      "source_obligation_ids": [
+        "obl-4985"
+      ],
+      "source_seed_ids": [
+        "seed-7136"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "canon_label": "detached_window",
+      "row_type": "stale_retirement",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "Entry",
+      "status": "missing",
+      "exact_items": [
+        "Follow-up Wave 2 rechecked the route/open and blocked-state survivor set (`detached_window`, `result_id`, `blocked_notice`, `action_available`, `No remaining gaps`) and added no new exact missing field, heading, stale survivor, affected target, or blocker family beyond the wave-one refinements."
+      ],
+      "stale_tokens": [
+        "detached_window",
+        "result_id",
+        "blocked_notice",
+        "action_available",
+        "No remaining gaps"
+      ],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "stale_retirement",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-05344",
+      "source_obligation_ids": [
+        "obl-4986"
+      ],
+      "source_seed_ids": [
+        "seed-7137"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "canon_label": "Entry",
+      "row_type": "stale_retirement",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "Entry",
+      "status": "missing",
+      "exact_items": [
+        "Follow-up Wave 3 rechecked the storage/help/history cluster and added no new exact missing field, heading, stale survivor, affected target, or blocker family beyond the wave-one refinements."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "stale_retirement",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-05354",
+      "source_obligation_ids": [
+        "obl-4996"
+      ],
+      "source_seed_ids": [
+        "seed-7161"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "canon_label": "pm.open_gaps.v3",
+      "row_type": "stale_retirement",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "Entry",
+      "status": "missing",
+      "exact_items": [
+        "summary: Audited the repaired `pm.open_gaps.v3` blocker split against live planning docs; the bounded waves reconfirmed the known missing headings, carry-through gaps, stale survivors, and broken cross-references, but produced zero new exact findings and no evidence that any repaired gap must move back to `blocker_type=planning`."
+      ],
+      "stale_tokens": [
+        "pm.open_gaps.v3",
+        "blocker_type=planning"
+      ],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "stale_retirement",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-05355",
+      "source_obligation_ids": [
+        "obl-4997"
+      ],
+      "source_seed_ids": [
+        "seed-7162"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "canon_label": "gap-001",
+      "row_type": "stale_retirement",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "Entry",
+      "status": "missing",
+      "exact_items": [
+        "Wave 1 rechecked `gap-001`, `gap-002`, and `gap-005` against live Contracts, UI command, chat, usage, HITL, and tool docs and only reconfirmed the already-recorded missing `5.1B` owner anchor, incomplete `execution_unit_context` required-field list, live `detached_window` / `result_id` survivors, skeletal `blocked_notice` payload, and stale closure verdict."
+      ],
+      "stale_tokens": [
+        "gap-001",
+        "gap-002",
+        "gap-005",
+        "5.1B",
+        "execution_unit_context",
+        "detached_window",
+        "result_id",
+        "blocked_notice"
+      ],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "stale_retirement",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-05360",
+      "source_obligation_ids": [
+        "obl-5001"
+      ],
+      "source_seed_ids": [
+        "seed-7166"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "canon_label": "Entry",
+      "row_type": "stale_retirement",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "Entry",
+      "status": "missing",
+      "exact_items": [
+        "Follow-up local stability sweeps across usage/help/blocked/storage clusters added no new exact missing field, heading, stale survivor, affected target, or blocker family."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "stale_retirement",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    }
+  ]
+}

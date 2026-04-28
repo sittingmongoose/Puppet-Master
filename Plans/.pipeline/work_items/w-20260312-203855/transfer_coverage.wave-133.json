@@ -1,0 +1,1053 @@
+{
+  "schema_id": "pm.transfer_coverage_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-133",
+  "row_groups": [
+    "rowgrp-0529",
+    "rowgrp-0530",
+    "rowgrp-0531",
+    "rowgrp-0532"
+  ],
+  "coverage_rows": [
+    {
+      "coverage_id": "cov-05252",
+      "source_obligation_ids": [
+        "obl-4907"
+      ],
+      "source_seed_ids": [
+        "seed-6992"
+      ],
+      "source_shard_ids": [
+        "shard-0090"
+      ],
+      "canon_label": "Ledger Condenser",
+      "row_type": "layout_blocker",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "Entry",
+      "status": "missing",
+      "exact_items": [
+        "The blocker bundle remains materially blocked, but the next useful stage is now `Ledger Condenser`, not another Audit Mode sweep."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-05272",
+      "source_obligation_ids": [
+        "obl-4926"
+      ],
+      "source_seed_ids": [
+        "seed-7032"
+      ],
+      "source_shard_ids": [
+        "shard-0090"
+      ],
+      "canon_label": "canon_inventory.json",
+      "row_type": "layout_blocker",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "Entry",
+      "status": "missing",
+      "exact_items": [
+        "`canon_inventory.json` now lags the refined blocker wording again, so the next useful stage is `Ledger Condenser`."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-05273",
+      "source_obligation_ids": [
+        "obl-4927"
+      ],
+      "source_seed_ids": [
+        "seed-7033"
+      ],
+      "source_shard_ids": [
+        "shard-0090"
+      ],
+      "canon_label": "Entry",
+      "row_type": "layout_blocker",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "Entry",
+      "status": "missing",
+      "exact_items": [
+        "summary: Ran two bounded audit waves against the condensed blocker bundle after the failed Ready Check and both waves produced zero new findings, so the work item stops on the iterative-audit zero-finding condition and hands back to Ledger Condenser."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-05292",
+      "source_obligation_ids": [
+        "obl-4946"
+      ],
+      "source_seed_ids": [
+        "seed-7072"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "canon_label": "Entry",
+      "row_type": "layout_blocker",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "Entry",
+      "status": "missing",
+      "exact_items": [
+        "summary: Ran a new bounded audit pass after the blocked Ready Check; the first wave produced exact refinements in the runtime-identity, route-target, glossary/help, and orchestrator cross-reference blocker families, and two bounded follow-up sweeps then produced zero new exact missing items."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-05314",
+      "source_obligation_ids": [
+        "obl-4963"
+      ],
+      "source_seed_ids": [
+        "seed-7104"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "canon_label": "Entry",
+      "row_type": "layout_blocker",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "Entry",
+      "status": "missing",
+      "exact_items": [
+        "summary: Ran another bounded audit pass after the blocked Ready Check; the first wave sharpened the storage and glossary blocker families with missing discoverable anchors and broken consumer references, and the follow-up sweeps produced zero new exact missing items beyond those refinements."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-05333",
+      "source_obligation_ids": [
+        "obl-4980"
+      ],
+      "source_seed_ids": [
+        "seed-7131"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "canon_label": "Entry",
+      "row_type": "layout_blocker",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "Entry",
+      "status": "missing",
+      "exact_items": [
+        "This invocation kept the blocker-family count at eight and the affected-doc count at twenty, but raised the underlying evidence count to fifty-nine by adding the missing-storage-anchor and missing-glossary-anchor evidence."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-05334",
+      "source_obligation_ids": [
+        "obl-4981"
+      ],
+      "source_seed_ids": [
+        "seed-7132"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "canon_label": "Entry",
+      "row_type": "layout_blocker",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "Entry",
+      "status": "missing",
+      "exact_items": [
+        "summary: Ran another bounded audit pass after the blocked Ready Check; the first wave sharpened the storage and receipt blocker families with additional broken storage-plan anchor evidence and downgraded the overstated restore-point contradiction, and two bounded follow-up sweeps then produced zero new exact missing items."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-05353",
+      "source_obligation_ids": [
+        "obl-4995"
+      ],
+      "source_seed_ids": [
+        "seed-7160"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "canon_label": "restore points",
+      "row_type": "layout_blocker",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "Entry",
+      "status": "missing",
+      "exact_items": [
+        "This invocation kept the blocker-family count at eight and the affected-doc count at twenty, removed the overstated `restore points` contradiction from `gap-007`, added exact broken-anchor evidence to `gap-003` and `gap-004`, and raised the underlying evidence count to sixty-two."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-05359",
+      "source_obligation_ids": [
+        "obl-5000"
+      ],
+      "source_seed_ids": [
+        "seed-7165"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "canon_label": "Entry",
+      "row_type": "layout_blocker",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "Entry",
+      "status": "missing",
+      "exact_items": [
+        "A delegated storage/receipt pass suggested reclassifying some missing-heading and broken-anchor items back to planning blockers, but the repair rule rejects that interpretation here because the owner sections, consumer targets, and exact mutations are already known; no new canon ambiguity surfaced."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-05370",
+      "source_obligation_ids": [
+        "obl-5011"
+      ],
+      "source_seed_ids": [
+        "seed-7197"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "canon_label": "planning",
+      "row_type": "layout_blocker",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "Entry",
+      "status": "missing",
+      "exact_items": [
+        "The repaired blocker split held: no gap needed reclassification back to `planning`, and no resolved gap could be removed from the backlog."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-00044",
+      "source_obligation_ids": [
+        "obl-0044"
+      ],
+      "source_seed_ids": [
+        "seed-0044"
+      ],
+      "source_shard_ids": [
+        "shard-0001"
+      ],
+      "canon_label": "Key Facts and Findings",
+      "row_type": "owner",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "Key Facts and Findings",
+      "status": "missing",
+      "exact_items": [
+        "blocked owner"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-00045",
+      "source_obligation_ids": [
+        "obl-0045"
+      ],
+      "source_seed_ids": [
+        "seed-0045"
+      ],
+      "source_shard_ids": [
+        "shard-0001"
+      ],
+      "canon_label": "Key Facts and Findings",
+      "row_type": "owner",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "Key Facts and Findings",
+      "status": "missing",
+      "exact_items": [
+        "blocked ownership should be normalized with stable labels:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-00049",
+      "source_obligation_ids": [
+        "obl-0049"
+      ],
+      "source_seed_ids": [
+        "seed-0049"
+      ],
+      "source_shard_ids": [
+        "shard-0002"
+      ],
+      "canon_label": "canonical event families should remain stable:",
+      "row_type": "owner",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "canonical event families should remain stable:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-00063",
+      "source_obligation_ids": [
+        "obl-0063"
+      ],
+      "source_seed_ids": [
+        "seed-0063"
+      ],
+      "source_shard_ids": [
+        "shard-0002"
+      ],
+      "canon_label": "owner",
+      "row_type": "owner",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "owner"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-00064",
+      "source_obligation_ids": [
+        "obl-0064"
+      ],
+      "source_seed_ids": [
+        "seed-0064"
+      ],
+      "source_shard_ids": [
+        "shard-0002"
+      ],
+      "canon_label": "canonical concerns should be created by:",
+      "row_type": "owner",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "canonical concerns should be created by:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-00065",
+      "source_obligation_ids": [
+        "obl-0065"
+      ],
+      "source_seed_ids": [
+        "seed-0065"
+      ],
+      "source_shard_ids": [
+        "shard-0002"
+      ],
+      "canon_label": "workers may nominate findings but should not mint canonical concerns directly",
+      "row_type": "owner",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "workers may nominate findings but should not mint canonical concerns directly"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-00078",
+      "source_obligation_ids": [
+        "obl-0078"
+      ],
+      "source_seed_ids": [
+        "seed-0078"
+      ],
+      "source_shard_ids": [
+        "shard-0002"
+      ],
+      "canon_label": "severity/owner mutation",
+      "row_type": "owner",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "severity/owner mutation"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-00104",
+      "source_obligation_ids": [
+        "obl-0104"
+      ],
+      "source_seed_ids": [
+        "seed-0104"
+      ],
+      "source_shard_ids": [
+        "shard-0002"
+      ],
+      "canon_label": "Project cards should show compact orchestrator/attention/usage pressure state and one primary bl",
+      "row_type": "owner",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "Project cards should show compact orchestrator/attention/usage pressure state and one primary blocked owner/reason when blocked"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-00108",
+      "source_obligation_ids": [
+        "obl-0108"
+      ],
+      "source_seed_ids": [
+        "seed-0108"
+      ],
+      "source_shard_ids": [
+        "shard-0002"
+      ],
+      "canon_label": "Project",
+      "row_type": "owner",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "`Project` = main execution policy owner"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-00141",
+      "source_obligation_ids": [
+        "obl-0140"
+      ],
+      "source_seed_ids": [
+        "seed-0140"
+      ],
+      "source_shard_ids": [
+        "shard-0003"
+      ],
+      "canon_label": "canonical handoff/retry memory should be structured runtime records, not loose markdown logs",
+      "row_type": "owner",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "canonical handoff/retry memory should be structured runtime records, not loose markdown logs"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-00142",
+      "source_obligation_ids": [
+        "obl-0141"
+      ],
+      "source_seed_ids": [
+        "seed-0141"
+      ],
+      "source_shard_ids": [
+        "shard-0003"
+      ],
+      "canon_label": "worker-facing handoff should be a synthesized bounded packet assembled from canonical records, n",
+      "row_type": "owner",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "worker-facing handoff should be a synthesized bounded packet assembled from canonical records, not full raw history"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-00144",
+      "source_obligation_ids": [
+        "obl-0143"
+      ],
+      "source_seed_ids": [
+        "seed-0143"
+      ],
+      "source_shard_ids": [
+        "shard-0003"
+      ],
+      "canon_label": "seglog",
+      "row_type": "owner",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "`seglog` = canonical append-only event source"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-00148",
+      "source_obligation_ids": [
+        "obl-0147"
+      ],
+      "source_seed_ids": [
+        "seed-0147"
+      ],
+      "source_shard_ids": [
+        "shard-0003"
+      ],
+      "canon_label": "canonical truth for these new orchestration artifacts should fit the documented stack:",
+      "row_type": "owner",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "canonical truth for these new orchestration artifacts should fit the documented stack:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-00150",
+      "source_obligation_ids": [
+        "obl-0149"
+      ],
+      "source_seed_ids": [
+        "seed-0149"
+      ],
+      "source_shard_ids": [
+        "shard-0003"
+      ],
+      "canon_label": "\"optional JSON\" wording should be removed from the design language unless JSON export is explici",
+      "row_type": "owner",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "\"optional JSON\" wording should be removed from the design language unless JSON export is explicitly about manual inspection/export, not canonical storage"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-00166",
+      "source_obligation_ids": [
+        "obl-0165"
+      ],
+      "source_seed_ids": [
+        "seed-0165"
+      ],
+      "source_shard_ids": [
+        "shard-0003"
+      ],
+      "canon_label": "orchestrator must consume canonical runtime fields and event names from shared contracts",
+      "row_type": "owner",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "orchestrator must consume canonical runtime fields and event names from shared contracts"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-00170",
+      "source_obligation_ids": [
+        "obl-0169"
+      ],
+      "source_seed_ids": [
+        "seed-0169"
+      ],
+      "source_shard_ids": [
+        "shard-0003"
+      ],
+      "canon_label": "hybrid becomes dangerous if tiers and graph both retain execution authority",
+      "row_type": "owner",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "hybrid becomes dangerous if tiers and graph both retain execution authority"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-00184",
+      "source_obligation_ids": [
+        "obl-0183"
+      ],
+      "source_seed_ids": [
+        "seed-0183"
+      ],
+      "source_shard_ids": [
+        "shard-0004"
+      ],
+      "canon_label": "user requested a concrete ownership / inheritance / override matrix next",
+      "row_type": "owner",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "user requested a concrete ownership / inheritance / override matrix next"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-00208",
+      "source_obligation_ids": [
+        "obl-0207"
+      ],
+      "source_seed_ids": [
+        "seed-0207"
+      ],
+      "source_shard_ids": [
+        "shard-0004"
+      ],
+      "canon_label": "runtime addenda emphasize \"consumer of canonical contracts\" and \"must not redefine locally\"",
+      "row_type": "owner",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "runtime addenda emphasize \"consumer of canonical contracts\" and \"must not redefine locally\""
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-00221",
+      "source_obligation_ids": [
+        "obl-0220"
+      ],
+      "source_seed_ids": [
+        "seed-0220"
+      ],
+      "source_shard_ids": [
+        "shard-0004"
+      ],
+      "canon_label": "Gaps / Problems Identified",
+      "row_type": "owner",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "Gaps / Problems Identified",
+      "status": "missing",
+      "exact_items": [
+        "runtime doc says canonical contracts live elsewhere and Orchestrator must consume them without redefining"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-00227",
+      "source_obligation_ids": [
+        "obl-0226"
+      ],
+      "source_seed_ids": [
+        "seed-0226"
+      ],
+      "source_shard_ids": [
+        "shard-0004"
+      ],
+      "canon_label": "Gaps / Problems Identified",
+      "row_type": "owner",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "Gaps / Problems Identified",
+      "status": "missing",
+      "exact_items": [
+        "node, work package, feature seam, promotion, and worktree lane should each have their own lifecycle rather than one universal status enum"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-00241",
+      "source_obligation_ids": [
+        "obl-0240"
+      ],
+      "source_seed_ids": [
+        "seed-0240"
+      ],
+      "source_shard_ids": [
+        "shard-0004"
+      ],
+      "canon_label": "Gaps / Problems Identified",
+      "row_type": "owner",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "Gaps / Problems Identified",
+      "status": "missing",
+      "exact_items": [
+        "log parsing should not be treated as canonical quota truth; at best it is a supplemental heuristic/evidence source"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-00246",
+      "source_obligation_ids": [
+        "obl-0245"
+      ],
+      "source_seed_ids": [
+        "seed-0245"
+      ],
+      "source_shard_ids": [
+        "shard-0004"
+      ],
+      "canon_label": "project",
+      "row_type": "owner",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "Gaps / Problems Identified",
+      "status": "missing",
+      "exact_items": [
+        "canonical persisted objects should likely include at least `project`, `run`, `feature_seam`, `work_package`, `node`, `attempt`, `lane`, `snapshot`, `promotion`, `review`, `resolution_thread`, and `event`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-00258",
+      "source_obligation_ids": [
+        "obl-0257"
+      ],
+      "source_seed_ids": [
+        "seed-0257"
+      ],
+      "source_shard_ids": [
+        "shard-0004"
+      ],
+      "canon_label": "project",
+      "row_type": "owner",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "Gaps / Problems Identified",
+      "status": "missing",
+      "exact_items": [
+        "`project` should primarily own identity, repo/project settings/theme/account-policy linkage, active-run pointers, and coarse project status"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-00259",
+      "source_obligation_ids": [
+        "obl-0258"
+      ],
+      "source_seed_ids": [
+        "seed-0258"
+      ],
+      "source_shard_ids": [
+        "shard-0004"
+      ],
+      "canon_label": "run",
+      "row_type": "owner",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "Gaps / Problems Identified",
+      "status": "missing",
+      "exact_items": [
+        "`run` should own execution-session identity/lifecycle, graph linkage, run-level settings snapshot, and active pointers/rollup posture"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-00260",
+      "source_obligation_ids": [
+        "obl-0259"
+      ],
+      "source_seed_ids": [
+        "seed-0259"
+      ],
+      "source_shard_ids": [
+        "shard-0004"
+      ],
+      "canon_label": "feature_seam",
+      "row_type": "owner",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "Gaps / Problems Identified",
+      "status": "missing",
+      "exact_items": [
+        "`feature_seam` should own membership, lifecycle, requested settings, overseer/governance state, seam-promotion state, and seam evidence linkage"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-00261",
+      "source_obligation_ids": [
+        "obl-0260"
+      ],
+      "source_seed_ids": [
+        "seed-0260"
+      ],
+      "source_shard_ids": [
+        "shard-0004"
+      ],
+      "canon_label": "work_package",
+      "row_type": "owner",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "Gaps / Problems Identified",
+      "status": "missing",
+      "exact_items": [
+        "`work_package` should own membership, lifecycle, requested settings, overseer/delegation/worktree policy refs, baseline lane state, package-governance state, promotion linkage, and package evidence linkage"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-00264",
+      "source_obligation_ids": [
+        "obl-0263"
+      ],
+      "source_seed_ids": [
+        "seed-0263"
+      ],
+      "source_shard_ids": [
+        "shard-0005"
+      ],
+      "canon_label": "how graph decomposition preserves bounded agent context without recreating tier authority as a s",
+      "row_type": "owner",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "how graph decomposition preserves bounded agent context without recreating tier authority as a second execution model"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-00266",
+      "source_obligation_ids": [
+        "obl-0265"
+      ],
+      "source_seed_ids": [
+        "seed-0265"
+      ],
+      "source_shard_ids": [
+        "shard-0005"
+      ],
+      "canon_label": "what distinct authority belongs to package overseer vs feature-seam overseer so they do not beco",
+      "row_type": "owner",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "what distinct authority belongs to package overseer vs feature-seam overseer so they do not become redundant or conflicting co-governors"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-00272",
+      "source_obligation_ids": [
+        "obl-0271"
+      ],
+      "source_seed_ids": [
+        "seed-0271"
+      ],
+      "source_shard_ids": [
+        "shard-0005"
+      ],
+      "canon_label": "Candidate Fixes / Design Directions",
+      "row_type": "owner",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "Candidate Fixes / Design Directions",
+      "status": "missing",
+      "exact_items": [
+        "Use the ledger to capture terminology, precedence rules, effective-vs-requested state, and cross-doc ownership as they emerge."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-00278",
+      "source_obligation_ids": [
+        "obl-0277"
+      ],
+      "source_seed_ids": [
+        "seed-0277"
+      ],
+      "source_shard_ids": [
+        "shard-0005"
+      ],
+      "canon_label": "Candidate Fixes / Design Directions",
+      "row_type": "owner",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "Candidate Fixes / Design Directions",
+      "status": "missing",
+      "exact_items": [
+        "a lightweight planning/replan agent may still exist, but only at graph-construction or graph-patch boundaries, not as the continuous owner of all execution truth"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    }
+  ]
+}

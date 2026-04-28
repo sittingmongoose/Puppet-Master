@@ -1,0 +1,1520 @@
+{
+  "schema_id": "pm.canonical_obligations_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-022",
+  "seed_groups": [
+    "seedgrp-085",
+    "seedgrp-086",
+    "seedgrp-087",
+    "seedgrp-088"
+  ],
+  "obligation_candidates": [
+    {
+      "source_seed_ids": [
+        "seed-1261"
+      ],
+      "source_shard_ids": [
+        "shard-0022"
+      ],
+      "canon_label": "Candidate fixes to carry forward",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "Define a project-summary projection with:"
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [
+        "Candidate fixes to carry forward"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L4280-L4284"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-1262"
+      ],
+      "source_shard_ids": [
+        "shard-0022"
+      ],
+      "canon_label": "Candidate fixes to carry forward",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "primary blocked/attention owner"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [
+        "Candidate fixes to carry forward"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L4288"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-1263"
+      ],
+      "source_shard_ids": [
+        "shard-0022"
+      ],
+      "canon_label": "Do-not-forget details",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "blocked ownership should describe the dominant current issue, not every issue in the project"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [
+        "Do-not-forget details"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L4295"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-1264"
+      ],
+      "source_shard_ids": [
+        "shard-0022"
+      ],
+      "canon_label": "Do-not-forget details",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "project health and project attention are different things and should not share one overloaded dot"
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [
+        "Do-not-forget details"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L4296"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-1265"
+      ],
+      "source_shard_ids": [
+        "shard-0022"
+      ],
+      "canon_label": "Plans/FinalGUISpec.md",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "`Plans/FinalGUISpec.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [
+        "Targeted docs read"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L4302"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-1266"
+      ],
+      "source_shard_ids": [
+        "shard-0022"
+      ],
+      "canon_label": "Plans/Orchestrator_Page.md",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "`Plans/Orchestrator_Page.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md"
+      ],
+      "heading_hints": [
+        "Targeted docs read"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L4303"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-1267"
+      ],
+      "source_shard_ids": [
+        "shard-0022"
+      ],
+      "canon_label": "Plans/storage-plan.md",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "`Plans/storage-plan.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [
+        "Targeted docs read"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L4304"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-1268"
+      ],
+      "source_shard_ids": [
+        "shard-0022"
+      ],
+      "canon_label": "Plans/usage-feature.md",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "`Plans/usage-feature.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/usage-feature.md"
+      ],
+      "heading_hints": [
+        "Targeted docs read"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L4305"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-1269"
+      ],
+      "source_shard_ids": [
+        "shard-0022"
+      ],
+      "canon_label": "Key findings",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "The docs already define many local attention behaviors:"
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [
+        "Key findings"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L4308"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-1270"
+      ],
+      "source_shard_ids": [
+        "shard-0022"
+      ],
+      "canon_label": "Action Required",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "Dashboard `Action Required` section"
+      ],
+      "affected_doc_hints": [
+        "layout_blocker_target_known_from_notes"
+      ],
+      "heading_hints": [
+        "Key findings"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L4309"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-1271"
+      ],
+      "source_shard_ids": [
+        "shard-0022"
+      ],
+      "canon_label": "Key findings",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "blocked and attention-required visual distinction"
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [
+        "Key findings"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L4315"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-1272"
+      ],
+      "source_shard_ids": [
+        "shard-0022"
+      ],
+      "canon_label": "Key findings",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "What is still missing is a shared escalation ladder across concerns, blocked states, usage pressure, and persistent unresolved conditions."
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [
+        "Key findings"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L4317"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-1273"
+      ],
+      "source_shard_ids": [
+        "shard-0022"
+      ],
+      "canon_label": "Recommended escalation ladder",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "define one shared progression:"
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [
+        "Recommended escalation ladder"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L4317-L4321"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-1274"
+      ],
+      "source_shard_ids": [
+        "shard-0022"
+      ],
+      "canon_label": "Recommended escalation ladder",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "user input helpful/needed, but background progress may still continue"
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [
+        "Recommended escalation ladder"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L4333"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-1275"
+      ],
+      "source_shard_ids": [
+        "shard-0022"
+      ],
+      "canon_label": "Recommended escalation ladder",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "cannot continue meaningfully until required action/precondition changes"
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [
+        "Recommended escalation ladder"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L4335"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-1276"
+      ],
+      "source_shard_ids": [
+        "shard-0022"
+      ],
+      "canon_label": "Surface ladder direction",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "only for things that genuinely need user decision/input"
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [
+        "Surface ladder direction"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L4348"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-1277"
+      ],
+      "source_shard_ids": [
+        "shard-0022"
+      ],
+      "canon_label": "Resurfacing / aging direction",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "unresolved conditions should resurface based on severity and persistence, not on every heartbeat/update"
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [
+        "Resurfacing / aging direction"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L4355"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-1278"
+      ],
+      "source_shard_ids": [
+        "shard-0022"
+      ],
+      "canon_label": "Resurfacing / aging direction",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "owner changes"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [
+        "Resurfacing / aging direction"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L4361"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-1279"
+      ],
+      "source_shard_ids": [
+        "shard-0022"
+      ],
+      "canon_label": "Persistent blocker direction",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "Persistent blockers should not become invisible just because the user dismissed a nearby warning once."
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [
+        "Persistent blocker direction"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L4367"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-1280"
+      ],
+      "source_shard_ids": [
+        "shard-0022"
+      ],
+      "canon_label": "Persistent blocker direction",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "real blocked states should remain represented until underlying truth changes"
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [
+        "Persistent blocker direction"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L4370"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-1281"
+      ],
+      "source_shard_ids": [
+        "shard-0022"
+      ],
+      "canon_label": "Persistent blocker direction",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "active blockers must not be dismissible into fake health"
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [
+        "Persistent blocker direction"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L4373"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-1282"
+      ],
+      "source_shard_ids": [
+        "shard-0022"
+      ],
+      "canon_label": "System-notification direction",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "System/tray notifications should stay narrow."
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [
+        "System-notification direction"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L4376"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-1283"
+      ],
+      "source_shard_ids": [
+        "shard-0022"
+      ],
+      "canon_label": "System-notification direction",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "HITL approval required"
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [
+        "System-notification direction"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L4378"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-1284"
+      ],
+      "source_shard_ids": [
+        "shard-0022"
+      ],
+      "canon_label": "Concern / blocked-owner implication",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Concerns and blocked ownership should feed escalation, but not every concern should become a system notification."
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [
+        "Concern / blocked-owner implication"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L4399"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-1285"
+      ],
+      "source_shard_ids": [
+        "shard-0023"
+      ],
+      "canon_label": "concern severity + blocking effect + owner + persistence decide escalation",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "concern severity + blocking effect + owner + persistence decide escalation"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L4401"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-1286"
+      ],
+      "source_shard_ids": [
+        "shard-0023"
+      ],
+      "canon_label": "Contradictions / gaps surfaced",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "There is no one explicit cross-surface escalation contract yet."
+      ],
+      "affected_doc_hints": [
+        "layout_blocker_target_known_from_notes"
+      ],
+      "heading_hints": [
+        "Contradictions / gaps surfaced"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L4407"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-1287"
+      ],
+      "source_shard_ids": [
+        "shard-0023"
+      ],
+      "canon_label": "Candidate fixes to carry forward",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "Define one escalation ladder shared across Orchestrator, Dashboard, thread badges, and notifications."
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [
+        "Candidate fixes to carry forward"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L4412"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-1288"
+      ],
+      "source_shard_ids": [
+        "shard-0023"
+      ],
+      "canon_label": "Candidate fixes to carry forward",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "Add resurfacing rules based on change/persistence thresholds rather than repeated identical events."
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [
+        "Candidate fixes to carry forward"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L4413"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-1289"
+      ],
+      "source_shard_ids": [
+        "shard-0023"
+      ],
+      "canon_label": "attention_required",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "`attention_required` and `blocked` must remain distinct everywhere"
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [
+        "Do-not-forget details"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L4418"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-1290"
+      ],
+      "source_shard_ids": [
+        "shard-0023"
+      ],
+      "canon_label": "Do-not-forget details",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "resurfacing should respond to meaningful change, not spam the user on every scheduler tick"
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [
+        "Do-not-forget details"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L4419"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-1291"
+      ],
+      "source_shard_ids": [
+        "shard-0023"
+      ],
+      "canon_label": "Do-not-forget details",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "the system should not silently demote a persistent blocker into history just because time passed"
+      ],
+      "affected_doc_hints": [
+        "layout_blocker_target_known_from_notes"
+      ],
+      "heading_hints": [
+        "Do-not-forget details"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L4420"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-1292"
+      ],
+      "source_shard_ids": [
+        "shard-0023"
+      ],
+      "canon_label": "Plans/Run_Graph_View.md",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "`Plans/Run_Graph_View.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Run_Graph_View.md"
+      ],
+      "heading_hints": [
+        "Targeted docs read"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L4420-L4425"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-1293"
+      ],
+      "source_shard_ids": [
+        "shard-0023"
+      ],
+      "canon_label": "Plans/FinalGUISpec.md",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "`Plans/FinalGUISpec.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [
+        "Targeted docs read"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L4420-L4426"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-1294"
+      ],
+      "source_shard_ids": [
+        "shard-0023"
+      ],
+      "canon_label": "Plans/storage-plan.md",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "`Plans/storage-plan.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [
+        "Targeted docs read"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L4427"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-1295"
+      ],
+      "source_shard_ids": [
+        "shard-0023"
+      ],
+      "canon_label": "Plans/Orchestrator_Page.md",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "`Plans/Orchestrator_Page.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md"
+      ],
+      "heading_hints": [
+        "Targeted docs read"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L4428"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-1296"
+      ],
+      "source_shard_ids": [
+        "shard-0023"
+      ],
+      "canon_label": "Key findings",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "The graph tab already has the strongest explicit scale contract in the current docs."
+      ],
+      "affected_doc_hints": [
+        "layout_blocker_target_known_from_notes"
+      ],
+      "heading_hints": [
+        "Key findings"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L4431"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-1297"
+      ],
+      "source_shard_ids": [
+        "shard-0023"
+      ],
+      "canon_label": "Key findings",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "layout under 500ms at 500 nodes"
+      ],
+      "affected_doc_hints": [
+        "layout_blocker_target_known_from_notes"
+      ],
+      "heading_hints": [
+        "Key findings"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L4435"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-1298"
+      ],
+      "source_shard_ids": [
+        "shard-0023"
+      ],
+      "canon_label": "Key findings",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "per-generation layout caching"
+      ],
+      "affected_doc_hints": [
+        "layout_blocker_target_known_from_notes"
+      ],
+      "heading_hints": [
+        "Key findings"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L4440"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-1299"
+      ],
+      "source_shard_ids": [
+        "shard-0023"
+      ],
+      "canon_label": "storage-plan.md",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "`storage-plan.md` already supports the broader pattern the rewrite needs:"
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [
+        "Key findings"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L4444"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-1300"
+      ],
+      "source_shard_ids": [
+        "shard-0023"
+      ],
+      "canon_label": "Recommended scaling stance",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "treat scale as a cross-tab contract, not just a graph-tab concern"
+      ],
+      "affected_doc_hints": [
+        "layout_blocker_target_known_from_notes"
+      ],
+      "heading_hints": [
+        "Recommended scaling stance"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L4452"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-1301"
+      ],
+      "source_shard_ids": [
+        "shard-0023"
+      ],
+      "canon_label": "Recommended scaling stance",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "That means the performance model must explicitly cover:"
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [
+        "Recommended scaling stance"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L4458"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-1302"
+      ],
+      "source_shard_ids": [
+        "shard-0023"
+      ],
+      "canon_label": "Recommended scaling stance",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "Progress widgets and cross-tab inspectors"
+      ],
+      "affected_doc_hints": [
+        "layout_blocker_target_known_from_notes"
+      ],
+      "heading_hints": [
+        "Recommended scaling stance"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L4464"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-1303"
+      ],
+      "source_shard_ids": [
+        "shard-0023"
+      ],
+      "canon_label": "Tab-by-tab direction",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "preserve old generations in the data model, but do not render every historical path at full fidelity all the time"
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [
+        "Tab-by-tab direction"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L4469"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-1304"
+      ],
+      "source_shard_ids": [
+        "shard-0023"
+      ],
+      "canon_label": "Tab-by-tab direction",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "must use progressive disclosure rather than fully expanded seam/package/node trees"
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [
+        "Tab-by-tab direction"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L4472"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-1305"
+      ],
+      "source_shard_ids": [
+        "shard-0023"
+      ],
+      "canon_label": "Tab-by-tab direction",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "top-level seam rows should load compact rollups first"
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [
+        "Tab-by-tab direction"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L4473"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-1306"
+      ],
+      "source_shard_ids": [
+        "shard-0023"
+      ],
+      "canon_label": "Tab-by-tab direction",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "package lists and node problem lists should expand lazily"
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [
+        "Tab-by-tab direction"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L4474"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-1307"
+      ],
+      "source_shard_ids": [
+        "shard-0023"
+      ],
+      "canon_label": "Tab-by-tab direction",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "evidence records and artifacts need independent virtualization/paging"
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [
+        "Tab-by-tab direction"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L4476"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-1308"
+      ],
+      "source_shard_ids": [
+        "shard-0023"
+      ],
+      "canon_label": "Tab-by-tab direction",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "heavy artifacts should stay metadata-first until opened"
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [
+        "Tab-by-tab direction"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L4477"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-1309"
+      ],
+      "source_shard_ids": [
+        "shard-0023"
+      ],
+      "canon_label": "Tab-by-tab direction",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "artifact previews should be demand-loaded, not pre-rendered for long lists"
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [
+        "Tab-by-tab direction"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L4478"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-1310"
+      ],
+      "source_shard_ids": [
+        "shard-0023"
+      ],
+      "canon_label": "Tab-by-tab direction",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "should be chronological but windowed"
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [
+        "Tab-by-tab direction"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L4480"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-1311"
+      ],
+      "source_shard_ids": [
+        "shard-0023"
+      ],
+      "canon_label": "Tab-by-tab direction",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "initial load should show a recent slice, with explicit load-older / jump controls"
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [
+        "Tab-by-tab direction"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L4481"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-1312"
+      ],
+      "source_shard_ids": [
+        "shard-0023"
+      ],
+      "canon_label": "Tab-by-tab direction",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "dense event bursts should be summarized when collapsed, not force every low-level record into the initial viewport"
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [
+        "Tab-by-tab direction"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L4482"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-1313"
+      ],
+      "source_shard_ids": [
+        "shard-0023"
+      ],
+      "canon_label": "Tab-by-tab direction",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "must be exact, but exact does not mean fully materialized at once"
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [
+        "Tab-by-tab direction"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L4484"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-1314"
+      ],
+      "source_shard_ids": [
+        "shard-0023"
+      ],
+      "canon_label": "Tab-by-tab direction",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "filtered query + paging + stable sort are required"
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [
+        "Tab-by-tab direction"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L4485"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-1315"
+      ],
+      "source_shard_ids": [
+        "shard-0023"
+      ],
+      "canon_label": "Tab-by-tab direction",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "export can retrieve more than the viewport, but normal browsing should stay slice-based"
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [
+        "Tab-by-tab direction"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L4486"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-1316"
+      ],
+      "source_shard_ids": [
+        "shard-0023"
+      ],
+      "canon_label": "Tab-by-tab direction",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "widgets should consume compact projections, not live-scan huge record sets per widget"
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [
+        "Tab-by-tab direction"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L4488"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-1317"
+      ],
+      "source_shard_ids": [
+        "shard-0023"
+      ],
+      "canon_label": "Tab-by-tab direction",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "a widget should deep-link to the native tab when the user wants dense detail"
+      ],
+      "affected_doc_hints": [
+        "layout_blocker_target_known_from_notes"
+      ],
+      "heading_hints": [
+        "Tab-by-tab direction"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L4489"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-1318"
+      ],
+      "source_shard_ids": [
+        "shard-0023"
+      ],
+      "canon_label": "Generation-heavy graph direction",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "generations should remain historically visible and clickable, but the UI should default to a focused generation plus nearby lineage context, not a fully expanded all-generations wall"
+      ],
+      "affected_doc_hints": [
+        "layout_blocker_target_known_from_notes"
+      ],
+      "heading_hints": [
+        "Generation-heavy graph direction"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L4494"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-1319"
+      ],
+      "source_shard_ids": [
+        "shard-0023"
+      ],
+      "canon_label": "Concern / lane / record density implication",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "So the rewrite should not assume the graph is the only heavy surface."
+      ],
+      "affected_doc_hints": [
+        "layout_blocker_target_known_from_notes"
+      ],
+      "heading_hints": [
+        "Concern / lane / record density implication"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L4507"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-1320"
+      ],
+      "source_shard_ids": [
+        "shard-0023"
+      ],
+      "canon_label": "Concern / lane / record density implication",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "every dense Orchestrator tab needs first-class summarization, filtering, and paging before it needs more visual chrome"
+      ],
+      "affected_doc_hints": [
+        "layout_blocker_target_known_from_notes"
+      ],
+      "heading_hints": [
+        "Concern / lane / record density implication"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L4509"
+      ],
+      "notes": []
+    }
+  ],
+  "represented_seed_ids": [
+    "seed-1261",
+    "seed-1262",
+    "seed-1263",
+    "seed-1264",
+    "seed-1265",
+    "seed-1266",
+    "seed-1267",
+    "seed-1268",
+    "seed-1269",
+    "seed-1270",
+    "seed-1271",
+    "seed-1272",
+    "seed-1273",
+    "seed-1274",
+    "seed-1275",
+    "seed-1276",
+    "seed-1277",
+    "seed-1278",
+    "seed-1279",
+    "seed-1280",
+    "seed-1281",
+    "seed-1282",
+    "seed-1283",
+    "seed-1284",
+    "seed-1285",
+    "seed-1286",
+    "seed-1287",
+    "seed-1288",
+    "seed-1289",
+    "seed-1290",
+    "seed-1291",
+    "seed-1292",
+    "seed-1293",
+    "seed-1294",
+    "seed-1295",
+    "seed-1296",
+    "seed-1297",
+    "seed-1298",
+    "seed-1299",
+    "seed-1300",
+    "seed-1301",
+    "seed-1302",
+    "seed-1303",
+    "seed-1304",
+    "seed-1305",
+    "seed-1306",
+    "seed-1307",
+    "seed-1308",
+    "seed-1309",
+    "seed-1310",
+    "seed-1311",
+    "seed-1312",
+    "seed-1313",
+    "seed-1314",
+    "seed-1315",
+    "seed-1316",
+    "seed-1317",
+    "seed-1318",
+    "seed-1319",
+    "seed-1320"
+  ],
+  "represented_source_shard_ids": [
+    "shard-0022",
+    "shard-0023"
+  ],
+  "deferred_seed_ids": [],
+  "noise_seed_ids": [],
+  "affected_doc_discovery_notes": []
+}
