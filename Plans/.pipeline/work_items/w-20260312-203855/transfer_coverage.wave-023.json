@@ -1,0 +1,501 @@
+{
+  "schema_id": "pm.transfer_coverage_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-023",
+  "row_groups": [
+    "rowgrp-0089",
+    "rowgrp-0090",
+    "rowgrp-0091",
+    "rowgrp-0092"
+  ],
+  "coverage_rows": [
+    {
+      "coverage_id": "cov-05378",
+      "source_obligation_ids": [
+        "obl-5019"
+      ],
+      "source_seed_ids": [
+        "seed-7214"
+      ],
+      "source_shard_ids": [
+        "shard-0092"
+      ],
+      "canon_label": "Plans/Models_System.md:58-80",
+      "row_type": "consumer",
+      "path": "Plans/Models_System.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "`Plans/Models_System.md:58-80`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Models_System.md:required_terms_absent"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-05387",
+      "source_obligation_ids": [
+        "obl-5026"
+      ],
+      "source_seed_ids": [
+        "seed-7221"
+      ],
+      "source_shard_ids": [
+        "shard-0092"
+      ],
+      "canon_label": "Plans/storage-plan.md",
+      "row_type": "consumer",
+      "path": "Plans/Models_System.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "Highest-pressure docs for condensation are `Plans/storage-plan.md`, `Plans/Contracts_V0.md`, `Plans/Models_System.md`, `Plans/Executor_Protocol.md`, `Plans/WorktreeGitImprovement.md`, `Plans/Crosswalk.md`, and `Plans/Orchestrator_Page.md`."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Models_System.md:125",
+        "Plans/Models_System.md:19",
+        "Plans/Models_System.md:14",
+        "Plans/Models_System.md:219"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-04531",
+      "source_obligation_ids": [
+        "obl-4283"
+      ],
+      "source_seed_ids": [
+        "seed-6167"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "canon_label": "Plans/*.md",
+      "row_type": "layout_blocker",
+      "path": "Plans/Models_System.md",
+      "heading_hint": "Do-not-forget details",
+      "status": "present",
+      "exact_items": [
+        "After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Models_System.md:56",
+        "Plans/Models_System.md:14",
+        "Plans/Models_System.md:48",
+        "Plans/Models_System.md:927",
+        "Plans/Models_System.md:1",
+        "Plans/Models_System.md:922"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00418",
+      "source_obligation_ids": [
+        "obl-0416"
+      ],
+      "source_seed_ids": [
+        "seed-0421"
+      ],
+      "source_shard_ids": [
+        "shard-0007"
+      ],
+      "canon_label": "Plans/Multi-Account.md",
+      "row_type": "consumer",
+      "path": "Plans/Multi-Account.md",
+      "heading_hint": "Settings / Provider / Persona / Account Impacts",
+      "status": "present",
+      "exact_items": [
+        "`Plans/Multi-Account.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Multi-Account.md:16",
+        "Plans/Multi-Account.md:327",
+        "Plans/Multi-Account.md:13",
+        "Plans/Multi-Account.md:53",
+        "Plans/Multi-Account.md:1"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00607",
+      "source_obligation_ids": [
+        "obl-0571"
+      ],
+      "source_seed_ids": [
+        "seed-0576"
+      ],
+      "source_shard_ids": [
+        "shard-0008"
+      ],
+      "canon_label": "Plans/WorktreeGitImprovement.md",
+      "row_type": "consumer",
+      "path": "Plans/Multi-Account.md",
+      "heading_hint": "Highest-Impact Docs",
+      "status": "partial",
+      "exact_items": [
+        "**`Plans/WorktreeGitImprovement.md` + `Plans/GitHub_Integration.md` + `Plans/Multi-Account.md`**"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Multi-Account.md:16",
+        "Plans/Multi-Account.md:135"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-00714",
+      "source_obligation_ids": [
+        "obl-0658"
+      ],
+      "source_seed_ids": [
+        "seed-0664"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "canon_label": "Plans/Multi-Account.md",
+      "row_type": "consumer",
+      "path": "Plans/Multi-Account.md",
+      "heading_hint": "Settings / Provider / Persona / Account Impacts",
+      "status": "present",
+      "exact_items": [
+        "`Plans/Multi-Account.md`, `Plans/GitHub_API_Auth_and_Flows.md`, `Plans/GitHub_Integration.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Multi-Account.md:16",
+        "Plans/Multi-Account.md:235",
+        "Plans/Multi-Account.md:327",
+        "Plans/Multi-Account.md:13",
+        "Plans/Multi-Account.md:53",
+        "Plans/Multi-Account.md:1"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00774",
+      "source_obligation_ids": [
+        "obl-0706"
+      ],
+      "source_seed_ids": [
+        "seed-0734",
+        "seed-1156",
+        "seed-1214",
+        "seed-1236",
+        "seed-1476",
+        "seed-1492",
+        "seed-1968",
+        "seed-2045",
+        "seed-2119",
+        "seed-2227",
+        "seed-2352",
+        "seed-2452",
+        "seed-2478",
+        "seed-2546",
+        "seed-2567",
+        "seed-2720",
+        "seed-3425"
+      ],
+      "source_shard_ids": [
+        "shard-0010",
+        "shard-0019",
+        "shard-0021",
+        "shard-0026",
+        "shard-0027",
+        "shard-0034",
+        "shard-0035",
+        "shard-0036",
+        "shard-0037",
+        "shard-0039",
+        "shard-0040",
+        "shard-0041",
+        "shard-0043",
+        "shard-0051"
+      ],
+      "canon_label": "Plans/Multi-Account.md",
+      "row_type": "consumer",
+      "path": "Plans/Multi-Account.md",
+      "heading_hint": "Targeted docs read",
+      "status": "present",
+      "exact_items": [
+        "`Plans/Multi-Account.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Multi-Account.md:16",
+        "Plans/Multi-Account.md:135",
+        "Plans/Multi-Account.md:136"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00785",
+      "source_obligation_ids": [
+        "obl-0717"
+      ],
+      "source_seed_ids": [
+        "seed-0745",
+        "seed-1983",
+        "seed-2061",
+        "seed-2243",
+        "seed-2371",
+        "seed-2500"
+      ],
+      "source_shard_ids": [
+        "shard-0011",
+        "shard-0034",
+        "shard-0035",
+        "shard-0037",
+        "shard-0039",
+        "shard-0040"
+      ],
+      "canon_label": "Plans/Multi-Account.md",
+      "row_type": "consumer",
+      "path": "Plans/Multi-Account.md",
+      "heading_hint": "Highest-risk impacted docs",
+      "status": "partial",
+      "exact_items": [
+        "`Plans/Multi-Account.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Multi-Account.md:16",
+        "Plans/Multi-Account.md:135"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-02157",
+      "source_obligation_ids": [
+        "obl-2078"
+      ],
+      "source_seed_ids": [
+        "seed-2468",
+        "seed-2557",
+        "seed-2576",
+        "seed-3443",
+        "seed-3506",
+        "seed-3826",
+        "seed-3920",
+        "seed-4164",
+        "seed-4475",
+        "seed-4664",
+        "seed-5135",
+        "seed-5973",
+        "seed-6060",
+        "seed-6148",
+        "seed-6308"
+      ],
+      "source_shard_ids": [
+        "shard-0040",
+        "shard-0041",
+        "shard-0042",
+        "shard-0052",
+        "shard-0056",
+        "shard-0058",
+        "shard-0062",
+        "shard-0064",
+        "shard-0070",
+        "shard-0081",
+        "shard-0082",
+        "shard-0084"
+      ],
+      "canon_label": "Plans/Multi-Account.md",
+      "row_type": "consumer",
+      "path": "Plans/Multi-Account.md",
+      "heading_hint": "Impacted docs",
+      "status": "partial",
+      "exact_items": [
+        "`Plans/Multi-Account.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Multi-Account.md:16",
+        "Plans/Multi-Account.md:135"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-03310",
+      "source_obligation_ids": [
+        "obl-3198"
+      ],
+      "source_seed_ids": [
+        "seed-4180"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "canon_label": "Plans/*.md",
+      "row_type": "consumer",
+      "path": "Plans/Multi-Account.md",
+      "heading_hint": "Do-not-forget details",
+      "status": "present",
+      "exact_items": [
+        "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Multi-Account.md:108",
+        "Plans/Multi-Account.md:35",
+        "Plans/Multi-Account.md:16",
+        "Plans/Multi-Account.md:135",
+        "Plans/Multi-Account.md:39",
+        "Plans/Multi-Account.md:123",
+        "Plans/Multi-Account.md:5",
+        "Plans/Multi-Account.md:7",
+        "Plans/Multi-Account.md:47",
+        "Plans/Multi-Account.md:549"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-04253",
+      "source_obligation_ids": [
+        "obl-4099"
+      ],
+      "source_seed_ids": [
+        "seed-5706"
+      ],
+      "source_shard_ids": [
+        "shard-0077"
+      ],
+      "canon_label": "Plans/Multi-Account.md",
+      "row_type": "consumer",
+      "path": "Plans/Multi-Account.md",
+      "heading_hint": "Priority merge",
+      "status": "present",
+      "exact_items": [
+        "`Plans/Multi-Account.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Multi-Account.md:16",
+        "Plans/Multi-Account.md:186",
+        "Plans/Multi-Account.md:330"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-04449",
+      "source_obligation_ids": [
+        "obl-4262"
+      ],
+      "source_seed_ids": [
+        "seed-6087"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "canon_label": "39",
+      "row_type": "consumer",
+      "path": "Plans/Multi-Account.md",
+      "heading_hint": "Do-not-forget details",
+      "status": "present",
+      "exact_items": [
+        "Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Multi-Account.md:8",
+        "Plans/Multi-Account.md:124",
+        "Plans/Multi-Account.md:383",
+        "Plans/Multi-Account.md:16",
+        "Plans/Multi-Account.md:135",
+        "Plans/Multi-Account.md:281",
+        "Plans/Multi-Account.md:108",
+        "Plans/Multi-Account.md:549"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-04798",
+      "source_obligation_ids": [
+        "obl-4513"
+      ],
+      "source_seed_ids": [
+        "seed-6505"
+      ],
+      "source_shard_ids": [
+        "shard-0086"
+      ],
+      "canon_label": "Plans/Multi-Account.md",
+      "row_type": "consumer",
+      "path": "Plans/Multi-Account.md",
+      "heading_hint": "Docs probably implicated",
+      "status": "partial",
+      "exact_items": [
+        "`Plans/Multi-Account.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Multi-Account.md:16",
+        "Plans/Multi-Account.md:135"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-04832",
+      "source_obligation_ids": [
+        "obl-4547"
+      ],
+      "source_seed_ids": [
+        "seed-6539"
+      ],
+      "source_shard_ids": [
+        "shard-0086"
+      ],
+      "canon_label": "Plans/Multi-Account.md",
+      "row_type": "consumer",
+      "path": "Plans/Multi-Account.md",
+      "heading_hint": "MUST RECONCILE",
+      "status": "partial",
+      "exact_items": [
+        "`Plans/Multi-Account.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Multi-Account.md:16"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-04976",
+      "source_obligation_ids": [
+        "obl-4675"
+      ],
+      "source_seed_ids": [
+        "seed-6667"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "canon_label": "Plans/Orchestrator_Page.md",
+      "row_type": "consumer",
+      "path": "Plans/Multi-Account.md",
+      "heading_hint": "Export / settings / persona transfer gaps are broader than first summarized",
+      "status": "present",
+      "exact_items": [
+        "`Plans/Orchestrator_Page.md`, `Plans/storage-plan.md`, `Plans/FinalGUISpec.md`, `Plans/Models_System.md`, `Plans/Multi-Account.md`, `Plans/Personas.md`, `Plans/Prompt_Pipeline.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Multi-Account.md:39",
+        "Plans/Multi-Account.md:60",
+        "Plans/Multi-Account.md:174",
+        "Plans/Multi-Account.md:16",
+        "Plans/Multi-Account.md:55",
+        "Plans/Multi-Account.md:327",
+        "Plans/Multi-Account.md:53",
+        "Plans/Multi-Account.md:104",
+        "Plans/Multi-Account.md:307"
+      ],
+      "required_action": "none"
+    }
+  ]
+}

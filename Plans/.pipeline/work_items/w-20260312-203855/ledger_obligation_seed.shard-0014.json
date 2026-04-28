@@ -1,0 +1,1207 @@
+{
+  "schema_id": "pm.ledger_obligation_seed_shard_result.v1",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-0014",
+  "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0014-L002601-L002800.md",
+  "source_line_range": "L002601-L002800",
+  "seed_candidates": [
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "History",
+      "exact_items": [
+        "`History` selection changes the whole page's focused run"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0014",
+      "source_evidence": [
+        "working_ledger.md:L2601"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Progress",
+      "exact_items": [
+        "`Progress` in historical mode must stop pretending to be a live dashboard and instead become a historical summary for that run, or show a reduced/locked state with a switch-back-to-live CTA"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0014",
+      "source_evidence": [
+        "working_ledger.md:L2603"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "otherwise each tab can drift into a different run context and the page becomes incoherent",
+      "exact_items": [
+        "otherwise each tab can drift into a different run context and the page becomes incoherent"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0014",
+      "source_evidence": [
+        "working_ledger.md:L2605"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "Progress",
+      "exact_items": [
+        "Current `Progress` tab language is heavily live-run oriented."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Progress-tab implication"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0014",
+      "source_evidence": [
+        "working_ledger.md:L2608"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Progress",
+      "exact_items": [
+        "If Orchestrator shares one focused run across all tabs, then `Progress` needs an explicit historical behavior."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Progress-tab implication"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0014",
+      "source_evidence": [
+        "working_ledger.md:L2609"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "Progress",
+      "exact_items": [
+        "in historical mode, `Progress` becomes a historical run summary surface"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Progress-tab implication"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0014",
+      "source_evidence": [
+        "working_ledger.md:L2610-L2611"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Progress-tab implication",
+      "exact_items": [
+        "This needs a sharper contract later."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Progress-tab implication"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0014",
+      "source_evidence": [
+        "working_ledger.md:L2615"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Progress",
+      "exact_items": [
+        "`Progress` is described as a live dashboard, but the shared run-focus model implies it may also need to represent historical runs coherently."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Contradictions / gaps surfaced"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0014",
+      "source_evidence": [
+        "working_ledger.md:L2621"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "active_run_id",
+      "exact_items": [
+        "Add explicit `active_run_id` vs `focused_run_id` semantics."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Candidate fixes to carry forward"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0014",
+      "source_evidence": [
+        "working_ledger.md:L2625"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "Historical Run Mode",
+      "exact_items": [
+        "Add a first-class `Historical Run Mode` UI contract for Orchestrator."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Candidate fixes to carry forward"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0014",
+      "source_evidence": [
+        "working_ledger.md:L2626"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "orchestrator.project_state.{project_id}",
+      "exact_items": [
+        "Add `orchestrator.project_state.{project_id}` with focused run and per-tab state."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Candidate fixes to carry forward"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0014",
+      "source_evidence": [
+        "working_ledger.md:L2627"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Candidate fixes to carry forward",
+      "exact_items": [
+        "Define which commands are:"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Candidate fixes to carry forward"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0014",
+      "source_evidence": [
+        "working_ledger.md:L2628"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Progress",
+      "exact_items": [
+        "Define how `Progress` behaves when the focused run is historical."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Candidate fixes to carry forward"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0014",
+      "source_evidence": [
+        "working_ledger.md:L2632"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "Do-not-forget details",
+      "exact_items": [
+        "The page must not auto-switch focus away from a historical run just because live activity appears."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Do-not-forget details"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0014",
+      "source_evidence": [
+        "working_ledger.md:L2635"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Do-not-forget details",
+      "exact_items": [
+        "The user should always know whether they are looking at the active run or a historical run."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Do-not-forget details"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0014",
+      "source_evidence": [
+        "working_ledger.md:L2636"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "run_id",
+      "exact_items": [
+        "Cross-tab deep links must preserve focused `run_id` so History -> Graph -> Evidence -> Ledger stays coherent."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Do-not-forget details"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0014",
+      "source_evidence": [
+        "working_ledger.md:L2637"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/Orchestrator_Page.md",
+      "exact_items": [
+        "`Plans/Orchestrator_Page.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md"
+      ],
+      "heading_hints": [
+        "Targeted docs read"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0014",
+      "source_evidence": [
+        "working_ledger.md:L2642"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/Run_Graph_View.md",
+      "exact_items": [
+        "`Plans/Run_Graph_View.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Run_Graph_View.md"
+      ],
+      "heading_hints": [
+        "Targeted docs read"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0014",
+      "source_evidence": [
+        "working_ledger.md:L2643"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/storage-plan.md",
+      "exact_items": [
+        "`Plans/storage-plan.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [
+        "Targeted docs read"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0014",
+      "source_evidence": [
+        "working_ledger.md:L2644"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/FinalGUISpec.md",
+      "exact_items": [
+        "`Plans/FinalGUISpec.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [
+        "Targeted docs read"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0014",
+      "source_evidence": [
+        "working_ledger.md:L2645"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/Widget_System.md",
+      "exact_items": [
+        "`Plans/Widget_System.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Widget_System.md"
+      ],
+      "heading_hints": [
+        "Targeted docs read"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0014",
+      "source_evidence": [
+        "working_ledger.md:L2646"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "Key findings",
+      "exact_items": [
+        "Existing docs mostly define local/tab-specific search and filtering:"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Key findings"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0014",
+      "source_evidence": [
+        "working_ledger.md:L2649"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "Key findings",
+      "exact_items": [
+        "Cross-surface navigation exists in fragments:"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Key findings"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0014",
+      "source_evidence": [
+        "working_ledger.md:L2654"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Key findings",
+      "exact_items": [
+        "seglog is canonical"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Key findings"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0014",
+      "source_evidence": [
+        "working_ledger.md:L2660"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "Key findings",
+      "exact_items": [
+        "What is still missing is a unified Orchestrator search contract that is object-first rather than page-first."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Key findings"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0014",
+      "source_evidence": [
+        "working_ledger.md:L2663"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "global object search",
+      "exact_items": [
+        "distinguish `global object search` from `tab-local filtering`"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Recommended search model"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0014",
+      "source_evidence": [
+        "working_ledger.md:L2663-L2667"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "Recommended search model",
+      "exact_items": [
+        "object-first, run-aware, cross-tab routing"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Recommended search model"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0014",
+      "source_evidence": [
+        "working_ledger.md:L2670"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "tab-local search",
+      "exact_items": [
+        "`tab-local search`"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Recommended search model"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0014",
+      "source_evidence": [
+        "working_ledger.md:L2671"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "Recommended search model",
+      "exact_items": [
+        "local narrowing/filtering within the active tab/view"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Recommended search model"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0014",
+      "source_evidence": [
+        "working_ledger.md:L2672"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Recommended search model",
+      "exact_items": [
+        "Object-first search targets should include at minimum:"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Recommended search model"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0014",
+      "source_evidence": [
+        "working_ledger.md:L2673"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Recommended search model",
+      "exact_items": [
+        "evidence/artifact when directly addressable"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Recommended search model"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0014",
+      "source_evidence": [
+        "working_ledger.md:L2685"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Routing contract direction",
+      "exact_items": [
+        "Search results should not merely highlight text."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Routing contract direction"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0014",
+      "source_evidence": [
+        "working_ledger.md:L2688"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "Routing contract direction",
+      "exact_items": [
+        "Each result should carry a canonical route target:"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Routing contract direction"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0014",
+      "source_evidence": [
+        "working_ledger.md:L2689"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "Routing contract direction",
+      "exact_items": [
+        "destination tab"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Routing contract direction"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0014",
+      "source_evidence": [
+        "working_ledger.md:L2691"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "Seams",
+      "exact_items": [
+        "seam/package -> `Seams` tab with correct hierarchy expanded"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Routing contract direction"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0014",
+      "source_evidence": [
+        "working_ledger.md:L2696"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Evidence",
+      "exact_items": [
+        "evidence/artifact -> `Evidence` with panes focused appropriately"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Routing contract direction"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0014",
+      "source_evidence": [
+        "working_ledger.md:L2698"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "focused_run_id",
+      "exact_items": [
+        "run -> switch `focused_run_id` and open the relevant tab/context"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Routing contract direction"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0014",
+      "source_evidence": [
+        "working_ledger.md:L2700"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Focused-run interaction",
+      "exact_items": [
+        "Orchestrator search must be run-aware."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Focused-run interaction"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0014",
+      "source_evidence": [
+        "working_ledger.md:L2703"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Focused-run interaction",
+      "exact_items": [
+        "when a result belongs to another run, selecting it should explicitly switch the focused run"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Focused-run interaction"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0014",
+      "source_evidence": [
+        "working_ledger.md:L2707"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "Focused-run interaction",
+      "exact_items": [
+        "the UI should disclose that the focused run changed because of the search result"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Focused-run interaction"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0014",
+      "source_evidence": [
+        "working_ledger.md:L2708"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "focused_run_id",
+      "exact_items": [
+        "search result routing must preserve or intentionally change `focused_run_id`"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Focused-run interaction"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0014",
+      "source_evidence": [
+        "working_ledger.md:L2710"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Focused-run interaction",
+      "exact_items": [
+        "it must never do so silently"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Focused-run interaction"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0014",
+      "source_evidence": [
+        "working_ledger.md:L2711"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "Search in this tab",
+      "exact_items": [
+        "`Search in this tab`"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Global vs local search distinction"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0014",
+      "source_evidence": [
+        "working_ledger.md:L2715"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "Global vs local search distinction",
+      "exact_items": [
+        "object-first, cross-tab, route-aware"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Global vs local search distinction"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0014",
+      "source_evidence": [
+        "working_ledger.md:L2718"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "Global vs local search distinction",
+      "exact_items": [
+        "tab-local search stays embedded in tabs like Graph/Evidence/Ledger"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Global vs local search distinction"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0014",
+      "source_evidence": [
+        "working_ledger.md:L2720"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "Global vs local search distinction",
+      "exact_items": [
+        "a page-level search box"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Global vs local search distinction"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0014",
+      "source_evidence": [
+        "working_ledger.md:L2722"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Global vs local search distinction",
+      "exact_items": [
+        "and/or command-palette integrated"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Global vs local search distinction"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0014",
+      "source_evidence": [
+        "working_ledger.md:L2723"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "FinalGUISpec.md",
+      "exact_items": [
+        "`FinalGUISpec.md` already defines a global command palette."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Command palette integration direction"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0014",
+      "source_evidence": [
+        "working_ledger.md:L2726"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Command palette integration direction",
+      "exact_items": [
+        "command palette can expose Orchestrator object results, not just commands/pages"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Command palette integration direction"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0014",
+      "source_evidence": [
+        "working_ledger.md:L2728"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "Command palette integration direction",
+      "exact_items": [
+        "selecting an object result should route through the same deep-link contract as Orchestrator search"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Command palette integration direction"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0014",
+      "source_evidence": [
+        "working_ledger.md:L2729"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Indexing / backend direction",
+      "exact_items": [
+        "search should prefer stable object identity matches first"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Indexing / backend direction"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0014",
+      "source_evidence": [
+        "working_ledger.md:L2737"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Indexing / backend direction",
+      "exact_items": [
+        "canonical names/titles"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Indexing / backend direction"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0014",
+      "source_evidence": [
+        "working_ledger.md:L2741"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "Search-result presentation direction",
+      "exact_items": [
+        "target tab"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Search-result presentation direction"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0014",
+      "source_evidence": [
+        "working_ledger.md:L2751"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Contradictions / gaps surfaced",
+      "exact_items": [
+        "Current docs define many local filters but not a unified Orchestrator search object model."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Contradictions / gaps surfaced"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0014",
+      "source_evidence": [
+        "working_ledger.md:L2759"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "Contradictions / gaps surfaced",
+      "exact_items": [
+        "There is no current canonical routing payload shared across search, deep links, and cross-tab navigation."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Contradictions / gaps surfaced"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0014",
+      "source_evidence": [
+        "working_ledger.md:L2760"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Candidate fixes to carry forward",
+      "exact_items": [
+        "Define a canonical Orchestrator search result contract with:"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Candidate fixes to carry forward"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0014",
+      "source_evidence": [
+        "working_ledger.md:L2765"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "Candidate fixes to carry forward",
+      "exact_items": [
+        "destination tab"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Candidate fixes to carry forward"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0014",
+      "source_evidence": [
+        "working_ledger.md:L2769"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "Candidate fixes to carry forward",
+      "exact_items": [
+        "Separate page-level Orchestrator search from tab-local filtering."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Candidate fixes to carry forward"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0014",
+      "source_evidence": [
+        "working_ledger.md:L2771"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Candidate fixes to carry forward",
+      "exact_items": [
+        "command palette results"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Candidate fixes to carry forward"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0014",
+      "source_evidence": [
+        "working_ledger.md:L2774"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "Candidate fixes to carry forward",
+      "exact_items": [
+        "cross-tab deep links"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Candidate fixes to carry forward"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0014",
+      "source_evidence": [
+        "working_ledger.md:L2775"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "Do-not-forget details",
+      "exact_items": [
+        "Search should help the user find the right object, not force them to know which tab owns it first."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Do-not-forget details"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0014",
+      "source_evidence": [
+        "working_ledger.md:L2780"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "Do-not-forget details",
+      "exact_items": [
+        "A narrow Source Control panel reinforces that richer cross-object search belongs more naturally in Orchestrator / command-palette flows than in side-panel SCM UI."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Do-not-forget details"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0014",
+      "source_evidence": [
+        "working_ledger.md:L2781"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Do-not-forget details",
+      "exact_items": [
+        "Historical results must preserve run context clearly so search does not create silent run-focus jumps."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Do-not-forget details"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0014",
+      "source_evidence": [
+        "working_ledger.md:L2782"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/storage-plan.md",
+      "exact_items": [
+        "`Plans/storage-plan.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [
+        "Targeted docs read"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0014",
+      "source_evidence": [
+        "working_ledger.md:L2787"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/Contracts_V0.md",
+      "exact_items": [
+        "`Plans/Contracts_V0.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md"
+      ],
+      "heading_hints": [
+        "Targeted docs read"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0014",
+      "source_evidence": [
+        "working_ledger.md:L2788"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/Run_Graph_View.md",
+      "exact_items": [
+        "`Plans/Run_Graph_View.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Run_Graph_View.md"
+      ],
+      "heading_hints": [
+        "Targeted docs read"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0014",
+      "source_evidence": [
+        "working_ledger.md:L2789"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/Orchestrator_Page.md",
+      "exact_items": [
+        "`Plans/Orchestrator_Page.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md"
+      ],
+      "heading_hints": [
+        "Targeted docs read"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0014",
+      "source_evidence": [
+        "working_ledger.md:L2790"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/FinalGUISpec.md",
+      "exact_items": [
+        "`Plans/FinalGUISpec.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [
+        "Targeted docs read"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0014",
+      "source_evidence": [
+        "working_ledger.md:L2791"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Key findings",
+      "exact_items": [
+        "historical lineage must remain visible even when live targets disappear"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Key findings"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0014",
+      "source_evidence": [
+        "working_ledger.md:L2797"
+      ],
+      "notes": []
+    }
+  ],
+  "noise_items": [
+    {
+      "item": "- switch to historical-summary rendering",
+      "source_evidence": [
+        "working_ledger.md:L2613"
+      ],
+      "reason": "metric/status/count/family or process line without concrete obligation-grade evidence"
+    }
+  ],
+  "uncertain_items": [],
+  "covered_shard_id": "shard-0014"
+}

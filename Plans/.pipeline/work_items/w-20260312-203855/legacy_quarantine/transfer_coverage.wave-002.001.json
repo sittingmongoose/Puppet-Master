@@ -1,0 +1,2060 @@
+{
+  "schema_id": "pm.transfer_coverage.wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-002",
+  "summary": {
+    "coverage_rows_total": 102,
+    "rows_present": 0,
+    "rows_partial": 46,
+    "rows_missing": 56,
+    "coverage_rows_deferred": 0
+  },
+  "coverage_rows": [
+    {
+      "coverage_id": "cov-110",
+      "source_obligation_ids": [
+        "obl-035"
+      ],
+      "canon_label": "Artifacts index and projector storage",
+      "row_type": "owner",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "",
+      "status": "partial",
+      "exact_items": [
+        "Register artifacts_index, artifacts_project_state, and runtime_artifacts projector checkpoint families",
+        "Make the artifact index rebuildable from canonical runtime evidence"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:L239-L246 matched tokens: artifacts_index, artifacts_project_state, checkpoint, families, projector, runtime_artifacts",
+        "Plans/storage-plan.md:L237-L244 partial tokens: artifact, index, runtime"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-111",
+      "source_obligation_ids": [
+        "obl-035"
+      ],
+      "canon_label": "Artifacts index and projector storage",
+      "row_type": "owner",
+      "path": "Plans/Runtime_Artifacts_Panel.md",
+      "heading_hint": "",
+      "status": "partial",
+      "exact_items": [
+        "Register artifacts_index, artifacts_project_state, and runtime_artifacts projector checkpoint families",
+        "Make the artifact index rebuildable from canonical runtime evidence"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Runtime_Artifacts_Panel.md:L6-L13 matched tokens: artifact, evidence, index, runtime"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-112",
+      "source_obligation_ids": [
+        "obl-036"
+      ],
+      "canon_label": "Worktree and lane storage families",
+      "row_type": "owner",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "Register worktree_record/worktree_projection and lane_record/lane_projection families",
+        "Use worktree_id as durable filesystem/git identity and lane_id as operational lineage identity"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:L1-L40 searched file; exact items absent"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-113",
+      "source_obligation_ids": [
+        "obl-036"
+      ],
+      "canon_label": "Worktree and lane storage families",
+      "row_type": "owner",
+      "path": "Plans/WorktreeGitImprovement.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "Register worktree_record/worktree_projection and lane_record/lane_projection families",
+        "Use worktree_id as durable filesystem/git identity and lane_id as operational lineage identity"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/WorktreeGitImprovement.md:L1-L40 searched file; exact items absent"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-114",
+      "source_obligation_ids": [
+        "obl-037"
+      ],
+      "canon_label": "Shared runtime attribution packet",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "",
+      "status": "partial",
+      "exact_items": [
+        "Share one attribution family across tool events, runtime artifacts, receipts, and usage records",
+        "Carry run/attempt/thread/node/artifact/provider/usage anchors plus execution/runtime identity fields"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L127-L134 partial tokens: attribution, events, receipts, runtime, usage"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-115",
+      "source_obligation_ids": [
+        "obl-037"
+      ],
+      "canon_label": "Shared runtime attribution packet",
+      "row_type": "owner",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "",
+      "status": "partial",
+      "exact_items": [
+        "Share one attribution family across tool events, runtime artifacts, receipts, and usage records",
+        "Carry run/attempt/thread/node/artifact/provider/usage anchors plus execution/runtime identity fields"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:L551-L558 partial tokens: artifacts, attribution, records, runtime, usage"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-116",
+      "source_obligation_ids": [
+        "obl-037"
+      ],
+      "canon_label": "Shared runtime attribution packet",
+      "row_type": "owner",
+      "path": "Plans/Tools.md",
+      "heading_hint": "",
+      "status": "partial",
+      "exact_items": [
+        "Share one attribution family across tool events, runtime artifacts, receipts, and usage records",
+        "Carry run/attempt/thread/node/artifact/provider/usage anchors plus execution/runtime identity fields"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Tools.md:L180-L187 partial tokens: artifacts, family, runtime, usage",
+        "Plans/Tools.md:L1684-L1691 partial tokens: anchors, fields, identity"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-117",
+      "source_obligation_ids": [
+        "obl-037"
+      ],
+      "canon_label": "Shared runtime attribution packet",
+      "row_type": "owner",
+      "path": "Plans/Runtime_Artifacts_Panel.md",
+      "heading_hint": "",
+      "status": "partial",
+      "exact_items": [
+        "Share one attribution family across tool events, runtime artifacts, receipts, and usage records",
+        "Carry run/attempt/thread/node/artifact/provider/usage anchors plus execution/runtime identity fields"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Runtime_Artifacts_Panel.md:L6-L13 partial tokens: artifacts, attribution, family, runtime, usage"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-118",
+      "source_obligation_ids": [
+        "obl-037"
+      ],
+      "canon_label": "Shared runtime attribution packet",
+      "row_type": "owner",
+      "path": "Plans/usage-feature.md",
+      "heading_hint": "",
+      "status": "partial",
+      "exact_items": [
+        "Share one attribution family across tool events, runtime artifacts, receipts, and usage records",
+        "Carry run/attempt/thread/node/artifact/provider/usage anchors plus execution/runtime identity fields"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/usage-feature.md:L731-L738 matched tokens: artifacts, attribution, receipts, records, runtime, usage"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-119",
+      "source_obligation_ids": [
+        "obl-038"
+      ],
+      "canon_label": "Runtime-artifact envelope",
+      "row_type": "owner",
+      "path": "Plans/Runtime_Artifacts_Panel.md",
+      "heading_hint": "",
+      "status": "partial",
+      "exact_items": [
+        "Make runtime artifacts attempt-native by default with artifact identity, routing refs, content refs, and provider/usage linkage",
+        "Resolve artifact open flows by artifact_id and then by linked envelope refs"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Runtime_Artifacts_Panel.md:L205-L212 partial tokens: artifact, artifacts, identity, linkage, runtime",
+        "Plans/Runtime_Artifacts_Panel.md:L66-L73 partial tokens: artifact, artifact_id, envelope, linked"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-120",
+      "source_obligation_ids": [
+        "obl-038"
+      ],
+      "canon_label": "Runtime-artifact envelope",
+      "row_type": "owner",
+      "path": "Plans/FileManager.md",
+      "heading_hint": "",
+      "status": "partial",
+      "exact_items": [
+        "Make runtime artifacts attempt-native by default with artifact identity, routing refs, content refs, and provider/usage linkage",
+        "Resolve artifact open flows by artifact_id and then by linked envelope refs"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FileManager.md:L906-L913 partial tokens: artifact, artifacts, default, identity, runtime",
+        "Plans/FileManager.md:L313-L320 partial tokens: artifact, artifact_id, resolve"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-121",
+      "source_obligation_ids": [
+        "obl-038"
+      ],
+      "canon_label": "Runtime-artifact envelope",
+      "row_type": "owner",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "",
+      "status": "partial",
+      "exact_items": [
+        "Make runtime artifacts attempt-native by default with artifact identity, routing refs, content refs, and provider/usage linkage",
+        "Resolve artifact open flows by artifact_id and then by linked envelope refs"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:L844-L851 partial tokens: artifact, artifacts, identity, linkage, runtime",
+        "Plans/storage-plan.md:L237-L244 partial tokens: artifact, artifact_id, linked"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-122",
+      "source_obligation_ids": [
+        "obl-039"
+      ],
+      "canon_label": "route_target and OpenSubject ownership",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "",
+      "status": "partial",
+      "exact_items": [
+        "Let Contracts_V0 own canonical route_target and OpenSubject contracts",
+        "Keep Crosswalk limited to primitive boundary ownership and FileManager OpenFile narrow and path-based"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L186-L193 matched tokens: contracts, contracts_v0, route_target"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-123",
+      "source_obligation_ids": [
+        "obl-039"
+      ],
+      "canon_label": "route_target and OpenSubject ownership",
+      "row_type": "owner",
+      "path": "Plans/Crosswalk.md",
+      "heading_hint": "",
+      "status": "partial",
+      "exact_items": [
+        "Let Contracts_V0 own canonical route_target and OpenSubject contracts",
+        "Keep Crosswalk limited to primitive boundary ownership and FileManager OpenFile narrow and path-based"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Crosswalk.md:L57-L64 matched tokens: contracts, contracts_v0, opensubject, route_target"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-124",
+      "source_obligation_ids": [
+        "obl-039"
+      ],
+      "canon_label": "route_target and OpenSubject ownership",
+      "row_type": "owner",
+      "path": "Plans/FileManager.md",
+      "heading_hint": "",
+      "status": "partial",
+      "exact_items": [
+        "Let Contracts_V0 own canonical route_target and OpenSubject contracts",
+        "Keep Crosswalk limited to primitive boundary ownership and FileManager OpenFile narrow and path-based"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FileManager.md:L320-L327 matched tokens: contracts, contracts_v0, opensubject, route_target"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-125",
+      "source_obligation_ids": [
+        "obl-039"
+      ],
+      "canon_label": "route_target and OpenSubject ownership",
+      "row_type": "owner",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "",
+      "status": "partial",
+      "exact_items": [
+        "Let Contracts_V0 own canonical route_target and OpenSubject contracts",
+        "Keep Crosswalk limited to primitive boundary ownership and FileManager OpenFile narrow and path-based"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:L1-L8 partial tokens: contracts, contracts_v0"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-126",
+      "source_obligation_ids": [
+        "obl-040"
+      ],
+      "canon_label": "route_target shape and boundaries",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "",
+      "status": "partial",
+      "exact_items": [
+        "Keep route_target small with subject_id or object_kind/object_id identity",
+        "Limit subject_id families to doc:/artifact:, keep inspector_target secondary, and override only necessary destination/context state"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L689-L696 partial tokens: identity, route_target, subject_id"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-127",
+      "source_obligation_ids": [
+        "obl-040"
+      ],
+      "canon_label": "route_target shape and boundaries",
+      "row_type": "owner",
+      "path": "Plans/FileManager.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "Keep route_target small with subject_id or object_kind/object_id identity",
+        "Limit subject_id families to doc:/artifact:, keep inspector_target secondary, and override only necessary destination/context state"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FileManager.md:L1-L40 searched file; exact items absent"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-128",
+      "source_obligation_ids": [
+        "obl-040"
+      ],
+      "canon_label": "route_target shape and boundaries",
+      "row_type": "owner",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "Keep route_target small with subject_id or object_kind/object_id identity",
+        "Limit subject_id families to doc:/artifact:, keep inspector_target secondary, and override only necessary destination/context state"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FinalGUISpec.md:L1-L40 searched file; exact items absent"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-129",
+      "source_obligation_ids": [
+        "obl-041"
+      ],
+      "canon_label": "Command normalization model",
+      "row_type": "owner",
+      "path": "Plans/UI_Command_Catalog.md",
+      "heading_hint": "",
+      "status": "partial",
+      "exact_items": [
+        "Distinguish shell_view, navigation_wrapper, and domain_action commands",
+        "Declare wrapper normalization metadata separately from deprecated alias metadata"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:L645-L652 matched tokens: alias, deprecated, metadata, normalization, wrapper"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-130",
+      "source_obligation_ids": [
+        "obl-041"
+      ],
+      "canon_label": "Command normalization model",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "",
+      "status": "partial",
+      "exact_items": [
+        "Distinguish shell_view, navigation_wrapper, and domain_action commands",
+        "Declare wrapper normalization metadata separately from deprecated alias metadata"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L561-L568 partial tokens: domain_action, navigation_wrapper, shell_view",
+        "Plans/Contracts_V0.md:L565-L572 partial tokens: alias, deprecated, normalization, wrapper"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-131",
+      "source_obligation_ids": [
+        "obl-042"
+      ],
+      "canon_label": "Route-aware wiring and gate evidence",
+      "row_type": "consumer",
+      "path": "Plans/Wiring_Matrix.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "Expand Wiring Matrix and GATE-010 to verify route args, wrapper normalization, stale revalidation, admissibility, and correlation passthrough",
+        "Add structured gate-specific evidence details for route-aware verification"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Wiring_Matrix.md:L1-L40 searched file; exact items absent"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-132",
+      "source_obligation_ids": [
+        "obl-042"
+      ],
+      "canon_label": "Route-aware wiring and gate evidence",
+      "row_type": "consumer",
+      "path": "Plans/Progression_Gates.md",
+      "heading_hint": "",
+      "status": "partial",
+      "exact_items": [
+        "Expand Wiring Matrix and GATE-010 to verify route args, wrapper normalization, stale revalidation, admissibility, and correlation passthrough",
+        "Add structured gate-specific evidence details for route-aware verification"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Progression_Gates.md:L191-L198 partial tokens: gate-010, matrix, normalization, wiring, wrapper"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-133",
+      "source_obligation_ids": [
+        "obl-042"
+      ],
+      "canon_label": "Route-aware wiring and gate evidence",
+      "row_type": "consumer",
+      "path": "Plans/evidence.schema.json",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "Expand Wiring Matrix and GATE-010 to verify route args, wrapper normalization, stale revalidation, admissibility, and correlation passthrough",
+        "Add structured gate-specific evidence details for route-aware verification"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/evidence.schema.json:L1-L40 searched file; exact items absent"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-134",
+      "source_obligation_ids": [
+        "obl-043"
+      ],
+      "canon_label": "Wizard/interview and validation lineage",
+      "row_type": "owner",
+      "path": "Plans/interview-subagent-integration.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "Extend wizard/interview handoff with project/thread/wizard/runtime identity and execution_role",
+        "Extend validation_pass_report with planning/governance lineage and an explicit bridge into the launched run"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/interview-subagent-integration.md:L1-L40 searched file; exact items absent"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-135",
+      "source_obligation_ids": [
+        "obl-043"
+      ],
+      "canon_label": "Wizard/interview and validation lineage",
+      "row_type": "owner",
+      "path": "Plans/chain-wizard.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "Extend wizard/interview handoff with project/thread/wizard/runtime identity and execution_role",
+        "Extend validation_pass_report with planning/governance lineage and an explicit bridge into the launched run"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/chain-wizard.md: unresolved target path or unreadable file"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-136",
+      "source_obligation_ids": [
+        "obl-043"
+      ],
+      "canon_label": "Wizard/interview and validation lineage",
+      "row_type": "owner",
+      "path": "Plans/Prompt_Pipeline.md",
+      "heading_hint": "",
+      "status": "partial",
+      "exact_items": [
+        "Extend wizard/interview handoff with project/thread/wizard/runtime identity and execution_role",
+        "Extend validation_pass_report with planning/governance lineage and an explicit bridge into the launched run"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Prompt_Pipeline.md:L257-L264 partial tokens: bridge, explicit, lineage"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-137",
+      "source_obligation_ids": [
+        "obl-044"
+      ],
+      "canon_label": "Help architecture and project status taxonomy",
+      "row_type": "owner",
+      "path": "Plans/Glossary.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "Define dedicated help-entry architecture with related-concept linking",
+        "Define project activity_state, project attention_state, blocked-owner taxonomy, escalation ladder, and resurfacing/aging rules"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Glossary.md:L1-L40 searched file; exact items absent"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-138",
+      "source_obligation_ids": [
+        "obl-044"
+      ],
+      "canon_label": "Help architecture and project status taxonomy",
+      "row_type": "owner",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "Define dedicated help-entry architecture with related-concept linking",
+        "Define project activity_state, project attention_state, blocked-owner taxonomy, escalation ladder, and resurfacing/aging rules"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L1-L19 searched file; exact items absent"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-139",
+      "source_obligation_ids": [
+        "obl-044"
+      ],
+      "canon_label": "Help architecture and project status taxonomy",
+      "row_type": "owner",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "Define dedicated help-entry architecture with related-concept linking",
+        "Define project activity_state, project attention_state, blocked-owner taxonomy, escalation ladder, and resurfacing/aging rules"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FinalGUISpec.md:L1-L40 searched file; exact items absent"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-140",
+      "source_obligation_ids": [
+        "obl-045"
+      ],
+      "canon_label": "Tail route/open refinement gaps",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "Carry selector precedence, reject rules, closed tab_id vocabulary, scoped resolver rules, route examples, ref-family split, and resume_url demotion into live route/open docs",
+        "Carry Primitive:RouteTarget/OpenSubject and wrapper/canonical normalization into crosswalk and wiring docs"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L1-L40 searched file; exact items absent"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-141",
+      "source_obligation_ids": [
+        "obl-045"
+      ],
+      "canon_label": "Tail route/open refinement gaps",
+      "row_type": "owner",
+      "path": "Plans/Crosswalk.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "Carry selector precedence, reject rules, closed tab_id vocabulary, scoped resolver rules, route examples, ref-family split, and resume_url demotion into live route/open docs",
+        "Carry Primitive:RouteTarget/OpenSubject and wrapper/canonical normalization into crosswalk and wiring docs"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Crosswalk.md:L1-L40 searched file; exact items absent"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-142",
+      "source_obligation_ids": [
+        "obl-045"
+      ],
+      "canon_label": "Tail route/open refinement gaps",
+      "row_type": "owner",
+      "path": "Plans/UI_Command_Catalog.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "Carry selector precedence, reject rules, closed tab_id vocabulary, scoped resolver rules, route examples, ref-family split, and resume_url demotion into live route/open docs",
+        "Carry Primitive:RouteTarget/OpenSubject and wrapper/canonical normalization into crosswalk and wiring docs"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:L1-L40 searched file; exact items absent"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-143",
+      "source_obligation_ids": [
+        "obl-045"
+      ],
+      "canon_label": "Tail route/open refinement gaps",
+      "row_type": "owner",
+      "path": "Plans/Wiring_Matrix.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "Carry selector precedence, reject rules, closed tab_id vocabulary, scoped resolver rules, route examples, ref-family split, and resume_url demotion into live route/open docs",
+        "Carry Primitive:RouteTarget/OpenSubject and wrapper/canonical normalization into crosswalk and wiring docs"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Wiring_Matrix.md:L1-L40 searched file; exact items absent"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-144",
+      "source_obligation_ids": [
+        "obl-045"
+      ],
+      "canon_label": "Tail route/open refinement gaps",
+      "row_type": "owner",
+      "path": "Plans/Progression_Gates.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "Carry selector precedence, reject rules, closed tab_id vocabulary, scoped resolver rules, route examples, ref-family split, and resume_url demotion into live route/open docs",
+        "Carry Primitive:RouteTarget/OpenSubject and wrapper/canonical normalization into crosswalk and wiring docs"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Progression_Gates.md:L1-L40 searched file; exact items absent"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-145",
+      "source_obligation_ids": [
+        "obl-046"
+      ],
+      "canon_label": "Blocked notice and usage observability gaps",
+      "row_type": "consumer",
+      "path": "Plans/assistant-chat-design.md",
+      "heading_hint": "",
+      "status": "partial",
+      "exact_items": [
+        "Expand blocked_notice beyond blocked_family and allowed_action_ids[]",
+        "Carry escalation_level, action_available ownership, and usage observability through blocked surfaces"
+      ],
+      "stale_tokens": [
+        "allowed_action_ids[]"
+      ],
+      "evidence": [
+        "Plans/assistant-chat-design.md:L807-L814 matched tokens: allowed_action_ids, blocked_family, blocked_notice",
+        "Plans/assistant-chat-design.md:L814 stale token live: allowed_action_ids[]"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-146",
+      "source_obligation_ids": [
+        "obl-046"
+      ],
+      "canon_label": "Blocked notice and usage observability gaps",
+      "row_type": "consumer",
+      "path": "Plans/usage-feature.md",
+      "heading_hint": "",
+      "status": "partial",
+      "exact_items": [
+        "Expand blocked_notice beyond blocked_family and allowed_action_ids[]",
+        "Carry escalation_level, action_available ownership, and usage observability through blocked surfaces"
+      ],
+      "stale_tokens": [
+        "allowed_action_ids[]"
+      ],
+      "evidence": [
+        "Plans/usage-feature.md:L720-L727 partial tokens: action_available, blocked, escalation_level, usage"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-147",
+      "source_obligation_ids": [
+        "obl-046"
+      ],
+      "canon_label": "Blocked notice and usage observability gaps",
+      "row_type": "consumer",
+      "path": "Plans/Tools.md",
+      "heading_hint": "",
+      "status": "partial",
+      "exact_items": [
+        "Expand blocked_notice beyond blocked_family and allowed_action_ids[]",
+        "Carry escalation_level, action_available ownership, and usage observability through blocked surfaces"
+      ],
+      "stale_tokens": [
+        "allowed_action_ids[]"
+      ],
+      "evidence": [
+        "Plans/Tools.md:L1236 stale token live: allowed_action_ids[]"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-148",
+      "source_obligation_ids": [
+        "obl-047"
+      ],
+      "canon_label": "Progress widget catalog and drill mappings",
+      "row_type": "consumer",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "Transfer the 13-widget Progress catalog with default drill targets",
+        "Transfer state/action labels, alert taxonomy, event taxonomy, and condition-aging policy"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L1-L19 searched file; exact items absent"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-149",
+      "source_obligation_ids": [
+        "obl-047"
+      ],
+      "canon_label": "Progress widget catalog and drill mappings",
+      "row_type": "consumer",
+      "path": "Plans/Widget_System.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "Transfer the 13-widget Progress catalog with default drill targets",
+        "Transfer state/action labels, alert taxonomy, event taxonomy, and condition-aging policy"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Widget_System.md:L1-L39 searched file; exact items absent"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-150",
+      "source_obligation_ids": [
+        "obl-047"
+      ],
+      "canon_label": "Progress widget catalog and drill mappings",
+      "row_type": "consumer",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "",
+      "status": "partial",
+      "exact_items": [
+        "Transfer the 13-widget Progress catalog with default drill targets",
+        "Transfer state/action labels, alert taxonomy, event taxonomy, and condition-aging policy"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FinalGUISpec.md:L2154-L2161 partial tokens: catalog, default, progress"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-151",
+      "source_obligation_ids": [
+        "obl-048"
+      ],
+      "canon_label": "Settings, persona, and resolver model",
+      "row_type": "owner",
+      "path": "Plans/Prompt_Pipeline.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "Define the three-axis settings model source/request/execution",
+        "Define display grammar, worker-policy display, resolver inputs, deterministic resolver matrix, and resolver emit shape"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Prompt_Pipeline.md:L1-L40 searched file; exact items absent"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-152",
+      "source_obligation_ids": [
+        "obl-048"
+      ],
+      "canon_label": "Settings, persona, and resolver model",
+      "row_type": "owner",
+      "path": "Plans/Models_System.md",
+      "heading_hint": "",
+      "status": "partial",
+      "exact_items": [
+        "Define the three-axis settings model source/request/execution",
+        "Define display grammar, worker-policy display, resolver inputs, deterministic resolver matrix, and resolver emit shape"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Models_System.md:L255-L262 partial tokens: model, settings"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-153",
+      "source_obligation_ids": [
+        "obl-048"
+      ],
+      "canon_label": "Settings, persona, and resolver model",
+      "row_type": "owner",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "",
+      "status": "partial",
+      "exact_items": [
+        "Define the three-axis settings model source/request/execution",
+        "Define display grammar, worker-policy display, resolver inputs, deterministic resolver matrix, and resolver emit shape"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FinalGUISpec.md:L146-L153 partial tokens: model, settings"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-154",
+      "source_obligation_ids": [
+        "obl-049"
+      ],
+      "canon_label": "Identity and blocked-policy transfer cluster",
+      "row_type": "owner",
+      "path": "Plans/Prompt_Pipeline.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "Transfer execution_role, requested_account_id, operational_identity, account-switch and pressure ownership, blocked_sequence minting, startup recovery handshake, and DAE jail/approval policy into owner and consumer docs",
+        "Carry usage switch-history and usage execution-role follow-through"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Prompt_Pipeline.md:L1-L40 searched file; exact items absent"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-155",
+      "source_obligation_ids": [
+        "obl-049"
+      ],
+      "canon_label": "Identity and blocked-policy transfer cluster",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "",
+      "status": "partial",
+      "exact_items": [
+        "Transfer execution_role, requested_account_id, operational_identity, account-switch and pressure ownership, blocked_sequence minting, startup recovery handshake, and DAE jail/approval policy into owner and consumer docs",
+        "Carry usage switch-history and usage execution-role follow-through"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L123-L130 partial tokens: execution-role, usage"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-156",
+      "source_obligation_ids": [
+        "obl-049"
+      ],
+      "canon_label": "Identity and blocked-policy transfer cluster",
+      "row_type": "owner",
+      "path": "Plans/Tools.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "Transfer execution_role, requested_account_id, operational_identity, account-switch and pressure ownership, blocked_sequence minting, startup recovery handshake, and DAE jail/approval policy into owner and consumer docs",
+        "Carry usage switch-history and usage execution-role follow-through"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Tools.md:L1-L40 searched file; exact items absent"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-157",
+      "source_obligation_ids": [
+        "obl-049"
+      ],
+      "canon_label": "Identity and blocked-policy transfer cluster",
+      "row_type": "owner",
+      "path": "Plans/GitHub_API_Auth_and_Flows.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "Transfer execution_role, requested_account_id, operational_identity, account-switch and pressure ownership, blocked_sequence minting, startup recovery handshake, and DAE jail/approval policy into owner and consumer docs",
+        "Carry usage switch-history and usage execution-role follow-through"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/GitHub_API_Auth_and_Flows.md:L1-L40 searched file; exact items absent"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-158",
+      "source_obligation_ids": [
+        "obl-049"
+      ],
+      "canon_label": "Identity and blocked-policy transfer cluster",
+      "row_type": "owner",
+      "path": "Plans/Architecture_Invariants.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "Transfer execution_role, requested_account_id, operational_identity, account-switch and pressure ownership, blocked_sequence minting, startup recovery handshake, and DAE jail/approval policy into owner and consumer docs",
+        "Carry usage switch-history and usage execution-role follow-through"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Architecture_Invariants.md:L1-L40 searched file; exact items absent"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-159",
+      "source_obligation_ids": [
+        "obl-049"
+      ],
+      "canon_label": "Identity and blocked-policy transfer cluster",
+      "row_type": "owner",
+      "path": "Plans/Run_Modes.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "Transfer execution_role, requested_account_id, operational_identity, account-switch and pressure ownership, blocked_sequence minting, startup recovery handshake, and DAE jail/approval policy into owner and consumer docs",
+        "Carry usage switch-history and usage execution-role follow-through"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Modes.md:L1-L40 searched file; exact items absent"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-160",
+      "source_obligation_ids": [
+        "obl-049"
+      ],
+      "canon_label": "Identity and blocked-policy transfer cluster",
+      "row_type": "owner",
+      "path": "Plans/Executor_Protocol.md",
+      "heading_hint": "",
+      "status": "partial",
+      "exact_items": [
+        "Transfer execution_role, requested_account_id, operational_identity, account-switch and pressure ownership, blocked_sequence minting, startup recovery handshake, and DAE jail/approval policy into owner and consumer docs",
+        "Carry usage switch-history and usage execution-role follow-through"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Executor_Protocol.md:L123-L130 partial tokens: blocked_sequence, execution_role, operational_identity, policy, recovery, requested_account_id"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-161",
+      "source_obligation_ids": [
+        "obl-049"
+      ],
+      "canon_label": "Identity and blocked-policy transfer cluster",
+      "row_type": "owner",
+      "path": "Plans/human-in-the-loop.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "Transfer execution_role, requested_account_id, operational_identity, account-switch and pressure ownership, blocked_sequence minting, startup recovery handshake, and DAE jail/approval policy into owner and consumer docs",
+        "Carry usage switch-history and usage execution-role follow-through"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/human-in-the-loop.md:L1-L40 searched file; exact items absent"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-162",
+      "source_obligation_ids": [
+        "obl-049"
+      ],
+      "canon_label": "Identity and blocked-policy transfer cluster",
+      "row_type": "owner",
+      "path": "Plans/usage-feature.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "Transfer execution_role, requested_account_id, operational_identity, account-switch and pressure ownership, blocked_sequence minting, startup recovery handshake, and DAE jail/approval policy into owner and consumer docs",
+        "Carry usage switch-history and usage execution-role follow-through"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/usage-feature.md:L1-L40 searched file; exact items absent"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-163",
+      "source_obligation_ids": [
+        "obl-050"
+      ],
+      "canon_label": "Coverage blocker concern lifecycle owner section",
+      "row_type": "owner",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "",
+      "status": "partial",
+      "exact_items": [
+        "Create one canonical concern-lifecycle owner section with explicit active/acknowledged/resolved/dismissed semantics",
+        "Carry resolution_kind including accepted_risk and a concern-action confirmation matrix into that owner section"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:L1163-L1170 partial tokens: explicit, semantics"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-164",
+      "source_obligation_ids": [
+        "obl-050"
+      ],
+      "canon_label": "Coverage blocker concern lifecycle owner section",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "Create one canonical concern-lifecycle owner section with explicit active/acknowledged/resolved/dismissed semantics",
+        "Carry resolution_kind including accepted_risk and a concern-action confirmation matrix into that owner section"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L1-L40 searched file; exact items absent"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-165",
+      "source_obligation_ids": [
+        "obl-050"
+      ],
+      "canon_label": "Coverage blocker concern lifecycle owner section",
+      "row_type": "owner",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "Create one canonical concern-lifecycle owner section with explicit active/acknowledged/resolved/dismissed semantics",
+        "Carry resolution_kind including accepted_risk and a concern-action confirmation matrix into that owner section"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L1-L19 searched file; exact items absent"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-166",
+      "source_obligation_ids": [
+        "obl-050"
+      ],
+      "canon_label": "Coverage blocker concern lifecycle owner section",
+      "row_type": "owner",
+      "path": "Plans/GUI_Rebuild_Requirements_Checklist.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "Create one canonical concern-lifecycle owner section with explicit active/acknowledged/resolved/dismissed semantics",
+        "Carry resolution_kind including accepted_risk and a concern-action confirmation matrix into that owner section"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/GUI_Rebuild_Requirements_Checklist.md:L1-L40 searched file; exact items absent"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-167",
+      "source_obligation_ids": [
+        "obl-051"
+      ],
+      "canon_label": "Coverage blocker provider/model precedence owner section",
+      "row_type": "owner",
+      "path": "Plans/Models_System.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "Define one owner section covering provider/model precedence across run, seam, package, node, overseer, and delegated-subagent levels",
+        "Tie that section to parallel-node worktree assignment and ownership transitions"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Models_System.md:L1-L40 searched file; exact items absent"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-168",
+      "source_obligation_ids": [
+        "obl-051"
+      ],
+      "canon_label": "Coverage blocker provider/model precedence owner section",
+      "row_type": "owner",
+      "path": "Plans/Executor_Protocol.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "Define one owner section covering provider/model precedence across run, seam, package, node, overseer, and delegated-subagent levels",
+        "Tie that section to parallel-node worktree assignment and ownership transitions"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Executor_Protocol.md:L1-L40 searched file; exact items absent"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-169",
+      "source_obligation_ids": [
+        "obl-051"
+      ],
+      "canon_label": "Coverage blocker provider/model precedence owner section",
+      "row_type": "owner",
+      "path": "Plans/WorktreeGitImprovement.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "Define one owner section covering provider/model precedence across run, seam, package, node, overseer, and delegated-subagent levels",
+        "Tie that section to parallel-node worktree assignment and ownership transitions"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/WorktreeGitImprovement.md:L1-L40 searched file; exact items absent"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-170",
+      "source_obligation_ids": [
+        "obl-052"
+      ],
+      "canon_label": "Coverage blocker worktree allocation strategy",
+      "row_type": "owner",
+      "path": "Plans/Crosswalk.md",
+      "heading_hint": "",
+      "status": "partial",
+      "exact_items": [
+        "Define concrete worktree allocation strategy",
+        "Define contamination, reuse, and cleanup rules for that strategy"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Crosswalk.md:L86-L93 partial tokens: concrete, worktree"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-171",
+      "source_obligation_ids": [
+        "obl-052"
+      ],
+      "canon_label": "Coverage blocker worktree allocation strategy",
+      "row_type": "owner",
+      "path": "Plans/WorktreeGitImprovement.md",
+      "heading_hint": "",
+      "status": "partial",
+      "exact_items": [
+        "Define concrete worktree allocation strategy",
+        "Define contamination, reuse, and cleanup rules for that strategy"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/WorktreeGitImprovement.md:L50-L57 partial tokens: strategy, worktree",
+        "Plans/WorktreeGitImprovement.md:L118-L125 partial tokens: cleanup, reuse, strategy"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-172",
+      "source_obligation_ids": [
+        "obl-052"
+      ],
+      "canon_label": "Coverage blocker worktree allocation strategy",
+      "row_type": "owner",
+      "path": "Plans/orchestrator-subagent-integration.md",
+      "heading_hint": "",
+      "status": "partial",
+      "exact_items": [
+        "Define concrete worktree allocation strategy",
+        "Define contamination, reuse, and cleanup rules for that strategy"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/orchestrator-subagent-integration.md:L75-L82 partial tokens: strategy, worktree"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-173",
+      "source_obligation_ids": [
+        "obl-053"
+      ],
+      "canon_label": "Concern owner vs creator vs resolver separation",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "Separate concern owner_kind/owner_ref from created_by_kind/created_by_ref and resolver authority",
+        "Allow ownership changes without changing concern identity"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L1-L40 searched file; exact items absent"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-174",
+      "source_obligation_ids": [
+        "obl-053"
+      ],
+      "canon_label": "Concern owner vs creator vs resolver separation",
+      "row_type": "owner",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "Separate concern owner_kind/owner_ref from created_by_kind/created_by_ref and resolver authority",
+        "Allow ownership changes without changing concern identity"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L1-L19 searched file; exact items absent"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-175",
+      "source_obligation_ids": [
+        "obl-054"
+      ],
+      "canon_label": "Concern source-event vs record vs projection split",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "Distinguish concern_source_event_ref, concern_record, and concern_projection as separate structural layers"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L1-L40 searched file; exact items absent"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-176",
+      "source_obligation_ids": [
+        "obl-054"
+      ],
+      "canon_label": "Concern source-event vs record vs projection split",
+      "row_type": "owner",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "Distinguish concern_source_event_ref, concern_record, and concern_projection as separate structural layers"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:L1-L40 searched file; exact items absent"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-177",
+      "source_obligation_ids": [
+        "obl-054"
+      ],
+      "canon_label": "Concern source-event vs record vs projection split",
+      "row_type": "owner",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "Distinguish concern_source_event_ref, concern_record, and concern_projection as separate structural layers"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L1-L19 searched file; exact items absent"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-178",
+      "source_obligation_ids": [
+        "obl-055"
+      ],
+      "canon_label": "Dismissed vs resolved rationale enforcement",
+      "row_type": "consumer",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "Require distinct dismissal rationale and resolution rationale rules",
+        "Treat accepted_risk as a resolution path rather than dismissal"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L1-L19 searched file; exact items absent"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-179",
+      "source_obligation_ids": [
+        "obl-055"
+      ],
+      "canon_label": "Dismissed vs resolved rationale enforcement",
+      "row_type": "consumer",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "",
+      "status": "partial",
+      "exact_items": [
+        "Require distinct dismissal rationale and resolution rationale rules",
+        "Treat accepted_risk as a resolution path rather than dismissal"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FinalGUISpec.md:L1392-L1399 partial tokens: rather, resolution"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-180",
+      "source_obligation_ids": [
+        "obl-056"
+      ],
+      "canon_label": "Runtime attribution ownership split",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "",
+      "status": "partial",
+      "exact_items": [
+        "Let Contracts_V0 own cross-family attribution packet shape",
+        "Let storage-plan own persistence and projection of attempt/usage/receipt/artifact joins"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L108-L115 partial tokens: attribution, contracts_v0, shape",
+        "Plans/Contracts_V0.md:L1191-L1198 partial tokens: persistence, projection, storage-plan"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-181",
+      "source_obligation_ids": [
+        "obl-056"
+      ],
+      "canon_label": "Runtime attribution ownership split",
+      "row_type": "owner",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "",
+      "status": "partial",
+      "exact_items": [
+        "Let Contracts_V0 own cross-family attribution packet shape",
+        "Let storage-plan own persistence and projection of attempt/usage/receipt/artifact joins"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:L578-L585 partial tokens: persistence, projection, storage-plan"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-182",
+      "source_obligation_ids": [
+        "obl-057"
+      ],
+      "canon_label": "Bridge-field precedence for attempt/provider/usage/receipt joins",
+      "row_type": "owner",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "",
+      "status": "partial",
+      "exact_items": [
+        "Use attempt_id as local anchor, provider_attempt_ref as provider/runtime bridge, usage_event_ref as usage bridge, and receipt refs as external side-effect lineage bridge",
+        "None of those bridge fields replace the primary local key"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:L852-L859 partial tokens: anchor, attempt_id, bridge, local, provider_attempt_ref, usage",
+        "Plans/storage-plan.md:L557-L564 partial tokens: bridge, fields, local"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-183",
+      "source_obligation_ids": [
+        "obl-057"
+      ],
+      "canon_label": "Bridge-field precedence for attempt/provider/usage/receipt joins",
+      "row_type": "owner",
+      "path": "Plans/Runtime_Artifacts_Panel.md",
+      "heading_hint": "",
+      "status": "partial",
+      "exact_items": [
+        "Use attempt_id as local anchor, provider_attempt_ref as provider/runtime bridge, usage_event_ref as usage bridge, and receipt refs as external side-effect lineage bridge",
+        "None of those bridge fields replace the primary local key"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Runtime_Artifacts_Panel.md:L70-L77 partial tokens: anchor, attempt_id, bridge, lineage, local, provider_attempt_ref",
+        "Plans/Runtime_Artifacts_Panel.md:L91-L98 matched tokens: bridge, fields, local, primary, replace"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-184",
+      "source_obligation_ids": [
+        "obl-057"
+      ],
+      "canon_label": "Bridge-field precedence for attempt/provider/usage/receipt joins",
+      "row_type": "owner",
+      "path": "Plans/usage-feature.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "Use attempt_id as local anchor, provider_attempt_ref as provider/runtime bridge, usage_event_ref as usage bridge, and receipt refs as external side-effect lineage bridge",
+        "None of those bridge fields replace the primary local key"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/usage-feature.md:L1-L40 searched file; exact items absent"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-185",
+      "source_obligation_ids": [
+        "obl-058"
+      ],
+      "canon_label": "Approval scope key and approver identity",
+      "row_type": "owner",
+      "path": "Plans/human-in-the-loop.md",
+      "heading_hint": "",
+      "status": "partial",
+      "exact_items": [
+        "Separate blocked-episode approval scope from session-wide policy scope",
+        "Persist durable approver identity fields on approval and rejection events"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/human-in-the-loop.md:L40-L47 partial tokens: approval, scope, separate"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-186",
+      "source_obligation_ids": [
+        "obl-058"
+      ],
+      "canon_label": "Approval scope key and approver identity",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "",
+      "status": "partial",
+      "exact_items": [
+        "Separate blocked-episode approval scope from session-wide policy scope",
+        "Persist durable approver identity fields on approval and rejection events"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L522-L529 partial tokens: approval, blocked-episode, policy, scope"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-187",
+      "source_obligation_ids": [
+        "obl-058"
+      ],
+      "canon_label": "Approval scope key and approver identity",
+      "row_type": "owner",
+      "path": "Plans/Executor_Protocol.md",
+      "heading_hint": "",
+      "status": "partial",
+      "exact_items": [
+        "Separate blocked-episode approval scope from session-wide policy scope",
+        "Persist durable approver identity fields on approval and rejection events"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Executor_Protocol.md:L81-L88 partial tokens: approval, policy, separate"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-188",
+      "source_obligation_ids": [
+        "obl-059"
+      ],
+      "canon_label": "Projection fields for startup rehydration",
+      "row_type": "owner",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "",
+      "status": "partial",
+      "exact_items": [
+        "Carry blocked_reason_code and lifecycle state in worktree projections for startup recovery",
+        "Carry dirty_state and conflict_state in worktree projections"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:L231-L238 partial tokens: projections, worktree"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-189",
+      "source_obligation_ids": [
+        "obl-059"
+      ],
+      "canon_label": "Projection fields for startup rehydration",
+      "row_type": "owner",
+      "path": "Plans/WorktreeGitImprovement.md",
+      "heading_hint": "",
+      "status": "partial",
+      "exact_items": [
+        "Carry blocked_reason_code and lifecycle state in worktree projections for startup recovery",
+        "Carry dirty_state and conflict_state in worktree projections"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/WorktreeGitImprovement.md:L151-L158 partial tokens: lifecycle, recovery, state, worktree",
+        "Plans/WorktreeGitImprovement.md:L530-L537 partial tokens: projections, worktree"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-190",
+      "source_obligation_ids": [
+        "obl-060"
+      ],
+      "canon_label": "Artifacts index exact indexed fields",
+      "row_type": "owner",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "",
+      "status": "partial",
+      "exact_items": [
+        "Index attempt_id and thread_id in artifact index families to preserve attempt-native artifact routing"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:L282-L289 partial tokens: artifact, families, index, preserve"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-191",
+      "source_obligation_ids": [
+        "obl-060"
+      ],
+      "canon_label": "Artifacts index exact indexed fields",
+      "row_type": "owner",
+      "path": "Plans/Runtime_Artifacts_Panel.md",
+      "heading_hint": "",
+      "status": "partial",
+      "exact_items": [
+        "Index attempt_id and thread_id in artifact index families to preserve attempt-native artifact routing"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Runtime_Artifacts_Panel.md:L27-L34 partial tokens: artifact, families, index, thread_id"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-192",
+      "source_obligation_ids": [
+        "obl-061"
+      ],
+      "canon_label": "Concern update heuristics",
+      "row_type": "consumer",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "Use source/scope/category/lineage-aware heuristics when deciding whether repeated sightings update an existing concern or create a new one"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L1-L19 searched file; exact items absent"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-193",
+      "source_obligation_ids": [
+        "obl-061"
+      ],
+      "canon_label": "Concern update heuristics",
+      "row_type": "consumer",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "Use source/scope/category/lineage-aware heuristics when deciding whether repeated sightings update an existing concern or create a new one"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L1-L40 searched file; exact items absent"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-194",
+      "source_obligation_ids": [
+        "obl-062"
+      ],
+      "canon_label": "Help entry template and related-concept clusters",
+      "row_type": "consumer",
+      "path": "Plans/Glossary.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "Define a dedicated help-entry template and related-concept linking clusters"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Glossary.md:L1-L40 searched file; exact items absent"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-195",
+      "source_obligation_ids": [
+        "obl-062"
+      ],
+      "canon_label": "Help entry template and related-concept clusters",
+      "row_type": "consumer",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "Define a dedicated help-entry template and related-concept linking clusters"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L1-L19 searched file; exact items absent"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-196",
+      "source_obligation_ids": [
+        "obl-063"
+      ],
+      "canon_label": "Blocked-owner eight-kind taxonomy and escalation ladder surfaces",
+      "row_type": "owner",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "Define an explicit blocked-owner 8-kind taxonomy and 5-level escalation ladder with surface mapping"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L1-L19 searched file; exact items absent"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-197",
+      "source_obligation_ids": [
+        "obl-063"
+      ],
+      "canon_label": "Blocked-owner eight-kind taxonomy and escalation ladder surfaces",
+      "row_type": "owner",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "Define an explicit blocked-owner 8-kind taxonomy and 5-level escalation ladder with surface mapping"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FinalGUISpec.md:L1-L40 searched file; exact items absent"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-198",
+      "source_obligation_ids": [
+        "obl-063"
+      ],
+      "canon_label": "Blocked-owner eight-kind taxonomy and escalation ladder surfaces",
+      "row_type": "owner",
+      "path": "Plans/usage-feature.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "Define an explicit blocked-owner 8-kind taxonomy and 5-level escalation ladder with surface mapping"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/usage-feature.md:L1-L40 searched file; exact items absent"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-199",
+      "source_obligation_ids": [
+        "obl-064"
+      ],
+      "canon_label": "Route/open compatibility-only fallback marking",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "Mark timestamp/run/thread fallback logic as compatibility-only inside route/open contracts",
+        "Keep ref-family split explicit when route/open normalization is transferred"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L1-L40 searched file; exact items absent"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-200",
+      "source_obligation_ids": [
+        "obl-064"
+      ],
+      "canon_label": "Route/open compatibility-only fallback marking",
+      "row_type": "owner",
+      "path": "Plans/Crosswalk.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "Mark timestamp/run/thread fallback logic as compatibility-only inside route/open contracts",
+        "Keep ref-family split explicit when route/open normalization is transferred"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Crosswalk.md:L1-L40 searched file; exact items absent"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-201",
+      "source_obligation_ids": [
+        "obl-064"
+      ],
+      "canon_label": "Route/open compatibility-only fallback marking",
+      "row_type": "owner",
+      "path": "Plans/Wiring_Matrix.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "Mark timestamp/run/thread fallback logic as compatibility-only inside route/open contracts",
+        "Keep ref-family split explicit when route/open normalization is transferred"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Wiring_Matrix.md:L1-L40 searched file; exact items absent"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-202",
+      "source_obligation_ids": [
+        "obl-065"
+      ],
+      "canon_label": "Artifact envelope routing preference",
+      "row_type": "owner",
+      "path": "Plans/Runtime_Artifacts_Panel.md",
+      "heading_hint": "",
+      "status": "partial",
+      "exact_items": [
+        "Prefer usage_event_ref rather than timestamp heuristics when routing cost-bearing artifacts to Usage and Ledger",
+        "Require runtime artifacts summarizing external operations to carry receipt linkage"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Runtime_Artifacts_Panel.md:L208-L215 partial tokens: artifacts, linkage, receipt, require, runtime"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-203",
+      "source_obligation_ids": [
+        "obl-065"
+      ],
+      "canon_label": "Artifact envelope routing preference",
+      "row_type": "owner",
+      "path": "Plans/usage-feature.md",
+      "heading_hint": "",
+      "status": "partial",
+      "exact_items": [
+        "Prefer usage_event_ref rather than timestamp heuristics when routing cost-bearing artifacts to Usage and Ledger",
+        "Require runtime artifacts summarizing external operations to carry receipt linkage"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/usage-feature.md:L258-L265 partial tokens: artifacts, heuristics, prefer, routing, usage"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-204",
+      "source_obligation_ids": [
+        "obl-065"
+      ],
+      "canon_label": "Artifact envelope routing preference",
+      "row_type": "owner",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "Prefer usage_event_ref rather than timestamp heuristics when routing cost-bearing artifacts to Usage and Ledger",
+        "Require runtime artifacts summarizing external operations to carry receipt linkage"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L1-L19 searched file; exact items absent"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-205",
+      "source_obligation_ids": [
+        "obl-066"
+      ],
+      "canon_label": "Lane cleanup lineage fields",
+      "row_type": "owner",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "Keep package/work-package linkage and cleanup/archive lineage explicit in lane_record and lane_projection families"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:L1-L40 searched file; exact items absent"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-206",
+      "source_obligation_ids": [
+        "obl-066"
+      ],
+      "canon_label": "Lane cleanup lineage fields",
+      "row_type": "owner",
+      "path": "Plans/WorktreeGitImprovement.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "Keep package/work-package linkage and cleanup/archive lineage explicit in lane_record and lane_projection families"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/WorktreeGitImprovement.md:L1-L40 searched file; exact items absent"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-207",
+      "source_obligation_ids": [
+        "obl-067"
+      ],
+      "canon_label": "Deferred concern visibility and blocking contract",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "### Recommended minimum concern record shape",
+      "status": "missing",
+      "exact_items": [
+        "Add `visibility_level`, `attention_level`, `chatworthy`, and `blocking_effect?` to the concern-family contract",
+        "Keep `blocking_effect` explicitly separate from `severity`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L1-L40 searched file; exact items absent"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-208",
+      "source_obligation_ids": [
+        "obl-067"
+      ],
+      "canon_label": "Deferred concern visibility and blocking contract",
+      "row_type": "owner",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "### Recommended minimum concern record shape",
+      "status": "missing",
+      "exact_items": [
+        "Add `visibility_level`, `attention_level`, `chatworthy`, and `blocking_effect?` to the concern-family contract",
+        "Keep `blocking_effect` explicitly separate from `severity`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L1-L19 searched file; exact items absent"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-209",
+      "source_obligation_ids": [
+        "obl-067"
+      ],
+      "canon_label": "Deferred concern visibility and blocking contract",
+      "row_type": "owner",
+      "path": "Plans/FinalGUISpec.md",
+      "heading_hint": "### Recommended minimum concern record shape",
+      "status": "partial",
+      "exact_items": [
+        "Add `visibility_level`, `attention_level`, `chatworthy`, and `blocking_effect?` to the concern-family contract",
+        "Keep `blocking_effect` explicitly separate from `severity`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/FinalGUISpec.md:L1396-L1403 partial tokens: explicitly, separate"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-210",
+      "source_obligation_ids": [
+        "obl-068"
+      ],
+      "canon_label": "Deferred concern owner-surface taxonomy",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "### Concern ownership / authority direction",
+      "status": "missing",
+      "exact_items": [
+        "Define concern owner surfaces across `Runtime`, `Package Overseer`, `Seam Overseer`, `Corroboration`, `Graph Patch`, `Recovery`, `User`, and `External Resource`",
+        "Treat `concern resolver` as distinct from owner/source roles",
+        "Allow concern ownership reassignment without changing concern identity"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Contracts_V0.md:L1-L40 searched file; exact items absent"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-211",
+      "source_obligation_ids": [
+        "obl-068"
+      ],
+      "canon_label": "Deferred concern owner-surface taxonomy",
+      "row_type": "owner",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "### Concern ownership / authority direction",
+      "status": "missing",
+      "exact_items": [
+        "Define concern owner surfaces across `Runtime`, `Package Overseer`, `Seam Overseer`, `Corroboration`, `Graph Patch`, `Recovery`, `User`, and `External Resource`",
+        "Treat `concern resolver` as distinct from owner/source roles",
+        "Allow concern ownership reassignment without changing concern identity"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:L1-L19 searched file; exact items absent"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    }
+  ]
+}

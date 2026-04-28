@@ -1,0 +1,1524 @@
+{
+  "schema_id": "pm.canonical_obligations_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-016",
+  "seed_groups": [
+    "seedgrp-061",
+    "seedgrp-062",
+    "seedgrp-063",
+    "seedgrp-064"
+  ],
+  "obligation_candidates": [
+    {
+      "source_seed_ids": [
+        "seed-0901"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "canon_label": "refreshing",
+      "obligation_type": "stale_retirement",
+      "exact_tokens": [
+        "`refreshing`: allow normal read actions; mutating actions may continue if backed by runtime truth rather than stale page cache"
+      ],
+      "affected_doc_hints": [
+        "needs_doc_discovery_in_canonical_obligations_builder"
+      ],
+      "heading_hints": [
+        "Action-gating direction"
+      ],
+      "stale_residue_to_retire": [
+        "refreshing"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L2434"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0902"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "canon_label": "stale",
+      "obligation_type": "stale_retirement",
+      "exact_tokens": [
+        "`stale`: allow inspection and historical navigation; require refresh or direct runtime revalidation before sensitive live actions"
+      ],
+      "affected_doc_hints": [
+        "needs_doc_discovery_in_canonical_obligations_builder"
+      ],
+      "heading_hints": [
+        "Action-gating direction"
+      ],
+      "stale_residue_to_retire": [
+        "stale"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L2434-L2435"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0903"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "canon_label": "degraded",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`degraded`: restrict to safe inspection and canonical recovery paths; do not allow ambiguous live actions"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [
+        "Action-gating direction"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L2435-L2436"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0904"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "canon_label": "unavailable",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "`unavailable`: route to record-backed fallback views or explicit recovery/refresh actions"
+      ],
+      "affected_doc_hints": [
+        "layout_blocker_target_known_from_notes"
+      ],
+      "heading_hints": [
+        "Action-gating direction"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L2435-L2437"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0905"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "canon_label": "Action-gating direction",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "page state must not silently stand in for runtime state when freshness/trust is insufficient"
+      ],
+      "affected_doc_hints": [
+        "layout_blocker_target_known_from_notes"
+      ],
+      "heading_hints": [
+        "Action-gating direction"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L2439"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0906"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "canon_label": "current",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "prefer native projection-backed surface when trust is `current`"
+      ],
+      "affected_doc_hints": [
+        "layout_blocker_target_known_from_notes"
+      ],
+      "heading_hints": [
+        "Fallback-view direction"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L2443"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0907"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "canon_label": "Fallback-view direction",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "if trust drops, keep the surface open but show:"
+      ],
+      "affected_doc_hints": [
+        "layout_blocker_target_known_from_notes"
+      ],
+      "heading_hints": [
+        "Fallback-view direction"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L2444"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0908"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "canon_label": "Fallback-view direction",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "projection-backed operational views can degrade without erasing auditability"
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [
+        "Fallback-view direction"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L2456"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0909"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "canon_label": "UI contract direction",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "Every projection-backed operational surface should expose at least:"
+      ],
+      "affected_doc_hints": [
+        "layout_blocker_target_known_from_notes"
+      ],
+      "heading_hints": [
+        "UI contract direction"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L2459"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0910"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "canon_label": "UI contract direction",
+      "obligation_type": "stale_retirement",
+      "exact_tokens": [
+        "degraded/stale reason when not current"
+      ],
+      "affected_doc_hints": [
+        "needs_doc_discovery_in_canonical_obligations_builder"
+      ],
+      "heading_hints": [
+        "UI contract direction"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L2462"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0911"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "canon_label": "UI contract direction",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "Likely good surface behavior:"
+      ],
+      "affected_doc_hints": [
+        "layout_blocker_target_known_from_notes"
+      ],
+      "heading_hints": [
+        "UI contract direction"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L2462-L2464"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0912"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "canon_label": "Progress",
+      "obligation_type": "stale_retirement",
+      "exact_tokens": [
+        "`Progress`: show run-level trust banner or chip when projections are stale/degraded"
+      ],
+      "affected_doc_hints": [
+        "needs_doc_discovery_in_canonical_obligations_builder"
+      ],
+      "heading_hints": [
+        "UI contract direction"
+      ],
+      "stale_residue_to_retire": [
+        "Progress"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L2465"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0913"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "canon_label": "Seams",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "`Seams`: allow browsing, but gate actions that depend on current promotion/blocker truth"
+      ],
+      "affected_doc_hints": [
+        "layout_blocker_target_known_from_notes"
+      ],
+      "heading_hints": [
+        "UI contract direction"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L2465-L2466"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0914"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "canon_label": "Node Graph",
+      "obligation_type": "stale_retirement",
+      "exact_tokens": [
+        "`Node Graph`: keep historical graph and current selections visible, but flag when live node state may be stale"
+      ],
+      "affected_doc_hints": [
+        "needs_doc_discovery_in_canonical_obligations_builder"
+      ],
+      "heading_hints": [
+        "UI contract direction"
+      ],
+      "stale_residue_to_retire": [
+        "Node Graph"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L2466-L2467"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0915"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "canon_label": "Evidence",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "`Evidence`: artifact browsing can remain available; live verdict/action affordances may gate"
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [
+        "UI contract direction"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L2467-L2468"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0916"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "canon_label": "History",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`History` / `Ledger`: usually the fallback-safe surfaces because they are closest to canonical records"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [
+        "UI contract direction"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L2467-L2469"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0917"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "canon_label": "Contradictions / gaps surfaced",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "No shared projection freshness schema is currently obvious across Usage, Orchestrator, Source Control, and other projection-backed surfaces."
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [
+        "Contradictions / gaps surfaced"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L2472"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0918"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "canon_label": "Contradictions / gaps surfaced",
+      "obligation_type": "stale_retirement",
+      "exact_tokens": [
+        "Usage has concrete stale-data mitigations, but Orchestrator currently lacks equally explicit stale/degraded trust copy and action rules."
+      ],
+      "affected_doc_hints": [
+        "needs_doc_discovery_in_canonical_obligations_builder"
+      ],
+      "heading_hints": [
+        "Contradictions / gaps surfaced"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L2473"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0919"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "canon_label": "Contradictions / gaps surfaced",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "FinalGUISpec has good safety language, but it does not yet appear to define one reusable trust-state UI contract for projection-backed tabs/widgets/panels."
+      ],
+      "affected_doc_hints": [
+        "layout_blocker_target_known_from_notes"
+      ],
+      "heading_hints": [
+        "Contradictions / gaps surfaced"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L2473-L2474"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0920"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "canon_label": "Candidate fixes to carry forward",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "Add a shared projection health/trust contract used by:"
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [
+        "Candidate fixes to carry forward"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L2473-L2477"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0921"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "canon_label": "Candidate fixes to carry forward",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "other projection-backed surfaces"
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [
+        "Candidate fixes to carry forward"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L2481"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0922"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "canon_label": "trust state",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "Make `trust state` and `last updated` first-class UI fields for projection-backed surfaces."
+      ],
+      "affected_doc_hints": [
+        "layout_blocker_target_known_from_notes"
+      ],
+      "heading_hints": [
+        "Candidate fixes to carry forward"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L2482"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0923"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "canon_label": "Candidate fixes to carry forward",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "Define which commands require:"
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [
+        "Candidate fixes to carry forward"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L2483"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0924"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "canon_label": "Candidate fixes to carry forward",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "current projection"
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [
+        "Candidate fixes to carry forward"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L2484"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0925"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "canon_label": "Candidate fixes to carry forward",
+      "obligation_type": "stale_retirement",
+      "exact_tokens": [
+        "or are safe from stale views because they operate on durable records only"
+      ],
+      "affected_doc_hints": [
+        "needs_doc_discovery_in_canonical_obligations_builder"
+      ],
+      "heading_hints": [
+        "Candidate fixes to carry forward"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L2486"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0926"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "canon_label": "Candidate fixes to carry forward",
+      "obligation_type": "stale_retirement",
+      "exact_tokens": [
+        "Define explicit record-backed fallback behavior when projections are stale/degraded/unavailable."
+      ],
+      "affected_doc_hints": [
+        "needs_doc_discovery_in_canonical_obligations_builder"
+      ],
+      "heading_hints": [
+        "Candidate fixes to carry forward"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L2486-L2487"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0927"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "canon_label": "refreshing",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "`refreshing` should continue showing the last committed projection rather than blanking the page."
+      ],
+      "affected_doc_hints": [
+        "layout_blocker_target_known_from_notes"
+      ],
+      "heading_hints": [
+        "Do-not-forget details"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L2487-L2490"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0928"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "canon_label": "Do-not-forget details",
+      "obligation_type": "stale_retirement",
+      "exact_tokens": [
+        "stale/degraded trust must be visible without making the UI feel broken or unusable."
+      ],
+      "affected_doc_hints": [
+        "needs_doc_discovery_in_canonical_obligations_builder"
+      ],
+      "heading_hints": [
+        "Do-not-forget details"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L2487-L2491"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0929"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "canon_label": "Do-not-forget details",
+      "obligation_type": "stale_retirement",
+      "exact_tokens": [
+        "the system should never quietly present stale operational truth as if it were live truth."
+      ],
+      "affected_doc_hints": [
+        "needs_doc_discovery_in_canonical_obligations_builder"
+      ],
+      "heading_hints": [
+        "Do-not-forget details"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L2491-L2492"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0930"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "canon_label": "Plans/Orchestrator_Page.md",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "`Plans/Orchestrator_Page.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md"
+      ],
+      "heading_hints": [
+        "Targeted docs read"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L2492-L2497"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0931"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "canon_label": "Plans/Run_Graph_View.md",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "`Plans/Run_Graph_View.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Run_Graph_View.md"
+      ],
+      "heading_hints": [
+        "Targeted docs read"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L2492-L2498"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0932"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "canon_label": "Plans/storage-plan.md",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "`Plans/storage-plan.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [
+        "Targeted docs read"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L2499"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0933"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "canon_label": "Plans/FinalGUISpec.md",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "`Plans/FinalGUISpec.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [
+        "Targeted docs read"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L2500"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0934"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "canon_label": "Plans/Widget_System.md",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "`Plans/Widget_System.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Widget_System.md"
+      ],
+      "heading_hints": [
+        "Targeted docs read"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L2501"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0935"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "canon_label": "Key findings",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "but there is no clear mode contract for what the whole page is in after a historical run is selected"
+      ],
+      "affected_doc_hints": [
+        "layout_blocker_target_known_from_notes"
+      ],
+      "heading_hints": [
+        "Key findings"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L2511"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0936"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "canon_label": "Key findings",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "but Orchestrator does not yet clearly define how active background runs interact with a currently focused historical run"
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [
+        "Key findings"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L2519"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0937"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "canon_label": "Historical-run mode direction",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "Required behavior:"
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [
+        "Historical-run mode direction"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L2539"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0938"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "canon_label": "Historical-run mode direction",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "the page displays a persistent banner/chip that the user is viewing historical data"
+      ],
+      "affected_doc_hints": [
+        "layout_blocker_target_known_from_notes"
+      ],
+      "heading_hints": [
+        "Historical-run mode direction"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L2541"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0939"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "canon_label": "Historical-run mode direction",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "actions route against the focused run only when they are historical-safe"
+      ],
+      "affected_doc_hints": [
+        "layout_blocker_target_known_from_notes"
+      ],
+      "heading_hints": [
+        "Historical-run mode direction"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L2543"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0940"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "canon_label": "Historical-run mode direction",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "Actions that should generally be disabled in historical mode:"
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [
+        "Historical-run mode direction"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L2551"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0941"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "canon_label": "Historical-run mode direction",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "approval/recovery actions that require current runtime state"
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [
+        "Historical-run mode direction"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L2554"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0942"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "canon_label": "Historical-run mode direction",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "any command that implies mutating the current live run context"
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [
+        "Historical-run mode direction"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L2555"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0943"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "canon_label": "Current-run mode direction",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "This avoids the page feeling unstable."
+      ],
+      "affected_doc_hints": [
+        "layout_blocker_target_known_from_notes"
+      ],
+      "heading_hints": [
+        "Current-run mode direction"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L2568"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0944"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "canon_label": "Background-runs interaction",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "Orchestrator should surface that without silently replacing the focused context"
+      ],
+      "affected_doc_hints": [
+        "layout_blocker_target_known_from_notes"
+      ],
+      "heading_hints": [
+        "Background-runs interaction"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L2576"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0945"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "canon_label": "Persistence direction",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "Likely missing project-state record:"
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [
+        "Persistence direction"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L2582"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0946"
+      ],
+      "source_shard_ids": [
+        "shard-0013"
+      ],
+      "canon_label": "Persistence direction",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "per-tab view state refs"
+      ],
+      "affected_doc_hints": [
+        "layout_blocker_target_known_from_notes"
+      ],
+      "heading_hints": [
+        "Persistence direction"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L2589"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0947"
+      ],
+      "source_shard_ids": [
+        "shard-0014"
+      ],
+      "canon_label": "History",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "`History` selection changes the whole page's focused run"
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L2601"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0948"
+      ],
+      "source_shard_ids": [
+        "shard-0014"
+      ],
+      "canon_label": "Progress",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "`Progress` in historical mode must stop pretending to be a live dashboard and instead become a historical summary for that run, or show a reduced/locked state with a switch-back-to-live CTA"
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L2603"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0949"
+      ],
+      "source_shard_ids": [
+        "shard-0014"
+      ],
+      "canon_label": "otherwise each tab can drift into a different run context and the page becomes incoherent",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "otherwise each tab can drift into a different run context and the page becomes incoherent"
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L2605"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0950"
+      ],
+      "source_shard_ids": [
+        "shard-0014"
+      ],
+      "canon_label": "Progress",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "Current `Progress` tab language is heavily live-run oriented."
+      ],
+      "affected_doc_hints": [
+        "layout_blocker_target_known_from_notes"
+      ],
+      "heading_hints": [
+        "Progress-tab implication"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L2608"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0951"
+      ],
+      "source_shard_ids": [
+        "shard-0014"
+      ],
+      "canon_label": "Progress",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "If Orchestrator shares one focused run across all tabs, then `Progress` needs an explicit historical behavior."
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [
+        "Progress-tab implication"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L2609"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0952"
+      ],
+      "source_shard_ids": [
+        "shard-0014"
+      ],
+      "canon_label": "Progress",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "in historical mode, `Progress` becomes a historical run summary surface"
+      ],
+      "affected_doc_hints": [
+        "layout_blocker_target_known_from_notes"
+      ],
+      "heading_hints": [
+        "Progress-tab implication"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L2610-L2611"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0953"
+      ],
+      "source_shard_ids": [
+        "shard-0014"
+      ],
+      "canon_label": "Progress-tab implication",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "This needs a sharper contract later."
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [
+        "Progress-tab implication"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L2615"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0954"
+      ],
+      "source_shard_ids": [
+        "shard-0014"
+      ],
+      "canon_label": "Progress",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "`Progress` is described as a live dashboard, but the shared run-focus model implies it may also need to represent historical runs coherently."
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [
+        "Contradictions / gaps surfaced"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L2621"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0955"
+      ],
+      "source_shard_ids": [
+        "shard-0014"
+      ],
+      "canon_label": "active_run_id",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "Add explicit `active_run_id` vs `focused_run_id` semantics."
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [
+        "Candidate fixes to carry forward"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L2625"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0956"
+      ],
+      "source_shard_ids": [
+        "shard-0014"
+      ],
+      "canon_label": "Historical Run Mode",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "Add a first-class `Historical Run Mode` UI contract for Orchestrator."
+      ],
+      "affected_doc_hints": [
+        "layout_blocker_target_known_from_notes"
+      ],
+      "heading_hints": [
+        "Candidate fixes to carry forward"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L2626"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0957"
+      ],
+      "source_shard_ids": [
+        "shard-0014"
+      ],
+      "canon_label": "orchestrator.project_state.{project_id}",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "Add `orchestrator.project_state.{project_id}` with focused run and per-tab state."
+      ],
+      "affected_doc_hints": [
+        "layout_blocker_target_known_from_notes"
+      ],
+      "heading_hints": [
+        "Candidate fixes to carry forward"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L2627"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0958"
+      ],
+      "source_shard_ids": [
+        "shard-0014"
+      ],
+      "canon_label": "Candidate fixes to carry forward",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "Define which commands are:"
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [
+        "Candidate fixes to carry forward"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L2628"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0959"
+      ],
+      "source_shard_ids": [
+        "shard-0014"
+      ],
+      "canon_label": "Progress",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "Define how `Progress` behaves when the focused run is historical."
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [
+        "Candidate fixes to carry forward"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L2632"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0960"
+      ],
+      "source_shard_ids": [
+        "shard-0014"
+      ],
+      "canon_label": "Do-not-forget details",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "The page must not auto-switch focus away from a historical run just because live activity appears."
+      ],
+      "affected_doc_hints": [
+        "layout_blocker_target_known_from_notes"
+      ],
+      "heading_hints": [
+        "Do-not-forget details"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L2635"
+      ],
+      "notes": []
+    }
+  ],
+  "represented_seed_ids": [
+    "seed-0901",
+    "seed-0902",
+    "seed-0903",
+    "seed-0904",
+    "seed-0905",
+    "seed-0906",
+    "seed-0907",
+    "seed-0908",
+    "seed-0909",
+    "seed-0910",
+    "seed-0911",
+    "seed-0912",
+    "seed-0913",
+    "seed-0914",
+    "seed-0915",
+    "seed-0916",
+    "seed-0917",
+    "seed-0918",
+    "seed-0919",
+    "seed-0920",
+    "seed-0921",
+    "seed-0922",
+    "seed-0923",
+    "seed-0924",
+    "seed-0925",
+    "seed-0926",
+    "seed-0927",
+    "seed-0928",
+    "seed-0929",
+    "seed-0930",
+    "seed-0931",
+    "seed-0932",
+    "seed-0933",
+    "seed-0934",
+    "seed-0935",
+    "seed-0936",
+    "seed-0937",
+    "seed-0938",
+    "seed-0939",
+    "seed-0940",
+    "seed-0941",
+    "seed-0942",
+    "seed-0943",
+    "seed-0944",
+    "seed-0945",
+    "seed-0946",
+    "seed-0947",
+    "seed-0948",
+    "seed-0949",
+    "seed-0950",
+    "seed-0951",
+    "seed-0952",
+    "seed-0953",
+    "seed-0954",
+    "seed-0955",
+    "seed-0956",
+    "seed-0957",
+    "seed-0958",
+    "seed-0959",
+    "seed-0960"
+  ],
+  "represented_source_shard_ids": [
+    "shard-0013",
+    "shard-0014"
+  ],
+  "deferred_seed_ids": [],
+  "noise_seed_ids": [],
+  "affected_doc_discovery_notes": []
+}

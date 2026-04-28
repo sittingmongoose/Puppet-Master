@@ -1,0 +1,1539 @@
+{
+  "schema_id": "pm.canonical_obligations_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-010",
+  "seed_groups": [
+    "seedgrp-037",
+    "seedgrp-038",
+    "seedgrp-039",
+    "seedgrp-040"
+  ],
+  "obligation_candidates": [
+    {
+      "source_seed_ids": [
+        "seed-0541"
+      ],
+      "source_shard_ids": [
+        "shard-0008"
+      ],
+      "canon_label": "Runtime / Storage / Contract Impacts",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "**Schema-level contradictions are active, not hypothetical.**"
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [
+        "Runtime / Storage / Contract Impacts"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L1483"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0542"
+      ],
+      "source_shard_ids": [
+        "shard-0008"
+      ],
+      "canon_label": "Runtime / Storage / Contract Impacts",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "Base provider envelope/spec tables omit node/attempt/safe-point fields that later addenda require."
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [
+        "Runtime / Storage / Contract Impacts"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L1485"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0543"
+      ],
+      "source_shard_ids": [
+        "shard-0008"
+      ],
+      "canon_label": "reason_code",
+      "obligation_type": "stale_retirement",
+      "exact_tokens": [
+        "**Blocked-state normalization is incomplete.** GPT-5.2 repeatedly surfaced legacy `reason_code` / `recovery_options[]` drift against canonical `blocked_reason_code` / `allowed_action_ids[]` rules."
+      ],
+      "affected_doc_hints": [
+        "needs_doc_discovery_in_canonical_obligations_builder"
+      ],
+      "heading_hints": [
+        "Runtime / Storage / Contract Impacts"
+      ],
+      "stale_residue_to_retire": [
+        "reason_code",
+        "recovery_options[]",
+        "blocked_reason_code",
+        "allowed_action_ids[]"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L1487"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0544"
+      ],
+      "source_shard_ids": [
+        "shard-0008"
+      ],
+      "canon_label": "Runtime / Storage / Contract Impacts",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "**Safe-point policy is present but not fully modeled.** Safe-point, restore-point, rollback, and contamination are all referenced, but not unified into one canonical field/event/object family."
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [
+        "Runtime / Storage / Contract Impacts"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L1488"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0545"
+      ],
+      "source_shard_ids": [
+        "shard-0008"
+      ],
+      "canon_label": "Runtime / Storage / Contract Impacts",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "**Package/seam/work-package remain schema ghosts.** The runtime increasingly assumes them conceptually, but core schemas, receipts, and event families still lack the objects and IDs."
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [
+        "Runtime / Storage / Contract Impacts"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L1490"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0546"
+      ],
+      "source_shard_ids": [
+        "shard-0008"
+      ],
+      "canon_label": "requested_account",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "**Multi-account fallback is still not a first-class contract.** GPT-5.2 found implicit multi-account surfaces and widgets, but no canonical `requested_account` / `effective_account` runtime shape."
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [
+        "Settings / Provider / Persona / Account Impacts"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L1495"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0547"
+      ],
+      "source_shard_ids": [
+        "shard-0008"
+      ],
+      "canon_label": "Settings / Provider / Persona / Account Impacts",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "**Provider/persona contracts are closer to the target than account identity.** The existing requested/effective Persona/model rules are a good base, but they need extension rather than a parallel account-only system."
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [
+        "Settings / Provider / Persona / Account Impacts"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L1496"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0548"
+      ],
+      "source_shard_ids": [
+        "shard-0008"
+      ],
+      "canon_label": "Settings / Provider / Persona / Account Impacts",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "**Per-project vs global settings remain mixed.** Several runtime-affecting settings are still assumed global or single-project where the emerging model needs project/package/seam/node layers."
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [
+        "Settings / Provider / Persona / Account Impacts"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L1497"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0549"
+      ],
+      "source_shard_ids": [
+        "shard-0008"
+      ],
+      "canon_label": "Settings / Provider / Persona / Account Impacts",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "**Docker auth is the clearest requested/effective example.** It should likely be generalized into the shared execution identity pattern instead of remaining a domain-specific one-off."
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [
+        "Settings / Provider / Persona / Account Impacts"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L1498"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0550"
+      ],
+      "source_shard_ids": [
+        "shard-0008"
+      ],
+      "canon_label": "Worktree / SCM / Parallelism Impacts",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "**Package-based lane pools are the missing parallelism contract.** Many docs already discuss worktree isolation, per-run branches, or per-subtask worktrees, but GPT-5.2 found no stable lane-pool model that unifies them."
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [
+        "Worktree / SCM / Parallelism Impacts"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L1502"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0551"
+      ],
+      "source_shard_ids": [
+        "shard-0008"
+      ],
+      "canon_label": "Worktree / SCM / Parallelism Impacts",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "**PM-owned SCM state is not fully visible.** Managed template repos, active git operations, live-run artifact roots, and worktree recovery state need stronger Orchestrator/Source Control registration."
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [
+        "Worktree / SCM / Parallelism Impacts"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L1502-L1504"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0552"
+      ],
+      "source_shard_ids": [
+        "shard-0008"
+      ],
+      "canon_label": "Cleanup Priorities",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "Reconcile graph ordering rules, dependency representations, and blocked payload field names."
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [
+        "Cleanup Priorities"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L1511"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0553"
+      ],
+      "source_shard_ids": [
+        "shard-0008"
+      ],
+      "canon_label": "Cleanup Priorities",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "Add package/seam/lane/worktree/account identity fields to runtime/event/envelope/schema families."
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [
+        "Cleanup Priorities"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L1512"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0554"
+      ],
+      "source_shard_ids": [
+        "shard-0008"
+      ],
+      "canon_label": "Cleanup Priorities",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "Define one execution identity snapshot that covers account as well as persona/model/platform."
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [
+        "Cleanup Priorities"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L1513"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0555"
+      ],
+      "source_shard_ids": [
+        "shard-0008"
+      ],
+      "canon_label": "Cleanup Priorities",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "Define one attention-routing model for blocked work, optional HITL, and side-effect approvals."
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [
+        "Cleanup Priorities"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L1521"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0556"
+      ],
+      "source_shard_ids": [
+        "shard-0008"
+      ],
+      "canon_label": "Cleanup Priorities",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "GPT-5.2 repeatedly found split-brain specs where addenda carry the correct modern model but anchor tables/body text still describe older rules."
+      ],
+      "affected_doc_hints": [
+        "layout_blocker_target_known_from_notes"
+      ],
+      "heading_hints": [
+        "Cleanup Priorities"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L1524"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0557"
+      ],
+      "source_shard_ids": [
+        "shard-0008"
+      ],
+      "canon_label": "Contradictions To Resolve",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "2. **Automation-first vs interactive defaults.** HTE-by-default, visible-first local runs, and mandatory review flows contradict the stated automation-first direction."
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [
+        "Contradictions To Resolve"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L1529"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0558"
+      ],
+      "source_shard_ids": [
+        "shard-0008"
+      ],
+      "canon_label": "Contradictions To Resolve",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "3. **Single Overseer vs package + seam overseers.** Existing runtime docs still largely model one Overseer while the emerging design needs dual governance layers."
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [
+        "Contradictions To Resolve"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L1529-L1530"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0559"
+      ],
+      "source_shard_ids": [
+        "shard-0008"
+      ],
+      "canon_label": "Contradictions To Resolve",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "4. **Tier identifiers vs node/package/seam identity.** Many UI, storage, and envelope contracts still key execution to tier concepts where package/node/seam IDs are now needed."
+      ],
+      "affected_doc_hints": [
+        "layout_blocker_target_known_from_notes"
+      ],
+      "heading_hints": [
+        "Contradictions To Resolve"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L1529-L1531"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0560"
+      ],
+      "source_shard_ids": [
+        "shard-0008"
+      ],
+      "canon_label": "Suggested Research Follow-Ups",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "1. **Lock the package/seam/lane object model.** Define canonical IDs, lifecycles, and schema placement for work packages, seams, lanes, promotions, reviews, and resolution threads."
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [
+        "Suggested Research Follow-Ups"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L1537"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0561"
+      ],
+      "source_shard_ids": [
+        "shard-0008"
+      ],
+      "canon_label": "Suggested Research Follow-Ups",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "2. **Extend the execution identity contract.** Add requested/effective account, overseer role, worktree/lane, and fallback reason fields to the canonical runtime snapshot."
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [
+        "Suggested Research Follow-Ups"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L1538"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0562"
+      ],
+      "source_shard_ids": [
+        "shard-0008"
+      ],
+      "canon_label": "Suggested Research Follow-Ups",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "4. **Unify attention routing.** Define how Dashboard, Orchestrator, chat-thread, and inline cards consume the same blocked/HITL/runtime event families."
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [
+        "Suggested Research Follow-Ups"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L1540"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0563"
+      ],
+      "source_shard_ids": [
+        "shard-0008"
+      ],
+      "canon_label": "regular",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "5. **Reconcile automation-first with local execution UX.** Decide how `regular`, `visual_mode`, manual confirmations, and optional HITL boundaries map into one coherent mode policy."
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [
+        "Suggested Research Follow-Ups"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L1541"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0564"
+      ],
+      "source_shard_ids": [
+        "shard-0008"
+      ],
+      "canon_label": "Suggested Research Follow-Ups",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "6. **Upgrade graph/evidence schemas.** Add work-package/seam/promotion/account/lane identity to the schema bundle and align acceptance/coverage/evidence linkage."
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [
+        "Suggested Research Follow-Ups"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L1542"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0565"
+      ],
+      "source_shard_ids": [
+        "shard-0008"
+      ],
+      "canon_label": "Suggested Research Follow-Ups",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "7. **Consolidate addenda into anchor sections.** Prioritize runtime core, graph schemas, Run Graph view, newtools/FileSafe/worktree docs, and policy/terminology docs."
+      ],
+      "affected_doc_hints": [
+        "layout_blocker_target_known_from_notes"
+      ],
+      "heading_hints": [
+        "Suggested Research Follow-Ups"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L1543"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0566"
+      ],
+      "source_shard_ids": [
+        "shard-0008"
+      ],
+      "canon_label": "Plans/**",
+      "obligation_type": "stale_retirement",
+      "exact_tokens": [
+        "Model-wave synthesis from GPT-5.4 fleet sweep across `Plans/**`. This pass surfaced the strongest contradiction map so far: not just stale terminology, but multiple places where old tier-era contracts and newer node/safe-point/runtime addenda are simultaneously marked canonical."
+      ],
+      "affected_doc_hints": [
+        "needs_doc_discovery_in_canonical_obligations_builder"
+      ],
+      "heading_hints": [
+        "GPT-5.4 Sweep Findings"
+      ],
+      "stale_residue_to_retire": [
+        "Plans/**"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L1547"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0567"
+      ],
+      "source_shard_ids": [
+        "shard-0008"
+      ],
+      "canon_label": "Plans/Orchestrator_Page.md",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "**`Plans/Orchestrator_Page.md` + `Plans/Executor_Protocol.md` + `Plans/Contracts_V0.md`**"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "heading_hints": [
+        "Highest-Impact Docs"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L1547-L1551"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0568"
+      ],
+      "source_shard_ids": [
+        "shard-0008"
+      ],
+      "canon_label": "AttemptJournal",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "**What old assumption is present:** Tiers are still first-class UI and contract nouns; HITL still has tier-boundary ancestry; `AttemptJournal`/handoff payloads remain subtask/iteration-shaped; one Overseer still owns orchestration."
+      ],
+      "affected_doc_hints": [
+        "layout_blocker_target_known_from_notes"
+      ],
+      "heading_hints": [
+        "Highest-Impact Docs"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L1553"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0569"
+      ],
+      "source_shard_ids": [
+        "shard-0008"
+      ],
+      "canon_label": "Highest-Impact Docs",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "**What likely new model pressure is:** Need explicit node/package/seam/lane/promotion identity, package overseer + seam overseer authority, requested/effective execution identity including account, and package/lane-aware blocked/recovery semantics."
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [
+        "Highest-Impact Docs"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L1554"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0570"
+      ],
+      "source_shard_ids": [
+        "shard-0008"
+      ],
+      "canon_label": "Plans/storage-plan.md",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "**`Plans/storage-plan.md` + `Plans/usage-feature.md` + `Plans/plan_graph.schema.json` + `Plans/project_plan_node.schema.json`**"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "heading_hints": [
+        "Highest-Impact Docs"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L1556"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0571"
+      ],
+      "source_shard_ids": [
+        "shard-0008"
+      ],
+      "canon_label": "Highest-Impact Docs",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "**Why impacted:** These define the canonical event/storage/schema backbone and are still consumed by many downstream docs."
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [
+        "Highest-Impact Docs"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L1557"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0572"
+      ],
+      "source_shard_ids": [
+        "shard-0008"
+      ],
+      "canon_label": "Highest-Impact Docs",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "**What likely new model pressure is:** Need attempt-scoped runtime state, package/seam/lane/promotion fields, blocked lineage, safe-point/restore linkage, and separation between plan structure and mutable runtime projections."
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [
+        "Highest-Impact Docs"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L1559"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0573"
+      ],
+      "source_shard_ids": [
+        "shard-0008"
+      ],
+      "canon_label": "Plans/FinalGUISpec.md",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "**`Plans/FinalGUISpec.md` + `Plans/Run_Graph_View.md` + `Plans/Widget_System.md` + `Plans/UI_Command_Catalog.md`**"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Widget_System.md",
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "heading_hints": [
+        "Highest-Impact Docs"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L1561"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0574"
+      ],
+      "source_shard_ids": [
+        "shard-0008"
+      ],
+      "canon_label": "Highest-Impact Docs",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "**What old assumption is present:** Tiers tab, phase/task/subtask trees, graph-local retry/approve/deny actions, completed-work prose by phase/task, single-current-task widgets, restore/checkpoint wording."
+      ],
+      "affected_doc_hints": [
+        "layout_blocker_target_known_from_notes"
+      ],
+      "heading_hints": [
+        "Highest-Impact Docs"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L1563"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0575"
+      ],
+      "source_shard_ids": [
+        "shard-0008"
+      ],
+      "canon_label": "Highest-Impact Docs",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "**What likely new model pressure is:** Need package/seam/lane/promotion/resolution-thread surfaces, runtime action families keyed by blocked classification, requested/effective identity including account, and separation of safe points from restore points."
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [
+        "Highest-Impact Docs"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L1564"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0576"
+      ],
+      "source_shard_ids": [
+        "shard-0008"
+      ],
+      "canon_label": "Plans/WorktreeGitImprovement.md",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "**`Plans/WorktreeGitImprovement.md` + `Plans/GitHub_Integration.md` + `Plans/Multi-Account.md`**"
+      ],
+      "affected_doc_hints": [
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/Multi-Account.md"
+      ],
+      "heading_hints": [
+        "Highest-Impact Docs"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L1566"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0577"
+      ],
+      "source_shard_ids": [
+        "shard-0008"
+      ],
+      "canon_label": "run/tier/subtask",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "**What old assumption is present:** Worktree ownership is `run/tier/subtask`, branch-per-run or subtask-per-worktree flows, GitHub/project flows are wizard-centric, account switching is still mostly run/iteration-scoped."
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [
+        "Highest-Impact Docs"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L1568"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0578"
+      ],
+      "source_shard_ids": [
+        "shard-0008"
+      ],
+      "canon_label": "Highest-Impact Docs",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "**What likely new model pressure is:** Need package-based lane pools, worktree visibility shared between Source Control and Orchestrator, effective-account recording per hosted side effect, and package/seam-aware promotion boundaries."
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [
+        "Highest-Impact Docs"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L1569"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0579"
+      ],
+      "source_shard_ids": [
+        "shard-0008"
+      ],
+      "canon_label": "Plans/human-in-the-loop.md",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "**`Plans/human-in-the-loop.md` + `Plans/Permissions_System.md` + `Plans/Project_Output_Artifacts.md`**"
+      ],
+      "affected_doc_hints": [
+        "Plans/human-in-the-loop.md",
+        "Plans/Permissions_System.md",
+        "Plans/Project_Output_Artifacts.md"
+      ],
+      "heading_hints": [
+        "Highest-Impact Docs"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L1571"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0580"
+      ],
+      "source_shard_ids": [
+        "shard-0008"
+      ],
+      "canon_label": "Highest-Impact Docs",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "**Why impacted:** These define approvals, blocked states, recovery, and artifact pathing."
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [
+        "Highest-Impact Docs"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L1572"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0581"
+      ],
+      "source_shard_ids": [
+        "shard-0008"
+      ],
+      "canon_label": "Highest-Impact Docs",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "**What likely new model pressure is:** Need node/package/seam/lane-bound optional HITL, canonical blocked episode actions, package/lane artifact pathing, and package/seam-aware recovery/promotion semantics."
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [
+        "Highest-Impact Docs"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L1574"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0582"
+      ],
+      "source_shard_ids": [
+        "shard-0008"
+      ],
+      "canon_label": "Tiers",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "**Tiers are still productized even where node graph is supposed to be canonical.** GPT-5.4 repeatedly found `Tiers` as a primary tab, navigation target, widget namespace, and telemetry dimension."
+      ],
+      "affected_doc_hints": [
+        "layout_blocker_target_known_from_notes"
+      ],
+      "heading_hints": [
+        "GUI / UX Impacts"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L1578"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0583"
+      ],
+      "source_shard_ids": [
+        "shard-0008"
+      ],
+      "canon_label": "GUI / UX Impacts",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "**Attention flow is fragmented across surfaces and vocabularies.** Some docs use Dashboard CtAs and blocked cards, others still use modal/toast approvals, graph-local dialogs, or inline chat actions. Resolution-thread ownership is largely missing."
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [
+        "GUI / UX Impacts"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L1580"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0584"
+      ],
+      "source_shard_ids": [
+        "shard-0008"
+      ],
+      "canon_label": "GUI / UX Impacts",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "**Requested vs effective runtime display remains incomplete.** Persona/platform/model are sometimes surfaced, but effective account, fallback reason, lane/worktree identity, package/seam ownership, and overseer role are generally absent."
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [
+        "GUI / UX Impacts"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L1580-L1582"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0585"
+      ],
+      "source_shard_ids": [
+        "shard-0008"
+      ],
+      "canon_label": "GUI / UX Impacts",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "**Restore language is still dangerously overloaded.** Several docs still use rollback/checkpoint/revert wording where newer addenda require safe-point-aware retry and explicit \u201cstart fresh attempt\u201d semantics."
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [
+        "GUI / UX Impacts"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L1580-L1584"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0586"
+      ],
+      "source_shard_ids": [
+        "shard-0008"
+      ],
+      "canon_label": "Executor_Protocol",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "`Executor_Protocol` addenda require scored ready-set scheduling with wake reasons, lane/capacity awareness, and blocked constraints."
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [
+        "Runtime / Storage / Contract Impacts"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L1592"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0587"
+      ],
+      "source_shard_ids": [
+        "shard-0008"
+      ],
+      "canon_label": "Retry/Replan/Reopen/Approve/Deny",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "graph-local `Retry/Replan/Reopen/Approve/Deny` vs canonical `cmd.runtime.*` action families"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [
+        "Runtime / Storage / Contract Impacts"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L1597"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0588"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "canon_label": "Settings / Provider / Persona / Account Impacts",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "**Multi-account is surfaced in UX before it is modeled canonically in runtime records.** GPT-5.4 found account widgets and auth panels, but almost no equivalent requested/effective account fields in runtime/storage/schema contracts."
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [
+        "Settings / Provider / Persona / Account Impacts"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L1611"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0589"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "canon_label": "node_id",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "**Provider/persona docs still encode old orchestration ownership.** Prompt, persona, model, and provider docs still talk in phase/task/subtask/iteration terms and singular Overseer assumptions, even where runtime records already include `node_id` and `attempt_id`."
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [
+        "Settings / Provider / Persona / Account Impacts"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L1613"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0590"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "canon_label": "Settings / Provider / Persona / Account Impacts",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "**Fallback behavior is contradictory in core docs.**"
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [
+        "Settings / Provider / Persona / Account Impacts"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L1615"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0591"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "canon_label": "Settings / Provider / Persona / Account Impacts",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "**Settings scopes are still too coarse.** Global/project toggles are common, but package/seam/lane/run/account-aware settings or policy scopes are mostly absent."
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [
+        "Settings / Provider / Persona / Account Impacts"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L1620"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0592"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "canon_label": "Worktree / SCM / Parallelism Impacts",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "**Package-based lane pools are still missing as a canonical concept.** GPT-5.4 found subtask/tier worktrees, branch-per-run flows, and direct merge/PR assumptions across SCM docs, but no stable lane-pool model."
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [
+        "Worktree / SCM / Parallelism Impacts"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L1624"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0593"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "canon_label": "Worktree / SCM / Parallelism Impacts",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "**Worktree visibility is only partially wired between Source Control and Orchestrator.** Several docs acknowledge shared visibility, yet status models still stop at repo/worktree/branch/tier rather than package/lane ownership, contamination, restore eligibility, or promotion posture."
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [
+        "Worktree / SCM / Parallelism Impacts"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L1624-L1626"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0594"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "canon_label": "Worktree / SCM / Parallelism Impacts",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "**Contamination policy is still a vocabulary gap.** Safe-point language exists in newer addenda, but contamination classification, restore-before-reuse, and lane quarantine semantics are mostly absent from the main SCM/worktree contracts."
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [
+        "Worktree / SCM / Parallelism Impacts"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L1635"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0595"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "canon_label": "Plans/Orchestrator_Page.md",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "`Plans/Orchestrator_Page.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md"
+      ],
+      "heading_hints": [
+        "Cleanup Priorities"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L1635-L1640"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0596"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "canon_label": "Plans/Executor_Protocol.md",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "`Plans/Executor_Protocol.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Executor_Protocol.md"
+      ],
+      "heading_hints": [
+        "Cleanup Priorities"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L1641"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0597"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "canon_label": "Plans/Contracts_V0.md",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "`Plans/Contracts_V0.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md"
+      ],
+      "heading_hints": [
+        "Cleanup Priorities"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L1642"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0598"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "canon_label": "Plans/storage-plan.md",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "`Plans/storage-plan.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [
+        "Cleanup Priorities"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L1643"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0599"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "canon_label": "Plans/human-in-the-loop.md",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "`Plans/human-in-the-loop.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/human-in-the-loop.md"
+      ],
+      "heading_hints": [
+        "Cleanup Priorities"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L1644"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0600"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "canon_label": "Plans/plan_graph.schema.json",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "`Plans/plan_graph.schema.json` / `Plans/project_plan_node.schema.json`"
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [
+        "Cleanup Priorities"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L1645"
+      ],
+      "notes": []
+    }
+  ],
+  "represented_seed_ids": [
+    "seed-0541",
+    "seed-0542",
+    "seed-0543",
+    "seed-0544",
+    "seed-0545",
+    "seed-0546",
+    "seed-0547",
+    "seed-0548",
+    "seed-0549",
+    "seed-0550",
+    "seed-0551",
+    "seed-0552",
+    "seed-0553",
+    "seed-0554",
+    "seed-0555",
+    "seed-0556",
+    "seed-0557",
+    "seed-0558",
+    "seed-0559",
+    "seed-0560",
+    "seed-0561",
+    "seed-0562",
+    "seed-0563",
+    "seed-0564",
+    "seed-0565",
+    "seed-0566",
+    "seed-0567",
+    "seed-0568",
+    "seed-0569",
+    "seed-0570",
+    "seed-0571",
+    "seed-0572",
+    "seed-0573",
+    "seed-0574",
+    "seed-0575",
+    "seed-0576",
+    "seed-0577",
+    "seed-0578",
+    "seed-0579",
+    "seed-0580",
+    "seed-0581",
+    "seed-0582",
+    "seed-0583",
+    "seed-0584",
+    "seed-0585",
+    "seed-0586",
+    "seed-0587",
+    "seed-0588",
+    "seed-0589",
+    "seed-0590",
+    "seed-0591",
+    "seed-0592",
+    "seed-0593",
+    "seed-0594",
+    "seed-0595",
+    "seed-0596",
+    "seed-0597",
+    "seed-0598",
+    "seed-0599",
+    "seed-0600"
+  ],
+  "represented_source_shard_ids": [
+    "shard-0008",
+    "shard-0009"
+  ],
+  "deferred_seed_ids": [],
+  "noise_seed_ids": [],
+  "affected_doc_discovery_notes": []
+}

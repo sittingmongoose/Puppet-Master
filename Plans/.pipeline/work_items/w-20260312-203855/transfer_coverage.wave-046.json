@@ -1,0 +1,410 @@
+{
+  "schema_id": "pm.transfer_coverage_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-046",
+  "row_groups": [
+    "rowgrp-0181",
+    "rowgrp-0182",
+    "rowgrp-0183",
+    "rowgrp-0184"
+  ],
+  "coverage_rows": [
+    {
+      "coverage_id": "cov-04556",
+      "source_obligation_ids": [
+        "obl-4283"
+      ],
+      "source_seed_ids": [
+        "seed-6167"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "canon_label": "Plans/*.md",
+      "row_type": "layout_blocker",
+      "path": "Plans/assistant-chat-design.md",
+      "heading_hint": "Do-not-forget details",
+      "status": "present",
+      "exact_items": [
+        "After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/assistant-chat-design.md:65",
+        "Plans/assistant-chat-design.md:199",
+        "Plans/assistant-chat-design.md:225",
+        "Plans/assistant-chat-design.md:287",
+        "Plans/assistant-chat-design.md:14",
+        "Plans/assistant-chat-design.md:55",
+        "Plans/assistant-chat-design.md:1377",
+        "Plans/assistant-chat-design.md:224",
+        "Plans/assistant-chat-design.md:33",
+        "Plans/assistant-chat-design.md:1902",
+        "Plans/assistant-chat-design.md:60"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-05178",
+      "source_obligation_ids": [
+        "obl-4848"
+      ],
+      "source_seed_ids": [
+        "seed-6880"
+      ],
+      "source_shard_ids": [
+        "shard-0089"
+      ],
+      "canon_label": "Plans/assistant-chat-design.md",
+      "row_type": "layout_blocker",
+      "path": "Plans/assistant-chat-design.md",
+      "heading_hint": "## Unified Thread Blocked-State Lifecycle",
+      "status": "present",
+      "exact_items": [
+        "`Plans/assistant-chat-design.md` does contain the exact heading `## Unified Thread Blocked-State Lifecycle`."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/assistant-chat-design.md:14",
+        "Plans/assistant-chat-design.md:2232",
+        "Plans/assistant-chat-design.md:216",
+        "Plans/assistant-chat-design.md:5",
+        "Plans/assistant-chat-design.md:11",
+        "Plans/assistant-chat-design.md:51",
+        "Plans/assistant-chat-design.md:84",
+        "Plans/assistant-chat-design.md:87"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-05248",
+      "source_obligation_ids": [
+        "obl-4903"
+      ],
+      "source_seed_ids": [
+        "seed-6961"
+      ],
+      "source_shard_ids": [
+        "shard-0090"
+      ],
+      "canon_label": "gap-003",
+      "row_type": "owner",
+      "path": "Plans/assistant-chat-design.md",
+      "heading_hint": "Entry",
+      "status": "present",
+      "exact_items": [
+        "Wave 2 targeted the storage/receipt/blocked subset around `gap-003`, `gap-004`, and `gap-005` (`Plans/storage-plan.md`, `Plans/Project_Output_Artifacts.md`, `Plans/Runtime_Artifacts_Panel.md`, `Plans/interview-subagent-integration.md`, `Plans/usage-feature.md`, `Plans/Tools.md`, `Plans/assistant-chat-design.md`) and only reconfirmed the already-recorded missing anchors/fields plus the already-known owner-vs-consumer split for blocked-packet fields."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/assistant-chat-design.md:43",
+        "Plans/assistant-chat-design.md:35",
+        "Plans/assistant-chat-design.md:166",
+        "Plans/assistant-chat-design.md:958",
+        "Plans/assistant-chat-design.md:147",
+        "Plans/assistant-chat-design.md:14",
+        "Plans/assistant-chat-design.md:560",
+        "Plans/assistant-chat-design.md:670",
+        "Plans/assistant-chat-design.md:477",
+        "Plans/assistant-chat-design.md:203",
+        "Plans/assistant-chat-design.md:2099",
+        "Plans/assistant-chat-design.md:1112"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-05038",
+      "source_obligation_ids": [
+        "obl-4715"
+      ],
+      "source_seed_ids": [
+        "seed-6707"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "canon_label": "Plans/assistant-chat-design.md:1775-1784",
+      "row_type": "stale_retirement",
+      "path": "Plans/assistant-chat-design.md",
+      "heading_hint": "Audit Pass 2026-04-16T01:28:16Z",
+      "status": "present",
+      "exact_items": [
+        "`Plans/assistant-chat-design.md:1775-1784` still contains a stale self-verdict:"
+      ],
+      "stale_tokens": [
+        "Plans/assistant-chat-design.md:1775-1784"
+      ],
+      "evidence": [
+        "Plans/assistant-chat-design.md:35"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-05156",
+      "source_obligation_ids": [
+        "obl-4828"
+      ],
+      "source_seed_ids": [
+        "seed-6840"
+      ],
+      "source_shard_ids": [
+        "shard-0089"
+      ],
+      "canon_label": "Plans/Tools.md",
+      "row_type": "stale_retirement",
+      "path": "Plans/assistant-chat-design.md",
+      "heading_hint": "Entry",
+      "status": "missing",
+      "exact_items": [
+        "`Plans/Tools.md` still carries the stale tuple `{ tool_name, invocation_summary, options }`, `Plans/assistant-chat-design.md` still carries `No remaining gaps`, and `Plans/FinalGUISpec.md` still carries the `restore points` contradiction."
+      ],
+      "stale_tokens": [
+        "Plans/Tools.md",
+        "{ tool_name, invocation_summary, options }",
+        "Plans/assistant-chat-design.md",
+        "No remaining gaps",
+        "Plans/FinalGUISpec.md",
+        "restore points"
+      ],
+      "evidence": [
+        "Plans/assistant-chat-design.md:147",
+        "Plans/assistant-chat-design.md:14",
+        "Plans/assistant-chat-design.md:62"
+      ],
+      "required_action": "stale_retirement"
+    },
+    {
+      "coverage_id": "cov-05259",
+      "source_obligation_ids": [
+        "obl-4913"
+      ],
+      "source_seed_ids": [
+        "seed-6998"
+      ],
+      "source_shard_ids": [
+        "shard-0090"
+      ],
+      "canon_label": "Plans/Tools.md",
+      "row_type": "stale_retirement",
+      "path": "Plans/assistant-chat-design.md",
+      "heading_hint": "Entry",
+      "status": "missing",
+      "exact_items": [
+        "`Plans/Tools.md` still carries the stale ask tuple `{ tool_name, invocation_summary, options }`, and `Plans/assistant-chat-design.md` still carries the stale self-verdict `No remaining gaps`."
+      ],
+      "stale_tokens": [
+        "Plans/Tools.md",
+        "{ tool_name, invocation_summary, options }",
+        "Plans/assistant-chat-design.md",
+        "No remaining gaps"
+      ],
+      "evidence": [
+        "Plans/assistant-chat-design.md:147",
+        "Plans/assistant-chat-design.md:14"
+      ],
+      "required_action": "stale_retirement"
+    },
+    {
+      "coverage_id": "cov-00490",
+      "source_obligation_ids": [
+        "obl-0477"
+      ],
+      "source_seed_ids": [
+        "seed-0482"
+      ],
+      "source_shard_ids": [
+        "shard-0007"
+      ],
+      "canon_label": "Plans/storage-plan.md",
+      "row_type": "consumer",
+      "path": "Plans/assistant-memory-subsystem.md",
+      "heading_hint": "Highest-Impact Docs",
+      "status": "partial",
+      "exact_items": [
+        "**`Plans/storage-plan.md` + `Plans/usage-feature.md` + `Plans/assistant-memory-subsystem.md`**"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/assistant-memory-subsystem.md:10",
+        "Plans/assistant-memory-subsystem.md:47"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-02692",
+      "source_obligation_ids": [
+        "obl-2612"
+      ],
+      "source_seed_ids": [
+        "seed-3277",
+        "seed-3468",
+        "seed-3774",
+        "seed-3866",
+        "seed-4119"
+      ],
+      "source_shard_ids": [
+        "shard-0049",
+        "shard-0052",
+        "shard-0055",
+        "shard-0056",
+        "shard-0058"
+      ],
+      "canon_label": "Plans/assistant-memory-subsystem.md",
+      "row_type": "consumer",
+      "path": "Plans/assistant-memory-subsystem.md",
+      "heading_hint": "Targeted docs read",
+      "status": "partial",
+      "exact_items": [
+        "`Plans/assistant-memory-subsystem.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/assistant-memory-subsystem.md:47",
+        "Plans/assistant-memory-subsystem.md:82"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-02720",
+      "source_obligation_ids": [
+        "obl-2639"
+      ],
+      "source_seed_ids": [
+        "seed-3305"
+      ],
+      "source_shard_ids": [
+        "shard-0050"
+      ],
+      "canon_label": "Plans/newtools.md",
+      "row_type": "consumer",
+      "path": "Plans/assistant-memory-subsystem.md",
+      "heading_hint": "",
+      "status": "partial",
+      "exact_items": [
+        "`Plans/newtools.md` and `Plans/assistant-memory-subsystem.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/assistant-memory-subsystem.md:47"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-02851",
+      "source_obligation_ids": [
+        "obl-2770"
+      ],
+      "source_seed_ids": [
+        "seed-3497",
+        "seed-3817",
+        "seed-3911",
+        "seed-4155"
+      ],
+      "source_shard_ids": [
+        "shard-0052",
+        "shard-0056",
+        "shard-0058"
+      ],
+      "canon_label": "Plans/assistant-memory-subsystem.md",
+      "row_type": "consumer",
+      "path": "Plans/assistant-memory-subsystem.md",
+      "heading_hint": "Impacted docs",
+      "status": "partial",
+      "exact_items": [
+        "`Plans/assistant-memory-subsystem.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/assistant-memory-subsystem.md:47"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-02885",
+      "source_obligation_ids": [
+        "obl-2804"
+      ],
+      "source_seed_ids": [
+        "seed-3539",
+        "seed-3853"
+      ],
+      "source_shard_ids": [
+        "shard-0052",
+        "shard-0056"
+      ],
+      "canon_label": "Plans/assistant-memory-subsystem.md",
+      "row_type": "consumer",
+      "path": "Plans/assistant-memory-subsystem.md",
+      "heading_hint": "Do-not-forget details",
+      "status": "partial",
+      "exact_items": [
+        "`Plans/assistant-memory-subsystem.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/assistant-memory-subsystem.md:47",
+        "Plans/assistant-memory-subsystem.md:59"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-03335",
+      "source_obligation_ids": [
+        "obl-3198"
+      ],
+      "source_seed_ids": [
+        "seed-4180"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "canon_label": "Plans/*.md",
+      "row_type": "consumer",
+      "path": "Plans/assistant-memory-subsystem.md",
+      "heading_hint": "Do-not-forget details",
+      "status": "present",
+      "exact_items": [
+        "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/assistant-memory-subsystem.md:3",
+        "Plans/assistant-memory-subsystem.md:250",
+        "Plans/assistant-memory-subsystem.md:277",
+        "Plans/assistant-memory-subsystem.md:23",
+        "Plans/assistant-memory-subsystem.md:17",
+        "Plans/assistant-memory-subsystem.md:59"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-04474",
+      "source_obligation_ids": [
+        "obl-4262"
+      ],
+      "source_seed_ids": [
+        "seed-6087"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "canon_label": "39",
+      "row_type": "consumer",
+      "path": "Plans/assistant-memory-subsystem.md",
+      "heading_hint": "Do-not-forget details",
+      "status": "present",
+      "exact_items": [
+        "Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/assistant-memory-subsystem.md:241",
+        "Plans/assistant-memory-subsystem.md:3",
+        "Plans/assistant-memory-subsystem.md:23",
+        "Plans/assistant-memory-subsystem.md:258",
+        "Plans/assistant-memory-subsystem.md:59"
+      ],
+      "required_action": "none"
+    }
+  ]
+}

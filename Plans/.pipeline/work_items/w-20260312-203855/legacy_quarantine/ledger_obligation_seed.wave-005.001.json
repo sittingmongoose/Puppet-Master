@@ -1,0 +1,1769 @@
+{
+  "schema_id": "pm.ledger_obligation_seed.wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave": 5,
+  "covered_ranges": [
+    "working_ledger.md:L16001-L16400",
+    "working_ledger.md:L16401-L16800",
+    "working_ledger.md:L16801-L17200",
+    "working_ledger.md:L17201-L17600",
+    "working_ledger.md:L17601-L18000",
+    "working_ledger.md:L18001-L18196"
+  ],
+  "seed_items": [
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Crosswalk section numbering and ownership primitives",
+      "exact_items": [
+        "Crosswalk.md needs: corrected section numbering",
+        "removal of stale Tiers and widgetized-Orchestrator wording",
+        "explicit primitive ownership for route_target and OpenSubject"
+      ],
+      "affected_doc_hints": [
+        "Plans/Crosswalk.md"
+      ],
+      "heading_hints": [
+        "## Research Progress - 2026-03-17 - owner-traceability seam: cross-cutting synthesis cleanup"
+      ],
+      "stale_tokens": [
+        "Tiers",
+        "widgetized-Orchestrator"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L16404-L16407"
+      ],
+      "notes": [
+        "Duplicated numbering undermines ContractRef stability and gateable traceability"
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "DRY_Rules.md ContractRef determinism",
+      "exact_items": [
+        "one deterministic ContractRef shape for ContractName",
+        "examples that follow its own rule exactly",
+        "cross-reference cleanup so gate and anchor examples are internally consistent"
+      ],
+      "affected_doc_hints": [
+        "Plans/DRY_Rules.md"
+      ],
+      "heading_hints": [
+        "## Research Progress - 2026-03-17 - owner-traceability seam: cross-cutting synthesis cleanup"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L16408-L16411"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Decision_Log.md rewrite-era governance records",
+      "exact_items": [
+        "explicit rewrite-era decisions entered as durable records",
+        "at minimum the owner-boundary decisions that now affect routing, Orchestrator ontology, blocked identity, runtime identity, and projection-trust vocabulary"
+      ],
+      "affected_doc_hints": [
+        "Plans/Decision_Log.md"
+      ],
+      "heading_hints": [
+        "## Research Progress - 2026-03-17 - owner-traceability seam: cross-cutting synthesis cleanup"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L16412-L16414"
+      ],
+      "notes": [
+        "Fixing Orchestrator_Page or FinalGUISpec first would still leave stale routing at precedence stack top"
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Progression_Gates.md ContractRef syntax violation",
+      "exact_items": [
+        "ContractRef: Plans/Architecture_Invariants.md#INV-002, Plans/Architecture_Invariants.md#INV-010, SchemaID:evidence.schema.json - syntax violation inside canonical gate text"
+      ],
+      "affected_doc_hints": [
+        "Plans/Progression_Gates.md",
+        "Plans/DRY_Rules.md"
+      ],
+      "heading_hints": [
+        "## Research Progress - 2026-03-17 - owner-traceability seam: Progression Gates"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L16431-L16433"
+      ],
+      "notes": [
+        "Bypasses ContractName: taxonomy that DRY_Rules says is canonical"
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Progression_Gates.md duplicate runtime-recovery addendum",
+      "exact_items": [
+        "Runtime Recovery Canonicalization Gate Addendum appears twice with the same body",
+        "multiple addenda append stronger runtime-lineage checks without being integrated into numbered gate canon",
+        "file mixes gate definitions with free-floating reconciliation notes"
+      ],
+      "affected_doc_hints": [
+        "Plans/Progression_Gates.md"
+      ],
+      "heading_hints": [
+        "## Research Progress - 2026-03-17 - owner-traceability seam: Progression Gates"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L16439-L16442"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Progression_Gates.md non-deterministic phrasing",
+      "exact_items": [
+        "Execution contract (recommended)",
+        "targeted for future enforcement"
+      ],
+      "affected_doc_hints": [
+        "Plans/Progression_Gates.md"
+      ],
+      "heading_hints": [
+        "## Research Progress - 2026-03-17 - owner-traceability seam: Progression Gates"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L16443-L16446"
+      ],
+      "notes": [
+        "Weakens deterministic posture expected from owner gate doc"
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Contracts_V0.md missing route_target and OpenSubject contracts",
+      "exact_items": [
+        "route_target - missing named canonical contract",
+        "OpenSubject - missing named canonical contract"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md"
+      ],
+      "heading_hints": [
+        "## Research Progress - 2026-03-17 - owner-contract seam: Contracts_V0 runtime identity, blocked identity, route/open ownership"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L16487-L16489"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "stale_retirement",
+      "canon_label_hint": "Contracts_V0.md stale HITL section",
+      "exact_items": [
+        "section 6. HITLRequest - stale approval model using request_id, tier_id, tier_type, request_kind = tier_boundary_approval, allowed_actions[]",
+        "section 1.1 EventRecord - stale run.tier_started and run.tier_completed among events"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md"
+      ],
+      "heading_hints": [
+        "## Research Progress - 2026-03-17 - owner-contract seam: Contracts_V0 runtime identity, blocked identity, route/open ownership"
+      ],
+      "stale_tokens": [
+        "tier_id",
+        "tier_type",
+        "request_kind",
+        "run.tier_started",
+        "run.tier_completed"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L16491-L16492"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Contracts_V0.md wizard.blocked internal inconsistency",
+      "exact_items": [
+        "earlier addendum requires resume_url",
+        "later reconciliation addendum weakens it to resume_url?"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md"
+      ],
+      "heading_hints": [
+        "## Research Progress - 2026-03-17 - owner-contract seam: Contracts_V0 runtime identity, blocked identity, route/open ownership"
+      ],
+      "stale_tokens": [
+        "resume_url"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L16499-L16502"
+      ],
+      "notes": [
+        "neither form is grounded in a named route_target contract"
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Contracts_V0.md remediation.resolved conflicting enum",
+      "exact_items": [
+        "earlier addendum: resolution = success | failed | ceiling_exceeded",
+        "later reconciliation addendum: fixed | superseded | abandoned | replan_required"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md"
+      ],
+      "heading_hints": [
+        "## Research Progress - 2026-03-17 - owner-contract seam: Contracts_V0 runtime identity, blocked identity, route/open ownership"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L16503-L16506"
+      ],
+      "notes": [
+        "both presented as canonical in different sections"
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "human-in-the-loop.md request-centric vs runtime-native contract conflict",
+      "exact_items": [
+        "opens with canonical request contract: request_id, tier_id, tier_type, request_kind = tier_boundary_approval, ordered allowed_action_ids[]",
+        "later moves to runtime-native model: blocked_reason_code = waiting_approval, blocked_sequence, blocked/runtime records"
+      ],
+      "affected_doc_hints": [
+        "Plans/human-in-the-loop.md"
+      ],
+      "heading_hints": [
+        "## Research Progress - 2026-03-17 - owner-contract seam: human-in-the-loop blocked identity collapse"
+      ],
+      "stale_tokens": [
+        "tier_id",
+        "tier_type",
+        "request_kind"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L16553-L16562"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "stale_retirement",
+      "canon_label_hint": "human-in-the-loop.md stale execution ontology",
+      "exact_items": [
+        "phase/task/subtask toggles",
+        "tier-boundary run-loop wording",
+        "redb persistence text keyed to request_id, tier_id, tier_type, request_kind, allowed_actions"
+      ],
+      "affected_doc_hints": [
+        "Plans/human-in-the-loop.md"
+      ],
+      "heading_hints": [
+        "## Research Progress - 2026-03-17 - owner-contract seam: human-in-the-loop blocked identity collapse"
+      ],
+      "stale_tokens": [
+        "request_id",
+        "tier_id",
+        "tier_type",
+        "request_kind",
+        "allowed_actions"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L16564-L16567"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "human-in-the-loop.md action label terminology drift",
+      "exact_items": [
+        "stale visible labels: Reject, Cancel Run, Skip",
+        "canonical runtime action families: Approve, Decline, Retry from safe point, Start fresh attempt, Resume after prerequisite, Replan, Skip node, Abort run"
+      ],
+      "affected_doc_hints": [
+        "Plans/human-in-the-loop.md"
+      ],
+      "heading_hints": [
+        "## Research Progress - 2026-03-17 - owner-contract seam: human-in-the-loop blocked identity collapse"
+      ],
+      "stale_tokens": [
+        "Reject",
+        "Cancel Run"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L16568-L16570"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "stale_retirement",
+      "canon_label_hint": "storage-plan.md tier-era and request-era pieces",
+      "exact_items": [
+        "event tables keyed to tier_id",
+        "run.tier_started, run.tier_completed",
+        "hitl.approval_requested, hitl.approved, hitl.rejected, hitl.cancelled with request_id, tier_id, tier_type, allowed_actions",
+        "tier_runtime_record",
+        "usage_record keyed by run_id, tier_id, attempt_id?, usage_sequence",
+        "evidence_record keyed by run_id, tier_id, evidence_id"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [
+        "## Research Progress - 2026-03-17 - owner-contract seam: storage-plan mixed runtime eras"
+      ],
+      "stale_tokens": [
+        "tier_id",
+        "tier_runtime_record",
+        "run.tier_started",
+        "run.tier_completed"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L16613-L16619"
+      ],
+      "notes": [
+        "These stale tier-era and request-era pieces contradict newer attempt-native identity"
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "storage-plan.md missing route_target and OpenSubject contract tie",
+      "exact_items": [
+        "no named route_target / OpenSubject contract tie even though subject-first preview identity already exists"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [
+        "## Research Progress - 2026-03-17 - owner-contract seam: storage-plan mixed runtime eras"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L16624-L16625"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "storage-plan.md missing lane_record and worktree_record family",
+      "exact_items": [
+        "no first-class worktree_record / lane_record family even though Orchestrator and Source Control now depend on durable lane/worktree lifecycle"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [
+        "## Research Progress - 2026-03-17 - owner-contract seam: storage-plan mixed runtime eras"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L16626-L16627"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Prompt_Pipeline.md scope vocabulary vs runtime identity field names",
+      "exact_items": [
+        "stale scope vocabulary: Run envelope (tier, mode, selected Persona ID(s), selected model/variant)",
+        "Active mode and tier",
+        "plan_or_tier_default",
+        "Orchestrator tier override",
+        "stage/tier/task/repo context"
+      ],
+      "affected_doc_hints": [
+        "Plans/Prompt_Pipeline.md"
+      ],
+      "heading_hints": [
+        "## Research Progress - 2026-03-17 - owner-contract seam: Prompt Pipeline scope and runtime identity drift"
+      ],
+      "stale_tokens": [
+        "tier",
+        "plan_or_tier_default"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L16675-L16680"
+      ],
+      "notes": [
+        "Field names like requested_persona and effective_persona are correct; scope model is stale"
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Prompt_Pipeline.md missing execution-role and operational-identity disclosure",
+      "exact_items": [
+        "execution_role - missing from effective-resolution record",
+        "operational identity / side-effect target identity - missing"
+      ],
+      "affected_doc_hints": [
+        "Plans/Prompt_Pipeline.md"
+      ],
+      "heading_hints": [
+        "## Research Progress - 2026-03-17 - owner-contract seam: Prompt Pipeline scope and runtime identity drift"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L16682-L16685"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "stale_retirement",
+      "canon_label_hint": "UI_Command_Catalog.md stale HITL command family",
+      "exact_items": [
+        "cmd.graph.approve_hitl and cmd.graph.deny_hitl still exist with request_id"
+      ],
+      "affected_doc_hints": [
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "heading_hints": [
+        "## Research Progress - 2026-03-17 - rewrite-root and GUI-drift seam: rewrite tie-in memo, UI command catalog, Final GUI spec"
+      ],
+      "stale_tokens": [
+        "cmd.graph.approve_hitl",
+        "cmd.graph.deny_hitl"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L16740-L16741"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "UI_Command_Catalog.md layout-vs-navigation command mislabeling",
+      "exact_items": [
+        "cmd.chat.open_thread_usage - say layout/UI state only but clearly target canonical object navigation",
+        "cmd.chat.focus_thread_usage - say layout/UI state only but clearly target canonical object navigation",
+        "cmd.source_control.select_worktree - say layout/UI state only but clearly target canonical object navigation",
+        "cmd.artifacts.show_in_ledger - say layout/UI state only but clearly target canonical object navigation",
+        "cmd.artifacts.show_in_usage - say layout/UI state only but clearly target canonical object navigation",
+        "cmd.orchestrator.open_in_source_control - say layout/UI state only but clearly target canonical object navigation"
+      ],
+      "affected_doc_hints": [
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "heading_hints": [
+        "## Research Progress - 2026-03-17 - rewrite-root and GUI-drift seam: rewrite tie-in memo, UI command catalog, Final GUI spec"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L16742-L16748"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "stale_retirement",
+      "canon_label_hint": "UI_Command_Catalog.md widget command stale wording",
+      "exact_items": [
+        "widget commands still say Orchestrator widget tabs - conflicts with rewrite direction that only Progress remains widget-composed"
+      ],
+      "affected_doc_hints": [
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "heading_hints": [
+        "## Research Progress - 2026-03-17 - rewrite-root and GUI-drift seam: rewrite tie-in memo, UI command catalog, Final GUI spec"
+      ],
+      "stale_tokens": [
+        "Orchestrator widget tabs"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L16749"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "stale_retirement",
+      "canon_label_hint": "FinalGUISpec.md Tiers view and tier-centric language",
+      "exact_items": [
+        "view inventory still lists Tiers as a primary view",
+        "dashboard/current-task language uses current tier / phase-task-subtask progress bars",
+        "section 7.7 Tiers still exists as primary content surface"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [
+        "## Research Progress - 2026-03-17 - rewrite-root and GUI-drift seam: rewrite tie-in memo, UI command catalog, Final GUI spec"
+      ],
+      "stale_tokens": [
+        "Tiers"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L16751-L16754"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "stale_retirement",
+      "canon_label_hint": "FinalGUISpec.md wizard_attention_required resume_url navigation",
+      "exact_items": [
+        "wizard_attention_required still treats resume_url as primary navigation object"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [
+        "## Research Progress - 2026-03-17 - rewrite-root and GUI-drift seam: rewrite tie-in memo, UI command catalog, Final GUI spec"
+      ],
+      "stale_tokens": [
+        "resume_url"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L16753"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "stale_retirement",
+      "canon_label_hint": "FinalGUISpec.md Appendix C widgetization and Orchestrator tabs",
+      "exact_items": [
+        "Appendix C still expands widgetization around Dashboard and references Orchestrator tabs through widget system"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [
+        "## Research Progress - 2026-03-17 - rewrite-root and GUI-drift seam: rewrite tie-in memo, UI command catalog, Final GUI spec"
+      ],
+      "stale_tokens": [
+        "Orchestrator tabs"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L16755"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "stale_retirement",
+      "canon_label_hint": "FinalGUISpec.md Settings tier-oriented language",
+      "exact_items": [
+        "Settings tab inventory still includes Tiers and tier-oriented settings language"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [
+        "## Research Progress - 2026-03-17 - rewrite-root and GUI-drift seam: rewrite tie-in memo, UI command catalog, Final GUI spec"
+      ],
+      "stale_tokens": [
+        "Tiers"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L16756"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "stale_retirement",
+      "canon_label_hint": "Orchestrator_Page.md stale tab/widget structure",
+      "exact_items": [
+        "still defines a six-tab page with `Tiers`",
+        "still says tabs `1, 2, 4, 5, 6` are widget-based",
+        "still makes `Tiers` the second tab and centers `widget.tier_tree`",
+        "still defines Evidence, History, and Ledger as widget tabs rather than native tabs",
+        "still describes Progress widgets in phase/task/subtask terms"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md"
+      ],
+      "heading_hints": [
+        "Research Progress - 2026-03-17 - execution-core and main surface seam",
+        "Key findings"
+      ],
+      "stale_tokens": [
+        "Tiers",
+        "widget.tier_tree",
+        "widget.current_task",
+        "phase/task/subtask"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L16818-L16827"
+      ],
+      "notes": [
+        "same-file supersession case; tabs 1,2,4,5,6 widget model must be replaced, Tiers retired, only Progress kept widget-composed, Evidence/History/Ledger made native tabs"
+      ]
+    },
+    {
+      "seed_type": "stale_retirement",
+      "canon_label_hint": "Orchestrator_Page.md stale worker/persona/HITL fields",
+      "exact_items": [
+        "still carries stale worker identity fields: `requested_persona_id`, `effective_persona_id`, `provider`, `model`",
+        "still treats HITL requests as keyed by `request_id`",
+        "still cites `PuppetMasterEvent::TierChanged` and `PuppetMasterEvent::UserInteractionRequired` as primary live-state inputs"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md"
+      ],
+      "heading_hints": [
+        "Research Progress - 2026-03-17 - execution-core and main surface seam",
+        "Key findings"
+      ],
+      "stale_tokens": [
+        "requested_persona_id",
+        "effective_persona_id",
+        "provider",
+        "model",
+        "request_id",
+        "PuppetMasterEvent::TierChanged"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L16829-L16835"
+      ],
+      "notes": [
+        "retire worker identity fields, replace HITL keying, deprecate legacy event types in favor of blocked/runtime actions"
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Executor_Protocol.md mixed-canon same-file supersession",
+      "exact_items": [
+        "the doc title and role model still say `Overseer Protocol` with `Builder`, `Verifier`, and `Overseer` as the primary execution framing",
+        "the opening sections still teach node completion semantics without the newer `Package Overseer` / `Seam Overseer` governance split",
+        "the canonical execution context replacement for `TierContext` still is not named here as a first-class owner contract"
+      ],
+      "affected_doc_hints": [
+        "Plans/Executor_Protocol.md"
+      ],
+      "heading_hints": [
+        "Research Progress - 2026-03-17 - execution-core and main surface seam",
+        "Key findings"
+      ],
+      "stale_tokens": [
+        "Overseer Protocol",
+        "Builder",
+        "Verifier",
+        "TierContext"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L16814-L16817"
+      ],
+      "notes": [
+        "need explicit owner placement for execution-unit context replacing TierContext, clear relationship between scheduler/execution roles and newer package/seam overseer governance"
+      ]
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Run_Graph_View.md tier-era stale correlation",
+      "exact_items": [
+        "worker activity requires `PuppetMasterEvent::Output` filtered by `tier_id`",
+        "verifier activity is scoped to node `tier_id`",
+        "`View in Usage` still filters by `tier_id`",
+        "base data model still includes: `worker_provider`, `worker_model`, `verifier_provider`, `verifier_model`, `hitl_request_id`",
+        "graph interactions still include: `Open that tier in the Tiers tab`, `View in Tiers`, `Copy tier_id`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Run_Graph_View.md"
+      ],
+      "heading_hints": [
+        "Research Progress - 2026-03-17 - remaining high-risk stale consumers",
+        "Key findings"
+      ],
+      "stale_tokens": [
+        "tier_id",
+        "PuppetMasterEvent::Output",
+        "hitl_request_id",
+        "View in Tiers"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L16885-L16898"
+      ],
+      "notes": [
+        "retire tier-id correlation, replace with node/attempt/runtime identity, elevate blocked/runtime event sources over request-centric HITL"
+      ]
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Widget_System.md stale layout/datasource persistence",
+      "exact_items": [
+        "still defines `Dashboard, Usage, Orchestrator widget tabs`",
+        "still includes `widget.tier_tree` for `Orch/Tiers`",
+        "still persists: `widget_layout:v1:orchestrator:tiers`, `widget_layout:v1:orchestrator:evidence`, `widget_layout:v1:orchestrator:history`, `widget_layout:v1:orchestrator:ledger`",
+        "data sources still rely on `PuppetMasterEvent::TierChanged`, `tier_id`, and phase/task/subtask framing for multiple Orchestrator widgets"
+      ],
+      "affected_doc_hints": [
+        "Plans/Widget_System.md"
+      ],
+      "heading_hints": [
+        "Research Progress - 2026-03-17 - remaining high-risk stale consumers",
+        "Key findings"
+      ],
+      "stale_tokens": [
+        "widget.tier_tree",
+        "widget_layout:v1:orchestrator:tiers",
+        "PuppetMasterEvent::TierChanged"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L16904-L16915"
+      ],
+      "notes": [
+        "narrow Orchestrator hostability to Progress only, remove non-Progress widget layout persistence keys, update datasource language away from TierChanged/tier_id"
+      ]
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "usage-feature.md tier-centric correlation drift",
+      "exact_items": [
+        "`usage.jsonl` and canonical usage discussion still center `tier_id`",
+        "canonical `UsageRecord` still requires `tier_id`",
+        "Run Graph and Orchestrator are still said to aggregate by `tier_id` and `attempt_id?`"
+      ],
+      "affected_doc_hints": [
+        "Plans/usage-feature.md"
+      ],
+      "heading_hints": [
+        "Research Progress - 2026-03-17 - remaining high-risk stale consumers",
+        "Key findings"
+      ],
+      "stale_tokens": [
+        "tier_id",
+        "UsageRecord"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L16917-L16919"
+      ],
+      "notes": [
+        "move usage correlation off tier_id as primary cross-surface key, elevate run/node/attempt identity and usage_event_ref"
+      ]
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "feature-list.md stale feature descriptions",
+      "exact_items": [
+        "still describes Dashboard/orchestrator layout in widget-card and tier terms",
+        "still lists `Orchestrator single-page with 6 tabs` including `Tiers`",
+        "still enumerates stale widgets: `widget.tier_tree`, `widget.progress_bars` as phase/task/subtask bars, `widget.current_task` as active tier",
+        "still describes Usage by `tier/session` and says tier config shows current usage",
+        "still mirrors worktree ownership through `tier_id`"
+      ],
+      "affected_doc_hints": [
+        "Plans/feature-list.md"
+      ],
+      "heading_hints": [
+        "Research Progress - 2026-03-17 - promoted-shell and feature-summary tranche",
+        "Key findings"
+      ],
+      "stale_tokens": [
+        "Tiers",
+        "widget.tier_tree",
+        "widget.current_task",
+        "tier_id"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L16988-L16996"
+      ],
+      "notes": [
+        "mirror doc requiring reconciliation after owner docs fixed; reflects stale upstream ontology"
+      ]
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "newfeatures.md tier-era language in snapshots",
+      "exact_items": [
+        "Dashboard/widget wording still assumes the older dashboard and widget stack",
+        "recovery/orchestrator snapshot language still uses phase/task/subtask ids",
+        "HITL references still point at tier-boundary approval framing",
+        "Git/worktree sections still use `tier_id` as worktree ownership glue"
+      ],
+      "affected_doc_hints": [
+        "Plans/newfeatures.md"
+      ],
+      "heading_hints": [
+        "Research Progress - 2026-03-17 - promoted-shell and feature-summary tranche",
+        "Key findings"
+      ],
+      "stale_tokens": [
+        "tier_id",
+        "phase/task/subtask"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L16998-L17001"
+      ],
+      "notes": [
+        "mirror doc; update after upstream owner reconciliation"
+      ]
+    },
+    {
+      "seed_type": "stale_retirement",
+      "canon_label_hint": "GUI_Rebuild_Requirements_Checklist.md stale pass conditions",
+      "exact_items": [
+        "marks as PASS several things that are only PASS relative to stale upstream docs: Orchestrator single page with 6 tabs including `Tiers`, cross-cutting widget system coverage for old Orchestrator widget tabs",
+        "also lists command families that now need revalidation against the newer runtime recovery and route/open model"
+      ],
+      "affected_doc_hints": [
+        "Plans/GUI_Rebuild_Requirements_Checklist.md"
+      ],
+      "heading_hints": [
+        "Research Progress - 2026-03-17 - promoted-shell and feature-summary tranche",
+        "Key findings"
+      ],
+      "stale_tokens": [
+        "Orchestrator single page with 6 tabs"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L17003-L17006"
+      ],
+      "notes": [
+        "reconciliation follower, not source; false confidence risk from stale upstream PASS conditions"
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Transfer-Fidelity cluster missing Orchestrator UI/Progress/notification behavior",
+      "exact_items": [
+        "Progress-only scope landed, but the named Progress widget catalog and deterministic drill-target mapping from the ledger did not",
+        "Missing the fuller blocked-owner taxonomy, resurfacing/aging rules, concern action policy details, projection fallback ladder, saved-view / sort-default behavior, historical-mode behavior, search scope/switch disclosure, and dense-tab scale rules"
+      ],
+      "affected_doc_hints": [
+        "Plans/Widget_System.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "heading_hints": [
+        "Transfer-Fidelity + Buildability Audit - 2026-04-06",
+        "High-confidence transfer misses"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L17246-L17251"
+      ],
+      "notes": [
+        "FIDELITY-grade miss: named widget catalog and drill-target mapping not transferred; blocked-owner taxonomy and operational details missing"
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Transfer-Fidelity cluster missing storage schemas for project summary/attention/pressure",
+      "exact_items": [
+        "Still missing field schemas for `project_summary.v1`, `project_attention_item.v1`, `account_pressure_episode.v1`, `account_switch_event.v1`, and broader governance/runtime record-envelope families",
+        "Bridge fields exist, but precedence/join semantics and compatibility fallback rules remain under-specified"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [
+        "Transfer-Fidelity + Buildability Audit - 2026-04-06",
+        "High-confidence transfer misses"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L17254-L17256"
+      ],
+      "notes": [
+        "FIDELITY-grade miss: schema layer for registered key families not transferred; missing precedence and fallback rules"
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Transfer-Fidelity cluster missing execution role and identity layer",
+      "exact_items": [
+        "Missing a unified execution-role and operational/account identity layer",
+        "Missing `execution_role` in attempt/runtime packet families and still incomplete around blocked-family minimums and ref-family separation",
+        "`tool.invoked` remains analytics-thin rather than carrying the richer attribution packet worked out in the ledger",
+        "Still login-keyed rather than stably account-keyed",
+        "Still preserves `TierContext`-era live canon rather than fully reflecting `execution_unit_context` direction"
+      ],
+      "affected_doc_hints": [
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Tools.md",
+        "Plans/GitHub_API_Auth_and_Flows.md",
+        "Plans/orchestrator-subagent-integration.md"
+      ],
+      "heading_hints": [
+        "Transfer-Fidelity + Buildability Audit - 2026-04-06",
+        "High-confidence transfer misses"
+      ],
+      "stale_tokens": [
+        "TierContext",
+        "execution_role"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L17260-L17270"
+      ],
+      "notes": [
+        "FIDELITY-grade miss: execution-role field missing from multiple owner packets; account-identity layer incomplete"
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Transfer-Fidelity cluster missing route/open refinement rules",
+      "exact_items": [
+        "Base route/open primitives landed, but missing: selector precedence, reject rules, closed `tab_id` vocabulary, scoped resolver rules, concrete route examples, `resume_url` allowed/prohibited serialization classes",
+        "Missing per-command `command_kind` / normalization metadata and still lacks the canonicalized navigation-family treatment",
+        "`OpenSubject` landed, but runtime-lineage subject families and fuller OpenFile/OpenSubject governance remained partial"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/FileManager.md"
+      ],
+      "heading_hints": [
+        "Transfer-Fidelity + Buildability Audit - 2026-04-06",
+        "High-confidence transfer misses"
+      ],
+      "stale_tokens": [
+        "tab_id",
+        "resume_url"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L17272-L17284"
+      ],
+      "notes": [
+        "FIDELITY-grade miss: refinement layer for route/open primitives; selector precedence, reject rules, and schema extensions missing"
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Transfer-Fidelity cluster missing glossary/help/terminology transfer",
+      "exact_items": [
+        "`Orchestrator rewrite terms` remains effectively empty relative to the ledger's terminology transfer",
+        "Missing help-entry template, related-concept linking, and distinction rules for high-risk term pairs"
+      ],
+      "affected_doc_hints": [
+        "Plans/Glossary.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [
+        "Transfer-Fidelity + Buildability Audit - 2026-04-06",
+        "High-confidence transfer misses"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L17293-L17296"
+      ],
+      "notes": [
+        "FIDELITY-grade miss: help-system structure and entry template never transferred; terminology distinction rules missing"
+      ]
+    },
+    {
+      "seed_type": "stale_retirement",
+      "canon_label_hint": "Same-file supersession: human-in-the-loop mixed-era canon",
+      "exact_items": [
+        "Older request/tier-era canon still coexists with newer blocked-runtime canon"
+      ],
+      "affected_doc_hints": [
+        "Plans/human-in-the-loop.md"
+      ],
+      "heading_hints": [
+        "Transfer-Fidelity + Buildability Audit - 2026-04-06",
+        "Cluster F - Same-file supersession failures"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L17299-L17300"
+      ],
+      "notes": [
+        "primary consumer cleanup doc; collapse same-file mixed canon"
+      ]
+    },
+    {
+      "seed_type": "stale_retirement",
+      "canon_label_hint": "Same-file supersession: usage-feature.md tier-era correlation",
+      "exact_items": [
+        "Base text still carries older tier-era correlation and incomplete usage-event guidance despite later corrective text"
+      ],
+      "affected_doc_hints": [
+        "Plans/usage-feature.md"
+      ],
+      "heading_hints": [
+        "Transfer-Fidelity + Buildability Audit - 2026-04-06",
+        "Cluster F - Same-file supersession failures"
+      ],
+      "stale_tokens": [
+        "tier_id"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L17301-L17302"
+      ],
+      "notes": [
+        "primary consumer cleanup doc; additive patches landed without retiring old framing"
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Chunked audit: 13-widget Progress catalog not named/transferred",
+      "exact_items": [
+        "The **13-widget Progress catalog** is not just underspecified - it is effectively absent as a named catalog",
+        "The **default widget drill-target mappings** are also absent"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/Widget_System.md"
+      ],
+      "heading_hints": [
+        "Chunked Transfer-Fidelity Recheck - 2026-04-06",
+        "Early Orchestrator surface details"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L17374-L17376"
+      ],
+      "notes": [
+        "FIDELITY-049 range: Progress widget catalog must be explicitly named with drill-target mappings"
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Chunked audit: Orchestrator state/action/alert taxonomy untransferred",
+      "exact_items": [
+        "The early ledger's **state/action label set**, **alert-level taxonomy**, **event-family taxonomy**, **backbone events**, and **condition-aging policy** remain largely untransferred"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Glossary.md"
+      ],
+      "heading_hints": [
+        "Chunked Transfer-Fidelity Recheck - 2026-04-06",
+        "Early Orchestrator surface details"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L17377-L17378"
+      ],
+      "notes": [
+        "FIDELITY-050 range: state/action label taxonomy and condition-aging policy must be transferred"
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Chunked audit: historical mode and search coherence missing",
+      "exact_items": [
+        "explicit `focus_mode = live | historical`",
+        "`orchestrator.project_state.{project_id}` persistence record",
+        "page-wide shared `focused_run_id` coherence across tabs",
+        "historical Progress behavior",
+        "default search scope = focused run, widening to project/all-runs, and required disclosure when search changes focused run",
+        "global-vs-local Orchestrator search distinction",
+        "explicit fallback hierarchy to History/Ledger under projection degradation"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [
+        "Chunked Transfer-Fidelity Recheck - 2026-04-06",
+        "Historical mode / search / trust behavior sharpened"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L17381-L17389"
+      ],
+      "notes": [
+        "FIDELITY-051 range: missing concrete coherence fields, search scope rules, and fallback hierarchy"
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Chunked audit: concern/governance record and confirmation policy",
+      "exact_items": [
+        "concern record canonical field set",
+        "non-weak-integration concern categories",
+        "`resolution_kind`",
+        "concern owner-kind enum",
+        "review / corroboration / graph-patch / promotion / recovery record shapes",
+        "state transition report family",
+        "4-level confirmation taxonomy",
+        "3-level reversibility taxonomy",
+        "action-family \u2192 confirmation mapping",
+        "orchestration-specific undo/compensating-action label policy"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md",
+        "Plans/Decision_Policy.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [
+        "Chunked Transfer-Fidelity Recheck - 2026-04-06",
+        "Concern/governance record and confirmation policy"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L17391-L17403"
+      ],
+      "notes": [
+        "FIDELITY-052 range: entire concern/governance record family and confirmation taxonomy must be transferred"
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Chunked audit: export/settings/persona resolver transfer gaps",
+      "exact_items": [
+        "three-way export taxonomy (`record` / `bundle` / `view`)",
+        "shared Orchestrator export manifest contract",
+        "export-family distinctions (Evidence / Artifact / Ledger / Run / Record)",
+        "three-axis settings model (`source` / `request` / `execution`)",
+        "named display grammar (`Inherited from`, `Overridden by`, `Requested`, `Effective`, `Reason`, `Support`)",
+        "explicit source-layer enumeration",
+        "worker-policy display under the same requested/effective grammar",
+        "Orchestrator actor-type and operation-type resolver inputs",
+        "deterministic resolver matrix and actor\u2192persona defaults",
+        "resolver emit shape (ranked candidates, winner, fallback reason)"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/storage-plan.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Models_System.md",
+        "Plans/Multi-Account.md",
+        "Plans/Personas.md",
+        "Plans/Prompt_Pipeline.md"
+      ],
+      "heading_hints": [
+        "Chunked Transfer-Fidelity Recheck - 2026-04-06",
+        "Export / settings / persona transfer gaps"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L17405-L17417"
+      ],
+      "notes": [
+        "FIDELITY-053 range: export taxonomy, settings model, display grammar, and resolver matrix must be transferred"
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Chunked audit: help/project status/escalation transfer gaps",
+      "exact_items": [
+        "three-part help-system architecture",
+        "dedicated help-entry template",
+        "related-concept linking clusters",
+        "project `activity_state` enum",
+        "project `attention_state` enum",
+        "blocked-owner 8-kind taxonomy",
+        "primary attention reason field",
+        "pressure-summary field",
+        "explicit 5-level escalation ladder",
+        "surface ladder mapping",
+        "resurfacing / aging rules",
+        "persistent-blocker semantics at the UI layer"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Glossary.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md"
+      ],
+      "heading_hints": [
+        "Chunked Transfer-Fidelity Recheck - 2026-04-06",
+        "Help / project status / escalation transfer gaps sharpened"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L17419-L17433"
+      ],
+      "notes": [
+        "spans earlier FIDELITY IDs; concrete missing contracts for help system, project status enums, escalation rules"
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Chunked audit: route/bridge/normalization refinement misses",
+      "exact_items": [
+        "bridge-field precedence still missing from `Contracts_V0.md`",
+        "timestamp/run/thread fallback still not marked compatibility-only",
+        "storage-plan still lacks the practical join model from attempt \u2192 provider \u2192 usage \u2192 receipt",
+        "`Crosswalk.md` still lacks `Primitive:RouteTarget` / `Primitive:OpenSubject` in the primitive index",
+        "`Wiring_Matrix.md` still cannot structurally express wrapper/canonical normalization or route-aware fields",
+        "GATE-010 text improved, but the supporting evidence schema/matrix model still lags",
+        "`Contracts_V0.md` still lacks the late refinement layer: selector precedence order, reject rules, closed `tab_id` vocabulary, scoped resolver rules, route examples, ref-family split",
+        "`resume_url` demotion rule exists, but stale consumer docs still treat it as a primary behavioral field"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Crosswalk.md",
+        "Plans/Wiring_Matrix.md",
+        "Plans/Progression_Gates.md",
+        "Plans/FileManager.md",
+        "Plans/Project_Output_Artifacts.md"
+      ],
+      "heading_hints": [
+        "Chunked Transfer-Fidelity Recheck - 2026-04-06",
+        "Route / bridge / normalization misses remain refinement-heavy"
+      ],
+      "stale_tokens": [
+        "tab_id",
+        "resume_url"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L17435-L17445"
+      ],
+      "notes": [
+        "FIDELITY-054 range: bridge precedence, join model, primitive indexing, and gate schema follow-through still incomplete"
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Chunked audit: identity/attribution/blocked-policy concrete misses",
+      "exact_items": [
+        "`execution_role` absent in many key owner/consumer docs",
+        "`requested_account_id` absent where the ledger expects it",
+        "`operational_identity` only partially transferred",
+        "account-switch / pressure families named but still under-owned at the contract level",
+        "`blocked_sequence` minting ownership still missing",
+        "startup recovery handshake still incomplete",
+        "DAE jail / approval policy gaps remain untransferred",
+        "usage still lacks real switch-history / execution-role follow-through"
+      ],
+      "affected_doc_hints": [
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Tools.md",
+        "Plans/GitHub_API_Auth_and_Flows.md",
+        "Plans/orchestrator-subagent-integration.md",
+        "Plans/Architecture_Invariants.md",
+        "Plans/Run_Modes.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/human-in-the-loop.md",
+        "Plans/usage-feature.md"
+      ],
+      "heading_hints": [
+        "Chunked Transfer-Fidelity Recheck - 2026-04-06",
+        "Identity / attribution / blocked-policy misses"
+      ],
+      "stale_tokens": [
+        "execution_role",
+        "blocked_sequence"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L17447-L17457"
+      ],
+      "notes": [
+        "FIDELITY-055 range: execution_role field missing across docs; blocked_sequence ownership and startup recovery handshake incomplete"
+      ]
+    },
+    {
+      "seed_type": "stale_retirement",
+      "canon_label_hint": "assistant-chat-design stale self-verdict conflict",
+      "exact_items": [
+        "Lines 1775-1784 stale self-verdict: `**Verdict:** The plan is **fully fleshed out** for MVP for all adopted items (\u00a723.4). No remaining gaps; **accessibility** is explicitly not MVP.`",
+        "This directly conflicts with still-open chat consumer gaps already tracked under `FIDELITY-049` through `FIDELITY-053`"
+      ],
+      "affected_doc_hints": [
+        "Plans/assistant-chat-design.md"
+      ],
+      "heading_hints": [
+        "Audit Pass 2026-04-16T01:28:16Z"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L17502-L17505"
+      ],
+      "notes": [
+        "keep assistant-chat blocked-state/runtime-identity cluster open; record this verdict text as additional stale contradictory survivor"
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "gap-001 runtime identity and account binding carry-through",
+      "exact_items": [
+        "requested_account_binding missing from consumer docs",
+        "requested_account_policy missing from consumer docs",
+        "tool_use_id missing from consumer docs",
+        "split owner anchors plus active TierContext / tier_id survivor residue"
+      ],
+      "affected_doc_hints": [
+        "Plans/interview-subagent-integration.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/usage-feature.md",
+        "Plans/orchestrator-subagent-integration.md"
+      ],
+      "heading_hints": [
+        "### Runtime identity visibility",
+        "### Unified `UsageRecord` schema expectations",
+        "### Subagent Selector"
+      ],
+      "stale_tokens": [
+        "TierContext",
+        "tier_id"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L17601",
+        "working_ledger.md:L17652",
+        "working_ledger.md:L17774-L17776",
+        "working_ledger.md:L17855-L17857"
+      ],
+      "notes": [
+        "Consumer-side identity carry-through deficiency vs owner definition in assistant-chat",
+        "Narrowed from blanket 'missing everywhere' to exact sections already carrying partial canon"
+      ]
+    },
+    {
+      "seed_type": "stale_retirement",
+      "canon_label_hint": "exact stale contradictory survivors confirmed for retirement",
+      "exact_items": [
+        "TierContext",
+        "tier_id",
+        "detached_window",
+        "result_id",
+        "artifact_kind",
+        "task_id",
+        "{ tool_name, invocation_summary, options }",
+        "No remaining gaps",
+        "restore points"
+      ],
+      "affected_doc_hints": [
+        "Plans/orchestrator-subagent-integration.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Tools.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [],
+      "stale_tokens": [
+        "TierContext",
+        "tier_id",
+        "detached_window",
+        "result_id",
+        "artifact_kind",
+        "task_id",
+        "tool_name",
+        "invocation_summary",
+        "options",
+        "No remaining gaps",
+        "restore points"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L17602",
+        "working_ledger.md:L17697-L17698",
+        "working_ledger.md:L17931-L17932",
+        "working_ledger.md:L17881-L17882"
+      ],
+      "notes": [
+        "Survivors remain confirmed across multiple audit passes",
+        "Real stale anti-pattern references that should not remain in exact-missing lists"
+      ]
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "gap-002 missing owner headings and stale survivors in UI Command Catalog",
+      "exact_items": [
+        "### 2.0 Command entry contract (doc-level) heading missing",
+        "Search-command routing heading missing",
+        "Canonical runtime recovery command ownership heading missing",
+        "detached_window stale survivor present",
+        "result_id stale survivor present"
+      ],
+      "affected_doc_hints": [
+        "Plans/UI_Command_Catalog.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [
+        "### 2.0A Promoted Section 15 command families",
+        "### 7.3 Shared route and open behavior"
+      ],
+      "stale_tokens": [
+        "detached_window",
+        "result_id"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L17653",
+        "working_ledger.md:L17696",
+        "working_ledger.md:L17751"
+      ],
+      "notes": [
+        "Real normalization content exists under alternate heading",
+        "FinalGUISpec consumer anchor confirmed as present"
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "gap-003 missing project-state ownership and stale lifecycle semantics",
+      "exact_items": [
+        "orchestrator.project_state.{project_id} key family not present as named canon",
+        "artifact_kind stale anti-pattern reference",
+        "task_id stale anti-pattern reference",
+        "historical_lineage_refs[] already present in Plans/storage-plan.md",
+        "missing owner headings: ### Required redb keys",
+        "missing owner headings: ### Restart and stale history"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [
+        "### Required redb keys",
+        "### Restart and stale history"
+      ],
+      "stale_tokens": [
+        "artifact_kind",
+        "task_id"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L17654",
+        "working_ledger.md:L17692",
+        "working_ledger.md:L17928"
+      ],
+      "notes": [
+        "One overstated item removed: historical_lineage_refs[] already present",
+        "Broader project_summary.v1:{project_id} exists but exact key family missing"
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "gap-004 missing receipt structure heading and consumer anchors",
+      "exact_items": [
+        "### Cross-surface receipt record anchor missing",
+        "receipt minimum-fields list incomplete: missing pass_verdict, phase_plan_ref, requirements_quality_report_ref",
+        "artifact drill-through section heading missing from Plans/usage-feature.md",
+        "validation artifact lineage heading missing",
+        "bridge-field viewer heading missing",
+        "validation/report section heading missing",
+        "consumer anchors missing from Tools/chat/usage surfaces"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/usage-feature.md",
+        "Plans/Project_Output_Artifacts.md",
+        "Plans/Runtime_Artifacts_Panel.md"
+      ],
+      "heading_hints": [
+        "### Cross-surface receipt record"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L17655",
+        "working_ledger.md:L17694",
+        "working_ledger.md:L17776-L17777",
+        "working_ledger.md:L17926-L17927"
+      ],
+      "notes": [
+        "run_id already present, removed from unresolved list",
+        "phase_plan_ref, requirements_quality_report_ref, pass_verdict already in Project_Output_Artifacts"
+      ]
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "gap-005 blocked-packet skeletal consumer carry-through defects",
+      "exact_items": [
+        "blocked_sequence missing from Plans/Tools.md, Plans/assistant-chat-design.md, Plans/usage-feature.md",
+        "approval_scope_key missing from Plans/assistant-chat-design.md blocked-notice payload",
+        "report_ref missing from consumer surfaces but present in Plans/Contracts_V0.md owner",
+        "startup_recovered missing from consumer surfaces but present in Plans/Executor_Protocol.md owner",
+        "escalation_level missing from consumer surfaces but present in Plans/Orchestrator_Page.md owner",
+        "action_available does not have discoverable owner or consumer presence"
+      ],
+      "affected_doc_hints": [
+        "Plans/Tools.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/usage-feature.md",
+        "Plans/Contracts_V0.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "heading_hints": [
+        "## Unified Thread Blocked-State Lifecycle",
+        "### Multi-episode display"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L17656",
+        "working_ledger.md:L17750",
+        "working_ledger.md:L17801-L17805",
+        "working_ledger.md:L17929-L17930"
+      ],
+      "notes": [
+        "Owner definitions exist for report_ref, startup_recovered, escalation_level but not propagated to consumers",
+        "Narrowed from blanket field absence to consumer-propagation defects"
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "gap-007 missing orchestrator structural headings and broken cross-reference",
+      "exact_items": [
+        "Plans/GitHub_Integration.md points to non-existent Plans/Orchestrator_Page.md#11. Source Control boundary",
+        "restore points contradiction present"
+      ],
+      "affected_doc_hints": [
+        "Plans/GitHub_Integration.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "heading_hints": [
+        "#11. Source Control boundary"
+      ],
+      "stale_tokens": [
+        "restore points"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L17656",
+        "working_ledger.md:L17699",
+        "working_ledger.md:L17881"
+      ],
+      "notes": [
+        "Real structural headings are required but live section is non-existent"
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "gap-008 missing identity carry-through and account-history ownership",
+      "exact_items": [
+        "requested_account_policy missing from Plans/interview-subagent-integration.md runtime-identity section",
+        "tool_use_id missing from Plans/interview-subagent-integration.md runtime-identity section",
+        "account_id already canonically present in Plans/usage-feature.md",
+        "missing requested/effective identity carry-through",
+        "missing runtime-role carry-through",
+        "missing explicit usage/account-history section ownership"
+      ],
+      "affected_doc_hints": [
+        "Plans/usage-feature.md",
+        "Plans/interview-subagent-integration.md",
+        "Plans/orchestrator-subagent-integration.md",
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L17656",
+        "working_ledger.md:L17830-L17835",
+        "working_ledger.md:L17858"
+      ],
+      "notes": [
+        "Unresolved work is identity carry-through and account-history section ownership, not account_id wholesale",
+        "Mapped to actual live sections where partial transfer exists"
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "gap-006 missing glossary term sections and help-entry population",
+      "exact_items": [
+        "### Orchestrator rewrite terms section missing",
+        "### Runtime and routing terms section missing",
+        "help-entry rows not populated"
+      ],
+      "affected_doc_hints": [
+        "Plans/Glossary.md"
+      ],
+      "heading_hints": [
+        "### Orchestrator rewrite terms",
+        "### Runtime and routing terms"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L17932"
+      ],
+      "notes": [
+        "Help-entry field template and labels already present but sections and rows missing"
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Missing Persona/Runtime Snapshot Payload Contract heading",
+      "exact_items": [
+        "### 5.1B Persona/Runtime Snapshot Payload Contract",
+        "execution_unit_context required-field list in Plans/Contracts_V0.md omits requested_account_binding, requested_account_policy, and operational_identity"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md"
+      ],
+      "heading_hints": [
+        "### 5.1B Persona/Runtime Snapshot Payload Contract"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L18029"
+      ],
+      "notes": [
+        "gap-001 sharpened: exact owner anchor absent and explicit required-field list incomplete"
+      ]
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Broken orchestrator anchor reference and stale result_id survivor",
+      "exact_items": [
+        "Plans/Orchestrator_Page.md#10. Search, routing, and action policy (non-existent)",
+        "result_id remains live in cmd.search.open_result / cmd.search.replace_selected args"
+      ],
+      "affected_doc_hints": [
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "heading_hints": [],
+      "stale_tokens": [
+        "result_id"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L18030"
+      ],
+      "notes": [
+        "gap-002 sharpened: non-existent orchestrator anchor and stale residue"
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Missing orchestrator glossary headings and incomplete help-entry structure",
+      "exact_items": [
+        "### Orchestrator rewrite terms",
+        "### Runtime and routing terms",
+        "canonical_name, short_definition, why_it_matters, what_it_is_not, common_related_states, related_concepts, surface_examples"
+      ],
+      "affected_doc_hints": [
+        "Plans/Glossary.md"
+      ],
+      "heading_hints": [
+        "### Orchestrator rewrite terms",
+        "### Runtime and routing terms"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L18032"
+      ],
+      "notes": [
+        "gap-006 sharpened: missing glossary headings and terms instantiated as two-column tables/inline bullets instead of full help-entry field set"
+      ]
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Broken source control boundary references across multiple docs",
+      "exact_items": [
+        "Plans/Orchestrator_Page.md#11. Source Control boundary (broken reference)",
+        "restore points contradiction in Plans/FinalGUISpec.md"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/storage-plan.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L18033"
+      ],
+      "notes": [
+        "gap-007 sharpened: broken reference survives in multiple docs, restore points contradiction later downgraded"
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Missing Canonical records heading in storage-plan",
+      "exact_items": [
+        "Canonical records",
+        "Plans/storage-plan.md#Canonical records anchor (missing discoverable heading)"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [
+        "Canonical records"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L18074"
+      ],
+      "notes": [
+        "gap-003 sharpened: missing discoverable anchor despite inline prose and canonical_record.v1 container"
+      ]
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Broken Glossary anchor references in Orchestrator_Page",
+      "exact_items": [
+        "Plans/Glossary.md#Orchestrator rewrite terms (missing anchor, live broken references)"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/Glossary.md"
+      ],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L18075"
+      ],
+      "notes": [
+        "gap-006 sharpened: glossary/help blocker includes broken consumer references in history and concern sections"
+      ]
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Missing storage-plan Cross-surface receipt record anchor",
+      "exact_items": [
+        "Plans/storage-plan.md#Cross-surface receipt record (missing anchor, live consumer reference)"
+      ],
+      "affected_doc_hints": [
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L18115"
+      ],
+      "notes": [
+        "gap-004 sharpened: broken consumer reference rather than only missing owner/consumer headings"
+      ]
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Missing storage-plan Restart and stale history heading",
+      "exact_items": [
+        "Plans/storage-plan.md#Restart and stale history (missing anchor)"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/WorktreeGitImprovement.md"
+      ],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L18114"
+      ],
+      "notes": [
+        "gap-003 sharpened: missing anchor pointed at by multiple consumer docs"
+      ]
+    },
+    {
+      "seed_type": "stale_retirement",
+      "canon_label_hint": "Stale closure verdict and skeletal blocked_notice payload",
+      "exact_items": [
+        "stale closure verdict survivor",
+        "skeletal blocked_notice payload",
+        "missing escalation_level observability carry-through",
+        "missing action_available ownership"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [
+        "stale verdict"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L18031",
+        "working_ledger.md:L18155"
+      ],
+      "notes": [
+        "gap-005: report_ref and startup_recovered downgraded, remaining defects in blocked_notice and verdict survivors"
+      ]
+    },
+    {
+      "seed_type": "stale_retirement",
+      "canon_label_hint": "Stale route/open and blocked-state survivors",
+      "exact_items": [
+        "detached_window (stale survivor)",
+        "result_id (stale survivor)",
+        "blocked_notice (stale survivor)",
+        "action_available (stale survivor)"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [
+        "detached_window",
+        "result_id",
+        "blocked_notice",
+        "action_available"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L18117",
+        "working_ledger.md:L18155"
+      ],
+      "notes": [
+        "Confirmed stale survivors in route/open, blocked-action, and blocked-state contexts"
+      ]
+    }
+  ]
+}

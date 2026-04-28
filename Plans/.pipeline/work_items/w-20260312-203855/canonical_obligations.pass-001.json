@@ -1,10 +1,14 @@
 {
-  "schema_id": "pm.canonical_obligations.pass.v1",
+  "schema_id": "pm.canonical_obligations_verification_pass.v1",
   "work_id": "w-20260312-203855",
-  "pass": 1,
-  "status": "no_material_changes",
-  "material_findings_total": 0,
+  "pass_id": "pass-001",
   "material_findings": [],
-  "represented_seed_ids_checked": 68,
-  "represented_seed_ids_missing": []
+  "noise_findings": [
+    {
+      "item": "all seed_ids and source_shard_ids are represented after canonical merge",
+      "reason": "verification pass found zero material changes"
+    }
+  ],
+  "seed_items_checked": 7221,
+  "obligations_checked": 5026
 }

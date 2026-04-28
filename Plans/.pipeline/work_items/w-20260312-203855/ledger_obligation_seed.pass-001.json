@@ -1,163 +1,108 @@
 {
-  "schema_id": "pm.ledger_obligation_seed.pass.v1",
+  "schema_id": "pm.ledger_obligation_seed_verification_pass.v1",
   "work_id": "w-20260312-203855",
-  "pass": 1,
-  "material_findings_total": 8,
-  "material_findings": [
-    {
-      "seed_type": "owner",
-      "canon_label_hint": "Concern owner vs creator vs resolver separation",
-      "exact_items": [
-        "Separate concern owner_kind/owner_ref from created_by_kind/created_by_ref and resolver authority",
-        "Allow ownership changes without changing concern identity"
-      ],
-      "affected_doc_hints": [
-        "Plans/Contracts_V0.md",
-        "Plans/Orchestrator_Page.md"
-      ],
-      "heading_hints": [],
-      "stale_tokens": [],
-      "source_evidence": [
-        "working_ledger.md:L3129-L3143"
-      ],
-      "notes": [],
-      "seed_id": "seed-053"
-    },
-    {
-      "seed_type": "owner",
-      "canon_label_hint": "Concern source-event vs record vs projection split",
-      "exact_items": [
-        "Distinguish concern_source_event_ref, concern_record, and concern_projection as separate structural layers"
-      ],
-      "affected_doc_hints": [
-        "Plans/Contracts_V0.md",
-        "Plans/storage-plan.md",
-        "Plans/Orchestrator_Page.md"
-      ],
-      "heading_hints": [],
-      "stale_tokens": [],
-      "source_evidence": [
-        "working_ledger.md:L2996-L3005"
-      ],
-      "notes": [],
-      "seed_id": "seed-054"
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Dismissed vs resolved rationale enforcement",
-      "exact_items": [
-        "Require distinct dismissal rationale and resolution rationale rules",
-        "Treat accepted_risk as a resolution path rather than dismissal"
-      ],
-      "affected_doc_hints": [
-        "Plans/Orchestrator_Page.md",
-        "Plans/FinalGUISpec.md"
-      ],
-      "heading_hints": [],
-      "stale_tokens": [],
-      "source_evidence": [
-        "working_ledger.md:L3075-L3092",
-        "working_ledger.md:L6001-L6014"
-      ],
-      "notes": [],
-      "seed_id": "seed-055"
-    },
-    {
-      "seed_type": "owner",
-      "canon_label_hint": "Runtime attribution ownership split",
-      "exact_items": [
-        "Let Contracts_V0 own cross-family attribution packet shape",
-        "Let storage-plan own persistence and projection of attempt/usage/receipt/artifact joins"
-      ],
-      "affected_doc_hints": [
-        "Plans/Contracts_V0.md",
-        "Plans/storage-plan.md"
-      ],
-      "heading_hints": [],
-      "stale_tokens": [],
-      "source_evidence": [
-        "working_ledger.md:L10440-L10454"
-      ],
-      "notes": [],
-      "seed_id": "seed-056"
-    },
-    {
-      "seed_type": "owner",
-      "canon_label_hint": "Bridge-field precedence for attempt/provider/usage/receipt joins",
-      "exact_items": [
-        "Use attempt_id as local anchor, provider_attempt_ref as provider/runtime bridge, usage_event_ref as usage bridge, and receipt refs as external side-effect lineage bridge",
-        "None of those bridge fields replace the primary local key"
-      ],
-      "affected_doc_hints": [
-        "Plans/storage-plan.md",
-        "Plans/Runtime_Artifacts_Panel.md",
-        "Plans/usage-feature.md"
-      ],
-      "heading_hints": [],
-      "stale_tokens": [],
-      "source_evidence": [
-        "working_ledger.md:L10486-L10525"
-      ],
-      "notes": [],
-      "seed_id": "seed-057"
-    },
-    {
-      "seed_type": "owner",
-      "canon_label_hint": "Approval scope key and approver identity",
-      "exact_items": [
-        "Separate blocked-episode approval scope from session-wide policy scope",
-        "Persist durable approver identity fields on approval and rejection events"
-      ],
-      "affected_doc_hints": [
-        "Plans/human-in-the-loop.md",
-        "Plans/Contracts_V0.md",
-        "Plans/Executor_Protocol.md"
-      ],
-      "heading_hints": [],
-      "stale_tokens": [],
-      "source_evidence": [
-        "working_ledger.md:L8829-L8843"
-      ],
-      "notes": [],
-      "seed_id": "seed-058"
-    },
-    {
-      "seed_type": "owner",
-      "canon_label_hint": "Projection fields for startup rehydration",
-      "exact_items": [
-        "Carry blocked_reason_code and lifecycle state in worktree projections for startup recovery",
-        "Carry dirty_state and conflict_state in worktree projections"
-      ],
-      "affected_doc_hints": [
-        "Plans/storage-plan.md",
-        "Plans/WorktreeGitImprovement.md"
-      ],
-      "heading_hints": [],
-      "stale_tokens": [],
-      "source_evidence": [
-        "working_ledger.md:L9549-L9557"
-      ],
-      "notes": [],
-      "seed_id": "seed-059"
-    },
-    {
-      "seed_type": "owner",
-      "canon_label_hint": "Artifacts index exact indexed fields",
-      "exact_items": [
-        "Index attempt_id and thread_id in artifact index families to preserve attempt-native artifact routing"
-      ],
-      "affected_doc_hints": [
-        "Plans/storage-plan.md",
-        "Plans/Runtime_Artifacts_Panel.md"
-      ],
-      "heading_hints": [],
-      "stale_tokens": [],
-      "source_evidence": [
-        "working_ledger.md:L9512-L9518"
-      ],
-      "notes": [],
-      "seed_id": "seed-060"
-    }
+  "pass_id": "pass-001",
+  "scope": "all shard results uncertainty/noise classification check",
+  "source_shards_checked": [
+    "shard-0001",
+    "shard-0002",
+    "shard-0003",
+    "shard-0004",
+    "shard-0005",
+    "shard-0006",
+    "shard-0007",
+    "shard-0008",
+    "shard-0009",
+    "shard-0010",
+    "shard-0011",
+    "shard-0012",
+    "shard-0013",
+    "shard-0014",
+    "shard-0015",
+    "shard-0016",
+    "shard-0017",
+    "shard-0018",
+    "shard-0019",
+    "shard-0020",
+    "shard-0021",
+    "shard-0022",
+    "shard-0023",
+    "shard-0024",
+    "shard-0025",
+    "shard-0026",
+    "shard-0027",
+    "shard-0028",
+    "shard-0029",
+    "shard-0030",
+    "shard-0031",
+    "shard-0032",
+    "shard-0033",
+    "shard-0034",
+    "shard-0035",
+    "shard-0036",
+    "shard-0037",
+    "shard-0038",
+    "shard-0039",
+    "shard-0040",
+    "shard-0041",
+    "shard-0042",
+    "shard-0043",
+    "shard-0044",
+    "shard-0045",
+    "shard-0046",
+    "shard-0047",
+    "shard-0048",
+    "shard-0049",
+    "shard-0050",
+    "shard-0051",
+    "shard-0052",
+    "shard-0053",
+    "shard-0054",
+    "shard-0055",
+    "shard-0056",
+    "shard-0057",
+    "shard-0058",
+    "shard-0059",
+    "shard-0060",
+    "shard-0061",
+    "shard-0062",
+    "shard-0063",
+    "shard-0064",
+    "shard-0065",
+    "shard-0066",
+    "shard-0067",
+    "shard-0068",
+    "shard-0069",
+    "shard-0070",
+    "shard-0071",
+    "shard-0072",
+    "shard-0073",
+    "shard-0074",
+    "shard-0075",
+    "shard-0076",
+    "shard-0077",
+    "shard-0078",
+    "shard-0079",
+    "shard-0080",
+    "shard-0081",
+    "shard-0082",
+    "shard-0083",
+    "shard-0084",
+    "shard-0085",
+    "shard-0086",
+    "shard-0087",
+    "shard-0088",
+    "shard-0089",
+    "shard-0090",
+    "shard-0091",
+    "shard-0092"
   ],
-  "status": "material_changes_found"
+  "material_findings": [],
+  "noise_findings": [
+    {
+      "item": "verification pass found no additional material beyond shard seed_candidates",
+      "uncertain_items_reviewed": 43,
+      "reason": "uncertain entries were open design questions or weaker restatements under deterministic seed rules"
+    }
+  ]
 }

@@ -1,238 +1,614 @@
 {
   "schema_id": "pm.legacy_quarantine_manifest.v1",
   "work_id": "w-20260312-203855",
-  "timestamp_utc": "2026-04-23T18:34:34Z",
+  "timestamp_utc": "2026-04-28T15:37:37Z",
   "reason": "legacy_downstream_artifacts_quarantined",
   "files_moved": [
-    "legacy_quarantine/canonical_obligations.20260423T183434Z.json",
-    "legacy_quarantine/canonical_obligations.noise-001.20260423T183434Z.json",
-    "legacy_quarantine/canonical_obligations.pass-001.20260423T183434Z.json",
-    "legacy_quarantine/canonical_obligations.wave-001.20260423T183434Z.json",
-    "legacy_quarantine/canonical_obligations_source_coverage_report.20260423T183434Z.json",
-    "legacy_quarantine/current_state.20260423T183434Z.md",
-    "legacy_quarantine/ledger_obligation_seed.20260423T183434Z.json",
-    "legacy_quarantine/ledger_obligation_seed.completeness-noise.20260423T183434Z.json",
-    "legacy_quarantine/ledger_obligation_seed.deferred-noise-001.20260423T183434Z.json",
-    "legacy_quarantine/ledger_obligation_seed.deferred-resolve-001.20260423T183434Z.json",
-    "legacy_quarantine/ledger_obligation_seed.deferred.20260423T183434Z.json",
-    "legacy_quarantine/ledger_obligation_seed.finalizer-noise.20260423T183434Z.json",
-    "legacy_quarantine/ledger_obligation_seed.noise-001.20260423T183434Z.json",
-    "legacy_quarantine/ledger_obligation_seed.noise-002.20260423T183434Z.json",
-    "legacy_quarantine/ledger_obligation_seed.noise-003.20260423T183434Z.json",
-    "legacy_quarantine/ledger_obligation_seed.pass-001.20260423T183434Z.json",
-    "legacy_quarantine/ledger_obligation_seed.pass-002.20260423T183434Z.json",
-    "legacy_quarantine/ledger_obligation_seed.pass-003.20260423T183434Z.json",
-    "legacy_quarantine/ledger_obligation_seed.wave-001.20260423T183434Z.json",
-    "legacy_quarantine/ledger_obligation_seed.wave-002.20260423T183434Z.json",
-    "legacy_quarantine/ledger_obligation_seed.wave-003.20260423T183434Z.json",
-    "legacy_quarantine/ledger_obligation_seed.wave-004.20260423T183434Z.json",
-    "legacy_quarantine/ledger_obligation_seed.wave-005.20260423T183434Z.json",
-    "legacy_quarantine/ledger_obligation_seed.wave-006.20260423T183434Z.json",
-    "legacy_quarantine/ledger_seed_completeness_report.20260423T183434Z.json",
-    "legacy_quarantine/open_gaps.json",
-    "legacy_quarantine/open_gaps.pass-001.json",
-    "legacy_quarantine/open_gaps.wave-001.json",
-    "legacy_quarantine/open_gaps.wave-002.json",
-    "legacy_quarantine/open_gaps.wave-003.json",
-    "legacy_quarantine/open_gaps.wave-004.json",
-    "legacy_quarantine/open_gaps.wave-005.json",
-    "legacy_quarantine/transfer_coverage.20260423T183434Z.json",
-    "legacy_quarantine/transfer_coverage.noise-001.20260423T183434Z.json",
-    "legacy_quarantine/transfer_coverage.pass-001.20260423T183434Z.json",
-    "legacy_quarantine/transfer_coverage.row_inventory.json",
-    "legacy_quarantine/transfer_coverage.wave-001.20260423T183434Z.json",
-    "legacy_quarantine/transfer_coverage.wave-002.json",
-    "legacy_quarantine/transfer_coverage.wave-003.json",
-    "legacy_quarantine/transfer_coverage.wave-004.json",
-    "legacy_quarantine/transfer_coverage.wave-005.json",
-    "legacy_quarantine/transfer_coverage.wave-006.json",
-    "legacy_quarantine/transfer_coverage.wave-007.json",
-    "legacy_quarantine/transfer_coverage_source_coverage_report.json"
+    {
+      "source": "canonical_obligations.json",
+      "quarantined_as": "canonical_obligations.001.json"
+    },
+    {
+      "source": "canonical_obligations.noise-001.json",
+      "quarantined_as": "canonical_obligations.noise-001.001.json"
+    },
+    {
+      "source": "canonical_obligations.noise-002.json",
+      "quarantined_as": "canonical_obligations.noise-002.json"
+    },
+    {
+      "source": "canonical_obligations.noise-003.json",
+      "quarantined_as": "canonical_obligations.noise-003.json"
+    },
+    {
+      "source": "canonical_obligations.pass-001.json",
+      "quarantined_as": "canonical_obligations.pass-001.001.json"
+    },
+    {
+      "source": "canonical_obligations.pass-002.json",
+      "quarantined_as": "canonical_obligations.pass-002.001.json"
+    },
+    {
+      "source": "canonical_obligations.pass-003.json",
+      "quarantined_as": "canonical_obligations.pass-003.001.json"
+    },
+    {
+      "source": "canonical_obligations.wave-001.json",
+      "quarantined_as": "canonical_obligations.wave-001.001.json"
+    },
+    {
+      "source": "canonical_obligations_source_coverage_report.json",
+      "quarantined_as": "canonical_obligations_source_coverage_report.001.json"
+    },
+    {
+      "source": "contractref_repair_report.json",
+      "quarantined_as": "contractref_repair_report.json"
+    },
+    {
+      "source": "current_state.md",
+      "quarantined_as": "current_state.001.md"
+    },
+    {
+      "source": "doc_discovery_resolution.json",
+      "quarantined_as": "doc_discovery_resolution.json"
+    },
+    {
+      "source": "doc_discovery_resolution.noise-001.json",
+      "quarantined_as": "doc_discovery_resolution.noise-001.json"
+    },
+    {
+      "source": "doc_discovery_resolution.pass-001.json",
+      "quarantined_as": "doc_discovery_resolution.pass-001.json"
+    },
+    {
+      "source": "doc_discovery_resolution.wave-001.json",
+      "quarantined_as": "doc_discovery_resolution.wave-001.json"
+    },
+    {
+      "source": "doc_discovery_resolution.wave-002.json",
+      "quarantined_as": "doc_discovery_resolution.wave-002.json"
+    },
+    {
+      "source": "doc_discovery_resolution.wave-003.json",
+      "quarantined_as": "doc_discovery_resolution.wave-003.json"
+    },
+    {
+      "source": "doc_discovery_resolution.wave-004.json",
+      "quarantined_as": "doc_discovery_resolution.wave-004.json"
+    },
+    {
+      "source": "fidelity_recovery_plan.json",
+      "quarantined_as": "fidelity_recovery_plan.json"
+    },
+    {
+      "source": "fidelity_recovery_plan.noise-001.json",
+      "quarantined_as": "fidelity_recovery_plan.noise-001.json"
+    },
+    {
+      "source": "fidelity_recovery_plan.pass-001.json",
+      "quarantined_as": "fidelity_recovery_plan.pass-001.json"
+    },
+    {
+      "source": "fidelity_recovery_plan.pass-002.json",
+      "quarantined_as": "fidelity_recovery_plan.pass-002.json"
+    },
+    {
+      "source": "fidelity_recovery_plan.pass-003.json",
+      "quarantined_as": "fidelity_recovery_plan.pass-003.json"
+    },
+    {
+      "source": "fidelity_recovery_plan.wave-001.json",
+      "quarantined_as": "fidelity_recovery_plan.wave-001.json"
+    },
+    {
+      "source": "fidelity_recovery_plan.wave-002.json",
+      "quarantined_as": "fidelity_recovery_plan.wave-002.json"
+    },
+    {
+      "source": "fidelity_recovery_plan.wave-003.json",
+      "quarantined_as": "fidelity_recovery_plan.wave-003.json"
+    },
+    {
+      "source": "fidelity_recovery_plan.wave-004.json",
+      "quarantined_as": "fidelity_recovery_plan.wave-004.json"
+    },
+    {
+      "source": "ledger_obligation_seed.completeness-noise.json",
+      "quarantined_as": "ledger_obligation_seed.completeness-noise.001.json"
+    },
+    {
+      "source": "ledger_obligation_seed.deferred-noise-001.json",
+      "quarantined_as": "ledger_obligation_seed.deferred-noise-001.001.json"
+    },
+    {
+      "source": "ledger_obligation_seed.deferred-resolve-001.json",
+      "quarantined_as": "ledger_obligation_seed.deferred-resolve-001.001.json"
+    },
+    {
+      "source": "ledger_obligation_seed.deferred.json",
+      "quarantined_as": "ledger_obligation_seed.deferred.001.json"
+    },
+    {
+      "source": "ledger_obligation_seed.finalizer-noise.json",
+      "quarantined_as": "ledger_obligation_seed.finalizer-noise.001.json"
+    },
+    {
+      "source": "ledger_obligation_seed.json",
+      "quarantined_as": "ledger_obligation_seed.001.json"
+    },
+    {
+      "source": "ledger_obligation_seed.noise-001.json",
+      "quarantined_as": "ledger_obligation_seed.noise-001.001.json"
+    },
+    {
+      "source": "ledger_obligation_seed.noise-002.json",
+      "quarantined_as": "ledger_obligation_seed.noise-002.001.json"
+    },
+    {
+      "source": "ledger_obligation_seed.noise-003.json",
+      "quarantined_as": "ledger_obligation_seed.noise-003.001.json"
+    },
+    {
+      "source": "ledger_obligation_seed.pass-001.json",
+      "quarantined_as": "ledger_obligation_seed.pass-001.001.json"
+    },
+    {
+      "source": "ledger_obligation_seed.pass-002.json",
+      "quarantined_as": "ledger_obligation_seed.pass-002.001.json"
+    },
+    {
+      "source": "ledger_obligation_seed.pass-003.json",
+      "quarantined_as": "ledger_obligation_seed.pass-003.001.json"
+    },
+    {
+      "source": "ledger_obligation_seed.wave-001.json",
+      "quarantined_as": "ledger_obligation_seed.wave-001.001.json"
+    },
+    {
+      "source": "ledger_obligation_seed.wave-002.json",
+      "quarantined_as": "ledger_obligation_seed.wave-002.001.json"
+    },
+    {
+      "source": "ledger_obligation_seed.wave-003.json",
+      "quarantined_as": "ledger_obligation_seed.wave-003.001.json"
+    },
+    {
+      "source": "ledger_obligation_seed.wave-004.json",
+      "quarantined_as": "ledger_obligation_seed.wave-004.001.json"
+    },
+    {
+      "source": "ledger_obligation_seed.wave-005.json",
+      "quarantined_as": "ledger_obligation_seed.wave-005.001.json"
+    },
+    {
+      "source": "ledger_seed_completeness_report.json",
+      "quarantined_as": "ledger_seed_completeness_report.001.json"
+    },
+    {
+      "source": "open_gaps.json",
+      "quarantined_as": "open_gaps.001.json"
+    },
+    {
+      "source": "open_gaps.pass-001.json",
+      "quarantined_as": "open_gaps.pass-001.001.json"
+    },
+    {
+      "source": "open_gaps.pass-002.json",
+      "quarantined_as": "open_gaps.pass-002.json"
+    },
+    {
+      "source": "open_gaps.pass-003.json",
+      "quarantined_as": "open_gaps.pass-003.json"
+    },
+    {
+      "source": "open_gaps.wave-001.json",
+      "quarantined_as": "open_gaps.wave-001.001.json"
+    },
+    {
+      "source": "open_gaps.wave-002.json",
+      "quarantined_as": "open_gaps.wave-002.001.json"
+    },
+    {
+      "source": "open_gaps.wave-003.json",
+      "quarantined_as": "open_gaps.wave-003.001.json"
+    },
+    {
+      "source": "packet_builder.noise-001.json",
+      "quarantined_as": "packet_builder.noise-001.json"
+    },
+    {
+      "source": "packet_builder.noise-002.json",
+      "quarantined_as": "packet_builder.noise-002.json"
+    },
+    {
+      "source": "packet_builder.noise-003.json",
+      "quarantined_as": "packet_builder.noise-003.json"
+    },
+    {
+      "source": "packet_builder.noise-004.json",
+      "quarantined_as": "packet_builder.noise-004.json"
+    },
+    {
+      "source": "packet_builder.pass-001.json",
+      "quarantined_as": "packet_builder.pass-001.json"
+    },
+    {
+      "source": "packet_builder.pass-002.json",
+      "quarantined_as": "packet_builder.pass-002.json"
+    },
+    {
+      "source": "packet_builder.pass-003.json",
+      "quarantined_as": "packet_builder.pass-003.json"
+    },
+    {
+      "source": "packet_builder.pass-004.json",
+      "quarantined_as": "packet_builder.pass-004.json"
+    },
+    {
+      "source": "packet_builder.wave-001.json",
+      "quarantined_as": "packet_builder.wave-001.json"
+    },
+    {
+      "source": "packet_builder.wave-002.json",
+      "quarantined_as": "packet_builder.wave-002.json"
+    },
+    {
+      "source": "packet_builder.wave-003.json",
+      "quarantined_as": "packet_builder.wave-003.json"
+    },
+    {
+      "source": "packet_builder.wave-004.json",
+      "quarantined_as": "packet_builder.wave-004.json"
+    },
+    {
+      "source": "packet_span_conflict.wave-001.json",
+      "quarantined_as": "packet_span_conflict.wave-001.json"
+    },
+    {
+      "source": "packet_span_conflict_report.json",
+      "quarantined_as": "packet_span_conflict_report.json"
+    },
+    {
+      "source": "packetizable_layout_repair_report.json",
+      "quarantined_as": "packetizable_layout_repair_report.json"
+    },
+    {
+      "source": "reconciliation_plan.json",
+      "quarantined_as": "reconciliation_plan.001.json"
+    },
+    {
+      "source": "reconciliation_plan.noise-001.json",
+      "quarantined_as": "reconciliation_plan.noise-001.json"
+    },
+    {
+      "source": "reconciliation_plan.noise-002.json",
+      "quarantined_as": "reconciliation_plan.noise-002.json"
+    },
+    {
+      "source": "reconciliation_plan.pass-001.json",
+      "quarantined_as": "reconciliation_plan.pass-001.json"
+    },
+    {
+      "source": "reconciliation_plan.pass-002.json",
+      "quarantined_as": "reconciliation_plan.pass-002.json"
+    },
+    {
+      "source": "reconciliation_plan.pass-003.json",
+      "quarantined_as": "reconciliation_plan.pass-003.json"
+    },
+    {
+      "source": "reconciliation_plan.pass-004.json",
+      "quarantined_as": "reconciliation_plan.pass-004.json"
+    },
+    {
+      "source": "reconciliation_plan.pass-005.json",
+      "quarantined_as": "reconciliation_plan.pass-005.json"
+    },
+    {
+      "source": "reconciliation_plan.wave-001.json",
+      "quarantined_as": "reconciliation_plan.wave-001.json"
+    },
+    {
+      "source": "reconciliation_plan.wave-002.json",
+      "quarantined_as": "reconciliation_plan.wave-002.json"
+    },
+    {
+      "source": "reconciliation_plan.wave-003.json",
+      "quarantined_as": "reconciliation_plan.wave-003.json"
+    },
+    {
+      "source": "reconciliation_plan.wave-004.json",
+      "quarantined_as": "reconciliation_plan.wave-004.json"
+    },
+    {
+      "source": "reconciliation_plan.wave-005.json",
+      "quarantined_as": "reconciliation_plan.wave-005.json"
+    },
+    {
+      "source": "reconciliation_plan.wave-006.json",
+      "quarantined_as": "reconciliation_plan.wave-006.json"
+    },
+    {
+      "source": "reconciliation_plan.wave-007.json",
+      "quarantined_as": "reconciliation_plan.wave-007.json"
+    },
+    {
+      "source": "scribe_apply_report.json",
+      "quarantined_as": "scribe_apply_report.json"
+    },
+    {
+      "source": "transfer_coverage.json",
+      "quarantined_as": "transfer_coverage.001.json"
+    },
+    {
+      "source": "transfer_coverage.noise-001.json",
+      "quarantined_as": "transfer_coverage.noise-001.001.json"
+    },
+    {
+      "source": "transfer_coverage.noise-002.json",
+      "quarantined_as": "transfer_coverage.noise-002.001.json"
+    },
+    {
+      "source": "transfer_coverage.noise-003.json",
+      "quarantined_as": "transfer_coverage.noise-003.001.json"
+    },
+    {
+      "source": "transfer_coverage.pass-001.json",
+      "quarantined_as": "transfer_coverage.pass-001.001.json"
+    },
+    {
+      "source": "transfer_coverage.pass-002.json",
+      "quarantined_as": "transfer_coverage.pass-002.001.json"
+    },
+    {
+      "source": "transfer_coverage.pass-003.json",
+      "quarantined_as": "transfer_coverage.pass-003.001.json"
+    },
+    {
+      "source": "transfer_coverage.row_inventory.json",
+      "quarantined_as": "transfer_coverage.row_inventory.001.json"
+    },
+    {
+      "source": "transfer_coverage.wave-001.json",
+      "quarantined_as": "transfer_coverage.wave-001.001.json"
+    },
+    {
+      "source": "transfer_coverage.wave-002.json",
+      "quarantined_as": "transfer_coverage.wave-002.001.json"
+    },
+    {
+      "source": "transfer_coverage_source_coverage_report.json",
+      "quarantined_as": "transfer_coverage_source_coverage_report.001.json"
+    }
   ],
   "files_already_quarantined": [
-    "legacy_quarantine/bucket_plan.json",
-    "legacy_quarantine/canon_inventory.json",
-    "legacy_quarantine/canonical_obligations.20260421T210130Z.json",
-    "legacy_quarantine/canonical_obligations.20260422T214829Z.json",
-    "legacy_quarantine/canonical_obligations.20260422T214829Z.pass-001.json",
-    "legacy_quarantine/canonical_obligations.20260422T214829Z.wave-001.json",
-    "legacy_quarantine/canonical_obligations.json",
-    "legacy_quarantine/canonical_obligations.noise-001.json",
-    "legacy_quarantine/canonical_obligations.pass-001.20260421T210130Z.json",
-    "legacy_quarantine/canonical_obligations.pass-001.json",
-    "legacy_quarantine/canonical_obligations.pass-002.json",
-    "legacy_quarantine/canonical_obligations.pass-003.json",
-    "legacy_quarantine/canonical_obligations.pass-004.json",
-    "legacy_quarantine/canonical_obligations.pass-005.json",
-    "legacy_quarantine/canonical_obligations.pass-006.json",
-    "legacy_quarantine/canonical_obligations.pass-007.json",
-    "legacy_quarantine/canonical_obligations.pass-008.json",
-    "legacy_quarantine/canonical_obligations.pass-009.json",
-    "legacy_quarantine/canonical_obligations.pass-010.json",
-    "legacy_quarantine/canonical_obligations.pass-011.json",
-    "legacy_quarantine/canonical_obligations.wave-001.20260421T210130Z.json",
-    "legacy_quarantine/canonical_obligations.wave-001.json",
-    "legacy_quarantine/canonical_obligations.wave-002.20260421T210130Z.json",
-    "legacy_quarantine/canonical_obligations.wave-002.json",
-    "legacy_quarantine/canonical_obligations.wave-003.20260421T210130Z.json",
-    "legacy_quarantine/canonical_obligations.wave-003.json",
-    "legacy_quarantine/canonical_obligations.wave-004.json",
-    "legacy_quarantine/canonical_obligations_source_coverage_report.json",
-    "legacy_quarantine/coverage_collection.json",
-    "legacy_quarantine/current_state.20260417T220834.md",
-    "legacy_quarantine/current_state.20260417T221909.md",
-    "legacy_quarantine/current_state.20260417T222958.md",
-    "legacy_quarantine/current_state.20260420T194958.md",
-    "legacy_quarantine/current_state.20260421T162956.md",
-    "legacy_quarantine/current_state.20260421T210130Z.md",
-    "legacy_quarantine/current_state.20260422T214829Z.md",
-    "legacy_quarantine/current_state.md",
-    "legacy_quarantine/ledger_obligation_seed.20260421T162956.json",
-    "legacy_quarantine/ledger_obligation_seed.20260421T210130Z.json",
-    "legacy_quarantine/ledger_obligation_seed.20260422T214829Z.completeness-noise.json",
-    "legacy_quarantine/ledger_obligation_seed.20260422T214829Z.deferred-noise-001.json",
-    "legacy_quarantine/ledger_obligation_seed.20260422T214829Z.deferred-noise-002.json",
-    "legacy_quarantine/ledger_obligation_seed.20260422T214829Z.deferred-noise-003.json",
-    "legacy_quarantine/ledger_obligation_seed.20260422T214829Z.deferred-resolve-001.json",
-    "legacy_quarantine/ledger_obligation_seed.20260422T214829Z.deferred-resolve-002.json",
-    "legacy_quarantine/ledger_obligation_seed.20260422T214829Z.deferred-resolve-003.json",
-    "legacy_quarantine/ledger_obligation_seed.20260422T214829Z.deferred.json",
-    "legacy_quarantine/ledger_obligation_seed.20260422T214829Z.finalizer-noise.json",
-    "legacy_quarantine/ledger_obligation_seed.20260422T214829Z.json",
-    "legacy_quarantine/ledger_obligation_seed.20260422T214829Z.noise-001.json",
-    "legacy_quarantine/ledger_obligation_seed.20260422T214829Z.noise-002.json",
-    "legacy_quarantine/ledger_obligation_seed.20260422T214829Z.noise-003.json",
-    "legacy_quarantine/ledger_obligation_seed.20260422T214829Z.pass-001.json",
-    "legacy_quarantine/ledger_obligation_seed.20260422T214829Z.pass-002.json",
-    "legacy_quarantine/ledger_obligation_seed.20260422T214829Z.pass-003.json",
-    "legacy_quarantine/ledger_obligation_seed.20260422T214829Z.wave-001.json",
-    "legacy_quarantine/ledger_obligation_seed.20260422T214829Z.wave-002.json",
-    "legacy_quarantine/ledger_obligation_seed.20260422T214829Z.wave-003.json",
-    "legacy_quarantine/ledger_obligation_seed.20260422T214829Z.wave-004.json",
-    "legacy_quarantine/ledger_obligation_seed.completeness-noise.20260421T210130Z.json",
-    "legacy_quarantine/ledger_obligation_seed.completeness-noise.json",
-    "legacy_quarantine/ledger_obligation_seed.deferred-noise-001.20260421T210130Z.json",
-    "legacy_quarantine/ledger_obligation_seed.deferred-noise-001.json",
-    "legacy_quarantine/ledger_obligation_seed.deferred-noise-002.json",
-    "legacy_quarantine/ledger_obligation_seed.deferred-noise-003.json",
-    "legacy_quarantine/ledger_obligation_seed.deferred-noise-004.json",
-    "legacy_quarantine/ledger_obligation_seed.deferred-noise-005.json",
-    "legacy_quarantine/ledger_obligation_seed.deferred-noise-006.json",
-    "legacy_quarantine/ledger_obligation_seed.deferred-noise-007.json",
-    "legacy_quarantine/ledger_obligation_seed.deferred-noise-008.json",
-    "legacy_quarantine/ledger_obligation_seed.deferred-resolve-001.20260421T210130Z.json",
-    "legacy_quarantine/ledger_obligation_seed.deferred-resolve-001.json",
-    "legacy_quarantine/ledger_obligation_seed.deferred-resolve-002.json",
-    "legacy_quarantine/ledger_obligation_seed.deferred-resolve-003.json",
-    "legacy_quarantine/ledger_obligation_seed.deferred-resolve-004.json",
-    "legacy_quarantine/ledger_obligation_seed.deferred-resolve-005.json",
-    "legacy_quarantine/ledger_obligation_seed.deferred-resolve-006.json",
-    "legacy_quarantine/ledger_obligation_seed.deferred-resolve-007.json",
-    "legacy_quarantine/ledger_obligation_seed.deferred-resolve-008.json",
-    "legacy_quarantine/ledger_obligation_seed.deferred.20260421T210130Z.json",
-    "legacy_quarantine/ledger_obligation_seed.deferred.json",
-    "legacy_quarantine/ledger_obligation_seed.finalizer-noise.20260421T210130Z.json",
-    "legacy_quarantine/ledger_obligation_seed.finalizer-noise.json",
-    "legacy_quarantine/ledger_obligation_seed.json",
-    "legacy_quarantine/ledger_obligation_seed.noise-001.20260421T210130Z.json",
-    "legacy_quarantine/ledger_obligation_seed.noise-001.json",
-    "legacy_quarantine/ledger_obligation_seed.noise-002.20260421T210130Z.json",
-    "legacy_quarantine/ledger_obligation_seed.noise-002.json",
-    "legacy_quarantine/ledger_obligation_seed.noise-003.20260421T210130Z.json",
-    "legacy_quarantine/ledger_obligation_seed.noise-003.json",
-    "legacy_quarantine/ledger_obligation_seed.pass-001.20260421T162956.json",
-    "legacy_quarantine/ledger_obligation_seed.pass-001.20260421T210130Z.json",
-    "legacy_quarantine/ledger_obligation_seed.pass-001.json",
-    "legacy_quarantine/ledger_obligation_seed.pass-002.20260421T162956.json",
-    "legacy_quarantine/ledger_obligation_seed.pass-002.20260421T210130Z.json",
-    "legacy_quarantine/ledger_obligation_seed.pass-002.json",
-    "legacy_quarantine/ledger_obligation_seed.pass-003.20260421T162956.json",
-    "legacy_quarantine/ledger_obligation_seed.pass-003.20260421T210130Z.json",
-    "legacy_quarantine/ledger_obligation_seed.pass-003.json",
-    "legacy_quarantine/ledger_obligation_seed.pass-004.json",
-    "legacy_quarantine/ledger_obligation_seed.pass-005.json",
-    "legacy_quarantine/ledger_obligation_seed.pass-006.json",
-    "legacy_quarantine/ledger_obligation_seed.pass-007.json",
-    "legacy_quarantine/ledger_obligation_seed.pass-008.json",
-    "legacy_quarantine/ledger_obligation_seed.pass-009.json",
-    "legacy_quarantine/ledger_obligation_seed.pass-010.json",
-    "legacy_quarantine/ledger_obligation_seed.pass-011.json",
-    "legacy_quarantine/ledger_obligation_seed.pass-012.json",
-    "legacy_quarantine/ledger_obligation_seed.pass-013.json",
-    "legacy_quarantine/ledger_obligation_seed.pass-014.json",
-    "legacy_quarantine/ledger_obligation_seed.pass-015.json",
-    "legacy_quarantine/ledger_obligation_seed.pass-016.json",
-    "legacy_quarantine/ledger_obligation_seed.pass-017.json",
-    "legacy_quarantine/ledger_obligation_seed.pass-018.json",
-    "legacy_quarantine/ledger_obligation_seed.pass-019.json",
-    "legacy_quarantine/ledger_obligation_seed.pass-020.json",
-    "legacy_quarantine/ledger_obligation_seed.pass-021.json",
-    "legacy_quarantine/ledger_obligation_seed.pass-022.json",
-    "legacy_quarantine/ledger_obligation_seed.pass-023.json",
-    "legacy_quarantine/ledger_obligation_seed.pass-024.json",
-    "legacy_quarantine/ledger_obligation_seed.pass-025.json",
-    "legacy_quarantine/ledger_obligation_seed.pass-026.json",
-    "legacy_quarantine/ledger_obligation_seed.pass-027.json",
-    "legacy_quarantine/ledger_obligation_seed.pass-028.json",
-    "legacy_quarantine/ledger_obligation_seed.pass-029.json",
-    "legacy_quarantine/ledger_obligation_seed.pass-030.json",
-    "legacy_quarantine/ledger_obligation_seed.pass-031.json",
-    "legacy_quarantine/ledger_obligation_seed.pass-032.json",
-    "legacy_quarantine/ledger_obligation_seed.pass-033.json",
-    "legacy_quarantine/ledger_obligation_seed.pass-034.json",
-    "legacy_quarantine/ledger_obligation_seed.pass-035.json",
-    "legacy_quarantine/ledger_obligation_seed.pass-036.json",
-    "legacy_quarantine/ledger_obligation_seed.pass-037.json",
-    "legacy_quarantine/ledger_obligation_seed.wave-001.20260421T162956.json",
-    "legacy_quarantine/ledger_obligation_seed.wave-001.20260421T210130Z.json",
-    "legacy_quarantine/ledger_obligation_seed.wave-001.json",
-    "legacy_quarantine/ledger_obligation_seed.wave-002.20260421T162956.json",
-    "legacy_quarantine/ledger_obligation_seed.wave-002.20260421T210130Z.json",
-    "legacy_quarantine/ledger_obligation_seed.wave-002.json",
-    "legacy_quarantine/ledger_obligation_seed.wave-003.20260421T162956.json",
-    "legacy_quarantine/ledger_obligation_seed.wave-003.20260421T210130Z.json",
-    "legacy_quarantine/ledger_obligation_seed.wave-003.json",
-    "legacy_quarantine/ledger_obligation_seed.wave-004.20260421T162956.json",
-    "legacy_quarantine/ledger_obligation_seed.wave-004.20260421T210130Z.json",
-    "legacy_quarantine/ledger_obligation_seed.wave-004.json",
-    "legacy_quarantine/ledger_obligation_seed.wave-005.20260421T162956.json",
-    "legacy_quarantine/ledger_obligation_seed.wave-005.20260421T210130Z.json",
-    "legacy_quarantine/ledger_obligation_seed.wave-005.json",
-    "legacy_quarantine/ledger_obligation_seed.wave-006.20260421T162956.json",
-    "legacy_quarantine/ledger_obligation_seed.wave-006.20260421T210130Z.json",
-    "legacy_quarantine/ledger_obligation_seed.wave-006.json",
-    "legacy_quarantine/ledger_obligation_seed.wave-007.20260421T162956.json",
-    "legacy_quarantine/ledger_obligation_seed.wave-007.json",
-    "legacy_quarantine/ledger_obligation_seed.wave-008.20260421T162956.json",
-    "legacy_quarantine/ledger_obligation_seed.wave-008.json",
-    "legacy_quarantine/ledger_obligation_seed.wave-009.20260421T162956.json",
-    "legacy_quarantine/ledger_obligation_seed.wave-009.json",
-    "legacy_quarantine/ledger_obligation_seed.wave-010.20260421T162956.json",
-    "legacy_quarantine/ledger_obligation_seed.wave-010.json",
-    "legacy_quarantine/ledger_obligation_seed.wave-011.20260421T162956.json",
-    "legacy_quarantine/ledger_obligation_seed.wave-011.json",
-    "legacy_quarantine/ledger_obligation_seed.wave-012.20260421T162956.json",
-    "legacy_quarantine/ledger_obligation_seed.wave-012.json",
-    "legacy_quarantine/ledger_seed_completeness_report.20260421T210130Z.json",
-    "legacy_quarantine/ledger_seed_completeness_report.20260422T214829Z.json",
-    "legacy_quarantine/ledger_seed_completeness_report.json",
-    "legacy_quarantine/migration_report.md",
-    "legacy_quarantine/missing_transfer_report.md",
-    "legacy_quarantine/mode_rules.md",
-    "legacy_quarantine/mode_status.md",
-    "legacy_quarantine/packet_plan.json",
-    "legacy_quarantine/reconciliation_plan.json",
-    "legacy_quarantine/schema_repair_report.md",
-    "legacy_quarantine/section_obligation_map.json",
-    "legacy_quarantine/transfer_coverage.deferred.json",
-    "legacy_quarantine/transfer_coverage.json",
-    "legacy_quarantine/transfer_coverage.noise-001.json",
-    "legacy_quarantine/transfer_coverage.noise-002.json",
-    "legacy_quarantine/transfer_coverage.noise-003.json",
-    "legacy_quarantine/transfer_coverage.pass-001.json",
-    "legacy_quarantine/transfer_coverage.pass-002.json",
-    "legacy_quarantine/transfer_coverage.pass-003.json",
-    "legacy_quarantine/transfer_coverage.wave-001.json"
+    "bucket_plan.json",
+    "canon_inventory.json",
+    "canonical_obligations.20260421T210130Z.json",
+    "canonical_obligations.20260422T214829Z.json",
+    "canonical_obligations.20260422T214829Z.pass-001.json",
+    "canonical_obligations.20260422T214829Z.wave-001.json",
+    "canonical_obligations.20260423T183434Z.json",
+    "canonical_obligations.json",
+    "canonical_obligations.noise-001.20260423T183434Z.json",
+    "canonical_obligations.noise-001.json",
+    "canonical_obligations.pass-001.20260421T210130Z.json",
+    "canonical_obligations.pass-001.20260423T183434Z.json",
+    "canonical_obligations.pass-001.json",
+    "canonical_obligations.pass-002.json",
+    "canonical_obligations.pass-003.json",
+    "canonical_obligations.pass-004.json",
+    "canonical_obligations.pass-005.json",
+    "canonical_obligations.pass-006.json",
+    "canonical_obligations.pass-007.json",
+    "canonical_obligations.pass-008.json",
+    "canonical_obligations.pass-009.json",
+    "canonical_obligations.pass-010.json",
+    "canonical_obligations.pass-011.json",
+    "canonical_obligations.wave-001.20260421T210130Z.json",
+    "canonical_obligations.wave-001.20260423T183434Z.json",
+    "canonical_obligations.wave-001.json",
+    "canonical_obligations.wave-002.20260421T210130Z.json",
+    "canonical_obligations.wave-002.json",
+    "canonical_obligations.wave-003.20260421T210130Z.json",
+    "canonical_obligations.wave-003.json",
+    "canonical_obligations.wave-004.json",
+    "canonical_obligations_source_coverage_report.20260423T183434Z.json",
+    "canonical_obligations_source_coverage_report.json",
+    "coverage_collection.json",
+    "current_state.20260417T220834.md",
+    "current_state.20260417T221909.md",
+    "current_state.20260417T222958.md",
+    "current_state.20260420T194958.md",
+    "current_state.20260421T162956.md",
+    "current_state.20260421T210130Z.md",
+    "current_state.20260422T214829Z.md",
+    "current_state.20260423T183434Z.md",
+    "current_state.md",
+    "ledger_obligation_seed.20260421T162956.json",
+    "ledger_obligation_seed.20260421T210130Z.json",
+    "ledger_obligation_seed.20260422T214829Z.completeness-noise.json",
+    "ledger_obligation_seed.20260422T214829Z.deferred-noise-001.json",
+    "ledger_obligation_seed.20260422T214829Z.deferred-noise-002.json",
+    "ledger_obligation_seed.20260422T214829Z.deferred-noise-003.json",
+    "ledger_obligation_seed.20260422T214829Z.deferred-resolve-001.json",
+    "ledger_obligation_seed.20260422T214829Z.deferred-resolve-002.json",
+    "ledger_obligation_seed.20260422T214829Z.deferred-resolve-003.json",
+    "ledger_obligation_seed.20260422T214829Z.deferred.json",
+    "ledger_obligation_seed.20260422T214829Z.finalizer-noise.json",
+    "ledger_obligation_seed.20260422T214829Z.json",
+    "ledger_obligation_seed.20260422T214829Z.noise-001.json",
+    "ledger_obligation_seed.20260422T214829Z.noise-002.json",
+    "ledger_obligation_seed.20260422T214829Z.noise-003.json",
+    "ledger_obligation_seed.20260422T214829Z.pass-001.json",
+    "ledger_obligation_seed.20260422T214829Z.pass-002.json",
+    "ledger_obligation_seed.20260422T214829Z.pass-003.json",
+    "ledger_obligation_seed.20260422T214829Z.wave-001.json",
+    "ledger_obligation_seed.20260422T214829Z.wave-002.json",
+    "ledger_obligation_seed.20260422T214829Z.wave-003.json",
+    "ledger_obligation_seed.20260422T214829Z.wave-004.json",
+    "ledger_obligation_seed.20260423T183434Z.json",
+    "ledger_obligation_seed.completeness-noise.20260421T210130Z.json",
+    "ledger_obligation_seed.completeness-noise.20260423T183434Z.json",
+    "ledger_obligation_seed.completeness-noise.json",
+    "ledger_obligation_seed.deferred-noise-001.20260421T210130Z.json",
+    "ledger_obligation_seed.deferred-noise-001.20260423T183434Z.json",
+    "ledger_obligation_seed.deferred-noise-001.json",
+    "ledger_obligation_seed.deferred-noise-002.json",
+    "ledger_obligation_seed.deferred-noise-003.json",
+    "ledger_obligation_seed.deferred-noise-004.json",
+    "ledger_obligation_seed.deferred-noise-005.json",
+    "ledger_obligation_seed.deferred-noise-006.json",
+    "ledger_obligation_seed.deferred-noise-007.json",
+    "ledger_obligation_seed.deferred-noise-008.json",
+    "ledger_obligation_seed.deferred-resolve-001.20260421T210130Z.json",
+    "ledger_obligation_seed.deferred-resolve-001.20260423T183434Z.json",
+    "ledger_obligation_seed.deferred-resolve-001.json",
+    "ledger_obligation_seed.deferred-resolve-002.json",
+    "ledger_obligation_seed.deferred-resolve-003.json",
+    "ledger_obligation_seed.deferred-resolve-004.json",
+    "ledger_obligation_seed.deferred-resolve-005.json",
+    "ledger_obligation_seed.deferred-resolve-006.json",
+    "ledger_obligation_seed.deferred-resolve-007.json",
+    "ledger_obligation_seed.deferred-resolve-008.json",
+    "ledger_obligation_seed.deferred.20260421T210130Z.json",
+    "ledger_obligation_seed.deferred.20260423T183434Z.json",
+    "ledger_obligation_seed.deferred.json",
+    "ledger_obligation_seed.finalizer-noise.20260421T210130Z.json",
+    "ledger_obligation_seed.finalizer-noise.20260423T183434Z.json",
+    "ledger_obligation_seed.finalizer-noise.json",
+    "ledger_obligation_seed.json",
+    "ledger_obligation_seed.noise-001.20260421T210130Z.json",
+    "ledger_obligation_seed.noise-001.20260423T183434Z.json",
+    "ledger_obligation_seed.noise-001.json",
+    "ledger_obligation_seed.noise-002.20260421T210130Z.json",
+    "ledger_obligation_seed.noise-002.20260423T183434Z.json",
+    "ledger_obligation_seed.noise-002.json",
+    "ledger_obligation_seed.noise-003.20260421T210130Z.json",
+    "ledger_obligation_seed.noise-003.20260423T183434Z.json",
+    "ledger_obligation_seed.noise-003.json",
+    "ledger_obligation_seed.pass-001.20260421T162956.json",
+    "ledger_obligation_seed.pass-001.20260421T210130Z.json",
+    "ledger_obligation_seed.pass-001.20260423T183434Z.json",
+    "ledger_obligation_seed.pass-001.json",
+    "ledger_obligation_seed.pass-002.20260421T162956.json",
+    "ledger_obligation_seed.pass-002.20260421T210130Z.json",
+    "ledger_obligation_seed.pass-002.20260423T183434Z.json",
+    "ledger_obligation_seed.pass-002.json",
+    "ledger_obligation_seed.pass-003.20260421T162956.json",
+    "ledger_obligation_seed.pass-003.20260421T210130Z.json",
+    "ledger_obligation_seed.pass-003.20260423T183434Z.json",
+    "ledger_obligation_seed.pass-003.json",
+    "ledger_obligation_seed.pass-004.json",
+    "ledger_obligation_seed.pass-005.json",
+    "ledger_obligation_seed.pass-006.json",
+    "ledger_obligation_seed.pass-007.json",
+    "ledger_obligation_seed.pass-008.json",
+    "ledger_obligation_seed.pass-009.json",
+    "ledger_obligation_seed.pass-010.json",
+    "ledger_obligation_seed.pass-011.json",
+    "ledger_obligation_seed.pass-012.json",
+    "ledger_obligation_seed.pass-013.json",
+    "ledger_obligation_seed.pass-014.json",
+    "ledger_obligation_seed.pass-015.json",
+    "ledger_obligation_seed.pass-016.json",
+    "ledger_obligation_seed.pass-017.json",
+    "ledger_obligation_seed.pass-018.json",
+    "ledger_obligation_seed.pass-019.json",
+    "ledger_obligation_seed.pass-020.json",
+    "ledger_obligation_seed.pass-021.json",
+    "ledger_obligation_seed.pass-022.json",
+    "ledger_obligation_seed.pass-023.json",
+    "ledger_obligation_seed.pass-024.json",
+    "ledger_obligation_seed.pass-025.json",
+    "ledger_obligation_seed.pass-026.json",
+    "ledger_obligation_seed.pass-027.json",
+    "ledger_obligation_seed.pass-028.json",
+    "ledger_obligation_seed.pass-029.json",
+    "ledger_obligation_seed.pass-030.json",
+    "ledger_obligation_seed.pass-031.json",
+    "ledger_obligation_seed.pass-032.json",
+    "ledger_obligation_seed.pass-033.json",
+    "ledger_obligation_seed.pass-034.json",
+    "ledger_obligation_seed.pass-035.json",
+    "ledger_obligation_seed.pass-036.json",
+    "ledger_obligation_seed.pass-037.json",
+    "ledger_obligation_seed.wave-001.20260421T162956.json",
+    "ledger_obligation_seed.wave-001.20260421T210130Z.json",
+    "ledger_obligation_seed.wave-001.20260423T183434Z.json",
+    "ledger_obligation_seed.wave-001.json",
+    "ledger_obligation_seed.wave-002.20260421T162956.json",
+    "ledger_obligation_seed.wave-002.20260421T210130Z.json",
+    "ledger_obligation_seed.wave-002.20260423T183434Z.json",
+    "ledger_obligation_seed.wave-002.json",
+    "ledger_obligation_seed.wave-003.20260421T162956.json",
+    "ledger_obligation_seed.wave-003.20260421T210130Z.json",
+    "ledger_obligation_seed.wave-003.20260423T183434Z.json",
+    "ledger_obligation_seed.wave-003.json",
+    "ledger_obligation_seed.wave-004.20260421T162956.json",
+    "ledger_obligation_seed.wave-004.20260421T210130Z.json",
+    "ledger_obligation_seed.wave-004.20260423T183434Z.json",
+    "ledger_obligation_seed.wave-004.json",
+    "ledger_obligation_seed.wave-005.20260421T162956.json",
+    "ledger_obligation_seed.wave-005.20260421T210130Z.json",
+    "ledger_obligation_seed.wave-005.20260423T183434Z.json",
+    "ledger_obligation_seed.wave-005.json",
+    "ledger_obligation_seed.wave-006.20260421T162956.json",
+    "ledger_obligation_seed.wave-006.20260421T210130Z.json",
+    "ledger_obligation_seed.wave-006.20260423T183434Z.json",
+    "ledger_obligation_seed.wave-006.json",
+    "ledger_obligation_seed.wave-007.20260421T162956.json",
+    "ledger_obligation_seed.wave-007.json",
+    "ledger_obligation_seed.wave-008.20260421T162956.json",
+    "ledger_obligation_seed.wave-008.json",
+    "ledger_obligation_seed.wave-009.20260421T162956.json",
+    "ledger_obligation_seed.wave-009.json",
+    "ledger_obligation_seed.wave-010.20260421T162956.json",
+    "ledger_obligation_seed.wave-010.json",
+    "ledger_obligation_seed.wave-011.20260421T162956.json",
+    "ledger_obligation_seed.wave-011.json",
+    "ledger_obligation_seed.wave-012.20260421T162956.json",
+    "ledger_obligation_seed.wave-012.json",
+    "ledger_seed_completeness_report.20260421T210130Z.json",
+    "ledger_seed_completeness_report.20260422T214829Z.json",
+    "ledger_seed_completeness_report.20260423T183434Z.json",
+    "ledger_seed_completeness_report.json",
+    "migration_report.md",
+    "missing_transfer_report.md",
+    "mode_rules.md",
+    "mode_status.md",
+    "open_gaps.json",
+    "open_gaps.pass-001.json",
+    "open_gaps.wave-001.json",
+    "open_gaps.wave-002.json",
+    "open_gaps.wave-003.json",
+    "open_gaps.wave-004.json",
+    "open_gaps.wave-005.json",
+    "packet_plan.json",
+    "reconciliation_plan.json",
+    "schema_repair_report.md",
+    "section_obligation_map.json",
+    "transfer_coverage.20260423T183434Z.json",
+    "transfer_coverage.deferred.json",
+    "transfer_coverage.json",
+    "transfer_coverage.noise-001.20260423T183434Z.json",
+    "transfer_coverage.noise-001.json",
+    "transfer_coverage.noise-002.json",
+    "transfer_coverage.noise-003.json",
+    "transfer_coverage.pass-001.20260423T183434Z.json",
+    "transfer_coverage.pass-001.json",
+    "transfer_coverage.pass-002.json",
+    "transfer_coverage.pass-003.json",
+    "transfer_coverage.row_inventory.json",
+    "transfer_coverage.wave-001.20260423T183434Z.json",
+    "transfer_coverage.wave-001.json",
+    "transfer_coverage.wave-002.json",
+    "transfer_coverage.wave-003.json",
+    "transfer_coverage.wave-004.json",
+    "transfer_coverage.wave-005.json",
+    "transfer_coverage.wave-006.json",
+    "transfer_coverage.wave-007.json",
+    "transfer_coverage_source_coverage_report.json"
   ],
   "active_files_remaining": [
     "current_state.md",

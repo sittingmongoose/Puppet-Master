@@ -1,0 +1,1053 @@
+{
+  "schema_id": "pm.transfer_coverage_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-092",
+  "row_groups": [
+    "rowgrp-0365",
+    "rowgrp-0366",
+    "rowgrp-0367",
+    "rowgrp-0368"
+  ],
+  "coverage_rows": [
+    {
+      "coverage_id": "cov-03017",
+      "source_obligation_ids": [
+        "obl-2931"
+      ],
+      "source_seed_ids": [
+        "seed-3717"
+      ],
+      "source_shard_ids": [
+        "shard-0055"
+      ],
+      "canon_label": "FinalGUISpec.md",
+      "row_type": "consumer",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "Contradictions / gaps surfaced",
+      "status": "missing",
+      "exact_items": [
+        "`FinalGUISpec.md` still overstates the scope of `OpenFile` by claiming all file-open actions across the app use that one contract, even though the app now needs identity-native subject opens."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-03019",
+      "source_obligation_ids": [
+        "obl-2933"
+      ],
+      "source_seed_ids": [
+        "seed-3719"
+      ],
+      "source_shard_ids": [
+        "shard-0055"
+      ],
+      "canon_label": "resume_url",
+      "row_type": "consumer",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "Contradictions / gaps surfaced",
+      "status": "missing",
+      "exact_items": [
+        "`resume_url` is already more precise than many in-app jumps, which is backwards; in-app routing should be at least as strong as serialized resume links."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-03022",
+      "source_obligation_ids": [
+        "obl-2936"
+      ],
+      "source_seed_ids": [
+        "seed-3722"
+      ],
+      "source_shard_ids": [
+        "shard-0055"
+      ],
+      "canon_label": "Candidate fixes to carry forward",
+      "row_type": "consumer",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "Candidate fixes to carry forward",
+      "status": "missing",
+      "exact_items": [
+        "Introduce explicit subject-open command coverage in the command catalog instead of overloading path-open semantics everywhere."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-03024",
+      "source_obligation_ids": [
+        "obl-2938"
+      ],
+      "source_seed_ids": [
+        "seed-3724"
+      ],
+      "source_shard_ids": [
+        "shard-0055"
+      ],
+      "canon_label": "Do-not-forget details",
+      "row_type": "consumer",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "Do-not-forget details",
+      "status": "missing",
+      "exact_items": [
+        "The system now wants a routing contract, not just more command IDs."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-03027",
+      "source_obligation_ids": [
+        "obl-2941"
+      ],
+      "source_seed_ids": [
+        "seed-3732"
+      ],
+      "source_shard_ids": [
+        "shard-0055"
+      ],
+      "canon_label": "Key findings",
+      "row_type": "consumer",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "Key findings",
+      "status": "missing",
+      "exact_items": [
+        "The command catalog already contains many specific pivots:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-03029",
+      "source_obligation_ids": [
+        "obl-2943"
+      ],
+      "source_seed_ids": [
+        "seed-3734"
+      ],
+      "source_shard_ids": [
+        "shard-0055"
+      ],
+      "canon_label": "generated://<artifact_id>",
+      "row_type": "consumer",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "Key findings",
+      "status": "missing",
+      "exact_items": [
+        "artifact-backed `generated://<artifact_id>`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-03033",
+      "source_obligation_ids": [
+        "obl-2947"
+      ],
+      "source_seed_ids": [
+        "seed-3738"
+      ],
+      "source_shard_ids": [
+        "shard-0055"
+      ],
+      "canon_label": "Recommended command-family responsibilities",
+      "row_type": "consumer",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "Recommended command-family responsibilities",
+      "status": "missing",
+      "exact_items": [
+        "resolves file/document/artifact/generated/report targets"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-03037",
+      "source_obligation_ids": [
+        "obl-2951"
+      ],
+      "source_seed_ids": [
+        "seed-3742"
+      ],
+      "source_shard_ids": [
+        "shard-0055"
+      ],
+      "canon_label": "Why this matters",
+      "row_type": "consumer",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "Why this matters",
+      "status": "missing",
+      "exact_items": [
+        "it reduces command sprawl"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-03045",
+      "source_obligation_ids": [
+        "obl-2959"
+      ],
+      "source_seed_ids": [
+        "seed-3759"
+      ],
+      "source_shard_ids": [
+        "shard-0055"
+      ],
+      "canon_label": "Show in Ledger",
+      "row_type": "consumer",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "Candidate fixes to carry forward",
+      "status": "missing",
+      "exact_items": [
+        "align `Show in Ledger`, `Show in Usage`, and artifact/report opens around the same target schema instead of per-feature payloads"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-03047",
+      "source_obligation_ids": [
+        "obl-2961"
+      ],
+      "source_seed_ids": [
+        "seed-3761"
+      ],
+      "source_shard_ids": [
+        "shard-0055"
+      ],
+      "canon_label": "Do-not-forget details",
+      "row_type": "consumer",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "Do-not-forget details",
+      "status": "missing",
+      "exact_items": [
+        "The catalog gap is now structural, not just a few missing IDs."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-03052",
+      "source_obligation_ids": [
+        "obl-2966"
+      ],
+      "source_seed_ids": [
+        "seed-3778"
+      ],
+      "source_shard_ids": [
+        "shard-0055"
+      ],
+      "canon_label": "cmd.chat.run_user_command",
+      "row_type": "consumer",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "Key findings",
+      "status": "missing",
+      "exact_items": [
+        "`cmd.chat.run_user_command` remains the missing core dispatch seam for User Commands, not merely an uncataloged helper."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-03054",
+      "source_obligation_ids": [
+        "obl-2968"
+      ],
+      "source_seed_ids": [
+        "seed-3780"
+      ],
+      "source_shard_ids": [
+        "shard-0055"
+      ],
+      "canon_label": "Key findings",
+      "row_type": "consumer",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "Key findings",
+      "status": "missing",
+      "exact_items": [
+        "Wiring / gate verification failures sharpened into exact structural limits:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-03059",
+      "source_obligation_ids": [
+        "obl-2973"
+      ],
+      "source_seed_ids": [
+        "seed-3785"
+      ],
+      "source_shard_ids": [
+        "shard-0055"
+      ],
+      "canon_label": "Key findings",
+      "row_type": "consumer",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "Key findings",
+      "status": "missing",
+      "exact_items": [
+        "Project artifact / file-management lineage got materially sharper:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-03060",
+      "source_obligation_ids": [
+        "obl-2974"
+      ],
+      "source_seed_ids": [
+        "seed-3786"
+      ],
+      "source_shard_ids": [
+        "shard-0055"
+      ],
+      "canon_label": "project_id",
+      "row_type": "consumer",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "Key findings",
+      "status": "missing",
+      "exact_items": [
+        "`project_id` is no longer just a nice-to-have lineage field; its omission now clearly blocks deterministic projector partitioning, replay, and per-project artifact/search indexing."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-03061",
+      "source_obligation_ids": [
+        "obl-2975"
+      ],
+      "source_seed_ids": [
+        "seed-3787"
+      ],
+      "source_shard_ids": [
+        "shard-0055"
+      ],
+      "canon_label": "OpenFile { path }",
+      "row_type": "consumer",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "Key findings",
+      "status": "missing",
+      "exact_items": [
+        "`OpenFile { path }` is directly incompatible with generated/runtime identity opens; the missing contract is now clearly an open-by-identity router, not a bigger `OpenFile`."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-03071",
+      "source_obligation_ids": [
+        "obl-2985"
+      ],
+      "source_seed_ids": [
+        "seed-3797"
+      ],
+      "source_shard_ids": [
+        "shard-0056"
+      ],
+      "canon_label": "Gate-registry integrity is still behind the runtime model:",
+      "row_type": "consumer",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "Gate-registry integrity is still behind the runtime model:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-03072",
+      "source_obligation_ids": [
+        "obl-2986"
+      ],
+      "source_seed_ids": [
+        "seed-3798"
+      ],
+      "source_shard_ids": [
+        "shard-0056"
+      ],
+      "canon_label": "GATE-007",
+      "row_type": "consumer",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "`GATE-007` / `GATE-008` are still missing from the registry with no tombstone/reserved handling."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-03073",
+      "source_obligation_ids": [
+        "obl-2987"
+      ],
+      "source_seed_ids": [
+        "seed-3799"
+      ],
+      "source_shard_ids": [
+        "shard-0056"
+      ],
+      "canon_label": "attention_required",
+      "row_type": "consumer",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "GATE-012 still collapses `attention_required` and true wizard `blocked` escalation into one evidence path."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-03074",
+      "source_obligation_ids": [
+        "obl-2988"
+      ],
+      "source_seed_ids": [
+        "seed-3800"
+      ],
+      "source_shard_ids": [
+        "shard-0056"
+      ],
+      "canon_label": "attention_required",
+      "row_type": "consumer",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "`attention_required` still lacks a durable persisted shape parallel to `blocked_notice`, so the gate\u2019s evidence expectations remain only partially machine-verifiable."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-03076",
+      "source_obligation_ids": [
+        "obl-2990"
+      ],
+      "source_seed_ids": [
+        "seed-3802"
+      ],
+      "source_shard_ids": [
+        "shard-0056"
+      ],
+      "canon_label": "preview/build/open-artifact orchestrator command IDs are still exact uncataloged gaps.",
+      "row_type": "consumer",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "preview/build/open-artifact orchestrator command IDs are still exact uncataloged gaps."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-03079",
+      "source_obligation_ids": [
+        "obl-2993"
+      ],
+      "source_seed_ids": [
+        "seed-3805"
+      ],
+      "source_shard_ids": [
+        "shard-0056"
+      ],
+      "canon_label": "handoff naming and thread collision behavior remain unowned across Assistant, HITL, and project-",
+      "row_type": "consumer",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "handoff naming and thread collision behavior remain unowned across Assistant, HITL, and project-switch flows."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-03088",
+      "source_obligation_ids": [
+        "obl-3002"
+      ],
+      "source_seed_ids": [
+        "seed-3834"
+      ],
+      "source_shard_ids": [
+        "shard-0056"
+      ],
+      "canon_label": "Candidate fixes to carry forward",
+      "row_type": "consumer",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "Candidate fixes to carry forward",
+      "status": "missing",
+      "exact_items": [
+        "slash-command reservation,"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-03089",
+      "source_obligation_ids": [
+        "obl-3003"
+      ],
+      "source_seed_ids": [
+        "seed-3835"
+      ],
+      "source_shard_ids": [
+        "shard-0056"
+      ],
+      "canon_label": "Candidate fixes to carry forward",
+      "row_type": "consumer",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "Candidate fixes to carry forward",
+      "status": "missing",
+      "exact_items": [
+        "command execution seam for User Commands,"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-03090",
+      "source_obligation_ids": [
+        "obl-3004"
+      ],
+      "source_seed_ids": [
+        "seed-3836"
+      ],
+      "source_shard_ids": [
+        "shard-0056"
+      ],
+      "canon_label": "Candidate fixes to carry forward",
+      "row_type": "consumer",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "Candidate fixes to carry forward",
+      "status": "missing",
+      "exact_items": [
+        "Extend wiring/gate schemas so runtime-era checks become machine-verifiable:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-03091",
+      "source_obligation_ids": [
+        "obl-3005"
+      ],
+      "source_seed_ids": [
+        "seed-3837"
+      ],
+      "source_shard_ids": [
+        "shard-0056"
+      ],
+      "canon_label": "project_id",
+      "row_type": "consumer",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "Candidate fixes to carry forward",
+      "status": "missing",
+      "exact_items": [
+        "Promote `project_id`, `attempt_id`, generated/runtime identity routing, and artifact/evidence join fields to first-class owners in the artifact/file/storage docs."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-03100",
+      "source_obligation_ids": [
+        "obl-3014"
+      ],
+      "source_seed_ids": [
+        "seed-3868"
+      ],
+      "source_shard_ids": [
+        "shard-0056"
+      ],
+      "canon_label": "Key findings",
+      "row_type": "consumer",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "Key findings",
+      "status": "missing",
+      "exact_items": [
+        "Command/event registry drift sharpened further:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-03102",
+      "source_obligation_ids": [
+        "obl-3016"
+      ],
+      "source_seed_ids": [
+        "seed-3870"
+      ],
+      "source_shard_ids": [
+        "shard-0056"
+      ],
+      "canon_label": "Key findings",
+      "row_type": "consumer",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "Key findings",
+      "status": "missing",
+      "exact_items": [
+        "reserved-name policy remains split across command-system, chat-design, and command-catalog owners with no single enforceable boundary."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-03103",
+      "source_obligation_ids": [
+        "obl-3017"
+      ],
+      "source_seed_ids": [
+        "seed-3871"
+      ],
+      "source_shard_ids": [
+        "shard-0056"
+      ],
+      "canon_label": "cmd.*",
+      "row_type": "consumer",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "Key findings",
+      "status": "missing",
+      "exact_items": [
+        "superseded command IDs still remain visible as plain `cmd.*` tokens inside the catalog, which can poison regex-style coverage extraction."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-03104",
+      "source_obligation_ids": [
+        "obl-3018"
+      ],
+      "source_seed_ids": [
+        "seed-3872"
+      ],
+      "source_shard_ids": [
+        "shard-0056"
+      ],
+      "canon_label": "cmd.*.json",
+      "row_type": "consumer",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "Key findings",
+      "status": "missing",
+      "exact_items": [
+        "Wiring Matrix example/evidence strings also contain `cmd.*.json` filename fragments that can poison naive ID extraction separately from real command rows."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-03105",
+      "source_obligation_ids": [
+        "obl-3019"
+      ],
+      "source_seed_ids": [
+        "seed-3873"
+      ],
+      "source_shard_ids": [
+        "shard-0056"
+      ],
+      "canon_label": "Wiring_Matrix.schema.json",
+      "row_type": "consumer",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "Key findings",
+      "status": "missing",
+      "exact_items": [
+        "wildcard command-family requirements in Wiring Matrix still cannot be represented by `Wiring_Matrix.schema.json` as written."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-03107",
+      "source_obligation_ids": [
+        "obl-3021"
+      ],
+      "source_seed_ids": [
+        "seed-3875"
+      ],
+      "source_shard_ids": [
+        "shard-0056"
+      ],
+      "canon_label": "cmd.runtime.*",
+      "row_type": "consumer",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "Key findings",
+      "status": "missing",
+      "exact_items": [
+        "dispatcher still lacks an explicit runtime rule that `cmd.runtime.*` recovery actions must be admitted only when the current blocked episode exposes the corresponding ordered `allowed_action_ids[]`."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-03108",
+      "source_obligation_ids": [
+        "obl-3022"
+      ],
+      "source_seed_ids": [
+        "seed-3876"
+      ],
+      "source_shard_ids": [
+        "shard-0056"
+      ],
+      "canon_label": "correlation_id",
+      "row_type": "consumer",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "Key findings",
+      "status": "missing",
+      "exact_items": [
+        "`correlation_id` still lacks an explicit trace-through requirement into persisted dispatch/domain events."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-03110",
+      "source_obligation_ids": [
+        "obl-3024"
+      ],
+      "source_seed_ids": [
+        "seed-3878"
+      ],
+      "source_shard_ids": [
+        "shard-0056"
+      ],
+      "canon_label": "Key findings",
+      "row_type": "consumer",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "Key findings",
+      "status": "missing",
+      "exact_items": [
+        "Project artifact / file-management gaps continued to deepen:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-03112",
+      "source_obligation_ids": [
+        "obl-3026"
+      ],
+      "source_seed_ids": [
+        "seed-3880"
+      ],
+      "source_shard_ids": [
+        "shard-0056"
+      ],
+      "canon_label": "project_id",
+      "row_type": "consumer",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "Key findings",
+      "status": "missing",
+      "exact_items": [
+        "`project_id` omission is now clearly a determinism problem in app-global seglog mode because artifact events cannot be partitioned safely by project otherwise."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-03113",
+      "source_obligation_ids": [
+        "obl-3027"
+      ],
+      "source_seed_ids": [
+        "seed-3881"
+      ],
+      "source_shard_ids": [
+        "shard-0056"
+      ],
+      "canon_label": "OpenFile { path }",
+      "row_type": "consumer",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "Key findings",
+      "status": "missing",
+      "exact_items": [
+        "`OpenFile { path }` is now unambiguously workspace-root-only, proving that generated/runtime opens need a separate open-by-identity router."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-03123",
+      "source_obligation_ids": [
+        "obl-3037"
+      ],
+      "source_seed_ids": [
+        "seed-3891"
+      ],
+      "source_shard_ids": [
+        "shard-0056"
+      ],
+      "canon_label": "Key findings",
+      "row_type": "consumer",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "Key findings",
+      "status": "missing",
+      "exact_items": [
+        "Gate/evidence integrity still is not caught up to the runtime model:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-03124",
+      "source_obligation_ids": [
+        "obl-3038"
+      ],
+      "source_seed_ids": [
+        "seed-3892"
+      ],
+      "source_shard_ids": [
+        "shard-0056"
+      ],
+      "canon_label": "run-gates",
+      "row_type": "consumer",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "Key findings",
+      "status": "missing",
+      "exact_items": [
+        "`run-gates` currently enforces plan-shard freshness, but Progression_Gates does not admit that as part of its gate inventory/status model."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-03125",
+      "source_obligation_ids": [
+        "obl-3039"
+      ],
+      "source_seed_ids": [
+        "seed-3893"
+      ],
+      "source_shard_ids": [
+        "shard-0056"
+      ],
+      "canon_label": "pm.evidence.schema.v1",
+      "row_type": "consumer",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "Key findings",
+      "status": "missing",
+      "exact_items": [
+        "`pm.evidence.schema.v1` still cannot encode the tri-state or machine-readable arrays that GATE-011/GATE-012 now demand."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-03126",
+      "source_obligation_ids": [
+        "obl-3040"
+      ],
+      "source_seed_ids": [
+        "seed-3894"
+      ],
+      "source_shard_ids": [
+        "shard-0056"
+      ],
+      "canon_label": "attention_required",
+      "row_type": "consumer",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "Key findings",
+      "status": "missing",
+      "exact_items": [
+        "GATE-012 still collapses `attention_required` and true `blocked` escalation in its evidence path."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    },
+    {
+      "coverage_id": "cov-03127",
+      "source_obligation_ids": [
+        "obl-3041"
+      ],
+      "source_seed_ids": [
+        "seed-3895"
+      ],
+      "source_shard_ids": [
+        "shard-0056"
+      ],
+      "canon_label": "newtools.md",
+      "row_type": "consumer",
+      "path": "__DOC_DISCOVERY_REQUIRED__",
+      "heading_hint": "Key findings",
+      "status": "missing",
+      "exact_items": [
+        "`newtools.md` and assistant-memory continued to add final-pass-worthy signal:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "doc_discovery_required:no concrete Plans path in canonical obligation"
+      ],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+    }
+  ]
+}

@@ -1,60 +1,532 @@
 {
-  "schema_id": "pm.ledger_obligation_seed.noise.v1",
+  "schema_id": "pm.ledger_obligation_seed_noise.v1",
   "work_id": "w-20260312-203855",
-  "pass": 1,
-  "noise_findings_total": 8,
-  "noise_findings": [
+  "noise_id": "noise-001",
+  "source": "shard extraction and verification pass 001",
+  "noise_items_total": 129,
+  "representative_noise_items": [
     {
-      "reason": "duplicate_or_weaker",
+      "item": "- Run Status",
       "source_evidence": [
-        "working_ledger.md:L2986-L2995",
-        "working_ledger.md:L5991-L5995"
-      ]
+        "working_ledger.md:L79"
+      ],
+      "reason": "metric/status/count/family or process line without concrete obligation-grade evidence"
     },
     {
-      "reason": "duplicate_or_weaker",
+      "item": "- Run Status -> `History`",
       "source_evidence": [
-        "working_ledger.md:L3084-L3092",
-        "working_ledger.md:L6003-L6011"
-      ]
+        "working_ledger.md:L93"
+      ],
+      "reason": "metric/status/count/family or process line without concrete obligation-grade evidence"
     },
     {
-      "reason": "duplicate_or_weaker",
+      "item": "- Dashboard = summary/urgency",
       "source_evidence": [
-        "working_ledger.md:L3094-L3108",
-        "working_ledger.md:L6016-L6039"
-      ]
+        "working_ledger.md:L213"
+      ],
+      "reason": "metric/status/count/family or process line without concrete obligation-grade evidence"
     },
     {
-      "reason": "summary_only",
+      "item": "- recently resolved major items may linger briefly in summary surfaces",
       "source_evidence": [
-        "working_ledger.md:L3170-L3181",
-        "working_ledger.md:L6086-L6100"
-      ]
+        "working_ledger.md:L244"
+      ],
+      "reason": "metric/status/count/family or process line without concrete obligation-grade evidence"
     },
     {
-      "reason": "duplicate_or_weaker",
+      "item": "- persistent reusable-pattern summary",
       "source_evidence": [
-        "working_ledger.md:L10362-L10417"
-      ]
+        "working_ledger.md:L472"
+      ],
+      "reason": "metric/status/count/family or process line without concrete obligation-grade evidence"
     },
     {
-      "reason": "duplicate_or_weaker",
+      "item": "## Gaps / Problems Identified",
       "source_evidence": [
-        "working_ledger.md:L8791-L8850"
-      ]
+        "working_ledger.md:L679"
+      ],
+      "reason": "section heading or summary marker without obligation-grade evidence"
     },
     {
-      "reason": "duplicate_or_weaker",
+      "item": "- Lifecycle/status direction now discussed:",
       "source_evidence": [
-        "working_ledger.md:L8851-L8919"
-      ]
+        "working_ledger.md:L709"
+      ],
+      "reason": "metric/status/count/family or process line without concrete obligation-grade evidence"
     },
     {
-      "reason": "duplicate_or_weaker",
+      "item": "## Candidate Fixes / Design Directions",
       "source_evidence": [
-        "working_ledger.md:L17380-L17418"
-      ]
+        "working_ledger.md:L827"
+      ],
+      "reason": "section heading or summary marker without obligation-grade evidence"
+    },
+    {
+      "item": "- Preserve `status`, `run_prefix`, `next_run_seq`, and `run_id` during stewardship refreshes.",
+      "source_evidence": [
+        "working_ledger.md:L1124"
+      ],
+      "reason": "metric/status/count/family or process line without concrete obligation-grade evidence"
+    },
+    {
+      "item": "- **Dashboard \u2192 Orchestrator attention flow is under-specified.** FinalGUISpec mentions `widget.orchestrator_status` and `widget.current_task` on the Dashboard, but the navigation path from Dashboard summary \u2192 Orchestrator detail \u2192 active chat thread lacks a defined contract. Which overseer's thread? Which lane's state?",
+      "source_evidence": [
+        "working_ledger.md:L1262"
+      ],
+      "reason": "metric/status/count/family or process line without concrete obligation-grade evidence"
+    },
+    {
+      "item": "- **What old assumption is present:** Tier/phase/iteration events, `tier_runtime_record`, `tier_id`-based usage rollups, lexicographic graph dispatch, narrow node status enums, runtime state embedded in plan shards.",
+      "source_evidence": [
+        "working_ledger.md:L1558"
+      ],
+      "reason": "metric/status/count/family or process line without concrete obligation-grade evidence"
+    },
+    {
+      "item": "- lane/worktree summary in package context",
+      "source_evidence": [
+        "working_ledger.md:L2226"
+      ],
+      "reason": "metric/status/count/family or process line without concrete obligation-grade evidence"
+    },
+    {
+      "item": "- compact status chips/icons",
+      "source_evidence": [
+        "working_ledger.md:L2255"
+      ],
+      "reason": "metric/status/count/family or process line without concrete obligation-grade evidence"
+    },
+    {
+      "item": "- background runs count / status",
+      "source_evidence": [
+        "working_ledger.md:L2567"
+      ],
+      "reason": "metric/status/count/family or process line without concrete obligation-grade evidence"
+    },
+    {
+      "item": "- switch to historical-summary rendering",
+      "source_evidence": [
+        "working_ledger.md:L2613"
+      ],
+      "reason": "metric/status/count/family or process line without concrete obligation-grade evidence"
+    },
+    {
+      "item": "- separate `time status`, `replacement status`, and `validity status`",
+      "source_evidence": [
+        "working_ledger.md:L2814"
+      ],
+      "reason": "metric/status/count/family or process line without concrete obligation-grade evidence"
+    },
+    {
+      "item": "- `status`",
+      "source_evidence": [
+        "working_ledger.md:L3021"
+      ],
+      "reason": "metric/status/count/family or process line without concrete obligation-grade evidence"
+    },
+    {
+      "item": "- `summary`",
+      "source_evidence": [
+        "working_ledger.md:L3022"
+      ],
+      "reason": "metric/status/count/family or process line without concrete obligation-grade evidence"
+    },
+    {
+      "item": "- concrete consequence summary",
+      "source_evidence": [
+        "working_ledger.md:L3293"
+      ],
+      "reason": "metric/status/count/family or process line without concrete obligation-grade evidence"
+    },
+    {
+      "item": "- exact records belong in Ledger while summary/inspection lives elsewhere",
+      "source_evidence": [
+        "working_ledger.md:L3369"
+      ],
+      "reason": "metric/status/count/family or process line without concrete obligation-grade evidence"
+    },
+    {
+      "item": "- `summary`",
+      "source_evidence": [
+        "working_ledger.md:L3404"
+      ],
+      "reason": "metric/status/count/family or process line without concrete obligation-grade evidence"
+    },
+    {
+      "item": "- findings summary",
+      "source_evidence": [
+        "working_ledger.md:L3420"
+      ],
+      "reason": "metric/status/count/family or process line without concrete obligation-grade evidence"
+    },
+    {
+      "item": "- compact requested/effective summary for live context",
+      "source_evidence": [
+        "working_ledger.md:L3774"
+      ],
+      "reason": "metric/status/count/family or process line without concrete obligation-grade evidence"
+    },
+    {
+      "item": "- support-status chips for controls",
+      "source_evidence": [
+        "working_ledger.md:L3809"
+      ],
+      "reason": "metric/status/count/family or process line without concrete obligation-grade evidence"
+    },
+    {
+      "item": "- orchestrator status (`idle/running/paused`)",
+      "source_evidence": [
+        "working_ledger.md:L4167"
+      ],
+      "reason": "metric/status/count/family or process line without concrete obligation-grade evidence"
+    },
+    {
+      "item": "### Recommended status split",
+      "source_evidence": [
+        "working_ledger.md:L4180"
+      ],
+      "reason": "section heading or summary marker without obligation-grade evidence"
+    },
+    {
+      "item": "- pressure summary",
+      "source_evidence": [
+        "working_ledger.md:L4203"
+      ],
+      "reason": "metric/status/count/family or process line without concrete obligation-grade evidence"
+    },
+    {
+      "item": "- with optional count badge for additional issues",
+      "source_evidence": [
+        "working_ledger.md:L4230"
+      ],
+      "reason": "metric/status/count/family or process line without concrete obligation-grade evidence"
+    },
+    {
+      "item": "- render target: 500 nodes, stretch 1000",
+      "source_evidence": [
+        "working_ledger.md:L4433"
+      ],
+      "reason": "metric/status/count/family or process line without concrete obligation-grade evidence"
+    },
+    {
+      "item": "- new-links/live-status indicators may not",
+      "source_evidence": [
+        "working_ledger.md:L4741"
+      ],
+      "reason": "metric/status/count/family or process line without concrete obligation-grade evidence"
+    },
+    {
+      "item": "- `status`",
+      "source_evidence": [
+        "working_ledger.md:L4839"
+      ],
+      "reason": "metric/status/count/family or process line without concrete obligation-grade evidence"
+    },
+    {
+      "item": "- `summary`",
+      "source_evidence": [
+        "working_ledger.md:L4842"
+      ],
+      "reason": "metric/status/count/family or process line without concrete obligation-grade evidence"
+    },
+    {
+      "item": "- user-facing filtered table/render output such as CSV, JSON summary, rendered image, or currently filtered list",
+      "source_evidence": [
+        "working_ledger.md:L5366"
+      ],
+      "reason": "metric/status/count/family or process line without concrete obligation-grade evidence"
+    },
+    {
+      "item": "- convenience summary",
+      "source_evidence": [
+        "working_ledger.md:L5453"
+      ],
+      "reason": "metric/status/count/family or process line without concrete obligation-grade evidence"
+    },
+    {
+      "item": "- wizard status:",
+      "source_evidence": [
+        "working_ledger.md:L5822"
+      ],
+      "reason": "metric/status/count/family or process line without concrete obligation-grade evidence"
+    },
+    {
+      "item": "- `status`",
+      "source_evidence": [
+        "working_ledger.md:L5964"
+      ],
+      "reason": "metric/status/count/family or process line without concrete obligation-grade evidence"
+    },
+    {
+      "item": "- `Orchestrator_Page.md` still requires forbidden `requested_persona_id` / `effective_persona_id` names in live-status dependencies",
+      "source_evidence": [
+        "working_ledger.md:L7035"
+      ],
+      "reason": "metric/status/count/family or process line without concrete obligation-grade evidence"
+    },
+    {
+      "item": "- But the actual project summary model is still much too thin.",
+      "source_evidence": [
+        "working_ledger.md:L7121"
+      ],
+      "reason": "metric/status/count/family or process line without concrete obligation-grade evidence"
+    },
+    {
+      "item": "- current ledger routing/escalation/project-summary clusters",
+      "source_evidence": [
+        "working_ledger.md:L7209"
+      ],
+      "reason": "metric/status/count/family or process line without concrete obligation-grade evidence"
+    },
+    {
+      "item": "- Recommended rollup rule:",
+      "source_evidence": [
+        "working_ledger.md:L7270"
+      ],
+      "reason": "metric/status/count/family or process line without concrete obligation-grade evidence"
+    },
+    {
+      "item": "## Research Progress - 2026-03-16 - project summary and attention storage contract cluster",
+      "source_evidence": [
+        "working_ledger.md:L7426"
+      ],
+      "reason": "section heading or summary marker without obligation-grade evidence"
+    },
+    {
+      "item": "- current ledger project-summary / attention-routing clusters",
+      "source_evidence": [
+        "working_ledger.md:L7433"
+      ],
+      "reason": "metric/status/count/family or process line without concrete obligation-grade evidence"
+    },
+    {
+      "item": "- project-summary vs attention-item projections",
+      "source_evidence": [
+        "working_ledger.md:L7785"
+      ],
+      "reason": "metric/status/count/family or process line without concrete obligation-grade evidence"
+    },
+    {
+      "item": "- `status` (`active | cooled_down | resolved | invalidated`)",
+      "source_evidence": [
+        "working_ledger.md:L8213"
+      ],
+      "reason": "metric/status/count/family or process line without concrete obligation-grade evidence"
+    },
+    {
+      "item": "- project summary / attention item projections",
+      "source_evidence": [
+        "working_ledger.md:L8532"
+      ],
+      "reason": "metric/status/count/family or process line without concrete obligation-grade evidence"
+    },
+    {
+      "item": "- project summary",
+      "source_evidence": [
+        "working_ledger.md:L8574"
+      ],
+      "reason": "metric/status/count/family or process line without concrete obligation-grade evidence"
+    },
+    {
+      "item": "- parent-summary/dependency prompt conveniences",
+      "source_evidence": [
+        "working_ledger.md:L8741"
+      ],
+      "reason": "metric/status/count/family or process line without concrete obligation-grade evidence"
+    },
+    {
+      "item": "- project summary / attention items",
+      "source_evidence": [
+        "working_ledger.md:L9475"
+      ],
+      "reason": "metric/status/count/family or process line without concrete obligation-grade evidence"
+    },
+    {
+      "item": "- `summary`",
+      "source_evidence": [
+        "working_ledger.md:L9517"
+      ],
+      "reason": "metric/status/count/family or process line without concrete obligation-grade evidence"
+    },
+    {
+      "item": "- `summary?`",
+      "source_evidence": [
+        "working_ledger.md:L10614"
+      ],
+      "reason": "metric/status/count/family or process line without concrete obligation-grade evidence"
+    },
+    {
+      "item": "- preconditions, freshness, mutation risk, deprecation/tombstone status, reverse coverage, and dispatcher obligations.",
+      "source_evidence": [
+        "working_ledger.md:L11057"
+      ],
+      "reason": "metric/status/count/family or process line without concrete obligation-grade evidence"
+    },
+    {
+      "item": "- Rewrite summary / index / inventory docs are lagging hard enough to misroute future reconciliation work:",
+      "source_evidence": [
+        "working_ledger.md:L12744"
+      ],
+      "reason": "metric/status/count/family or process line without concrete obligation-grade evidence"
+    },
+    {
+      "item": "- Keep `resume_url` portability and persistence, but remove its status as the strongest implicit navigation mechanism.",
+      "source_evidence": [
+        "working_ledger.md:L13614"
+      ],
+      "reason": "metric/status/count/family or process line without concrete obligation-grade evidence"
+    },
+    {
+      "item": "- `summary`",
+      "source_evidence": [
+        "working_ledger.md:L13716"
+      ],
+      "reason": "metric/status/count/family or process line without concrete obligation-grade evidence"
+    },
+    {
+      "item": "- `inspector_target = summary | history | reviews`",
+      "source_evidence": [
+        "working_ledger.md:L14152"
+      ],
+      "reason": "metric/status/count/family or process line without concrete obligation-grade evidence"
+    },
+    {
+      "item": "- `inspector_target = summary | history | reviews | lineage`",
+      "source_evidence": [
+        "working_ledger.md:L14160"
+      ],
+      "reason": "metric/status/count/family or process line without concrete obligation-grade evidence"
+    },
+    {
+      "item": "- `Orchestrator_Page.md` still uses `evidence_ref` for summary/evidence surfaces, which is aligned with record inspection, not routing.",
+      "source_evidence": [
+        "working_ledger.md:L15018"
+      ],
+      "reason": "metric/status/count/family or process line without concrete obligation-grade evidence"
+    },
+    {
+      "item": "- That leaves `usage_record` and evidence/summary families in an unstable middle state:",
+      "source_evidence": [
+        "working_ledger.md:L15214"
+      ],
+      "reason": "metric/status/count/family or process line without concrete obligation-grade evidence"
+    },
+    {
+      "item": "- live status still says HITL requests are keyed by `request_id`",
+      "source_evidence": [
+        "working_ledger.md:L15644"
+      ],
+      "reason": "metric/status/count/family or process line without concrete obligation-grade evidence"
+    },
+    {
+      "item": "- The live-status layer is still split between:",
+      "source_evidence": [
+        "working_ledger.md:L15767"
+      ],
+      "reason": "metric/status/count/family or process line without concrete obligation-grade evidence"
+    },
+    {
+      "item": "- `widget.completed_prose` is also still described as completed tier summaries even though evidence and summary records are moving toward stronger object-backed surfaces.",
+      "source_evidence": [
+        "working_ledger.md:L15900"
+      ],
+      "reason": "metric/status/count/family or process line without concrete obligation-grade evidence"
+    },
+    {
+      "item": "- runtime artifacts and project attention/summary families still remain unevenly owned",
+      "source_evidence": [
+        "working_ledger.md:L16627"
+      ],
+      "reason": "metric/status/count/family or process line without concrete obligation-grade evidence"
+    },
+    {
+      "item": "- project summary / attention",
+      "source_evidence": [
+        "working_ledger.md:L16656"
+      ],
+      "reason": "metric/status/count/family or process line without concrete obligation-grade evidence"
+    },
+    {
+      "item": "## Research Progress - 2026-03-17 - promoted-shell and feature-summary tranche",
+      "source_evidence": [
+        "working_ledger.md:L16976"
+      ],
+      "reason": "section heading or summary marker without obligation-grade evidence"
+    },
+    {
+      "item": "- `feature-list.md` and `newfeatures.md` third as summary cleanup",
+      "source_evidence": [
+        "working_ledger.md:L17030"
+      ],
+      "reason": "metric/status/count/family or process line without concrete obligation-grade evidence"
+    },
+    {
+      "item": "- Mirrors and summary/checklist followers:",
+      "source_evidence": [
+        "working_ledger.md:L17059"
+      ],
+      "reason": "metric/status/count/family or process line without concrete obligation-grade evidence"
+    },
+    {
+      "item": "#### Help / project status / escalation transfer gaps sharpened",
+      "source_evidence": [
+        "working_ledger.md:L17419"
+      ],
+      "reason": "section heading or summary marker without obligation-grade evidence"
+    },
+    {
+      "item": "- settings/help/project-status structures",
+      "source_evidence": [
+        "working_ledger.md:L17472"
+      ],
+      "reason": "metric/status/count/family or process line without concrete obligation-grade evidence"
+    },
+    {
+      "item": "- timestamp_utc: 2026-04-16T02:44:23.119Z",
+      "source_evidence": [
+        "working_ledger.md:L17647"
+      ],
+      "reason": "metric/status/count/family or process line without concrete obligation-grade evidence"
+    },
+    {
+      "item": "- timestamp_utc: 2026-04-16T02:52:01.474Z",
+      "source_evidence": [
+        "working_ledger.md:L17687"
+      ],
+      "reason": "metric/status/count/family or process line without concrete obligation-grade evidence"
+    },
+    {
+      "item": "- timestamp_utc: 2026-04-16T03:07:02.489Z",
+      "source_evidence": [
+        "working_ledger.md:L17827"
+      ],
+      "reason": "metric/status/count/family or process line without concrete obligation-grade evidence"
+    },
+    {
+      "item": "- timestamp_utc: 2026-04-16T03:08:09.801Z",
+      "source_evidence": [
+        "working_ledger.md:L17850"
+      ],
+      "reason": "metric/status/count/family or process line without concrete obligation-grade evidence"
+    },
+    {
+      "item": "- timestamp_utc: 2026-04-16T03:59:39.707Z",
+      "source_evidence": [
+        "working_ledger.md:L18024"
+      ],
+      "reason": "metric/status/count/family or process line without concrete obligation-grade evidence"
+    },
+    {
+      "item": "- timestamp_utc: 2026-04-16T04:12:47.793Z",
+      "source_evidence": [
+        "working_ledger.md:L18069"
+      ],
+      "reason": "metric/status/count/family or process line without concrete obligation-grade evidence"
+    },
+    {
+      "item": "verification pass found no additional material beyond shard seed_candidates",
+      "uncertain_items_reviewed": 43,
+      "reason": "uncertain entries were open design questions or weaker restatements under deterministic seed rules"
     }
   ]
 }

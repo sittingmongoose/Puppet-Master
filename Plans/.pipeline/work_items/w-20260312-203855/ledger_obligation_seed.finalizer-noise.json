@@ -1,8 +1,6552 @@
 {
-  "schema_id": "pm.ledger_obligation_seed.finalizer_noise.v1",
+  "schema_id": "pm.ledger_obligation_seed_finalizer_noise.v1",
   "work_id": "w-20260312-203855",
-  "items_moved": [],
-  "summary": {
-    "finalizer_noise_items_total": 0
-  }
+  "source_seed": "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.json",
+  "timestamp_utc": "2026-04-28T16:37:11Z",
+  "reason": "finalizer_schema_and_summary_poison_cleanup",
+  "items_moved_count": 294,
+  "split_items_created": 0,
+  "source_shard_fixes": [],
+  "noise_items": [
+    {
+      "reason": "source_process_metadata_not_obligation_grade",
+      "original_seed_id": "seed-0001",
+      "item": {
+        "seed_id": "seed-0001",
+        "seed_type": "stale_retirement",
+        "canon_label_hint": "Topic / Scope",
+        "exact_items": [
+          "Orchestrator rewrite transfer-fidelity audit, legacy-canon cleanup readiness, and reconciliation prep."
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Topic / Scope"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0001",
+        "source_evidence": [
+          "working_ledger.md:L10"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "source_process_metadata_not_obligation_grade",
+      "original_seed_id": "seed-0002",
+      "item": {
+        "seed_id": "seed-0002",
+        "seed_type": "consumer",
+        "canon_label_hint": "Topic / Scope",
+        "exact_items": [
+          "ledger-to-plan transfer fidelity"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Topic / Scope"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0001",
+        "source_evidence": [
+          "working_ledger.md:L12"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "source_process_metadata_not_obligation_grade",
+      "original_seed_id": "seed-0003",
+      "item": {
+        "seed_id": "seed-0003",
+        "seed_type": "stale_retirement",
+        "canon_label_hint": "Topic / Scope",
+        "exact_items": [
+          "legacy canon / same-file supersession risk"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Topic / Scope"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0001",
+        "source_evidence": [
+          "working_ledger.md:L14"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "source_process_metadata_not_obligation_grade",
+      "original_seed_id": "seed-0004",
+      "item": {
+        "seed_id": "seed-0004",
+        "seed_type": "consumer",
+        "canon_label_hint": "Objective",
+        "exact_items": [
+          "Preserve durable execution memory for the completed audit, blocked fidelity findings, and late-session handoffs."
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Objective"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0001",
+        "source_evidence": [
+          "working_ledger.md:L18"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "source_process_metadata_not_obligation_grade",
+      "original_seed_id": "seed-0005",
+      "item": {
+        "seed_id": "seed-0005",
+        "seed_type": "stale_retirement",
+        "canon_label_hint": "Objective",
+        "exact_items": [
+          "Keep the missed-transfer findings, legacy-canon hotspots, and recovery posture recoverable without relying on chat history."
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Objective"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0001",
+        "source_evidence": [
+          "working_ledger.md:L19"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "source_process_metadata_not_obligation_grade",
+      "original_seed_id": "seed-0006",
+      "item": {
+        "seed_id": "seed-0006",
+        "seed_type": "owner",
+        "canon_label_hint": "Objective",
+        "exact_items": [
+          "Support owner-first fidelity recovery from the existing packetized work item."
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Objective"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0001",
+        "source_evidence": [
+          "working_ledger.md:L20"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "source_process_metadata_not_obligation_grade",
+      "original_seed_id": "seed-0007",
+      "item": {
+        "seed_id": "seed-0007",
+        "seed_type": "owner",
+        "canon_label_hint": "Constraints / Non-Goals",
+        "exact_items": [
+          "Ledger is execution memory only; it is not canonical and must not be cited in planning docs."
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Constraints / Non-Goals"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0001",
+        "source_evidence": [
+          "working_ledger.md:L20-L23"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "source_process_metadata_not_obligation_grade",
+      "original_seed_id": "seed-0008",
+      "item": {
+        "seed_id": "seed-0008",
+        "seed_type": "owner",
+        "canon_label_hint": "Constraints / Non-Goals",
+        "exact_items": [
+          "Do not treat this file as packet content, reconciliation text, or canonical cleanup output."
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Constraints / Non-Goals"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0001",
+        "source_evidence": [
+          "working_ledger.md:L25"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "vague_label_without_exact_obligation",
+      "original_seed_id": "seed-0043",
+      "item": {
+        "seed_id": "seed-0043",
+        "seed_type": "owner",
+        "canon_label_hint": "Key Facts and Findings",
+        "exact_items": [
+          "prefer precise canonical terms in docs/runtime model"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Key Facts and Findings"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0001",
+        "source_evidence": [
+          "working_ledger.md:L145-L146"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "vague_label_without_exact_obligation",
+      "original_seed_id": "seed-0045",
+      "item": {
+        "seed_id": "seed-0045",
+        "seed_type": "owner",
+        "canon_label_hint": "Key Facts and Findings",
+        "exact_items": [
+          "keep expert/canonical terms stable in docs"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Key Facts and Findings"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0001",
+        "source_evidence": [
+          "working_ledger.md:L167-L168"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "label_only_introductory_line",
+      "original_seed_id": "seed-0153",
+      "item": {
+        "seed_id": "seed-0153",
+        "seed_type": "consumer",
+        "canon_label_hint": "Plans/storage-plan.md",
+        "exact_items": [
+          "`Plans/storage-plan.md` already declares:"
+        ],
+        "affected_doc_hints": [
+          "Plans/storage-plan.md"
+        ],
+        "heading_hints": [],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0003",
+        "source_evidence": [
+          "working_ledger.md:L512-L513"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "no_exact_obligation_grade_content",
+      "original_seed_id": "seed-0155",
+      "item": {
+        "seed_id": "seed-0155",
+        "seed_type": "owner",
+        "canon_label_hint": "JSONL mirror = disposable projector output, not canonical truth",
+        "exact_items": [
+          "JSONL mirror = disposable projector output, not canonical truth"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0003",
+        "source_evidence": [
+          "working_ledger.md:L517"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "label_only_introductory_line",
+      "original_seed_id": "seed-0156",
+      "item": {
+        "seed_id": "seed-0156",
+        "seed_type": "consumer",
+        "canon_label_hint": "Plans/FinalGUISpec.md",
+        "exact_items": [
+          "`Plans/FinalGUISpec.md` aligns with this:"
+        ],
+        "affected_doc_hints": [
+          "Plans/FinalGUISpec.md"
+        ],
+        "heading_hints": [],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0003",
+        "source_evidence": [
+          "working_ledger.md:L518"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "no_exact_obligation_grade_content",
+      "original_seed_id": "seed-0158",
+      "item": {
+        "seed_id": "seed-0158",
+        "seed_type": "owner",
+        "canon_label_hint": "the broad canonical runtime storage model *has* been decided/documented at stack level",
+        "exact_items": [
+          "the broad canonical runtime storage model *has* been decided/documented at stack level"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0003",
+        "source_evidence": [
+          "working_ledger.md:L522"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "vague_label_without_exact_obligation",
+      "original_seed_id": "seed-0162",
+      "item": {
+        "seed_id": "seed-0162",
+        "seed_type": "owner",
+        "canon_label_hint": "avoid making loose JSON files the canonical source",
+        "exact_items": [
+          "avoid making loose JSON files the canonical source"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0003",
+        "source_evidence": [
+          "working_ledger.md:L533"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "label_only_introductory_line",
+      "original_seed_id": "seed-0182",
+      "item": {
+        "seed_id": "seed-0182",
+        "seed_type": "consumer",
+        "canon_label_hint": "Current docs do say Orchestrator consumes the plan/node graph for execution:",
+        "exact_items": [
+          "Current docs do say Orchestrator consumes the plan/node graph for execution:"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0003",
+        "source_evidence": [
+          "working_ledger.md:L588"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "no_exact_obligation_grade_content",
+      "original_seed_id": "seed-0185",
+      "item": {
+        "seed_id": "seed-0185",
+        "seed_type": "owner",
+        "canon_label_hint": "hybrid is acceptable only if graph execution remains canonical and tiers become a derived human-",
+        "exact_items": [
+          "hybrid is acceptable only if graph execution remains canonical and tiers become a derived human-facing lens"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0003",
+        "source_evidence": [
+          "working_ledger.md:L592-L593"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "vague_label_without_exact_obligation",
+      "original_seed_id": "seed-0188",
+      "item": {
+        "seed_id": "seed-0188",
+        "seed_type": "owner",
+        "canon_label_hint": "keep the canonical graph as execution truth",
+        "exact_items": [
+          "keep the canonical graph as execution truth"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0003",
+        "source_evidence": [
+          "working_ledger.md:L599-L600"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "no_exact_obligation_grade_content",
+      "original_seed_id": "seed-0285",
+      "item": {
+        "seed_id": "seed-0285",
+        "seed_type": "owner",
+        "canon_label_hint": "but probably not canonical runtime enums, event semantics, or scheduler truth",
+        "exact_items": [
+          "but probably not canonical runtime enums, event semantics, or scheduler truth"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0005",
+        "source_evidence": [
+          "working_ledger.md:L820"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "vague_label_without_exact_obligation",
+      "original_seed_id": "seed-0353",
+      "item": {
+        "seed_id": "seed-0353",
+        "seed_type": "owner",
+        "canon_label_hint": "Open Questions / Uncertainties",
+        "exact_items": [
+          "Orchestrator executes the canonical node graph directly"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Open Questions / Uncertainties"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0005",
+        "source_evidence": [
+          "working_ledger.md:L964"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "vague_label_without_exact_obligation",
+      "original_seed_id": "seed-0406",
+      "item": {
+        "seed_id": "seed-0406",
+        "seed_type": "owner",
+        "canon_label_hint": "Do-Not-Forget Details",
+        "exact_items": [
+          "stable canonical terminology"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Do-Not-Forget Details"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0006",
+        "source_evidence": [
+          "working_ledger.md:L1134-L1138"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "no_exact_obligation_grade_content",
+      "original_seed_id": "seed-0519",
+      "item": {
+        "seed_id": "seed-0519",
+        "seed_type": "owner",
+        "canon_label_hint": "Runtime / Storage / Contract Impacts",
+        "exact_items": [
+          "**Safe-point vs restore-point vs rollback is still not normalized.** Sonnet found the concepts referenced across runtime, policy, interview, and worktree docs, but rarely defined together in one canonical contract."
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Runtime / Storage / Contract Impacts"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0007",
+        "source_evidence": [
+          "working_ledger.md:L1381"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "no_exact_obligation_grade_content",
+      "original_seed_id": "seed-0523",
+      "item": {
+        "seed_id": "seed-0523",
+        "seed_type": "owner",
+        "canon_label_hint": "Settings / Provider / Persona / Account Impacts",
+        "exact_items": [
+          "**Overseer personas are not modeled cleanly.** Package overseer and seam overseer do not have canonical Persona registry treatment or runtime identity slots in the existing Persona/model-selection contracts."
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Settings / Provider / Persona / Account Impacts"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0007",
+        "source_evidence": [
+          "working_ledger.md:L1390"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "no_exact_obligation_grade_content",
+      "original_seed_id": "seed-0561",
+      "item": {
+        "seed_id": "seed-0561",
+        "seed_type": "owner",
+        "canon_label_hint": "GUI / UX Impacts",
+        "exact_items": [
+          "**Attention flow exists, but is fragmented.** GPT-5.2 found strong pieces of Dashboard CtAs, thread badges, blocked node CTAs, and live-run cards, but no single canonical routing contract across Dashboard \u2192 Orchestrator \u2192 chat-thread."
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "GUI / UX Impacts"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0008",
+        "source_evidence": [
+          "working_ledger.md:L1475"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "no_exact_obligation_grade_content",
+      "original_seed_id": "seed-0576",
+      "item": {
+        "seed_id": "seed-0576",
+        "seed_type": "owner",
+        "canon_label_hint": "Cleanup Priorities",
+        "exact_items": [
+          "**Priority 1 \u2014 Fix canonical contracts and schemas**"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Cleanup Priorities"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0008",
+        "source_evidence": [
+          "working_ledger.md:L1510"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "no_exact_obligation_grade_content",
+      "original_seed_id": "seed-0582",
+      "item": {
+        "seed_id": "seed-0582",
+        "seed_type": "owner",
+        "canon_label_hint": "Contradictions To Resolve",
+        "exact_items": [
+          "1. **Lexicographic graph selection vs scored scheduler tuple.** Runtime addenda and graph schemas disagree on the actual canonical selection rule."
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Contradictions To Resolve"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0008",
+        "source_evidence": [
+          "working_ledger.md:L1528"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "no_exact_obligation_grade_content",
+      "original_seed_id": "seed-0617",
+      "item": {
+        "seed_id": "seed-0617",
+        "seed_type": "owner",
+        "canon_label_hint": "Settings / Provider / Persona / Account Impacts",
+        "exact_items": [
+          "Persona fallback is split between \u201cbare-context run\u201d and canonical fallback Persona."
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Settings / Provider / Persona / Account Impacts"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0009",
+        "source_evidence": [
+          "working_ledger.md:L1616"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "no_exact_obligation_grade_content",
+      "original_seed_id": "seed-0622",
+      "item": {
+        "seed_id": "seed-0622",
+        "seed_type": "owner",
+        "canon_label_hint": "Cleanup Priorities",
+        "exact_items": [
+          "**Priority 1 \u2014 Canonical contracts that cannot safely coexist with the new model**"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Cleanup Priorities"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0009",
+        "source_evidence": [
+          "working_ledger.md:L1635-L1639"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "no_exact_obligation_grade_content",
+      "original_seed_id": "seed-0646",
+      "item": {
+        "seed_id": "seed-0646",
+        "seed_type": "owner",
+        "canon_label_hint": "Contradictions To Resolve",
+        "exact_items": [
+          "5. **Graph-local recovery commands vs canonical runtime action families**"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Contradictions To Resolve"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0009",
+        "source_evidence": [
+          "working_ledger.md:L1681"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "no_exact_obligation_grade_content",
+      "original_seed_id": "seed-0648",
+      "item": {
+        "seed_id": "seed-0648",
+        "seed_type": "owner",
+        "canon_label_hint": "Contradictions To Resolve",
+        "exact_items": [
+          "Why it matters: worktree lifecycle, visibility, and conflict recovery cannot be coherent if both models remain canonical."
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Contradictions To Resolve"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0009",
+        "source_evidence": [
+          "working_ledger.md:L1687"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "no_exact_obligation_grade_content",
+      "original_seed_id": "seed-0651",
+      "item": {
+        "seed_id": "seed-0651",
+        "seed_type": "owner",
+        "canon_label_hint": "Suggested Research Follow-Ups",
+        "exact_items": [
+          "Why it matters: tier-boundary approvals, graph-local commands, and blocked-node runtime actions currently coexist as competing canonical mechanisms."
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Suggested Research Follow-Ups"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0009",
+        "source_evidence": [
+          "working_ledger.md:L1702"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "no_exact_obligation_grade_content",
+      "original_seed_id": "seed-0653",
+      "item": {
+        "seed_id": "seed-0653",
+        "seed_type": "layout_blocker",
+        "canon_label_hint": "Suggested Research Follow-Ups",
+        "exact_items": [
+          "Why it matters: SCM, Source Control UI, Orchestrator UI, and recovery policy all depend on it, but no single canonical lane-pool model exists yet."
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Suggested Research Follow-Ups"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0009",
+        "source_evidence": [
+          "working_ledger.md:L1708"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "no_exact_obligation_grade_content",
+      "original_seed_id": "seed-0693",
+      "item": {
+        "seed_id": "seed-0693",
+        "seed_type": "owner",
+        "canon_label_hint": "Runtime / Storage / Contract Impacts",
+        "exact_items": [
+          "likely issue: lexicographic dispatch, scored scheduler, blocked overlays, and graph-local retry families still coexist without one canonical model."
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Runtime / Storage / Contract Impacts"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0009",
+        "source_evidence": [
+          "working_ledger.md:L1800"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "no_exact_obligation_grade_content",
+      "original_seed_id": "seed-0746",
+      "item": {
+        "seed_id": "seed-0746",
+        "seed_type": "layout_blocker",
+        "canon_label_hint": "Suggested Research Follow-Ups",
+        "exact_items": [
+          "why it matters: unify blocked/recovery action families so UI, runtime, and chat-thread resolution all point to the same canonical actions."
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Suggested Research Follow-Ups"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0010",
+        "source_evidence": [
+          "working_ledger.md:L1910"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "label_only_introductory_line",
+      "original_seed_id": "seed-0777",
+      "item": {
+        "seed_id": "seed-0777",
+        "seed_type": "owner",
+        "canon_label_hint": "Key findings",
+        "exact_items": [
+          "Bridged-provider contracts remain materially weaker than the canonical runtime identity contract:"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Key findings"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0011",
+        "source_evidence": [
+          "working_ledger.md:L2018"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "no_exact_obligation_grade_content",
+      "original_seed_id": "seed-0785",
+      "item": {
+        "seed_id": "seed-0785",
+        "seed_type": "owner",
+        "canon_label_hint": "Highest-risk impacted docs",
+        "exact_items": [
+          "still too weak to support canonical account identity, switch-reason disclosure, or conversational-actor routing through the provider facade"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Highest-risk impacted docs"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0011",
+        "source_evidence": [
+          "working_ledger.md:L2035"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "label_only_introductory_line",
+      "original_seed_id": "seed-0813",
+      "item": {
+        "seed_id": "seed-0813",
+        "seed_type": "owner",
+        "canon_label_hint": "Key findings",
+        "exact_items": [
+          "GitHub account identity is still not aligned with the canonical account model:"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Key findings"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0011",
+        "source_evidence": [
+          "working_ledger.md:L2092"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "label_only_introductory_line",
+      "original_seed_id": "seed-0882",
+      "item": {
+        "seed_id": "seed-0882",
+        "seed_type": "consumer",
+        "canon_label_hint": "Plans/Widget_System.md",
+        "exact_items": [
+          "`Plans/Widget_System.md` is still heavily aligned to the older orchestrator model:"
+        ],
+        "affected_doc_hints": [
+          "Plans/Widget_System.md"
+        ],
+        "heading_hints": [
+          "Key findings"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0012",
+        "source_evidence": [
+          "working_ledger.md:L2271"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "no_exact_obligation_grade_content",
+      "original_seed_id": "seed-0914",
+      "item": {
+        "seed_id": "seed-0914",
+        "seed_type": "stale_retirement",
+        "canon_label_hint": "Candidate fixes to carry forward",
+        "exact_items": [
+          "Move all widget data contracts off legacy tier events and onto stable projections / canonical records."
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Candidate fixes to carry forward"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0012",
+        "source_evidence": [
+          "working_ledger.md:L2380"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "vague_label_without_exact_obligation",
+      "original_seed_id": "seed-0930",
+      "item": {
+        "seed_id": "seed-0930",
+        "seed_type": "owner",
+        "canon_label_hint": "blocked/recovery actions bind to canonical projections/records",
+        "exact_items": [
+          "blocked/recovery actions bind to canonical projections/records"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0013",
+        "source_evidence": [
+          "working_ledger.md:L2411"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "label_only_introductory_line",
+      "original_seed_id": "seed-0948",
+      "item": {
+        "seed_id": "seed-0948",
+        "seed_type": "owner",
+        "canon_label_hint": "Fallback-view direction",
+        "exact_items": [
+          "when necessary, fall back to canonical record-backed views:"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Fallback-view direction"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0013",
+        "source_evidence": [
+          "working_ledger.md:L2449"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "vague_label_without_exact_obligation",
+      "original_seed_id": "seed-1011",
+      "item": {
+        "seed_id": "seed-1011",
+        "seed_type": "owner",
+        "canon_label_hint": "Key findings",
+        "exact_items": [
+          "seglog is canonical"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Key findings"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0014",
+        "source_evidence": [
+          "working_ledger.md:L2660"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "vague_label_without_exact_obligation",
+      "original_seed_id": "seed-1039",
+      "item": {
+        "seed_id": "seed-1039",
+        "seed_type": "owner",
+        "canon_label_hint": "Indexing / backend direction",
+        "exact_items": [
+          "canonical names/titles"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Indexing / backend direction"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0014",
+        "source_evidence": [
+          "working_ledger.md:L2741"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "vague_label_without_exact_obligation",
+      "original_seed_id": "seed-1058",
+      "item": {
+        "seed_id": "seed-1058",
+        "seed_type": "owner",
+        "canon_label_hint": "Recommended semantic split",
+        "exact_items": [
+          "replaced by a newer canonical successor for the same semantic slot"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Recommended semantic split"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0015",
+        "source_evidence": [
+          "working_ledger.md:L2821"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "no_exact_obligation_grade_content",
+      "original_seed_id": "seed-1087",
+      "item": {
+        "seed_id": "seed-1087",
+        "seed_type": "owner",
+        "canon_label_hint": "Key findings",
+        "exact_items": [
+          "canonical concern creators are runtime / package overseer / seam overseer / corroboration outcome / graph patch logic"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Key findings"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0015",
+        "source_evidence": [
+          "working_ledger.md:L2987"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "no_exact_obligation_grade_content",
+      "original_seed_id": "seed-1109",
+      "item": {
+        "seed_id": "seed-1109",
+        "seed_type": "owner",
+        "canon_label_hint": "Contradictions / gaps surfaced",
+        "exact_items": [
+          "Concern importance is already established, but canonical storage/contract shape is still underdefined."
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Contradictions / gaps surfaced"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0016",
+        "source_evidence": [
+          "working_ledger.md:L3171"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "vague_label_without_exact_obligation",
+      "original_seed_id": "seed-1133",
+      "item": {
+        "seed_id": "seed-1133",
+        "seed_type": "owner",
+        "canon_label_hint": "Recommended action-family mapping",
+        "exact_items": [
+          "graph patch application when it changes canonical graph generation"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Recommended action-family mapping"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0017",
+        "source_evidence": [
+          "working_ledger.md:L3282"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "vague_label_without_exact_obligation",
+      "original_seed_id": "seed-1144",
+      "item": {
+        "seed_id": "seed-1144",
+        "seed_type": "owner",
+        "canon_label_hint": "Candidate fixes to carry forward",
+        "exact_items": [
+          "canonical recovery path"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Candidate fixes to carry forward"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0017",
+        "source_evidence": [
+          "working_ledger.md:L3344"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "no_exact_obligation_grade_content",
+      "original_seed_id": "seed-1166",
+      "item": {
+        "seed_id": "seed-1166",
+        "seed_type": "owner",
+        "canon_label_hint": "Artifact vs record distinction",
+        "exact_items": [
+          "record = canonical structured object in Ledger/export/search/routing"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Artifact vs record distinction"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0018",
+        "source_evidence": [
+          "working_ledger.md:L3505"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "vague_label_without_exact_obligation",
+      "original_seed_id": "seed-1182",
+      "item": {
+        "seed_id": "seed-1182",
+        "seed_type": "owner",
+        "canon_label_hint": "Key findings",
+        "exact_items": [
+          "what is the canonical manifest"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Key findings"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0018",
+        "source_evidence": [
+          "working_ledger.md:L3556"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "no_exact_obligation_grade_content",
+      "original_seed_id": "seed-1183",
+      "item": {
+        "seed_id": "seed-1183",
+        "seed_type": "owner",
+        "canon_label_hint": "Recommended export split",
+        "exact_items": [
+          "exact structured object(s), canonical ids, references, metadata"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Recommended export split"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0018",
+        "source_evidence": [
+          "working_ledger.md:L3569"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "no_exact_obligation_grade_content",
+      "original_seed_id": "seed-1205",
+      "item": {
+        "seed_id": "seed-1205",
+        "seed_type": "owner",
+        "canon_label_hint": "Candidate fixes to carry forward",
+        "exact_items": [
+          "Keep CSV/table exports as convenience view exports, not as canonical archival exports."
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Candidate fixes to carry forward"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0019",
+        "source_evidence": [
+          "working_ledger.md:L3654"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "label_only_introductory_line",
+      "original_seed_id": "seed-1217",
+      "item": {
+        "seed_id": "seed-1217",
+        "seed_type": "owner",
+        "canon_label_hint": "Recommended display grammar",
+        "exact_items": [
+          "Good canonical display groups:"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Recommended display grammar"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0019",
+        "source_evidence": [
+          "working_ledger.md:L3702"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "vague_label_without_exact_obligation",
+      "original_seed_id": "seed-1243",
+      "item": {
+        "seed_id": "seed-1243",
+        "seed_type": "owner",
+        "canon_label_hint": "Key findings",
+        "exact_items": [
+          "canonical fallback"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Key findings"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0020",
+        "source_evidence": [
+          "working_ledger.md:L3850-L3852"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "vague_label_without_exact_obligation",
+      "original_seed_id": "seed-1275",
+      "item": {
+        "seed_id": "seed-1275",
+        "seed_type": "owner",
+        "canon_label_hint": "Core help principle",
+        "exact_items": [
+          "keep canonical names stable"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Core help principle"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0021",
+        "source_evidence": [
+          "working_ledger.md:L4048"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "vague_label_without_exact_obligation",
+      "original_seed_id": "seed-1278",
+      "item": {
+        "seed_id": "seed-1278",
+        "seed_type": "owner",
+        "canon_label_hint": "Help entry structure direction",
+        "exact_items": [
+          "canonical name"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Help entry structure direction"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0021",
+        "source_evidence": [
+          "working_ledger.md:L4086"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "no_exact_obligation_grade_content",
+      "original_seed_id": "seed-1285",
+      "item": {
+        "seed_id": "seed-1285",
+        "seed_type": "owner",
+        "canon_label_hint": "Glossary implication",
+        "exact_items": [
+          "Glossary = canonical short definitions"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Glossary implication"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0021",
+        "source_evidence": [
+          "working_ledger.md:L4134"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "no_exact_obligation_grade_content",
+      "original_seed_id": "seed-1287",
+      "item": {
+        "seed_id": "seed-1287",
+        "seed_type": "owner",
+        "canon_label_hint": "Candidate fixes to carry forward",
+        "exact_items": [
+          "Keep canonical term names stable across Expert and ELI5."
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Candidate fixes to carry forward"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0021",
+        "source_evidence": [
+          "working_ledger.md:L4144"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "no_exact_obligation_grade_content",
+      "original_seed_id": "seed-1288",
+      "item": {
+        "seed_id": "seed-1288",
+        "seed_type": "owner",
+        "canon_label_hint": "Candidate fixes to carry forward",
+        "exact_items": [
+          "Use Glossary as the canonical short-definition inventory."
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Candidate fixes to carry forward"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0021",
+        "source_evidence": [
+          "working_ledger.md:L4145"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "no_exact_obligation_grade_content",
+      "original_seed_id": "seed-1406",
+      "item": {
+        "seed_id": "seed-1406",
+        "seed_type": "owner",
+        "canon_label_hint": "Recommended command-surface model",
+        "exact_items": [
+          "recover / retry / approve / decline / replan / restore / cleanup actions that already have canonical runtime semantics and confirmation rules"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Recommended command-surface model"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0023",
+        "source_evidence": [
+          "working_ledger.md:L4576"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "no_exact_obligation_grade_content",
+      "original_seed_id": "seed-1462",
+      "item": {
+        "seed_id": "seed-1462",
+        "seed_type": "owner",
+        "canon_label_hint": "Canonical-validation direction",
+        "exact_items": [
+          "or perform an authoritative revalidation against canonical/current runtime state before executing"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Canonical-validation direction"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0024",
+        "source_evidence": [
+          "working_ledger.md:L4750-L4752"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "no_exact_obligation_grade_content",
+      "original_seed_id": "seed-1471",
+      "item": {
+        "seed_id": "seed-1471",
+        "seed_type": "layout_blocker",
+        "canon_label_hint": "Contradictions / gaps surfaced",
+        "exact_items": [
+          "Current docs establish canonical vs derived storage, but not the UI policy that follows from that distinction."
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Contradictions / gaps surfaced"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0024",
+        "source_evidence": [
+          "working_ledger.md:L4778"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "label_only_introductory_line",
+      "original_seed_id": "seed-1484",
+      "item": {
+        "seed_id": "seed-1484",
+        "seed_type": "owner",
+        "canon_label_hint": "storage-plan.md",
+        "exact_items": [
+          "`storage-plan.md` already defines several canonical records:"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Key findings"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0025",
+        "source_evidence": [
+          "working_ledger.md:L4805"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "vague_label_without_exact_obligation",
+      "original_seed_id": "seed-1486",
+      "item": {
+        "seed_id": "seed-1486",
+        "seed_type": "layout_blocker",
+        "canon_label_hint": "Key findings",
+        "exact_items": [
+          "canonical event fields instead of GUI-only aliases"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Key findings"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0025",
+        "source_evidence": [
+          "working_ledger.md:L4818"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "no_exact_obligation_grade_content",
+      "original_seed_id": "seed-1490",
+      "item": {
+        "seed_id": "seed-1490",
+        "seed_type": "owner",
+        "canon_label_hint": "Record vs artifact distinction",
+        "exact_items": [
+          "structured canonical object used by projections, search, history, and ledger"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Record vs artifact distinction"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0025",
+        "source_evidence": [
+          "working_ledger.md:L4857"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "no_exact_obligation_grade_content",
+      "original_seed_id": "seed-1494",
+      "item": {
+        "seed_id": "seed-1494",
+        "seed_type": "owner",
+        "canon_label_hint": "Family-specific payload direction",
+        "exact_items": [
+          "promotion_class, source_scope, target_scope, canonical verdict, revoked/reopened lineage"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Family-specific payload direction"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0025",
+        "source_evidence": [
+          "working_ledger.md:L4870-L4872"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "no_exact_obligation_grade_content",
+      "original_seed_id": "seed-1500",
+      "item": {
+        "seed_id": "seed-1500",
+        "seed_type": "owner",
+        "canon_label_hint": "Candidate fixes to carry forward",
+        "exact_items": [
+          "Keep artifacts and rendered summaries linked but separate from canonical records."
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Candidate fixes to carry forward"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0025",
+        "source_evidence": [
+          "working_ledger.md:L4909"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "vague_label_without_exact_obligation",
+      "original_seed_id": "seed-1515",
+      "item": {
+        "seed_id": "seed-1515",
+        "seed_type": "owner",
+        "canon_label_hint": "Recommended lane-oriented states",
+        "exact_items": [
+          "canonical starting lane for a package pool"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Recommended lane-oriented states"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0025",
+        "source_evidence": [
+          "working_ledger.md:L4966"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "vague_label_without_exact_obligation",
+      "original_seed_id": "seed-1549",
+      "item": {
+        "seed_id": "seed-1549",
+        "seed_type": "owner",
+        "canon_label_hint": "Help-system implication",
+        "exact_items": [
+          "glossary owns short canonical definitions"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Help-system implication"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0026",
+        "source_evidence": [
+          "working_ledger.md:L5145"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "no_exact_obligation_grade_content",
+      "original_seed_id": "seed-1554",
+      "item": {
+        "seed_id": "seed-1554",
+        "seed_type": "owner",
+        "canon_label_hint": "Candidate fixes to carry forward",
+        "exact_items": [
+          "Use glossary definitions as the canonical short-definition source for future help entries."
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Candidate fixes to carry forward"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0026",
+        "source_evidence": [
+          "working_ledger.md:L5191"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "vague_label_without_exact_obligation",
+      "original_seed_id": "seed-1589",
+      "item": {
+        "seed_id": "seed-1589",
+        "seed_type": "owner",
+        "canon_label_hint": "Key findings",
+        "exact_items": [
+          "artifacts stay on canonical runtime identity"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Key findings"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0027",
+        "source_evidence": [
+          "working_ledger.md:L5344"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "label_only_introductory_line",
+      "original_seed_id": "seed-1591",
+      "item": {
+        "seed_id": "seed-1591",
+        "seed_type": "owner",
+        "canon_label_hint": "chain-wizard-flexibility.md",
+        "exact_items": [
+          "`chain-wizard-flexibility.md` is also disciplined on canonical vs derived export:"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Key findings"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0027",
+        "source_evidence": [
+          "working_ledger.md:L5347"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "vague_label_without_exact_obligation",
+      "original_seed_id": "seed-1592",
+      "item": {
+        "seed_id": "seed-1592",
+        "seed_type": "owner",
+        "canon_label_hint": "Key findings",
+        "exact_items": [
+          "sharded plan graph is canonical"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Key findings"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0027",
+        "source_evidence": [
+          "working_ledger.md:L5348"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "no_exact_obligation_grade_content",
+      "original_seed_id": "seed-1597",
+      "item": {
+        "seed_id": "seed-1597",
+        "seed_type": "owner",
+        "canon_label_hint": "Canonical-vs-derived rule",
+        "exact_items": [
+          "filtered CSV is a view export, not canonical history"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Canonical-vs-derived rule"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0028",
+        "source_evidence": [
+          "working_ledger.md:L5410"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "no_exact_obligation_grade_content",
+      "original_seed_id": "seed-1598",
+      "item": {
+        "seed_id": "seed-1598",
+        "seed_type": "owner",
+        "canon_label_hint": "Canonical-vs-derived rule",
+        "exact_items": [
+          "JSON summary export is not equivalent to canonical record export unless it preserves the exact record envelope"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Canonical-vs-derived rule"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0028",
+        "source_evidence": [
+          "working_ledger.md:L5411"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "no_exact_obligation_grade_content",
+      "original_seed_id": "seed-1599",
+      "item": {
+        "seed_id": "seed-1599",
+        "seed_type": "owner",
+        "canon_label_hint": "Canonical-vs-derived rule",
+        "exact_items": [
+          "monolithic plan-graph export remains derived, never canonical"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Canonical-vs-derived rule"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0028",
+        "source_evidence": [
+          "working_ledger.md:L5412"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "vague_label_without_exact_obligation",
+      "original_seed_id": "seed-1608",
+      "item": {
+        "seed_id": "seed-1608",
+        "seed_type": "owner",
+        "canon_label_hint": "Trust / stale-data implication",
+        "exact_items": [
+          "or re-query from canonical/current backing data before export"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Trust / stale-data implication"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0028",
+        "source_evidence": [
+          "working_ledger.md:L5425-L5427"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "no_exact_obligation_grade_content",
+      "original_seed_id": "seed-1609",
+      "item": {
+        "seed_id": "seed-1609",
+        "seed_type": "owner",
+        "canon_label_hint": "Retention / archival implication",
+        "exact_items": [
+          "but export does not itself authorize deletion of the canonical/historical record model"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Retention / archival implication"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0028",
+        "source_evidence": [
+          "working_ledger.md:L5440"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "vague_label_without_exact_obligation",
+      "original_seed_id": "seed-1615",
+      "item": {
+        "seed_id": "seed-1615",
+        "seed_type": "owner",
+        "canon_label_hint": "Do-not-forget details",
+        "exact_items": [
+          "filtered JSON is not automatically a canonical record export"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Do-not-forget details"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0028",
+        "source_evidence": [
+          "working_ledger.md:L5463"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "no_exact_obligation_grade_content",
+      "original_seed_id": "seed-1639",
+      "item": {
+        "seed_id": "seed-1639",
+        "seed_type": "owner",
+        "canon_label_hint": "Projection-trust interaction direction",
+        "exact_items": [
+          "prefer notifications rooted in canonical events/blocked records rather than derived rollups"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Projection-trust interaction direction"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0028",
+        "source_evidence": [
+          "working_ledger.md:L5529"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "vague_label_without_exact_obligation",
+      "original_seed_id": "seed-1642",
+      "item": {
+        "seed_id": "seed-1642",
+        "seed_type": "owner",
+        "canon_label_hint": "Routing / surface direction",
+        "exact_items": [
+          "canonical chronology of everything"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Routing / surface direction"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0028",
+        "source_evidence": [
+          "working_ledger.md:L5537"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "vague_label_without_exact_obligation",
+      "original_seed_id": "seed-1717",
+      "item": {
+        "seed_id": "seed-1717",
+        "seed_type": "owner",
+        "canon_label_hint": "replaced by a newer canonical successor in the same lineage",
+        "exact_items": [
+          "replaced by a newer canonical successor in the same lineage"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0030",
+        "source_evidence": [
+          "working_ledger.md:L5804"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "label_only_introductory_line",
+      "original_seed_id": "seed-1719",
+      "item": {
+        "seed_id": "seed-1719",
+        "seed_type": "consumer",
+        "canon_label_hint": "Plans/Contracts_V0.md",
+        "exact_items": [
+          "There is a real contract conflict in `Plans/Contracts_V0.md` for `remediation.resolved`:"
+        ],
+        "affected_doc_hints": [
+          "Plans/Contracts_V0.md"
+        ],
+        "heading_hints": [
+          "Important contradiction surfaced"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0030",
+        "source_evidence": [
+          "working_ledger.md:L5827"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "vague_label_without_exact_obligation",
+      "original_seed_id": "seed-1740",
+      "item": {
+        "seed_id": "seed-1740",
+        "seed_type": "owner",
+        "canon_label_hint": "Concern vs adjacent object boundaries",
+        "exact_items": [
+          "runtime execution stop with canonical recovery metadata"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Concern vs adjacent object boundaries"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0030",
+        "source_evidence": [
+          "working_ledger.md:L5952"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "vague_label_without_exact_obligation",
+      "original_seed_id": "seed-1745",
+      "item": {
+        "seed_id": "seed-1745",
+        "seed_type": "owner",
+        "canon_label_hint": "Merge / split / supersession direction",
+        "exact_items": [
+          "concern replaced by a newer concern or broader canonical object framing"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Merge / split / supersession direction"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0031",
+        "source_evidence": [
+          "working_ledger.md:L6024"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "label_only_introductory_line",
+      "original_seed_id": "seed-1789",
+      "item": {
+        "seed_id": "seed-1789",
+        "seed_type": "owner",
+        "canon_label_hint": "Contradictions / gaps surfaced",
+        "exact_items": [
+          "Storage and usage docs already hold canonical-ish runtime data, but still encode obsolete routing/grouping terms:"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Contradictions / gaps surfaced"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0031",
+        "source_evidence": [
+          "working_ledger.md:L6151"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "label_only_introductory_line",
+      "original_seed_id": "seed-1817",
+      "item": {
+        "seed_id": "seed-1817",
+        "seed_type": "owner",
+        "canon_label_hint": "Canonical invariants are increasingly runtime-object-first:",
+        "exact_items": [
+          "Canonical invariants are increasingly runtime-object-first:"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0032",
+        "source_evidence": [
+          "working_ledger.md:L6208"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "no_exact_obligation_grade_content",
+      "original_seed_id": "seed-1826",
+      "item": {
+        "seed_id": "seed-1826",
+        "seed_type": "owner",
+        "canon_label_hint": "Contradictions / gaps surfaced",
+        "exact_items": [
+          "Requested/effective identity is canonical enough to affect policy and permissions now, but those docs still treat it as adjacent detail rather than core decision context."
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Contradictions / gaps surfaced"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0032",
+        "source_evidence": [
+          "working_ledger.md:L6222"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "vague_label_without_exact_obligation",
+      "original_seed_id": "seed-1831",
+      "item": {
+        "seed_id": "seed-1831",
+        "seed_type": "owner",
+        "canon_label_hint": "Candidate fixes to carry forward",
+        "exact_items": [
+          "canonical runtime object families"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Candidate fixes to carry forward"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0032",
+        "source_evidence": [
+          "working_ledger.md:L6236"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "no_exact_obligation_grade_content",
+      "original_seed_id": "seed-1849",
+      "item": {
+        "seed_id": "seed-1849",
+        "seed_type": "owner",
+        "canon_label_hint": "Key findings",
+        "exact_items": [
+          "but downstream docs still use those names normatively or mix them with canonical names"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Key findings"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0032",
+        "source_evidence": [
+          "working_ledger.md:L6265"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "label_only_introductory_line",
+      "original_seed_id": "seed-1863",
+      "item": {
+        "seed_id": "seed-1863",
+        "seed_type": "owner",
+        "canon_label_hint": "Contradictions / gaps surfaced",
+        "exact_items": [
+          "Canonical naming conflict:"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Contradictions / gaps surfaced"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0032",
+        "source_evidence": [
+          "working_ledger.md:L6292"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "vague_label_without_exact_obligation",
+      "original_seed_id": "seed-1927",
+      "item": {
+        "seed_id": "seed-1927",
+        "seed_type": "owner",
+        "canon_label_hint": "Key findings",
+        "exact_items": [
+          "concern actions never hard-delete canonical concern history in normal operation"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Key findings"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0033",
+        "source_evidence": [
+          "working_ledger.md:L6431"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "label_only_introductory_line",
+      "original_seed_id": "seed-1934",
+      "item": {
+        "seed_id": "seed-1934",
+        "seed_type": "owner",
+        "canon_label_hint": "Contradictions / gaps surfaced",
+        "exact_items": [
+          "There is still no canonical concern action matrix spanning:"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Contradictions / gaps surfaced"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0033",
+        "source_evidence": [
+          "working_ledger.md:L6443"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "vague_label_without_exact_obligation",
+      "original_seed_id": "seed-1962",
+      "item": {
+        "seed_id": "seed-1962",
+        "seed_type": "owner",
+        "canon_label_hint": "Key findings",
+        "exact_items": [
+          "canonical concept definition / glossary entry"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Key findings"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0033",
+        "source_evidence": [
+          "working_ledger.md:L6518"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "no_exact_obligation_grade_content",
+      "original_seed_id": "seed-1970",
+      "item": {
+        "seed_id": "seed-1970",
+        "seed_type": "owner",
+        "canon_label_hint": "Contradictions / gaps surfaced",
+        "exact_items": [
+          "the safer rule is: simplify explanation depth, not canonical object names"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Contradictions / gaps surfaced"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0033",
+        "source_evidence": [
+          "working_ledger.md:L6546"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "vague_label_without_exact_obligation",
+      "original_seed_id": "seed-1979",
+      "item": {
+        "seed_id": "seed-1979",
+        "seed_type": "owner",
+        "canon_label_hint": "Candidate fixes to carry forward",
+        "exact_items": [
+          "canonical term names do not change between Expert and ELI5"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Candidate fixes to carry forward"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0033",
+        "source_evidence": [
+          "working_ledger.md:L6561"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "no_exact_obligation_grade_content",
+      "original_seed_id": "seed-1999",
+      "item": {
+        "seed_id": "seed-1999",
+        "seed_type": "stale_retirement",
+        "canon_label_hint": "Key findings",
+        "exact_items": [
+          "then immediately defines SSOT precedence saying legacy keys are converted and the legacy key is deleted"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Key findings"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0034",
+        "source_evidence": [
+          "working_ledger.md:L6624"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "vague_label_without_exact_obligation",
+      "original_seed_id": "seed-2016",
+      "item": {
+        "seed_id": "seed-2016",
+        "seed_type": "owner",
+        "canon_label_hint": "Candidate fixes to carry forward",
+        "exact_items": [
+          "widgets may consume stable projections and canonical records"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Candidate fixes to carry forward"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0034",
+        "source_evidence": [
+          "working_ledger.md:L6661"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "label_only_introductory_line",
+      "original_seed_id": "seed-2036",
+      "item": {
+        "seed_id": "seed-2036",
+        "seed_type": "owner",
+        "canon_label_hint": "Key findings",
+        "exact_items": [
+          "Canonical runtime identity is still split between strong normative prose and weaker tables/consumers:"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Key findings"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0034",
+        "source_evidence": [
+          "working_ledger.md:L6692"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "label_only_introductory_line",
+      "original_seed_id": "seed-2074",
+      "item": {
+        "seed_id": "seed-2074",
+        "seed_type": "owner",
+        "canon_label_hint": "Key findings",
+        "exact_items": [
+          "The canonical identity/account contract still fails to enter the dispatch boundary cleanly:"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Key findings"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0034",
+        "source_evidence": [
+          "working_ledger.md:L6764"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "vague_label_without_exact_obligation",
+      "original_seed_id": "seed-2153",
+      "item": {
+        "seed_id": "seed-2153",
+        "seed_type": "owner",
+        "canon_label_hint": "Key findings",
+        "exact_items": [
+          "adapters currently have no canonical way to satisfy both requirements at once"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Key findings"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0035",
+        "source_evidence": [
+          "working_ledger.md:L6907"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "no_exact_obligation_grade_content",
+      "original_seed_id": "seed-2180",
+      "item": {
+        "seed_id": "seed-2180",
+        "seed_type": "layout_blocker",
+        "canon_label_hint": "Key findings",
+        "exact_items": [
+          "storage and UI consumers now have no single obviously-canonical payload block for scheduler, safe point, and remediation lineage"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Key findings"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0035",
+        "source_evidence": [
+          "working_ledger.md:L6962"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "no_exact_obligation_grade_content",
+      "original_seed_id": "seed-2235",
+      "item": {
+        "seed_id": "seed-2235",
+        "seed_type": "layout_blocker",
+        "canon_label_hint": "Key findings",
+        "exact_items": [
+          "GitHub and Orchestrator surfaces still do not promote auth/scope/rate-limit issues into concern-aware or trust-aware projections; they remain closer to UI error states than canonical runtime records"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Key findings"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0036",
+        "source_evidence": [
+          "working_ledger.md:L7046"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "no_exact_obligation_grade_content",
+      "original_seed_id": "seed-2242",
+      "item": {
+        "seed_id": "seed-2242",
+        "seed_type": "owner",
+        "canon_label_hint": "Highest-risk impacted docs",
+        "exact_items": [
+          "still drifts from canonical storage namespaces and lacks settled hostability, migration, and trust contracts"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Highest-risk impacted docs"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0036",
+        "source_evidence": [
+          "working_ledger.md:L7054-L7056"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "vague_label_without_exact_obligation",
+      "original_seed_id": "seed-2295",
+      "item": {
+        "seed_id": "seed-2295",
+        "seed_type": "owner",
+        "canon_label_hint": "Candidate fixes to carry forward",
+        "exact_items": [
+          "canonical active blocked episodes win over derived warnings"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Candidate fixes to carry forward"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0036",
+        "source_evidence": [
+          "working_ledger.md:L7184"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "no_exact_obligation_grade_content",
+      "original_seed_id": "seed-2314",
+      "item": {
+        "seed_id": "seed-2314",
+        "seed_type": "owner",
+        "canon_label_hint": "Key findings",
+        "exact_items": [
+          "canonical blocked episodes, approval waits, and persisted thread/wizard states can drive strong routing"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Key findings"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0037",
+        "source_evidence": [
+          "working_ledger.md:L7230"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "no_exact_obligation_grade_content",
+      "original_seed_id": "seed-2377",
+      "item": {
+        "seed_id": "seed-2377",
+        "seed_type": "owner",
+        "canon_label_hint": "Key findings",
+        "exact_items": [
+          "there is still no canonical envelope slot for those fields, so the doc cannot satisfy its own preservation rule cleanly"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Key findings"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0037",
+        "source_evidence": [
+          "working_ledger.md:L7375"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "vague_label_without_exact_obligation",
+      "original_seed_id": "seed-2406",
+      "item": {
+        "seed_id": "seed-2406",
+        "seed_type": "owner",
+        "canon_label_hint": "Key findings",
+        "exact_items": [
+          "canonical events stay in seglog"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Key findings"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0038",
+        "source_evidence": [
+          "working_ledger.md:L7447"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "label_only_introductory_line",
+      "original_seed_id": "seed-2411",
+      "item": {
+        "seed_id": "seed-2411",
+        "seed_type": "owner",
+        "canon_label_hint": "Contradictions / gaps surfaced",
+        "exact_items": [
+          "There is still no canonical redb key pattern or record shape for:"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Contradictions / gaps surfaced"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0038",
+        "source_evidence": [
+          "working_ledger.md:L7467"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "vague_label_without_exact_obligation",
+      "original_seed_id": "seed-2413",
+      "item": {
+        "seed_id": "seed-2413",
+        "seed_type": "owner",
+        "canon_label_hint": "Candidate fixes to carry forward",
+        "exact_items": [
+          "no canonical blocked/attention truth"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Candidate fixes to carry forward"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0038",
+        "source_evidence": [
+          "working_ledger.md:L7481"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "no_exact_obligation_grade_content",
+      "original_seed_id": "seed-2419",
+      "item": {
+        "seed_id": "seed-2419",
+        "seed_type": "owner",
+        "canon_label_hint": "Candidate fixes to carry forward",
+        "exact_items": [
+          "project summary derives from canonical runtime/thread/wizard/usage/auth/source-control records and from active attention rows"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Candidate fixes to carry forward"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0038",
+        "source_evidence": [
+          "working_ledger.md:L7525"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "label_only_introductory_line",
+      "original_seed_id": "seed-2477",
+      "item": {
+        "seed_id": "seed-2477",
+        "seed_type": "owner",
+        "canon_label_hint": "Key findings",
+        "exact_items": [
+          "Prompt Pipeline still has the sharpest canonical gap for requested-vs-effective truth:"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Key findings"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0039",
+        "source_evidence": [
+          "working_ledger.md:L7652"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "no_exact_obligation_grade_content",
+      "original_seed_id": "seed-2490",
+      "item": {
+        "seed_id": "seed-2490",
+        "seed_type": "owner",
+        "canon_label_hint": "Contradictions / gaps surfaced",
+        "exact_items": [
+          "Operational identities are declared in Multi-Account, but not carried in the canonical runtime identity bundle."
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Contradictions / gaps surfaced"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0039",
+        "source_evidence": [
+          "working_ledger.md:L7671-L7674"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "no_exact_obligation_grade_content",
+      "original_seed_id": "seed-2509",
+      "item": {
+        "seed_id": "seed-2509",
+        "seed_type": "owner",
+        "canon_label_hint": "Key findings",
+        "exact_items": [
+          "there is still no canonical slot for actor kind, effective account, switch reason, lane/worktree identity, or pressure/trust context"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Key findings"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0039",
+        "source_evidence": [
+          "working_ledger.md:L7712"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "no_exact_obligation_grade_content",
+      "original_seed_id": "seed-2524",
+      "item": {
+        "seed_id": "seed-2524",
+        "seed_type": "owner",
+        "canon_label_hint": "Highest-risk impacted docs",
+        "exact_items": [
+          "likely owners for canonical correlation blocks, switch/pressure episodes, and blocked/approval identity linkage"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Highest-risk impacted docs"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0039",
+        "source_evidence": [
+          "working_ledger.md:L7737"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "no_exact_obligation_grade_content",
+      "original_seed_id": "seed-2531",
+      "item": {
+        "seed_id": "seed-2531",
+        "seed_type": "owner",
+        "canon_label_hint": "Candidate fixes to carry forward",
+        "exact_items": [
+          "Introduce a canonical account-health / pressure / degraded-trust family rather than overloading auth lifecycle states."
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Candidate fixes to carry forward"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0039",
+        "source_evidence": [
+          "working_ledger.md:L7750"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "vague_label_without_exact_obligation",
+      "original_seed_id": "seed-2555",
+      "item": {
+        "seed_id": "seed-2555",
+        "seed_type": "owner",
+        "canon_label_hint": "Candidate criteria before reconciliation is actually safe",
+        "exact_items": [
+          "one canonical decision for requested concrete-account representation"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Candidate criteria before reconciliation is actually safe"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0040",
+        "source_evidence": [
+          "working_ledger.md:L7810"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "vague_label_without_exact_obligation",
+      "original_seed_id": "seed-2556",
+      "item": {
+        "seed_id": "seed-2556",
+        "seed_type": "owner",
+        "canon_label_hint": "Candidate criteria before reconciliation is actually safe",
+        "exact_items": [
+          "one canonical decision for operational identity / execution role disclosure"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Candidate criteria before reconciliation is actually safe"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0040",
+        "source_evidence": [
+          "working_ledger.md:L7811"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "no_exact_obligation_grade_content",
+      "original_seed_id": "seed-2568",
+      "item": {
+        "seed_id": "seed-2568",
+        "seed_type": "owner",
+        "canon_label_hint": "Do-not-forget details",
+        "exact_items": [
+          "if a seam still requires inventing a new canonical event/record family, it probably is not done being researched"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Do-not-forget details"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0040",
+        "source_evidence": [
+          "working_ledger.md:L7833-L7834"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "no_exact_obligation_grade_content",
+      "original_seed_id": "seed-2578",
+      "item": {
+        "seed_id": "seed-2578",
+        "seed_type": "owner",
+        "canon_label_hint": "Key findings",
+        "exact_items": [
+          "but there is still no canonical way to represent a requested concrete account on the requested side"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Key findings"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0040",
+        "source_evidence": [
+          "working_ledger.md:L7851"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "no_exact_obligation_grade_content",
+      "original_seed_id": "seed-2592",
+      "item": {
+        "seed_id": "seed-2592",
+        "seed_type": "owner",
+        "canon_label_hint": "Contradictions / gaps surfaced",
+        "exact_items": [
+          "Current canonical wording implies requested-side truth can be explained with policy alone, which is no longer sufficient."
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Contradictions / gaps surfaced"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0040",
+        "source_evidence": [
+          "working_ledger.md:L7894-L7897"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "no_exact_obligation_grade_content",
+      "original_seed_id": "seed-2626",
+      "item": {
+        "seed_id": "seed-2626",
+        "seed_type": "owner",
+        "canon_label_hint": "Contradictions / gaps surfaced",
+        "exact_items": [
+          "Usage still wants switch explanations without carrying switch lineage in its canonical records."
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Contradictions / gaps surfaced"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0040",
+        "source_evidence": [
+          "working_ledger.md:L7972"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "label_only_introductory_line",
+      "original_seed_id": "seed-2649",
+      "item": {
+        "seed_id": "seed-2649",
+        "seed_type": "owner",
+        "canon_label_hint": "Permission control is still unsafe for parallel actors unless it gets a canonical scope key:",
+        "exact_items": [
+          "Permission control is still unsafe for parallel actors unless it gets a canonical scope key:"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0041",
+        "source_evidence": [
+          "working_ledger.md:L8012"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "vague_label_without_exact_obligation",
+      "original_seed_id": "seed-2676",
+      "item": {
+        "seed_id": "seed-2676",
+        "seed_type": "owner",
+        "canon_label_hint": "Key findings",
+        "exact_items": [
+          "current canonical fields cover provider/model/auth/account identity"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Key findings"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0041",
+        "source_evidence": [
+          "working_ledger.md:L8068"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "no_exact_obligation_grade_content",
+      "original_seed_id": "seed-2711",
+      "item": {
+        "seed_id": "seed-2711",
+        "seed_type": "consumer",
+        "canon_label_hint": "Candidate fixes to carry forward",
+        "exact_items": [
+          "Let Usage, History, Ledger, and Orchestrator consume the same event family rather than inventing local switch-history views."
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Candidate fixes to carry forward"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0042",
+        "source_evidence": [
+          "working_ledger.md:L8250"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "vague_label_without_exact_obligation",
+      "original_seed_id": "seed-2763",
+      "item": {
+        "seed_id": "seed-2763",
+        "seed_type": "owner",
+        "canon_label_hint": "Key findings",
+        "exact_items": [
+          "the tool outcome taxonomy still diverges from canonical blocked reason taxonomy"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Key findings"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0042",
+        "source_evidence": [
+          "working_ledger.md:L8340"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "label_only_introductory_line",
+      "original_seed_id": "seed-2835",
+      "item": {
+        "seed_id": "seed-2835",
+        "seed_type": "owner",
+        "canon_label_hint": "Glossary.md",
+        "exact_items": [
+          "Make `Glossary.md` own the canonical term meanings:"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Candidate fixes to carry forward"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0043",
+        "source_evidence": [
+          "working_ledger.md:L8490-L8491"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "no_exact_obligation_grade_content",
+      "original_seed_id": "seed-2863",
+      "item": {
+        "seed_id": "seed-2863",
+        "seed_type": "owner",
+        "canon_label_hint": "Key findings",
+        "exact_items": [
+          "but the rewrite has already pushed canonical semantics upward into graph/package/seam/lane/runtime-record language"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Key findings"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0043",
+        "source_evidence": [
+          "working_ledger.md:L8538"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "label_only_introductory_line",
+      "original_seed_id": "seed-2872",
+      "item": {
+        "seed_id": "seed-2872",
+        "seed_type": "owner",
+        "canon_label_hint": "Recommended owner map",
+        "exact_items": [
+          "own final canonical term definitions for:"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Recommended owner map"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0043",
+        "source_evidence": [
+          "working_ledger.md:L8571"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "stage_status_or_summary_note",
+      "original_seed_id": "seed-2887",
+      "item": {
+        "seed_id": "seed-2887",
+        "seed_type": "consumer",
+        "canon_label_hint": "Key findings",
+        "exact_items": [
+          "result: the doc is effectively trying to consume a node/lane scheduler while still operationalizing execution via tier-native runtime structs"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Key findings"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0044",
+        "source_evidence": [
+          "working_ledger.md:L8614"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "no_exact_obligation_grade_content",
+      "original_seed_id": "seed-2891",
+      "item": {
+        "seed_id": "seed-2891",
+        "seed_type": "owner",
+        "canon_label_hint": "Key findings",
+        "exact_items": [
+          "without a canonical replacement execution-context object, downstream docs keep papering over the split locally"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Key findings"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0044",
+        "source_evidence": [
+          "working_ledger.md:L8623-L8624"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "vague_label_without_exact_obligation",
+      "original_seed_id": "seed-2906",
+      "item": {
+        "seed_id": "seed-2906",
+        "seed_type": "owner",
+        "canon_label_hint": "Contradictions / gaps surfaced",
+        "exact_items": [
+          "canonical execution-unit refs"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Contradictions / gaps surfaced"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0044",
+        "source_evidence": [
+          "working_ledger.md:L8646-L8647"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "no_exact_obligation_grade_content",
+      "original_seed_id": "seed-2918",
+      "item": {
+        "seed_id": "seed-2918",
+        "seed_type": "owner",
+        "canon_label_hint": "Key findings",
+        "exact_items": [
+          "That mixture is the core reason it cannot become the rewrite-era canonical execution context. It is trying to be both a planner/decomposition helper and a runtime/audit object."
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Key findings"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0044",
+        "source_evidence": [
+          "working_ledger.md:L8687"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "label_only_introductory_line",
+      "original_seed_id": "seed-2919",
+      "item": {
+        "seed_id": "seed-2919",
+        "seed_type": "owner",
+        "canon_label_hint": "Key findings",
+        "exact_items": [
+          "The cross-cutting canonical runtime fields already exist elsewhere:"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Key findings"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0044",
+        "source_evidence": [
+          "working_ledger.md:L8688"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "no_exact_obligation_grade_content",
+      "original_seed_id": "seed-2926",
+      "item": {
+        "seed_id": "seed-2926",
+        "seed_type": "owner",
+        "canon_label_hint": "Recommended execution-context shape",
+        "exact_items": [
+          "refs or embedded snapshot for canonical requested/effective persona/runtime record"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Recommended execution-context shape"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0044",
+        "source_evidence": [
+          "working_ledger.md:L8722"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "label_only_introductory_line",
+      "original_seed_id": "seed-2943",
+      "item": {
+        "seed_id": "seed-2943",
+        "seed_type": "owner",
+        "canon_label_hint": "tier_id",
+        "exact_items": [
+          "Migrate coordination and crew models from `tier_id` anchoring to canonical execution refs plus secondary labels:"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Candidate fixes to carry forward"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0044",
+        "source_evidence": [
+          "working_ledger.md:L8768"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "no_exact_obligation_grade_content",
+      "original_seed_id": "seed-2944",
+      "item": {
+        "seed_id": "seed-2944",
+        "seed_type": "owner",
+        "canon_label_hint": "Candidate fixes to carry forward",
+        "exact_items": [
+          "Treat worktree/lane binding and requested/effective account/runtime identity as mandatory parts of the canonical execution context, not optional downstream embellishments."
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Candidate fixes to carry forward"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0044",
+        "source_evidence": [
+          "working_ledger.md:L8775"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "no_exact_obligation_grade_content",
+      "original_seed_id": "seed-2954",
+      "item": {
+        "seed_id": "seed-2954",
+        "seed_type": "owner",
+        "canon_label_hint": "Key findings",
+        "exact_items": [
+          "newer model treats approval as a blocked episode attached to canonical runtime execution"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Key findings"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0044",
+        "source_evidence": [
+          "working_ledger.md:L8797"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "label_only_introductory_line",
+      "original_seed_id": "seed-2972",
+      "item": {
+        "seed_id": "seed-2972",
+        "seed_type": "owner",
+        "canon_label_hint": "Candidate fixes to carry forward",
+        "exact_items": [
+          "Move approval anchoring onto canonical runtime identity:"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Candidate fixes to carry forward"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0045",
+        "source_evidence": [
+          "working_ledger.md:L8836"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "no_exact_obligation_grade_content",
+      "original_seed_id": "seed-3010",
+      "item": {
+        "seed_id": "seed-3010",
+        "seed_type": "owner",
+        "canon_label_hint": "Highest-risk impacted docs",
+        "exact_items": [
+          "still lacks canonical mappings/families for HITL, account management, concern flows, promotion flows, and freshness-gated mutation commands."
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Highest-risk impacted docs"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0045",
+        "source_evidence": [
+          "working_ledger.md:L8897"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "no_exact_obligation_grade_content",
+      "original_seed_id": "seed-3062",
+      "item": {
+        "seed_id": "seed-3062",
+        "seed_type": "owner",
+        "canon_label_hint": "Contradictions / gaps surfaced",
+        "exact_items": [
+          "Several docs still claim to align with canonical runtime records while silently dropping auth/account/role fields that those records already own elsewhere."
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Contradictions / gaps surfaced"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0045",
+        "source_evidence": [
+          "working_ledger.md:L8987"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "no_exact_obligation_grade_content",
+      "original_seed_id": "seed-3225",
+      "item": {
+        "seed_id": "seed-3225",
+        "seed_type": "layout_blocker",
+        "canon_label_hint": "Highest-risk impacted docs",
+        "exact_items": [
+          "duplicate canonical sections plus unowned mint/handshake rules remain an execution-core risk multiplier."
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Highest-risk impacted docs"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0047",
+        "source_evidence": [
+          "working_ledger.md:L9291"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "no_exact_obligation_grade_content",
+      "original_seed_id": "seed-3227",
+      "item": {
+        "seed_id": "seed-3227",
+        "seed_type": "owner",
+        "canon_label_hint": "Highest-risk impacted docs",
+        "exact_items": [
+          "active coordination and context construction still cannot be trusted as canonical runtime identity."
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Highest-risk impacted docs"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0047",
+        "source_evidence": [
+          "working_ledger.md:L9293"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "no_exact_obligation_grade_content",
+      "original_seed_id": "seed-3231",
+      "item": {
+        "seed_id": "seed-3231",
+        "seed_type": "owner",
+        "canon_label_hint": "Contradictions / gaps surfaced",
+        "exact_items": [
+          "Several docs now fail because they promise canonical sections/IDs that do not exist at all."
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Contradictions / gaps surfaced"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0047",
+        "source_evidence": [
+          "working_ledger.md:L9302"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "label_only_introductory_line",
+      "original_seed_id": "seed-3248",
+      "item": {
+        "seed_id": "seed-3248",
+        "seed_type": "owner",
+        "canon_label_hint": "Key findings",
+        "exact_items": [
+          "Validation-pass reports are already treated as canonical first-class artifacts:"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Key findings"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0047",
+        "source_evidence": [
+          "working_ledger.md:L9333"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "vague_label_without_exact_obligation",
+      "original_seed_id": "seed-3303",
+      "item": {
+        "seed_id": "seed-3303",
+        "seed_type": "owner",
+        "canon_label_hint": "Candidate fixes to carry forward",
+        "exact_items": [
+          "canonical redb key registration"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Candidate fixes to carry forward"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0048",
+        "source_evidence": [
+          "working_ledger.md:L9464"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "label_only_introductory_line",
+      "original_seed_id": "seed-3394",
+      "item": {
+        "seed_id": "seed-3394",
+        "seed_type": "owner",
+        "canon_label_hint": "Recommended owner decision",
+        "exact_items": [
+          "A blocked episode is the canonical unit for:"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Recommended owner decision"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0049",
+        "source_evidence": [
+          "working_ledger.md:L9698"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "vague_label_without_exact_obligation",
+      "original_seed_id": "seed-3409",
+      "item": {
+        "seed_id": "seed-3409",
+        "seed_type": "owner",
+        "canon_label_hint": "Candidate fixes to carry forward",
+        "exact_items": [
+          "canonical runtime action routing"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Candidate fixes to carry forward"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0049",
+        "source_evidence": [
+          "working_ledger.md:L9748"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "no_exact_obligation_grade_content",
+      "original_seed_id": "seed-3454",
+      "item": {
+        "seed_id": "seed-3454",
+        "seed_type": "owner",
+        "canon_label_hint": "both introduce concrete commands/events/tool IDs that the canonical owners do not currently regi",
+        "exact_items": [
+          "both introduce concrete commands/events/tool IDs that the canonical owners do not currently register."
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0050",
+        "source_evidence": [
+          "working_ledger.md:L9805-L9807"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "label_only_introductory_line",
+      "original_seed_id": "seed-3473",
+      "item": {
+        "seed_id": "seed-3473",
+        "seed_type": "owner",
+        "canon_label_hint": "storage-plan.md",
+        "exact_items": [
+          "`storage-plan.md` already owns the canonical runtime persistence side for execution attempts and runtime overlays:"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Key findings"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0050",
+        "source_evidence": [
+          "working_ledger.md:L9840-L9842"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "label_only_introductory_line",
+      "original_seed_id": "seed-3482",
+      "item": {
+        "seed_id": "seed-3482",
+        "seed_type": "owner",
+        "canon_label_hint": "Recommended replacement model",
+        "exact_items": [
+          "Canonical object:"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Recommended replacement model"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0050",
+        "source_evidence": [
+          "working_ledger.md:L9865"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "label_only_introductory_line",
+      "original_seed_id": "seed-3503",
+      "item": {
+        "seed_id": "seed-3503",
+        "seed_type": "consumer",
+        "canon_label_hint": "orchestrator-subagent-integration.md",
+        "exact_items": [
+          "Refactor `orchestrator-subagent-integration.md` so selector and hook APIs consume:"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Candidate fixes to carry forward"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0050",
+        "source_evidence": [
+          "working_ledger.md:L9950-L9951"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "vague_label_without_exact_obligation",
+      "original_seed_id": "seed-3504",
+      "item": {
+        "seed_id": "seed-3504",
+        "seed_type": "owner",
+        "canon_label_hint": "Candidate fixes to carry forward",
+        "exact_items": [
+          "canonical execution-unit refs for truth"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Candidate fixes to carry forward"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0050",
+        "source_evidence": [
+          "working_ledger.md:L9950-L9952"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "label_only_introductory_line",
+      "original_seed_id": "seed-3587",
+      "item": {
+        "seed_id": "seed-3587",
+        "seed_type": "owner",
+        "canon_label_hint": "execution_role",
+        "exact_items": [
+          "`execution_role` belongs in the canonical runtime attempt/dispatch packet family:"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Recommended placement rule"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0051",
+        "source_evidence": [
+          "working_ledger.md:L10185"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "no_exact_obligation_grade_content",
+      "original_seed_id": "seed-3768",
+      "item": {
+        "seed_id": "seed-3768",
+        "seed_type": "owner",
+        "canon_label_hint": "Do-not-forget details",
+        "exact_items": [
+          "The big risk here is accidental \u201cprimary key drift,\u201d where bridge refs start being treated like canonical local identity."
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Do-not-forget details"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0053",
+        "source_evidence": [
+          "working_ledger.md:L10559"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "label_only_introductory_line",
+      "original_seed_id": "seed-3818",
+      "item": {
+        "seed_id": "seed-3818",
+        "seed_type": "owner",
+        "canon_label_hint": "FileManager.md",
+        "exact_items": [
+          "`FileManager.md` still states one canonical open contract:"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Key findings"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0054",
+        "source_evidence": [
+          "working_ledger.md:L10681"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "vague_label_without_exact_obligation",
+      "original_seed_id": "seed-3824",
+      "item": {
+        "seed_id": "seed-3824",
+        "seed_type": "owner",
+        "canon_label_hint": "Recommended `OpenSubject` identity families",
+        "exact_items": [
+          "resolves to canonical workspace file/buffer"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Recommended `OpenSubject` identity families"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0054",
+        "source_evidence": [
+          "working_ledger.md:L10703"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "label_only_introductory_line",
+      "original_seed_id": "seed-3830",
+      "item": {
+        "seed_id": "seed-3830",
+        "seed_type": "owner",
+        "canon_label_hint": "Recommended behavior rule",
+        "exact_items": [
+          "identity-based open is the canonical entrypoint for:"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Recommended behavior rule"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0054",
+        "source_evidence": [
+          "working_ledger.md:L10722"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "label_only_introductory_line",
+      "original_seed_id": "seed-3832",
+      "item": {
+        "seed_id": "seed-3832",
+        "seed_type": "owner",
+        "canon_label_hint": "Recommended resolution order for identity opens",
+        "exact_items": [
+          "if file-backed canonical document exists:"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Recommended resolution order for identity opens"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0054",
+        "source_evidence": [
+          "working_ledger.md:L10731"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "label_only_introductory_line",
+      "original_seed_id": "seed-3846",
+      "item": {
+        "seed_id": "seed-3846",
+        "seed_type": "owner",
+        "canon_label_hint": "Candidate fixes to carry forward",
+        "exact_items": [
+          "Split FileManager\u2019s canonical open contract into:"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Candidate fixes to carry forward"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0054",
+        "source_evidence": [
+          "working_ledger.md:L10760"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "vague_label_without_exact_obligation",
+      "original_seed_id": "seed-4100",
+      "item": {
+        "seed_id": "seed-4100",
+        "seed_type": "layout_blocker",
+        "canon_label_hint": "Key findings",
+        "exact_items": [
+          "a direct binding to a canonical navigation primitive"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Key findings"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0056",
+        "source_evidence": [
+          "working_ledger.md:L11197"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "vague_label_without_exact_obligation",
+      "original_seed_id": "seed-4133",
+      "item": {
+        "seed_id": "seed-4133",
+        "seed_type": "layout_blocker",
+        "canon_label_hint": "Key findings",
+        "exact_items": [
+          "wrapper commands over a canonical navigation primitive"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Key findings"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0057",
+        "source_evidence": [
+          "working_ledger.md:L11258"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "vague_label_without_exact_obligation",
+      "original_seed_id": "seed-4155",
+      "item": {
+        "seed_id": "seed-4155",
+        "seed_type": "layout_blocker",
+        "canon_label_hint": "Candidate fixes to carry forward",
+        "exact_items": [
+          "wrapper-to-canonical navigation consistency"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Candidate fixes to carry forward"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0057",
+        "source_evidence": [
+          "working_ledger.md:L11289"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "vague_label_without_exact_obligation",
+      "original_seed_id": "seed-4167",
+      "item": {
+        "seed_id": "seed-4167",
+        "seed_type": "layout_blocker",
+        "canon_label_hint": "Key findings",
+        "exact_items": [
+          "canonical navigation primitive"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Key findings"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0057",
+        "source_evidence": [
+          "working_ledger.md:L11318"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "no_exact_obligation_grade_content",
+      "original_seed_id": "seed-4257",
+      "item": {
+        "seed_id": "seed-4257",
+        "seed_type": "layout_blocker",
+        "canon_label_hint": "Key findings",
+        "exact_items": [
+          "The remaining mismatch is that this stance is still distributed across planning/UI docs rather than being tied back to one canonical subject-open contract."
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Key findings"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0058",
+        "source_evidence": [
+          "working_ledger.md:L11494"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "no_exact_obligation_grade_content",
+      "original_seed_id": "seed-4303",
+      "item": {
+        "seed_id": "seed-4303",
+        "seed_type": "owner",
+        "canon_label_hint": "Key findings",
+        "exact_items": [
+          "DAE still lacks a canonical lifecycle across defer/restart and still cannot safely enforce remote side-effect approval without a pre-dispatch intercept path."
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Key findings"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0058",
+        "source_evidence": [
+          "working_ledger.md:L11562-L11564"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "no_exact_obligation_grade_content",
+      "original_seed_id": "seed-4355",
+      "item": {
+        "seed_id": "seed-4355",
+        "seed_type": "layout_blocker",
+        "canon_label_hint": "Key findings",
+        "exact_items": [
+          "but they still frame those as view-specific navigation instructions, not as a canonical target model."
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Key findings"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0059",
+        "source_evidence": [
+          "working_ledger.md:L11648"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "label_only_introductory_line",
+      "original_seed_id": "seed-4379",
+      "item": {
+        "seed_id": "seed-4379",
+        "seed_type": "owner",
+        "canon_label_hint": "Key findings",
+        "exact_items": [
+          "The canonical-storage side is already disciplined:"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Key findings"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0059",
+        "source_evidence": [
+          "working_ledger.md:L11700"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "no_exact_obligation_grade_content",
+      "original_seed_id": "seed-4395",
+      "item": {
+        "seed_id": "seed-4395",
+        "seed_type": "owner",
+        "canon_label_hint": "Contradictions / gaps surfaced",
+        "exact_items": [
+          "There is still no shared rule for when an export is just a convenience view versus when it becomes a structured bundle with manifest, canonical refs, trust disclosure, and reproducibility expectations."
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Contradictions / gaps surfaced"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0059",
+        "source_evidence": [
+          "working_ledger.md:L11731"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "no_exact_obligation_grade_content",
+      "original_seed_id": "seed-4399",
+      "item": {
+        "seed_id": "seed-4399",
+        "seed_type": "owner",
+        "canon_label_hint": "Do-not-forget details",
+        "exact_items": [
+          "The biggest risk is that export features get implemented as \u201cdump whatever the current view shows\u201d and quietly lose canonical identity."
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Do-not-forget details"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0059",
+        "source_evidence": [
+          "working_ledger.md:L11746"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "label_only_introductory_line",
+      "original_seed_id": "seed-4468",
+      "item": {
+        "seed_id": "seed-4468",
+        "seed_type": "consumer",
+        "canon_label_hint": "Key findings",
+        "exact_items": [
+          "specialized operations that consume it, especially:"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Key findings"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0060",
+        "source_evidence": [
+          "working_ledger.md:L11880"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "vague_label_without_exact_obligation",
+      "original_seed_id": "seed-4469",
+      "item": {
+        "seed_id": "seed-4469",
+        "seed_type": "layout_blocker",
+        "canon_label_hint": "Recommended shape",
+        "exact_items": [
+          "canonical target/scope object used by navigation/open/focus actions"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Recommended shape"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0060",
+        "source_evidence": [
+          "working_ledger.md:L11888"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "vague_label_without_exact_obligation",
+      "original_seed_id": "seed-4471",
+      "item": {
+        "seed_id": "seed-4471",
+        "seed_type": "owner",
+        "canon_label_hint": "Recommended shape",
+        "exact_items": [
+          "resolves through canonical subject/open rules"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Recommended shape"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0060",
+        "source_evidence": [
+          "working_ledger.md:L11905"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "no_exact_obligation_grade_content",
+      "original_seed_id": "seed-4473",
+      "item": {
+        "seed_id": "seed-4473",
+        "seed_type": "layout_blocker",
+        "canon_label_hint": "Recommended shape",
+        "exact_items": [
+          "remains the right tool for real file opens and code-navigation clicks when a canonical workspace path is already known"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Recommended shape"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0060",
+        "source_evidence": [
+          "working_ledger.md:L11909"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "vague_label_without_exact_obligation",
+      "original_seed_id": "seed-4495",
+      "item": {
+        "seed_id": "seed-4495",
+        "seed_type": "owner",
+        "canon_label_hint": "Key findings",
+        "exact_items": [
+          "keep the canonical target object small"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Key findings"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0060",
+        "source_evidence": [
+          "working_ledger.md:L11956-L11957"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "label_only_introductory_line",
+      "original_seed_id": "seed-4498",
+      "item": {
+        "seed_id": "seed-4498",
+        "seed_type": "owner",
+        "canon_label_hint": "Recommended minimum field set",
+        "exact_items": [
+          "Canonical target selector:"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Recommended minimum field set"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0060",
+        "source_evidence": [
+          "working_ledger.md:L11972"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "no_exact_obligation_grade_content",
+      "original_seed_id": "seed-4517",
+      "item": {
+        "seed_id": "seed-4517",
+        "seed_type": "owner",
+        "canon_label_hint": "Do-not-forget details",
+        "exact_items": [
+          "If the base target object grows too large, it stops being canonical and just becomes a new dumping ground."
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Do-not-forget details"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0061",
+        "source_evidence": [
+          "working_ledger.md:L12044"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "label_only_introductory_line",
+      "original_seed_id": "seed-4527",
+      "item": {
+        "seed_id": "seed-4527",
+        "seed_type": "owner",
+        "canon_label_hint": "Recommended `subject_id` families",
+        "exact_items": [
+          "Keep the initial canonical set deliberately small:"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Recommended `subject_id` families"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0061",
+        "source_evidence": [
+          "working_ledger.md:L12064"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "no_exact_obligation_grade_content",
+      "original_seed_id": "seed-4575",
+      "item": {
+        "seed_id": "seed-4575",
+        "seed_type": "layout_blocker",
+        "canon_label_hint": "Do-not-forget details",
+        "exact_items": [
+          "Canonical identity and UI focus are different layers."
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Do-not-forget details"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0062",
+        "source_evidence": [
+          "working_ledger.md:L12231"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "label_only_introductory_line",
+      "original_seed_id": "seed-4587",
+      "item": {
+        "seed_id": "seed-4587",
+        "seed_type": "owner",
+        "canon_label_hint": "Recommended migration pattern",
+        "exact_items": [
+          "Canonical layer:"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Recommended migration pattern"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0062",
+        "source_evidence": [
+          "working_ledger.md:L12258"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "vague_label_without_exact_obligation",
+      "original_seed_id": "seed-4590",
+      "item": {
+        "seed_id": "seed-4590",
+        "seed_type": "owner",
+        "canon_label_hint": "Recommended migration pattern",
+        "exact_items": [
+          "wrappers normalize their args into canonical target/subject forms internally"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Recommended migration pattern"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0062",
+        "source_evidence": [
+          "working_ledger.md:L12265"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "no_exact_obligation_grade_content",
+      "original_seed_id": "seed-4603",
+      "item": {
+        "seed_id": "seed-4603",
+        "seed_type": "stale_retirement",
+        "canon_label_hint": "Contradictions / gaps surfaced",
+        "exact_items": [
+          "Wrapper commands are currently real and useful, but the docs still lack a rule for when they are canonical UX affordances versus deprecated raw transport shapes."
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Contradictions / gaps surfaced"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0062",
+        "source_evidence": [
+          "working_ledger.md:L12285-L12286"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "no_exact_obligation_grade_content",
+      "original_seed_id": "seed-4605",
+      "item": {
+        "seed_id": "seed-4605",
+        "seed_type": "owner",
+        "canon_label_hint": "Candidate fixes to carry forward",
+        "exact_items": [
+          "Let wrapper commands remain if they provide real UX meaning, but make the underlying target model canonical."
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Candidate fixes to carry forward"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0062",
+        "source_evidence": [
+          "working_ledger.md:L12290"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "label_only_introductory_line",
+      "original_seed_id": "seed-4716",
+      "item": {
+        "seed_id": "seed-4716",
+        "seed_type": "owner",
+        "canon_label_hint": "Recommended boundary",
+        "exact_items": [
+          "Canonical routing may carry enough view intent to answer:"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Recommended boundary"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0063",
+        "source_evidence": [
+          "working_ledger.md:L12506"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "no_exact_obligation_grade_content",
+      "original_seed_id": "seed-4781",
+      "item": {
+        "seed_id": "seed-4781",
+        "seed_type": "owner",
+        "canon_label_hint": "Do-not-forget details",
+        "exact_items": [
+          "Destination-local refinement is real, but it is one layer down from canonical target identity."
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Do-not-forget details"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0064",
+        "source_evidence": [
+          "working_ledger.md:L12652"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "no_exact_obligation_grade_content",
+      "original_seed_id": "seed-4880",
+      "item": {
+        "seed_id": "seed-4880",
+        "seed_type": "layout_blocker",
+        "canon_label_hint": "Key findings",
+        "exact_items": [
+          "Domain mutation/runtime commands remain separate again. They act on canonical runtime or domain identity and are not just navigation with a side effect."
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Key findings"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0065",
+        "source_evidence": [
+          "working_ledger.md:L12827"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "no_exact_obligation_grade_content",
+      "original_seed_id": "seed-4908",
+      "item": {
+        "seed_id": "seed-4908",
+        "seed_type": "owner",
+        "canon_label_hint": "Do-not-forget details",
+        "exact_items": [
+          "The catalog can keep UX-facing wrapper names; the important change is the canonical contract beneath them."
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Do-not-forget details"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0065",
+        "source_evidence": [
+          "working_ledger.md:L12869"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "no_exact_obligation_grade_content",
+      "original_seed_id": "seed-4919",
+      "item": {
+        "seed_id": "seed-4919",
+        "seed_type": "layout_blocker",
+        "canon_label_hint": "Key findings",
+        "exact_items": [
+          "these are good UX-facing wrapper names, even if they are not the canonical navigation primitive"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Key findings"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0065",
+        "source_evidence": [
+          "working_ledger.md:L12893"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "no_exact_obligation_grade_content",
+      "original_seed_id": "seed-4928",
+      "item": {
+        "seed_id": "seed-4928",
+        "seed_type": "layout_blocker",
+        "canon_label_hint": "Contradictions / gaps surfaced",
+        "exact_items": [
+          "There is still no canonical navigation primitive in the contract layer, so wrapper commands remain forced to carry semantics in prose."
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Contradictions / gaps surfaced"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0065",
+        "source_evidence": [
+          "working_ledger.md:L12909"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "vague_label_without_exact_obligation",
+      "original_seed_id": "seed-4964",
+      "item": {
+        "seed_id": "seed-4964",
+        "seed_type": "owner",
+        "canon_label_hint": "Contradictions / gaps surfaced",
+        "exact_items": [
+          "canonical primitive underneath both"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Contradictions / gaps surfaced"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0065",
+        "source_evidence": [
+          "working_ledger.md:L12977"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "vague_label_without_exact_obligation",
+      "original_seed_id": "seed-4969",
+      "item": {
+        "seed_id": "seed-4969",
+        "seed_type": "owner",
+        "canon_label_hint": "Candidate fixes to carry forward",
+        "exact_items": [
+          "canonical primitive or normalized target contract"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Candidate fixes to carry forward"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0065",
+        "source_evidence": [
+          "working_ledger.md:L12987"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "vague_label_without_exact_obligation",
+      "original_seed_id": "seed-4988",
+      "item": {
+        "seed_id": "seed-4988",
+        "seed_type": "owner",
+        "canon_label_hint": "Key findings",
+        "exact_items": [
+          "potentially another future canonical primitive family"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Key findings"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0066",
+        "source_evidence": [
+          "working_ledger.md:L13034"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "vague_label_without_exact_obligation",
+      "original_seed_id": "seed-5003",
+      "item": {
+        "seed_id": "seed-5003",
+        "seed_type": "owner",
+        "canon_label_hint": "Candidate fixes to carry forward",
+        "exact_items": [
+          "point to the canonical primitive family"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Candidate fixes to carry forward"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0066",
+        "source_evidence": [
+          "working_ledger.md:L13060"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "label_only_introductory_line",
+      "original_seed_id": "seed-5079",
+      "item": {
+        "seed_id": "seed-5079",
+        "seed_type": "owner",
+        "canon_label_hint": "subject_id",
+        "exact_items": [
+          "Keep `subject_id` canonical and stable:"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Candidate fixes to carry forward"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0067",
+        "source_evidence": [
+          "working_ledger.md:L13223"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "label_only_introductory_line",
+      "original_seed_id": "seed-5089",
+      "item": {
+        "seed_id": "seed-5089",
+        "seed_type": "owner",
+        "canon_label_hint": "Key findings",
+        "exact_items": [
+          "The canonical minimum is:"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Key findings"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0067",
+        "source_evidence": [
+          "working_ledger.md:L13247"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "label_only_introductory_line",
+      "original_seed_id": "seed-5090",
+      "item": {
+        "seed_id": "seed-5090",
+        "seed_type": "owner",
+        "canon_label_hint": "subject_id",
+        "exact_items": [
+          "`subject_id` is the canonical identity:"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Key findings"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0067",
+        "source_evidence": [
+          "working_ledger.md:L13250"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "label_only_introductory_line",
+      "original_seed_id": "seed-5113",
+      "item": {
+        "seed_id": "seed-5113",
+        "seed_type": "owner",
+        "canon_label_hint": "Key findings",
+        "exact_items": [
+          "one canonical target selector:"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Key findings"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0067",
+        "source_evidence": [
+          "working_ledger.md:L13329"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "label_only_introductory_line",
+      "original_seed_id": "seed-5144",
+      "item": {
+        "seed_id": "seed-5144",
+        "seed_type": "owner",
+        "canon_label_hint": "Key findings",
+        "exact_items": [
+          "The canonical vocabulary is:"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Key findings"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0068",
+        "source_evidence": [
+          "working_ledger.md:L13428"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "label_only_introductory_line",
+      "original_seed_id": "seed-5165",
+      "item": {
+        "seed_id": "seed-5165",
+        "seed_type": "owner",
+        "canon_label_hint": "Key findings",
+        "exact_items": [
+          "The canonical selector rule is:"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Key findings"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0068",
+        "source_evidence": [
+          "working_ledger.md:L13498"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "label_only_introductory_line",
+      "original_seed_id": "seed-5189",
+      "item": {
+        "seed_id": "seed-5189",
+        "seed_type": "owner",
+        "canon_label_hint": "Serialization rule",
+        "exact_items": [
+          "internal canonical contract:"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Serialization rule"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0068",
+        "source_evidence": [
+          "working_ledger.md:L13573"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "label_only_introductory_line",
+      "original_seed_id": "seed-5213",
+      "item": {
+        "seed_id": "seed-5213",
+        "seed_type": "owner",
+        "canon_label_hint": "object_kind",
+        "exact_items": [
+          "The canonical `object_kind` set is:"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Key findings"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0069",
+        "source_evidence": [
+          "working_ledger.md:L13634"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "label_only_introductory_line",
+      "original_seed_id": "seed-5236",
+      "item": {
+        "seed_id": "seed-5236",
+        "seed_type": "owner",
+        "canon_label_hint": "Key findings",
+        "exact_items": [
+          "The canonical vocabulary is:"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Key findings"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0069",
+        "source_evidence": [
+          "working_ledger.md:L13715"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "label_only_introductory_line",
+      "original_seed_id": "seed-5256",
+      "item": {
+        "seed_id": "seed-5256",
+        "seed_type": "owner",
+        "canon_label_hint": "subject_id",
+        "exact_items": [
+          "The canonical `subject_id` families remain:"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Key findings"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0069",
+        "source_evidence": [
+          "working_ledger.md:L13773"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "no_exact_obligation_grade_content",
+      "original_seed_id": "seed-5413",
+      "item": {
+        "seed_id": "seed-5413",
+        "seed_type": "layout_blocker",
+        "canon_label_hint": "Contradictions / gaps surfaced",
+        "exact_items": [
+          "Lane, seam, package, concern, and promotion routes are still mostly implied by UI prose instead of declared as canonical navigation identities."
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Contradictions / gaps surfaced"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0071",
+        "source_evidence": [
+          "working_ledger.md:L14189"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "label_only_introductory_line",
+      "original_seed_id": "seed-5440",
+      "item": {
+        "seed_id": "seed-5440",
+        "seed_type": "owner",
+        "canon_label_hint": "Key findings",
+        "exact_items": [
+          "The current high-value canonical vocabulary is:"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Key findings"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0072",
+        "source_evidence": [
+          "working_ledger.md:L14256"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "label_only_introductory_line",
+      "original_seed_id": "seed-5463",
+      "item": {
+        "seed_id": "seed-5463",
+        "seed_type": "owner",
+        "canon_label_hint": "Key findings",
+        "exact_items": [
+          "The canonical rule is:"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Key findings"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0072",
+        "source_evidence": [
+          "working_ledger.md:L14310"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "vague_label_without_exact_obligation",
+      "original_seed_id": "seed-5493",
+      "item": {
+        "seed_id": "seed-5493",
+        "seed_type": "layout_blocker",
+        "canon_label_hint": "Key findings",
+        "exact_items": [
+          "stop owning canonical navigation identity"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Key findings"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0072",
+        "source_evidence": [
+          "working_ledger.md:L14387"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "no_exact_obligation_grade_content",
+      "original_seed_id": "seed-5502",
+      "item": {
+        "seed_id": "seed-5502",
+        "seed_type": "layout_blocker",
+        "canon_label_hint": "Key findings",
+        "exact_items": [
+          "consume worktree object routing rather than inventing a separate SCM-local navigation identity"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Key findings"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0072",
+        "source_evidence": [
+          "working_ledger.md:L14398"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "label_only_introductory_line",
+      "original_seed_id": "seed-5526",
+      "item": {
+        "seed_id": "seed-5526",
+        "seed_type": "consumer",
+        "canon_label_hint": "Plans/Orchestrator_Page.md",
+        "exact_items": [
+          "`Plans/Orchestrator_Page.md` is still structurally tier-era:"
+        ],
+        "affected_doc_hints": [
+          "Plans/Orchestrator_Page.md"
+        ],
+        "heading_hints": [
+          "Key findings"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0073",
+        "source_evidence": [
+          "working_ledger.md:L14441-L14442"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "label_only_introductory_line",
+      "original_seed_id": "seed-5530",
+      "item": {
+        "seed_id": "seed-5530",
+        "seed_type": "consumer",
+        "canon_label_hint": "Plans/Run_Graph_View.md",
+        "exact_items": [
+          "`Plans/Run_Graph_View.md` has a direct internal contract split:"
+        ],
+        "affected_doc_hints": [
+          "Plans/Run_Graph_View.md"
+        ],
+        "heading_hints": [
+          "Key findings"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0073",
+        "source_evidence": [
+          "working_ledger.md:L14447"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "label_only_introductory_line",
+      "original_seed_id": "seed-5532",
+      "item": {
+        "seed_id": "seed-5532",
+        "seed_type": "consumer",
+        "canon_label_hint": "Plans/UI_Command_Catalog.md",
+        "exact_items": [
+          "`Plans/UI_Command_Catalog.md` is internally split:"
+        ],
+        "affected_doc_hints": [
+          "Plans/UI_Command_Catalog.md"
+        ],
+        "heading_hints": [
+          "Key findings"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0073",
+        "source_evidence": [
+          "working_ledger.md:L14452"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "no_exact_obligation_grade_content",
+      "original_seed_id": "seed-5570",
+      "item": {
+        "seed_id": "seed-5570",
+        "seed_type": "layout_blocker",
+        "canon_label_hint": "Candidate fixes to carry forward",
+        "exact_items": [
+          "Keep filter/scroll/highlight behavior as destination realization, not as canonical navigation identity."
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Candidate fixes to carry forward"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0073",
+        "source_evidence": [
+          "working_ledger.md:L14535"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "label_only_introductory_line",
+      "original_seed_id": "seed-5575",
+      "item": {
+        "seed_id": "seed-5575",
+        "seed_type": "consumer",
+        "canon_label_hint": "Plans/FileManager.md",
+        "exact_items": [
+          "`Plans/FileManager.md` still states one universal open primitive:"
+        ],
+        "affected_doc_hints": [
+          "Plans/FileManager.md"
+        ],
+        "heading_hints": [
+          "Key findings"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0073",
+        "source_evidence": [
+          "working_ledger.md:L14550"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "no_exact_obligation_grade_content",
+      "original_seed_id": "seed-5577",
+      "item": {
+        "seed_id": "seed-5577",
+        "seed_type": "owner",
+        "canon_label_hint": "Key findings",
+        "exact_items": [
+          "the embedded document pane already shares canonical document identity and backend restore pipelines rather than pure path opens"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Key findings"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0073",
+        "source_evidence": [
+          "working_ledger.md:L14556"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "label_only_introductory_line",
+      "original_seed_id": "seed-5578",
+      "item": {
+        "seed_id": "seed-5578",
+        "seed_type": "consumer",
+        "canon_label_hint": "Plans/assistant-chat-design.md",
+        "exact_items": [
+          "`Plans/assistant-chat-design.md` is materially ahead here:"
+        ],
+        "affected_doc_hints": [
+          "Plans/assistant-chat-design.md"
+        ],
+        "heading_hints": [
+          "Key findings"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0073",
+        "source_evidence": [
+          "working_ledger.md:L14557"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "no_exact_obligation_grade_content",
+      "original_seed_id": "seed-5600",
+      "item": {
+        "seed_id": "seed-5600",
+        "seed_type": "consumer",
+        "canon_label_hint": "Orchestrator consumes worktree identity, blocked state, and lineage",
+        "exact_items": [
+          "Orchestrator consumes worktree identity, blocked state, and lineage"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0074",
+        "source_evidence": [
+          "working_ledger.md:L14602-L14604"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "label_only_introductory_line",
+      "original_seed_id": "seed-5622",
+      "item": {
+        "seed_id": "seed-5622",
+        "seed_type": "consumer",
+        "canon_label_hint": "Plans/storage-plan.md",
+        "exact_items": [
+          "`Plans/storage-plan.md` is already the strongest doc for subject identity:"
+        ],
+        "affected_doc_hints": [
+          "Plans/storage-plan.md"
+        ],
+        "heading_hints": [
+          "Key findings"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0074",
+        "source_evidence": [
+          "working_ledger.md:L14648"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "label_only_introductory_line",
+      "original_seed_id": "seed-5625",
+      "item": {
+        "seed_id": "seed-5625",
+        "seed_type": "consumer",
+        "canon_label_hint": "Plans/Runtime_Artifacts_Panel.md",
+        "exact_items": [
+          "`Plans/Runtime_Artifacts_Panel.md` is partly aligned:"
+        ],
+        "affected_doc_hints": [
+          "Plans/Runtime_Artifacts_Panel.md"
+        ],
+        "heading_hints": [
+          "Key findings"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0074",
+        "source_evidence": [
+          "working_ledger.md:L14652"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "no_exact_obligation_grade_content",
+      "original_seed_id": "seed-5638",
+      "item": {
+        "seed_id": "seed-5638",
+        "seed_type": "layout_blocker",
+        "canon_label_hint": "Contradictions / gaps surfaced",
+        "exact_items": [
+          "Storage already knows canonical subject identity, but Contracts and Crosswalk still do not declare the navigation primitive that consumes it."
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Contradictions / gaps surfaced"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0074",
+        "source_evidence": [
+          "working_ledger.md:L14665-L14669"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "label_only_introductory_line",
+      "original_seed_id": "seed-5649",
+      "item": {
+        "seed_id": "seed-5649",
+        "seed_type": "owner",
+        "canon_label_hint": "Plans/Contracts_V0.md",
+        "exact_items": [
+          "`Plans/Contracts_V0.md` still lacks the named canonical contracts for:"
+        ],
+        "affected_doc_hints": [
+          "Plans/Contracts_V0.md"
+        ],
+        "heading_hints": [
+          "Structural gaps still live"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0074",
+        "source_evidence": [
+          "working_ledger.md:L14693-L14696"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "label_only_introductory_line",
+      "original_seed_id": "seed-5674",
+      "item": {
+        "seed_id": "seed-5674",
+        "seed_type": "consumer",
+        "canon_label_hint": "Plans/Contracts_V0.md",
+        "exact_items": [
+          "`Plans/Contracts_V0.md` already has the correct attachment point:"
+        ],
+        "affected_doc_hints": [
+          "Plans/Contracts_V0.md"
+        ],
+        "heading_hints": [
+          "Key findings"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0074",
+        "source_evidence": [
+          "working_ledger.md:L14740"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "label_only_introductory_line",
+      "original_seed_id": "seed-5678",
+      "item": {
+        "seed_id": "seed-5678",
+        "seed_type": "consumer",
+        "canon_label_hint": "Plans/Crosswalk.md",
+        "exact_items": [
+          "`Plans/Crosswalk.md` already has the adjacent primitive owners that expose the gap:"
+        ],
+        "affected_doc_hints": [
+          "Plans/Crosswalk.md"
+        ],
+        "heading_hints": [
+          "Key findings"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0074",
+        "source_evidence": [
+          "working_ledger.md:L14749"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "label_only_introductory_line",
+      "original_seed_id": "seed-5690",
+      "item": {
+        "seed_id": "seed-5690",
+        "seed_type": "consumer",
+        "canon_label_hint": "Plans/Contracts_V0.md",
+        "exact_items": [
+          "In `Plans/Contracts_V0.md`:"
+        ],
+        "affected_doc_hints": [
+          "Plans/Contracts_V0.md"
+        ],
+        "heading_hints": [
+          "Candidate fixes to carry forward"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0074",
+        "source_evidence": [
+          "working_ledger.md:L14771-L14774"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "label_only_introductory_line",
+      "original_seed_id": "seed-5693",
+      "item": {
+        "seed_id": "seed-5693",
+        "seed_type": "consumer",
+        "canon_label_hint": "Plans/Crosswalk.md",
+        "exact_items": [
+          "In `Plans/Crosswalk.md`:"
+        ],
+        "affected_doc_hints": [
+          "Plans/Crosswalk.md"
+        ],
+        "heading_hints": [
+          "Candidate fixes to carry forward"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0074",
+        "source_evidence": [
+          "working_ledger.md:L14778"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "label_only_introductory_line",
+      "original_seed_id": "seed-5713",
+      "item": {
+        "seed_id": "seed-5713",
+        "seed_type": "consumer",
+        "canon_label_hint": "Plans/UI_Command_Catalog.md",
+        "exact_items": [
+          "In `Plans/UI_Command_Catalog.md`:"
+        ],
+        "affected_doc_hints": [
+          "Plans/UI_Command_Catalog.md"
+        ],
+        "heading_hints": [
+          "Candidate fixes to carry forward"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0075",
+        "source_evidence": [
+          "working_ledger.md:L14823"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "label_only_introductory_line",
+      "original_seed_id": "seed-5715",
+      "item": {
+        "seed_id": "seed-5715",
+        "seed_type": "consumer",
+        "canon_label_hint": "Plans/FinalGUISpec.md",
+        "exact_items": [
+          "In `Plans/FinalGUISpec.md`:"
+        ],
+        "affected_doc_hints": [
+          "Plans/FinalGUISpec.md"
+        ],
+        "heading_hints": [
+          "Candidate fixes to carry forward"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0075",
+        "source_evidence": [
+          "working_ledger.md:L14827"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "vague_label_without_exact_obligation",
+      "original_seed_id": "seed-5748",
+      "item": {
+        "seed_id": "seed-5748",
+        "seed_type": "owner",
+        "canon_label_hint": "Candidate fixes to carry forward",
+        "exact_items": [
+          "canonical target contract"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Candidate fixes to carry forward"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0075",
+        "source_evidence": [
+          "working_ledger.md:L14886"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "label_only_introductory_line",
+      "original_seed_id": "seed-5757",
+      "item": {
+        "seed_id": "seed-5757",
+        "seed_type": "layout_blocker",
+        "canon_label_hint": "Plans/Crosswalk.md",
+        "exact_items": [
+          "`Plans/Crosswalk.md` has duplicated section numbering:"
+        ],
+        "affected_doc_hints": [
+          "Plans/Crosswalk.md"
+        ],
+        "heading_hints": [
+          "Key findings"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0075",
+        "source_evidence": [
+          "working_ledger.md:L14903-L14904"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "label_only_introductory_line",
+      "original_seed_id": "seed-5761",
+      "item": {
+        "seed_id": "seed-5761",
+        "seed_type": "consumer",
+        "canon_label_hint": "Plans/Orchestrator_Page.md",
+        "exact_items": [
+          "`Plans/Orchestrator_Page.md` still hardcodes:"
+        ],
+        "affected_doc_hints": [
+          "Plans/Orchestrator_Page.md"
+        ],
+        "heading_hints": [
+          "Key findings"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0075",
+        "source_evidence": [
+          "working_ledger.md:L14912"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "label_only_introductory_line",
+      "original_seed_id": "seed-5776",
+      "item": {
+        "seed_id": "seed-5776",
+        "seed_type": "consumer",
+        "canon_label_hint": "Plans/Contracts_V0.md",
+        "exact_items": [
+          "The strongest conflict is inside `Plans/Contracts_V0.md` itself:"
+        ],
+        "affected_doc_hints": [
+          "Plans/Contracts_V0.md"
+        ],
+        "heading_hints": [
+          "Key findings"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0075",
+        "source_evidence": [
+          "working_ledger.md:L14950"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "label_only_introductory_line",
+      "original_seed_id": "seed-5777",
+      "item": {
+        "seed_id": "seed-5777",
+        "seed_type": "consumer",
+        "canon_label_hint": "Plans/storage-plan.md",
+        "exact_items": [
+          "`Plans/storage-plan.md` continues that ambiguity:"
+        ],
+        "affected_doc_hints": [
+          "Plans/storage-plan.md"
+        ],
+        "heading_hints": [
+          "Key findings"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0075",
+        "source_evidence": [
+          "working_ledger.md:L14953"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "label_only_introductory_line",
+      "original_seed_id": "seed-5781",
+      "item": {
+        "seed_id": "seed-5781",
+        "seed_type": "consumer",
+        "canon_label_hint": "Plans/assistant-chat-design.md",
+        "exact_items": [
+          "`Plans/assistant-chat-design.md` is already closer to the correct boundary for blocked runtime flows:"
+        ],
+        "affected_doc_hints": [
+          "Plans/assistant-chat-design.md"
+        ],
+        "heading_hints": [
+          "Key findings"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0075",
+        "source_evidence": [
+          "working_ledger.md:L14959"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "label_only_introductory_line",
+      "original_seed_id": "seed-5865",
+      "item": {
+        "seed_id": "seed-5865",
+        "seed_type": "consumer",
+        "canon_label_hint": "Plans/storage-plan.md",
+        "exact_items": [
+          "`Plans/storage-plan.md` still defines:"
+        ],
+        "affected_doc_hints": [
+          "Plans/storage-plan.md"
+        ],
+        "heading_hints": [
+          "Key findings"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0076",
+        "source_evidence": [
+          "working_ledger.md:L15182"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "label_only_introductory_line",
+      "original_seed_id": "seed-5866",
+      "item": {
+        "seed_id": "seed-5866",
+        "seed_type": "consumer",
+        "canon_label_hint": "Plans/usage-feature.md",
+        "exact_items": [
+          "`Plans/usage-feature.md` still says:"
+        ],
+        "affected_doc_hints": [
+          "Plans/usage-feature.md"
+        ],
+        "heading_hints": [
+          "Key findings"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0076",
+        "source_evidence": [
+          "working_ledger.md:L15186"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "label_only_introductory_line",
+      "original_seed_id": "seed-5867",
+      "item": {
+        "seed_id": "seed-5867",
+        "seed_type": "consumer",
+        "canon_label_hint": "Plans/Run_Graph_View.md",
+        "exact_items": [
+          "`Plans/Run_Graph_View.md` still routes Usage by node-through-tier:"
+        ],
+        "affected_doc_hints": [
+          "Plans/Run_Graph_View.md"
+        ],
+        "heading_hints": [
+          "Key findings"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0076",
+        "source_evidence": [
+          "working_ledger.md:L15189"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "label_only_introductory_line",
+      "original_seed_id": "seed-5868",
+      "item": {
+        "seed_id": "seed-5868",
+        "seed_type": "consumer",
+        "canon_label_hint": "Plans/Orchestrator_Page.md",
+        "exact_items": [
+          "`Plans/Orchestrator_Page.md` still uses:"
+        ],
+        "affected_doc_hints": [
+          "Plans/Orchestrator_Page.md"
+        ],
+        "heading_hints": [
+          "Key findings"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0076",
+        "source_evidence": [
+          "working_ledger.md:L15192"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "label_only_introductory_line",
+      "original_seed_id": "seed-5869",
+      "item": {
+        "seed_id": "seed-5869",
+        "seed_type": "consumer",
+        "canon_label_hint": "Plans/Runtime_Artifacts_Panel.md",
+        "exact_items": [
+          "`Plans/Runtime_Artifacts_Panel.md` is already stronger than these docs on the usage side:"
+        ],
+        "affected_doc_hints": [
+          "Plans/Runtime_Artifacts_Panel.md"
+        ],
+        "heading_hints": [
+          "Key findings"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0076",
+        "source_evidence": [
+          "working_ledger.md:L15196"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "vague_label_without_exact_obligation",
+      "original_seed_id": "seed-5881",
+      "item": {
+        "seed_id": "seed-5881",
+        "seed_type": "owner",
+        "canon_label_hint": "Contradictions / gaps surfaced",
+        "exact_items": [
+          "canonical enough for Ledger and cost artifacts"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Contradictions / gaps surfaced"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0077",
+        "source_evidence": [
+          "working_ledger.md:L15215"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "no_exact_obligation_grade_content",
+      "original_seed_id": "seed-5883",
+      "item": {
+        "seed_id": "seed-5883",
+        "seed_type": "layout_blocker",
+        "canon_label_hint": "Candidate fixes to carry forward",
+        "exact_items": [
+          "Keep canonical usage-event identity primary for Usage/Ledger navigation."
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Candidate fixes to carry forward"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0077",
+        "source_evidence": [
+          "working_ledger.md:L15221"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "label_only_introductory_line",
+      "original_seed_id": "seed-5886",
+      "item": {
+        "seed_id": "seed-5886",
+        "seed_type": "consumer",
+        "canon_label_hint": "Plans/storage-plan.md",
+        "exact_items": [
+          "`Plans/storage-plan.md` now contains a clear same-file canon split between:"
+        ],
+        "affected_doc_hints": [
+          "Plans/storage-plan.md"
+        ],
+        "heading_hints": [
+          "Key findings"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0077",
+        "source_evidence": [
+          "working_ledger.md:L15235"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "vague_label_without_exact_obligation",
+      "original_seed_id": "seed-5887",
+      "item": {
+        "seed_id": "seed-5887",
+        "seed_type": "owner",
+        "canon_label_hint": "Key findings",
+        "exact_items": [
+          "later runtime recovery / canonical-record addenda"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Key findings"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0077",
+        "source_evidence": [
+          "working_ledger.md:L15237"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "label_only_introductory_line",
+      "original_seed_id": "seed-5891",
+      "item": {
+        "seed_id": "seed-5891",
+        "seed_type": "layout_blocker",
+        "canon_label_hint": "Key findings",
+        "exact_items": [
+          "Then the canonical-record section partially regresses again by keeping:"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Key findings"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0077",
+        "source_evidence": [
+          "working_ledger.md:L15250"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "vague_label_without_exact_obligation",
+      "original_seed_id": "seed-5898",
+      "item": {
+        "seed_id": "seed-5898",
+        "seed_type": "owner",
+        "canon_label_hint": "Candidate fixes to carry forward",
+        "exact_items": [
+          "canonical event families"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Candidate fixes to carry forward"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0077",
+        "source_evidence": [
+          "working_ledger.md:L15268"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "vague_label_without_exact_obligation",
+      "original_seed_id": "seed-5899",
+      "item": {
+        "seed_id": "seed-5899",
+        "seed_type": "owner",
+        "canon_label_hint": "Candidate fixes to carry forward",
+        "exact_items": [
+          "canonical key families"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Candidate fixes to carry forward"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0077",
+        "source_evidence": [
+          "working_ledger.md:L15269"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "vague_label_without_exact_obligation",
+      "original_seed_id": "seed-5900",
+      "item": {
+        "seed_id": "seed-5900",
+        "seed_type": "owner",
+        "canon_label_hint": "Candidate fixes to carry forward",
+        "exact_items": [
+          "canonical record families"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Candidate fixes to carry forward"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0077",
+        "source_evidence": [
+          "working_ledger.md:L15270"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "label_only_introductory_line",
+      "original_seed_id": "seed-5968",
+      "item": {
+        "seed_id": "seed-5968",
+        "seed_type": "consumer",
+        "canon_label_hint": "Plans/Run_Graph_View.md",
+        "exact_items": [
+          "`Plans/Run_Graph_View.md` still presents worker/verifier identity in older shorthand:"
+        ],
+        "affected_doc_hints": [
+          "Plans/Run_Graph_View.md"
+        ],
+        "heading_hints": [],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0078",
+        "source_evidence": [
+          "working_ledger.md:L15408"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "no_exact_obligation_grade_content",
+      "original_seed_id": "seed-5969",
+      "item": {
+        "seed_id": "seed-5969",
+        "seed_type": "owner",
+        "canon_label_hint": "usage and reasoning fields are split in the graph model without clearly tying back to the canoni",
+        "exact_items": [
+          "usage and reasoning fields are split in the graph model without clearly tying back to the canonical requested/effective snapshot contract"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0078",
+        "source_evidence": [
+          "working_ledger.md:L15414"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "no_exact_obligation_grade_content",
+      "original_seed_id": "seed-5983",
+      "item": {
+        "seed_id": "seed-5983",
+        "seed_type": "owner",
+        "canon_label_hint": "Candidate fixes to carry forward",
+        "exact_items": [
+          "Keep any graph-local display structs derived from the canonical runtime snapshot rather than naming parallel canonical fields."
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Candidate fixes to carry forward"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0078",
+        "source_evidence": [
+          "working_ledger.md:L15434-L15438"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "label_only_introductory_line",
+      "original_seed_id": "seed-5995",
+      "item": {
+        "seed_id": "seed-5995",
+        "seed_type": "consumer",
+        "canon_label_hint": "Plans/Contracts_V0.md",
+        "exact_items": [
+          "`Plans/Contracts_V0.md` is mixed:"
+        ],
+        "affected_doc_hints": [
+          "Plans/Contracts_V0.md"
+        ],
+        "heading_hints": [
+          "Key findings"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0078",
+        "source_evidence": [
+          "working_ledger.md:L15462"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "label_only_introductory_line",
+      "original_seed_id": "seed-6021",
+      "item": {
+        "seed_id": "seed-6021",
+        "seed_type": "owner",
+        "canon_label_hint": "Plans/storage-plan.md",
+        "exact_items": [
+          "`Plans/storage-plan.md` still teaches canonical event families such as:"
+        ],
+        "affected_doc_hints": [
+          "Plans/storage-plan.md"
+        ],
+        "heading_hints": [
+          "Key findings"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0078",
+        "source_evidence": [
+          "working_ledger.md:L15508-L15509"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "label_only_introductory_line",
+      "original_seed_id": "seed-6023",
+      "item": {
+        "seed_id": "seed-6023",
+        "seed_type": "consumer",
+        "canon_label_hint": "Plans/Contracts_V0.md",
+        "exact_items": [
+          "`Plans/Contracts_V0.md` preserves the same split:"
+        ],
+        "affected_doc_hints": [
+          "Plans/Contracts_V0.md"
+        ],
+        "heading_hints": [
+          "Key findings"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0078",
+        "source_evidence": [
+          "working_ledger.md:L15523"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "label_only_introductory_line",
+      "original_seed_id": "seed-6044",
+      "item": {
+        "seed_id": "seed-6044",
+        "seed_type": "owner",
+        "canon_label_hint": "Key findings",
+        "exact_items": [
+          "canonical runtime commands use:"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Key findings"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0078",
+        "source_evidence": [
+          "working_ledger.md:L15578"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "label_only_introductory_line",
+      "original_seed_id": "seed-6045",
+      "item": {
+        "seed_id": "seed-6045",
+        "seed_type": "owner",
+        "canon_label_hint": "human-in-the-loop.md",
+        "exact_items": [
+          "`human-in-the-loop.md` still defines a canonical HITL request record centered on:"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Key findings"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0078",
+        "source_evidence": [
+          "working_ledger.md:L15585"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "label_only_introductory_line",
+      "original_seed_id": "seed-6064",
+      "item": {
+        "seed_id": "seed-6064",
+        "seed_type": "consumer",
+        "canon_label_hint": "Plans/UI_Command_Catalog.md",
+        "exact_items": [
+          "`Plans/UI_Command_Catalog.md` already says:"
+        ],
+        "affected_doc_hints": [
+          "Plans/UI_Command_Catalog.md"
+        ],
+        "heading_hints": [
+          "Key findings"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0079",
+        "source_evidence": [
+          "working_ledger.md:L15633"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "label_only_introductory_line",
+      "original_seed_id": "seed-6066",
+      "item": {
+        "seed_id": "seed-6066",
+        "seed_type": "consumer",
+        "canon_label_hint": "Plans/Run_Graph_View.md",
+        "exact_items": [
+          "`Plans/Run_Graph_View.md` is internally split:"
+        ],
+        "affected_doc_hints": [
+          "Plans/Run_Graph_View.md"
+        ],
+        "heading_hints": [
+          "Key findings"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0079",
+        "source_evidence": [
+          "working_ledger.md:L15639"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "label_only_introductory_line",
+      "original_seed_id": "seed-6068",
+      "item": {
+        "seed_id": "seed-6068",
+        "seed_type": "consumer",
+        "canon_label_hint": "Plans/Orchestrator_Page.md",
+        "exact_items": [
+          "`Plans/Orchestrator_Page.md` shows the same mixed model:"
+        ],
+        "affected_doc_hints": [
+          "Plans/Orchestrator_Page.md"
+        ],
+        "heading_hints": [
+          "Key findings"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0079",
+        "source_evidence": [
+          "working_ledger.md:L15643"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "label_only_introductory_line",
+      "original_seed_id": "seed-6084",
+      "item": {
+        "seed_id": "seed-6084",
+        "seed_type": "consumer",
+        "canon_label_hint": "Plans/human-in-the-loop.md",
+        "exact_items": [
+          "`Plans/human-in-the-loop.md` now has a sharp internal split between:"
+        ],
+        "affected_doc_hints": [
+          "Plans/human-in-the-loop.md"
+        ],
+        "heading_hints": [
+          "Key findings"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0079",
+        "source_evidence": [
+          "working_ledger.md:L15682"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "vague_label_without_exact_obligation",
+      "original_seed_id": "seed-6085",
+      "item": {
+        "seed_id": "seed-6085",
+        "seed_type": "owner",
+        "canon_label_hint": "Key findings",
+        "exact_items": [
+          "later canonical correction addenda"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Key findings"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0079",
+        "source_evidence": [
+          "working_ledger.md:L15684"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "label_only_introductory_line",
+      "original_seed_id": "seed-6088",
+      "item": {
+        "seed_id": "seed-6088",
+        "seed_type": "owner",
+        "canon_label_hint": "Key findings",
+        "exact_items": [
+          "Later canonical correction text says:"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Key findings"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0079",
+        "source_evidence": [
+          "working_ledger.md:L15691"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "no_exact_obligation_grade_content",
+      "original_seed_id": "seed-6095",
+      "item": {
+        "seed_id": "seed-6095",
+        "seed_type": "owner",
+        "canon_label_hint": "Contradictions / gaps surfaced",
+        "exact_items": [
+          "The older request-centric sections are no longer compatible with the later canonical correction sections."
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Contradictions / gaps surfaced"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0079",
+        "source_evidence": [
+          "working_ledger.md:L15699-L15703"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "vague_label_without_exact_obligation",
+      "original_seed_id": "seed-6098",
+      "item": {
+        "seed_id": "seed-6098",
+        "seed_type": "owner",
+        "canon_label_hint": "Candidate fixes to carry forward",
+        "exact_items": [
+          "canonical runtime actions"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Candidate fixes to carry forward"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0079",
+        "source_evidence": [
+          "working_ledger.md:L15711"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "label_only_introductory_line",
+      "original_seed_id": "seed-6103",
+      "item": {
+        "seed_id": "seed-6103",
+        "seed_type": "consumer",
+        "canon_label_hint": "Plans/UI_Command_Catalog.md",
+        "exact_items": [
+          "`Plans/UI_Command_Catalog.md` says:"
+        ],
+        "affected_doc_hints": [
+          "Plans/UI_Command_Catalog.md"
+        ],
+        "heading_hints": [
+          "Key findings"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0079",
+        "source_evidence": [
+          "working_ledger.md:L15727-L15729"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "label_only_introductory_line",
+      "original_seed_id": "seed-6104",
+      "item": {
+        "seed_id": "seed-6104",
+        "seed_type": "consumer",
+        "canon_label_hint": "Plans/Run_Graph_View.md",
+        "exact_items": [
+          "`Plans/Run_Graph_View.md` says:"
+        ],
+        "affected_doc_hints": [
+          "Plans/Run_Graph_View.md"
+        ],
+        "heading_hints": [
+          "Key findings"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0079",
+        "source_evidence": [
+          "working_ledger.md:L15732"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "no_exact_obligation_grade_content",
+      "original_seed_id": "seed-6110",
+      "item": {
+        "seed_id": "seed-6110",
+        "seed_type": "owner",
+        "canon_label_hint": "Contradictions / gaps surfaced",
+        "exact_items": [
+          "The canonical runtime action model has already made both versions obsolete."
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Contradictions / gaps surfaced"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0079",
+        "source_evidence": [
+          "working_ledger.md:L15747"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "vague_label_without_exact_obligation",
+      "original_seed_id": "seed-6119",
+      "item": {
+        "seed_id": "seed-6119",
+        "seed_type": "owner",
+        "canon_label_hint": "Key findings",
+        "exact_items": [
+          "newer canonical runtime records and projections"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Key findings"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0079",
+        "source_evidence": [
+          "working_ledger.md:L15768"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "label_only_introductory_line",
+      "original_seed_id": "seed-6120",
+      "item": {
+        "seed_id": "seed-6120",
+        "seed_type": "consumer",
+        "canon_label_hint": "Plans/Run_Graph_View.md",
+        "exact_items": [
+          "`Plans/Run_Graph_View.md` does the same in its event-update table:"
+        ],
+        "affected_doc_hints": [
+          "Plans/Run_Graph_View.md"
+        ],
+        "heading_hints": [
+          "Key findings"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0079",
+        "source_evidence": [
+          "working_ledger.md:L15776"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "vague_label_without_exact_obligation",
+      "original_seed_id": "seed-6131",
+      "item": {
+        "seed_id": "seed-6131",
+        "seed_type": "owner",
+        "canon_label_hint": "Contradictions / gaps surfaced",
+        "exact_items": [
+          "graph/orchestrator live-status bindings that bypass canonical blocked projections"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Contradictions / gaps surfaced"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0080",
+        "source_evidence": [
+          "working_ledger.md:L15808"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "label_only_introductory_line",
+      "original_seed_id": "seed-6137",
+      "item": {
+        "seed_id": "seed-6137",
+        "seed_type": "consumer",
+        "canon_label_hint": "Plans/Run_Graph_View.md",
+        "exact_items": [
+          "`Plans/Run_Graph_View.md` now has a clear split between:"
+        ],
+        "affected_doc_hints": [
+          "Plans/Run_Graph_View.md"
+        ],
+        "heading_hints": [
+          "Key findings"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0080",
+        "source_evidence": [
+          "working_ledger.md:L15817-L15825"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "no_exact_obligation_grade_content",
+      "original_seed_id": "seed-6140",
+      "item": {
+        "seed_id": "seed-6140",
+        "seed_type": "owner",
+        "canon_label_hint": "Key findings",
+        "exact_items": [
+          "queue-analysis and blocked-state rendering rules keyed to canonical runtime records"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Key findings"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0080",
+        "source_evidence": [
+          "working_ledger.md:L15845"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "label_only_introductory_line",
+      "original_seed_id": "seed-6155",
+      "item": {
+        "seed_id": "seed-6155",
+        "seed_type": "owner",
+        "canon_label_hint": "Candidate fixes to carry forward",
+        "exact_items": [
+          "Keep Progress widget composition, but bind widgets to canonical runtime and orchestration objects:"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Candidate fixes to carry forward"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0080",
+        "source_evidence": [
+          "working_ledger.md:L15904"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "label_only_introductory_line",
+      "original_seed_id": "seed-6172",
+      "item": {
+        "seed_id": "seed-6172",
+        "seed_type": "layout_blocker",
+        "canon_label_hint": "Plans/Widget_System.md",
+        "exact_items": [
+          "`Plans/Widget_System.md` says in section 7.3:"
+        ],
+        "affected_doc_hints": [
+          "Plans/Widget_System.md"
+        ],
+        "heading_hints": [
+          "Key findings"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0080",
+        "source_evidence": [
+          "working_ledger.md:L15972"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "no_exact_obligation_grade_content",
+      "original_seed_id": "seed-6173",
+      "item": {
+        "seed_id": "seed-6173",
+        "seed_type": "stale_retirement",
+        "canon_label_hint": "Key findings",
+        "exact_items": [
+          "after migration, the legacy key is deleted"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Key findings"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0080",
+        "source_evidence": [
+          "working_ledger.md:L15976"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "label_only_introductory_line",
+      "original_seed_id": "seed-6174",
+      "item": {
+        "seed_id": "seed-6174",
+        "seed_type": "consumer",
+        "canon_label_hint": "Plans/FinalGUISpec.md",
+        "exact_items": [
+          "`Plans/FinalGUISpec.md` appendix C.5 mirrors the backup-preserving version:"
+        ],
+        "affected_doc_hints": [
+          "Plans/FinalGUISpec.md"
+        ],
+        "heading_hints": [
+          "Key findings"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0080",
+        "source_evidence": [
+          "working_ledger.md:L15977"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "vague_label_without_exact_obligation",
+      "original_seed_id": "seed-6179",
+      "item": {
+        "seed_id": "seed-6179",
+        "seed_type": "stale_retirement",
+        "canon_label_hint": "Contradictions / gaps surfaced",
+        "exact_items": [
+          "delete legacy key"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Contradictions / gaps surfaced"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0080",
+        "source_evidence": [
+          "working_ledger.md:L15990"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "label_only_introductory_line",
+      "original_seed_id": "seed-6449",
+      "item": {
+        "seed_id": "seed-6449",
+        "seed_type": "owner",
+        "canon_label_hint": "Plans/DRY_Rules.md",
+        "exact_items": [
+          "`Plans/DRY_Rules.md` still has exact traceability-format weaknesses even though it is the canonical anti-drift doc:"
+        ],
+        "affected_doc_hints": [
+          "Plans/DRY_Rules.md"
+        ],
+        "heading_hints": [
+          "Key findings"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0082",
+        "source_evidence": [
+          "working_ledger.md:L16364"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "label_only_introductory_line",
+      "original_seed_id": "seed-6514",
+      "item": {
+        "seed_id": "seed-6514",
+        "seed_type": "owner",
+        "canon_label_hint": "Plans/Contracts_V0.md",
+        "exact_items": [
+          "`Plans/Contracts_V0.md` still lacks named canonical contracts for:"
+        ],
+        "affected_doc_hints": [
+          "Plans/Contracts_V0.md"
+        ],
+        "heading_hints": [
+          "Key findings"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0083",
+        "source_evidence": [
+          "working_ledger.md:L16478-L16487"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "vague_label_without_exact_obligation",
+      "original_seed_id": "seed-6516",
+      "item": {
+        "seed_id": "seed-6516",
+        "seed_type": "owner",
+        "canon_label_hint": "Key findings",
+        "exact_items": [
+          "both are presented as canonical in different sections"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Key findings"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0083",
+        "source_evidence": [
+          "working_ledger.md:L16506"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "label_only_introductory_line",
+      "original_seed_id": "seed-6536",
+      "item": {
+        "seed_id": "seed-6536",
+        "seed_type": "owner",
+        "canon_label_hint": "Plans/human-in-the-loop.md",
+        "exact_items": [
+          "`Plans/human-in-the-loop.md` still opens with a canonical request contract built on:"
+        ],
+        "affected_doc_hints": [
+          "Plans/human-in-the-loop.md"
+        ],
+        "heading_hints": [
+          "Key findings"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0083",
+        "source_evidence": [
+          "working_ledger.md:L16553"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "vague_label_without_exact_obligation",
+      "original_seed_id": "seed-6537",
+      "item": {
+        "seed_id": "seed-6537",
+        "seed_type": "owner",
+        "canon_label_hint": "Key findings",
+        "exact_items": [
+          "action binding is through canonical runtime action families"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Key findings"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0083",
+        "source_evidence": [
+          "working_ledger.md:L16561"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "vague_label_without_exact_obligation",
+      "original_seed_id": "seed-6552",
+      "item": {
+        "seed_id": "seed-6552",
+        "seed_type": "owner",
+        "canon_label_hint": "Candidate fixes to carry forward",
+        "exact_items": [
+          "canonical runtime action families"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Candidate fixes to carry forward"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0083",
+        "source_evidence": [
+          "working_ledger.md:L16589-L16591"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "no_exact_obligation_grade_content",
+      "original_seed_id": "seed-6571",
+      "item": {
+        "seed_id": "seed-6571",
+        "seed_type": "owner",
+        "canon_label_hint": "Contradictions / gaps surfaced",
+        "exact_items": [
+          "Storage already has the stronger blocked and attempt identities, but still preserves tier-era keys as peer canonical records."
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Contradictions / gaps surfaced"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0084",
+        "source_evidence": [
+          "working_ledger.md:L16642"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "label_only_introductory_line",
+      "original_seed_id": "seed-6605",
+      "item": {
+        "seed_id": "seed-6605",
+        "seed_type": "consumer",
+        "canon_label_hint": "Plans/rewrite-tie-in-memo.md",
+        "exact_items": [
+          "`Plans/rewrite-tie-in-memo.md` is comparatively ahead on provider/runtime identity:"
+        ],
+        "affected_doc_hints": [
+          "Plans/rewrite-tie-in-memo.md"
+        ],
+        "heading_hints": [
+          "Key findings"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0084",
+        "source_evidence": [
+          "working_ledger.md:L16729"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "label_only_introductory_line",
+      "original_seed_id": "seed-6611",
+      "item": {
+        "seed_id": "seed-6611",
+        "seed_type": "layout_blocker",
+        "canon_label_hint": "Plans/FinalGUISpec.md",
+        "exact_items": [
+          "`Plans/FinalGUISpec.md` is still one of the strongest GUI drift amplifiers:"
+        ],
+        "affected_doc_hints": [
+          "Plans/FinalGUISpec.md"
+        ],
+        "heading_hints": [
+          "Key findings"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0084",
+        "source_evidence": [
+          "working_ledger.md:L16749-L16750"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "no_exact_obligation_grade_content",
+      "original_seed_id": "seed-6612",
+      "item": {
+        "seed_id": "seed-6612",
+        "seed_type": "owner",
+        "canon_label_hint": "Key findings",
+        "exact_items": [
+          "dashboard/current-task language still uses current tier / phase-task-subtask progress bars as if that were the canonical Orchestrator model"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Key findings"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0084",
+        "source_evidence": [
+          "working_ledger.md:L16752"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "label_only_introductory_line",
+      "original_seed_id": "seed-6642",
+      "item": {
+        "seed_id": "seed-6642",
+        "seed_type": "consumer",
+        "canon_label_hint": "Plans/Executor_Protocol.md",
+        "exact_items": [
+          "`Plans/Executor_Protocol.md` is now far less tier-era than several adjacent docs:"
+        ],
+        "affected_doc_hints": [
+          "Plans/Executor_Protocol.md"
+        ],
+        "heading_hints": [
+          "Key findings"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0085",
+        "source_evidence": [
+          "working_ledger.md:L16808"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "vague_label_without_exact_obligation",
+      "original_seed_id": "seed-6677",
+      "item": {
+        "seed_id": "seed-6677",
+        "seed_type": "stale_retirement",
+        "canon_label_hint": "Key findings",
+        "exact_items": [
+          "later says legacy key is deleted"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Key findings"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0085",
+        "source_evidence": [
+          "working_ledger.md:L16914"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "label_only_introductory_line",
+      "original_seed_id": "seed-6678",
+      "item": {
+        "seed_id": "seed-6678",
+        "seed_type": "consumer",
+        "canon_label_hint": "Plans/usage-feature.md",
+        "exact_items": [
+          "`Plans/usage-feature.md` is still one of the main correlation drifts:"
+        ],
+        "affected_doc_hints": [
+          "Plans/usage-feature.md"
+        ],
+        "heading_hints": [
+          "Key findings"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0085",
+        "source_evidence": [
+          "working_ledger.md:L16916"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "vague_label_without_exact_obligation",
+      "original_seed_id": "seed-6681",
+      "item": {
+        "seed_id": "seed-6681",
+        "seed_type": "owner",
+        "canon_label_hint": "Key findings",
+        "exact_items": [
+          "canonical Usage surfaces"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Key findings"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0085",
+        "source_evidence": [
+          "working_ledger.md:L16922"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "label_only_introductory_line",
+      "original_seed_id": "seed-6682",
+      "item": {
+        "seed_id": "seed-6682",
+        "seed_type": "consumer",
+        "canon_label_hint": "Plans/assistant-chat-design.md",
+        "exact_items": [
+          "`Plans/assistant-chat-design.md` is healthier than the other three:"
+        ],
+        "affected_doc_hints": [
+          "Plans/assistant-chat-design.md"
+        ],
+        "heading_hints": [
+          "Key findings"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0085",
+        "source_evidence": [
+          "working_ledger.md:L16924"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "no_exact_obligation_grade_content",
+      "original_seed_id": "seed-6701",
+      "item": {
+        "seed_id": "seed-6701",
+        "seed_type": "owner",
+        "canon_label_hint": "Candidate fixes to carry forward",
+        "exact_items": [
+          "worker/verifier identity fields aligned to canonical requested/effective runtime disclosure"
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Candidate fixes to carry forward"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0085",
+        "source_evidence": [
+          "working_ledger.md:L16961-L16962"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "label_only_introductory_line",
+      "original_seed_id": "seed-6712",
+      "item": {
+        "seed_id": "seed-6712",
+        "seed_type": "consumer",
+        "canon_label_hint": "Plans/Section15_MVP_Promoted_Features_Spec.md",
+        "exact_items": [
+          "`Plans/Section15_MVP_Promoted_Features_Spec.md` is comparatively disciplined in this seam:"
+        ],
+        "affected_doc_hints": [
+          "Plans/Section15_MVP_Promoted_Features_Spec.md"
+        ],
+        "heading_hints": [
+          "Key findings"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0085",
+        "source_evidence": [
+          "working_ledger.md:L16985"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "label_only_introductory_line",
+      "original_seed_id": "seed-6722",
+      "item": {
+        "seed_id": "seed-6722",
+        "seed_type": "consumer",
+        "canon_label_hint": "Plans/GUI_Rebuild_Requirements_Checklist.md",
+        "exact_items": [
+          "`Plans/GUI_Rebuild_Requirements_Checklist.md` is now clearly a reconciliation follower, not a source:"
+        ],
+        "affected_doc_hints": [
+          "Plans/GUI_Rebuild_Requirements_Checklist.md"
+        ],
+        "heading_hints": [],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0086",
+        "source_evidence": [
+          "working_ledger.md:L17002"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "no_exact_obligation_grade_content",
+      "original_seed_id": "seed-6863",
+      "item": {
+        "seed_id": "seed-6863",
+        "seed_type": "owner",
+        "canon_label_hint": "Scope and method",
+        "exact_items": [
+          "Constraint for this pass: do **not** edit planning docs directly; use the existing work-item ledger plus current canonical docs."
+        ],
+        "affected_doc_hints": [],
+        "heading_hints": [
+          "Scope and method"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0087",
+        "source_evidence": [
+          "working_ledger.md:L17204-L17210"
+        ],
+        "notes": []
+      }
+    },
+    {
+      "reason": "label_only_introductory_line",
+      "original_seed_id": "seed-7006",
+      "item": {
+        "seed_id": "seed-7006",
+        "seed_type": "consumer",
+        "canon_label_hint": "Plans/storage-plan.md:879-910",
+        "exact_items": [
+          "`Plans/storage-plan.md:879-910` confirms partial transfer for bridge/activity payload canon:"
+        ],
+        "affected_doc_hints": [
+          "Plans/storage-plan.md"
+        ],
+        "heading_hints": [
+          "Audit Pass 2026-04-16T01:28:16Z"
+        ],
+        "stale_tokens": [],
+        "source_shard_id": "shard-0088",
+        "source_evidence": [
+          "working_ledger.md:L17509"
+        ],
+        "notes": []
+      }
+    }
+  ]
 }
