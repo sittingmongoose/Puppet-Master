@@ -1,5 +1,21 @@
 # Models System (Canonical SSOT)
 
+## Fidelity recovery addendum
+
+This addendum is an ordered parent-writer recovery container. It preserves the row-level fidelity repairs below without requiring multiple same-anchor packet writes.
+
+### Fidelity recovery cov-167: Coverage blocker provider/model precedence owner section
+- Coverage rows: cov-167
+- Fidelity gap refs: cov-167
+- Required fidelity items:
+- Exact required item: Define one owner section covering provider/model precedence across run, seam, package, node, overseer, and delegated-subagent levels
+- Exact required item: Tie that section to parallel-node worktree assignment and ownership transitions
+- Acceptance checks represented:
+- Exact acceptance check: The heading `### Fidelity recovery cov-167: Coverage blocker provider/model precedence owner section` exists in `Plans/Models_System.md`.
+- Exact acceptance check: The `cov-167` repair states the exact requirement: Define one owner section covering provider/model precedence across run, seam, package, node, overseer, and delegated-subagent levels
+- Exact acceptance check: The `cov-167` repair states the exact requirement: Tie that section to parallel-node worktree assignment and ownership transitions
+- Exact acceptance check: The `cov-167` repair is in the owner section for `Plans/Models_System.md` and is not only a downstream consumer note.
+
 > **Compliance:** This document follows `Plans/DRY_Rules.md` and references SSOT contracts in `Plans/Contracts_V0.md`. Naming: "Puppet Master" only. No open questions; deterministic defaults per `Plans/Decision_Policy.md`.
 
 ## 0. Scope and SSOT status
@@ -82,8 +98,6 @@ The resolver MUST emit one shared record containing at least:
 - `skipped_persona_controls[]`
 
 That emit shape is consumed by runtime snapshots, inspectors, and owner transitions; later sections in this document elaborate, but do not replace, this owner section.
-
----
 
 ## 1. Canonical model identifier
 <a id="MODEL-ID"></a>

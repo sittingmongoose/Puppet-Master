@@ -1,8 +1,18 @@
 {
   "schema_id": "pm.packet_builder_noise.v1",
   "work_id": "w-20260312-203855",
-  "run_id": "r-20260312-203855-run-027",
+  "run_id": "r-20260312-203855-run-029",
   "pass": "pass-001",
-  "status": "empty",
-  "noise_findings": []
+  "noise_findings": [
+    {
+      "source_chunk": "packet-pass-001-003",
+      "classification": "noise",
+      "reason": "Verifier reported material findings against a gaps/coverage-row shape without content_markdown, but deterministic validation of the written research_packet.json confirmed the packet targets preserve metadata and content for all reconciliation targets."
+    },
+    {
+      "source_wave": "packet-builder-wave-001",
+      "classification": "noise",
+      "reason": "Several construction subagents returned summaries or malformed bundles; final merge used the validated reconciliation target data and preserved the usable chunk-001 packet shape without dropping row-level fields."
+    }
+  ]
 }

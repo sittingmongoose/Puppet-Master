@@ -1,9 +1,14 @@
 {
-  "schema_id": "pm.packet_builder_pass.v1",
+  "schema_id": "pm.packet_builder_verification_pass.v1",
   "work_id": "w-20260312-203855",
-  "run_id": "r-20260312-203855-run-026",
-  "pass": "pass-003",
-  "status": "clean",
+  "run_id": "r-20260312-203855-run-028",
+  "pass_id": "pass-003",
+  "status": "pass",
   "material_findings": [],
-  "summary": "No additional packet corrections were needed after pass-001 clean."
+  "noise_findings": [],
+  "verified_chunks": [
+    "packet-verify3-affected"
+  ],
+  "target_count": 138,
+  "next_required_stage": "Scribe"
 }

@@ -1,60 +1,105 @@
 {
   "schema_id": "pm.packetizable_layout_repair_report.v1",
   "work_id": "w-20260312-203855",
-  "run_id": "r-20260312-203855-run-024",
+  "run_id": "r-20260312-203855-run-028",
   "status": "complete",
   "blocked_targets_repaired": [
-    "batch-3-models-provider-precedence"
+    "rec-cov-002-storage-plan",
+    "rec-cov-004-executor-protocol",
+    "rec-cov-006-human-in-the-loop",
+    "rec-cov-013-storage-plan",
+    "rec-cov-018-storage-plan",
+    "rec-cov-020-storage-plan",
+    "rec-cov-025-storage-plan",
+    "rec-cov-039-storage-plan",
+    "rec-cov-043-storage-plan",
+    "rec-cov-044-storage-plan",
+    "rec-cov-060-storage-plan",
+    "rec-cov-074-storage-plan",
+    "rec-cov-077-storage-plan",
+    "rec-cov-080-storage-plan",
+    "rec-cov-101-human-in-the-loop",
+    "rec-cov-160-executor-protocol",
+    "rec-cov-161-human-in-the-loop",
+    "rec-cov-163-storage-plan",
+    "rec-cov-168-executor-protocol",
+    "rec-cov-176-storage-plan",
+    "rec-cov-181-storage-plan",
+    "rec-cov-182-storage-plan",
+    "rec-cov-185-human-in-the-loop",
+    "rec-cov-187-executor-protocol",
+    "rec-cov-188-storage-plan",
+    "rec-cov-190-storage-plan",
+    "rec-cov-205-storage-plan"
   ],
   "docs_touched": [
-    "Plans/Models_System.md"
+    "Plans/storage-plan.md",
+    "Plans/Executor_Protocol.md",
+    "Plans/human-in-the-loop.md"
   ],
   "layout_defects_found": [
     {
-      "path": "Plans/Models_System.md",
-      "defect_type": "duplicate_owner_heading",
-      "details": "The file contained two `## Provider/model precedence and settings resolution` headings, which made heading-based packet targeting ambiguous."
-    },
-    {
-      "path": "Plans/Models_System.md",
+      "path": "Plans/storage-plan.md",
       "defect_type": "duplicate_child_heading",
-      "details": "The file contained two `### Three-axis settings model` headings with different semantics, which made bounded child-heading targeting ambiguous."
+      "details": "Repeated storage redb headings such as Canonical records, Required redb keys, Cross-surface receipt record, Scope split, projection freshness, account pressure, artifacts index, worktree/lane lifecycle, and Naming and migration rules created ambiguous packet anchors."
     },
     {
-      "path": "Plans/Models_System.md",
+      "path": "Plans/storage-plan.md",
       "defect_type": "untitled_owner_preamble",
-      "details": "Owner-scope canon for run/seam/package/node/overseer/delegated-subagent scope, parallel-node worktree assignment, and ownership transitions lived in untitled preamble text directly under the owner heading."
+      "details": "Runtime artifact and projection-state storage content before Canonical terminal persistence decomposition had no unique local heading."
     },
     {
-      "path": "Plans/Models_System.md",
+      "path": "Plans/storage-plan.md",
       "defect_type": "ambiguous_anchor",
-      "details": "The canonical owner section ended in malformed `---## 1. Canonical model identifier` markup, which blurred the owner-section boundary needed for bounded packet replacement."
+      "details": "The owner-first reconciliation bullet and the following Canonical records heading were joined on one line."
+    },
+    {
+      "path": "Plans/Executor_Protocol.md",
+      "defect_type": "duplicate_child_heading",
+      "details": "Overlapping runtime scheduler and recovery addenda reused child heading names for scheduler pass, score tuple, wakeup triggers, remediation lineage, attempt identity, and acceptance carry-through."
+    },
+    {
+      "path": "Plans/human-in-the-loop.md",
+      "defect_type": "duplicate_owner_heading",
+      "details": "Three adjacent HITL recovery action addenda covered the same recovery-action semantics with overlapping owner headings."
     }
   ],
   "repairs_applied": [
     {
-      "path": "Plans/Models_System.md",
-      "repair": "Added `### Scope and owner boundaries` and moved/restated the owner-scope preamble there so the canonical owner content has a unique child anchor.",
-      "canonical_heading": "## Provider/model precedence and settings resolution",
-      "safe_anchor_after_repair": "### Scope and owner boundaries"
+      "path": "Plans/storage-plan.md",
+      "repair": "Renamed repeated storage redb headings with explicit baseline, runtime/storage, ownership split, owner reconciliation, and terminal/storage scopes; fixed the malformed heading boundary.",
+      "canonical_heading": "### Fidelity recovery order",
+      "safe_anchor_after_repair": "### Canonical records (runtime/storage families)"
     },
     {
-      "path": "Plans/Models_System.md",
-      "repair": "Kept the early owner section as canonical and left exactly one `### Three-axis settings model` heading under it.",
-      "canonical_heading": "## Provider/model precedence and settings resolution",
-      "safe_anchor_after_repair": "### Three-axis settings model"
+      "path": "Plans/storage-plan.md",
+      "repair": "Created a unique owner heading for runtime artifact and projection-state storage content that previously lived in an untitled preamble.",
+      "canonical_heading": "### Runtime artifact and projection storage scope",
+      "safe_anchor_after_repair": "### Runtime artifact and projection storage scope"
     },
     {
-      "path": "Plans/Models_System.md",
-      "repair": "Renamed the later duplicate owner section to `## Provider/model selection policy and audit addendum` and renamed its duplicated child heading to `### Persona, execution-unit, and scope policy inputs` so its unique addendum content remains preserved without colliding with canonical anchors.",
-      "canonical_heading": "## Provider/model selection policy and audit addendum",
-      "safe_anchor_after_repair": "### Persona, execution-unit, and scope policy inputs"
+      "path": "Plans/storage-plan.md",
+      "repair": "Promoted the rewrite contract to a unique storage-owned heading under the terminal/storage naming area.",
+      "canonical_heading": "### Storage-owned rewrite contract",
+      "safe_anchor_after_repair": "### Storage-owned rewrite contract"
     },
     {
-      "path": "Plans/Models_System.md",
-      "repair": "Split malformed `---## 1. Canonical model identifier` markup into a horizontal rule plus a separate `## 1. Canonical model identifier` heading so the canonical owner section has a clear bounded end.",
-      "canonical_heading": "## Provider/model precedence and settings resolution",
-      "safe_anchor_after_repair": "## 1. Canonical model identifier"
+      "path": "Plans/Executor_Protocol.md",
+      "repair": "Renamed overlapping runtime scheduler/recovery child headings so each recovery addendum has unique packetizable anchors while preserving the existing normative text.",
+      "canonical_heading": "## Runtime Scheduler / Recovery Reconciliation Addendum (2026-03-09)",
+      "safe_anchor_after_repair": "### Runtime recovery scheduler pass"
+    },
+    {
+      "path": "Plans/Executor_Protocol.md",
+      "repair": "Renamed repeated acceptance carry-through child headings to blocked-episode and provider/model scoped headings.",
+      "canonical_heading": "## Unified Runtime Scheduler and Attempt Lifecycle Reconciliation Addendum (2026-03-09)",
+      "safe_anchor_after_repair": "#### Blocked episode acceptance carry-through"
+    },
+    {
+      "path": "Plans/human-in-the-loop.md",
+      "repair": "Merged the three overlapping recovery action addenda into one canonical HITL recovery action alignment addendum with unique child headings.",
+      "canonical_heading": "## Canonical HITL Recovery Action Alignment Addendum (2026-03-09)",
+      "safe_anchor_after_repair": "## Canonical HITL Recovery Action Alignment Addendum (2026-03-09)"
     }
   ],
   "unresolved_layout_blockers": [],

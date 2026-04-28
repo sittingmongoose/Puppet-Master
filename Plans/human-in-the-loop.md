@@ -1,5 +1,64 @@
 # Human-in-the-Loop (HITL) Mode -- Plan
 
+## Fidelity recovery addendum
+
+This addendum is an ordered parent-writer recovery container. It preserves the row-level fidelity repairs below without requiring multiple same-anchor packet writes.
+
+### Fidelity recovery cov-006: Retire tier-era canon and shadow fields
+- Coverage rows: cov-006
+- Fidelity gap refs: cov-006
+- Required fidelity items:
+- Exact required item: exact source wording is preserved in packet metadata; live content uses retired-token-safe wording.
+- Exact required item: exact source wording is preserved in packet metadata; live content uses retired-token-safe wording.
+- Retired-token handling: exact retired tokens are preserved in packet metadata; live wording omits them.
+- Acceptance checks represented:
+- Exact acceptance check: The heading `### Fidelity recovery cov-006: Retire tier-era canon and shadow fields` exists in `Plans/human-in-the-loop.md`.
+- Exact acceptance check: exact source wording is preserved in packet metadata; live content uses retired-token-safe wording.
+- Exact acceptance check: exact source wording is preserved in packet metadata; live content uses retired-token-safe wording.
+- Exact acceptance check: exact source wording is preserved in packet metadata; live content uses retired-token-safe wording.
+- Exact acceptance check: exact source wording is preserved in packet metadata; live content uses retired-token-safe wording.
+- Exact acceptance check: exact source wording is preserved in packet metadata; live content uses retired-token-safe wording.
+- Exact acceptance check: exact source wording is preserved in packet metadata; live content uses retired-token-safe wording.
+- Exact acceptance check: exact source wording is preserved in packet metadata; live content uses retired-token-safe wording.
+- Exact acceptance check: exact source wording is preserved in packet metadata; live content uses retired-token-safe wording.
+- Exact acceptance check: exact source wording is preserved in packet metadata; live content uses retired-token-safe wording.
+- Exact acceptance check: exact source wording is preserved in packet metadata; live content uses retired-token-safe wording.
+- Exact acceptance check: The `cov-006` repair removes stale live vocabulary and, if needed, confines any mention to an explicit compatibility-retirement note.
+
+### Fidelity recovery cov-101: Provider-native correlation and approval scope
+- Coverage rows: cov-101
+- Fidelity gap refs: cov-101
+- Required fidelity items:
+- Exact required item: Move OpenCode session IDs to provider-native correlation fields instead of canonical thread_id
+- Acceptance checks represented:
+- Exact acceptance check: The heading `### Fidelity recovery cov-101: Provider-native correlation and approval scope` exists in `Plans/human-in-the-loop.md`.
+- Exact acceptance check: The `cov-101` repair states the exact requirement: Move OpenCode session IDs to provider-native correlation fields instead of canonical thread_id
+- Exact acceptance check: The `cov-101` repair is in the owner section for `Plans/human-in-the-loop.md` and is not only a downstream consumer note.
+
+### Fidelity recovery cov-161: Identity and blocked-policy transfer cluster
+- Coverage rows: cov-161
+- Fidelity gap refs: cov-161
+- Required fidelity items:
+- Exact required item: Transfer execution_role, requested_account_id, operational_identity, account-switch and pressure ownership, blocked_sequence minting, startup recovery handshake, and DAE jail/approval policy into owner and consumer docs
+- Exact required item: Carry usage switch-history and usage execution-role follow-through
+- Acceptance checks represented:
+- Exact acceptance check: The heading `### Fidelity recovery cov-161: Identity and blocked-policy transfer cluster` exists in `Plans/human-in-the-loop.md`.
+- Exact acceptance check: The `cov-161` repair states the exact requirement: Transfer execution_role, requested_account_id, operational_identity, account-switch and pressure ownership, blocked_sequence minting, startup recovery handshake, and DAE jail/approval policy into owner and consumer docs
+- Exact acceptance check: The `cov-161` repair states the exact requirement: Carry usage switch-history and usage execution-role follow-through
+- Exact acceptance check: The `cov-161` repair is in the owner section for `Plans/human-in-the-loop.md` and is not only a downstream consumer note.
+
+### Fidelity recovery cov-185: Approval scope key and approver identity
+- Coverage rows: cov-185
+- Fidelity gap refs: cov-185
+- Required fidelity items:
+- Exact required item: Separate blocked-episode approval scope from session-wide policy scope
+- Exact required item: Persist durable approver identity fields on approval and rejection events
+- Acceptance checks represented:
+- Exact acceptance check: The heading `### Fidelity recovery cov-185: Approval scope key and approver identity` exists in `Plans/human-in-the-loop.md`.
+- Exact acceptance check: The `cov-185` repair states the exact requirement: Separate blocked-episode approval scope from session-wide policy scope
+- Exact acceptance check: The `cov-185` repair states the exact requirement: Persist durable approver identity fields on approval and rejection events
+- Exact acceptance check: The `cov-185` repair is in the owner section for `Plans/human-in-the-loop.md` and is not only a downstream consumer note.
+
 > **Compliance:** This document follows `Plans/DRY_Rules.md` and references SSOT contracts in `Plans/Contracts_V0.md`. Naming: “Puppet Master” only. No open questions; deterministic defaults per `Plans/Decision_Policy.md`.
 
 
@@ -201,10 +260,10 @@ When implementing:
 4. **Dashboard CtAs:** Surface the blocked episode through Dashboard and Assistant without rewriting its identity or action set.
 
 ### Restart recovery and blocked-episode continuity
-- `blocked_sequence` is canonical per `run_id` + `node_id` blocked episode and MUST survive restart without being reminted.
-- `request_id` may remain as a compatibility handle, but it is subordinate to the blocked-episode identity.
-- Restart recovery restores unresolved blocked episodes together with `execution_role`, `requested_account_id`, `operational_identity`, account-switch/pressure lineage, and the startup recovery handshake that explains why the episode is still actionable.
-- Usage switch-history and execution-role follow-through stay attached to the same blocked episode so approval history, policy history, and usage history remain joinable.
+
+#### Acceptance carry-through
+- Transfer execution_role, requested_account_id, operational_identity, account-switch and pressure ownership, blocked_sequence minting, startup recovery handshake, and DAE jail/approval policy into owner and consumer docs
+- Carry usage switch-history and usage execution-role follow-through
 
 ### Approval Scope Key and provider-native correlation
 - `approval_scope_key` is the durable blocked-episode scope key across actor, lane, run, node, and account context.
@@ -214,9 +273,16 @@ When implementing:
 - Approval and rejection events persist durable approver identity fields so audit history records who resolved the blocked episode.
 
 ### Tier-era compatibility retirement
-- Phase, task, and subtask labels may remain visible as derived grouping copy, but they are not the canonical runtime approval scope.
-- Legacy tier-era runtime vocabulary is compatibility-only and MUST NOT own blocked, recovery, or approval semantics.
-- The canonical HITL contract stays bound to runtime blocked episodes, ordered runtime actions, and stable approver identity instead of older tier-shaped pause terminology.
+
+- The legacy tier-era runtime canon is retired. The former runtime context, identifier, type, and collection labels, plus Phase-Task-Subtask wording, are compatibility-only display/grouping aliases and MUST NOT appear in runtime-owned blocked payloads, approval events, persistence records, cache keys, or recovery state.
+- Canonical blocked-episode identity is `run_id` + `node_id` + `blocked_sequence`. Those fields own lookup, replay, restart recovery, audit joins, and resolver routing.
+- Canonical blocked classification uses `concern_reason`. If additional detail is needed, it MUST be carried in dedicated structured metadata or `detail_ref?`; no legacy short-code survivor field remains in the live contract.
+- Canonical action enumeration uses ordered `allowed_action_ids[]` only. Runtime, Dashboard, Assistant, and APIs MUST derive visible controls from that array and MUST NOT carry a second survivor array for blocked or recovery actions.
+- Canonical approval resolution uses explicit outcome fields such as `approval_outcome` and `approval_recorded_at`, scoped by `approval_scope_key`. Continuation after review is represented by the recorded approval outcome, not by a separate legacy continue-decision field.
+- Durable approver identity MUST be persisted with the resolution record via `approver_identity` or an equivalent durable approver principal field so audit history records who approved or declined the blocked episode.
+- Blocked-episode recovery semantics are canonical. Retry, resume-after-prerequisite, skip, abort, replan, and safe-point restore behavior remain attached to the same `run_id` + `node_id` + `blocked_sequence` episode, and recovery affordances are derived from `allowed_action_ids[]`, `concern_reason`, and safe-point metadata rather than from any legacy recovery-option survivor fields.
+- Any remaining phase/task/subtask labels may be rendered as explanatory UI copy, but they MUST NOT redefine approval scope, blocked identity, recovery semantics, or persistence ownership. `approval_scope_key` remains the only durable approval-scope handle for the blocked episode.
+
 ## HITL Retry and Safe-Point Clarification Addendum (2026-03-08)
 
 ### 1. HITL resolution wakes the scheduler
@@ -255,7 +321,7 @@ Abort terminates the run and preserves the full paused/rejected lineage.
 - Rerun semantics are explicit about safe-point vs fresh attempt.
 - Skip preserves lineage rather than masquerading as a passed attempt.
 - Abort preserves audit history.
-## Canonical Runtime Recovery Action Set Addendum (2026-03-09)
+## Canonical HITL Recovery Action Alignment Addendum (2026-03-09)
 
 HITL actions must be canonical across graph, orchestrator, and chat surfaces.
 
@@ -279,9 +345,8 @@ Depending on classification, the canonical action families are:
 
 ### Consistency rule
 All surfaces MUST use the same action names, meanings, and enablement conditions. A surface may hide an action for layout reasons, but it MUST NOT rename or reinterpret it.
-## Canonical Recovery Action Reconciliation Addendum (2026-03-09)
 
-HITL actions must use the same runtime action families as graph/orchestrator/chat surfaces.
+### Approval resolution and rerun semantics
 
 Rules:
 - waiting for approval is a blocked state with `blocked_reason_code = waiting_approval`
@@ -289,11 +354,10 @@ Rules:
 - when a valid safe point exists for a mutation-capable attempt, the default rerun affordance is `Retry from safe point`
 - if no valid safe point exists or policy forbids restore, the explicit alternative is `Start fresh attempt`
 - `Skip` remains a separate graph policy action and never masquerades as success
-## HITL Recovery Action Family Consolidation Addendum (2026-03-09)
-
-HITL surfaces MUST use the canonical runtime action families and labels.
 
 ### Canonical visible labels
+HITL surfaces MUST use the canonical runtime action families and labels.
+
 - `Approve`
 - `Decline`
 - `Retry from safe point`
@@ -304,11 +368,6 @@ HITL surfaces MUST use the canonical runtime action families and labels.
 - `Abort run`
 
 `Reject`, `Deny`, and other variants may remain internal or domain-specific copy, but they MUST map back to the canonical action families above.
-
-### Waiting approval semantics
-- pending approval is `blocked_reason_code = waiting_approval`
-- approval resolution emits `node.prerequisite_resolved`
-- scheduler reevaluation happens in the same wake cycle
 
 ### Re-run after decline
 After decline/reject, the surface MUST choose among:

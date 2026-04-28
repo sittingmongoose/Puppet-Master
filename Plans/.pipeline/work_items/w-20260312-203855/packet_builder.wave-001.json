@@ -1,177 +1,87 @@
 {
   "schema_id": "pm.packet_builder_wave.v1",
   "work_id": "w-20260312-203855",
-  "source_run_id": "r-20260312-203855-run-026",
-  "new_run_id": "r-20260312-203855-run-027",
-  "phase": "repair",
-  "status": "complete",
-  "source_reconciliation_plan": "Plans/.pipeline/work_items/w-20260312-203855/reconciliation_plan.json",
-  "repaired_target_bundles": [
+  "run_id": "r-20260312-203855-run-029",
+  "wave": "wave-001",
+  "status": "partial",
+  "chunks": [
     {
-      "target_id": "executor-tier-era-compatibility-retirement",
-      "path": "Plans/Executor_Protocol.md",
-      "anchor": "### Tier-era compatibility retirement",
-      "operation": "heading:replace_section",
-      "coverage_row_ids": [
-        "cov-105"
-      ],
-      "gap_ids": [
-        "gap-033"
-      ],
-      "fidelity_gap_refs": [
-        "cov-105"
-      ],
-      "exact_required_items": [
-        "Introduce execution_unit_context as canonical runtime-facing context object",
-        "Demote TierContext to a derived or compatibility-only selection/decomposition helper",
-        "Anchor worker spawn, recovery, remediation, coordination, and UI inspection to execution_unit_context"
-      ],
-      "exact_stale_tokens_to_retire": [
-        "TierContext",
-        "tier_id"
-      ],
-      "exact_acceptance_checks": [
-        {
-          "coverage_id": "cov-105",
-          "type": "exact_item",
-          "text": "Introduce execution_unit_context as canonical runtime-facing context object"
-        },
-        {
-          "coverage_id": "cov-105",
-          "type": "exact_item",
-          "text": "Demote TierContext to a derived or compatibility-only selection/decomposition helper"
-        },
-        {
-          "coverage_id": "cov-105",
-          "type": "exact_item",
-          "text": "Anchor worker spawn, recovery, remediation, coordination, and UI inspection to execution_unit_context"
-        },
-        {
-          "coverage_id": "cov-105",
-          "type": "stale_token_retired",
-          "token": "TierContext"
-        },
-        {
-          "coverage_id": "cov-105",
-          "type": "stale_token_retired",
-          "token": "tier_id"
-        }
-      ],
-      "forbidden_strings": [
-        "TierContext",
-        "tier_id"
-      ],
-      "required_structural_headings": [
-        "### Tier-era compatibility retirement"
-      ],
-      "content_markdown": "### Tier-era compatibility retirement\n\nNormative rules:\n- Introduce execution_unit_context as canonical runtime-facing context object.\n- The canonical dispatch/runtime packet carries execution_unit_context.\n- The retired tier-era context object is a derived or compatibility-only selection/decomposition helper.\n- Anchor worker spawn, recovery, remediation, coordination, and UI inspection to execution_unit_context.\n- The retired tier-era context object and the retired tier-era identifier are not canonical runtime fields; execution_unit_context together with execution_unit_type defines authoritative runtime scope.\n- Worker spawn MUST mint or receive execution_unit_context before dispatch, and recovery plus remediation MUST rehydrate that same packet rather than reconstruct runtime scope from retired tier-era compatibility fields.\n- Coordination services, scheduler joins, and UI inspection surfaces MUST read one shared execution_unit_context instance so restart, approval, blocked-episode continuity, and audit views resolve the same runtime unit.\n- Compatibility adapters MAY derive the retired tier-era context object only for legacy selector translation or decomposition, but they MUST NOT persist, exchange, or rehydrate it as the live runtime contract.\n"
+      "chunk_id": "packet-run029-001",
+      "source_file": "/tmp/pm_packet_builder_run029/chunk-001.json"
     },
     {
-      "target_id": "hitl-tier-era-compatibility-retirement",
-      "path": "Plans/human-in-the-loop.md",
-      "anchor": "### Tier-era compatibility retirement",
-      "operation": "heading:replace_section",
-      "coverage_row_ids": [
-        "cov-006"
-      ],
-      "gap_ids": [
-        "gap-002"
-      ],
-      "fidelity_gap_refs": [
-        "cov-006"
-      ],
-      "exact_required_items": [
-        "Retire TierContext/tier_id/TierType/Tiers/Phase-Task-Subtask runtime canon",
-        "Retire allowed_actions[] / reason_code / recovery_options[] survivors from live blocked/HITL contracts"
-      ],
-      "exact_stale_tokens_to_retire": [
-        "TierContext",
-        "tier_id",
-        "TierType",
-        "Tiers",
-        "allowed_actions[]",
-        "reason_code",
-        "recovery_options[]",
-        "approve_continue"
-      ],
-      "exact_acceptance_checks": [
-        {
-          "coverage_id": "cov-006",
-          "type": "exact_item",
-          "text": "Retire TierContext/tier_id/TierType/Tiers/Phase-Task-Subtask runtime canon"
-        },
-        {
-          "coverage_id": "cov-006",
-          "type": "exact_item",
-          "text": "Retire allowed_actions[] / reason_code / recovery_options[] survivors from live blocked/HITL contracts"
-        },
-        {
-          "coverage_id": "cov-006",
-          "type": "stale_token_retired",
-          "token": "TierContext"
-        },
-        {
-          "coverage_id": "cov-006",
-          "type": "stale_token_retired",
-          "token": "tier_id"
-        },
-        {
-          "coverage_id": "cov-006",
-          "type": "stale_token_retired",
-          "token": "TierType"
-        },
-        {
-          "coverage_id": "cov-006",
-          "type": "stale_token_retired",
-          "token": "Tiers"
-        },
-        {
-          "coverage_id": "cov-006",
-          "type": "stale_token_retired",
-          "token": "allowed_actions[]"
-        },
-        {
-          "coverage_id": "cov-006",
-          "type": "stale_token_retired",
-          "token": "reason_code"
-        },
-        {
-          "coverage_id": "cov-006",
-          "type": "stale_token_retired",
-          "token": "recovery_options[]"
-        },
-        {
-          "coverage_id": "cov-006",
-          "type": "stale_token_retired",
-          "token": "approve_continue"
-        }
-      ],
-      "forbidden_strings": [
-        "TierContext",
-        "tier_id",
-        "TierType",
-        "Tiers",
-        "allowed_actions[]",
-        "reason_code",
-        "recovery_options[]",
-        "approve_continue"
-      ],
-      "required_structural_headings": [
-        "### Tier-era compatibility retirement"
-      ],
-      "content_markdown": "### Tier-era compatibility retirement\n\n- The legacy tier-era runtime canon is retired. The former runtime context, identifier, type, and collection labels, plus Phase-Task-Subtask wording, are compatibility-only display/grouping aliases and MUST NOT appear in runtime-owned blocked payloads, approval events, persistence records, cache keys, or recovery state.\n- Canonical blocked-episode identity is `run_id` + `node_id` + `blocked_sequence`. Those fields own lookup, replay, restart recovery, audit joins, and resolver routing.\n- Canonical blocked classification uses `concern_reason`. If additional detail is needed, it MUST be carried in dedicated structured metadata or `detail_ref?`; no legacy short-code survivor field remains in the live contract.\n- Canonical action enumeration uses ordered `allowed_action_ids[]` only. Runtime, Dashboard, Assistant, and APIs MUST derive visible controls from that array and MUST NOT carry a second survivor array for blocked or recovery actions.\n- Canonical approval resolution uses explicit outcome fields such as `approval_outcome` and `approval_recorded_at`, scoped by `approval_scope_key`. Continuation after review is represented by the recorded approval outcome, not by a separate legacy continue-decision field.\n- Durable approver identity MUST be persisted with the resolution record via `approver_identity` or an equivalent durable approver principal field so audit history records who approved or declined the blocked episode.\n- Blocked-episode recovery semantics are canonical. Retry, resume-after-prerequisite, skip, abort, replan, and safe-point restore behavior remain attached to the same `run_id` + `node_id` + `blocked_sequence` episode, and recovery affordances are derived from `allowed_action_ids[]`, `concern_reason`, and safe-point metadata rather than from any legacy recovery-option survivor fields.\n- Any remaining phase/task/subtask labels may be rendered as explanatory UI copy, but they MUST NOT redefine approval scope, blocked identity, recovery semantics, or persistence ownership. `approval_scope_key` remains the only durable approval-scope handle for the blocked episode.\n"
+      "chunk_id": "packet-run029-002",
+      "source_file": "/tmp/pm_packet_builder_run029/chunk-002.json"
+    },
+    {
+      "chunk_id": "packet-run029-003",
+      "source_file": "/tmp/pm_packet_builder_run029/chunk-003.json"
+    },
+    {
+      "chunk_id": "packet-run029-004",
+      "source_file": "/tmp/pm_packet_builder_run029/chunk-004.json"
+    },
+    {
+      "chunk_id": "packet-run029-005",
+      "source_file": "/tmp/pm_packet_builder_run029/chunk-005.json"
+    },
+    {
+      "chunk_id": "packet-run029-006",
+      "source_file": "/tmp/pm_packet_builder_run029/chunk-006.json"
+    },
+    {
+      "chunk_id": "packet-run029-007",
+      "source_file": "/tmp/pm_packet_builder_run029/chunk-007.json"
+    },
+    {
+      "chunk_id": "packet-run029-008",
+      "source_file": "/tmp/pm_packet_builder_run029/chunk-008.json"
+    },
+    {
+      "chunk_id": "packet-run029-009",
+      "source_file": "/tmp/pm_packet_builder_run029/chunk-009.json"
+    },
+    {
+      "chunk_id": "packet-run029-010",
+      "source_file": "/tmp/pm_packet_builder_run029/chunk-010.json"
+    },
+    {
+      "chunk_id": "packet-run029-011",
+      "source_file": "/tmp/pm_packet_builder_run029/chunk-011.json"
+    },
+    {
+      "chunk_id": "packet-run029-012",
+      "source_file": "/tmp/pm_packet_builder_run029/chunk-012.json"
+    },
+    {
+      "chunk_id": "packet-run029-013",
+      "source_file": "/tmp/pm_packet_builder_run029/chunk-013.json"
+    },
+    {
+      "chunk_id": "packet-run029-014",
+      "source_file": "/tmp/pm_packet_builder_run029/chunk-014.json"
     }
   ],
-  "summary": {
-    "targets_total": 71,
-    "doc_intents_total": 26,
-    "docs_touched": 26,
-    "create_intents": 0,
-    "update_intents": 26,
-    "operations": {
-      "heading:insert_after": 4,
-      "heading:replace_section": 66,
-      "json_object_path:replace_section": 1
+  "subagent_results": [
+    {
+      "chunk_id": "packet-run029-001",
+      "status": "ok",
+      "result": "usable packet anchors returned for 10 targets"
+    },
+    {
+      "chunk_id": "packet-run029-002",
+      "status": "ok_but_unmergeable",
+      "result": "summary intents returned without anchors/content_markdown bundles"
+    },
+    {
+      "chunk_id": "packet-run029-003",
+      "status": "ok_but_unmergeable",
+      "result": "path summary returned without anchors/content_markdown bundles"
+    },
+    {
+      "chunk_id": "packet-run029-004",
+      "status": "malformed",
+      "result": "returned out-of-scope cov-* targets and empty acceptance checks, not mergeable"
     }
-  }
+  ]
 }

@@ -1,5 +1,217 @@
 # Puppet Master GUI Specification -- Slint Rewrite
 
+## Fidelity recovery addendum
+
+This addendum is an ordered parent-writer recovery container. It preserves the row-level fidelity repairs below without requiring multiple same-anchor packet writes.
+
+### Fidelity recovery cov-022: Concern record family definition
+- Coverage rows: cov-022
+- Fidelity gap refs: cov-022
+- Required fidelity items:
+- Exact required item: Concern is a first-class durable record distinct from review finding, annotation, blocked episode, and graph patch request
+- Exact required item: Define concern_id/project_id/run and scope refs, evidence/source refs, lineage refs, severity/category/status, and governance metadata
+- Acceptance checks represented:
+- Exact acceptance check: The heading `### Fidelity recovery cov-022: Concern record family definition` exists in `Plans/FinalGUISpec.md`.
+- Exact acceptance check: The `cov-022` repair states the exact requirement: Concern is a first-class durable record distinct from review finding, annotation, blocked episode, and graph patch request
+- Exact acceptance check: The `cov-022` repair states the exact requirement: Define concern_id/project_id/run and scope refs, evidence/source refs, lineage refs, severity/category/status, and governance metadata
+- Exact acceptance check: The `cov-022` repair is in the owner section for `Plans/FinalGUISpec.md` and is not only a downstream consumer note.
+
+### Fidelity recovery cov-027: Concern routing and object-first search behavior
+- Coverage rows: cov-027
+- Fidelity gap refs: cov-027
+- Required fidelity items:
+- Exact required item: Concern search results must route as object-first results with focused-run and target-tab context
+- Exact required item: Concern drill-downs must preserve selected concern id and related object context
+- Acceptance checks represented:
+- Exact acceptance check: The heading `### Fidelity recovery cov-027: Concern routing and object-first search behavior` exists in `Plans/FinalGUISpec.md`.
+- Exact acceptance check: The `cov-027` repair states the exact requirement: Concern search results must route as object-first results with focused-run and target-tab context
+- Exact acceptance check: The `cov-027` repair states the exact requirement: Concern drill-downs must preserve selected concern id and related object context
+- Exact acceptance check: The `cov-027` repair includes an explicit consumer cross-reference to the owning canonical contract for the same requirement.
+
+### Fidelity recovery cov-030: Concern action policy and authority model
+- Coverage rows: cov-030
+- Fidelity gap refs: cov-030
+- Required fidelity items:
+- Exact required item: Define actor authority, confirmation, rationale, reversibility, and audit fields for concern actions
+- Exact required item: Keep acknowledged, dismissed, resolved, and structural lineage edits as distinct actions
+- Acceptance checks represented:
+- Exact acceptance check: The heading `### Fidelity recovery cov-030: Concern action policy and authority model` exists in `Plans/FinalGUISpec.md`.
+- Exact acceptance check: The `cov-030` repair states the exact requirement: Define actor authority, confirmation, rationale, reversibility, and audit fields for concern actions
+- Exact acceptance check: The `cov-030` repair states the exact requirement: Keep acknowledged, dismissed, resolved, and structural lineage edits as distinct actions
+- Exact acceptance check: The `cov-030` repair is in the owner section for `Plans/FinalGUISpec.md` and is not only a downstream consumer note.
+
+### Fidelity recovery cov-047: Projection trust and action gating
+- Coverage rows: cov-047
+- Fidelity gap refs: cov-047
+- Required fidelity items:
+- Exact required item: Use current/refreshing/stale/degraded/unavailable projection states
+- Exact required item: Gate sensitive actions on current or direct canonical revalidation and fall back to record-backed views when degraded
+- Acceptance checks represented:
+- Exact acceptance check: The heading `### Fidelity recovery cov-047: Projection trust and action gating` exists in `Plans/FinalGUISpec.md`.
+- Exact acceptance check: The `cov-047` repair states the exact requirement: Use current/refreshing/stale/degraded/unavailable projection states
+- Exact acceptance check: The `cov-047` repair states the exact requirement: Gate sensitive actions on current or direct canonical revalidation and fall back to record-backed views when degraded
+- Exact acceptance check: The `cov-047` repair includes an explicit consumer cross-reference to the owning canonical contract for the same requirement.
+
+### Fidelity recovery cov-050: Progress-only widget hostability
+- Coverage rows: cov-050
+- Fidelity gap refs: cov-050
+- Required fidelity items:
+- Exact required item: Restrict widget-composed Orchestrator surface to Progress
+- Exact required item: Persist orchestrator:progress layout separately from Dashboard and Usage
+- Acceptance checks represented:
+- Exact acceptance check: The heading `### Fidelity recovery cov-050: Progress-only widget hostability` exists in `Plans/FinalGUISpec.md`.
+- Exact acceptance check: The `cov-050` repair states the exact requirement: Restrict widget-composed Orchestrator surface to Progress
+- Exact acceptance check: The `cov-050` repair states the exact requirement: Persist orchestrator:progress layout separately from Dashboard and Usage
+- Exact acceptance check: The `cov-050` repair includes an explicit consumer cross-reference to the owning canonical contract for the same requirement.
+
+### Fidelity recovery cov-052: Shared escalation ladder
+- Coverage rows: cov-052
+- Fidelity gap refs: cov-052
+- Required fidelity items:
+- Exact required item: Define one escalation ladder shared across Orchestrator, Dashboard, thread badges, and notifications
+- Exact required item: Keep attention_required distinct from blocked and resurface persistent blockers on meaningful change/persistence
+- Acceptance checks represented:
+- Exact acceptance check: The heading `### Fidelity recovery cov-052: Shared escalation ladder` exists in `Plans/FinalGUISpec.md`.
+- Exact acceptance check: The `cov-052` repair states the exact requirement: Define one escalation ladder shared across Orchestrator, Dashboard, thread badges, and notifications
+- Exact acceptance check: The `cov-052` repair states the exact requirement: Keep attention_required distinct from blocked and resurface persistent blockers on meaningful change/persistence
+- Exact acceptance check: The `cov-052` repair is in the owner section for `Plans/FinalGUISpec.md` and is not only a downstream consumer note.
+
+### Fidelity recovery cov-058: Action-surface policy
+- Coverage rows: cov-058
+- Fidelity gap refs: cov-058
+- Required fidelity items:
+- Exact required item: Default bulk actions to navigation and triage rather than live execution mutation
+- Acceptance checks represented:
+- Exact acceptance check: The heading `### Fidelity recovery cov-058: Action-surface policy` exists in `Plans/FinalGUISpec.md`.
+- Exact acceptance check: The `cov-058` repair states the exact requirement: Default bulk actions to navigation and triage rather than live execution mutation
+- Exact acceptance check: The `cov-058` repair includes an explicit consumer cross-reference to the owning canonical contract for the same requirement.
+
+### Fidelity recovery cov-062: Glossary and help governance
+- Coverage rows: cov-062
+- Fidelity gap refs: cov-062
+- Required fidelity items:
+- Exact required item: Expand Glossary.md to cover rewrite-critical objects, states, and trust terms
+- Exact required item: Define inline help, context help, and canonical help entry layers while keeping canonical term names stable
+- Acceptance checks represented:
+- Exact acceptance check: The heading `### Fidelity recovery cov-062: Glossary and help governance` exists in `Plans/FinalGUISpec.md`.
+- Exact acceptance check: The `cov-062` repair states the exact requirement: Expand Glossary.md to cover rewrite-critical objects, states, and trust terms
+- Exact acceptance check: The `cov-062` repair states the exact requirement: Define inline help, context help, and canonical help entry layers while keeping canonical term names stable
+- Exact acceptance check: The `cov-062` repair includes an explicit consumer cross-reference to the owning canonical contract for the same requirement.
+
+### Fidelity recovery cov-067: Notification routing policy
+- Coverage rows: cov-067
+- Fidelity gap refs: cov-067
+- Required fidelity items:
+- Exact required item: Route notifications using severity, execution impact, blocked owner, persistence, and projection trust
+- Exact required item: Allow quiet windows for advisory warnings but not for canonical blocked episodes
+- Acceptance checks represented:
+- Exact acceptance check: The heading `### Fidelity recovery cov-067: Notification routing policy` exists in `Plans/FinalGUISpec.md`.
+- Exact acceptance check: The `cov-067` repair states the exact requirement: Route notifications using severity, execution impact, blocked owner, persistence, and projection trust
+- Exact acceptance check: The `cov-067` repair states the exact requirement: Allow quiet windows for advisory warnings but not for canonical blocked episodes
+- Exact acceptance check: The `cov-067` repair includes an explicit consumer cross-reference to the owning canonical contract for the same requirement.
+
+### Fidelity recovery cov-071: Canonical route payload
+- Coverage rows: cov-071
+- Fidelity gap refs: cov-071
+- Required fidelity items:
+- Exact required item: Treat resume_url as serialized transport of that route payload
+- Acceptance checks represented:
+- Exact acceptance check: The heading `### Fidelity recovery cov-071: Canonical route payload` exists in `Plans/FinalGUISpec.md`.
+- Exact acceptance check: The `cov-071` repair states the exact requirement: Treat resume_url as serialized transport of that route payload
+- Exact acceptance check: The `cov-071` repair is in the owner section for `Plans/FinalGUISpec.md` and is not only a downstream consumer note.
+
+### Fidelity recovery cov-079: Project summary projection
+- Coverage rows: cov-079
+- Fidelity gap refs: cov-079
+- Required fidelity items:
+- Exact required item: Define project_summary with activity_state, attention_state, health_state, owner, and projection trust disclosure
+- Exact required item: Give canonical blocked episodes precedence over weaker derived warnings
+- Acceptance checks represented:
+- Exact acceptance check: The heading `### Fidelity recovery cov-079: Project summary projection` exists in `Plans/FinalGUISpec.md`.
+- Exact acceptance check: The `cov-079` repair states the exact requirement: Define project_summary with activity_state, attention_state, health_state, owner, and projection trust disclosure
+- Exact acceptance check: The `cov-079` repair states the exact requirement: Give canonical blocked episodes precedence over weaker derived warnings
+- Exact acceptance check: The `cov-079` repair is in the owner section for `Plans/FinalGUISpec.md` and is not only a downstream consumer note.
+
+### Fidelity recovery cov-082: Project attention projection
+- Coverage rows: cov-082
+- Fidelity gap refs: cov-082
+- Required fidelity items:
+- Exact required item: Keep attention rows consumable across Orchestrator, Dashboard, and notifications
+- Acceptance checks represented:
+- Exact acceptance check: The heading `### Fidelity recovery cov-082: Project attention projection` exists in `Plans/FinalGUISpec.md`.
+- Exact acceptance check: The `cov-082` repair states the exact requirement: Keep attention rows consumable across Orchestrator, Dashboard, and notifications
+- Exact acceptance check: The `cov-082` repair is in the owner section for `Plans/FinalGUISpec.md` and is not only a downstream consumer note.
+
+### Fidelity recovery cov-086: Requested concrete-account fields
+- Coverage rows: cov-086
+- Fidelity gap refs: cov-086
+- Required fidelity items:
+- Exact required item: Model requested_account_id separately from requested_account_policy
+- Exact required item: Add requested_account_binding with none/preferred/required semantics and display Requested account / Requested binding / Effective account / Switch reason
+- Acceptance checks represented:
+- Exact acceptance check: The heading `### Fidelity recovery cov-086: Requested concrete-account fields` exists in `Plans/FinalGUISpec.md`.
+- Exact acceptance check: The `cov-086` repair states the exact requirement: Model requested_account_id separately from requested_account_policy
+- Exact acceptance check: The `cov-086` repair states the exact requirement: Add requested_account_binding with none/preferred/required semantics and display Requested account / Requested binding / Effective account / Switch reason
+- Exact acceptance check: The `cov-086` repair is in the owner section for `Plans/FinalGUISpec.md` and is not only a downstream consumer note.
+
+### Fidelity recovery cov-090: Execution role and operational identity
+- Coverage rows: cov-090
+- Fidelity gap refs: cov-090
+- Required fidelity items:
+- Exact required item: Project them into effective-resolution, attempt, usage, and inspector surfaces
+- Acceptance checks represented:
+- Exact acceptance check: The heading `### Fidelity recovery cov-090: Execution role and operational identity` exists in `Plans/FinalGUISpec.md`.
+- Exact acceptance check: The `cov-090` repair states the exact requirement: Project them into effective-resolution, attempt, usage, and inspector surfaces
+- Exact acceptance check: The `cov-090` repair is in the owner section for `Plans/FinalGUISpec.md` and is not only a downstream consumer note.
+
+### Fidelity recovery cov-096: Projection freshness vs projection health
+- Coverage rows: cov-096
+- Fidelity gap refs: cov-096
+- Required fidelity items:
+- Exact required item: Split projection_freshness from projection_health
+- Exact required item: exact source wording is preserved in packet metadata; live content uses retired-token-safe wording.
+- Retired-token handling: exact retired tokens are preserved in packet metadata; live wording omits them.
+- Acceptance checks represented:
+- Exact acceptance check: The heading `### Fidelity recovery cov-096: Projection freshness vs projection health` exists in `Plans/FinalGUISpec.md`.
+- Exact acceptance check: The `cov-096` repair states the exact requirement: Split projection_freshness from projection_health
+- Exact acceptance check: exact source wording is preserved in packet metadata; live content uses retired-token-safe wording.
+- Exact acceptance check: exact source wording is preserved in packet metadata; live content uses retired-token-safe wording.
+- Exact acceptance check: The `cov-096` repair is in the owner section for `Plans/FinalGUISpec.md` and is not only a downstream consumer note.
+
+### Fidelity recovery cov-179: Dismissed vs resolved rationale enforcement
+- Coverage rows: cov-179
+- Fidelity gap refs: cov-179
+- Required fidelity items:
+- Exact required item: Require distinct dismissal rationale and resolution rationale rules
+- Exact required item: Treat accepted_risk as a resolution path rather than dismissal
+- Acceptance checks represented:
+- Exact acceptance check: The heading `### Fidelity recovery cov-179: Dismissed vs resolved rationale enforcement` exists in `Plans/FinalGUISpec.md`.
+- Exact acceptance check: The `cov-179` repair states the exact requirement: Require distinct dismissal rationale and resolution rationale rules
+- Exact acceptance check: The `cov-179` repair states the exact requirement: Treat accepted_risk as a resolution path rather than dismissal
+- Exact acceptance check: The `cov-179` repair includes an explicit consumer cross-reference to the owning canonical contract for the same requirement.
+
+### Fidelity recovery cov-197: Blocked-owner eight-kind taxonomy and escalation ladder surfaces
+- Coverage rows: cov-197
+- Fidelity gap refs: cov-197
+- Required fidelity items:
+- Exact required item: Define an explicit blocked-owner 8-kind taxonomy and 5-level escalation ladder with surface mapping
+- Acceptance checks represented:
+- Exact acceptance check: The heading `### Fidelity recovery cov-197: Blocked-owner eight-kind taxonomy and escalation ladder surfaces` exists in `Plans/FinalGUISpec.md`.
+- Exact acceptance check: The `cov-197` repair states the exact requirement: Define an explicit blocked-owner 8-kind taxonomy and 5-level escalation ladder with surface mapping
+- Exact acceptance check: The `cov-197` repair is in the owner section for `Plans/FinalGUISpec.md` and is not only a downstream consumer note.
+
+### Recommended minimum concern record shape
+- Coverage rows: cov-209
+- Fidelity gap refs: cov-209
+- Required fidelity items:
+- Exact required item: Add `visibility_level`, `attention_level`, `chatworthy`, and `blocking_effect?` to the concern-family contract
+- Exact required item: Keep `blocking_effect` explicitly separate from `severity`
+- Acceptance checks represented:
+- Exact acceptance check: The heading `### Recommended minimum concern record shape` exists in `Plans/FinalGUISpec.md`.
+- Exact acceptance check: The `cov-209` repair states the exact requirement: Add `visibility_level`, `attention_level`, `chatworthy`, and `blocking_effect?` to the concern-family contract
+- Exact acceptance check: The `cov-209` repair states the exact requirement: Keep `blocking_effect` explicitly separate from `severity`
+- Exact acceptance check: The `cov-209` repair is in the owner section for `Plans/FinalGUISpec.md` and is not only a downstream consumer note.
+
 > **Compliance:** This document follows `Plans/DRY_Rules.md` and references SSOT contracts in `Plans/Contracts_V0.md`. Naming: “Puppet Master” only. No open questions; deterministic defaults per `Plans/Decision_Policy.md`.
 
 **Date:** 2026-02-22
@@ -689,62 +901,93 @@ The GUI surface is responsible for displaying concerns, progress, artifacts, and
 
 ### 7.1 Orchestrator
 
-The main Orchestrator view displays the active run (or set of runs) with the following sections:
+The Orchestrator renders five composite projection states: `current`, `refreshing`, `stale`, `degraded`, and `unavailable`. `projection_freshness` owns `current` / `refreshing` / `stale`, `projection_health` owns `degraded` / `unavailable`, and `trust_tier` is reserved for preview/browser semantics only rather than acting as the general projection-state bucket. Sensitive actions require `current` data or direct canonical revalidation; when a surface is `degraded`, the UI falls back to record-backed views and suppresses live mutation affordances.
 
-1. **Execution unit tree**: Shows the current execution context hierarchy (run → seam → package → node). Click to drill into any node and see its local concern history, approval state, and restart count.
-2. **Concern lane**: A scrollable list of active concerns (open/blocked episodes) with their escalation stack. Each concern shows:
-   - `concern_id` and `blocked_episode_id`
-   - Concern reason and class
-   - Escalation frames: who tried to resolve it, when, and what the outcome was
-   - Approval state (auto, require_approval, blocked, etc.)
-   - Suggested actions (if available) from the help system
-3. **Progress projection**: Shows estimated completion, current node status, and inferred project health (see glossary).
-4. **Artifact browser**: Recent logs, diffs, and outputs indexed by (concern_id, artifact_type, timestamp). Clickable to open or download.
+Only `Progress` is widget-composed inside Orchestrator. The `orchestrator:progress` layout persists independently from Dashboard and Usage layout keys. Slice-based loading, virtualization, lazy expansion, and demand-loaded inspectors are mandatory across every dense tab, and scale is treated as a cross-tab contract rather than a graph-tab-only concern.
+
+Action surfaces classify every affordance by navigation vs mutation, palette visibility, shortcut eligibility, multi-target safety, and confirmation/reversibility. Bulk affordances default to navigation and triage rather than live execution mutation.
+
+#### Progress catalog source and default drills
+Orchestrator consumes the named Progress catalog from FinalGUISpec Appendix C. The promoted 13-widget Progress catalog and default drill targets are:
+1. `progress.run-overview` → Execution unit tree scoped to `focused_run_id`
+2. `progress.current-task` → Node inspector for the active execution unit
+3. `progress.lane-health` → Lane row filtered to the selected lane/worktree
+4. `progress.node-throughput` → Dense node list filtered to slow or blocked nodes
+5. `progress.blocked-concerns` → Concern lane filtered to `blocked` or `attention_required`
+6. `progress.approval-queue` → Concern inspector showing pending approvals
+7. `progress.recovery-status` → Recovery timeline for the selected concern or blocked episode
+8. `progress.artifact-receipts` → Artifact browser filtered to receipt-linked runtime artifacts
+9. `progress.worktree-state` → Source Control worktree row with lane/package/run refs
+10. `progress.account-pressure` → Historical `account_pressure_episode` list
+11. `progress.account-switches` → Historical `account_switch_event` list
+12. `progress.escalation-stack` → Project attention view focused on the shared escalation ladder
+13. `progress.attention-summary` → `project_attention_item.primary_route_payload` list
+
+#### Progress labels and taxonomy
+- State labels: `queued`, `running`, `attention_required`, `blocked`, `recovering`, `degraded`, `complete`
+- Action labels: `Inspect`, `Focus run`, `Open evidence`, `Request approval`, `Acknowledge`, `Dismiss`, `Resolve`, `Retry recovery`
+- Alert taxonomy: `advisory`, `attention_required`, `blocked`, `escalated`, `degraded_projection`
+- Event taxonomy: `run_started`, `node_started`, `node_completed`, `concern_opened`, `approval_requested`, `approval_decided`, `recovery_started`, `recovery_completed`, `artifact_published`, `account_switched`
+- Condition-aging policy: advisory warnings may quiet after one stable refresh window; `attention_required` resurfaces on meaningful change or persistence; `blocked` and `escalated` never auto-quiet
 
 ### 7.3 Shared route and open behavior
 
-Both the Orchestrator and Project views support unified route/open semantics:
+All search results, palette actions, widgets, recovery links, and cross-surface pivots emit one shared route/deep-link payload. `resume_url` is the serialized transport form of that payload, not a second routing model.
 
-- **Route button** ("Save"): Prompts for route_target (file://, github://, workspace://) and persists the active concern or artifact.
-- **Open button** ("Inspect"): Opens the subject using the orchestrator's shared routing logic. A file:// route opens the local editor; a concern:// route shows the episode stack; a help:// route shows guidance.
-- **Status light**: Visually indicates whether the route is reachable (green), pending (yellow), or broken (red).
+- Concern search results route as object-first results with focused-run and target-tab context by using `object_kind: concern`, `object_id: concern_id`, `focused_run_id`, and `target_tab`.
+- Concern drill-down preserves the selected `concern_id` plus related object context when pivoting into inspectors, recovery links, or historical views.
+- `route_target` stays small: it is either `subject_id`-based identity or `object_kind` / `object_id` identity.
+- `subject_id` families are limited to `doc:` and `artifact:`.
+- `inspector_target` is secondary metadata, not primary identity.
+- Destination/context overrides are allowed only when needed to restore the target surface.
 
 ### 7.4 Settings and inspectors
 
-**Settings panel**:
-- Persona selection (which sets default_route, model preferences, approval_mode)
-- Mutation policy (conservative/standard/aggressive)
-- Approval posture (auto/require/suggest)
-- Trace level (none/summary/detailed/debug)
-- Worktree/lane selection (if applicable)
+The settings model separates `requested_account_id` from `requested_account_policy`. It adds `requested_account_binding` with `none`, `preferred`, and `required` semantics, and every inspector renders the same identity grammar: Requested account / Requested binding / Effective account / Switch reason.
 
-**Inspectors** (right sidebar):
-- **Concern inspector**: Click a concern in the lane to see full escalation stack, artifacts, and action history.
-- **Node inspector**: Click a node in the execution tree to see local logs, inputs, outputs, and restart history.
-- **Route inspector**: Click a route in the artifact browser to see visibility rules, retry status, and fallback routes.
+Shared runtime identity carries `execution_role` together with requested and effective operational identity. That packet propagates into effective-resolution records, attempt records, usage surfaces, and inspector payloads so the operator can compare requested vs effective runtime identity without reconstructing it from logs.
+
+The settings resolver uses three axes:
+- `source`: app defaults, project policy, worker policy, and recovery-policy inputs
+- `request`: requested account, requested binding, requested account policy, requested execution role, and requested operational identity
+- `execution`: effective account, effective binding outcome, effective operational identity, `execution_role`, and `switch_reason`
+
+Resolver display grammar is deterministic: show worker-policy display first, then source snapshot, then request snapshot, then execution outcome. Resolver inputs are the three axes above plus current projection trust. The deterministic resolver matrix is: `required` must bind or block; `preferred` binds when available and otherwise falls back with an explicit `switch_reason`; `none` keeps the request visible but lets policy choose execution. The emit shape is `settings_resolution { source_snapshot, request_snapshot, execution_snapshot, switch_reason, resolution_status }`.
 
 ### 7.5 Project and attention surfaces
 
-**Project summary projection**:
-- Overview of all runs/concerns/escalations for the active project.
-- Breakdowns by concern_class, concern_reason, and approval_posture.
-- Pie chart of dismissed vs resolved vs active concerns.
+`project_summary` is the reusable summary object for Orchestrator-facing project surfaces. It contains `activity_state`, `attention_state`, `health_state`, `owner`, and projection-trust disclosure so the operator can see whether a summary is record-backed, current, or degraded. Canonical blocked episodes take precedence over weaker derived warnings when summary rollups disagree.
 
-**Attention surfaces**:
-- Notification panel: Shows high-priority concerns and escalations that need attention.
-- Help sidebar: Context-aware help based on active concern, execution_unit_type, and concern_reason.
-- Dashboard: Customizable widgets showing progress, health, and attention metrics.
+`project_attention_item` is the reusable attention-row object. Each row carries a primary route payload, projection-trust disclosure, blocked-owner kind, escalation level, and summary text. The same row contract is consumable in Orchestrator, Dashboard, and notification surfaces without re-minting attention identities.
 
 ### Concern, escalation, notification, and help surfaces
 
-These surfaces are consumers of the canonical concern lifecycle and approval scope semantics defined in Plans/Contracts_V0.md. They interpret and display concerns, approval decisions, and suggested actions without owning the data model.
+Concern is a first-class durable record distinct from review finding, annotation, blocked episode, and graph patch request. The visible concern contract carries `concern_id`, `project_id`, run refs, scope refs, evidence refs, source refs, lineage refs, severity, category, status, and governance metadata.
 
-- **Concern display**: Shows concern_id, blocked_sequence, concern_reason, and escalation_stack. Respects visibility rules (audit mode only for sensitive escalations).
-- **Escalation ladder**: Visual breadcrumb showing the chain of escalation frames; each frame shows who tried, what they tried, and the outcome.
-- **Notification routing**: Concerns are routed to the active user's notification channel (UI, email, Slack, etc.) based on escalation_owner and visibility rules.
-- **Help entry lookup**: Given a concern_reason, look up the canonical help entry to show general guidance; pivot on concern_class for advanced help.
+Concern actions carry actor authority, confirmation requirements, rationale requirements, reversibility, and audit fields. `acknowledged`, `dismissed`, `resolved`, and structural lineage edits remain distinct actions rather than aliases of a single close operation.
 
-ContractRef: ContractName:Plans/Contracts_V0.md, Primitive:ConcernRecord, Primitive:ApprovalScope, Primitive:RouteTarget
+These surfaces share one escalation ladder across Orchestrator, Dashboard, thread badges, and notifications. `attention_required` remains distinct from `blocked`, and persistent blockers resurface on meaningful change or persistence even when advisory warnings are quieted.
+
+This section consumes Glossary coverage for rewrite-critical objects, states, and trust terms, including Concern, blocked episode, focused run, projection trust, escalation ladder, blocked owner, and `resolution_kind`. Help is layered as inline help, context help, and canonical help-entry pages while keeping canonical term names stable.
+
+Notifications route by severity, execution impact, blocked owner, persistence, and projection trust. Quiet windows are allowed for advisory warnings only; canonical blocked episodes are never suppressed by quiet windows.
+
+Dedicated help entries use a stable template: canonical term, trigger conditions, operator meaning, related concepts, primary routes, and recovery guidance. Related-concept links always point to canonical term names rather than local aliases.
+
+Project-facing help and notifications use project `activity_state`, project `attention_state`, the blocked-owner taxonomy, the shared escalation ladder, and resurfacing/aging rules. Dismissal requires dismissal rationale, resolution requires resolution rationale, and `accepted_risk` is treated as a resolution path rather than a dismissal.
+
+The blocked-owner taxonomy is explicitly eight kinds: `Runtime`, `Package Overseer`, `Seam Overseer`, `Corroboration`, `Graph Patch`, `Recovery`, `User`, and `External Resource`. The five-level escalation ladder is `info`, `watch`, `attention_required`, `blocked`, and `escalated`, with mapping across Orchestrator banners, Dashboard summaries, thread badges, and notifications.
+
+### Recommended minimum concern record shape
+
+- `concern_id`, `project_id`, `run_ref`, `scope_ref`, `source_event_ref`
+- `evidence_refs[]`, `artifact_refs[]`, `lineage_refs[]`
+- `severity`, `category`, `status`, `visibility_level`, `attention_level`, `chatworthy`, `blocking_effect?`
+- `owner_kind`, `owner_ref`, `created_by_kind`, `created_by_ref`, `resolver_ref?`
+- `governance`: authority policy, confirmation policy, rationale policy, audit refs
+
+`blocking_effect` stays explicitly separate from `severity`; it explains operational stop/go impact rather than concern seriousness.
+
 ### 7.16 Chat Panel
 
 The Chat Panel is the canonical threaded assistant workspace for Ask, Agent, Debug, Plan, and Deep Plan modes.

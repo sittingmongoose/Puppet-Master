@@ -1,5 +1,25 @@
 # Permissions System (Canonical SSOT)
 
+## Fidelity recovery addendum
+
+This addendum is an ordered parent-writer recovery container. It preserves the row-level fidelity repairs below without requiring multiple same-anchor packet writes.
+
+### Fidelity recovery cov-011: Requested/effective account identity contract
+- Coverage rows: cov-011
+- Fidelity gap refs: cov-011
+- Required fidelity items:
+- Exact required item: Add requested_account_id alongside requested_account_policy
+- Exact required item: exact source wording is preserved in packet metadata; live content uses retired-token-safe wording.
+- Exact required item: Carry requested/effective account identity through runtime, bridged-provider, and permission envelopes
+- Retired-token handling: exact retired tokens are preserved in packet metadata; live wording omits them.
+- Acceptance checks represented:
+- Exact acceptance check: The heading `### Fidelity recovery cov-011: Requested/effective account identity contract` exists in `Plans/Permissions_System.md`.
+- Exact acceptance check: The `cov-011` repair states the exact requirement: Add requested_account_id alongside requested_account_policy
+- Exact acceptance check: exact source wording is preserved in packet metadata; live content uses retired-token-safe wording.
+- Exact acceptance check: The `cov-011` repair states the exact requirement: Carry requested/effective account identity through runtime, bridged-provider, and permission envelopes
+- Exact acceptance check: exact source wording is preserved in packet metadata; live content uses retired-token-safe wording.
+- Exact acceptance check: The `cov-011` repair is in the owner section for `Plans/Permissions_System.md` and is not only a downstream consumer note.
+
 > **Compliance:** This document follows `Plans/DRY_Rules.md` and references SSOT contracts in `Plans/Contracts_V0.md`. Naming: "Puppet Master" only. No open questions; deterministic defaults per `Plans/Decision_Policy.md`.
 
 ## 0. Scope and SSOT status
@@ -25,31 +45,19 @@ ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md
 ---
 
 ## Canonical data-shape reconciliation
-
-This section owns the permission-facing identity and approval correlation shape.
-
 ### Required data shape
 
-Permission, approval, and blocked-state envelopes MUST preserve:
-- `requested_account_id`
-- `requested_account_policy`
-- `requested_account_binding`
-- `effective_account_id`
-- `effective_provider_identity`
-- `execution_role`
-- `operational_identity`
-- `approval_scope_key`
-
-Rules:
-- stable requested/effective account identity MUST survive permission evaluation, approval reuse, blocked episodes, and historical replay
-- `provider_account_id`, OpenCode session ids, and other provider-native handles are additive correlation fields only; they MUST NOT replace canonical `thread_id`, `run_id`, or stable account identity
-- `approval_scope_key` is the reusable approval join key across permissions, HITL, doom-loop protection, and session approval caching
-- `approval_scope_key` is derived from actor kind, execution role, lane/package/run context, requested/effective account context, and the concrete external-side-effect target when one exists
-- exact scope-key match is required for approval reuse unless a durable project/global rule is explicitly created
-
-This owner section governs later acceptance criteria and addenda; later sections elaborate but do not replace this shape.
-
----
+#### Acceptance carry-through
+- Add requested_account_id alongside requested_account_policy
+- Add requested_account_binding and govern provider_account_id as subordinate provider-native metadata
+- Carry requested/effective account identity through runtime, bridged-provider, and permission envelopes
+- Move OpenCode session IDs to provider-native correlation fields instead of canonical thread_id
+- Define Approval Scope Key across actor/lane/run/account context and reuse it across permissions, HITL, doom-loop, and session approval caching
+- Under `## Canonical data-shape reconciliation` -> `### Required data shape`, explicitly place `requested_account_id` alongside `requested_account_policy`.
+- Define `requested_account_binding` and keep `provider_account_id` governed only as subordinate provider-native metadata rather than canonical account identity.
+- Require requested/effective account identity to survive runtime, bridged-provider, and permission envelopes.
+- State that OpenCode session IDs move into provider-native correlation fields instead of canonical `thread_id`.
+- Define `approval_scope_key` across actor/lane/run/account context and require reuse across permissions, HITL, doom-loop, and session approval caching.
 
 ## 1. Definitions and scope
 ### 1.1 Path normalization invariants

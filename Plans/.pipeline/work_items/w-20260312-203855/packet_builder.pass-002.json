@@ -1,9 +1,21 @@
 {
-  "schema_id": "pm.packet_builder_pass.v1",
+  "schema_id": "pm.packet_builder_verification_pass.v1",
   "work_id": "w-20260312-203855",
-  "run_id": "r-20260312-203855-run-026",
-  "pass": "pass-002",
-  "status": "clean",
-  "material_findings": [],
-  "summary": "No additional packet corrections were needed after pass-001 clean."
+  "run_id": "r-20260312-203855-run-028",
+  "pass_id": "pass-002",
+  "status": "material_changes_required",
+  "material_findings": [
+    {
+      "target_id": "rec-cov-101-human-in-the-loop",
+      "issue": "truncated content_markdown",
+      "action": "merged targeted content repair"
+    }
+  ],
+  "noise_findings": [],
+  "verified_chunks": [
+    "packet-verify2-001",
+    "packet-verify2-002",
+    "packet-verify2-003",
+    "packet-verify2-004"
+  ]
 }

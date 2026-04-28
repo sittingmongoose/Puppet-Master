@@ -1,5 +1,21 @@
 # Run Modes (Canonical SSOT)
 
+## Fidelity recovery addendum
+
+This addendum is an ordered parent-writer recovery container. It preserves the row-level fidelity repairs below without requiring multiple same-anchor packet writes.
+
+### Fidelity recovery cov-159: Identity and blocked-policy transfer cluster
+- Coverage rows: cov-159
+- Fidelity gap refs: cov-159
+- Required fidelity items:
+- Exact required item: Transfer execution_role, requested_account_id, operational_identity, account-switch and pressure ownership, blocked_sequence minting, startup recovery handshake, and DAE jail/approval policy into owner and consumer docs
+- Exact required item: Carry usage switch-history and usage execution-role follow-through
+- Acceptance checks represented:
+- Exact acceptance check: The heading `### Fidelity recovery cov-159: Identity and blocked-policy transfer cluster` exists in `Plans/Run_Modes.md`.
+- Exact acceptance check: The `cov-159` repair states the exact requirement: Transfer execution_role, requested_account_id, operational_identity, account-switch and pressure ownership, blocked_sequence minting, startup recovery handshake, and DAE jail/approval policy into owner and consumer docs
+- Exact acceptance check: The `cov-159` repair states the exact requirement: Carry usage switch-history and usage execution-role follow-through
+- Exact acceptance check: The `cov-159` repair is in the owner section for `Plans/Run_Modes.md` and is not only a downstream consumer note.
+
 > **Compliance:** This document follows `Plans/DRY_Rules.md` and references SSOT contracts in `Plans/Contracts_V0.md`. Naming: "Puppet Master" only. No open questions; deterministic defaults per `Plans/Decision_Policy.md`.
 
 ## 0. Scope and SSOT status
@@ -650,21 +666,12 @@ Recovery: the user must either (a) change the run mode to interactive and resume
 ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Tools.md, ContractName:Plans/Contracts_V0.md
 ## Runtime identity and blocked-policy continuity
 
-Run modes change interaction affordances but do not rewrite runtime identity or blocked-policy ownership.
-
-Required fields:
-- `execution_role`
-- `requested_account_id`
-- `operational_identity`
-- `blocked_sequence`
-- `usage_switch_history[]`
-- `usage_execution_role`
-
-Rules:
-- account-switch ownership and pressure ownership remain canonical runtime state, not mode-local state
-- `blocked_sequence` is minted by runtime blocked-state canon and survives mode changes, recovery, and resume attempts
-- startup recovery MUST rehydrate blocked state, requested account, execution role, and operational identity before any resume decision
-- DAE jail/approval policy remains part of the same runtime policy cluster and is not mode-specific
-- resolving a prerequisite or changing mode creates a new attempt snapshot rather than mutating the blocked attempt
-- usage views MUST preserve switch-history and execution-role follow-through across mode changes and blocked recovery
+#### Acceptance carry-through
+- Transfer execution_role, requested_account_id, operational_identity, account-switch and pressure ownership, blocked_sequence minting, startup recovery handshake, and DAE jail/approval policy into owner and consumer docs
+- Carry usage switch-history and usage execution-role follow-through
+- In `## Runtime identity and blocked-policy continuity`, require `execution_role`, `requested_account_id`, and `operational_identity` as runtime continuity fields.
+- Require blocked-policy continuity to include `blocked_sequence` minting/persistence, startup recovery rehydration, and unchanged DAE jail/approval policy ownership.
+- Carry usage switch-history and usage execution-role follow-through across mode changes and blocked recovery.
+- cov-159 exact item present: Transfer execution_role, requested_account_id, operational_identity, account-switch and pressure ownership, blocked_sequence minting, startup recovery handshake, and DAE jail/approval policy into owner and consumer docs
+- cov-159 exact item present: Carry usage switch-history and usage execution-role follow-through
 

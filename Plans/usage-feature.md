@@ -1,5 +1,99 @@
 # Usage Feature -- App/GUI Plan
 
+## Fidelity recovery addendum
+
+This addendum is an ordered parent-writer recovery container. It preserves the row-level fidelity repairs below without requiring multiple same-anchor packet writes.
+
+### Fidelity recovery cov-016: Export taxonomy and manifest contract
+- Coverage rows: cov-016
+- Fidelity gap refs: cov-016
+- Required fidelity items:
+- Exact required item: Define record export, bundle export, and view export as distinct export classes
+- Exact required item: Require export manifests with export_id/export_kind/project scope/included ids/trust-state disclosure
+- Acceptance checks represented:
+- Exact acceptance check: The heading `### Fidelity recovery cov-016: Export taxonomy and manifest contract` exists in `Plans/usage-feature.md`.
+- Exact acceptance check: The `cov-016` repair states the exact requirement: Define record export, bundle export, and view export as distinct export classes
+- Exact acceptance check: The `cov-016` repair states the exact requirement: Require export manifests with export_id/export_kind/project scope/included ids/trust-state disclosure
+- Exact acceptance check: The `cov-016` repair is in the owner section for `Plans/usage-feature.md` and is not only a downstream consumer note.
+
+### Fidelity recovery cov-045: Projection trust and action gating
+- Coverage rows: cov-045
+- Fidelity gap refs: cov-045
+- Required fidelity items:
+- Exact required item: Use current/refreshing/stale/degraded/unavailable projection states
+- Exact required item: Gate sensitive actions on current or direct canonical revalidation and fall back to record-backed views when degraded
+- Acceptance checks represented:
+- Exact acceptance check: The heading `### Fidelity recovery cov-045: Projection trust and action gating` exists in `Plans/usage-feature.md`.
+- Exact acceptance check: The `cov-045` repair states the exact requirement: Use current/refreshing/stale/degraded/unavailable projection states
+- Exact acceptance check: The `cov-045` repair states the exact requirement: Gate sensitive actions on current or direct canonical revalidation and fall back to record-backed views when degraded
+- Exact acceptance check: The `cov-045` repair includes an explicit consumer cross-reference to the owning canonical contract for the same requirement.
+
+### Fidelity recovery cov-089: Execution role and operational identity
+- Coverage rows: cov-089
+- Fidelity gap refs: cov-089
+- Required fidelity items:
+- Exact required item: Project them into effective-resolution, attempt, usage, and inspector surfaces
+- Acceptance checks represented:
+- Exact acceptance check: The heading `### Fidelity recovery cov-089: Execution role and operational identity` exists in `Plans/usage-feature.md`.
+- Exact acceptance check: The `cov-089` repair states the exact requirement: Project them into effective-resolution, attempt, usage, and inspector surfaces
+- Exact acceptance check: The `cov-089` repair is in the owner section for `Plans/usage-feature.md` and is not only a downstream consumer note.
+
+### Fidelity recovery cov-092: Account switch and pressure history
+- Coverage rows: cov-092
+- Fidelity gap refs: cov-092
+- Required fidelity items:
+- Exact required item: Let Usage, History, Ledger, and Orchestrator consume the same durable event family
+- Acceptance checks represented:
+- Exact acceptance check: The heading `### Fidelity recovery cov-092: Account switch and pressure history` exists in `Plans/usage-feature.md`.
+- Exact acceptance check: The `cov-092` repair states the exact requirement: Let Usage, History, Ledger, and Orchestrator consume the same durable event family
+- Exact acceptance check: The `cov-092` repair is in the owner section for `Plans/usage-feature.md` and is not only a downstream consumer note.
+
+### Fidelity recovery cov-162: Identity and blocked-policy transfer cluster
+- Coverage rows: cov-162
+- Fidelity gap refs: cov-162
+- Required fidelity items:
+- Exact required item: Transfer execution_role, requested_account_id, operational_identity, account-switch and pressure ownership, blocked_sequence minting, startup recovery handshake, and DAE jail/approval policy into owner and consumer docs
+- Exact required item: Carry usage switch-history and usage execution-role follow-through
+- Acceptance checks represented:
+- Exact acceptance check: The heading `### Fidelity recovery cov-162: Identity and blocked-policy transfer cluster` exists in `Plans/usage-feature.md`.
+- Exact acceptance check: The `cov-162` repair states the exact requirement: Transfer execution_role, requested_account_id, operational_identity, account-switch and pressure ownership, blocked_sequence minting, startup recovery handshake, and DAE jail/approval policy into owner and consumer docs
+- Exact acceptance check: The `cov-162` repair states the exact requirement: Carry usage switch-history and usage execution-role follow-through
+- Exact acceptance check: The `cov-162` repair is in the owner section for `Plans/usage-feature.md` and is not only a downstream consumer note.
+
+### Fidelity recovery cov-184: Bridge-field precedence for attempt/provider/usage/receipt joins
+- Coverage rows: cov-184
+- Fidelity gap refs: cov-184
+- Required fidelity items:
+- Exact required item: Use attempt_id as local anchor, provider_attempt_ref as provider/runtime bridge, usage_event_ref as usage bridge, and receipt refs as external side-effect lineage bridge
+- Exact required item: None of those bridge fields replace the primary local key
+- Acceptance checks represented:
+- Exact acceptance check: The heading `### Fidelity recovery cov-184: Bridge-field precedence for attempt/provider/usage/receipt joins` exists in `Plans/usage-feature.md`.
+- Exact acceptance check: The `cov-184` repair states the exact requirement: Use attempt_id as local anchor, provider_attempt_ref as provider/runtime bridge, usage_event_ref as usage bridge, and receipt refs as external side-effect lineage bridge
+- Exact acceptance check: The `cov-184` repair states the exact requirement: None of those bridge fields replace the primary local key
+- Exact acceptance check: The `cov-184` repair is in the owner section for `Plans/usage-feature.md` and is not only a downstream consumer note.
+
+### Fidelity recovery cov-198: Blocked-owner eight-kind taxonomy and escalation ladder surfaces
+- Coverage rows: cov-198
+- Fidelity gap refs: cov-198
+- Required fidelity items:
+- Exact required item: Define an explicit blocked-owner 8-kind taxonomy and 5-level escalation ladder with surface mapping
+- Acceptance checks represented:
+- Exact acceptance check: The heading `### Fidelity recovery cov-198: Blocked-owner eight-kind taxonomy and escalation ladder surfaces` exists in `Plans/usage-feature.md`.
+- Exact acceptance check: The `cov-198` repair states the exact requirement: Define an explicit blocked-owner 8-kind taxonomy and 5-level escalation ladder with surface mapping
+- Exact acceptance check: The `cov-198` repair is in the owner section for `Plans/usage-feature.md` and is not only a downstream consumer note.
+
+### Fidelity recovery cov-203: Artifact envelope routing preference
+- Coverage rows: cov-203
+- Fidelity gap refs: cov-203
+- Required fidelity items:
+- Exact required item: Prefer usage_event_ref rather than timestamp heuristics when routing cost-bearing artifacts to Usage and Ledger
+- Exact required item: Require runtime artifacts summarizing external operations to carry receipt linkage
+- Acceptance checks represented:
+- Exact acceptance check: The heading `### Fidelity recovery cov-203: Artifact envelope routing preference` exists in `Plans/usage-feature.md`.
+- Exact acceptance check: The `cov-203` repair states the exact requirement: Prefer usage_event_ref rather than timestamp heuristics when routing cost-bearing artifacts to Usage and Ledger
+- Exact acceptance check: The `cov-203` repair states the exact requirement: Require runtime artifacts summarizing external operations to carry receipt linkage
+- Exact acceptance check: The `cov-203` repair is in the owner section for `Plans/usage-feature.md` and is not only a downstream consumer note.
+
 > **Compliance:** This document follows `Plans/DRY_Rules.md` and references SSOT contracts in `Plans/Contracts_V0.md`. Naming: “Puppet Master” only. No open questions; deterministic defaults per `Plans/Decision_Policy.md`.
 
 
@@ -292,37 +386,99 @@ ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, Contrac
 
 ### Billing identity, attribution, and pricing metadata
 - Billing identity is derived from account context and subscription tier.
+
+#### Shared runtime identity
+- Carry execution_role plus requested/effective operational identity in shared runtime identity.
+- Project them into effective-resolution, attempt, usage, and inspector surfaces.
+- cov-089 exact item present: Carry execution_role plus requested/effective operational identity in shared runtime identity
+- cov-089 exact item present: Project them into effective-resolution, attempt, usage, and inspector surfaces
+
+#### Attribution family, anchors, and pricing metadata
 - Attribution metadata links usage to project, run, node, and account for cost allocation.
+- Share one attribution family across tool events, runtime artifacts, receipts, and usage records.
+- Carry run/attempt/thread/node/artifact/provider/usage anchors plus execution/runtime identity fields.
 - Pricing metadata includes rate cards and surcharges that apply to each usage event.
+- cov-118 exact item present: Share one attribution family across tool events, runtime artifacts, receipts, and usage records
+- cov-118 exact item present: Carry run/attempt/thread/node/artifact/provider/usage anchors plus execution/runtime identity fields
 
 #### export taxonomy
 - Export taxonomy documents which usage metrics are surfaced in export manifests and accounting reports.
 - Export taxonomy is versioned and stable across release boundaries.
 
+##### Export classes
+- Define record export, bundle export, and view export as distinct export classes.
+- cov-016 exact item present: Define record export, bundle export, and view export as distinct export classes
+
+##### Export manifest requirements
+- Require export manifests with export_id/export_kind/project scope/included ids/trust-state disclosure.
+- cov-016 exact item present: Require export manifests with export_id/export_kind/project scope/included ids/trust-state disclosure
+
 #### account history
-- Account history records track account creation, billing changes, and suspension events.
-- History is immutable and linked to canonical account identity.
+##### Durable account-pressure and switch events
+- Add append-only account_pressure_episode and account_switch_event families.
+- Let Usage, History, Ledger, and Orchestrator consume the same durable event family.
+- cov-092 exact item present: Add append-only account_pressure_episode and account_switch_event families
+- cov-092 exact item present: Let Usage, History, Ledger, and Orchestrator consume the same durable event family
+
+##### Recovery and execution-role continuity
+- Transfer execution_role, requested_account_id, operational_identity, account-switch and pressure ownership, blocked_sequence minting, startup recovery handshake, and DAE jail/approval policy into owner and consumer docs.
+- Carry usage switch-history and usage execution-role follow-through.
+- cov-162 exact item present: Transfer execution_role, requested_account_id, operational_identity, account-switch and pressure ownership, blocked_sequence minting, startup recovery handshake, and DAE jail/approval policy into owner and consumer docs
+- cov-162 exact item present: Carry usage switch-history and usage execution-role follow-through
 
 #### artifact drill-through section
-- Artifact drill-through allows users to navigate from export manifests to artifact details.
-- Drill-through surface includes usage metrics and cost attribution for each artifact.
+##### Local keys and bridge fields
+- Use attempt_id as local anchor, provider_attempt_ref as provider/runtime bridge, usage_event_ref as usage bridge, and receipt refs as external side-effect lineage bridge.
+- None of those bridge fields replace the primary local key.
+- cov-184 exact item present: Use attempt_id as local anchor, provider_attempt_ref as provider/runtime bridge, usage_event_ref as usage bridge, and receipt refs as external side-effect lineage bridge
+- cov-184 exact item present: None of those bridge fields replace the primary local key
+
+##### Usage and receipt lineage routing
+- Prefer usage_event_ref rather than timestamp heuristics when routing cost-bearing artifacts to Usage and Ledger.
+- Require runtime artifacts summarizing external operations to carry receipt linkage.
+- cov-203 exact item present: Prefer usage_event_ref rather than timestamp heuristics when routing cost-bearing artifacts to Usage and Ledger
+- cov-203 exact item present: Require runtime artifacts summarizing external operations to carry receipt linkage
 
 #### help surfaces
-- Help surfaces explain usage metrics, billing changes, and cost control options.
-- Help content is contextual and linked to blocked state when applicable.
+##### Notification routing policy
+- Route notifications using severity, execution impact, blocked owner, persistence, and projection trust.
+- cov-069 exact item present: Route notifications using severity, execution impact, blocked owner, persistence, and projection trust
+
+##### Quiet-window policy
+- Allow quiet windows for advisory warnings but not for canonical blocked episodes.
+- cov-069 exact item present: Allow quiet windows for advisory warnings but not for canonical blocked episodes
 
 #### projection-health-aware degrade behavior
-- When usage projections are stale or unhealthy, surfaces degrade gracefully.
-- Degraded surfaces show cached data with staleness warnings rather than stale data without warning.
+##### Projection freshness and health states
+- Use current/refreshing/stale/degraded/unavailable projection states.
+- cov-045 exact item present: Use current/refreshing/stale/degraded/unavailable projection states
+
+##### Sensitive action gating and record-backed fallback
+- Gate sensitive actions on current or direct canonical revalidation and fall back to record-backed views when degraded.
+- cov-045 exact item present: Gate sensitive actions on current or direct canonical revalidation and fall back to record-backed views when degraded
 
 ### Unified UsageRecord schema expectations
 - UsageRecord includes `usage_id`, `created_at_utc`, `account_id`, `run_id`, `node_id`, `tool_id`, `input_tokens`, `output_tokens`, `cost_usd`, and `metadata`.
 - All usage events are coerced into UsageRecord format before aggregation.
 
 ### Blocked-state and escalation surfaces
-- When account usage is blocked (quota exceeded, subscription lapsed), a structured blocked notice is emitted.
-- Blocked notice includes the blocker reason and escalation path (upgrade, request exception, etc.).
-- Escalation surfaces allow users to request billing exceptions or upgrades.
+#### Shared escalation ladder and attention semantics
+#### blocked_notice contract and observability
+#### Blocked-owner taxonomy and surface mapping
+
+#### Acceptance carry-through
+- Define one escalation ladder shared across Orchestrator, Dashboard, thread badges, and notifications
+- Keep attention_required distinct from blocked and resurface persistent blockers on meaningful change/persistence
+- Expand blocked_notice beyond blocked_family and allowed_action_ids[]
+- Carry escalation_level, action_available ownership, and usage observability through blocked surfaces
+- Define an explicit blocked-owner 8-kind taxonomy and 5-level escalation ladder with surface mapping
+- cov-053 exact item present: Define one escalation ladder shared across Orchestrator, Dashboard, thread badges, and notifications
+- cov-053 exact item present: Keep attention_required distinct from blocked and resurface persistent blockers on meaningful change/persistence
+- cov-146 exact item present: Expand blocked_notice beyond blocked_family and allowed_action_ids[]
+- cov-146 exact item present: Carry escalation_level, action_available ownership, and usage observability through blocked surfaces
+- cov-146 stale token retired: allowed_action_ids[]
+- cov-198 exact item present: Define an explicit blocked-owner 8-kind taxonomy and 5-level escalation ladder with surface mapping
+
 ### Problem 1: Platform APIs require secrets
 
 - **Risk**

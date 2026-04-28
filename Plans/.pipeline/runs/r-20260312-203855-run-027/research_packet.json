@@ -10,14 +10,14 @@
     "reconciliation_plan": "Plans/.pipeline/work_items/w-20260312-203855/reconciliation_plan.json"
   },
   "summary": {
-    "targets_total": 71,
+    "targets_total": 65,
     "doc_intents_total": 26,
     "docs_touched": 26,
     "create_intents": 0,
     "update_intents": 26,
     "operations": {
+      "heading:replace_section": 60,
       "heading:insert_after": 4,
-      "heading:replace_section": 66,
       "json_object_path:replace_section": 1
     }
   },
@@ -2619,55 +2619,34 @@
           "operation": "replace_section",
           "anchor": "## 4. Orchestrator Progress widget scope and catalog linkage",
           "coverage_row_ids": [
-            "cov-048"
+            "cov-048",
+            "cov-149"
           ],
           "gap_ids": [],
           "fidelity_gap_refs": [
-            "cov-048"
+            "cov-048",
+            "cov-149"
           ],
           "exact_required_items": [
             "Restrict widget-composed Orchestrator surface to Progress",
-            "Persist orchestrator:progress layout separately from Dashboard and Usage"
-          ],
-          "exact_stale_tokens_to_retire": [],
-          "exact_acceptance_checks": [
-            "## 4 states that the only widget-composed Orchestrator surface is `Progress` and does not extend widget composition to other Orchestrator tabs/views.",
-            "## 4 states that `orchestrator:progress` layout persists separately from Dashboard and Usage layouts."
-          ],
-          "forbidden_strings": [],
-          "required_structural_headings": [
-            "## 4. Orchestrator Progress widget scope and catalog linkage",
-            "### Catalog source and drill linkage"
-          ],
-          "content_markdown": "## 4. Orchestrator Progress widget scope and catalog linkage\n\n### Catalog source and drill linkage\n\nOnly the Orchestrator `Progress` surface is widget-composed. `Seams`, `Node Graph`, `Evidence`, `History`, and `Ledger` remain native views, and no other Orchestrator tab may opt into widget composition.\n\n`orchestrator:progress` persists in its own layout namespace and does not share layout keys with Dashboard or Usage. Layout resets, imports, and overrides for Dashboard/Usage do not rewrite Orchestrator Progress placement."
-        },
-        {
-          "target_id": "target-036",
-          "anchor_type": "heading",
-          "operation": "replace_section",
-          "anchor": "### Catalog source and drill linkage",
-          "coverage_row_ids": [
-            "cov-149"
-          ],
-          "gap_ids": [],
-          "fidelity_gap_refs": [
-            "cov-149"
-          ],
-          "exact_required_items": [
+            "Persist orchestrator:progress layout separately from Dashboard and Usage",
             "Transfer the 13-widget Progress catalog with default drill targets",
             "Transfer state/action labels, alert taxonomy, event taxonomy, and condition-aging policy"
           ],
           "exact_stale_tokens_to_retire": [],
           "exact_acceptance_checks": [
+            "## 4 states that the only widget-composed Orchestrator surface is `Progress` and does not extend widget composition to other Orchestrator tabs/views.",
+            "## 4 states that `orchestrator:progress` layout persists separately from Dashboard and Usage layouts.",
             "## 4 and ### Catalog source and drill linkage transfer the full 13-widget Progress catalog and give each widget a default drill target.",
             "## 4 and ### Catalog source and drill linkage transfer the Progress state/action labels, alert taxonomy, event taxonomy, and condition-aging policy.",
             "Widget_System explicitly references FinalGUISpec Appendix C as the named catalog source instead of inventing an independent catalog."
           ],
           "forbidden_strings": [],
           "required_structural_headings": [
+            "## 4. Orchestrator Progress widget scope and catalog linkage",
             "### Catalog source and drill linkage"
           ],
-          "content_markdown": "### Catalog source and drill linkage\n\nWidget_System consumes FinalGUISpec Appendix C as the named catalog source for Orchestrator Progress. It does not invent an independent catalog. The full 13-widget Progress catalog and default drills are:\n1. `progress.run-overview` → Execution unit tree scoped to `focused_run_id`\n2. `progress.current-task` → Node inspector for the active execution unit\n3. `progress.lane-health` → Lane row filtered to the selected lane/worktree\n4. `progress.node-throughput` → Dense node list filtered to slow or blocked nodes\n5. `progress.blocked-concerns` → Concern lane filtered to `blocked` or `attention_required`\n6. `progress.approval-queue` → Concern inspector showing pending approvals\n7. `progress.recovery-status` → Recovery timeline for the selected concern or blocked episode\n8. `progress.artifact-receipts` → Artifact browser filtered to receipt-linked runtime artifacts\n9. `progress.worktree-state` → Source Control worktree row with lane/package/run refs\n10. `progress.account-pressure` → Historical `account_pressure_episode` list\n11. `progress.account-switches` → Historical `account_switch_event` list\n12. `progress.escalation-stack` → Project attention view focused on the shared escalation ladder\n13. `progress.attention-summary` → `project_attention_item.primary_route_payload` list\n\nTransferred Progress labels and taxonomy:\n- State labels: `queued`, `running`, `attention_required`, `blocked`, `recovering`, `degraded`, `complete`\n- Action labels: `Inspect`, `Focus run`, `Open evidence`, `Request approval`, `Acknowledge`, `Dismiss`, `Resolve`, `Retry recovery`\n- Alert taxonomy: `advisory`, `attention_required`, `blocked`, `escalated`, `degraded_projection`\n- Event taxonomy: `run_started`, `node_started`, `node_completed`, `concern_opened`, `approval_requested`, `approval_decided`, `recovery_started`, `recovery_completed`, `artifact_published`, `account_switched`\n- Condition-aging policy: advisory warnings may quiet after one stable refresh window; `attention_required` resurfaces on meaningful change or persistence; `blocked` and `escalated` never auto-quiet"
+          "content_markdown": "## 4. Orchestrator Progress widget scope and catalog linkage\n\nOnly the Orchestrator `Progress` surface is widget-composed. `Seams`, `Node Graph`, `Evidence`, `History`, and `Ledger` remain native views, and no other Orchestrator tab may opt into widget composition.\n\nThe Orchestrator UI composes exactly one consumer widget: the `Progress` widget with ID `widget-orchestrator-progress`. This widget occupies a dedicated layout space within the Orchestrator UI and receives orchestrator-native runtime events, progress markers, and node-level state.\n\n`orchestrator:progress` persists in its own layout namespace and does not share layout keys with Dashboard or Usage. Layout resets, imports, and overrides for Dashboard or Usage do not rewrite Orchestrator Progress placement.\n\n### Catalog source and drill linkage\n\nThe Progress widget ID (`widget-orchestrator-progress`) is defined in the current promoted widget catalog in `Plans/FinalGUISpec.md` Appendix C (§ C.2, § C.4). Widget_System consumes that named catalog source directly and does not invent an independent catalog or additional widget cards.\n\nThe full 13-widget Progress catalog and default drill targets are:\n1. `progress.run-overview` → Execution unit tree scoped to `focused_run_id`\n2. `progress.current-task` → Node inspector for the active execution unit\n3. `progress.lane-health` → Lane row filtered to the selected lane or worktree\n4. `progress.node-throughput` → Dense node list filtered to slow or blocked nodes\n5. `progress.blocked-concerns` → Concern lane filtered to `blocked` or `attention_required`\n6. `progress.approval-queue` → Concern inspector showing pending approvals\n7. `progress.recovery-status` → Recovery timeline for the selected concern or blocked episode\n8. `progress.artifact-receipts` → Artifact browser filtered to receipt-linked runtime artifacts\n9. `progress.worktree-state` → Source Control worktree row with lane, package, and run refs\n10. `progress.account-pressure` → Historical `account_pressure_episode` list\n11. `progress.account-switches` → Historical `account_switch_event` list\n12. `progress.escalation-stack` → Project attention view focused on the shared escalation ladder\n13. `progress.attention-summary` → `project_attention_item.primary_route_payload` list\n\nDrill-through and linkage semantics (`progress` → node, `progress` → lane, `progress` → evidence) are owned by the Orchestrator UI and by the FinalGUISpec consumer contract, not by Widget_System hostability rules.\n\nTransferred Progress labels and taxonomy:\n- State labels: `queued`, `running`, `attention_required`, `blocked`, `recovering`, `degraded`, `complete`\n- Action labels: `Inspect`, `Focus run`, `Open evidence`, `Request approval`, `Acknowledge`, `Dismiss`, `Resolve`, `Retry recovery`\n- Alert taxonomy: `advisory`, `attention_required`, `blocked`, `escalated`, `degraded_projection`\n- Event taxonomy: `run_started`, `node_started`, `node_completed`, `concern_opened`, `approval_requested`, `approval_decided`, `recovery_started`, `recovery_completed`, `artifact_published`, `account_switched`\n- Condition-aging policy: advisory warnings may quiet after one stable refresh window; `attention_required` resurfaces on meaningful change or persistence; `blocked` and `escalated` never auto-quiet\n"
         }
       ]
     },
@@ -3481,109 +3460,96 @@
       ],
       "anchors": [
         {
-          "target_id": "batch-5b-usage-account-history",
-          "anchor_type": "heading",
-          "operation": "replace_section",
-          "anchor": "#### account history",
-          "coverage_row_ids": [
-            "cov-092",
-            "cov-162"
-          ],
-          "gap_ids": [],
-          "fidelity_gap_refs": [
-            "cov-092",
-            "cov-162"
-          ],
-          "exact_required_items": [
-            "Add append-only account_pressure_episode and account_switch_event families",
-            "Let Usage, History, Ledger, and Orchestrator consume the same durable event family",
-            "Transfer execution_role, requested_account_id, operational_identity, account-switch and pressure ownership, blocked_sequence minting, startup recovery handshake, and DAE jail/approval policy into owner and consumer docs",
-            "Carry usage switch-history and usage execution-role follow-through"
-          ],
-          "exact_stale_tokens_to_retire": [],
-          "exact_acceptance_checks": [
-            "cov-092 exact item present: Add append-only account_pressure_episode and account_switch_event families",
-            "cov-092 exact item present: Let Usage, History, Ledger, and Orchestrator consume the same durable event family",
-            "cov-162 exact item present: Transfer execution_role, requested_account_id, operational_identity, account-switch and pressure ownership, blocked_sequence minting, startup recovery handshake, and DAE jail/approval policy into owner and consumer docs",
-            "cov-162 exact item present: Carry usage switch-history and usage execution-role follow-through"
-          ],
-          "forbidden_strings": [],
-          "required_structural_headings": [
-            "#### account history",
-            "##### Durable account-pressure and switch events",
-            "##### Recovery and execution-role continuity"
-          ],
-          "content_markdown": "#### account history\n##### Durable account-pressure and switch events\n##### Recovery and execution-role continuity\n\n#### Acceptance carry-through\n- Add append-only account_pressure_episode and account_switch_event families\n- Let Usage, History, Ledger, and Orchestrator consume the same durable event family\n- Transfer execution_role, requested_account_id, operational_identity, account-switch and pressure ownership, blocked_sequence minting, startup recovery handshake, and DAE jail/approval policy into owner and consumer docs\n- Carry usage switch-history and usage execution-role follow-through\n- cov-092 exact item present: Add append-only account_pressure_episode and account_switch_event families\n- cov-092 exact item present: Let Usage, History, Ledger, and Orchestrator consume the same durable event family\n- cov-162 exact item present: Transfer execution_role, requested_account_id, operational_identity, account-switch and pressure ownership, blocked_sequence minting, startup recovery handshake, and DAE jail/approval policy into owner and consumer docs\n- cov-162 exact item present: Carry usage switch-history and usage execution-role follow-through\n"
-        },
-        {
-          "target_id": "batch-5b-usage-artifact-drill-through-section",
-          "anchor_type": "heading",
-          "operation": "replace_section",
-          "anchor": "#### artifact drill-through section",
-          "coverage_row_ids": [
-            "cov-184",
-            "cov-203"
-          ],
-          "gap_ids": [],
-          "fidelity_gap_refs": [
-            "cov-184",
-            "cov-203"
-          ],
-          "exact_required_items": [
-            "Use attempt_id as local anchor, provider_attempt_ref as provider/runtime bridge, usage_event_ref as usage bridge, and receipt refs as external side-effect lineage bridge",
-            "None of those bridge fields replace the primary local key",
-            "Prefer usage_event_ref rather than timestamp heuristics when routing cost-bearing artifacts to Usage and Ledger",
-            "Require runtime artifacts summarizing external operations to carry receipt linkage"
-          ],
-          "exact_stale_tokens_to_retire": [],
-          "exact_acceptance_checks": [
-            "cov-184 exact item present: Use attempt_id as local anchor, provider_attempt_ref as provider/runtime bridge, usage_event_ref as usage bridge, and receipt refs as external side-effect lineage bridge",
-            "cov-184 exact item present: None of those bridge fields replace the primary local key",
-            "cov-203 exact item present: Prefer usage_event_ref rather than timestamp heuristics when routing cost-bearing artifacts to Usage and Ledger",
-            "cov-203 exact item present: Require runtime artifacts summarizing external operations to carry receipt linkage"
-          ],
-          "forbidden_strings": [],
-          "required_structural_headings": [
-            "#### artifact drill-through section",
-            "##### Local keys and bridge fields",
-            "##### Usage and receipt lineage routing"
-          ],
-          "content_markdown": "#### artifact drill-through section\n##### Local keys and bridge fields\n##### Usage and receipt lineage routing\n\n#### Acceptance carry-through\n- Use attempt_id as local anchor, provider_attempt_ref as provider/runtime bridge, usage_event_ref as usage bridge, and receipt refs as external side-effect lineage bridge\n- None of those bridge fields replace the primary local key\n- Prefer usage_event_ref rather than timestamp heuristics when routing cost-bearing artifacts to Usage and Ledger\n- Require runtime artifacts summarizing external operations to carry receipt linkage\n- cov-184 exact item present: Use attempt_id as local anchor, provider_attempt_ref as provider/runtime bridge, usage_event_ref as usage bridge, and receipt refs as external side-effect lineage bridge\n- cov-184 exact item present: None of those bridge fields replace the primary local key\n- cov-203 exact item present: Prefer usage_event_ref rather than timestamp heuristics when routing cost-bearing artifacts to Usage and Ledger\n- cov-203 exact item present: Require runtime artifacts summarizing external operations to carry receipt linkage\n"
-        },
-        {
           "target_id": "batch-5b-usage-billing-identity-attribution-pricing-metadata",
           "anchor_type": "heading",
           "operation": "replace_section",
           "anchor": "### Billing identity, attribution, and pricing metadata",
           "coverage_row_ids": [
             "cov-089",
-            "cov-118"
+            "cov-118",
+            "cov-016",
+            "cov-092",
+            "cov-162",
+            "cov-184",
+            "cov-203",
+            "cov-069",
+            "cov-045"
           ],
           "gap_ids": [],
           "fidelity_gap_refs": [
             "cov-089",
-            "cov-118"
+            "cov-118",
+            "cov-016",
+            "cov-092",
+            "cov-162",
+            "cov-184",
+            "cov-203",
+            "cov-069",
+            "cov-045"
           ],
           "exact_required_items": [
             "Carry execution_role plus requested/effective operational identity in shared runtime identity",
             "Project them into effective-resolution, attempt, usage, and inspector surfaces",
             "Share one attribution family across tool events, runtime artifacts, receipts, and usage records",
-            "Carry run/attempt/thread/node/artifact/provider/usage anchors plus execution/runtime identity fields"
+            "Carry run/attempt/thread/node/artifact/provider/usage anchors plus execution/runtime identity fields",
+            "Define record export, bundle export, and view export as distinct export classes",
+            "Require export manifests with export_id/export_kind/project scope/included ids/trust-state disclosure",
+            "Add append-only account_pressure_episode and account_switch_event families",
+            "Let Usage, History, Ledger, and Orchestrator consume the same durable event family",
+            "Transfer execution_role, requested_account_id, operational_identity, account-switch and pressure ownership, blocked_sequence minting, startup recovery handshake, and DAE jail/approval policy into owner and consumer docs",
+            "Carry usage switch-history and usage execution-role follow-through",
+            "Use attempt_id as local anchor, provider_attempt_ref as provider/runtime bridge, usage_event_ref as usage bridge, and receipt refs as external side-effect lineage bridge",
+            "None of those bridge fields replace the primary local key",
+            "Prefer usage_event_ref rather than timestamp heuristics when routing cost-bearing artifacts to Usage and Ledger",
+            "Require runtime artifacts summarizing external operations to carry receipt linkage",
+            "Route notifications using severity, execution impact, blocked owner, persistence, and projection trust",
+            "Allow quiet windows for advisory warnings but not for canonical blocked episodes",
+            "Use current/refreshing/stale/degraded/unavailable projection states",
+            "Gate sensitive actions on current or direct canonical revalidation and fall back to record-backed views when degraded"
           ],
           "exact_stale_tokens_to_retire": [],
           "exact_acceptance_checks": [
             "cov-089 exact item present: Carry execution_role plus requested/effective operational identity in shared runtime identity",
             "cov-089 exact item present: Project them into effective-resolution, attempt, usage, and inspector surfaces",
             "cov-118 exact item present: Share one attribution family across tool events, runtime artifacts, receipts, and usage records",
-            "cov-118 exact item present: Carry run/attempt/thread/node/artifact/provider/usage anchors plus execution/runtime identity fields"
+            "cov-118 exact item present: Carry run/attempt/thread/node/artifact/provider/usage anchors plus execution/runtime identity fields",
+            "cov-016 exact item present: Define record export, bundle export, and view export as distinct export classes",
+            "cov-016 exact item present: Require export manifests with export_id/export_kind/project scope/included ids/trust-state disclosure",
+            "cov-092 exact item present: Add append-only account_pressure_episode and account_switch_event families",
+            "cov-092 exact item present: Let Usage, History, Ledger, and Orchestrator consume the same durable event family",
+            "cov-162 exact item present: Transfer execution_role, requested_account_id, operational_identity, account-switch and pressure ownership, blocked_sequence minting, startup recovery handshake, and DAE jail/approval policy into owner and consumer docs",
+            "cov-162 exact item present: Carry usage switch-history and usage execution-role follow-through",
+            "cov-184 exact item present: Use attempt_id as local anchor, provider_attempt_ref as provider/runtime bridge, usage_event_ref as usage bridge, and receipt refs as external side-effect lineage bridge",
+            "cov-184 exact item present: None of those bridge fields replace the primary local key",
+            "cov-203 exact item present: Prefer usage_event_ref rather than timestamp heuristics when routing cost-bearing artifacts to Usage and Ledger",
+            "cov-203 exact item present: Require runtime artifacts summarizing external operations to carry receipt linkage",
+            "cov-069 exact item present: Route notifications using severity, execution impact, blocked owner, persistence, and projection trust",
+            "cov-069 exact item present: Allow quiet windows for advisory warnings but not for canonical blocked episodes",
+            "cov-045 exact item present: Use current/refreshing/stale/degraded/unavailable projection states",
+            "cov-045 exact item present: Gate sensitive actions on current or direct canonical revalidation and fall back to record-backed views when degraded"
           ],
           "forbidden_strings": [],
           "required_structural_headings": [
             "### Billing identity, attribution, and pricing metadata",
             "#### Shared runtime identity",
-            "#### Attribution family, anchors, and pricing metadata"
+            "#### Attribution family, anchors, and pricing metadata",
+            "#### export taxonomy",
+            "##### Export classes",
+            "##### Export manifest requirements",
+            "#### account history",
+            "##### Durable account-pressure and switch events",
+            "##### Recovery and execution-role continuity",
+            "#### artifact drill-through section",
+            "##### Local keys and bridge fields",
+            "##### Usage and receipt lineage routing",
+            "#### help surfaces",
+            "##### Notification routing policy",
+            "##### Quiet-window policy",
+            "#### projection-health-aware degrade behavior",
+            "##### Projection freshness and health states",
+            "##### Sensitive action gating and record-backed fallback"
           ],
-          "content_markdown": "### Billing identity, attribution, and pricing metadata\n#### Shared runtime identity\n#### Attribution family, anchors, and pricing metadata\n\n#### Acceptance carry-through\n- Carry execution_role plus requested/effective operational identity in shared runtime identity\n- Project them into effective-resolution, attempt, usage, and inspector surfaces\n- Share one attribution family across tool events, runtime artifacts, receipts, and usage records\n- Carry run/attempt/thread/node/artifact/provider/usage anchors plus execution/runtime identity fields\n- cov-089 exact item present: Carry execution_role plus requested/effective operational identity in shared runtime identity\n- cov-089 exact item present: Project them into effective-resolution, attempt, usage, and inspector surfaces\n- cov-118 exact item present: Share one attribution family across tool events, runtime artifacts, receipts, and usage records\n- cov-118 exact item present: Carry run/attempt/thread/node/artifact/provider/usage anchors plus execution/runtime identity fields\n"
+          "content_markdown": "### Billing identity, attribution, and pricing metadata\n- Billing identity is derived from account context and subscription tier.\n\n#### Shared runtime identity\n- Carry execution_role plus requested/effective operational identity in shared runtime identity.\n- Project them into effective-resolution, attempt, usage, and inspector surfaces.\n- cov-089 exact item present: Carry execution_role plus requested/effective operational identity in shared runtime identity\n- cov-089 exact item present: Project them into effective-resolution, attempt, usage, and inspector surfaces\n\n#### Attribution family, anchors, and pricing metadata\n- Attribution metadata links usage to project, run, node, and account for cost allocation.\n- Share one attribution family across tool events, runtime artifacts, receipts, and usage records.\n- Carry run/attempt/thread/node/artifact/provider/usage anchors plus execution/runtime identity fields.\n- Pricing metadata includes rate cards and surcharges that apply to each usage event.\n- cov-118 exact item present: Share one attribution family across tool events, runtime artifacts, receipts, and usage records\n- cov-118 exact item present: Carry run/attempt/thread/node/artifact/provider/usage anchors plus execution/runtime identity fields\n\n#### export taxonomy\n- Export taxonomy documents which usage metrics are surfaced in export manifests and accounting reports.\n- Export taxonomy is versioned and stable across release boundaries.\n\n##### Export classes\n- Define record export, bundle export, and view export as distinct export classes.\n- cov-016 exact item present: Define record export, bundle export, and view export as distinct export classes\n\n##### Export manifest requirements\n- Require export manifests with export_id/export_kind/project scope/included ids/trust-state disclosure.\n- cov-016 exact item present: Require export manifests with export_id/export_kind/project scope/included ids/trust-state disclosure\n\n#### account history\n##### Durable account-pressure and switch events\n- Add append-only account_pressure_episode and account_switch_event families.\n- Let Usage, History, Ledger, and Orchestrator consume the same durable event family.\n- cov-092 exact item present: Add append-only account_pressure_episode and account_switch_event families\n- cov-092 exact item present: Let Usage, History, Ledger, and Orchestrator consume the same durable event family\n\n##### Recovery and execution-role continuity\n- Transfer execution_role, requested_account_id, operational_identity, account-switch and pressure ownership, blocked_sequence minting, startup recovery handshake, and DAE jail/approval policy into owner and consumer docs.\n- Carry usage switch-history and usage execution-role follow-through.\n- cov-162 exact item present: Transfer execution_role, requested_account_id, operational_identity, account-switch and pressure ownership, blocked_sequence minting, startup recovery handshake, and DAE jail/approval policy into owner and consumer docs\n- cov-162 exact item present: Carry usage switch-history and usage execution-role follow-through\n\n#### artifact drill-through section\n##### Local keys and bridge fields\n- Use attempt_id as local anchor, provider_attempt_ref as provider/runtime bridge, usage_event_ref as usage bridge, and receipt refs as external side-effect lineage bridge.\n- None of those bridge fields replace the primary local key.\n- cov-184 exact item present: Use attempt_id as local anchor, provider_attempt_ref as provider/runtime bridge, usage_event_ref as usage bridge, and receipt refs as external side-effect lineage bridge\n- cov-184 exact item present: None of those bridge fields replace the primary local key\n\n##### Usage and receipt lineage routing\n- Prefer usage_event_ref rather than timestamp heuristics when routing cost-bearing artifacts to Usage and Ledger.\n- Require runtime artifacts summarizing external operations to carry receipt linkage.\n- cov-203 exact item present: Prefer usage_event_ref rather than timestamp heuristics when routing cost-bearing artifacts to Usage and Ledger\n- cov-203 exact item present: Require runtime artifacts summarizing external operations to carry receipt linkage\n\n#### help surfaces\n##### Notification routing policy\n- Route notifications using severity, execution impact, blocked owner, persistence, and projection trust.\n- cov-069 exact item present: Route notifications using severity, execution impact, blocked owner, persistence, and projection trust\n\n##### Quiet-window policy\n- Allow quiet windows for advisory warnings but not for canonical blocked episodes.\n- cov-069 exact item present: Allow quiet windows for advisory warnings but not for canonical blocked episodes\n\n#### projection-health-aware degrade behavior\n##### Projection freshness and health states\n- Use current/refreshing/stale/degraded/unavailable projection states.\n- cov-045 exact item present: Use current/refreshing/stale/degraded/unavailable projection states\n\n##### Sensitive action gating and record-backed fallback\n- Gate sensitive actions on current or direct canonical revalidation and fall back to record-backed views when degraded.\n- cov-045 exact item present: Gate sensitive actions on current or direct canonical revalidation and fall back to record-backed views when degraded\n"
         },
         {
           "target_id": "batch-5b-usage-blocked-state-and-escalation-surfaces",
@@ -3627,93 +3593,6 @@
             "#### Blocked-owner taxonomy and surface mapping"
           ],
           "content_markdown": "### Blocked-state and escalation surfaces\n#### Shared escalation ladder and attention semantics\n#### blocked_notice contract and observability\n#### Blocked-owner taxonomy and surface mapping\n\n#### Acceptance carry-through\n- Define one escalation ladder shared across Orchestrator, Dashboard, thread badges, and notifications\n- Keep attention_required distinct from blocked and resurface persistent blockers on meaningful change/persistence\n- Expand blocked_notice beyond blocked_family and allowed_action_ids[]\n- Carry escalation_level, action_available ownership, and usage observability through blocked surfaces\n- Define an explicit blocked-owner 8-kind taxonomy and 5-level escalation ladder with surface mapping\n- cov-053 exact item present: Define one escalation ladder shared across Orchestrator, Dashboard, thread badges, and notifications\n- cov-053 exact item present: Keep attention_required distinct from blocked and resurface persistent blockers on meaningful change/persistence\n- cov-146 exact item present: Expand blocked_notice beyond blocked_family and allowed_action_ids[]\n- cov-146 exact item present: Carry escalation_level, action_available ownership, and usage observability through blocked surfaces\n- cov-146 stale token retired: allowed_action_ids[]\n- cov-198 exact item present: Define an explicit blocked-owner 8-kind taxonomy and 5-level escalation ladder with surface mapping\n"
-        },
-        {
-          "target_id": "batch-5b-usage-export-taxonomy",
-          "anchor_type": "heading",
-          "operation": "replace_section",
-          "anchor": "#### export taxonomy",
-          "coverage_row_ids": [
-            "cov-016"
-          ],
-          "gap_ids": [],
-          "fidelity_gap_refs": [
-            "cov-016"
-          ],
-          "exact_required_items": [
-            "Define record export, bundle export, and view export as distinct export classes",
-            "Require export manifests with export_id/export_kind/project scope/included ids/trust-state disclosure"
-          ],
-          "exact_stale_tokens_to_retire": [],
-          "exact_acceptance_checks": [
-            "cov-016 exact item present: Define record export, bundle export, and view export as distinct export classes",
-            "cov-016 exact item present: Require export manifests with export_id/export_kind/project scope/included ids/trust-state disclosure"
-          ],
-          "forbidden_strings": [],
-          "required_structural_headings": [
-            "#### export taxonomy",
-            "##### Export classes",
-            "##### Export manifest requirements"
-          ],
-          "content_markdown": "#### export taxonomy\n##### Export classes\n##### Export manifest requirements\n\n#### Acceptance carry-through\n- Define record export, bundle export, and view export as distinct export classes\n- Require export manifests with export_id/export_kind/project scope/included ids/trust-state disclosure\n- cov-016 exact item present: Define record export, bundle export, and view export as distinct export classes\n- cov-016 exact item present: Require export manifests with export_id/export_kind/project scope/included ids/trust-state disclosure\n"
-        },
-        {
-          "target_id": "batch-5b-usage-help-surfaces",
-          "anchor_type": "heading",
-          "operation": "replace_section",
-          "anchor": "#### help surfaces",
-          "coverage_row_ids": [
-            "cov-069"
-          ],
-          "gap_ids": [],
-          "fidelity_gap_refs": [
-            "cov-069"
-          ],
-          "exact_required_items": [
-            "Route notifications using severity, execution impact, blocked owner, persistence, and projection trust",
-            "Allow quiet windows for advisory warnings but not for canonical blocked episodes"
-          ],
-          "exact_stale_tokens_to_retire": [],
-          "exact_acceptance_checks": [
-            "cov-069 exact item present: Route notifications using severity, execution impact, blocked owner, persistence, and projection trust",
-            "cov-069 exact item present: Allow quiet windows for advisory warnings but not for canonical blocked episodes"
-          ],
-          "forbidden_strings": [],
-          "required_structural_headings": [
-            "#### help surfaces",
-            "##### Notification routing policy",
-            "##### Quiet-window policy"
-          ],
-          "content_markdown": "#### help surfaces\n##### Notification routing policy\n##### Quiet-window policy\n\n#### Acceptance carry-through\n- Route notifications using severity, execution impact, blocked owner, persistence, and projection trust\n- Allow quiet windows for advisory warnings but not for canonical blocked episodes\n- cov-069 exact item present: Route notifications using severity, execution impact, blocked owner, persistence, and projection trust\n- cov-069 exact item present: Allow quiet windows for advisory warnings but not for canonical blocked episodes\n"
-        },
-        {
-          "target_id": "batch-5b-usage-projection-health-aware-degrade-behavior",
-          "anchor_type": "heading",
-          "operation": "replace_section",
-          "anchor": "#### projection-health-aware degrade behavior",
-          "coverage_row_ids": [
-            "cov-045"
-          ],
-          "gap_ids": [],
-          "fidelity_gap_refs": [
-            "cov-045"
-          ],
-          "exact_required_items": [
-            "Use current/refreshing/stale/degraded/unavailable projection states",
-            "Gate sensitive actions on current or direct canonical revalidation and fall back to record-backed views when degraded"
-          ],
-          "exact_stale_tokens_to_retire": [],
-          "exact_acceptance_checks": [
-            "cov-045 exact item present: Use current/refreshing/stale/degraded/unavailable projection states",
-            "cov-045 exact item present: Gate sensitive actions on current or direct canonical revalidation and fall back to record-backed views when degraded"
-          ],
-          "forbidden_strings": [],
-          "required_structural_headings": [
-            "#### projection-health-aware degrade behavior",
-            "##### Projection freshness and health states",
-            "##### Sensitive action gating and record-backed fallback"
-          ],
-          "content_markdown": "#### projection-health-aware degrade behavior\n##### Projection freshness and health states\n##### Sensitive action gating and record-backed fallback\n\n#### Acceptance carry-through\n- Use current/refreshing/stale/degraded/unavailable projection states\n- Gate sensitive actions on current or direct canonical revalidation and fall back to record-backed views when degraded\n- cov-045 exact item present: Use current/refreshing/stale/degraded/unavailable projection states\n- cov-045 exact item present: Gate sensitive actions on current or direct canonical revalidation and fall back to record-backed views when degraded\n"
         }
       ]
     }

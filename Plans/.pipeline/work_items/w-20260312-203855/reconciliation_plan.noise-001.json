@@ -1,0 +1,20 @@
+{
+  "schema_id": "pm.reconciliation_plan_noise.v1",
+  "work_id": "w-20260312-203855",
+  "run_id": "r-20260312-203855-run-028",
+  "pass": "pass-001",
+  "noise_findings": [
+    {
+      "source_chunk": "pass-001-003",
+      "classification": "noise",
+      "reason": "Verifier reported exact_survivors mismatch, but deterministic comparison confirmed every final target has exact_survivors as [] when the source has no survivor strings.",
+      "affected_target_count": 35
+    },
+    {
+      "source_chunk": "pass-001-004",
+      "classification": "noise",
+      "reason": "Verifier reported exact_survivors/gap_ids mismatches for five targets, but deterministic comparison confirmed exact_survivors and gap_ids match source fidelity_gap_refs for all final targets.",
+      "affected_target_count": 5
+    }
+  ]
+}

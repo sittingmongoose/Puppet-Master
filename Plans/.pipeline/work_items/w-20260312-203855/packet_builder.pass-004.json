@@ -1,0 +1,87 @@
+{
+  "schema_id": "pm.packet_builder.verification_pass.v1",
+  "work_id": "w-20260312-203855",
+  "run_id": "r-20260312-203855-run-030",
+  "pass_id": "packet_builder.pass-004",
+  "status": "pass",
+  "packet": "Plans/.pipeline/research_packet.json",
+  "run_scoped_packet": "Plans/.pipeline/runs/r-20260312-203855-run-030/research_packet.json",
+  "subagent_verification_chunks": [
+    {
+      "chunk_id": "packet30-v001",
+      "status": "pass",
+      "paths_checked": [
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/usage-feature.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/Executor_Protocol.md"
+      ],
+      "targets_checked": 7,
+      "material_findings": []
+    },
+    {
+      "chunk_id": "packet30-v002",
+      "status": "noise_only_after_classification",
+      "paths_checked": [
+        "Plans/human-in-the-loop.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/orchestrator-subagent-integration.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Multi-Account.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/GitHub_Integration.md"
+      ],
+      "targets_checked": 7,
+      "material_findings": []
+    },
+    {
+      "chunk_id": "packet30-v003",
+      "status": "pass",
+      "paths_checked": [
+        "Plans/Glossary.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/Crosswalk.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/CLI_Bridged_Providers.md",
+        "Plans/Permissions_System.md",
+        "Plans/Progression_Gates.md",
+        "Plans/Widget_System.md",
+        "Plans/interview-subagent-integration.md",
+        "Plans/Provider_Stream_Mapping_External_Reference_A2A.md"
+      ],
+      "targets_checked": 10,
+      "material_findings": []
+    },
+    {
+      "chunk_id": "packet30-v004",
+      "status": "pass",
+      "paths_checked": [
+        "Plans/Run_Modes.md",
+        "Plans/GUI_Rebuild_Requirements_Checklist.md",
+        "Plans/Models_System.md",
+        "Plans/Wiring_Matrix.md"
+      ],
+      "targets_checked": 4,
+      "material_findings": []
+    }
+  ],
+  "deterministic_validation": {
+    "status": "pass",
+    "error_count": 0,
+    "packet_targets": 28,
+    "doc_intents": 28,
+    "coverage_rows_mapped": 138,
+    "fidelity_gap_refs_mapped": 138,
+    "packet_writer_roles": {
+      "parent_writer": 28
+    },
+    "span_conflicts": 0,
+    "top_level_and_run_scoped_packets_match": true,
+    "forbidden_strings_reintroduced": 0
+  },
+  "material_changes_merged": [],
+  "stop_rule": "first full verification pass has zero material changes after classifying verifier chunk 002 retired-token findings as noise"
+}

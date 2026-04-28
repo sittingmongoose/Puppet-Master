@@ -1,0 +1,91 @@
+{
+  "schema_id": "pm.reconciliation_plan.verification_pass.v1",
+  "work_id": "w-20260312-203855",
+  "run_id": "r-20260312-203855-run-029",
+  "pass_id": "reconciliation_plan.pass-005",
+  "status": "pass",
+  "source": "Plans/.pipeline/work_items/w-20260312-203855/fidelity_recovery_plan.json",
+  "plan": "Plans/.pipeline/work_items/w-20260312-203855/reconciliation_plan.json",
+  "subagent_verification_chunks": [
+    {
+      "chunk_id": "verify-replan029-001",
+      "status": "pass",
+      "docs_checked": [
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/usage-feature.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/Executor_Protocol.md"
+      ],
+      "source_targets_checked": 103,
+      "coverage_rows_checked": 103,
+      "material_findings": []
+    },
+    {
+      "chunk_id": "verify-replan029-002",
+      "status": "pass",
+      "docs_checked": [
+        "Plans/human-in-the-loop.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/orchestrator-subagent-integration.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Multi-Account.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/GitHub_Integration.md"
+      ],
+      "source_targets_checked": 18,
+      "coverage_rows_checked": 18,
+      "material_findings": []
+    },
+    {
+      "chunk_id": "verify-replan029-003",
+      "status": "pass",
+      "docs_checked": [
+        "Plans/Glossary.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/Crosswalk.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/CLI_Bridged_Providers.md",
+        "Plans/Permissions_System.md",
+        "Plans/Progression_Gates.md",
+        "Plans/Widget_System.md",
+        "Plans/interview-subagent-integration.md",
+        "Plans/Provider_Stream_Mapping_External_Reference_A2A.md"
+      ],
+      "source_targets_checked": 13,
+      "coverage_rows_checked": 13,
+      "material_findings": []
+    },
+    {
+      "chunk_id": "verify-replan029-004",
+      "status": "noise_only_after_classification",
+      "docs_checked": [
+        "Plans/Run_Modes.md",
+        "Plans/GUI_Rebuild_Requirements_Checklist.md",
+        "Plans/Models_System.md",
+        "Plans/Wiring_Matrix.md"
+      ],
+      "source_targets_checked": 4,
+      "coverage_rows_checked": 4,
+      "material_findings": []
+    }
+  ],
+  "deterministic_validation": {
+    "status": "pass",
+    "error_count": 0,
+    "source_targets": 138,
+    "reconciliation_targets": 28,
+    "coverage_rows_preserved": 138,
+    "fidelity_gap_refs_preserved": 138,
+    "source_target_ids_preserved": 138,
+    "active_writer_targets": 28,
+    "duplicate_same_anchor_writer_groups": 0,
+    "packet_writer_roles": {
+      "parent_writer": 28
+    }
+  },
+  "material_changes_merged": [],
+  "stop_rule": "first full verification pass has zero material changes after classifying verifier chunk 004 as noise"
+}

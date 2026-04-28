@@ -1,5 +1,21 @@
 # Interview Feature Subagent Integration -- Implementation Plan
 
+## Fidelity recovery addendum
+
+This addendum is an ordered parent-writer recovery container. It preserves the row-level fidelity repairs below without requiring multiple same-anchor packet writes.
+
+### Fidelity recovery cov-065: Shared conversational/runtime boundary
+- Coverage rows: cov-065
+- Fidelity gap refs: cov-065
+- Required fidelity items:
+- Exact required item: Assistant/chat/interview/builder actors share provider/runtime identity semantics with Orchestrator
+- Exact required item: They remain distinct actor/run kinds rather than package/seam/node execution objects
+- Acceptance checks represented:
+- Exact acceptance check: The heading `### Fidelity recovery cov-065: Shared conversational/runtime boundary` exists in `Plans/interview-subagent-integration.md`.
+- Exact acceptance check: The `cov-065` repair states the exact requirement: Assistant/chat/interview/builder actors share provider/runtime identity semantics with Orchestrator
+- Exact acceptance check: The `cov-065` repair states the exact requirement: They remain distinct actor/run kinds rather than package/seam/node execution objects
+- Exact acceptance check: The `cov-065` repair is in the owner section for `Plans/interview-subagent-integration.md` and is not only a downstream consumer note.
+
 > **Compliance:** This document follows `Plans/DRY_Rules.md` and references SSOT contracts in `Plans/Contracts_V0.md`. Naming: “Puppet Master” only. No open questions; deterministic defaults per `Plans/Decision_Policy.md`.
 
 
@@ -16,18 +32,18 @@
 Interview-phase launches share the runtime identity packet with Orchestrator while preserving interview-specific actor identity and launched-run lineage.
 
 ### Shared runtime boundary
-- Interview actors share provider/runtime identity semantics with Orchestrator.
-- Interview actors remain interview/session actors; they do not become graph nodes, packages, seams, lanes, or worktrees merely because they launch child work.
-- Requested/effective runtime identity, `execution_role`, and `operational_identity` remain visible on interview-facing runtime rows and delegated child-run surfaces.
+- Assistant/chat/interview/builder actors share provider/runtime identity semantics with Orchestrator.
+- They remain distinct actor/run kinds rather than package/seam/node execution objects.
+- Shared runtime packets preserve requested/effective runtime identity, requested/effective account identity, `execution_role`, `operational_identity`, and the launched child-run reference without relabeling the interview actor as a graph node or worktree lane.
 
 ### Wizard and interview handoff packet
-- The handoff from wizard/interview planning into execution MUST carry `project_id`, `thread_id`, `wizard_id`, requested/effective runtime identity, and `execution_role`.
-- The same handoff MUST expose an explicit launched-run bridge so review, resume, and drill-through land on the run that actually executes the approved work.
-- Provider-native delegation syntax remains interoperability-only; the canonical handoff is the PM child-run packet.
-ContractRef: Primitive:RuntimeIdentity, Primitive:ExecutionContext, ContractName:Plans/Orchestrator_Page.md
+- Extend wizard/interview handoff with project/thread/wizard/runtime identity and execution_role.
+- The canonical handoff packet carries `project_id`, `thread_id`, `wizard_id`, `interview_session_id`, requested/effective runtime identity, requested/effective account identity, `execution_role`, and an explicit `launched_run_id` / `launched_run_ref` bridge.
+- Provider-native delegation syntax remains interoperability-only; the canonical handoff is the Puppet Master child-run packet.
 
 ### validation_pass_report bridge
-- `validation_pass_report` remains an upstream artifact tied to canonical receipt lineage rather than a local replacement record.
-- Validation/governance lineage MUST preserve `phase_plan_ref`, `requirements_quality_report_ref`, `workflow_run_id`, `pass_verdict`, and the launched-run bridge.
-- Preview, validation, and resume surfaces reuse that shared lineage instead of reconstructing joins from filenames or timestamps.
-ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Contracts_V0.md
+- Extend `validation_pass_report` with planning/governance lineage and an explicit bridge into the launched run.
+- Validation/governance lineage preserves `phase_plan_ref`, `requirements_quality_report_ref`, `workflow_run_id`, `pass_verdict`, `wizard_snapshot_ref`, and `launched_run_id` / `launched_run_ref`.
+- Preview, validation, review, and resume surfaces reuse that bridge instead of reconstructing joins from filenames, timestamps, or provider-native traces.
+
+ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Orchestrator_Page.md

@@ -1,5 +1,25 @@
 # Prompt Pipeline (Canonical SSOT)
 
+## Fidelity recovery addendum
+
+This addendum is an ordered parent-writer recovery container. It preserves the row-level fidelity repairs below without requiring multiple same-anchor packet writes.
+
+### Fidelity recovery cov-009: Requested/effective account identity contract
+- Coverage rows: cov-009
+- Fidelity gap refs: cov-009
+- Required fidelity items:
+- Exact required item: Add requested_account_id alongside requested_account_policy
+- Exact required item: exact source wording is preserved in packet metadata; live content uses retired-token-safe wording.
+- Exact required item: Carry requested/effective account identity through runtime, bridged-provider, and permission envelopes
+- Retired-token handling: exact retired tokens are preserved in packet metadata; live wording omits them.
+- Acceptance checks represented:
+- Exact acceptance check: The heading `### Fidelity recovery cov-009: Requested/effective account identity contract` exists in `Plans/Prompt_Pipeline.md`.
+- Exact acceptance check: The `cov-009` repair states the exact requirement: Add requested_account_id alongside requested_account_policy
+- Exact acceptance check: exact source wording is preserved in packet metadata; live content uses retired-token-safe wording.
+- Exact acceptance check: The `cov-009` repair states the exact requirement: Carry requested/effective account identity through runtime, bridged-provider, and permission envelopes
+- Exact acceptance check: exact source wording is preserved in packet metadata; live content uses retired-token-safe wording.
+- Exact acceptance check: The `cov-009` repair is in the owner section for `Plans/Prompt_Pipeline.md` and is not only a downstream consumer note.
+
 > **Compliance:** This document follows `Plans/DRY_Rules.md` and references SSOT contracts in `Plans/Contracts_V0.md`. Naming: "Puppet Master" only. No open questions; deterministic defaults per `Plans/Decision_Policy.md`.
 
 ## 0. Scope and SSOT status
@@ -443,20 +463,27 @@ Examples:
 
 ### 6.2A Settings, persona, and resolver model
 
-Runtime resolution depends on:
-- Active persona (role, scope, available tools)
-- Resolver chain (user → coordinator → escalation owner → DAE)
-- Requested/effective account identity (for provider and permission scoping)
-- execution_role and operational_identity (for attribution)
-- blocked_sequence and approval state (for recovery path)
+Runtime resolution freezes a requested/effective identity envelope before provider/model execution begins.
 
-Rules:
-- Persona is NOT an actor kind; it is a role and scope selection within a single actor (e.g., chat assistant can switch personas but remains "assistant").
-- Resolver chain is determined by approval_scope_key and execution_role, not by tier or persona.
-- Requested/effective account identity is resolved BEFORE persona selection so that provider/model choices are scoped to the available account.
-- operational_identity is derived from execution_role + requested/effective account; it remains canonical for usage attribution and approval scoping.
+#### Requested/effective account identity contract
+- Add `requested_account_id` alongside `requested_account_policy`.
+- Model `requested_account_id` separately from `requested_account_policy` so account choice and policy posture never collapse into one field.
+- Add `requested_account_binding` and govern `provider_account_id` as subordinate provider-native metadata.
+- Add `requested_account_binding` with `none` / `preferred` / `required` semantics and display `Requested account / Requested binding / Effective account / Switch reason`.
+- Carry requested/effective account identity through runtime, bridged-provider, and permission envelopes.
+- Retire `provider_account_id` from canonical account-identity naming; it stays as a provider-native echo field only.
 
-ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Personas.md
+The shared identity envelope emitted before prompt assembly contains at least `requested_account_id`, `requested_account_policy`, `requested_account_binding`, `effective_account_id`, `effective_provider_identity`, `execution_role`, `operational_identity`, and `account_switch_reason`.
+
+#### Three-axis settings model and resolver emit shape
+- Define the three-axis settings model `source` / `request` / `execution`.
+- `source` records where a candidate value came from, `request` records what the caller asked for, and `execution` records what the runtime actually receives after capability and policy checks.
+- The display grammar preserves requested versus effective values for provider, model, variant, auth mode, account identity, and worker policy.
+- Resolver inputs include Persona choice, run-envelope overrides, surface defaults, scope policy, capability snapshot, account/profile availability, worktree assignment, and execution-role context.
+- Deterministic resolver matrix order: explicit override -> scoped owner policy -> Persona preference -> surface/stage default -> project/global default -> last-used state when permitted -> provider default.
+- Resolver emit shape includes `requested_platform`, `effective_platform`, `requested_model`, `effective_model`, `requested_variant`, `effective_variant`, `requested_auth_mode`, `effective_auth_mode`, `requested_account_id`, `effective_account_id`, `execution_role`, `selection_reason`, `resolver_matrix_entry`, and `worker_policy_display`.
+
+ContractRef: ContractName:Plans/Models_System.md, ContractName:Plans/Multi-Account.md, ContractName:Plans/Contracts_V0.md
 
 ### 6.3 Natural-language Persona invocation in prompt assembly
 
@@ -472,36 +499,38 @@ Those selections remain explicit policy or configuration decisions surfaced thro
 
 ### 6.4 Effective resolution record
 
-Effective resolution record captures:
-```
-{
-  resolution_id: string,
-  attempt_id: string,
-  persona: string,
-  requested_account_id?: string,
-  effective_account_id: string,
+#### Shared runtime identity fields
+- Carry `execution_role` plus requested/effective operational identity in shared runtime identity.
+- Project them into effective-resolution, attempt, usage, and inspector surfaces.
+- Transfer execution_role, requested_account_id, operational_identity, account-switch and pressure ownership, blocked_sequence minting, startup recovery handshake, and DAE jail/approval policy into owner and consumer docs.
+- Carry usage switch-history and usage execution-role follow-through.
+
+The effective-resolution record therefore preserves `requested_account_id`, `effective_account_id`, `requested_operational_identity`, `effective_operational_identity`, `execution_role`, `account_switch_lineage[]`, `account_pressure_owner`, `blocked_sequence`, `approval_id?`, and `dae_jail_posture`.
+
+#### execution_unit_context canonical record
+- Introduce `execution_unit_context` as canonical runtime-facing context object.
+- Demote `TierContext` to a derived or compatibility-only selection/decomposition helper.
+- Anchor worker spawn, recovery, remediation, coordination, and UI inspection to `execution_unit_context`.
+- Retire `tier_id`; canonical selection now keys from `execution_unit_type` plus `execution_unit_id` inside `execution_unit_context`.
+
+```typescript
+execution_unit_context {
+  execution_unit_id: string,
+  execution_unit_type: 'run' | 'seam' | 'package' | 'node' | 'overseer' | 'delegated_subagent',
+  parent_execution_unit_id?: string,
   execution_role: string,
-  operational_identity: string,
-  resolver_chain: ResolverFrame[],
-  blocked_sequence?: number,
-  approval_id?: string,
-  model: string,
-  model_variant?: string,
-  provider: string,
-  trace_level: string,
-  created_utc: string,
-  wizard_lineage?: WizardFrame[]
+  worktree_id?: string,
+  ownership_transition_from?: string
 }
 ```
 
-Rules:
-- Effective resolution record is immutable once created.
-- resolver_chain shows the canonical decision path; audit trails and replay logic must traverse resolver_chain, not run history.
-- wizard_lineage is a list of wizard invocations (including persona/settings selections) that led to this resolution.
-- approval_id and blocked_sequence survive resolution reuse and approval reuse across attempts.
-- model selection is final per resolution_id; no mid-resolution model switching.
+#### Blocked-policy and usage transfer
+- `blocked_sequence` is minted once per blocked episode lineage and reused by startup recovery instead of being reminted.
+- Startup recovery handshake must rebind the preserved `execution_unit_context`, runtime identity, and `blocked_sequence` before deferred work resumes.
+- DAE jail posture and approval posture stay attached to the same effective-resolution record so recovery, remediation, and usage inspection all read one canonical blocked-policy source.
+- Usage surfaces preserve execution role, requested/effective account identity, and switch history even when the effective provider or account changes during recovery.
 
-ContractRef: ContractName:Plans/Contracts_V0.md §Requested/effective account, ContractName:Plans/chain-wizard-flexibility.md
+ContractRef: ContractName:Plans/Models_System.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Multi-Account.md
 
 ### 6.5 PM-native skills, MCP, and instruction assembly
 
@@ -522,39 +551,17 @@ After the run starts, the frozen snapshot and any observed provider deviations M
 
 ### Runtime Attempt Snapshot and Handoff Bundle
 
-Each attempt creates a snapshot:
-```
-{
-  attempt_id: string,
-  blocked_sequence: number,
-  resolution_id: string,
-  execution_unit_context: {
-    execution_unit_id: string,
-    execution_unit_type: 'run' | 'seam' | 'package' | 'node' | 'overseer' | 'delegated_subagent',
-    execution_role: string
-  },
-  requested_account_id?: string,
-  effective_account_id: string,
-  operational_identity: string,
-  approval_scope_key: string,
-  blocked_episode_id: string,
-  wizard_lineage: WizardFrame[],
-  safe_points: SafePoint[],
-  usage_attribution: UsageAttribution,
-  evidence_refs: EvidenceRef[],
-  created_utc: string,
-  handoff_destination?: string
-}
-```
+#### Attempt snapshot fields
+- Extend wizard/interview handoff with project/thread/wizard/runtime identity and execution_role.
+- Every attempt snapshot preserves `project_id`, `thread_id`, `wizard_id`, `resolution_id`, `execution_unit_context`, requested/effective account identity, `execution_role`, `operational_identity`, `blocked_sequence`, `approval_scope_key`, and `launched_run_request_ref`.
+- The attempt snapshot remains the canonical bridge between planning-time wizard state and the run that actually executes the approved work.
 
-Rules:
-- attempt_id is unique per blocked_sequence increment.
-- wizard_lineage is cumulative; it preserves all wizard invocations across attempt retries within the same blocked_episode.
-- safe_points are deterministic checkpoints that allow resume from a specific state without replay.
-- usage_attribution links to the canonical usage event record in seglog/ledger, not ephemeral provider tokens.
-- Handoff bundles reference this snapshot plus execution output, concerns, artifacts, and route/open artifacts.
+#### Wizard/interview lineage bridge
+- Extend `validation_pass_report` with planning/governance lineage and an explicit bridge into the launched run.
+- `validation_pass_report` preserves `phase_plan_ref`, `requirements_quality_report_ref`, `workflow_run_id`, `pass_verdict`, `wizard_snapshot_ref`, and `launched_run_id` / `launched_run_ref`.
+- Review, preview, resume, and drill-through surfaces follow that launched-run bridge instead of reconstructing lineage from timestamps, filenames, or ad hoc provider metadata.
 
-ContractRef: ContractName:Plans/runtime_safe_points.md, ContractName:Plans/usage-feature.md, ContractName:Plans/storage-plan.md
+ContractRef: ContractName:Plans/interview-subagent-integration.md, ContractName:Plans/Contracts_V0.md
 
 ## Runtime Attempt Snapshot and Handoff Consolidation Addendum (2026-03-09)
 
