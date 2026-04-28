@@ -54,32 +54,20 @@ ContractRef: SchemaID:Spec_Lock.json#github_operations, Primitive:PatchPipeline,
 
 ### Required data shape
 
-The GitHub OAuth/PAT auth context MUST include these fields in the runtime identity record:
-ContractRef: Primitive:RuntimeIdentity, Primitive:ExecutionContext, ContractName:Plans/Contracts_V0.md
+#### Stable account identity and credential references
+- Replace login-keyed durable GitHub identity with stable `account_id` / `credential_ref`.
+- Canonical GitHub runtime and mutation envelopes carry `requested_account_id`, `effective_account_id`, stable `account_id`, `credential_ref`, `account_type`, `account_login`, `execution_role`, `operational_identity`, and `account_switch_lineage[]`.
+- `account_login` and any provider-native handle stay descriptive only; `credential_ref` points to the credential-store entry that actually authorizes the GitHub account.
 
-```typescript
-GitHub_AuthContext {
-  account_id: string,                  // GitHub user or org ID
-  account_type: enum,                  // 'user' | 'org' | 'app'
-  account_login: string,               // GitHub username or org name
-  oauth_token?: string,                // (only when active session)
-  pat_token?: string,                  // (only when PAT-based)
-  scopes: string[],                    // OAuth scopes or PAT permissions
-  expires_at_utc?: string,             // Token expiration (if applicable)
-  is_effective_account: boolean,       // Whether this is the effective_account_id or a capability check
-  switched_from_account_id?: string,   // If account was switched, the prior account_id
-  switch_reason?: string,              // Why the switch occurred (capability check, user request, policy, etc.)
-}
-```
+#### Recovery context and mutation gating
+- Add recovery context payload and trust/degraded-state gating for GitHub mutations.
+- Every write-capable GitHub request carries `recovery_context { blocked_sequence, blocked_episode_id, recovery_handshake_state, trust_state, degraded_state, approval_id?, dae_jail_posture }`.
+- A GitHub mutation may proceed only after the startup recovery handshake rebinds the current blocked episode, `trust_state` is writable, `degraded_state` is false, and any approval or DAE jail gate has been cleared.
 
-**Integration with runtime identity:**
-- When a GitHub operation is requested, the runtime identity's `effective_account_id` is resolved through the GitHub auth context.
-- If the requested GitHub account differs from the effective account, the switch is logged in `account_switch_lineage[]` with metadata (switch_reason, switch_time_utc).
-- All GitHub API calls include the account_id context so audits and logs can trace which account performed the operation.
+#### Runtime identity and blocked-policy transfer
+- Transfer execution_role, requested_account_id, operational_identity, account-switch and pressure ownership, blocked_sequence minting, startup recovery handshake, and DAE jail/approval policy into owner and consumer docs.
+- GitHub write attempts mint or reuse the current `blocked_sequence`; startup recovery must rebind that same sequence before resuming deferred work.
+- Carry usage switch-history and usage execution-role follow-through.
+- Usage and audit rows record `execution_role`, requested/effective account identity, switch history, pressure owner, and the GitHub `account_id` / `credential_ref` pair that actually executed the call.
 
-**Capability-check semantics:**
-- Before switching to a requested GitHub account, the runtime performs a capability check: does the current user/role have permission to assume this account's context?
-- If the capability check fails, the effective_account_id remains the prior account and an escalation is triggered (not a silent fallback).
-- Successful capability checks are logged (not as errors, but as audit events) so recovery and tracing are visible.
-
-ContractRef: Primitive:RuntimeIdentity, Primitive:ExecutionContext, ContractName:Plans/Contracts_V0.md
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Multi-Account.md, ContractName:Plans/Prompt_Pipeline.md

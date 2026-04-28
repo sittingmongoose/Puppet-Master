@@ -1,5 +1,223 @@
 # Storage plan (seglog, redb, Tantivy, projectors)
 
+## Fidelity recovery addendum
+
+This addendum is an ordered parent-writer recovery container. It preserves the row-level fidelity repairs below without requiring multiple same-anchor packet writes.
+
+### Fidelity recovery cov-002: Owner-first fidelity recovery order
+- Coverage rows: cov-002
+- Fidelity gap refs: cov-002
+- Required fidelity items:
+- Exact required item: Apply owner-doc corrections before consumer and mirror cleanup
+- Exact required item: Rerun fidelity audit only after owner and consumer corrections are in place
+- Acceptance checks represented:
+- Exact acceptance check: The heading `### Fidelity recovery cov-002: Owner-first fidelity recovery order` exists in `Plans/storage-plan.md`.
+- Exact acceptance check: The `cov-002` repair states the exact requirement: Apply owner-doc corrections before consumer and mirror cleanup
+- Exact acceptance check: The `cov-002` repair states the exact requirement: Rerun fidelity audit only after owner and consumer corrections are in place
+- Exact acceptance check: The `cov-002` repair is in the owner section for `Plans/storage-plan.md` and is not only a downstream consumer note.
+
+### Fidelity recovery cov-013: Shared governance/runtime record envelope
+- Coverage rows: cov-013
+- Fidelity gap refs: cov-013
+- Required fidelity items:
+- Exact required item: Define one shared record envelope with canonical lineage refs and artifact/evidence refs
+- Exact required item: Keep record objects distinct from artifacts and rendered summaries
+- Acceptance checks represented:
+- Exact acceptance check: The heading `### Fidelity recovery cov-013: Shared governance/runtime record envelope` exists in `Plans/storage-plan.md`.
+- Exact acceptance check: The `cov-013` repair states the exact requirement: Define one shared record envelope with canonical lineage refs and artifact/evidence refs
+- Exact acceptance check: The `cov-013` repair states the exact requirement: Keep record objects distinct from artifacts and rendered summaries
+- Exact acceptance check: The `cov-013` repair is in the owner section for `Plans/storage-plan.md` and is not only a downstream consumer note.
+
+### Fidelity recovery cov-018: Export taxonomy and manifest contract
+- Coverage rows: cov-018
+- Fidelity gap refs: cov-018
+- Required fidelity items:
+- Exact required item: Define record export, bundle export, and view export as distinct export classes
+- Exact required item: Require export manifests with export_id/export_kind/project scope/included ids/trust-state disclosure
+- Acceptance checks represented:
+- Exact acceptance check: The heading `### Fidelity recovery cov-018: Export taxonomy and manifest contract` exists in `Plans/storage-plan.md`.
+- Exact acceptance check: The `cov-018` repair states the exact requirement: Define record export, bundle export, and view export as distinct export classes
+- Exact acceptance check: The `cov-018` repair states the exact requirement: Require export manifests with export_id/export_kind/project scope/included ids/trust-state disclosure
+- Exact acceptance check: The `cov-018` repair is in the owner section for `Plans/storage-plan.md` and is not only a downstream consumer note.
+
+### Fidelity recovery cov-020: Concern record family definition
+- Coverage rows: cov-020
+- Fidelity gap refs: cov-020
+- Required fidelity items:
+- Exact required item: Concern is a first-class durable record distinct from review finding, annotation, blocked episode, and graph patch request
+- Exact required item: Define concern_id/project_id/run and scope refs, evidence/source refs, lineage refs, severity/category/status, and governance metadata
+- Acceptance checks represented:
+- Exact acceptance check: The heading `### Fidelity recovery cov-020: Concern record family definition` exists in `Plans/storage-plan.md`.
+- Exact acceptance check: The `cov-020` repair states the exact requirement: Concern is a first-class durable record distinct from review finding, annotation, blocked episode, and graph patch request
+- Exact acceptance check: The `cov-020` repair states the exact requirement: Define concern_id/project_id/run and scope refs, evidence/source refs, lineage refs, severity/category/status, and governance metadata
+- Exact acceptance check: The `cov-020` repair is in the owner section for `Plans/storage-plan.md` and is not only a downstream consumer note.
+
+### Fidelity recovery cov-025: Concern lifecycle and resolution kinds
+- Coverage rows: cov-025
+- Fidelity gap refs: cov-025
+- Required fidelity items:
+- Exact required item: Use active/acknowledged/resolved/dismissed as concern lifecycle states
+- Exact required item: Use fixed/accepted_risk/superseded/merged/split/invalidated/obsoleted_by_patch/obsoleted_by_recovery as resolution_kind values
+- Acceptance checks represented:
+- Exact acceptance check: The heading `### Fidelity recovery cov-025: Concern lifecycle and resolution kinds` exists in `Plans/storage-plan.md`.
+- Exact acceptance check: The `cov-025` repair states the exact requirement: Use active/acknowledged/resolved/dismissed as concern lifecycle states
+- Exact acceptance check: The `cov-025` repair states the exact requirement: Use fixed/accepted_risk/superseded/merged/split/invalidated/obsoleted_by_patch/obsoleted_by_recovery as resolution_kind values
+- Exact acceptance check: The `cov-025` repair is in the owner section for `Plans/storage-plan.md` and is not only a downstream consumer note.
+
+### Fidelity recovery cov-039: Focused run and historical routing contract
+- Coverage rows: cov-039
+- Fidelity gap refs: cov-039
+- Required fidelity items:
+- Exact required item: Use active_run_id/focused_run_id with focus_mode = live | historical
+- Exact required item: Keep cross-tab deep links and search pivots coherent on the focused run
+- Acceptance checks represented:
+- Exact acceptance check: The heading `### Fidelity recovery cov-039: Focused run and historical routing contract` exists in `Plans/storage-plan.md`.
+- Exact acceptance check: The `cov-039` repair states the exact requirement: Use active_run_id/focused_run_id with focus_mode = live | historical
+- Exact acceptance check: The `cov-039` repair states the exact requirement: Keep cross-tab deep links and search pivots coherent on the focused run
+- Exact acceptance check: The `cov-039` repair includes an explicit consumer cross-reference to the owning canonical contract for the same requirement.
+
+### Fidelity recovery cov-043: Source Control and worktree handshake
+- Coverage rows: cov-043
+- Fidelity gap refs: cov-043
+- Required fidelity items:
+- Exact required item: Keep Orchestrator as lane-pool operational truth and Source Control as concrete repo/worktree operator
+- Exact required item: Show owning package/lane/run refs plus lifecycle and blocked/recovery state on worktree rows
+- Acceptance checks represented:
+- Exact acceptance check: The heading `### Fidelity recovery cov-043: Source Control and worktree handshake` exists in `Plans/storage-plan.md`.
+- Exact acceptance check: The `cov-043` repair states the exact requirement: Keep Orchestrator as lane-pool operational truth and Source Control as concrete repo/worktree operator
+- Exact acceptance check: The `cov-043` repair states the exact requirement: Show owning package/lane/run refs plus lifecycle and blocked/recovery state on worktree rows
+- Exact acceptance check: The `cov-043` repair includes an explicit consumer cross-reference to the owning canonical contract for the same requirement.
+
+### Fidelity recovery cov-044: Projection trust and action gating
+- Coverage rows: cov-044
+- Fidelity gap refs: cov-044
+- Required fidelity items:
+- Exact required item: Use current/refreshing/stale/degraded/unavailable projection states
+- Exact required item: Gate sensitive actions on current or direct canonical revalidation and fall back to record-backed views when degraded
+- Acceptance checks represented:
+- Exact acceptance check: The heading `### Fidelity recovery cov-044: Projection trust and action gating` exists in `Plans/storage-plan.md`.
+- Exact acceptance check: The `cov-044` repair states the exact requirement: Use current/refreshing/stale/degraded/unavailable projection states
+- Exact acceptance check: The `cov-044` repair states the exact requirement: Gate sensitive actions on current or direct canonical revalidation and fall back to record-backed views when degraded
+- Exact acceptance check: The `cov-044` repair includes an explicit consumer cross-reference to the owning canonical contract for the same requirement.
+
+### Fidelity recovery cov-060: Lane vs worktree lifecycle split
+- Coverage rows: cov-060
+- Fidelity gap refs: cov-060
+- Required fidelity items:
+- Exact required item: Gate cleanup on runtime/recovery/lineage checks rather than age alone
+- Acceptance checks represented:
+- Exact acceptance check: The heading `### Fidelity recovery cov-060: Lane vs worktree lifecycle split` exists in `Plans/storage-plan.md`.
+- Exact acceptance check: The `cov-060` repair states the exact requirement: Gate cleanup on runtime/recovery/lineage checks rather than age alone
+- Exact acceptance check: The `cov-060` repair is in the owner section for `Plans/storage-plan.md` and is not only a downstream consumer note.
+
+### Fidelity recovery cov-074: Historical semantic consistency
+- Coverage rows: cov-074
+- Fidelity gap refs: cov-074
+- Required fidelity items:
+- Exact required item: Keep family-local workflow states distinct and reconcile remediation.resolved enum conflict
+- Acceptance checks represented:
+- Exact acceptance check: The heading `### Fidelity recovery cov-074: Historical semantic consistency` exists in `Plans/storage-plan.md`.
+- Exact acceptance check: The `cov-074` repair states the exact requirement: Keep family-local workflow states distinct and reconcile remediation.resolved enum conflict
+- Exact acceptance check: The `cov-074` repair is in the owner section for `Plans/storage-plan.md` and is not only a downstream consumer note.
+
+### Fidelity recovery cov-077: Project summary projection
+- Coverage rows: cov-077
+- Fidelity gap refs: cov-077
+- Required fidelity items:
+- Exact required item: Define project_summary with activity_state, attention_state, health_state, owner, and projection trust disclosure
+- Acceptance checks represented:
+- Exact acceptance check: The heading `### Fidelity recovery cov-077: Project summary projection` exists in `Plans/storage-plan.md`.
+- Exact acceptance check: The `cov-077` repair states the exact requirement: Define project_summary with activity_state, attention_state, health_state, owner, and projection trust disclosure
+- Exact acceptance check: The `cov-077` repair is in the owner section for `Plans/storage-plan.md` and is not only a downstream consumer note.
+
+### Fidelity recovery cov-080: Project attention projection
+- Coverage rows: cov-080
+- Fidelity gap refs: cov-080
+- Required fidelity items:
+- Exact required item: Keep attention rows consumable across Orchestrator, Dashboard, and notifications
+- Acceptance checks represented:
+- Exact acceptance check: The heading `### Fidelity recovery cov-080: Project attention projection` exists in `Plans/storage-plan.md`.
+- Exact acceptance check: The `cov-080` repair states the exact requirement: Keep attention rows consumable across Orchestrator, Dashboard, and notifications
+- Exact acceptance check: The `cov-080` repair is in the owner section for `Plans/storage-plan.md` and is not only a downstream consumer note.
+
+### Fidelity recovery cov-163: Coverage blocker concern lifecycle owner section
+- Coverage rows: cov-163
+- Fidelity gap refs: cov-163
+- Required fidelity items:
+- Exact required item: Create one canonical concern-lifecycle owner section with explicit active/acknowledged/resolved/dismissed semantics
+- Exact required item: Carry resolution_kind including accepted_risk and a concern-action confirmation matrix into that owner section
+- Acceptance checks represented:
+- Exact acceptance check: The heading `### Fidelity recovery cov-163: Coverage blocker concern lifecycle owner section` exists in `Plans/storage-plan.md`.
+- Exact acceptance check: The `cov-163` repair states the exact requirement: Create one canonical concern-lifecycle owner section with explicit active/acknowledged/resolved/dismissed semantics
+- Exact acceptance check: The `cov-163` repair states the exact requirement: Carry resolution_kind including accepted_risk and a concern-action confirmation matrix into that owner section
+- Exact acceptance check: The `cov-163` repair is in the owner section for `Plans/storage-plan.md` and is not only a downstream consumer note.
+
+### Fidelity recovery cov-176: Concern source-event vs record vs projection split
+- Coverage rows: cov-176
+- Fidelity gap refs: cov-176
+- Required fidelity items:
+- Exact required item: Distinguish concern_source_event_ref, concern_record, and concern_projection as separate structural layers
+- Acceptance checks represented:
+- Exact acceptance check: The heading `### Fidelity recovery cov-176: Concern source-event vs record vs projection split` exists in `Plans/storage-plan.md`.
+- Exact acceptance check: The `cov-176` repair states the exact requirement: Distinguish concern_source_event_ref, concern_record, and concern_projection as separate structural layers
+- Exact acceptance check: The `cov-176` repair is in the owner section for `Plans/storage-plan.md` and is not only a downstream consumer note.
+
+### Fidelity recovery cov-181: Runtime attribution ownership split
+- Coverage rows: cov-181
+- Fidelity gap refs: cov-181
+- Required fidelity items:
+- Exact required item: Let Contracts_V0 own cross-family attribution packet shape
+- Exact required item: Let storage-plan own persistence and projection of attempt/usage/receipt/artifact joins
+- Acceptance checks represented:
+- Exact acceptance check: The heading `### Fidelity recovery cov-181: Runtime attribution ownership split` exists in `Plans/storage-plan.md`.
+- Exact acceptance check: The `cov-181` repair states the exact requirement: Let Contracts_V0 own cross-family attribution packet shape
+- Exact acceptance check: The `cov-181` repair states the exact requirement: Let storage-plan own persistence and projection of attempt/usage/receipt/artifact joins
+- Exact acceptance check: The `cov-181` repair is in the owner section for `Plans/storage-plan.md` and is not only a downstream consumer note.
+
+### Fidelity recovery cov-182: Bridge-field precedence for attempt/provider/usage/receipt joins
+- Coverage rows: cov-182
+- Fidelity gap refs: cov-182
+- Required fidelity items:
+- Exact required item: Use attempt_id as local anchor, provider_attempt_ref as provider/runtime bridge, usage_event_ref as usage bridge, and receipt refs as external side-effect lineage bridge
+- Exact required item: None of those bridge fields replace the primary local key
+- Acceptance checks represented:
+- Exact acceptance check: The heading `### Fidelity recovery cov-182: Bridge-field precedence for attempt/provider/usage/receipt joins` exists in `Plans/storage-plan.md`.
+- Exact acceptance check: The `cov-182` repair states the exact requirement: Use attempt_id as local anchor, provider_attempt_ref as provider/runtime bridge, usage_event_ref as usage bridge, and receipt refs as external side-effect lineage bridge
+- Exact acceptance check: The `cov-182` repair states the exact requirement: None of those bridge fields replace the primary local key
+- Exact acceptance check: The `cov-182` repair is in the owner section for `Plans/storage-plan.md` and is not only a downstream consumer note.
+
+### Fidelity recovery cov-188: Projection fields for startup rehydration
+- Coverage rows: cov-188
+- Fidelity gap refs: cov-188
+- Required fidelity items:
+- Exact required item: Carry blocked_reason_code and lifecycle state in worktree projections for startup recovery
+- Exact required item: Carry dirty_state and conflict_state in worktree projections
+- Acceptance checks represented:
+- Exact acceptance check: The heading `### Fidelity recovery cov-188: Projection fields for startup rehydration` exists in `Plans/storage-plan.md`.
+- Exact acceptance check: The `cov-188` repair states the exact requirement: Carry blocked_reason_code and lifecycle state in worktree projections for startup recovery
+- Exact acceptance check: The `cov-188` repair states the exact requirement: Carry dirty_state and conflict_state in worktree projections
+- Exact acceptance check: The `cov-188` repair is in the owner section for `Plans/storage-plan.md` and is not only a downstream consumer note.
+
+### Fidelity recovery cov-190: Artifacts index exact indexed fields
+- Coverage rows: cov-190
+- Fidelity gap refs: cov-190
+- Required fidelity items:
+- Exact required item: Index attempt_id and thread_id in artifact index families to preserve attempt-native artifact routing
+- Acceptance checks represented:
+- Exact acceptance check: The heading `### Fidelity recovery cov-190: Artifacts index exact indexed fields` exists in `Plans/storage-plan.md`.
+- Exact acceptance check: The `cov-190` repair states the exact requirement: Index attempt_id and thread_id in artifact index families to preserve attempt-native artifact routing
+- Exact acceptance check: The `cov-190` repair is in the owner section for `Plans/storage-plan.md` and is not only a downstream consumer note.
+
+### Fidelity recovery cov-205: Lane cleanup lineage fields
+- Coverage rows: cov-205
+- Fidelity gap refs: cov-205
+- Required fidelity items:
+- Exact required item: Keep package/work-package linkage and cleanup/archive lineage explicit in lane_record and lane_projection families
+- Acceptance checks represented:
+- Exact acceptance check: The heading `### Fidelity recovery cov-205: Lane cleanup lineage fields` exists in `Plans/storage-plan.md`.
+- Exact acceptance check: The `cov-205` repair states the exact requirement: Keep package/work-package linkage and cleanup/archive lineage explicit in lane_record and lane_projection families
+- Exact acceptance check: The `cov-205` repair is in the owner section for `Plans/storage-plan.md` and is not only a downstream consumer note.
+
 > **Compliance:** This document follows `Plans/DRY_Rules.md` and references SSOT contracts in `Plans/Contracts_V0.md`. Naming: “Puppet Master” only. No open questions; deterministic defaults per `Plans/Decision_Policy.md`.
 
 **Date:** 2026-02-20
@@ -236,48 +454,66 @@ ContractRef: ContractName:Plans/Architecture_Invariants.md, ContractName:Plans/E
 
 ### 2.3 redb: schema, migrations, key patterns
 
-#### Canonical records
+#### Canonical records baseline
 - Canonical records are the single source of truth for run, node, lane, and execution state.
 - Canonical records are immutable once committed; corrections require a new record with explicit lineage.
 - All canonical records include `created_at_utc`, `updated_at_utc`, and `created_by` for audit.
 
-#### Required redb keys
+### Concern record and lifecycle canon
+- Concern is a first-class durable record distinct from review finding, annotation, blocked episode, and graph patch request.
+- Define concern_id/project_id/run and scope refs, evidence/source refs, lineage refs, severity/category/status, and governance metadata.
+- Create one canonical concern-lifecycle owner section with explicit active/acknowledged/resolved/dismissed semantics.
+- Carry resolution_kind including accepted_risk and a concern-action confirmation matrix into that owner section.
+- Storage persists concern_record separately from concern_projection and blocked_episode linkage so lifecycle ownership stays durable and queryable.
+
+#### Required redb keys baseline
 - `run:<run_id>`: Run context and policy.
 - `node:<node_id>`: Node definition and execution state.
 - `lane:<lane_id>`: Lane lifecycle and worktree allocation.
 - `execution_unit:<execution_unit_id>`: Execution unit context and identity.
 - `receipt:<receipt_id>`: Execution receipt and artifact linkage.
 
-#### Cross-surface receipt record
+### Historical semantic consistency
+- Define shared historical vocabulary: historical, stale_historical, superseded, revoked, reopened, archived, removed.
+- Keep family-local workflow states distinct and reconcile remediation.resolved enum conflict.
+- Historical terms stay shared across concern, receipt, artifact, worktree, and usage families without collapsing family-local workflow states.
+
+#### Cross-surface receipt record baseline
 - Receipt records bind execution results to canonical run, node, and lane identity.
 - Receipts include `execution_unit_id`, `result_summary`, `artifacts`, and `evidence_ref`.
 - Dashboard, CLI, and API surfaces query receipt records to display execution results.
 
-#### Projection freshness, health, and startup rehydration
+#### Projection freshness, health, and startup rehydration baseline
 - Projections are derived from canonical records and events.
 - Projection freshness is tracked per projection type; stale projections are recomputed at startup.
 - Startup rehydration restores projections from seglog and redb canonical records.
 
-#### Account pressure, history, and runtime attribution
+#### Account pressure, history, and runtime attribution baseline
 - Account pressure metrics are stored per account and updated at node/lane boundaries.
 - History records (account-level and execution-level) are immutable and linked to canonical run/node identity.
 - Runtime attribution tracks which actor/role executed each node or phase.
 
-#### Artifacts index, export manifests, and route/open linkage
+#### Artifacts index, export manifests, and route/open linkage baseline
 - Artifacts are indexed by artifact ID and linked to run, node, and receipt records.
 - Export manifests bind artifact collections to project deliverables.
 - Route/open linkage documents which route args and open contracts were active during execution.
 
-#### Worktree/lane lifecycle, handshake, and cleanup lineage
+#### Worktree/lane lifecycle, handshake, and cleanup lineage baseline
 - Worktree lifecycle records track allocation, usage, and reclamation events.
 - Handshake records document the Source Control → Orchestrator worktree allocation contract.
 - Cleanup lineage ensures stale worktrees are eventually removed and audited.
 
-#### Naming and migration rules
+#### Naming and migration rules baseline
 - Schema keys follow `entity_type:entity_id:sub_key` patterns for consistency.
 - Migrations are versioned and idempotent; old schema versions must be supported for at least one major release.
 - Deprecation is explicit and documented in migration notes.
-### Canonical records
+
+### Fidelity recovery order
+- Apply owner-doc corrections before consumer and mirror cleanup.
+- Rerun fidelity audit only after owner and consumer corrections are in place.
+- Storage-owner sequencing follows the same order: canonical owner records first, dependent projections and mirrors second, and fidelity rerun evidence only after both are complete.
+
+### Canonical records (runtime/storage families)
 Storage owns one shared record envelope with canonical lineage refs plus artifact/evidence refs. Record objects remain distinct from rendered views, mirrors, exports, and summaries.
 
 Required record families include:
@@ -301,7 +537,7 @@ Concern canon:
 
 Historical vocabulary stays explicit: `historical`, `stale_historical`, `superseded`, `revoked`, `reopened`, `archived`, and `removed` are shared storage terms, while family-local workflow states remain family-local.
 
-### Required redb keys
+### Required redb keys (project/runtime families)
 - `artifacts_index.v1:{project_id}:{artifact_id}`
 - `artifacts_project_state.v1:{project_id}`
 - `projector.checkpoint.runtime_artifacts:{project_id}`
@@ -317,7 +553,7 @@ Historical vocabulary stays explicit: `historical`, `stale_historical`, `superse
 - `account_pressure_episode.v1:{provider_id}:{account_id}:{episode_id}`
 - `account_switch_event.v1:{provider_id}:{event_id}`
 
-### Cross-surface receipt record
+### Cross-surface receipt record (required fields)
 Required fields:
 - `attempt_id`
 - `provider_attempt_ref`
@@ -338,7 +574,7 @@ Rules:
 - Runtime artifacts are attempt-native by default and stay joinable to receipts, usage, workflow, and validation lineage.
 - Artifact open flows resolve by `artifact_id` first and then by linked envelope refs.
 
-### Scope split
+### Scope split (durable store boundaries)
 | Scope | Store | What belongs here |
 |---|---|---|
 | Secret | OS credential store only | GitHub API tokens, Docker PATs, browser-login derived credentials, registry/helper secrets |
@@ -346,60 +582,65 @@ Rules:
 | Project state | redb | selected repo/worktree, panel subviews, pinned workflows, selected runtime/context, requested auth mode, template repo state |
 | Event ledger | seglog | auth validation, blocked/recovery outcomes, workflow actions, publish results, runtime receipts, cross-surface linkage |
 
-### Projection freshness, health, and startup rehydration
-Projection-state families expose both axes:
-- `projection_freshness = current | refreshing | stale`
-- `projection_health = healthy | degraded | unavailable`
+### Projection freshness, health, and startup rehydration (operational rules)
 
-Rules:
-- freshness and health are different axes and do not collapse into one trust field
-- sensitive actions require `current` projection state or direct canonical revalidation
-- degraded views fall back to record-backed reads instead of implying data loss
-- startup rehydration keeps `blocked_reason_code`, lifecycle state, `dirty_state`, and `conflict_state` on worktree projections so unresolved runtime state can be restored deterministically
-- `project_summary` carries `activity_state`, `attention_state`, `health_state`, owner, and projection-trust disclosure, while canonical blocked episodes outrank weaker derived warnings
-- `project_attention_item` carries the primary route payload and projection-trust disclosure for Orchestrator, Dashboard, and notification consumers
+Required rules:
+- Use active_run_id/focused_run_id with focus_mode = live | historical
+- Keep cross-tab deep links and search pivots coherent on the focused run
+- Split projection_freshness from projection_health
+- Reserve trust_tier for preview/browser semantics and tie action gating to both axes
 
-### Account pressure, history, and runtime attribution
-Storage owns append-only `account_pressure_episode` and `account_switch_event` families. Usage, History, Ledger, and Orchestrator consume those same durable events.
+Canonical storage rules:
+- Project state stores `active_run_id`, `focused_run_id`, and `focus_mode = live | historical` so live dashboards, historical inspectors, and restart rehydration all resolve the same focused run.
+- Cross-tab deep links and search pivots MUST target the focused run context; switching tabs or reopening the app does not silently retarget links back to the active run when `focus_mode = historical`.
+- `projection_freshness` remains the recency axis and `projection_health` remains the integrity/availability axis; storage and consumers MUST NOT collapse them into a single trust field.
+- Sensitive action gating evaluates both axes together: stale-but-healthy projections can require refresh, degraded projections can fall back to canonical record reads, and unavailable projections block projection-dependent actions.
+- `trust_tier` is retired as canonical projection vocabulary and is reserved only for preview/browser semantics where UI transport trust must still be disclosed without replacing freshness or health.
 
-Storage also owns persistence and projection for one shared runtime attribution packet across tool events, runtime artifacts, receipts, and usage records. The packet carries run/attempt/thread/node/artifact/provider/usage anchors plus execution/runtime identity, including requested/effective account state and operational identity.
+### Account pressure, history, and runtime attribution (ownership split)
 
-### Artifacts index, export manifests, and route/open linkage
-Storage owns distinct export classes:
-- record export
-- bundle export
-- view export
+Required rules:
+- Introduce execution_unit_context as canonical runtime-facing context object
+- Demote TierContext to a derived or compatibility-only selection/decomposition helper
+- Anchor worker spawn, recovery, remediation, coordination, and UI inspection to execution_unit_context
+- Let Contracts_V0 own cross-family attribution packet shape
+- Let storage-plan own persistence and projection of attempt/usage/receipt/artifact joins
 
-Every export manifest carries `export_id`, `export_kind`, project scope, included ids, and trust-state disclosure.
+Canonical ownership split:
+- `execution_unit_context` is the canonical runtime-facing context object persisted with account pressure episodes, switch history, runtime artifacts, receipts, and usage joins.
+- Any `TierContext` or `tier_id` decomposition is compatibility-only derived metadata for legacy selection helpers and MUST NOT own runtime canon, storage keys, or join identity.
+- Worker spawn, recovery, remediation, coordination, and UI inspection all resolve runtime identity from `execution_unit_context` so restart flows and inspectors reuse the same run/node/attempt/account anchors.
+- Contracts_V0 owns the cross-family attribution packet shape, including run/attempt/thread/node/artifact/provider/usage anchors plus execution/runtime identity.
+- storage-plan owns persistence and projection of the attempt/usage/receipt/artifact joins that materialize that packet for history, audit, and inspector consumers.
 
-Artifacts storage rules:
-- `artifacts_index`, `artifacts_project_state`, and `projector.checkpoint.runtime_artifacts` are rebuildable from canonical runtime evidence
-- artifact index families index `attempt_id` and `thread_id` so attempt-native routing survives projection rebuilds
-- runtime artifacts that summarize external operations carry receipt linkage
-- canonical route/open ownership stays with the shared route/open contracts; storage persists the joins and lookup fields needed for those routes
+### Artifacts index, export manifests, and route/open linkage (ownership split)
+- Make runtime artifacts attempt-native by default with artifact identity, routing refs, content refs, and provider/usage linkage.
+- Resolve artifact open flows by artifact_id and then by linked envelope refs.
+- Let Contracts_V0 own canonical route_target and OpenSubject contracts.
+- Keep Crosswalk limited to primitive boundary ownership and FileManager OpenFile narrow and path-based.
+- Export manifests and artifact indices carry route/open linkage by reference rather than redefining route payload shapes locally.
 
-### Worktree/lane lifecycle, handshake, and cleanup lineage
-Storage owns the lane/worktree split.
+### Worktree/lane lifecycle, handshake, and cleanup lineage (ownership split)
+- Keep Orchestrator as lane-pool operational truth and Source Control as concrete repo/worktree operator.
+- Show owning package/lane/run refs plus lifecycle and blocked/recovery state on worktree rows.
+- Register worktree_record/worktree_projection and lane_record/lane_projection families.
+- Use worktree_id as durable filesystem/git identity and lane_id as operational lineage identity.
+- Keep package/work-package linkage and cleanup/archive lineage explicit in lane_record and lane_projection families.
+- Handshake and cleanup history remain lineage-bearing storage records instead of ad hoc UI-only summaries.
 
-Rules:
-- lane lifecycle and worktree lifecycle are related but not identical
-- worktree records expose owning package/work-package, lane, run, lifecycle, and blocked/recovery state needed by Source Control and Orchestrator handshakes
-- cleanup is gated by runtime, recovery, and lineage checks rather than age alone
-- contamination, reuse, and cleanup decisions remain explicit and auditable
-- historical lane/worktree records survive archive, prune, remove, and cleanup operations
-- lane and worktree families keep cleanup/archive lineage explicit so later audits can trace how an execution environment was reused or retired
-
-### Naming and migration rules
+### Naming and migration rules (forward-only storage policy)
 Storage migrations are forward-only and monotonic.
 
 Required rules:
 - new fields are additive first; destructive renames require a migration note in the same section that introduces them
 - stable semantic names stay aligned across runtime, persistence, and events unless an explicit translation layer is defined
 - account/profile-backed runtime records and server-profile-backed runtime records stay distinct durable shapes even when surfaced through one GUI ontology
-- consumer docs follow owner-first reconciliation order: owner correction here first, then consumer propagation, then fidelity audit rerun### Canonical records
+- consumer docs follow owner-first reconciliation order: owner correction here first, then consumer propagation, then fidelity audit rerun
+
+### Canonical records (owner reconciliation)
 Storage owns discoverable record families for runtime, receipt, and projection truth.
 
-### Required redb keys
+### Required redb keys (owner reconciliation)
 - `artifacts_index.v1:{project_id}:{artifact_id}`
 - `artifacts_project_state.v1:{project_id}`
 - `projector.checkpoint.runtime_artifacts:{project_id}`
@@ -409,7 +650,7 @@ Storage owns discoverable record families for runtime, receipt, and projection t
 - `lane_projection.v1:{project_id}:{lane_id}`
 - `orchestrator.project_state.{project_id}`
 
-### Cross-surface receipt record
+### Cross-surface receipt record (storage rules)
 Required fields:
 - `attempt_id`
 - `provider_attempt_ref`
@@ -427,7 +668,8 @@ Required fields:
 Rules:
 - Receipt fields remain lineage-bearing rather than summary prose.
 - Runtime artifacts, worktree records, lane records, and project-state keys stay storage owned.
-### Scope split
+
+### Scope split (owner reconciliation)
 
 | Scope | Store | What belongs here |
 |---|---|---|
@@ -720,6 +962,8 @@ ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Pro
 
 ContractRef: Plans/Runtime_Artifacts_Panel.md#4. redb key and projector, Plans/WorktreeGitImprovement.md#4.1 Assistant-created worktree lifecycle
 
+### Runtime artifact and projection storage scope
+
 Required fields:
 - artifact_type
 - repo_id
@@ -739,6 +983,7 @@ Labels:
 Behavioral rules:
 - Runtime-artifact indexing and durable worktree/lane identity are storage-owned families.
 - Projection state and projector checkpoints must be first-class rather than panel-owned leftovers.
+
 ### Canonical terminal persistence decomposition
 
 Storage-plan is the canonical source for terminal persistence keys. The terminal surface persists as the following decomposed key families:
@@ -756,7 +1001,8 @@ Storage-plan is the canonical source for terminal persistence keys. The terminal
 FinalGUISpec §15.1 references `terminal_state:v1` as a subset alias. The canonical keys above provide the full decomposition.
 
 ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/FileManager.md
-### Naming and migration rules
+
+### Naming and migration rules (terminal/storage keys)
 Storage migrations are forward-only and monotonic.
 
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md
@@ -769,7 +1015,7 @@ Required rules:
 
 ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md
 
-#### Storage-owned rewrite contract
+### Storage-owned rewrite contract
 All non-append durable-store rewrites MUST use same-directory temporary files and atomic promotion.
 - Replacement writes for state files, manifests, checkpoints, segment rewrites, or similar durable storage artifacts MUST create `<target>.tmp.<random>` in the target directory, write the full replacement payload there, `fsync` the temp file, and then rename/promote it into place.
 - Append-only seglog/event writers are exempt from temp-rename promotion, but they remain subject to durable flush and corruption-detection rules.

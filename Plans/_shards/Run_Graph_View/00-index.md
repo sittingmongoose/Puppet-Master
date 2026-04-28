@@ -7,7 +7,8 @@ Canonical source: [Plans/Run_Graph_View.md](../../Run_Graph_View.md)
 ## Shards (reading order)
 
 - [01-preamble.md](01-preamble.md) — (preamble / chunk)
-- [02-1-scope-and-canonical-role.md](02-1-scope-and-canonical-role.md) — ## 1. Scope and canonical role
-- [03-2-layout.md](03-2-layout.md) — ## 2. Layout
-- [04-3-node-detail-inspector.md](04-3-node-detail-inspector.md) — ## 3. Node detail inspector
-- [05-4-data-model-and-identity.md](05-4-data-model-and-identity.md) — ## 4. Data model and identity
+- [02-fidelity-recovery-addendum.md](02-fidelity-recovery-addendum.md) — ## Fidelity recovery addendum
+- [03-1-scope-and-canonical-role.md](03-1-scope-and-canonical-role.md) — ## 1. Scope and canonical role
+- [04-2-layout.md](04-2-layout.md) — ## 2. Layout
+- [05-3-node-detail-inspector.md](05-3-node-detail-inspector.md) — ## 3. Node detail inspector
+- [06-4-data-model-and-identity.md](06-4-data-model-and-identity.md) — ## 4. Data model and identity

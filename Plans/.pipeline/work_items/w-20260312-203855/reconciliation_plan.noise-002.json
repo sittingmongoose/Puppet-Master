@@ -1,0 +1,20 @@
+{
+  "schema_id": "pm.reconciliation_plan.noise.v1",
+  "work_id": "w-20260312-203855",
+  "run_id": "r-20260312-203855-run-029",
+  "noise_id": "reconciliation_plan.noise-002",
+  "status": "recorded",
+  "noise_findings": [
+    {
+      "source": "verify-replan029-004",
+      "classification": "noise",
+      "reason": "Verifier checked live docs for headings that the mutation plan is intended to create, and referenced old one-row target ids. The final plan preserves those headings inside required_structural_headings under parent_writer targets and deterministic source-to-plan validation has zero errors.",
+      "affected_source_targets": [
+        "rec-cov-159-run-modes",
+        "rec-cov-166-gui-rebuild-requirements-checklist",
+        "rec-cov-167-models-system",
+        "rec-cov-201-wiring-matrix"
+      ]
+    }
+  ]
+}

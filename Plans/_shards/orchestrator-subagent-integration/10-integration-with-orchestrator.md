@@ -305,19 +305,25 @@ ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md#7
 ## Execution unit context and worktree allocation strategy
 
 ### Canonical runtime context
-- Execution units are canonical runtime containers for node execution.
-- Each execution unit holds `execution_role`, `operational_identity`, `run_id`, `node_id`, and `lane_id`.
-- Execution units are immutable once created; policy changes require a new execution unit.
+
+- Introduce execution_unit_context as canonical runtime-facing context object.
+- Demote TierContext to a derived or compatibility-only selection/decomposition helper.
+- Anchor worker spawn, recovery, remediation, coordination, and UI inspection to execution_unit_context.
+- Any remaining `TierContext` or `tier_id` mention in this subsection is compatibility-only and never canonical runtime state.
 
 ### Worktree allocation strategy
-- Worktree allocation is a lane-level decision, not a node-level decision.
-- The lane allocates worktrees based on execution strategy and storage policy.
-- Nodes execute within allocated worktrees; worktree switching is prohibited within a single execution unit.
+
+- Define concrete worktree allocation strategy: each `execution_unit_context` receives a lane-managed worktree lease; package or seam reuse is allowed only when lineage matches the lane assignment and no contamination guard is active.
+- Define contamination, reuse, and cleanup rules for that strategy: contaminated worktrees are quarantined until recovery clears the blocker, reuse requires clean lineage plus no dirty/conflict state, and cleanup waits for archive, receipt, and recovery checks instead of age alone.
+- This subsection stays separate from runtime-context canon language and separate from stale-token retirement language.
 
 ### Compatibility retirement
-- Legacy TierContext, tier_id, TierType, and tier-based pause vocabulary are deprecated.
-- Tier concepts are not used in execution unit context or worktree allocation.
-- Use execution_unit_context and lane-level policy instead.
+
+- Retire TierContext/tier_id/TierType/Tiers/Phase-Task-Subtask runtime canon.
+- Retire allowed_actions[] / reason_code / recovery_options[] survivors from live blocked/HITL contracts.
+- Retirement targets are exactly: `TierContext`, `tier_id`, `TierType`, `Tiers`, `allowed_actions[]`, `reason_code`, `recovery_options[]`, `approve_continue`.
+- This subsection is retirement-only; canonical runtime-context rules and worktree-allocation rules remain in sibling subsections.
+
 ## Benefits
 
 1. **Dynamic Adaptation:** Automatically selects appropriate subagents based on project context

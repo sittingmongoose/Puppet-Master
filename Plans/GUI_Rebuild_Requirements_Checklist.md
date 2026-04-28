@@ -1,5 +1,21 @@
 # GUI Rebuild Requirements Checklist (2026-02-23)
 
+## Fidelity recovery addendum
+
+This addendum is an ordered parent-writer recovery container. It preserves the row-level fidelity repairs below without requiring multiple same-anchor packet writes.
+
+### Fidelity recovery cov-166: Coverage blocker concern lifecycle owner section
+- Coverage rows: cov-166
+- Fidelity gap refs: cov-166
+- Required fidelity items:
+- Exact required item: Create one canonical concern-lifecycle owner section with explicit active/acknowledged/resolved/dismissed semantics
+- Exact required item: Carry resolution_kind including accepted_risk and a concern-action confirmation matrix into that owner section
+- Acceptance checks represented:
+- Exact acceptance check: The heading `### Fidelity recovery cov-166: Coverage blocker concern lifecycle owner section` exists in `Plans/GUI_Rebuild_Requirements_Checklist.md`.
+- Exact acceptance check: The `cov-166` repair states the exact requirement: Create one canonical concern-lifecycle owner section with explicit active/acknowledged/resolved/dismissed semantics
+- Exact acceptance check: The `cov-166` repair states the exact requirement: Carry resolution_kind including accepted_risk and a concern-action confirmation matrix into that owner section
+- Exact acceptance check: The `cov-166` repair is in the owner section for `Plans/GUI_Rebuild_Requirements_Checklist.md` and is not only a downstream consumer note.
+
 > **Compliance:** This document follows `Plans/DRY_Rules.md` and references SSOT contracts in `Plans/Contracts_V0.md`. Naming: “Puppet Master” only. No open questions; deterministic defaults per `Plans/Decision_Policy.md`.
 
 

@@ -1,6 +1,6 @@
 {
   "source_path": "Plans/GitHub_Integration.md",
-  "source_sha256": "21ce02d6e5272773ab26ac15b529dbed79d07a3ab0977013ff5c93f5b46bd36e",
+  "source_sha256": "86c47cb89d9799fde75a991f770e7126119ce0121dfbc9acedf336ea269b1977",
   "split_rule": {
     "primary": "## outside fences",
     "fallback": "line-count-200",
@@ -10,28 +10,35 @@
     {
       "dest_path": "Plans/_shards/GitHub_Integration/01-preamble.md",
       "start_line": 1,
-      "end_line": 20,
-      "segment_sha256": "fbe6982d0494340c44331eabdc213e0256eeb3c6b9b5b84dae8f4a7db1d934d0",
+      "end_line": 2,
+      "segment_sha256": "5d7c04c79ecbcd161832654880df0cb55536086ec8b38b749a66c9b03cc1742e",
       "heading": null
     },
     {
-      "dest_path": "Plans/_shards/GitHub_Integration/02-change-summary.md",
-      "start_line": 21,
-      "end_line": 31,
+      "dest_path": "Plans/_shards/GitHub_Integration/02-fidelity-recovery-addendum.md",
+      "start_line": 3,
+      "end_line": 46,
+      "segment_sha256": "ba3fd590aef7fd0ed254eba6dd6095d6a8e1edb90667ffa929cdb834bdd99c2b",
+      "heading": "## Fidelity recovery addendum"
+    },
+    {
+      "dest_path": "Plans/_shards/GitHub_Integration/03-change-summary.md",
+      "start_line": 47,
+      "end_line": 57,
       "segment_sha256": "87cd4272d6ca9c9ece991657166864b7bbebde75016a08ac6c92681f65732f41",
       "heading": "## Change Summary"
     },
     {
-      "dest_path": "Plans/_shards/GitHub_Integration/03-ssot-references-dry.md",
-      "start_line": 32,
-      "end_line": 67,
+      "dest_path": "Plans/_shards/GitHub_Integration/04-ssot-references-dry.md",
+      "start_line": 58,
+      "end_line": 93,
       "segment_sha256": "f8b3c38b70e9ea1f54dd8e6356f7dd878a8ba12ef2ad33a6aaf5d9d9654d5cf0",
       "heading": "## SSOT References (DRY)"
     },
     {
-      "dest_path": "Plans/_shards/GitHub_Integration/04-canonical-owner-and-consumer-reconciliation.md",
-      "start_line": 68,
-      "end_line": 94,
+      "dest_path": "Plans/_shards/GitHub_Integration/05-canonical-owner-and-consumer-reconciliation.md",
+      "start_line": 94,
+      "end_line": 120,
       "segment_sha256": "253062780d060350ba9da8ed5b9d3b99488a33d2f2145c362a0bce6968779648",
       "heading": "## Canonical owner and consumer reconciliation"
     }

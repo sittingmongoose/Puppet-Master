@@ -1,25 +1,61 @@
 {
-  "schema_id": "pm.reconciliation_plan_wave.v1",
+  "schema_id": "pm.reconciliation_worklist.v1",
   "work_id": "w-20260312-203855",
-  "phase": "worklist-repair",
-  "status": "complete",
-  "source_priority": "fidelity_recovery_plan",
-  "targets_in_scope": [
-    "batch-3-models-provider-precedence",
-    "target-034::storage-fidelity-recovery-order",
-    "target-034::storage-concern-records",
-    "target-034::storage-historical-semantics"
-  ],
-  "scribe_blockers": [
-    "Plans/Models_System.md duplicated owner heading for provider/model precedence",
-    "Plans/storage-plan.md same-anchor insert collision at `### 2.3 redb: schema, migrations, key patterns`"
-  ],
-  "coverage_row_ids": [
-    "cov-002",
-    "cov-020",
-    "cov-074",
-    "cov-152",
-    "cov-163",
-    "cov-167"
+  "source": "fidelity_recovery_plan.json",
+  "run_id": "r-20260312-203855-run-028",
+  "strategy": "preserve recovery targets; convert missing replace anchors to safe insert-after live anchors",
+  "chunks": [
+    {
+      "chunk_id": "replan-001",
+      "target_count": 35,
+      "paths": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/Run_Graph_View.md",
+        "Plans/Crosswalk.md",
+        "Plans/interview-subagent-integration.md",
+        "Plans/Models_System.md"
+      ]
+    },
+    {
+      "chunk_id": "replan-002",
+      "target_count": 35,
+      "paths": [
+        "Plans/storage-plan.md",
+        "Plans/Executor_Protocol.md",
+        "Plans/human-in-the-loop.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/Permissions_System.md",
+        "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+        "Plans/Wiring_Matrix.md"
+      ]
+    },
+    {
+      "chunk_id": "replan-003",
+      "target_count": 34,
+      "paths": [
+        "Plans/Contracts_V0.md",
+        "Plans/usage-feature.md",
+        "Plans/orchestrator-subagent-integration.md",
+        "Plans/Multi-Account.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/Progression_Gates.md",
+        "Plans/Run_Modes.md"
+      ]
+    },
+    {
+      "chunk_id": "replan-004",
+      "target_count": 34,
+      "paths": [
+        "Plans/FinalGUISpec.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Glossary.md",
+        "Plans/CLI_Bridged_Providers.md",
+        "Plans/Widget_System.md",
+        "Plans/GUI_Rebuild_Requirements_Checklist.md"
+      ]
+    }
   ]
 }

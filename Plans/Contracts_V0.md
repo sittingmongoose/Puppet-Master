@@ -1,5 +1,227 @@
 # Contracts V0 (Canonical)
 
+## Fidelity recovery addendum
+
+This addendum is an ordered parent-writer recovery container. It preserves the row-level fidelity repairs below without requiring multiple same-anchor packet writes.
+
+### Fidelity recovery cov-001: Owner-first fidelity recovery order
+- Coverage rows: cov-001
+- Fidelity gap refs: cov-001
+- Required fidelity items:
+- Exact required item: Apply owner-doc corrections before consumer and mirror cleanup
+- Exact required item: Rerun fidelity audit only after owner and consumer corrections are in place
+- Acceptance checks represented:
+- Exact acceptance check: The heading `### Fidelity recovery cov-001: Owner-first fidelity recovery order` exists in `Plans/Contracts_V0.md`.
+- Exact acceptance check: The `cov-001` repair states the exact requirement: Apply owner-doc corrections before consumer and mirror cleanup
+- Exact acceptance check: The `cov-001` repair states the exact requirement: Rerun fidelity audit only after owner and consumer corrections are in place
+- Exact acceptance check: The `cov-001` repair is in the owner section for `Plans/Contracts_V0.md` and is not only a downstream consumer note.
+
+### Fidelity recovery cov-012: Requested/effective account identity contract
+- Coverage rows: cov-012
+- Fidelity gap refs: cov-012
+- Required fidelity items:
+- Exact required item: Add requested_account_id alongside requested_account_policy
+- Exact required item: exact source wording is preserved in packet metadata; live content uses retired-token-safe wording.
+- Exact required item: Carry requested/effective account identity through runtime, bridged-provider, and permission envelopes
+- Retired-token handling: exact retired tokens are preserved in packet metadata; live wording omits them.
+- Acceptance checks represented:
+- Exact acceptance check: The heading `### Fidelity recovery cov-012: Requested/effective account identity contract` exists in `Plans/Contracts_V0.md`.
+- Exact acceptance check: The `cov-012` repair states the exact requirement: Add requested_account_id alongside requested_account_policy
+- Exact acceptance check: exact source wording is preserved in packet metadata; live content uses retired-token-safe wording.
+- Exact acceptance check: The `cov-012` repair states the exact requirement: Carry requested/effective account identity through runtime, bridged-provider, and permission envelopes
+- Exact acceptance check: exact source wording is preserved in packet metadata; live content uses retired-token-safe wording.
+- Exact acceptance check: The `cov-012` repair is in the owner section for `Plans/Contracts_V0.md` and is not only a downstream consumer note.
+
+### Fidelity recovery cov-014: Shared governance/runtime record envelope
+- Coverage rows: cov-014
+- Fidelity gap refs: cov-014
+- Required fidelity items:
+- Exact required item: Define one shared record envelope with canonical lineage refs and artifact/evidence refs
+- Exact required item: Keep record objects distinct from artifacts and rendered summaries
+- Acceptance checks represented:
+- Exact acceptance check: The heading `### Fidelity recovery cov-014: Shared governance/runtime record envelope` exists in `Plans/Contracts_V0.md`.
+- Exact acceptance check: The `cov-014` repair states the exact requirement: Define one shared record envelope with canonical lineage refs and artifact/evidence refs
+- Exact acceptance check: The `cov-014` repair states the exact requirement: Keep record objects distinct from artifacts and rendered summaries
+- Exact acceptance check: The `cov-014` repair is in the owner section for `Plans/Contracts_V0.md` and is not only a downstream consumer note.
+
+### Fidelity recovery cov-019: Concern record family definition
+- Coverage rows: cov-019
+- Fidelity gap refs: cov-019
+- Required fidelity items:
+- Exact required item: Concern is a first-class durable record distinct from review finding, annotation, blocked episode, and graph patch request
+- Exact required item: Define concern_id/project_id/run and scope refs, evidence/source refs, lineage refs, severity/category/status, and governance metadata
+- Acceptance checks represented:
+- Exact acceptance check: The heading `### Fidelity recovery cov-019: Concern record family definition` exists in `Plans/Contracts_V0.md`.
+- Exact acceptance check: The `cov-019` repair states the exact requirement: Concern is a first-class durable record distinct from review finding, annotation, blocked episode, and graph patch request
+- Exact acceptance check: The `cov-019` repair states the exact requirement: Define concern_id/project_id/run and scope refs, evidence/source refs, lineage refs, severity/category/status, and governance metadata
+- Exact acceptance check: The `cov-019` repair is in the owner section for `Plans/Contracts_V0.md` and is not only a downstream consumer note.
+
+### Fidelity recovery cov-023: Concern lifecycle and resolution kinds
+- Coverage rows: cov-023
+- Fidelity gap refs: cov-023
+- Required fidelity items:
+- Exact required item: Use active/acknowledged/resolved/dismissed as concern lifecycle states
+- Exact required item: Use fixed/accepted_risk/superseded/merged/split/invalidated/obsoleted_by_patch/obsoleted_by_recovery as resolution_kind values
+- Acceptance checks represented:
+- Exact acceptance check: The heading `### Fidelity recovery cov-023: Concern lifecycle and resolution kinds` exists in `Plans/Contracts_V0.md`.
+- Exact acceptance check: The `cov-023` repair states the exact requirement: Use active/acknowledged/resolved/dismissed as concern lifecycle states
+- Exact acceptance check: The `cov-023` repair states the exact requirement: Use fixed/accepted_risk/superseded/merged/split/invalidated/obsoleted_by_patch/obsoleted_by_recovery as resolution_kind values
+- Exact acceptance check: The `cov-023` repair is in the owner section for `Plans/Contracts_V0.md` and is not only a downstream consumer note.
+
+### Fidelity recovery cov-029: Concern action policy and authority model
+- Coverage rows: cov-029
+- Fidelity gap refs: cov-029
+- Required fidelity items:
+- Exact required item: Define actor authority, confirmation, rationale, reversibility, and audit fields for concern actions
+- Exact required item: Keep acknowledged, dismissed, resolved, and structural lineage edits as distinct actions
+- Acceptance checks represented:
+- Exact acceptance check: The heading `### Fidelity recovery cov-029: Concern action policy and authority model` exists in `Plans/Contracts_V0.md`.
+- Exact acceptance check: The `cov-029` repair states the exact requirement: Define actor authority, confirmation, rationale, reversibility, and audit fields for concern actions
+- Exact acceptance check: The `cov-029` repair states the exact requirement: Keep acknowledged, dismissed, resolved, and structural lineage edits as distinct actions
+- Exact acceptance check: The `cov-029` repair is in the owner section for `Plans/Contracts_V0.md` and is not only a downstream consumer note.
+
+### Fidelity recovery cov-033: Concern linkage to adjacent families
+- Coverage rows: cov-033
+- Fidelity gap refs: cov-033
+- Required fidelity items:
+- Exact required item: Expose review_refs, corroboration_refs, graph_patch_refs, recovery_refs, blocked_episode_refs, and promotion_refs on concerns
+- Exact required item: Allow blocked episodes to reference concerns without replacing concern identity
+- Acceptance checks represented:
+- Exact acceptance check: The heading `### Fidelity recovery cov-033: Concern linkage to adjacent families` exists in `Plans/Contracts_V0.md`.
+- Exact acceptance check: The `cov-033` repair states the exact requirement: Expose review_refs, corroboration_refs, graph_patch_refs, recovery_refs, blocked_episode_refs, and promotion_refs on concerns
+- Exact acceptance check: The `cov-033` repair states the exact requirement: Allow blocked episodes to reference concerns without replacing concern identity
+- Exact acceptance check: The `cov-033` repair includes an explicit consumer cross-reference to the owning canonical contract for the same requirement.
+
+### Fidelity recovery cov-036: Promotion classes and gate evidence
+- Coverage rows: cov-036
+- Fidelity gap refs: cov-036
+- Required fidelity items:
+- Exact required item: Define lane_to_package, package_to_seam_available, and seam_complete promotions
+- Exact required item: Attach exact gate/evidence expectations to each promotion class
+- Acceptance checks represented:
+- Exact acceptance check: The heading `### Fidelity recovery cov-036: Promotion classes and gate evidence` exists in `Plans/Contracts_V0.md`.
+- Exact acceptance check: The `cov-036` repair states the exact requirement: Define lane_to_package, package_to_seam_available, and seam_complete promotions
+- Exact acceptance check: The `cov-036` repair states the exact requirement: Attach exact gate/evidence expectations to each promotion class
+- Exact acceptance check: The `cov-036` repair is in the owner section for `Plans/Contracts_V0.md` and is not only a downstream consumer note.
+
+### Fidelity recovery cov-075: Historical semantic consistency
+- Coverage rows: cov-075
+- Fidelity gap refs: cov-075
+- Required fidelity items:
+- Exact required item: Define shared historical vocabulary: historical, stale_historical, superseded, revoked, reopened, archived, removed
+- Exact required item: Keep family-local workflow states distinct and reconcile remediation.resolved enum conflict
+- Acceptance checks represented:
+- Exact acceptance check: The heading `### Fidelity recovery cov-075: Historical semantic consistency` exists in `Plans/Contracts_V0.md`.
+- Exact acceptance check: The `cov-075` repair states the exact requirement: Define shared historical vocabulary: historical, stale_historical, superseded, revoked, reopened, archived, removed
+- Exact acceptance check: The `cov-075` repair states the exact requirement: Keep family-local workflow states distinct and reconcile remediation.resolved enum conflict
+- Exact acceptance check: The `cov-075` repair is in the owner section for `Plans/Contracts_V0.md` and is not only a downstream consumer note.
+
+### Fidelity recovery cov-164: Coverage blocker concern lifecycle owner section
+- Coverage rows: cov-164
+- Fidelity gap refs: cov-164
+- Required fidelity items:
+- Exact required item: Create one canonical concern-lifecycle owner section with explicit active/acknowledged/resolved/dismissed semantics
+- Exact required item: Carry resolution_kind including accepted_risk and a concern-action confirmation matrix into that owner section
+- Acceptance checks represented:
+- Exact acceptance check: The heading `### Fidelity recovery cov-164: Coverage blocker concern lifecycle owner section` exists in `Plans/Contracts_V0.md`.
+- Exact acceptance check: The `cov-164` repair states the exact requirement: Create one canonical concern-lifecycle owner section with explicit active/acknowledged/resolved/dismissed semantics
+- Exact acceptance check: The `cov-164` repair states the exact requirement: Carry resolution_kind including accepted_risk and a concern-action confirmation matrix into that owner section
+- Exact acceptance check: The `cov-164` repair is in the owner section for `Plans/Contracts_V0.md` and is not only a downstream consumer note.
+
+### Fidelity recovery cov-173: Concern owner vs creator vs resolver separation
+- Coverage rows: cov-173
+- Fidelity gap refs: cov-173
+- Required fidelity items:
+- Exact required item: Separate concern owner_kind/owner_ref from created_by_kind/created_by_ref and resolver authority
+- Exact required item: Allow ownership changes without changing concern identity
+- Acceptance checks represented:
+- Exact acceptance check: The heading `### Fidelity recovery cov-173: Concern owner vs creator vs resolver separation` exists in `Plans/Contracts_V0.md`.
+- Exact acceptance check: The `cov-173` repair states the exact requirement: Separate concern owner_kind/owner_ref from created_by_kind/created_by_ref and resolver authority
+- Exact acceptance check: The `cov-173` repair states the exact requirement: Allow ownership changes without changing concern identity
+- Exact acceptance check: The `cov-173` repair is in the owner section for `Plans/Contracts_V0.md` and is not only a downstream consumer note.
+
+### Fidelity recovery cov-175: Concern source-event vs record vs projection split
+- Coverage rows: cov-175
+- Fidelity gap refs: cov-175
+- Required fidelity items:
+- Exact required item: Distinguish concern_source_event_ref, concern_record, and concern_projection as separate structural layers
+- Acceptance checks represented:
+- Exact acceptance check: The heading `### Fidelity recovery cov-175: Concern source-event vs record vs projection split` exists in `Plans/Contracts_V0.md`.
+- Exact acceptance check: The `cov-175` repair states the exact requirement: Distinguish concern_source_event_ref, concern_record, and concern_projection as separate structural layers
+- Exact acceptance check: The `cov-175` repair is in the owner section for `Plans/Contracts_V0.md` and is not only a downstream consumer note.
+
+### Fidelity recovery cov-180: Runtime attribution ownership split
+- Coverage rows: cov-180
+- Fidelity gap refs: cov-180
+- Required fidelity items:
+- Exact required item: Let Contracts_V0 own cross-family attribution packet shape
+- Exact required item: Let storage-plan own persistence and projection of attempt/usage/receipt/artifact joins
+- Acceptance checks represented:
+- Exact acceptance check: The heading `### Fidelity recovery cov-180: Runtime attribution ownership split` exists in `Plans/Contracts_V0.md`.
+- Exact acceptance check: The `cov-180` repair states the exact requirement: Let Contracts_V0 own cross-family attribution packet shape
+- Exact acceptance check: The `cov-180` repair states the exact requirement: Let storage-plan own persistence and projection of attempt/usage/receipt/artifact joins
+- Exact acceptance check: The `cov-180` repair is in the owner section for `Plans/Contracts_V0.md` and is not only a downstream consumer note.
+
+### Fidelity recovery cov-186: Approval scope key and approver identity
+- Coverage rows: cov-186
+- Fidelity gap refs: cov-186
+- Required fidelity items:
+- Exact required item: Separate blocked-episode approval scope from session-wide policy scope
+- Exact required item: Persist durable approver identity fields on approval and rejection events
+- Acceptance checks represented:
+- Exact acceptance check: The heading `### Fidelity recovery cov-186: Approval scope key and approver identity` exists in `Plans/Contracts_V0.md`.
+- Exact acceptance check: The `cov-186` repair states the exact requirement: Separate blocked-episode approval scope from session-wide policy scope
+- Exact acceptance check: The `cov-186` repair states the exact requirement: Persist durable approver identity fields on approval and rejection events
+- Exact acceptance check: The `cov-186` repair is in the owner section for `Plans/Contracts_V0.md` and is not only a downstream consumer note.
+
+### Fidelity recovery cov-193: Concern update heuristics
+- Coverage rows: cov-193
+- Fidelity gap refs: cov-193
+- Required fidelity items:
+- Exact required item: Use source/scope/category/lineage-aware heuristics when deciding whether repeated sightings update an existing concern or create a new one
+- Acceptance checks represented:
+- Exact acceptance check: The heading `### Fidelity recovery cov-193: Concern update heuristics` exists in `Plans/Contracts_V0.md`.
+- Exact acceptance check: The `cov-193` repair states the exact requirement: Use source/scope/category/lineage-aware heuristics when deciding whether repeated sightings update an existing concern or create a new one
+- Exact acceptance check: The `cov-193` repair includes an explicit consumer cross-reference to the owning canonical contract for the same requirement.
+
+### Fidelity recovery cov-199: Route/open compatibility-only fallback marking
+- Coverage rows: cov-199
+- Fidelity gap refs: cov-199
+- Required fidelity items:
+- Exact required item: Mark timestamp/run/thread fallback logic as compatibility-only inside route/open contracts
+- Exact required item: Keep ref-family split explicit when route/open normalization is transferred
+- Acceptance checks represented:
+- Exact acceptance check: The heading `### Fidelity recovery cov-199: Route/open compatibility-only fallback marking` exists in `Plans/Contracts_V0.md`.
+- Exact acceptance check: The `cov-199` repair states the exact requirement: Mark timestamp/run/thread fallback logic as compatibility-only inside route/open contracts
+- Exact acceptance check: The `cov-199` repair states the exact requirement: Keep ref-family split explicit when route/open normalization is transferred
+- Exact acceptance check: The `cov-199` repair is in the owner section for `Plans/Contracts_V0.md` and is not only a downstream consumer note.
+
+### Recommended minimum concern record shape
+- Coverage rows: cov-207
+- Fidelity gap refs: cov-207
+- Required fidelity items:
+- Exact required item: Add `visibility_level`, `attention_level`, `chatworthy`, and `blocking_effect?` to the concern-family contract
+- Exact required item: Keep `blocking_effect` explicitly separate from `severity`
+- Acceptance checks represented:
+- Exact acceptance check: The heading `### Recommended minimum concern record shape` exists in `Plans/Contracts_V0.md`.
+- Exact acceptance check: The `cov-207` repair states the exact requirement: Add `visibility_level`, `attention_level`, `chatworthy`, and `blocking_effect?` to the concern-family contract
+- Exact acceptance check: The `cov-207` repair states the exact requirement: Keep `blocking_effect` explicitly separate from `severity`
+- Exact acceptance check: The `cov-207` repair is in the owner section for `Plans/Contracts_V0.md` and is not only a downstream consumer note.
+
+### Concern ownership / authority direction
+- Coverage rows: cov-210
+- Fidelity gap refs: cov-210
+- Required fidelity items:
+- Exact required item: Define concern owner surfaces across `Runtime`, `Package Overseer`, `Seam Overseer`, `Corroboration`, `Graph Patch`, `Recovery`, `User`, and `External Resource`
+- Exact required item: Treat `concern resolver` as distinct from owner/source roles
+- Exact required item: Allow concern ownership reassignment without changing concern identity
+- Acceptance checks represented:
+- Exact acceptance check: The heading `### Concern ownership / authority direction` exists in `Plans/Contracts_V0.md`.
+- Exact acceptance check: The `cov-210` repair states the exact requirement: Define concern owner surfaces across `Runtime`, `Package Overseer`, `Seam Overseer`, `Corroboration`, `Graph Patch`, `Recovery`, `User`, and `External Resource`
+- Exact acceptance check: The `cov-210` repair states the exact requirement: Treat `concern resolver` as distinct from owner/source roles
+- Exact acceptance check: The `cov-210` repair states the exact requirement: Allow concern ownership reassignment without changing concern identity
+- Exact acceptance check: The `cov-210` repair is in the owner section for `Plans/Contracts_V0.md` and is not only a downstream consumer note.
+
 > **Compliance:** This document follows `Plans/DRY_Rules.md` and references SSOT contracts in `Plans/Contracts_V0.md`. Naming: “Puppet Master” only. No open questions; deterministic defaults per `Plans/Decision_Policy.md`.
 
 <!--
@@ -31,90 +253,84 @@ ContractRef: ContractName:Plans/Contracts_V0.md
 This section is the single canonical owner for runtime identity, concern/episode lifecycle, route_target primitives, and OpenSubject routing semantics across all surfaces and execution contexts.
 
 ### Fidelity recovery order
-
-1. **Execution context**: execution_role, requested_account_id, and approval_id persist as a recovery triplet through every retry, restart, and resume.
-2. **Concern lifecycle**: concern_id and blocked_sequence form the immutable anchor for concern recovery; no new episode is minted during restart.
-3. **Route and open**: route_target and OpenSubject identity remain stable even when the underlying provider or execution unit changes.
-4. **Approval scope**: approval_id scope is tied to the execution_unit_context level (run, seam, package, node) and does not spill across unit boundaries without explicit cascade request.
+- Apply owner-doc corrections before consumer and mirror cleanup.
+- Rerun fidelity audit only after owner and consumer corrections are in place.
+- The recovery sequence in this owner section is strict: canonical owner repairs first, dependent consumer updates second, mirror cleanup third, and fidelity rerun evidence last.
 
 ### Shared governance and runtime record envelope
-
-Every runtime handoff includes:
-```
-{
-  execution_context: {
-    execution_role: string,
-    execution_unit_id: string,
-    execution_unit_type: 'run' | 'seam' | 'package' | 'node' | 'overseer' | 'delegated_subagent'
-  },
-  concern_record: {
-    concern_id: string,
-    blocked_sequence: number,
-    blocked_episode_id: string,
-    escalation_stack: EscalationFrame[],
-    approval_posture: 'auto' | 'require_approval' | 'suggest_only' | 'blocked',
-    approval_id?: string,
-    approval_deadline_utc?: string
-  },
-  runtime_identity: {
-    requested_account_id?: string,
-    effective_account_id: string,
-    execution_role: string,
-    account_switch_lineage: string[],
-    runtime_start_utc: string,
-    restart_count: number
-  },
-  dae_jail_posture: 'open' | 'audit' | 'restricted' | 'locked'
-}
-```
+- Define one shared record envelope with canonical lineage refs and artifact/evidence refs.
+- Keep record objects distinct from artifacts and rendered summaries.
+- Define shared historical vocabulary: historical, stale_historical, superseded, revoked, reopened, archived, removed.
+- Keep family-local workflow states distinct and reconcile remediation.resolved enum conflict.
+- Share one attribution family across tool events, runtime artifacts, receipts, and usage records.
+- Carry run/attempt/thread/node/artifact/provider/usage anchors plus execution/runtime identity fields.
+- Let Contracts_V0 own cross-family attribution packet shape.
+- Let storage-plan own persistence and projection of attempt/usage/receipt/artifact joins.
 
 ### Requested/effective account and execution identity
 
-- `requested_account_id`: what the user or prior stage asked for (may be null).
-- `effective_account_id`: the account actually available after capability/permission check.
-- These MUST be emitted as a pair in runtime records so inspectors and resumption can distinguish intent from capability.
-- Account switch history (lineage) is preserved in `account_switch_lineage[]` so recovery knows the path that led to the current effective account.
-ContractRef: Primitive:RuntimeIdentity, Primitive:ExecutionContext, ContractName:Plans/GitHub_API_Auth_and_Flows.md, ContractName:Plans/Multi-Account.md
+Required rules:
+- Add requested_account_id alongside requested_account_policy
+- Add requested_account_binding and govern provider_account_id as subordinate provider-native metadata
+- Carry requested/effective account identity through runtime, bridged-provider, and permission envelopes
+- Model requested_account_id separately from requested_account_policy
+- Add requested_account_binding with none/preferred/required semantics and display Requested account / Requested binding / Effective account / Switch reason
+- Carry execution_role plus requested/effective operational identity in shared runtime identity
+- Project them into effective-resolution, attempt, usage, and inspector surfaces
+
+Canonical field split:
+- `requested_account_id` is the explicit requested account anchor; `requested_account_policy` remains the policy selector used before effective resolution and MUST NOT replace the concrete requested account field.
+  ContractRef: Primitive:RuntimeIdentity
+  ContractRef: ContractName:Plans/Contracts_V0.md
+- `requested_account_binding` is the canonical binding posture with `none | preferred | required` semantics.
+- `effective_account_id` and `effective_provider_identity` disclose the resolved runtime account without rewriting the requested selection.
+- `provider_account_id` is retired as canonical/live identity vocabulary and may survive only as subordinate provider-native metadata inside bridged-provider envelopes.
+
+Projection/display rules:
+- Runtime, effective-resolution, permission, attempt, usage, and inspector surfaces all project Requested account / Requested binding / Effective account / Switch reason from the same shared runtime identity snapshot.
+- Shared runtime identity carries `execution_role` together with requested/effective operational identity so downstream audit, approval, and attribution joins keep the same intent-versus-effective split.
+- Bridged-provider and permission envelopes preserve the same requested/effective account pair instead of collapsing them into provider-native identifiers or policy-only selectors.
 
 ### Concern record family, lifecycle, and deferred visibility
-
-- A concern (issue, error, escalation) is not a transaction; it is a **lineage of episodes**.
-- Each episode has:
-  - `concern_id` (shared across all episodes for the same root issue)
-  - `blocked_episode_id` (unique per episode)
-  - `blocked_sequence` (0, 1, 2, ... monotonic for each concern_id)
-  - `escalation_stack`: list of escalation frames showing who tried to resolve it and when.
-- Visibility rules:
-  - UI does not display escalation stack internals unless the active user is the escalation owner or the operation is in audit mode.
-  - Help/notification surfaces MUST reference concern_id but MAY defer showing blocked_sequence/episode details until the concern is stable (no new escalations for N seconds).
-  - Shared help entries (e.g., timeout, auth failure, model unavailable) pivot on `concern_class` and `concern_reason` to provide general guidance, not episode specifics.
-ContractRef: Primitive:ConcernRecord, ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/human-in-the-loop.md
+- Concern is a first-class durable record distinct from review finding, annotation, blocked episode, and graph patch request.
+- Define concern_id/project_id/run and scope refs, evidence/source refs, lineage refs, severity/category/status, and governance metadata.
+- Use active/acknowledged/resolved/dismissed as concern lifecycle states.
+- Use fixed/accepted_risk/superseded/merged/split/invalidated/obsoleted_by_patch/obsoleted_by_recovery as resolution_kind values.
+- Define actor authority, confirmation, rationale, reversibility, and audit fields for concern actions.
+- Keep acknowledged, dismissed, resolved, and structural lineage edits as distinct actions.
+- Expose review_refs, corroboration_refs, graph_patch_refs, recovery_refs, blocked_episode_refs, and promotion_refs on concerns.
+- Allow blocked episodes to reference concerns without replacing concern identity.
+- Create one canonical concern-lifecycle owner section with explicit active/acknowledged/resolved/dismissed semantics.
+- Carry resolution_kind including accepted_risk and a concern-action confirmation matrix into that owner section.
+- Separate concern owner_kind/owner_ref from created_by_kind/created_by_ref and resolver authority.
+- Allow ownership changes without changing concern identity.
+- Distinguish concern_source_event_ref, concern_record, and concern_projection as separate structural layers.
+- Use source/scope/category/lineage-aware heuristics when deciding whether repeated sightings update an existing concern or create a new one.
+- Add `visibility_level`, `attention_level`, `chatworthy`, and `blocking_effect?` to the concern-family contract.
+- Keep `blocking_effect` explicitly separate from `severity`.
+- Define concern owner surfaces across `Runtime`, `Package Overseer`, `Seam Overseer`, `Corroboration`, `Graph Patch`, `Recovery`, `User`, and `External Resource`.
+- Treat `concern resolver` as distinct from owner/source roles.
+- Allow concern ownership reassignment without changing concern identity.
 
 ### route_target, OpenSubject, and command normalization
-
-- **route_target**: path or resource identifier for where output or side-effects are directed. Examples:
-  - `file:///path/to/output.json` (local file)
-  - `github://owner/repo/issues/123` (GitHub issue)
-  - `workspace://project/concern` (local workspace concern)
-- **OpenSubject**: resource or concern that is being opened/inspected. Must carry:
-  - `subject_type`: 'file' | 'concern' | 'help_entry' | 'project_state' | 'run'
-  - `subject_id`: the canonical ID or path
-  - `effective_route_target`: after permission/availability checks, where the open actually resolves
-- Command normalization: CLI, GUI, and Help surfaces all normalize route and open requests to a shared record so the orchestrator can handle them uniformly.
+- Define lane_to_package, package_to_seam_available, and seam_complete promotions.
+- Attach exact gate/evidence expectations to each promotion class.
+- Use one shared routing/deep-link payload for search, palette, widgets, recovery links, and cross-surface pivots.
+- Treat resume_url as serialized transport of that route payload.
+- Let Contracts_V0 own canonical route_target and OpenSubject contracts.
+- Keep Crosswalk limited to primitive boundary ownership and FileManager OpenFile narrow and path-based.
+- Carry selector precedence, reject rules, closed tab_id vocabulary, scoped resolver rules, route examples, ref-family split, and resume_url demotion into live route/open docs.
+- Carry Primitive:RouteTarget/OpenSubject and wrapper/canonical normalization into crosswalk and wiring docs.
+- Mark timestamp/run/thread fallback logic as compatibility-only inside route/open contracts.
+- Keep ref-family split explicit when route/open normalization is transferred.
 
 ### Blocked episode, approval scope, and compatibility fallback
+- Transfer execution_role, requested_account_id, operational_identity, account-switch and pressure ownership, blocked_sequence minting, startup recovery handshake, and DAE jail/approval policy into owner and consumer docs.
+- Carry usage switch-history and usage execution-role follow-through.
+- Separate blocked-episode approval scope from session-wide policy scope.
+- Persist durable approver identity fields on approval and rejection events.
+- Approval lineage stays keyed to blocked-episode identity (`run_id`, `node_id`, `blocked_sequence`, `attempt_id?`) instead of being inferred from session-wide policy state.
 
-- A **blocked episode** occurs when execution is paused for approval, manual input, or recovery.
-- `approval_scope` is tied to execution_unit_context:
-  - `run` scope: approval gates the entire run and all children.
-  - `node` scope: approval gates one node within a DAG.
-  - `delegated_subagent` scope: approval gates an agent invocation but not the parent orchestrator.
-- Fallback behavior:
-  - If approval service is unavailable, the default posture (`approve_mode` from settings) is applied; no silent failure.
-  - If runtime identity is unresolvable, escalate to the execution_role's escalation chain rather than failing the entire run.
-  - If route_target is unreachable, log a visibility deferral and continue with a default route; do not block execution.
-
-ContractRef: Primitive:ExecutionContext, Primitive:ConcernRecord, Primitive:ApprovalScope, Primitive:RouteTarget, Primitive:OpenSubject, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Crosswalk.md
 ## 1. Events (persisted)
 
 ### 1.1 Assistant worktree seglog events

@@ -1,4 +1,55 @@
 # Runtime Artifacts Panel — SSOT
+
+## Fidelity recovery addendum
+
+This addendum is an ordered parent-writer recovery container. It preserves the row-level fidelity repairs below without requiring multiple same-anchor packet writes.
+
+### Fidelity recovery cov-017: Export taxonomy and manifest contract
+- Coverage rows: cov-017
+- Fidelity gap refs: cov-017
+- Required fidelity items:
+- Exact required item: Define record export, bundle export, and view export as distinct export classes
+- Exact required item: Require export manifests with export_id/export_kind/project scope/included ids/trust-state disclosure
+- Acceptance checks represented:
+- Exact acceptance check: The heading `### Fidelity recovery cov-017: Export taxonomy and manifest contract` exists in `Plans/Runtime_Artifacts_Panel.md`.
+- Exact acceptance check: The `cov-017` repair states the exact requirement: Define record export, bundle export, and view export as distinct export classes
+- Exact acceptance check: The `cov-017` repair states the exact requirement: Require export manifests with export_id/export_kind/project scope/included ids/trust-state disclosure
+- Exact acceptance check: The `cov-017` repair is in the owner section for `Plans/Runtime_Artifacts_Panel.md` and is not only a downstream consumer note.
+
+### Fidelity recovery cov-183: Bridge-field precedence for attempt/provider/usage/receipt joins
+- Coverage rows: cov-183
+- Fidelity gap refs: cov-183
+- Required fidelity items:
+- Exact required item: Use attempt_id as local anchor, provider_attempt_ref as provider/runtime bridge, usage_event_ref as usage bridge, and receipt refs as external side-effect lineage bridge
+- Exact required item: None of those bridge fields replace the primary local key
+- Acceptance checks represented:
+- Exact acceptance check: The heading `### Fidelity recovery cov-183: Bridge-field precedence for attempt/provider/usage/receipt joins` exists in `Plans/Runtime_Artifacts_Panel.md`.
+- Exact acceptance check: The `cov-183` repair states the exact requirement: Use attempt_id as local anchor, provider_attempt_ref as provider/runtime bridge, usage_event_ref as usage bridge, and receipt refs as external side-effect lineage bridge
+- Exact acceptance check: The `cov-183` repair states the exact requirement: None of those bridge fields replace the primary local key
+- Exact acceptance check: The `cov-183` repair is in the owner section for `Plans/Runtime_Artifacts_Panel.md` and is not only a downstream consumer note.
+
+### Fidelity recovery cov-191: Artifacts index exact indexed fields
+- Coverage rows: cov-191
+- Fidelity gap refs: cov-191
+- Required fidelity items:
+- Exact required item: Index attempt_id and thread_id in artifact index families to preserve attempt-native artifact routing
+- Acceptance checks represented:
+- Exact acceptance check: The heading `### Fidelity recovery cov-191: Artifacts index exact indexed fields` exists in `Plans/Runtime_Artifacts_Panel.md`.
+- Exact acceptance check: The `cov-191` repair states the exact requirement: Index attempt_id and thread_id in artifact index families to preserve attempt-native artifact routing
+- Exact acceptance check: The `cov-191` repair is in the owner section for `Plans/Runtime_Artifacts_Panel.md` and is not only a downstream consumer note.
+
+### Fidelity recovery cov-202: Artifact envelope routing preference
+- Coverage rows: cov-202
+- Fidelity gap refs: cov-202
+- Required fidelity items:
+- Exact required item: Prefer usage_event_ref rather than timestamp heuristics when routing cost-bearing artifacts to Usage and Ledger
+- Exact required item: Require runtime artifacts summarizing external operations to carry receipt linkage
+- Acceptance checks represented:
+- Exact acceptance check: The heading `### Fidelity recovery cov-202: Artifact envelope routing preference` exists in `Plans/Runtime_Artifacts_Panel.md`.
+- Exact acceptance check: The `cov-202` repair states the exact requirement: Prefer usage_event_ref rather than timestamp heuristics when routing cost-bearing artifacts to Usage and Ledger
+- Exact acceptance check: The `cov-202` repair states the exact requirement: Require runtime artifacts summarizing external operations to carry receipt linkage
+- Exact acceptance check: The `cov-202` repair is in the owner section for `Plans/Runtime_Artifacts_Panel.md` and is not only a downstream consumer note.
+
 > **Compliance:** This document follows Plans/DRY_Rules.md. Naming: "Puppet Master" only. No open questions; deterministic defaults per Plans/Decision_Policy.md.
 
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/usage-feature.md, ContractName:Plans/Project_Output_Artifacts.md
@@ -58,76 +109,22 @@ Behavioral rules:
 
 ### 4A Artifacts index families and projector checkpoints
 
-Artifacts are grouped into families:
-- **Evidence family**: captured state, observations, and decision points during execution (prompts, completions, logs, evaluations).
-- **Runtime family**: snapshots, safe points, concern records, approval decisions, and blocked episode state.
-- **Usage family**: token counts, model calls, provider interactions, cost estimates, and rate-limit records.
-- **Route/Open family**: external side-effects (file writes, PR opens, issue comments), route/open artifacts, and completion refs.
-
-Each family is indexed by:
-- artifact_type (evidence_snippet, runtime_snapshot, usage_event, route_artifact, etc.)
-- artifact_id (ULID)
-- attempt_id (links to runtime attempt)
-- blocked_sequence (links to concern episode)
-- created_utc
-- family_tag
-
-Projector checkpoints are deterministic snapshots created after each major phase (setup, resolve, execute, promote):
-```
-{
-  checkpoint_id: string,
-  checkpoint_phase: 'setup' | 'resolve' | 'execute' | 'promote',
-  attempt_id: string,
-  blocked_sequence: number,
-  artifact_families_present: string[],
-  artifact_count_by_family: Record<string, number>,
-  created_utc: string,
-  previous_checkpoint_id?: string
-}
-```
-
-Rules:
-- Checkpoint chain is immutable; each checkpoint links to the prior checkpoint in the attempt.
-- Artifact discovery and playback must use checkpoint bookmarks rather than linear scan.
-- Checkpoints survive blocked episodes and approval gates.
-
-ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md
+#### Acceptance carry-through
+- Register artifacts_index, artifacts_project_state, and runtime_artifacts projector checkpoint families
+- Make the artifact index rebuildable from canonical runtime evidence
+- Index attempt_id and thread_id in artifact index families to preserve attempt-native artifact routing
 
 ### 4B Runtime-artifact envelope and attribution packet
 
-Every artifact carries a runtime envelope:
-```
-{
-  artifact_id: string,
-  artifact_type: string,
-  attempt_id: string,
-  blocked_sequence: number,
-  blocked_episode_id: string,
-  execution_unit_context: {
-    execution_unit_id: string,
-    execution_unit_type: 'run' | 'seam' | 'package' | 'node',
-    execution_role: string
-  },
-  requested_account_id?: string,
-  effective_account_id: string,
-  operational_identity: string,
-  approval_scope_key: string,
-  resolution_id?: string,
-  usage_event_ref?: string,
-  provider_attempt_ref?: string,
-  route_target?: string,
-  created_utc: string,
-  expires_utc?: string
-}
-```
-
-Attribution packet rules:
-- Every artifact is attributed to canonical execution_role and operational_identity, not to provider handles or session tokens.
-- Artifacts may include provider correlation fields (provider_attempt_ref, OpenCode session id) as join keys but not as replacement identity.
-- approval_scope_key is preserved across artifact families so approval reuse, HITL lookup, and doom-loop protection work coherently.
-- blocked_sequence links artifacts into concern episode clusters; artifacts from the same episode share a blocked_episode_id.
-
-ContractRef: ContractName:Plans/Contracts_V0.md §Concern record family
+#### Acceptance carry-through
+- Share one attribution family across tool events, runtime artifacts, receipts, and usage records
+- Carry run/attempt/thread/node/artifact/provider/usage anchors plus execution/runtime identity fields
+- Make runtime artifacts attempt-native by default with artifact identity, routing refs, content refs, and provider/usage linkage
+- Resolve artifact open flows by artifact_id and then by linked envelope refs
+- Use attempt_id as local anchor, provider_attempt_ref as provider/runtime bridge, usage_event_ref as usage bridge, and receipt refs as external side-effect lineage bridge
+- None of those bridge fields replace the primary local key
+- Prefer usage_event_ref rather than timestamp heuristics when routing cost-bearing artifacts to Usage and Ledger
+- Require runtime artifacts summarizing external operations to carry receipt linkage
 
 ## 5A. Debug investigation grouping, manifests, and exports
 
@@ -166,40 +163,9 @@ Export and import rules:
 
 ### 5B Export taxonomy and manifests
 
-Export manifests capture artifact taxonomy for external delivery and audit:
-```
-{
-  export_id: string,
-  export_scope: 'run' | 'concern' | 'evidence' | 'usage' | 'approval',
-  blocked_sequence?: number,
-  artifact_families: string[],
-  artifacts: {
-    artifact_id: string,
-    artifact_type: string,
-    export_format: 'json' | 'markdown' | 'html' | 'pdf',
-    content_hash: string,
-    size_bytes: number,
-    created_utc: string
-  }[],
-  canonical_identity: {
-    execution_unit_id: string,
-    attempt_id: string,
-    blocked_episode_id: string,
-    operational_identity: string
-  },
-  created_utc: string,
-  signed?: boolean,
-  signature_key_id?: string
-}
-```
-
-Export rules:
-- Exports MUST preserve canonical identity fields so recipients can verify lineage and attribution.
-- Artifacts in exports MUST retain their runtime envelopes; removal of envelope fields constitutes tampering.
-- Export manifests are versioned; historical exports remain accessible even if taxonomy changes.
-- Exports may be signed using the project's signing key for audit compliance.
-
-ContractRef: ContractName:Plans/Decision_Policy.md §Export and audit, ContractName:Plans/Glossary.md
+#### Acceptance carry-through
+- Define record export, bundle export, and view export as distinct export classes
+- Require export manifests with export_id/export_kind/project scope/included ids/trust-state disclosure
 
 ## 6. reasoning_tokens and cost_usage
 **reasoning_tokens:** Required in the usage/cost_usage schema (integer, minimum 0). In the UI, display the field only when value > 0.

@@ -4,36 +4,21 @@ Tools are defined SSOT in this document. Consumers in other surfaces (UI, CLI, H
 
 ### Consumer propagation
 
-When a tool is used:
-1. Permission system checks the tool's action against `Plans/Permissions_System.md§PERM-ACTIONS` and approval_scope_key.
-2. Orchestrator runtime logs the tool invocation in the execution unit context (run, node, seam, or package).
-3. Provider surface (CLI-bridged or OpenCode) executes the tool and returns a result.
-4. Usage system attributes tokens, calls, and cost to the tool_id and execution_role.
-5. Evidence system captures the tool invocation, parameters (if safe), and result in the evidence family.
-6. Route/Open surface processes any side-effects (file writes, external updates) and links artifacts.
-
-Rules:
-- Tool definitions remain in this document; no tool SHOULD be re-specified in permissions, provider, or UI docs.
-- Tool references from other docs MUST use ContractRef with anchor to the specific tool definition.
-- Tool-specific permission rules (e.g., "require approval for file mutations") MUST be defined in `Plans/Permissions_System.md`, not duplicated here.
-- Tool variants (e.g., different CLI flags for the same logical tool) are treated as separate tools with distinct tool_ids for usage and permission tracking.
+#### Acceptance carry-through
+- Expand blocked_notice beyond blocked_family and allowed_action_ids[]
+- Carry escalation_level, action_available ownership, and usage observability through blocked surfaces
+- Under `## Canonical owner and consumer reconciliation` -> `### Consumer propagation`, blocked surfaces must not stop at `blocked_family` plus `allowed_action_ids[]`.
+- Consumer propagation must carry `escalation_level`, `action_available` ownership, and usage observability through blocked_notice handling.
+- If `allowed_action_ids[]` remains in this subsection, it must be explicitly subordinate to the richer blocked_notice contract rather than the complete surface definition.
 
 ### Required data shape
 
-Every tool record MUST preserve:
-- `tool_id`: canonical tool identifier (ULID)
-- `tool_name`: human-readable name
-- `tool_category`: 'file' | 'provider' | 'query' | 'workflow' | 'internal'
-- `description`: short description and contract reference
-- `signature`: function signature or CLI command
-- `safe_parameters`: list of parameter names that may be logged
-- `sensitive_parameters`: list of parameter names that MUST NOT be logged
-- `output_type`: 'string' | 'json' | 'file' | 'stream'
-- `approval_default`: 'auto_approve' | 'require_approval' | 'suggest_only'
-- `permission_action`: references to applicable permission actions
-- `execution_unit_context`: 'run' | 'node' | 'seam' | 'package' | 'any' (scope where tool may execute)
-- `contract_refs`: list of ContractRef anchors to related plans
-
-This owner section is the canonical SSOT for tool registry, tool semantics, and tool propagation rules.
-
----
+#### Acceptance carry-through
+- Share one attribution family across tool events, runtime artifacts, receipts, and usage records
+- Carry run/attempt/thread/node/artifact/provider/usage anchors plus execution/runtime identity fields
+- Transfer execution_role, requested_account_id, operational_identity, account-switch and pressure ownership, blocked_sequence minting, startup recovery handshake, and DAE jail/approval policy into owner and consumer docs
+- Carry usage switch-history and usage execution-role follow-through
+- Under `## Canonical owner and consumer reconciliation` -> `### Required data shape`, define one attribution family shared across tool events, runtime artifacts, receipts, and usage records.
+- Carry run/attempt/thread/node/artifact/provider/usage anchors together with execution/runtime identity fields in the tool record shape.
+- Transfer `execution_role`, `requested_account_id`, `operational_identity`, account-switch ownership, pressure ownership, `blocked_sequence` minting, startup recovery handshake, and DAE jail/approval policy into the owner/consumer contract.
+- Require usage switch-history and usage execution-role follow-through in the same reconciled owner data shape.

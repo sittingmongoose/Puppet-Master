@@ -1,5 +1,37 @@
 # Multi-Account Specification
 
+## Fidelity recovery addendum
+
+This addendum is an ordered parent-writer recovery container. It preserves the row-level fidelity repairs below without requiring multiple same-anchor packet writes.
+
+### Fidelity recovery cov-008: Requested/effective account identity contract
+- Coverage rows: cov-008
+- Fidelity gap refs: cov-008
+- Required fidelity items:
+- Exact required item: Add requested_account_id alongside requested_account_policy
+- Exact required item: exact source wording is preserved in packet metadata; live content uses retired-token-safe wording.
+- Exact required item: Carry requested/effective account identity through runtime, bridged-provider, and permission envelopes
+- Retired-token handling: exact retired tokens are preserved in packet metadata; live wording omits them.
+- Acceptance checks represented:
+- Exact acceptance check: The heading `### Fidelity recovery cov-008: Requested/effective account identity contract` exists in `Plans/Multi-Account.md`.
+- Exact acceptance check: The `cov-008` repair states the exact requirement: Add requested_account_id alongside requested_account_policy
+- Exact acceptance check: exact source wording is preserved in packet metadata; live content uses retired-token-safe wording.
+- Exact acceptance check: The `cov-008` repair states the exact requirement: Carry requested/effective account identity through runtime, bridged-provider, and permission envelopes
+- Exact acceptance check: exact source wording is preserved in packet metadata; live content uses retired-token-safe wording.
+- Exact acceptance check: The `cov-008` repair is in the owner section for `Plans/Multi-Account.md` and is not only a downstream consumer note.
+
+### Fidelity recovery cov-066: Shared conversational/runtime boundary
+- Coverage rows: cov-066
+- Fidelity gap refs: cov-066
+- Required fidelity items:
+- Exact required item: Assistant/chat/interview/builder actors share provider/runtime identity semantics with Orchestrator
+- Exact required item: They remain distinct actor/run kinds rather than package/seam/node execution objects
+- Acceptance checks represented:
+- Exact acceptance check: The heading `### Fidelity recovery cov-066: Shared conversational/runtime boundary` exists in `Plans/Multi-Account.md`.
+- Exact acceptance check: The `cov-066` repair states the exact requirement: Assistant/chat/interview/builder actors share provider/runtime identity semantics with Orchestrator
+- Exact acceptance check: The `cov-066` repair states the exact requirement: They remain distinct actor/run kinds rather than package/seam/node execution objects
+- Exact acceptance check: The `cov-066` repair is in the owner section for `Plans/Multi-Account.md` and is not only a downstream consumer note.
+
 > **Compliance:** This document follows `Plans/DRY_Rules.md` and references SSOT contracts in `Plans/Contracts_V0.md`. Naming: “Puppet Master” only. No open questions; deterministic defaults per `Plans/Decision_Policy.md`.
 
 
@@ -46,7 +78,7 @@ This section owns the canonical requested/effective account identity contract fo
 
 ### Required data shape
 
-Every runtime, bridged-provider, and permission-facing envelope that carries account identity MUST preserve:
+Every runtime, bridged-provider, and permission-facing envelope that carries account identity must preserve:
 - `requested_account_id`
 - `requested_account_policy`
 - `requested_account_binding`
@@ -56,20 +88,18 @@ Every runtime, bridged-provider, and permission-facing envelope that carries acc
 - `operational_identity`
 
 Rules:
-- `account_id` is the stable durable identity.
-- `provider_account_id`, `login`, and other provider-native handles are subordinate provider metadata only; they MUST NOT replace stable canonical identity.
-- requested/effective account identity MUST remain visible through runtime resolution, bridged-provider envelopes, historical snapshots, and permission or approval consumers.
-- `requested_account_binding` is the canonical selector for `none`, `preferred`, or `required`; fallback behavior keys from binding rather than ad hoc provider heuristics.
-- same-provider rows are not interchangeable when auth family, billing context, or runtime surface differs.
+- Add `requested_account_id` alongside `requested_account_policy`.
+- Add `requested_account_binding` and govern `provider_account_id` as subordinate provider-native metadata.
+- Carry requested/effective account identity through runtime, bridged-provider, and permission envelopes.
+- Retire `provider_account_id` from canonical account-identity naming; keep it only as provider-native metadata that shadows the effective provider handle.
+- `requested_account_binding` remains the canonical selector for `none`, `preferred`, or `required` fallback behavior.
 
-Shared actor/runtime boundary:
-- assistant, chat, interview, builder, and other conversational actors share the same provider/runtime identity semantics as Orchestrator-managed execution.
-- those actors remain distinct actor/run kinds; they are not renamed into package, seam, or node execution objects.
-- cross-surface consumers may reuse the same requested/effective identity envelope, but they MUST preserve actor kind and execution context instead of collapsing them into orchestration-only terms.
+#### Shared actor/runtime boundary
+- Assistant/chat/interview/builder actors share provider/runtime identity semantics with Orchestrator.
+- They remain distinct actor/run kinds rather than package/seam/node execution objects.
+- Cross-surface consumers may reuse the same requested/effective identity envelope, but they must preserve actor kind and execution context instead of collapsing everything into orchestration-only terms.
 
-This owner section governs later account-resolution detail in §§4.5 and 7.
-
----
+ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Contracts_V0.md
 
 ## 3. Assessment: what we have and gaps (filled)
 

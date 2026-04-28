@@ -264,47 +264,103 @@
       }
     },
     "route_aware_verification": {
-  "type": "object",
-  "additionalProperties": false,
-  "required": [
-    "gate_id",
-    "result"
-  ],
-  "properties": {
-    "gate_id": {
-      "type": "string",
-      "const": "GATE-010"
-    },
-    "result": {
-      "type": "string",
-      "enum": [
-        "PASS",
-        "FAIL"
-      ]
-    },
-    "wiring_matrix_ref": {
-      "type": "string",
-      "minLength": 1
-    },
-    "route_args_verified": {
-      "type": "boolean"
-    },
-    "wrapper_normalization_verified": {
-      "type": "boolean"
-    },
-    "stale_revalidation_verified": {
-      "type": "boolean"
-    },
-    "admissibility_verified": {
-      "type": "boolean"
-    },
-    "correlation_passthrough_verified": {
-      "type": "boolean"
-    },
-    "details": {
-      "type": "string"
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "gate_id",
+        "result",
+        "wiring_matrix_ref",
+        "route_args_verified",
+        "wrapper_normalization_verified",
+        "stale_revalidation_verified",
+        "admissibility_verified",
+        "correlation_passthrough_verified",
+        "details"
+      ],
+      "properties": {
+        "gate_id": {
+          "type": "string",
+          "const": "GATE-010"
+        },
+        "result": {
+          "type": "string",
+          "enum": [
+            "PASS",
+            "FAIL"
+          ]
+        },
+        "wiring_matrix_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "route_args_verified": {
+          "type": "boolean"
+        },
+        "wrapper_normalization_verified": {
+          "type": "boolean"
+        },
+        "stale_revalidation_verified": {
+          "type": "boolean"
+        },
+        "admissibility_verified": {
+          "type": "boolean"
+        },
+        "correlation_passthrough_verified": {
+          "type": "boolean"
+        },
+        "details": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "route_args",
+            "wrapper_normalization",
+            "stale_revalidation",
+            "admissibility",
+            "correlation_passthrough"
+          ],
+          "properties": {
+            "route_args": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "wrapper_normalization": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "stale_revalidation": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "admissibility": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "correlation_passthrough": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "notes": {
+              "type": "string"
+            },
+            "contract_refs": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
     }
-  }
-}
   }
 }

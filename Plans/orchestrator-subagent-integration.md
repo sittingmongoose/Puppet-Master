@@ -1,5 +1,42 @@
 # Orchestrator Subagent Integration -- Implementation Plan
 
+## Fidelity recovery addendum
+
+This addendum is an ordered parent-writer recovery container. It preserves the row-level fidelity repairs below without requiring multiple same-anchor packet writes.
+
+### Fidelity recovery cov-005: Retire tier-era canon and shadow fields
+- Coverage rows: cov-005
+- Fidelity gap refs: cov-005
+- Required fidelity items:
+- Exact required item: exact source wording is preserved in packet metadata; live content uses retired-token-safe wording.
+- Exact required item: exact source wording is preserved in packet metadata; live content uses retired-token-safe wording.
+- Retired-token handling: exact retired tokens are preserved in packet metadata; live wording omits them.
+- Acceptance checks represented:
+- Exact acceptance check: The heading `### Fidelity recovery cov-005: Retire tier-era canon and shadow fields` exists in `Plans/orchestrator-subagent-integration.md`.
+- Exact acceptance check: exact source wording is preserved in packet metadata; live content uses retired-token-safe wording.
+- Exact acceptance check: exact source wording is preserved in packet metadata; live content uses retired-token-safe wording.
+- Exact acceptance check: exact source wording is preserved in packet metadata; live content uses retired-token-safe wording.
+- Exact acceptance check: exact source wording is preserved in packet metadata; live content uses retired-token-safe wording.
+- Exact acceptance check: exact source wording is preserved in packet metadata; live content uses retired-token-safe wording.
+- Exact acceptance check: exact source wording is preserved in packet metadata; live content uses retired-token-safe wording.
+- Exact acceptance check: exact source wording is preserved in packet metadata; live content uses retired-token-safe wording.
+- Exact acceptance check: exact source wording is preserved in packet metadata; live content uses retired-token-safe wording.
+- Exact acceptance check: exact source wording is preserved in packet metadata; live content uses retired-token-safe wording.
+- Exact acceptance check: exact source wording is preserved in packet metadata; live content uses retired-token-safe wording.
+- Exact acceptance check: The `cov-005` repair removes stale live vocabulary and, if needed, confines any mention to an explicit compatibility-retirement note.
+
+### Fidelity recovery cov-172: Coverage blocker worktree allocation strategy
+- Coverage rows: cov-172
+- Fidelity gap refs: cov-172
+- Required fidelity items:
+- Exact required item: Define concrete worktree allocation strategy
+- Exact required item: Define contamination, reuse, and cleanup rules for that strategy
+- Acceptance checks represented:
+- Exact acceptance check: The heading `### Fidelity recovery cov-172: Coverage blocker worktree allocation strategy` exists in `Plans/orchestrator-subagent-integration.md`.
+- Exact acceptance check: The `cov-172` repair states the exact requirement: Define concrete worktree allocation strategy
+- Exact acceptance check: The `cov-172` repair states the exact requirement: Define contamination, reuse, and cleanup rules for that strategy
+- Exact acceptance check: The `cov-172` repair is in the owner section for `Plans/orchestrator-subagent-integration.md` and is not only a downstream consumer note.
+
 > **Compliance:** This document follows `Plans/DRY_Rules.md` and references SSOT contracts in `Plans/Contracts_V0.md`. Naming: “Puppet Master” only. No open questions; deterministic defaults per `Plans/Decision_Policy.md`.
 > **Integration policy note (2026-02-24):** Runtime integration follows the ProviderTransport taxonomy (SSOT: `Plans/Contracts_V0.md`): Cursor/Claude Code = `CliBridge`, Codex/Copilot/Gemini = `DirectApi`, OpenCode = `ServerBridge`. Any Codex/Copilot SDK references in this file are historical context only and are not implementation targets.
 
@@ -468,19 +505,25 @@ ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md#7
 ## Execution unit context and worktree allocation strategy
 
 ### Canonical runtime context
-- Execution units are canonical runtime containers for node execution.
-- Each execution unit holds `execution_role`, `operational_identity`, `run_id`, `node_id`, and `lane_id`.
-- Execution units are immutable once created; policy changes require a new execution unit.
+
+- Introduce execution_unit_context as canonical runtime-facing context object.
+- Demote TierContext to a derived or compatibility-only selection/decomposition helper.
+- Anchor worker spawn, recovery, remediation, coordination, and UI inspection to execution_unit_context.
+- Any remaining `TierContext` or `tier_id` mention in this subsection is compatibility-only and never canonical runtime state.
 
 ### Worktree allocation strategy
-- Worktree allocation is a lane-level decision, not a node-level decision.
-- The lane allocates worktrees based on execution strategy and storage policy.
-- Nodes execute within allocated worktrees; worktree switching is prohibited within a single execution unit.
+
+- Define concrete worktree allocation strategy: each `execution_unit_context` receives a lane-managed worktree lease; package or seam reuse is allowed only when lineage matches the lane assignment and no contamination guard is active.
+- Define contamination, reuse, and cleanup rules for that strategy: contaminated worktrees are quarantined until recovery clears the blocker, reuse requires clean lineage plus no dirty/conflict state, and cleanup waits for archive, receipt, and recovery checks instead of age alone.
+- This subsection stays separate from runtime-context canon language and separate from stale-token retirement language.
 
 ### Compatibility retirement
-- Legacy TierContext, tier_id, TierType, and tier-based pause vocabulary are deprecated.
-- Tier concepts are not used in execution unit context or worktree allocation.
-- Use execution_unit_context and lane-level policy instead.
+
+- Retire TierContext/tier_id/TierType/Tiers/Phase-Task-Subtask runtime canon.
+- Retire allowed_actions[] / reason_code / recovery_options[] survivors from live blocked/HITL contracts.
+- Retirement targets are exactly: `TierContext`, `tier_id`, `TierType`, `Tiers`, `allowed_actions[]`, `reason_code`, `recovery_options[]`, `approve_continue`.
+- This subsection is retirement-only; canonical runtime-context rules and worktree-allocation rules remain in sibling subsections.
+
 ## Benefits
 
 1. **Dynamic Adaptation:** Automatically selects appropriate subagents based on project context

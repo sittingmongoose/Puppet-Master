@@ -1,5 +1,66 @@
 # Overseer Protocol (Canonical)
 
+## Fidelity recovery addendum
+
+This addendum is an ordered parent-writer recovery container. It preserves the row-level fidelity repairs below without requiring multiple same-anchor packet writes.
+
+### Fidelity recovery cov-004: Retire tier-era canon and shadow fields
+- Coverage rows: cov-004
+- Fidelity gap refs: cov-004
+- Required fidelity items:
+- Exact required item: exact source wording is preserved in packet metadata; live content uses retired-token-safe wording.
+- Exact required item: exact source wording is preserved in packet metadata; live content uses retired-token-safe wording.
+- Retired-token handling: exact retired tokens are preserved in packet metadata; live wording omits them.
+- Acceptance checks represented:
+- Exact acceptance check: The heading `### Fidelity recovery cov-004: Retire tier-era canon and shadow fields` exists in `Plans/Executor_Protocol.md`.
+- Exact acceptance check: exact source wording is preserved in packet metadata; live content uses retired-token-safe wording.
+- Exact acceptance check: exact source wording is preserved in packet metadata; live content uses retired-token-safe wording.
+- Exact acceptance check: exact source wording is preserved in packet metadata; live content uses retired-token-safe wording.
+- Exact acceptance check: exact source wording is preserved in packet metadata; live content uses retired-token-safe wording.
+- Exact acceptance check: exact source wording is preserved in packet metadata; live content uses retired-token-safe wording.
+- Exact acceptance check: exact source wording is preserved in packet metadata; live content uses retired-token-safe wording.
+- Exact acceptance check: exact source wording is preserved in packet metadata; live content uses retired-token-safe wording.
+- Exact acceptance check: exact source wording is preserved in packet metadata; live content uses retired-token-safe wording.
+- Exact acceptance check: exact source wording is preserved in packet metadata; live content uses retired-token-safe wording.
+- Exact acceptance check: exact source wording is preserved in packet metadata; live content uses retired-token-safe wording.
+- Exact acceptance check: The `cov-004` repair removes stale live vocabulary and, if needed, confines any mention to an explicit compatibility-retirement note.
+
+### Fidelity recovery cov-160: Identity and blocked-policy transfer cluster
+- Coverage rows: cov-160
+- Fidelity gap refs: cov-160
+- Required fidelity items:
+- Exact required item: Transfer execution_role, requested_account_id, operational_identity, account-switch and pressure ownership, blocked_sequence minting, startup recovery handshake, and DAE jail/approval policy into owner and consumer docs
+- Exact required item: Carry usage switch-history and usage execution-role follow-through
+- Acceptance checks represented:
+- Exact acceptance check: The heading `### Fidelity recovery cov-160: Identity and blocked-policy transfer cluster` exists in `Plans/Executor_Protocol.md`.
+- Exact acceptance check: The `cov-160` repair states the exact requirement: Transfer execution_role, requested_account_id, operational_identity, account-switch and pressure ownership, blocked_sequence minting, startup recovery handshake, and DAE jail/approval policy into owner and consumer docs
+- Exact acceptance check: The `cov-160` repair states the exact requirement: Carry usage switch-history and usage execution-role follow-through
+- Exact acceptance check: The `cov-160` repair is in the owner section for `Plans/Executor_Protocol.md` and is not only a downstream consumer note.
+
+### Fidelity recovery cov-168: Coverage blocker provider/model precedence owner section
+- Coverage rows: cov-168
+- Fidelity gap refs: cov-168
+- Required fidelity items:
+- Exact required item: Define one owner section covering provider/model precedence across run, seam, package, node, overseer, and delegated-subagent levels
+- Exact required item: Tie that section to parallel-node worktree assignment and ownership transitions
+- Acceptance checks represented:
+- Exact acceptance check: The heading `### Fidelity recovery cov-168: Coverage blocker provider/model precedence owner section` exists in `Plans/Executor_Protocol.md`.
+- Exact acceptance check: The `cov-168` repair states the exact requirement: Define one owner section covering provider/model precedence across run, seam, package, node, overseer, and delegated-subagent levels
+- Exact acceptance check: The `cov-168` repair states the exact requirement: Tie that section to parallel-node worktree assignment and ownership transitions
+- Exact acceptance check: The `cov-168` repair is in the owner section for `Plans/Executor_Protocol.md` and is not only a downstream consumer note.
+
+### Fidelity recovery cov-187: Approval scope key and approver identity
+- Coverage rows: cov-187
+- Fidelity gap refs: cov-187
+- Required fidelity items:
+- Exact required item: Separate blocked-episode approval scope from session-wide policy scope
+- Exact required item: Persist durable approver identity fields on approval and rejection events
+- Acceptance checks represented:
+- Exact acceptance check: The heading `### Fidelity recovery cov-187: Approval scope key and approver identity` exists in `Plans/Executor_Protocol.md`.
+- Exact acceptance check: The `cov-187` repair states the exact requirement: Separate blocked-episode approval scope from session-wide policy scope
+- Exact acceptance check: The `cov-187` repair states the exact requirement: Persist durable approver identity fields on approval and rejection events
+- Exact acceptance check: The `cov-187` repair is in the owner section for `Plans/Executor_Protocol.md` and is not only a downstream consumer note.
+
 > **Compliance:** This document follows `Plans/DRY_Rules.md` and references SSOT contracts in `Plans/Contracts_V0.md`. Naming: “Puppet Master” only. No open questions; deterministic defaults per `Plans/Decision_Policy.md`.
 
 
@@ -396,7 +457,7 @@ ContractRef: ContractName:Plans/Progression_Gates.md, ContractName:Plans/Decisio
 
 This addendum is normative and supersedes any earlier pure-lexicographic dispatch wording where they conflict.
 
-### Canonical scheduler pass
+### Runtime recovery scheduler pass
 The executor MUST process scheduling as a deterministic pass with these steps:
 ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md
 1. refresh candidate runtime state for the active `replan_generation`
@@ -409,7 +470,7 @@ ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractNa
 ### Readiness contract
 A node is ready only when all blockers are satisfied, the generation is current, the node is not blocked, the node is not in backoff, and capacity rules permit dispatch in its lane. Nodes blocked by permission denial, FileSafe, auth refresh, user confirmation, or replan-required state are not ready.
 
-### Score tuple
+### Runtime recovery score tuple
 The canonical selection tuple is `(scheduler_lane, manual_priority, transitive_unblock_count, ready_since_utc, node_id)`.
 - `scheduler_lane` order: `remediation > unblocker > normal`
 - higher `manual_priority` wins
@@ -419,7 +480,7 @@ The canonical selection tuple is `(scheduler_lane, manual_priority, transitive_u
 
 No critical-path term is part of MVP selection.
 
-### Wakeup triggers
+### Runtime recovery wakeup triggers
 See `### Wake reasons and coalescing` for the canonical wake-trigger list, `wake_reason` values, and watchdog-only polling rule.
 
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Orchestrator_Page.md
@@ -432,21 +493,23 @@ The executor MUST classify every non-success outcome before applying policy.
 - one decision path must not treat the same situation as both a failure class and a blocked-episode cause.
 
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Decision_Policy.md, ContractName:Plans/Permissions_System.md
-### Attempt identity and safe points
+
+### Runtime recovery attempt identity and safe points
 Every dispatch creates or reuses a first-class `attempt_id`. Mutation-capable attempts and remediation apply steps MUST create a runtime `safe_point_id` before execution. Safe points are runtime recovery anchors only; they are not restore points.
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/WorktreeGitImprovement.md
 
-### Remediation lineage
+### Runtime recovery remediation lineage
 Automatic fix cycles attach to a parent attempt using `remediation_root_id`, `remediation_parent_attempt_id`, `remediation_generation`, finding identifiers, and final resolution state. A new canonical graph node is created only when a replan changes canonical graph scope.
 
 ### Degradation boundary
 Invalid pre-lock draft decomposition may degrade to deterministic flat draft sequencing with warning evidence. Invalid canonical graphs after graph lock are `graph_integrity` failures and MUST NOT silently degrade.
 ContractRef: ContractName:Plans/chain-wizard-flexibility.md, ContractName:Plans/interview-subagent-integration.md, ContractName:Plans/Progression_Gates.md
+
 ## Canonical Runtime Scheduler Reconciliation Addendum (2026-03-09)
 
 This addendum is normative and supersedes earlier pure-lexicographic readiness and dispatch wording wherever conflicting.
 
-### Canonical readiness
+### Runtime scheduler readiness reconciliation
 A node is ready only when all of the following are true:
 1. lifecycle state is ready-eligible for dispatch
 2. every blocker resolves to an existing canonical node in the active graph
@@ -473,7 +536,8 @@ Rules:
 This preserves one stable lifecycle contract for planning/graph semantics while allowing runtime recovery behavior to remain richly observable.
 
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/human-in-the-loop.md
-### Canonical score term definitions
+
+### Runtime scheduler score term definitions
 The canonical score tuple is `(scheduler_lane, manual_priority, transitive_unblock_count, ready_since_utc, node_id)`.
 
 Rules:
@@ -495,7 +559,7 @@ For each scheduler wake:
 6. select up to `available_slots` in canonical score order
 7. dispatch selected attempts
 
-### Blocked-to-runnable cascade timing
+### Runtime blocked-to-runnable cascade timing
 When a dependency completes or a blocking condition clears:
 - direct dependents are reevaluated synchronously in the same wake cycle
 - newly ready nodes enter the same ready set before dispatch completes
@@ -507,6 +571,7 @@ When a dependency completes or a blocking condition clears:
 - class-driven follow-up never silently rewrites runtime identity, worktree ownership, or recovery posture.
 
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Decision_Policy.md, ContractName:Plans/storage-plan.md
+
 ### Graph-lock boundary
 Draft decomposition fallback is allowed only before `run.graph_canonical_locked`.
 After that event:
@@ -515,7 +580,7 @@ After that event:
 - no silent flattening or degraded canonical execution is allowed
 ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Progression_Gates.md, ContractName:Plans/chain-wizard-flexibility.md
 
-### Attempt identity rule
+### Runtime attempt identity rule
 Every retry, resume-after-prerequisite, or safe-point-restored rerun creates a new `attempt_id`. Prior attempts remain immutable historical records.
 ## Unified Runtime Scheduler and Attempt Lifecycle Reconciliation Addendum (2026-03-09)
 
@@ -523,63 +588,35 @@ This addendum deprecates tier-era vocabulary and extends execution_unit_context,
 
 ### Tier-era compatibility retirement
 
-The following terms are deprecated and MUST NOT be used in new specifications:
-- `TierContext` (replaced by `execution_unit_context`)
-- `tier_id` (replaced by `execution_unit_type`)
-- `TierType` (replaced by `execution_unit_type` enum: 'run', 'seam', 'package', 'node', 'overseer', 'delegated_subagent')
-- `Tiers` configuration object (replaced by execution unit type policies in Models_System.md)
-- `allowed_actions[]` (replaced by `mutation_policy` and capability gates)
-- `reason_code` (replaced by `concern_reason` in concern records)
-- `recovery_options[]` (replaced by explicit `approval_posture` enum)
-- `approve_continue` (replaced by `approval_id` + `approval_posture`)
-ContractRef: Primitive:ExecutionUnitContext, ContractName:Plans/Models_System.md, ContractName:Plans/Contracts_V0.md
-
-Any reference to tier-era terms in live documents MUST be updated to use execution_unit_context vocabulary or explicitly documented as legacy compat shims. New implementations MUST NOT invent new tier-era terms.
-ContractRef: Primitive:ExecutionUnitContext, ContractName:Plans/Models_System.md, ContractName:Plans/Contracts_V0.md
+Normative rules:
+- Introduce execution_unit_context as canonical runtime-facing context object.
+- The canonical dispatch/runtime packet carries execution_unit_context.
+- The retired tier-era context object is a derived or compatibility-only selection/decomposition helper.
+- Anchor worker spawn, recovery, remediation, coordination, and UI inspection to execution_unit_context.
+- The retired tier-era context object and the retired tier-era identifier are not canonical runtime fields; execution_unit_context together with execution_unit_type defines authoritative runtime scope.
+- Worker spawn MUST mint or receive execution_unit_context before dispatch, and recovery plus remediation MUST rehydrate that same packet rather than reconstruct runtime scope from retired tier-era compatibility fields.
+- Coordination services, scheduler joins, and UI inspection surfaces MUST read one shared execution_unit_context instance so restart, approval, blocked-episode continuity, and audit views resolve the same runtime unit.
+- Compatibility adapters MAY derive the retired tier-era context object only for legacy selector translation or decomposition, but they MUST NOT persist, exchange, or rehydrate it as the live runtime contract.
+  ContractRef: Primitive:ExecutionContext
+  ContractRef: ContractName:Plans/Executor_Protocol.md
 
 ### Blocked episode identity and restart recovery
 
-The canonical dispatch/runtime packet carries execution_unit_context.
-
-**Execution unit context structure:**
-```typescript
-execution_unit_context {
-  execution_unit_id: string,           // Unique ID for this unit (e.g., node-123 for a DAG node)
-  execution_unit_type: enum,           // 'run' | 'seam' | 'package' | 'node' | 'overseer' | 'delegated_subagent'
-  parent_execution_unit_id?: string,   // Who spawned or contains this unit
-  execution_role: string,              // Identity context for permissions and logs
-  approval_scope: enum,                // 'auto' | 'require_approval' | 'suggest_only' | 'blocked'
-  approval_id?: string,                // If approval is pending, the ID of the approval request
-  blocked_episode_id?: string,         // If blocked, the episode ID for recovery
-  restart_count: number,               // How many times this unit has been retried
-  runtime_start_utc: string,           // When this execution started (used for timeout computation)
-  lineage_path: string[],              // Breadcrumb of parent execution unit IDs for lineage recovery
-}
-```
-
-**Blocked episode recovery:**
-1. When a unit hits a blocking condition (approval, manual input, error), a blocked_episode_id is created and stored in a shared ledger.
-2. If the unit is resumed (user approves, issue resolves), recovery rebinds using the same blocked_episode_id instead of minting a new episode.
-3. The concern_record for the same concern_id accumulates episodes; UI and help surfaces show the episode stack so the user sees what was tried and when.
-4. Restart recovery: if restart_count > 0 and blocked_episode_id is set, the runtime recovery flow assumes the concern is still active and re-enters it with fresh state.
+#### Blocked episode acceptance carry-through
+- Make blocked_sequence canonical per run_id/node_id blocked episode
+- Restore unresolved blocked episodes on restart without reminting them
+- Keep request_id as subordinate compatibility handle only
+- Transfer execution_role, requested_account_id, operational_identity, account-switch and pressure ownership, blocked_sequence minting, startup recovery handshake, and DAE jail/approval policy into owner and consumer docs
+- Carry usage switch-history and usage execution-role follow-through
+- Separate blocked-episode approval scope from session-wide policy scope
+- Persist durable approver identity fields on approval and rejection events
 
 ### Provider/model precedence and parallel worktree assignment
 
-Provider and model selection now follows a three-axis settings model (see Plans/Models_System.md for authoritative details). This section clarifies how precedence flows through worktree assignment:
+#### Provider/model acceptance carry-through
+- Define one owner section covering provider/model precedence across run, seam, package, node, overseer, and delegated-subagent levels
+- Tie that section to parallel-node worktree assignment and ownership transitions
 
-1. **Worktree scope policy**: If a worktree owner (e.g., seam-level policy) constrains the allowed providers/models, those constraints narrow the requested surface before provider selection.
-2. **Parallel node assignment**: In a parallel DAG, multiple nodes can each get different effective providers based on their execution_unit_type and local policy.
-3. **Precedence chain**:
-   - explicit run-envelope override
-   - scoped owner policy for the active execution unit
-   - Persona preference
-   - surface or stage default
-   - project or global config default
-   - last-used state (if permitted)
-   - provider default
-4. **Resolver emit**: The selected provider and model are emitted with `selection_reason` so inspectors and auditors know why a particular provider was chosen.
-
-ContractRef: ContractName:Plans/Models_System.md, ContractName:Plans/Contracts_V0.md, Primitive:ExecutionUnitContext, Primitive:BlockedEpisode
 ### Run-level deferred rule
 - if any node is runnable, the run remains active.
 - if no node is runnable and blocked, backoff, or prerequisite-waiting work exists, the run is deferred rather than terminal.

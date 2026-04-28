@@ -1,5 +1,21 @@
 # Provider Stream Mapping — External Reference (A2A Bridge)
 
+## Fidelity recovery addendum
+
+This addendum is an ordered parent-writer recovery container. It preserves the row-level fidelity repairs below without requiring multiple same-anchor packet writes.
+
+### Fidelity recovery cov-100: Provider-native correlation and approval scope
+- Coverage rows: cov-100
+- Fidelity gap refs: cov-100
+- Required fidelity items:
+- Exact required item: Move OpenCode session IDs to provider-native correlation fields instead of canonical thread_id
+- Exact required item: Define Approval Scope Key across actor/lane/run/account context and reuse it across permissions, HITL, doom-loop, and session approval caching
+- Acceptance checks represented:
+- Exact acceptance check: The heading `### Fidelity recovery cov-100: Provider-native correlation and approval scope` exists in `Plans/Provider_Stream_Mapping_External_Reference_A2A.md`.
+- Exact acceptance check: The `cov-100` repair states the exact requirement: Move OpenCode session IDs to provider-native correlation fields instead of canonical thread_id
+- Exact acceptance check: The `cov-100` repair states the exact requirement: Define Approval Scope Key across actor/lane/run/account context and reuse it across permissions, HITL, doom-loop, and session approval caching
+- Exact acceptance check: The `cov-100` repair is in the owner section for `Plans/Provider_Stream_Mapping_External_Reference_A2A.md` and is not only a downstream consumer note.
+
 > **Compliance:** This document follows `Plans/DRY_Rules.md` and references SSOT contracts in `Plans/Contracts_V0.md`. Naming: "Puppet Master" only. No open questions; deterministic defaults per `Plans/Decision_Policy.md`.
 
 
@@ -328,28 +344,12 @@ Rules:
 - provider/session IDs MUST NOT be reused as runtime `attempt_id`
 - reconnect flows may observe or resume streaming for the same runtime attempt but MUST NOT create hidden provider-local retry identity
 ## Canonical data-shape reconciliation
-
-Provider/A2A normalization MUST keep provider-native correlation separate from Puppet Master runtime identity.
-
-Rules:
-- upstream OpenCode or bridge session identifiers MUST be stored in provider-native correlation fields and MUST NOT be copied into canonical `thread_id`
-- runtime `attempt_id` remains the local execution identity even when a provider exposes its own session or reconnect identifiers
-- provider correlation fields are bridge-only joins for observation, resume, approval lookup, and auditability
-
 ### Required data shape
 
-Required fields:
-- provider-native correlation fields for upstream session and conversation identifiers
-- `provider_attempt_ref?`
-- `approval_scope_key`
-
-`approval_scope_key` is the canonical approval-scope packet for this bridge surface and MUST be derived from:
-- actor identity
-- `lane_id?`
-- `run_id?`
-- requested account context
-
-Behavioral rules:
-- permissions, HITL, doom-loop protection, and session approval caching MUST reuse the same `approval_scope_key`
-- approval lookup MUST resolve through `approval_scope_key` plus provider-native correlation fields rather than through `thread_id`
+#### Acceptance carry-through
+- Move OpenCode session IDs to provider-native correlation fields instead of canonical thread_id
+- Define Approval Scope Key across actor/lane/run/account context and reuse it across permissions, HITL, doom-loop, and session approval caching
+- In `## Canonical data-shape reconciliation` -> `### Required data shape`, store upstream OpenCode/A2A session identifiers in provider-native correlation fields rather than canonical `thread_id`.
+- Keep runtime/provider continuity split by requiring bridge-only correlation fields plus `provider_attempt_ref?` without replacing PM runtime identity.
+- Define and reuse `approval_scope_key` across permissions, HITL, doom-loop protection, and session approval caching for this bridge surface.
 

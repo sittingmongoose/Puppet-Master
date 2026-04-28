@@ -1,22 +1,266 @@
 {
   "schema_id": "pm.scribe_apply_report.v1",
   "work_id": "w-20260312-203855",
-  "run_id": "r-20260312-203855-run-027",
-  "status": "blocked",
-  "triage_class": "reconciliation_plan_defect",
-  "docs_touched": [],
-  "targets_applied": [],
-  "targets_blocked": [
-    "target-025",
-    "target-036",
-    "batch-5b-usage-billing-identity-attribution-pricing-metadata",
-    "batch-5b-usage-export-taxonomy"
+  "run_id": "r-20260312-203855-run-030",
+  "status": "complete",
+  "triage_class": null,
+  "docs_touched": [
+    "Plans/CLI_Bridged_Providers.md",
+    "Plans/Contracts_V0.md",
+    "Plans/Crosswalk.md",
+    "Plans/Executor_Protocol.md",
+    "Plans/FinalGUISpec.md",
+    "Plans/GUI_Rebuild_Requirements_Checklist.md",
+    "Plans/GitHub_Integration.md",
+    "Plans/Glossary.md",
+    "Plans/Models_System.md",
+    "Plans/Multi-Account.md",
+    "Plans/Orchestrator_Page.md",
+    "Plans/Permissions_System.md",
+    "Plans/Progression_Gates.md",
+    "Plans/Prompt_Pipeline.md",
+    "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+    "Plans/Run_Graph_View.md",
+    "Plans/Run_Modes.md",
+    "Plans/Runtime_Artifacts_Panel.md",
+    "Plans/UI_Command_Catalog.md",
+    "Plans/Widget_System.md",
+    "Plans/Wiring_Matrix.md",
+    "Plans/WorktreeGitImprovement.md",
+    "Plans/assistant-chat-design.md",
+    "Plans/human-in-the-loop.md",
+    "Plans/interview-subagent-integration.md",
+    "Plans/orchestrator-subagent-integration.md",
+    "Plans/storage-plan.md",
+    "Plans/usage-feature.md"
   ],
-  "exact_blockers": [
-    "Active-run checks passed for run `r-20260312-203855-run-027`, and the packet plus packet-shape artifacts match, but the packet contains overlapping same-file `heading:replace_section` targets that Scribe cannot apply safely.",
-    "`Plans/Widget_System.md` has an owner-section replacement `target-025` on `## 4. Orchestrator Progress widget scope and catalog linkage` spanning lines 41-51, while nested child replacement `target-036` on `### Catalog source and drill linkage` spans lines 47-51 inside the same owner block.",
-    "`Plans/usage-feature.md` has parent replacement `batch-5b-usage-billing-identity-attribution-pricing-metadata` spanning lines 293-317, while nested child replacement `batch-5b-usage-export-taxonomy` spans lines 298-301 inside that same parent block.",
-    "Because these packet targets overlap on live spans, Scribe would have to guess precedence or mutate packet intent to continue, so the blocker routes to Reconciliation Planner."
+  "targets_applied": [
+    {
+      "target_id": "rec-doc-cli-bridged-providers-fidelity-recovery",
+      "path": "Plans/CLI_Bridged_Providers.md",
+      "operation": "insert_after",
+      "packet_span_group_id": "span:cli-bridged-providers:fidelity-recovery-addendum",
+      "packet_writer_role": "parent_writer",
+      "status": "applied"
+    },
+    {
+      "target_id": "rec-doc-contracts-v0-fidelity-recovery",
+      "path": "Plans/Contracts_V0.md",
+      "operation": "insert_after",
+      "packet_span_group_id": "span:contracts-v0:fidelity-recovery-addendum",
+      "packet_writer_role": "parent_writer",
+      "status": "applied"
+    },
+    {
+      "target_id": "rec-doc-crosswalk-fidelity-recovery",
+      "path": "Plans/Crosswalk.md",
+      "operation": "insert_after",
+      "packet_span_group_id": "span:crosswalk:fidelity-recovery-addendum",
+      "packet_writer_role": "parent_writer",
+      "status": "applied"
+    },
+    {
+      "target_id": "rec-doc-executor-protocol-fidelity-recovery",
+      "path": "Plans/Executor_Protocol.md",
+      "operation": "insert_after",
+      "packet_span_group_id": "span:executor-protocol:fidelity-recovery-addendum",
+      "packet_writer_role": "parent_writer",
+      "status": "applied"
+    },
+    {
+      "target_id": "rec-doc-finalguispec-fidelity-recovery",
+      "path": "Plans/FinalGUISpec.md",
+      "operation": "insert_after",
+      "packet_span_group_id": "span:finalguispec:fidelity-recovery-addendum",
+      "packet_writer_role": "parent_writer",
+      "status": "applied"
+    },
+    {
+      "target_id": "rec-doc-gui-rebuild-requirements-checklist-fidelity-recovery",
+      "path": "Plans/GUI_Rebuild_Requirements_Checklist.md",
+      "operation": "insert_after",
+      "packet_span_group_id": "span:gui-rebuild-requirements-checklist:fidelity-recovery-addendum",
+      "packet_writer_role": "parent_writer",
+      "status": "applied"
+    },
+    {
+      "target_id": "rec-doc-github-integration-fidelity-recovery",
+      "path": "Plans/GitHub_Integration.md",
+      "operation": "insert_after",
+      "packet_span_group_id": "span:github-integration:fidelity-recovery-addendum",
+      "packet_writer_role": "parent_writer",
+      "status": "applied"
+    },
+    {
+      "target_id": "rec-doc-glossary-fidelity-recovery",
+      "path": "Plans/Glossary.md",
+      "operation": "insert_after",
+      "packet_span_group_id": "span:glossary:fidelity-recovery-addendum",
+      "packet_writer_role": "parent_writer",
+      "status": "applied"
+    },
+    {
+      "target_id": "rec-doc-models-system-fidelity-recovery",
+      "path": "Plans/Models_System.md",
+      "operation": "insert_after",
+      "packet_span_group_id": "span:models-system:fidelity-recovery-addendum",
+      "packet_writer_role": "parent_writer",
+      "status": "applied"
+    },
+    {
+      "target_id": "rec-doc-multi-account-fidelity-recovery",
+      "path": "Plans/Multi-Account.md",
+      "operation": "insert_after",
+      "packet_span_group_id": "span:multi-account:fidelity-recovery-addendum",
+      "packet_writer_role": "parent_writer",
+      "status": "applied"
+    },
+    {
+      "target_id": "rec-doc-orchestrator-page-fidelity-recovery",
+      "path": "Plans/Orchestrator_Page.md",
+      "operation": "insert_after",
+      "packet_span_group_id": "span:orchestrator-page:fidelity-recovery-addendum",
+      "packet_writer_role": "parent_writer",
+      "status": "applied"
+    },
+    {
+      "target_id": "rec-doc-permissions-system-fidelity-recovery",
+      "path": "Plans/Permissions_System.md",
+      "operation": "insert_after",
+      "packet_span_group_id": "span:permissions-system:fidelity-recovery-addendum",
+      "packet_writer_role": "parent_writer",
+      "status": "applied"
+    },
+    {
+      "target_id": "rec-doc-progression-gates-fidelity-recovery",
+      "path": "Plans/Progression_Gates.md",
+      "operation": "insert_after",
+      "packet_span_group_id": "span:progression-gates:fidelity-recovery-addendum",
+      "packet_writer_role": "parent_writer",
+      "status": "applied"
+    },
+    {
+      "target_id": "rec-doc-prompt-pipeline-fidelity-recovery",
+      "path": "Plans/Prompt_Pipeline.md",
+      "operation": "insert_after",
+      "packet_span_group_id": "span:prompt-pipeline:fidelity-recovery-addendum",
+      "packet_writer_role": "parent_writer",
+      "status": "applied"
+    },
+    {
+      "target_id": "rec-doc-provider-stream-mapping-external-reference-a2a-fidelity-recovery",
+      "path": "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+      "operation": "insert_after",
+      "packet_span_group_id": "span:provider-stream-mapping-external-reference-a2a:fidelity-recovery-addendum",
+      "packet_writer_role": "parent_writer",
+      "status": "applied"
+    },
+    {
+      "target_id": "rec-doc-run-graph-view-fidelity-recovery",
+      "path": "Plans/Run_Graph_View.md",
+      "operation": "insert_after",
+      "packet_span_group_id": "span:run-graph-view:fidelity-recovery-addendum",
+      "packet_writer_role": "parent_writer",
+      "status": "applied"
+    },
+    {
+      "target_id": "rec-doc-run-modes-fidelity-recovery",
+      "path": "Plans/Run_Modes.md",
+      "operation": "insert_after",
+      "packet_span_group_id": "span:run-modes:fidelity-recovery-addendum",
+      "packet_writer_role": "parent_writer",
+      "status": "applied"
+    },
+    {
+      "target_id": "rec-doc-runtime-artifacts-panel-fidelity-recovery",
+      "path": "Plans/Runtime_Artifacts_Panel.md",
+      "operation": "insert_after",
+      "packet_span_group_id": "span:runtime-artifacts-panel:fidelity-recovery-addendum",
+      "packet_writer_role": "parent_writer",
+      "status": "applied"
+    },
+    {
+      "target_id": "rec-doc-ui-command-catalog-fidelity-recovery",
+      "path": "Plans/UI_Command_Catalog.md",
+      "operation": "insert_after",
+      "packet_span_group_id": "span:ui-command-catalog:fidelity-recovery-addendum",
+      "packet_writer_role": "parent_writer",
+      "status": "applied"
+    },
+    {
+      "target_id": "rec-doc-widget-system-fidelity-recovery",
+      "path": "Plans/Widget_System.md",
+      "operation": "insert_after",
+      "packet_span_group_id": "span:widget-system:fidelity-recovery-addendum",
+      "packet_writer_role": "parent_writer",
+      "status": "applied"
+    },
+    {
+      "target_id": "rec-doc-wiring-matrix-fidelity-recovery",
+      "path": "Plans/Wiring_Matrix.md",
+      "operation": "insert_after",
+      "packet_span_group_id": "span:wiring-matrix:fidelity-recovery-addendum",
+      "packet_writer_role": "parent_writer",
+      "status": "applied"
+    },
+    {
+      "target_id": "rec-doc-worktreegitimprovement-fidelity-recovery",
+      "path": "Plans/WorktreeGitImprovement.md",
+      "operation": "insert_after",
+      "packet_span_group_id": "span:worktreegitimprovement:fidelity-recovery-addendum",
+      "packet_writer_role": "parent_writer",
+      "status": "applied"
+    },
+    {
+      "target_id": "rec-doc-assistant-chat-design-fidelity-recovery",
+      "path": "Plans/assistant-chat-design.md",
+      "operation": "insert_after",
+      "packet_span_group_id": "span:assistant-chat-design:fidelity-recovery-addendum",
+      "packet_writer_role": "parent_writer",
+      "status": "applied"
+    },
+    {
+      "target_id": "rec-doc-human-in-the-loop-fidelity-recovery",
+      "path": "Plans/human-in-the-loop.md",
+      "operation": "insert_after",
+      "packet_span_group_id": "span:human-in-the-loop:fidelity-recovery-addendum",
+      "packet_writer_role": "parent_writer",
+      "status": "applied"
+    },
+    {
+      "target_id": "rec-doc-interview-subagent-integration-fidelity-recovery",
+      "path": "Plans/interview-subagent-integration.md",
+      "operation": "insert_after",
+      "packet_span_group_id": "span:interview-subagent-integration:fidelity-recovery-addendum",
+      "packet_writer_role": "parent_writer",
+      "status": "applied"
+    },
+    {
+      "target_id": "rec-doc-orchestrator-subagent-integration-fidelity-recovery",
+      "path": "Plans/orchestrator-subagent-integration.md",
+      "operation": "insert_after",
+      "packet_span_group_id": "span:orchestrator-subagent-integration:fidelity-recovery-addendum",
+      "packet_writer_role": "parent_writer",
+      "status": "applied"
+    },
+    {
+      "target_id": "rec-doc-storage-plan-fidelity-recovery",
+      "path": "Plans/storage-plan.md",
+      "operation": "insert_after",
+      "packet_span_group_id": "span:storage-plan:fidelity-recovery-addendum",
+      "packet_writer_role": "parent_writer",
+      "status": "applied"
+    },
+    {
+      "target_id": "rec-doc-usage-feature-fidelity-recovery",
+      "path": "Plans/usage-feature.md",
+      "operation": "insert_after",
+      "packet_span_group_id": "span:usage-feature:fidelity-recovery-addendum",
+      "packet_writer_role": "parent_writer",
+      "status": "applied"
+    }
   ],
-  "next_required_stage": "Reconciliation Planner"
+  "targets_blocked": [],
+  "exact_blockers": [],
+  "next_required_stage": "Normalizer"
 }

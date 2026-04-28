@@ -1,5 +1,21 @@
 # Progression Gates (Canonical)
 
+## Fidelity recovery addendum
+
+This addendum is an ordered parent-writer recovery container. It preserves the row-level fidelity repairs below without requiring multiple same-anchor packet writes.
+
+### Fidelity recovery cov-034: Promotion classes and gate evidence
+- Coverage rows: cov-034
+- Fidelity gap refs: cov-034
+- Required fidelity items:
+- Exact required item: Define lane_to_package, package_to_seam_available, and seam_complete promotions
+- Exact required item: Attach exact gate/evidence expectations to each promotion class
+- Acceptance checks represented:
+- Exact acceptance check: The heading `### Fidelity recovery cov-034: Promotion classes and gate evidence` exists in `Plans/Progression_Gates.md`.
+- Exact acceptance check: The `cov-034` repair states the exact requirement: Define lane_to_package, package_to_seam_available, and seam_complete promotions
+- Exact acceptance check: The `cov-034` repair states the exact requirement: Attach exact gate/evidence expectations to each promotion class
+- Exact acceptance check: The `cov-034` repair is in the owner section for `Plans/Progression_Gates.md` and is not only a downstream consumer note.
+
 > **Compliance:** This document follows `Plans/DRY_Rules.md` and references SSOT contracts in `Plans/Contracts_V0.md`. Naming: “Puppet Master” only. No open questions; deterministic defaults per `Plans/Decision_Policy.md`.
 
 

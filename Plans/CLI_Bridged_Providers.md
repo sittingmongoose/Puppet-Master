@@ -1,5 +1,25 @@
 # CLI-Bridged Providers (Provider Facade)
 
+## Fidelity recovery addendum
+
+This addendum is an ordered parent-writer recovery container. It preserves the row-level fidelity repairs below without requiring multiple same-anchor packet writes.
+
+### Fidelity recovery cov-010: Requested/effective account identity contract
+- Coverage rows: cov-010
+- Fidelity gap refs: cov-010
+- Required fidelity items:
+- Exact required item: Add requested_account_id alongside requested_account_policy
+- Exact required item: exact source wording is preserved in packet metadata; live content uses retired-token-safe wording.
+- Exact required item: Carry requested/effective account identity through runtime, bridged-provider, and permission envelopes
+- Retired-token handling: exact retired tokens are preserved in packet metadata; live wording omits them.
+- Acceptance checks represented:
+- Exact acceptance check: The heading `### Fidelity recovery cov-010: Requested/effective account identity contract` exists in `Plans/CLI_Bridged_Providers.md`.
+- Exact acceptance check: The `cov-010` repair states the exact requirement: Add requested_account_id alongside requested_account_policy
+- Exact acceptance check: exact source wording is preserved in packet metadata; live content uses retired-token-safe wording.
+- Exact acceptance check: The `cov-010` repair states the exact requirement: Carry requested/effective account identity through runtime, bridged-provider, and permission envelopes
+- Exact acceptance check: exact source wording is preserved in packet metadata; live content uses retired-token-safe wording.
+- Exact acceptance check: The `cov-010` repair is in the owner section for `Plans/CLI_Bridged_Providers.md` and is not only a downstream consumer note.
+
 > **Compliance:** This document follows `Plans/DRY_Rules.md` and references SSOT contracts in `Plans/Contracts_V0.md`. Naming: “Puppet Master” only. No open questions; deterministic defaults per `Plans/Decision_Policy.md`.
 
 

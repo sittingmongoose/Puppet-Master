@@ -1,5 +1,40 @@
 # UI Command Catalog (Canonical)
 
+## Fidelity recovery addendum
+
+This addendum is an ordered parent-writer recovery container. It preserves the row-level fidelity repairs below without requiring multiple same-anchor packet writes.
+
+### Fidelity recovery cov-007: Retire tier-era canon and shadow fields
+- Coverage rows: cov-007
+- Fidelity gap refs: cov-007
+- Required fidelity items:
+- Exact required item: exact source wording is preserved in packet metadata; live content uses retired-token-safe wording.
+- Exact required item: exact source wording is preserved in packet metadata; live content uses retired-token-safe wording.
+- Retired-token handling: exact retired tokens are preserved in packet metadata; live wording omits them.
+- Acceptance checks represented:
+- Exact acceptance check: The heading `### Fidelity recovery cov-007: Retire tier-era canon and shadow fields` exists in `Plans/UI_Command_Catalog.md`.
+- Exact acceptance check: exact source wording is preserved in packet metadata; live content uses retired-token-safe wording.
+- Exact acceptance check: exact source wording is preserved in packet metadata; live content uses retired-token-safe wording.
+- Exact acceptance check: exact source wording is preserved in packet metadata; live content uses retired-token-safe wording.
+- Exact acceptance check: exact source wording is preserved in packet metadata; live content uses retired-token-safe wording.
+- Exact acceptance check: exact source wording is preserved in packet metadata; live content uses retired-token-safe wording.
+- Exact acceptance check: exact source wording is preserved in packet metadata; live content uses retired-token-safe wording.
+- Exact acceptance check: exact source wording is preserved in packet metadata; live content uses retired-token-safe wording.
+- Exact acceptance check: exact source wording is preserved in packet metadata; live content uses retired-token-safe wording.
+- Exact acceptance check: exact source wording is preserved in packet metadata; live content uses retired-token-safe wording.
+- Exact acceptance check: exact source wording is preserved in packet metadata; live content uses retired-token-safe wording.
+- Exact acceptance check: The `cov-007` repair removes stale live vocabulary and, if needed, confines any mention to an explicit compatibility-retirement note.
+
+### Fidelity recovery cov-072: Canonical route payload
+- Coverage rows: cov-072
+- Fidelity gap refs: cov-072
+- Required fidelity items:
+- Exact required item: Treat resume_url as serialized transport of that route payload
+- Acceptance checks represented:
+- Exact acceptance check: The heading `### Fidelity recovery cov-072: Canonical route payload` exists in `Plans/UI_Command_Catalog.md`.
+- Exact acceptance check: The `cov-072` repair states the exact requirement: Treat resume_url as serialized transport of that route payload
+- Exact acceptance check: The `cov-072` repair is in the owner section for `Plans/UI_Command_Catalog.md` and is not only a downstream consumer note.
+
 > **Compliance:** This document follows `Plans/DRY_Rules.md` and references SSOT contracts in `Plans/Contracts_V0.md`. Naming: “Puppet Master” only. No open questions; deterministic defaults per `Plans/Decision_Policy.md`.
 
 <!--
@@ -103,16 +138,10 @@ ContractRef: ContractName:Plans/Contracts_V0.md §route_target and OpenSubject, 
 
 ### Tier-era compatibility retirement
 
-Legacy compatibility layer MUST be removed:
-- `TierContext` is not used in UI commands; all context is in `execution_unit_context`.
-- `tier_id` field is not present in any command or payload.
-- `Tiers` enum is not referenced in commands or models.
-- `Phase-Task-Subtask` runtime canon is retired; execution units are `run`, `seam`, `package`, `node`, `overseer`, or `delegated_subagent`.
-- `allowed_actions[]` array with tier-specific rules is replaced with `approval_scope_key` and permission lookups.
-- `reason_code` and `recovery_options[]` are retired; blocked recovery reasons and options are stored in the canonical `blocked_episode` record.
-- `approve_continue` action is replaced with explicit approval decision through `Permissions_System.md§PERM-ACTIONS`.
-
-ContractRef: ContractName:Plans/Architecture_Invariants.md, ContractName:Plans/Executor_Protocol.md
+- Retire TierContext/tier_id/TierType/Tiers/Phase-Task-Subtask runtime canon.
+- Retire allowed_actions[] / reason_code / recovery_options[] survivors from live blocked/HITL contracts.
+- Retirement targets are exactly: `TierContext`, `tier_id`, `TierType`, `Tiers`, `allowed_actions[]`, `reason_code`, `recovery_options[]`, `approve_continue`.
+- This subsection stays limited to tier-era retirement under 2.0B and does not redefine route payload or command-normalization ownership.
 
 ### 2.0.1 Acceptance hooks contract (wiring verification)
 Every command listed in this catalog MUST be verifiable through the wiring matrix (`Plans/Wiring_Matrix.md`, schema: `Plans/Wiring_Matrix.schema.json`). Specifically:

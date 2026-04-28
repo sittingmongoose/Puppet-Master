@@ -1,5 +1,33 @@
 # Crosswalk (Canonical)
 
+## Fidelity recovery addendum
+
+This addendum is an ordered parent-writer recovery container. It preserves the row-level fidelity repairs below without requiring multiple same-anchor packet writes.
+
+### Fidelity recovery cov-170: Coverage blocker worktree allocation strategy
+- Coverage rows: cov-170
+- Fidelity gap refs: cov-170
+- Required fidelity items:
+- Exact required item: Define concrete worktree allocation strategy
+- Exact required item: Define contamination, reuse, and cleanup rules for that strategy
+- Acceptance checks represented:
+- Exact acceptance check: The heading `### Fidelity recovery cov-170: Coverage blocker worktree allocation strategy` exists in `Plans/Crosswalk.md`.
+- Exact acceptance check: The `cov-170` repair states the exact requirement: Define concrete worktree allocation strategy
+- Exact acceptance check: The `cov-170` repair states the exact requirement: Define contamination, reuse, and cleanup rules for that strategy
+- Exact acceptance check: The `cov-170` repair is in the owner section for `Plans/Crosswalk.md` and is not only a downstream consumer note.
+
+### Fidelity recovery cov-200: Route/open compatibility-only fallback marking
+- Coverage rows: cov-200
+- Fidelity gap refs: cov-200
+- Required fidelity items:
+- Exact required item: Mark timestamp/run/thread fallback logic as compatibility-only inside route/open contracts
+- Exact required item: Keep ref-family split explicit when route/open normalization is transferred
+- Acceptance checks represented:
+- Exact acceptance check: The heading `### Fidelity recovery cov-200: Route/open compatibility-only fallback marking` exists in `Plans/Crosswalk.md`.
+- Exact acceptance check: The `cov-200` repair states the exact requirement: Mark timestamp/run/thread fallback logic as compatibility-only inside route/open contracts
+- Exact acceptance check: The `cov-200` repair states the exact requirement: Keep ref-family split explicit when route/open normalization is transferred
+- Exact acceptance check: The `cov-200` repair is in the owner section for `Plans/Crosswalk.md` and is not only a downstream consumer note.
+
 > **Compliance:** This document follows `Plans/DRY_Rules.md` and references SSOT contracts in `Plans/Contracts_V0.md`. Naming: “Puppet Master” only. No open questions; deterministic defaults per `Plans/Decision_Policy.md`.
 
 

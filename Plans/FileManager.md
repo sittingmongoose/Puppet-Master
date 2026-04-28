@@ -307,10 +307,11 @@ FileManager is the canonical owner of the file-open and artifact-storage contrac
 
 ### Route/open rules
 
-- **File open**: Resolve route_target scheme and permissions, then bind to worktree and execution_unit_context.
-- **Artifact open**: Query artifact storage by (concern_id, route_target, artifact_type) and check visibility rules.
-- **Help open**: Open help entries via the shared help/OpenSubject routing in Contracts_V0.md.
-- **Concern open**: Open a concern episode by concern_id and blocked_episode_id; show the escalation stack and relevant artifacts.
+#### Acceptance carry-through
+- Let Contracts_V0 own canonical route_target and OpenSubject contracts
+- Keep Crosswalk limited to primitive boundary ownership and FileManager OpenFile narrow and path-based
+- Keep route_target small with subject_id or object_kind/object_id identity
+- Limit subject_id families to doc:/artifact:, keep inspector_target secondary, and override only necessary destination/context state
 
 ### Error recovery in file/artifact access
 
@@ -321,22 +322,6 @@ If a file path is broken or a route_target is unreachable:
 
 ## Runtime Artifact Open-by-Identity Consolidation Addendum (2026-03-09)
 
-Artifacts are now opened, stored, and indexed by identity (content hash, metadata) rather than by filesystem path. This consolidation allows artifacts to follow concerns and approvals without being scattered across worktrees.
-
-**Artifact storage structure:**
-```typescript
-Artifact {
-  artifact_id: string,                 // Content hash or UUID
-  concern_id?: string,                 // If produced by a concern/escalation
-  blocked_episode_id?: string,         // Which episode produced this artifact
-  artifact_type: string,               // 'log' | 'diff' | 'output' | 'input' | 'trace'
-  content_hash: string,                // SHA256 or similar
-  route_target: string,                // Where it should be saved/shared
-  visibility: enum,                    // 'public' | 'team' | 'private' | 'escalation_only'
-  created_at_utc: string,
-  expires_at_utc?: string,             // Retention policy
-  lineage_path: string[],              // Which execution units contributed to this artifact
-}
-```
-
-ContractRef: Primitive:RouteTarget, Primitive:OpenSubject, ContractName:Plans/Contracts_V0.md
+#### Acceptance carry-through
+- Make runtime artifacts attempt-native by default with artifact identity, routing refs, content refs, and provider/usage linkage
+- Resolve artifact open flows by artifact_id and then by linked envelope refs

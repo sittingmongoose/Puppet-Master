@@ -1,5 +1,29 @@
 # Glossary (Canonical)
 
+## Fidelity recovery addendum
+
+This addendum is an ordered parent-writer recovery container. It preserves the row-level fidelity repairs below without requiring multiple same-anchor packet writes.
+
+### Fidelity recovery cov-061: Glossary and help governance
+- Coverage rows: cov-061
+- Fidelity gap refs: cov-061
+- Required fidelity items:
+- Exact required item: Define inline help, context help, and canonical help entry layers while keeping canonical term names stable
+- Acceptance checks represented:
+- Exact acceptance check: The heading `### Fidelity recovery cov-061: Glossary and help governance` exists in `Plans/Glossary.md`.
+- Exact acceptance check: The `cov-061` repair states the exact requirement: Define inline help, context help, and canonical help entry layers while keeping canonical term names stable
+- Exact acceptance check: The `cov-061` repair includes an explicit consumer cross-reference to the owning canonical contract for the same requirement.
+
+### Fidelity recovery cov-194: Help entry template and related-concept clusters
+- Coverage rows: cov-194
+- Fidelity gap refs: cov-194
+- Required fidelity items:
+- Exact required item: Define a dedicated help-entry template and related-concept linking clusters
+- Acceptance checks represented:
+- Exact acceptance check: The heading `### Fidelity recovery cov-194: Help entry template and related-concept clusters` exists in `Plans/Glossary.md`.
+- Exact acceptance check: The `cov-194` repair states the exact requirement: Define a dedicated help-entry template and related-concept linking clusters
+- Exact acceptance check: The `cov-194` repair includes an explicit consumer cross-reference to the owning canonical contract for the same requirement.
+
 > **Compliance:** This document follows `Plans/DRY_Rules.md` and references SSOT contracts in `Plans/Contracts_V0.md`. Naming: “Puppet Master” only. No open questions; deterministic defaults per `Plans/Decision_Policy.md`.
 
 
@@ -31,19 +55,17 @@ ContractRef: Invariant:INV-010
 
 ### Orchestrator rewrite terms
 
-**Execution Unit**: A discrete unit of work in the orchestrator (run, seam, package, node, overseer, or delegated subagent). Each has its own execution_unit_context, approval scope, and restart history. Not to be confused with Tier (deprecated).
+- **Execution Unit Context** -- the canonical runtime-facing object that names `execution_unit_id`, `execution_unit_type`, parent lineage, and the `execution_role` that owns execution.
+- **Concern Record** -- the durable record for a concern lineage, including `concern_id`, `blocked_episode_id`, `blocked_sequence`, escalation frames, and recovery posture.
+- **Trust State** -- the runtime trust decision for whether a route, provider, or mutation surface is readable, writable, degraded, or blocked.
+- **Degraded State** -- a temporary runtime condition where read-only inspection may continue but write mutations or resumptions remain gated until recovery clears the degraded posture.
+- **Inline Help** -- lightweight help rendered directly beside the active control, row, or blocked state without changing the canonical term name.
+- **Context Help** -- a resolved help payload scoped to the active concern, execution context, route target, or inspector surface.
+- **Canonical Help Entry** -- the durable help record keyed by canonical concern and state terms; inline help and context help both point back to this entry instead of minting new synonyms.
 
-**Execution Role**: The identity context (user, service account, or agent) under which a unit executes. Tied to permissions, quotas, and escalation chains.
+Use these canonical names verbatim in rewrite docs so execution objects, states, trust semantics, and help layers stay stable across Orchestrator, inspectors, and recovery surfaces.
 
-**Concern**: An issue, error, or escalation that blocks or affects execution. Concerns form a lineage of episodes; each episode is tied to a specific execution attempt.
-
-**Blocked Episode**: One instance of a concern being blocked (e.g., waiting for approval, encountering an error, retrying). Identified by blocked_episode_id; multiple episodes can exist within a single concern_id.
-
-**Escalation Stack**: The chain of escalation frames showing who tried to resolve a concern, when, and what the outcome was. Escalations are not removed; they form an audit trail.
-
-**Approval Scope**: The execution_unit_context level at which an approval decision gates further execution (run scope, node scope, delegated_subagent scope). An approval at one scope does not bypass approvals at a different scope.
-
-**Approval Posture**: The policy for how approval decisions are handled (auto-approve, require_approval, suggest_only, or blocked). Tied to execution_unit_context or Persona settings.
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/FinalGUISpec.md
 
 ### Runtime and routing terms
 
@@ -59,36 +81,46 @@ ContractRef: Invariant:INV-010
 
 ### Projection freshness and health terms
 
-**Projection Freshness**: How recently the UI's state representation was synchronized with the execution backend. A projection can be "fresh" (< 1s old), "warm" (< 30s), or "stale" (> 30s). UI updates are gated by freshness; a stale projection triggers a refresh.
+- **Projection Freshness** -- the recency of the projection relative to the live runtime source. It answers "how old is this copy?" and is evaluated with states such as `fresh`, `warm`, `stale`, and `expired`.
+- **Projection Health** -- the quality and executability of the projection. It answers "is this state safe and complete enough to act on?" and is evaluated with states such as `healthy`, `degraded`, `blocked`, or `unknown`.
+- Action gating uses both axes together: a projection can be fresh-but-unhealthy or healthy-but-stale, and either condition can block a route/open or mutation surface.
+- `trust_tier` is reserved for preview/browser semantics such as DOM confidence, scraper provenance, or visual inspection confidence.
+- Retire `trust_tier` from action-gating terminology; route/open admissibility and mutations key from `projection_freshness` plus `projection_health` instead.
 
-**Projection Health**: A synthetic metric combining execution unit status, concern count, escalation depth, and approval pending state. Ranges from 'green' (no concerns, all units progressing) to 'yellow' (concerns present but recoverable) to 'red' (blocked or unrecoverable state).
-
-**Help Architecture**: The system for providing contextual guidance (help entries, suggested actions, escalation advice) based on active concern, execution_unit_type, and concern_reason. Help entries are canonical and reusable across surfaces.
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md
 
 ### Help architecture and project status terms
 
-**Help Entry**: A reusable guidance document addressing a specific concern_reason or execution problem. Indexed by concern_class and concern_reason so the orchestrator can look up relevant help without requiring human navigation.
+- **Help Entry Architecture** -- the dedicated help-entry architecture with related-concept linking. Each help entry is keyed by canonical concern/state terms and can expose related concepts without renaming the underlying canon.
+- **Project `activity_state`** -- the project-wide activity summary (`planning`, `running`, `waiting`, `blocked`, `cooling_down`, `archived`) that answers what the project is doing now.
+- **Project `attention_state`** -- the project-wide urgency summary (`quiet`, `watch`, `needs_attention`, `urgent`) that answers how strongly the project should surface alerts, badges, and resurfacing reminders.
+- **Blocked-owner taxonomy** -- the canonical owner classes for who must act next (`runtime_owner`, `approval_owner`, `account_owner`, `route_owner`, `policy_owner`).
+- **Escalation ladder** -- the deterministic progression from inline help to context help to canonical help entry to owner-targeted remediation to explicit human escalation.
+- **Resurfacing / aging rules** -- the thresholds that age unresolved blockers, raise `attention_state`, and resurface the same help entry until the blocker is resolved, dismissed, or reassigned.
 
-**Project Status**: A summary projection of all runs, concerns, and escalations for an active project. Includes breakdowns by concern_class, approval posture, and resolution state (active, resolved, dismissed).
+This section defines project `activity_state`, project `attention_state`, blocked-owner taxonomy, escalation ladder, and resurfacing/aging rules so the same vocabulary can be reused across Orchestrator, project inspectors, and help surfaces.
 
-**Suggested Action**: An auto-generated recommendation based on the active concern, historical outcomes, and available Personas or providers. Not mandatory; users can ignore or override.
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Orchestrator_Page.md
 
 ### Help-entry template and related-concept clusters
 
-**Template Structure**: Each help entry has:
-```
-- Title (concern_reason or execution problem name)
-- Canonical Definition (what this issue means)
-- Common Causes (why it happens)
-- Recovery Steps (what to try, in order)
-- Escalation Path (who to contact if recovery fails)
-- Related Entries (other help topics that interact with this one)
-- Evidence Links (where to find logs, traces, or debug info)
+A dedicated help-entry template and related-concept linking cluster uses this canonical shape:
+
+```text
+Title
+Canonical definition
+When this appears
+Affected execution context or surface
+Recovery steps
+Escalation path
+Related concepts
+Evidence / inspector links
 ```
 
-**Concept Clusters**: Help entries are grouped by concern_class (e.g., 'auth', 'timeout', 'approval', 'data') so users can browse related topics.
+Related-concept clusters group help entries by canonical concern/state families such as `auth`, `approval`, `route/open`, `runtime recovery`, and `projection health`. Each cluster keeps durable links between sibling help entries so inline help, context help, and full help views can pivot without inventing new terminology.
 
-ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/FinalGUISpec.md
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Orchestrator_Page.md
+
 ## 4. Evidence
 - **Evidence bundle** -- a structured record of commands/checks/artifacts that demonstrates a requirement is met.
 

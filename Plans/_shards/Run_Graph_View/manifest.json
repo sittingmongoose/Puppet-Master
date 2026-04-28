@@ -1,6 +1,6 @@
 {
   "source_path": "Plans/Run_Graph_View.md",
-  "source_sha256": "ed07fa8f8e1349a6620ef3c1c8d7102f0055761b1d09d8f4495b1b15ffb246b5",
+  "source_sha256": "01fc11293677fd22f6f725cf4ab09ed2ae131ce050a1ea02819e577ce24d3ae7",
   "split_rule": {
     "primary": "## outside fences",
     "fallback": "line-count-200",
@@ -15,31 +15,38 @@
       "heading": null
     },
     {
-      "dest_path": "Plans/_shards/Run_Graph_View/02-1-scope-and-canonical-role.md",
+      "dest_path": "Plans/_shards/Run_Graph_View/02-fidelity-recovery-addendum.md",
       "start_line": 3,
-      "end_line": 12,
+      "end_line": 30,
+      "segment_sha256": "2a55e0054fd10a38025f136194b157eeea22b30cdd47b63592f356c0d8d58f72",
+      "heading": "## Fidelity recovery addendum"
+    },
+    {
+      "dest_path": "Plans/_shards/Run_Graph_View/03-1-scope-and-canonical-role.md",
+      "start_line": 31,
+      "end_line": 40,
       "segment_sha256": "f1c6d9e45f5b4d1a8cb9f93f8da01a45d04c11e92043fa4e23e9afcf5579c019",
       "heading": "## 1. Scope and canonical role"
     },
     {
-      "dest_path": "Plans/_shards/Run_Graph_View/03-2-layout.md",
-      "start_line": 13,
-      "end_line": 25,
+      "dest_path": "Plans/_shards/Run_Graph_View/04-2-layout.md",
+      "start_line": 41,
+      "end_line": 53,
       "segment_sha256": "74a91b7ebf9623f122c76fae899f153c3129ee1c5b2e1f374649da4b2085d87e",
       "heading": "## 2. Layout"
     },
     {
-      "dest_path": "Plans/_shards/Run_Graph_View/04-3-node-detail-inspector.md",
-      "start_line": 26,
-      "end_line": 47,
-      "segment_sha256": "7acdcbabf4ac190bf70cfc310e3b119798d16281ed4291ca15c49f7a45edf5d9",
+      "dest_path": "Plans/_shards/Run_Graph_View/05-3-node-detail-inspector.md",
+      "start_line": 54,
+      "end_line": 59,
+      "segment_sha256": "0cd3491a3e13a9c7c899f0bc955b6113ea8ee272db4722b0bc4029b2a019c1a7",
       "heading": "## 3. Node detail inspector"
     },
     {
-      "dest_path": "Plans/_shards/Run_Graph_View/05-4-data-model-and-identity.md",
-      "start_line": 48,
-      "end_line": 72,
-      "segment_sha256": "3830cbd20f87323dde41c2c238f2c1152b238759277b6a6f1b554f8480f7f646",
+      "dest_path": "Plans/_shards/Run_Graph_View/06-4-data-model-and-identity.md",
+      "start_line": 60,
+      "end_line": 64,
+      "segment_sha256": "06c04dbb9a763b5e40306fb0f6ff01461f23ada8d5ad36c88130833540689e85",
       "heading": "## 4. Data model and identity"
     }
   ]

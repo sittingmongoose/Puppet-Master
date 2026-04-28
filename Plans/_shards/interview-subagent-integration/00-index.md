@@ -7,5 +7,6 @@ Canonical source: [Plans/interview-subagent-integration.md](../../interview-suba
 ## Shards (reading order)
 
 - [01-preamble.md](01-preamble.md) — (preamble / chunk)
-- [02-change-summary.md](02-change-summary.md) — ## Change Summary
-- [03-interview-runtime-boundary-and-handoff-lineage.md](03-interview-runtime-boundary-and-handoff-lineage.md) — ## Interview runtime boundary and handoff lineage
+- [02-fidelity-recovery-addendum.md](02-fidelity-recovery-addendum.md) — ## Fidelity recovery addendum
+- [03-change-summary.md](03-change-summary.md) — ## Change Summary
+- [04-interview-runtime-boundary-and-handoff-lineage.md](04-interview-runtime-boundary-and-handoff-lineage.md) — ## Interview runtime boundary and handoff lineage

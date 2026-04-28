@@ -1,6 +1,6 @@
 {
   "source_path": "Plans/usage-feature.md",
-  "source_sha256": "73262d2ed1b17609a8e439949adb6a1ef809860bab38396dad2c191fdc8519ed",
+  "source_sha256": "ded7837399dc585f06030fd0d8799063a62ee22d9202b1555c77ad4a37874144",
   "split_rule": {
     "primary": "## outside fences",
     "fallback": "line-count-200",
@@ -10,126 +10,133 @@
     {
       "dest_path": "Plans/_shards/usage-feature/01-preamble.md",
       "start_line": 1,
-      "end_line": 5,
-      "segment_sha256": "672128e76379f293b9a0ddb651c195c8502ffdc3f7cdc7533f79587b04bf0591",
+      "end_line": 2,
+      "segment_sha256": "87f52f080e0dd5920cdac4c270c7380aff3c24944cf6f74b918b9792bbe0bf93",
       "heading": null
     },
     {
-      "dest_path": "Plans/_shards/usage-feature/02-plan-document-status.md",
-      "start_line": 6,
-      "end_line": 13,
+      "dest_path": "Plans/_shards/usage-feature/02-fidelity-recovery-addendum.md",
+      "start_line": 3,
+      "end_line": 99,
+      "segment_sha256": "b07c27375aa5007722d0d9ff5f71bcc6f7486232c48c3e375ea94c67372a1552",
+      "heading": "## Fidelity recovery addendum"
+    },
+    {
+      "dest_path": "Plans/_shards/usage-feature/03-plan-document-status.md",
+      "start_line": 100,
+      "end_line": 107,
       "segment_sha256": "053f2402dac1188a141839c3b72df863b3aeb66c7e9b669b01562b2ffdcffcf9",
       "heading": "## Plan Document Status"
     },
     {
-      "dest_path": "Plans/_shards/usage-feature/03-rewrite-alignment-2026-02-21.md",
-      "start_line": 14,
-      "end_line": 19,
+      "dest_path": "Plans/_shards/usage-feature/04-rewrite-alignment-2026-02-21.md",
+      "start_line": 108,
+      "end_line": 113,
       "segment_sha256": "d513eb09dbdd488d859e5ef69357549c35c5cca3398d665624e4a3f8cbae483e",
       "heading": "## Rewrite alignment (2026-02-21)"
     },
     {
-      "dest_path": "Plans/_shards/usage-feature/04-storage-dependency-implementation.md",
-      "start_line": 20,
-      "end_line": 44,
+      "dest_path": "Plans/_shards/usage-feature/05-storage-dependency-implementation.md",
+      "start_line": 114,
+      "end_line": 138,
       "segment_sha256": "e21f5b20f1b6842637832c76318f5afab84fe31ef4727b84b14c4d8be6c3c68a",
       "heading": "## Storage dependency (implementation)"
     },
     {
-      "dest_path": "Plans/_shards/usage-feature/05-executive-summary.md",
-      "start_line": 45,
-      "end_line": 48,
+      "dest_path": "Plans/_shards/usage-feature/06-executive-summary.md",
+      "start_line": 139,
+      "end_line": 142,
       "segment_sha256": "5e8b2b144202deac94f4ba1c23954c4017eebb5a6bf2217ae7a6a56ef4def3ba",
       "heading": "## Executive Summary"
     },
     {
-      "dest_path": "Plans/_shards/usage-feature/06-relationship-to-existing-docs.md",
-      "start_line": 49,
-      "end_line": 67,
+      "dest_path": "Plans/_shards/usage-feature/07-relationship-to-existing-docs.md",
+      "start_line": 143,
+      "end_line": 161,
       "segment_sha256": "c115a2496a69a8bb5ed276c1a36e4ea8778d775badef81b166d79985d7cd7f77",
       "heading": "## Relationship to Existing Docs"
     },
     {
-      "dest_path": "Plans/_shards/usage-feature/07-external-references-competitive-ecosystem.md",
-      "start_line": 68,
-      "end_line": 77,
+      "dest_path": "Plans/_shards/usage-feature/08-external-references-competitive-ecosystem.md",
+      "start_line": 162,
+      "end_line": 171,
       "segment_sha256": "3be9eb1280f7f29cad7398bf752329af84fe2433ea97f9827fcb13c0ddc3f1d7",
       "heading": "## External References (Competitive & Ecosystem)"
     },
     {
-      "dest_path": "Plans/_shards/usage-feature/08-scope-of-the-usage-feature.md",
-      "start_line": 78,
-      "end_line": 232,
+      "dest_path": "Plans/_shards/usage-feature/09-scope-of-the-usage-feature.md",
+      "start_line": 172,
+      "end_line": 326,
       "segment_sha256": "9f65f55fe9323d7b884a5fb8335ef7d3b91d31320042bc4fddffa366efc5b83b",
       "heading": "## Scope of the Usage Feature"
     },
     {
-      "dest_path": "Plans/_shards/usage-feature/09-data-and-backend-conceptual.md",
-      "start_line": 233,
-      "end_line": 267,
+      "dest_path": "Plans/_shards/usage-feature/10-data-and-backend-conceptual.md",
+      "start_line": 327,
+      "end_line": 361,
       "segment_sha256": "1e3b2923bd055f6f88d743a4fc2dd24b25c7f96fbc157348195b70d4c81e333c",
       "heading": "## Data and Backend (conceptual)"
     },
     {
-      "dest_path": "Plans/_shards/usage-feature/10-gui-placement-options.md",
-      "start_line": 268,
-      "end_line": 285,
+      "dest_path": "Plans/_shards/usage-feature/11-gui-placement-options.md",
+      "start_line": 362,
+      "end_line": 379,
       "segment_sha256": "032f98584b32cbb5b4bcbc97450414c8755bd2d69e4c6ecb440300da3aac3e19",
       "heading": "## GUI Placement Options"
     },
     {
-      "dest_path": "Plans/_shards/usage-feature/11-gaps-current-state-vs-desired.md",
-      "start_line": 286,
-      "end_line": 404,
-      "segment_sha256": "be80d4d02ec98d58d646d346d55c307dd95a3734d69e38146211ac5642a9c32a",
+      "dest_path": "Plans/_shards/usage-feature/12-gaps-current-state-vs-desired.md",
+      "start_line": 380,
+      "end_line": 560,
+      "segment_sha256": "1a9c3b9c635e0e8b8586b1d252bc88503d1d511f4671e498f2cfe7030c2863e0",
       "heading": "## Gaps (Current State vs. Desired)"
     },
     {
-      "dest_path": "Plans/_shards/usage-feature/12-enhancements-beyond-minimum.md",
-      "start_line": 405,
-      "end_line": 487,
+      "dest_path": "Plans/_shards/usage-feature/13-enhancements-beyond-minimum.md",
+      "start_line": 561,
+      "end_line": 643,
       "segment_sha256": "f774a33de216b7566e0eff815ff0b45eaee0019e645a3836f57d1d084fb79f5e",
       "heading": "## Enhancements (Beyond Minimum)"
     },
     {
-      "dest_path": "Plans/_shards/usage-feature/13-out-of-scope-for-this-plan.md",
-      "start_line": 488,
-      "end_line": 493,
+      "dest_path": "Plans/_shards/usage-feature/14-out-of-scope-for-this-plan.md",
+      "start_line": 644,
+      "end_line": 649,
       "segment_sha256": "840be484e9ac974c58b8b14864280e68212e51926112914c4d3ec88f9055d980",
       "heading": "## Out of Scope for This Plan"
     },
     {
-      "dest_path": "Plans/_shards/usage-feature/14-success-criteria.md",
-      "start_line": 494,
-      "end_line": 501,
+      "dest_path": "Plans/_shards/usage-feature/15-success-criteria.md",
+      "start_line": 650,
+      "end_line": 657,
       "segment_sha256": "a9e54460761a8ecc70732420dd0d64196f68f6b6adf5ff0eb5043e488a8711c5",
       "heading": "## Success Criteria"
     },
     {
-      "dest_path": "Plans/_shards/usage-feature/15-version-history.md",
-      "start_line": 502,
-      "end_line": 517,
+      "dest_path": "Plans/_shards/usage-feature/16-version-history.md",
+      "start_line": 658,
+      "end_line": 673,
       "segment_sha256": "5a2db29b42b051236663030b2c93f4b9d1233b54cfda06428c57ab7c919052d2",
       "heading": "## Version History"
     },
     {
-      "dest_path": "Plans/_shards/usage-feature/16-widget-composed-page-layout-addendum-2026-02-23.md",
-      "start_line": 518,
-      "end_line": 619,
+      "dest_path": "Plans/_shards/usage-feature/17-widget-composed-page-layout-addendum-2026-02-23.md",
+      "start_line": 674,
+      "end_line": 775,
       "segment_sha256": "9d385fdd502eff58d6c71373bdc7bfdbc771b78979f6b4d089a50105dcaa67d2",
       "heading": "## Widget-Composed Page Layout (Addendum -- 2026-02-23)"
     },
     {
-      "dest_path": "Plans/_shards/usage-feature/17-runtime-scheduler-recovery-observability-addendum-2026-03-09.md",
-      "start_line": 620,
-      "end_line": 633,
+      "dest_path": "Plans/_shards/usage-feature/18-runtime-scheduler-recovery-observability-addendum-2026-03-09.md",
+      "start_line": 776,
+      "end_line": 789,
       "segment_sha256": "a00d1a144260ab864541b16583bc4181498b0f8c04236b714ff7cf4428ceafb5",
       "heading": "## Runtime Scheduler / Recovery Observability Addendum (2026-03-09)"
     },
     {
-      "dest_path": "Plans/_shards/usage-feature/18-source-control-github-actions-and-docker-manager-cost-attribution-addendum-2026-03-12.md",
-      "start_line": 634,
-      "end_line": 643,
+      "dest_path": "Plans/_shards/usage-feature/19-source-control-github-actions-and-docker-manager-cost-attribution-addendum-2026-03-12.md",
+      "start_line": 790,
+      "end_line": 799,
       "segment_sha256": "c62d0fd607f6d92b9a9f0ff812e876b36644df346c7840550422bee84218b10a",
       "heading": "## Source Control, GitHub Actions, and Docker Manager Cost Attribution Addendum (2026-03-12)"
     }

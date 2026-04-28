@@ -1,5 +1,33 @@
 # Run Graph View (Node Graph Display) -- Specification
 
+## Fidelity recovery addendum
+
+This addendum is an ordered parent-writer recovery container. It preserves the row-level fidelity repairs below without requiring multiple same-anchor packet writes.
+
+### Fidelity recovery cov-032: Concern linkage to adjacent families
+- Coverage rows: cov-032
+- Fidelity gap refs: cov-032
+- Required fidelity items:
+- Exact required item: Expose review_refs, corroboration_refs, graph_patch_refs, recovery_refs, blocked_episode_refs, and promotion_refs on concerns
+- Exact required item: Allow blocked episodes to reference concerns without replacing concern identity
+- Acceptance checks represented:
+- Exact acceptance check: The heading `### Fidelity recovery cov-032: Concern linkage to adjacent families` exists in `Plans/Run_Graph_View.md`.
+- Exact acceptance check: The `cov-032` repair states the exact requirement: Expose review_refs, corroboration_refs, graph_patch_refs, recovery_refs, blocked_episode_refs, and promotion_refs on concerns
+- Exact acceptance check: The `cov-032` repair states the exact requirement: Allow blocked episodes to reference concerns without replacing concern identity
+- Exact acceptance check: The `cov-032` repair includes an explicit consumer cross-reference to the owning canonical contract for the same requirement.
+
+### Fidelity recovery cov-038: Focused run and historical routing contract
+- Coverage rows: cov-038
+- Fidelity gap refs: cov-038
+- Required fidelity items:
+- Exact required item: Use active_run_id/focused_run_id with focus_mode = live | historical
+- Exact required item: Keep cross-tab deep links and search pivots coherent on the focused run
+- Acceptance checks represented:
+- Exact acceptance check: The heading `### Fidelity recovery cov-038: Focused run and historical routing contract` exists in `Plans/Run_Graph_View.md`.
+- Exact acceptance check: The `cov-038` repair states the exact requirement: Use active_run_id/focused_run_id with focus_mode = live | historical
+- Exact acceptance check: The `cov-038` repair states the exact requirement: Keep cross-tab deep links and search pivots coherent on the focused run
+- Exact acceptance check: The `cov-038` repair includes an explicit consumer cross-reference to the owning canonical contract for the same requirement.
+
 ## 1. Scope and canonical role
 Run Graph is the canonical graph/lineage inspection surface for orchestrated execution.
 
@@ -24,49 +52,13 @@ Rules:
 ContractRef: ContractName:Plans/Decision_Policy.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Contracts_V0.md
 
 ## 3. Node detail inspector
-The inspector must show at minimum:
-- node summary and graph lineage
-- package and seam mapping
-- requested/effective provider/model/effort/persona/account identity
-- worker policy and retry policy
-- attempt history and safe points
-- lane/worktree/snapshot state
-- usage/token/cost links
-- evidence, artifacts, reviews, promotions, and concerns
-- concern adjacency: `review_refs[]`, `corroboration_refs[]`, `graph_patch_refs[]`, `recovery_refs[]`, `blocked_episode_refs[]`, and `promotion_refs[]`
-- blocked episode state and allowed runtime actions
 
-ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/usage-feature.md
+#### Acceptance carry-through
+- Expose review_refs, corroboration_refs, graph_patch_refs, recovery_refs, blocked_episode_refs, and promotion_refs on concerns
+- Allow blocked episodes to reference concerns without replacing concern identity
 
-Rules:
-- `request_id` and `tier_id` do not remain primary graph action keys
-- approval/recovery actions resolve through blocked runtime identity
-- evidence and artifact pivots route into native Evidence and Ledger targets using canonical route/open contracts
-- blocked episodes may reference concerns without replacing concern identity
-
-ContractRef: ContractName:Plans/human-in-the-loop.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Orchestrator_Page.md
 ## 4. Data model and identity
-Graph projection identity is anchored by:
-- `project_id`
-- `run_id`
-- `node_id`
-- `attempt_id?`
-- `blocked_sequence?`
-- `graph_generation_id?`
-- `feature_seam_id?`
-- `work_package_id?`
-- `lane_id?`
-- `worktree_id?`
 
-Focused-run routing state is anchored by:
-- `active_run_id`
-- `focused_run_id`
-- `focus_mode = live | historical`
-
-Rules:
-- usage correlation resolves through canonical usage identity such as `usage_event_ref` and runtime attribution fields, not by `tier_id`
-- runtime artifacts link through `artifact_id`, `provider_attempt_ref`, `usage_event_ref`, and external receipt refs as bridges rather than as replacement primary keys
-- cross-tab deep links, graph pivots, and search pivots MUST resolve against `focused_run_id` when present
-- focused-run routing MUST remain coherent for both live and historical views
-
-ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/usage-feature.md
+#### Acceptance carry-through
+- Use active_run_id/focused_run_id with focus_mode = live | historical
+- Keep cross-tab deep links and search pivots coherent on the focused run

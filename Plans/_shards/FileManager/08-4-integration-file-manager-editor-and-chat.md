@@ -15,10 +15,11 @@ FileManager is the canonical owner of the file-open and artifact-storage contrac
 
 ### Route/open rules
 
-- **File open**: Resolve route_target scheme and permissions, then bind to worktree and execution_unit_context.
-- **Artifact open**: Query artifact storage by (concern_id, route_target, artifact_type) and check visibility rules.
-- **Help open**: Open help entries via the shared help/OpenSubject routing in Contracts_V0.md.
-- **Concern open**: Open a concern episode by concern_id and blocked_episode_id; show the escalation stack and relevant artifacts.
+#### Acceptance carry-through
+- Let Contracts_V0 own canonical route_target and OpenSubject contracts
+- Keep Crosswalk limited to primitive boundary ownership and FileManager OpenFile narrow and path-based
+- Keep route_target small with subject_id or object_kind/object_id identity
+- Limit subject_id families to doc:/artifact:, keep inspector_target secondary, and override only necessary destination/context state
 
 ### Error recovery in file/artifact access
 
