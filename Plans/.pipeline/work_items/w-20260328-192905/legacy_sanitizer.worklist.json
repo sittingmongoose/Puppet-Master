@@ -1,0 +1,31 @@
+{
+  "schema_id": "pm.legacy_sanitizer.worklist.v2",
+  "work_id": "w-20260328-192905",
+  "status": "complete",
+  "generated_artifacts": [
+    {
+      "path": "Plans/.pipeline/work_items/w-20260328-192905/meta.json",
+      "classification": "state_file",
+      "action": "ignore",
+      "reason": "Active work-item metadata for the current pipeline state."
+    },
+    {
+      "path": "Plans/.pipeline/work_items/w-20260328-192905/current_state.md",
+      "classification": "state_file",
+      "action": "ignore",
+      "reason": "Active work-item state file for the current pipeline state."
+    },
+    {
+      "path": "Plans/.pipeline/work_items/w-20260328-192905/working_ledger.md",
+      "classification": "protected_ledger",
+      "action": "ignore",
+      "reason": "Protected file; existence confirmed only and not eligible for quarantine."
+    }
+  ],
+  "candidate_artifacts": [],
+  "legacy_quarantine_existing": [],
+  "notes": [
+    "No stale generated artifacts were present under the active work-item root.",
+    "No existing legacy_quarantine contents were present."
+  ]
+}

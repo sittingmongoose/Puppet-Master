@@ -1,0 +1,45 @@
+{
+  "schema_id": "pm.legacy_sanitizer.wave.v2",
+  "work_id": "w-20260328-192905",
+  "wave_id": "wave-001",
+  "status": "complete",
+  "subagent_tasks": [
+    {
+      "agent": "legacy-scan",
+      "task": "Inspect the active work-item generated artifacts for stale schema versions, known poison artifacts, and target-path pollution."
+    }
+  ],
+  "assigned_input_boundaries": [
+    "Plans/.pipeline/work_items/w-20260328-192905/*",
+    "Plans/.pipeline/work_items/w-20260328-192905/legacy_quarantine/**"
+  ],
+  "subagent_result_status": "complete",
+  "completed_task_count": 1,
+  "failed_task_count": 0,
+  "files_assigned": [
+    "Plans/.pipeline/work_items/w-20260328-192905/meta.json",
+    "Plans/.pipeline/work_items/w-20260328-192905/current_state.md",
+    "Plans/.pipeline/work_items/w-20260328-192905/working_ledger.md"
+  ],
+  "files_completed": [
+    "Plans/.pipeline/work_items/w-20260328-192905/meta.json",
+    "Plans/.pipeline/work_items/w-20260328-192905/current_state.md",
+    "Plans/.pipeline/work_items/w-20260328-192905/working_ledger.md"
+  ],
+  "files_to_quarantine": [],
+  "files_to_ignore": [
+    {
+      "path": "Plans/.pipeline/work_items/w-20260328-192905/meta.json",
+      "reason": "Current v2-compatible work-item metadata."
+    },
+    {
+      "path": "Plans/.pipeline/work_items/w-20260328-192905/current_state.md",
+      "reason": "Current work-item state file; retained in place."
+    },
+    {
+      "path": "Plans/.pipeline/work_items/w-20260328-192905/working_ledger.md",
+      "reason": "Protected file; sanitizer confirmed existence only."
+    }
+  ],
+  "path_pollution_detected": []
+}

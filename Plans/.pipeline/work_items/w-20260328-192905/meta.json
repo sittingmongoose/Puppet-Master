@@ -1,11 +1,23 @@
 {
+  "schema_id": "pm.work_item_meta.v2",
   "work_id": "w-20260328-192905",
   "mode": "research",
   "topic_or_scope": "Persona systems/features expansion for Puppet Master rewrite planning, including built-in base personas, specialty personas, and persona settings GUI behavior.",
   "status": "active",
   "created_at_utc": "2026-03-28T19:29:05Z",
-  "updated_at_utc": "2026-03-31T00:02:00Z",
+  "updated_at_utc": "2026-04-29T18:46:53Z",
   "run_prefix": "r-20260328-192905",
   "next_run_seq": 1,
-  "run_id": null
+  "run_id": null,
+  "ledger_shards": {
+    "status": "not_generated",
+    "manifest_path": null,
+    "source_sha256": null,
+    "shard_line_size": 200
+  },
+  "target_document_existence": {
+    "status": "not_checked",
+    "report_path": null
+  },
+  "next_required_stage": "Ledger Shard Indexer"
 }
