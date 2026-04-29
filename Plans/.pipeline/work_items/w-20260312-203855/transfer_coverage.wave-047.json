@@ -1,484 +1,453 @@
 {
-  "schema_id": "pm.transfer_coverage_wave.v1",
+  "schema_id": "pm.transfer_coverage_wave.v3",
   "work_id": "w-20260312-203855",
   "wave_id": "wave-047",
-  "row_groups": [
-    "rowgrp-0185",
-    "rowgrp-0186",
-    "rowgrp-0187",
-    "rowgrp-0188"
+  "timestamp_utc": "2026-04-28T21:11:40Z",
+  "subagent_tasks": [
+    "coverage-rowgrp-185",
+    "coverage-rowgrp-186",
+    "coverage-rowgrp-187",
+    "coverage-rowgrp-188"
   ],
-  "coverage_rows": [
+  "assigned_input_boundaries": [
+    "rowgrp-185 cov-600,cov-863 Plans/Runtime_Artifacts_Panel.md",
+    "rowgrp-186 cov-480,cov-691,cov-703,cov-753,cov-764,cov-778,cov-1242,cov-1263 Plans/Runtime_Artifacts_Panel.md",
+    "rowgrp-187 cov-380,cov-827,cov-832 Plans/Runtime_Artifacts_Panel.md",
+    "rowgrp-188 cov-424,cov-432,cov-647,cov-670,cov-695,cov-769,cov-943 Plans/Runtime_Artifacts_Panel.md"
+  ],
+  "subagent_result_status": {
+    "coverage-rowgrp-185": "completed_reduced_conservatively_with_schema_normalization",
+    "coverage-rowgrp-186": "completed_reduced_conservatively_with_schema_normalization",
+    "coverage-rowgrp-187": "completed_reduced_conservatively_with_schema_normalization",
+    "coverage-rowgrp-188": "completed_reduced_conservatively_with_schema_normalization"
+  },
+  "completed_task_count": 4,
+  "failed_task_count": 0,
+  "coverage_ids_assigned": [
+    "cov-600",
+    "cov-863",
+    "cov-480",
+    "cov-691",
+    "cov-703",
+    "cov-753",
+    "cov-764",
+    "cov-778",
+    "cov-1242",
+    "cov-1263",
+    "cov-380",
+    "cov-827",
+    "cov-832",
+    "cov-424",
+    "cov-432",
+    "cov-647",
+    "cov-670",
+    "cov-695",
+    "cov-769",
+    "cov-943"
+  ],
+  "coverage_ids_completed": [
+    "cov-600",
+    "cov-863",
+    "cov-480",
+    "cov-691",
+    "cov-703",
+    "cov-753",
+    "cov-764",
+    "cov-778",
+    "cov-1242",
+    "cov-1263",
+    "cov-380",
+    "cov-827",
+    "cov-832",
+    "cov-424",
+    "cov-432",
+    "cov-647",
+    "cov-670",
+    "cov-695",
+    "cov-769",
+    "cov-943"
+  ],
+  "path_groups_assigned": [
+    "Plans/Runtime_Artifacts_Panel.md"
+  ],
+  "rows": [
     {
-      "coverage_id": "cov-04557",
-      "source_obligation_ids": [
-        "obl-4283"
-      ],
-      "source_seed_ids": [
-        "seed-6167"
-      ],
-      "source_shard_ids": [
-        "shard-0082"
-      ],
-      "canon_label": "Plans/*.md",
-      "row_type": "layout_blocker",
-      "path": "Plans/assistant-memory-subsystem.md",
-      "heading_hint": "Do-not-forget details",
-      "status": "present",
-      "exact_items": [
-        "After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes."
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/assistant-memory-subsystem.md:241",
-        "Plans/assistant-memory-subsystem.md:322",
-        "Plans/assistant-memory-subsystem.md:3",
-        "Plans/assistant-memory-subsystem.md:38",
-        "Plans/assistant-memory-subsystem.md:23",
-        "Plans/assistant-memory-subsystem.md:17",
-        "Plans/assistant-memory-subsystem.md:59"
-      ],
-      "required_action": "none"
-    },
-    {
-      "coverage_id": "cov-00402",
-      "source_obligation_ids": [
-        "obl-0401"
-      ],
-      "source_seed_ids": [
-        "seed-0406"
-      ],
-      "source_shard_ids": [
-        "shard-0006"
-      ],
-      "canon_label": "Plans/chain-wizard-flexibility.md",
-      "row_type": "consumer",
-      "path": "Plans/chain-wizard-flexibility.md",
-      "heading_hint": "GUI / UX Impacts",
+      "coverage_id": "cov-600",
       "status": "partial",
-      "exact_items": [
-        "`Plans/chain-wizard-flexibility.md`"
-      ],
-      "stale_tokens": [],
       "evidence": [
-        "Plans/chain-wizard-flexibility.md:441"
+        "Plans/Runtime_Artifacts_Panel.md:117-127 defines runtime-artifact envelope and attribution packet carrying run/attempt/thread/node/artifact/provider/usage anchors plus execution/runtime identity fields, provider/usage linkage, artifact identity, routing refs, content refs, bridge refs, usage_event_ref routing, and receipt linkage",
+        "Plans/Runtime_Artifacts_Panel.md:188-194 requires runtime_artifact envelope and per-type schemas and validation before seglog/index writes"
       ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-00685",
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "Runtime-artifact identity/anchors are present, but producer identity/role/account/switch lineage and GUI rewrite concern ownership are not directly specified.",
       "source_obligation_ids": [
-        "obl-0637"
+        "obl-168"
       ],
       "source_seed_ids": [
-        "seed-0643"
+        "seed-168"
       ],
       "source_shard_ids": [
-        "shard-0009"
+        "shard-0042"
       ],
-      "canon_label": "Plans/FinalGUISpec.md",
-      "row_type": "consumer",
-      "path": "Plans/chain-wizard-flexibility.md",
-      "heading_hint": "GUI / UX Impacts",
-      "status": "present",
-      "exact_items": [
-        "`Plans/FinalGUISpec.md`, `Plans/assistant-chat-design.md`, `Plans/chain-wizard-flexibility.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/chain-wizard-flexibility.md:381",
-        "Plans/chain-wizard-flexibility.md:10",
-        "Plans/chain-wizard-flexibility.md:441"
-      ],
-      "required_action": "none"
+      "path_field_status": "match"
     },
     {
-      "coverage_id": "cov-01426",
+      "coverage_id": "cov-863",
+      "status": "missing",
+      "evidence": [],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "Plans/Runtime_Artifacts_Panel.md does not mention panel ids, tab ids, or split ratios.",
       "source_obligation_ids": [
-        "obl-1357"
+        "obl-242"
       ],
       "source_seed_ids": [
-        "seed-1490",
-        "seed-1517",
-        "seed-1590",
-        "seed-1631",
-        "seed-1653",
-        "seed-2659",
-        "seed-2848",
-        "seed-2895",
-        "seed-2941",
-        "seed-3023",
-        "seed-3062",
-        "seed-3100",
-        "seed-4088",
-        "seed-5545"
+        "seed-242"
       ],
       "source_shard_ids": [
-        "shard-0027",
-        "shard-0029",
-        "shard-0030",
-        "shard-0042",
-        "shard-0045",
-        "shard-0046",
-        "shard-0047",
-        "shard-0058",
-        "shard-0075"
+        "shard-0061"
       ],
-      "canon_label": "Plans/chain-wizard-flexibility.md",
-      "row_type": "consumer",
-      "path": "Plans/chain-wizard-flexibility.md",
-      "heading_hint": "Targeted docs read",
-      "status": "present",
-      "exact_items": [
-        "`Plans/chain-wizard-flexibility.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/chain-wizard-flexibility.md:441",
-        "Plans/chain-wizard-flexibility.md:682",
-        "Plans/chain-wizard-flexibility.md:10"
-      ],
-      "required_action": "none"
+      "path_field_status": "match"
     },
     {
-      "coverage_id": "cov-01624",
-      "source_obligation_ids": [
-        "obl-1555"
-      ],
-      "source_seed_ids": [
-        "seed-1735",
-        "seed-3035",
-        "seed-3111",
-        "seed-4094",
-        "seed-5557"
-      ],
-      "source_shard_ids": [
-        "shard-0032",
-        "shard-0047",
-        "shard-0058",
-        "shard-0075"
-      ],
-      "canon_label": "Plans/chain-wizard-flexibility.md",
-      "row_type": "consumer",
-      "path": "Plans/chain-wizard-flexibility.md",
-      "heading_hint": "Impacted docs",
+      "coverage_id": "cov-480",
       "status": "partial",
-      "exact_items": [
-        "`Plans/chain-wizard-flexibility.md`"
-      ],
-      "stale_tokens": [],
       "evidence": [
-        "Plans/chain-wizard-flexibility.md:441",
-        "Plans/chain-wizard-flexibility.md:10"
+        "Plans/Runtime_Artifacts_Panel.md:41-51 and 123-127 prefer usage_event_ref over timestamp heuristics for Usage/Ledger routing and require receipt linkage",
+        "Plans/Runtime_Artifacts_Panel.md:173-184 defines cost_usage use of canonical usage identity and Show in Ledger/Show in Usage navigation with matching usage identity and run/thread filters",
+        "Plans/Runtime_Artifacts_Panel.md:245-261 defines bridge-field viewer with usage_event_ref and Show in Ledger/Show in Usage actions"
       ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-02292",
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "usage_event_ref and Show in Ledger/Usage routing are present, but concrete usage_event_ref format/stability and full identity payload are not pinned.",
       "source_obligation_ids": [
-        "obl-2212"
+        "obl-140"
       ],
       "source_seed_ids": [
-        "seed-2676",
-        "seed-2872",
-        "seed-2919",
-        "seed-2967",
-        "seed-3086"
+        "seed-140"
       ],
       "source_shard_ids": [
-        "shard-0043",
-        "shard-0045",
-        "shard-0046",
+        "shard-0035"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-691",
+      "status": "missing",
+      "evidence": [],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "Plans/Runtime_Artifacts_Panel.md only references UI_Command_Catalog; it does not define UICommand IDs, cmd.orchestrator.switch_tab, or cmd.chat.run_user_command.",
+      "source_obligation_ids": [
+        "obl-190"
+      ],
+      "source_seed_ids": [
+        "seed-190"
+      ],
+      "source_shard_ids": [
         "shard-0047"
       ],
-      "canon_label": "Plans/chain-wizard-flexibility.md",
-      "row_type": "consumer",
-      "path": "Plans/chain-wizard-flexibility.md",
-      "heading_hint": "Highest-risk impacted docs",
-      "status": "partial",
-      "exact_items": [
-        "`Plans/chain-wizard-flexibility.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/chain-wizard-flexibility.md:441",
-        "Plans/chain-wizard-flexibility.md:10"
-      ],
-      "required_action": "consumer_propagation"
+      "path_field_status": "match"
     },
     {
-      "coverage_id": "cov-03336",
+      "coverage_id": "cov-703",
+      "status": "partial",
+      "evidence": [
+        "Plans/Runtime_Artifacts_Panel.md:61-65 names Runtime Artifacts persistence as seglog runtime_artifact.* and redb artifacts_index:v1:{project_id}",
+        "Plans/Runtime_Artifacts_Panel.md:112-115 registers artifacts_index, artifacts_project_state, runtime_artifacts projector checkpoint families, rebuildability, and attempt_id/thread_id indexing"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "Artifact index/projector families are present, but worktree_record/lane_projection ownership and full storage-plan projector/rebuild semantics are not direct.",
       "source_obligation_ids": [
-        "obl-3198"
+        "obl-194"
       ],
       "source_seed_ids": [
-        "seed-4180"
+        "seed-194"
+      ],
+      "source_shard_ids": [
+        "shard-0048"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-753",
+      "status": "partial",
+      "evidence": [
+        "Plans/Runtime_Artifacts_Panel.md:117-127 shares one attribution family across tool events, runtime artifacts, receipts, and usage records with run/attempt/thread/node/artifact/provider/usage anchors, execution/runtime identity fields, provider/usage linkage, provider_attempt_ref, usage_event_ref, and receipt refs"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "Shared attribution packet is present, but tool.invoked/tool.denied and receipt/provider-attribution details are not directly enumerated.",
+      "source_obligation_ids": [
+        "obl-208"
+      ],
+      "source_seed_ids": [
+        "seed-208"
+      ],
+      "source_shard_ids": [
+        "shard-0052"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-764",
+      "status": "partial",
+      "evidence": [
+        "Plans/Runtime_Artifacts_Panel.md:117-127 carries run/attempt/thread/node/artifact/provider/usage anchors plus execution/runtime identity fields, makes runtime artifacts attempt-native, and uses attempt_id, provider_attempt_ref, usage_event_ref, and receipt refs as bridges"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "attempt_id, node, provider_attempt_ref, and execution/runtime identity are present, but execution_role and operational_identity are not directly named.",
+      "source_obligation_ids": [
+        "obl-211"
+      ],
+      "source_seed_ids": [
+        "seed-211"
+      ],
+      "source_shard_ids": [
+        "shard-0053"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-778",
+      "status": "partial",
+      "evidence": [
+        "Plans/Runtime_Artifacts_Panel.md:68-78 lists artifact_id, artifact_type, run_id, attempt_id, projection_freshness, projection_health, runtime_artifact.*, and artifacts_index.v1:{project_id}:{artifact_id}",
+        "Plans/Runtime_Artifacts_Panel.md:123-125 resolves artifact open flows by artifact_id and linked envelope refs with attempt_id as local anchor and bridge refs as joins"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "artifact_id/attempt_id and artifact open routing are present, but OpenArtifact/OpenSubject canonical contract is absent.",
+      "source_obligation_ids": [
+        "obl-215"
+      ],
+      "source_seed_ids": [
+        "seed-215"
+      ],
+      "source_shard_ids": [
+        "shard-0054"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-1242",
+      "status": "partial",
+      "evidence": [
+        "Plans/Runtime_Artifacts_Panel.md:123-127 resolves artifact open flows by artifact_id/envelope refs and defines bridge fields including attempt_id, provider_attempt_ref, usage_event_ref, and receipt refs",
+        "Plans/Runtime_Artifacts_Panel.md:245-261 defines bridge-field viewer with attempt_id, provider_attempt_ref, usage_event_ref, workflow/docker/kubernetes refs, workflow_run_id, Show in Ledger, Show in Usage, and canonical receipt/usage identity routing"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "bridge-field viewer is present, but artifact drill-through, validation artifact lineage, and validation/report section headings are absent.",
+      "source_obligation_ids": [
+        "obl-350"
+      ],
+      "source_seed_ids": [
+        "seed-350"
+      ],
+      "source_shard_ids": [
+        "shard-0089"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-1263",
+      "status": "missing",
+      "evidence": [],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "Plans/Runtime_Artifacts_Panel.md does not contain glossary/help-entry field set terms such as canonical_name, short_definition, why_it_matters, what_it_is_not, common_related_states, related_concepts, surface_examples, or a canonical records heading.",
+      "source_obligation_ids": [
+        "obl-356"
+      ],
+      "source_seed_ids": [
+        "seed-356"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-380",
+      "status": "partial",
+      "evidence": [
+        "Plans/Runtime_Artifacts_Panel.md:59-65 anchors runtime artifacts in this document with seglog runtime_artifact.* and redb artifacts_index persistence",
+        "Plans/Runtime_Artifacts_Panel.md:242-261 states receipt-like artifacts keep canonical runtime identity and bridge fields instead of artifact-local lineage, defines attempt_id/provider_attempt_ref/usage_event_ref/workflow_refs/workflow_run_id, and keeps bridge fields as joins rather than replacement primary keys"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "canonical linkage and no-shadow-ID receipt behavior are present, but Orchestrator exports are not directly named.",
+      "source_obligation_ids": [
+        "obl-113"
+      ],
+      "source_seed_ids": [
+        "seed-113"
+      ],
+      "source_shard_ids": [
+        "shard-0028"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-827",
+      "status": "partial",
+      "evidence": [
+        "Plans/Runtime_Artifacts_Panel.md:143-144 routes artifact open/focus actions to owning target surfaces rather than artifact-local shells",
+        "Plans/Runtime_Artifacts_Panel.md:173-184 defines Show in Ledger and Show in Usage navigation through canonical usage identity and preserved run/thread filters"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Related open/focus and usage/artifact pivots exist, but one canonical route-target model for search/attention/usage/artifact pivots is not explicit.",
+      "source_obligation_ids": [
+        "obl-232"
+      ],
+      "source_seed_ids": [
+        "seed-232"
       ],
       "source_shard_ids": [
         "shard-0059"
       ],
-      "canon_label": "Plans/*.md",
-      "row_type": "consumer",
-      "path": "Plans/chain-wizard-flexibility.md",
-      "heading_hint": "Do-not-forget details",
-      "status": "present",
-      "exact_items": [
-        "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage."
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/chain-wizard-flexibility.md:360",
-        "Plans/chain-wizard-flexibility.md:3",
-        "Plans/chain-wizard-flexibility.md:131",
-        "Plans/chain-wizard-flexibility.md:10",
-        "Plans/chain-wizard-flexibility.md:438",
-        "Plans/chain-wizard-flexibility.md:1102",
-        "Plans/chain-wizard-flexibility.md:156",
-        "Plans/chain-wizard-flexibility.md:9",
-        "Plans/chain-wizard-flexibility.md:694",
-        "Plans/chain-wizard-flexibility.md:8",
-        "Plans/chain-wizard-flexibility.md:42"
-      ],
-      "required_action": "none"
+      "path_field_status": "match"
     },
     {
-      "coverage_id": "cov-04475",
+      "coverage_id": "cov-832",
+      "status": "present",
+      "evidence": [
+        "Plans/Runtime_Artifacts_Panel.md:145-169 defines required bundle manifest fields, requires raw artifacts remain stored/opened through shared runtime-artifact system with bundle manifests referencing them instead of duplicating bytes, preserves provenance on imported bundles, and defines record, bundle, and view export classes with export manifests carrying export_id/export_kind/project scope/included ids/trust-state disclosure"
+      ],
+      "required_action": "none",
+      "unresolved_reason": "",
       "source_obligation_ids": [
-        "obl-4262"
+        "obl-233"
       ],
       "source_seed_ids": [
-        "seed-6087"
+        "seed-233"
       ],
       "source_shard_ids": [
-        "shard-0082"
+        "shard-0059"
       ],
-      "canon_label": "39",
-      "row_type": "consumer",
-      "path": "Plans/chain-wizard-flexibility.md",
-      "heading_hint": "Do-not-forget details",
-      "status": "present",
-      "exact_items": [
-        "Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes."
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/chain-wizard-flexibility.md:1230",
-        "Plans/chain-wizard-flexibility.md:241",
-        "Plans/chain-wizard-flexibility.md:11",
-        "Plans/chain-wizard-flexibility.md:27",
-        "Plans/chain-wizard-flexibility.md:199",
-        "Plans/chain-wizard-flexibility.md:610",
-        "Plans/chain-wizard-flexibility.md:3",
-        "Plans/chain-wizard-flexibility.md:10",
-        "Plans/chain-wizard-flexibility.md:9",
-        "Plans/chain-wizard-flexibility.md:270",
-        "Plans/chain-wizard-flexibility.md:360",
-        "Plans/chain-wizard-flexibility.md:620"
-      ],
-      "required_action": "none"
+      "path_field_status": "match"
     },
     {
-      "coverage_id": "cov-04809",
+      "coverage_id": "cov-424",
+      "status": "missing",
+      "evidence": [],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Plans/Runtime_Artifacts_Panel.md contains generic execution/runtime identity fields but no requested/effective identity disclosure or provider/account identity contract.",
       "source_obligation_ids": [
-        "obl-4524"
+        "obl-124"
       ],
       "source_seed_ids": [
-        "seed-6516"
-      ],
-      "source_shard_ids": [
-        "shard-0086"
-      ],
-      "canon_label": "Plans/chain-wizard-flexibility.md",
-      "row_type": "consumer",
-      "path": "Plans/chain-wizard-flexibility.md",
-      "heading_hint": "Docs that could drift if left untouched",
-      "status": "present",
-      "exact_items": [
-        "`Plans/chain-wizard-flexibility.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/chain-wizard-flexibility.md:441",
-        "Plans/chain-wizard-flexibility.md:10",
-        "Plans/chain-wizard-flexibility.md:1322",
-        "Plans/chain-wizard-flexibility.md:780"
-      ],
-      "required_action": "none"
-    },
-    {
-      "coverage_id": "cov-04847",
-      "source_obligation_ids": [
-        "obl-4562"
-      ],
-      "source_seed_ids": [
-        "seed-6554"
-      ],
-      "source_shard_ids": [
-        "shard-0086"
-      ],
-      "canon_label": "Plans/chain-wizard-flexibility.md",
-      "row_type": "consumer",
-      "path": "Plans/chain-wizard-flexibility.md",
-      "heading_hint": "MUST VERIFY",
-      "status": "present",
-      "exact_items": [
-        "`Plans/chain-wizard-flexibility.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/chain-wizard-flexibility.md:441",
-        "Plans/chain-wizard-flexibility.md:439"
-      ],
-      "required_action": "none"
-    },
-    {
-      "coverage_id": "cov-04899",
-      "source_obligation_ids": [
-        "obl-4613"
-      ],
-      "source_seed_ids": [
-        "seed-6605"
-      ],
-      "source_shard_ids": [
-        "shard-0087"
-      ],
-      "canon_label": "Plans/chain-wizard-flexibility.md",
-      "row_type": "consumer",
-      "path": "Plans/chain-wizard-flexibility.md",
-      "heading_hint": "Cluster D - Route / open-subject / bridge-field refinement misses",
-      "status": "partial",
-      "exact_items": [
-        "`Plans/chain-wizard-flexibility.md`, `Plans/FinalGUISpec.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/chain-wizard-flexibility.md:441",
-        "Plans/chain-wizard-flexibility.md:381"
-      ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-04938",
-      "source_obligation_ids": [
-        "obl-4648"
-      ],
-      "source_seed_ids": [
-        "seed-6640"
-      ],
-      "source_shard_ids": [
-        "shard-0087"
-      ],
-      "canon_label": "Plans/chain-wizard-flexibility.md",
-      "row_type": "consumer",
-      "path": "Plans/chain-wizard-flexibility.md",
-      "heading_hint": "Impacted docs and likely owner order",
-      "status": "present",
-      "exact_items": [
-        "`Plans/chain-wizard-flexibility.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/chain-wizard-flexibility.md:441",
-        "Plans/chain-wizard-flexibility.md:10",
-        "Plans/chain-wizard-flexibility.md:47",
-        "Plans/chain-wizard-flexibility.md:207"
-      ],
-      "required_action": "none"
-    },
-    {
-      "coverage_id": "cov-01612",
-      "source_obligation_ids": [
-        "obl-1543"
-      ],
-      "source_seed_ids": [
-        "seed-1721"
+        "seed-124"
       ],
       "source_shard_ids": [
         "shard-0031"
       ],
-      "canon_label": "Plans/chain-wizard-flexibility.md",
-      "row_type": "layout_blocker",
-      "path": "Plans/chain-wizard-flexibility.md",
-      "heading_hint": "Targeted docs read",
-      "status": "present",
-      "exact_items": [
-        "`Plans/chain-wizard-flexibility.md` (section 1)"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/chain-wizard-flexibility.md:441",
-        "Plans/chain-wizard-flexibility.md:15",
-        "Plans/chain-wizard-flexibility.md:682",
-        "Plans/chain-wizard-flexibility.md:10"
-      ],
-      "required_action": "none"
+      "path_field_status": "match"
     },
     {
-      "coverage_id": "cov-04143",
+      "coverage_id": "cov-432",
+      "status": "missing",
+      "evidence": [],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Plans/Runtime_Artifacts_Panel.md contains attempt_id but not seam_id, package_id, lane_id, tier_id, run.tier_*, tier_tree, or Tiers replacement guidance.",
       "source_obligation_ids": [
-        "obl-3989"
+        "obl-125"
       ],
       "source_seed_ids": [
-        "seed-5549"
+        "seed-125"
       ],
       "source_shard_ids": [
-        "shard-0075"
+        "shard-0031"
       ],
-      "canon_label": "Plans/chain-wizard-flexibility.md",
-      "row_type": "layout_blocker",
-      "path": "Plans/chain-wizard-flexibility.md",
-      "heading_hint": "Key findings",
-      "status": "present",
-      "exact_items": [
-        "`Plans/chain-wizard-flexibility.md` also still defines `resume_url` as the deep-link to the blocked wizard step."
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/chain-wizard-flexibility.md:441",
-        "Plans/chain-wizard-flexibility.md:1687",
-        "Plans/chain-wizard-flexibility.md:59",
-        "Plans/chain-wizard-flexibility.md:269",
-        "Plans/chain-wizard-flexibility.md:1",
-        "Plans/chain-wizard-flexibility.md:436",
-        "Plans/chain-wizard-flexibility.md:8"
-      ],
-      "required_action": "none"
+      "path_field_status": "match"
     },
     {
-      "coverage_id": "cov-04558",
+      "coverage_id": "cov-647",
+      "status": "present",
+      "evidence": [
+        "Plans/Runtime_Artifacts_Panel.md:68-78 includes attempt_id in required artifact fields and artifacts_index canonical terms",
+        "Plans/Runtime_Artifacts_Panel.md:188-194 requires runtime_artifact envelope plus per-type schema files for all runtime_artifact.* payloads and validates every runtime artifact event before seglog/index writes",
+        "Plans/Runtime_Artifacts_Panel.md:242-261 defines bridge fields including attempt_id, provider_attempt_ref, usage_event_ref, workflow refs, and workflow_run_id for receipt-like artifacts"
+      ],
+      "required_action": "none",
+      "unresolved_reason": "",
       "source_obligation_ids": [
-        "obl-4283"
+        "obl-183"
       ],
       "source_seed_ids": [
-        "seed-6167"
+        "seed-183"
       ],
       "source_shard_ids": [
-        "shard-0082"
+        "shard-0046"
       ],
-      "canon_label": "Plans/*.md",
-      "row_type": "layout_blocker",
-      "path": "Plans/chain-wizard-flexibility.md",
-      "heading_hint": "Do-not-forget details",
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-670",
+      "status": "missing",
+      "evidence": [],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Plans/Runtime_Artifacts_Panel.md does not contain validation_pass_report, artifact_type: validation_pass_report, or a validation-pass report contract.",
+      "source_obligation_ids": [
+        "obl-188"
+      ],
+      "source_seed_ids": [
+        "seed-188"
+      ],
+      "source_shard_ids": [
+        "shard-0047"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-695",
       "status": "present",
-      "exact_items": [
-        "After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes."
-      ],
-      "stale_tokens": [],
       "evidence": [
-        "Plans/chain-wizard-flexibility.md:199",
-        "Plans/chain-wizard-flexibility.md:65",
-        "Plans/chain-wizard-flexibility.md:610",
-        "Plans/chain-wizard-flexibility.md:3",
-        "Plans/chain-wizard-flexibility.md:380",
-        "Plans/chain-wizard-flexibility.md:270",
-        "Plans/chain-wizard-flexibility.md:10",
-        "Plans/chain-wizard-flexibility.md:27",
-        "Plans/chain-wizard-flexibility.md:694",
-        "Plans/chain-wizard-flexibility.md:8",
-        "Plans/chain-wizard-flexibility.md:1399",
-        "Plans/chain-wizard-flexibility.md:42"
+        "Plans/Runtime_Artifacts_Panel.md:61-65 states Runtime Artifacts persist through seglog runtime_artifact.* and redb artifacts_index:v1:{project_id}",
+        "Plans/Runtime_Artifacts_Panel.md:112-115 registers artifacts_index, artifacts_project_state, and runtime_artifacts projector checkpoint families, makes the artifact index rebuildable, and indexes attempt_id/thread_id"
       ],
-      "required_action": "none"
+      "required_action": "none",
+      "unresolved_reason": "",
+      "source_obligation_ids": [
+        "obl-191"
+      ],
+      "source_seed_ids": [
+        "seed-191"
+      ],
+      "source_shard_ids": [
+        "shard-0048"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-769",
+      "status": "partial",
+      "evidence": [
+        "Plans/Runtime_Artifacts_Panel.md:117-127 defines a runtime-artifact envelope and attribution packet with artifact identity, routing refs, content refs, provider/usage linkage, artifact_id open flow, attempt/provider/usage/receipt bridge refs, and primary local-key preservation",
+        "Plans/Runtime_Artifacts_Panel.md:190-194 names Plans/runtime_artifact_envelope.schema.json as common payload fields for all runtime artifact events and requires envelope/type validation"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Common runtime-artifact envelope is present, but FileManager second-open contract by artifact_id is not directly stated.",
+      "source_obligation_ids": [
+        "obl-213"
+      ],
+      "source_seed_ids": [
+        "seed-213"
+      ],
+      "source_shard_ids": [
+        "shard-0054"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-943",
+      "status": "missing",
+      "evidence": [],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Plans/Runtime_Artifacts_Panel.md does not contain OpenSubject, subject_id, or open_intent.",
+      "source_obligation_ids": [
+        "obl-264"
+      ],
+      "source_seed_ids": [
+        "seed-264"
+      ],
+      "source_shard_ids": [
+        "shard-0067"
+      ],
+      "path_field_status": "match"
     }
   ]
 }

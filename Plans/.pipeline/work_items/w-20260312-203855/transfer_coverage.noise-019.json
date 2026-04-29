@@ -1,0 +1,23 @@
+{
+  "schema_id": "pm.transfer_coverage_noise.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-019",
+  "noise_findings": [
+    {
+      "source": "coverage-rowgrp-073",
+      "finding": "Reducer credited line 1749 as partial Tiers retirement evidence and kept catalog/command drift missing; same-file stale-token rows were not treated as fixed by unrelated route text."
+    },
+    {
+      "source": "coverage-rowgrp-074",
+      "finding": "Reducer kept owner rows partial where FinalGUISpec had related GUI evidence but lacked full owner-contract tables, manifest rules, redb key patterns, or route-validation rejection rules."
+    },
+    {
+      "source": "coverage-rowgrp-075",
+      "finding": "Subagent result was structurally complete; reducer preserved partial status because FinalGUISpec references canonical routing but does not state the row-specific owner-doc lag claim."
+    },
+    {
+      "source": "coverage-rowgrp-076",
+      "finding": "Reducer preserved present status only for exact override-display grammar and project health/activity/attention split; other rows remain partial due incomplete shared trust, glossary, Source Control, and concern-contract details."
+    }
+  ]
+}

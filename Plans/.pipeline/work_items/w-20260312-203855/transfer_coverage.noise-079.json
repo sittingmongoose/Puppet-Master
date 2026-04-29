@@ -1,0 +1,23 @@
+{
+  "schema_id": "pm.transfer_coverage_noise.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-079",
+  "noise_findings": [
+    {
+      "source": "coverage-rowgrp-313",
+      "finding": "coverage_ids_completed was empty; reducer completed all five IDs, normalized stale_retirement actions, and retained partial statuses for OpenSubject, TierContext, HITL, and blocked_projection evidence."
+    },
+    {
+      "source": "coverage-rowgrp-314",
+      "finding": "coverage_ids_completed was empty; reducer completed cov-137, normalized action to packetizable_layout_repair, and stripped generic schema evidence while retaining missing status."
+    },
+    {
+      "source": "coverage-rowgrp-315",
+      "finding": "coverage_ids_completed was empty; reducer completed all five IDs, normalized consumer actions, retained partial cov-023/cov-761/cov-1195, and kept cov-332/cov-336 missing with empty evidence."
+    },
+    {
+      "source": "coverage-rowgrp-316",
+      "finding": "coverage_ids_completed was empty; reducer completed all ten IDs, stripped generic Usage evidence from missing rows, downgraded cov-128 and cov-986 to missing, upgraded cov-751 and cov-1157 to present based on direct execution_role and usage_event_ref/tier_id evidence, and retained partial cov-315/cov-1073/cov-1231."
+    }
+  ]
+}

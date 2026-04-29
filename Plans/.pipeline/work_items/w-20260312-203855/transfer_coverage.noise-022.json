@@ -1,0 +1,23 @@
+{
+  "schema_id": "pm.transfer_coverage_noise.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-022",
+  "noise_findings": [
+    {
+      "source": "coverage-rowgrp-085",
+      "finding": "Reducer downgraded cov-418 from present to partial because GitHub auth covers requested/effective identity locally but not the full shared disclosure contract across graph detail, artifacts, GitHub/auth, and usage/account-pressure surfaces."
+    },
+    {
+      "source": "coverage-rowgrp-086",
+      "finding": "Subagent result was structurally complete; reducer preserved login-key retirement as partial because widget/layout and canonical payload items are absent."
+    },
+    {
+      "source": "coverage-rowgrp-087",
+      "finding": "Reducer preserved missing status for broad owner-reference evidence on result_id/missing-anchor row; only direct live command/anchor evidence would count."
+    },
+    {
+      "source": "coverage-rowgrp-088",
+      "finding": "Reducer downgraded Source Control narrow-panel row to missing because cited panel visibility text is not Source Control layout guidance; lane/worktree rows remain partial."
+    }
+  ]
+}

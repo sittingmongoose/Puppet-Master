@@ -1,0 +1,21 @@
+{
+  "schema_id": "pm.ledger_obligation_seed_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-020",
+  "source_manifest": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/manifest.json",
+  "shard_results": [
+    "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.shard-0077.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.shard-0078.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.shard-0079.json",
+    "Plans/.pipeline/work_items/w-20260312-203855/ledger_obligation_seed.shard-0080.json"
+  ],
+  "shard_ids": [
+    "shard-0077",
+    "shard-0078",
+    "shard-0079",
+    "shard-0080"
+  ],
+  "seed_candidates": 312,
+  "noise_items": 5,
+  "uncertain_items": 1
+}

@@ -1,0 +1,589 @@
+{
+  "schema_id": "pm.transfer_coverage_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-027",
+  "row_groups": [
+    "rowgrp-0105",
+    "rowgrp-0106",
+    "rowgrp-0107",
+    "rowgrp-0108"
+  ],
+  "coverage_rows": [
+    {
+      "coverage_id": "cov-05062",
+      "source_obligation_ids": [
+        "obl-4736"
+      ],
+      "source_seed_ids": [
+        "seed-6729"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "canon_label": "Plans/Glossary.md",
+      "row_type": "owner",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "Entry",
+      "status": "present",
+      "exact_items": [
+        "`Plans/Glossary.md` and `Plans/Orchestrator_Page.md` already carry real token/label/behavior blocks, but still lack the required discoverable owner headings in the audited canon clusters."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:14",
+        "Plans/Orchestrator_Page.md:238",
+        "Plans/Orchestrator_Page.md:7",
+        "Plans/Orchestrator_Page.md:23",
+        "Plans/Orchestrator_Page.md:178"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-05205",
+      "source_obligation_ids": [
+        "obl-4872"
+      ],
+      "source_seed_ids": [
+        "seed-6914"
+      ],
+      "source_shard_ids": [
+        "shard-0090"
+      ],
+      "canon_label": "Plans/Orchestrator_Page.md",
+      "row_type": "owner",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "`Plans/Orchestrator_Page.md` already carries `escalation_level` in the concern/notification owner fields."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:14",
+        "Plans/Orchestrator_Page.md:436",
+        "Plans/Orchestrator_Page.md:7",
+        "Plans/Orchestrator_Page.md:358"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-05358",
+      "source_obligation_ids": [
+        "obl-4999"
+      ],
+      "source_seed_ids": [
+        "seed-7164"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "canon_label": "gap-006",
+      "row_type": "owner",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "Orchestrator rewrite terms",
+      "status": "present",
+      "exact_items": [
+        "Wave 1 rechecked `gap-006` and `gap-007` against live glossary and orchestrator docs and only reconfirmed the already-recorded missing glossary/orchestrator owner headings plus the broken `Plans/Glossary.md#Orchestrator rewrite terms` and `Plans/Orchestrator_Page.md#11. Source Control boundary` references."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:107",
+        "Plans/Orchestrator_Page.md:173",
+        "Plans/Orchestrator_Page.md:1",
+        "Plans/Orchestrator_Page.md:7",
+        "Plans/Orchestrator_Page.md:120",
+        "Plans/Orchestrator_Page.md:177",
+        "Plans/Orchestrator_Page.md:14",
+        "Plans/Orchestrator_Page.md:36",
+        "Plans/Orchestrator_Page.md:115",
+        "Plans/Orchestrator_Page.md:447"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-04265",
+      "source_obligation_ids": [
+        "obl-4111"
+      ],
+      "source_seed_ids": [
+        "seed-5722"
+      ],
+      "source_shard_ids": [
+        "shard-0078"
+      ],
+      "canon_label": "Plans/Orchestrator_Page.md",
+      "row_type": "stale_retirement",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "`Plans/Orchestrator_Page.md` still asks consumers to bind worker and verifier identity using stale/local names:"
+      ],
+      "stale_tokens": [
+        "Plans/Orchestrator_Page.md"
+      ],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:14"
+      ],
+      "required_action": "stale_retirement"
+    },
+    {
+      "coverage_id": "cov-04690",
+      "source_obligation_ids": [
+        "obl-4405"
+      ],
+      "source_seed_ids": [
+        "seed-6360"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "canon_label": "Plans/Orchestrator_Page.md",
+      "row_type": "stale_retirement",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "Key findings",
+      "status": "missing",
+      "exact_items": [
+        "`Plans/Orchestrator_Page.md` remains one of the strongest stale surface owners:"
+      ],
+      "stale_tokens": [
+        "Plans/Orchestrator_Page.md"
+      ],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:14"
+      ],
+      "required_action": "stale_retirement"
+    },
+    {
+      "coverage_id": "cov-05239",
+      "source_obligation_ids": [
+        "obl-4902"
+      ],
+      "source_seed_ids": [
+        "seed-6960"
+      ],
+      "source_shard_ids": [
+        "shard-0090"
+      ],
+      "canon_label": "gap-002",
+      "row_type": "stale_retirement",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "Entry",
+      "status": "missing",
+      "exact_items": [
+        "Wave 1 targeted the structural/survivor subset around `gap-002`, `gap-006`, and `gap-007` (`Plans/UI_Command_Catalog.md`, `Plans/Glossary.md`, `Plans/Orchestrator_Page.md`, `Plans/GitHub_Integration.md`, `Plans/FinalGUISpec.md`) and only reconfirmed the already-recorded missing owner headings plus existing `detached_window`, `result_id`, `restore points`, and the broken `#11. Source Control boundary` reference."
+      ],
+      "stale_tokens": [
+        "gap-002",
+        "gap-006",
+        "gap-007",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Glossary.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/GitHub_Integration.md",
+        "Plans/FinalGUISpec.md",
+        "detached_window",
+        "result_id",
+        "restore points",
+        "#11. Source Control boundary"
+      ],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:14"
+      ],
+      "required_action": "stale_retirement"
+    },
+    {
+      "coverage_id": "cov-05295",
+      "source_obligation_ids": [
+        "obl-4948"
+      ],
+      "source_seed_ids": [
+        "seed-7074"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "canon_label": "gap-002",
+      "row_type": "stale_retirement",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "10. Search",
+      "status": "present",
+      "exact_items": [
+        "`gap-002` sharpened: `Plans/UI_Command_Catalog.md` still points at the non-existent `Plans/Orchestrator_Page.md#10. Search, routing, and action policy`, and `result_id` remains live in `cmd.search.open_result` / `cmd.search.replace_selected` args rather than appearing only as stale residue."
+      ],
+      "stale_tokens": [
+        "gap-002",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Orchestrator_Page.md#10. Search, routing, and action policy",
+        "result_id",
+        "cmd.search.open_result",
+        "cmd.search.replace_selected"
+      ],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:55"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-05337",
+      "source_obligation_ids": [
+        "obl-4982"
+      ],
+      "source_seed_ids": [
+        "seed-7133"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "canon_label": "gap-003",
+      "row_type": "stale_retirement",
+      "path": "Plans/Orchestrator_Page.md",
+      "heading_hint": "Canonical records",
+      "status": "missing",
+      "exact_items": [
+        "`gap-003` sharpened: `Plans/Contracts_V0.md` still points at the missing `Plans/storage-plan.md#Canonical records` anchor, and both `Plans/Orchestrator_Page.md` and `Plans/WorktreeGitImprovement.md` still point at the missing `Plans/storage-plan.md#Restart and stale history` anchor in addition to the already-carried missing `Canonical records` heading."
+      ],
+      "stale_tokens": [
+        "gap-003",
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md#Canonical records",
+        "Plans/Orchestrator_Page.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/storage-plan.md#Restart and stale history",
+        "Canonical records"
+      ],
+      "evidence": [
+        "Plans/Orchestrator_Page.md:14"
+      ],
+      "required_action": "stale_retirement"
+    },
+    {
+      "coverage_id": "cov-00414",
+      "source_obligation_ids": [
+        "obl-0412"
+      ],
+      "source_seed_ids": [
+        "seed-0417"
+      ],
+      "source_shard_ids": [
+        "shard-0006"
+      ],
+      "canon_label": "Plans/Permissions_System.md",
+      "row_type": "consumer",
+      "path": "Plans/Permissions_System.md",
+      "heading_hint": "Runtime / Storage / Contract Impacts",
+      "status": "present",
+      "exact_items": [
+        "`Plans/Permissions_System.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Permissions_System.md:16",
+        "Plans/Permissions_System.md:13",
+        "Plans/Permissions_System.md:101",
+        "Plans/Permissions_System.md:7"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00611",
+      "source_obligation_ids": [
+        "obl-0574"
+      ],
+      "source_seed_ids": [
+        "seed-0579"
+      ],
+      "source_shard_ids": [
+        "shard-0008"
+      ],
+      "canon_label": "Plans/human-in-the-loop.md",
+      "row_type": "consumer",
+      "path": "Plans/Permissions_System.md",
+      "heading_hint": "Highest-Impact Docs",
+      "status": "present",
+      "exact_items": [
+        "**`Plans/human-in-the-loop.md` + `Plans/Permissions_System.md` + `Plans/Project_Output_Artifacts.md`**"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Permissions_System.md:143",
+        "Plans/Permissions_System.md:16",
+        "Plans/Permissions_System.md:307"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00781",
+      "source_obligation_ids": [
+        "obl-0713"
+      ],
+      "source_seed_ids": [
+        "seed-0741",
+        "seed-6065"
+      ],
+      "source_shard_ids": [
+        "shard-0011",
+        "shard-0082"
+      ],
+      "canon_label": "Plans/Permissions_System.md",
+      "row_type": "consumer",
+      "path": "Plans/Permissions_System.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "`Plans/Permissions_System.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Permissions_System.md:16"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00792",
+      "source_obligation_ids": [
+        "obl-0724"
+      ],
+      "source_seed_ids": [
+        "seed-0752",
+        "seed-2280",
+        "seed-2407",
+        "seed-2536",
+        "seed-2648"
+      ],
+      "source_shard_ids": [
+        "shard-0011",
+        "shard-0037",
+        "shard-0039",
+        "shard-0041",
+        "shard-0042"
+      ],
+      "canon_label": "Plans/Permissions_System.md",
+      "row_type": "consumer",
+      "path": "Plans/Permissions_System.md",
+      "heading_hint": "Highest-risk impacted docs",
+      "status": "partial",
+      "exact_items": [
+        "`Plans/Permissions_System.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Permissions_System.md:16",
+        "Plans/Permissions_System.md:307"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-01609",
+      "source_obligation_ids": [
+        "obl-1540"
+      ],
+      "source_seed_ids": [
+        "seed-1718",
+        "seed-1973",
+        "seed-2263",
+        "seed-2389",
+        "seed-2515",
+        "seed-2633"
+      ],
+      "source_shard_ids": [
+        "shard-0031",
+        "shard-0034",
+        "shard-0037",
+        "shard-0039",
+        "shard-0040",
+        "shard-0042"
+      ],
+      "canon_label": "Plans/Permissions_System.md",
+      "row_type": "consumer",
+      "path": "Plans/Permissions_System.md",
+      "heading_hint": "Targeted docs read",
+      "status": "present",
+      "exact_items": [
+        "`Plans/Permissions_System.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Permissions_System.md:16",
+        "Plans/Permissions_System.md:307",
+        "Plans/Permissions_System.md:54"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-01622",
+      "source_obligation_ids": [
+        "obl-1553"
+      ],
+      "source_seed_ids": [
+        "seed-1733",
+        "seed-4473",
+        "seed-5140",
+        "seed-5978",
+        "seed-6153"
+      ],
+      "source_shard_ids": [
+        "shard-0032",
+        "shard-0062",
+        "shard-0070",
+        "shard-0081",
+        "shard-0082"
+      ],
+      "canon_label": "Plans/Permissions_System.md",
+      "row_type": "consumer",
+      "path": "Plans/Permissions_System.md",
+      "heading_hint": "Impacted docs",
+      "status": "partial",
+      "exact_items": [
+        "`Plans/Permissions_System.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Permissions_System.md:16",
+        "Plans/Permissions_System.md:307"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-01803",
+      "source_obligation_ids": [
+        "obl-1732"
+      ],
+      "source_seed_ids": [
+        "seed-1989"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "canon_label": "Plans/Permissions_System.md",
+      "row_type": "consumer",
+      "path": "Plans/Permissions_System.md",
+      "heading_hint": "Highest-risk impacted docs",
+      "status": "partial",
+      "exact_items": [
+        "`Plans/Permissions_System.md` + `Plans/Provider_OpenCode.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Permissions_System.md:16",
+        "Plans/Permissions_System.md:307"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-03314",
+      "source_obligation_ids": [
+        "obl-3198"
+      ],
+      "source_seed_ids": [
+        "seed-4180"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "canon_label": "Plans/*.md",
+      "row_type": "consumer",
+      "path": "Plans/Permissions_System.md",
+      "heading_hint": "Do-not-forget details",
+      "status": "present",
+      "exact_items": [
+        "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Permissions_System.md:23",
+        "Plans/Permissions_System.md:16",
+        "Plans/Permissions_System.md:307",
+        "Plans/Permissions_System.md:369",
+        "Plans/Permissions_System.md:5",
+        "Plans/Permissions_System.md:533",
+        "Plans/Permissions_System.md:7",
+        "Plans/Permissions_System.md:180",
+        "Plans/Permissions_System.md:83"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-04453",
+      "source_obligation_ids": [
+        "obl-4262"
+      ],
+      "source_seed_ids": [
+        "seed-6087"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "canon_label": "39",
+      "row_type": "consumer",
+      "path": "Plans/Permissions_System.md",
+      "heading_hint": "Do-not-forget details",
+      "status": "present",
+      "exact_items": [
+        "Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Permissions_System.md:8",
+        "Plans/Permissions_System.md:103",
+        "Plans/Permissions_System.md:16",
+        "Plans/Permissions_System.md:307",
+        "Plans/Permissions_System.md:533",
+        "Plans/Permissions_System.md:554",
+        "Plans/Permissions_System.md:83"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-04804",
+      "source_obligation_ids": [
+        "obl-4519"
+      ],
+      "source_seed_ids": [
+        "seed-6511"
+      ],
+      "source_shard_ids": [
+        "shard-0086"
+      ],
+      "canon_label": "Plans/Permissions_System.md",
+      "row_type": "consumer",
+      "path": "Plans/Permissions_System.md",
+      "heading_hint": "Docs probably implicated",
+      "status": "partial",
+      "exact_items": [
+        "`Plans/Permissions_System.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Permissions_System.md:16",
+        "Plans/Permissions_System.md:307"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-04838",
+      "source_obligation_ids": [
+        "obl-4553"
+      ],
+      "source_seed_ids": [
+        "seed-6545"
+      ],
+      "source_shard_ids": [
+        "shard-0086"
+      ],
+      "canon_label": "Plans/Permissions_System.md",
+      "row_type": "consumer",
+      "path": "Plans/Permissions_System.md",
+      "heading_hint": "MUST RECONCILE",
+      "status": "partial",
+      "exact_items": [
+        "`Plans/Permissions_System.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Permissions_System.md:16"
+      ],
+      "required_action": "consumer_propagation"
+    }
+  ]
+}

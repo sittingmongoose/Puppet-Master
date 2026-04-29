@@ -1,0 +1,970 @@
+{
+  "schema_id": "pm.transfer_coverage_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-019",
+  "row_groups": [
+    "rowgrp-0073",
+    "rowgrp-0074",
+    "rowgrp-0075",
+    "rowgrp-0076"
+  ],
+  "coverage_rows": [
+    {
+      "coverage_id": "cov-00436",
+      "source_obligation_ids": [
+        "obl-0434"
+      ],
+      "source_seed_ids": [
+        "seed-0439"
+      ],
+      "source_shard_ids": [
+        "shard-0007"
+      ],
+      "canon_label": "Plans/Glossary.md",
+      "row_type": "consumer",
+      "path": "Plans/Glossary.md",
+      "heading_hint": "Cleanup Priorities",
+      "status": "present",
+      "exact_items": [
+        "`Plans/Glossary.md`, `Plans/Decision_Policy.md`, `Plans/Crosswalk.md`: Need to adopt Seam/Lane/Overseer/Package terminology."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Glossary.md:13",
+        "Plans/Glossary.md:27",
+        "Plans/Glossary.md:120"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00446",
+      "source_obligation_ids": [
+        "obl-0440"
+      ],
+      "source_seed_ids": [
+        "seed-0445"
+      ],
+      "source_shard_ids": [
+        "shard-0007"
+      ],
+      "canon_label": "Plans/orchestrator-subagent-integration.md",
+      "row_type": "consumer",
+      "path": "Plans/Glossary.md",
+      "heading_hint": "Highest-Impact Docs",
+      "status": "present",
+      "exact_items": [
+        "**`Plans/orchestrator-subagent-integration.md` + `Plans/Crosswalk.md` + `Plans/Glossary.md`** \u2014 Crosswalk and Glossary have near-zero coverage of overseer (package or seam), work package, feature seam, lane, attempt, or effective identity. These are the terminology authorities and their silence makes every other doc's usage inconsistent."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Glossary.md:13",
+        "Plans/Glossary.md:1",
+        "Plans/Glossary.md:8",
+        "Plans/Glossary.md:72",
+        "Plans/Glossary.md:157",
+        "Plans/Glossary.md:76",
+        "Plans/Glossary.md:66",
+        "Plans/Glossary.md:31",
+        "Plans/Glossary.md:172"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00498",
+      "source_obligation_ids": [
+        "obl-0483"
+      ],
+      "source_seed_ids": [
+        "seed-0488"
+      ],
+      "source_shard_ids": [
+        "shard-0007"
+      ],
+      "canon_label": "Plans/Glossary.md",
+      "row_type": "consumer",
+      "path": "Plans/Glossary.md",
+      "heading_hint": "Highest-Impact Docs",
+      "status": "present",
+      "exact_items": [
+        "**`Plans/Glossary.md` + `Plans/Crosswalk.md` + `Plans/Decision_Policy.md` + `Plans/00-plans-index.md`**"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Glossary.md:13",
+        "Plans/Glossary.md:27",
+        "Plans/Glossary.md:66"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00558",
+      "source_obligation_ids": [
+        "obl-0530"
+      ],
+      "source_seed_ids": [
+        "seed-0535"
+      ],
+      "source_shard_ids": [
+        "shard-0008"
+      ],
+      "canon_label": "Plans/storage-plan.md",
+      "row_type": "consumer",
+      "path": "Plans/Glossary.md",
+      "heading_hint": "Highest-Impact Docs",
+      "status": "present",
+      "exact_items": [
+        "**`Plans/storage-plan.md` + `Plans/usage-feature.md` + `Plans/Crosswalk.md` + `Plans/Glossary.md`**"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Glossary.md:90",
+        "Plans/Glossary.md:13",
+        "Plans/Glossary.md:66"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00642",
+      "source_obligation_ids": [
+        "obl-0604"
+      ],
+      "source_seed_ids": [
+        "seed-0609",
+        "seed-0689"
+      ],
+      "source_shard_ids": [
+        "shard-0009",
+        "shard-0010"
+      ],
+      "canon_label": "Plans/Glossary.md",
+      "row_type": "consumer",
+      "path": "Plans/Glossary.md",
+      "heading_hint": "Cleanup Priorities",
+      "status": "partial",
+      "exact_items": [
+        "`Plans/Glossary.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Glossary.md:13"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-00674",
+      "source_obligation_ids": [
+        "obl-0631"
+      ],
+      "source_seed_ids": [
+        "seed-0637"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "canon_label": "Plans/00-plans-index.md",
+      "row_type": "consumer",
+      "path": "Plans/Glossary.md",
+      "heading_hint": "Highest-Impact Docs",
+      "status": "partial",
+      "exact_items": [
+        "`Plans/00-plans-index.md`, `Plans/Crosswalk.md`, `Plans/Glossary.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Glossary.md:13",
+        "Plans/Glossary.md:66"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-01192",
+      "source_obligation_ids": [
+        "obl-1123"
+      ],
+      "source_seed_ids": [
+        "seed-1211",
+        "seed-1472",
+        "seed-1858",
+        "seed-2196",
+        "seed-2661",
+        "seed-2687",
+        "seed-2724",
+        "seed-3270",
+        "seed-3461",
+        "seed-3767",
+        "seed-3859",
+        "seed-4112"
+      ],
+      "source_shard_ids": [
+        "shard-0021",
+        "shard-0026",
+        "shard-0033",
+        "shard-0037",
+        "shard-0042",
+        "shard-0043",
+        "shard-0049",
+        "shard-0052",
+        "shard-0055",
+        "shard-0056",
+        "shard-0058"
+      ],
+      "canon_label": "Plans/Glossary.md",
+      "row_type": "consumer",
+      "path": "Plans/Glossary.md",
+      "heading_hint": "Targeted docs read",
+      "status": "present",
+      "exact_items": [
+        "`Plans/Glossary.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Glossary.md:13",
+        "Plans/Glossary.md:98",
+        "Plans/Glossary.md:66",
+        "Plans/Glossary.md:60"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-01711",
+      "source_obligation_ids": [
+        "obl-1642"
+      ],
+      "source_seed_ids": [
+        "seed-1870",
+        "seed-2210",
+        "seed-2699",
+        "seed-3490",
+        "seed-3810",
+        "seed-3904",
+        "seed-4148",
+        "seed-4665",
+        "seed-5017",
+        "seed-5132",
+        "seed-5969",
+        "seed-6056",
+        "seed-6144"
+      ],
+      "source_shard_ids": [
+        "shard-0033",
+        "shard-0037",
+        "shard-0043",
+        "shard-0052",
+        "shard-0056",
+        "shard-0058",
+        "shard-0064",
+        "shard-0069",
+        "shard-0070",
+        "shard-0081",
+        "shard-0082"
+      ],
+      "canon_label": "Plans/Glossary.md",
+      "row_type": "consumer",
+      "path": "Plans/Glossary.md",
+      "heading_hint": "Impacted docs",
+      "status": "partial",
+      "exact_items": [
+        "`Plans/Glossary.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Glossary.md:13",
+        "Plans/Glossary.md:66"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-02713",
+      "source_obligation_ids": [
+        "obl-2633"
+      ],
+      "source_seed_ids": [
+        "seed-3299"
+      ],
+      "source_shard_ids": [
+        "shard-0049"
+      ],
+      "canon_label": "Plans/Glossary.md",
+      "row_type": "consumer",
+      "path": "Plans/Glossary.md",
+      "heading_hint": "Highest-risk impacted docs",
+      "status": "partial",
+      "exact_items": [
+        "`Plans/Glossary.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Glossary.md:13",
+        "Plans/Glossary.md:66"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-02839",
+      "source_obligation_ids": [
+        "obl-2758"
+      ],
+      "source_seed_ids": [
+        "seed-3481"
+      ],
+      "source_shard_ids": [
+        "shard-0052"
+      ],
+      "canon_label": "Plans/Glossary.md \u00a72",
+      "row_type": "consumer",
+      "path": "Plans/Glossary.md",
+      "heading_hint": "Key findings",
+      "status": "present",
+      "exact_items": [
+        "multiple adjacent docs cite `Plans/Glossary.md \u00a72` for `Overseer`, but no such entry exists."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Glossary.md:5",
+        "Plans/Glossary.md:66",
+        "Plans/Glossary.md:13",
+        "Plans/Glossary.md:84",
+        "Plans/Glossary.md:11"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-03304",
+      "source_obligation_ids": [
+        "obl-3198"
+      ],
+      "source_seed_ids": [
+        "seed-4180"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "canon_label": "Plans/*.md",
+      "row_type": "consumer",
+      "path": "Plans/Glossary.md",
+      "heading_hint": "Do-not-forget details",
+      "status": "present",
+      "exact_items": [
+        "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Glossary.md:27",
+        "Plans/Glossary.md:13",
+        "Plans/Glossary.md:66",
+        "Plans/Glossary.md:5",
+        "Plans/Glossary.md:120",
+        "Plans/Glossary.md:76",
+        "Plans/Glossary.md:74"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-04443",
+      "source_obligation_ids": [
+        "obl-4262"
+      ],
+      "source_seed_ids": [
+        "seed-6087"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "canon_label": "39",
+      "row_type": "consumer",
+      "path": "Plans/Glossary.md",
+      "heading_hint": "Do-not-forget details",
+      "status": "present",
+      "exact_items": [
+        "Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Glossary.md:8",
+        "Plans/Glossary.md:13",
+        "Plans/Glossary.md:66",
+        "Plans/Glossary.md:120",
+        "Plans/Glossary.md:85",
+        "Plans/Glossary.md:74"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-04790",
+      "source_obligation_ids": [
+        "obl-4505"
+      ],
+      "source_seed_ids": [
+        "seed-6497"
+      ],
+      "source_shard_ids": [
+        "shard-0086"
+      ],
+      "canon_label": "Plans/Glossary.md",
+      "row_type": "consumer",
+      "path": "Plans/Glossary.md",
+      "heading_hint": "Docs clearly implicated",
+      "status": "partial",
+      "exact_items": [
+        "`Plans/Glossary.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Glossary.md:13",
+        "Plans/Glossary.md:66"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-04828",
+      "source_obligation_ids": [
+        "obl-4543"
+      ],
+      "source_seed_ids": [
+        "seed-6535"
+      ],
+      "source_shard_ids": [
+        "shard-0086"
+      ],
+      "canon_label": "Plans/Glossary.md",
+      "row_type": "consumer",
+      "path": "Plans/Glossary.md",
+      "heading_hint": "MUST RECONCILE",
+      "status": "partial",
+      "exact_items": [
+        "`Plans/Glossary.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Glossary.md:13"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-04904",
+      "source_obligation_ids": [
+        "obl-4617"
+      ],
+      "source_seed_ids": [
+        "seed-6609"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "canon_label": "Plans/Glossary.md",
+      "row_type": "consumer",
+      "path": "Plans/Glossary.md",
+      "heading_hint": "Cluster E - Lifecycle / glossary / help / terminology transfer misses",
+      "status": "present",
+      "exact_items": [
+        "`Plans/Glossary.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Glossary.md:13",
+        "Plans/Glossary.md:17",
+        "Plans/Glossary.md:1",
+        "Plans/Glossary.md:7",
+        "Plans/Glossary.md:31"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-04930",
+      "source_obligation_ids": [
+        "obl-4640"
+      ],
+      "source_seed_ids": [
+        "seed-6632"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "canon_label": "Plans/Glossary.md",
+      "row_type": "consumer",
+      "path": "Plans/Glossary.md",
+      "heading_hint": "Impacted docs and likely owner order",
+      "status": "present",
+      "exact_items": [
+        "`Plans/Glossary.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Glossary.md:13",
+        "Plans/Glossary.md:66",
+        "Plans/Glossary.md:97",
+        "Plans/Glossary.md:5"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-04959",
+      "source_obligation_ids": [
+        "obl-4666"
+      ],
+      "source_seed_ids": [
+        "seed-6658"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "canon_label": "Plans/Orchestrator_Page.md",
+      "row_type": "consumer",
+      "path": "Plans/Glossary.md",
+      "heading_hint": "Early Orchestrator surface details that were more under-transferred than the earlier synthesis made explicit",
+      "status": "present",
+      "exact_items": [
+        "`Plans/Orchestrator_Page.md` / `Plans/FinalGUISpec.md` / `Plans/Glossary.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Glossary.md:68",
+        "Plans/Glossary.md:13",
+        "Plans/Glossary.md:56",
+        "Plans/Glossary.md:60",
+        "Plans/Glossary.md:15"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-04981",
+      "source_obligation_ids": [
+        "obl-4677"
+      ],
+      "source_seed_ids": [
+        "seed-6669"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "canon_label": "Plans/FinalGUISpec.md",
+      "row_type": "consumer",
+      "path": "Plans/Glossary.md",
+      "heading_hint": "Help / project status / escalation transfer gaps sharpened",
+      "status": "present",
+      "exact_items": [
+        "`Plans/FinalGUISpec.md`, `Plans/Glossary.md`, `Plans/Orchestrator_Page.md`, `Plans/storage-plan.md`, `Plans/usage-feature.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Glossary.md:68",
+        "Plans/Glossary.md:13",
+        "Plans/Glossary.md:90",
+        "Plans/Glossary.md:7",
+        "Plans/Glossary.md:74",
+        "Plans/Glossary.md:92",
+        "Plans/Glossary.md:59"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-05033",
+      "source_obligation_ids": [
+        "obl-4710"
+      ],
+      "source_seed_ids": [
+        "seed-6702"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "canon_label": "Plans/Glossary.md",
+      "row_type": "consumer",
+      "path": "Plans/Glossary.md",
+      "heading_hint": "Reconciliation posture after rerun",
+      "status": "partial",
+      "exact_items": [
+        "7. `Plans/Glossary.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Glossary.md:13",
+        "Plans/Glossary.md:59"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-05068",
+      "source_obligation_ids": [
+        "obl-4742"
+      ],
+      "source_seed_ids": [
+        "seed-6735",
+        "seed-6849",
+        "seed-6964",
+        "seed-7006",
+        "seed-7048",
+        "seed-7085",
+        "seed-7112",
+        "seed-7179"
+      ],
+      "source_shard_ids": [
+        "shard-0088",
+        "shard-0089",
+        "shard-0090",
+        "shard-0091"
+      ],
+      "canon_label": "Plans/Glossary.md",
+      "row_type": "consumer",
+      "path": "Plans/Glossary.md",
+      "heading_hint": "Entry",
+      "status": "present",
+      "exact_items": [
+        "`Plans/Glossary.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Glossary.md:13",
+        "Plans/Glossary.md:11"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-05084",
+      "source_obligation_ids": [
+        "obl-4758"
+      ],
+      "source_seed_ids": [
+        "seed-6751"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "canon_label": "Plans/Glossary.md:34-67",
+      "row_type": "consumer",
+      "path": "Plans/Glossary.md",
+      "heading_hint": "Entry",
+      "status": "partial",
+      "exact_items": [
+        "`Plans/Glossary.md:34-67`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Glossary.md:11"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-05085",
+      "source_obligation_ids": [
+        "obl-4759"
+      ],
+      "source_seed_ids": [
+        "seed-6752"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "canon_label": "Plans/Glossary.md:102-126",
+      "row_type": "consumer",
+      "path": "Plans/Glossary.md",
+      "heading_hint": "Entry",
+      "status": "partial",
+      "exact_items": [
+        "`Plans/Glossary.md:102-126`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Glossary.md:11"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-05102",
+      "source_obligation_ids": [
+        "obl-4776"
+      ],
+      "source_seed_ids": [
+        "seed-6772",
+        "seed-7208"
+      ],
+      "source_shard_ids": [
+        "shard-0089",
+        "shard-0092"
+      ],
+      "canon_label": "Plans/Glossary.md",
+      "row_type": "consumer",
+      "path": "Plans/Glossary.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "`Plans/Glossary.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Glossary.md:13"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-05116",
+      "source_obligation_ids": [
+        "obl-4790"
+      ],
+      "source_seed_ids": [
+        "seed-6792"
+      ],
+      "source_shard_ids": [
+        "shard-0089"
+      ],
+      "canon_label": "Plans/Glossary.md:34-67",
+      "row_type": "consumer",
+      "path": "Plans/Glossary.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "`Plans/Glossary.md:34-67`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Glossary.md:required_terms_absent"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-05117",
+      "source_obligation_ids": [
+        "obl-4791"
+      ],
+      "source_seed_ids": [
+        "seed-6793"
+      ],
+      "source_shard_ids": [
+        "shard-0089"
+      ],
+      "canon_label": "Plans/Glossary.md:102-126",
+      "row_type": "consumer",
+      "path": "Plans/Glossary.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "`Plans/Glossary.md:102-126`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Glossary.md:required_terms_absent"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-05169",
+      "source_obligation_ids": [
+        "obl-4839"
+      ],
+      "source_seed_ids": [
+        "seed-6869",
+        "seed-6977"
+      ],
+      "source_shard_ids": [
+        "shard-0089",
+        "shard-0090"
+      ],
+      "canon_label": "Plans/Glossary.md:30-127",
+      "row_type": "consumer",
+      "path": "Plans/Glossary.md",
+      "heading_hint": "Entry",
+      "status": "partial",
+      "exact_items": [
+        "`Plans/Glossary.md:30-127`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Glossary.md:11"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-05260",
+      "source_obligation_ids": [
+        "obl-4914"
+      ],
+      "source_seed_ids": [
+        "seed-6999"
+      ],
+      "source_shard_ids": [
+        "shard-0090"
+      ],
+      "canon_label": "Plans/Glossary.md",
+      "row_type": "consumer",
+      "path": "Plans/Glossary.md",
+      "heading_hint": "Entry",
+      "status": "present",
+      "exact_items": [
+        "`Plans/Glossary.md` already carries the required help-entry field template and labels, but still does not have the named `### Orchestrator rewrite terms` / `### Runtime and routing terms` sections or populated help-entry rows."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Glossary.md:13",
+        "Plans/Glossary.md:56",
+        "Plans/Glossary.md:70",
+        "Plans/Glossary.md:21",
+        "Plans/Glossary.md:17",
+        "Plans/Glossary.md:39",
+        "Plans/Glossary.md:58",
+        "Plans/Glossary.md:11"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-05268",
+      "source_obligation_ids": [
+        "obl-4922"
+      ],
+      "source_seed_ids": [
+        "seed-7024"
+      ],
+      "source_shard_ids": [
+        "shard-0090"
+      ],
+      "canon_label": "Plans/Glossary.md:30-67",
+      "row_type": "consumer",
+      "path": "Plans/Glossary.md",
+      "heading_hint": "Entry",
+      "status": "partial",
+      "exact_items": [
+        "`Plans/Glossary.md:30-67`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Glossary.md:11"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-05288",
+      "source_obligation_ids": [
+        "obl-4942"
+      ],
+      "source_seed_ids": [
+        "seed-7066"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "canon_label": "Plans/Glossary.md:30-70",
+      "row_type": "consumer",
+      "path": "Plans/Glossary.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "`Plans/Glossary.md:30-70`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Glossary.md:required_terms_absent"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-05297",
+      "source_obligation_ids": [
+        "obl-4950"
+      ],
+      "source_seed_ids": [
+        "seed-7076"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "canon_label": "gap-006",
+      "row_type": "consumer",
+      "path": "Plans/Glossary.md",
+      "heading_hint": "Entry",
+      "status": "present",
+      "exact_items": [
+        "`gap-006` sharpened: `Plans/Glossary.md` still lacks `### Orchestrator rewrite terms` / `### Runtime and routing terms`, and the live glossary still instantiates terms as two-column `Term | Definition` tables or inline bullets instead of the full help-entry field set (`canonical_name`, `short_definition`, `why_it_matters`, `what_it_is_not`, `common_related_states`, `related_concepts`, `surface_examples`)."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Glossary.md:13",
+        "Plans/Glossary.md:56",
+        "Plans/Glossary.md:70",
+        "Plans/Glossary.md:39",
+        "Plans/Glossary.md:58",
+        "Plans/Glossary.md:84",
+        "Plans/Glossary.md:1",
+        "Plans/Glossary.md:11",
+        "Plans/Glossary.md:111",
+        "Plans/Glossary.md:64",
+        "Plans/Glossary.md:120",
+        "Plans/Glossary.md:21"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-05310",
+      "source_obligation_ids": [
+        "obl-4959"
+      ],
+      "source_seed_ids": [
+        "seed-7097"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "canon_label": "Plans/Glossary.md:34-85",
+      "row_type": "consumer",
+      "path": "Plans/Glossary.md",
+      "heading_hint": "Entry",
+      "status": "partial",
+      "exact_items": [
+        "`Plans/Glossary.md:34-85`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Glossary.md:11"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-05328",
+      "source_obligation_ids": [
+        "obl-4975"
+      ],
+      "source_seed_ids": [
+        "seed-7123"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "canon_label": "Plans/Glossary.md:30-85",
+      "row_type": "consumer",
+      "path": "Plans/Glossary.md",
+      "heading_hint": "Entry",
+      "status": "partial",
+      "exact_items": [
+        "`Plans/Glossary.md:30-85`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Glossary.md:11"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-05365",
+      "source_obligation_ids": [
+        "obl-5006"
+      ],
+      "source_seed_ids": [
+        "seed-7188"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "canon_label": "Plans/Glossary.md:30-90",
+      "row_type": "consumer",
+      "path": "Plans/Glossary.md",
+      "heading_hint": "Entry",
+      "status": "partial",
+      "exact_items": [
+        "`Plans/Glossary.md:30-90`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Glossary.md:11"
+      ],
+      "required_action": "consumer_propagation"
+    }
+  ]
+}

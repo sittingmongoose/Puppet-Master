@@ -1,0 +1,23 @@
+{
+  "schema_id": "pm.transfer_coverage_noise.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-070",
+  "noise_findings": [
+    {
+      "source": "coverage-rowgrp-277",
+      "finding": "coverage_ids_completed was empty; reducer completed cov-017,cov-616,cov-681 and retained partial/missing statuses."
+    },
+    {
+      "source": "coverage-rowgrp-278",
+      "finding": "coverage_ids_completed was empty; reducer completed cov-298,cov-438 and retained partial statuses."
+    },
+    {
+      "source": "coverage-rowgrp-279",
+      "finding": "coverage_ids_completed was empty; reducer completed cov-619 and retained partial for related but incomplete consolidation evidence."
+    },
+    {
+      "source": "coverage-rowgrp-280",
+      "finding": "coverage_ids_completed was empty; reducer completed cov-050,cov-057,cov-634 and upgraded cov-634 from subagent missing to partial because execution_unit_context/TierContext demotion evidence is direct but incomplete."
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "schema_id": "pm.transfer_coverage_noise.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-042",
+  "noise_findings": [
+    {
+      "source": "coverage-rowgrp-165",
+      "finding": "Reducer kept cov-582 partial rather than present because Provider_OpenCode covers session/thread correlation but not explicit shared-runtime event-join trust language."
+    },
+    {
+      "source": "coverage-rowgrp-166",
+      "finding": "coverage_ids_completed was empty; reducer normalized cov-548 completion and stripped scope-only evidence from the missing row."
+    },
+    {
+      "source": "coverage-rowgrp-167",
+      "finding": "coverage_ids_completed was empty; reducer normalized completions and kept cov-146/cov-191 partial for Overseer/auth mapping evidence missing exact split/account-attribution requirements."
+    },
+    {
+      "source": "coverage-rowgrp-168",
+      "finding": "coverage_ids_completed was empty; reducer normalized cov-590 completion and upgraded missing to partial for direct bridge correlation and approval_scope_key evidence, while preserving unresolved layout blockers."
+    }
+  ]
+}

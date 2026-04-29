@@ -1,410 +1,273 @@
 {
-  "schema_id": "pm.transfer_coverage_wave.v1",
+  "schema_id": "pm.transfer_coverage_wave.v3",
   "work_id": "w-20260312-203855",
   "wave_id": "wave-046",
-  "row_groups": [
-    "rowgrp-0181",
-    "rowgrp-0182",
-    "rowgrp-0183",
-    "rowgrp-0184"
+  "timestamp_utc": "2026-04-28T21:09:48Z",
+  "subagent_tasks": [
+    "coverage-rowgrp-181",
+    "coverage-rowgrp-182",
+    "coverage-rowgrp-183",
+    "coverage-rowgrp-184"
   ],
-  "coverage_rows": [
+  "assigned_input_boundaries": [
+    "rowgrp-181 cov-1224 Plans/Run_Modes.md",
+    "rowgrp-182 cov-1079 Plans/Run_Modes.md",
+    "rowgrp-183 cov-678,cov-760,cov-822,cov-851 Plans/Runtime_Artifacts_Panel.md",
+    "rowgrp-184 cov-391,cov-741,cov-750,cov-776,cov-861 Plans/Runtime_Artifacts_Panel.md"
+  ],
+  "subagent_result_status": {
+    "coverage-rowgrp-181": "completed_reduced_conservatively_with_schema_normalization",
+    "coverage-rowgrp-182": "completed_reduced_conservatively_with_schema_normalization",
+    "coverage-rowgrp-183": "completed_reduced_conservatively_with_schema_normalization",
+    "coverage-rowgrp-184": "completed_reduced_conservatively_with_schema_normalization"
+  },
+  "completed_task_count": 4,
+  "failed_task_count": 0,
+  "coverage_ids_assigned": [
+    "cov-1224",
+    "cov-1079",
+    "cov-678",
+    "cov-760",
+    "cov-822",
+    "cov-851",
+    "cov-391",
+    "cov-741",
+    "cov-750",
+    "cov-776",
+    "cov-861"
+  ],
+  "coverage_ids_completed": [
+    "cov-1224",
+    "cov-1079",
+    "cov-678",
+    "cov-760",
+    "cov-822",
+    "cov-851",
+    "cov-391",
+    "cov-741",
+    "cov-750",
+    "cov-776",
+    "cov-861"
+  ],
+  "path_groups_assigned": [
+    "Plans/Run_Modes.md",
+    "Plans/Runtime_Artifacts_Panel.md"
+  ],
+  "rows": [
     {
-      "coverage_id": "cov-04556",
-      "source_obligation_ids": [
-        "obl-4283"
-      ],
-      "source_seed_ids": [
-        "seed-6167"
-      ],
-      "source_shard_ids": [
-        "shard-0082"
-      ],
-      "canon_label": "Plans/*.md",
-      "row_type": "layout_blocker",
-      "path": "Plans/assistant-chat-design.md",
-      "heading_hint": "Do-not-forget details",
+      "coverage_id": "cov-1224",
       "status": "present",
-      "exact_items": [
-        "After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes."
-      ],
-      "stale_tokens": [],
       "evidence": [
-        "Plans/assistant-chat-design.md:65",
-        "Plans/assistant-chat-design.md:199",
-        "Plans/assistant-chat-design.md:225",
-        "Plans/assistant-chat-design.md:287",
-        "Plans/assistant-chat-design.md:14",
-        "Plans/assistant-chat-design.md:55",
-        "Plans/assistant-chat-design.md:1377",
-        "Plans/assistant-chat-design.md:224",
-        "Plans/assistant-chat-design.md:33",
-        "Plans/assistant-chat-design.md:1902",
-        "Plans/assistant-chat-design.md:60"
+        "Plans/Run_Modes.md:667-676 defines Runtime identity and blocked-policy continuity, transfers execution_role, requested_account_id, operational_identity, account-switch and pressure ownership, blocked_sequence minting, startup recovery handshake, DAE jail/approval policy into owner and consumer docs, requires blocked_sequence minting/persistence and startup recovery rehydration, and carries usage switch-history plus execution-role follow-through"
       ],
-      "required_action": "none"
-    },
-    {
-      "coverage_id": "cov-05178",
+      "required_action": "none",
+      "unresolved_reason": "",
       "source_obligation_ids": [
-        "obl-4848"
+        "obl-346"
       ],
       "source_seed_ids": [
-        "seed-6880"
-      ],
-      "source_shard_ids": [
-        "shard-0089"
-      ],
-      "canon_label": "Plans/assistant-chat-design.md",
-      "row_type": "layout_blocker",
-      "path": "Plans/assistant-chat-design.md",
-      "heading_hint": "## Unified Thread Blocked-State Lifecycle",
-      "status": "present",
-      "exact_items": [
-        "`Plans/assistant-chat-design.md` does contain the exact heading `## Unified Thread Blocked-State Lifecycle`."
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/assistant-chat-design.md:14",
-        "Plans/assistant-chat-design.md:2232",
-        "Plans/assistant-chat-design.md:216",
-        "Plans/assistant-chat-design.md:5",
-        "Plans/assistant-chat-design.md:11",
-        "Plans/assistant-chat-design.md:51",
-        "Plans/assistant-chat-design.md:84",
-        "Plans/assistant-chat-design.md:87"
-      ],
-      "required_action": "none"
-    },
-    {
-      "coverage_id": "cov-05248",
-      "source_obligation_ids": [
-        "obl-4903"
-      ],
-      "source_seed_ids": [
-        "seed-6961"
-      ],
-      "source_shard_ids": [
-        "shard-0090"
-      ],
-      "canon_label": "gap-003",
-      "row_type": "owner",
-      "path": "Plans/assistant-chat-design.md",
-      "heading_hint": "Entry",
-      "status": "present",
-      "exact_items": [
-        "Wave 2 targeted the storage/receipt/blocked subset around `gap-003`, `gap-004`, and `gap-005` (`Plans/storage-plan.md`, `Plans/Project_Output_Artifacts.md`, `Plans/Runtime_Artifacts_Panel.md`, `Plans/interview-subagent-integration.md`, `Plans/usage-feature.md`, `Plans/Tools.md`, `Plans/assistant-chat-design.md`) and only reconfirmed the already-recorded missing anchors/fields plus the already-known owner-vs-consumer split for blocked-packet fields."
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/assistant-chat-design.md:43",
-        "Plans/assistant-chat-design.md:35",
-        "Plans/assistant-chat-design.md:166",
-        "Plans/assistant-chat-design.md:958",
-        "Plans/assistant-chat-design.md:147",
-        "Plans/assistant-chat-design.md:14",
-        "Plans/assistant-chat-design.md:560",
-        "Plans/assistant-chat-design.md:670",
-        "Plans/assistant-chat-design.md:477",
-        "Plans/assistant-chat-design.md:203",
-        "Plans/assistant-chat-design.md:2099",
-        "Plans/assistant-chat-design.md:1112"
-      ],
-      "required_action": "none"
-    },
-    {
-      "coverage_id": "cov-05038",
-      "source_obligation_ids": [
-        "obl-4715"
-      ],
-      "source_seed_ids": [
-        "seed-6707"
+        "seed-346"
       ],
       "source_shard_ids": [
         "shard-0088"
       ],
-      "canon_label": "Plans/assistant-chat-design.md:1775-1784",
-      "row_type": "stale_retirement",
-      "path": "Plans/assistant-chat-design.md",
-      "heading_hint": "Audit Pass 2026-04-16T01:28:16Z",
-      "status": "present",
-      "exact_items": [
-        "`Plans/assistant-chat-design.md:1775-1784` still contains a stale self-verdict:"
-      ],
-      "stale_tokens": [
-        "Plans/assistant-chat-design.md:1775-1784"
-      ],
-      "evidence": [
-        "Plans/assistant-chat-design.md:35"
-      ],
-      "required_action": "none"
+      "path_field_status": "match"
     },
     {
-      "coverage_id": "cov-05156",
-      "source_obligation_ids": [
-        "obl-4828"
-      ],
-      "source_seed_ids": [
-        "seed-6840"
-      ],
-      "source_shard_ids": [
-        "shard-0089"
-      ],
-      "canon_label": "Plans/Tools.md",
-      "row_type": "stale_retirement",
-      "path": "Plans/assistant-chat-design.md",
-      "heading_hint": "Entry",
+      "coverage_id": "cov-1079",
       "status": "missing",
-      "exact_items": [
-        "`Plans/Tools.md` still carries the stale tuple `{ tool_name, invocation_summary, options }`, `Plans/assistant-chat-design.md` still carries `No remaining gaps`, and `Plans/FinalGUISpec.md` still carries the `restore points` contradiction."
-      ],
-      "stale_tokens": [
-        "Plans/Tools.md",
-        "{ tool_name, invocation_summary, options }",
-        "Plans/assistant-chat-design.md",
-        "No remaining gaps",
-        "Plans/FinalGUISpec.md",
-        "restore points"
-      ],
-      "evidence": [
-        "Plans/assistant-chat-design.md:147",
-        "Plans/assistant-chat-design.md:14",
-        "Plans/assistant-chat-design.md:62"
-      ],
-      "required_action": "stale_retirement"
-    },
-    {
-      "coverage_id": "cov-05259",
+      "evidence": [],
+      "required_action": "stale_retirement",
+      "unresolved_reason": "Plans/Run_Modes.md references Prompt_Pipeline ownership and HITL tier-boundary approvals, but does not contain the assigned tier/tier_id/run.tier_started/run.tier_completed/run.persona_stage_changed/tier_type/tier_runtime_record retirement wording.",
       "source_obligation_ids": [
-        "obl-4913"
+        "obl-309"
       ],
       "source_seed_ids": [
-        "seed-6998"
+        "seed-309"
       ],
       "source_shard_ids": [
-        "shard-0090"
+        "shard-0078"
       ],
-      "canon_label": "Plans/Tools.md",
-      "row_type": "stale_retirement",
-      "path": "Plans/assistant-chat-design.md",
-      "heading_hint": "Entry",
-      "status": "missing",
-      "exact_items": [
-        "`Plans/Tools.md` still carries the stale ask tuple `{ tool_name, invocation_summary, options }`, and `Plans/assistant-chat-design.md` still carries the stale self-verdict `No remaining gaps`."
-      ],
-      "stale_tokens": [
-        "Plans/Tools.md",
-        "{ tool_name, invocation_summary, options }",
-        "Plans/assistant-chat-design.md",
-        "No remaining gaps"
-      ],
-      "evidence": [
-        "Plans/assistant-chat-design.md:147",
-        "Plans/assistant-chat-design.md:14"
-      ],
-      "required_action": "stale_retirement"
+      "path_field_status": "match"
     },
     {
-      "coverage_id": "cov-00490",
-      "source_obligation_ids": [
-        "obl-0477"
-      ],
-      "source_seed_ids": [
-        "seed-0482"
-      ],
-      "source_shard_ids": [
-        "shard-0007"
-      ],
-      "canon_label": "Plans/storage-plan.md",
-      "row_type": "consumer",
-      "path": "Plans/assistant-memory-subsystem.md",
-      "heading_hint": "Highest-Impact Docs",
+      "coverage_id": "cov-678",
       "status": "partial",
-      "exact_items": [
-        "**`Plans/storage-plan.md` + `Plans/usage-feature.md` + `Plans/assistant-memory-subsystem.md`**"
-      ],
-      "stale_tokens": [],
       "evidence": [
-        "Plans/assistant-memory-subsystem.md:10",
-        "Plans/assistant-memory-subsystem.md:47"
+        "Plans/Runtime_Artifacts_Panel.md:57-66 defines the Artifacts panel scope and identifies Runtime Artifacts as this document-owned agent-run outputs persisted via seglog runtime_artifact.* and redb artifacts_index",
+        "Plans/Runtime_Artifacts_Panel.md:236-240 references Contracts_V0, storage-plan, usage-feature, Project_Output_Artifacts, and FileManager"
       ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-02692",
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "The panel and related references are present, but there is no direct downstream/highest-risk impacted-docs list that includes Runtime_Artifacts_Panel and the full related-doc set.",
       "source_obligation_ids": [
-        "obl-2612"
+        "obl-189"
       ],
       "source_seed_ids": [
-        "seed-3277",
-        "seed-3468",
-        "seed-3774",
-        "seed-3866",
-        "seed-4119"
+        "seed-189"
       ],
       "source_shard_ids": [
-        "shard-0049",
-        "shard-0052",
-        "shard-0055",
-        "shard-0056",
+        "shard-0047"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-760",
+      "status": "partial",
+      "evidence": [
+        "Plans/Runtime_Artifacts_Panel.md:81-82 keeps Project Plan Package and Runtime Artifacts as distinct families and says lookup/indexing is projection concern, not canonical artifact truth",
+        "Plans/Runtime_Artifacts_Panel.md:117-127 defines runtime-artifact envelope and attribution packet sharing one attribution family across tool events, runtime artifacts, receipts, and usage records with run/attempt/thread/node/artifact/provider/usage anchors, execution/runtime identity fields, attempt-native artifacts, bridge refs, and usage_event_ref routing",
+        "Plans/Runtime_Artifacts_Panel.md:173-184 states cost_usage uses the same canonical usage identity as Usage, Context Detail, Ledger, Run Graph, and Orchestrator, and does not create an artifact-local usage model"
+      ],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "Artifact-family distinction and shared attribution/usage identity are covered, but the exact Tools.md/usage-feature consumer split is not fully direct.",
+      "source_obligation_ids": [
+        "obl-210"
+      ],
+      "source_seed_ids": [
+        "seed-210"
+      ],
+      "source_shard_ids": [
+        "shard-0053"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-822",
+      "status": "partial",
+      "evidence": [
+        "Plans/Runtime_Artifacts_Panel.md:123-125 resolves artifact open flows by artifact_id and linked envelope refs without replacing the primary local key",
+        "Plans/Runtime_Artifacts_Panel.md:143-144 routes artifact open/focus actions to the owning target surface rather than an artifact-local shell"
+      ],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "Artifact open/focus routing is covered, but the shared subject-open resolver and bespoke artifact-opening replacement wording are not explicit.",
+      "source_obligation_ids": [
+        "obl-231"
+      ],
+      "source_seed_ids": [
+        "seed-231"
+      ],
+      "source_shard_ids": [
         "shard-0058"
       ],
-      "canon_label": "Plans/assistant-memory-subsystem.md",
-      "row_type": "consumer",
-      "path": "Plans/assistant-memory-subsystem.md",
-      "heading_hint": "Targeted docs read",
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-851",
       "status": "partial",
-      "exact_items": [
-        "`Plans/assistant-memory-subsystem.md`"
-      ],
-      "stale_tokens": [],
       "evidence": [
-        "Plans/assistant-memory-subsystem.md:47",
-        "Plans/assistant-memory-subsystem.md:82"
+        "Plans/Runtime_Artifacts_Panel.md:143-144 routes artifact open/focus actions to the owning target surface rather than an artifact-local shell",
+        "Plans/Runtime_Artifacts_Panel.md:173-184 defines Show in Ledger and Show in Usage navigation using matching/canonical usage identity and preserving run/thread filters"
       ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-02720",
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "Shared navigation behavior is related, but the file does not directly state shared navigation primitives or contrast them with local semantics.",
       "source_obligation_ids": [
-        "obl-2639"
+        "obl-237"
       ],
       "source_seed_ids": [
-        "seed-3305"
+        "seed-237"
       ],
       "source_shard_ids": [
-        "shard-0050"
+        "shard-0060"
       ],
-      "canon_label": "Plans/newtools.md",
-      "row_type": "consumer",
-      "path": "Plans/assistant-memory-subsystem.md",
-      "heading_hint": "",
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-391",
       "status": "partial",
-      "exact_items": [
-        "`Plans/newtools.md` and `Plans/assistant-memory-subsystem.md`"
-      ],
-      "stale_tokens": [],
       "evidence": [
-        "Plans/assistant-memory-subsystem.md:47"
+        "Plans/Runtime_Artifacts_Panel.md:123-127 resolves artifact open flows by artifact_id and envelope refs, uses attempt_id/provider_attempt_ref/usage_event_ref/receipt refs as bridge fields, and prefers usage_event_ref over timestamp heuristics for Usage/Ledger routing",
+        "Plans/Runtime_Artifacts_Panel.md:173-184 defines Show in Ledger and Show in Usage navigation preserving usage identity and run/thread filters"
       ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-02851",
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "Open/Show routing and bridge payloads are present, but the shared routing payload wrapper contract and resume_url/focused_run_id/object_kind/object_id treatment are not direct.",
       "source_obligation_ids": [
-        "obl-2770"
+        "obl-116"
       ],
       "source_seed_ids": [
-        "seed-3497",
-        "seed-3817",
-        "seed-3911",
-        "seed-4155"
+        "seed-116"
       ],
       "source_shard_ids": [
-        "shard-0052",
-        "shard-0056",
-        "shard-0058"
+        "shard-0029"
       ],
-      "canon_label": "Plans/assistant-memory-subsystem.md",
-      "row_type": "consumer",
-      "path": "Plans/assistant-memory-subsystem.md",
-      "heading_hint": "Impacted docs",
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-741",
       "status": "partial",
-      "exact_items": [
-        "`Plans/assistant-memory-subsystem.md`"
-      ],
-      "stale_tokens": [],
       "evidence": [
-        "Plans/assistant-memory-subsystem.md:47"
+        "Plans/Runtime_Artifacts_Panel.md:117-127 carries run/attempt/thread/node/artifact/provider/usage anchors plus execution/runtime identity fields, makes runtime artifacts attempt-native, resolves opens by artifact_id, and uses attempt_id/provider_attempt_ref/usage_event_ref/receipt refs as bridges"
       ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-02885",
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "Canonical identity/attempt anchoring is present, but tier/group views, blocked-episode identity first, node_id/attempt_id retargeting, and tier_id/request_id/tier_type retirement are not directly covered.",
       "source_obligation_ids": [
-        "obl-2804"
+        "obl-204"
       ],
       "source_seed_ids": [
-        "seed-3539",
-        "seed-3853"
+        "seed-204"
       ],
       "source_shard_ids": [
-        "shard-0052",
-        "shard-0056"
+        "shard-0051"
       ],
-      "canon_label": "Plans/assistant-memory-subsystem.md",
-      "row_type": "consumer",
-      "path": "Plans/assistant-memory-subsystem.md",
-      "heading_hint": "Do-not-forget details",
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-750",
+      "status": "missing",
+      "evidence": [],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "Plans/Runtime_Artifacts_Panel.md contains execution/runtime identity fields but does not directly contain execution_role or operational target context/disclosure.",
+      "source_obligation_ids": [
+        "obl-207"
+      ],
+      "source_seed_ids": [
+        "seed-207"
+      ],
+      "source_shard_ids": [
+        "shard-0052"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-776",
       "status": "partial",
-      "exact_items": [
-        "`Plans/assistant-memory-subsystem.md`"
-      ],
-      "stale_tokens": [],
       "evidence": [
-        "Plans/assistant-memory-subsystem.md:47",
-        "Plans/assistant-memory-subsystem.md:59"
+        "Plans/Runtime_Artifacts_Panel.md:69-78 lists artifact_id and artifacts_index keying",
+        "Plans/Runtime_Artifacts_Panel.md:123-125 resolves artifact open flows by artifact_id and linked envelope refs without replacing the primary local key",
+        "Plans/Runtime_Artifacts_Panel.md:143-144 routes artifact open/focus actions to the owning target surface rather than an artifact-local shell",
+        "Plans/Runtime_Artifacts_Panel.md:236-240 references FileManager open by artifact identity"
       ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-03335",
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "artifact_id open routing is present, but OpenFile/OpenSubject/OpenArtifact taxonomy and explicit second identity-native open contract are absent.",
       "source_obligation_ids": [
-        "obl-3198"
+        "obl-214"
       ],
       "source_seed_ids": [
-        "seed-4180"
+        "seed-214"
       ],
       "source_shard_ids": [
-        "shard-0059"
+        "shard-0054"
       ],
-      "canon_label": "Plans/*.md",
-      "row_type": "consumer",
-      "path": "Plans/assistant-memory-subsystem.md",
-      "heading_hint": "Do-not-forget details",
-      "status": "present",
-      "exact_items": [
-        "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage."
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/assistant-memory-subsystem.md:3",
-        "Plans/assistant-memory-subsystem.md:250",
-        "Plans/assistant-memory-subsystem.md:277",
-        "Plans/assistant-memory-subsystem.md:23",
-        "Plans/assistant-memory-subsystem.md:17",
-        "Plans/assistant-memory-subsystem.md:59"
-      ],
-      "required_action": "none"
+      "path_field_status": "match"
     },
     {
-      "coverage_id": "cov-04474",
+      "coverage_id": "cov-861",
+      "status": "partial",
+      "evidence": [
+        "Plans/Runtime_Artifacts_Panel.md:41-51 and 123-127 prefer usage_event_ref over timestamp heuristics when routing cost-bearing artifacts to Usage and Ledger",
+        "Plans/Runtime_Artifacts_Panel.md:245-250 defines a bridge-field viewer with attempt_id, provider_attempt_ref, usage_event_ref, and workflow_refs"
+      ],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "usage_event_ref routing is present, but object_kind=usage_event/object_id preference over top-level usage_event_ref is absent.",
       "source_obligation_ids": [
-        "obl-4262"
+        "obl-241"
       ],
       "source_seed_ids": [
-        "seed-6087"
+        "seed-241"
       ],
       "source_shard_ids": [
-        "shard-0082"
+        "shard-0061"
       ],
-      "canon_label": "39",
-      "row_type": "consumer",
-      "path": "Plans/assistant-memory-subsystem.md",
-      "heading_hint": "Do-not-forget details",
-      "status": "present",
-      "exact_items": [
-        "Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes."
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/assistant-memory-subsystem.md:241",
-        "Plans/assistant-memory-subsystem.md:3",
-        "Plans/assistant-memory-subsystem.md:23",
-        "Plans/assistant-memory-subsystem.md:258",
-        "Plans/assistant-memory-subsystem.md:59"
-      ],
-      "required_action": "none"
+      "path_field_status": "match"
     }
   ]
 }

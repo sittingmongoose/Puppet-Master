@@ -1,0 +1,13 @@
+{
+  "schema_id": "pm.transfer_coverage.pass.v2",
+  "work_id": "w-20260312-203855",
+  "pass_id": "pass-001",
+  "material_coverage_rows": [],
+  "material_coverage_updates": [],
+  "noise_findings": [
+    {
+      "item": "all canonical obligations have rows and source lineage; required_action/status checks are consistent",
+      "reason": "verification pass found no material coverage changes"
+    }
+  ]
+}

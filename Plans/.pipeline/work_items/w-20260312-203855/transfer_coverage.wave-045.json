@@ -1,1164 +1,428 @@
 {
-  "schema_id": "pm.transfer_coverage_wave.v1",
+  "schema_id": "pm.transfer_coverage_wave.v3",
   "work_id": "w-20260312-203855",
   "wave_id": "wave-045",
-  "row_groups": [
-    "rowgrp-0177",
-    "rowgrp-0178",
-    "rowgrp-0179",
-    "rowgrp-0180"
+  "timestamp_utc": "2026-04-28T21:08:02Z",
+  "subagent_tasks": [
+    "coverage-rowgrp-177",
+    "coverage-rowgrp-178",
+    "coverage-rowgrp-179",
+    "coverage-rowgrp-180"
   ],
-  "coverage_rows": [
+  "assigned_input_boundaries": [
+    "rowgrp-177 cov-030 Plans/Run_Graph_View.md",
+    "rowgrp-178 cov-226,cov-420,cov-428,cov-545,cov-571,cov-664,cov-672,cov-974,cov-979,cov-999 Plans/Run_Graph_View.md",
+    "rowgrp-179 cov-1139,cov-1177 Plans/Run_Graph_View.md",
+    "rowgrp-180 cov-036,cov-240,cov-245,cov-457,cov-493,cov-743,cov-1093 Plans/Run_Graph_View.md"
+  ],
+  "subagent_result_status": {
+    "coverage-rowgrp-177": "completed_reduced_conservatively_with_schema_normalization",
+    "coverage-rowgrp-178": "completed_reduced_conservatively_with_schema_normalization",
+    "coverage-rowgrp-179": "completed_reduced_conservatively_with_schema_normalization",
+    "coverage-rowgrp-180": "completed_reduced_conservatively_with_schema_normalization"
+  },
+  "completed_task_count": 4,
+  "failed_task_count": 0,
+  "coverage_ids_assigned": [
+    "cov-030",
+    "cov-226",
+    "cov-420",
+    "cov-428",
+    "cov-545",
+    "cov-571",
+    "cov-664",
+    "cov-672",
+    "cov-974",
+    "cov-979",
+    "cov-999",
+    "cov-1139",
+    "cov-1177",
+    "cov-036",
+    "cov-240",
+    "cov-245",
+    "cov-457",
+    "cov-493",
+    "cov-743",
+    "cov-1093"
+  ],
+  "coverage_ids_completed": [
+    "cov-030",
+    "cov-226",
+    "cov-420",
+    "cov-428",
+    "cov-545",
+    "cov-571",
+    "cov-664",
+    "cov-672",
+    "cov-974",
+    "cov-979",
+    "cov-999",
+    "cov-1139",
+    "cov-1177",
+    "cov-036",
+    "cov-240",
+    "cov-245",
+    "cov-457",
+    "cov-493",
+    "cov-743",
+    "cov-1093"
+  ],
+  "path_groups_assigned": [
+    "Plans/Run_Graph_View.md"
+  ],
+  "rows": [
     {
-      "coverage_id": "cov-00404",
+      "coverage_id": "cov-030",
+      "status": "missing",
+      "evidence": [],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Plans/Run_Graph_View.md does not directly cover first-class feature seam/work package ownership or independent provider/model/effort settings.",
       "source_obligation_ids": [
-        "obl-0403"
+        "obl-022"
       ],
       "source_seed_ids": [
-        "seed-0408"
+        "seed-022"
       ],
       "source_shard_ids": [
-        "shard-0006"
+        "shard-0004"
       ],
-      "canon_label": "Plans/assistant-chat-design.md",
-      "row_type": "consumer",
-      "path": "Plans/assistant-chat-design.md",
-      "heading_hint": "GUI / UX Impacts",
-      "status": "present",
-      "exact_items": [
-        "`Plans/assistant-chat-design.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/assistant-chat-design.md:14",
-        "Plans/assistant-chat-design.md:564"
-      ],
-      "required_action": "none"
+      "path_field_status": "match"
     },
     {
-      "coverage_id": "cov-00547",
-      "source_obligation_ids": [
-        "obl-0525"
-      ],
-      "source_seed_ids": [
-        "seed-0530"
-      ],
-      "source_shard_ids": [
-        "shard-0008"
-      ],
-      "canon_label": "Plans/Run_Graph_View.md",
-      "row_type": "consumer",
-      "path": "Plans/assistant-chat-design.md",
-      "heading_hint": "Highest-Impact Docs",
-      "status": "present",
-      "exact_items": [
-        "**`Plans/Run_Graph_View.md` + `Plans/FinalGUISpec.md` + `Plans/assistant-chat-design.md`**"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/assistant-chat-design.md:62",
-        "Plans/assistant-chat-design.md:14",
-        "Plans/assistant-chat-design.md:65"
-      ],
-      "required_action": "none"
-    },
-    {
-      "coverage_id": "cov-00684",
-      "source_obligation_ids": [
-        "obl-0637"
-      ],
-      "source_seed_ids": [
-        "seed-0643"
-      ],
-      "source_shard_ids": [
-        "shard-0009"
-      ],
-      "canon_label": "Plans/FinalGUISpec.md",
-      "row_type": "consumer",
-      "path": "Plans/assistant-chat-design.md",
-      "heading_hint": "GUI / UX Impacts",
-      "status": "present",
-      "exact_items": [
-        "`Plans/FinalGUISpec.md`, `Plans/assistant-chat-design.md`, `Plans/chain-wizard-flexibility.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/assistant-chat-design.md:62",
-        "Plans/assistant-chat-design.md:14",
-        "Plans/assistant-chat-design.md:37",
-        "Plans/assistant-chat-design.md:564"
-      ],
-      "required_action": "none"
-    },
-    {
-      "coverage_id": "cov-00718",
-      "source_obligation_ids": [
-        "obl-0659"
-      ],
-      "source_seed_ids": [
-        "seed-0665"
-      ],
-      "source_shard_ids": [
-        "shard-0010"
-      ],
-      "canon_label": "Plans/newtools.md",
-      "row_type": "consumer",
-      "path": "Plans/assistant-chat-design.md",
-      "heading_hint": "Settings / Provider / Persona / Account Impacts",
-      "status": "present",
-      "exact_items": [
-        "`Plans/newtools.md`, `Plans/assistant-chat-design.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/assistant-chat-design.md:1124",
-        "Plans/assistant-chat-design.md:14",
-        "Plans/assistant-chat-design.md:35",
-        "Plans/assistant-chat-design.md:11",
-        "Plans/assistant-chat-design.md:888",
-        "Plans/assistant-chat-design.md:56",
-        "Plans/assistant-chat-design.md:564"
-      ],
-      "required_action": "none"
-    },
-    {
-      "coverage_id": "cov-00725",
-      "source_obligation_ids": [
-        "obl-0664"
-      ],
-      "source_seed_ids": [
-        "seed-0671"
-      ],
-      "source_shard_ids": [
-        "shard-0010"
-      ],
-      "canon_label": "Plans/assistant-chat-design.md",
-      "row_type": "consumer",
-      "path": "Plans/assistant-chat-design.md",
-      "heading_hint": "Worktree / SCM / Parallelism Impacts",
-      "status": "present",
-      "exact_items": [
-        "`Plans/assistant-chat-design.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/assistant-chat-design.md:14",
-        "Plans/assistant-chat-design.md:160",
-        "Plans/assistant-chat-design.md:564"
-      ],
-      "required_action": "none"
-    },
-    {
-      "coverage_id": "cov-00729",
-      "source_obligation_ids": [
-        "obl-0668"
-      ],
-      "source_seed_ids": [
-        "seed-0685"
-      ],
-      "source_shard_ids": [
-        "shard-0010"
-      ],
-      "canon_label": "Plans/assistant-chat-design.md",
-      "row_type": "consumer",
-      "path": "Plans/assistant-chat-design.md",
-      "heading_hint": "Cleanup Priorities",
+      "coverage_id": "cov-226",
       "status": "partial",
-      "exact_items": [
-        "`Plans/assistant-chat-design.md`"
-      ],
-      "stale_tokens": [],
       "evidence": [
-        "Plans/assistant-chat-design.md:14",
-        "Plans/assistant-chat-design.md:117"
+        "Plans/Run_Graph_View.md:19-29 defines focused run and historical routing with active_run_id/focused_run_id, focus_mode live/historical, and coherent cross-tab deep links/search pivots",
+        "Plans/Run_Graph_View.md:62-64 carries active_run_id/focused_run_id and focus_mode live/historical into the data model"
       ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-01425",
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "focused_run_id and focus_mode are present, but orchestrator.project_state, last_live_run_id, selected_tab, per-tab view refs, and persistence of last focused run are absent.",
       "source_obligation_ids": [
-        "obl-1356"
+        "obl-062"
       ],
       "source_seed_ids": [
-        "seed-1488",
-        "seed-1541",
-        "seed-1589",
-        "seed-1630",
-        "seed-2078",
-        "seed-2198",
-        "seed-2264",
-        "seed-2295",
-        "seed-2317",
-        "seed-2629",
-        "seed-2842",
-        "seed-2889",
-        "seed-2935",
-        "seed-3056",
-        "seed-3694",
-        "seed-3729",
-        "seed-4186",
-        "seed-4211",
-        "seed-4232",
-        "seed-4315",
-        "seed-4343",
-        "seed-4373",
-        "seed-4600",
-        "seed-4689",
-        "seed-4861",
-        "seed-4892",
-        "seed-4984",
-        "seed-5010",
-        "seed-5049",
-        "seed-5162",
-        "seed-5362",
-        "seed-5382",
-        "seed-5544",
-        "seed-5570",
-        "seed-5594",
-        "seed-5615",
-        "seed-6386"
+        "seed-062"
       ],
       "source_shard_ids": [
-        "shard-0027",
-        "shard-0028",
-        "shard-0029",
-        "shard-0035",
-        "shard-0037",
-        "shard-0038",
-        "shard-0042",
-        "shard-0045",
-        "shard-0046",
-        "shard-0047",
-        "shard-0054",
-        "shard-0055",
-        "shard-0059",
-        "shard-0060",
-        "shard-0061",
-        "shard-0064",
-        "shard-0065",
-        "shard-0066",
-        "shard-0067",
-        "shard-0068",
-        "shard-0069",
-        "shard-0070",
-        "shard-0073",
-        "shard-0075",
-        "shard-0076",
-        "shard-0085"
+        "shard-0013"
       ],
-      "canon_label": "Plans/assistant-chat-design.md",
-      "row_type": "consumer",
-      "path": "Plans/assistant-chat-design.md",
-      "heading_hint": "Targeted docs read",
-      "status": "present",
-      "exact_items": [
-        "`Plans/assistant-chat-design.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/assistant-chat-design.md:14",
-        "Plans/assistant-chat-design.md:560",
-        "Plans/assistant-chat-design.md:65",
-        "Plans/assistant-chat-design.md:38"
-      ],
-      "required_action": "none"
+      "path_field_status": "match"
     },
     {
-      "coverage_id": "cov-01976",
+      "coverage_id": "cov-420",
+      "status": "missing",
+      "evidence": [],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Plans/Run_Graph_View.md does not contain requested/effective identity disclosure or provider/account identity coverage.",
       "source_obligation_ids": [
-        "obl-1900"
+        "obl-124"
       ],
       "source_seed_ids": [
-        "seed-2213",
-        "seed-2333",
-        "seed-2827",
-        "seed-3006",
-        "seed-3039",
-        "seed-3115",
-        "seed-3502",
-        "seed-3710",
-        "seed-3822",
-        "seed-3916",
-        "seed-4160",
-        "seed-4198",
-        "seed-4222",
-        "seed-4241",
-        "seed-4275",
-        "seed-4307",
-        "seed-4336",
-        "seed-4361",
-        "seed-4389",
-        "seed-4420",
-        "seed-4510",
-        "seed-4624",
-        "seed-4707",
-        "seed-4901",
-        "seed-5021",
-        "seed-5064",
-        "seed-5175",
-        "seed-5370",
-        "seed-5391",
-        "seed-5559",
-        "seed-5582",
-        "seed-5606",
-        "seed-5621",
-        "seed-6159",
-        "seed-6397"
+        "seed-124"
       ],
       "source_shard_ids": [
-        "shard-0037",
-        "shard-0038",
-        "shard-0045",
-        "shard-0046",
-        "shard-0047",
-        "shard-0052",
-        "shard-0055",
-        "shard-0056",
-        "shard-0058",
-        "shard-0059",
-        "shard-0060",
-        "shard-0061",
-        "shard-0062",
-        "shard-0063",
-        "shard-0064",
-        "shard-0065",
-        "shard-0067",
-        "shard-0069",
-        "shard-0070",
-        "shard-0071",
-        "shard-0073",
-        "shard-0074",
-        "shard-0075",
-        "shard-0076",
-        "shard-0082",
-        "shard-0085"
+        "shard-0031"
       ],
-      "canon_label": "Plans/assistant-chat-design.md",
-      "row_type": "consumer",
-      "path": "Plans/assistant-chat-design.md",
-      "heading_hint": "Impacted docs",
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-428",
       "status": "partial",
-      "exact_items": [
-        "`Plans/assistant-chat-design.md`"
-      ],
-      "stale_tokens": [],
       "evidence": [
-        "Plans/assistant-chat-design.md:14",
-        "Plans/assistant-chat-design.md:65"
+        "Plans/Run_Graph_View.md:31-39 states graph nodes are runtime nodes, not tiers, and links Run Graph to Executor, Orchestrator, and storage contracts"
       ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-02023",
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Anti-tier graph-node language is present, but seam_id/package_id/lane_id/attempt_id, run.tier_* replacement, tier_tree/Tiers replacement, and first-class identity fields are absent.",
       "source_obligation_ids": [
-        "obl-1946"
+        "obl-125"
       ],
       "source_seed_ids": [
-        "seed-2282"
+        "seed-125"
       ],
       "source_shard_ids": [
-        "shard-0038"
+        "shard-0031"
       ],
-      "canon_label": "Plans/assistant-chat-design.md",
-      "row_type": "consumer",
-      "path": "Plans/assistant-chat-design.md",
-      "heading_hint": "",
-      "status": "present",
-      "exact_items": [
-        "`Plans/assistant-chat-design.md` + `Plans/interview-subagent-integration.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/assistant-chat-design.md:14",
-        "Plans/assistant-chat-design.md:43"
-      ],
-      "required_action": "none"
+      "path_field_status": "match"
     },
     {
-      "coverage_id": "cov-02264",
+      "coverage_id": "cov-545",
+      "status": "missing",
+      "evidence": [],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Plans/Run_Graph_View.md does not contain execution_role, actor_role, operational identity, or requested concrete account coverage.",
       "source_obligation_ids": [
-        "obl-2184"
+        "obl-155"
       ],
       "source_seed_ids": [
-        "seed-2640",
-        "seed-2867"
+        "seed-155"
       ],
       "source_shard_ids": [
-        "shard-0042",
-        "shard-0045"
+        "shard-0039"
       ],
-      "canon_label": "Plans/assistant-chat-design.md",
-      "row_type": "consumer",
-      "path": "Plans/assistant-chat-design.md",
-      "heading_hint": "Highest-risk impacted docs",
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-571",
+      "status": "missing",
+      "evidence": [],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Plans/Run_Graph_View.md does not contain execution_role, actor_kind, account_switch_reason, durable actor/role projection, or operational identity block coverage.",
+      "source_obligation_ids": [
+        "obl-160"
+      ],
+      "source_seed_ids": [
+        "seed-160"
+      ],
+      "source_shard_ids": [
+        "shard-0040"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-664",
+      "status": "missing",
+      "evidence": [],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Plans/Run_Graph_View.md does not contain wizard/interview handoff payload identity fields, thread_id, project_id, requested/effective persona/platform/model/account, or execution_role.",
+      "source_obligation_ids": [
+        "obl-187"
+      ],
+      "source_seed_ids": [
+        "seed-187"
+      ],
+      "source_shard_ids": [
+        "shard-0047"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-672",
+      "status": "missing",
+      "evidence": [],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Plans/Run_Graph_View.md does not contain validation_pass_report, workflow_run_id, artifact_type, pass fields, wizard/runtime context, or execution lineage coverage.",
+      "source_obligation_ids": [
+        "obl-188"
+      ],
+      "source_seed_ids": [
+        "seed-188"
+      ],
+      "source_shard_ids": [
+        "shard-0047"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-974",
       "status": "partial",
-      "exact_items": [
-        "`Plans/assistant-chat-design.md`"
-      ],
-      "stale_tokens": [],
       "evidence": [
-        "Plans/assistant-chat-design.md:14",
-        "Plans/assistant-chat-design.md:65"
+        "Plans/Run_Graph_View.md:19-29 defines focused_run_id for focused run/historical routing",
+        "Plans/Run_Graph_View.md:54-58 exposes concern refs including blocked_episode_refs and states blocked episodes can reference concerns without replacing concern identity"
       ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-03334",
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "focused_run_id and blocked episode references are present, but object_kind enum, blocked_episode object identity, project_id, object_id, blocked_sequence, and node_id are absent.",
       "source_obligation_ids": [
-        "obl-3198"
+        "obl-272"
       ],
       "source_seed_ids": [
-        "seed-4180"
+        "seed-272"
       ],
       "source_shard_ids": [
-        "shard-0059"
+        "shard-0069"
       ],
-      "canon_label": "Plans/*.md",
-      "row_type": "consumer",
-      "path": "Plans/assistant-chat-design.md",
-      "heading_hint": "Do-not-forget details",
-      "status": "present",
-      "exact_items": [
-        "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage."
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/assistant-chat-design.md:722",
-        "Plans/assistant-chat-design.md:29",
-        "Plans/assistant-chat-design.md:184",
-        "Plans/assistant-chat-design.md:225",
-        "Plans/assistant-chat-design.md:14",
-        "Plans/assistant-chat-design.md:65",
-        "Plans/assistant-chat-design.md:55",
-        "Plans/assistant-chat-design.md:164",
-        "Plans/assistant-chat-design.md:5",
-        "Plans/assistant-chat-design.md:180",
-        "Plans/assistant-chat-design.md:33",
-        "Plans/assistant-chat-design.md:60"
-      ],
-      "required_action": "none"
+      "path_field_status": "match"
     },
     {
-      "coverage_id": "cov-03518",
+      "coverage_id": "cov-979",
+      "status": "missing",
+      "evidence": [],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Plans/Run_Graph_View.md does not contain inspector_target or closed inspector target enum/anchor rules.",
       "source_obligation_ids": [
-        "obl-3369"
+        "obl-273"
       ],
       "source_seed_ids": [
-        "seed-4494",
-        "seed-4879",
-        "seed-4997",
-        "seed-5302",
-        "seed-6774",
-        "seed-6921"
+        "seed-273"
       ],
       "source_shard_ids": [
-        "shard-0063",
-        "shard-0067",
-        "shard-0069",
-        "shard-0073",
-        "shard-0089",
-        "shard-0090"
+        "shard-0069"
       ],
-      "canon_label": "Plans/assistant-chat-design.md",
-      "row_type": "consumer",
-      "path": "Plans/assistant-chat-design.md",
-      "heading_hint": "",
-      "status": "present",
-      "exact_items": [
-        "`Plans/assistant-chat-design.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/assistant-chat-design.md:14"
-      ],
-      "required_action": "none"
+      "path_field_status": "match"
     },
     {
-      "coverage_id": "cov-03965",
+      "coverage_id": "cov-999",
+      "status": "missing",
+      "evidence": [],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Plans/Run_Graph_View.md does not contain blocked_sequence, run/node resolver context, or object-first runtime lineage rules.",
       "source_obligation_ids": [
-        "obl-3811"
+        "obl-280"
       ],
       "source_seed_ids": [
-        "seed-5288"
+        "seed-280"
       ],
       "source_shard_ids": [
-        "shard-0072"
+        "shard-0071"
       ],
-      "canon_label": "Plans/assistant-chat-design.md",
-      "row_type": "consumer",
-      "path": "Plans/assistant-chat-design.md",
-      "heading_hint": "Key findings",
-      "status": "present",
-      "exact_items": [
-        "`Plans/assistant-chat-design.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/assistant-chat-design.md:14",
-        "Plans/assistant-chat-design.md:115"
-      ],
-      "required_action": "none"
+      "path_field_status": "match"
     },
     {
-      "coverage_id": "cov-04064",
+      "coverage_id": "cov-1139",
+      "status": "missing",
+      "evidence": [],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Plans/Run_Graph_View.md does not contain tier_runtime_record, usage_record, evidence_record, or storage-plan runtime-era demotion/replacement language.",
       "source_obligation_ids": [
-        "obl-3910"
+        "obl-331"
       ],
       "source_seed_ids": [
-        "seed-5438"
+        "seed-331"
       ],
       "source_shard_ids": [
-        "shard-0074"
+        "shard-0084"
       ],
-      "canon_label": "Plans/assistant-chat-design.md",
-      "row_type": "consumer",
-      "path": "Plans/assistant-chat-design.md",
-      "heading_hint": "Reconciliation strata",
-      "status": "partial",
-      "exact_items": [
-        "`Plans/assistant-chat-design.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/assistant-chat-design.md:14",
-        "Plans/assistant-chat-design.md:1369"
-      ],
-      "required_action": "consumer_propagation"
+      "path_field_status": "match"
     },
     {
-      "coverage_id": "cov-04473",
+      "coverage_id": "cov-1177",
+      "status": "missing",
+      "evidence": [],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Plans/Run_Graph_View.md does not contain MUST CHANGE, MUST RECONCILE, MUST VERIFY, or packet category semantics.",
       "source_obligation_ids": [
-        "obl-4262"
+        "obl-339"
       ],
       "source_seed_ids": [
-        "seed-6087"
-      ],
-      "source_shard_ids": [
-        "shard-0082"
-      ],
-      "canon_label": "39",
-      "row_type": "consumer",
-      "path": "Plans/assistant-chat-design.md",
-      "heading_hint": "Do-not-forget details",
-      "status": "present",
-      "exact_items": [
-        "Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes."
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/assistant-chat-design.md:99",
-        "Plans/assistant-chat-design.md:8",
-        "Plans/assistant-chat-design.md:1719",
-        "Plans/assistant-chat-design.md:65",
-        "Plans/assistant-chat-design.md:2501",
-        "Plans/assistant-chat-design.md:287",
-        "Plans/assistant-chat-design.md:14",
-        "Plans/assistant-chat-design.md:180",
-        "Plans/assistant-chat-design.md:722",
-        "Plans/assistant-chat-design.md:111",
-        "Plans/assistant-chat-design.md:1902",
-        "Plans/assistant-chat-design.md:60"
-      ],
-      "required_action": "none"
-    },
-    {
-      "coverage_id": "cov-04802",
-      "source_obligation_ids": [
-        "obl-4517"
-      ],
-      "source_seed_ids": [
-        "seed-6509"
+        "seed-339"
       ],
       "source_shard_ids": [
         "shard-0086"
       ],
-      "canon_label": "Plans/assistant-chat-design.md",
-      "row_type": "consumer",
-      "path": "Plans/assistant-chat-design.md",
-      "heading_hint": "Docs probably implicated",
-      "status": "partial",
-      "exact_items": [
-        "`Plans/assistant-chat-design.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/assistant-chat-design.md:14",
-        "Plans/assistant-chat-design.md:65"
-      ],
-      "required_action": "consumer_propagation"
+      "path_field_status": "match"
     },
     {
-      "coverage_id": "cov-04836",
-      "source_obligation_ids": [
-        "obl-4551"
-      ],
-      "source_seed_ids": [
-        "seed-6543"
-      ],
-      "source_shard_ids": [
-        "shard-0086"
-      ],
-      "canon_label": "Plans/assistant-chat-design.md",
-      "row_type": "consumer",
-      "path": "Plans/assistant-chat-design.md",
-      "heading_hint": "MUST RECONCILE",
-      "status": "present",
-      "exact_items": [
-        "`Plans/assistant-chat-design.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/assistant-chat-design.md:14",
-        "Plans/assistant-chat-design.md:49"
-      ],
-      "required_action": "none"
-    },
-    {
-      "coverage_id": "cov-04939",
-      "source_obligation_ids": [
-        "obl-4649"
-      ],
-      "source_seed_ids": [
-        "seed-6641"
-      ],
-      "source_shard_ids": [
-        "shard-0087"
-      ],
-      "canon_label": "Plans/assistant-chat-design.md",
-      "row_type": "consumer",
-      "path": "Plans/assistant-chat-design.md",
-      "heading_hint": "Impacted docs and likely owner order",
-      "status": "present",
-      "exact_items": [
-        "`Plans/assistant-chat-design.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/assistant-chat-design.md:14",
-        "Plans/assistant-chat-design.md:65",
-        "Plans/assistant-chat-design.md:17",
-        "Plans/assistant-chat-design.md:5"
-      ],
-      "required_action": "none"
-    },
-    {
-      "coverage_id": "cov-05070",
-      "source_obligation_ids": [
-        "obl-4744"
-      ],
-      "source_seed_ids": [
-        "seed-6737",
-        "seed-6817",
-        "seed-6848",
-        "seed-6885",
-        "seed-6900",
-        "seed-6974",
-        "seed-7004",
-        "seed-7040",
-        "seed-7083",
-        "seed-7113",
-        "seed-7145",
-        "seed-7170"
-      ],
-      "source_shard_ids": [
-        "shard-0088",
-        "shard-0089",
-        "shard-0090",
-        "shard-0091"
-      ],
-      "canon_label": "Plans/assistant-chat-design.md",
-      "row_type": "consumer",
-      "path": "Plans/assistant-chat-design.md",
-      "heading_hint": "Entry",
-      "status": "present",
-      "exact_items": [
-        "`Plans/assistant-chat-design.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/assistant-chat-design.md:14",
-        "Plans/assistant-chat-design.md:139"
-      ],
-      "required_action": "none"
-    },
-    {
-      "coverage_id": "cov-05088",
-      "source_obligation_ids": [
-        "obl-4762"
-      ],
-      "source_seed_ids": [
-        "seed-6755",
-        "seed-6867",
-        "seed-7021",
-        "seed-7093",
-        "seed-7125"
-      ],
-      "source_shard_ids": [
-        "shard-0088",
-        "shard-0089",
-        "shard-0090",
-        "shard-0091"
-      ],
-      "canon_label": "Plans/assistant-chat-design.md:1784",
-      "row_type": "consumer",
-      "path": "Plans/assistant-chat-design.md",
-      "heading_hint": "Entry",
-      "status": "partial",
-      "exact_items": [
-        "`Plans/assistant-chat-design.md:1784`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/assistant-chat-design.md:139"
-      ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-05120",
-      "source_obligation_ids": [
-        "obl-4794"
-      ],
-      "source_seed_ids": [
-        "seed-6796"
-      ],
-      "source_shard_ids": [
-        "shard-0089"
-      ],
-      "canon_label": "Plans/assistant-chat-design.md:1784",
-      "row_type": "consumer",
-      "path": "Plans/assistant-chat-design.md",
-      "heading_hint": "",
+      "coverage_id": "cov-036",
       "status": "missing",
-      "exact_items": [
-        "`Plans/assistant-chat-design.md:1784`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/assistant-chat-design.md:required_terms_absent"
-      ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-05121",
+      "evidence": [],
+      "required_action": "stale_retirement",
+      "unresolved_reason": "Plans/Run_Graph_View.md does not contain Overseer, PuppetMasterEvent::*, Phase/Task/Subtask/Iteration, TierContext, tier_id, approve_continue, or github_api token cleanup.",
       "source_obligation_ids": [
-        "obl-4795"
+        "obl-024"
       ],
       "source_seed_ids": [
-        "seed-6797"
+        "seed-024"
       ],
       "source_shard_ids": [
-        "shard-0089"
+        "shard-0004"
       ],
-      "canon_label": "Plans/assistant-chat-design.md:2240",
-      "row_type": "consumer",
-      "path": "Plans/assistant-chat-design.md",
-      "heading_hint": "",
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-240",
+      "status": "partial",
+      "evidence": [
+        "Plans/Run_Graph_View.md:48-50 keeps superseded and historical branches visible/clickable and uses lineage-focused defaults rather than hiding historical truth",
+        "Plans/Run_Graph_View.md:62-64 uses active_run_id/focused_run_id with focus_mode live/historical"
+      ],
+      "required_action": "stale_retirement",
+      "unresolved_reason": "Historical visibility is present, but stale_historical attempts/projections and live-target disappearance behavior are absent.",
+      "source_obligation_ids": [
+        "obl-067"
+      ],
+      "source_seed_ids": [
+        "seed-067"
+      ],
+      "source_shard_ids": [
+        "shard-0014"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-245",
+      "status": "partial",
+      "evidence": [
+        "Plans/Run_Graph_View.md:48-50 keeps superseded and historical branches visible/clickable and preserves historical truth"
+      ],
+      "required_action": "stale_retirement",
+      "unresolved_reason": "historical and superseded concepts are present, but stale_historical, revoked, reopened, archived, and removed state semantics are absent.",
+      "source_obligation_ids": [
+        "obl-068"
+      ],
+      "source_seed_ids": [
+        "seed-068"
+      ],
+      "source_shard_ids": [
+        "shard-0015"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-457",
       "status": "missing",
-      "exact_items": [
-        "`Plans/assistant-chat-design.md:2240`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/assistant-chat-design.md:required_terms_absent"
-      ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-05143",
+      "evidence": [],
+      "required_action": "stale_retirement",
+      "unresolved_reason": "Plans/Run_Graph_View.md does not contain older execution ontology/user labels/help-copy drift or legacy tier wording retirement.",
       "source_obligation_ids": [
-        "obl-4817"
+        "obl-133"
       ],
       "source_seed_ids": [
-        "seed-6827",
-        "seed-6868",
-        "seed-6889",
-        "seed-6991",
-        "seed-7022"
+        "seed-133"
       ],
       "source_shard_ids": [
-        "shard-0089",
-        "shard-0090"
+        "shard-0033"
       ],
-      "canon_label": "Plans/assistant-chat-design.md:2213-2240",
-      "row_type": "consumer",
-      "path": "Plans/assistant-chat-design.md",
-      "heading_hint": "Entry",
-      "status": "partial",
-      "exact_items": [
-        "`Plans/assistant-chat-design.md:2213-2240`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/assistant-chat-design.md:139"
-      ],
-      "required_action": "consumer_propagation"
+      "path_field_status": "match"
     },
     {
-      "coverage_id": "cov-05179",
-      "source_obligation_ids": [
-        "obl-4849"
-      ],
-      "source_seed_ids": [
-        "seed-6881"
-      ],
-      "source_shard_ids": [
-        "shard-0089"
-      ],
-      "canon_label": "Plans/assistant-chat-design.md",
-      "row_type": "consumer",
-      "path": "Plans/assistant-chat-design.md",
-      "heading_hint": "Entry",
-      "status": "present",
-      "exact_items": [
-        "`Plans/assistant-chat-design.md` also contains `### Multi-episode display`, so the blocked-notice flow is not missing wholesale."
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/assistant-chat-design.md:14",
-        "Plans/assistant-chat-design.md:2241",
-        "Plans/assistant-chat-design.md:161",
-        "Plans/assistant-chat-design.md:2180",
-        "Plans/assistant-chat-design.md:55",
-        "Plans/assistant-chat-design.md:37",
-        "Plans/assistant-chat-design.md:477",
-        "Plans/assistant-chat-design.md:139"
-      ],
-      "required_action": "none"
-    },
-    {
-      "coverage_id": "cov-05180",
-      "source_obligation_ids": [
-        "obl-4850"
-      ],
-      "source_seed_ids": [
-        "seed-6882"
-      ],
-      "source_shard_ids": [
-        "shard-0089"
-      ],
-      "canon_label": "Plans/assistant-chat-design.md",
-      "row_type": "consumer",
-      "path": "Plans/assistant-chat-design.md",
-      "heading_hint": "Entry",
-      "status": "present",
-      "exact_items": [
-        "`Plans/assistant-chat-design.md` still does not carry the exact blocked packet fields `blocked_sequence`, `approval_scope_key`, `report_ref`, `startup_recovered`, `action_available`, or `escalation_level`."
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/assistant-chat-design.md:14",
-        "Plans/assistant-chat-design.md:2237",
-        "Plans/assistant-chat-design.md:2238",
-        "Plans/assistant-chat-design.md:216",
-        "Plans/assistant-chat-design.md:1048",
-        "Plans/assistant-chat-design.md:11",
-        "Plans/assistant-chat-design.md:516",
-        "Plans/assistant-chat-design.md:5",
-        "Plans/assistant-chat-design.md:34",
-        "Plans/assistant-chat-design.md:139"
-      ],
-      "required_action": "none"
-    },
-    {
-      "coverage_id": "cov-05187",
-      "source_obligation_ids": [
-        "obl-4857"
-      ],
-      "source_seed_ids": [
-        "seed-6896"
-      ],
-      "source_shard_ids": [
-        "shard-0089"
-      ],
-      "canon_label": "Plans/assistant-chat-design.md",
-      "row_type": "consumer",
-      "path": "Plans/assistant-chat-design.md",
-      "heading_hint": "Entry",
-      "status": "present",
-      "exact_items": [
-        "`Plans/assistant-chat-design.md` already carries `tool_use_id`, so gap-001's consumer deficiency is sharper than a blanket \"missing everywhere\" claim."
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/assistant-chat-design.md:14",
-        "Plans/assistant-chat-design.md:1145",
-        "Plans/assistant-chat-design.md:386",
-        "Plans/assistant-chat-design.md:17",
-        "Plans/assistant-chat-design.md:627",
-        "Plans/assistant-chat-design.md:477",
-        "Plans/assistant-chat-design.md:139"
-      ],
-      "required_action": "none"
-    },
-    {
-      "coverage_id": "cov-05195",
-      "source_obligation_ids": [
-        "obl-4863"
-      ],
-      "source_seed_ids": [
-        "seed-6905"
-      ],
-      "source_shard_ids": [
-        "shard-0089"
-      ],
-      "canon_label": "Plans/assistant-chat-design.md:1112-1120",
-      "row_type": "consumer",
-      "path": "Plans/assistant-chat-design.md",
-      "heading_hint": "Entry",
-      "status": "partial",
-      "exact_items": [
-        "`Plans/assistant-chat-design.md:1112-1120`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/assistant-chat-design.md:139"
-      ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-05207",
-      "source_obligation_ids": [
-        "obl-4873"
-      ],
-      "source_seed_ids": [
-        "seed-6915"
-      ],
-      "source_shard_ids": [
-        "shard-0090"
-      ],
-      "canon_label": "Plans/Tools.md",
-      "row_type": "consumer",
-      "path": "Plans/assistant-chat-design.md",
-      "heading_hint": "",
-      "status": "present",
-      "exact_items": [
-        "`Plans/Tools.md`, `Plans/assistant-chat-design.md`, and `Plans/usage-feature.md` still do not carry `report_ref`, `startup_recovered`, or `escalation_level` through the blocked-packet consumer surfaces under audit."
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/assistant-chat-design.md:147",
-        "Plans/assistant-chat-design.md:14",
-        "Plans/assistant-chat-design.md:958",
-        "Plans/assistant-chat-design.md:1048",
-        "Plans/assistant-chat-design.md:54",
-        "Plans/assistant-chat-design.md:17",
-        "Plans/assistant-chat-design.md:55",
-        "Plans/assistant-chat-design.md:38"
-      ],
-      "required_action": "none"
-    },
-    {
-      "coverage_id": "cov-05215",
-      "source_obligation_ids": [
-        "obl-4880"
-      ],
-      "source_seed_ids": [
-        "seed-6928"
-      ],
-      "source_shard_ids": [
-        "shard-0090"
-      ],
-      "canon_label": "Plans/assistant-chat-design.md:2213-2240",
-      "row_type": "consumer",
-      "path": "Plans/assistant-chat-design.md",
-      "heading_hint": "",
+      "coverage_id": "cov-493",
       "status": "missing",
-      "exact_items": [
-        "`Plans/assistant-chat-design.md:2213-2240`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/assistant-chat-design.md:required_terms_absent"
-      ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-05256",
+      "evidence": [],
+      "required_action": "stale_retirement",
+      "unresolved_reason": "Plans/Run_Graph_View.md does not contain run/account/attempt/thread/wizard/interview/receipt/usage_event/HITL/projection-trust identifiers for this row.",
       "source_obligation_ids": [
-        "obl-4911"
+        "obl-142"
       ],
       "source_seed_ids": [
-        "seed-6996"
+        "seed-142"
       ],
       "source_shard_ids": [
-        "shard-0090"
+        "shard-0035"
       ],
-      "canon_label": "Plans/assistant-chat-design.md",
-      "row_type": "consumer",
-      "path": "Plans/assistant-chat-design.md",
-      "heading_hint": "Entry",
-      "status": "present",
-      "exact_items": [
-        "`Plans/assistant-chat-design.md` still defines `blocked_notice` with only `blocked_family` and `allowed_action_ids[]`, so `blocked_sequence` and `approval_scope_key` remain missing specifically from the live blocked-notice payload."
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/assistant-chat-design.md:14",
-        "Plans/assistant-chat-design.md:840",
-        "Plans/assistant-chat-design.md:2237",
-        "Plans/assistant-chat-design.md:2238",
-        "Plans/assistant-chat-design.md:65",
-        "Plans/assistant-chat-design.md:12",
-        "Plans/assistant-chat-design.md:477",
-        "Plans/assistant-chat-design.md:99",
-        "Plans/assistant-chat-design.md:139"
-      ],
-      "required_action": "none"
+      "path_field_status": "match"
     },
     {
-      "coverage_id": "cov-05266",
-      "source_obligation_ids": [
-        "obl-4920"
-      ],
-      "source_seed_ids": [
-        "seed-7020",
-        "seed-7092",
-        "seed-7124",
-        "seed-7158"
-      ],
-      "source_shard_ids": [
-        "shard-0090",
-        "shard-0091"
-      ],
-      "canon_label": "Plans/assistant-chat-design.md:808-818",
-      "row_type": "consumer",
-      "path": "Plans/assistant-chat-design.md",
-      "heading_hint": "Entry",
-      "status": "partial",
-      "exact_items": [
-        "`Plans/assistant-chat-design.md:808-818`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/assistant-chat-design.md:139"
-      ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-05279",
-      "source_obligation_ids": [
-        "obl-4933"
-      ],
-      "source_seed_ids": [
-        "seed-7057"
-      ],
-      "source_shard_ids": [
-        "shard-0091"
-      ],
-      "canon_label": "Plans/assistant-chat-design.md:808-818",
-      "row_type": "consumer",
-      "path": "Plans/assistant-chat-design.md",
-      "heading_hint": "",
+      "coverage_id": "cov-743",
       "status": "missing",
-      "exact_items": [
-        "`Plans/assistant-chat-design.md:808-818`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/assistant-chat-design.md:required_terms_absent"
-      ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-05308",
+      "evidence": [],
+      "required_action": "stale_retirement",
+      "unresolved_reason": "Plans/Run_Graph_View.md does not contain tier_runtime_record, tier_id, or tier-shaped projection compatibility overlay coverage.",
       "source_obligation_ids": [
-        "obl-4957"
+        "obl-205"
       ],
       "source_seed_ids": [
-        "seed-7094"
+        "seed-205"
       ],
       "source_shard_ids": [
-        "shard-0091"
+        "shard-0051"
       ],
-      "canon_label": "Plans/assistant-chat-design.md:2218-2242",
-      "row_type": "consumer",
-      "path": "Plans/assistant-chat-design.md",
-      "heading_hint": "Entry",
-      "status": "partial",
-      "exact_items": [
-        "`Plans/assistant-chat-design.md:2218-2242`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/assistant-chat-design.md:139"
-      ],
-      "required_action": "consumer_propagation"
+      "path_field_status": "match"
     },
     {
-      "coverage_id": "cov-05329",
+      "coverage_id": "cov-1093",
+      "status": "missing",
+      "evidence": [],
+      "required_action": "stale_retirement",
+      "unresolved_reason": "Plans/Run_Graph_View.md does not contain PuppetMasterEvent::TierChanged/UserInteractionRequired or run_id/node_id/blocked_sequence source-set comparison.",
       "source_obligation_ids": [
-        "obl-4976"
+        "obl-314"
       ],
       "source_seed_ids": [
-        "seed-7126"
+        "seed-314"
       ],
       "source_shard_ids": [
-        "shard-0091"
+        "shard-0079"
       ],
-      "canon_label": "Plans/assistant-chat-design.md:2233-2240",
-      "row_type": "consumer",
-      "path": "Plans/assistant-chat-design.md",
-      "heading_hint": "Entry",
-      "status": "partial",
-      "exact_items": [
-        "`Plans/assistant-chat-design.md:2233-2240`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/assistant-chat-design.md:139"
-      ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-05352",
-      "source_obligation_ids": [
-        "obl-4994"
-      ],
-      "source_seed_ids": [
-        "seed-7159",
-        "seed-7192"
-      ],
-      "source_shard_ids": [
-        "shard-0091"
-      ],
-      "canon_label": "Plans/assistant-chat-design.md:1784-1784",
-      "row_type": "consumer",
-      "path": "Plans/assistant-chat-design.md",
-      "heading_hint": "Entry",
-      "status": "partial",
-      "exact_items": [
-        "`Plans/assistant-chat-design.md:1784-1784`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/assistant-chat-design.md:139"
-      ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-05367",
-      "source_obligation_ids": [
-        "obl-5008"
-      ],
-      "source_seed_ids": [
-        "seed-7191"
-      ],
-      "source_shard_ids": [
-        "shard-0091"
-      ],
-      "canon_label": "Plans/assistant-chat-design.md:814-818",
-      "row_type": "consumer",
-      "path": "Plans/assistant-chat-design.md",
-      "heading_hint": "Entry",
-      "status": "partial",
-      "exact_items": [
-        "`Plans/assistant-chat-design.md:814-818`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/assistant-chat-design.md:139"
-      ],
-      "required_action": "consumer_propagation"
+      "path_field_status": "match"
     }
   ]
 }

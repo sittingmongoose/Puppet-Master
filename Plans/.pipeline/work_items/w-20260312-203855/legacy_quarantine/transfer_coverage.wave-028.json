@@ -1,0 +1,417 @@
+{
+  "schema_id": "pm.transfer_coverage_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-028",
+  "row_groups": [
+    "rowgrp-0109",
+    "rowgrp-0110",
+    "rowgrp-0111",
+    "rowgrp-0112"
+  ],
+  "coverage_rows": [
+    {
+      "coverage_id": "cov-04536",
+      "source_obligation_ids": [
+        "obl-4283"
+      ],
+      "source_seed_ids": [
+        "seed-6167"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "canon_label": "Plans/*.md",
+      "row_type": "layout_blocker",
+      "path": "Plans/Permissions_System.md",
+      "heading_hint": "Do-not-forget details",
+      "status": "present",
+      "exact_items": [
+        "After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Permissions_System.md:103",
+        "Plans/Permissions_System.md:626",
+        "Plans/Permissions_System.md:16",
+        "Plans/Permissions_System.md:93",
+        "Plans/Permissions_System.md:307",
+        "Plans/Permissions_System.md:7",
+        "Plans/Permissions_System.md:180",
+        "Plans/Permissions_System.md:554",
+        "Plans/Permissions_System.md:83"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00421",
+      "source_obligation_ids": [
+        "obl-0419"
+      ],
+      "source_seed_ids": [
+        "seed-0424"
+      ],
+      "source_shard_ids": [
+        "shard-0007"
+      ],
+      "canon_label": "Plans/Personas.md",
+      "row_type": "consumer",
+      "path": "Plans/Personas.md",
+      "heading_hint": "Settings / Provider / Persona / Account Impacts",
+      "status": "present",
+      "exact_items": [
+        "`Plans/Personas.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Personas.md:7",
+        "Plans/Personas.md:193",
+        "Plans/Personas.md:33",
+        "Plans/Personas.md:1"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00668",
+      "source_obligation_ids": [
+        "obl-0628"
+      ],
+      "source_seed_ids": [
+        "seed-0634"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "canon_label": "Plans/Prompt_Pipeline.md",
+      "row_type": "consumer",
+      "path": "Plans/Personas.md",
+      "heading_hint": "Highest-Impact Docs",
+      "status": "partial",
+      "exact_items": [
+        "`Plans/Prompt_Pipeline.md`, `Plans/Personas.md`, `Plans/Provider_Stream_Mapping_External_Reference_A2A.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Personas.md:40",
+        "Plans/Personas.md:7"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-00711",
+      "source_obligation_ids": [
+        "obl-0655"
+      ],
+      "source_seed_ids": [
+        "seed-0661"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "canon_label": "Plans/Models_System.md",
+      "row_type": "consumer",
+      "path": "Plans/Personas.md",
+      "heading_hint": "Settings / Provider / Persona / Account Impacts",
+      "status": "present",
+      "exact_items": [
+        "`Plans/Models_System.md`, `Plans/Prompt_Pipeline.md`, `Plans/Personas.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Personas.md:23",
+        "Plans/Personas.md:40",
+        "Plans/Personas.md:7",
+        "Plans/Personas.md:193",
+        "Plans/Personas.md:33",
+        "Plans/Personas.md:1"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00776",
+      "source_obligation_ids": [
+        "obl-0708"
+      ],
+      "source_seed_ids": [
+        "seed-0736",
+        "seed-6068"
+      ],
+      "source_shard_ids": [
+        "shard-0011",
+        "shard-0082"
+      ],
+      "canon_label": "Plans/Personas.md",
+      "row_type": "consumer",
+      "path": "Plans/Personas.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "`Plans/Personas.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Personas.md:7"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00790",
+      "source_obligation_ids": [
+        "obl-0722"
+      ],
+      "source_seed_ids": [
+        "seed-0750",
+        "seed-1987"
+      ],
+      "source_shard_ids": [
+        "shard-0011",
+        "shard-0034"
+      ],
+      "canon_label": "Plans/Personas.md",
+      "row_type": "consumer",
+      "path": "Plans/Personas.md",
+      "heading_hint": "Highest-risk impacted docs",
+      "status": "partial",
+      "exact_items": [
+        "`Plans/Personas.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Personas.md:7"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-01148",
+      "source_obligation_ids": [
+        "obl-1079"
+      ],
+      "source_seed_ids": [
+        "seed-1159",
+        "seed-1181",
+        "seed-1213",
+        "seed-1474",
+        "seed-1493",
+        "seed-1862",
+        "seed-1974",
+        "seed-2229",
+        "seed-2354",
+        "seed-2480"
+      ],
+      "source_shard_ids": [
+        "shard-0019",
+        "shard-0020",
+        "shard-0021",
+        "shard-0026",
+        "shard-0027",
+        "shard-0033",
+        "shard-0034",
+        "shard-0037",
+        "shard-0039",
+        "shard-0040"
+      ],
+      "canon_label": "Plans/Personas.md",
+      "row_type": "consumer",
+      "path": "Plans/Personas.md",
+      "heading_hint": "Targeted docs read",
+      "status": "partial",
+      "exact_items": [
+        "`Plans/Personas.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Personas.md:7",
+        "Plans/Personas.md:152"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-03315",
+      "source_obligation_ids": [
+        "obl-3198"
+      ],
+      "source_seed_ids": [
+        "seed-4180"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "canon_label": "Plans/*.md",
+      "row_type": "consumer",
+      "path": "Plans/Personas.md",
+      "heading_hint": "Do-not-forget details",
+      "status": "present",
+      "exact_items": [
+        "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Personas.md:3",
+        "Plans/Personas.md:46",
+        "Plans/Personas.md:177",
+        "Plans/Personas.md:23"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-04454",
+      "source_obligation_ids": [
+        "obl-4262"
+      ],
+      "source_seed_ids": [
+        "seed-6087"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "canon_label": "39",
+      "row_type": "consumer",
+      "path": "Plans/Personas.md",
+      "heading_hint": "Do-not-forget details",
+      "status": "partial",
+      "exact_items": [
+        "Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Personas.md:3"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-04498",
+      "source_obligation_ids": [
+        "obl-4275"
+      ],
+      "source_seed_ids": [
+        "seed-6158"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "canon_label": "Plans/Personas.md",
+      "row_type": "consumer",
+      "path": "Plans/Personas.md",
+      "heading_hint": "Impacted docs",
+      "status": "partial",
+      "exact_items": [
+        "`Plans/Personas.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Personas.md:7"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-04796",
+      "source_obligation_ids": [
+        "obl-4511"
+      ],
+      "source_seed_ids": [
+        "seed-6503"
+      ],
+      "source_shard_ids": [
+        "shard-0086"
+      ],
+      "canon_label": "Plans/Personas.md",
+      "row_type": "consumer",
+      "path": "Plans/Personas.md",
+      "heading_hint": "Docs probably implicated",
+      "status": "partial",
+      "exact_items": [
+        "`Plans/Personas.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Personas.md:7"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-04830",
+      "source_obligation_ids": [
+        "obl-4545"
+      ],
+      "source_seed_ids": [
+        "seed-6537"
+      ],
+      "source_shard_ids": [
+        "shard-0086"
+      ],
+      "canon_label": "Plans/Personas.md",
+      "row_type": "consumer",
+      "path": "Plans/Personas.md",
+      "heading_hint": "MUST RECONCILE",
+      "status": "partial",
+      "exact_items": [
+        "`Plans/Personas.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Personas.md:7"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-04977",
+      "source_obligation_ids": [
+        "obl-4675"
+      ],
+      "source_seed_ids": [
+        "seed-6667"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "canon_label": "Plans/Orchestrator_Page.md",
+      "row_type": "consumer",
+      "path": "Plans/Personas.md",
+      "heading_hint": "Export / settings / persona transfer gaps are broader than first summarized",
+      "status": "present",
+      "exact_items": [
+        "`Plans/Orchestrator_Page.md`, `Plans/storage-plan.md`, `Plans/FinalGUISpec.md`, `Plans/Models_System.md`, `Plans/Multi-Account.md`, `Plans/Personas.md`, `Plans/Prompt_Pipeline.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Personas.md:267",
+        "Plans/Personas.md:193",
+        "Plans/Personas.md:23",
+        "Plans/Personas.md:7",
+        "Plans/Personas.md:40",
+        "Plans/Personas.md:45",
+        "Plans/Personas.md:1",
+        "Plans/Personas.md:317",
+        "Plans/Personas.md:307"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-04537",
+      "source_obligation_ids": [
+        "obl-4283"
+      ],
+      "source_seed_ids": [
+        "seed-6167"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "canon_label": "Plans/*.md",
+      "row_type": "layout_blocker",
+      "path": "Plans/Personas.md",
+      "heading_hint": "Do-not-forget details",
+      "status": "present",
+      "exact_items": [
+        "After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Personas.md:3",
+        "Plans/Personas.md:319",
+        "Plans/Personas.md:177",
+        "Plans/Personas.md:23"
+      ],
+      "required_action": "none"
+    }
+  ]
+}

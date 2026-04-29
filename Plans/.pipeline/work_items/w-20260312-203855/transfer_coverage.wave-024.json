@@ -1,473 +1,388 @@
 {
-  "schema_id": "pm.transfer_coverage_wave.v1",
+  "schema_id": "pm.transfer_coverage_wave.v3",
   "work_id": "w-20260312-203855",
   "wave_id": "wave-024",
-  "row_groups": [
-    "rowgrp-0093",
-    "rowgrp-0094",
-    "rowgrp-0095",
-    "rowgrp-0096"
+  "timestamp_utc": "2026-04-28T20:19:07Z",
+  "subagent_tasks": [
+    "coverage-rowgrp-093",
+    "coverage-rowgrp-094",
+    "coverage-rowgrp-095",
+    "coverage-rowgrp-096"
   ],
-  "coverage_rows": [
+  "assigned_input_boundaries": [
+    "rowgrp-093 cov-521 Plans/Glossary.md",
+    "rowgrp-094 cov-107,cov-361,cov-723,cov-1260 Plans/Glossary.md",
+    "rowgrp-095 cov-085,cov-301,cov-303,cov-353,cov-507,cov-972 Plans/Glossary.md",
+    "rowgrp-096 cov-173,cov-458,cov-611,cov-623,cov-727 Plans/Glossary.md"
+  ],
+  "subagent_result_status": {
+    "coverage-rowgrp-093": "completed_reduced_conservatively",
+    "coverage-rowgrp-094": "completed_reduced_conservatively",
+    "coverage-rowgrp-095": "completed_reduced_conservatively",
+    "coverage-rowgrp-096": "completed_reduced_conservatively"
+  },
+  "completed_task_count": 4,
+  "failed_task_count": 0,
+  "coverage_ids_assigned": [
+    "cov-521",
+    "cov-107",
+    "cov-361",
+    "cov-723",
+    "cov-1260",
+    "cov-085",
+    "cov-301",
+    "cov-303",
+    "cov-353",
+    "cov-507",
+    "cov-972",
+    "cov-173",
+    "cov-458",
+    "cov-611",
+    "cov-623",
+    "cov-727"
+  ],
+  "coverage_ids_completed": [
+    "cov-521",
+    "cov-107",
+    "cov-361",
+    "cov-723",
+    "cov-1260",
+    "cov-085",
+    "cov-301",
+    "cov-303",
+    "cov-353",
+    "cov-507",
+    "cov-972",
+    "cov-173",
+    "cov-458",
+    "cov-611",
+    "cov-623",
+    "cov-727"
+  ],
+  "path_groups_assigned": [
+    "Plans/Glossary.md"
+  ],
+  "rows": [
     {
-      "coverage_id": "cov-04532",
+      "coverage_id": "cov-521",
+      "status": "partial",
+      "evidence": [
+        "Plans/Glossary.md:96 project attention_state defines project-wide urgency for alerts, badges, and resurfacing reminders",
+        "Plans/Glossary.md:99 resurfacing/aging rules raise attention_state and resurface help entries until blockers resolve, dismiss, or reassign"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "Glossary defines attention_state and resurfacing vocabulary, but no concrete attention-center payload/schema or badge-collapse precedence rule.",
       "source_obligation_ids": [
-        "obl-4283"
+        "obl-150"
       ],
       "source_seed_ids": [
-        "seed-6167"
+        "seed-150"
       ],
       "source_shard_ids": [
-        "shard-0082"
+        "shard-0037"
       ],
-      "canon_label": "Plans/*.md",
-      "row_type": "layout_blocker",
-      "path": "Plans/Multi-Account.md",
-      "heading_hint": "Do-not-forget details",
-      "status": "present",
-      "exact_items": [
-        "After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes."
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/Multi-Account.md:124",
-        "Plans/Multi-Account.md:330",
-        "Plans/Multi-Account.md:383",
-        "Plans/Multi-Account.md:16",
-        "Plans/Multi-Account.md:46",
-        "Plans/Multi-Account.md:135",
-        "Plans/Multi-Account.md:104",
-        "Plans/Multi-Account.md:7",
-        "Plans/Multi-Account.md:47",
-        "Plans/Multi-Account.md:549"
-      ],
-      "required_action": "none"
+      "path_field_status": "match"
     },
     {
-      "coverage_id": "cov-00644",
+      "coverage_id": "cov-107",
+      "status": "partial",
+      "evidence": [
+        "Plans/Glossary.md:58-66 defines execution context, concern record, trust/degraded state, and help-layer terms",
+        "Plans/Glossary.md:72-88 defines route/open/runtime identity and projection freshness/health terms",
+        "Plans/Glossary.md:92-120 defines help architecture, project status terms, and related-concept clusters"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "Glossary has related rewrite/runtime/help terms, but not the full cleanup-priority set for graph-schema constants, contamination/safe-points, tier widget demotion, duplicated addenda, or recovery_options drift.",
       "source_obligation_ids": [
-        "obl-0606"
+        "obl-034"
       ],
       "source_seed_ids": [
-        "seed-0611",
-        "seed-0691"
+        "seed-034"
       ],
       "source_shard_ids": [
-        "shard-0009",
+        "shard-0008"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-361",
+      "status": "partial",
+      "evidence": [
+        "Plans/Glossary.md:92-101 defines project status, blocked-owner, escalation, and resurfacing vocabulary",
+        "Plans/Glossary.md:105-120 defines canonical help-entry template and related-concept clusters"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "Glossary has help/copy governance, but not direct Orchestrator tab, Source Control lane/worktree, blocked/recovery action, concern/promotion/patch/history/ledger label discipline.",
+      "source_obligation_ids": [
+        "obl-107"
+      ],
+      "source_seed_ids": [
+        "seed-107"
+      ],
+      "source_shard_ids": [
+        "shard-0026"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-723",
+      "status": "missing",
+      "evidence": [
+        "Plans/Glossary.md: assigned file reviewed; no ghost command IDs, cmd.chat.run_user_command, missing runtime-artifact schema/storage registration, dispatcher precondition, or catalog-row defect evidence found"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "Ghost command and schema/section integrity defects are absent from the assigned path.",
+      "source_obligation_ids": [
+        "obl-197"
+      ],
+      "source_seed_ids": [
+        "seed-197"
+      ],
+      "source_shard_ids": [
+        "shard-0049"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-1260",
+      "status": "partial",
+      "evidence": [
+        "Plans/Glossary.md:56 and Plans/Glossary.md:70 include Orchestrator rewrite and Runtime/routing term headings",
+        "Plans/Glossary.md:107-118 help-entry template includes title, canonical definition, affected context/surface, recovery steps, escalation path, related concepts, and evidence/inspector links",
+        "Plans/Glossary.md:151-154 SessionStore defines storage boundary and references storage-plan"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "Glossary now has the missing headings and adjacent help-entry/storage structure, but not the exact canonical_name/short_definition/why_it_matters field set or downstream storage-anchor closure.",
+      "source_obligation_ids": [
+        "obl-356"
+      ],
+      "source_seed_ids": [
+        "seed-356"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-085",
+      "status": "missing",
+      "evidence": [
+        "Plans/Glossary.md:56-66 includes adjacent execution, concern, trust, and help terms only",
+        "Plans/Glossary.md:92-122 includes adjacent help and project status terms only"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Glossary does not directly cover feature seam, work package, package/seam overseers, lane pools, contamination, safe points, effective execution identity, or tier/no-new-tiers contradictions.",
+      "source_obligation_ids": [
+        "obl-033"
+      ],
+      "source_seed_ids": [
+        "seed-033"
+      ],
+      "source_shard_ids": [
+        "shard-0007"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-301",
+      "status": "partial",
+      "evidence": [
+        "Plans/Glossary.md:62-64 defines Inline Help, Context Help, and Canonical Help Entry",
+        "Plans/Glossary.md:66 requires canonical names verbatim across rewrite docs",
+        "Plans/Glossary.md:94 and Plans/Glossary.md:120 preserve canonical concern/state terms without renaming"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Help layers and stable canonical names are represented, but the explicit split between canonical term system, help entry system, and contextual help system is not fully stated.",
+      "source_obligation_ids": [
+        "obl-086"
+      ],
+      "source_seed_ids": [
+        "seed-086"
+      ],
+      "source_shard_ids": [
+        "shard-0021"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-303",
+      "status": "partial",
+      "evidence": [
+        "Plans/Glossary.md:39 says the glossary defines canonical terms used across plan documents",
+        "Plans/Glossary.md:40 says it prevents drift and synonym creep",
+        "Plans/Glossary.md:107-120 defines the help-entry template and related-concept clusters"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Glossary is a canonical term inventory and help entries exist, but the file does not fully state Glossary = canonical short definitions and Help entries = fuller explanations with examples and links.",
+      "source_obligation_ids": [
+        "obl-087"
+      ],
+      "source_seed_ids": [
+        "seed-087"
+      ],
+      "source_shard_ids": [
+        "shard-0021"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-353",
+      "status": "partial",
+      "evidence": [
+        "Plans/Glossary.md:58-60 defines Execution Unit Context, Concern Record, Trust State, and Degraded State",
+        "Plans/Glossary.md:84-88 defines projection freshness/health terms including stale, degraded, and trust_tier retirement",
+        "Plans/Glossary.md:94-99 defines help architecture, project activity/attention state, blocked-owner taxonomy, escalation, and resurfacing terms"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Glossary covers some rewrite-critical terms, but lacks the full requested set including Feature Seam, Work Package, Package Overseer, Seam Overseer, Weak Integration, Promotion, Corroboration, Graph Patch/Generation, Lane Pool, Historical Run, Reopened, Revoked, Superseded, and stale_historical.",
+      "source_obligation_ids": [
+        "obl-105"
+      ],
+      "source_seed_ids": [
+        "seed-105"
+      ],
+      "source_shard_ids": [
+        "shard-0026"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-507",
+      "status": "missing",
+      "evidence": [
+        "Plans/Glossary.md:96 project attention_state is present, but no project_attention_item or shared attention item payload/model is defined"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Shared project_attention_item contract is absent from the assigned path.",
+      "source_obligation_ids": [
+        "obl-147"
+      ],
+      "source_seed_ids": [
+        "seed-147"
+      ],
+      "source_shard_ids": [
+        "shard-0037"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-972",
+      "status": "partial",
+      "evidence": [
+        "Plans/Glossary.md:59 Concern Record includes blocked_episode_id and blocked_sequence",
+        "Plans/Glossary.md:74 OpenSubject lists concern, help_entry, project_state, run, and artifact_storage in shared routing model"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Glossary has adjacent blocked episode and routing vocabulary, but no canonical object_kind enum or blocked_episode route identity field set.",
+      "source_obligation_ids": [
+        "obl-272"
+      ],
+      "source_seed_ids": [
+        "seed-272"
+      ],
+      "source_shard_ids": [
+        "shard-0069"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-173",
+      "status": "missing",
+      "evidence": [
+        "Plans/Glossary.md: assigned file reviewed; no tier-boundary, single-Overseer, or tier-term retirement decision found"
+      ],
+      "required_action": "stale_retirement",
+      "unresolved_reason": "Legacy tier/Overseer terminology retirement is absent from the assigned path.",
+      "source_obligation_ids": [
+        "obl-046"
+      ],
+      "source_seed_ids": [
+        "seed-046"
+      ],
+      "source_shard_ids": [
         "shard-0010"
       ],
-      "canon_label": "Plans/OpenCode_Coverage_Matrix.md",
-      "row_type": "consumer",
-      "path": "Plans/OpenCode_Coverage_Matrix.md",
-      "heading_hint": "Cleanup Priorities",
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-458",
+      "status": "partial",
+      "evidence": [
+        "Plans/Glossary.md:62-66 requires inline/context/canonical help to use canonical names without minting synonyms",
+        "Plans/Glossary.md:105-120 defines canonical help-entry template and related-concept clusters"
+      ],
+      "required_action": "stale_retirement",
+      "unresolved_reason": "Help/copy anti-drift is present, but no direct Orchestrator_Page or Run_Graph_View legacy-label retirement text exists.",
+      "source_obligation_ids": [
+        "obl-133"
+      ],
+      "source_seed_ids": [
+        "seed-133"
+      ],
+      "source_shard_ids": [
+        "shard-0033"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-611",
       "status": "missing",
-      "exact_items": [
-        "`Plans/OpenCode_Coverage_Matrix.md`"
-      ],
-      "stale_tokens": [],
       "evidence": [
-        "Plans/OpenCode_Coverage_Matrix.md:required_terms_absent"
+        "Plans/Glossary.md: assigned file reviewed; no tier-native execution or tier/subtask execution cleanup found"
       ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-03311",
+      "required_action": "stale_retirement",
+      "unresolved_reason": "Tier-native execution remnant retirement is absent from the assigned path.",
       "source_obligation_ids": [
-        "obl-3198"
+        "obl-170"
       ],
       "source_seed_ids": [
-        "seed-4180"
+        "seed-170"
       ],
       "source_shard_ids": [
-        "shard-0059"
+        "shard-0042"
       ],
-      "canon_label": "Plans/*.md",
-      "row_type": "consumer",
-      "path": "Plans/OpenCode_Coverage_Matrix.md",
-      "heading_hint": "Do-not-forget details",
-      "status": "present",
-      "exact_items": [
-        "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage."
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/OpenCode_Coverage_Matrix.md:3",
-        "Plans/OpenCode_Coverage_Matrix.md:19",
-        "Plans/OpenCode_Coverage_Matrix.md:39",
-        "Plans/OpenCode_Coverage_Matrix.md:45",
-        "Plans/OpenCode_Coverage_Matrix.md:80"
-      ],
-      "required_action": "none"
+      "path_field_status": "match"
     },
     {
-      "coverage_id": "cov-03602",
-      "source_obligation_ids": [
-        "obl-3453"
-      ],
-      "source_seed_ids": [
-        "seed-4634",
-        "seed-5082",
-        "seed-5923",
-        "seed-6009",
-        "seed-6101"
-      ],
-      "source_shard_ids": [
-        "shard-0064",
-        "shard-0070",
-        "shard-0081",
-        "shard-0082"
-      ],
-      "canon_label": "Plans/OpenCode_Coverage_Matrix.md",
-      "row_type": "consumer",
-      "path": "Plans/OpenCode_Coverage_Matrix.md",
-      "heading_hint": "Targeted docs read",
+      "coverage_id": "cov-623",
       "status": "partial",
-      "exact_items": [
-        "`Plans/OpenCode_Coverage_Matrix.md`"
-      ],
-      "stale_tokens": [],
       "evidence": [
-        "Plans/OpenCode_Coverage_Matrix.md:19",
-        "Plans/OpenCode_Coverage_Matrix.md:87"
+        "Plans/Glossary.md:87 trust_tier is reserved for preview/browser semantics",
+        "Plans/Glossary.md:88 trust_tier is retired from action-gating terminology in favor of projection_freshness and projection_health"
       ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-03619",
+      "required_action": "stale_retirement",
+      "unresolved_reason": "trust_tier cleanup is direct, but scheduler_lane, worktree lane binding, and historical-lineage preservation are not covered.",
       "source_obligation_ids": [
-        "obl-3470"
+        "obl-174"
       ],
       "source_seed_ids": [
-        "seed-4652",
-        "seed-5120",
-        "seed-5958",
-        "seed-6045",
-        "seed-6133"
+        "seed-174"
       ],
       "source_shard_ids": [
-        "shard-0064",
-        "shard-0070",
-        "shard-0081",
-        "shard-0082"
+        "shard-0043"
       ],
-      "canon_label": "Plans/OpenCode_Coverage_Matrix.md",
-      "row_type": "consumer",
-      "path": "Plans/OpenCode_Coverage_Matrix.md",
-      "heading_hint": "Impacted docs",
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-727",
       "status": "partial",
-      "exact_items": [
-        "`Plans/OpenCode_Coverage_Matrix.md`"
-      ],
-      "stale_tokens": [],
       "evidence": [
-        "Plans/OpenCode_Coverage_Matrix.md:19"
+        "Plans/Glossary.md:72-88 defines route/open, runtime identity, account switch lineage, artifact, projection freshness, and projection health terms",
+        "Plans/Glossary.md:92-122 defines project status/help architecture and related-concept clusters"
       ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-03629",
+      "required_action": "stale_retirement",
+      "unresolved_reason": "Route/open/runtime identity and help/glossary cleanup are present, but stale tier-era consumer and old worktree/tier copy retirement is not directly stated.",
       "source_obligation_ids": [
-        "obl-3480"
+        "obl-198"
       ],
       "source_seed_ids": [
-        "seed-4675",
-        "seed-5150",
-        "seed-5986",
-        "seed-6079"
+        "seed-198"
       ],
       "source_shard_ids": [
-        "shard-0064",
-        "shard-0070",
-        "shard-0081",
-        "shard-0082"
+        "shard-0049"
       ],
-      "canon_label": "Plans/OpenCode_Coverage_Matrix.md",
-      "row_type": "consumer",
-      "path": "Plans/OpenCode_Coverage_Matrix.md",
-      "heading_hint": "Candidate fixes to carry forward",
-      "status": "partial",
-      "exact_items": [
-        "`Plans/OpenCode_Coverage_Matrix.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/OpenCode_Coverage_Matrix.md:99"
-      ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-04256",
-      "source_obligation_ids": [
-        "obl-4102"
-      ],
-      "source_seed_ids": [
-        "seed-5709"
-      ],
-      "source_shard_ids": [
-        "shard-0077"
-      ],
-      "canon_label": "Plans/OpenCode_Coverage_Matrix.md",
-      "row_type": "consumer",
-      "path": "Plans/OpenCode_Coverage_Matrix.md",
-      "heading_hint": "Priority merge",
-      "status": "partial",
-      "exact_items": [
-        "`Plans/OpenCode_Coverage_Matrix.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/OpenCode_Coverage_Matrix.md:58"
-      ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-04450",
-      "source_obligation_ids": [
-        "obl-4262"
-      ],
-      "source_seed_ids": [
-        "seed-6087"
-      ],
-      "source_shard_ids": [
-        "shard-0082"
-      ],
-      "canon_label": "39",
-      "row_type": "consumer",
-      "path": "Plans/OpenCode_Coverage_Matrix.md",
-      "heading_hint": "Do-not-forget details",
-      "status": "present",
-      "exact_items": [
-        "Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes."
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/OpenCode_Coverage_Matrix.md:77",
-        "Plans/OpenCode_Coverage_Matrix.md:60",
-        "Plans/OpenCode_Coverage_Matrix.md:1",
-        "Plans/OpenCode_Coverage_Matrix.md:26",
-        "Plans/OpenCode_Coverage_Matrix.md:3",
-        "Plans/OpenCode_Coverage_Matrix.md:19",
-        "Plans/OpenCode_Coverage_Matrix.md:39",
-        "Plans/OpenCode_Coverage_Matrix.md:80"
-      ],
-      "required_action": "none"
-    },
-    {
-      "coverage_id": "cov-04533",
-      "source_obligation_ids": [
-        "obl-4283"
-      ],
-      "source_seed_ids": [
-        "seed-6167"
-      ],
-      "source_shard_ids": [
-        "shard-0082"
-      ],
-      "canon_label": "Plans/*.md",
-      "row_type": "layout_blocker",
-      "path": "Plans/OpenCode_Coverage_Matrix.md",
-      "heading_hint": "Do-not-forget details",
-      "status": "present",
-      "exact_items": [
-        "After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes."
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/OpenCode_Coverage_Matrix.md:26",
-        "Plans/OpenCode_Coverage_Matrix.md:3",
-        "Plans/OpenCode_Coverage_Matrix.md:55",
-        "Plans/OpenCode_Coverage_Matrix.md:19",
-        "Plans/OpenCode_Coverage_Matrix.md:129",
-        "Plans/OpenCode_Coverage_Matrix.md:45",
-        "Plans/OpenCode_Coverage_Matrix.md:80"
-      ],
-      "required_action": "none"
-    },
-    {
-      "coverage_id": "cov-03312",
-      "source_obligation_ids": [
-        "obl-3198"
-      ],
-      "source_seed_ids": [
-        "seed-4180"
-      ],
-      "source_shard_ids": [
-        "shard-0059"
-      ],
-      "canon_label": "Plans/*.md",
-      "row_type": "consumer",
-      "path": "Plans/OpenCode_Deep_Extraction.md",
-      "heading_hint": "Do-not-forget details",
-      "status": "present",
-      "exact_items": [
-        "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage."
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/OpenCode_Deep_Extraction.md:88",
-        "Plans/OpenCode_Deep_Extraction.md:316",
-        "Plans/OpenCode_Deep_Extraction.md:3",
-        "Plans/OpenCode_Deep_Extraction.md:48",
-        "Plans/OpenCode_Deep_Extraction.md:177",
-        "Plans/OpenCode_Deep_Extraction.md:630",
-        "Plans/OpenCode_Deep_Extraction.md:29"
-      ],
-      "required_action": "none"
-    },
-    {
-      "coverage_id": "cov-03475",
-      "source_obligation_ids": [
-        "obl-3327"
-      ],
-      "source_seed_ids": [
-        "seed-4437",
-        "seed-5083",
-        "seed-5924",
-        "seed-6010",
-        "seed-6102"
-      ],
-      "source_shard_ids": [
-        "shard-0062",
-        "shard-0070",
-        "shard-0081",
-        "shard-0082"
-      ],
-      "canon_label": "Plans/OpenCode_Deep_Extraction.md",
-      "row_type": "consumer",
-      "path": "Plans/OpenCode_Deep_Extraction.md",
-      "heading_hint": "Targeted docs read",
-      "status": "partial",
-      "exact_items": [
-        "`Plans/OpenCode_Deep_Extraction.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/OpenCode_Deep_Extraction.md:48",
-        "Plans/OpenCode_Deep_Extraction.md:57"
-      ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-03499",
-      "source_obligation_ids": [
-        "obl-3351"
-      ],
-      "source_seed_ids": [
-        "seed-4464",
-        "seed-5121",
-        "seed-5959",
-        "seed-6046",
-        "seed-6134"
-      ],
-      "source_shard_ids": [
-        "shard-0062",
-        "shard-0070",
-        "shard-0081",
-        "shard-0082"
-      ],
-      "canon_label": "Plans/OpenCode_Deep_Extraction.md",
-      "row_type": "consumer",
-      "path": "Plans/OpenCode_Deep_Extraction.md",
-      "heading_hint": "Impacted docs",
-      "status": "partial",
-      "exact_items": [
-        "`Plans/OpenCode_Deep_Extraction.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/OpenCode_Deep_Extraction.md:48"
-      ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-03511",
-      "source_obligation_ids": [
-        "obl-3363"
-      ],
-      "source_seed_ids": [
-        "seed-4487",
-        "seed-5149",
-        "seed-5985",
-        "seed-6078"
-      ],
-      "source_shard_ids": [
-        "shard-0062",
-        "shard-0070",
-        "shard-0081",
-        "shard-0082"
-      ],
-      "canon_label": "Plans/OpenCode_Deep_Extraction.md",
-      "row_type": "consumer",
-      "path": "Plans/OpenCode_Deep_Extraction.md",
-      "heading_hint": "Candidate fixes to carry forward",
-      "status": "partial",
-      "exact_items": [
-        "`Plans/OpenCode_Deep_Extraction.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/OpenCode_Deep_Extraction.md:692"
-      ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-04255",
-      "source_obligation_ids": [
-        "obl-4101"
-      ],
-      "source_seed_ids": [
-        "seed-5708"
-      ],
-      "source_shard_ids": [
-        "shard-0077"
-      ],
-      "canon_label": "Plans/OpenCode_Deep_Extraction.md",
-      "row_type": "consumer",
-      "path": "Plans/OpenCode_Deep_Extraction.md",
-      "heading_hint": "Priority merge",
-      "status": "partial",
-      "exact_items": [
-        "`Plans/OpenCode_Deep_Extraction.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/OpenCode_Deep_Extraction.md:216",
-        "Plans/OpenCode_Deep_Extraction.md:157"
-      ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-04451",
-      "source_obligation_ids": [
-        "obl-4262"
-      ],
-      "source_seed_ids": [
-        "seed-6087"
-      ],
-      "source_shard_ids": [
-        "shard-0082"
-      ],
-      "canon_label": "39",
-      "row_type": "consumer",
-      "path": "Plans/OpenCode_Deep_Extraction.md",
-      "heading_hint": "Do-not-forget details",
-      "status": "present",
-      "exact_items": [
-        "Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes."
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/OpenCode_Deep_Extraction.md:292",
-        "Plans/OpenCode_Deep_Extraction.md:88",
-        "Plans/OpenCode_Deep_Extraction.md:75",
-        "Plans/OpenCode_Deep_Extraction.md:155",
-        "Plans/OpenCode_Deep_Extraction.md:3",
-        "Plans/OpenCode_Deep_Extraction.md:48",
-        "Plans/OpenCode_Deep_Extraction.md:199",
-        "Plans/OpenCode_Deep_Extraction.md:316",
-        "Plans/OpenCode_Deep_Extraction.md:29"
-      ],
-      "required_action": "none"
+      "path_field_status": "match"
     }
   ]
 }

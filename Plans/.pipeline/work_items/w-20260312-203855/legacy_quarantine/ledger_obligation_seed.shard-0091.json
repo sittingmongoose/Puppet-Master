@@ -1,0 +1,2796 @@
+{
+  "schema_id": "pm.ledger_obligation_seed_shard_result.v1",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-0091",
+  "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0091-L018001-L018200.md",
+  "source_line_range": "L018001-L018200",
+  "seed_candidates": [
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/Runtime_Artifacts_Panel.md:61-93",
+      "exact_items": [
+        "`Plans/Runtime_Artifacts_Panel.md:61-93`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Runtime_Artifacts_Panel.md"
+      ],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0091",
+      "source_evidence": [
+        "working_ledger.md:L18001"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/usage-feature.md:233-245",
+      "exact_items": [
+        "`Plans/usage-feature.md:233-245`"
+      ],
+      "affected_doc_hints": [
+        "Plans/usage-feature.md"
+      ],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0091",
+      "source_evidence": [
+        "working_ledger.md:L18002"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/usage-feature.md:690-705",
+      "exact_items": [
+        "`Plans/usage-feature.md:690-705`"
+      ],
+      "affected_doc_hints": [
+        "Plans/usage-feature.md"
+      ],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0091",
+      "source_evidence": [
+        "working_ledger.md:L18003"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/assistant-chat-design.md:808-818",
+      "exact_items": [
+        "`Plans/assistant-chat-design.md:808-818`"
+      ],
+      "affected_doc_hints": [
+        "Plans/assistant-chat-design.md"
+      ],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0091",
+      "source_evidence": [
+        "working_ledger.md:L18004"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/Tools.md:1131-1135",
+      "exact_items": [
+        "`Plans/Tools.md:1131-1135`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Tools.md"
+      ],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0091",
+      "source_evidence": [
+        "working_ledger.md:L18005"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/human-in-the-loop.md:22-49",
+      "exact_items": [
+        "`Plans/human-in-the-loop.md:22-49`"
+      ],
+      "affected_doc_hints": [
+        "Plans/human-in-the-loop.md"
+      ],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0091",
+      "source_evidence": [
+        "working_ledger.md:L18006"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/interview-subagent-integration.md:1686-1698",
+      "exact_items": [
+        "`Plans/interview-subagent-integration.md:1686-1698`"
+      ],
+      "affected_doc_hints": [
+        "Plans/interview-subagent-integration.md"
+      ],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0091",
+      "source_evidence": [
+        "working_ledger.md:L18007"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/Contracts_V0.md:461-465",
+      "exact_items": [
+        "`Plans/Contracts_V0.md:461-465`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md"
+      ],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0091",
+      "source_evidence": [
+        "working_ledger.md:L18008"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/Executor_Protocol.md:134-160",
+      "exact_items": [
+        "`Plans/Executor_Protocol.md:134-160`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Executor_Protocol.md"
+      ],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0091",
+      "source_evidence": [
+        "working_ledger.md:L18009"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/orchestrator-subagent-integration.md:374-391",
+      "exact_items": [
+        "`Plans/orchestrator-subagent-integration.md:374-391`"
+      ],
+      "affected_doc_hints": [
+        "Plans/orchestrator-subagent-integration.md"
+      ],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0091",
+      "source_evidence": [
+        "working_ledger.md:L18010"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/UI_Command_Catalog.md:29-95",
+      "exact_items": [
+        "`Plans/UI_Command_Catalog.md:29-95`"
+      ],
+      "affected_doc_hints": [
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0091",
+      "source_evidence": [
+        "working_ledger.md:L18011"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/UI_Command_Catalog.md:617-623",
+      "exact_items": [
+        "`Plans/UI_Command_Catalog.md:617-623`"
+      ],
+      "affected_doc_hints": [
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0091",
+      "source_evidence": [
+        "working_ledger.md:L18012"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/Glossary.md:30-70",
+      "exact_items": [
+        "`Plans/Glossary.md:30-70`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Glossary.md"
+      ],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0091",
+      "source_evidence": [
+        "working_ledger.md:L18013"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/Orchestrator_Page.md:1-44",
+      "exact_items": [
+        "`Plans/Orchestrator_Page.md:1-44`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md"
+      ],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0091",
+      "source_evidence": [
+        "working_ledger.md:L18014"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/GitHub_Integration.md:251-258",
+      "exact_items": [
+        "`Plans/GitHub_Integration.md:251-258`"
+      ],
+      "affected_doc_hints": [
+        "Plans/GitHub_Integration.md"
+      ],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0091",
+      "source_evidence": [
+        "working_ledger.md:L18015"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/FinalGUISpec.md:2092",
+      "exact_items": [
+        "`Plans/FinalGUISpec.md:2092`"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0091",
+      "source_evidence": [
+        "working_ledger.md:L18016"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/FinalGUISpec.md:2737-2739",
+      "exact_items": [
+        "`Plans/FinalGUISpec.md:2737-2739`"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0091",
+      "source_evidence": [
+        "working_ledger.md:L18017"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "stale_retirement",
+      "canon_label_hint": "Wave 1 and Wave 2 both count as zero-finding waves under the strict audit rule because they adde",
+      "exact_items": [
+        "Wave 1 and Wave 2 both count as zero-finding waves under the strict audit rule because they added no new exact missing field, command, heading, stale survivor, affected target, or blocker family."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0091",
+      "source_evidence": [
+        "working_ledger.md:L18020"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "Entry",
+      "exact_items": [
+        "summary: Ran a new bounded audit pass after the blocked Ready Check; the first wave produced exact refinements in the runtime-identity, route-target, glossary/help, and orchestrator cross-reference blocker families, and two bounded follow-up sweeps then produced zero new exact missing items."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Entry"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0091",
+      "source_evidence": [
+        "working_ledger.md:L18027"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "gap-001",
+      "exact_items": [
+        "`gap-001` sharpened: the exact owner anchor `### 5.1B Persona/Runtime Snapshot Payload Contract` is still absent, and the explicit `execution_unit_context` required-field list in `Plans/Contracts_V0.md` still omits `requested_account_binding`, `requested_account_policy`, and `operational_identity` even though the surrounding canon expects requested/effective identity carry-through."
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md"
+      ],
+      "heading_hints": [
+        "### 5.1B Persona/Runtime Snapshot Payload Contract",
+        "Entry"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0091",
+      "source_evidence": [
+        "working_ledger.md:L18027-L18029"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "stale_retirement",
+      "canon_label_hint": "gap-002",
+      "exact_items": [
+        "`gap-002` sharpened: `Plans/UI_Command_Catalog.md` still points at the non-existent `Plans/Orchestrator_Page.md#10. Search, routing, and action policy`, and `result_id` remains live in `cmd.search.open_result` / `cmd.search.replace_selected` args rather than appearing only as stale residue."
+      ],
+      "affected_doc_hints": [
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Orchestrator_Page.md#10. Search"
+      ],
+      "heading_hints": [
+        "10. Search",
+        "Entry"
+      ],
+      "stale_tokens": [
+        "gap-002",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Orchestrator_Page.md#10. Search, routing, and action policy",
+        "result_id",
+        "cmd.search.open_result",
+        "cmd.search.replace_selected"
+      ],
+      "source_shard_id": "shard-0091",
+      "source_evidence": [
+        "working_ledger.md:L18029-L18030"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "stale_retirement",
+      "canon_label_hint": "gap-005",
+      "exact_items": [
+        "`gap-005` downgraded: `report_ref` and `startup_recovered` are no longer kept in the unresolved exact-missing list; the remaining live defect is the skeletal `blocked_notice` payload, missing usage observability carry-through for `escalation_level`, missing `action_available` ownership, and the stale tuple / stale verdict survivors."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Entry"
+      ],
+      "stale_tokens": [
+        "gap-005",
+        "report_ref",
+        "startup_recovered",
+        "blocked_notice",
+        "escalation_level",
+        "action_available"
+      ],
+      "source_shard_id": "shard-0091",
+      "source_evidence": [
+        "working_ledger.md:L18030-L18031"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "gap-006",
+      "exact_items": [
+        "`gap-006` sharpened: `Plans/Glossary.md` still lacks `### Orchestrator rewrite terms` / `### Runtime and routing terms`, and the live glossary still instantiates terms as two-column `Term | Definition` tables or inline bullets instead of the full help-entry field set (`canonical_name`, `short_definition`, `why_it_matters`, `what_it_is_not`, `common_related_states`, `related_concepts`, `surface_examples`)."
+      ],
+      "affected_doc_hints": [
+        "Plans/Glossary.md"
+      ],
+      "heading_hints": [
+        "Entry"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0091",
+      "source_evidence": [
+        "working_ledger.md:L18031-L18032"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "gap-007",
+      "exact_items": [
+        "`gap-007` sharpened: the broken `Plans/Orchestrator_Page.md#11. Source Control boundary` reference survives not only in `Plans/GitHub_Integration.md` but also in `Plans/storage-plan.md` and `Plans/WorktreeGitImprovement.md`, while `Plans/FinalGUISpec.md` still preserves the `restore points` contradiction."
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md#11. Source Control boundary",
+        "Plans/GitHub_Integration.md",
+        "Plans/storage-plan.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [
+        "11. Source Control boundary",
+        "Entry"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0091",
+      "source_evidence": [
+        "working_ledger.md:L18032-L18033"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "stale_retirement",
+      "canon_label_hint": "Entry",
+      "exact_items": [
+        "Follow-up Wave 2 rechecked the storage/receipt/usage cluster and added no new exact missing field, heading, stale survivor, affected target, or blocker family beyond the wave-one refinements."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Entry"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0091",
+      "source_evidence": [
+        "working_ledger.md:L18033-L18034"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "stale_retirement",
+      "canon_label_hint": "Entry",
+      "exact_items": [
+        "Follow-up Wave 3 rechecked the blocked/chat/routing cluster and added no new exact missing field, heading, stale survivor, affected target, or blocker family beyond the wave-one refinements."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Entry"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0091",
+      "source_evidence": [
+        "working_ledger.md:L18034-L18035"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/Contracts_V0.md",
+      "exact_items": [
+        "`Plans/Contracts_V0.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md"
+      ],
+      "heading_hints": [
+        "Entry"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0091",
+      "source_evidence": [
+        "working_ledger.md:L18035-L18037"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/UI_Command_Catalog.md",
+      "exact_items": [
+        "`Plans/UI_Command_Catalog.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "heading_hints": [
+        "Entry"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0091",
+      "source_evidence": [
+        "working_ledger.md:L18038"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/Orchestrator_Page.md",
+      "exact_items": [
+        "`Plans/Orchestrator_Page.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md"
+      ],
+      "heading_hints": [
+        "Entry"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0091",
+      "source_evidence": [
+        "working_ledger.md:L18039"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/assistant-chat-design.md",
+      "exact_items": [
+        "`Plans/assistant-chat-design.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/assistant-chat-design.md"
+      ],
+      "heading_hints": [
+        "Entry"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0091",
+      "source_evidence": [
+        "working_ledger.md:L18040"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/usage-feature.md",
+      "exact_items": [
+        "`Plans/usage-feature.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/usage-feature.md"
+      ],
+      "heading_hints": [
+        "Entry"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0091",
+      "source_evidence": [
+        "working_ledger.md:L18041"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/Glossary.md",
+      "exact_items": [
+        "`Plans/Glossary.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Glossary.md"
+      ],
+      "heading_hints": [
+        "Entry"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0091",
+      "source_evidence": [
+        "working_ledger.md:L18042"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/GitHub_Integration.md",
+      "exact_items": [
+        "`Plans/GitHub_Integration.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/GitHub_Integration.md"
+      ],
+      "heading_hints": [
+        "Entry"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0091",
+      "source_evidence": [
+        "working_ledger.md:L18043"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/storage-plan.md",
+      "exact_items": [
+        "`Plans/storage-plan.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [
+        "Entry"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0091",
+      "source_evidence": [
+        "working_ledger.md:L18044"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/WorktreeGitImprovement.md",
+      "exact_items": [
+        "`Plans/WorktreeGitImprovement.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/WorktreeGitImprovement.md"
+      ],
+      "heading_hints": [
+        "Entry"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0091",
+      "source_evidence": [
+        "working_ledger.md:L18045"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/Contracts_V0.md:557-624",
+      "exact_items": [
+        "`Plans/Contracts_V0.md:557-624`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md"
+      ],
+      "heading_hints": [
+        "Entry"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0091",
+      "source_evidence": [
+        "working_ledger.md:L18047"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/UI_Command_Catalog.md:214-223",
+      "exact_items": [
+        "`Plans/UI_Command_Catalog.md:214-223`"
+      ],
+      "affected_doc_hints": [
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "heading_hints": [
+        "Entry"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0091",
+      "source_evidence": [
+        "working_ledger.md:L18048"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/UI_Command_Catalog.md:617-623",
+      "exact_items": [
+        "`Plans/UI_Command_Catalog.md:617-623`"
+      ],
+      "affected_doc_hints": [
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "heading_hints": [
+        "Entry"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0091",
+      "source_evidence": [
+        "working_ledger.md:L18049"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/assistant-chat-design.md:808-818",
+      "exact_items": [
+        "`Plans/assistant-chat-design.md:808-818`"
+      ],
+      "affected_doc_hints": [
+        "Plans/assistant-chat-design.md"
+      ],
+      "heading_hints": [
+        "Entry"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0091",
+      "source_evidence": [
+        "working_ledger.md:L18050"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/assistant-chat-design.md:1784",
+      "exact_items": [
+        "`Plans/assistant-chat-design.md:1784`"
+      ],
+      "affected_doc_hints": [
+        "Plans/assistant-chat-design.md"
+      ],
+      "heading_hints": [
+        "Entry"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0091",
+      "source_evidence": [
+        "working_ledger.md:L18051"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/assistant-chat-design.md:2218-2242",
+      "exact_items": [
+        "`Plans/assistant-chat-design.md:2218-2242`"
+      ],
+      "affected_doc_hints": [
+        "Plans/assistant-chat-design.md"
+      ],
+      "heading_hints": [
+        "Entry"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0091",
+      "source_evidence": [
+        "working_ledger.md:L18052"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/usage-feature.md:233-249",
+      "exact_items": [
+        "`Plans/usage-feature.md:233-249`"
+      ],
+      "affected_doc_hints": [
+        "Plans/usage-feature.md"
+      ],
+      "heading_hints": [
+        "Entry"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0091",
+      "source_evidence": [
+        "working_ledger.md:L18053"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/usage-feature.md:690-705",
+      "exact_items": [
+        "`Plans/usage-feature.md:690-705`"
+      ],
+      "affected_doc_hints": [
+        "Plans/usage-feature.md"
+      ],
+      "heading_hints": [
+        "Entry"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0091",
+      "source_evidence": [
+        "working_ledger.md:L18054"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/Glossary.md:34-85",
+      "exact_items": [
+        "`Plans/Glossary.md:34-85`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Glossary.md"
+      ],
+      "heading_hints": [
+        "Entry"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0091",
+      "source_evidence": [
+        "working_ledger.md:L18055"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/GitHub_Integration.md:251-258",
+      "exact_items": [
+        "`Plans/GitHub_Integration.md:251-258`"
+      ],
+      "affected_doc_hints": [
+        "Plans/GitHub_Integration.md"
+      ],
+      "heading_hints": [
+        "Entry"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0091",
+      "source_evidence": [
+        "working_ledger.md:L18056"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/storage-plan.md:1650-1654",
+      "exact_items": [
+        "`Plans/storage-plan.md:1650-1654`"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [
+        "Entry"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0091",
+      "source_evidence": [
+        "working_ledger.md:L18057"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/WorktreeGitImprovement.md:704-708",
+      "exact_items": [
+        "`Plans/WorktreeGitImprovement.md:704-708`"
+      ],
+      "affected_doc_hints": [
+        "Plans/WorktreeGitImprovement.md"
+      ],
+      "heading_hints": [
+        "Entry"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0091",
+      "source_evidence": [
+        "working_ledger.md:L18058"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/FinalGUISpec.md:2092",
+      "exact_items": [
+        "`Plans/FinalGUISpec.md:2092`"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [
+        "Entry"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0091",
+      "source_evidence": [
+        "working_ledger.md:L18059"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/FinalGUISpec.md:2737-2739",
+      "exact_items": [
+        "`Plans/FinalGUISpec.md:2737-2739`"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [
+        "Entry"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0091",
+      "source_evidence": [
+        "working_ledger.md:L18060"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/Orchestrator_Page.md:1-150",
+      "exact_items": [
+        "`Plans/Orchestrator_Page.md:1-150`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md"
+      ],
+      "heading_hints": [
+        "Entry"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0091",
+      "source_evidence": [
+        "working_ledger.md:L18061"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "Entry",
+      "exact_items": [
+        "summary: Ran another bounded audit pass after the blocked Ready Check; the first wave sharpened the storage and glossary blocker families with missing discoverable anchors and broken consumer references, and the follow-up sweeps produced zero new exact missing items beyond those refinements."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Entry"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0091",
+      "source_evidence": [
+        "working_ledger.md:L18072"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "gap-003",
+      "exact_items": [
+        "`gap-003` sharpened: `Plans/storage-plan.md` still lacks a discoverable `Canonical records` heading even though it contains inline `Canonical records for this feature set...` prose and a `canonical_record.v1:{project_id}:{record_id}` authoritative container, and `Plans/Orchestrator_Page.md` still points at the missing `Plans/storage-plan.md#Canonical records` anchor from three different sections."
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/storage-plan.md#Canonical records"
+      ],
+      "heading_hints": [
+        "Canonical records",
+        "Entry"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0091",
+      "source_evidence": [
+        "working_ledger.md:L18072-L18074"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "gap-006",
+      "exact_items": [
+        "`gap-006` sharpened: `Plans/Orchestrator_Page.md` history and concern sections still point at the missing `Plans/Glossary.md#Orchestrator rewrite terms` anchor, so the glossary/help blocker now includes live broken consumer references in addition to the missing owner headings and incomplete help-entry structure."
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
+        "Plans/Glossary.md#Orchestrator rewrite terms"
+      ],
+      "heading_hints": [
+        "Orchestrator rewrite terms",
+        "Entry"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0091",
+      "source_evidence": [
+        "working_ledger.md:L18074-L18075"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "stale_retirement",
+      "canon_label_hint": "Entry",
+      "exact_items": [
+        "Follow-up Wave 2 rechecked the runtime-identity and blocked-episode cluster and added no new exact missing field, heading, stale survivor, affected target, or blocker family beyond the current blocker wording."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Entry"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0091",
+      "source_evidence": [
+        "working_ledger.md:L18075-L18076"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "stale_retirement",
+      "canon_label_hint": "Entry",
+      "exact_items": [
+        "Follow-up Wave 3 rechecked the storage/receipt/account-history cluster and added no new exact missing field, heading, stale survivor, affected target, or blocker family beyond the wave-one refinements."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Entry"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0091",
+      "source_evidence": [
+        "working_ledger.md:L18076-L18077"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "stale_retirement",
+      "canon_label_hint": "Entry",
+      "exact_items": [
+        "Follow-up Wave 4 rechecked the route/open, blocked-action, and projection-health consumer surfaces and added no new exact missing field, heading, stale survivor, affected target, or blocker family beyond the current blocker wording."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Entry"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0091",
+      "source_evidence": [
+        "working_ledger.md:L18077-L18078"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/storage-plan.md",
+      "exact_items": [
+        "`Plans/storage-plan.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [
+        "Entry"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0091",
+      "source_evidence": [
+        "working_ledger.md:L18078-L18080"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/Orchestrator_Page.md",
+      "exact_items": [
+        "`Plans/Orchestrator_Page.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md"
+      ],
+      "heading_hints": [
+        "Entry"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0091",
+      "source_evidence": [
+        "working_ledger.md:L18081"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/Glossary.md",
+      "exact_items": [
+        "`Plans/Glossary.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Glossary.md"
+      ],
+      "heading_hints": [
+        "Entry"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0091",
+      "source_evidence": [
+        "working_ledger.md:L18082"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/assistant-chat-design.md",
+      "exact_items": [
+        "`Plans/assistant-chat-design.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/assistant-chat-design.md"
+      ],
+      "heading_hints": [
+        "Entry"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0091",
+      "source_evidence": [
+        "working_ledger.md:L18083"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/usage-feature.md",
+      "exact_items": [
+        "`Plans/usage-feature.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/usage-feature.md"
+      ],
+      "heading_hints": [
+        "Entry"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0091",
+      "source_evidence": [
+        "working_ledger.md:L18084"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/UI_Command_Catalog.md",
+      "exact_items": [
+        "`Plans/UI_Command_Catalog.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "heading_hints": [
+        "Entry"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0091",
+      "source_evidence": [
+        "working_ledger.md:L18085"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/FinalGUISpec.md",
+      "exact_items": [
+        "`Plans/FinalGUISpec.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [
+        "Entry"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0091",
+      "source_evidence": [
+        "working_ledger.md:L18086"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/storage-plan.md:1389-1396",
+      "exact_items": [
+        "`Plans/storage-plan.md:1389-1396`"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [
+        "Entry"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0091",
+      "source_evidence": [
+        "working_ledger.md:L18088"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/Orchestrator_Page.md:171-171",
+      "exact_items": [
+        "`Plans/Orchestrator_Page.md:171-171`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md"
+      ],
+      "heading_hints": [
+        "Entry"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0091",
+      "source_evidence": [
+        "working_ledger.md:L18089"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/Orchestrator_Page.md:209-209",
+      "exact_items": [
+        "`Plans/Orchestrator_Page.md:209-209`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md"
+      ],
+      "heading_hints": [
+        "Entry"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0091",
+      "source_evidence": [
+        "working_ledger.md:L18090"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/Orchestrator_Page.md:230-230",
+      "exact_items": [
+        "`Plans/Orchestrator_Page.md:230-230`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md"
+      ],
+      "heading_hints": [
+        "Entry"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0091",
+      "source_evidence": [
+        "working_ledger.md:L18091"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/Orchestrator_Page.md:270-270",
+      "exact_items": [
+        "`Plans/Orchestrator_Page.md:270-270`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md"
+      ],
+      "heading_hints": [
+        "Entry"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0091",
+      "source_evidence": [
+        "working_ledger.md:L18092"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/Orchestrator_Page.md:437-437",
+      "exact_items": [
+        "`Plans/Orchestrator_Page.md:437-437`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md"
+      ],
+      "heading_hints": [
+        "Entry"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0091",
+      "source_evidence": [
+        "working_ledger.md:L18093"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/Glossary.md:30-85",
+      "exact_items": [
+        "`Plans/Glossary.md:30-85`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Glossary.md"
+      ],
+      "heading_hints": [
+        "Entry"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0091",
+      "source_evidence": [
+        "working_ledger.md:L18094"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/assistant-chat-design.md:808-818",
+      "exact_items": [
+        "`Plans/assistant-chat-design.md:808-818`"
+      ],
+      "affected_doc_hints": [
+        "Plans/assistant-chat-design.md"
+      ],
+      "heading_hints": [
+        "Entry"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0091",
+      "source_evidence": [
+        "working_ledger.md:L18095"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/assistant-chat-design.md:1784",
+      "exact_items": [
+        "`Plans/assistant-chat-design.md:1784`"
+      ],
+      "affected_doc_hints": [
+        "Plans/assistant-chat-design.md"
+      ],
+      "heading_hints": [
+        "Entry"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0091",
+      "source_evidence": [
+        "working_ledger.md:L18096"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/assistant-chat-design.md:2233-2240",
+      "exact_items": [
+        "`Plans/assistant-chat-design.md:2233-2240`"
+      ],
+      "affected_doc_hints": [
+        "Plans/assistant-chat-design.md"
+      ],
+      "heading_hints": [
+        "Entry"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0091",
+      "source_evidence": [
+        "working_ledger.md:L18097"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/usage-feature.md:346-382",
+      "exact_items": [
+        "`Plans/usage-feature.md:346-382`"
+      ],
+      "affected_doc_hints": [
+        "Plans/usage-feature.md"
+      ],
+      "heading_hints": [
+        "Entry"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0091",
+      "source_evidence": [
+        "working_ledger.md:L18098"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/usage-feature.md:694-701",
+      "exact_items": [
+        "`Plans/usage-feature.md:694-701`"
+      ],
+      "affected_doc_hints": [
+        "Plans/usage-feature.md"
+      ],
+      "heading_hints": [
+        "Entry"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0091",
+      "source_evidence": [
+        "working_ledger.md:L18099"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/UI_Command_Catalog.md:617-623",
+      "exact_items": [
+        "`Plans/UI_Command_Catalog.md:617-623`"
+      ],
+      "affected_doc_hints": [
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "heading_hints": [
+        "Entry"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0091",
+      "source_evidence": [
+        "working_ledger.md:L18100"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/FinalGUISpec.md:2924-2928",
+      "exact_items": [
+        "`Plans/FinalGUISpec.md:2924-2928`"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [
+        "Entry"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0091",
+      "source_evidence": [
+        "working_ledger.md:L18101"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "Entry",
+      "exact_items": [
+        "This invocation kept the blocker-family count at eight and the affected-doc count at twenty, but raised the underlying evidence count to fifty-nine by adding the missing-storage-anchor and missing-glossary-anchor evidence."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Entry"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0091",
+      "source_evidence": [
+        "working_ledger.md:L18104"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "Entry",
+      "exact_items": [
+        "summary: Ran another bounded audit pass after the blocked Ready Check; the first wave sharpened the storage and receipt blocker families with additional broken storage-plan anchor evidence and downgraded the overstated restore-point contradiction, and two bounded follow-up sweeps then produced zero new exact missing items."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Entry"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0091",
+      "source_evidence": [
+        "working_ledger.md:L18112"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "stale_retirement",
+      "canon_label_hint": "gap-003",
+      "exact_items": [
+        "`gap-003` sharpened: `Plans/Contracts_V0.md` still points at the missing `Plans/storage-plan.md#Canonical records` anchor, and both `Plans/Orchestrator_Page.md` and `Plans/WorktreeGitImprovement.md` still point at the missing `Plans/storage-plan.md#Restart and stale history` anchor in addition to the already-carried missing `Canonical records` heading."
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md#Canonical records",
+        "Plans/Orchestrator_Page.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/storage-plan.md#Restart and stale history"
+      ],
+      "heading_hints": [
+        "Canonical records",
+        "Restart and stale history",
+        "Entry"
+      ],
+      "stale_tokens": [
+        "gap-003",
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md#Canonical records",
+        "Plans/Orchestrator_Page.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/storage-plan.md#Restart and stale history",
+        "Canonical records"
+      ],
+      "source_shard_id": "shard-0091",
+      "source_evidence": [
+        "working_ledger.md:L18112-L18114"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "gap-004",
+      "exact_items": [
+        "`gap-004` sharpened: `Plans/Runtime_Artifacts_Panel.md` still points directly at the missing `Plans/storage-plan.md#Cross-surface receipt record` anchor, so the receipt blocker now includes a live broken consumer reference rather than only missing owner/consumer headings."
+      ],
+      "affected_doc_hints": [
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/storage-plan.md#Cross-surface receipt record"
+      ],
+      "heading_hints": [
+        "Cross-surface receipt record",
+        "Entry"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0091",
+      "source_evidence": [
+        "working_ledger.md:L18114-L18115"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "gap-007",
+      "exact_items": [
+        "`gap-007` downgraded: the prior `restore points` contradiction was overstated because `Plans/storage-plan.md` now cleanly separates runtime safe points from project-scoped restore points and `Plans/FinalGUISpec.md` explicitly forbids presenting safe points as restore points; the remaining blocker is structural-heading and broken-reference drift."
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [
+        "Entry"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0091",
+      "source_evidence": [
+        "working_ledger.md:L18115-L18116"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "stale_retirement",
+      "canon_label_hint": "detached_window",
+      "exact_items": [
+        "Follow-up Wave 2 rechecked the route/open and blocked-state survivor set (`detached_window`, `result_id`, `blocked_notice`, `action_available`, `No remaining gaps`) and added no new exact missing field, heading, stale survivor, affected target, or blocker family beyond the wave-one refinements."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Entry"
+      ],
+      "stale_tokens": [
+        "detached_window",
+        "result_id",
+        "blocked_notice",
+        "action_available",
+        "No remaining gaps"
+      ],
+      "source_shard_id": "shard-0091",
+      "source_evidence": [
+        "working_ledger.md:L18116-L18117"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "stale_retirement",
+      "canon_label_hint": "Entry",
+      "exact_items": [
+        "Follow-up Wave 3 rechecked the storage/help/history cluster and added no new exact missing field, heading, stale survivor, affected target, or blocker family beyond the wave-one refinements."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Entry"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0091",
+      "source_evidence": [
+        "working_ledger.md:L18117-L18118"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/Contracts_V0.md",
+      "exact_items": [
+        "`Plans/Contracts_V0.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md"
+      ],
+      "heading_hints": [
+        "Entry"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0091",
+      "source_evidence": [
+        "working_ledger.md:L18118-L18120"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/Runtime_Artifacts_Panel.md",
+      "exact_items": [
+        "`Plans/Runtime_Artifacts_Panel.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Runtime_Artifacts_Panel.md"
+      ],
+      "heading_hints": [
+        "Entry"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0091",
+      "source_evidence": [
+        "working_ledger.md:L18121"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/Orchestrator_Page.md",
+      "exact_items": [
+        "`Plans/Orchestrator_Page.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md"
+      ],
+      "heading_hints": [
+        "Entry"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0091",
+      "source_evidence": [
+        "working_ledger.md:L18122"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/storage-plan.md",
+      "exact_items": [
+        "`Plans/storage-plan.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [
+        "Entry"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0091",
+      "source_evidence": [
+        "working_ledger.md:L18123"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/WorktreeGitImprovement.md",
+      "exact_items": [
+        "`Plans/WorktreeGitImprovement.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/WorktreeGitImprovement.md"
+      ],
+      "heading_hints": [
+        "Entry"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0091",
+      "source_evidence": [
+        "working_ledger.md:L18124"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/FinalGUISpec.md",
+      "exact_items": [
+        "`Plans/FinalGUISpec.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [
+        "Entry"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0091",
+      "source_evidence": [
+        "working_ledger.md:L18125"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/UI_Command_Catalog.md",
+      "exact_items": [
+        "`Plans/UI_Command_Catalog.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "heading_hints": [
+        "Entry"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0091",
+      "source_evidence": [
+        "working_ledger.md:L18126"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/assistant-chat-design.md",
+      "exact_items": [
+        "`Plans/assistant-chat-design.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/assistant-chat-design.md"
+      ],
+      "heading_hints": [
+        "Entry"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0091",
+      "source_evidence": [
+        "working_ledger.md:L18127"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/Contracts_V0.md:55-60",
+      "exact_items": [
+        "`Plans/Contracts_V0.md:55-60`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md"
+      ],
+      "heading_hints": [
+        "Entry"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0091",
+      "source_evidence": [
+        "working_ledger.md:L18129"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/Contracts_V0.md:800-807",
+      "exact_items": [
+        "`Plans/Contracts_V0.md:800-807`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md"
+      ],
+      "heading_hints": [
+        "Entry"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0091",
+      "source_evidence": [
+        "working_ledger.md:L18130"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/Runtime_Artifacts_Panel.md:57-65",
+      "exact_items": [
+        "`Plans/Runtime_Artifacts_Panel.md:57-65`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Runtime_Artifacts_Panel.md"
+      ],
+      "heading_hints": [
+        "Entry"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0091",
+      "source_evidence": [
+        "working_ledger.md:L18131"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/Orchestrator_Page.md:171-171",
+      "exact_items": [
+        "`Plans/Orchestrator_Page.md:171-171`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md"
+      ],
+      "heading_hints": [
+        "Entry"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0091",
+      "source_evidence": [
+        "working_ledger.md:L18132"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/Orchestrator_Page.md:209-209",
+      "exact_items": [
+        "`Plans/Orchestrator_Page.md:209-209`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md"
+      ],
+      "heading_hints": [
+        "Entry"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0091",
+      "source_evidence": [
+        "working_ledger.md:L18133"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/Orchestrator_Page.md:230-230",
+      "exact_items": [
+        "`Plans/Orchestrator_Page.md:230-230`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md"
+      ],
+      "heading_hints": [
+        "Entry"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0091",
+      "source_evidence": [
+        "working_ledger.md:L18134"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/Orchestrator_Page.md:270-270",
+      "exact_items": [
+        "`Plans/Orchestrator_Page.md:270-270`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md"
+      ],
+      "heading_hints": [
+        "Entry"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0091",
+      "source_evidence": [
+        "working_ledger.md:L18135"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/storage-plan.md:1616-1625",
+      "exact_items": [
+        "`Plans/storage-plan.md:1616-1625`"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [
+        "Entry"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0091",
+      "source_evidence": [
+        "working_ledger.md:L18136"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/WorktreeGitImprovement.md:134-150",
+      "exact_items": [
+        "`Plans/WorktreeGitImprovement.md:134-150`"
+      ],
+      "affected_doc_hints": [
+        "Plans/WorktreeGitImprovement.md"
+      ],
+      "heading_hints": [
+        "Entry"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0091",
+      "source_evidence": [
+        "working_ledger.md:L18137"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/FinalGUISpec.md:2092-2092",
+      "exact_items": [
+        "`Plans/FinalGUISpec.md:2092-2092`"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [
+        "Entry"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0091",
+      "source_evidence": [
+        "working_ledger.md:L18138"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/FinalGUISpec.md:2736-2739",
+      "exact_items": [
+        "`Plans/FinalGUISpec.md:2736-2739`"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [
+        "Entry"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0091",
+      "source_evidence": [
+        "working_ledger.md:L18139"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/UI_Command_Catalog.md:617-623",
+      "exact_items": [
+        "`Plans/UI_Command_Catalog.md:617-623`"
+      ],
+      "affected_doc_hints": [
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "heading_hints": [
+        "Entry"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0091",
+      "source_evidence": [
+        "working_ledger.md:L18140"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/assistant-chat-design.md:808-818",
+      "exact_items": [
+        "`Plans/assistant-chat-design.md:808-818`"
+      ],
+      "affected_doc_hints": [
+        "Plans/assistant-chat-design.md"
+      ],
+      "heading_hints": [
+        "Entry"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0091",
+      "source_evidence": [
+        "working_ledger.md:L18141"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/assistant-chat-design.md:1784-1784",
+      "exact_items": [
+        "`Plans/assistant-chat-design.md:1784-1784`"
+      ],
+      "affected_doc_hints": [
+        "Plans/assistant-chat-design.md"
+      ],
+      "heading_hints": [
+        "Entry"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0091",
+      "source_evidence": [
+        "working_ledger.md:L18142"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "restore points",
+      "exact_items": [
+        "This invocation kept the blocker-family count at eight and the affected-doc count at twenty, removed the overstated `restore points` contradiction from `gap-007`, added exact broken-anchor evidence to `gap-003` and `gap-004`, and raised the underlying evidence count to sixty-two."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Entry"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0091",
+      "source_evidence": [
+        "working_ledger.md:L18145"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "stale_retirement",
+      "canon_label_hint": "pm.open_gaps.v3",
+      "exact_items": [
+        "summary: Audited the repaired `pm.open_gaps.v3` blocker split against live planning docs; the bounded waves reconfirmed the known missing headings, carry-through gaps, stale survivors, and broken cross-references, but produced zero new exact findings and no evidence that any repaired gap must move back to `blocker_type=planning`."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Entry"
+      ],
+      "stale_tokens": [
+        "pm.open_gaps.v3",
+        "blocker_type=planning"
+      ],
+      "source_shard_id": "shard-0091",
+      "source_evidence": [
+        "working_ledger.md:L18153"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "stale_retirement",
+      "canon_label_hint": "gap-001",
+      "exact_items": [
+        "Wave 1 rechecked `gap-001`, `gap-002`, and `gap-005` against live Contracts, UI command, chat, usage, HITL, and tool docs and only reconfirmed the already-recorded missing `5.1B` owner anchor, incomplete `execution_unit_context` required-field list, live `detached_window` / `result_id` survivors, skeletal `blocked_notice` payload, and stale closure verdict."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Entry"
+      ],
+      "stale_tokens": [
+        "gap-001",
+        "gap-002",
+        "gap-005",
+        "5.1B",
+        "execution_unit_context",
+        "detached_window",
+        "result_id",
+        "blocked_notice"
+      ],
+      "source_shard_id": "shard-0091",
+      "source_evidence": [
+        "working_ledger.md:L18153-L18155"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "gap-003",
+      "exact_items": [
+        "Wave 1 rechecked `gap-003`, `gap-004`, and `gap-008` against live storage, runtime-artifact, receipt, and usage docs and only reconfirmed the already-recorded missing storage/receipt headings, broken `Plans/storage-plan.md` anchor consumers, missing `orchestrator.project_state.{project_id}` naming, and missing usage-side account-history / degrade sections."
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [
+        "Entry"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0091",
+      "source_evidence": [
+        "working_ledger.md:L18155-L18156"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "gap-006",
+      "exact_items": [
+        "Wave 1 rechecked `gap-006` and `gap-007` against live glossary and orchestrator docs and only reconfirmed the already-recorded missing glossary/orchestrator owner headings plus the broken `Plans/Glossary.md#Orchestrator rewrite terms` and `Plans/Orchestrator_Page.md#11. Source Control boundary` references."
+      ],
+      "affected_doc_hints": [
+        "Plans/Glossary.md#Orchestrator rewrite terms",
+        "Plans/Orchestrator_Page.md#11. Source Control boundary"
+      ],
+      "heading_hints": [
+        "Orchestrator rewrite terms",
+        "11. Source Control boundary",
+        "Entry"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0091",
+      "source_evidence": [
+        "working_ledger.md:L18156-L18157"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "Entry",
+      "exact_items": [
+        "A delegated storage/receipt pass suggested reclassifying some missing-heading and broken-anchor items back to planning blockers, but the repair rule rejects that interpretation here because the owner sections, consumer targets, and exact mutations are already known; no new canon ambiguity surfaced."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Entry"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0091",
+      "source_evidence": [
+        "working_ledger.md:L18157-L18158"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "stale_retirement",
+      "canon_label_hint": "Entry",
+      "exact_items": [
+        "Follow-up local stability sweeps across usage/help/blocked/storage clusters added no new exact missing field, heading, stale survivor, affected target, or blocker family."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Entry"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0091",
+      "source_evidence": [
+        "working_ledger.md:L18158-L18159"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/Contracts_V0.md",
+      "exact_items": [
+        "`Plans/Contracts_V0.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md"
+      ],
+      "heading_hints": [
+        "Entry"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0091",
+      "source_evidence": [
+        "working_ledger.md:L18159-L18161"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/Executor_Protocol.md",
+      "exact_items": [
+        "`Plans/Executor_Protocol.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Executor_Protocol.md"
+      ],
+      "heading_hints": [
+        "Entry"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0091",
+      "source_evidence": [
+        "working_ledger.md:L18162"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/UI_Command_Catalog.md",
+      "exact_items": [
+        "`Plans/UI_Command_Catalog.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "heading_hints": [
+        "Entry"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0091",
+      "source_evidence": [
+        "working_ledger.md:L18163"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/assistant-chat-design.md",
+      "exact_items": [
+        "`Plans/assistant-chat-design.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/assistant-chat-design.md"
+      ],
+      "heading_hints": [
+        "Entry"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0091",
+      "source_evidence": [
+        "working_ledger.md:L18164"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/usage-feature.md",
+      "exact_items": [
+        "`Plans/usage-feature.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/usage-feature.md"
+      ],
+      "heading_hints": [
+        "Entry"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0091",
+      "source_evidence": [
+        "working_ledger.md:L18165"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/human-in-the-loop.md",
+      "exact_items": [
+        "`Plans/human-in-the-loop.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/human-in-the-loop.md"
+      ],
+      "heading_hints": [
+        "Entry"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0091",
+      "source_evidence": [
+        "working_ledger.md:L18166"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/Tools.md",
+      "exact_items": [
+        "`Plans/Tools.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Tools.md"
+      ],
+      "heading_hints": [
+        "Entry"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0091",
+      "source_evidence": [
+        "working_ledger.md:L18167"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/storage-plan.md",
+      "exact_items": [
+        "`Plans/storage-plan.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [
+        "Entry"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0091",
+      "source_evidence": [
+        "working_ledger.md:L18168"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/Runtime_Artifacts_Panel.md",
+      "exact_items": [
+        "`Plans/Runtime_Artifacts_Panel.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Runtime_Artifacts_Panel.md"
+      ],
+      "heading_hints": [
+        "Entry"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0091",
+      "source_evidence": [
+        "working_ledger.md:L18169"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/Project_Output_Artifacts.md",
+      "exact_items": [
+        "`Plans/Project_Output_Artifacts.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Project_Output_Artifacts.md"
+      ],
+      "heading_hints": [
+        "Entry"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0091",
+      "source_evidence": [
+        "working_ledger.md:L18170"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/interview-subagent-integration.md",
+      "exact_items": [
+        "`Plans/interview-subagent-integration.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/interview-subagent-integration.md"
+      ],
+      "heading_hints": [
+        "Entry"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0091",
+      "source_evidence": [
+        "working_ledger.md:L18171"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/Orchestrator_Page.md",
+      "exact_items": [
+        "`Plans/Orchestrator_Page.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md"
+      ],
+      "heading_hints": [
+        "Entry"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0091",
+      "source_evidence": [
+        "working_ledger.md:L18172"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/Glossary.md",
+      "exact_items": [
+        "`Plans/Glossary.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Glossary.md"
+      ],
+      "heading_hints": [
+        "Entry"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0091",
+      "source_evidence": [
+        "working_ledger.md:L18173"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/GitHub_Integration.md",
+      "exact_items": [
+        "`Plans/GitHub_Integration.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/GitHub_Integration.md"
+      ],
+      "heading_hints": [
+        "Entry"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0091",
+      "source_evidence": [
+        "working_ledger.md:L18174"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/WorktreeGitImprovement.md",
+      "exact_items": [
+        "`Plans/WorktreeGitImprovement.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/WorktreeGitImprovement.md"
+      ],
+      "heading_hints": [
+        "Entry"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0091",
+      "source_evidence": [
+        "working_ledger.md:L18175"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/Contracts_V0.md:50-58",
+      "exact_items": [
+        "`Plans/Contracts_V0.md:50-58`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md"
+      ],
+      "heading_hints": [
+        "Entry"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0091",
+      "source_evidence": [
+        "working_ledger.md:L18177"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/Contracts_V0.md:800-806",
+      "exact_items": [
+        "`Plans/Contracts_V0.md:800-806`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md"
+      ],
+      "heading_hints": [
+        "Entry"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0091",
+      "source_evidence": [
+        "working_ledger.md:L18178"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/storage-plan.md:323-337",
+      "exact_items": [
+        "`Plans/storage-plan.md:323-337`"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [
+        "Entry"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0091",
+      "source_evidence": [
+        "working_ledger.md:L18179"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/storage-plan.md:941-954",
+      "exact_items": [
+        "`Plans/storage-plan.md:941-954`"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [
+        "Entry"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0091",
+      "source_evidence": [
+        "working_ledger.md:L18180"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/storage-plan.md:1389-1396",
+      "exact_items": [
+        "`Plans/storage-plan.md:1389-1396`"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [
+        "Entry"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0091",
+      "source_evidence": [
+        "working_ledger.md:L18181"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/Runtime_Artifacts_Panel.md:57-65",
+      "exact_items": [
+        "`Plans/Runtime_Artifacts_Panel.md:57-65`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Runtime_Artifacts_Panel.md"
+      ],
+      "heading_hints": [
+        "Entry"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0091",
+      "source_evidence": [
+        "working_ledger.md:L18182"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/Glossary.md:30-90",
+      "exact_items": [
+        "`Plans/Glossary.md:30-90`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Glossary.md"
+      ],
+      "heading_hints": [
+        "Entry"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0091",
+      "source_evidence": [
+        "working_ledger.md:L18183"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/Orchestrator_Page.md:209-230",
+      "exact_items": [
+        "`Plans/Orchestrator_Page.md:209-230`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md"
+      ],
+      "heading_hints": [
+        "Entry"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0091",
+      "source_evidence": [
+        "working_ledger.md:L18184"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/Orchestrator_Page.md:270-270",
+      "exact_items": [
+        "`Plans/Orchestrator_Page.md:270-270`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md"
+      ],
+      "heading_hints": [
+        "Entry"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0091",
+      "source_evidence": [
+        "working_ledger.md:L18185"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/assistant-chat-design.md:814-818",
+      "exact_items": [
+        "`Plans/assistant-chat-design.md:814-818`"
+      ],
+      "affected_doc_hints": [
+        "Plans/assistant-chat-design.md"
+      ],
+      "heading_hints": [
+        "Entry"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0091",
+      "source_evidence": [
+        "working_ledger.md:L18186"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/assistant-chat-design.md:1784-1784",
+      "exact_items": [
+        "`Plans/assistant-chat-design.md:1784-1784`"
+      ],
+      "affected_doc_hints": [
+        "Plans/assistant-chat-design.md"
+      ],
+      "heading_hints": [
+        "Entry"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0091",
+      "source_evidence": [
+        "working_ledger.md:L18187"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/UI_Command_Catalog.md:617-623",
+      "exact_items": [
+        "`Plans/UI_Command_Catalog.md:617-623`"
+      ],
+      "affected_doc_hints": [
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "heading_hints": [
+        "Entry"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0091",
+      "source_evidence": [
+        "working_ledger.md:L18188"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/WorktreeGitImprovement.md:142-144",
+      "exact_items": [
+        "`Plans/WorktreeGitImprovement.md:142-144`"
+      ],
+      "affected_doc_hints": [
+        "Plans/WorktreeGitImprovement.md"
+      ],
+      "heading_hints": [
+        "Entry"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0091",
+      "source_evidence": [
+        "working_ledger.md:L18189"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/GitHub_Integration.md:258-258",
+      "exact_items": [
+        "`Plans/GitHub_Integration.md:258-258`"
+      ],
+      "affected_doc_hints": [
+        "Plans/GitHub_Integration.md"
+      ],
+      "heading_hints": [
+        "Entry"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0091",
+      "source_evidence": [
+        "working_ledger.md:L18190"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/usage-feature.md:346-382",
+      "exact_items": [
+        "`Plans/usage-feature.md:346-382`"
+      ],
+      "affected_doc_hints": [
+        "Plans/usage-feature.md"
+      ],
+      "heading_hints": [
+        "Entry"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0091",
+      "source_evidence": [
+        "working_ledger.md:L18191"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "planning",
+      "exact_items": [
+        "The repaired blocker split held: no gap needed reclassification back to `planning`, and no resolved gap could be removed from the backlog."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Entry"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0091",
+      "source_evidence": [
+        "working_ledger.md:L18195"
+      ],
+      "notes": []
+    }
+  ],
+  "noise_items": [
+    {
+      "item": "- timestamp_utc: 2026-04-16T03:59:39.707Z",
+      "source_evidence": [
+        "working_ledger.md:L18024"
+      ],
+      "reason": "metric/status/count/family or process line without concrete obligation-grade evidence"
+    },
+    {
+      "item": "- timestamp_utc: 2026-04-16T04:12:47.793Z",
+      "source_evidence": [
+        "working_ledger.md:L18069"
+      ],
+      "reason": "metric/status/count/family or process line without concrete obligation-grade evidence"
+    },
+    {
+      "item": "- timestamp_utc: 2026-04-16T04:27:38.269Z",
+      "source_evidence": [
+        "working_ledger.md:L18109"
+      ],
+      "reason": "metric/status/count/family or process line without concrete obligation-grade evidence"
+    },
+    {
+      "item": "- timestamp_utc: 2026-04-16T21:43:01.694Z",
+      "source_evidence": [
+        "working_ledger.md:L18150"
+      ],
+      "reason": "metric/status/count/family or process line without concrete obligation-grade evidence"
+    },
+    {
+      "item": "- timestamp_utc: 2026-04-23T21:50:53Z",
+      "source_evidence": [
+        "working_ledger.md:L18199"
+      ],
+      "reason": "metric/status/count/family or process line without concrete obligation-grade evidence"
+    }
+  ],
+  "uncertain_items": [
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "Plans/WorktreeGitImprovement.md",
+      "exact_items": [
+        "This invocation kept the blocker-family count at eight, raised the affected-doc count to twenty by pulling `Plans/WorktreeGitImprovement.md` into the unresolved blocker set, and raised the underlying evidence count to fifty-four."
+      ],
+      "affected_doc_hints": [
+        "Plans/WorktreeGitImprovement.md"
+      ],
+      "heading_hints": [
+        "Entry"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0091",
+      "source_evidence": [
+        "working_ledger.md:L18064"
+      ],
+      "notes": [],
+      "reason": "open or unresolved wording may need later human classification"
+    }
+  ],
+  "covered_shard_id": "shard-0091"
+}

@@ -1,0 +1,382 @@
+{
+  "schema_id": "pm.transfer_coverage_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-032",
+  "row_groups": [
+    "rowgrp-0125",
+    "rowgrp-0126",
+    "rowgrp-0127",
+    "rowgrp-0128"
+  ],
+  "coverage_rows": [
+    {
+      "coverage_id": "cov-04541",
+      "source_obligation_ids": [
+        "obl-4283"
+      ],
+      "source_seed_ids": [
+        "seed-6167"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "canon_label": "Plans/*.md",
+      "row_type": "layout_blocker",
+      "path": "Plans/Prompt_Pipeline.md",
+      "heading_hint": "Do-not-forget details",
+      "status": "present",
+      "exact_items": [
+        "After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Prompt_Pipeline.md:138",
+        "Plans/Prompt_Pipeline.md:286",
+        "Plans/Prompt_Pipeline.md:16",
+        "Plans/Prompt_Pipeline.md:82",
+        "Plans/Prompt_Pipeline.md:505",
+        "Plans/Prompt_Pipeline.md:298",
+        "Plans/Prompt_Pipeline.md:7",
+        "Plans/Prompt_Pipeline.md:63"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-02737",
+      "source_obligation_ids": [
+        "obl-2656"
+      ],
+      "source_seed_ids": [
+        "seed-3326"
+      ],
+      "source_shard_ids": [
+        "shard-0050"
+      ],
+      "canon_label": "Plans/Prompt_Pipeline.md",
+      "row_type": "owner",
+      "path": "Plans/Prompt_Pipeline.md",
+      "heading_hint": "Recommended owner split",
+      "status": "present",
+      "exact_items": [
+        "`Plans/Prompt_Pipeline.md` should remain the owner of the effective-resolution field family."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Prompt_Pipeline.md:16",
+        "Plans/Prompt_Pipeline.md:176",
+        "Plans/Prompt_Pipeline.md:21",
+        "Plans/Prompt_Pipeline.md:104",
+        "Plans/Prompt_Pipeline.md:71"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-04279",
+      "source_obligation_ids": [
+        "obl-4125"
+      ],
+      "source_seed_ids": [
+        "seed-5745"
+      ],
+      "source_shard_ids": [
+        "shard-0078"
+      ],
+      "canon_label": "Plans/Prompt_Pipeline.md",
+      "row_type": "owner",
+      "path": "Plans/Prompt_Pipeline.md",
+      "heading_hint": "Key findings",
+      "status": "present",
+      "exact_items": [
+        "`Plans/Prompt_Pipeline.md` still uses tier-era scope in owner-level text:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Prompt_Pipeline.md:16",
+        "Plans/Prompt_Pipeline.md:12",
+        "Plans/Prompt_Pipeline.md:25"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-04651",
+      "source_obligation_ids": [
+        "obl-4366"
+      ],
+      "source_seed_ids": [
+        "seed-6300"
+      ],
+      "source_shard_ids": [
+        "shard-0084"
+      ],
+      "canon_label": "Plans/Prompt_Pipeline.md",
+      "row_type": "owner",
+      "path": "Plans/Prompt_Pipeline.md",
+      "heading_hint": "Key findings",
+      "status": "present",
+      "exact_items": [
+        "`Plans/Prompt_Pipeline.md` already uses the stronger canonical runtime field names:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Prompt_Pipeline.md:16",
+        "Plans/Prompt_Pipeline.md:12",
+        "Plans/Prompt_Pipeline.md:1",
+        "Plans/Prompt_Pipeline.md:13",
+        "Plans/Prompt_Pipeline.md:71"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-04266",
+      "source_obligation_ids": [
+        "obl-4112"
+      ],
+      "source_seed_ids": [
+        "seed-5723"
+      ],
+      "source_shard_ids": [
+        "shard-0078"
+      ],
+      "canon_label": "Plans/Prompt_Pipeline.md",
+      "row_type": "stale_retirement",
+      "path": "Plans/Prompt_Pipeline.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "`Plans/Prompt_Pipeline.md` is mostly aligned on field names, but it still carries stale scope wording:"
+      ],
+      "stale_tokens": [
+        "Plans/Prompt_Pipeline.md"
+      ],
+      "evidence": [
+        "Plans/Prompt_Pipeline.md:16"
+      ],
+      "required_action": "stale_retirement"
+    },
+    {
+      "coverage_id": "cov-00779",
+      "source_obligation_ids": [
+        "obl-0711"
+      ],
+      "source_seed_ids": [
+        "seed-0739",
+        "seed-6070"
+      ],
+      "source_shard_ids": [
+        "shard-0011",
+        "shard-0082"
+      ],
+      "canon_label": "Plans/Provider_OpenCode.md",
+      "row_type": "consumer",
+      "path": "Plans/Provider_OpenCode.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "`Plans/Provider_OpenCode.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Provider_OpenCode.md:required_terms_absent"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-01792",
+      "source_obligation_ids": [
+        "obl-1721"
+      ],
+      "source_seed_ids": [
+        "seed-1972",
+        "seed-2261",
+        "seed-2387",
+        "seed-2513"
+      ],
+      "source_shard_ids": [
+        "shard-0034",
+        "shard-0037",
+        "shard-0039",
+        "shard-0040"
+      ],
+      "canon_label": "Plans/Provider_OpenCode.md",
+      "row_type": "consumer",
+      "path": "Plans/Provider_OpenCode.md",
+      "heading_hint": "Targeted docs read",
+      "status": "partial",
+      "exact_items": [
+        "`Plans/Provider_OpenCode.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Provider_OpenCode.md:55",
+        "Plans/Provider_OpenCode.md:66"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-01804",
+      "source_obligation_ids": [
+        "obl-1732"
+      ],
+      "source_seed_ids": [
+        "seed-1989"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "canon_label": "Plans/Permissions_System.md",
+      "row_type": "consumer",
+      "path": "Plans/Provider_OpenCode.md",
+      "heading_hint": "Highest-risk impacted docs",
+      "status": "partial",
+      "exact_items": [
+        "`Plans/Permissions_System.md` + `Plans/Provider_OpenCode.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Provider_OpenCode.md:265",
+        "Plans/Provider_OpenCode.md:55"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-02020",
+      "source_obligation_ids": [
+        "obl-1943"
+      ],
+      "source_seed_ids": [
+        "seed-2277",
+        "seed-2401",
+        "seed-2530"
+      ],
+      "source_shard_ids": [
+        "shard-0037",
+        "shard-0039",
+        "shard-0041"
+      ],
+      "canon_label": "Plans/Provider_OpenCode.md",
+      "row_type": "consumer",
+      "path": "Plans/Provider_OpenCode.md",
+      "heading_hint": "Highest-risk impacted docs",
+      "status": "partial",
+      "exact_items": [
+        "`Plans/Provider_OpenCode.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Provider_OpenCode.md:55"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-03320",
+      "source_obligation_ids": [
+        "obl-3198"
+      ],
+      "source_seed_ids": [
+        "seed-4180"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "canon_label": "Plans/*.md",
+      "row_type": "consumer",
+      "path": "Plans/Provider_OpenCode.md",
+      "heading_hint": "Do-not-forget details",
+      "status": "present",
+      "exact_items": [
+        "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Provider_OpenCode.md:3",
+        "Plans/Provider_OpenCode.md:55",
+        "Plans/Provider_OpenCode.md:15",
+        "Plans/Provider_OpenCode.md:514",
+        "Plans/Provider_OpenCode.md:155",
+        "Plans/Provider_OpenCode.md:42",
+        "Plans/Provider_OpenCode.md:8"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-04254",
+      "source_obligation_ids": [
+        "obl-4100"
+      ],
+      "source_seed_ids": [
+        "seed-5707"
+      ],
+      "source_shard_ids": [
+        "shard-0077"
+      ],
+      "canon_label": "Plans/Provider_OpenCode.md",
+      "row_type": "consumer",
+      "path": "Plans/Provider_OpenCode.md",
+      "heading_hint": "Priority merge",
+      "status": "missing",
+      "exact_items": [
+        "`Plans/Provider_OpenCode.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Provider_OpenCode.md:required_terms_absent"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-04459",
+      "source_obligation_ids": [
+        "obl-4262"
+      ],
+      "source_seed_ids": [
+        "seed-6087"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "canon_label": "39",
+      "row_type": "consumer",
+      "path": "Plans/Provider_OpenCode.md",
+      "heading_hint": "Do-not-forget details",
+      "status": "present",
+      "exact_items": [
+        "Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Provider_OpenCode.md:479",
+        "Plans/Provider_OpenCode.md:239",
+        "Plans/Provider_OpenCode.md:3",
+        "Plans/Provider_OpenCode.md:55",
+        "Plans/Provider_OpenCode.md:155",
+        "Plans/Provider_OpenCode.md:8"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-04496",
+      "source_obligation_ids": [
+        "obl-4273"
+      ],
+      "source_seed_ids": [
+        "seed-6155"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "canon_label": "Plans/Provider_OpenCode.md",
+      "row_type": "consumer",
+      "path": "Plans/Provider_OpenCode.md",
+      "heading_hint": "Impacted docs",
+      "status": "partial",
+      "exact_items": [
+        "`Plans/Provider_OpenCode.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Provider_OpenCode.md:55"
+      ],
+      "required_action": "consumer_propagation"
+    }
+  ]
+}

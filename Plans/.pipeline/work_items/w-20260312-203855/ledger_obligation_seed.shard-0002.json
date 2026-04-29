@@ -1,1066 +1,227 @@
 {
-  "schema_id": "pm.ledger_obligation_seed_shard_result.v1",
+  "schema_id": "pm.ledger_obligation_seed_shard_result.v2",
   "work_id": "w-20260312-203855",
   "shard_id": "shard-0002",
   "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0002-L000201-L000400.md",
   "source_line_range": "L000201-L000400",
+  "covered_shard_id": "shard-0002",
   "seed_candidates": [
     {
-      "seed_type": "consumer",
-      "canon_label_hint": "alert levels should roughly separate into:",
+      "seed_type": "stale_retirement",
+      "canon_label_hint": "UI/backbone label normalization",
       "exact_items": [
-        "alert levels should roughly separate into:"
+        "Seam Overseer",
+        "Corroboration",
+        "Graph Patch",
+        "Recovery",
+        "User",
+        "External Resource"
       ],
       "affected_doc_hints": [],
+      "doc_resolution_status": "unknown_pending_doc_discovery",
       "heading_hints": [],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0002",
+      "stale_tokens": [
+        "Seam Overseer",
+        "Corroboration",
+        "Graph Patch",
+        "Recovery",
+        "User",
+        "External Resource"
+      ],
       "source_evidence": [
-        "working_ledger.md:L207-L208"
+        "working_ledger.md:L201-L206"
       ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Action Required",
-      "exact_items": [
-        "`Action Required`"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0002",
-      "source_evidence": [
-        "working_ledger.md:L212"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "chat thread = only for situations that actually need user resolution/decision, not general warni",
-      "exact_items": [
-        "chat thread = only for situations that actually need user resolution/decision, not general warnings"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0002",
-      "source_evidence": [
-        "working_ledger.md:L215"
-      ],
-      "notes": []
+      "notes": [
+        "Returned uncertain whether labels are stale or canonical; retained as uncertain-adjacent candidate."
+      ]
     },
     {
       "seed_type": "owner",
-      "canon_label_hint": "canonical event families should remain stable:",
+      "canon_label_hint": "concern record carry-through",
       "exact_items": [
-        "canonical event families should remain stable:"
+        "identity",
+        "scope",
+        "severity",
+        "category",
+        "owner",
+        "lifecycle state",
+        "meaning/summary",
+        "linkage to evidence/artifacts/history/source records",
+        "visibility/attention flags"
       ],
       "affected_doc_hints": [],
+      "doc_resolution_status": "unknown_pending_doc_discovery",
       "heading_hints": [],
       "stale_tokens": [],
-      "source_shard_id": "shard-0002",
       "source_evidence": [
-        "working_ledger.md:L216-L217"
+        "working_ledger.md:L260-L268"
       ],
       "notes": []
     },
     {
       "seed_type": "consumer",
-      "canon_label_hint": "operator visibility should separate:",
+      "canon_label_hint": "orchestrator widget projection fields",
       "exact_items": [
-        "operator visibility should separate:"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0002",
-      "source_evidence": [
-        "working_ledger.md:L226"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "chat-thread-worthy action-required cases",
-      "exact_items": [
-        "chat-thread-worthy action-required cases"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0002",
-      "source_evidence": [
-        "working_ledger.md:L230"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "restore required / failed / completed",
-      "exact_items": [
-        "restore required / failed / completed"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0002",
-      "source_evidence": [
-        "working_ledger.md:L235"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "layout_blocker",
-      "canon_label_hint": "Tab-badge direction now clarified:",
-      "exact_items": [
-        "Tab-badge direction now clarified:"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0002",
-      "source_evidence": [
-        "working_ledger.md:L237"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "badges should stay sparse and purposeful",
-      "exact_items": [
-        "badges should stay sparse and purposeful"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0002",
-      "source_evidence": [
-        "working_ledger.md:L237-L238"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Progress",
-      "exact_items": [
-        "`Progress` badge should represent meaningful attention/action-required count"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0002",
-      "source_evidence": [
-        "working_ledger.md:L237-L239"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "other tabs should prefer targeted counts or simple dot-badges rather than noisy unread-like coun",
-      "exact_items": [
-        "other tabs should prefer targeted counts or simple dot-badges rather than noisy unread-like counters"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0002",
-      "source_evidence": [
-        "working_ledger.md:L240"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "future settings should use a simple policy-level control, not per-alert micro-configuration",
-      "exact_items": [
-        "future settings should use a simple policy-level control, not per-alert micro-configuration"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0002",
-      "source_evidence": [
-        "working_ledger.md:L248"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "active blockers must not be dismissible in a way that makes the system appear unblocked",
-      "exact_items": [
-        "active blockers must not be dismissible in a way that makes the system appear unblocked"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0002",
-      "source_evidence": [
-        "working_ledger.md:L252"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "acknowledgment should reduce operational noise while preserving traceability",
-      "exact_items": [
-        "acknowledgment should reduce operational noise while preserving traceability"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0002",
-      "source_evidence": [
-        "working_ledger.md:L256"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "blockers requiring real action must not be acknowledgeable in place of resolution",
-      "exact_items": [
-        "blockers requiring real action must not be acknowledgeable in place of resolution"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0002",
-      "source_evidence": [
-        "working_ledger.md:L257"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "concern",
-      "exact_items": [
-        "`concern` should be a first-class record, not just a field buried in review/alert logic"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0002",
-      "source_evidence": [
-        "working_ledger.md:L258-L259"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "concern records should carry:",
-      "exact_items": [
-        "concern records should carry:"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0002",
-      "source_evidence": [
-        "working_ledger.md:L258-L260"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "owner",
-      "canon_label_hint": "owner",
-      "exact_items": [
-        "owner"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0002",
-      "source_evidence": [
-        "working_ledger.md:L265"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "owner",
-      "canon_label_hint": "canonical concerns should be created by:",
-      "exact_items": [
-        "canonical concerns should be created by:"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0002",
-      "source_evidence": [
-        "working_ledger.md:L275-L276"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "owner",
-      "canon_label_hint": "workers may nominate findings but should not mint canonical concerns directly",
-      "exact_items": [
-        "workers may nominate findings but should not mint canonical concerns directly"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0002",
-      "source_evidence": [
-        "working_ledger.md:L282"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "concern records should update/escalate/downgrade when the same underlying issue persists rather ",
-      "exact_items": [
-        "concern records should update/escalate/downgrade when the same underlying issue persists rather than duplicating endlessly"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0002",
-      "source_evidence": [
-        "working_ledger.md:L283"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "resolution must track underlying truth changes, not mere presentation changes",
-      "exact_items": [
-        "resolution must track underlying truth changes, not mere presentation changes"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0002",
-      "source_evidence": [
-        "working_ledger.md:L284"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Shared concern projection rule now clarified:",
-      "exact_items": [
-        "Shared concern projection rule now clarified:"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0002",
-      "source_evidence": [
-        "working_ledger.md:L285"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "all major surfaces should project the same concern model rather than inventing local versions",
-      "exact_items": [
-        "all major surfaces should project the same concern model rather than inventing local versions"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0002",
-      "source_evidence": [
-        "working_ledger.md:L285-L286"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Progress",
-      "exact_items": [
-        "`Progress` = operational attention projection"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0002",
-      "source_evidence": [
-        "working_ledger.md:L285-L287"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Seams",
-      "exact_items": [
-        "`Seams` = integration/governance projection"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0002",
-      "source_evidence": [
-        "working_ledger.md:L288"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Evidence",
-      "exact_items": [
-        "`Evidence` = proof-backed concern projection"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0002",
-      "source_evidence": [
-        "working_ledger.md:L289"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "History",
-      "exact_items": [
-        "`History` = concern lifecycle timeline projection"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0002",
-      "source_evidence": [
-        "working_ledger.md:L290"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Ledger",
-      "exact_items": [
-        "`Ledger` = exact structured concern-record projection"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0002",
-      "source_evidence": [
-        "working_ledger.md:L291"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "user-facing concern actions should stay narrow:",
-      "exact_items": [
-        "user-facing concern actions should stay narrow:"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0002",
-      "source_evidence": [
-        "working_ledger.md:L292-L293"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "layout_blocker",
-      "canon_label_hint": "runtime/overseer actions should remain mostly non-generic GUI buttons:",
-      "exact_items": [
-        "runtime/overseer actions should remain mostly non-generic GUI buttons:"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0002",
-      "source_evidence": [
-        "working_ledger.md:L298"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "layout_blocker",
-      "canon_label_hint": "route to remediation",
-      "exact_items": [
-        "route to remediation"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0002",
-      "source_evidence": [
-        "working_ledger.md:L300"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "owner",
-      "canon_label_hint": "severity/owner mutation",
-      "exact_items": [
-        "severity/owner mutation"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0002",
-      "source_evidence": [
-        "working_ledger.md:L302"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "side inspectors should remain summary/action-light",
-      "exact_items": [
-        "side inspectors should remain summary/action-light"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0002",
-      "source_evidence": [
-        "working_ledger.md:L305-L306"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "orchestrator widgets should consume stable shared projections rather than raw event streams or b",
-      "exact_items": [
-        "orchestrator widgets should consume stable shared projections rather than raw event streams or bespoke queries"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0002",
-      "source_evidence": [
-        "working_ledger.md:L308-L309"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "widget shell needs:",
-      "exact_items": [
-        "widget shell needs:"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0002",
-      "source_evidence": [
-        "working_ledger.md:L308-L310"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "projection ref",
-      "exact_items": [
+        "widget identity/type",
+        "scope",
+        "filter/sort/display config",
         "projection ref"
       ],
       "affected_doc_hints": [],
+      "doc_resolution_status": "unknown_pending_doc_discovery",
       "heading_hints": [],
       "stale_tokens": [],
-      "source_shard_id": "shard-0002",
       "source_evidence": [
-        "working_ledger.md:L314"
+        "working_ledger.md:L308-L315"
       ],
       "notes": []
     },
     {
       "seed_type": "consumer",
-      "canon_label_hint": "Required orchestrator projection families now identified:",
+      "canon_label_hint": "orchestrator projection families",
       "exact_items": [
-        "Required orchestrator projection families now identified:"
+        "Run Summary",
+        "Seam Summary",
+        "Package Summary",
+        "Node Summary",
+        "Promotion Summary",
+        "Lane / Worktree Summary",
+        "Concern Summary",
+        "Account / Usage Pressure",
+        "Recent Major Events",
+        "Corroboration Summary",
+        "Recovery Summary",
+        "Overseer Activity"
       ],
       "affected_doc_hints": [],
+      "doc_resolution_status": "unknown_pending_doc_discovery",
       "heading_hints": [],
       "stale_tokens": [],
-      "source_shard_id": "shard-0002",
       "source_evidence": [
-        "working_ledger.md:L315"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Projection reuse split clarified:",
-      "exact_items": [
-        "Projection reuse split clarified:"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0002",
-      "source_evidence": [
-        "working_ledger.md:L328"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Run Summary",
-      "exact_items": [
-        "`Run Summary`, `Seam Summary`, `Concern Summary`, `Account / Usage Pressure`, `Recent Major Events` should be broadly reusable across Orchestrator / Dashboard / Projects"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0002",
-      "source_evidence": [
-        "working_ledger.md:L328-L329"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Projection freshness direction now clarified:",
-      "exact_items": [
-        "Projection freshness direction now clarified:"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0002",
-      "source_evidence": [
-        "working_ledger.md:L331"
+        "working_ledger.md:L315-L327"
       ],
       "notes": []
     },
     {
       "seed_type": "layout_blocker",
-      "canon_label_hint": "manual refresh / tab re-open refresh remain secondary",
+      "canon_label_hint": "degraded projection trust/action gates",
       "exact_items": [
-        "manual refresh / tab re-open refresh remain secondary"
+        "fresh-enough projection state gate",
+        "Ledger and direct record views as trust anchor",
+        "direct record action support only for current/generation-matched records"
       ],
       "affected_doc_hints": [],
+      "doc_resolution_status": "layout_target_in_notes",
       "heading_hints": [],
       "stale_tokens": [],
-      "source_shard_id": "shard-0002",
       "source_evidence": [
-        "working_ledger.md:L331-L333"
+        "working_ledger.md:L342-L352"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "direct-record actionability disclosure",
+      "exact_items": [
+        "currentness",
+        "generation match",
+        "superseded yes/no",
+        "actionable yes/no"
+      ],
+      "affected_doc_hints": [],
+      "doc_resolution_status": "layout_target_in_notes",
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L359-L363"
       ],
       "notes": []
     },
     {
       "seed_type": "consumer",
-      "canon_label_hint": "projection health states should conceptually include:",
+      "canon_label_hint": "settings categorization hierarchy",
       "exact_items": [
-        "projection health states should conceptually include:"
+        "Providers & Models",
+        "Execution Identity",
+        "Governance",
+        "Workers",
+        "Recovery",
+        "HITL",
+        "App / Global",
+        "Project",
+        "Seam",
+        "Package",
+        "Node",
+        "Actor / Role",
+        "Runtime only"
       ],
       "affected_doc_hints": [],
+      "doc_resolution_status": "unknown_pending_doc_discovery",
       "heading_hints": [],
       "stale_tokens": [],
-      "source_shard_id": "shard-0002",
       "source_evidence": [
-        "working_ledger.md:L334"
+        "working_ledger.md:L381-L397"
       ],
       "notes": []
     },
     {
       "seed_type": "stale_retirement",
-      "canon_label_hint": "stale",
+      "canon_label_hint": "usage redesign out-of-scope marker",
       "exact_items": [
-        "`stale`"
+        "full Usage-page redesign is intentionally out of scope for this thread"
       ],
       "affected_doc_hints": [],
-      "heading_hints": [],
-      "stale_tokens": [
-        "stale"
-      ],
-      "source_shard_id": "shard-0002",
-      "source_evidence": [
-        "working_ledger.md:L337"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Projection degradation policy is clearer:",
-      "exact_items": [
-        "Projection degradation policy is clearer:"
-      ],
-      "affected_doc_hints": [],
+      "doc_resolution_status": "global_or_cross_cutting",
       "heading_hints": [],
       "stale_tokens": [],
-      "source_shard_id": "shard-0002",
       "source_evidence": [
-        "working_ledger.md:L337-L339"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "projection health becomes an operational concern when it undermines trust in blocked/promotion/r",
-      "exact_items": [
-        "projection health becomes an operational concern when it undermines trust in blocked/promotion/recovery/patch/account-pressure truth"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0002",
-      "source_evidence": [
-        "working_ledger.md:L340"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "at that point it should mint a real concern rather than staying a silent widget problem",
-      "exact_items": [
-        "at that point it should mint a real concern rather than staying a silent widget problem"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0002",
-      "source_evidence": [
-        "working_ledger.md:L341"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "actions that change execution/promotion/recovery/approval truth require fresh-enough projection ",
-      "exact_items": [
-        "actions that change execution/promotion/recovery/approval truth require fresh-enough projection state"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0002",
-      "source_evidence": [
-        "working_ledger.md:L342-L343"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "layout_blocker",
-      "canon_label_hint": "UI should explain gating inline:",
-      "exact_items": [
-        "UI should explain gating inline:"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0002",
-      "source_evidence": [
-        "working_ledger.md:L345"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "stale_retirement",
-      "canon_label_hint": "what is stale",
-      "exact_items": [
-        "what is stale"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0002",
-      "source_evidence": [
-        "working_ledger.md:L346"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "stale_retirement",
-      "canon_label_hint": "Fallback path under stale projections is now clearer:",
-      "exact_items": [
-        "Fallback path under stale projections is now clearer:"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0002",
-      "source_evidence": [
-        "working_ledger.md:L349"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "degrade from summary/projection surfaces to direct record-backed inspection",
-      "exact_items": [
-        "degrade from summary/projection surfaces to direct record-backed inspection"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0002",
-      "source_evidence": [
-        "working_ledger.md:L349-L350"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "layout_blocker",
-      "canon_label_hint": "Ledger",
-      "exact_items": [
-        "`Ledger` and direct record views become the trust anchor under degraded projection health"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0002",
-      "source_evidence": [
-        "working_ledger.md:L349-L351"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "only certain current/generation-matched direct records should support action",
-      "exact_items": [
-        "only certain current/generation-matched direct records should support action"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0002",
-      "source_evidence": [
-        "working_ledger.md:L352"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "direct record views that allow action should explicitly show:",
-      "exact_items": [
-        "direct record views that allow action should explicitly show:"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0002",
-      "source_evidence": [
-        "working_ledger.md:L359"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "layout_blocker",
-      "canon_label_hint": "each tab needs role-appropriate filters",
-      "exact_items": [
-        "each tab needs role-appropriate filters"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0002",
-      "source_evidence": [
-        "working_ledger.md:L364-L365"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "layout_blocker",
-      "canon_label_hint": "Orchestrator should support saved views (at least per project) for tabs/filters/sort/grouping/wi",
-      "exact_items": [
-        "Orchestrator should support saved views (at least per project) for tabs/filters/sort/grouping/widget layout"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0002",
-      "source_evidence": [
-        "working_ledger.md:L364-L366"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "layout_blocker",
-      "canon_label_hint": "Projects page = multi-project summary/management surface, richer than a tiny status list but sti",
-      "exact_items": [
-        "Projects page = multi-project summary/management surface, richer than a tiny status list but still summary-first"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0002",
-      "source_evidence": [
-        "working_ledger.md:L374"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "owner",
-      "canon_label_hint": "Project cards should show compact orchestrator/attention/usage pressure state and one primary bl",
-      "exact_items": [
-        "Project cards should show compact orchestrator/attention/usage pressure state and one primary blocked owner/reason when blocked"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0002",
-      "source_evidence": [
-        "working_ledger.md:L375"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "layout_blocker",
-      "canon_label_hint": "Usage/multi-account surface split is now clearer:",
-      "exact_items": [
-        "Usage/multi-account surface split is now clearer:"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0002",
-      "source_evidence": [
-        "working_ledger.md:L375-L376"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "layout_blocker",
-      "canon_label_hint": "Projects page shows coarse account/usage pressure summary only",
-      "exact_items": [
-        "Projects page shows coarse account/usage pressure summary only"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0002",
-      "source_evidence": [
-        "working_ledger.md:L375-L377"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "layout_blocker",
-      "canon_label_hint": "Usage page needs account-level breakdown, role usage view, and switch history, but full Usage-pa",
-      "exact_items": [
-        "Usage page needs account-level breakdown, role usage view, and switch history, but full Usage-page redesign is intentionally out of scope for this thread"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0002",
-      "source_evidence": [
-        "working_ledger.md:L380"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "owner",
-      "canon_label_hint": "Project",
-      "exact_items": [
-        "`Project` = main execution policy owner"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0002",
-      "source_evidence": [
-        "working_ledger.md:L390-L392"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "layout_blocker",
-      "canon_label_hint": "UI should explicitly show:",
-      "exact_items": [
-        "UI should explicitly show:"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0002",
-      "source_evidence": [
-        "working_ledger.md:L398-L399"
+        "working_ledger.md:L376-L380"
       ],
       "notes": []
     }
   ],
   "noise_items": [
     {
-      "item": "- Dashboard = summary/urgency",
-      "source_evidence": [
-        "working_ledger.md:L213"
-      ],
-      "reason": "metric/status/count/family or process line without concrete obligation-grade evidence"
+      "source_evidence": "working_ledger.md:L207-L215",
+      "item": "alert level / dashboard / orchestrator / chat-thread direction bullets"
     },
     {
-      "item": "- recently resolved major items may linger briefly in summary surfaces",
-      "source_evidence": [
-        "working_ledger.md:L244"
-      ],
-      "reason": "metric/status/count/family or process line without concrete obligation-grade evidence"
+      "source_evidence": "working_ledger.md:L217-L240",
+      "item": "event family / visibility / badge sparse-count direction bullets"
     },
     {
-      "item": "- meaning/summary",
-      "source_evidence": [
-        "working_ledger.md:L267"
-      ],
-      "reason": "metric/status/count/family or process line without concrete obligation-grade evidence"
+      "source_evidence": "working_ledger.md:L241-L257",
+      "item": "condition-aging / resolved / dismissed / acknowledged semantics"
     },
     {
-      "item": "- Run Summary",
-      "source_evidence": [
-        "working_ledger.md:L316"
-      ],
-      "reason": "metric/status/count/family or process line without concrete obligation-grade evidence"
+      "source_evidence": "working_ledger.md:L275-L304",
+      "item": "concern creation / projection / action-model direction bullets"
     },
     {
-      "item": "- Seam Summary",
-      "source_evidence": [
-        "working_ledger.md:L317"
-      ],
-      "reason": "metric/status/count/family or process line without concrete obligation-grade evidence"
+      "source_evidence": "working_ledger.md:L328-L341",
+      "item": "projection freshness / degradation policy bullets"
     },
     {
-      "item": "- Package Summary",
-      "source_evidence": [
-        "working_ledger.md:L318"
-      ],
-      "reason": "metric/status/count/family or process line without concrete obligation-grade evidence"
+      "source_evidence": "working_ledger.md:L364-L370",
+      "item": "sorting/grouping defaults bullets"
     },
     {
-      "item": "- Node Summary",
-      "source_evidence": [
-        "working_ledger.md:L319"
-      ],
-      "reason": "metric/status/count/family or process line without concrete obligation-grade evidence"
-    },
-    {
-      "item": "- Promotion Summary",
-      "source_evidence": [
-        "working_ledger.md:L320"
-      ],
-      "reason": "metric/status/count/family or process line without concrete obligation-grade evidence"
-    },
-    {
-      "item": "- Lane / Worktree Summary",
-      "source_evidence": [
-        "working_ledger.md:L321"
-      ],
-      "reason": "metric/status/count/family or process line without concrete obligation-grade evidence"
-    },
-    {
-      "item": "- Concern Summary",
-      "source_evidence": [
-        "working_ledger.md:L322"
-      ],
-      "reason": "metric/status/count/family or process line without concrete obligation-grade evidence"
-    },
-    {
-      "item": "- Corroboration Summary",
-      "source_evidence": [
-        "working_ledger.md:L325"
-      ],
-      "reason": "metric/status/count/family or process line without concrete obligation-grade evidence"
-    },
-    {
-      "item": "- Recovery Summary",
-      "source_evidence": [
-        "working_ledger.md:L326"
-      ],
-      "reason": "metric/status/count/family or process line without concrete obligation-grade evidence"
-    },
-    {
-      "item": "- Dashboard = summary/urgency/entry points",
-      "source_evidence": [
-        "working_ledger.md:L372"
-      ],
-      "reason": "metric/status/count/family or process line without concrete obligation-grade evidence"
+      "source_evidence": "working_ledger.md:L371-L400",
+      "item": "dashboard/projects/orchestrator split and override-display direction bullets"
     }
   ],
-  "uncertain_items": [],
-  "covered_shard_id": "shard-0002"
+  "uncertain_items": [
+    {
+      "source_evidence": "working_ledger.md:L201-L206",
+      "item": "whether the listed labels are stale tokens to retire or canonical headings to preserve"
+    },
+    {
+      "source_evidence": "working_ledger.md:L308-L327",
+      "item": "whether projection family names map to existing Plans/** doc sections or only future surfaces"
+    },
+    {
+      "source_evidence": "working_ledger.md:L381-L397",
+      "item": "whether settings hierarchy names are canonical headings or draft groupings"
+    }
+  ]
 }

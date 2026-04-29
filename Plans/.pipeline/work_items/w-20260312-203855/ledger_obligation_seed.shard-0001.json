@@ -1,961 +1,125 @@
 {
-  "schema_id": "pm.ledger_obligation_seed_shard_result.v1",
+  "schema_id": "pm.ledger_obligation_seed_shard_result.v2",
   "work_id": "w-20260312-203855",
   "shard_id": "shard-0001",
   "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0001-L000001-L000200.md",
   "source_line_range": "L000001-L000200",
   "seed_candidates": [
     {
-      "seed_type": "stale_retirement",
-      "canon_label_hint": "Topic / Scope",
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "tab-first orchestrator shell",
       "exact_items": [
-        "Orchestrator rewrite transfer-fidelity audit, legacy-canon cleanup readiness, and reconciliation prep."
+        "Orchestrator should remain tab-first, not widget-first",
+        "Progress remains the first tab and is the tab that contains orchestrator widgets",
+        "existing Tiers tab should be replaced by a seam/package-oriented tab (name still open; likely Seams or equivalent)",
+        "Node Graph Display tab remains, but must evolve to show graph-patch lineage",
+        "Evidence tab remains but needs major redesign",
+        "History and Ledger both remain candidates, but merging them is on the table"
       ],
       "affected_doc_hints": [],
+      "doc_resolution_status": "global_or_cross_cutting",
       "heading_hints": [
-        "Topic / Scope"
+        "Key Facts and Findings"
       ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0001",
+      "stale_tokens": [
+        "Tiers",
+        "Node Graph Display"
+      ],
       "source_evidence": [
-        "working_ledger.md:L10"
+        "working_ledger.md:L29-L40",
+        "working_ledger.md:L46-L58",
+        "working_ledger.md:L59-L74"
       ],
-      "notes": []
+      "notes": [
+        "Canonical layout blocker spans multiple tabs and naming/structure decisions."
+      ]
     },
     {
       "seed_type": "consumer",
-      "canon_label_hint": "Topic / Scope",
+      "canon_label_hint": "Progress widget drill targets",
       "exact_items": [
-        "ledger-to-plan transfer fidelity"
+        "Default Progress-widget drill targets were made deterministic:",
+        "Run Status -> History",
+        "Current Activity -> Node Graph",
+        "Attention / Blockers -> Node Graph",
+        "Seam Health -> Seams",
+        "Package Activity -> Seams",
+        "Promotion Queue -> Ledger",
+        "Worktree Lanes -> Node Graph",
+        "Account / Usage Pressure -> Usage",
+        "Recent Major Events -> History",
+        "Overseer Activity -> Seams",
+        "Corroboration Queue -> Evidence",
+        "Recovery State -> Evidence",
+        "Throughput / Capacity -> History"
       ],
       "affected_doc_hints": [],
+      "doc_resolution_status": "global_or_cross_cutting",
       "heading_hints": [
-        "Topic / Scope"
+        "Key Facts and Findings"
       ],
       "stale_tokens": [],
-      "source_shard_id": "shard-0001",
       "source_evidence": [
-        "working_ledger.md:L12"
+        "working_ledger.md:L92-L105"
       ],
-      "notes": []
-    },
-    {
-      "seed_type": "stale_retirement",
-      "canon_label_hint": "Topic / Scope",
-      "exact_items": [
-        "legacy canon / same-file supersession risk"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Topic / Scope"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0001",
-      "source_evidence": [
-        "working_ledger.md:L14"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Objective",
-      "exact_items": [
-        "Preserve durable execution memory for the completed audit, blocked fidelity findings, and late-session handoffs."
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Objective"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0001",
-      "source_evidence": [
-        "working_ledger.md:L18"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "stale_retirement",
-      "canon_label_hint": "Objective",
-      "exact_items": [
-        "Keep the missed-transfer findings, legacy-canon hotspots, and recovery posture recoverable without relying on chat history."
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Objective"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0001",
-      "source_evidence": [
-        "working_ledger.md:L19"
-      ],
-      "notes": []
+      "notes": [
+        "Consumer carry-through is explicit via deterministic drill-target mappings."
+      ]
     },
     {
       "seed_type": "owner",
-      "canon_label_hint": "Objective",
+      "canon_label_hint": "blocked ownership labels",
       "exact_items": [
-        "Support owner-first fidelity recovery from the existing packetized work item."
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Objective"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0001",
-      "source_evidence": [
-        "working_ledger.md:L20"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "owner",
-      "canon_label_hint": "Constraints / Non-Goals",
-      "exact_items": [
-        "Ledger is execution memory only; it is not canonical and must not be cited in planning docs."
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Constraints / Non-Goals"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0001",
-      "source_evidence": [
-        "working_ledger.md:L20-L23"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "owner",
-      "canon_label_hint": "Constraints / Non-Goals",
-      "exact_items": [
-        "Do not treat this file as packet content, reconciliation text, or canonical cleanup output."
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Constraints / Non-Goals"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0001",
-      "source_evidence": [
-        "working_ledger.md:L25"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "layout_blocker",
-      "canon_label_hint": "Key Facts and Findings",
-      "exact_items": [
-        "Orchestrator page shell direction clarified by user:"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Key Facts and Findings"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0001",
-      "source_evidence": [
-        "working_ledger.md:L29"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "layout_blocker",
-      "canon_label_hint": "Key Facts and Findings",
-      "exact_items": [
-        "Orchestrator should remain tab-first, not widget-first"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Key Facts and Findings"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0001",
-      "source_evidence": [
-        "working_ledger.md:L29-L30"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "layout_blocker",
-      "canon_label_hint": "Progress",
-      "exact_items": [
-        "`Progress` remains the first tab and is the tab that contains orchestrator widgets"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Key Facts and Findings"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0001",
-      "source_evidence": [
-        "working_ledger.md:L29-L31"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "layout_blocker",
-      "canon_label_hint": "Tiers",
-      "exact_items": [
-        "existing `Tiers` tab should be replaced by a seam/package-oriented tab (name still open; likely `Seams` or equivalent)"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Key Facts and Findings"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0001",
-      "source_evidence": [
-        "working_ledger.md:L32"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "layout_blocker",
-      "canon_label_hint": "Node Graph Display",
-      "exact_items": [
-        "`Node Graph Display` tab remains, but must evolve to show graph-patch lineage:"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Key Facts and Findings"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0001",
-      "source_evidence": [
-        "working_ledger.md:L33"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "layout_blocker",
-      "canon_label_hint": "Evidence",
-      "exact_items": [
-        "`Evidence` tab remains but needs major redesign"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Key Facts and Findings"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0001",
-      "source_evidence": [
-        "working_ledger.md:L38"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Key Facts and Findings",
-      "exact_items": [
-        "all Orchestrator tabs need substantial redesign around the new model"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Key Facts and Findings"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0001",
-      "source_evidence": [
-        "working_ledger.md:L40"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "layout_blocker",
-      "canon_label_hint": "Progress",
-      "exact_items": [
-        "Orchestrator widgets live inside the `Progress` tab"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Key Facts and Findings"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0001",
-      "source_evidence": [
-        "working_ledger.md:L41-L42"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "layout_blocker",
-      "canon_label_hint": "Key Facts and Findings",
-      "exact_items": [
-        "non-Orchestrator widgets should not be hostable on the Orchestrator page"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Key Facts and Findings"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0001",
-      "source_evidence": [
-        "working_ledger.md:L44"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "layout_blocker",
-      "canon_label_hint": "Key Facts and Findings",
-      "exact_items": [
-        "widgets remain resizable/customizable, but tab-first structure remains primary"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Key Facts and Findings"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0001",
-      "source_evidence": [
-        "working_ledger.md:L45"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "layout_blocker",
-      "canon_label_hint": "Progress",
-      "exact_items": [
-        "`Progress` already functioned as the widget-hosting operational tab"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Key Facts and Findings"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0001",
-      "source_evidence": [
-        "working_ledger.md:L54"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "layout_blocker",
-      "canon_label_hint": "Key Facts and Findings",
-      "exact_items": [
-        "preserve tab-first structure"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Key Facts and Findings"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0001",
-      "source_evidence": [
-        "working_ledger.md:L55-L56"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "layout_blocker",
-      "canon_label_hint": "Tiers",
-      "exact_items": [
-        "replace `Tiers` with a seam/package-oriented tab"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Key Facts and Findings"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0001",
-      "source_evidence": [
-        "working_ledger.md:L55-L57"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "layout_blocker",
-      "canon_label_hint": "Key Facts and Findings",
-      "exact_items": [
-        "Orchestrator tab redesign direction is now materially clearer:"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Key Facts and Findings"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0001",
-      "source_evidence": [
-        "working_ledger.md:L59"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "layout_blocker",
-      "canon_label_hint": "Progress",
-      "exact_items": [
-        "`Progress` is the widget-hosting operational summary tab"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Key Facts and Findings"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0001",
-      "source_evidence": [
-        "working_ledger.md:L67"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Evidence",
-      "exact_items": [
-        "`Evidence` should use separate panes:"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Key Facts and Findings"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0001",
-      "source_evidence": [
-        "working_ledger.md:L69"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Key Facts and Findings",
-      "exact_items": [
-        "artifact pane"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Key Facts and Findings"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0001",
-      "source_evidence": [
-        "working_ledger.md:L71"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "History",
-      "exact_items": [
-        "`History` and `Ledger` should remain separate:"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Key Facts and Findings"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0001",
-      "source_evidence": [
-        "working_ledger.md:L72"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "layout_blocker",
-      "canon_label_hint": "Key Facts and Findings",
-      "exact_items": [
-        "Progress-tab widget direction is now firmer:"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Key Facts and Findings"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0001",
-      "source_evidence": [
-        "working_ledger.md:L75"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "layout_blocker",
-      "canon_label_hint": "Key Facts and Findings",
-      "exact_items": [
-        "Seams-tab structure direction is now clearer:"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Key Facts and Findings"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0001",
-      "source_evidence": [
-        "working_ledger.md:L106"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Key Facts and Findings",
-      "exact_items": [
-        "nodes should appear as summaries/problem drill-ins rather than the default list shape"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Key Facts and Findings"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0001",
-      "source_evidence": [
-        "working_ledger.md:L109"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "layout_blocker",
-      "canon_label_hint": "Key Facts and Findings",
-      "exact_items": [
-        "Seams detail panel should emphasize governance/completion/integration truth rather than raw node execution churn"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Key Facts and Findings"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0001",
-      "source_evidence": [
-        "working_ledger.md:L110"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "layout_blocker",
-      "canon_label_hint": "Key Facts and Findings",
-      "exact_items": [
-        "Node Graph tab direction was extended beyond lineage:"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Key Facts and Findings"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0001",
-      "source_evidence": [
-        "working_ledger.md:L111"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Key Facts and Findings",
-      "exact_items": [
-        "detail inspector should expose:"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Key Facts and Findings"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0001",
-      "source_evidence": [
-        "working_ledger.md:L111-L113"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "layout_blocker",
-      "canon_label_hint": "Key Facts and Findings",
-      "exact_items": [
-        "clicking evidence/artifact links in graph detail should deep-link into the Evidence tab with target selection/filter applied"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Key Facts and Findings"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0001",
-      "source_evidence": [
-        "working_ledger.md:L120"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "layout_blocker",
-      "canon_label_hint": "Key Facts and Findings",
-      "exact_items": [
-        "Evidence tab redesign direction is now much sharper:"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Key Facts and Findings"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0001",
-      "source_evidence": [
-        "working_ledger.md:L121"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Key Facts and Findings",
-      "exact_items": [
-        "evidence and artifacts should remain linked bidirectionally"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Key Facts and Findings"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0001",
-      "source_evidence": [
-        "working_ledger.md:L125"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Key Facts and Findings",
-      "exact_items": [
-        "right-side inspectors should stay summary/action oriented"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Key Facts and Findings"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0001",
-      "source_evidence": [
-        "working_ledger.md:L130-L131"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Key Facts and Findings",
-      "exact_items": [
-        "dense objects should open full-record views"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Key Facts and Findings"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0001",
-      "source_evidence": [
-        "working_ledger.md:L130-L132"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Key Facts and Findings",
-      "exact_items": [
-        "attempt handoff artifacts"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Key Facts and Findings"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0001",
-      "source_evidence": [
-        "working_ledger.md:L134"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "layout_blocker",
-      "canon_label_hint": "Key Facts and Findings",
-      "exact_items": [
-        "Cross-tab navigation is now treated as a real contract:"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Key Facts and Findings"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0001",
-      "source_evidence": [
-        "working_ledger.md:L141"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "layout_blocker",
-      "canon_label_hint": "Key Facts and Findings",
-      "exact_items": [
-        "object/event focus should deep-link across Progress / Seams / Node Graph / Evidence / History / Ledger"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Key Facts and Findings"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0001",
-      "source_evidence": [
-        "working_ledger.md:L142"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Key Facts and Findings",
-      "exact_items": [
-        "deep links should carry selection/filter/focus context, not merely switch tabs"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Key Facts and Findings"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0001",
-      "source_evidence": [
-        "working_ledger.md:L143"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Seams",
-      "exact_items": [
-        "`Seams` and `Node Graph` should share focus context without hyperactive live-sync"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Key Facts and Findings"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0001",
-      "source_evidence": [
-        "working_ledger.md:L144"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "owner",
-      "canon_label_hint": "Key Facts and Findings",
-      "exact_items": [
-        "prefer precise canonical terms in docs/runtime model"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Key Facts and Findings"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0001",
-      "source_evidence": [
-        "working_ledger.md:L145-L146"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "layout_blocker",
-      "canon_label_hint": "Key Facts and Findings",
-      "exact_items": [
-        "likely canonical tab/object labels:"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Key Facts and Findings"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0001",
-      "source_evidence": [
-        "working_ledger.md:L145-L147"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "owner",
-      "canon_label_hint": "Key Facts and Findings",
-      "exact_items": [
-        "keep expert/canonical terms stable in docs"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Key Facts and Findings"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0001",
-      "source_evidence": [
-        "working_ledger.md:L167-L168"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "layout_blocker",
-      "canon_label_hint": "Key Facts and Findings",
-      "exact_items": [
-        "derive simpler labels later where needed for GUI/help"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Key Facts and Findings"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0001",
-      "source_evidence": [
-        "working_ledger.md:L167-L169"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Key Facts and Findings",
-      "exact_items": [
-        "not every term should get dual variants; only the more technical/loaded ones"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Key Facts and Findings"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0001",
-      "source_evidence": [
-        "working_ledger.md:L170"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "layout_blocker",
-      "canon_label_hint": "Weak Integration",
-      "exact_items": [
-        "`Weak Integration` should not be just a badge; Seams UI should summarize it visibly and group concerns under readable headings like:"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Key Facts and Findings"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0001",
-      "source_evidence": [
-        "working_ledger.md:L171-L172"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Key Facts and Findings",
-      "exact_items": [
-        "package issues should roll up to seam concerns only when they cross package/seam/user-visible boundaries or affect seam completion truth"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Key Facts and Findings"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0001",
-      "source_evidence": [
-        "working_ledger.md:L178"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Key Facts and Findings",
-      "exact_items": [
-        "seam completion should be presented distinctly from package completion and package-to-seam availability:"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Key Facts and Findings"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0001",
-      "source_evidence": [
-        "working_ledger.md:L179"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Key Facts and Findings",
-      "exact_items": [
-        "promotions should be visible as explicit named boundaries:"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Key Facts and Findings"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0001",
-      "source_evidence": [
-        "working_ledger.md:L183"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Key Facts and Findings",
-      "exact_items": [
-        "revocation/reopen semantics should be explicit and visible:"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Key Facts and Findings"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0001",
-      "source_evidence": [
-        "working_ledger.md:L187"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Key Facts and Findings",
-      "exact_items": [
-        "blocked states should always expose:"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Key Facts and Findings"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0001",
-      "source_evidence": [
-        "working_ledger.md:L193"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "owner",
-      "canon_label_hint": "Key Facts and Findings",
-      "exact_items": [
-        "blocked owner"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Key Facts and Findings"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0001",
-      "source_evidence": [
-        "working_ledger.md:L195"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "owner",
-      "canon_label_hint": "Key Facts and Findings",
-      "exact_items": [
+        "blocked states should always expose:",
+        "blocked reason",
+        "blocked owner",
+        "time blocked",
+        "next step",
         "blocked ownership should be normalized with stable labels:"
       ],
       "affected_doc_hints": [],
+      "doc_resolution_status": "global_or_cross_cutting",
       "heading_hints": [
         "Key Facts and Findings"
       ],
       "stale_tokens": [],
-      "source_shard_id": "shard-0001",
       "source_evidence": [
-        "working_ledger.md:L198"
+        "working_ledger.md:L193-L200"
       ],
-      "notes": []
+      "notes": [
+        "Owner-grade obligation is the normalized blocked-owner requirement."
+      ]
+    },
+    {
+      "seed_type": "stale_retirement",
+      "canon_label_hint": "replace Tiers with Seams",
+      "exact_items": [
+        "existing Tiers tab should be replaced by a seam/package-oriented tab (name still open; likely Seams or equivalent)",
+        "replace Tiers with a seam/package-oriented tab",
+        "likely canonical tab/object labels: Seams, Feature Seam, Work Package, Package Overseer, Seam Overseer"
+      ],
+      "affected_doc_hints": [],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [
+        "Key Facts and Findings"
+      ],
+      "stale_tokens": [
+        "Tiers"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L30-L33",
+        "working_ledger.md:L55-L58",
+        "working_ledger.md:L145-L153"
+      ],
+      "notes": [
+        "Legacy token retirement is explicit and tied to canonical label replacement."
+      ]
     }
   ],
   "noise_items": [
-    {
-      "item": "- Run Status",
-      "source_evidence": [
-        "working_ledger.md:L79"
-      ],
-      "reason": "metric/status/count/family or process line without concrete obligation-grade evidence"
-    },
-    {
-      "item": "- Run Status -> `History`",
-      "source_evidence": [
-        "working_ledger.md:L93"
-      ],
-      "reason": "metric/status/count/family or process line without concrete obligation-grade evidence"
-    }
+    "Ledger is execution memory only; it is not canonical and must not be cited in planning docs.",
+    "Do not write planning-doc changes during work-item stewardship.",
+    "pass completed"
   ],
   "uncertain_items": [],
   "covered_shard_id": "shard-0001"

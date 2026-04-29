@@ -1,0 +1,484 @@
+{
+  "schema_id": "pm.transfer_coverage_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-047",
+  "row_groups": [
+    "rowgrp-0185",
+    "rowgrp-0186",
+    "rowgrp-0187",
+    "rowgrp-0188"
+  ],
+  "coverage_rows": [
+    {
+      "coverage_id": "cov-04557",
+      "source_obligation_ids": [
+        "obl-4283"
+      ],
+      "source_seed_ids": [
+        "seed-6167"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "canon_label": "Plans/*.md",
+      "row_type": "layout_blocker",
+      "path": "Plans/assistant-memory-subsystem.md",
+      "heading_hint": "Do-not-forget details",
+      "status": "present",
+      "exact_items": [
+        "After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/assistant-memory-subsystem.md:241",
+        "Plans/assistant-memory-subsystem.md:322",
+        "Plans/assistant-memory-subsystem.md:3",
+        "Plans/assistant-memory-subsystem.md:38",
+        "Plans/assistant-memory-subsystem.md:23",
+        "Plans/assistant-memory-subsystem.md:17",
+        "Plans/assistant-memory-subsystem.md:59"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00402",
+      "source_obligation_ids": [
+        "obl-0401"
+      ],
+      "source_seed_ids": [
+        "seed-0406"
+      ],
+      "source_shard_ids": [
+        "shard-0006"
+      ],
+      "canon_label": "Plans/chain-wizard-flexibility.md",
+      "row_type": "consumer",
+      "path": "Plans/chain-wizard-flexibility.md",
+      "heading_hint": "GUI / UX Impacts",
+      "status": "partial",
+      "exact_items": [
+        "`Plans/chain-wizard-flexibility.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/chain-wizard-flexibility.md:441"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-00685",
+      "source_obligation_ids": [
+        "obl-0637"
+      ],
+      "source_seed_ids": [
+        "seed-0643"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "canon_label": "Plans/FinalGUISpec.md",
+      "row_type": "consumer",
+      "path": "Plans/chain-wizard-flexibility.md",
+      "heading_hint": "GUI / UX Impacts",
+      "status": "present",
+      "exact_items": [
+        "`Plans/FinalGUISpec.md`, `Plans/assistant-chat-design.md`, `Plans/chain-wizard-flexibility.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/chain-wizard-flexibility.md:381",
+        "Plans/chain-wizard-flexibility.md:10",
+        "Plans/chain-wizard-flexibility.md:441"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-01426",
+      "source_obligation_ids": [
+        "obl-1357"
+      ],
+      "source_seed_ids": [
+        "seed-1490",
+        "seed-1517",
+        "seed-1590",
+        "seed-1631",
+        "seed-1653",
+        "seed-2659",
+        "seed-2848",
+        "seed-2895",
+        "seed-2941",
+        "seed-3023",
+        "seed-3062",
+        "seed-3100",
+        "seed-4088",
+        "seed-5545"
+      ],
+      "source_shard_ids": [
+        "shard-0027",
+        "shard-0029",
+        "shard-0030",
+        "shard-0042",
+        "shard-0045",
+        "shard-0046",
+        "shard-0047",
+        "shard-0058",
+        "shard-0075"
+      ],
+      "canon_label": "Plans/chain-wizard-flexibility.md",
+      "row_type": "consumer",
+      "path": "Plans/chain-wizard-flexibility.md",
+      "heading_hint": "Targeted docs read",
+      "status": "present",
+      "exact_items": [
+        "`Plans/chain-wizard-flexibility.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/chain-wizard-flexibility.md:441",
+        "Plans/chain-wizard-flexibility.md:682",
+        "Plans/chain-wizard-flexibility.md:10"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-01624",
+      "source_obligation_ids": [
+        "obl-1555"
+      ],
+      "source_seed_ids": [
+        "seed-1735",
+        "seed-3035",
+        "seed-3111",
+        "seed-4094",
+        "seed-5557"
+      ],
+      "source_shard_ids": [
+        "shard-0032",
+        "shard-0047",
+        "shard-0058",
+        "shard-0075"
+      ],
+      "canon_label": "Plans/chain-wizard-flexibility.md",
+      "row_type": "consumer",
+      "path": "Plans/chain-wizard-flexibility.md",
+      "heading_hint": "Impacted docs",
+      "status": "partial",
+      "exact_items": [
+        "`Plans/chain-wizard-flexibility.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/chain-wizard-flexibility.md:441",
+        "Plans/chain-wizard-flexibility.md:10"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-02292",
+      "source_obligation_ids": [
+        "obl-2212"
+      ],
+      "source_seed_ids": [
+        "seed-2676",
+        "seed-2872",
+        "seed-2919",
+        "seed-2967",
+        "seed-3086"
+      ],
+      "source_shard_ids": [
+        "shard-0043",
+        "shard-0045",
+        "shard-0046",
+        "shard-0047"
+      ],
+      "canon_label": "Plans/chain-wizard-flexibility.md",
+      "row_type": "consumer",
+      "path": "Plans/chain-wizard-flexibility.md",
+      "heading_hint": "Highest-risk impacted docs",
+      "status": "partial",
+      "exact_items": [
+        "`Plans/chain-wizard-flexibility.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/chain-wizard-flexibility.md:441",
+        "Plans/chain-wizard-flexibility.md:10"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-03336",
+      "source_obligation_ids": [
+        "obl-3198"
+      ],
+      "source_seed_ids": [
+        "seed-4180"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "canon_label": "Plans/*.md",
+      "row_type": "consumer",
+      "path": "Plans/chain-wizard-flexibility.md",
+      "heading_hint": "Do-not-forget details",
+      "status": "present",
+      "exact_items": [
+        "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/chain-wizard-flexibility.md:360",
+        "Plans/chain-wizard-flexibility.md:3",
+        "Plans/chain-wizard-flexibility.md:131",
+        "Plans/chain-wizard-flexibility.md:10",
+        "Plans/chain-wizard-flexibility.md:438",
+        "Plans/chain-wizard-flexibility.md:1102",
+        "Plans/chain-wizard-flexibility.md:156",
+        "Plans/chain-wizard-flexibility.md:9",
+        "Plans/chain-wizard-flexibility.md:694",
+        "Plans/chain-wizard-flexibility.md:8",
+        "Plans/chain-wizard-flexibility.md:42"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-04475",
+      "source_obligation_ids": [
+        "obl-4262"
+      ],
+      "source_seed_ids": [
+        "seed-6087"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "canon_label": "39",
+      "row_type": "consumer",
+      "path": "Plans/chain-wizard-flexibility.md",
+      "heading_hint": "Do-not-forget details",
+      "status": "present",
+      "exact_items": [
+        "Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/chain-wizard-flexibility.md:1230",
+        "Plans/chain-wizard-flexibility.md:241",
+        "Plans/chain-wizard-flexibility.md:11",
+        "Plans/chain-wizard-flexibility.md:27",
+        "Plans/chain-wizard-flexibility.md:199",
+        "Plans/chain-wizard-flexibility.md:610",
+        "Plans/chain-wizard-flexibility.md:3",
+        "Plans/chain-wizard-flexibility.md:10",
+        "Plans/chain-wizard-flexibility.md:9",
+        "Plans/chain-wizard-flexibility.md:270",
+        "Plans/chain-wizard-flexibility.md:360",
+        "Plans/chain-wizard-flexibility.md:620"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-04809",
+      "source_obligation_ids": [
+        "obl-4524"
+      ],
+      "source_seed_ids": [
+        "seed-6516"
+      ],
+      "source_shard_ids": [
+        "shard-0086"
+      ],
+      "canon_label": "Plans/chain-wizard-flexibility.md",
+      "row_type": "consumer",
+      "path": "Plans/chain-wizard-flexibility.md",
+      "heading_hint": "Docs that could drift if left untouched",
+      "status": "present",
+      "exact_items": [
+        "`Plans/chain-wizard-flexibility.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/chain-wizard-flexibility.md:441",
+        "Plans/chain-wizard-flexibility.md:10",
+        "Plans/chain-wizard-flexibility.md:1322",
+        "Plans/chain-wizard-flexibility.md:780"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-04847",
+      "source_obligation_ids": [
+        "obl-4562"
+      ],
+      "source_seed_ids": [
+        "seed-6554"
+      ],
+      "source_shard_ids": [
+        "shard-0086"
+      ],
+      "canon_label": "Plans/chain-wizard-flexibility.md",
+      "row_type": "consumer",
+      "path": "Plans/chain-wizard-flexibility.md",
+      "heading_hint": "MUST VERIFY",
+      "status": "present",
+      "exact_items": [
+        "`Plans/chain-wizard-flexibility.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/chain-wizard-flexibility.md:441",
+        "Plans/chain-wizard-flexibility.md:439"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-04899",
+      "source_obligation_ids": [
+        "obl-4613"
+      ],
+      "source_seed_ids": [
+        "seed-6605"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "canon_label": "Plans/chain-wizard-flexibility.md",
+      "row_type": "consumer",
+      "path": "Plans/chain-wizard-flexibility.md",
+      "heading_hint": "Cluster D - Route / open-subject / bridge-field refinement misses",
+      "status": "partial",
+      "exact_items": [
+        "`Plans/chain-wizard-flexibility.md`, `Plans/FinalGUISpec.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/chain-wizard-flexibility.md:441",
+        "Plans/chain-wizard-flexibility.md:381"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-04938",
+      "source_obligation_ids": [
+        "obl-4648"
+      ],
+      "source_seed_ids": [
+        "seed-6640"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "canon_label": "Plans/chain-wizard-flexibility.md",
+      "row_type": "consumer",
+      "path": "Plans/chain-wizard-flexibility.md",
+      "heading_hint": "Impacted docs and likely owner order",
+      "status": "present",
+      "exact_items": [
+        "`Plans/chain-wizard-flexibility.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/chain-wizard-flexibility.md:441",
+        "Plans/chain-wizard-flexibility.md:10",
+        "Plans/chain-wizard-flexibility.md:47",
+        "Plans/chain-wizard-flexibility.md:207"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-01612",
+      "source_obligation_ids": [
+        "obl-1543"
+      ],
+      "source_seed_ids": [
+        "seed-1721"
+      ],
+      "source_shard_ids": [
+        "shard-0031"
+      ],
+      "canon_label": "Plans/chain-wizard-flexibility.md",
+      "row_type": "layout_blocker",
+      "path": "Plans/chain-wizard-flexibility.md",
+      "heading_hint": "Targeted docs read",
+      "status": "present",
+      "exact_items": [
+        "`Plans/chain-wizard-flexibility.md` (section 1)"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/chain-wizard-flexibility.md:441",
+        "Plans/chain-wizard-flexibility.md:15",
+        "Plans/chain-wizard-flexibility.md:682",
+        "Plans/chain-wizard-flexibility.md:10"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-04143",
+      "source_obligation_ids": [
+        "obl-3989"
+      ],
+      "source_seed_ids": [
+        "seed-5549"
+      ],
+      "source_shard_ids": [
+        "shard-0075"
+      ],
+      "canon_label": "Plans/chain-wizard-flexibility.md",
+      "row_type": "layout_blocker",
+      "path": "Plans/chain-wizard-flexibility.md",
+      "heading_hint": "Key findings",
+      "status": "present",
+      "exact_items": [
+        "`Plans/chain-wizard-flexibility.md` also still defines `resume_url` as the deep-link to the blocked wizard step."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/chain-wizard-flexibility.md:441",
+        "Plans/chain-wizard-flexibility.md:1687",
+        "Plans/chain-wizard-flexibility.md:59",
+        "Plans/chain-wizard-flexibility.md:269",
+        "Plans/chain-wizard-flexibility.md:1",
+        "Plans/chain-wizard-flexibility.md:436",
+        "Plans/chain-wizard-flexibility.md:8"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-04558",
+      "source_obligation_ids": [
+        "obl-4283"
+      ],
+      "source_seed_ids": [
+        "seed-6167"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "canon_label": "Plans/*.md",
+      "row_type": "layout_blocker",
+      "path": "Plans/chain-wizard-flexibility.md",
+      "heading_hint": "Do-not-forget details",
+      "status": "present",
+      "exact_items": [
+        "After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/chain-wizard-flexibility.md:199",
+        "Plans/chain-wizard-flexibility.md:65",
+        "Plans/chain-wizard-flexibility.md:610",
+        "Plans/chain-wizard-flexibility.md:3",
+        "Plans/chain-wizard-flexibility.md:380",
+        "Plans/chain-wizard-flexibility.md:270",
+        "Plans/chain-wizard-flexibility.md:10",
+        "Plans/chain-wizard-flexibility.md:27",
+        "Plans/chain-wizard-flexibility.md:694",
+        "Plans/chain-wizard-flexibility.md:8",
+        "Plans/chain-wizard-flexibility.md:1399",
+        "Plans/chain-wizard-flexibility.md:42"
+      ],
+      "required_action": "none"
+    }
+  ]
+}

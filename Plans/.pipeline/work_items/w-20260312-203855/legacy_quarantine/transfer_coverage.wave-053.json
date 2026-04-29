@@ -1,0 +1,941 @@
+{
+  "schema_id": "pm.transfer_coverage_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-053",
+  "row_groups": [
+    "rowgrp-0209",
+    "rowgrp-0210",
+    "rowgrp-0211",
+    "rowgrp-0212"
+  ],
+  "coverage_rows": [
+    {
+      "coverage_id": "cov-00163",
+      "source_obligation_ids": [
+        "obl-0162"
+      ],
+      "source_seed_ids": [
+        "seed-0162",
+        "seed-2754",
+        "seed-7207"
+      ],
+      "source_shard_ids": [
+        "shard-0003",
+        "shard-0044",
+        "shard-0092"
+      ],
+      "canon_label": "Plans/orchestrator-subagent-integration.md",
+      "row_type": "consumer",
+      "path": "Plans/orchestrator-subagent-integration.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "`Plans/orchestrator-subagent-integration.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/orchestrator-subagent-integration.md:15"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00168",
+      "source_obligation_ids": [
+        "obl-0167"
+      ],
+      "source_seed_ids": [
+        "seed-0167"
+      ],
+      "source_shard_ids": [
+        "shard-0003"
+      ],
+      "canon_label": "Plans/orchestrator-subagent-integration.md",
+      "row_type": "consumer",
+      "path": "Plans/orchestrator-subagent-integration.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "`Plans/orchestrator-subagent-integration.md` says Puppet Master orchestrator consumes sharded-only plan graphs and executes headless from `.puppet-master/project/plan_graph/index.json` and node shards"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/orchestrator-subagent-integration.md:15",
+        "Plans/orchestrator-subagent-integration.md:5971",
+        "Plans/orchestrator-subagent-integration.md:863",
+        "Plans/orchestrator-subagent-integration.md:40",
+        "Plans/orchestrator-subagent-integration.md:1",
+        "Plans/orchestrator-subagent-integration.md:1196",
+        "Plans/orchestrator-subagent-integration.md:109",
+        "Plans/orchestrator-subagent-integration.md:5973"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00215",
+      "source_obligation_ids": [
+        "obl-0214"
+      ],
+      "source_seed_ids": [
+        "seed-0214"
+      ],
+      "source_shard_ids": [
+        "shard-0004"
+      ],
+      "canon_label": "Plans/orchestrator-subagent-integration.md#Tier-Level Subagent Strategy",
+      "row_type": "consumer",
+      "path": "Plans/orchestrator-subagent-integration.md",
+      "heading_hint": "Tier-Level Subagent Strategy",
+      "status": "present",
+      "exact_items": [
+        "`Plans/orchestrator-subagent-integration.md#Tier-Level Subagent Strategy` -> `tier_id`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/orchestrator-subagent-integration.md:116",
+        "Plans/orchestrator-subagent-integration.md:15",
+        "Plans/orchestrator-subagent-integration.md:119",
+        "Plans/orchestrator-subagent-integration.md:1",
+        "Plans/orchestrator-subagent-integration.md:28"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00304",
+      "source_obligation_ids": [
+        "obl-0303"
+      ],
+      "source_seed_ids": [
+        "seed-0304"
+      ],
+      "source_shard_ids": [
+        "shard-0005"
+      ],
+      "canon_label": "Plans/orchestrator-subagent-integration.md",
+      "row_type": "consumer",
+      "path": "Plans/orchestrator-subagent-integration.md",
+      "heading_hint": "Impacted Docs",
+      "status": "partial",
+      "exact_items": [
+        "`Plans/orchestrator-subagent-integration.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/orchestrator-subagent-integration.md:15",
+        "Plans/orchestrator-subagent-integration.md:808"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-00384",
+      "source_obligation_ids": [
+        "obl-0383"
+      ],
+      "source_seed_ids": [
+        "seed-0388"
+      ],
+      "source_shard_ids": [
+        "shard-0006"
+      ],
+      "canon_label": "Plans/orchestrator-subagent-integration.md",
+      "row_type": "consumer",
+      "path": "Plans/orchestrator-subagent-integration.md",
+      "heading_hint": "Do-Not-Forget Details",
+      "status": "partial",
+      "exact_items": [
+        "`Plans/orchestrator-subagent-integration.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/orchestrator-subagent-integration.md:15",
+        "Plans/orchestrator-subagent-integration.md:69"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-00390",
+      "source_obligation_ids": [
+        "obl-0389"
+      ],
+      "source_seed_ids": [
+        "seed-0394"
+      ],
+      "source_shard_ids": [
+        "shard-0006"
+      ],
+      "canon_label": "Plans/orchestrator-subagent-integration.md",
+      "row_type": "consumer",
+      "path": "Plans/orchestrator-subagent-integration.md",
+      "heading_hint": "Highest-Impact Docs",
+      "status": "partial",
+      "exact_items": [
+        "`Plans/orchestrator-subagent-integration.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/orchestrator-subagent-integration.md:15",
+        "Plans/orchestrator-subagent-integration.md:808"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-00410",
+      "source_obligation_ids": [
+        "obl-0409"
+      ],
+      "source_seed_ids": [
+        "seed-0414"
+      ],
+      "source_shard_ids": [
+        "shard-0006"
+      ],
+      "canon_label": "Plans/orchestrator-subagent-integration.md",
+      "row_type": "consumer",
+      "path": "Plans/orchestrator-subagent-integration.md",
+      "heading_hint": "Runtime / Storage / Contract Impacts",
+      "status": "present",
+      "exact_items": [
+        "`Plans/orchestrator-subagent-integration.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/orchestrator-subagent-integration.md:15",
+        "Plans/orchestrator-subagent-integration.md:41",
+        "Plans/orchestrator-subagent-integration.md:54",
+        "Plans/orchestrator-subagent-integration.md:40"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00431",
+      "source_obligation_ids": [
+        "obl-0429"
+      ],
+      "source_seed_ids": [
+        "seed-0434"
+      ],
+      "source_shard_ids": [
+        "shard-0007"
+      ],
+      "canon_label": "Plans/orchestrator-subagent-integration.md",
+      "row_type": "consumer",
+      "path": "Plans/orchestrator-subagent-integration.md",
+      "heading_hint": "Cleanup Priorities",
+      "status": "present",
+      "exact_items": [
+        "`Plans/orchestrator-subagent-integration.md`: The core execution model is invalid."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/orchestrator-subagent-integration.md:15",
+        "Plans/orchestrator-subagent-integration.md:149",
+        "Plans/orchestrator-subagent-integration.md:82",
+        "Plans/orchestrator-subagent-integration.md:69",
+        "Plans/orchestrator-subagent-integration.md:33"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00444",
+      "source_obligation_ids": [
+        "obl-0440"
+      ],
+      "source_seed_ids": [
+        "seed-0445"
+      ],
+      "source_shard_ids": [
+        "shard-0007"
+      ],
+      "canon_label": "Plans/orchestrator-subagent-integration.md",
+      "row_type": "consumer",
+      "path": "Plans/orchestrator-subagent-integration.md",
+      "heading_hint": "Highest-Impact Docs",
+      "status": "present",
+      "exact_items": [
+        "**`Plans/orchestrator-subagent-integration.md` + `Plans/Crosswalk.md` + `Plans/Glossary.md`** \u2014 Crosswalk and Glossary have near-zero coverage of overseer (package or seam), work package, feature seam, lane, attempt, or effective identity. These are the terminology authorities and their silence makes every other doc's usage inconsistent."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/orchestrator-subagent-integration.md:15",
+        "Plans/orchestrator-subagent-integration.md:3969",
+        "Plans/orchestrator-subagent-integration.md:205",
+        "Plans/orchestrator-subagent-integration.md:46",
+        "Plans/orchestrator-subagent-integration.md:8",
+        "Plans/orchestrator-subagent-integration.md:203",
+        "Plans/orchestrator-subagent-integration.md:108",
+        "Plans/orchestrator-subagent-integration.md:107",
+        "Plans/orchestrator-subagent-integration.md:28",
+        "Plans/orchestrator-subagent-integration.md:111",
+        "Plans/orchestrator-subagent-integration.md:116",
+        "Plans/orchestrator-subagent-integration.md:62"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00478",
+      "source_obligation_ids": [
+        "obl-0471"
+      ],
+      "source_seed_ids": [
+        "seed-0476"
+      ],
+      "source_shard_ids": [
+        "shard-0007"
+      ],
+      "canon_label": "Plans/orchestrator-subagent-integration.md",
+      "row_type": "consumer",
+      "path": "Plans/orchestrator-subagent-integration.md",
+      "heading_hint": "Highest-Impact Docs",
+      "status": "present",
+      "exact_items": [
+        "**`Plans/orchestrator-subagent-integration.md` + `Plans/Executor_Protocol.md` + `Plans/Contracts_V0.md`**"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/orchestrator-subagent-integration.md:15",
+        "Plans/orchestrator-subagent-integration.md:118",
+        "Plans/orchestrator-subagent-integration.md:40",
+        "Plans/orchestrator-subagent-integration.md:808"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-01168",
+      "source_obligation_ids": [
+        "obl-1099"
+      ],
+      "source_seed_ids": [
+        "seed-1185",
+        "seed-1724",
+        "seed-2658",
+        "seed-2722",
+        "seed-2782",
+        "seed-2846",
+        "seed-2893",
+        "seed-2939",
+        "seed-3060",
+        "seed-3321"
+      ],
+      "source_shard_ids": [
+        "shard-0020",
+        "shard-0031",
+        "shard-0042",
+        "shard-0043",
+        "shard-0044",
+        "shard-0045",
+        "shard-0046",
+        "shard-0047",
+        "shard-0050"
+      ],
+      "canon_label": "Plans/orchestrator-subagent-integration.md",
+      "row_type": "consumer",
+      "path": "Plans/orchestrator-subagent-integration.md",
+      "heading_hint": "Targeted docs read",
+      "status": "present",
+      "exact_items": [
+        "`Plans/orchestrator-subagent-integration.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/orchestrator-subagent-integration.md:15",
+        "Plans/orchestrator-subagent-integration.md:3485",
+        "Plans/orchestrator-subagent-integration.md:808",
+        "Plans/orchestrator-subagent-integration.md:54"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-01625",
+      "source_obligation_ids": [
+        "obl-1556"
+      ],
+      "source_seed_ids": [
+        "seed-1736",
+        "seed-2762",
+        "seed-2794",
+        "seed-3335",
+        "seed-3409",
+        "seed-6268"
+      ],
+      "source_shard_ids": [
+        "shard-0032",
+        "shard-0044",
+        "shard-0050",
+        "shard-0051",
+        "shard-0083"
+      ],
+      "canon_label": "Plans/orchestrator-subagent-integration.md",
+      "row_type": "consumer",
+      "path": "Plans/orchestrator-subagent-integration.md",
+      "heading_hint": "Impacted docs",
+      "status": "partial",
+      "exact_items": [
+        "`Plans/orchestrator-subagent-integration.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/orchestrator-subagent-integration.md:15",
+        "Plans/orchestrator-subagent-integration.md:808"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-02287",
+      "source_obligation_ids": [
+        "obl-2207"
+      ],
+      "source_seed_ids": [
+        "seed-2671",
+        "seed-2871",
+        "seed-2915",
+        "seed-3084"
+      ],
+      "source_shard_ids": [
+        "shard-0043",
+        "shard-0045",
+        "shard-0047"
+      ],
+      "canon_label": "Plans/orchestrator-subagent-integration.md",
+      "row_type": "consumer",
+      "path": "Plans/orchestrator-subagent-integration.md",
+      "heading_hint": "Highest-risk impacted docs",
+      "status": "partial",
+      "exact_items": [
+        "`Plans/orchestrator-subagent-integration.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/orchestrator-subagent-integration.md:15",
+        "Plans/orchestrator-subagent-integration.md:808"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-02777",
+      "source_obligation_ids": [
+        "obl-2696"
+      ],
+      "source_seed_ids": [
+        "seed-3386"
+      ],
+      "source_shard_ids": [
+        "shard-0051"
+      ],
+      "canon_label": "Plans/orchestrator-subagent-integration.md",
+      "row_type": "consumer",
+      "path": "Plans/orchestrator-subagent-integration.md",
+      "heading_hint": "Targeted docs read",
+      "status": "present",
+      "exact_items": [
+        "spot-checks against `Plans/orchestrator-subagent-integration.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/orchestrator-subagent-integration.md:15",
+        "Plans/orchestrator-subagent-integration.md:258",
+        "Plans/orchestrator-subagent-integration.md:3485",
+        "Plans/orchestrator-subagent-integration.md:808",
+        "Plans/orchestrator-subagent-integration.md:54"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-03343",
+      "source_obligation_ids": [
+        "obl-3198"
+      ],
+      "source_seed_ids": [
+        "seed-4180"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "canon_label": "Plans/*.md",
+      "row_type": "consumer",
+      "path": "Plans/orchestrator-subagent-integration.md",
+      "heading_hint": "Do-not-forget details",
+      "status": "present",
+      "exact_items": [
+        "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/orchestrator-subagent-integration.md:512",
+        "Plans/orchestrator-subagent-integration.md:40",
+        "Plans/orchestrator-subagent-integration.md:4928",
+        "Plans/orchestrator-subagent-integration.md:15",
+        "Plans/orchestrator-subagent-integration.md:808",
+        "Plans/orchestrator-subagent-integration.md:41",
+        "Plans/orchestrator-subagent-integration.md:1090",
+        "Plans/orchestrator-subagent-integration.md:5",
+        "Plans/orchestrator-subagent-integration.md:82",
+        "Plans/orchestrator-subagent-integration.md:62",
+        "Plans/orchestrator-subagent-integration.md:69"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-04482",
+      "source_obligation_ids": [
+        "obl-4262"
+      ],
+      "source_seed_ids": [
+        "seed-6087"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "canon_label": "39",
+      "row_type": "consumer",
+      "path": "Plans/orchestrator-subagent-integration.md",
+      "heading_hint": "Do-not-forget details",
+      "status": "present",
+      "exact_items": [
+        "Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/orchestrator-subagent-integration.md:3146",
+        "Plans/orchestrator-subagent-integration.md:8",
+        "Plans/orchestrator-subagent-integration.md:46",
+        "Plans/orchestrator-subagent-integration.md:78",
+        "Plans/orchestrator-subagent-integration.md:585",
+        "Plans/orchestrator-subagent-integration.md:15",
+        "Plans/orchestrator-subagent-integration.md:808",
+        "Plans/orchestrator-subagent-integration.md:82",
+        "Plans/orchestrator-subagent-integration.md:330",
+        "Plans/orchestrator-subagent-integration.md:512",
+        "Plans/orchestrator-subagent-integration.md:643",
+        "Plans/orchestrator-subagent-integration.md:69"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-04782",
+      "source_obligation_ids": [
+        "obl-4497"
+      ],
+      "source_seed_ids": [
+        "seed-6489"
+      ],
+      "source_shard_ids": [
+        "shard-0086"
+      ],
+      "canon_label": "Plans/orchestrator-subagent-integration.md",
+      "row_type": "consumer",
+      "path": "Plans/orchestrator-subagent-integration.md",
+      "heading_hint": "Docs clearly implicated",
+      "status": "partial",
+      "exact_items": [
+        "`Plans/orchestrator-subagent-integration.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/orchestrator-subagent-integration.md:15",
+        "Plans/orchestrator-subagent-integration.md:808"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-04820",
+      "source_obligation_ids": [
+        "obl-4535"
+      ],
+      "source_seed_ids": [
+        "seed-6527"
+      ],
+      "source_shard_ids": [
+        "shard-0086"
+      ],
+      "canon_label": "Plans/orchestrator-subagent-integration.md",
+      "row_type": "consumer",
+      "path": "Plans/orchestrator-subagent-integration.md",
+      "heading_hint": "MUST CHANGE",
+      "status": "present",
+      "exact_items": [
+        "`Plans/orchestrator-subagent-integration.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/orchestrator-subagent-integration.md:15",
+        "Plans/orchestrator-subagent-integration.md:46"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-04889",
+      "source_obligation_ids": [
+        "obl-4604"
+      ],
+      "source_seed_ids": [
+        "seed-6596"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "canon_label": "Plans/orchestrator-subagent-integration.md",
+      "row_type": "consumer",
+      "path": "Plans/orchestrator-subagent-integration.md",
+      "heading_hint": "Cluster C - Identity / attribution / owner-doc transfer misses",
+      "status": "present",
+      "exact_items": [
+        "`Plans/orchestrator-subagent-integration.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/orchestrator-subagent-integration.md:15",
+        "Plans/orchestrator-subagent-integration.md:77",
+        "Plans/orchestrator-subagent-integration.md:5566"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-04936",
+      "source_obligation_ids": [
+        "obl-4646"
+      ],
+      "source_seed_ids": [
+        "seed-6638"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "canon_label": "Plans/orchestrator-subagent-integration.md",
+      "row_type": "consumer",
+      "path": "Plans/orchestrator-subagent-integration.md",
+      "heading_hint": "Impacted docs and likely owner order",
+      "status": "present",
+      "exact_items": [
+        "`Plans/orchestrator-subagent-integration.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/orchestrator-subagent-integration.md:15",
+        "Plans/orchestrator-subagent-integration.md:808",
+        "Plans/orchestrator-subagent-integration.md:38",
+        "Plans/orchestrator-subagent-integration.md:5"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-05010",
+      "source_obligation_ids": [
+        "obl-4692"
+      ],
+      "source_seed_ids": [
+        "seed-6684"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "canon_label": "Plans/Prompt_Pipeline.md",
+      "row_type": "consumer",
+      "path": "Plans/orchestrator-subagent-integration.md",
+      "heading_hint": "Identity / attribution / blocked-policy misses were reconfirmed with stronger specificity",
+      "status": "present",
+      "exact_items": [
+        "`Plans/Prompt_Pipeline.md`, `Plans/Contracts_V0.md`, `Plans/Tools.md`, `Plans/GitHub_API_Auth_and_Flows.md`, `Plans/orchestrator-subagent-integration.md`, `Plans/Architecture_Invariants.md`, `Plans/Run_Modes.md`, `Plans/Executor_Protocol.md`, `Plans/human-in-the-loop.md`, `Plans/usage-feature.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/orchestrator-subagent-integration.md:118",
+        "Plans/orchestrator-subagent-integration.md:40",
+        "Plans/orchestrator-subagent-integration.md:142",
+        "Plans/orchestrator-subagent-integration.md:15",
+        "Plans/orchestrator-subagent-integration.md:3487",
+        "Plans/orchestrator-subagent-integration.md:64",
+        "Plans/orchestrator-subagent-integration.md:1257",
+        "Plans/orchestrator-subagent-integration.md:2956",
+        "Plans/orchestrator-subagent-integration.md:77",
+        "Plans/orchestrator-subagent-integration.md:5566",
+        "Plans/orchestrator-subagent-integration.md:1580"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-05065",
+      "source_obligation_ids": [
+        "obl-4739"
+      ],
+      "source_seed_ids": [
+        "seed-6732",
+        "seed-6846",
+        "seed-6939",
+        "seed-6949",
+        "seed-7010",
+        "seed-7046"
+      ],
+      "source_shard_ids": [
+        "shard-0088",
+        "shard-0089",
+        "shard-0090"
+      ],
+      "canon_label": "Plans/orchestrator-subagent-integration.md",
+      "row_type": "consumer",
+      "path": "Plans/orchestrator-subagent-integration.md",
+      "heading_hint": "Entry",
+      "status": "present",
+      "exact_items": [
+        "`Plans/orchestrator-subagent-integration.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/orchestrator-subagent-integration.md:15",
+        "Plans/orchestrator-subagent-integration.md:125"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-05077",
+      "source_obligation_ids": [
+        "obl-4751"
+      ],
+      "source_seed_ids": [
+        "seed-6744",
+        "seed-6864"
+      ],
+      "source_shard_ids": [
+        "shard-0088",
+        "shard-0089"
+      ],
+      "canon_label": "Plans/orchestrator-subagent-integration.md:209-235",
+      "row_type": "consumer",
+      "path": "Plans/orchestrator-subagent-integration.md",
+      "heading_hint": "Entry",
+      "status": "partial",
+      "exact_items": [
+        "`Plans/orchestrator-subagent-integration.md:209-235`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/orchestrator-subagent-integration.md:125"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-05078",
+      "source_obligation_ids": [
+        "obl-4752"
+      ],
+      "source_seed_ids": [
+        "seed-6745"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "canon_label": "Plans/orchestrator-subagent-integration.md:380-402",
+      "row_type": "consumer",
+      "path": "Plans/orchestrator-subagent-integration.md",
+      "heading_hint": "Entry",
+      "status": "partial",
+      "exact_items": [
+        "`Plans/orchestrator-subagent-integration.md:380-402`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/orchestrator-subagent-integration.md:125"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-05222",
+      "source_obligation_ids": [
+        "obl-4887"
+      ],
+      "source_seed_ids": [
+        "seed-6935"
+      ],
+      "source_shard_ids": [
+        "shard-0090"
+      ],
+      "canon_label": "Plans/orchestrator-subagent-integration.md",
+      "row_type": "consumer",
+      "path": "Plans/orchestrator-subagent-integration.md",
+      "heading_hint": "Entry",
+      "status": "present",
+      "exact_items": [
+        "`Plans/orchestrator-subagent-integration.md` still carries a narrower `execution_unit_context` packet that stops at `requested_account_id`, `effective_account_id`, and `operational_identity`."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/orchestrator-subagent-integration.md:15",
+        "Plans/orchestrator-subagent-integration.md:509",
+        "Plans/orchestrator-subagent-integration.md:190",
+        "Plans/orchestrator-subagent-integration.md:191",
+        "Plans/orchestrator-subagent-integration.md:194",
+        "Plans/orchestrator-subagent-integration.md:5",
+        "Plans/orchestrator-subagent-integration.md:3087",
+        "Plans/orchestrator-subagent-integration.md:125"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-05225",
+      "source_obligation_ids": [
+        "obl-4890"
+      ],
+      "source_seed_ids": [
+        "seed-6942"
+      ],
+      "source_shard_ids": [
+        "shard-0090"
+      ],
+      "canon_label": "Plans/orchestrator-subagent-integration.md:379-391",
+      "row_type": "consumer",
+      "path": "Plans/orchestrator-subagent-integration.md",
+      "heading_hint": "Entry",
+      "status": "partial",
+      "exact_items": [
+        "`Plans/orchestrator-subagent-integration.md:379-391`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/orchestrator-subagent-integration.md:125"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-05232",
+      "source_obligation_ids": [
+        "obl-4897"
+      ],
+      "source_seed_ids": [
+        "seed-6953",
+        "seed-7030"
+      ],
+      "source_shard_ids": [
+        "shard-0090"
+      ],
+      "canon_label": "Plans/orchestrator-subagent-integration.md:374-391",
+      "row_type": "consumer",
+      "path": "Plans/orchestrator-subagent-integration.md",
+      "heading_hint": "Entry",
+      "status": "partial",
+      "exact_items": [
+        "`Plans/orchestrator-subagent-integration.md:374-391`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/orchestrator-subagent-integration.md:125"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-05285",
+      "source_obligation_ids": [
+        "obl-4939"
+      ],
+      "source_seed_ids": [
+        "seed-7063"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "canon_label": "Plans/orchestrator-subagent-integration.md:374-391",
+      "row_type": "consumer",
+      "path": "Plans/orchestrator-subagent-integration.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "`Plans/orchestrator-subagent-integration.md:374-391`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/orchestrator-subagent-integration.md:required_terms_absent"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-05383",
+      "source_obligation_ids": [
+        "obl-5024"
+      ],
+      "source_seed_ids": [
+        "seed-7219"
+      ],
+      "source_shard_ids": [
+        "shard-0092"
+      ],
+      "canon_label": "Plans/orchestrator-subagent-integration.md:28-41",
+      "row_type": "consumer",
+      "path": "Plans/orchestrator-subagent-integration.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "`Plans/orchestrator-subagent-integration.md:28-41`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/orchestrator-subagent-integration.md:required_terms_absent"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-04565",
+      "source_obligation_ids": [
+        "obl-4283"
+      ],
+      "source_seed_ids": [
+        "seed-6167"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "canon_label": "Plans/*.md",
+      "row_type": "layout_blocker",
+      "path": "Plans/orchestrator-subagent-integration.md",
+      "heading_hint": "Do-not-forget details",
+      "status": "present",
+      "exact_items": [
+        "After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/orchestrator-subagent-integration.md:78",
+        "Plans/orchestrator-subagent-integration.md:87",
+        "Plans/orchestrator-subagent-integration.md:585",
+        "Plans/orchestrator-subagent-integration.md:15",
+        "Plans/orchestrator-subagent-integration.md:62",
+        "Plans/orchestrator-subagent-integration.md:634",
+        "Plans/orchestrator-subagent-integration.md:808",
+        "Plans/orchestrator-subagent-integration.md:46",
+        "Plans/orchestrator-subagent-integration.md:69",
+        "Plans/orchestrator-subagent-integration.md:643"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-05230",
+      "source_obligation_ids": [
+        "obl-4895"
+      ],
+      "source_seed_ids": [
+        "seed-6947"
+      ],
+      "source_shard_ids": [
+        "shard-0090"
+      ],
+      "canon_label": "gap-001",
+      "row_type": "layout_blocker",
+      "path": "Plans/orchestrator-subagent-integration.md",
+      "heading_hint": "Entry",
+      "status": "present",
+      "exact_items": [
+        "`gap-001` now points at `Plans/orchestrator-subagent-integration.md` \u2014 `### Subagent Selector`, which is the real containing section for the narrower `execution_unit_context` packet."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/orchestrator-subagent-integration.md:15",
+        "Plans/orchestrator-subagent-integration.md:186",
+        "Plans/orchestrator-subagent-integration.md:509",
+        "Plans/orchestrator-subagent-integration.md:77",
+        "Plans/orchestrator-subagent-integration.md:1",
+        "Plans/orchestrator-subagent-integration.md:149",
+        "Plans/orchestrator-subagent-integration.md:611",
+        "Plans/orchestrator-subagent-integration.md:567",
+        "Plans/orchestrator-subagent-integration.md:38",
+        "Plans/orchestrator-subagent-integration.md:125"
+      ],
+      "required_action": "none"
+    }
+  ]
+}

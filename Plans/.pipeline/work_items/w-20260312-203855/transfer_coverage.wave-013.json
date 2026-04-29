@@ -1,512 +1,386 @@
 {
-  "schema_id": "pm.transfer_coverage_wave.v1",
+  "schema_id": "pm.transfer_coverage_wave.v3",
   "work_id": "w-20260312-203855",
   "wave_id": "wave-013",
-  "row_groups": [
-    "rowgrp-0049",
-    "rowgrp-0050",
-    "rowgrp-0051",
-    "rowgrp-0052"
+  "timestamp_utc": "2026-04-28T19:46:36Z",
+  "subagent_tasks": [
+    "coverage-rowgrp-049",
+    "coverage-rowgrp-050",
+    "coverage-rowgrp-051",
+    "coverage-rowgrp-052"
   ],
-  "coverage_rows": [
+  "assigned_input_boundaries": [
+    "rowgrp-049 cov-618 Plans/Executor_Protocol.md",
+    "rowgrp-050 cov-051,cov-068,cov-092,cov-178 Plans/Executor_Protocol.md",
+    "rowgrp-051 cov-732 Plans/Executor_Protocol.md",
+    "rowgrp-052 cov-072,cov-489,cov-624,cov-706,cov-734,cov-1056,cov-1143,cov-1152,cov-1172,cov-1225 Plans/Executor_Protocol.md"
+  ],
+  "subagent_result_status": {
+    "coverage-rowgrp-049": "completed",
+    "coverage-rowgrp-050": "completed",
+    "coverage-rowgrp-051": "completed",
+    "coverage-rowgrp-052": "completed_reduced_conservatively"
+  },
+  "completed_task_count": 4,
+  "failed_task_count": 0,
+  "coverage_ids_assigned": [
+    "cov-618",
+    "cov-051",
+    "cov-068",
+    "cov-092",
+    "cov-178",
+    "cov-732",
+    "cov-072",
+    "cov-489",
+    "cov-624",
+    "cov-706",
+    "cov-734",
+    "cov-1056",
+    "cov-1143",
+    "cov-1152",
+    "cov-1172",
+    "cov-1225"
+  ],
+  "coverage_ids_completed": [
+    "cov-618",
+    "cov-051",
+    "cov-068",
+    "cov-092",
+    "cov-178",
+    "cov-732",
+    "cov-072",
+    "cov-489",
+    "cov-624",
+    "cov-706",
+    "cov-734",
+    "cov-1056",
+    "cov-1143",
+    "cov-1152",
+    "cov-1172",
+    "cov-1225"
+  ],
+  "path_groups_assigned": [
+    "Plans/Executor_Protocol.md"
+  ],
+  "rows": [
     {
-      "coverage_id": "cov-04789",
+      "coverage_id": "cov-618",
+      "status": "missing",
+      "evidence": [
+        "Plans/Executor_Protocol.md:64-68 purpose/scope text exists, but no matching orchestration split-brain consolidation coverage was found",
+        "Plans/Executor_Protocol.md:247-249 runtime scheduler addendum exists, but does not consolidate the assigned split-brain issue"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "Executor_Protocol.md does not contain the assigned consolidation coverage for body/addenda split-brain, rewrite-era actor/corroboration/concern/wake semantics, or graph/package/seam/lane model reconciliation.",
       "source_obligation_ids": [
-        "obl-4504"
+        "obl-173"
       ],
       "source_seed_ids": [
-        "seed-6496"
+        "seed-173"
       ],
       "source_shard_ids": [
-        "shard-0086"
+        "shard-0043"
       ],
-      "canon_label": "Plans/FileManager.md",
-      "row_type": "consumer",
-      "path": "Plans/FileManager.md",
-      "heading_hint": "Docs clearly implicated",
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-051",
       "status": "partial",
-      "exact_items": [
-        "`Plans/FileManager.md`"
-      ],
-      "stale_tokens": [],
       "evidence": [
-        "Plans/FileManager.md:25"
+        "Plans/Executor_Protocol.md:88-95 Work Package, Feature Seam, and Runtime scheduler roles are live role definitions",
+        "Plans/Executor_Protocol.md:171-191 run_id, worktree_id, execution_role, and allowed_action_ids[] appear in the canonical packet"
       ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-04827",
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "Executor_Protocol.md contains related orchestration/runtime vocabulary, but the worktree allocation and governing-layer boundary questions remain unresolved.",
       "source_obligation_ids": [
-        "obl-4542"
+        "obl-026"
       ],
       "source_seed_ids": [
-        "seed-6534"
+        "seed-026"
       ],
       "source_shard_ids": [
-        "shard-0086"
+        "shard-0005"
       ],
-      "canon_label": "Plans/FileManager.md",
-      "row_type": "consumer",
-      "path": "Plans/FileManager.md",
-      "heading_hint": "MUST CHANGE",
-      "status": "partial",
-      "exact_items": [
-        "`Plans/FileManager.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/FileManager.md:6"
-      ],
-      "required_action": "consumer_propagation"
+      "path_field_status": "match"
     },
     {
-      "coverage_id": "cov-04895",
-      "source_obligation_ids": [
-        "obl-4610"
-      ],
-      "source_seed_ids": [
-        "seed-6602"
-      ],
-      "source_shard_ids": [
-        "shard-0087"
-      ],
-      "canon_label": "Plans/FileManager.md",
-      "row_type": "consumer",
-      "path": "Plans/FileManager.md",
-      "heading_hint": "Cluster D - Route / open-subject / bridge-field refinement misses",
-      "status": "partial",
-      "exact_items": [
-        "`Plans/FileManager.md`"
-      ],
-      "stale_tokens": [],
+      "coverage_id": "cov-068",
+      "status": "missing",
       "evidence": [
-        "Plans/FileManager.md:181"
+        "Plans/Executor_Protocol.md:102 and 193 contain ContractRef links, but no live TierContext, TierType, active-agents.json, Phase/Task/Subtask/Iteration, or Tiers tab coverage was found"
       ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-04935",
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "No matching stale-token occurrence or same-file supersession hotspot repair was found for this row.",
       "source_obligation_ids": [
-        "obl-4645"
+        "obl-029"
       ],
       "source_seed_ids": [
-        "seed-6637"
-      ],
-      "source_shard_ids": [
-        "shard-0087"
-      ],
-      "canon_label": "Plans/FileManager.md",
-      "row_type": "consumer",
-      "path": "Plans/FileManager.md",
-      "heading_hint": "Impacted docs and likely owner order",
-      "status": "present",
-      "exact_items": [
-        "`Plans/FileManager.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/FileManager.md:25",
-        "Plans/FileManager.md:104"
-      ],
-      "required_action": "none"
-    },
-    {
-      "coverage_id": "cov-04997",
-      "source_obligation_ids": [
-        "obl-4684"
-      ],
-      "source_seed_ids": [
-        "seed-6676"
-      ],
-      "source_shard_ids": [
-        "shard-0088"
-      ],
-      "canon_label": "Plans/Contracts_V0.md",
-      "row_type": "consumer",
-      "path": "Plans/FileManager.md",
-      "heading_hint": "Route / bridge / normalization misses remain refinement-heavy but are more specific now",
-      "status": "present",
-      "exact_items": [
-        "`Plans/Contracts_V0.md`, `Plans/storage-plan.md`, `Plans/UI_Command_Catalog.md`, `Plans/Crosswalk.md`, `Plans/Wiring_Matrix.md`, `Plans/Progression_Gates.md`, `Plans/FileManager.md`, `Plans/Project_Output_Artifacts.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/FileManager.md:3",
-        "Plans/FileManager.md:27",
-        "Plans/FileManager.md:185",
-        "Plans/FileManager.md:13",
-        "Plans/FileManager.md:181",
-        "Plans/FileManager.md:23",
-        "Plans/FileManager.md:80",
-        "Plans/FileManager.md:84"
-      ],
-      "required_action": "none"
-    },
-    {
-      "coverage_id": "cov-04519",
-      "source_obligation_ids": [
-        "obl-4283"
-      ],
-      "source_seed_ids": [
-        "seed-6167"
-      ],
-      "source_shard_ids": [
-        "shard-0082"
-      ],
-      "canon_label": "Plans/*.md",
-      "row_type": "layout_blocker",
-      "path": "Plans/FileManager.md",
-      "heading_hint": "Do-not-forget details",
-      "status": "present",
-      "exact_items": [
-        "After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes."
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/FileManager.md:102",
-        "Plans/FileManager.md:15",
-        "Plans/FileManager.md:3",
-        "Plans/FileManager.md:87",
-        "Plans/FileManager.md:25",
-        "Plans/FileManager.md:116",
-        "Plans/FileManager.md:197",
-        "Plans/FileManager.md:33"
-      ],
-      "required_action": "none"
-    },
-    {
-      "coverage_id": "cov-00395",
-      "source_obligation_ids": [
-        "obl-0394"
-      ],
-      "source_seed_ids": [
-        "seed-0399"
+        "seed-029"
       ],
       "source_shard_ids": [
         "shard-0006"
       ],
-      "canon_label": "Plans/FileSafe.md",
-      "row_type": "consumer",
-      "path": "Plans/FileSafe.md",
-      "heading_hint": "Highest-Impact Docs",
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-092",
       "status": "partial",
-      "exact_items": [
-        "`Plans/FileSafe.md`"
-      ],
-      "stale_tokens": [],
       "evidence": [
-        "Plans/FileSafe.md:1103",
-        "Plans/FileSafe.md:18"
+        "Plans/Executor_Protocol.md:180-191 package_id, seam_id, lane_id, worktree_id, account, and blocked_sequence fields are present in execution_unit_context"
       ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-00433",
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "Executor_Protocol.md includes some required identity fields, but graph-schema constants, contamination/safe-point linkage, tiers-first layouts, and duplicate runtime/model cleanup remain incomplete.",
       "source_obligation_ids": [
-        "obl-0431"
+        "obl-034"
       ],
       "source_seed_ids": [
-        "seed-0436"
-      ],
-      "source_shard_ids": [
-        "shard-0007"
-      ],
-      "canon_label": "Plans/FileSafe.md",
-      "row_type": "consumer",
-      "path": "Plans/FileSafe.md",
-      "heading_hint": "Cleanup Priorities",
-      "status": "present",
-      "exact_items": [
-        "`Plans/FileSafe.md`: The strict Phase/Task/Subtask hierarchy prevents package-based planning."
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/FileSafe.md:1103",
-        "Plans/FileSafe.md:52",
-        "Plans/FileSafe.md:2359",
-        "Plans/FileSafe.md:2211",
-        "Plans/FileSafe.md:1184"
-      ],
-      "required_action": "none"
-    },
-    {
-      "coverage_id": "cov-00493",
-      "source_obligation_ids": [
-        "obl-0480"
-      ],
-      "source_seed_ids": [
-        "seed-0485"
-      ],
-      "source_shard_ids": [
-        "shard-0007"
-      ],
-      "canon_label": "Plans/FileSafe.md",
-      "row_type": "consumer",
-      "path": "Plans/FileSafe.md",
-      "heading_hint": "Highest-Impact Docs",
-      "status": "present",
-      "exact_items": [
-        "**`Plans/FileSafe.md` + `Plans/WorktreeGitImprovement.md` + `Plans/newtools.md`**"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/FileSafe.md:1103",
-        "Plans/FileSafe.md:567",
-        "Plans/FileSafe.md:18"
-      ],
-      "required_action": "none"
-    },
-    {
-      "coverage_id": "cov-00550",
-      "source_obligation_ids": [
-        "obl-0527"
-      ],
-      "source_seed_ids": [
-        "seed-0532"
+        "seed-034"
       ],
       "source_shard_ids": [
         "shard-0008"
       ],
-      "canon_label": "Plans/newtools.md",
-      "row_type": "consumer",
-      "path": "Plans/FileSafe.md",
-      "heading_hint": "Highest-Impact Docs",
-      "status": "present",
-      "exact_items": [
-        "**`Plans/newtools.md` + `Plans/FileSafe.md` + `Plans/WorktreeGitImprovement.md` + `Plans/MiscPlan.md`**"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/FileSafe.md:1103",
-        "Plans/FileSafe.md:567",
-        "Plans/FileSafe.md:2406",
-        "Plans/FileSafe.md:18"
-      ],
-      "required_action": "none"
+      "path_field_status": "match"
     },
     {
-      "coverage_id": "cov-03298",
-      "source_obligation_ids": [
-        "obl-3198"
-      ],
-      "source_seed_ids": [
-        "seed-4180"
-      ],
-      "source_shard_ids": [
-        "shard-0059"
-      ],
-      "canon_label": "Plans/*.md",
-      "row_type": "consumer",
-      "path": "Plans/FileSafe.md",
-      "heading_hint": "Do-not-forget details",
-      "status": "present",
-      "exact_items": [
-        "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage."
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/FileSafe.md:3",
-        "Plans/FileSafe.md:18",
-        "Plans/FileSafe.md:795",
-        "Plans/FileSafe.md:585",
-        "Plans/FileSafe.md:54",
-        "Plans/FileSafe.md:2383",
-        "Plans/FileSafe.md:89",
-        "Plans/FileSafe.md:72"
-      ],
-      "required_action": "none"
-    },
-    {
-      "coverage_id": "cov-03472",
-      "source_obligation_ids": [
-        "obl-3324"
-      ],
-      "source_seed_ids": [
-        "seed-4433",
-        "seed-5076",
-        "seed-5917",
-        "seed-6003",
-        "seed-6095"
-      ],
-      "source_shard_ids": [
-        "shard-0062",
-        "shard-0070",
-        "shard-0081",
-        "shard-0082"
-      ],
-      "canon_label": "Plans/FileSafe.md",
-      "row_type": "consumer",
-      "path": "Plans/FileSafe.md",
-      "heading_hint": "Targeted docs read",
-      "status": "present",
-      "exact_items": [
-        "`Plans/FileSafe.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/FileSafe.md:1103",
-        "Plans/FileSafe.md:18",
-        "Plans/FileSafe.md:89"
-      ],
-      "required_action": "none"
-    },
-    {
-      "coverage_id": "cov-03496",
-      "source_obligation_ids": [
-        "obl-3348"
-      ],
-      "source_seed_ids": [
-        "seed-4460",
-        "seed-5114",
-        "seed-5952",
-        "seed-6039",
-        "seed-6127"
-      ],
-      "source_shard_ids": [
-        "shard-0062",
-        "shard-0070",
-        "shard-0081",
-        "shard-0082"
-      ],
-      "canon_label": "Plans/FileSafe.md",
-      "row_type": "consumer",
-      "path": "Plans/FileSafe.md",
-      "heading_hint": "Impacted docs",
+      "coverage_id": "cov-178",
       "status": "partial",
-      "exact_items": [
-        "`Plans/FileSafe.md`"
-      ],
-      "stale_tokens": [],
       "evidence": [
-        "Plans/FileSafe.md:1103",
-        "Plans/FileSafe.md:18"
+        "Plans/Executor_Protocol.md:191 allowed_action_ids[] is in execution_unit_context",
+        "Plans/Executor_Protocol.md:217-220 blocked-action carrythrough stays anchored to blocked-episode lineage"
       ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-03508",
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "Canonical action-ID and blocked-action carrythrough are partly visible, but the scheduler-truth split and full allowed_actions[] retirement are not fully resolved here.",
       "source_obligation_ids": [
-        "obl-3360"
+        "obl-047"
       ],
       "source_seed_ids": [
-        "seed-4484",
-        "seed-5147",
-        "seed-5983",
-        "seed-6074"
+        "seed-047"
       ],
       "source_shard_ids": [
-        "shard-0062",
-        "shard-0070",
-        "shard-0081",
-        "shard-0082"
+        "shard-0010"
       ],
-      "canon_label": "Plans/FileSafe.md",
-      "row_type": "consumer",
-      "path": "Plans/FileSafe.md",
-      "heading_hint": "Candidate fixes to carry forward",
-      "status": "present",
-      "exact_items": [
-        "`Plans/FileSafe.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/FileSafe.md:1103",
-        "Plans/FileSafe.md:302",
-        "Plans/FileSafe.md:62"
-      ],
-      "required_action": "none"
+      "path_field_status": "match"
     },
     {
-      "coverage_id": "cov-04249",
+      "coverage_id": "cov-732",
+      "status": "present",
+      "evidence": [
+        "Plans/Executor_Protocol.md:171 canonical dispatch/runtime packet carries execution_unit_context",
+        "Plans/Executor_Protocol.md:195-220 Unified DispatchContext schema defines required execution_unit_context fields and behavioral rules"
+      ],
+      "required_action": "none",
+      "unresolved_reason": "",
       "source_obligation_ids": [
-        "obl-4095"
+        "obl-201"
       ],
       "source_seed_ids": [
-        "seed-5702"
+        "seed-201"
       ],
       "source_shard_ids": [
-        "shard-0077"
+        "shard-0050"
       ],
-      "canon_label": "Plans/FileSafe.md",
-      "row_type": "consumer",
-      "path": "Plans/FileSafe.md",
-      "heading_hint": "Priority merge",
-      "status": "present",
-      "exact_items": [
-        "`Plans/FileSafe.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/FileSafe.md:1103",
-        "Plans/FileSafe.md:7",
-        "Plans/FileSafe.md:449"
-      ],
-      "required_action": "none"
+      "path_field_status": "match"
     },
     {
-      "coverage_id": "cov-04437",
+      "coverage_id": "cov-072",
+      "status": "partial",
+      "evidence": [
+        "Plans/Executor_Protocol.md:171-193 canonical execution_unit_context field table includes run, node, attempt, lane, package, seam, worktree, account, operational_identity, and blocked_sequence fields",
+        "Plans/Executor_Protocol.md:198-220 DispatchContext requires the execution-unit packet and downstream joins"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Executor_Protocol.md covers execution-unit context generally, but not the full tier-rooted runtime/storage identity gap set across active-agents, storage records, progression gates, prompt pipeline, and event schemas.",
       "source_obligation_ids": [
-        "obl-4262"
+        "obl-030"
       ],
       "source_seed_ids": [
-        "seed-6087"
+        "seed-030"
       ],
       "source_shard_ids": [
-        "shard-0082"
+        "shard-0007"
       ],
-      "canon_label": "39",
-      "row_type": "consumer",
-      "path": "Plans/FileSafe.md",
-      "heading_hint": "Do-not-forget details",
-      "status": "present",
-      "exact_items": [
-        "Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes."
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/FileSafe.md:2448",
-        "Plans/FileSafe.md:61",
-        "Plans/FileSafe.md:3",
-        "Plans/FileSafe.md:18",
-        "Plans/FileSafe.md:54",
-        "Plans/FileSafe.md:114",
-        "Plans/FileSafe.md:72"
-      ],
-      "required_action": "none"
+      "path_field_status": "match"
     },
     {
-      "coverage_id": "cov-04520",
+      "coverage_id": "cov-489",
+      "status": "partial",
+      "evidence": [
+        "Plans/Executor_Protocol.md:179 attempt_id is part of execution_unit_context",
+        "Plans/Executor_Protocol.md:184 execution_role is part of execution_unit_context",
+        "Plans/Executor_Protocol.md:217-220 downstream consumers join losslessly to runtime records"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Executor_Protocol.md has execution-context fields, but does not fully cover stream-schema ownership, actor-envelope completeness, reserved diagnostic categories, or normalized stream detail keys.",
       "source_obligation_ids": [
-        "obl-4283"
+        "obl-141"
       ],
       "source_seed_ids": [
-        "seed-6167"
+        "seed-141"
       ],
       "source_shard_ids": [
-        "shard-0082"
+        "shard-0035"
       ],
-      "canon_label": "Plans/*.md",
-      "row_type": "layout_blocker",
-      "path": "Plans/FileSafe.md",
-      "heading_hint": "Do-not-forget details",
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-624",
       "status": "present",
-      "exact_items": [
-        "After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes."
-      ],
-      "stale_tokens": [],
       "evidence": [
-        "Plans/FileSafe.md:61",
-        "Plans/FileSafe.md:449",
-        "Plans/FileSafe.md:3",
-        "Plans/FileSafe.md:147",
-        "Plans/FileSafe.md:54",
-        "Plans/FileSafe.md:18",
-        "Plans/FileSafe.md:1435",
-        "Plans/FileSafe.md:2383",
-        "Plans/FileSafe.md:89",
-        "Plans/FileSafe.md:72"
+        "Plans/Executor_Protocol.md:171 canonical dispatch/runtime packet carries execution_unit_context",
+        "Plans/Executor_Protocol.md:173-191 authoritative execution_unit_context fields are listed",
+        "Plans/Executor_Protocol.md:195-220 DispatchContext schema and behavior are defined"
       ],
-      "required_action": "none"
+      "required_action": "none",
+      "unresolved_reason": "",
+      "source_obligation_ids": [
+        "obl-175"
+      ],
+      "source_seed_ids": [
+        "seed-175"
+      ],
+      "source_shard_ids": [
+        "shard-0044"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-706",
+      "status": "partial",
+      "evidence": [
+        "Plans/Executor_Protocol.md:190 blocked_sequence is part of execution_unit_context",
+        "Plans/Executor_Protocol.md:214 blocked_sequence is a required DispatchContext field",
+        "Plans/Executor_Protocol.md:217-220 recovery/remediation/inspection read one execution-unit packet and blocked-action carrythrough stays anchored to blocked-episode lineage"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Execution context and blocked_sequence fields are present, but minting ownership, startup recovery, storage families, and validation/wizard lineage bridges are not fully resolved.",
+      "source_obligation_ids": [
+        "obl-195"
+      ],
+      "source_seed_ids": [
+        "seed-195"
+      ],
+      "source_shard_ids": [
+        "shard-0049"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-734",
+      "status": "present",
+      "evidence": [
+        "Plans/Executor_Protocol.md:171-193 execution_unit_context packet and authoritative fields are defined",
+        "Plans/Executor_Protocol.md:195-220 Unified DispatchContext schema defines runtime dispatch fields and behavior"
+      ],
+      "required_action": "none",
+      "unresolved_reason": "",
+      "source_obligation_ids": [
+        "obl-203"
+      ],
+      "source_seed_ids": [
+        "seed-203"
+      ],
+      "source_shard_ids": [
+        "shard-0051"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-1056",
+      "status": "partial",
+      "evidence": [
+        "Plans/Executor_Protocol.md:155-167 node verification lifecycle rules are present",
+        "Plans/Executor_Protocol.md:171-220 execution_unit_context and dispatch context are present"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Executor_Protocol.md addresses lifecycle and dispatch identity, but not the storage-plan blocked/runtime node-native reconciliation gap directly.",
+      "source_obligation_ids": [
+        "obl-300"
+      ],
+      "source_seed_ids": [
+        "seed-300"
+      ],
+      "source_shard_ids": [
+        "shard-0076"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-1143",
+      "status": "missing",
+      "evidence": [
+        "Plans/Executor_Protocol.md:11-26 generic retired-token-safe wording appears for cov-004, but no persona_override_owner_id, tier_id, or Prompt Pipeline stale scope vocabulary coverage was found"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "The assigned Prompt Pipeline stale-scope cleanup is not covered by the generic retired-token-safe addendum in Executor_Protocol.md.",
+      "source_obligation_ids": [
+        "obl-332"
+      ],
+      "source_seed_ids": [
+        "seed-332"
+      ],
+      "source_shard_ids": [
+        "shard-0084"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-1152",
+      "status": "partial",
+      "evidence": [
+        "Plans/Executor_Protocol.md:88-100 package/seam overseer and runtime scheduler relationship is defined",
+        "Plans/Executor_Protocol.md:171-220 execution_unit_context and DispatchContext are defined"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Executor_Protocol.md defines execution-unit context and scheduler/overseer roles, but the explicit replacement relationship to TierContext is not fully stated in the checked section.",
+      "source_obligation_ids": [
+        "obl-335"
+      ],
+      "source_seed_ids": [
+        "seed-335"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-1172",
+      "status": "missing",
+      "evidence": [
+        "Plans/Executor_Protocol.md:195-220 dispatch context behavior exists, but no MUST CHANGE / MUST RECONCILE / MUST VERIFY packet inclusion category coverage was found"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Assigned packet inclusion categories are absent from Plans/Executor_Protocol.md.",
+      "source_obligation_ids": [
+        "obl-339"
+      ],
+      "source_seed_ids": [
+        "seed-339"
+      ],
+      "source_shard_ids": [
+        "shard-0086"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-1225",
+      "status": "partial",
+      "evidence": [
+        "Plans/Executor_Protocol.md:184-190 execution_role, requested_account_id, operational_identity, and blocked_sequence fields are listed",
+        "Plans/Executor_Protocol.md:208-214 DispatchContext requires execution_role, requested_account_id, operational_identity, and blocked_sequence"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Executor_Protocol.md includes the identity and blocked-sequence fields, but the full ownership-gaps treatment remains incomplete.",
+      "source_obligation_ids": [
+        "obl-346"
+      ],
+      "source_seed_ids": [
+        "seed-346"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "path_field_status": "match"
     }
   ]
 }

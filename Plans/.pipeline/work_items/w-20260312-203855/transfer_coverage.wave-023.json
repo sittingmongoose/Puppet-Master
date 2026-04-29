@@ -1,501 +1,215 @@
 {
-  "schema_id": "pm.transfer_coverage_wave.v1",
+  "schema_id": "pm.transfer_coverage_wave.v3",
   "work_id": "w-20260312-203855",
   "wave_id": "wave-023",
-  "row_groups": [
-    "rowgrp-0089",
-    "rowgrp-0090",
-    "rowgrp-0091",
-    "rowgrp-0092"
+  "timestamp_utc": "2026-04-28T20:16:46Z",
+  "subagent_tasks": [
+    "coverage-rowgrp-089",
+    "coverage-rowgrp-090",
+    "coverage-rowgrp-091",
+    "coverage-rowgrp-092"
   ],
-  "coverage_rows": [
+  "assigned_input_boundaries": [
+    "rowgrp-089 cov-160,cov-198,cov-419,cov-430 Plans/GitHub_Integration.md",
+    "rowgrp-090 cov-348 Plans/GitHub_Integration.md",
+    "rowgrp-091 cov-451 Plans/Glossary.md",
+    "rowgrp-092 cov-130,cov-358 Plans/Glossary.md"
+  ],
+  "subagent_result_status": {
+    "coverage-rowgrp-089": "completed_reduced_conservatively",
+    "coverage-rowgrp-090": "completed_reduced_conservatively",
+    "coverage-rowgrp-091": "completed_reduced_conservatively",
+    "coverage-rowgrp-092": "completed_reduced_conservatively"
+  },
+  "completed_task_count": 4,
+  "failed_task_count": 0,
+  "coverage_ids_assigned": [
+    "cov-160",
+    "cov-198",
+    "cov-419",
+    "cov-430",
+    "cov-348",
+    "cov-451",
+    "cov-130",
+    "cov-358"
+  ],
+  "coverage_ids_completed": [
+    "cov-160",
+    "cov-198",
+    "cov-419",
+    "cov-430",
+    "cov-348",
+    "cov-451",
+    "cov-130",
+    "cov-358"
+  ],
+  "path_groups_assigned": [
+    "Plans/GitHub_Integration.md",
+    "Plans/Glossary.md"
+  ],
+  "rows": [
     {
-      "coverage_id": "cov-05378",
-      "source_obligation_ids": [
-        "obl-5019"
-      ],
-      "source_seed_ids": [
-        "seed-7214"
-      ],
-      "source_shard_ids": [
-        "shard-0092"
-      ],
-      "canon_label": "Plans/Models_System.md:58-80",
-      "row_type": "consumer",
-      "path": "Plans/Models_System.md",
-      "heading_hint": "",
-      "status": "missing",
-      "exact_items": [
-        "`Plans/Models_System.md:58-80`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/Models_System.md:required_terms_absent"
-      ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-05387",
-      "source_obligation_ids": [
-        "obl-5026"
-      ],
-      "source_seed_ids": [
-        "seed-7221"
-      ],
-      "source_shard_ids": [
-        "shard-0092"
-      ],
-      "canon_label": "Plans/storage-plan.md",
-      "row_type": "consumer",
-      "path": "Plans/Models_System.md",
-      "heading_hint": "",
-      "status": "present",
-      "exact_items": [
-        "Highest-pressure docs for condensation are `Plans/storage-plan.md`, `Plans/Contracts_V0.md`, `Plans/Models_System.md`, `Plans/Executor_Protocol.md`, `Plans/WorktreeGitImprovement.md`, `Plans/Crosswalk.md`, and `Plans/Orchestrator_Page.md`."
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/Models_System.md:125",
-        "Plans/Models_System.md:19",
-        "Plans/Models_System.md:14",
-        "Plans/Models_System.md:219"
-      ],
-      "required_action": "none"
-    },
-    {
-      "coverage_id": "cov-04531",
-      "source_obligation_ids": [
-        "obl-4283"
-      ],
-      "source_seed_ids": [
-        "seed-6167"
-      ],
-      "source_shard_ids": [
-        "shard-0082"
-      ],
-      "canon_label": "Plans/*.md",
-      "row_type": "layout_blocker",
-      "path": "Plans/Models_System.md",
-      "heading_hint": "Do-not-forget details",
-      "status": "present",
-      "exact_items": [
-        "After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes."
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/Models_System.md:56",
-        "Plans/Models_System.md:14",
-        "Plans/Models_System.md:48",
-        "Plans/Models_System.md:927",
-        "Plans/Models_System.md:1",
-        "Plans/Models_System.md:922"
-      ],
-      "required_action": "none"
-    },
-    {
-      "coverage_id": "cov-00418",
-      "source_obligation_ids": [
-        "obl-0416"
-      ],
-      "source_seed_ids": [
-        "seed-0421"
-      ],
-      "source_shard_ids": [
-        "shard-0007"
-      ],
-      "canon_label": "Plans/Multi-Account.md",
-      "row_type": "consumer",
-      "path": "Plans/Multi-Account.md",
-      "heading_hint": "Settings / Provider / Persona / Account Impacts",
-      "status": "present",
-      "exact_items": [
-        "`Plans/Multi-Account.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/Multi-Account.md:16",
-        "Plans/Multi-Account.md:327",
-        "Plans/Multi-Account.md:13",
-        "Plans/Multi-Account.md:53",
-        "Plans/Multi-Account.md:1"
-      ],
-      "required_action": "none"
-    },
-    {
-      "coverage_id": "cov-00607",
-      "source_obligation_ids": [
-        "obl-0571"
-      ],
-      "source_seed_ids": [
-        "seed-0576"
-      ],
-      "source_shard_ids": [
-        "shard-0008"
-      ],
-      "canon_label": "Plans/WorktreeGitImprovement.md",
-      "row_type": "consumer",
-      "path": "Plans/Multi-Account.md",
-      "heading_hint": "Highest-Impact Docs",
+      "coverage_id": "cov-160",
       "status": "partial",
-      "exact_items": [
-        "**`Plans/WorktreeGitImprovement.md` + `Plans/GitHub_Integration.md` + `Plans/Multi-Account.md`**"
-      ],
-      "stale_tokens": [],
       "evidence": [
-        "Plans/Multi-Account.md:16",
-        "Plans/Multi-Account.md:135"
+        "Plans/GitHub_Integration.md:111 consumes runtime identity GitHub_AuthContext",
+        "Plans/GitHub_Integration.md:112 all GitHub API calls include effective_account_id for audit",
+        "Plans/GitHub_Integration.md:113 cross-org account changes use runtime identity resolution rather than silent re-auth"
       ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-00714",
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Effective account identity and account-context handling are present, but requested/effective pairing, fallback reason, and account-switching disclosure are not fully stated.",
       "source_obligation_ids": [
-        "obl-0658"
+        "obl-043"
       ],
       "source_seed_ids": [
-        "seed-0664"
+        "seed-043"
       ],
       "source_shard_ids": [
         "shard-0010"
       ],
-      "canon_label": "Plans/Multi-Account.md",
-      "row_type": "consumer",
-      "path": "Plans/Multi-Account.md",
-      "heading_hint": "Settings / Provider / Persona / Account Impacts",
-      "status": "present",
-      "exact_items": [
-        "`Plans/Multi-Account.md`, `Plans/GitHub_API_Auth_and_Flows.md`, `Plans/GitHub_Integration.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/Multi-Account.md:16",
-        "Plans/Multi-Account.md:235",
-        "Plans/Multi-Account.md:327",
-        "Plans/Multi-Account.md:13",
-        "Plans/Multi-Account.md:53",
-        "Plans/Multi-Account.md:1"
-      ],
-      "required_action": "none"
+      "path_field_status": "match"
     },
     {
-      "coverage_id": "cov-00774",
+      "coverage_id": "cov-198",
+      "status": "present",
+      "evidence": [
+        "Plans/GitHub_Integration.md:11 keeps Orchestrator as lane-pool operational truth and Source Control as concrete repo/worktree operator",
+        "Plans/GitHub_Integration.md:12 worktree rows show owning package/lane/run refs plus lifecycle and blocked/recovery state"
+      ],
+      "required_action": "none",
+      "unresolved_reason": "",
       "source_obligation_ids": [
-        "obl-0706"
+        "obl-053"
       ],
       "source_seed_ids": [
-        "seed-0734",
-        "seed-1156",
-        "seed-1214",
-        "seed-1236",
-        "seed-1476",
-        "seed-1492",
-        "seed-1968",
-        "seed-2045",
-        "seed-2119",
-        "seed-2227",
-        "seed-2352",
-        "seed-2452",
-        "seed-2478",
-        "seed-2546",
-        "seed-2567",
-        "seed-2720",
-        "seed-3425"
+        "seed-053"
       ],
       "source_shard_ids": [
-        "shard-0010",
-        "shard-0019",
-        "shard-0021",
-        "shard-0026",
-        "shard-0027",
-        "shard-0034",
-        "shard-0035",
-        "shard-0036",
-        "shard-0037",
-        "shard-0039",
-        "shard-0040",
-        "shard-0041",
-        "shard-0043",
-        "shard-0051"
+        "shard-0012"
       ],
-      "canon_label": "Plans/Multi-Account.md",
-      "row_type": "consumer",
-      "path": "Plans/Multi-Account.md",
-      "heading_hint": "Targeted docs read",
-      "status": "present",
-      "exact_items": [
-        "`Plans/Multi-Account.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/Multi-Account.md:16",
-        "Plans/Multi-Account.md:135",
-        "Plans/Multi-Account.md:136"
-      ],
-      "required_action": "none"
+      "path_field_status": "match"
     },
     {
-      "coverage_id": "cov-00785",
-      "source_obligation_ids": [
-        "obl-0717"
-      ],
-      "source_seed_ids": [
-        "seed-0745",
-        "seed-1983",
-        "seed-2061",
-        "seed-2243",
-        "seed-2371",
-        "seed-2500"
-      ],
-      "source_shard_ids": [
-        "shard-0011",
-        "shard-0034",
-        "shard-0035",
-        "shard-0037",
-        "shard-0039",
-        "shard-0040"
-      ],
-      "canon_label": "Plans/Multi-Account.md",
-      "row_type": "consumer",
-      "path": "Plans/Multi-Account.md",
-      "heading_hint": "Highest-risk impacted docs",
+      "coverage_id": "cov-419",
       "status": "partial",
-      "exact_items": [
-        "`Plans/Multi-Account.md`"
-      ],
-      "stale_tokens": [],
       "evidence": [
-        "Plans/Multi-Account.md:16",
-        "Plans/Multi-Account.md:135"
+        "Plans/GitHub_Integration.md:111 consumes runtime identity GitHub_AuthContext",
+        "Plans/GitHub_Integration.md:112 effective_account_id is included so audit shows which account performed the operation",
+        "Plans/GitHub_Integration.md:113 account-context changes use runtime identity resolution flow"
       ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-02157",
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "GitHub identity disclosure exists, but a shared requested/effective identity disclosure contract across graph detail, artifacts, GitHub/auth, and usage/account-pressure is not fully present.",
       "source_obligation_ids": [
-        "obl-2078"
+        "obl-124"
       ],
       "source_seed_ids": [
-        "seed-2468",
-        "seed-2557",
-        "seed-2576",
-        "seed-3443",
-        "seed-3506",
-        "seed-3826",
-        "seed-3920",
-        "seed-4164",
-        "seed-4475",
-        "seed-4664",
-        "seed-5135",
-        "seed-5973",
-        "seed-6060",
-        "seed-6148",
-        "seed-6308"
+        "seed-124"
       ],
       "source_shard_ids": [
-        "shard-0040",
-        "shard-0041",
-        "shard-0042",
-        "shard-0052",
-        "shard-0056",
-        "shard-0058",
-        "shard-0062",
-        "shard-0064",
-        "shard-0070",
-        "shard-0081",
-        "shard-0082",
-        "shard-0084"
+        "shard-0031"
       ],
-      "canon_label": "Plans/Multi-Account.md",
-      "row_type": "consumer",
-      "path": "Plans/Multi-Account.md",
-      "heading_hint": "Impacted docs",
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-430",
+      "status": "missing",
+      "evidence": [
+        "Plans/GitHub_Integration.md: assigned file reviewed; no seam_id/package_id/lane_id/attempt_id first-class attribution or tier-era event/widget deprecation found"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Storage/usage attribution pivot away from tier-era routing is absent from the assigned path.",
+      "source_obligation_ids": [
+        "obl-125"
+      ],
+      "source_seed_ids": [
+        "seed-125"
+      ],
+      "source_shard_ids": [
+        "shard-0031"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-348",
       "status": "partial",
-      "exact_items": [
-        "`Plans/Multi-Account.md`"
-      ],
-      "stale_tokens": [],
       "evidence": [
-        "Plans/Multi-Account.md:16",
-        "Plans/Multi-Account.md:135"
+        "Plans/GitHub_Integration.md:11 Orchestrator is lane-pool operational truth and Source Control is concrete repo/worktree operator",
+        "Plans/GitHub_Integration.md:12 worktree rows show owning package/lane/run refs plus lifecycle and blocked/recovery state"
       ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-03310",
+      "required_action": "stale_retirement",
+      "unresolved_reason": "Lane/worktree ownership relation is present, but lane lifecycle vs worktree lifecycle states and recover/archive/prune/remove split are not fully represented.",
       "source_obligation_ids": [
-        "obl-3198"
+        "obl-103"
       ],
       "source_seed_ids": [
-        "seed-4180"
+        "seed-103"
       ],
       "source_shard_ids": [
-        "shard-0059"
+        "shard-0025"
       ],
-      "canon_label": "Plans/*.md",
-      "row_type": "consumer",
-      "path": "Plans/Multi-Account.md",
-      "heading_hint": "Do-not-forget details",
-      "status": "present",
-      "exact_items": [
-        "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage."
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/Multi-Account.md:108",
-        "Plans/Multi-Account.md:35",
-        "Plans/Multi-Account.md:16",
-        "Plans/Multi-Account.md:135",
-        "Plans/Multi-Account.md:39",
-        "Plans/Multi-Account.md:123",
-        "Plans/Multi-Account.md:5",
-        "Plans/Multi-Account.md:7",
-        "Plans/Multi-Account.md:47",
-        "Plans/Multi-Account.md:549"
-      ],
-      "required_action": "none"
+      "path_field_status": "match"
     },
     {
-      "coverage_id": "cov-04253",
-      "source_obligation_ids": [
-        "obl-4099"
-      ],
-      "source_seed_ids": [
-        "seed-5706"
-      ],
-      "source_shard_ids": [
-        "shard-0077"
-      ],
-      "canon_label": "Plans/Multi-Account.md",
-      "row_type": "consumer",
-      "path": "Plans/Multi-Account.md",
-      "heading_hint": "Priority merge",
-      "status": "present",
-      "exact_items": [
-        "`Plans/Multi-Account.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/Multi-Account.md:16",
-        "Plans/Multi-Account.md:186",
-        "Plans/Multi-Account.md:330"
-      ],
-      "required_action": "none"
-    },
-    {
-      "coverage_id": "cov-04449",
-      "source_obligation_ids": [
-        "obl-4262"
-      ],
-      "source_seed_ids": [
-        "seed-6087"
-      ],
-      "source_shard_ids": [
-        "shard-0082"
-      ],
-      "canon_label": "39",
-      "row_type": "consumer",
-      "path": "Plans/Multi-Account.md",
-      "heading_hint": "Do-not-forget details",
-      "status": "present",
-      "exact_items": [
-        "Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes."
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/Multi-Account.md:8",
-        "Plans/Multi-Account.md:124",
-        "Plans/Multi-Account.md:383",
-        "Plans/Multi-Account.md:16",
-        "Plans/Multi-Account.md:135",
-        "Plans/Multi-Account.md:281",
-        "Plans/Multi-Account.md:108",
-        "Plans/Multi-Account.md:549"
-      ],
-      "required_action": "none"
-    },
-    {
-      "coverage_id": "cov-04798",
-      "source_obligation_ids": [
-        "obl-4513"
-      ],
-      "source_seed_ids": [
-        "seed-6505"
-      ],
-      "source_shard_ids": [
-        "shard-0086"
-      ],
-      "canon_label": "Plans/Multi-Account.md",
-      "row_type": "consumer",
-      "path": "Plans/Multi-Account.md",
-      "heading_hint": "Docs probably implicated",
+      "coverage_id": "cov-451",
       "status": "partial",
-      "exact_items": [
-        "`Plans/Multi-Account.md`"
-      ],
-      "stale_tokens": [],
       "evidence": [
-        "Plans/Multi-Account.md:16",
-        "Plans/Multi-Account.md:135"
+        "Plans/Glossary.md:62-64 defines Inline Help, Context Help, and Canonical Help Entry with stable canonical term names",
+        "Plans/Glossary.md:66 requires canonical names verbatim across rewrite docs",
+        "Plans/Glossary.md:120 related-concept clusters allow inline help, context help, and full help views to pivot without inventing new terminology"
       ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-04832",
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "Three help depths and anti-drift naming are covered, but click/hover term/badge/state behavior is not fully specified.",
       "source_obligation_ids": [
-        "obl-4547"
+        "obl-132"
       ],
       "source_seed_ids": [
-        "seed-6539"
+        "seed-132"
       ],
       "source_shard_ids": [
-        "shard-0086"
+        "shard-0033"
       ],
-      "canon_label": "Plans/Multi-Account.md",
-      "row_type": "consumer",
-      "path": "Plans/Multi-Account.md",
-      "heading_hint": "MUST RECONCILE",
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-130",
       "status": "partial",
-      "exact_items": [
-        "`Plans/Multi-Account.md`"
-      ],
-      "stale_tokens": [],
       "evidence": [
-        "Plans/Multi-Account.md:16"
+        "Plans/Glossary.md:56-68 defines Orchestrator rewrite terms and links Contracts, Orchestrator_Page, and FinalGUISpec",
+        "Plans/Glossary.md:146-154 PatchPipeline and SessionStore reference WorktreeGitImprovement, GitHub auth, and storage-plan ownership"
       ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-04976",
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "Glossary has related consumer terms and cross-doc ownership links, but not the full impacted-doc bundle set or stale-token pressure list.",
       "source_obligation_ids": [
-        "obl-4675"
+        "obl-036"
       ],
       "source_seed_ids": [
-        "seed-6667"
+        "seed-036"
       ],
       "source_shard_ids": [
-        "shard-0088"
+        "shard-0008"
       ],
-      "canon_label": "Plans/Orchestrator_Page.md",
-      "row_type": "consumer",
-      "path": "Plans/Multi-Account.md",
-      "heading_hint": "Export / settings / persona transfer gaps are broader than first summarized",
-      "status": "present",
-      "exact_items": [
-        "`Plans/Orchestrator_Page.md`, `Plans/storage-plan.md`, `Plans/FinalGUISpec.md`, `Plans/Models_System.md`, `Plans/Multi-Account.md`, `Plans/Personas.md`, `Plans/Prompt_Pipeline.md`"
-      ],
-      "stale_tokens": [],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-358",
+      "status": "partial",
       "evidence": [
-        "Plans/Multi-Account.md:39",
-        "Plans/Multi-Account.md:60",
-        "Plans/Multi-Account.md:174",
-        "Plans/Multi-Account.md:16",
-        "Plans/Multi-Account.md:55",
-        "Plans/Multi-Account.md:327",
-        "Plans/Multi-Account.md:53",
-        "Plans/Multi-Account.md:104",
-        "Plans/Multi-Account.md:307"
+        "Plans/Glossary.md:62-64 defines inline help, context help, and canonical help entry",
+        "Plans/Glossary.md:94-103 defines help-entry architecture, project status terms, escalation ladder, and resurfacing/aging rules",
+        "Plans/Glossary.md:105-120 defines a help-entry template and related-concept clusters"
       ],
-      "required_action": "none"
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "Help-system architecture is present, but not all distinction-heavy concepts in the row are represented.",
+      "source_obligation_ids": [
+        "obl-106"
+      ],
+      "source_seed_ids": [
+        "seed-106"
+      ],
+      "source_shard_ids": [
+        "shard-0026"
+      ],
+      "path_field_status": "match"
     }
   ]
 }

@@ -1,1392 +1,295 @@
 {
-  "schema_id": "pm.transfer_coverage_wave.v1",
+  "schema_id": "pm.transfer_coverage_wave.v3",
   "work_id": "w-20260312-203855",
   "wave_id": "wave-014",
-  "row_groups": [
-    "rowgrp-0053",
-    "rowgrp-0054",
-    "rowgrp-0055",
-    "rowgrp-0056"
+  "timestamp_utc": "2026-04-28T19:49:20Z",
+  "subagent_tasks": [
+    "coverage-rowgrp-053",
+    "coverage-rowgrp-054",
+    "coverage-rowgrp-055",
+    "coverage-rowgrp-056"
   ],
-  "coverage_rows": [
+  "assigned_input_boundaries": [
+    "rowgrp-053 cov-1245,cov-1269 Plans/Executor_Protocol.md",
+    "rowgrp-054 cov-038,cov-111,cov-132,cov-610,cov-637 Plans/Executor_Protocol.md",
+    "rowgrp-055 cov-928 Plans/FileManager.md",
+    "rowgrp-056 cov-774,cov-784,cov-1039,cov-1216 Plans/FileManager.md"
+  ],
+  "subagent_result_status": {
+    "coverage-rowgrp-053": "completed",
+    "coverage-rowgrp-054": "completed_reduced_conservatively",
+    "coverage-rowgrp-055": "completed",
+    "coverage-rowgrp-056": "completed"
+  },
+  "completed_task_count": 4,
+  "failed_task_count": 0,
+  "coverage_ids_assigned": [
+    "cov-1245",
+    "cov-1269",
+    "cov-038",
+    "cov-111",
+    "cov-132",
+    "cov-610",
+    "cov-637",
+    "cov-928",
+    "cov-774",
+    "cov-784",
+    "cov-1039",
+    "cov-1216"
+  ],
+  "coverage_ids_completed": [
+    "cov-1245",
+    "cov-1269",
+    "cov-038",
+    "cov-111",
+    "cov-132",
+    "cov-610",
+    "cov-637",
+    "cov-928",
+    "cov-774",
+    "cov-784",
+    "cov-1039",
+    "cov-1216"
+  ],
+  "path_groups_assigned": [
+    "Plans/Executor_Protocol.md",
+    "Plans/FileManager.md"
+  ],
+  "rows": [
     {
-      "coverage_id": "cov-00204",
+      "coverage_id": "cov-1245",
+      "status": "missing",
+      "evidence": [
+        "Plans/Executor_Protocol.md:171-191 execution_unit_context packet fields are present, but report_ref, startup_recovered, and escalation_level are absent"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Exact required items are absent from Plans/Executor_Protocol.md; only adjacent packet-field canon exists.",
       "source_obligation_ids": [
-        "obl-0203"
+        "obl-351"
       ],
       "source_seed_ids": [
-        "seed-0203"
+        "seed-351"
+      ],
+      "source_shard_ids": [
+        "shard-0090"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-1269",
+      "status": "present",
+      "evidence": [
+        "Plans/Executor_Protocol.md:616-618 Provider/model acceptance carry-through defines one owner section covering provider/model precedence across run, seam, package, node, overseer, and delegated-subagent levels and ties it to parallel-node worktree assignment and ownership transitions"
+      ],
+      "required_action": "none",
+      "unresolved_reason": "",
+      "source_obligation_ids": [
+        "obl-358"
+      ],
+      "source_seed_ids": [
+        "seed-358"
+      ],
+      "source_shard_ids": [
+        "shard-0092"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-038",
+      "status": "partial",
+      "evidence": [
+        "Plans/Executor_Protocol.md:1 Overseer Protocol heading remains live",
+        "Plans/Executor_Protocol.md:88-95 Package Overseer, Seam Overseer, and Runtime scheduler roles are live"
+      ],
+      "required_action": "stale_retirement",
+      "unresolved_reason": "Overseer vocabulary remains live, while other assigned legacy runtime tokens are not found in the assigned path.",
+      "source_obligation_ids": [
+        "obl-024"
+      ],
+      "source_seed_ids": [
+        "seed-024"
       ],
       "source_shard_ids": [
         "shard-0004"
       ],
-      "canon_label": "Plans/FinalGUISpec.md",
-      "row_type": "consumer",
-      "path": "Plans/FinalGUISpec.md",
-      "heading_hint": "",
-      "status": "present",
-      "exact_items": [
-        "`Plans/FinalGUISpec.md` still references `phase/task/subtask` progress and mapping editors rather than package/seam governance surfaces"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/FinalGUISpec.md:14",
-        "Plans/FinalGUISpec.md:215",
-        "Plans/FinalGUISpec.md:55",
-        "Plans/FinalGUISpec.md:197",
-        "Plans/FinalGUISpec.md:2132",
-        "Plans/FinalGUISpec.md:12",
-        "Plans/FinalGUISpec.md:161"
-      ],
-      "required_action": "none"
+      "path_field_status": "match"
     },
     {
-      "coverage_id": "cov-00301",
-      "source_obligation_ids": [
-        "obl-0300"
-      ],
-      "source_seed_ids": [
-        "seed-0300",
-        "seed-0310"
-      ],
-      "source_shard_ids": [
-        "shard-0005"
-      ],
-      "canon_label": "Plans/FinalGUISpec.md",
-      "row_type": "consumer",
-      "path": "Plans/FinalGUISpec.md",
-      "heading_hint": "Impacted Docs",
+      "coverage_id": "cov-111",
       "status": "partial",
-      "exact_items": [
-        "`Plans/FinalGUISpec.md`"
-      ],
-      "stale_tokens": [],
       "evidence": [
-        "Plans/FinalGUISpec.md:14",
-        "Plans/FinalGUISpec.md:1853"
+        "Plans/Executor_Protocol.md:117 If multiple nodes are ready simultaneously, Overseer chooses the lexicographically smallest node_id"
       ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-00387",
+      "required_action": "stale_retirement",
+      "unresolved_reason": "Lexicographic selection remains live, but the other assigned contract-drift tokens are not found in the assigned path.",
       "source_obligation_ids": [
-        "obl-0386"
+        "obl-035"
       ],
       "source_seed_ids": [
-        "seed-0391"
-      ],
-      "source_shard_ids": [
-        "shard-0006"
-      ],
-      "canon_label": "Plans/FinalGUISpec.md",
-      "row_type": "consumer",
-      "path": "Plans/FinalGUISpec.md",
-      "heading_hint": "Do-Not-Forget Details",
-      "status": "partial",
-      "exact_items": [
-        "`Plans/FinalGUISpec.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/FinalGUISpec.md:14",
-        "Plans/FinalGUISpec.md:876"
-      ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-00393",
-      "source_obligation_ids": [
-        "obl-0392"
-      ],
-      "source_seed_ids": [
-        "seed-0397"
-      ],
-      "source_shard_ids": [
-        "shard-0006"
-      ],
-      "canon_label": "Plans/FinalGUISpec.md",
-      "row_type": "consumer",
-      "path": "Plans/FinalGUISpec.md",
-      "heading_hint": "Highest-Impact Docs",
-      "status": "partial",
-      "exact_items": [
-        "`Plans/FinalGUISpec.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/FinalGUISpec.md:14",
-        "Plans/FinalGUISpec.md:1853"
-      ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-00399",
-      "source_obligation_ids": [
-        "obl-0398"
-      ],
-      "source_seed_ids": [
-        "seed-0403"
-      ],
-      "source_shard_ids": [
-        "shard-0006"
-      ],
-      "canon_label": "Plans/FinalGUISpec.md",
-      "row_type": "consumer",
-      "path": "Plans/FinalGUISpec.md",
-      "heading_hint": "GUI / UX Impacts",
-      "status": "partial",
-      "exact_items": [
-        "`Plans/FinalGUISpec.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/FinalGUISpec.md:14"
-      ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-00482",
-      "source_obligation_ids": [
-        "obl-0473"
-      ],
-      "source_seed_ids": [
-        "seed-0478"
-      ],
-      "source_shard_ids": [
-        "shard-0007"
-      ],
-      "canon_label": "Plans/FinalGUISpec.md",
-      "row_type": "consumer",
-      "path": "Plans/FinalGUISpec.md",
-      "heading_hint": "Highest-Impact Docs",
-      "status": "present",
-      "exact_items": [
-        "**`Plans/FinalGUISpec.md` + `Plans/Run_Graph_View.md` + `Plans/Widget_System.md`**"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/FinalGUISpec.md:14",
-        "Plans/FinalGUISpec.md:2564",
-        "Plans/FinalGUISpec.md:1168",
-        "Plans/FinalGUISpec.md:1853"
-      ],
-      "required_action": "none"
-    },
-    {
-      "coverage_id": "cov-00546",
-      "source_obligation_ids": [
-        "obl-0525"
-      ],
-      "source_seed_ids": [
-        "seed-0530"
+        "seed-035"
       ],
       "source_shard_ids": [
         "shard-0008"
       ],
-      "canon_label": "Plans/Run_Graph_View.md",
-      "row_type": "consumer",
-      "path": "Plans/FinalGUISpec.md",
-      "heading_hint": "Highest-Impact Docs",
-      "status": "present",
-      "exact_items": [
-        "**`Plans/Run_Graph_View.md` + `Plans/FinalGUISpec.md` + `Plans/assistant-chat-design.md`**"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/FinalGUISpec.md:2564",
-        "Plans/FinalGUISpec.md:14",
-        "Plans/FinalGUISpec.md:273",
-        "Plans/FinalGUISpec.md:1853"
-      ],
-      "required_action": "none"
+      "path_field_status": "match"
     },
     {
-      "coverage_id": "cov-00599",
-      "source_obligation_ids": [
-        "obl-0568"
-      ],
-      "source_seed_ids": [
-        "seed-0573"
-      ],
-      "source_shard_ids": [
-        "shard-0008"
-      ],
-      "canon_label": "Plans/FinalGUISpec.md",
-      "row_type": "consumer",
-      "path": "Plans/FinalGUISpec.md",
-      "heading_hint": "Highest-Impact Docs",
-      "status": "present",
-      "exact_items": [
-        "**`Plans/FinalGUISpec.md` + `Plans/Run_Graph_View.md` + `Plans/Widget_System.md` + `Plans/UI_Command_Catalog.md`**"
-      ],
-      "stale_tokens": [],
+      "coverage_id": "cov-132",
+      "status": "missing",
       "evidence": [
-        "Plans/FinalGUISpec.md:14",
-        "Plans/FinalGUISpec.md:2564",
-        "Plans/FinalGUISpec.md:1168",
-        "Plans/FinalGUISpec.md:367",
-        "Plans/FinalGUISpec.md:1853"
+        "Plans/Executor_Protocol.md: assigned file reviewed; no plan shards, JSON sidecars, or event/projection docs runtime-truth relocation coverage found"
       ],
-      "required_action": "none"
-    },
-    {
-      "coverage_id": "cov-00634",
+      "required_action": "stale_retirement",
+      "unresolved_reason": "No live evidence for cov-132 runtime-truth relocation wording in the assigned path.",
       "source_obligation_ids": [
-        "obl-0596"
+        "obl-037"
       ],
       "source_seed_ids": [
-        "seed-0601",
-        "seed-0679"
-      ],
-      "source_shard_ids": [
-        "shard-0009",
-        "shard-0010"
-      ],
-      "canon_label": "Plans/FinalGUISpec.md",
-      "row_type": "consumer",
-      "path": "Plans/FinalGUISpec.md",
-      "heading_hint": "Cleanup Priorities",
-      "status": "partial",
-      "exact_items": [
-        "`Plans/FinalGUISpec.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/FinalGUISpec.md:14",
-        "Plans/FinalGUISpec.md:634"
-      ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-00683",
-      "source_obligation_ids": [
-        "obl-0637"
-      ],
-      "source_seed_ids": [
-        "seed-0643"
+        "seed-037"
       ],
       "source_shard_ids": [
         "shard-0009"
       ],
-      "canon_label": "Plans/FinalGUISpec.md",
-      "row_type": "consumer",
-      "path": "Plans/FinalGUISpec.md",
-      "heading_hint": "GUI / UX Impacts",
-      "status": "present",
-      "exact_items": [
-        "`Plans/FinalGUISpec.md`, `Plans/assistant-chat-design.md`, `Plans/chain-wizard-flexibility.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/FinalGUISpec.md:14",
-        "Plans/FinalGUISpec.md:273",
-        "Plans/FinalGUISpec.md:1887"
-      ],
-      "required_action": "none"
+      "path_field_status": "match"
     },
     {
-      "coverage_id": "cov-00756",
-      "source_obligation_ids": [
-        "obl-0688"
-      ],
-      "source_seed_ids": [
-        "seed-0716",
-        "seed-0843",
-        "seed-0883",
-        "seed-0933",
-        "seed-0966",
-        "seed-1012",
-        "seed-1041",
-        "seed-1072",
-        "seed-1104",
-        "seed-1129",
-        "seed-1160",
-        "seed-1186",
-        "seed-1210",
-        "seed-1232",
-        "seed-1265",
-        "seed-1293",
-        "seed-1334",
-        "seed-1369",
-        "seed-1420",
-        "seed-1442",
-        "seed-1473",
-        "seed-1491",
-        "seed-1513",
-        "seed-1538",
-        "seed-1584",
-        "seed-1627",
-        "seed-1648",
-        "seed-1825",
-        "seed-1859",
-        "seed-2159",
-        "seed-2197",
-        "seed-2267",
-        "seed-2293",
-        "seed-2316",
-        "seed-2420",
-        "seed-2455",
-        "seed-2572",
-        "seed-2590",
-        "seed-2839",
-        "seed-2886",
-        "seed-2932",
-        "seed-3053",
-        "seed-3131",
-        "seed-3695",
-        "seed-3728",
-        "seed-4030",
-        "seed-4063",
-        "seed-4090",
-        "seed-4181",
-        "seed-4210",
-        "seed-4231",
-        "seed-4346",
-        "seed-4371",
-        "seed-4400",
-        "seed-4492",
-        "seed-4520",
-        "seed-4556",
-        "seed-4581",
-        "seed-4597",
-        "seed-4686",
-        "seed-4727",
-        "seed-4826",
-        "seed-4858",
-        "seed-4890",
-        "seed-4911",
-        "seed-4943",
-        "seed-4963",
-        "seed-4982",
-        "seed-5033",
-        "seed-5048",
-        "seed-5161",
-        "seed-5215",
-        "seed-5233",
-        "seed-5315",
-        "seed-5476",
-        "seed-5527",
-        "seed-5543",
-        "seed-5899",
-        "seed-6322"
-      ],
-      "source_shard_ids": [
-        "shard-0010",
-        "shard-0012",
-        "shard-0013",
-        "shard-0014",
-        "shard-0015",
-        "shard-0016",
-        "shard-0017",
-        "shard-0018",
-        "shard-0019",
-        "shard-0020",
-        "shard-0021",
-        "shard-0022",
-        "shard-0023",
-        "shard-0024",
-        "shard-0025",
-        "shard-0026",
-        "shard-0027",
-        "shard-0028",
-        "shard-0029",
-        "shard-0030",
-        "shard-0033",
-        "shard-0036",
-        "shard-0037",
-        "shard-0038",
-        "shard-0039",
-        "shard-0040",
-        "shard-0041",
-        "shard-0042",
-        "shard-0045",
-        "shard-0046",
-        "shard-0047",
-        "shard-0048",
-        "shard-0054",
-        "shard-0055",
-        "shard-0057",
-        "shard-0058",
-        "shard-0059",
-        "shard-0061",
-        "shard-0062",
-        "shard-0063",
-        "shard-0064",
-        "shard-0065",
-        "shard-0066",
-        "shard-0067",
-        "shard-0068",
-        "shard-0069",
-        "shard-0070",
-        "shard-0072",
-        "shard-0073",
-        "shard-0074",
-        "shard-0075",
-        "shard-0080",
-        "shard-0084"
-      ],
-      "canon_label": "Plans/FinalGUISpec.md",
-      "row_type": "consumer",
-      "path": "Plans/FinalGUISpec.md",
-      "heading_hint": "Targeted docs read",
-      "status": "present",
-      "exact_items": [
-        "`Plans/FinalGUISpec.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/FinalGUISpec.md:14",
-        "Plans/FinalGUISpec.md:1057",
-        "Plans/FinalGUISpec.md:1853",
-        "Plans/FinalGUISpec.md:71"
-      ],
-      "required_action": "none"
-    },
-    {
-      "coverage_id": "cov-00847",
-      "source_obligation_ids": [
-        "obl-0778"
-      ],
-      "source_seed_ids": [
-        "seed-0810",
-        "seed-0871"
-      ],
-      "source_shard_ids": [
-        "shard-0011",
-        "shard-0012"
-      ],
-      "canon_label": "Plans/FinalGUISpec.md",
-      "row_type": "consumer",
-      "path": "Plans/FinalGUISpec.md",
-      "heading_hint": "Contradictions / gaps surfaced",
+      "coverage_id": "cov-610",
       "status": "partial",
-      "exact_items": [
-        "`Plans/FinalGUISpec.md`"
-      ],
-      "stale_tokens": [],
       "evidence": [
-        "Plans/FinalGUISpec.md:14",
-        "Plans/FinalGUISpec.md:395"
+        "Plans/Executor_Protocol.md:171-220 node-native execution_unit_context and DispatchContext are present",
+        "Plans/Executor_Protocol.md:587-599 tier-era vocabulary is deprecated and execution_unit_context is canonical"
       ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-00871",
+      "required_action": "stale_retirement",
+      "unresolved_reason": "Executor_Protocol.md partially addresses node-native execution and tier-era retirement, but does not fully cover concern model, corroboration lifecycle, or wake reasons.",
       "source_obligation_ids": [
-        "obl-0802"
+        "obl-170"
       ],
       "source_seed_ids": [
-        "seed-0834"
+        "seed-170"
       ],
       "source_shard_ids": [
-        "shard-0012"
+        "shard-0042"
       ],
-      "canon_label": "Plans/FinalGUISpec.md",
-      "row_type": "consumer",
-      "path": "Plans/FinalGUISpec.md",
-      "heading_hint": "Follow-on doc impact",
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-637",
       "status": "partial",
-      "exact_items": [
-        "`Plans/FinalGUISpec.md`"
-      ],
-      "stale_tokens": [],
       "evidence": [
-        "Plans/FinalGUISpec.md:14",
-        "Plans/FinalGUISpec.md:105"
+        "Plans/Executor_Protocol.md:587-599 tier-era vocabulary is deprecated; execution_unit_context is canonical runtime-facing context and retired tier-era context/identifier are not canonical runtime fields"
       ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-01688",
+      "required_action": "stale_retirement",
+      "unresolved_reason": "Tier-era migration/retirement is present, but the row's broader legacy tier language/key migration coverage is not fully closed.",
       "source_obligation_ids": [
-        "obl-1619"
+        "obl-178"
       ],
       "source_seed_ids": [
-        "seed-1837",
-        "seed-1871",
-        "seed-1907",
-        "seed-2178",
-        "seed-2211",
-        "seed-2301",
-        "seed-2332",
-        "seed-2469",
-        "seed-2581",
-        "seed-2701",
-        "seed-2766",
-        "seed-3149",
-        "seed-3708",
-        "seed-3746",
-        "seed-3922",
-        "seed-4042",
-        "seed-4077",
-        "seed-4096",
-        "seed-4190",
-        "seed-4221",
-        "seed-4240",
-        "seed-4273",
-        "seed-4306",
-        "seed-4335",
-        "seed-4364",
-        "seed-4385",
-        "seed-4419",
-        "seed-4468",
-        "seed-4507",
-        "seed-4537",
-        "seed-4566",
-        "seed-4588",
-        "seed-4620",
-        "seed-4660",
-        "seed-4704",
-        "seed-4739",
-        "seed-4845",
-        "seed-4899",
-        "seed-4932",
-        "seed-4953",
-        "seed-4973",
-        "seed-5041",
-        "seed-5061",
-        "seed-5133",
-        "seed-5174",
-        "seed-5225",
-        "seed-5244",
-        "seed-5326",
-        "seed-5485",
-        "seed-5536",
-        "seed-5556",
-        "seed-5903",
-        "seed-5971",
-        "seed-6058",
-        "seed-6146",
-        "seed-6188",
-        "seed-6246",
-        "seed-6332",
-        "seed-6370",
-        "seed-6401",
-        "seed-6437"
+        "seed-178"
       ],
       "source_shard_ids": [
-        "shard-0033",
-        "shard-0034",
-        "shard-0036",
-        "shard-0037",
-        "shard-0038",
-        "shard-0040",
-        "shard-0042",
-        "shard-0043",
-        "shard-0044",
-        "shard-0048",
-        "shard-0055",
-        "shard-0056",
-        "shard-0057",
-        "shard-0058",
-        "shard-0059",
-        "shard-0060",
-        "shard-0061",
-        "shard-0062",
-        "shard-0063",
-        "shard-0064",
-        "shard-0065",
-        "shard-0066",
-        "shard-0067",
-        "shard-0068",
-        "shard-0069",
-        "shard-0070",
-        "shard-0071",
-        "shard-0072",
-        "shard-0073",
-        "shard-0075",
-        "shard-0080",
-        "shard-0081",
-        "shard-0082",
-        "shard-0083",
-        "shard-0084",
-        "shard-0085",
-        "shard-0086"
+        "shard-0044"
       ],
-      "canon_label": "Plans/FinalGUISpec.md",
-      "row_type": "consumer",
-      "path": "Plans/FinalGUISpec.md",
-      "heading_hint": "Impacted docs",
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-928",
       "status": "partial",
-      "exact_items": [
-        "`Plans/FinalGUISpec.md`"
-      ],
-      "stale_tokens": [],
       "evidence": [
-        "Plans/FinalGUISpec.md:14",
-        "Plans/FinalGUISpec.md:1853"
+        "Plans/FileManager.md:311-312 Contracts_V0 owns route_target/OpenSubject and Crosswalk is limited to primitive boundary ownership while FileManager OpenFile remains narrow and path-based"
       ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-01728",
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "Route contract and primitive boundary references are present, but the full consumer-propagation wording for route contract / wiring matrix boundaries is not verified.",
       "source_obligation_ids": [
-        "obl-1659"
+        "obl-261"
       ],
       "source_seed_ids": [
-        "seed-1892",
-        "seed-4166",
-        "seed-4877",
-        "seed-4995",
-        "seed-5298",
-        "seed-6769"
+        "seed-261"
       ],
       "source_shard_ids": [
-        "shard-0034",
-        "shard-0059",
-        "shard-0067",
-        "shard-0069",
-        "shard-0073",
-        "shard-0089"
+        "shard-0066"
       ],
-      "canon_label": "Plans/FinalGUISpec.md",
-      "row_type": "consumer",
-      "path": "Plans/FinalGUISpec.md",
-      "heading_hint": "",
-      "status": "present",
-      "exact_items": [
-        "`Plans/FinalGUISpec.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/FinalGUISpec.md:14"
-      ],
-      "required_action": "none"
+      "path_field_status": "match"
     },
     {
-      "coverage_id": "cov-02241",
-      "source_obligation_ids": [
-        "obl-2162"
-      ],
-      "source_seed_ids": [
-        "seed-2611",
-        "seed-2863"
-      ],
-      "source_shard_ids": [
-        "shard-0042",
-        "shard-0045"
-      ],
-      "canon_label": "Plans/FinalGUISpec.md",
-      "row_type": "consumer",
-      "path": "Plans/FinalGUISpec.md",
-      "heading_hint": "Highest-risk impacted docs",
+      "coverage_id": "cov-774",
       "status": "partial",
-      "exact_items": [
-        "`Plans/FinalGUISpec.md`"
-      ],
-      "stale_tokens": [],
       "evidence": [
-        "Plans/FinalGUISpec.md:14",
-        "Plans/FinalGUISpec.md:1853"
+        "Plans/FileManager.md:303 route_target scheme resolves through shared route/open semantics",
+        "Plans/FileManager.md:305 artifacts are stored by content hash and indexed by concern_id, route_target, artifact_type, and timestamp",
+        "Plans/FileManager.md:311-312 OpenSubject and OpenFile route/open split is present"
       ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-03299",
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "OpenFile/OpenSubject and artifact identity are present, but OpenArtifact-style flow and full identity-native object-open coverage are incomplete.",
       "source_obligation_ids": [
-        "obl-3198"
+        "obl-214"
       ],
       "source_seed_ids": [
-        "seed-4180"
+        "seed-214"
       ],
       "source_shard_ids": [
-        "shard-0059"
+        "shard-0054"
       ],
-      "canon_label": "Plans/*.md",
-      "row_type": "consumer",
-      "path": "Plans/FinalGUISpec.md",
-      "heading_hint": "Do-not-forget details",
-      "status": "present",
-      "exact_items": [
-        "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage."
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/FinalGUISpec.md:362",
-        "Plans/FinalGUISpec.md:215",
-        "Plans/FinalGUISpec.md:14",
-        "Plans/FinalGUISpec.md:1853",
-        "Plans/FinalGUISpec.md:313",
-        "Plans/FinalGUISpec.md:5",
-        "Plans/FinalGUISpec.md:254",
-        "Plans/FinalGUISpec.md:145",
-        "Plans/FinalGUISpec.md:31",
-        "Plans/FinalGUISpec.md:1491",
-        "Plans/FinalGUISpec.md:876"
-      ],
-      "required_action": "none"
+      "path_field_status": "match"
     },
     {
-      "coverage_id": "cov-03957",
+      "coverage_id": "cov-784",
+      "status": "partial",
+      "evidence": [
+        "Plans/FileManager.md:301-306 FileManager open-file and artifact-storage contract is defined",
+        "Plans/FileManager.md:311-312 OpenSubject/OpenFile split is present"
+      ],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "OpenFile/OpenSubject distinction is present, but the broader GUI contract update is not fully verified in FileManager.md.",
       "source_obligation_ids": [
-        "obl-3803"
+        "obl-217"
       ],
       "source_seed_ids": [
-        "seed-5280"
+        "seed-217"
       ],
       "source_shard_ids": [
-        "shard-0072"
+        "shard-0055"
       ],
-      "canon_label": "Plans/FinalGUISpec.md",
-      "row_type": "consumer",
-      "path": "Plans/FinalGUISpec.md",
-      "heading_hint": "Key findings",
-      "status": "present",
-      "exact_items": [
-        "`Plans/FinalGUISpec.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/FinalGUISpec.md:14",
-        "Plans/FinalGUISpec.md:1103"
-      ],
-      "required_action": "none"
+      "path_field_status": "match"
     },
     {
-      "coverage_id": "cov-04062",
+      "coverage_id": "cov-1039",
+      "status": "partial",
+      "evidence": [
+        "Plans/FileManager.md:301 FileManager is canonical owner of file-open and artifact-storage contract",
+        "Plans/FileManager.md:311-312 Contracts_V0 owns route/OpenSubject contracts, Crosswalk owns primitive boundary, and FileManager OpenFile remains narrow and path-based"
+      ],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "Primitive ownership split is partially represented, but preview_subject_id and resume_url persisted-ref ownership are not covered in FileManager.md.",
       "source_obligation_ids": [
-        "obl-3908"
+        "obl-291"
       ],
       "source_seed_ids": [
-        "seed-5436"
+        "seed-291"
       ],
       "source_shard_ids": [
         "shard-0074"
       ],
-      "canon_label": "Plans/FinalGUISpec.md",
-      "row_type": "consumer",
-      "path": "Plans/FinalGUISpec.md",
-      "heading_hint": "Reconciliation strata",
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-1216",
       "status": "partial",
-      "exact_items": [
-        "`Plans/FinalGUISpec.md`"
-      ],
-      "stale_tokens": [],
       "evidence": [
-        "Plans/FinalGUISpec.md:14",
-        "Plans/FinalGUISpec.md:2463"
+        "Plans/FileManager.md:303 route_target scheme resolves through shared route/open semantics",
+        "Plans/FileManager.md:311-314 route_target/OpenSubject ownership and subject_id/object_kind/object_id route identity are present"
       ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-04218",
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "Route/open semantics are present, but Primitive:RouteTarget/Primitive:OpenSubject, tab_id, resume_url, bridge-field precedence, and route storage wiring refinement omissions are not fully covered.",
       "source_obligation_ids": [
-        "obl-4064"
+        "obl-345"
       ],
       "source_seed_ids": [
-        "seed-5671"
-      ],
-      "source_shard_ids": [
-        "shard-0077"
-      ],
-      "canon_label": "Plans/FinalGUISpec.md",
-      "row_type": "consumer",
-      "path": "Plans/FinalGUISpec.md",
-      "heading_hint": "Highest-priority stale consumer set",
-      "status": "present",
-      "exact_items": [
-        "`Plans/FinalGUISpec.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/FinalGUISpec.md:14",
-        "Plans/FinalGUISpec.md:47",
-        "Plans/FinalGUISpec.md:17"
-      ],
-      "required_action": "none"
-    },
-    {
-      "coverage_id": "cov-04242",
-      "source_obligation_ids": [
-        "obl-4088"
-      ],
-      "source_seed_ids": [
-        "seed-5695"
-      ],
-      "source_shard_ids": [
-        "shard-0077"
-      ],
-      "canon_label": "Plans/FinalGUISpec.md",
-      "row_type": "consumer",
-      "path": "Plans/FinalGUISpec.md",
-      "heading_hint": "Priority merge",
-      "status": "present",
-      "exact_items": [
-        "`Plans/FinalGUISpec.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/FinalGUISpec.md:14",
-        "Plans/FinalGUISpec.md:1846",
-        "Plans/FinalGUISpec.md:220"
-      ],
-      "required_action": "none"
-    },
-    {
-      "coverage_id": "cov-04374",
-      "source_obligation_ids": [
-        "obl-4220"
-      ],
-      "source_seed_ids": [
-        "seed-5907"
-      ],
-      "source_shard_ids": [
-        "shard-0080"
-      ],
-      "canon_label": "Plans/FinalGUISpec.md",
-      "row_type": "consumer",
-      "path": "Plans/FinalGUISpec.md",
-      "heading_hint": "Candidate fixes to carry forward",
-      "status": "present",
-      "exact_items": [
-        "`Plans/FinalGUISpec.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/FinalGUISpec.md:14",
-        "Plans/FinalGUISpec.md:967",
-        "Plans/FinalGUISpec.md:1208"
-      ],
-      "required_action": "none"
-    },
-    {
-      "coverage_id": "cov-04438",
-      "source_obligation_ids": [
-        "obl-4262"
-      ],
-      "source_seed_ids": [
-        "seed-6087"
-      ],
-      "source_shard_ids": [
-        "shard-0082"
-      ],
-      "canon_label": "39",
-      "row_type": "consumer",
-      "path": "Plans/FinalGUISpec.md",
-      "heading_hint": "Do-not-forget details",
-      "status": "present",
-      "exact_items": [
-        "Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes."
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/FinalGUISpec.md:746",
-        "Plans/FinalGUISpec.md:7",
-        "Plans/FinalGUISpec.md:8",
-        "Plans/FinalGUISpec.md:406",
-        "Plans/FinalGUISpec.md:14",
-        "Plans/FinalGUISpec.md:1853",
-        "Plans/FinalGUISpec.md:254",
-        "Plans/FinalGUISpec.md:387",
-        "Plans/FinalGUISpec.md:362",
-        "Plans/FinalGUISpec.md:904",
-        "Plans/FinalGUISpec.md:2138",
-        "Plans/FinalGUISpec.md:876"
-      ],
-      "required_action": "none"
-    },
-    {
-      "coverage_id": "cov-04755",
-      "source_obligation_ids": [
-        "obl-4470"
-      ],
-      "source_seed_ids": [
-        "seed-6462"
-      ],
-      "source_shard_ids": [
-        "shard-0086"
-      ],
-      "canon_label": "Plans/FinalGUISpec.md",
-      "row_type": "consumer",
-      "path": "Plans/FinalGUISpec.md",
-      "heading_hint": "Targeted docs checked for coverage convergence",
-      "status": "present",
-      "exact_items": [
-        "`Plans/FinalGUISpec.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/FinalGUISpec.md:14",
-        "Plans/FinalGUISpec.md:1057",
-        "Plans/FinalGUISpec.md:1853",
-        "Plans/FinalGUISpec.md:8"
-      ],
-      "required_action": "none"
-    },
-    {
-      "coverage_id": "cov-04784",
-      "source_obligation_ids": [
-        "obl-4499"
-      ],
-      "source_seed_ids": [
-        "seed-6491"
-      ],
-      "source_shard_ids": [
-        "shard-0086"
-      ],
-      "canon_label": "Plans/FinalGUISpec.md",
-      "row_type": "consumer",
-      "path": "Plans/FinalGUISpec.md",
-      "heading_hint": "Docs clearly implicated",
-      "status": "partial",
-      "exact_items": [
-        "`Plans/FinalGUISpec.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/FinalGUISpec.md:14",
-        "Plans/FinalGUISpec.md:1853"
-      ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-04822",
-      "source_obligation_ids": [
-        "obl-4537"
-      ],
-      "source_seed_ids": [
-        "seed-6529"
-      ],
-      "source_shard_ids": [
-        "shard-0086"
-      ],
-      "canon_label": "Plans/FinalGUISpec.md",
-      "row_type": "consumer",
-      "path": "Plans/FinalGUISpec.md",
-      "heading_hint": "MUST CHANGE",
-      "status": "present",
-      "exact_items": [
-        "`Plans/FinalGUISpec.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/FinalGUISpec.md:14",
-        "Plans/FinalGUISpec.md:72"
-      ],
-      "required_action": "none"
-    },
-    {
-      "coverage_id": "cov-04855",
-      "source_obligation_ids": [
-        "obl-4570"
-      ],
-      "source_seed_ids": [
-        "seed-6562"
-      ],
-      "source_shard_ids": [
-        "shard-0086"
-      ],
-      "canon_label": "Plans/FinalGUISpec.md",
-      "row_type": "consumer",
-      "path": "Plans/FinalGUISpec.md",
-      "heading_hint": "Same-file supersession hot list",
-      "status": "partial",
-      "exact_items": [
-        "`Plans/FinalGUISpec.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/FinalGUISpec.md:14",
-        "Plans/FinalGUISpec.md:511"
-      ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-04878",
-      "source_obligation_ids": [
-        "obl-4593"
-      ],
-      "source_seed_ids": [
-        "seed-6585"
-      ],
-      "source_shard_ids": [
-        "shard-0087"
-      ],
-      "canon_label": "Plans/FinalGUISpec.md",
-      "row_type": "consumer",
-      "path": "Plans/FinalGUISpec.md",
-      "heading_hint": "Cluster A - Orchestrator UI / Progress / notification / projection behavior",
-      "status": "present",
-      "exact_items": [
-        "`Plans/FinalGUISpec.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/FinalGUISpec.md:14",
-        "Plans/FinalGUISpec.md:608",
-        "Plans/FinalGUISpec.md:59",
-        "Plans/FinalGUISpec.md:55",
-        "Plans/FinalGUISpec.md:71",
-        "Plans/FinalGUISpec.md:43",
-        "Plans/FinalGUISpec.md:19"
-      ],
-      "required_action": "none"
-    },
-    {
-      "coverage_id": "cov-04900",
-      "source_obligation_ids": [
-        "obl-4613"
-      ],
-      "source_seed_ids": [
-        "seed-6605"
-      ],
-      "source_shard_ids": [
-        "shard-0087"
-      ],
-      "canon_label": "Plans/chain-wizard-flexibility.md",
-      "row_type": "consumer",
-      "path": "Plans/FinalGUISpec.md",
-      "heading_hint": "Cluster D - Route / open-subject / bridge-field refinement misses",
-      "status": "present",
-      "exact_items": [
-        "`Plans/chain-wizard-flexibility.md`, `Plans/FinalGUISpec.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/FinalGUISpec.md:1887",
-        "Plans/FinalGUISpec.md:14",
-        "Plans/FinalGUISpec.md:608",
-        "Plans/FinalGUISpec.md:23"
-      ],
-      "required_action": "none"
-    },
-    {
-      "coverage_id": "cov-04905",
-      "source_obligation_ids": [
-        "obl-4618"
-      ],
-      "source_seed_ids": [
-        "seed-6610"
-      ],
-      "source_shard_ids": [
-        "shard-0087"
-      ],
-      "canon_label": "Plans/FinalGUISpec.md",
-      "row_type": "consumer",
-      "path": "Plans/FinalGUISpec.md",
-      "heading_hint": "Cluster E - Lifecycle / glossary / help / terminology transfer misses",
-      "status": "present",
-      "exact_items": [
-        "`Plans/FinalGUISpec.md` / glossary/help surfaces"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/FinalGUISpec.md:14",
-        "Plans/FinalGUISpec.md:161",
-        "Plans/FinalGUISpec.md:608",
-        "Plans/FinalGUISpec.md:1515",
-        "Plans/FinalGUISpec.md:89"
-      ],
-      "required_action": "none"
-    },
-    {
-      "coverage_id": "cov-04911",
-      "source_obligation_ids": [
-        "obl-4622"
-      ],
-      "source_seed_ids": [
-        "seed-6614"
-      ],
-      "source_shard_ids": [
-        "shard-0087"
-      ],
-      "canon_label": "Plans/Contracts_V0.md",
-      "row_type": "consumer",
-      "path": "Plans/FinalGUISpec.md",
-      "heading_hint": "Cluster F - Same-file supersession failures",
-      "status": "present",
-      "exact_items": [
-        "`Plans/Contracts_V0.md`, `Plans/storage-plan.md`, `Plans/FinalGUISpec.md`, `Plans/UI_Command_Catalog.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/FinalGUISpec.md:215",
-        "Plans/FinalGUISpec.md:367",
-        "Plans/FinalGUISpec.md:14",
-        "Plans/FinalGUISpec.md:608",
-        "Plans/FinalGUISpec.md:1240"
-      ],
-      "required_action": "none"
-    },
-    {
-      "coverage_id": "cov-04928",
-      "source_obligation_ids": [
-        "obl-4638"
-      ],
-      "source_seed_ids": [
-        "seed-6630"
-      ],
-      "source_shard_ids": [
-        "shard-0087"
-      ],
-      "canon_label": "Plans/FinalGUISpec.md",
-      "row_type": "consumer",
-      "path": "Plans/FinalGUISpec.md",
-      "heading_hint": "Impacted docs and likely owner order",
-      "status": "present",
-      "exact_items": [
-        "`Plans/FinalGUISpec.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/FinalGUISpec.md:14",
-        "Plans/FinalGUISpec.md:1853",
-        "Plans/FinalGUISpec.md:17",
-        "Plans/FinalGUISpec.md:5"
-      ],
-      "required_action": "none"
-    },
-    {
-      "coverage_id": "cov-04958",
-      "source_obligation_ids": [
-        "obl-4666"
-      ],
-      "source_seed_ids": [
-        "seed-6658"
-      ],
-      "source_shard_ids": [
-        "shard-0087"
-      ],
-      "canon_label": "Plans/Orchestrator_Page.md",
-      "row_type": "consumer",
-      "path": "Plans/FinalGUISpec.md",
-      "heading_hint": "Early Orchestrator surface details that were more under-transferred than the earlier synthesis made explicit",
-      "status": "present",
-      "exact_items": [
-        "`Plans/Orchestrator_Page.md` / `Plans/FinalGUISpec.md` / `Plans/Glossary.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/FinalGUISpec.md:14",
-        "Plans/FinalGUISpec.md:1890",
-        "Plans/FinalGUISpec.md:1824",
-        "Plans/FinalGUISpec.md:59",
-        "Plans/FinalGUISpec.md:876",
-        "Plans/FinalGUISpec.md:1282",
-        "Plans/FinalGUISpec.md:2062",
-        "Plans/FinalGUISpec.md:1831",
-        "Plans/FinalGUISpec.md:29"
-      ],
-      "required_action": "none"
-    },
-    {
-      "coverage_id": "cov-04961",
-      "source_obligation_ids": [
-        "obl-4667"
-      ],
-      "source_seed_ids": [
-        "seed-6659"
-      ],
-      "source_shard_ids": [
-        "shard-0087"
-      ],
-      "canon_label": "Plans/Orchestrator_Page.md",
-      "row_type": "consumer",
-      "path": "Plans/FinalGUISpec.md",
-      "heading_hint": "Historical mode / search / trust behavior sharpened",
-      "status": "present",
-      "exact_items": [
-        "`Plans/Orchestrator_Page.md` / `Plans/FinalGUISpec.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/FinalGUISpec.md:14",
-        "Plans/FinalGUISpec.md:921",
-        "Plans/FinalGUISpec.md:31",
-        "Plans/FinalGUISpec.md:19",
-        "Plans/FinalGUISpec.md:43"
-      ],
-      "required_action": "none"
-    },
-    {
-      "coverage_id": "cov-04968",
-      "source_obligation_ids": [
-        "obl-4671"
-      ],
-      "source_seed_ids": [
-        "seed-6663"
-      ],
-      "source_shard_ids": [
-        "shard-0087"
-      ],
-      "canon_label": "Plans/Contracts_V0.md",
-      "row_type": "consumer",
-      "path": "Plans/FinalGUISpec.md",
-      "heading_hint": "Concern/governance record and confirmation policy transfer is weaker than the earlier synthesis stated",
-      "status": "present",
-      "exact_items": [
-        "`Plans/Contracts_V0.md`, `Plans/storage-plan.md`, `Plans/Decision_Policy.md`, `Plans/FinalGUISpec.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/FinalGUISpec.md:215",
-        "Plans/FinalGUISpec.md:367",
-        "Plans/FinalGUISpec.md:14",
-        "Plans/FinalGUISpec.md:7",
-        "Plans/FinalGUISpec.md:35",
-        "Plans/FinalGUISpec.md:31",
-        "Plans/FinalGUISpec.md:128",
-        "Plans/FinalGUISpec.md:1831"
-      ],
-      "required_action": "none"
-    },
-    {
-      "coverage_id": "cov-04974",
-      "source_obligation_ids": [
-        "obl-4675"
-      ],
-      "source_seed_ids": [
-        "seed-6667"
+        "seed-345"
       ],
       "source_shard_ids": [
         "shard-0088"
       ],
-      "canon_label": "Plans/Orchestrator_Page.md",
-      "row_type": "consumer",
-      "path": "Plans/FinalGUISpec.md",
-      "heading_hint": "Export / settings / persona transfer gaps are broader than first summarized",
-      "status": "present",
-      "exact_items": [
-        "`Plans/Orchestrator_Page.md`, `Plans/storage-plan.md`, `Plans/FinalGUISpec.md`, `Plans/Models_System.md`, `Plans/Multi-Account.md`, `Plans/Personas.md`, `Plans/Prompt_Pipeline.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/FinalGUISpec.md:367",
-        "Plans/FinalGUISpec.md:14",
-        "Plans/FinalGUISpec.md:1627",
-        "Plans/FinalGUISpec.md:268",
-        "Plans/FinalGUISpec.md:259",
-        "Plans/FinalGUISpec.md:244",
-        "Plans/FinalGUISpec.md:1906",
-        "Plans/FinalGUISpec.md:11",
-        "Plans/FinalGUISpec.md:1217"
-      ],
-      "required_action": "none"
-    },
-    {
-      "coverage_id": "cov-04980",
-      "source_obligation_ids": [
-        "obl-4677"
-      ],
-      "source_seed_ids": [
-        "seed-6669"
-      ],
-      "source_shard_ids": [
-        "shard-0088"
-      ],
-      "canon_label": "Plans/FinalGUISpec.md",
-      "row_type": "consumer",
-      "path": "Plans/FinalGUISpec.md",
-      "heading_hint": "Help / project status / escalation transfer gaps sharpened",
-      "status": "present",
-      "exact_items": [
-        "`Plans/FinalGUISpec.md`, `Plans/Glossary.md`, `Plans/Orchestrator_Page.md`, `Plans/storage-plan.md`, `Plans/usage-feature.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/FinalGUISpec.md:14",
-        "Plans/FinalGUISpec.md:1890",
-        "Plans/FinalGUISpec.md:367",
-        "Plans/FinalGUISpec.md:1885",
-        "Plans/FinalGUISpec.md:89",
-        "Plans/FinalGUISpec.md:12",
-        "Plans/FinalGUISpec.md:67"
-      ],
-      "required_action": "none"
-    },
-    {
-      "coverage_id": "cov-05031",
-      "source_obligation_ids": [
-        "obl-4708"
-      ],
-      "source_seed_ids": [
-        "seed-6700"
-      ],
-      "source_shard_ids": [
-        "shard-0088"
-      ],
-      "canon_label": "Plans/FinalGUISpec.md",
-      "row_type": "consumer",
-      "path": "Plans/FinalGUISpec.md",
-      "heading_hint": "Reconciliation posture after rerun",
-      "status": "present",
-      "exact_items": [
-        "5. `Plans/FinalGUISpec.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/FinalGUISpec.md:14",
-        "Plans/FinalGUISpec.md:2463",
-        "Plans/FinalGUISpec.md:406",
-        "Plans/FinalGUISpec.md:2629"
-      ],
-      "required_action": "none"
-    },
-    {
-      "coverage_id": "cov-05041",
-      "source_obligation_ids": [
-        "obl-4718"
-      ],
-      "source_seed_ids": [
-        "seed-6710"
-      ],
-      "source_shard_ids": [
-        "shard-0088"
-      ],
-      "canon_label": "Plans/FinalGUISpec.md:2092",
-      "row_type": "consumer",
-      "path": "Plans/FinalGUISpec.md",
-      "heading_hint": "Audit Pass 2026-04-16T01:28:16Z",
-      "status": "present",
-      "exact_items": [
-        "`Plans/FinalGUISpec.md:2092` still references `restore points` through `Plans/newfeatures.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/FinalGUISpec.md:1891",
-        "Plans/FinalGUISpec.md:215",
-        "Plans/FinalGUISpec.md:385",
-        "Plans/FinalGUISpec.md:1373",
-        "Plans/FinalGUISpec.md:317",
-        "Plans/FinalGUISpec.md:35",
-        "Plans/FinalGUISpec.md:1788"
-      ],
-      "required_action": "none"
-    },
-    {
-      "coverage_id": "cov-05043",
-      "source_obligation_ids": [
-        "obl-4719"
-      ],
-      "source_seed_ids": [
-        "seed-6711"
-      ],
-      "source_shard_ids": [
-        "shard-0088"
-      ],
-      "canon_label": "Plans/FinalGUISpec.md:2737-2739",
-      "row_type": "consumer",
-      "path": "Plans/FinalGUISpec.md",
-      "heading_hint": "Audit Pass 2026-04-16T01:28:16Z",
-      "status": "present",
-      "exact_items": [
-        "`Plans/FinalGUISpec.md:2737-2739` separately and correctly says safe points are runtime recovery anchors and MUST NOT be presented as user-facing restore points"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/FinalGUISpec.md:60",
-        "Plans/FinalGUISpec.md:172",
-        "Plans/FinalGUISpec.md:1373",
-        "Plans/FinalGUISpec.md:261",
-        "Plans/FinalGUISpec.md:3",
-        "Plans/FinalGUISpec.md:1879",
-        "Plans/FinalGUISpec.md:13",
-        "Plans/FinalGUISpec.md:252",
-        "Plans/FinalGUISpec.md:385",
-        "Plans/FinalGUISpec.md:35",
-        "Plans/FinalGUISpec.md:1788"
-      ],
-      "required_action": "none"
+      "path_field_status": "match"
     }
   ]
 }

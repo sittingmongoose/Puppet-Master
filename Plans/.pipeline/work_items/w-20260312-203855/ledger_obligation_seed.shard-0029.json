@@ -1,924 +1,125 @@
 {
-  "schema_id": "pm.ledger_obligation_seed_shard_result.v1",
+  "schema_id": "pm.ledger_obligation_seed_shard_result.v2",
   "work_id": "w-20260312-203855",
   "shard_id": "shard-0029",
   "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0029-L005601-L005800.md",
   "source_line_range": "L005601-L005800",
+  "covered_shard_id": "shard-0029",
   "seed_candidates": [
     {
       "seed_type": "consumer",
-      "canon_label_hint": "Plans/FinalGUISpec.md",
+      "canon_label_hint": "shared routing payload contract",
       "exact_items": [
-        "`Plans/FinalGUISpec.md`"
-      ],
-      "affected_doc_hints": [
-        "Plans/FinalGUISpec.md"
-      ],
-      "heading_hints": [
-        "Targeted docs read"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0029",
-      "source_evidence": [
-        "working_ledger.md:L5605"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Plans/Orchestrator_Page.md",
-      "exact_items": [
-        "`Plans/Orchestrator_Page.md`"
-      ],
-      "affected_doc_hints": [
-        "Plans/Orchestrator_Page.md"
-      ],
-      "heading_hints": [
-        "Targeted docs read"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0029",
-      "source_evidence": [
-        "working_ledger.md:L5606"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Plans/UI_Command_Catalog.md",
-      "exact_items": [
-        "`Plans/UI_Command_Catalog.md`"
-      ],
-      "affected_doc_hints": [
-        "Plans/UI_Command_Catalog.md"
-      ],
-      "heading_hints": [
-        "Targeted docs read"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0029",
-      "source_evidence": [
-        "working_ledger.md:L5607"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Plans/usage-feature.md",
-      "exact_items": [
-        "`Plans/usage-feature.md`"
-      ],
-      "affected_doc_hints": [
-        "Plans/usage-feature.md"
-      ],
-      "heading_hints": [
-        "Targeted docs read"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0029",
-      "source_evidence": [
-        "working_ledger.md:L5608"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Plans/Runtime_Artifacts_Panel.md",
-      "exact_items": [
-        "`Plans/Runtime_Artifacts_Panel.md`"
-      ],
-      "affected_doc_hints": [
-        "Plans/Runtime_Artifacts_Panel.md"
-      ],
-      "heading_hints": [
-        "Targeted docs read"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0029",
-      "source_evidence": [
-        "working_ledger.md:L5609"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Plans/assistant-chat-design.md",
-      "exact_items": [
-        "`Plans/assistant-chat-design.md`"
-      ],
-      "affected_doc_hints": [
-        "Plans/assistant-chat-design.md"
-      ],
-      "heading_hints": [
-        "Targeted docs read"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0029",
-      "source_evidence": [
-        "working_ledger.md:L5610"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Plans/chain-wizard-flexibility.md",
-      "exact_items": [
-        "`Plans/chain-wizard-flexibility.md`"
-      ],
-      "affected_doc_hints": [
-        "Plans/chain-wizard-flexibility.md"
-      ],
-      "heading_hints": [
-        "Targeted docs read"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0029",
-      "source_evidence": [
-        "working_ledger.md:L5611"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Key findings",
-      "exact_items": [
-        "command palette"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Key findings"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0029",
-      "source_evidence": [
-        "working_ledger.md:L5615"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "layout_blocker",
-      "canon_label_hint": "Key findings",
-      "exact_items": [
-        "local tab search and filter behavior"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Key findings"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0029",
-      "source_evidence": [
-        "working_ledger.md:L5621"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "layout_blocker",
-      "canon_label_hint": "UI_Command_Catalog.md",
-      "exact_items": [
-        "`UI_Command_Catalog.md` already gives several useful route-like commands:"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Key findings"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0029",
-      "source_evidence": [
-        "working_ledger.md:L5622"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Key findings",
-      "exact_items": [
-        "What is still missing is one shared destination payload model that can span:"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Key findings"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0029",
-      "source_evidence": [
-        "working_ledger.md:L5629"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Key findings",
-      "exact_items": [
-        "command palette entries"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Key findings"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0029",
-      "source_evidence": [
-        "working_ledger.md:L5629-L5631"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "layout_blocker",
-      "canon_label_hint": "Key findings",
-      "exact_items": [
-        "cross-surface \u201cShow in \u2026\u201d pivots"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Key findings"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0029",
-      "source_evidence": [
-        "working_ledger.md:L5635"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "layout_blocker",
-      "canon_label_hint": "Main normalization direction",
-      "exact_items": [
-        "define one shared routing payload contract rather than separate ad hoc payloads per surface"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Main normalization direction"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0029",
-      "source_evidence": [
-        "working_ledger.md:L5639"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Main normalization direction",
-      "exact_items": [
-        "This should apply across:"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Main normalization direction"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0029",
-      "source_evidence": [
-        "working_ledger.md:L5642"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "layout_blocker",
-      "canon_label_hint": "Candidate shared payload fields",
-      "exact_items": [
-        "Not every route uses every field, but the contract should make these composable rather than reinvented."
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Candidate shared payload fields"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0029",
-      "source_evidence": [
-        "working_ledger.md:L5670"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "layout_blocker",
-      "canon_label_hint": "Object-kind direction",
-      "exact_items": [
-        "Search and deep-link routing now need object-kind vocabulary to avoid ambiguity."
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Object-kind direction"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0029",
-      "source_evidence": [
-        "working_ledger.md:L5673"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "artifact",
-      "exact_items": [
-        "`artifact`"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Object-kind direction"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0029",
-      "source_evidence": [
-        "working_ledger.md:L5689"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "layout_blocker",
-      "canon_label_hint": "resume_url",
-      "exact_items": [
-        "`resume_url` is the clearest existing deep-link contract, but it is too narrow to carry the full cross-surface model by itself."
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Resume-url implication"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0029",
-      "source_evidence": [
-        "working_ledger.md:L5693-L5696"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "layout_blocker",
-      "canon_label_hint": "Resume-url implication",
-      "exact_items": [
-        "keep human-meaningful deep-link URLs for recovery/resume"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Resume-url implication"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0029",
-      "source_evidence": [
-        "working_ledger.md:L5698"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Resume-url implication",
-      "exact_items": [
-        "but normalize their decoded payload into the same routing contract used by in-app search and command routing"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Resume-url implication"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0029",
-      "source_evidence": [
-        "working_ledger.md:L5699"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "layout_blocker",
-      "canon_label_hint": "Search-result direction",
-      "exact_items": [
-        "Search results should not merely open a page; they should reconstruct context."
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Search-result direction"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0029",
-      "source_evidence": [
-        "working_ledger.md:L5703"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "layout_blocker",
-      "canon_label_hint": "Search-result direction",
-      "exact_items": [
-        "switch to the correct tab"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Search-result direction"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0029",
-      "source_evidence": [
-        "working_ledger.md:L5709"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "owner",
-      "canon_label_hint": "Cross-surface pivot direction",
-      "exact_items": [
-        "preserve canonical usage identity"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Cross-surface pivot direction"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0029",
-      "source_evidence": [
-        "working_ledger.md:L5720"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Cross-surface pivot direction",
-      "exact_items": [
+        "define one shared routing payload contract rather than separate ad hoc payloads per surface",
         "all \u201cOpen in \u2026\u201d / \u201cShow in \u2026\u201d actions should become thin wrappers over the shared routing payload"
       ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Cross-surface pivot direction"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0029",
-      "source_evidence": [
-        "working_ledger.md:L5724"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "focused_run_id",
-      "exact_items": [
-        "Because earlier research established `focused_run_id`, historical-run mode, and project-state persistence, routing needs a persistence-aware rule:"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Persistence implication"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0029",
-      "source_evidence": [
-        "working_ledger.md:L5727"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "layout_blocker",
-      "canon_label_hint": "Persistence implication",
-      "exact_items": [
-        "some route activations should update stored view state"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Persistence implication"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0029",
-      "source_evidence": [
-        "working_ledger.md:L5728"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Persistence implication",
-      "exact_items": [
-        "others should be transient focus changes only"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Persistence implication"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0029",
-      "source_evidence": [
-        "working_ledger.md:L5729"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "layout_blocker",
-      "canon_label_hint": "Persistence implication",
-      "exact_items": [
-        "explicit search navigation to a historical run likely should update persisted Orchestrator focused-run state"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Persistence implication"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0029",
-      "source_evidence": [
-        "working_ledger.md:L5731"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Persistence implication",
-      "exact_items": [
-        "hover previews or temporary compare pivots should not necessarily rewrite persistent state"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Persistence implication"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0029",
-      "source_evidence": [
-        "working_ledger.md:L5732"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Trust / stale-data implication",
-      "exact_items": [
-        "Routing also intersects with projection trust."
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Trust / stale-data implication"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0029",
-      "source_evidence": [
-        "working_ledger.md:L5735"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "layout_blocker",
-      "canon_label_hint": "Trust / stale-data implication",
-      "exact_items": [
-        "if the target surface is degraded, the route should still land on the canonical fallback representation when possible rather than fail opaque"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Trust / stale-data implication"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0029",
-      "source_evidence": [
-        "working_ledger.md:L5737"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "layout_blocker",
-      "canon_label_hint": "Trust / stale-data implication",
-      "exact_items": [
-        "deep link to a concern during projection degradation might route to exact record view / Ledger-backed inspector instead of the normal rollup tab presentation"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Trust / stale-data implication"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0029",
-      "source_evidence": [
-        "working_ledger.md:L5739"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "layout_blocker",
-      "canon_label_hint": "Contradictions / gaps surfaced",
-      "exact_items": [
-        "Current docs have several route-like mechanisms, but they are still defined per feature rather than by one shared navigation payload."
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Contradictions / gaps surfaced"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0029",
-      "source_evidence": [
-        "working_ledger.md:L5742"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Contradictions / gaps surfaced",
-      "exact_items": [
-        "subtle mismatches between command palette, search, widgets, and deep links"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Contradictions / gaps surfaced"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0029",
-      "source_evidence": [
-        "working_ledger.md:L5746"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "layout_blocker",
-      "canon_label_hint": "Candidate fixes to carry forward",
-      "exact_items": [
-        "Define one shared routing/deep-link payload for search, command palette, widget drill-downs, recovery links, and cross-surface pivots."
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Candidate fixes to carry forward"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0029",
-      "source_evidence": [
-        "working_ledger.md:L5750"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "object_kind",
-      "exact_items": [
-        "Add stable `object_kind` / `object_id` vocabulary for the newer Orchestrator object model and adjacent runtime actors."
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Candidate fixes to carry forward"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0029",
-      "source_evidence": [
-        "working_ledger.md:L5751"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "layout_blocker",
-      "canon_label_hint": "Candidate fixes to carry forward",
-      "exact_items": [
-        "Make route activation restore scope, not just surface."
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Candidate fixes to carry forward"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0029",
-      "source_evidence": [
-        "working_ledger.md:L5752"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "layout_blocker",
-      "canon_label_hint": "focused_run_id",
-      "exact_items": [
-        "route payloads need to restore context like `focused_run_id`, not merely switch tabs"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Do-not-forget details"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0029",
-      "source_evidence": [
-        "working_ledger.md:L5756"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "layout_blocker",
-      "canon_label_hint": "Do-not-forget details",
-      "exact_items": [
-        "URL deep links and in-app search routes should decode to the same internal navigation model"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Do-not-forget details"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0029",
-      "source_evidence": [
-        "working_ledger.md:L5757"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "owner",
-      "canon_label_hint": "Do-not-forget details",
-      "exact_items": [
-        "degraded surfaces should still be routable via canonical fallback views when possible"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Do-not-forget details"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0029",
-      "source_evidence": [
-        "working_ledger.md:L5758"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Plans/storage-plan.md",
-      "exact_items": [
-        "`Plans/storage-plan.md`"
-      ],
       "affected_doc_hints": [
-        "Plans/storage-plan.md"
-      ],
-      "heading_hints": [
-        "Targeted docs read"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0029",
-      "source_evidence": [
-        "working_ledger.md:L5763"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Plans/Contracts_V0.md",
-      "exact_items": [
-        "`Plans/Contracts_V0.md`"
-      ],
-      "affected_doc_hints": [
-        "Plans/Contracts_V0.md"
-      ],
-      "heading_hints": [
-        "Targeted docs read"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0029",
-      "source_evidence": [
-        "working_ledger.md:L5764"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Plans/FinalGUISpec.md",
-      "exact_items": [
-        "`Plans/FinalGUISpec.md`"
-      ],
-      "affected_doc_hints": [
-        "Plans/FinalGUISpec.md"
-      ],
-      "heading_hints": [
-        "Targeted docs read"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0029",
-      "source_evidence": [
-        "working_ledger.md:L5765"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Plans/Orchestrator_Page.md",
-      "exact_items": [
-        "`Plans/Orchestrator_Page.md`"
-      ],
-      "affected_doc_hints": [
-        "Plans/Orchestrator_Page.md"
-      ],
-      "heading_hints": [
-        "Targeted docs read"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0029",
-      "source_evidence": [
-        "working_ledger.md:L5766"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Plans/WorktreeGitImprovement.md",
-      "exact_items": [
-        "`Plans/WorktreeGitImprovement.md`"
-      ],
-      "affected_doc_hints": [
-        "Plans/WorktreeGitImprovement.md"
-      ],
-      "heading_hints": [
-        "Targeted docs read"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0029",
-      "source_evidence": [
-        "working_ledger.md:L5767"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Plans/assistant-chat-design.md",
-      "exact_items": [
-        "`Plans/assistant-chat-design.md`"
-      ],
-      "affected_doc_hints": [
-        "Plans/assistant-chat-design.md"
-      ],
-      "heading_hints": [
-        "Targeted docs read"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0029",
-      "source_evidence": [
-        "working_ledger.md:L5768"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Plans/chain-wizard-flexibility.md",
-      "exact_items": [
-        "`Plans/chain-wizard-flexibility.md`"
-      ],
-      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/UI_Command_Catalog.md",
+        "Plans/usage-feature.md",
+        "Plans/Runtime_Artifacts_Panel.md",
+        "Plans/assistant-chat-design.md",
         "Plans/chain-wizard-flexibility.md"
       ],
+      "doc_resolution_status": "concrete",
       "heading_hints": [
-        "Targeted docs read"
+        "Main normalization direction",
+        "Cross-surface pivot direction",
+        "Candidate fixes to carry forward"
       ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0029",
+      "stale_tokens": [
+        "resume_url",
+        "focused_run_id",
+        "object_kind",
+        "object_id"
+      ],
       "source_evidence": [
-        "working_ledger.md:L5769"
+        "working_ledger.md:L5638-L5645"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "object-kind vocabulary for deep-link/search routing",
+      "exact_items": [
+        "Search and deep-link routing now need object-kind vocabulary to avoid ambiguity.",
+        "Candidate object kinds: run, feature_seam, work_package, node, lane, worktree, concern, promotion, review, corroboration, graph_patch, recovery_record, blocked_episode, usage_record, artifact, thread, wizard, bundle."
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/UI_Command_Catalog.md"
+      ],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "Object-kind direction",
+        "Candidate shared payload fields"
+      ],
+      "stale_tokens": [
+        "resume_url",
+        "actor_run_kind",
+        "destination_surface",
+        "destination_tab"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L5672-L5693"
       ],
       "notes": []
     },
     {
       "seed_type": "stale_retirement",
-      "canon_label_hint": "Key findings",
+      "canon_label_hint": "historical semantic core",
       "exact_items": [
-        "historical worktree references must survive live prune/retire operations"
+        "blocked projections remain historical after resolution and are not overwritten",
+        "attempts from older generations become stale_historical and are never resumable",
+        "historical worktree references must survive live prune/retire operations",
+        "The most reusable cross-family historical terms still look like: historical, stale_historical, superseded, revoked, reopened, archived, removed"
       ],
-      "affected_doc_hints": [],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/Contracts_V0.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/chain-wizard-flexibility.md"
+      ],
+      "doc_resolution_status": "concrete",
       "heading_hints": [
-        "Key findings"
+        "Key findings",
+        "Cross-family semantic core"
       ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0029",
+      "stale_tokens": [
+        "stale_historical",
+        "historical",
+        "superseded",
+        "revoked",
+        "removed"
+      ],
       "source_evidence": [
-        "working_ledger.md:L5776"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Key findings",
-      "exact_items": [
-        "The real need is:"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Key findings"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0029",
-      "source_evidence": [
-        "working_ledger.md:L5785"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Key findings",
-      "exact_items": [
-        "define which semantic words are cross-family"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Key findings"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0029",
-      "source_evidence": [
-        "working_ledger.md:L5786"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Key findings",
-      "exact_items": [
-        "define which are family-local"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Key findings"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0029",
-      "source_evidence": [
-        "working_ledger.md:L5787"
+        "working_ledger.md:L5772-L5797"
       ],
       "notes": []
     }
   ],
-  "noise_items": [],
-  "uncertain_items": [],
-  "covered_shard_id": "shard-0029"
+  "noise_items": [
+    "L005601",
+    "L005603",
+    "L005604",
+    "L005613",
+    "L005637",
+    "L005649",
+    "L005672",
+    "L005695",
+    "L005702",
+    "L005718",
+    "L005726",
+    "L005734",
+    "L005741",
+    "L005760",
+    "L005771",
+    "L005789"
+  ],
+  "uncertain_items": []
 }

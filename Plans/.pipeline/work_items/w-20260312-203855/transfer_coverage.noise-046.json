@@ -1,0 +1,23 @@
+{
+  "schema_id": "pm.transfer_coverage_noise.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-046",
+  "noise_findings": [
+    {
+      "source": "coverage-rowgrp-181",
+      "finding": "coverage_ids_completed was empty; reducer normalized cov-1224 and upgraded partial to present after verifying direct owner-section runtime identity and blocked-policy continuity coverage."
+    },
+    {
+      "source": "coverage-rowgrp-182",
+      "finding": "coverage_ids_completed was empty; reducer normalized cov-1079 and downgraded partial to missing because cited Run_Modes lines only reference Prompt_Pipeline/run envelope, not the assigned stale-scope retirement set."
+    },
+    {
+      "source": "coverage-rowgrp-183",
+      "finding": "coverage_ids_completed was empty and required_action strings were non-canonical; reducer normalized actions and retained partial statuses for related runtime-artifact attribution/open/navigation evidence."
+    },
+    {
+      "source": "coverage-rowgrp-184",
+      "finding": "coverage_ids_completed was empty and required_action strings were non-canonical; reducer normalized actions, upgraded cov-391 from missing to partial for open/show routing evidence, and stripped absence-only evidence from cov-750."
+    }
+  ]
+}

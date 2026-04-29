@@ -1,0 +1,11 @@
+{
+  "schema_id": "pm.transfer_coverage_noise.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-009",
+  "noise_findings": [
+    {
+      "source": "coverage-rowgrp-035",
+      "finding": "Subagent marked all rows present from generic Crosswalk stale/projection references; reducer downgraded unrelated rows to missing and exact/adjacent route-boundary rows to partial."
+    }
+  ]
+}

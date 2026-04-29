@@ -1,0 +1,15 @@
+{
+  "schema_id": "pm.transfer_coverage_noise.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-082",
+  "noise_findings": [
+    {
+      "source": "coverage-rowgrp-325",
+      "finding": "coverage_ids_completed was empty; reducer completed both owner doc-discovery IDs and retained missing statuses with empty evidence because no concrete live doc path was assigned."
+    },
+    {
+      "source": "coverage-rowgrp-326",
+      "finding": "coverage_ids_completed was empty; reducer completed all six stale-retirement doc-discovery IDs and retained missing statuses with empty evidence because no concrete live doc path was assigned."
+    }
+  ]
+}

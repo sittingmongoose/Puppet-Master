@@ -1,363 +1,213 @@
 {
-  "schema_id": "pm.transfer_coverage_wave.v1",
+  "schema_id": "pm.transfer_coverage_wave.v3",
   "work_id": "w-20260312-203855",
   "wave_id": "wave-021",
-  "row_groups": [
-    "rowgrp-0081",
-    "rowgrp-0082",
-    "rowgrp-0083",
-    "rowgrp-0084"
+  "timestamp_utc": "2026-04-28T20:12:53Z",
+  "subagent_tasks": [
+    "coverage-rowgrp-081",
+    "coverage-rowgrp-082",
+    "coverage-rowgrp-083",
+    "coverage-rowgrp-084"
   ],
-  "coverage_rows": [
+  "assigned_input_boundaries": [
+    "rowgrp-081 cov-789,cov-1045,cov-1238,cov-1258 Plans/FinalGUISpec.md",
+    "rowgrp-082 cov-1114 Plans/Formatters_System.md",
+    "rowgrp-083 cov-1106,cov-1266 Plans/GUI_Rebuild_Requirements_Checklist.md",
+    "rowgrp-084 cov-1181 Plans/GUI_Rebuild_Requirements_Checklist.md"
+  ],
+  "subagent_result_status": {
+    "coverage-rowgrp-081": "completed_reduced_conservatively",
+    "coverage-rowgrp-082": "completed_reduced_conservatively",
+    "coverage-rowgrp-083": "completed_reduced_conservatively",
+    "coverage-rowgrp-084": "completed_reduced_conservatively"
+  },
+  "completed_task_count": 4,
+  "failed_task_count": 0,
+  "coverage_ids_assigned": [
+    "cov-789",
+    "cov-1045",
+    "cov-1238",
+    "cov-1258",
+    "cov-1114",
+    "cov-1106",
+    "cov-1266",
+    "cov-1181"
+  ],
+  "coverage_ids_completed": [
+    "cov-789",
+    "cov-1045",
+    "cov-1238",
+    "cov-1258",
+    "cov-1114",
+    "cov-1106",
+    "cov-1266",
+    "cov-1181"
+  ],
+  "path_groups_assigned": [
+    "Plans/FinalGUISpec.md",
+    "Plans/Formatters_System.md",
+    "Plans/GUI_Rebuild_Requirements_Checklist.md"
+  ],
+  "rows": [
     {
-      "coverage_id": "cov-04527",
+      "coverage_id": "cov-789",
+      "status": "present",
+      "evidence": [
+        "Plans/FinalGUISpec.md:117 resume_url is treated as serialized transport of the shared route payload",
+        "Plans/FinalGUISpec.md:935 resume_url is serialized transport of the route/deep-link payload, not a second routing model"
+      ],
+      "required_action": "none",
+      "unresolved_reason": "",
       "source_obligation_ids": [
-        "obl-4283"
+        "obl-219"
       ],
       "source_seed_ids": [
-        "seed-6167"
+        "seed-219"
       ],
       "source_shard_ids": [
-        "shard-0082"
+        "shard-0055"
       ],
-      "canon_label": "Plans/*.md",
-      "row_type": "layout_blocker",
-      "path": "Plans/LSPSupport.md",
-      "heading_hint": "Do-not-forget details",
-      "status": "present",
-      "exact_items": [
-        "After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes."
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/LSPSupport.md:324",
-        "Plans/LSPSupport.md:700",
-        "Plans/LSPSupport.md:11",
-        "Plans/LSPSupport.md:13",
-        "Plans/LSPSupport.md:3",
-        "Plans/LSPSupport.md:61",
-        "Plans/LSPSupport.md:512",
-        "Plans/LSPSupport.md:24",
-        "Plans/LSPSupport.md:341",
-        "Plans/LSPSupport.md:489",
-        "Plans/LSPSupport.md:225",
-        "Plans/LSPSupport.md:306"
-      ],
-      "required_action": "none"
+      "path_field_status": "match"
     },
     {
-      "coverage_id": "cov-03306",
+      "coverage_id": "cov-1045",
+      "status": "missing",
+      "evidence": [
+        "Plans/FinalGUISpec.md: assigned file reviewed; no cmd.source_control.select_worktree, cmd.chat.open_thread_usage, cmd.chat.focus_thread_usage, or cmd.panel.switch command-example cleanup found"
+      ],
+      "required_action": "stale_retirement",
+      "unresolved_reason": "Catalog stale navigation command examples are absent from the assigned path.",
       "source_obligation_ids": [
-        "obl-3198"
+        "obl-294"
       ],
       "source_seed_ids": [
-        "seed-4180"
+        "seed-294"
       ],
       "source_shard_ids": [
-        "shard-0059"
+        "shard-0074"
       ],
-      "canon_label": "Plans/*.md",
-      "row_type": "consumer",
-      "path": "Plans/MCP_Integration.md",
-      "heading_hint": "Do-not-forget details",
-      "status": "present",
-      "exact_items": [
-        "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage."
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/MCP_Integration.md:5",
-        "Plans/MCP_Integration.md:21",
-        "Plans/MCP_Integration.md:57"
-      ],
-      "required_action": "none"
+      "path_field_status": "match"
     },
     {
-      "coverage_id": "cov-04445",
-      "source_obligation_ids": [
-        "obl-4262"
-      ],
-      "source_seed_ids": [
-        "seed-6087"
-      ],
-      "source_shard_ids": [
-        "shard-0082"
-      ],
-      "canon_label": "39",
-      "row_type": "consumer",
-      "path": "Plans/MCP_Integration.md",
-      "heading_hint": "Do-not-forget details",
+      "coverage_id": "cov-1238",
       "status": "partial",
-      "exact_items": [
-        "Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes."
-      ],
-      "stale_tokens": [],
       "evidence": [
-        "Plans/MCP_Integration.md:5"
+        "Plans/FinalGUISpec.md:1891 newfeatures reference still includes restore points",
+        "Plans/FinalGUISpec.md:2543 safe points are runtime recovery anchors and MUST NOT be presented as user-facing restore points"
       ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-04528",
+      "required_action": "stale_retirement",
+      "unresolved_reason": "FinalGUISpec contains restore-point contradiction/survivor evidence, but the broader TierContext, tier_id, detached_window, stale tool tuple, and No remaining gaps survivor set is not directly present in this assigned path.",
       "source_obligation_ids": [
-        "obl-4283"
+        "obl-349"
       ],
       "source_seed_ids": [
-        "seed-6167"
+        "seed-349"
       ],
       "source_shard_ids": [
-        "shard-0082"
+        "shard-0089"
       ],
-      "canon_label": "Plans/*.md",
-      "row_type": "layout_blocker",
-      "path": "Plans/MCP_Integration.md",
-      "heading_hint": "Do-not-forget details",
-      "status": "present",
-      "exact_items": [
-        "After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes."
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/MCP_Integration.md:5",
-        "Plans/MCP_Integration.md:9",
-        "Plans/MCP_Integration.md:21",
-        "Plans/MCP_Integration.md:57"
-      ],
-      "required_action": "none"
+      "path_field_status": "match"
     },
     {
-      "coverage_id": "cov-03081",
+      "coverage_id": "cov-1258",
+      "status": "missing",
+      "evidence": [
+        "Plans/FinalGUISpec.md: assigned file reviewed; no blocked_notice, escalation_level, action_available, detached_window, or result_id survivor evidence found"
+      ],
+      "required_action": "stale_retirement",
+      "unresolved_reason": "Blocked_notice stale survivor fields are absent from the assigned path.",
       "source_obligation_ids": [
-        "obl-2995"
+        "obl-355"
       ],
       "source_seed_ids": [
-        "seed-3827",
-        "seed-4462",
-        "seed-5118",
-        "seed-5956",
-        "seed-6043",
-        "seed-6131"
+        "seed-355"
       ],
       "source_shard_ids": [
-        "shard-0056",
-        "shard-0062",
-        "shard-0070",
-        "shard-0081",
-        "shard-0082"
+        "shard-0091"
       ],
-      "canon_label": "Plans/Media_Generation_and_Capabilities.md",
-      "row_type": "consumer",
-      "path": "Plans/Media_Generation_and_Capabilities.md",
-      "heading_hint": "Impacted docs",
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-1114",
       "status": "partial",
-      "exact_items": [
-        "`Plans/Media_Generation_and_Capabilities.md`"
-      ],
-      "stale_tokens": [],
       "evidence": [
-        "Plans/Media_Generation_and_Capabilities.md:27"
+        "Plans/Formatters_System.md:54 Formatters MUST NOT run during Delegated Agent Execution (DAE); provider CLI manages formatting",
+        "Plans/Formatters_System.md:166-172 formatter config persists under global/project formatter sections and references Plugins_System plugin config",
+        "Plans/Formatters_System.md:225-229 Puppet Master records format.applied events and restricts formatters to HTE mode while DAE delegates formatting"
       ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-03271",
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "Formatters_System addresses DAE exclusion and attribution, but not the full promoted shell/runtime language, central mutation-policy engine, plugin bypass, and LSPSupport normalization blocker set.",
       "source_obligation_ids": [
-        "obl-3185"
+        "obl-322"
       ],
       "source_seed_ids": [
-        "seed-4167"
+        "seed-322"
       ],
       "source_shard_ids": [
-        "shard-0059"
+        "shard-0081"
       ],
-      "canon_label": "Plans/Media_Generation_and_Capabilities.md",
-      "row_type": "consumer",
-      "path": "Plans/Media_Generation_and_Capabilities.md",
-      "heading_hint": "",
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-1106",
+      "status": "missing",
+      "evidence": [
+        "Plans/GUI_Rebuild_Requirements_Checklist.md:19 generic DRY_Rules compliance and SSOT ContractRef statement exists",
+        "Plans/GUI_Rebuild_Requirements_Checklist.md:42 generic ContractRef line exists",
+        "Plans/GUI_Rebuild_Requirements_Checklist.md:81 generic ContractRef list exists"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "No direct evidence for DRY cross-check defects, malformed/uncategorized ContractRefs, phantom/superseded command IDs, wrong catalog ranges, or OpenCode matrix stale assumptions is present.",
+      "source_obligation_ids": [
+        "obl-320"
+      ],
+      "source_seed_ids": [
+        "seed-320"
+      ],
+      "source_shard_ids": [
+        "shard-0081"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-1266",
       "status": "present",
-      "exact_items": [
-        "`Plans/Media_Generation_and_Capabilities.md`"
-      ],
-      "stale_tokens": [],
       "evidence": [
-        "Plans/Media_Generation_and_Capabilities.md:27"
+        "Plans/GUI_Rebuild_Requirements_Checklist.md:11-12 exact concern-lifecycle owner section requirements include active/acknowledged/resolved/dismissed semantics, resolution_kind, accepted_risk, and confirmation matrix",
+        "Plans/GUI_Rebuild_Requirements_Checklist.md:35-38 checklist expands active, acknowledged, resolved, dismissed, accepted_risk, resolution_kind, and confirmation/rationale rules"
       ],
-      "required_action": "none"
-    },
-    {
-      "coverage_id": "cov-03307",
+      "required_action": "none",
+      "unresolved_reason": "",
       "source_obligation_ids": [
-        "obl-3198"
+        "obl-357"
       ],
       "source_seed_ids": [
-        "seed-4180"
+        "seed-357"
       ],
       "source_shard_ids": [
-        "shard-0059"
+        "shard-0092"
       ],
-      "canon_label": "Plans/*.md",
-      "row_type": "consumer",
-      "path": "Plans/Media_Generation_and_Capabilities.md",
-      "heading_hint": "Do-not-forget details",
-      "status": "present",
-      "exact_items": [
-        "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage."
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/Media_Generation_and_Capabilities.md:558",
-        "Plans/Media_Generation_and_Capabilities.md:3",
-        "Plans/Media_Generation_and_Capabilities.md:637",
-        "Plans/Media_Generation_and_Capabilities.md:609",
-        "Plans/Media_Generation_and_Capabilities.md:76",
-        "Plans/Media_Generation_and_Capabilities.md:742",
-        "Plans/Media_Generation_and_Capabilities.md:55",
-        "Plans/Media_Generation_and_Capabilities.md:96",
-        "Plans/Media_Generation_and_Capabilities.md:39"
-      ],
-      "required_action": "none"
+      "path_field_status": "match"
     },
     {
-      "coverage_id": "cov-03474",
-      "source_obligation_ids": [
-        "obl-3326"
-      ],
-      "source_seed_ids": [
-        "seed-4435",
-        "seed-5080",
-        "seed-5921",
-        "seed-6007",
-        "seed-6099"
-      ],
-      "source_shard_ids": [
-        "shard-0062",
-        "shard-0070",
-        "shard-0081",
-        "shard-0082"
-      ],
-      "canon_label": "Plans/Media_Generation_and_Capabilities.md",
-      "row_type": "consumer",
-      "path": "Plans/Media_Generation_and_Capabilities.md",
-      "heading_hint": "Targeted docs read",
+      "coverage_id": "cov-1181",
       "status": "partial",
-      "exact_items": [
-        "`Plans/Media_Generation_and_Capabilities.md`"
-      ],
-      "stale_tokens": [],
       "evidence": [
-        "Plans/Media_Generation_and_Capabilities.md:27",
-        "Plans/Media_Generation_and_Capabilities.md:55"
+        "Plans/GUI_Rebuild_Requirements_Checklist.md:32 checklist is an auditable summary for GUI rebuild handoff requirements",
+        "Plans/GUI_Rebuild_Requirements_Checklist.md:79 checklist is complete when verification rows are PASS and verifier gates pass"
       ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-03509",
+      "required_action": "stale_retirement",
+      "unresolved_reason": "The checklist is framed as a summary and PASS-gated mirror, but it does not directly retire stale PASS rows or state mirror docs update only after owner-doc reconciliation.",
       "source_obligation_ids": [
-        "obl-3361"
+        "obl-340"
       ],
       "source_seed_ids": [
-        "seed-4485"
+        "seed-340"
       ],
       "source_shard_ids": [
-        "shard-0062"
+        "shard-0086"
       ],
-      "canon_label": "Plans/Media_Generation_and_Capabilities.md",
-      "row_type": "consumer",
-      "path": "Plans/Media_Generation_and_Capabilities.md",
-      "heading_hint": "Candidate fixes to carry forward",
-      "status": "partial",
-      "exact_items": [
-        "`Plans/Media_Generation_and_Capabilities.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/Media_Generation_and_Capabilities.md:27",
-        "Plans/Media_Generation_and_Capabilities.md:524"
-      ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-04257",
-      "source_obligation_ids": [
-        "obl-4103"
-      ],
-      "source_seed_ids": [
-        "seed-5710"
-      ],
-      "source_shard_ids": [
-        "shard-0077"
-      ],
-      "canon_label": "Plans/Media_Generation_and_Capabilities.md",
-      "row_type": "consumer",
-      "path": "Plans/Media_Generation_and_Capabilities.md",
-      "heading_hint": "Priority merge",
-      "status": "present",
-      "exact_items": [
-        "`Plans/Media_Generation_and_Capabilities.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/Media_Generation_and_Capabilities.md:27",
-        "Plans/Media_Generation_and_Capabilities.md:392",
-        "Plans/Media_Generation_and_Capabilities.md:137"
-      ],
-      "required_action": "none"
-    },
-    {
-      "coverage_id": "cov-04420",
-      "source_obligation_ids": [
-        "obl-4260"
-      ],
-      "source_seed_ids": [
-        "seed-6085"
-      ],
-      "source_shard_ids": [
-        "shard-0082"
-      ],
-      "canon_label": "Plans/Plugins_System.md",
-      "row_type": "consumer",
-      "path": "Plans/Media_Generation_and_Capabilities.md",
-      "heading_hint": "Candidate fixes to carry forward",
-      "status": "partial",
-      "exact_items": [
-        "with `Plans/Plugins_System.md`, `Plans/Skills_System.md`, `Plans/LSPSupport.md`, `Plans/Media_Generation_and_Capabilities.md`, and `Plans/agent-rules-context.md` still clearly active."
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/Media_Generation_and_Capabilities.md:27",
-        "Plans/Media_Generation_and_Capabilities.md:524"
-      ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-04446",
-      "source_obligation_ids": [
-        "obl-4262"
-      ],
-      "source_seed_ids": [
-        "seed-6087"
-      ],
-      "source_shard_ids": [
-        "shard-0082"
-      ],
-      "canon_label": "39",
-      "row_type": "consumer",
-      "path": "Plans/Media_Generation_and_Capabilities.md",
-      "heading_hint": "Do-not-forget details",
-      "status": "present",
-      "exact_items": [
-        "Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes."
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/Media_Generation_and_Capabilities.md:100",
-        "Plans/Media_Generation_and_Capabilities.md:189",
-        "Plans/Media_Generation_and_Capabilities.md:137",
-        "Plans/Media_Generation_and_Capabilities.md:3",
-        "Plans/Media_Generation_and_Capabilities.md:55",
-        "Plans/Media_Generation_and_Capabilities.md:558"
-      ],
-      "required_action": "none"
+      "path_field_status": "match"
     }
   ]
 }

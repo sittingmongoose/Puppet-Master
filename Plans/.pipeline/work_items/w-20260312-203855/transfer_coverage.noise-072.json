@@ -1,0 +1,23 @@
+{
+  "schema_id": "pm.transfer_coverage_noise.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-072",
+  "noise_findings": [
+    {
+      "source": "coverage-rowgrp-285",
+      "finding": "coverage_ids_completed was empty; reducer completed cov-094,cov-135,cov-180 and stripped stale-only/generic schema evidence from missing rows."
+    },
+    {
+      "source": "coverage-rowgrp-286",
+      "finding": "coverage_ids_completed was empty; reducer completed cov-108 and retained partial for direct lexicographic/blockers evidence."
+    },
+    {
+      "source": "coverage-rowgrp-287",
+      "finding": "coverage_ids_completed was empty; reducer completed cov-119 and downgraded from subagent partial to missing because evidence was generic schema constants, not row coverage."
+    },
+    {
+      "source": "coverage-rowgrp-288",
+      "finding": "coverage_ids_completed was empty; reducer completed cov-096 and downgraded from subagent partial to missing because only stale selection_rule/node-only schema evidence was present."
+    }
+  ]
+}

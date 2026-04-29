@@ -1,0 +1,23 @@
+{
+  "schema_id": "pm.transfer_coverage_noise.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-043",
+  "noise_findings": [
+    {
+      "source": "coverage-rowgrp-169",
+      "finding": "coverage_ids_completed was empty; reducer normalized cov-519 completion and kept partial for bridge/correlation evidence missing exact contract-weakness claims."
+    },
+    {
+      "source": "coverage-rowgrp-170",
+      "finding": "coverage_ids_completed was empty; reducer normalized completions and kept cov-142/cov-484 partial for account-scope and stale diagnostic evidence missing full row contracts."
+    },
+    {
+      "source": "coverage-rowgrp-171",
+      "finding": "coverage_ids_completed was empty; reducer normalized cov-170 completion and kept partial for direct tier-boundary/Overseer protocol evidence."
+    },
+    {
+      "source": "coverage-rowgrp-172",
+      "finding": "coverage_ids_completed was empty and required_action strings were non-canonical; reducer normalized actions, upgraded cov-033 from missing to partial for direct graph/corroboration lineage evidence, retained cov-334/cov-630 partial, and stripped absence-only evidence from missing rows."
+    }
+  ]
+}

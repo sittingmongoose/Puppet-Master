@@ -1,0 +1,23 @@
+{
+  "schema_id": "pm.transfer_coverage_noise.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-073",
+  "noise_findings": [
+    {
+      "source": "coverage-rowgrp-289",
+      "finding": "coverage_ids_completed was empty; reducer completed cov-110 and retained partial for direct lexicographic/depends_on evidence."
+    },
+    {
+      "source": "coverage-rowgrp-290",
+      "finding": "coverage_ids_completed was empty; reducer completed cov-118 and stripped generic schema evidence from missing row."
+    },
+    {
+      "source": "coverage-rowgrp-291",
+      "finding": "coverage_ids_completed was empty; reducer completed cov-095,cov-136 and stripped generic schema evidence from missing rows."
+    },
+    {
+      "source": "coverage-rowgrp-292",
+      "finding": "coverage_ids_completed was empty; reducer completed cov-109 and retained partial for direct blockers/unblocks and depends_on evidence."
+    }
+  ]
+}

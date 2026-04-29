@@ -1,0 +1,23 @@
+{
+  "schema_id": "pm.transfer_coverage_noise.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-066",
+  "noise_findings": [
+    {
+      "source": "coverage-rowgrp-261",
+      "finding": "coverage_ids_completed was empty; reducer completed cov-1187 and retained partial for incomplete hot-list coverage."
+    },
+    {
+      "source": "coverage-rowgrp-262",
+      "finding": "coverage_ids_completed was empty; reducer completed cov-058,cov-177,cov-1081 and stripped non-row-specific tier evidence from missing cov-058."
+    },
+    {
+      "source": "coverage-rowgrp-263",
+      "finding": "coverage_ids_completed was empty and some owner required_action values were malformed as owner; reducer normalized all owner actions and retained partial/missing statuses."
+    },
+    {
+      "source": "coverage-rowgrp-264",
+      "finding": "coverage_ids_completed listed only cov-639; reducer completed all assigned IDs, accepted cov-639 as present with required_action none, and retained partial/missing statuses for the rest."
+    }
+  ]
+}

@@ -1,775 +1,319 @@
 {
-  "schema_id": "pm.transfer_coverage_wave.v1",
+  "schema_id": "pm.transfer_coverage_wave.v3",
   "work_id": "w-20260312-203855",
   "wave_id": "wave-015",
-  "row_groups": [
-    "rowgrp-0057",
-    "rowgrp-0058",
-    "rowgrp-0059",
-    "rowgrp-0060"
+  "timestamp_utc": "2026-04-28T19:52:18Z",
+  "subagent_tasks": [
+    "coverage-rowgrp-057",
+    "coverage-rowgrp-058",
+    "coverage-rowgrp-059",
+    "coverage-rowgrp-060"
   ],
-  "coverage_rows": [
+  "assigned_input_boundaries": [
+    "rowgrp-057 cov-722,cov-779,cov-877 Plans/FileManager.md",
+    "rowgrp-058 cov-846 Plans/FileManager.md",
+    "rowgrp-059 cov-423,cov-431,cov-770,cov-819,cov-941,cov-950,cov-1180 Plans/FileManager.md",
+    "rowgrp-060 cov-853,cov-1032 Plans/FileManager.md"
+  ],
+  "subagent_result_status": {
+    "coverage-rowgrp-057": "completed_reduced_conservatively",
+    "coverage-rowgrp-058": "completed_reduced_conservatively",
+    "coverage-rowgrp-059": "completed_reduced_conservatively",
+    "coverage-rowgrp-060": "completed"
+  },
+  "completed_task_count": 4,
+  "failed_task_count": 0,
+  "coverage_ids_assigned": [
+    "cov-722",
+    "cov-779",
+    "cov-877",
+    "cov-846",
+    "cov-423",
+    "cov-431",
+    "cov-770",
+    "cov-819",
+    "cov-941",
+    "cov-950",
+    "cov-1180",
+    "cov-853",
+    "cov-1032"
+  ],
+  "coverage_ids_completed": [
+    "cov-722",
+    "cov-779",
+    "cov-877",
+    "cov-846",
+    "cov-423",
+    "cov-431",
+    "cov-770",
+    "cov-819",
+    "cov-941",
+    "cov-950",
+    "cov-1180",
+    "cov-853",
+    "cov-1032"
+  ],
+  "path_groups_assigned": [
+    "Plans/FileManager.md"
+  ],
+  "rows": [
     {
-      "coverage_id": "cov-05071",
-      "source_obligation_ids": [
-        "obl-4745"
-      ],
-      "source_seed_ids": [
-        "seed-6738",
-        "seed-6816",
-        "seed-6852",
-        "seed-6886",
-        "seed-6967",
-        "seed-7051",
-        "seed-7116",
-        "seed-7143"
-      ],
-      "source_shard_ids": [
-        "shard-0088",
-        "shard-0089",
-        "shard-0090",
-        "shard-0091"
-      ],
-      "canon_label": "Plans/FinalGUISpec.md",
-      "row_type": "consumer",
-      "path": "Plans/FinalGUISpec.md",
-      "heading_hint": "Entry",
-      "status": "present",
-      "exact_items": [
-        "`Plans/FinalGUISpec.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/FinalGUISpec.md:14",
-        "Plans/FinalGUISpec.md:94"
-      ],
-      "required_action": "none"
-    },
-    {
-      "coverage_id": "cov-05089",
-      "source_obligation_ids": [
-        "obl-4763"
-      ],
-      "source_seed_ids": [
-        "seed-6756",
-        "seed-6830",
-        "seed-6873",
-        "seed-6981",
-        "seed-7101"
-      ],
-      "source_shard_ids": [
-        "shard-0088",
-        "shard-0089",
-        "shard-0090",
-        "shard-0091"
-      ],
-      "canon_label": "Plans/FinalGUISpec.md:2092",
-      "row_type": "consumer",
-      "path": "Plans/FinalGUISpec.md",
-      "heading_hint": "Entry",
-      "status": "partial",
-      "exact_items": [
-        "`Plans/FinalGUISpec.md:2092`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/FinalGUISpec.md:94"
-      ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-05090",
-      "source_obligation_ids": [
-        "obl-4764"
-      ],
-      "source_seed_ids": [
-        "seed-6757",
-        "seed-6831",
-        "seed-6874",
-        "seed-6982",
-        "seed-7102"
-      ],
-      "source_shard_ids": [
-        "shard-0088",
-        "shard-0089",
-        "shard-0090",
-        "shard-0091"
-      ],
-      "canon_label": "Plans/FinalGUISpec.md:2737-2739",
-      "row_type": "consumer",
-      "path": "Plans/FinalGUISpec.md",
-      "heading_hint": "Entry",
-      "status": "partial",
-      "exact_items": [
-        "`Plans/FinalGUISpec.md:2737-2739`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/FinalGUISpec.md:94"
-      ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-05094",
-      "source_obligation_ids": [
-        "obl-4768"
-      ],
-      "source_seed_ids": [
-        "seed-6761"
-      ],
-      "source_shard_ids": [
-        "shard-0088"
-      ],
-      "canon_label": "Plans/FinalGUISpec.md",
-      "row_type": "consumer",
-      "path": "Plans/FinalGUISpec.md",
-      "heading_hint": "Entry",
-      "status": "present",
-      "exact_items": [
-        "`Plans/FinalGUISpec.md` already carries `account_pressure_episode`, `account_switch_event`, `projection_freshness`, and `projection_health`."
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/FinalGUISpec.md:14",
-        "Plans/FinalGUISpec.md:921",
-        "Plans/FinalGUISpec.md:922",
-        "Plans/FinalGUISpec.md:171",
-        "Plans/FinalGUISpec.md:948",
-        "Plans/FinalGUISpec.md:94"
-      ],
-      "required_action": "none"
-    },
-    {
-      "coverage_id": "cov-05107",
-      "source_obligation_ids": [
-        "obl-4781"
-      ],
-      "source_seed_ids": [
-        "seed-6783"
-      ],
-      "source_shard_ids": [
-        "shard-0089"
-      ],
-      "canon_label": "Plans/FinalGUISpec.md:1842-1845",
-      "row_type": "consumer",
-      "path": "Plans/FinalGUISpec.md",
-      "heading_hint": "",
+      "coverage_id": "cov-722",
       "status": "missing",
-      "exact_items": [
-        "`Plans/FinalGUISpec.md:1842-1845`"
-      ],
-      "stale_tokens": [],
       "evidence": [
-        "Plans/FinalGUISpec.md:required_terms_absent"
+        "Plans/FileManager.md:145 token mention is drag-out security, unrelated to ghost command/schema integrity",
+        "Plans/FileManager.md:198 token mention is syntax highlighting, unrelated to ghost command/schema integrity",
+        "Plans/FileManager.md:232 stale mention is annotation-state handling, unrelated to ghost command/schema integrity"
       ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-05108",
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "FileManager.md does not contain row-specific coverage for ghost commands, missing catalog rows, runtime-artifact schema ownership, duplicated executor canon, or dead glossary/TOC references.",
       "source_obligation_ids": [
-        "obl-4782"
+        "obl-197"
       ],
       "source_seed_ids": [
-        "seed-6784",
-        "seed-7069"
+        "seed-197"
       ],
       "source_shard_ids": [
-        "shard-0089",
-        "shard-0091"
+        "shard-0049"
       ],
-      "canon_label": "Plans/FinalGUISpec.md:2092",
-      "row_type": "consumer",
-      "path": "Plans/FinalGUISpec.md",
-      "heading_hint": "",
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-779",
+      "status": "partial",
+      "evidence": [
+        "Plans/FileManager.md:303 identity-based routing resolves route_target schemes through shared route/open semantics",
+        "Plans/FileManager.md:305 artifacts are stored by content hash and indexed by concern_id, route_target, artifact_type, and timestamp",
+        "Plans/FileManager.md:311-312 Contracts_V0 owns route_target/OpenSubject and FileManager keeps OpenFile narrow and path-based",
+        "Plans/FileManager.md:325-327 runtime artifacts are attempt-native and artifact open flows resolve by artifact_id"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "Artifact identity and OpenSubject references are present, but a complete canonical OpenArtifact/OpenSubject contract is not fully defined here.",
+      "source_obligation_ids": [
+        "obl-215"
+      ],
+      "source_seed_ids": [
+        "seed-215"
+      ],
+      "source_shard_ids": [
+        "shard-0054"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-877",
+      "status": "partial",
+      "evidence": [
+        "Plans/FileManager.md:313 route_target stays small with subject_id or object_kind/object_id identity",
+        "Plans/FileManager.md:314 subject_id families are limited and inspector_target is kept secondary"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "inspector_target sub-selection is mentioned, but the full layout-blocker rule for object/detail UI focus is not completely defined in FileManager.md.",
+      "source_obligation_ids": [
+        "obl-246"
+      ],
+      "source_seed_ids": [
+        "seed-246"
+      ],
+      "source_shard_ids": [
+        "shard-0062"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-846",
+      "status": "partial",
+      "evidence": [
+        "Plans/FileManager.md:301 FileManager owns the file-open and artifact-storage contract",
+        "Plans/FileManager.md:303 identity-based routing uses route_target through shared route/open semantics in Contracts_V0.md",
+        "Plans/FileManager.md:311-312 Contracts_V0 owns route_target/OpenSubject, Crosswalk owns primitive boundary, and FileManager keeps OpenFile narrow and path-based"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "The owner split is partly present, but route payload boundaries are not fully stated as the exact owner split requested by the row.",
+      "source_obligation_ids": [
+        "obl-236"
+      ],
+      "source_seed_ids": [
+        "seed-236"
+      ],
+      "source_shard_ids": [
+        "shard-0060"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-423",
       "status": "missing",
-      "exact_items": [
-        "`Plans/FinalGUISpec.md:2092`"
-      ],
-      "stale_tokens": [],
       "evidence": [
-        "Plans/FinalGUISpec.md:required_terms_absent"
+        "Plans/FileManager.md:301-306 file-open/artifact contract exists, but no requested/effective/provider/account identity disclosure contract is present"
       ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-05109",
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Requested/effective identity disclosure contract is absent; FileManager.md only has route/open and artifact-by-identity language for this area.",
       "source_obligation_ids": [
-        "obl-4783"
+        "obl-124"
       ],
       "source_seed_ids": [
-        "seed-6785",
-        "seed-7070"
+        "seed-124"
       ],
       "source_shard_ids": [
-        "shard-0089",
-        "shard-0091"
+        "shard-0031"
       ],
-      "canon_label": "Plans/FinalGUISpec.md:2737-2739",
-      "row_type": "consumer",
-      "path": "Plans/FinalGUISpec.md",
-      "heading_hint": "",
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-431",
       "status": "missing",
-      "exact_items": [
-        "`Plans/FinalGUISpec.md:2737-2739`"
-      ],
-      "stale_tokens": [],
       "evidence": [
-        "Plans/FinalGUISpec.md:required_terms_absent"
+        "Plans/FileManager.md:303-305 route/open and artifact-by-identity rules exist, but no seam_id, package_id, lane_id, attempt_id, tier_id, run.tier_*, tier_tree, or Tiers attribution pivot coverage was found"
       ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-05110",
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "FileManager.md does not contain the assigned storage/usage attribution pivot away from tier-era routing.",
       "source_obligation_ids": [
-        "obl-4784"
+        "obl-125"
       ],
       "source_seed_ids": [
-        "seed-6786"
+        "seed-125"
       ],
       "source_shard_ids": [
-        "shard-0089"
+        "shard-0031"
       ],
-      "canon_label": "Plans/FinalGUISpec.md:2924-2925",
-      "row_type": "consumer",
-      "path": "Plans/FinalGUISpec.md",
-      "heading_hint": "",
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-770",
+      "status": "partial",
+      "evidence": [
+        "Plans/FileManager.md:305 artifacts are indexed by concern_id, route_target, artifact_type, and timestamp",
+        "Plans/FileManager.md:325-327 runtime artifacts are attempt-native and artifact open flows resolve by artifact_id and linked envelope refs"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Artifact identity and linked envelope refs are present, but the complete runtime-artifact envelope common field contract is not fully stated in FileManager.md.",
+      "source_obligation_ids": [
+        "obl-213"
+      ],
+      "source_seed_ids": [
+        "seed-213"
+      ],
+      "source_shard_ids": [
+        "shard-0054"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-819",
+      "status": "present",
+      "evidence": [
+        "Plans/FileManager.md:311-312 Contracts_V0 owns route_target/OpenSubject while FileManager keeps OpenFile narrow and path-based"
+      ],
+      "required_action": "none",
+      "unresolved_reason": "",
+      "source_obligation_ids": [
+        "obl-229"
+      ],
+      "source_seed_ids": [
+        "seed-229"
+      ],
+      "source_shard_ids": [
+        "shard-0058"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-941",
+      "status": "partial",
+      "evidence": [
+        "Plans/FileManager.md:311 Contracts_V0 owns OpenSubject contracts",
+        "Plans/FileManager.md:313-314 route/open rules include subject_id, object_kind/object_id identity, and inspector_target secondary focus"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "OpenSubject and subject identity are referenced, but open_intent and complete OpenSubject contract definition are not present in FileManager.md.",
+      "source_obligation_ids": [
+        "obl-264"
+      ],
+      "source_seed_ids": [
+        "seed-264"
+      ],
+      "source_shard_ids": [
+        "shard-0067"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-950",
+      "status": "partial",
+      "evidence": [
+        "Plans/FileManager.md:311-312 Contracts_V0 owns route_target/OpenSubject and FileManager OpenFile remains narrow and path-based"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "OpenFile path-editor scope is present, but line/range ownership and the route_target/OpenSubject non-overlap are not fully stated.",
+      "source_obligation_ids": [
+        "obl-266"
+      ],
+      "source_seed_ids": [
+        "seed-266"
+      ],
+      "source_shard_ids": [
+        "shard-0067"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-1180",
       "status": "missing",
-      "exact_items": [
-        "`Plans/FinalGUISpec.md:2924-2925`"
-      ],
-      "stale_tokens": [],
       "evidence": [
-        "Plans/FinalGUISpec.md:required_terms_absent"
+        "Plans/FileManager.md:301-327 file-open/artifact routing section exists, but no MUST CHANGE / MUST RECONCILE / MUST VERIFY packet inclusion category coverage was found"
       ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-05183",
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Assigned packet inclusion categories are absent from Plans/FileManager.md.",
       "source_obligation_ids": [
-        "obl-4853"
+        "obl-339"
       ],
       "source_seed_ids": [
-        "seed-6890"
+        "seed-339"
       ],
       "source_shard_ids": [
-        "shard-0089"
+        "shard-0086"
       ],
-      "canon_label": "Plans/FinalGUISpec.md:728-735",
-      "row_type": "consumer",
-      "path": "Plans/FinalGUISpec.md",
-      "heading_hint": "Entry",
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-853",
       "status": "partial",
-      "exact_items": [
-        "`Plans/FinalGUISpec.md:728-735`"
-      ],
-      "stale_tokens": [],
       "evidence": [
-        "Plans/FinalGUISpec.md:94"
+        "Plans/FileManager.md:311-312 FileManager keeps OpenFile narrow and path-based"
       ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-05302",
+      "required_action": "stale_retirement",
+      "unresolved_reason": "OpenFile narrowing is present, but explicit retirement of OpenFile as a surrogate navigation primitive is not complete.",
       "source_obligation_ids": [
-        "obl-4951"
+        "obl-238"
       ],
       "source_seed_ids": [
-        "seed-7077"
+        "seed-238"
       ],
       "source_shard_ids": [
-        "shard-0091"
+        "shard-0060"
       ],
-      "canon_label": "gap-007",
-      "row_type": "consumer",
-      "path": "Plans/FinalGUISpec.md",
-      "heading_hint": "11. Source Control boundary",
-      "status": "present",
-      "exact_items": [
-        "`gap-007` sharpened: the broken `Plans/Orchestrator_Page.md#11. Source Control boundary` reference survives not only in `Plans/GitHub_Integration.md` but also in `Plans/storage-plan.md` and `Plans/WorktreeGitImprovement.md`, while `Plans/FinalGUISpec.md` still preserves the `restore points` contradiction."
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/FinalGUISpec.md:273",
-        "Plans/FinalGUISpec.md:367",
-        "Plans/FinalGUISpec.md:390",
-        "Plans/FinalGUISpec.md:14",
-        "Plans/FinalGUISpec.md:1891",
-        "Plans/FinalGUISpec.md:12",
-        "Plans/FinalGUISpec.md:244",
-        "Plans/FinalGUISpec.md:508",
-        "Plans/FinalGUISpec.md:29",
-        "Plans/FinalGUISpec.md:1748",
-        "Plans/FinalGUISpec.md:94",
-        "Plans/FinalGUISpec.md:5"
-      ],
-      "required_action": "none"
+      "path_field_status": "match"
     },
     {
-      "coverage_id": "cov-05332",
-      "source_obligation_ids": [
-        "obl-4979"
-      ],
-      "source_seed_ids": [
-        "seed-7130"
-      ],
-      "source_shard_ids": [
-        "shard-0091"
-      ],
-      "canon_label": "Plans/FinalGUISpec.md:2924-2928",
-      "row_type": "consumer",
-      "path": "Plans/FinalGUISpec.md",
-      "heading_hint": "Entry",
+      "coverage_id": "cov-1032",
       "status": "partial",
-      "exact_items": [
-        "`Plans/FinalGUISpec.md:2924-2928`"
-      ],
-      "stale_tokens": [],
       "evidence": [
-        "Plans/FinalGUISpec.md:94"
+        "Plans/FileManager.md:311-312 OpenSubject is owned by Contracts_V0 and FileManager OpenFile remains narrow and path-based",
+        "Plans/FileManager.md:325-327 runtime artifacts are attempt-native and resolve by artifact_id"
       ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-05350",
+      "required_action": "stale_retirement",
+      "unresolved_reason": "OpenSubject and artifact_id resolution are present, but generated://<artifact_id> resolver-output handling and full universal-open overclaim retirement are not complete.",
       "source_obligation_ids": [
-        "obl-4992"
+        "obl-290"
       ],
       "source_seed_ids": [
-        "seed-7155"
-      ],
-      "source_shard_ids": [
-        "shard-0091"
-      ],
-      "canon_label": "Plans/FinalGUISpec.md:2092-2092",
-      "row_type": "consumer",
-      "path": "Plans/FinalGUISpec.md",
-      "heading_hint": "Entry",
-      "status": "partial",
-      "exact_items": [
-        "`Plans/FinalGUISpec.md:2092-2092`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/FinalGUISpec.md:94"
-      ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-05351",
-      "source_obligation_ids": [
-        "obl-4993"
-      ],
-      "source_seed_ids": [
-        "seed-7156"
-      ],
-      "source_shard_ids": [
-        "shard-0091"
-      ],
-      "canon_label": "Plans/FinalGUISpec.md:2736-2739",
-      "row_type": "consumer",
-      "path": "Plans/FinalGUISpec.md",
-      "heading_hint": "Entry",
-      "status": "partial",
-      "exact_items": [
-        "`Plans/FinalGUISpec.md:2736-2739`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/FinalGUISpec.md:94"
-      ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-00120",
-      "source_obligation_ids": [
-        "obl-0119"
-      ],
-      "source_seed_ids": [
-        "seed-0119"
-      ],
-      "source_shard_ids": [
-        "shard-0003"
-      ],
-      "canon_label": "Plans/storage-plan.md",
-      "row_type": "layout_blocker",
-      "path": "Plans/FinalGUISpec.md",
-      "heading_hint": "",
-      "status": "present",
-      "exact_items": [
-        "`Plans/storage-plan.md` and `Plans/FinalGUISpec.md` also carry meaningful usage/runtime/event/GUI assumptions."
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/FinalGUISpec.md:367",
-        "Plans/FinalGUISpec.md:14",
-        "Plans/FinalGUISpec.md:1748",
-        "Plans/FinalGUISpec.md:967",
-        "Plans/FinalGUISpec.md:72"
-      ],
-      "required_action": "none"
-    },
-    {
-      "coverage_id": "cov-00432",
-      "source_obligation_ids": [
-        "obl-0430"
-      ],
-      "source_seed_ids": [
-        "seed-0435"
-      ],
-      "source_shard_ids": [
-        "shard-0007"
-      ],
-      "canon_label": "Plans/FinalGUISpec.md",
-      "row_type": "layout_blocker",
-      "path": "Plans/FinalGUISpec.md",
-      "heading_hint": "Cleanup Priorities",
-      "status": "present",
-      "exact_items": [
-        "`Plans/FinalGUISpec.md`: The \"Tiers\" tab and linear navigation are fundamentally wrong for the new model."
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/FinalGUISpec.md:14",
-        "Plans/FinalGUISpec.md:1749",
-        "Plans/FinalGUISpec.md:83",
-        "Plans/FinalGUISpec.md:785",
-        "Plans/FinalGUISpec.md:634"
-      ],
-      "required_action": "none"
-    },
-    {
-      "coverage_id": "cov-00441",
-      "source_obligation_ids": [
-        "obl-0437"
-      ],
-      "source_seed_ids": [
-        "seed-0442"
-      ],
-      "source_shard_ids": [
-        "shard-0007"
-      ],
-      "canon_label": "Plans/FinalGUISpec.md",
-      "row_type": "layout_blocker",
-      "path": "Plans/FinalGUISpec.md",
-      "heading_hint": "Highest-Impact Docs",
-      "status": "present",
-      "exact_items": [
-        "**`Plans/FinalGUISpec.md`** \u2014 22 addenda accumulated. Body defines Tiers tab, phase/task/subtask progress bars (3-bar layout), and `widget.tier_tree` as a primary Orchestrator surface. Later addenda introduce dashboard widget grid, rendering surface, scheduler/blocked GUI, but never reconcile the Tiers tab itself. The tab name, progress bar structure, and navigation model all assume linear phase progression."
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/FinalGUISpec.md:14",
-        "Plans/FinalGUISpec.md:635",
-        "Plans/FinalGUISpec.md:1145",
-        "Plans/FinalGUISpec.md:1749",
-        "Plans/FinalGUISpec.md:55",
-        "Plans/FinalGUISpec.md:1357",
-        "Plans/FinalGUISpec.md:60",
-        "Plans/FinalGUISpec.md:252",
-        "Plans/FinalGUISpec.md:59",
-        "Plans/FinalGUISpec.md:472",
-        "Plans/FinalGUISpec.md:374",
-        "Plans/FinalGUISpec.md:1932"
-      ],
-      "required_action": "none"
-    },
-    {
-      "coverage_id": "cov-03985",
-      "source_obligation_ids": [
-        "obl-3831"
-      ],
-      "source_seed_ids": [
-        "seed-5321"
+        "seed-290"
       ],
       "source_shard_ids": [
         "shard-0073"
       ],
-      "canon_label": "Plans/FinalGUISpec.md",
-      "row_type": "layout_blocker",
-      "path": "Plans/FinalGUISpec.md",
-      "heading_hint": "Key findings",
-      "status": "present",
-      "exact_items": [
-        "`Plans/FinalGUISpec.md` still preserves `Tiers` as a primary page-level surface and still embeds older standalone-surface assumptions that conflict with the tab-first Orchestrator rewrite"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/FinalGUISpec.md:14",
-        "Plans/FinalGUISpec.md:1749",
-        "Plans/FinalGUISpec.md:5",
-        "Plans/FinalGUISpec.md:252",
-        "Plans/FinalGUISpec.md:1479",
-        "Plans/FinalGUISpec.md:59",
-        "Plans/FinalGUISpec.md:623",
-        "Plans/FinalGUISpec.md:2239",
-        "Plans/FinalGUISpec.md:305",
-        "Plans/FinalGUISpec.md:1839",
-        "Plans/FinalGUISpec.md:1",
-        "Plans/FinalGUISpec.md:1103"
-      ],
-      "required_action": "none"
-    },
-    {
-      "coverage_id": "cov-04142",
-      "source_obligation_ids": [
-        "obl-3988"
-      ],
-      "source_seed_ids": [
-        "seed-5548"
-      ],
-      "source_shard_ids": [
-        "shard-0075"
-      ],
-      "canon_label": "Plans/FinalGUISpec.md",
-      "row_type": "layout_blocker",
-      "path": "Plans/FinalGUISpec.md",
-      "heading_hint": "Key findings",
-      "status": "present",
-      "exact_items": [
-        "`Plans/FinalGUISpec.md` still treats the deep-link URL as a first-class behavioral object:"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/FinalGUISpec.md:14",
-        "Plans/FinalGUISpec.md:935",
-        "Plans/FinalGUISpec.md:11",
-        "Plans/FinalGUISpec.md:1103"
-      ],
-      "required_action": "none"
-    },
-    {
-      "coverage_id": "cov-04521",
-      "source_obligation_ids": [
-        "obl-4283"
-      ],
-      "source_seed_ids": [
-        "seed-6167"
-      ],
-      "source_shard_ids": [
-        "shard-0082"
-      ],
-      "canon_label": "Plans/*.md",
-      "row_type": "layout_blocker",
-      "path": "Plans/FinalGUISpec.md",
-      "heading_hint": "Do-not-forget details",
-      "status": "present",
-      "exact_items": [
-        "After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes."
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/FinalGUISpec.md:740",
-        "Plans/FinalGUISpec.md:406",
-        "Plans/FinalGUISpec.md:220",
-        "Plans/FinalGUISpec.md:14",
-        "Plans/FinalGUISpec.md:59",
-        "Plans/FinalGUISpec.md:375",
-        "Plans/FinalGUISpec.md:1853",
-        "Plans/FinalGUISpec.md:1092",
-        "Plans/FinalGUISpec.md:145",
-        "Plans/FinalGUISpec.md:31",
-        "Plans/FinalGUISpec.md:2138",
-        "Plans/FinalGUISpec.md:876"
-      ],
-      "required_action": "none"
-    },
-    {
-      "coverage_id": "cov-05342",
-      "source_obligation_ids": [
-        "obl-4984"
-      ],
-      "source_seed_ids": [
-        "seed-7135"
-      ],
-      "source_shard_ids": [
-        "shard-0091"
-      ],
-      "canon_label": "gap-007",
-      "row_type": "layout_blocker",
-      "path": "Plans/FinalGUISpec.md",
-      "heading_hint": "Entry",
-      "status": "present",
-      "exact_items": [
-        "`gap-007` downgraded: the prior `restore points` contradiction was overstated because `Plans/storage-plan.md` now cleanly separates runtime safe points from project-scoped restore points and `Plans/FinalGUISpec.md` explicitly forbids presenting safe points as restore points; the remaining blocker is structural-heading and broken-reference drift."
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/FinalGUISpec.md:1891",
-        "Plans/FinalGUISpec.md:367",
-        "Plans/FinalGUISpec.md:14",
-        "Plans/FinalGUISpec.md:892",
-        "Plans/FinalGUISpec.md:385",
-        "Plans/FinalGUISpec.md:1373",
-        "Plans/FinalGUISpec.md:305",
-        "Plans/FinalGUISpec.md:946",
-        "Plans/FinalGUISpec.md:261",
-        "Plans/FinalGUISpec.md:172",
-        "Plans/FinalGUISpec.md:509",
-        "Plans/FinalGUISpec.md:208"
-      ],
-      "required_action": "none"
-    },
-    {
-      "coverage_id": "cov-04099",
-      "source_obligation_ids": [
-        "obl-3945"
-      ],
-      "source_seed_ids": [
-        "seed-5479"
-      ],
-      "source_shard_ids": [
-        "shard-0074"
-      ],
-      "canon_label": "Plans/FinalGUISpec.md",
-      "row_type": "stale_retirement",
-      "path": "Plans/FinalGUISpec.md",
-      "heading_hint": "Key findings",
-      "status": "missing",
-      "exact_items": [
-        "`Plans/FinalGUISpec.md` is carrying two separate stale seams at once:"
-      ],
-      "stale_tokens": [
-        "Plans/FinalGUISpec.md"
-      ],
-      "evidence": [
-        "Plans/FinalGUISpec.md:14"
-      ],
-      "required_action": "stale_retirement"
-    },
-    {
-      "coverage_id": "cov-04134",
-      "source_obligation_ids": [
-        "obl-3980"
-      ],
-      "source_seed_ids": [
-        "seed-5531"
-      ],
-      "source_shard_ids": [
-        "shard-0075"
-      ],
-      "canon_label": "Plans/FinalGUISpec.md",
-      "row_type": "stale_retirement",
-      "path": "Plans/FinalGUISpec.md",
-      "heading_hint": "Key findings",
-      "status": "missing",
-      "exact_items": [
-        "`Plans/FinalGUISpec.md` still has stale top-level structure for `Tiers`:"
-      ],
-      "stale_tokens": [
-        "Plans/FinalGUISpec.md",
-        "Tiers"
-      ],
-      "evidence": [
-        "Plans/FinalGUISpec.md:14",
-        "Plans/FinalGUISpec.md:1749"
-      ],
-      "required_action": "stale_retirement"
-    },
-    {
-      "coverage_id": "cov-05157",
-      "source_obligation_ids": [
-        "obl-4828"
-      ],
-      "source_seed_ids": [
-        "seed-6840"
-      ],
-      "source_shard_ids": [
-        "shard-0089"
-      ],
-      "canon_label": "Plans/Tools.md",
-      "row_type": "stale_retirement",
-      "path": "Plans/FinalGUISpec.md",
-      "heading_hint": "Entry",
-      "status": "missing",
-      "exact_items": [
-        "`Plans/Tools.md` still carries the stale tuple `{ tool_name, invocation_summary, options }`, `Plans/assistant-chat-design.md` still carries `No remaining gaps`, and `Plans/FinalGUISpec.md` still carries the `restore points` contradiction."
-      ],
-      "stale_tokens": [
-        "Plans/Tools.md",
-        "{ tool_name, invocation_summary, options }",
-        "Plans/assistant-chat-design.md",
-        "No remaining gaps",
-        "Plans/FinalGUISpec.md",
-        "restore points"
-      ],
-      "evidence": [
-        "Plans/FinalGUISpec.md:378",
-        "Plans/FinalGUISpec.md:273",
-        "Plans/FinalGUISpec.md:14",
-        "Plans/FinalGUISpec.md:1891"
-      ],
-      "required_action": "stale_retirement"
-    },
-    {
-      "coverage_id": "cov-05181",
-      "source_obligation_ids": [
-        "obl-4851"
-      ],
-      "source_seed_ids": [
-        "seed-6883"
-      ],
-      "source_shard_ids": [
-        "shard-0089"
-      ],
-      "canon_label": "Plans/FinalGUISpec.md",
-      "row_type": "stale_retirement",
-      "path": "Plans/FinalGUISpec.md",
-      "heading_hint": "### 7.3 Shared route and open behavior",
-      "status": "missing",
-      "exact_items": [
-        "`Plans/FinalGUISpec.md` still contains the exact consumer anchor `### 7.3 Shared route and open behavior`, so gap-002 remains an owner-heading and stale-survivor problem rather than a missing Final GUI consumer anchor."
-      ],
-      "stale_tokens": [
-        "Plans/FinalGUISpec.md",
-        "### 7.3 Shared route and open behavior"
-      ],
-      "evidence": [
-        "Plans/FinalGUISpec.md:14",
-        "Plans/FinalGUISpec.md:933"
-      ],
-      "required_action": "stale_retirement"
-    },
-    {
-      "coverage_id": "cov-05241",
-      "source_obligation_ids": [
-        "obl-4902"
-      ],
-      "source_seed_ids": [
-        "seed-6960"
-      ],
-      "source_shard_ids": [
-        "shard-0090"
-      ],
-      "canon_label": "gap-002",
-      "row_type": "stale_retirement",
-      "path": "Plans/FinalGUISpec.md",
-      "heading_hint": "Entry",
-      "status": "missing",
-      "exact_items": [
-        "Wave 1 targeted the structural/survivor subset around `gap-002`, `gap-006`, and `gap-007` (`Plans/UI_Command_Catalog.md`, `Plans/Glossary.md`, `Plans/Orchestrator_Page.md`, `Plans/GitHub_Integration.md`, `Plans/FinalGUISpec.md`) and only reconfirmed the already-recorded missing owner headings plus existing `detached_window`, `result_id`, `restore points`, and the broken `#11. Source Control boundary` reference."
-      ],
-      "stale_tokens": [
-        "gap-002",
-        "gap-006",
-        "gap-007",
-        "Plans/UI_Command_Catalog.md",
-        "Plans/Glossary.md",
-        "Plans/Orchestrator_Page.md",
-        "Plans/GitHub_Integration.md",
-        "Plans/FinalGUISpec.md",
-        "detached_window",
-        "result_id",
-        "restore points",
-        "#11. Source Control boundary"
-      ],
-      "evidence": [
-        "Plans/FinalGUISpec.md:367",
-        "Plans/FinalGUISpec.md:1890",
-        "Plans/FinalGUISpec.md:273",
-        "Plans/FinalGUISpec.md:14",
-        "Plans/FinalGUISpec.md:1891"
-      ],
-      "required_action": "stale_retirement"
+      "path_field_status": "match"
     }
   ]
 }

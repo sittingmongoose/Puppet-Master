@@ -1,0 +1,1184 @@
+{
+  "schema_id": "pm.transfer_coverage_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-039",
+  "row_groups": [
+    "rowgrp-0153",
+    "rowgrp-0154",
+    "rowgrp-0155",
+    "rowgrp-0156"
+  ],
+  "coverage_rows": [
+    {
+      "coverage_id": "cov-00602",
+      "source_obligation_ids": [
+        "obl-0568"
+      ],
+      "source_seed_ids": [
+        "seed-0573"
+      ],
+      "source_shard_ids": [
+        "shard-0008"
+      ],
+      "canon_label": "Plans/FinalGUISpec.md",
+      "row_type": "consumer",
+      "path": "Plans/UI_Command_Catalog.md",
+      "heading_hint": "Highest-Impact Docs",
+      "status": "present",
+      "exact_items": [
+        "**`Plans/FinalGUISpec.md` + `Plans/Run_Graph_View.md` + `Plans/Widget_System.md` + `Plans/UI_Command_Catalog.md`**"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:274",
+        "Plans/UI_Command_Catalog.md:256",
+        "Plans/UI_Command_Catalog.md:232",
+        "Plans/UI_Command_Catalog.md:15",
+        "Plans/UI_Command_Catalog.md:638"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00639",
+      "source_obligation_ids": [
+        "obl-0601"
+      ],
+      "source_seed_ids": [
+        "seed-0606",
+        "seed-0683"
+      ],
+      "source_shard_ids": [
+        "shard-0009",
+        "shard-0010"
+      ],
+      "canon_label": "Plans/UI_Command_Catalog.md",
+      "row_type": "consumer",
+      "path": "Plans/UI_Command_Catalog.md",
+      "heading_hint": "Cleanup Priorities",
+      "status": "partial",
+      "exact_items": [
+        "`Plans/UI_Command_Catalog.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:15"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-00687",
+      "source_obligation_ids": [
+        "obl-0639"
+      ],
+      "source_seed_ids": [
+        "seed-0645"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "canon_label": "Plans/UI_Command_Catalog.md",
+      "row_type": "consumer",
+      "path": "Plans/UI_Command_Catalog.md",
+      "heading_hint": "GUI / UX Impacts",
+      "status": "partial",
+      "exact_items": [
+        "`Plans/UI_Command_Catalog.md`, `Plans/Wiring_Matrix.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:15",
+        "Plans/UI_Command_Catalog.md:147"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-01297",
+      "source_obligation_ids": [
+        "obl-1228"
+      ],
+      "source_seed_ids": [
+        "seed-1335",
+        "seed-1586",
+        "seed-1935",
+        "seed-2003",
+        "seed-2077",
+        "seed-2121",
+        "seed-2314",
+        "seed-2591",
+        "seed-2723",
+        "seed-2813",
+        "seed-2841",
+        "seed-2888",
+        "seed-2934",
+        "seed-3055",
+        "seed-3207",
+        "seed-3244",
+        "seed-3692",
+        "seed-3727",
+        "seed-3937",
+        "seed-4000",
+        "seed-4062",
+        "seed-4184",
+        "seed-4314",
+        "seed-4398",
+        "seed-4521",
+        "seed-4558",
+        "seed-4579",
+        "seed-4598",
+        "seed-4683",
+        "seed-4722",
+        "seed-4748",
+        "seed-4786",
+        "seed-4828",
+        "seed-4914",
+        "seed-4944",
+        "seed-5163",
+        "seed-5182",
+        "seed-5199",
+        "seed-5214",
+        "seed-5256",
+        "seed-5316",
+        "seed-5475",
+        "seed-5770",
+        "seed-5789",
+        "seed-5809",
+        "seed-5838",
+        "seed-6321"
+      ],
+      "source_shard_ids": [
+        "shard-0023",
+        "shard-0029",
+        "shard-0034",
+        "shard-0035",
+        "shard-0036",
+        "shard-0038",
+        "shard-0042",
+        "shard-0043",
+        "shard-0044",
+        "shard-0045",
+        "shard-0046",
+        "shard-0047",
+        "shard-0049",
+        "shard-0054",
+        "shard-0055",
+        "shard-0056",
+        "shard-0057",
+        "shard-0058",
+        "shard-0059",
+        "shard-0060",
+        "shard-0062",
+        "shard-0063",
+        "shard-0064",
+        "shard-0065",
+        "shard-0066",
+        "shard-0067",
+        "shard-0068",
+        "shard-0070",
+        "shard-0071",
+        "shard-0072",
+        "shard-0073",
+        "shard-0074",
+        "shard-0078",
+        "shard-0079",
+        "shard-0084"
+      ],
+      "canon_label": "Plans/UI_Command_Catalog.md",
+      "row_type": "consumer",
+      "path": "Plans/UI_Command_Catalog.md",
+      "heading_hint": "Targeted docs read",
+      "status": "present",
+      "exact_items": [
+        "`Plans/UI_Command_Catalog.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:15",
+        "Plans/UI_Command_Catalog.md:638",
+        "Plans/UI_Command_Catalog.md:372"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-01886",
+      "source_obligation_ids": [
+        "obl-1812"
+      ],
+      "source_seed_ids": [
+        "seed-2099"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "canon_label": "Plans/UI_Command_Catalog.md",
+      "row_type": "consumer",
+      "path": "Plans/UI_Command_Catalog.md",
+      "heading_hint": "Highest-risk impacted docs",
+      "status": "present",
+      "exact_items": [
+        "`Plans/UI_Command_Catalog.md` + `Plans/Runtime_Artifacts_Panel.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:15",
+        "Plans/UI_Command_Catalog.md:441",
+        "Plans/UI_Command_Catalog.md:638"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-01916",
+      "source_obligation_ids": [
+        "obl-1841"
+      ],
+      "source_seed_ids": [
+        "seed-2139"
+      ],
+      "source_shard_ids": [
+        "shard-0036"
+      ],
+      "canon_label": "Plans/UI_Command_Catalog.md",
+      "row_type": "consumer",
+      "path": "Plans/UI_Command_Catalog.md",
+      "heading_hint": "Highest-risk impacted docs",
+      "status": "present",
+      "exact_items": [
+        "`Plans/UI_Command_Catalog.md` + `Plans/storage-plan.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:15",
+        "Plans/UI_Command_Catalog.md:351",
+        "Plans/UI_Command_Catalog.md:638"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-02059",
+      "source_obligation_ids": [
+        "obl-1981"
+      ],
+      "source_seed_ids": [
+        "seed-2330",
+        "seed-2768",
+        "seed-2825",
+        "seed-3258",
+        "seed-3499",
+        "seed-3709",
+        "seed-3745",
+        "seed-3819",
+        "seed-3913",
+        "seed-3950",
+        "seed-3983",
+        "seed-4008",
+        "seed-4045",
+        "seed-4073",
+        "seed-4157",
+        "seed-4193",
+        "seed-4226",
+        "seed-4245",
+        "seed-4274",
+        "seed-4305",
+        "seed-4330",
+        "seed-4360",
+        "seed-4391",
+        "seed-4414",
+        "seed-4455",
+        "seed-4511",
+        "seed-4542",
+        "seed-4568",
+        "seed-4587",
+        "seed-4621",
+        "seed-4669",
+        "seed-4701",
+        "seed-4736",
+        "seed-4770",
+        "seed-4800",
+        "seed-4846",
+        "seed-4933",
+        "seed-4954",
+        "seed-4972",
+        "seed-5042",
+        "seed-5137",
+        "seed-5172",
+        "seed-5192",
+        "seed-5206",
+        "seed-5223",
+        "seed-5245",
+        "seed-5327",
+        "seed-5394",
+        "seed-5484",
+        "seed-5516",
+        "seed-5778",
+        "seed-5817",
+        "seed-5843",
+        "seed-5975",
+        "seed-6150",
+        "seed-6223",
+        "seed-6244",
+        "seed-6265",
+        "seed-6331",
+        "seed-6373",
+        "seed-6402",
+        "seed-6440"
+      ],
+      "source_shard_ids": [
+        "shard-0038",
+        "shard-0044",
+        "shard-0045",
+        "shard-0049",
+        "shard-0052",
+        "shard-0055",
+        "shard-0056",
+        "shard-0057",
+        "shard-0058",
+        "shard-0059",
+        "shard-0060",
+        "shard-0061",
+        "shard-0062",
+        "shard-0063",
+        "shard-0064",
+        "shard-0065",
+        "shard-0066",
+        "shard-0067",
+        "shard-0068",
+        "shard-0069",
+        "shard-0070",
+        "shard-0071",
+        "shard-0072",
+        "shard-0073",
+        "shard-0074",
+        "shard-0075",
+        "shard-0078",
+        "shard-0079",
+        "shard-0081",
+        "shard-0082",
+        "shard-0083",
+        "shard-0084",
+        "shard-0085",
+        "shard-0086"
+      ],
+      "canon_label": "Plans/UI_Command_Catalog.md",
+      "row_type": "consumer",
+      "path": "Plans/UI_Command_Catalog.md",
+      "heading_hint": "Impacted docs",
+      "status": "partial",
+      "exact_items": [
+        "`Plans/UI_Command_Catalog.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:15",
+        "Plans/UI_Command_Catalog.md:638"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-02243",
+      "source_obligation_ids": [
+        "obl-2164"
+      ],
+      "source_seed_ids": [
+        "seed-2613",
+        "seed-2870",
+        "seed-2913",
+        "seed-2957",
+        "seed-3077",
+        "seed-3293"
+      ],
+      "source_shard_ids": [
+        "shard-0042",
+        "shard-0045",
+        "shard-0046",
+        "shard-0047",
+        "shard-0049"
+      ],
+      "canon_label": "Plans/UI_Command_Catalog.md",
+      "row_type": "consumer",
+      "path": "Plans/UI_Command_Catalog.md",
+      "heading_hint": "Highest-risk impacted docs",
+      "status": "partial",
+      "exact_items": [
+        "`Plans/UI_Command_Catalog.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:15",
+        "Plans/UI_Command_Catalog.md:638"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-03328",
+      "source_obligation_ids": [
+        "obl-3198"
+      ],
+      "source_seed_ids": [
+        "seed-4180"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "canon_label": "Plans/*.md",
+      "row_type": "consumer",
+      "path": "Plans/UI_Command_Catalog.md",
+      "heading_hint": "Do-not-forget details",
+      "status": "present",
+      "exact_items": [
+        "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:38",
+        "Plans/UI_Command_Catalog.md:570",
+        "Plans/UI_Command_Catalog.md:15",
+        "Plans/UI_Command_Catalog.md:638",
+        "Plans/UI_Command_Catalog.md:5",
+        "Plans/UI_Command_Catalog.md:331",
+        "Plans/UI_Command_Catalog.md:648",
+        "Plans/UI_Command_Catalog.md:111",
+        "Plans/UI_Command_Catalog.md:431"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-03468",
+      "source_obligation_ids": [
+        "obl-3320"
+      ],
+      "source_seed_ids": [
+        "seed-4428"
+      ],
+      "source_shard_ids": [
+        "shard-0062"
+      ],
+      "canon_label": "Plans/UI_Command_Catalog.md",
+      "row_type": "consumer",
+      "path": "Plans/UI_Command_Catalog.md",
+      "heading_hint": "Targeted docs read",
+      "status": "present",
+      "exact_items": [
+        "`Plans/UI_Command_Catalog.md` (Gemini backfill)"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:15",
+        "Plans/UI_Command_Catalog.md:638",
+        "Plans/UI_Command_Catalog.md:372"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-03954",
+      "source_obligation_ids": [
+        "obl-3800"
+      ],
+      "source_seed_ids": [
+        "seed-5277"
+      ],
+      "source_shard_ids": [
+        "shard-0072"
+      ],
+      "canon_label": "Plans/UI_Command_Catalog.md",
+      "row_type": "consumer",
+      "path": "Plans/UI_Command_Catalog.md",
+      "heading_hint": "Key findings",
+      "status": "partial",
+      "exact_items": [
+        "`Plans/UI_Command_Catalog.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:15"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-03972",
+      "source_obligation_ids": [
+        "obl-3818"
+      ],
+      "source_seed_ids": [
+        "seed-5297",
+        "seed-5799",
+        "seed-6062",
+        "seed-6776"
+      ],
+      "source_shard_ids": [
+        "shard-0073",
+        "shard-0079",
+        "shard-0082",
+        "shard-0089"
+      ],
+      "canon_label": "Plans/UI_Command_Catalog.md",
+      "row_type": "consumer",
+      "path": "Plans/UI_Command_Catalog.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "`Plans/UI_Command_Catalog.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:15"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-04061",
+      "source_obligation_ids": [
+        "obl-3907"
+      ],
+      "source_seed_ids": [
+        "seed-5435"
+      ],
+      "source_shard_ids": [
+        "shard-0074"
+      ],
+      "canon_label": "Plans/UI_Command_Catalog.md",
+      "row_type": "consumer",
+      "path": "Plans/UI_Command_Catalog.md",
+      "heading_hint": "Reconciliation strata",
+      "status": "partial",
+      "exact_items": [
+        "`Plans/UI_Command_Catalog.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:15"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-04216",
+      "source_obligation_ids": [
+        "obl-4062"
+      ],
+      "source_seed_ids": [
+        "seed-5669"
+      ],
+      "source_shard_ids": [
+        "shard-0077"
+      ],
+      "canon_label": "Plans/UI_Command_Catalog.md",
+      "row_type": "consumer",
+      "path": "Plans/UI_Command_Catalog.md",
+      "heading_hint": "Highest-priority stale consumer set",
+      "status": "present",
+      "exact_items": [
+        "`Plans/UI_Command_Catalog.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:15",
+        "Plans/UI_Command_Catalog.md:26",
+        "Plans/UI_Command_Catalog.md:36"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-04241",
+      "source_obligation_ids": [
+        "obl-4087"
+      ],
+      "source_seed_ids": [
+        "seed-5694"
+      ],
+      "source_shard_ids": [
+        "shard-0077"
+      ],
+      "canon_label": "Plans/UI_Command_Catalog.md",
+      "row_type": "consumer",
+      "path": "Plans/UI_Command_Catalog.md",
+      "heading_hint": "Priority merge",
+      "status": "partial",
+      "exact_items": [
+        "`Plans/UI_Command_Catalog.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:15",
+        "Plans/UI_Command_Catalog.md:414"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-04467",
+      "source_obligation_ids": [
+        "obl-4262"
+      ],
+      "source_seed_ids": [
+        "seed-6087"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "canon_label": "39",
+      "row_type": "consumer",
+      "path": "Plans/UI_Command_Catalog.md",
+      "heading_hint": "Do-not-forget details",
+      "status": "present",
+      "exact_items": [
+        "Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:8",
+        "Plans/UI_Command_Catalog.md:509",
+        "Plans/UI_Command_Catalog.md:580",
+        "Plans/UI_Command_Catalog.md:15",
+        "Plans/UI_Command_Catalog.md:638",
+        "Plans/UI_Command_Catalog.md:331",
+        "Plans/UI_Command_Catalog.md:193",
+        "Plans/UI_Command_Catalog.md:431"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-04756",
+      "source_obligation_ids": [
+        "obl-4471"
+      ],
+      "source_seed_ids": [
+        "seed-6463"
+      ],
+      "source_shard_ids": [
+        "shard-0086"
+      ],
+      "canon_label": "Plans/UI_Command_Catalog.md",
+      "row_type": "consumer",
+      "path": "Plans/UI_Command_Catalog.md",
+      "heading_hint": "Targeted docs checked for coverage convergence",
+      "status": "present",
+      "exact_items": [
+        "`Plans/UI_Command_Catalog.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:15",
+        "Plans/UI_Command_Catalog.md:638",
+        "Plans/UI_Command_Catalog.md:8"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-04785",
+      "source_obligation_ids": [
+        "obl-4500"
+      ],
+      "source_seed_ids": [
+        "seed-6492"
+      ],
+      "source_shard_ids": [
+        "shard-0086"
+      ],
+      "canon_label": "Plans/UI_Command_Catalog.md",
+      "row_type": "consumer",
+      "path": "Plans/UI_Command_Catalog.md",
+      "heading_hint": "Docs clearly implicated",
+      "status": "partial",
+      "exact_items": [
+        "`Plans/UI_Command_Catalog.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:15",
+        "Plans/UI_Command_Catalog.md:638"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-04823",
+      "source_obligation_ids": [
+        "obl-4538"
+      ],
+      "source_seed_ids": [
+        "seed-6530"
+      ],
+      "source_shard_ids": [
+        "shard-0086"
+      ],
+      "canon_label": "Plans/UI_Command_Catalog.md",
+      "row_type": "consumer",
+      "path": "Plans/UI_Command_Catalog.md",
+      "heading_hint": "MUST CHANGE",
+      "status": "present",
+      "exact_items": [
+        "`Plans/UI_Command_Catalog.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:15",
+        "Plans/UI_Command_Catalog.md:90"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-04856",
+      "source_obligation_ids": [
+        "obl-4571"
+      ],
+      "source_seed_ids": [
+        "seed-6563"
+      ],
+      "source_shard_ids": [
+        "shard-0086"
+      ],
+      "canon_label": "Plans/UI_Command_Catalog.md",
+      "row_type": "consumer",
+      "path": "Plans/UI_Command_Catalog.md",
+      "heading_hint": "Same-file supersession hot list",
+      "status": "partial",
+      "exact_items": [
+        "`Plans/UI_Command_Catalog.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:15",
+        "Plans/UI_Command_Catalog.md:49"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-04893",
+      "source_obligation_ids": [
+        "obl-4608"
+      ],
+      "source_seed_ids": [
+        "seed-6600"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "canon_label": "Plans/UI_Command_Catalog.md",
+      "row_type": "consumer",
+      "path": "Plans/UI_Command_Catalog.md",
+      "heading_hint": "Cluster D - Route / open-subject / bridge-field refinement misses",
+      "status": "partial",
+      "exact_items": [
+        "`Plans/UI_Command_Catalog.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:15",
+        "Plans/UI_Command_Catalog.md:28"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-04912",
+      "source_obligation_ids": [
+        "obl-4622"
+      ],
+      "source_seed_ids": [
+        "seed-6614"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "canon_label": "Plans/Contracts_V0.md",
+      "row_type": "consumer",
+      "path": "Plans/UI_Command_Catalog.md",
+      "heading_hint": "Cluster F - Same-file supersession failures",
+      "status": "present",
+      "exact_items": [
+        "`Plans/Contracts_V0.md`, `Plans/storage-plan.md`, `Plans/FinalGUISpec.md`, `Plans/UI_Command_Catalog.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:38",
+        "Plans/UI_Command_Catalog.md:351",
+        "Plans/UI_Command_Catalog.md:274",
+        "Plans/UI_Command_Catalog.md:15"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-04929",
+      "source_obligation_ids": [
+        "obl-4639"
+      ],
+      "source_seed_ids": [
+        "seed-6631"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "canon_label": "Plans/UI_Command_Catalog.md",
+      "row_type": "consumer",
+      "path": "Plans/UI_Command_Catalog.md",
+      "heading_hint": "Impacted docs and likely owner order",
+      "status": "present",
+      "exact_items": [
+        "`Plans/UI_Command_Catalog.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:15",
+        "Plans/UI_Command_Catalog.md:638",
+        "Plans/UI_Command_Catalog.md:36",
+        "Plans/UI_Command_Catalog.md:5"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-04993",
+      "source_obligation_ids": [
+        "obl-4684"
+      ],
+      "source_seed_ids": [
+        "seed-6676"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "canon_label": "Plans/Contracts_V0.md",
+      "row_type": "consumer",
+      "path": "Plans/UI_Command_Catalog.md",
+      "heading_hint": "Route / bridge / normalization misses remain refinement-heavy but are more specific now",
+      "status": "present",
+      "exact_items": [
+        "`Plans/Contracts_V0.md`, `Plans/storage-plan.md`, `Plans/UI_Command_Catalog.md`, `Plans/Crosswalk.md`, `Plans/Wiring_Matrix.md`, `Plans/Progression_Gates.md`, `Plans/FileManager.md`, `Plans/Project_Output_Artifacts.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:38",
+        "Plans/UI_Command_Catalog.md:351",
+        "Plans/UI_Command_Catalog.md:15",
+        "Plans/UI_Command_Catalog.md:573",
+        "Plans/UI_Command_Catalog.md:147",
+        "Plans/UI_Command_Catalog.md:552",
+        "Plans/UI_Command_Catalog.md:28",
+        "Plans/UI_Command_Catalog.md:71",
+        "Plans/UI_Command_Catalog.md:77",
+        "Plans/UI_Command_Catalog.md:437"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-05032",
+      "source_obligation_ids": [
+        "obl-4709"
+      ],
+      "source_seed_ids": [
+        "seed-6701"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "canon_label": "Plans/UI_Command_Catalog.md",
+      "row_type": "consumer",
+      "path": "Plans/UI_Command_Catalog.md",
+      "heading_hint": "Reconciliation posture after rerun",
+      "status": "present",
+      "exact_items": [
+        "6. `Plans/UI_Command_Catalog.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:15",
+        "Plans/UI_Command_Catalog.md:86",
+        "Plans/UI_Command_Catalog.md:509",
+        "Plans/UI_Command_Catalog.md:326"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-05064",
+      "source_obligation_ids": [
+        "obl-4738"
+      ],
+      "source_seed_ids": [
+        "seed-6731",
+        "seed-6814",
+        "seed-6844",
+        "seed-6963",
+        "seed-7009",
+        "seed-7047",
+        "seed-7081",
+        "seed-7115",
+        "seed-7144",
+        "seed-7169"
+      ],
+      "source_shard_ids": [
+        "shard-0088",
+        "shard-0089",
+        "shard-0090",
+        "shard-0091"
+      ],
+      "canon_label": "Plans/UI_Command_Catalog.md",
+      "row_type": "consumer",
+      "path": "Plans/UI_Command_Catalog.md",
+      "heading_hint": "Entry",
+      "status": "present",
+      "exact_items": [
+        "`Plans/UI_Command_Catalog.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:15",
+        "Plans/UI_Command_Catalog.md:68"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-05072",
+      "source_obligation_ids": [
+        "obl-4746"
+      ],
+      "source_seed_ids": [
+        "seed-6739"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "canon_label": "Plans/UI_Command_Catalog.md:67-91",
+      "row_type": "consumer",
+      "path": "Plans/UI_Command_Catalog.md",
+      "heading_hint": "Entry",
+      "status": "partial",
+      "exact_items": [
+        "`Plans/UI_Command_Catalog.md:67-91`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:68"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-05073",
+      "source_obligation_ids": [
+        "obl-4747"
+      ],
+      "source_seed_ids": [
+        "seed-6740"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "canon_label": "Plans/UI_Command_Catalog.md:224-246",
+      "row_type": "consumer",
+      "path": "Plans/UI_Command_Catalog.md",
+      "heading_hint": "Entry",
+      "status": "partial",
+      "exact_items": [
+        "`Plans/UI_Command_Catalog.md:224-246`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:68"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-05074",
+      "source_obligation_ids": [
+        "obl-4748"
+      ],
+      "source_seed_ids": [
+        "seed-6741",
+        "seed-6823",
+        "seed-6861",
+        "seed-6975"
+      ],
+      "source_shard_ids": [
+        "shard-0088",
+        "shard-0089",
+        "shard-0090"
+      ],
+      "canon_label": "Plans/UI_Command_Catalog.md:617-622",
+      "row_type": "consumer",
+      "path": "Plans/UI_Command_Catalog.md",
+      "heading_hint": "Entry",
+      "status": "partial",
+      "exact_items": [
+        "`Plans/UI_Command_Catalog.md:617-622`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:68"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-05125",
+      "source_obligation_ids": [
+        "obl-4799"
+      ],
+      "source_seed_ids": [
+        "seed-6801"
+      ],
+      "source_shard_ids": [
+        "shard-0089"
+      ],
+      "canon_label": "Plans/UI_Command_Catalog.md:617-622",
+      "row_type": "consumer",
+      "path": "Plans/UI_Command_Catalog.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "`Plans/UI_Command_Catalog.md:617-622`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:required_terms_absent"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-05166",
+      "source_obligation_ids": [
+        "obl-4836"
+      ],
+      "source_seed_ids": [
+        "seed-6860"
+      ],
+      "source_shard_ids": [
+        "shard-0089"
+      ],
+      "canon_label": "Plans/UI_Command_Catalog.md:29-90",
+      "row_type": "consumer",
+      "path": "Plans/UI_Command_Catalog.md",
+      "heading_hint": "Entry",
+      "status": "partial",
+      "exact_items": [
+        "`Plans/UI_Command_Catalog.md:29-90`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:68"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-05270",
+      "source_obligation_ids": [
+        "obl-4924"
+      ],
+      "source_seed_ids": [
+        "seed-7028"
+      ],
+      "source_shard_ids": [
+        "shard-0090"
+      ],
+      "canon_label": "Plans/UI_Command_Catalog.md:29-92",
+      "row_type": "consumer",
+      "path": "Plans/UI_Command_Catalog.md",
+      "heading_hint": "Entry",
+      "status": "partial",
+      "exact_items": [
+        "`Plans/UI_Command_Catalog.md:29-92`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:68"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-05271",
+      "source_obligation_ids": [
+        "obl-4925"
+      ],
+      "source_seed_ids": [
+        "seed-7029",
+        "seed-7091",
+        "seed-7129",
+        "seed-7157",
+        "seed-7193"
+      ],
+      "source_shard_ids": [
+        "shard-0090",
+        "shard-0091"
+      ],
+      "canon_label": "Plans/UI_Command_Catalog.md:617-623",
+      "row_type": "consumer",
+      "path": "Plans/UI_Command_Catalog.md",
+      "heading_hint": "Entry",
+      "status": "partial",
+      "exact_items": [
+        "`Plans/UI_Command_Catalog.md:617-623`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:68"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-05286",
+      "source_obligation_ids": [
+        "obl-4940"
+      ],
+      "source_seed_ids": [
+        "seed-7064"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "canon_label": "Plans/UI_Command_Catalog.md:29-95",
+      "row_type": "consumer",
+      "path": "Plans/UI_Command_Catalog.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "`Plans/UI_Command_Catalog.md:29-95`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:required_terms_absent"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-05287",
+      "source_obligation_ids": [
+        "obl-4941"
+      ],
+      "source_seed_ids": [
+        "seed-7065"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "canon_label": "Plans/UI_Command_Catalog.md:617-623",
+      "row_type": "consumer",
+      "path": "Plans/UI_Command_Catalog.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "`Plans/UI_Command_Catalog.md:617-623`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:required_terms_absent"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-05307",
+      "source_obligation_ids": [
+        "obl-4956"
+      ],
+      "source_seed_ids": [
+        "seed-7090"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "canon_label": "Plans/UI_Command_Catalog.md:214-223",
+      "row_type": "consumer",
+      "path": "Plans/UI_Command_Catalog.md",
+      "heading_hint": "Entry",
+      "status": "partial",
+      "exact_items": [
+        "`Plans/UI_Command_Catalog.md:214-223`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:68"
+      ],
+      "required_action": "consumer_propagation"
+    }
+  ]
+}

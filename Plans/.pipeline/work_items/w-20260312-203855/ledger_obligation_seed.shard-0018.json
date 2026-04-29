@@ -1,636 +1,139 @@
 {
-  "schema_id": "pm.ledger_obligation_seed_shard_result.v1",
+  "schema_id": "pm.ledger_obligation_seed_shard_result.v2",
   "work_id": "w-20260312-203855",
   "shard_id": "shard-0018",
   "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0018-L003401-L003600.md",
   "source_line_range": "L003401-L003600",
   "seed_candidates": [
     {
-      "seed_type": "consumer",
-      "canon_label_hint": "Review record direction",
-      "exact_items": [
-        "A review record likely needs:"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Review record direction"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0018",
-      "source_evidence": [
-        "working_ledger.md:L3411"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Review record direction",
-      "exact_items": [
-        "review findings may nominate or update concerns, but the review record itself should remain distinct from concern records"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Review record direction"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0018",
-      "source_evidence": [
-        "working_ledger.md:L3426"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Corroboration record direction",
-      "exact_items": [
-        "Packet should likely carry:"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Corroboration record direction"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0018",
-      "source_evidence": [
-        "working_ledger.md:L3432"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Corroboration record direction",
-      "exact_items": [
-        "required quorum model"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Corroboration record direction"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0018",
-      "source_evidence": [
-        "working_ledger.md:L3437"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Corroboration record direction",
-      "exact_items": [
-        "Result should likely carry:"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Corroboration record direction"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0018",
-      "source_evidence": [
-        "working_ledger.md:L3439"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Graph patch record direction",
-      "exact_items": [
-        "Graph patch likely needs:"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Graph patch record direction"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0018",
-      "source_evidence": [
-        "working_ledger.md:L3446"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Graph patch record direction",
-      "exact_items": [
-        "Request should carry:"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Graph patch record direction"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0018",
-      "source_evidence": [
-        "working_ledger.md:L3449"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Graph patch record direction",
-      "exact_items": [
-        "Result should carry:"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Graph patch record direction"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0018",
-      "source_evidence": [
-        "working_ledger.md:L3453-L3455"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Promotion record direction",
-      "exact_items": [
-        "Promotion record should likely include:"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Promotion record direction"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0018",
-      "source_evidence": [
-        "working_ledger.md:L3464"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Recovery record direction",
-      "exact_items": [
-        "Recovery record likely needs:"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Recovery record direction"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0018",
-      "source_evidence": [
-        "working_ledger.md:L3477"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "owner",
-      "canon_label_hint": "Artifact vs record distinction",
-      "exact_items": [
-        "record = canonical structured object in Ledger/export/search/routing"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Artifact vs record distinction"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0018",
-      "source_evidence": [
-        "working_ledger.md:L3505"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Artifact vs record distinction",
-      "exact_items": [
-        "artifact = file/blob/renderable output linked from the record"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Artifact vs record distinction"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0018",
-      "source_evidence": [
-        "working_ledger.md:L3506"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Artifact vs record distinction",
-      "exact_items": [
-        "review markdown summary = artifact"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Artifact vs record distinction"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0018",
-      "source_evidence": [
-        "working_ledger.md:L3508"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Artifact vs record distinction",
-      "exact_items": [
-        "corroboration packet JSON/markdown = artifact"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Artifact vs record distinction"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0018",
-      "source_evidence": [
-        "working_ledger.md:L3510"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Export implication",
-      "exact_items": [
-        "Export contracts should likely use the record envelope as the manifest backbone."
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Export implication"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0018",
-      "source_evidence": [
-        "working_ledger.md:L3514"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Export implication",
-      "exact_items": [
-        "Then artifact files/blobs attach by reference rather than replacing record structure."
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Export implication"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0018",
-      "source_evidence": [
-        "working_ledger.md:L3515"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Candidate fixes to carry forward",
-      "exact_items": [
-        "Define a shared record-envelope convention for governance/runtime record families."
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Candidate fixes to carry forward"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0018",
-      "source_evidence": [
-        "working_ledger.md:L3523"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Candidate fixes to carry forward",
-      "exact_items": [
-        "Define exact minimum shapes for:"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Candidate fixes to carry forward"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0018",
-      "source_evidence": [
-        "working_ledger.md:L3524"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Evidence",
-      "exact_items": [
-        "`Evidence` and `Artifacts` panes should remain distinct even when both link back to the same underlying record."
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Do-not-forget details"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0018",
-      "source_evidence": [
-        "working_ledger.md:L3534"
-      ],
-      "notes": []
-    },
-    {
       "seed_type": "layout_blocker",
-      "canon_label_hint": "Do-not-forget details",
+      "canon_label_hint": "shared record-envelope for governance/runtime record families",
       "exact_items": [
-        "parent-summary artifacts and UI evidence summaries are not interchangeable and should not be collapsed."
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Do-not-forget details"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0018",
-      "source_evidence": [
-        "working_ledger.md:L3535"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "layout_blocker",
-      "canon_label_hint": "Do-not-forget details",
-      "exact_items": [
-        "search and deep-link routing will benefit a lot from record envelopes carrying stable scope refs."
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Do-not-forget details"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0018",
-      "source_evidence": [
-        "working_ledger.md:L3536"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Plans/storage-plan.md",
-      "exact_items": [
-        "`Plans/storage-plan.md`"
+        "review record",
+        "corroboration request/result",
+        "graph patch request/result",
+        "promotion record",
+        "recovery record",
+        "state transition report"
       ],
       "affected_doc_hints": [
-        "Plans/storage-plan.md"
-      ],
-      "heading_hints": [
-        "Targeted docs read"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0018",
-      "source_evidence": [
-        "working_ledger.md:L3541"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Plans/FinalGUISpec.md",
-      "exact_items": [
-        "`Plans/FinalGUISpec.md`"
-      ],
-      "affected_doc_hints": [
-        "Plans/FinalGUISpec.md"
-      ],
-      "heading_hints": [
-        "Targeted docs read"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0018",
-      "source_evidence": [
-        "working_ledger.md:L3542"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Plans/Orchestrator_Page.md",
-      "exact_items": [
-        "`Plans/Orchestrator_Page.md`"
-      ],
-      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md",
+        "Plans/storage-plan.md",
         "Plans/Orchestrator_Page.md"
       ],
+      "doc_resolution_status": "global_or_cross_cutting",
       "heading_hints": [
-        "Targeted docs read"
+        "Review record direction",
+        "Corroboration record direction",
+        "Graph patch record direction",
+        "Promotion record direction",
+        "Recovery record direction",
+        "State transition report direction"
       ],
       "stale_tokens": [],
-      "source_shard_id": "shard-0018",
       "source_evidence": [
-        "working_ledger.md:L3543"
+        "working_ledger.md:L003410-L003536"
       ],
-      "notes": []
+      "notes": [
+        "Records are called out as canonical structured objects; artifacts must stay separate."
+      ]
     },
     {
-      "seed_type": "consumer",
-      "canon_label_hint": "Plans/usage-feature.md",
+      "seed_type": "owner",
+      "canon_label_hint": "export manifest backbone / record export contract",
       "exact_items": [
-        "`Plans/usage-feature.md`"
+        "record export",
+        "bundle export",
+        "view export",
+        "manifest backbone",
+        "manifest fields"
       ],
       "affected_doc_hints": [
-        "Plans/usage-feature.md"
-      ],
-      "heading_hints": [
-        "Targeted docs read"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0018",
-      "source_evidence": [
-        "working_ledger.md:L3544"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Plans/Widget_System.md",
-      "exact_items": [
-        "`Plans/Widget_System.md`"
-      ],
-      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/usage-feature.md",
         "Plans/Widget_System.md"
       ],
+      "doc_resolution_status": "global_or_cross_cutting",
       "heading_hints": [
-        "Targeted docs read"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0018",
-      "source_evidence": [
-        "working_ledger.md:L3545"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "owner",
-      "canon_label_hint": "Key findings",
-      "exact_items": [
-        "what is the canonical manifest"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Key findings"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0018",
-      "source_evidence": [
-        "working_ledger.md:L3556"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "owner",
-      "canon_label_hint": "Recommended export split",
-      "exact_items": [
-        "exact structured object(s), canonical ids, references, metadata"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Recommended export split"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0018",
-      "source_evidence": [
-        "working_ledger.md:L3569"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Recommended Orchestrator export families",
-      "exact_items": [
-        "Likely export families needed:"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Recommended Orchestrator export families"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0018",
-      "source_evidence": [
-        "working_ledger.md:L3576"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Artifact export",
-      "exact_items": [
-        "`Artifact export`"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Recommended Orchestrator export families"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0018",
-      "source_evidence": [
-        "working_ledger.md:L3578"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Ledger export",
-      "exact_items": [
-        "`Ledger export` should be record-shaped first, CSV/JSON second"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Recommended Orchestrator export families"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0018",
-      "source_evidence": [
-        "working_ledger.md:L3583"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Evidence export",
-      "exact_items": [
-        "`Evidence export` should preserve evidence/artifact distinction"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Recommended Orchestrator export families"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0018",
-      "source_evidence": [
-        "working_ledger.md:L3584"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Run export",
-      "exact_items": [
-        "`Run export` should include a manifest that ties together:"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Recommended Orchestrator export families"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0018",
-      "source_evidence": [
-        "working_ledger.md:L3585"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Manifest direction",
-      "exact_items": [
-        "every non-trivial Orchestrator export should include a manifest"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
+        "Export implication",
+        "Recommended export split",
+        "Recommended Orchestrator export families",
         "Manifest direction"
       ],
       "stale_tokens": [],
-      "source_shard_id": "shard-0018",
       "source_evidence": [
-        "working_ledger.md:L3593"
+        "working_ledger.md:L003513-L003600"
       ],
-      "notes": []
+      "notes": [
+        "Explicit recommendation that export contracts use the record envelope as the manifest backbone."
+      ]
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "artifact-linked record export separation",
+      "exact_items": [
+        "record = canonical structured object",
+        "artifact = file/blob/renderable output",
+        "evidence/artifact panes distinct"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [
+        "Artifact vs record distinction",
+        "Do-not-forget details"
+      ],
+      "stale_tokens": [],
+      "source_evidence": [
+        "working_ledger.md:L003501-L003536"
+      ],
+      "notes": [
+        "Consumer-facing exports/UI should preserve record-vs-artifact distinction."
+      ]
+    },
+    {
+      "seed_type": "stale_retirement",
+      "canon_label_hint": "historical/superseded/removed backing objects in exports",
+      "exact_items": [
+        "historical",
+        "superseded",
+        "removed backing objects",
+        "historical/superseded status flags"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [
+        "Export implication",
+        "Recommended export families",
+        "Manifest direction"
+      ],
+      "stale_tokens": [
+        "superseded",
+        "removed"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L003555-L003589"
+      ],
+      "notes": [
+        "Export behavior for old/invalidated objects remains underspecified and likely needs explicit retention rules."
+      ]
     }
   ],
   "noise_items": [
-    {
-      "item": "- `summary`",
-      "source_evidence": [
-        "working_ledger.md:L3404"
-      ],
-      "reason": "metric/status/count/family or process line without concrete obligation-grade evidence"
-    },
-    {
-      "item": "- findings summary",
-      "source_evidence": [
-        "working_ledger.md:L3420"
-      ],
-      "reason": "metric/status/count/family or process line without concrete obligation-grade evidence"
-    },
-    {
-      "item": "- requested structural change summary",
-      "source_evidence": [
-        "working_ledger.md:L3452"
-      ],
-      "reason": "metric/status/count/family or process line without concrete obligation-grade evidence"
-    },
-    {
-      "item": "- This may help avoid every major object family inventing bespoke \"decision summary\" fields.",
-      "source_evidence": [
-        "working_ledger.md:L3499"
-      ],
-      "reason": "metric/status/count/family or process line without concrete obligation-grade evidence"
-    },
-    {
-      "item": "- historical/superseded status flags where relevant",
-      "source_evidence": [
-        "working_ledger.md:L3589"
-      ],
-      "reason": "metric/status/count/family or process line without concrete obligation-grade evidence"
-    }
+    "process/count/status chatter",
+    "research progress date marker",
+    "targeted docs read list"
   ],
-  "uncertain_items": [],
+  "uncertain_items": [
+    "whether review/corroboration/graph patch/promotion/recovery should be separate record families or variants of one envelope",
+    "whether export manifest fields are final or only candidate minimums"
+  ],
   "covered_shard_id": "shard-0018"
 }

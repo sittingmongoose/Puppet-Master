@@ -1,781 +1,127 @@
 {
-  "schema_id": "pm.ledger_obligation_seed_shard_result.v1",
+  "schema_id": "pm.ledger_obligation_seed_shard_result.v2",
   "work_id": "w-20260312-203855",
   "shard_id": "shard-0021",
   "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0021-L004001-L004200.md",
   "source_line_range": "L004001-L004200",
+  "covered_shard_id": "shard-0021",
   "seed_candidates": [
     {
-      "seed_type": "consumer",
-      "canon_label_hint": "auto",
+      "seed_type": "owner",
+      "canon_label_hint": "Help system split / canonical term system",
       "exact_items": [
-        "`auto` must never appear as an opaque state with no resolved Persona/reason."
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Do-not-forget details"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0021",
-      "source_evidence": [
-        "working_ledger.md:L4009"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Do-not-forget details",
-      "exact_items": [
-        "historical runs must preserve the resolved effective Persona and reason from the time of execution."
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Do-not-forget details"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0021",
-      "source_evidence": [
-        "working_ledger.md:L4010"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Do-not-forget details",
-      "exact_items": [
-        "corroboration/review personas should remain distinct from the original implementation persona whenever possible."
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Do-not-forget details"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0021",
-      "source_evidence": [
-        "working_ledger.md:L4011"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Plans/FinalGUISpec.md",
-      "exact_items": [
-        "`Plans/FinalGUISpec.md`"
+        "distinguish canonical term system, help entry system, contextual help system",
+        "simple help must simplify explanation, not rename the model",
+        "keep canonical names stable; explain them more simply in ELI5 mode",
+        "do not create parallel friendly object names that drift away from contracts"
       ],
       "affected_doc_hints": [
-        "Plans/FinalGUISpec.md"
-      ],
-      "heading_hints": [
-        "Targeted docs read"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0021",
-      "source_evidence": [
-        "working_ledger.md:L4016"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Plans/Glossary.md",
-      "exact_items": [
-        "`Plans/Glossary.md`"
-      ],
-      "affected_doc_hints": [
-        "Plans/Glossary.md"
-      ],
-      "heading_hints": [
-        "Targeted docs read"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0021",
-      "source_evidence": [
-        "working_ledger.md:L4017"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Plans/WorktreeGitImprovement.md",
-      "exact_items": [
-        "`Plans/WorktreeGitImprovement.md`"
-      ],
-      "affected_doc_hints": [
-        "Plans/WorktreeGitImprovement.md"
-      ],
-      "heading_hints": [
-        "Targeted docs read"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0021",
-      "source_evidence": [
-        "working_ledger.md:L4018"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Plans/Personas.md",
-      "exact_items": [
-        "`Plans/Personas.md`"
-      ],
-      "affected_doc_hints": [
-        "Plans/Personas.md"
-      ],
-      "heading_hints": [
-        "Targeted docs read"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0021",
-      "source_evidence": [
-        "working_ledger.md:L4019"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Plans/Multi-Account.md",
-      "exact_items": [
-        "`Plans/Multi-Account.md`"
-      ],
-      "affected_doc_hints": [
-        "Plans/Multi-Account.md"
-      ],
-      "heading_hints": [
-        "Targeted docs read"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0021",
-      "source_evidence": [
-        "working_ledger.md:L4020"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Plans/Orchestrator_Page.md",
-      "exact_items": [
-        "`Plans/Orchestrator_Page.md`"
-      ],
-      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Glossary.md",
         "Plans/Orchestrator_Page.md"
       ],
+      "doc_resolution_status": "global_or_cross_cutting",
       "heading_hints": [
-        "Targeted docs read"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0021",
-      "source_evidence": [
-        "working_ledger.md:L4021"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Chat ELI5",
-      "exact_items": [
-        "chat-level `Chat ELI5` is separate and must not be conflated with app help copy"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Key findings"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0021",
-      "source_evidence": [
-        "working_ledger.md:L4026"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "owner",
-      "canon_label_hint": "Key findings",
-      "exact_items": [
-        "At the same time, the canonical model is getting denser, so \u201csimple help\u201d must not mutate the underlying terms or invent alternate semantics."
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Key findings"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0021",
-      "source_evidence": [
-        "working_ledger.md:L4029"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "owner",
-      "canon_label_hint": "canonical term system",
-      "exact_items": [
-        "`canonical term system`"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Recommended help-system split"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0021",
-      "source_evidence": [
-        "working_ledger.md:L4034"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "owner",
-      "canon_label_hint": "canonical term system",
-      "exact_items": [
-        "`canonical term system`"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Recommended help-system split"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0021",
-      "source_evidence": [
-        "working_ledger.md:L4038"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Core help principle",
-      "exact_items": [
-        "Simple help must simplify explanation, not rename the model."
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Core help principle"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0021",
-      "source_evidence": [
-        "working_ledger.md:L4046"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "owner",
-      "canon_label_hint": "Core help principle",
-      "exact_items": [
-        "keep canonical names stable"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Core help principle"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0021",
-      "source_evidence": [
-        "working_ledger.md:L4048"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "layout_blocker",
-      "canon_label_hint": "Which concepts can stay contextual-only",
-      "exact_items": [
-        "one-surface-only controls whose meaning is already obvious from context"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Which concepts can stay contextual-only"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0021",
-      "source_evidence": [
-        "working_ledger.md:L4079"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Help entry structure direction",
-      "exact_items": [
-        "each dedicated help entry should have a small fixed template"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
+        "Recommended help-system split",
+        "Core help principle",
         "Help entry structure direction"
       ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0021",
+      "stale_tokens": [
+        "tooltip-only",
+        "friendly object names"
+      ],
       "source_evidence": [
-        "working_ledger.md:L4084"
+        "working_ledger.md:L4031-L4055"
       ],
       "notes": []
     },
     {
       "seed_type": "owner",
-      "canon_label_hint": "Help entry structure direction",
+      "canon_label_hint": "Glossary as canonical short-definition inventory",
       "exact_items": [
-        "canonical name"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Help entry structure direction"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0021",
-      "source_evidence": [
-        "working_ledger.md:L4086"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "layout_blocker",
-      "canon_label_hint": "Help entry structure direction",
-      "exact_items": [
-        "surface examples / where you see it"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Help entry structure direction"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0021",
-      "source_evidence": [
-        "working_ledger.md:L4092"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Related-concept linking direction",
-      "exact_items": [
-        "The help system should explicitly support related links."
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Related-concept linking direction"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0021",
-      "source_evidence": [
-        "working_ledger.md:L4100"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Expert / ELI5 layering direction",
-      "exact_items": [
-        "expert and ELI5 variants should share the same concept skeleton"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Expert / ELI5 layering direction"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0021",
-      "source_evidence": [
-        "working_ledger.md:L4111"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Seams",
-      "exact_items": [
-        "likely needs clickable help affordances on core concepts in `Seams`, `Progress`, and inspectors"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Surface behavior direction"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0021",
-      "source_evidence": [
-        "working_ledger.md:L4127"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Surface behavior direction",
-      "exact_items": [
-        "exact records first, but should still offer concept help links for unfamiliar states/actions"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Surface behavior direction"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0021",
-      "source_evidence": [
-        "working_ledger.md:L4129"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "owner",
-      "canon_label_hint": "Plans/Glossary.md",
-      "exact_items": [
-        "`Plans/Glossary.md` likely needs to become the canonical concept inventory backbone, even if richer help entries live elsewhere."
+        "Plans/Glossary.md likely needs to become the canonical concept inventory backbone",
+        "Glossary = canonical short definitions",
+        "Help entries = fuller explanations with examples and related links"
       ],
       "affected_doc_hints": [
-        "Plans/Glossary.md"
+        "Plans/Glossary.md",
+        "Plans/FinalGUISpec.md"
       ],
+      "doc_resolution_status": "concrete",
       "heading_hints": [
         "Glossary implication"
       ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0021",
+      "stale_tokens": [
+        "inventory backbone",
+        "short-definition inventory"
+      ],
       "source_evidence": [
-        "working_ledger.md:L4132"
+        "working_ledger.md:L4131-L4136"
       ],
       "notes": []
     },
     {
       "seed_type": "owner",
-      "canon_label_hint": "Glossary implication",
+      "canon_label_hint": "Project health / activity / attention split",
       "exact_items": [
-        "Glossary = canonical short definitions"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Glossary implication"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0021",
-      "source_evidence": [
-        "working_ledger.md:L4134"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Candidate fixes to carry forward",
-      "exact_items": [
-        "Define a dedicated help-entry contract with a fixed structure and related-concept links."
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Candidate fixes to carry forward"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0021",
-      "source_evidence": [
-        "working_ledger.md:L4143"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "owner",
-      "canon_label_hint": "Candidate fixes to carry forward",
-      "exact_items": [
-        "Keep canonical term names stable across Expert and ELI5."
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Candidate fixes to carry forward"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0021",
-      "source_evidence": [
-        "working_ledger.md:L4144"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "owner",
-      "canon_label_hint": "Candidate fixes to carry forward",
-      "exact_items": [
-        "Use Glossary as the canonical short-definition inventory."
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Candidate fixes to carry forward"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0021",
-      "source_evidence": [
-        "working_ledger.md:L4145"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Candidate fixes to carry forward",
-      "exact_items": [
-        "Explicitly identify which rewrite concepts require full help entries versus contextual help only."
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Candidate fixes to carry forward"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0021",
-      "source_evidence": [
-        "working_ledger.md:L4146"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Do-not-forget details",
-      "exact_items": [
-        "simple help must not mutate runtime truth or contract semantics"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Do-not-forget details"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0021",
-      "source_evidence": [
-        "working_ledger.md:L4150"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Plans/FinalGUISpec.md",
-      "exact_items": [
-        "`Plans/FinalGUISpec.md`"
+        "separate project health, project activity, project attention",
+        "project health = setup/integrity/config viability",
+        "project activity = whether runs are active/paused/queued/background",
+        "project attention = whether something actually needs user or operator action"
       ],
       "affected_doc_hints": [
-        "Plans/FinalGUISpec.md"
-      ],
-      "heading_hints": [
-        "Targeted docs read"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0021",
-      "source_evidence": [
-        "working_ledger.md:L4156"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Plans/storage-plan.md",
-      "exact_items": [
-        "`Plans/storage-plan.md`"
-      ],
-      "affected_doc_hints": [
-        "Plans/storage-plan.md"
-      ],
-      "heading_hints": [
-        "Targeted docs read"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0021",
-      "source_evidence": [
-        "working_ledger.md:L4157"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Plans/Orchestrator_Page.md",
-      "exact_items": [
-        "`Plans/Orchestrator_Page.md`"
-      ],
-      "affected_doc_hints": [
-        "Plans/Orchestrator_Page.md"
-      ],
-      "heading_hints": [
-        "Targeted docs read"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0021",
-      "source_evidence": [
-        "working_ledger.md:L4158"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Plans/usage-feature.md",
-      "exact_items": [
-        "`Plans/usage-feature.md`"
-      ],
-      "affected_doc_hints": [
-        "Plans/usage-feature.md"
-      ],
-      "heading_hints": [
-        "Targeted docs read"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0021",
-      "source_evidence": [
-        "working_ledger.md:L4159"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Plans/Multi-Account.md",
-      "exact_items": [
-        "`Plans/Multi-Account.md`"
-      ],
-      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md",
+        "Plans/storage-plan.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/usage-feature.md",
         "Plans/Multi-Account.md"
       ],
+      "doc_resolution_status": "global_or_cross_cutting",
       "heading_hints": [
-        "Targeted docs read"
+        "Recommended status split",
+        "Working interpretation"
       ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0021",
+      "stale_tokens": [
+        "blocked ownership",
+        "operational state model"
+      ],
       "source_evidence": [
-        "working_ledger.md:L4160"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "layout_blocker",
-      "canon_label_hint": "Key findings",
-      "exact_items": [
-        "The current Projects page contract is still fairly basic:"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Key findings"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0021",
-      "source_evidence": [
-        "working_ledger.md:L4163"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "stale_retirement",
-      "canon_label_hint": "Key findings",
-      "exact_items": [
-        "amber = stale config / missing optional files"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Key findings"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0021",
-      "source_evidence": [
-        "working_ledger.md:L4171"
+        "working_ledger.md:L4180-L4193"
       ],
       "notes": []
     },
     {
       "seed_type": "consumer",
-      "canon_label_hint": "Key findings",
+      "canon_label_hint": "Top-level project card fields",
       "exact_items": [
-        "red = missing directory / corrupt repo / critical config errors"
+        "project name",
+        "path",
+        "language/framework badges",
+        "activity status",
+        "attention status"
       ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Key findings"
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md"
       ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0021",
-      "source_evidence": [
-        "working_ledger.md:L4171-L4172"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "owner",
-      "canon_label_hint": "Key findings",
-      "exact_items": [
-        "blocked ownership"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Key findings"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0021",
-      "source_evidence": [
-        "working_ledger.md:L4172-L4174"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Key findings",
-      "exact_items": [
-        "main reason the project needs attention"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Key findings"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0021",
-      "source_evidence": [
-        "working_ledger.md:L4175"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Recommended top-level project card fields",
-      "exact_items": [
-        "Likely required fields:"
-      ],
-      "affected_doc_hints": [],
+      "doc_resolution_status": "layout_target_in_notes",
       "heading_hints": [
         "Recommended top-level project card fields"
       ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0021",
+      "stale_tokens": [
+        "health indicator",
+        "orchestrator status"
+      ],
       "source_evidence": [
-        "working_ledger.md:L4195"
+        "working_ledger.md:L4194-L4200"
       ],
       "notes": []
     }
   ],
   "noise_items": [
-    {
-      "item": "- orchestrator status (`idle/running/paused`)",
-      "source_evidence": [
-        "working_ledger.md:L4167"
-      ],
-      "reason": "metric/status/count/family or process line without concrete obligation-grade evidence"
-    },
-    {
-      "item": "### Recommended status split",
-      "source_evidence": [
-        "working_ledger.md:L4180"
-      ],
-      "reason": "section heading or summary marker without obligation-grade evidence"
-    },
-    {
-      "item": "- activity status",
-      "source_evidence": [
-        "working_ledger.md:L4199"
-      ],
-      "reason": "metric/status/count/family or process line without concrete obligation-grade evidence"
-    },
-    {
-      "item": "- attention status",
-      "source_evidence": [
-        "working_ledger.md:L4200"
-      ],
-      "reason": "metric/status/count/family or process line without concrete obligation-grade evidence"
-    }
+    "Research Progress headings",
+    "Targeted docs read lists",
+    "Key findings section labels"
   ],
-  "uncertain_items": [
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Recommended status split",
-      "exact_items": [
-        "whether something actually needs user or operator action"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Recommended status split"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0021",
-      "source_evidence": [
-        "working_ledger.md:L4192"
-      ],
-      "notes": [],
-      "reason": "open or unresolved wording may need later human classification"
-    }
-  ],
-  "covered_shard_id": "shard-0021"
+  "uncertain_items": []
 }

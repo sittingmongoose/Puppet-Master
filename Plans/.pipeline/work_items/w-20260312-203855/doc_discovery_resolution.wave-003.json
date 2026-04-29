@@ -1,0 +1,48 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v3",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-003",
+  "timestamp_utc": "2026-04-29T00:35:45Z",
+  "subagent_tasks": [
+    "docdisc-cov012-confirm",
+    "docdisc-cov012-clarify"
+  ],
+  "assigned_input_boundaries": [
+    "single-row confirmation and clarification for cov-012"
+  ],
+  "subagent_result_status": {
+    "docdisc-cov012-confirm": "completed_reduced",
+    "docdisc-cov012-clarify": "completed_reduced"
+  },
+  "completed_task_count": 2,
+  "failed_task_count": 0,
+  "coverage_row_ids_assigned": [
+    "cov-012"
+  ],
+  "coverage_row_ids_completed": [
+    "cov-012"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-012",
+      "source_obligation_ids": [
+        "obl-012"
+      ],
+      "source_seed_ids": [
+        "seed-012"
+      ],
+      "source_shard_ids": [
+        "shard-0002"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/usage-feature.md",
+      "new_heading_hint": "Out of Scope for This Plan",
+      "resolution_basis": "stale-retirement surface",
+      "evidence": [
+        "Plans/usage-feature.md:640-648"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

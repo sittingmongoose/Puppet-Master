@@ -1,722 +1,710 @@
 {
-  "schema_id": "pm.transfer_coverage_wave.v1",
+  "schema_id": "pm.transfer_coverage_wave.v3",
   "work_id": "w-20260312-203855",
   "wave_id": "wave-031",
-  "row_groups": [
-    "rowgrp-0121",
-    "rowgrp-0122",
-    "rowgrp-0123",
-    "rowgrp-0124"
+  "timestamp_utc": "2026-04-28T20:38:26Z",
+  "subagent_tasks": [
+    "coverage-rowgrp-121",
+    "coverage-rowgrp-122",
+    "coverage-rowgrp-123",
+    "coverage-rowgrp-124"
   ],
-  "coverage_rows": [
+  "assigned_input_boundaries": [
+    "rowgrp-121 cov-1098,cov-1252 Plans/Orchestrator_Page.md",
+    "rowgrp-122 cov-042,cov-267,cov-278,cov-463,cov-466,cov-579,cov-601,cov-889,cov-910,cov-1188 Plans/Orchestrator_Page.md",
+    "rowgrp-123 cov-048,cov-079,cov-093,cov-219,cov-253,cov-262,cov-318,cov-322,cov-324,cov-327 Plans/Orchestrator_Page.md",
+    "rowgrp-124 cov-339,cov-341,cov-383,cov-481,cov-504,cov-558,cov-686,cov-781,cov-876,cov-1050 Plans/Orchestrator_Page.md"
+  ],
+  "subagent_result_status": {
+    "coverage-rowgrp-121": "completed_reduced_conservatively_with_schema_normalization",
+    "coverage-rowgrp-122": "completed_reduced_conservatively",
+    "coverage-rowgrp-123": "completed_reduced_conservatively_with_schema_normalization",
+    "coverage-rowgrp-124": "completed_reduced_conservatively_with_schema_normalization"
+  },
+  "completed_task_count": 4,
+  "failed_task_count": 0,
+  "coverage_ids_assigned": [
+    "cov-1098",
+    "cov-1252",
+    "cov-042",
+    "cov-267",
+    "cov-278",
+    "cov-463",
+    "cov-466",
+    "cov-579",
+    "cov-601",
+    "cov-889",
+    "cov-910",
+    "cov-1188",
+    "cov-048",
+    "cov-079",
+    "cov-093",
+    "cov-219",
+    "cov-253",
+    "cov-262",
+    "cov-318",
+    "cov-322",
+    "cov-324",
+    "cov-327",
+    "cov-339",
+    "cov-341",
+    "cov-383",
+    "cov-481",
+    "cov-504",
+    "cov-558",
+    "cov-686",
+    "cov-781",
+    "cov-876",
+    "cov-1050"
+  ],
+  "coverage_ids_completed": [
+    "cov-1098",
+    "cov-1252",
+    "cov-042",
+    "cov-267",
+    "cov-278",
+    "cov-463",
+    "cov-466",
+    "cov-579",
+    "cov-601",
+    "cov-889",
+    "cov-910",
+    "cov-1188",
+    "cov-048",
+    "cov-079",
+    "cov-093",
+    "cov-219",
+    "cov-253",
+    "cov-262",
+    "cov-318",
+    "cov-322",
+    "cov-324",
+    "cov-327",
+    "cov-339",
+    "cov-341",
+    "cov-383",
+    "cov-481",
+    "cov-504",
+    "cov-558",
+    "cov-686",
+    "cov-781",
+    "cov-876",
+    "cov-1050"
+  ],
+  "path_groups_assigned": [
+    "Plans/Orchestrator_Page.md"
+  ],
+  "rows": [
     {
-      "coverage_id": "cov-04540",
+      "coverage_id": "cov-1098",
+      "status": "missing",
+      "evidence": [],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "Plans/Orchestrator_Page.md does not contain widget.current_task, widget.progress_bars, widget.agent_terminal, widget.completed_prose, or tier_id Progress widget semantics.",
       "source_obligation_ids": [
-        "obl-4283"
+        "obl-317"
       ],
       "source_seed_ids": [
-        "seed-6167"
+        "seed-317"
       ],
       "source_shard_ids": [
-        "shard-0082"
+        "shard-0080"
       ],
-      "canon_label": "Plans/*.md",
-      "row_type": "layout_blocker",
-      "path": "Plans/Project_Output_Artifacts.md",
-      "heading_hint": "Do-not-forget details",
-      "status": "present",
-      "exact_items": [
-        "After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes."
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/Project_Output_Artifacts.md:27",
-        "Plans/Project_Output_Artifacts.md:464",
-        "Plans/Project_Output_Artifacts.md:3",
-        "Plans/Project_Output_Artifacts.md:63",
-        "Plans/Project_Output_Artifacts.md:21",
-        "Plans/Project_Output_Artifacts.md:14",
-        "Plans/Project_Output_Artifacts.md:496",
-        "Plans/Project_Output_Artifacts.md:181"
-      ],
-      "required_action": "none"
+      "path_field_status": "match"
     },
     {
-      "coverage_id": "cov-05189",
+      "coverage_id": "cov-1252",
+      "status": "missing",
+      "evidence": [],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "Plans/Orchestrator_Page.md does not contain result_id, cmd.search.open_result, cmd.search.replace_selected, or the referenced missing anchor text.",
       "source_obligation_ids": [
-        "obl-4859"
+        "obl-354"
       ],
       "source_seed_ids": [
-        "seed-6898"
+        "seed-354"
       ],
       "source_shard_ids": [
-        "shard-0089"
+        "shard-0091"
       ],
-      "canon_label": "Plans/Project_Output_Artifacts.md",
-      "row_type": "layout_blocker",
-      "path": "Plans/Project_Output_Artifacts.md",
-      "heading_hint": "Entry",
-      "status": "present",
-      "exact_items": [
-        "`Plans/Project_Output_Artifacts.md`, `Plans/Runtime_Artifacts_Panel.md`, and `Plans/interview-subagent-integration.md` still do not contain the exact `validation artifact lineage`, `bridge-field viewer`, or `validation/report section` headings."
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/Project_Output_Artifacts.md:35",
-        "Plans/Project_Output_Artifacts.md:19",
-        "Plans/Project_Output_Artifacts.md:723",
-        "Plans/Project_Output_Artifacts.md:26",
-        "Plans/Project_Output_Artifacts.md:58",
-        "Plans/Project_Output_Artifacts.md:45",
-        "Plans/Project_Output_Artifacts.md:11",
-        "Plans/Project_Output_Artifacts.md:418",
-        "Plans/Project_Output_Artifacts.md:536"
-      ],
-      "required_action": "none"
+      "path_field_status": "match"
     },
     {
-      "coverage_id": "cov-05254",
+      "coverage_id": "cov-042",
+      "status": "partial",
+      "evidence": [
+        "Plans/Orchestrator_Page.md:115-125 defines the Source Control/worktree handshake with Orchestrator as lane-pool operational truth and worktree rows carrying package/lane/run refs",
+        "Plans/Orchestrator_Page.md:349-363 defines Orchestrator scope, concern routing, action policy, projection trust, and action gating"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "Orchestrator scope and worktree projection pieces are present, but package/seam GUI surface, shared event language, and multi-project/multi-account scoping are incomplete.",
       "source_obligation_ids": [
-        "obl-4909"
+        "obl-025"
       ],
       "source_seed_ids": [
-        "seed-6994"
+        "seed-025"
       ],
       "source_shard_ids": [
-        "shard-0090"
+        "shard-0004"
       ],
-      "canon_label": "Plans/Project_Output_Artifacts.md",
-      "row_type": "layout_blocker",
-      "path": "Plans/Project_Output_Artifacts.md",
-      "heading_hint": "Entry",
-      "status": "present",
-      "exact_items": [
-        "`Plans/Project_Output_Artifacts.md` already carries `phase_plan_ref`, `requirements_quality_report_ref`, and `pass_verdict` in the validation-pass-report lineage, so `gap-004`'s unresolved work is now the missing receipt owner heading plus missing consumer anchors rather than those fields wholesale."
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/Project_Output_Artifacts.md:35",
-        "Plans/Project_Output_Artifacts.md:491",
-        "Plans/Project_Output_Artifacts.md:493",
-        "Plans/Project_Output_Artifacts.md:515",
-        "Plans/Project_Output_Artifacts.md:418",
-        "Plans/Project_Output_Artifacts.md:711",
-        "Plans/Project_Output_Artifacts.md:21",
-        "Plans/Project_Output_Artifacts.md:721",
-        "Plans/Project_Output_Artifacts.md:564",
-        "Plans/Project_Output_Artifacts.md:173",
-        "Plans/Project_Output_Artifacts.md:19",
-        "Plans/Project_Output_Artifacts.md:161"
-      ],
-      "required_action": "none"
+      "path_field_status": "match"
     },
     {
-      "coverage_id": "cov-05243",
+      "coverage_id": "cov-267",
+      "status": "partial",
+      "evidence": [
+        "Plans/Orchestrator_Page.md:19-29 defines a shared governance/runtime record envelope with lineage, artifact, and evidence refs",
+        "Plans/Orchestrator_Page.md:406-408 exposes concern links to review, corroboration, graph patch, recovery, blocked episode, and promotion refs"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "Shared envelope and adjacent refs are present, but the full record-family list for review/corroboration/graph patch/promotion/recovery/state-transition records is not direct.",
       "source_obligation_ids": [
-        "obl-4903"
+        "obl-076"
       ],
       "source_seed_ids": [
-        "seed-6961"
+        "seed-076"
       ],
       "source_shard_ids": [
-        "shard-0090"
+        "shard-0018"
       ],
-      "canon_label": "gap-003",
-      "row_type": "owner",
-      "path": "Plans/Project_Output_Artifacts.md",
-      "heading_hint": "Entry",
-      "status": "present",
-      "exact_items": [
-        "Wave 2 targeted the storage/receipt/blocked subset around `gap-003`, `gap-004`, and `gap-005` (`Plans/storage-plan.md`, `Plans/Project_Output_Artifacts.md`, `Plans/Runtime_Artifacts_Panel.md`, `Plans/interview-subagent-integration.md`, `Plans/usage-feature.md`, `Plans/Tools.md`, `Plans/assistant-chat-design.md`) and only reconfirmed the already-recorded missing anchors/fields plus the already-known owner-vs-consumer split for blocked-packet fields."
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/Project_Output_Artifacts.md:23",
-        "Plans/Project_Output_Artifacts.md:35",
-        "Plans/Project_Output_Artifacts.md:19",
-        "Plans/Project_Output_Artifacts.md:460",
-        "Plans/Project_Output_Artifacts.md:173",
-        "Plans/Project_Output_Artifacts.md:530",
-        "Plans/Project_Output_Artifacts.md:45"
-      ],
-      "required_action": "none"
+      "path_field_status": "match"
     },
     {
-      "coverage_id": "cov-00667",
+      "coverage_id": "cov-278",
+      "status": "missing",
+      "evidence": [],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "Plans/Orchestrator_Page.md does not define source/request/execution axes, winning-source display, or requested/effective skip/clamp presentation.",
       "source_obligation_ids": [
-        "obl-0628"
+        "obl-080"
       ],
       "source_seed_ids": [
-        "seed-0634"
+        "seed-080"
       ],
       "source_shard_ids": [
-        "shard-0009"
+        "shard-0019"
       ],
-      "canon_label": "Plans/Prompt_Pipeline.md",
-      "row_type": "consumer",
-      "path": "Plans/Prompt_Pipeline.md",
-      "heading_hint": "Highest-Impact Docs",
-      "status": "present",
-      "exact_items": [
-        "`Plans/Prompt_Pipeline.md`, `Plans/Personas.md`, `Plans/Provider_Stream_Mapping_External_Reference_A2A.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/Prompt_Pipeline.md:16",
-        "Plans/Prompt_Pipeline.md:48",
-        "Plans/Prompt_Pipeline.md:505"
-      ],
-      "required_action": "none"
+      "path_field_status": "match"
     },
     {
-      "coverage_id": "cov-00710",
+      "coverage_id": "cov-463",
+      "status": "partial",
+      "evidence": [
+        "Plans/Orchestrator_Page.md:173-183 defines inline help, context help, canonical help-entry layers, and stable canonical term names",
+        "Plans/Orchestrator_Page.md:463-465 defines help-entry template and related-concept clusters"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "Layered help exists, but compact narrow-surface labels for graph badges, chips, trust chrome, widget filters, and action gating messages are not direct.",
       "source_obligation_ids": [
-        "obl-0655"
+        "obl-134"
       ],
       "source_seed_ids": [
-        "seed-0661"
+        "seed-134"
       ],
       "source_shard_ids": [
-        "shard-0010"
+        "shard-0033"
       ],
-      "canon_label": "Plans/Models_System.md",
-      "row_type": "consumer",
-      "path": "Plans/Prompt_Pipeline.md",
-      "heading_hint": "Settings / Provider / Persona / Account Impacts",
-      "status": "present",
-      "exact_items": [
-        "`Plans/Models_System.md`, `Plans/Prompt_Pipeline.md`, `Plans/Personas.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/Prompt_Pipeline.md:238",
-        "Plans/Prompt_Pipeline.md:16",
-        "Plans/Prompt_Pipeline.md:48",
-        "Plans/Prompt_Pipeline.md:464",
-        "Plans/Prompt_Pipeline.md:13",
-        "Plans/Prompt_Pipeline.md:7"
-      ],
-      "required_action": "none"
+      "path_field_status": "match"
     },
     {
-      "coverage_id": "cov-00777",
+      "coverage_id": "cov-466",
+      "status": "partial",
+      "evidence": [
+        "Plans/Orchestrator_Page.md:139-149 restricts widget-composed Orchestrator content to Progress and persists orchestrator:progress separately",
+        "Plans/Orchestrator_Page.md:365-367 repeats Progress-only widget hostability and separate layout persistence"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "Progress-only widget hostability exists, but page-global versus project-scoped state-container alignment is not direct.",
       "source_obligation_ids": [
-        "obl-0709"
+        "obl-135"
       ],
       "source_seed_ids": [
-        "seed-0737"
+        "seed-135"
       ],
       "source_shard_ids": [
-        "shard-0011"
+        "shard-0034"
       ],
-      "canon_label": "Plans/Prompt_Pipeline.md",
-      "row_type": "consumer",
-      "path": "Plans/Prompt_Pipeline.md",
-      "heading_hint": "",
-      "status": "present",
-      "exact_items": [
-        "`Plans/Prompt_Pipeline.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/Prompt_Pipeline.md:16"
-      ],
-      "required_action": "none"
+      "path_field_status": "match"
     },
     {
-      "coverage_id": "cov-00787",
+      "coverage_id": "cov-579",
+      "status": "partial",
+      "evidence": [
+        "Plans/Orchestrator_Page.md:197-219 defines project_summary and project_attention_item with projection-trust disclosure",
+        "Plans/Orchestrator_Page.md:431-437 repeats project summary and attention projection fields"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "Projection freshness and project attention are present, but requested concrete account and operational identity/actor role seams are incomplete.",
       "source_obligation_ids": [
-        "obl-0719"
+        "obl-162"
       ],
       "source_seed_ids": [
-        "seed-0747",
-        "seed-1981",
-        "seed-2241",
-        "seed-2369",
-        "seed-2494"
+        "seed-162"
       ],
       "source_shard_ids": [
-        "shard-0011",
-        "shard-0034",
-        "shard-0037",
-        "shard-0039",
         "shard-0040"
       ],
-      "canon_label": "Plans/Prompt_Pipeline.md",
-      "row_type": "consumer",
-      "path": "Plans/Prompt_Pipeline.md",
-      "heading_hint": "Highest-risk impacted docs",
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-601",
       "status": "partial",
-      "exact_items": [
-        "`Plans/Prompt_Pipeline.md`"
-      ],
-      "stale_tokens": [],
       "evidence": [
-        "Plans/Prompt_Pipeline.md:16",
-        "Plans/Prompt_Pipeline.md:505"
+        "Plans/Orchestrator_Page.md:333-345 defines concern ownership/authority surfaces",
+        "Plans/Orchestrator_Page.md:471-497 defines record envelopes, concern records, source events, projections, evidence refs, and artifact refs"
       ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-01147",
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "Concern/artifact structures are present, but producer identity, role/account, and switch lineage are not fully defined.",
       "source_obligation_ids": [
-        "obl-1078"
+        "obl-168"
       ],
       "source_seed_ids": [
-        "seed-1158",
-        "seed-1182",
-        "seed-1969",
-        "seed-2230",
-        "seed-2355",
-        "seed-2451",
-        "seed-2481",
-        "seed-2517",
-        "seed-2549",
-        "seed-2571",
-        "seed-2635",
-        "seed-2662",
-        "seed-2719",
-        "seed-2784",
-        "seed-3024",
-        "seed-3318",
-        "seed-3383",
-        "seed-5719",
-        "seed-5740",
-        "seed-6299"
+        "seed-168"
       ],
       "source_shard_ids": [
-        "shard-0019",
-        "shard-0020",
-        "shard-0034",
-        "shard-0037",
-        "shard-0039",
-        "shard-0040",
-        "shard-0041",
-        "shard-0042",
-        "shard-0043",
-        "shard-0044",
-        "shard-0046",
-        "shard-0050",
-        "shard-0051",
-        "shard-0077",
-        "shard-0078",
-        "shard-0084"
+        "shard-0042"
       ],
-      "canon_label": "Plans/Prompt_Pipeline.md",
-      "row_type": "consumer",
-      "path": "Plans/Prompt_Pipeline.md",
-      "heading_hint": "Targeted docs read",
-      "status": "present",
-      "exact_items": [
-        "`Plans/Prompt_Pipeline.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/Prompt_Pipeline.md:16",
-        "Plans/Prompt_Pipeline.md:505",
-        "Plans/Prompt_Pipeline.md:74"
-      ],
-      "required_action": "none"
+      "path_field_status": "match"
     },
     {
-      "coverage_id": "cov-02156",
+      "coverage_id": "cov-889",
+      "status": "missing",
+      "evidence": [],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "Plans/Orchestrator_Page.md does not define a controlled coarse destination enum/family or separate destination surface from object identity/scope.",
       "source_obligation_ids": [
-        "obl-2077"
+        "obl-251"
       ],
       "source_seed_ids": [
-        "seed-2465",
-        "seed-2559",
-        "seed-2580",
-        "seed-2797",
-        "seed-3037",
-        "seed-3338",
-        "seed-3407",
-        "seed-3444",
-        "seed-5134",
-        "seed-5728",
-        "seed-5753",
-        "seed-5972",
-        "seed-6059",
-        "seed-6147",
-        "seed-6305"
+        "seed-251"
       ],
       "source_shard_ids": [
-        "shard-0040",
-        "shard-0041",
-        "shard-0042",
-        "shard-0044",
-        "shard-0047",
-        "shard-0050",
-        "shard-0051",
-        "shard-0052",
-        "shard-0070",
-        "shard-0078",
-        "shard-0081",
-        "shard-0082",
-        "shard-0084"
+        "shard-0063"
       ],
-      "canon_label": "Plans/Prompt_Pipeline.md",
-      "row_type": "consumer",
-      "path": "Plans/Prompt_Pipeline.md",
-      "heading_hint": "Impacted docs",
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-910",
       "status": "partial",
-      "exact_items": [
-        "`Plans/Prompt_Pipeline.md`"
-      ],
-      "stale_tokens": [],
       "evidence": [
-        "Plans/Prompt_Pipeline.md:16",
-        "Plans/Prompt_Pipeline.md:505"
+        "Plans/Orchestrator_Page.md:353-355 routes concern results as object-first results with focused-run and target-tab context while preserving concern_id and related object context",
+        "Plans/Orchestrator_Page.md:396-398 keeps cross-tab deep links and search pivots coherent on focused_run_id"
       ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-03319",
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "Routing target preservation is related, but a shared override rule for landing state and remembered shell state is not direct.",
       "source_obligation_ids": [
-        "obl-3198"
+        "obl-255"
       ],
       "source_seed_ids": [
-        "seed-4180"
+        "seed-255"
       ],
       "source_shard_ids": [
-        "shard-0059"
+        "shard-0064"
       ],
-      "canon_label": "Plans/*.md",
-      "row_type": "consumer",
-      "path": "Plans/Prompt_Pipeline.md",
-      "heading_hint": "Do-not-forget details",
-      "status": "present",
-      "exact_items": [
-        "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage."
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/Prompt_Pipeline.md:337",
-        "Plans/Prompt_Pipeline.md:23",
-        "Plans/Prompt_Pipeline.md:16",
-        "Plans/Prompt_Pipeline.md:505",
-        "Plans/Prompt_Pipeline.md:273",
-        "Plans/Prompt_Pipeline.md:5",
-        "Plans/Prompt_Pipeline.md:112",
-        "Plans/Prompt_Pipeline.md:7",
-        "Plans/Prompt_Pipeline.md:63"
-      ],
-      "required_action": "none"
+      "path_field_status": "match"
     },
     {
-      "coverage_id": "cov-04213",
+      "coverage_id": "cov-1188",
+      "status": "missing",
+      "evidence": [],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "Plans/Orchestrator_Page.md does not contain the same-file supersession hot-list language.",
       "source_obligation_ids": [
-        "obl-4059"
+        "obl-341"
       ],
       "source_seed_ids": [
-        "seed-5666"
-      ],
-      "source_shard_ids": [
-        "shard-0077"
-      ],
-      "canon_label": "Plans/Prompt_Pipeline.md",
-      "row_type": "consumer",
-      "path": "Plans/Prompt_Pipeline.md",
-      "heading_hint": "Highest-priority owner cleanup set",
-      "status": "partial",
-      "exact_items": [
-        "`Plans/Prompt_Pipeline.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/Prompt_Pipeline.md:16",
-        "Plans/Prompt_Pipeline.md:21"
-      ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-04237",
-      "source_obligation_ids": [
-        "obl-4083"
-      ],
-      "source_seed_ids": [
-        "seed-5690"
-      ],
-      "source_shard_ids": [
-        "shard-0077"
-      ],
-      "canon_label": "Plans/Prompt_Pipeline.md",
-      "row_type": "consumer",
-      "path": "Plans/Prompt_Pipeline.md",
-      "heading_hint": "Priority merge",
-      "status": "present",
-      "exact_items": [
-        "`Plans/Prompt_Pipeline.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/Prompt_Pipeline.md:16",
-        "Plans/Prompt_Pipeline.md:175",
-        "Plans/Prompt_Pipeline.md:286"
-      ],
-      "required_action": "none"
-    },
-    {
-      "coverage_id": "cov-04458",
-      "source_obligation_ids": [
-        "obl-4262"
-      ],
-      "source_seed_ids": [
-        "seed-6087"
-      ],
-      "source_shard_ids": [
-        "shard-0082"
-      ],
-      "canon_label": "39",
-      "row_type": "consumer",
-      "path": "Plans/Prompt_Pipeline.md",
-      "heading_hint": "Do-not-forget details",
-      "status": "present",
-      "exact_items": [
-        "Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes."
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/Prompt_Pipeline.md:8",
-        "Plans/Prompt_Pipeline.md:138",
-        "Plans/Prompt_Pipeline.md:16",
-        "Plans/Prompt_Pipeline.md:505",
-        "Plans/Prompt_Pipeline.md:112",
-        "Plans/Prompt_Pipeline.md:292",
-        "Plans/Prompt_Pipeline.md:337"
-      ],
-      "required_action": "none"
-    },
-    {
-      "coverage_id": "cov-04748",
-      "source_obligation_ids": [
-        "obl-4463"
-      ],
-      "source_seed_ids": [
-        "seed-6455"
+        "seed-341"
       ],
       "source_shard_ids": [
         "shard-0086"
       ],
-      "canon_label": "Plans/Prompt_Pipeline.md",
-      "row_type": "consumer",
-      "path": "Plans/Prompt_Pipeline.md",
-      "heading_hint": "Targeted docs checked for coverage convergence",
-      "status": "present",
-      "exact_items": [
-        "`Plans/Prompt_Pipeline.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/Prompt_Pipeline.md:16",
-        "Plans/Prompt_Pipeline.md:505",
-        "Plans/Prompt_Pipeline.md:8"
-      ],
-      "required_action": "none"
+      "path_field_status": "match"
     },
     {
-      "coverage_id": "cov-04776",
-      "source_obligation_ids": [
-        "obl-4491"
-      ],
-      "source_seed_ids": [
-        "seed-6483"
-      ],
-      "source_shard_ids": [
-        "shard-0086"
-      ],
-      "canon_label": "Plans/Prompt_Pipeline.md",
-      "row_type": "consumer",
-      "path": "Plans/Prompt_Pipeline.md",
-      "heading_hint": "Docs clearly implicated",
+      "coverage_id": "cov-048",
       "status": "partial",
-      "exact_items": [
-        "`Plans/Prompt_Pipeline.md`"
-      ],
-      "stale_tokens": [],
       "evidence": [
-        "Plans/Prompt_Pipeline.md:16",
-        "Plans/Prompt_Pipeline.md:505"
+        "Plans/Orchestrator_Page.md:349-355 defines Orchestrator scope and object-first concern routing",
+        "Plans/Orchestrator_Page.md:449-455 defines promotion classes and Source Control/worktree handshake"
       ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-04814",
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "Run/package/seam/node and promotion terms are partially represented, but settings boundaries and deterministic scheduler versus super-agent ownership are incomplete.",
       "source_obligation_ids": [
-        "obl-4529"
+        "obl-026"
       ],
       "source_seed_ids": [
-        "seed-6521"
+        "seed-026"
       ],
       "source_shard_ids": [
-        "shard-0086"
+        "shard-0005"
       ],
-      "canon_label": "Plans/Prompt_Pipeline.md",
-      "row_type": "consumer",
-      "path": "Plans/Prompt_Pipeline.md",
-      "heading_hint": "MUST CHANGE",
-      "status": "present",
-      "exact_items": [
-        "`Plans/Prompt_Pipeline.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/Prompt_Pipeline.md:16",
-        "Plans/Prompt_Pipeline.md:227"
-      ],
-      "required_action": "none"
+      "path_field_status": "match"
     },
     {
-      "coverage_id": "cov-04883",
+      "coverage_id": "cov-079",
+      "status": "partial",
+      "evidence": [
+        "Plans/Orchestrator_Page.md:365-388 defines Progress-only widget hostability and a non-tier Progress widget catalog"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "The current Progress catalog is not tier-centered, but the row-specific Tiers tab retirement and cross-doc Run Graph/FinalGUISpec cleanup are not direct.",
       "source_obligation_ids": [
-        "obl-4598"
+        "obl-031"
       ],
       "source_seed_ids": [
-        "seed-6590"
+        "seed-031"
       ],
       "source_shard_ids": [
-        "shard-0087"
+        "shard-0007"
       ],
-      "canon_label": "Plans/Prompt_Pipeline.md",
-      "row_type": "consumer",
-      "path": "Plans/Prompt_Pipeline.md",
-      "heading_hint": "Cluster C - Identity / attribution / owner-doc transfer misses",
-      "status": "present",
-      "exact_items": [
-        "`Plans/Prompt_Pipeline.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/Prompt_Pipeline.md:16",
-        "Plans/Prompt_Pipeline.md:7",
-        "Plans/Prompt_Pipeline.md:405",
-        "Plans/Prompt_Pipeline.md:505"
-      ],
-      "required_action": "none"
+      "path_field_status": "match"
     },
     {
-      "coverage_id": "cov-04926",
+      "coverage_id": "cov-093",
+      "status": "partial",
+      "evidence": [
+        "Plans/Orchestrator_Page.md:349-363 defines Orchestrator scope, routing, action policy, projection states, and action gating",
+        "Plans/Orchestrator_Page.md:400-455 defines account switch history, concern links, project summary, escalation, scale, promotions, and worktree handshake"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "Many cleanup priorities have adjacent coverage, but graph constants, safe-point linkage, canonical routing, duplicated addenda, reason_code/recovery_options, and broader owner-doc cleanup are not fully direct.",
       "source_obligation_ids": [
-        "obl-4636"
+        "obl-034"
       ],
       "source_seed_ids": [
-        "seed-6628"
+        "seed-034"
       ],
       "source_shard_ids": [
-        "shard-0087"
+        "shard-0008"
       ],
-      "canon_label": "Plans/Prompt_Pipeline.md",
-      "row_type": "consumer",
-      "path": "Plans/Prompt_Pipeline.md",
-      "heading_hint": "Impacted docs and likely owner order",
-      "status": "present",
-      "exact_items": [
-        "`Plans/Prompt_Pipeline.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/Prompt_Pipeline.md:16",
-        "Plans/Prompt_Pipeline.md:505",
-        "Plans/Prompt_Pipeline.md:21",
-        "Plans/Prompt_Pipeline.md:5"
-      ],
-      "required_action": "none"
+      "path_field_status": "match"
     },
     {
-      "coverage_id": "cov-04978",
+      "coverage_id": "cov-219",
+      "status": "partial",
+      "evidence": [
+        "Plans/Orchestrator_Page.md:127-137 gates sensitive actions on current data or canonical revalidation and falls back to record-backed views when degraded",
+        "Plans/Orchestrator_Page.md:361-363 repeats projection states and record-backed degraded fallback",
+        "Plans/Orchestrator_Page.md:390-392 routes cost-bearing artifacts to Usage and Ledger with receipt linkage"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "Record-backed fallback is present, but History as chronological durable story and Ledger as exact record inspection are not fully specified.",
       "source_obligation_ids": [
-        "obl-4675"
+        "obl-060"
       ],
       "source_seed_ids": [
-        "seed-6667"
+        "seed-060"
       ],
       "source_shard_ids": [
-        "shard-0088"
+        "shard-0013"
       ],
-      "canon_label": "Plans/Orchestrator_Page.md",
-      "row_type": "consumer",
-      "path": "Plans/Prompt_Pipeline.md",
-      "heading_hint": "Export / settings / persona transfer gaps are broader than first summarized",
-      "status": "present",
-      "exact_items": [
-        "`Plans/Orchestrator_Page.md`, `Plans/storage-plan.md`, `Plans/FinalGUISpec.md`, `Plans/Models_System.md`, `Plans/Multi-Account.md`, `Plans/Personas.md`, `Plans/Prompt_Pipeline.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/Prompt_Pipeline.md:68",
-        "Plans/Prompt_Pipeline.md:51",
-        "Plans/Prompt_Pipeline.md:238",
-        "Plans/Prompt_Pipeline.md:407",
-        "Plans/Prompt_Pipeline.md:48",
-        "Plans/Prompt_Pipeline.md:16",
-        "Plans/Prompt_Pipeline.md:129",
-        "Plans/Prompt_Pipeline.md:464",
-        "Plans/Prompt_Pipeline.md:505",
-        "Plans/Prompt_Pipeline.md:140"
-      ],
-      "required_action": "none"
+      "path_field_status": "match"
     },
     {
-      "coverage_id": "cov-05006",
+      "coverage_id": "cov-253",
+      "status": "present",
+      "evidence": [
+        "Plans/Orchestrator_Page.md:475-481 defines concern as a durable record and includes merge/split/supersession resolution kinds",
+        "Plans/Orchestrator_Page.md:492-495 separates concern_source_event_ref, concern_record, and concern_projection",
+        "Plans/Orchestrator_Page.md:406-408 links concerns to reviews, corroboration, graph patches, recovery, blocked episodes, and promotions"
+      ],
+      "required_action": "none",
+      "unresolved_reason": "",
       "source_obligation_ids": [
-        "obl-4692"
+        "obl-071"
       ],
       "source_seed_ids": [
-        "seed-6684"
+        "seed-071"
       ],
       "source_shard_ids": [
-        "shard-0088"
+        "shard-0015"
       ],
-      "canon_label": "Plans/Prompt_Pipeline.md",
-      "row_type": "consumer",
-      "path": "Plans/Prompt_Pipeline.md",
-      "heading_hint": "Identity / attribution / blocked-policy misses were reconfirmed with stronger specificity",
-      "status": "present",
-      "exact_items": [
-        "`Plans/Prompt_Pipeline.md`, `Plans/Contracts_V0.md`, `Plans/Tools.md`, `Plans/GitHub_API_Auth_and_Flows.md`, `Plans/orchestrator-subagent-integration.md`, `Plans/Architecture_Invariants.md`, `Plans/Run_Modes.md`, `Plans/Executor_Protocol.md`, `Plans/human-in-the-loop.md`, `Plans/usage-feature.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/Prompt_Pipeline.md:16",
-        "Plans/Prompt_Pipeline.md:23",
-        "Plans/Prompt_Pipeline.md:49",
-        "Plans/Prompt_Pipeline.md:116",
-        "Plans/Prompt_Pipeline.md:38",
-        "Plans/Prompt_Pipeline.md:263",
-        "Plans/Prompt_Pipeline.md:281",
-        "Plans/Prompt_Pipeline.md:7",
-        "Plans/Prompt_Pipeline.md:405",
-        "Plans/Prompt_Pipeline.md:527"
-      ],
-      "required_action": "none"
+      "path_field_status": "match"
     },
     {
-      "coverage_id": "cov-05029",
+      "coverage_id": "cov-262",
+      "status": "partial",
+      "evidence": [
+        "Plans/Orchestrator_Page.md:67-77 defines concern action authority, confirmation, rationale, reversibility, audit fields, and distinct lifecycle actions",
+        "Plans/Orchestrator_Page.md:357-359 repeats concern action policy fields",
+        "Plans/Orchestrator_Page.md:369-371 classifies affordances by navigation/mutation, palette visibility, shortcut eligibility, multi-target safety, and confirmation/reversibility"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "Action policy fields are present, but the no/light/strong/hard_gate matrix and canonical recovery path bindings are incomplete.",
       "source_obligation_ids": [
-        "obl-4706"
+        "obl-075"
       ],
       "source_seed_ids": [
-        "seed-6698"
+        "seed-075"
       ],
       "source_shard_ids": [
-        "shard-0088"
+        "shard-0017"
       ],
-      "canon_label": "Plans/Prompt_Pipeline.md",
-      "row_type": "consumer",
-      "path": "Plans/Prompt_Pipeline.md",
-      "heading_hint": "Reconciliation posture after rerun",
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-318",
       "status": "present",
-      "exact_items": [
-        "3. `Plans/Prompt_Pipeline.md`"
-      ],
-      "stale_tokens": [],
       "evidence": [
-        "Plans/Prompt_Pipeline.md:16",
-        "Plans/Prompt_Pipeline.md:568",
-        "Plans/Prompt_Pipeline.md:470",
-        "Plans/Prompt_Pipeline.md:138"
+        "Plans/Orchestrator_Page.md:423-425 defines one escalation ladder shared across Orchestrator, Dashboard, thread badges, and notifications and keeps attention_required distinct from blocked",
+        "Plans/Orchestrator_Page.md:443-445 defines blocked-owner kinds and escalation levels across Orchestrator banners, Dashboard summaries, thread badges, and notifications"
       ],
-      "required_action": "none"
+      "required_action": "none",
+      "unresolved_reason": "",
+      "source_obligation_ids": [
+        "obl-094"
+      ],
+      "source_seed_ids": [
+        "seed-094"
+      ],
+      "source_shard_ids": [
+        "shard-0023"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-322",
+      "status": "partial",
+      "evidence": [
+        "Plans/Orchestrator_Page.md:427-429 defines an Orchestrator-wide scale contract requiring slice-based loading, virtualization, lazy expansion, and demand-loaded inspectors across dense tabs"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "The broad scale contract is present, but initial slice size, paging/search interplay, and degraded large-dataset fallback behavior are not direct.",
+      "source_obligation_ids": [
+        "obl-095"
+      ],
+      "source_seed_ids": [
+        "seed-095"
+      ],
+      "source_shard_ids": [
+        "shard-0023"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-324",
+      "status": "partial",
+      "evidence": [
+        "Plans/Orchestrator_Page.md:427-429 requires slice-based loading, virtualization, lazy expansion, and demand-loaded inspectors across dense tabs",
+        "Plans/Orchestrator_Page.md:374-388 defines the dense Progress widget catalog and drill mappings"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "Dense loading primitives are present, but Seams progressive disclosure, Evidence/artifact paging, History windowing, and Ledger materialization constraints are incomplete.",
+      "source_obligation_ids": [
+        "obl-096"
+      ],
+      "source_seed_ids": [
+        "seed-096"
+      ],
+      "source_shard_ids": [
+        "shard-0023"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-327",
+      "status": "partial",
+      "evidence": [
+        "Plans/Orchestrator_Page.md:369-371 classifies affordances by navigation/mutation, palette visibility, shortcut eligibility, multi-target safety, confirmation/reversibility, and makes bulk actions default to navigation and triage"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "Palette/bulk safety is partly covered, but live runtime mutation constraints and broad destructive bulk mutation rules are incomplete.",
+      "source_obligation_ids": [
+        "obl-097"
+      ],
+      "source_seed_ids": [
+        "seed-097"
+      ],
+      "source_shard_ids": [
+        "shard-0023"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-339",
+      "status": "partial",
+      "evidence": [
+        "Plans/Orchestrator_Page.md:67-77 defines actor authority, confirmation, rationale, reversibility, and audit fields for concern actions",
+        "Plans/Orchestrator_Page.md:369-371 classifies affordances by palette visibility, shortcut eligibility, multi-target safety, and confirmation/reversibility"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "Confirmation and action-surface classification exist, but strong/hard_gate/non_reversible/compensating_action_only command-gate requirements are not direct.",
+      "source_obligation_ids": [
+        "obl-100"
+      ],
+      "source_seed_ids": [
+        "seed-100"
+      ],
+      "source_shard_ids": [
+        "shard-0024"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-341",
+      "status": "present",
+      "evidence": [
+        "Plans/Orchestrator_Page.md:127-137 requires current/refreshing/stale/degraded/unavailable projection states, gates sensitive actions on current or canonical revalidation, and falls back to record-backed views when degraded",
+        "Plans/Orchestrator_Page.md:361-363 repeats projection states, current-data gating, canonical revalidation, and record-backed degraded fallback"
+      ],
+      "required_action": "none",
+      "unresolved_reason": "",
+      "source_obligation_ids": [
+        "obl-101"
+      ],
+      "source_seed_ids": [
+        "seed-101"
+      ],
+      "source_shard_ids": [
+        "shard-0024"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-383",
+      "status": "partial",
+      "evidence": [
+        "Plans/Orchestrator_Page.md:185-195 routes notifications by severity, execution impact, blocked owner, persistence, and projection trust and permits quiet windows only for advisory warnings",
+        "Plans/Orchestrator_Page.md:410-412 repeats notification routing by severity, execution impact, blocked owner, persistence, and projection trust"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "Notification routing and quiet windows are present, but stale/degraded overconfidence and disclosure/revalidation rules are not fully direct.",
+      "source_obligation_ids": [
+        "obl-115"
+      ],
+      "source_seed_ids": [
+        "seed-115"
+      ],
+      "source_shard_ids": [
+        "shard-0028"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-481",
+      "status": "partial",
+      "evidence": [
+        "Plans/Orchestrator_Page.md:103-113 defines active_run_id/focused_run_id with live/historical focus and coherent cross-tab pivots",
+        "Plans/Orchestrator_Page.md:127-137 defines projection trust states and action gating",
+        "Plans/Orchestrator_Page.md:390-392 prefers usage_event_ref for cost-bearing artifact routing and requires receipt linkage"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "Focused-run, projection trust, and usage_event_ref pieces are present, but concrete usage identity payloads, TOC section gaps, worktree partition contract, and stable attempt/scheduler/worktree identity are incomplete.",
+      "source_obligation_ids": [
+        "obl-140"
+      ],
+      "source_seed_ids": [
+        "seed-140"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-504",
+      "status": "partial",
+      "evidence": [
+        "Plans/Orchestrator_Page.md:139-149 restricts widget-composed Orchestrator content to Progress and persists orchestrator:progress separately",
+        "Plans/Orchestrator_Page.md:365-371 defines Progress-only widget hostability and action-surface policy"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "Progress layout persistence and action policy are related, but canonical cmd.runtime/cmd.orchestrator.open_in bindings, action envelope, and trust-state command gating are not direct.",
+      "source_obligation_ids": [
+        "obl-146"
+      ],
+      "source_seed_ids": [
+        "seed-146"
+      ],
+      "source_shard_ids": [
+        "shard-0036"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-558",
+      "status": "missing",
+      "evidence": [],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "Plans/Orchestrator_Page.md does not define a missing role/actor dimension in effective/runtime records or a shared route-payload schema.",
+      "source_obligation_ids": [
+        "obl-158"
+      ],
+      "source_seed_ids": [
+        "seed-158"
+      ],
+      "source_shard_ids": [
+        "shard-0039"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-686",
+      "status": "missing",
+      "evidence": [],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "Plans/Orchestrator_Page.md does not contain UICommand IDs, cmd.orchestrator.switch_tab, cmd.chat.run_user_command, or catalog/page integrity blocker text.",
+      "source_obligation_ids": [
+        "obl-190"
+      ],
+      "source_seed_ids": [
+        "seed-190"
+      ],
+      "source_shard_ids": [
+        "shard-0047"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-781",
+      "status": "missing",
+      "evidence": [],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "Plans/Orchestrator_Page.md does not define OpenArtifact/OpenSubject or attempt-native runtime attribution fields.",
+      "source_obligation_ids": [
+        "obl-215"
+      ],
+      "source_seed_ids": [
+        "seed-215"
+      ],
+      "source_shard_ids": [
+        "shard-0054"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-876",
+      "status": "missing",
+      "evidence": [],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "Plans/Orchestrator_Page.md does not define inspector_target or a reusable sub-selection boundary.",
+      "source_obligation_ids": [
+        "obl-246"
+      ],
+      "source_seed_ids": [
+        "seed-246"
+      ],
+      "source_shard_ids": [
+        "shard-0062"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-1050",
+      "status": "missing",
+      "evidence": [],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "Plans/Orchestrator_Page.md does not contain direct Tiers page/tab retirement language.",
+      "source_obligation_ids": [
+        "obl-296"
+      ],
+      "source_seed_ids": [
+        "seed-296"
+      ],
+      "source_shard_ids": [
+        "shard-0075"
+      ],
+      "path_field_status": "match"
     }
   ]
 }

@@ -1,0 +1,675 @@
+{
+  "schema_id": "pm.transfer_coverage_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-034",
+  "row_groups": [
+    "rowgrp-0133",
+    "rowgrp-0134",
+    "rowgrp-0135",
+    "rowgrp-0136"
+  ],
+  "coverage_rows": [
+    {
+      "coverage_id": "cov-00708",
+      "source_obligation_ids": [
+        "obl-0654"
+      ],
+      "source_seed_ids": [
+        "seed-0660"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "canon_label": "Plans/Executor_Protocol.md",
+      "row_type": "consumer",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "Runtime / Storage / Contract Impacts",
+      "status": "present",
+      "exact_items": [
+        "`Plans/Executor_Protocol.md`, `Plans/Progression_Gates.md`, `Plans/Run_Graph_View.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Graph_View.md:39",
+        "Plans/Run_Graph_View.md:14",
+        "Plans/Run_Graph_View.md:35",
+        "Plans/Run_Graph_View.md:17"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00742",
+      "source_obligation_ids": [
+        "obl-0677"
+      ],
+      "source_seed_ids": [
+        "seed-0701"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "canon_label": "Plans/Executor_Protocol.md",
+      "row_type": "consumer",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "Contradictions To Resolve",
+      "status": "partial",
+      "exact_items": [
+        "docs involved: `Plans/Executor_Protocol.md`, `Plans/Progression_Gates.md`, `Plans/plan_graph.schema.json`, `Plans/Run_Graph_View.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Graph_View.md:39",
+        "Plans/Run_Graph_View.md:14"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-00759",
+      "source_obligation_ids": [
+        "obl-0691"
+      ],
+      "source_seed_ids": [
+        "seed-0719",
+        "seed-0768",
+        "seed-0931",
+        "seed-0964",
+        "seed-1010",
+        "seed-1042",
+        "seed-1105",
+        "seed-1292",
+        "seed-1419",
+        "seed-1680",
+        "seed-1754",
+        "seed-1791",
+        "seed-1861",
+        "seed-1934",
+        "seed-2004",
+        "seed-2075",
+        "seed-2233",
+        "seed-2359",
+        "seed-2486",
+        "seed-2594",
+        "seed-3354",
+        "seed-5008",
+        "seed-5032",
+        "seed-5183",
+        "seed-5201",
+        "seed-5254",
+        "seed-5314",
+        "seed-5629",
+        "seed-5717",
+        "seed-5769",
+        "seed-5807",
+        "seed-5839",
+        "seed-5851",
+        "seed-5868",
+        "seed-6383"
+      ],
+      "source_shard_ids": [
+        "shard-0010",
+        "shard-0011",
+        "shard-0013",
+        "shard-0014",
+        "shard-0015",
+        "shard-0017",
+        "shard-0023",
+        "shard-0024",
+        "shard-0031",
+        "shard-0032",
+        "shard-0033",
+        "shard-0034",
+        "shard-0035",
+        "shard-0037",
+        "shard-0039",
+        "shard-0040",
+        "shard-0042",
+        "shard-0050",
+        "shard-0069",
+        "shard-0071",
+        "shard-0072",
+        "shard-0073",
+        "shard-0076",
+        "shard-0077",
+        "shard-0078",
+        "shard-0079",
+        "shard-0080",
+        "shard-0085"
+      ],
+      "canon_label": "Plans/Run_Graph_View.md",
+      "row_type": "consumer",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "Targeted docs read",
+      "status": "partial",
+      "exact_items": [
+        "`Plans/Run_Graph_View.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Graph_View.md:14"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-00817",
+      "source_obligation_ids": [
+        "obl-0749"
+      ],
+      "source_seed_ids": [
+        "seed-0781",
+        "seed-2097"
+      ],
+      "source_shard_ids": [
+        "shard-0011",
+        "shard-0035"
+      ],
+      "canon_label": "Plans/Run_Graph_View.md",
+      "row_type": "consumer",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "Highest-risk impacted docs",
+      "status": "partial",
+      "exact_items": [
+        "`Plans/Run_Graph_View.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Graph_View.md:14"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-01589",
+      "source_obligation_ids": [
+        "obl-1520"
+      ],
+      "source_seed_ids": [
+        "seed-1698",
+        "seed-1770",
+        "seed-1810",
+        "seed-1873",
+        "seed-2704",
+        "seed-2765",
+        "seed-2803",
+        "seed-2829",
+        "seed-3005",
+        "seed-3042",
+        "seed-3118",
+        "seed-3340",
+        "seed-3370",
+        "seed-3410",
+        "seed-3448",
+        "seed-3567",
+        "seed-5019",
+        "seed-5039",
+        "seed-5176",
+        "seed-5190",
+        "seed-5264",
+        "seed-5325",
+        "seed-5726",
+        "seed-5779",
+        "seed-5815",
+        "seed-5844",
+        "seed-5858",
+        "seed-5872",
+        "seed-6266",
+        "seed-6286",
+        "seed-6311",
+        "seed-6337",
+        "seed-6369",
+        "seed-6394"
+      ],
+      "source_shard_ids": [
+        "shard-0031",
+        "shard-0032",
+        "shard-0033",
+        "shard-0043",
+        "shard-0044",
+        "shard-0045",
+        "shard-0046",
+        "shard-0047",
+        "shard-0050",
+        "shard-0051",
+        "shard-0052",
+        "shard-0053",
+        "shard-0069",
+        "shard-0071",
+        "shard-0072",
+        "shard-0073",
+        "shard-0078",
+        "shard-0079",
+        "shard-0080",
+        "shard-0083",
+        "shard-0084",
+        "shard-0085"
+      ],
+      "canon_label": "Plans/Run_Graph_View.md",
+      "row_type": "consumer",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "Impacted docs",
+      "status": "partial",
+      "exact_items": [
+        "`Plans/Run_Graph_View.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Graph_View.md:14"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-01771",
+      "source_obligation_ids": [
+        "obl-1702"
+      ],
+      "source_seed_ids": [
+        "seed-1950"
+      ],
+      "source_shard_ids": [
+        "shard-0034"
+      ],
+      "canon_label": "Plans/Run_Graph_View.md",
+      "row_type": "consumer",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "Highest-risk impacted docs",
+      "status": "partial",
+      "exact_items": [
+        "`Plans/Run_Graph_View.md` + `Plans/Orchestrator_Page.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Graph_View.md:14",
+        "Plans/Run_Graph_View.md:39"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-01834",
+      "source_obligation_ids": [
+        "obl-1762"
+      ],
+      "source_seed_ids": [
+        "seed-2030"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "canon_label": "Plans/Run_Graph_View.md",
+      "row_type": "consumer",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "Highest-risk impacted docs",
+      "status": "partial",
+      "exact_items": [
+        "`Plans/Run_Graph_View.md` + `Plans/Runtime_Artifacts_Panel.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Graph_View.md:14"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-01999",
+      "source_obligation_ids": [
+        "obl-1922"
+      ],
+      "source_seed_ids": [
+        "seed-2247",
+        "seed-2376"
+      ],
+      "source_shard_ids": [
+        "shard-0037",
+        "shard-0039"
+      ],
+      "canon_label": "Plans/Orchestrator_Page.md",
+      "row_type": "consumer",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "Highest-risk impacted docs",
+      "status": "partial",
+      "exact_items": [
+        "`Plans/Orchestrator_Page.md` + `Plans/Run_Graph_View.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Graph_View.md:39",
+        "Plans/Run_Graph_View.md:14"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-03322",
+      "source_obligation_ids": [
+        "obl-3198"
+      ],
+      "source_seed_ids": [
+        "seed-4180"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "canon_label": "Plans/*.md",
+      "row_type": "consumer",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "Do-not-forget details",
+      "status": "present",
+      "exact_items": [
+        "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Graph_View.md:14",
+        "Plans/Run_Graph_View.md:5",
+        "Plans/Run_Graph_View.md:60"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-03967",
+      "source_obligation_ids": [
+        "obl-3813"
+      ],
+      "source_seed_ids": [
+        "seed-5290"
+      ],
+      "source_shard_ids": [
+        "shard-0072"
+      ],
+      "canon_label": "Plans/Run_Graph_View.md",
+      "row_type": "consumer",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "Key findings",
+      "status": "partial",
+      "exact_items": [
+        "`Plans/Run_Graph_View.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Graph_View.md:14"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-03973",
+      "source_obligation_ids": [
+        "obl-3819"
+      ],
+      "source_seed_ids": [
+        "seed-5303",
+        "seed-5638"
+      ],
+      "source_shard_ids": [
+        "shard-0073",
+        "shard-0077"
+      ],
+      "canon_label": "Plans/Run_Graph_View.md",
+      "row_type": "consumer",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "`Plans/Run_Graph_View.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Graph_View.md:14"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-04067",
+      "source_obligation_ids": [
+        "obl-3913"
+      ],
+      "source_seed_ids": [
+        "seed-5441"
+      ],
+      "source_shard_ids": [
+        "shard-0074"
+      ],
+      "canon_label": "Plans/Run_Graph_View.md",
+      "row_type": "consumer",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "Reconciliation strata",
+      "status": "partial",
+      "exact_items": [
+        "`Plans/Run_Graph_View.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Graph_View.md:14"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-04215",
+      "source_obligation_ids": [
+        "obl-4061"
+      ],
+      "source_seed_ids": [
+        "seed-5668"
+      ],
+      "source_shard_ids": [
+        "shard-0077"
+      ],
+      "canon_label": "Plans/Run_Graph_View.md",
+      "row_type": "consumer",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "Highest-priority stale consumer set",
+      "status": "partial",
+      "exact_items": [
+        "`Plans/Run_Graph_View.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Graph_View.md:14",
+        "Plans/Run_Graph_View.md:17"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-04461",
+      "source_obligation_ids": [
+        "obl-4262"
+      ],
+      "source_seed_ids": [
+        "seed-6087"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "canon_label": "39",
+      "row_type": "consumer",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "Do-not-forget details",
+      "status": "partial",
+      "exact_items": [
+        "Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Graph_View.md:8",
+        "Plans/Run_Graph_View.md:14"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-04757",
+      "source_obligation_ids": [
+        "obl-4472"
+      ],
+      "source_seed_ids": [
+        "seed-6464"
+      ],
+      "source_shard_ids": [
+        "shard-0086"
+      ],
+      "canon_label": "Plans/Run_Graph_View.md",
+      "row_type": "consumer",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "Targeted docs checked for coverage convergence",
+      "status": "partial",
+      "exact_items": [
+        "`Plans/Run_Graph_View.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Graph_View.md:14",
+        "Plans/Run_Graph_View.md:8"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-04786",
+      "source_obligation_ids": [
+        "obl-4501"
+      ],
+      "source_seed_ids": [
+        "seed-6493"
+      ],
+      "source_shard_ids": [
+        "shard-0086"
+      ],
+      "canon_label": "Plans/Run_Graph_View.md",
+      "row_type": "consumer",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "Docs clearly implicated",
+      "status": "partial",
+      "exact_items": [
+        "`Plans/Run_Graph_View.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Graph_View.md:14"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-04824",
+      "source_obligation_ids": [
+        "obl-4539"
+      ],
+      "source_seed_ids": [
+        "seed-6531"
+      ],
+      "source_shard_ids": [
+        "shard-0086"
+      ],
+      "canon_label": "Plans/Run_Graph_View.md",
+      "row_type": "consumer",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "MUST CHANGE",
+      "status": "partial",
+      "exact_items": [
+        "`Plans/Run_Graph_View.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Graph_View.md:14"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-04857",
+      "source_obligation_ids": [
+        "obl-4572"
+      ],
+      "source_seed_ids": [
+        "seed-6564"
+      ],
+      "source_shard_ids": [
+        "shard-0086"
+      ],
+      "canon_label": "Plans/Run_Graph_View.md",
+      "row_type": "consumer",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "Same-file supersession hot list",
+      "status": "partial",
+      "exact_items": [
+        "`Plans/Run_Graph_View.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Graph_View.md:14"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-04544",
+      "source_obligation_ids": [
+        "obl-4283"
+      ],
+      "source_seed_ids": [
+        "seed-6167"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "canon_label": "Plans/*.md",
+      "row_type": "layout_blocker",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "Do-not-forget details",
+      "status": "present",
+      "exact_items": [
+        "After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Graph_View.md:14",
+        "Plans/Run_Graph_View.md:32",
+        "Plans/Run_Graph_View.md:60"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-04705",
+      "source_obligation_ids": [
+        "obl-4420"
+      ],
+      "source_seed_ids": [
+        "seed-6387"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "canon_label": "Plans/Run_Graph_View.md",
+      "row_type": "layout_blocker",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "Key findings",
+      "status": "partial",
+      "exact_items": [
+        "`Plans/Run_Graph_View.md` is still strongly tier-era in its core surface contract:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Run_Graph_View.md:14",
+        "Plans/Run_Graph_View.md:32"
+      ],
+      "required_action": "packetizable_layout_repair"
+    },
+    {
+      "coverage_id": "cov-00443",
+      "source_obligation_ids": [
+        "obl-0439"
+      ],
+      "source_seed_ids": [
+        "seed-0444"
+      ],
+      "source_shard_ids": [
+        "shard-0007"
+      ],
+      "canon_label": "Plans/Run_Graph_View.md",
+      "row_type": "stale_retirement",
+      "path": "Plans/Run_Graph_View.md",
+      "heading_hint": "Highest-Impact Docs",
+      "status": "missing",
+      "exact_items": [
+        "**`Plans/Run_Graph_View.md`** \u2014 273 node/graph term hits but 52 legacy tier hits. Grouped-by-phase layouts are rigid. The doc is the closest to node-aware but still frames visualization through a phase lens. Needs swimlane/package-group views."
+      ],
+      "stale_tokens": [
+        "Plans/Run_Graph_View.md"
+      ],
+      "evidence": [
+        "Plans/Run_Graph_View.md:14"
+      ],
+      "required_action": "stale_retirement"
+    }
+  ]
+}

@@ -1,675 +1,197 @@
 {
-  "schema_id": "pm.transfer_coverage_wave.v1",
+  "schema_id": "pm.transfer_coverage_wave.v3",
   "work_id": "w-20260312-203855",
   "wave_id": "wave-034",
-  "row_groups": [
-    "rowgrp-0133",
-    "rowgrp-0134",
-    "rowgrp-0135",
-    "rowgrp-0136"
+  "timestamp_utc": "2026-04-28T20:45:59Z",
+  "subagent_tasks": [
+    "coverage-rowgrp-133",
+    "coverage-rowgrp-134",
+    "coverage-rowgrp-135",
+    "coverage-rowgrp-136"
   ],
-  "coverage_rows": [
+  "assigned_input_boundaries": [
+    "rowgrp-133 cov-197,cov-434,cov-478,cov-584 Plans/Permissions_System.md",
+    "rowgrp-134 cov-591 Plans/Permissions_System.md",
+    "rowgrp-135 cov-069 Plans/Permissions_System.md",
+    "rowgrp-136 cov-520 Plans/Permissions_System.md"
+  ],
+  "subagent_result_status": {
+    "coverage-rowgrp-133": "completed_reduced_conservatively_with_schema_normalization",
+    "coverage-rowgrp-134": "completed_reduced_conservatively_with_schema_normalization",
+    "coverage-rowgrp-135": "completed_reduced_conservatively_with_schema_normalization",
+    "coverage-rowgrp-136": "completed_reduced_conservatively_with_schema_normalization"
+  },
+  "completed_task_count": 4,
+  "failed_task_count": 0,
+  "coverage_ids_assigned": [
+    "cov-197",
+    "cov-434",
+    "cov-478",
+    "cov-584",
+    "cov-591",
+    "cov-069",
+    "cov-520"
+  ],
+  "coverage_ids_completed": [
+    "cov-197",
+    "cov-434",
+    "cov-478",
+    "cov-584",
+    "cov-591",
+    "cov-069",
+    "cov-520"
+  ],
+  "path_groups_assigned": [
+    "Plans/Permissions_System.md"
+  ],
+  "rows": [
     {
-      "coverage_id": "cov-00708",
-      "source_obligation_ids": [
-        "obl-0654"
-      ],
-      "source_seed_ids": [
-        "seed-0660"
-      ],
-      "source_shard_ids": [
-        "shard-0009"
-      ],
-      "canon_label": "Plans/Executor_Protocol.md",
-      "row_type": "consumer",
-      "path": "Plans/Run_Graph_View.md",
-      "heading_hint": "Runtime / Storage / Contract Impacts",
+      "coverage_id": "cov-197",
       "status": "present",
-      "exact_items": [
-        "`Plans/Executor_Protocol.md`, `Plans/Progression_Gates.md`, `Plans/Run_Graph_View.md`"
-      ],
-      "stale_tokens": [],
       "evidence": [
-        "Plans/Run_Graph_View.md:39",
-        "Plans/Run_Graph_View.md:14",
-        "Plans/Run_Graph_View.md:35",
-        "Plans/Run_Graph_View.md:17"
+        "Plans/Permissions_System.md:187-203 defines execution_entity_id, account_id, permission_scope, approval_carryover_scope, and multi-lane/account-aware permission resolution and approval carryover",
+        "Plans/Permissions_System.md:480-506 requires approval_scope_key, blocked_sequence, execution_entity_id, lane_id, package_id, account_id, lane/package/account scope, and ordered allowed_action_ids[]",
+        "Plans/Permissions_System.md:849 binds Always approval reuse to exact approval_scope_key or durable rule creation and forbids blind session-wide allow",
+        "Plans/Permissions_System.md:1007 reuses approval only while approval_scope_key, approval_target_ref, and runtime identity context match"
       ],
-      "required_action": "none"
-    },
-    {
-      "coverage_id": "cov-00742",
+      "required_action": "none",
+      "unresolved_reason": "",
       "source_obligation_ids": [
-        "obl-0677"
+        "obl-052"
       ],
       "source_seed_ids": [
-        "seed-0701"
+        "seed-052"
       ],
       "source_shard_ids": [
-        "shard-0010"
+        "shard-0006"
       ],
-      "canon_label": "Plans/Executor_Protocol.md",
-      "row_type": "consumer",
-      "path": "Plans/Run_Graph_View.md",
-      "heading_hint": "Contradictions To Resolve",
-      "status": "partial",
-      "exact_items": [
-        "docs involved: `Plans/Executor_Protocol.md`, `Plans/Progression_Gates.md`, `Plans/plan_graph.schema.json`, `Plans/Run_Graph_View.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/Run_Graph_View.md:39",
-        "Plans/Run_Graph_View.md:14"
-      ],
-      "required_action": "consumer_propagation"
+      "path_field_status": "match"
     },
     {
-      "coverage_id": "cov-00759",
+      "coverage_id": "cov-434",
+      "status": "partial",
+      "evidence": [
+        "Plans/Permissions_System.md:51-60 adds requested/effective account identity carry-through and approval_scope_key across actor/lane/run/account context",
+        "Plans/Permissions_System.md:175-203 defines lane/package/account permission scopes and multi-lane/account-aware approval carryover"
+      ],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "Requested/effective identity and lane/account scope are present, but concern/corroboration/promotion authority rules and scheduler-lane invariants are not direct in Permissions_System.",
       "source_obligation_ids": [
-        "obl-0691"
+        "obl-126"
       ],
       "source_seed_ids": [
-        "seed-0719",
-        "seed-0768",
-        "seed-0931",
-        "seed-0964",
-        "seed-1010",
-        "seed-1042",
-        "seed-1105",
-        "seed-1292",
-        "seed-1419",
-        "seed-1680",
-        "seed-1754",
-        "seed-1791",
-        "seed-1861",
-        "seed-1934",
-        "seed-2004",
-        "seed-2075",
-        "seed-2233",
-        "seed-2359",
-        "seed-2486",
-        "seed-2594",
-        "seed-3354",
-        "seed-5008",
-        "seed-5032",
-        "seed-5183",
-        "seed-5201",
-        "seed-5254",
-        "seed-5314",
-        "seed-5629",
-        "seed-5717",
-        "seed-5769",
-        "seed-5807",
-        "seed-5839",
-        "seed-5851",
-        "seed-5868",
-        "seed-6383"
+        "seed-126"
       ],
       "source_shard_ids": [
-        "shard-0010",
-        "shard-0011",
-        "shard-0013",
-        "shard-0014",
-        "shard-0015",
-        "shard-0017",
-        "shard-0023",
-        "shard-0024",
-        "shard-0031",
-        "shard-0032",
-        "shard-0033",
-        "shard-0034",
-        "shard-0035",
-        "shard-0037",
-        "shard-0039",
-        "shard-0040",
-        "shard-0042",
-        "shard-0050",
-        "shard-0069",
-        "shard-0071",
-        "shard-0072",
-        "shard-0073",
-        "shard-0076",
-        "shard-0077",
-        "shard-0078",
-        "shard-0079",
-        "shard-0080",
-        "shard-0085"
+        "shard-0031"
       ],
-      "canon_label": "Plans/Run_Graph_View.md",
-      "row_type": "consumer",
-      "path": "Plans/Run_Graph_View.md",
-      "heading_hint": "Targeted docs read",
-      "status": "partial",
-      "exact_items": [
-        "`Plans/Run_Graph_View.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/Run_Graph_View.md:14"
-      ],
-      "required_action": "consumer_propagation"
+      "path_field_status": "match"
     },
     {
-      "coverage_id": "cov-00817",
-      "source_obligation_ids": [
-        "obl-0749"
-      ],
-      "source_seed_ids": [
-        "seed-0781",
-        "seed-2097"
-      ],
-      "source_shard_ids": [
-        "shard-0011",
-        "shard-0035"
-      ],
-      "canon_label": "Plans/Run_Graph_View.md",
-      "row_type": "consumer",
-      "path": "Plans/Run_Graph_View.md",
-      "heading_hint": "Highest-risk impacted docs",
+      "coverage_id": "cov-478",
       "status": "partial",
-      "exact_items": [
-        "`Plans/Run_Graph_View.md`"
-      ],
-      "stale_tokens": [],
       "evidence": [
-        "Plans/Run_Graph_View.md:14"
+        "Plans/Permissions_System.md:53-60 carries requested/effective account identity through bridged-provider and permission envelopes, moves OpenCode session IDs to provider-native correlation, and defines approval_scope_key across actor/lane/run/account context",
+        "Plans/Permissions_System.md:203 requires permission resolution and approval carryover to be multi-lane and account-aware rather than session-only",
+        "Plans/Permissions_System.md:849 forbids blind session-wide Always allows",
+        "Plans/Permissions_System.md:1007 invalidates approval reuse when scope, target, or runtime identity context drifts"
       ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-01589",
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "Bridged-provider/session-scope gaps are partly covered, but shared-runtime snapshot language, multi-account capability declarations, and durable switch notification/history semantics are not direct.",
       "source_obligation_ids": [
-        "obl-1520"
+        "obl-139"
       ],
       "source_seed_ids": [
-        "seed-1698",
-        "seed-1770",
-        "seed-1810",
-        "seed-1873",
-        "seed-2704",
-        "seed-2765",
-        "seed-2803",
-        "seed-2829",
-        "seed-3005",
-        "seed-3042",
-        "seed-3118",
-        "seed-3340",
-        "seed-3370",
-        "seed-3410",
-        "seed-3448",
-        "seed-3567",
-        "seed-5019",
-        "seed-5039",
-        "seed-5176",
-        "seed-5190",
-        "seed-5264",
-        "seed-5325",
-        "seed-5726",
-        "seed-5779",
-        "seed-5815",
-        "seed-5844",
-        "seed-5858",
-        "seed-5872",
-        "seed-6266",
-        "seed-6286",
-        "seed-6311",
-        "seed-6337",
-        "seed-6369",
-        "seed-6394"
-      ],
-      "source_shard_ids": [
-        "shard-0031",
-        "shard-0032",
-        "shard-0033",
-        "shard-0043",
-        "shard-0044",
-        "shard-0045",
-        "shard-0046",
-        "shard-0047",
-        "shard-0050",
-        "shard-0051",
-        "shard-0052",
-        "shard-0053",
-        "shard-0069",
-        "shard-0071",
-        "shard-0072",
-        "shard-0073",
-        "shard-0078",
-        "shard-0079",
-        "shard-0080",
-        "shard-0083",
-        "shard-0084",
-        "shard-0085"
-      ],
-      "canon_label": "Plans/Run_Graph_View.md",
-      "row_type": "consumer",
-      "path": "Plans/Run_Graph_View.md",
-      "heading_hint": "Impacted docs",
-      "status": "partial",
-      "exact_items": [
-        "`Plans/Run_Graph_View.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/Run_Graph_View.md:14"
-      ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-01771",
-      "source_obligation_ids": [
-        "obl-1702"
-      ],
-      "source_seed_ids": [
-        "seed-1950"
-      ],
-      "source_shard_ids": [
-        "shard-0034"
-      ],
-      "canon_label": "Plans/Run_Graph_View.md",
-      "row_type": "consumer",
-      "path": "Plans/Run_Graph_View.md",
-      "heading_hint": "Highest-risk impacted docs",
-      "status": "partial",
-      "exact_items": [
-        "`Plans/Run_Graph_View.md` + `Plans/Orchestrator_Page.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/Run_Graph_View.md:14",
-        "Plans/Run_Graph_View.md:39"
-      ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-01834",
-      "source_obligation_ids": [
-        "obl-1762"
-      ],
-      "source_seed_ids": [
-        "seed-2030"
+        "seed-139"
       ],
       "source_shard_ids": [
         "shard-0035"
       ],
-      "canon_label": "Plans/Run_Graph_View.md",
-      "row_type": "consumer",
-      "path": "Plans/Run_Graph_View.md",
-      "heading_hint": "Highest-risk impacted docs",
-      "status": "partial",
-      "exact_items": [
-        "`Plans/Run_Graph_View.md` + `Plans/Runtime_Artifacts_Panel.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/Run_Graph_View.md:14"
-      ],
-      "required_action": "consumer_propagation"
+      "path_field_status": "match"
     },
     {
-      "coverage_id": "cov-01999",
-      "source_obligation_ids": [
-        "obl-1922"
-      ],
-      "source_seed_ids": [
-        "seed-2247",
-        "seed-2376"
-      ],
-      "source_shard_ids": [
-        "shard-0037",
-        "shard-0039"
-      ],
-      "canon_label": "Plans/Orchestrator_Page.md",
-      "row_type": "consumer",
-      "path": "Plans/Run_Graph_View.md",
-      "heading_hint": "Highest-risk impacted docs",
-      "status": "partial",
-      "exact_items": [
-        "`Plans/Orchestrator_Page.md` + `Plans/Run_Graph_View.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/Run_Graph_View.md:39",
-        "Plans/Run_Graph_View.md:14"
-      ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-03322",
-      "source_obligation_ids": [
-        "obl-3198"
-      ],
-      "source_seed_ids": [
-        "seed-4180"
-      ],
-      "source_shard_ids": [
-        "shard-0059"
-      ],
-      "canon_label": "Plans/*.md",
-      "row_type": "consumer",
-      "path": "Plans/Run_Graph_View.md",
-      "heading_hint": "Do-not-forget details",
+      "coverage_id": "cov-584",
       "status": "present",
-      "exact_items": [
-        "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage."
-      ],
-      "stale_tokens": [],
       "evidence": [
-        "Plans/Run_Graph_View.md:14",
-        "Plans/Run_Graph_View.md:5",
-        "Plans/Run_Graph_View.md:60"
+        "Plans/Permissions_System.md:55-60 defines approval_scope_key across actor/lane/run/account context reused across permissions, HITL, doom-loop, and session approval caching",
+        "Plans/Permissions_System.md:203 requires permission resolution and approval carryover to be multi-lane and account-aware rather than session-only",
+        "Plans/Permissions_System.md:499 states approval scope must not silently become same-session if lanes are parallel",
+        "Plans/Permissions_System.md:821 ties deny cascade to exact approval_scope_key matches",
+        "Plans/Permissions_System.md:849 binds Always reuse to approval_scope_key or durable rules and forbids blind session-wide allow",
+        "Plans/Permissions_System.md:1007 requires approval_scope_key, approval_target_ref, and runtime identity context to still match for reuse"
       ],
-      "required_action": "none"
-    },
-    {
-      "coverage_id": "cov-03967",
+      "required_action": "none",
+      "unresolved_reason": "",
       "source_obligation_ids": [
-        "obl-3813"
+        "obl-164"
       ],
       "source_seed_ids": [
-        "seed-5290"
+        "seed-164"
       ],
       "source_shard_ids": [
-        "shard-0072"
+        "shard-0041"
       ],
-      "canon_label": "Plans/Run_Graph_View.md",
-      "row_type": "consumer",
-      "path": "Plans/Run_Graph_View.md",
-      "heading_hint": "Key findings",
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-591",
       "status": "partial",
-      "exact_items": [
-        "`Plans/Run_Graph_View.md`"
-      ],
-      "stale_tokens": [],
       "evidence": [
-        "Plans/Run_Graph_View.md:14"
+        "Plans/Permissions_System.md:53 carries requested/effective account identity through runtime, bridged-provider, and permission envelopes",
+        "Plans/Permissions_System.md:375-385 defines a non-bypassable remote-side-effect approval guard",
+        "Plans/Permissions_System.md:480-506 requires approval_scope_key, blocked_sequence, execution_entity_id, lane_id, package_id, account_id, and lane/package/account scope",
+        "Plans/Permissions_System.md:798 requires operational permission outcomes to be written to seglog",
+        "Plans/Permissions_System.md:835 requires deterministic permission resolution"
       ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-03973",
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "Correlation/account/scope metadata and remote side-effect controls are present, but A2A category growth and rich requested/effective permission snapshots are incomplete.",
       "source_obligation_ids": [
-        "obl-3819"
+        "obl-166"
       ],
       "source_seed_ids": [
-        "seed-5303",
-        "seed-5638"
+        "seed-166"
       ],
       "source_shard_ids": [
-        "shard-0073",
-        "shard-0077"
+        "shard-0041"
       ],
-      "canon_label": "Plans/Run_Graph_View.md",
-      "row_type": "consumer",
-      "path": "Plans/Run_Graph_View.md",
-      "heading_hint": "",
-      "status": "present",
-      "exact_items": [
-        "`Plans/Run_Graph_View.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/Run_Graph_View.md:14"
-      ],
-      "required_action": "none"
+      "path_field_status": "match"
     },
     {
-      "coverage_id": "cov-04067",
-      "source_obligation_ids": [
-        "obl-3913"
-      ],
-      "source_seed_ids": [
-        "seed-5441"
-      ],
-      "source_shard_ids": [
-        "shard-0074"
-      ],
-      "canon_label": "Plans/Run_Graph_View.md",
-      "row_type": "consumer",
-      "path": "Plans/Run_Graph_View.md",
-      "heading_hint": "Reconciliation strata",
-      "status": "partial",
-      "exact_items": [
-        "`Plans/Run_Graph_View.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/Run_Graph_View.md:14"
-      ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-04215",
-      "source_obligation_ids": [
-        "obl-4061"
-      ],
-      "source_seed_ids": [
-        "seed-5668"
-      ],
-      "source_shard_ids": [
-        "shard-0077"
-      ],
-      "canon_label": "Plans/Run_Graph_View.md",
-      "row_type": "consumer",
-      "path": "Plans/Run_Graph_View.md",
-      "heading_hint": "Highest-priority stale consumer set",
-      "status": "partial",
-      "exact_items": [
-        "`Plans/Run_Graph_View.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/Run_Graph_View.md:14",
-        "Plans/Run_Graph_View.md:17"
-      ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-04461",
-      "source_obligation_ids": [
-        "obl-4262"
-      ],
-      "source_seed_ids": [
-        "seed-6087"
-      ],
-      "source_shard_ids": [
-        "shard-0082"
-      ],
-      "canon_label": "39",
-      "row_type": "consumer",
-      "path": "Plans/Run_Graph_View.md",
-      "heading_hint": "Do-not-forget details",
-      "status": "partial",
-      "exact_items": [
-        "Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes."
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/Run_Graph_View.md:8",
-        "Plans/Run_Graph_View.md:14"
-      ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-04757",
-      "source_obligation_ids": [
-        "obl-4472"
-      ],
-      "source_seed_ids": [
-        "seed-6464"
-      ],
-      "source_shard_ids": [
-        "shard-0086"
-      ],
-      "canon_label": "Plans/Run_Graph_View.md",
-      "row_type": "consumer",
-      "path": "Plans/Run_Graph_View.md",
-      "heading_hint": "Targeted docs checked for coverage convergence",
-      "status": "partial",
-      "exact_items": [
-        "`Plans/Run_Graph_View.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/Run_Graph_View.md:14",
-        "Plans/Run_Graph_View.md:8"
-      ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-04786",
-      "source_obligation_ids": [
-        "obl-4501"
-      ],
-      "source_seed_ids": [
-        "seed-6493"
-      ],
-      "source_shard_ids": [
-        "shard-0086"
-      ],
-      "canon_label": "Plans/Run_Graph_View.md",
-      "row_type": "consumer",
-      "path": "Plans/Run_Graph_View.md",
-      "heading_hint": "Docs clearly implicated",
-      "status": "partial",
-      "exact_items": [
-        "`Plans/Run_Graph_View.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/Run_Graph_View.md:14"
-      ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-04824",
-      "source_obligation_ids": [
-        "obl-4539"
-      ],
-      "source_seed_ids": [
-        "seed-6531"
-      ],
-      "source_shard_ids": [
-        "shard-0086"
-      ],
-      "canon_label": "Plans/Run_Graph_View.md",
-      "row_type": "consumer",
-      "path": "Plans/Run_Graph_View.md",
-      "heading_hint": "MUST CHANGE",
-      "status": "partial",
-      "exact_items": [
-        "`Plans/Run_Graph_View.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/Run_Graph_View.md:14"
-      ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-04857",
-      "source_obligation_ids": [
-        "obl-4572"
-      ],
-      "source_seed_ids": [
-        "seed-6564"
-      ],
-      "source_shard_ids": [
-        "shard-0086"
-      ],
-      "canon_label": "Plans/Run_Graph_View.md",
-      "row_type": "consumer",
-      "path": "Plans/Run_Graph_View.md",
-      "heading_hint": "Same-file supersession hot list",
-      "status": "partial",
-      "exact_items": [
-        "`Plans/Run_Graph_View.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/Run_Graph_View.md:14"
-      ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-04544",
-      "source_obligation_ids": [
-        "obl-4283"
-      ],
-      "source_seed_ids": [
-        "seed-6167"
-      ],
-      "source_shard_ids": [
-        "shard-0082"
-      ],
-      "canon_label": "Plans/*.md",
-      "row_type": "layout_blocker",
-      "path": "Plans/Run_Graph_View.md",
-      "heading_hint": "Do-not-forget details",
-      "status": "present",
-      "exact_items": [
-        "After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes."
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/Run_Graph_View.md:14",
-        "Plans/Run_Graph_View.md:32",
-        "Plans/Run_Graph_View.md:60"
-      ],
-      "required_action": "none"
-    },
-    {
-      "coverage_id": "cov-04705",
-      "source_obligation_ids": [
-        "obl-4420"
-      ],
-      "source_seed_ids": [
-        "seed-6387"
-      ],
-      "source_shard_ids": [
-        "shard-0085"
-      ],
-      "canon_label": "Plans/Run_Graph_View.md",
-      "row_type": "layout_blocker",
-      "path": "Plans/Run_Graph_View.md",
-      "heading_hint": "Key findings",
-      "status": "partial",
-      "exact_items": [
-        "`Plans/Run_Graph_View.md` is still strongly tier-era in its core surface contract:"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/Run_Graph_View.md:14",
-        "Plans/Run_Graph_View.md:32"
-      ],
-      "required_action": "packetizable_layout_repair"
-    },
-    {
-      "coverage_id": "cov-00443",
-      "source_obligation_ids": [
-        "obl-0439"
-      ],
-      "source_seed_ids": [
-        "seed-0444"
-      ],
-      "source_shard_ids": [
-        "shard-0007"
-      ],
-      "canon_label": "Plans/Run_Graph_View.md",
-      "row_type": "stale_retirement",
-      "path": "Plans/Run_Graph_View.md",
-      "heading_hint": "Highest-Impact Docs",
+      "coverage_id": "cov-069",
       "status": "missing",
-      "exact_items": [
-        "**`Plans/Run_Graph_View.md`** \u2014 273 node/graph term hits but 52 legacy tier hits. Grouped-by-phase layouts are rigid. The doc is the closest to node-aware but still frames visualization through a phase lens. Needs swimlane/package-group views."
+      "evidence": [],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "Plans/Permissions_System.md does not contain TierContext, TierType, active-agents.json, Phase/Task/Subtask/Iteration, or Tiers tab supersession hotspot text.",
+      "source_obligation_ids": [
+        "obl-029"
       ],
-      "stale_tokens": [
-        "Plans/Run_Graph_View.md"
+      "source_seed_ids": [
+        "seed-029"
       ],
+      "source_shard_ids": [
+        "shard-0006"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-520",
+      "status": "partial",
       "evidence": [
-        "Plans/Run_Graph_View.md:14"
+        "Plans/Permissions_System.md:51-60 defines requested account fields, bridged-provider permission envelopes, provider-native OpenCode correlation, and approval_scope_key across actor/lane/run/account context",
+        "Plans/Permissions_System.md:203 requires permission resolution and approval carryover to be multi-lane and account-aware rather than session-only"
       ],
-      "required_action": "stale_retirement"
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Bridged-provider identity/correlation coverage is partial; direct-provider comparison and CLI_Bridged_Providers normalized correlation inconsistency are not direct here.",
+      "source_obligation_ids": [
+        "obl-149"
+      ],
+      "source_seed_ids": [
+        "seed-149"
+      ],
+      "source_shard_ids": [
+        "shard-0037"
+      ],
+      "path_field_status": "match"
     }
   ]
 }

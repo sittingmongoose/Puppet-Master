@@ -1,0 +1,81 @@
+{
+  "schema_id": "pm.transfer_coverage.pass.v3",
+  "work_id": "w-20260312-203855",
+  "pass_id": "pass-002",
+  "timestamp_utc": "2026-04-29T00:42:07Z",
+  "title": "source lineage and evidence pass",
+  "material_coverage_rows": [],
+  "material_coverage_updates": [],
+  "path_field_findings": [],
+  "noise_findings": [
+    "Source obligation/seed/shard IDs are preserved for refreshed rows; all PRESENT rows retain evidence and refreshed rows carry Doc Discovery Resolver evidence."
+  ],
+  "subagent_tasks": [
+    "coverage-refresh-recheck-001",
+    "coverage-refresh-recheck-002",
+    "coverage-refresh-recheck-003",
+    "coverage-refresh-recheck-004"
+  ],
+  "assigned_input_boundaries": [
+    "20 rows resolved by Doc Discovery Resolver"
+  ],
+  "subagent_result_status": "complete",
+  "completed_task_count": 4,
+  "failed_task_count": 0,
+  "coverage_ids_assigned": [
+    "cov-001",
+    "cov-002",
+    "cov-003",
+    "cov-004",
+    "cov-005",
+    "cov-006",
+    "cov-007",
+    "cov-008",
+    "cov-009",
+    "cov-010",
+    "cov-011",
+    "cov-012",
+    "cov-018",
+    "cov-021",
+    "cov-022",
+    "cov-352",
+    "cov-379",
+    "cov-381",
+    "cov-414",
+    "cov-1096"
+  ],
+  "coverage_ids_completed": [
+    "cov-001",
+    "cov-002",
+    "cov-003",
+    "cov-004",
+    "cov-005",
+    "cov-006",
+    "cov-007",
+    "cov-008",
+    "cov-009",
+    "cov-010",
+    "cov-011",
+    "cov-012",
+    "cov-018",
+    "cov-021",
+    "cov-022",
+    "cov-352",
+    "cov-379",
+    "cov-381",
+    "cov-414",
+    "cov-1096"
+  ],
+  "path_groups_assigned": [
+    "Plans/Contracts_V0.md",
+    "Plans/Executor_Protocol.md",
+    "Plans/FinalGUISpec.md",
+    "Plans/Runtime_Artifacts_Panel.md",
+    "Plans/Widget_System.md",
+    "Plans/newfeatures.md",
+    "Plans/orchestrator-subagent-integration.md",
+    "Plans/rewrite-tie-in-memo.md",
+    "Plans/storage-plan.md",
+    "Plans/usage-feature.md"
+  ]
+}

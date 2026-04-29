@@ -2,1470 +2,233 @@
   "schema_id": "pm.canonical_obligations_wave.v1",
   "work_id": "w-20260312-203855",
   "wave_id": "wave-004",
-  "seed_groups": [
-    "seedgrp-013",
-    "seedgrp-014",
-    "seedgrp-015",
-    "seedgrp-016"
+  "timestamp_utc": "2026-04-28T18:51:37Z",
+  "subagent_tasks": [
+    "canon-seedgrp-013",
+    "canon-seedgrp-014",
+    "canon-seedgrp-015",
+    "canon-seedgrp-016"
   ],
-  "obligation_candidates": [
-    {
-      "source_seed_ids": [
-        "seed-0181"
-      ],
-      "source_shard_ids": [
-        "shard-0004"
-      ],
-      "canon_label": "if overseer-spawned node subagents are enabled, their provider/model/effort must be configurable",
-      "obligation_type": "consumer",
-      "exact_tokens": [
-        "if overseer-spawned node subagents are enabled, their provider/model/effort must be configurable"
-      ],
-      "affected_doc_hints": [
-        "global_or_cross_cutting_no_single_doc_hint"
-      ],
-      "heading_hints": [],
-      "stale_residue_to_retire": [],
-      "source_evidence": [
-        "working_ledger.md:L625"
-      ],
-      "notes": []
-    },
-    {
-      "source_seed_ids": [
-        "seed-0182"
-      ],
-      "source_shard_ids": [
-        "shard-0004"
-      ],
-      "canon_label": "user raised a specific worktree concern: if a package uses a bounded pool of mutable worktrees,",
-      "obligation_type": "consumer",
-      "exact_tokens": [
-        "user raised a specific worktree concern: if a package uses a bounded pool of mutable worktrees, dependent nodes inside the same package may require careful lane/ordering rules so downstream nodes see the right upstream state"
-      ],
-      "affected_doc_hints": [
-        "global_or_cross_cutting_no_single_doc_hint"
-      ],
-      "heading_hints": [],
-      "stale_residue_to_retire": [],
-      "source_evidence": [
-        "working_ledger.md:L627"
-      ],
-      "notes": []
-    },
-    {
-      "source_seed_ids": [
-        "seed-0183"
-      ],
-      "source_shard_ids": [
-        "shard-0004"
-      ],
-      "canon_label": "user requested a concrete ownership / inheritance / override matrix next",
-      "obligation_type": "owner",
-      "exact_tokens": [
-        "user requested a concrete ownership / inheritance / override matrix next"
-      ],
-      "affected_doc_hints": [
-        "ownership_target_unknown_pending_audit"
-      ],
-      "heading_hints": [],
-      "stale_residue_to_retire": [],
-      "source_evidence": [
-        "working_ledger.md:L630"
-      ],
-      "notes": []
-    },
-    {
-      "source_seed_ids": [
-        "seed-0184"
-      ],
-      "source_shard_ids": [
-        "shard-0004"
-      ],
-      "canon_label": "user also raised a new runtime-model question: Puppet Master snapshots / safe-point-like recover",
-      "obligation_type": "consumer",
-      "exact_tokens": [
-        "user also raised a new runtime-model question: Puppet Master snapshots / safe-point-like recovery likely need to be accounted for and may need an explicit relationship to the plan graph"
-      ],
-      "affected_doc_hints": [
-        "global_or_cross_cutting_no_single_doc_hint"
-      ],
-      "heading_hints": [],
-      "stale_residue_to_retire": [],
-      "source_evidence": [
-        "working_ledger.md:L631"
-      ],
-      "notes": []
-    },
-    {
-      "source_seed_ids": [
-        "seed-0185"
-      ],
-      "source_shard_ids": [
-        "shard-0004"
-      ],
-      "canon_label": "user clarified an important global constraint: the system should be fully automated by default;",
-      "obligation_type": "consumer",
-      "exact_tokens": [
-        "user clarified an important global constraint: the system should be fully automated by default; humans are only involved when something critically fails or a major decision is required"
-      ],
-      "affected_doc_hints": [
-        "global_or_cross_cutting_no_single_doc_hint"
-      ],
-      "heading_hints": [],
-      "stale_residue_to_retire": [],
-      "source_evidence": [
-        "working_ledger.md:L635"
-      ],
-      "notes": []
-    },
-    {
-      "source_seed_ids": [
-        "seed-0186"
-      ],
-      "source_shard_ids": [
-        "shard-0004"
-      ],
-      "canon_label": "if HITL blocks or a critical failure / decision occurs, the issue must surface in:",
-      "obligation_type": "layout_blocker",
-      "exact_tokens": [
-        "if HITL blocks or a critical failure / decision occurs, the issue must surface in:"
-      ],
-      "affected_doc_hints": [
-        "global_or_cross_cutting_no_single_doc_hint"
-      ],
-      "heading_hints": [],
-      "stale_residue_to_retire": [],
-      "source_evidence": [
-        "working_ledger.md:L640"
-      ],
-      "notes": []
-    },
-    {
-      "source_seed_ids": [
-        "seed-0187"
-      ],
-      "source_shard_ids": [
-        "shard-0004"
-      ],
-      "canon_label": "Orchestrator page",
-      "obligation_type": "layout_blocker",
-      "exact_tokens": [
-        "Orchestrator page"
-      ],
-      "affected_doc_hints": [
-        "global_or_cross_cutting_no_single_doc_hint"
-      ],
-      "heading_hints": [],
-      "stale_residue_to_retire": [],
-      "source_evidence": [
-        "working_ledger.md:L642"
-      ],
-      "notes": []
-    },
-    {
-      "source_seed_ids": [
-        "seed-0188"
-      ],
-      "source_shard_ids": [
-        "shard-0004"
-      ],
-      "canon_label": "Dashboard and Orchestrator should direct the user to the chat thread for decision/resolution det",
-      "obligation_type": "consumer",
-      "exact_tokens": [
-        "Dashboard and Orchestrator should direct the user to the chat thread for decision/resolution details"
-      ],
-      "affected_doc_hints": [
-        "global_or_cross_cutting_no_single_doc_hint"
-      ],
-      "heading_hints": [],
-      "stale_residue_to_retire": [],
-      "source_evidence": [
-        "working_ledger.md:L644"
-      ],
-      "notes": []
-    },
-    {
-      "source_seed_ids": [
-        "seed-0189"
-      ],
-      "source_shard_ids": [
-        "shard-0004"
-      ],
-      "canon_label": "the chat thread should present the issue/decision and allow the user to choose how to resolve it",
-      "obligation_type": "consumer",
-      "exact_tokens": [
-        "the chat thread should present the issue/decision and allow the user to choose how to resolve it"
-      ],
-      "affected_doc_hints": [
-        "global_or_cross_cutting_no_single_doc_hint"
-      ],
-      "heading_hints": [],
-      "stale_residue_to_retire": [],
-      "source_evidence": [
-        "working_ledger.md:L645"
-      ],
-      "notes": []
-    },
-    {
-      "source_seed_ids": [
-        "seed-0190"
-      ],
-      "source_shard_ids": [
-        "shard-0004"
-      ],
-      "canon_label": "user added a cross-surface requirement: worktrees should be visible in the Orchestrator page and",
-      "obligation_type": "layout_blocker",
-      "exact_tokens": [
-        "user added a cross-surface requirement: worktrees should be visible in the Orchestrator page and likely also in Source Control"
-      ],
-      "affected_doc_hints": [
-        "global_or_cross_cutting_no_single_doc_hint"
-      ],
-      "heading_hints": [],
-      "stale_residue_to_retire": [],
-      "source_evidence": [
-        "working_ledger.md:L647"
-      ],
-      "notes": []
-    },
-    {
-      "source_seed_ids": [
-        "seed-0191"
-      ],
-      "source_shard_ids": [
-        "shard-0004"
-      ],
-      "canon_label": "Source Control side panel is relatively small, though tabs can be added if needed",
-      "obligation_type": "layout_blocker",
-      "exact_tokens": [
-        "Source Control side panel is relatively small, though tabs can be added if needed"
-      ],
-      "affected_doc_hints": [
-        "global_or_cross_cutting_no_single_doc_hint"
-      ],
-      "heading_hints": [],
-      "stale_residue_to_retire": [],
-      "source_evidence": [
-        "working_ledger.md:L648-L649"
-      ],
-      "notes": []
-    },
-    {
-      "source_seed_ids": [
-        "seed-0192"
-      ],
-      "source_shard_ids": [
-        "shard-0004"
-      ],
-      "canon_label": "Orchestrator-managed worktrees should likely be separated from other worktrees (user-created or",
-      "obligation_type": "consumer",
-      "exact_tokens": [
-        "Orchestrator-managed worktrees should likely be separated from other worktrees (user-created or assistant-created)"
-      ],
-      "affected_doc_hints": [
-        "global_or_cross_cutting_no_single_doc_hint"
-      ],
-      "heading_hints": [],
-      "stale_residue_to_retire": [],
-      "source_evidence": [
-        "working_ledger.md:L648-L650"
-      ],
-      "notes": []
-    },
-    {
-      "source_seed_ids": [
-        "seed-0193"
-      ],
-      "source_shard_ids": [
-        "shard-0004"
-      ],
-      "canon_label": "existing Orchestrator tab structure already contains 4-6 tabs of different information, though t",
-      "obligation_type": "layout_blocker",
-      "exact_tokens": [
-        "existing Orchestrator tab structure already contains 4-6 tabs of different information, though the current spec is weak and should not be deeply redesigned in this thread"
-      ],
-      "affected_doc_hints": [
-        "global_or_cross_cutting_no_single_doc_hint"
-      ],
-      "heading_hints": [],
-      "stale_residue_to_retire": [],
-      "source_evidence": [
-        "working_ledger.md:L651"
-      ],
-      "notes": []
-    },
-    {
-      "source_seed_ids": [
-        "seed-0194"
-      ],
-      "source_shard_ids": [
-        "shard-0004"
-      ],
-      "canon_label": "there is also a project page that shows current status of each project",
-      "obligation_type": "layout_blocker",
-      "exact_tokens": [
-        "there is also a project page that shows current status of each project"
-      ],
-      "affected_doc_hints": [
-        "global_or_cross_cutting_no_single_doc_hint"
-      ],
-      "heading_hints": [],
-      "stale_residue_to_retire": [],
-      "source_evidence": [
-        "working_ledger.md:L655"
-      ],
-      "notes": []
-    },
-    {
-      "source_seed_ids": [
-        "seed-0195"
-      ],
-      "source_shard_ids": [
-        "shard-0004"
-      ],
-      "canon_label": "data/storage shape should be per-project so orchestration state remains isolated",
-      "obligation_type": "consumer",
-      "exact_tokens": [
-        "data/storage shape should be per-project so orchestration state remains isolated"
-      ],
-      "affected_doc_hints": [
-        "global_or_cross_cutting_no_single_doc_hint"
-      ],
-      "heading_hints": [],
-      "stale_residue_to_retire": [],
-      "source_evidence": [
-        "working_ledger.md:L657"
-      ],
-      "notes": []
-    },
-    {
-      "source_seed_ids": [
-        "seed-0196"
-      ],
-      "source_shard_ids": [
-        "shard-0004"
-      ],
-      "canon_label": "user added another execution complication:",
-      "obligation_type": "consumer",
-      "exact_tokens": [
-        "user added another execution complication:"
-      ],
-      "affected_doc_hints": [
-        "global_or_cross_cutting_no_single_doc_hint"
-      ],
-      "heading_hints": [],
-      "stale_residue_to_retire": [],
-      "source_evidence": [
-        "working_ledger.md:L658"
-      ],
-      "notes": []
-    },
-    {
-      "source_seed_ids": [
-        "seed-0197"
-      ],
-      "source_shard_ids": [
-        "shard-0004"
-      ],
-      "canon_label": "if a node exhausts usage or multi-account logic predicts imminent exhaustion, execution should b",
-      "obligation_type": "consumer",
-      "exact_tokens": [
-        "if a node exhausts usage or multi-account logic predicts imminent exhaustion, execution should be able to switch to another account"
-      ],
-      "affected_doc_hints": [
-        "global_or_cross_cutting_no_single_doc_hint"
-      ],
-      "heading_hints": [],
-      "stale_residue_to_retire": [],
-      "source_evidence": [
-        "working_ledger.md:L660"
-      ],
-      "notes": []
-    },
-    {
-      "source_seed_ids": [
-        "seed-0198"
-      ],
-      "source_shard_ids": [
-        "shard-0004"
-      ],
-      "canon_label": "this likely already exists in docs, but it strengthens the need to model account/provider select",
-      "obligation_type": "consumer",
-      "exact_tokens": [
-        "this likely already exists in docs, but it strengthens the need to model account/provider selection as requested vs effective runtime identity"
-      ],
-      "affected_doc_hints": [
-        "global_or_cross_cutting_no_single_doc_hint"
-      ],
-      "heading_hints": [],
-      "stale_residue_to_retire": [],
-      "source_evidence": [
-        "working_ledger.md:L661"
-      ],
-      "notes": []
-    },
-    {
-      "source_seed_ids": [
-        "seed-0199"
-      ],
-      "source_shard_ids": [
-        "shard-0004"
-      ],
-      "canon_label": "Current GUI/orchestrator documentation remains oriented around the older surface model:",
-      "obligation_type": "layout_blocker",
-      "exact_tokens": [
-        "Current GUI/orchestrator documentation remains oriented around the older surface model:"
-      ],
-      "affected_doc_hints": [
-        "global_or_cross_cutting_no_single_doc_hint"
-      ],
-      "heading_hints": [],
-      "stale_residue_to_retire": [],
-      "source_evidence": [
-        "working_ledger.md:L665"
-      ],
-      "notes": []
-    },
-    {
-      "source_seed_ids": [
-        "seed-0200"
-      ],
-      "source_shard_ids": [
-        "shard-0004"
-      ],
-      "canon_label": "Plans/Orchestrator_Page.md",
-      "obligation_type": "consumer",
-      "exact_tokens": [
-        "`Plans/Orchestrator_Page.md` still defines tabs `Progress`, `Tiers`, `Node Graph Display`, `Evidence`, `History`, `Ledger`"
-      ],
-      "affected_doc_hints": [
-        "Plans/Orchestrator_Page.md"
-      ],
-      "heading_hints": [],
-      "stale_residue_to_retire": [],
-      "source_evidence": [
-        "working_ledger.md:L666"
-      ],
-      "notes": []
-    },
-    {
-      "source_seed_ids": [
-        "seed-0201"
-      ],
-      "source_shard_ids": [
-        "shard-0004"
-      ],
-      "canon_label": "Plans/Orchestrator_Page.md",
-      "obligation_type": "consumer",
-      "exact_tokens": [
-        "`Plans/Orchestrator_Page.md` still explicitly says runs and tier checks are driven by the `Overseer`"
-      ],
-      "affected_doc_hints": [
-        "Plans/Orchestrator_Page.md"
-      ],
-      "heading_hints": [],
-      "stale_residue_to_retire": [],
-      "source_evidence": [
-        "working_ledger.md:L667"
-      ],
-      "notes": []
-    },
-    {
-      "source_seed_ids": [
-        "seed-0202"
-      ],
-      "source_shard_ids": [
-        "shard-0004"
-      ],
-      "canon_label": "Plans/Run_Graph_View.md",
-      "obligation_type": "consumer",
-      "exact_tokens": [
-        "`Plans/Run_Graph_View.md` describes the graph as live DAG execution, but node rendering still includes tier-type iconography and tier-oriented vocabulary"
-      ],
-      "affected_doc_hints": [
-        "Plans/Run_Graph_View.md"
-      ],
-      "heading_hints": [],
-      "stale_residue_to_retire": [],
-      "source_evidence": [
-        "working_ledger.md:L668"
-      ],
-      "notes": []
-    },
-    {
-      "source_seed_ids": [
-        "seed-0203"
-      ],
-      "source_shard_ids": [
-        "shard-0004"
-      ],
-      "canon_label": "Plans/FinalGUISpec.md",
-      "obligation_type": "consumer",
-      "exact_tokens": [
-        "`Plans/FinalGUISpec.md` still references `phase/task/subtask` progress and mapping editors rather than package/seam governance surfaces"
-      ],
-      "affected_doc_hints": [
-        "Plans/FinalGUISpec.md"
-      ],
-      "heading_hints": [],
-      "stale_residue_to_retire": [],
-      "source_evidence": [
-        "working_ledger.md:L669"
-      ],
-      "notes": []
-    },
-    {
-      "source_seed_ids": [
-        "seed-0204"
-      ],
-      "source_shard_ids": [
-        "shard-0004"
-      ],
-      "canon_label": "Orchestrator is a top-level page with six tabs, including a dedicated full-page graph tab and ru",
-      "obligation_type": "layout_blocker",
-      "exact_tokens": [
-        "Orchestrator is a top-level page with six tabs, including a dedicated full-page graph tab and run-scoped ledger/history/evidence surfaces"
-      ],
-      "affected_doc_hints": [
-        "global_or_cross_cutting_no_single_doc_hint"
-      ],
-      "heading_hints": [],
-      "stale_residue_to_retire": [],
-      "source_evidence": [
-        "working_ledger.md:L671"
-      ],
-      "notes": []
-    },
-    {
-      "source_seed_ids": [
-        "seed-0205"
-      ],
-      "source_shard_ids": [
-        "shard-0004"
-      ],
-      "canon_label": "the page doc already admits unresolved data-source ownership gaps and explicitly says the UI mus",
-      "obligation_type": "layout_blocker",
-      "exact_tokens": [
-        "the page doc already admits unresolved data-source ownership gaps and explicitly says the UI must bind to upstream owners rather than minting local compatibility fields"
-      ],
-      "affected_doc_hints": [
-        "global_or_cross_cutting_no_single_doc_hint"
-      ],
-      "heading_hints": [],
-      "stale_residue_to_retire": [],
-      "source_evidence": [
-        "working_ledger.md:L672"
-      ],
-      "notes": []
-    },
-    {
-      "source_seed_ids": [
-        "seed-0206"
-      ],
-      "source_shard_ids": [
-        "shard-0004"
-      ],
-      "canon_label": "PuppetMasterEvent::*",
-      "obligation_type": "layout_blocker",
-      "exact_tokens": [
-        "page-spec language still includes local event/type phrasing such as `PuppetMasterEvent::*` and a named AI foreman role (`Overseer`)"
-      ],
-      "affected_doc_hints": [
-        "global_or_cross_cutting_no_single_doc_hint"
-      ],
-      "heading_hints": [],
-      "stale_residue_to_retire": [],
-      "source_evidence": [
-        "working_ledger.md:L674"
-      ],
-      "notes": []
-    },
-    {
-      "source_seed_ids": [
-        "seed-0207"
-      ],
-      "source_shard_ids": [
-        "shard-0004"
-      ],
-      "canon_label": "runtime addenda emphasize \"consumer of canonical contracts\" and \"must not redefine locally\"",
-      "obligation_type": "owner",
-      "exact_tokens": [
-        "runtime addenda emphasize \"consumer of canonical contracts\" and \"must not redefine locally\""
-      ],
-      "affected_doc_hints": [
-        "ownership_target_unknown_pending_audit"
-      ],
-      "heading_hints": [],
-      "stale_residue_to_retire": [],
-      "source_evidence": [
-        "working_ledger.md:L675"
-      ],
-      "notes": []
-    },
-    {
-      "source_seed_ids": [
-        "seed-0208"
-      ],
-      "source_shard_ids": [
-        "shard-0004"
-      ],
-      "canon_label": "likely reconciliation seam: remove shadow event/schema ownership from the page layer and tighten",
-      "obligation_type": "layout_blocker",
-      "exact_tokens": [
-        "likely reconciliation seam: remove shadow event/schema ownership from the page layer and tighten it around projections and controls only"
-      ],
-      "affected_doc_hints": [
-        "global_or_cross_cutting_no_single_doc_hint"
-      ],
-      "heading_hints": [],
-      "stale_residue_to_retire": [],
-      "source_evidence": [
-        "working_ledger.md:L675-L676"
-      ],
-      "notes": []
-    },
-    {
-      "source_seed_ids": [
-        "seed-0209"
-      ],
-      "source_shard_ids": [
-        "shard-0004"
-      ],
-      "canon_label": "Gaps / Problems Identified",
-      "obligation_type": "layout_blocker",
-      "exact_tokens": [
-        "Packetization is not emitter-ready yet:"
-      ],
-      "affected_doc_hints": [
-        "layout_blocker_target_known_from_notes"
-      ],
-      "heading_hints": [
-        "Gaps / Problems Identified"
-      ],
-      "stale_residue_to_retire": [],
-      "source_evidence": [
-        "working_ledger.md:L680"
-      ],
-      "notes": []
-    },
-    {
-      "source_seed_ids": [
-        "seed-0210"
-      ],
-      "source_shard_ids": [
-        "shard-0004"
-      ],
-      "canon_label": "packet_plan.json",
-      "obligation_type": "stale_retirement",
-      "exact_tokens": [
-        "`packet_plan.json` currently contains at least four survivor/residue contradictions where the same token appears in both required-survivor and stale-retire sets"
-      ],
-      "affected_doc_hints": [
-        "needs_doc_discovery_in_canonical_obligations_builder"
-      ],
-      "heading_hints": [
-        "Gaps / Problems Identified"
-      ],
-      "stale_residue_to_retire": [
-        "packet_plan.json"
-      ],
-      "source_evidence": [
-        "working_ledger.md:L682"
-      ],
-      "notes": []
-    },
-    {
-      "source_seed_ids": [
-        "seed-0211"
-      ],
-      "source_shard_ids": [
-        "shard-0004"
-      ],
-      "canon_label": "Plans/Executor_Protocol.md#5. Node execution fields",
-      "obligation_type": "consumer",
-      "exact_tokens": [
-        "`Plans/Executor_Protocol.md#5. Node execution fields` -> `TierContext`, `tier_id`"
-      ],
-      "affected_doc_hints": [
-        "Plans/Executor_Protocol.md#5. Node execution fields"
-      ],
-      "heading_hints": [
-        "5. Node execution fields",
-        "Gaps / Problems Identified"
-      ],
-      "stale_residue_to_retire": [],
-      "source_evidence": [
-        "working_ledger.md:L682-L684"
-      ],
-      "notes": []
-    },
-    {
-      "source_seed_ids": [
-        "seed-0212"
-      ],
-      "source_shard_ids": [
-        "shard-0004"
-      ],
-      "canon_label": "Plans/GitHub_API_Auth_and_Flows.md#Token handling and storage (hard rules)",
-      "obligation_type": "consumer",
-      "exact_tokens": [
-        "`Plans/GitHub_API_Auth_and_Flows.md#Token handling and storage (hard rules)` -> `github_api:github.com/<login>`"
-      ],
-      "affected_doc_hints": [
-        "Plans/GitHub_API_Auth_and_Flows.md#Token handling and storage (hard rules"
-      ],
-      "heading_hints": [
-        "Token handling and storage (hard rules",
-        "Gaps / Problems Identified"
-      ],
-      "stale_residue_to_retire": [],
-      "source_evidence": [
-        "working_ledger.md:L685"
-      ],
-      "notes": []
-    },
-    {
-      "source_seed_ids": [
-        "seed-0213"
-      ],
-      "source_shard_ids": [
-        "shard-0004"
-      ],
-      "canon_label": "Plans/UI_Command_Catalog.md#Canonical Runtime Recovery Command Consolidation (2026-03-09)",
-      "obligation_type": "owner",
-      "exact_tokens": [
-        "`Plans/UI_Command_Catalog.md#Canonical Runtime Recovery Command Consolidation (2026-03-09)` -> `approve_continue`"
-      ],
-      "affected_doc_hints": [
-        "Plans/UI_Command_Catalog.md#Canonical Runtime Recovery Command Consolidation (2026-03-09"
-      ],
-      "heading_hints": [
-        "Canonical Runtime Recovery Command Consolidation (2026-03-09",
-        "Gaps / Problems Identified"
-      ],
-      "stale_residue_to_retire": [],
-      "source_evidence": [
-        "working_ledger.md:L686"
-      ],
-      "notes": []
-    },
-    {
-      "source_seed_ids": [
-        "seed-0214"
-      ],
-      "source_shard_ids": [
-        "shard-0004"
-      ],
-      "canon_label": "Plans/orchestrator-subagent-integration.md#Tier-Level Subagent Strategy",
-      "obligation_type": "consumer",
-      "exact_tokens": [
-        "`Plans/orchestrator-subagent-integration.md#Tier-Level Subagent Strategy` -> `tier_id`"
-      ],
-      "affected_doc_hints": [
-        "Plans/orchestrator-subagent-integration.md#Tier-Level Subagent Strategy"
-      ],
-      "heading_hints": [
-        "Tier-Level Subagent Strategy",
-        "Gaps / Problems Identified"
-      ],
-      "stale_residue_to_retire": [],
-      "source_evidence": [
-        "working_ledger.md:L687"
-      ],
-      "notes": []
-    },
-    {
-      "source_seed_ids": [
-        "seed-0215"
-      ],
-      "source_shard_ids": [
-        "shard-0004"
-      ],
-      "canon_label": "Gaps / Problems Identified",
-      "obligation_type": "consumer",
-      "exact_tokens": [
-        "Because of that contradiction class:"
-      ],
-      "affected_doc_hints": [
-        "global_or_cross_cutting_no_single_doc_hint"
-      ],
-      "heading_hints": [
-        "Gaps / Problems Identified"
-      ],
-      "stale_residue_to_retire": [],
-      "source_evidence": [
-        "working_ledger.md:L688"
-      ],
-      "notes": []
-    },
-    {
-      "source_seed_ids": [
-        "seed-0216"
-      ],
-      "source_shard_ids": [
-        "shard-0004"
-      ],
-      "canon_label": "Gaps / Problems Identified",
-      "obligation_type": "consumer",
-      "exact_tokens": [
-        "packet emission must not proceed until those target-level contradictions are repaired in packet-planning inputs"
-      ],
-      "affected_doc_hints": [
-        "global_or_cross_cutting_no_single_doc_hint"
-      ],
-      "heading_hints": [
-        "Gaps / Problems Identified"
-      ],
-      "stale_residue_to_retire": [],
-      "source_evidence": [
-        "working_ledger.md:L691"
-      ],
-      "notes": []
-    },
-    {
-      "source_seed_ids": [
-        "seed-0217"
-      ],
-      "source_shard_ids": [
-        "shard-0004"
-      ],
-      "canon_label": "Gaps / Problems Identified",
-      "obligation_type": "layout_blocker",
-      "exact_tokens": [
-        "page IA / widget behavior / data bindings"
-      ],
-      "affected_doc_hints": [
-        "layout_blocker_target_known_from_notes"
-      ],
-      "heading_hints": [
-        "Gaps / Problems Identified"
-      ],
-      "stale_residue_to_retire": [],
-      "source_evidence": [
-        "working_ledger.md:L694"
-      ],
-      "notes": []
-    },
-    {
-      "source_seed_ids": [
-        "seed-0218"
-      ],
-      "source_shard_ids": [
-        "shard-0004"
-      ],
-      "canon_label": "Gaps / Problems Identified",
-      "obligation_type": "layout_blocker",
-      "exact_tokens": [
-        "Current docs likely risk shadow ownership at the page layer:"
-      ],
-      "affected_doc_hints": [
-        "layout_blocker_target_known_from_notes"
-      ],
-      "heading_hints": [
-        "Gaps / Problems Identified"
-      ],
-      "stale_residue_to_retire": [],
-      "source_evidence": [
-        "working_ledger.md:L696"
-      ],
-      "notes": []
-    },
-    {
-      "source_seed_ids": [
-        "seed-0219"
-      ],
-      "source_shard_ids": [
-        "shard-0004"
-      ],
-      "canon_label": "Gaps / Problems Identified",
-      "obligation_type": "layout_blocker",
-      "exact_tokens": [
-        "page doc names concrete event sources and local live-status mappings"
-      ],
-      "affected_doc_hints": [
-        "layout_blocker_target_known_from_notes"
-      ],
-      "heading_hints": [
-        "Gaps / Problems Identified"
-      ],
-      "stale_residue_to_retire": [],
-      "source_evidence": [
-        "working_ledger.md:L697"
-      ],
-      "notes": []
-    },
-    {
-      "source_seed_ids": [
-        "seed-0220"
-      ],
-      "source_shard_ids": [
-        "shard-0004"
-      ],
-      "canon_label": "Gaps / Problems Identified",
-      "obligation_type": "owner",
-      "exact_tokens": [
-        "runtime doc says canonical contracts live elsewhere and Orchestrator must consume them without redefining"
-      ],
-      "affected_doc_hints": [
-        "ownership_target_unknown_pending_audit"
-      ],
-      "heading_hints": [
-        "Gaps / Problems Identified"
-      ],
-      "stale_residue_to_retire": [],
-      "source_evidence": [
-        "working_ledger.md:L698"
-      ],
-      "notes": []
-    },
-    {
-      "source_seed_ids": [
-        "seed-0221"
-      ],
-      "source_shard_ids": [
-        "shard-0004"
-      ],
-      "canon_label": "work package",
-      "obligation_type": "layout_blocker",
-      "exact_tokens": [
-        "no documented GUI surface yet for `work package`"
-      ],
-      "affected_doc_hints": [
-        "layout_blocker_target_known_from_notes"
-      ],
-      "heading_hints": [
-        "Gaps / Problems Identified"
-      ],
-      "stale_residue_to_retire": [],
-      "source_evidence": [
-        "working_ledger.md:L702-L703"
-      ],
-      "notes": []
-    },
-    {
-      "source_seed_ids": [
-        "seed-0222"
-      ],
-      "source_shard_ids": [
-        "shard-0004"
-      ],
-      "canon_label": "feature seam",
-      "obligation_type": "layout_blocker",
-      "exact_tokens": [
-        "no documented GUI surface yet for `feature seam`"
-      ],
-      "affected_doc_hints": [
-        "layout_blocker_target_known_from_notes"
-      ],
-      "heading_hints": [
-        "Gaps / Problems Identified"
-      ],
-      "stale_residue_to_retire": [],
-      "source_evidence": [
-        "working_ledger.md:L702-L704"
-      ],
-      "notes": []
-    },
-    {
-      "source_seed_ids": [
-        "seed-0223"
-      ],
-      "source_shard_ids": [
-        "shard-0004"
-      ],
-      "canon_label": "Gaps / Problems Identified",
-      "obligation_type": "layout_blocker",
-      "exact_tokens": [
-        "worktree visibility/controls likely need coordination across Orchestrator and Source Control, not isolated ownership in only one surface"
-      ],
-      "affected_doc_hints": [
-        "layout_blocker_target_known_from_notes"
-      ],
-      "heading_hints": [
-        "Gaps / Problems Identified"
-      ],
-      "stale_residue_to_retire": [],
-      "source_evidence": [
-        "working_ledger.md:L706"
-      ],
-      "notes": []
-    },
-    {
-      "source_seed_ids": [
-        "seed-0224"
-      ],
-      "source_shard_ids": [
-        "shard-0004"
-      ],
-      "canon_label": "Gaps / Problems Identified",
-      "obligation_type": "layout_blocker",
-      "exact_tokens": [
-        "worktree UI likely needs partitioning/filtering between orchestrator-owned worktrees and non-orchestrator worktrees due to scale and panel-size constraints"
-      ],
-      "affected_doc_hints": [
-        "layout_blocker_target_known_from_notes"
-      ],
-      "heading_hints": [
-        "Gaps / Problems Identified"
-      ],
-      "stale_residue_to_retire": [],
-      "source_evidence": [
-        "working_ledger.md:L707"
-      ],
-      "notes": []
-    },
-    {
-      "source_seed_ids": [
-        "seed-0225"
-      ],
-      "source_shard_ids": [
-        "shard-0004"
-      ],
-      "canon_label": "Gaps / Problems Identified",
-      "obligation_type": "consumer",
-      "exact_tokens": [
-        "dashboard/project-summary surfaces also need per-project aggregation without collapsing project-local orchestration state into one global pool"
-      ],
-      "affected_doc_hints": [
-        "global_or_cross_cutting_no_single_doc_hint"
-      ],
-      "heading_hints": [
-        "Gaps / Problems Identified"
-      ],
-      "stale_residue_to_retire": [],
-      "source_evidence": [
-        "working_ledger.md:L708"
-      ],
-      "notes": []
-    },
-    {
-      "source_seed_ids": [
-        "seed-0226"
-      ],
-      "source_shard_ids": [
-        "shard-0004"
-      ],
-      "canon_label": "Gaps / Problems Identified",
-      "obligation_type": "owner",
-      "exact_tokens": [
-        "node, work package, feature seam, promotion, and worktree lane should each have their own lifecycle rather than one universal status enum"
-      ],
-      "affected_doc_hints": [
-        "ownership_target_unknown_pending_audit"
-      ],
-      "heading_hints": [
-        "Gaps / Problems Identified"
-      ],
-      "stale_residue_to_retire": [],
-      "source_evidence": [
-        "working_ledger.md:L709-L710"
-      ],
-      "notes": []
-    },
-    {
-      "source_seed_ids": [
-        "seed-0227"
-      ],
-      "source_shard_ids": [
-        "shard-0004"
-      ],
-      "canon_label": "Gaps / Problems Identified",
-      "obligation_type": "consumer",
-      "exact_tokens": [
-        "transitions should be deterministic and event-driven"
-      ],
-      "affected_doc_hints": [
-        "global_or_cross_cutting_no_single_doc_hint"
-      ],
-      "heading_hints": [
-        "Gaps / Problems Identified"
-      ],
-      "stale_residue_to_retire": [],
-      "source_evidence": [
-        "working_ledger.md:L709-L711"
-      ],
-      "notes": []
-    },
-    {
-      "source_seed_ids": [
-        "seed-0228"
-      ],
-      "source_shard_ids": [
-        "shard-0004"
-      ],
-      "canon_label": "Gaps / Problems Identified",
-      "obligation_type": "consumer",
-      "exact_tokens": [
-        "define the event model that causes lifecycle transitions"
-      ],
-      "affected_doc_hints": [
-        "global_or_cross_cutting_no_single_doc_hint"
-      ],
-      "heading_hints": [
-        "Gaps / Problems Identified"
-      ],
-      "stale_residue_to_retire": [],
-      "source_evidence": [
-        "working_ledger.md:L713"
-      ],
-      "notes": []
-    },
-    {
-      "source_seed_ids": [
-        "seed-0229"
-      ],
-      "source_shard_ids": [
-        "shard-0004"
-      ],
-      "canon_label": "Gaps / Problems Identified",
-      "obligation_type": "consumer",
-      "exact_tokens": [
-        "event families should include scheduling, execution, review/verification, contamination/recovery, remediation/replan, promotion, HITL/escalation, worktree/lane, and effective-resolution events"
-      ],
-      "affected_doc_hints": [
-        "global_or_cross_cutting_no_single_doc_hint"
-      ],
-      "heading_hints": [
-        "Gaps / Problems Identified"
-      ],
-      "stale_residue_to_retire": [],
-      "source_evidence": [
-        "working_ledger.md:L714-L715"
-      ],
-      "notes": []
-    },
-    {
-      "source_seed_ids": [
-        "seed-0230"
-      ],
-      "source_shard_ids": [
-        "shard-0004"
-      ],
-      "canon_label": "Gaps / Problems Identified",
-      "obligation_type": "layout_blocker",
-      "exact_tokens": [
-        "canonical event naming should be shared across runtime and UI projections; Orchestrator should not invent a shadow event language"
-      ],
-      "affected_doc_hints": [
-        "layout_blocker_target_known_from_notes"
-      ],
-      "heading_hints": [
-        "Gaps / Problems Identified"
-      ],
-      "stale_residue_to_retire": [],
-      "source_evidence": [
-        "working_ledger.md:L714-L716"
-      ],
-      "notes": []
-    },
-    {
-      "source_seed_ids": [
-        "seed-0231"
-      ],
-      "source_shard_ids": [
-        "shard-0004"
-      ],
-      "canon_label": "Gaps / Problems Identified",
-      "obligation_type": "consumer",
-      "exact_tokens": [
-        "some events are runtime-internal, some must be operator-visible, and some must specifically drive Dashboard/Orchestrator/chat resolution surfaces"
-      ],
-      "affected_doc_hints": [
-        "global_or_cross_cutting_no_single_doc_hint"
-      ],
-      "heading_hints": [
-        "Gaps / Problems Identified"
-      ],
-      "stale_residue_to_retire": [],
-      "source_evidence": [
-        "working_ledger.md:L717"
-      ],
-      "notes": []
-    },
-    {
-      "source_seed_ids": [
-        "seed-0232"
-      ],
-      "source_shard_ids": [
-        "shard-0004"
-      ],
-      "canon_label": "Gaps / Problems Identified",
-      "obligation_type": "consumer",
-      "exact_tokens": [
-        "multi-project orchestration means identity/projection/storage will need at least project scoping, not just run/seam/package/node scoping"
-      ],
-      "affected_doc_hints": [
-        "global_or_cross_cutting_no_single_doc_hint"
-      ],
-      "heading_hints": [
-        "Gaps / Problems Identified"
-      ],
-      "stale_residue_to_retire": [],
-      "source_evidence": [
-        "working_ledger.md:L720"
-      ],
-      "notes": []
-    },
-    {
-      "source_seed_ids": [
-        "seed-0233"
-      ],
-      "source_shard_ids": [
-        "shard-0004"
-      ],
-      "canon_label": "Gaps / Problems Identified",
-      "obligation_type": "consumer",
-      "exact_tokens": [
-        "multi-account execution means identity/projection/storage may also need account selection / account fallback visibility as part of effective runtime state"
-      ],
-      "affected_doc_hints": [
-        "global_or_cross_cutting_no_single_doc_hint"
-      ],
-      "heading_hints": [
-        "Gaps / Problems Identified"
-      ],
-      "stale_residue_to_retire": [],
-      "source_evidence": [
-        "working_ledger.md:L721"
-      ],
-      "notes": []
-    },
-    {
-      "source_seed_ids": [
-        "seed-0234"
-      ],
-      "source_shard_ids": [
-        "shard-0004"
-      ],
-      "canon_label": "Gaps / Problems Identified",
-      "obligation_type": "consumer",
-      "exact_tokens": [
-        "very provider/OAuth-specific implementation details when our model must span broader execution roles/providers"
-      ],
-      "affected_doc_hints": [
-        "global_or_cross_cutting_no_single_doc_hint"
-      ],
-      "heading_hints": [
-        "Gaps / Problems Identified"
-      ],
-      "stale_residue_to_retire": [],
-      "source_evidence": [
-        "working_ledger.md:L746"
-      ],
-      "notes": []
-    },
-    {
-      "source_seed_ids": [
-        "seed-0235"
-      ],
-      "source_shard_ids": [
-        "shard-0004"
-      ],
-      "canon_label": "effective_account_id",
-      "obligation_type": "consumer",
-      "exact_tokens": [
-        "add explicit `effective_account_id` and switch/fallback reason to attempt/runtime visibility"
-      ],
-      "affected_doc_hints": [
-        "global_or_cross_cutting_no_single_doc_hint"
-      ],
-      "heading_hints": [
-        "Gaps / Problems Identified"
-      ],
-      "stale_residue_to_retire": [],
-      "source_evidence": [
-        "working_ledger.md:L766-L767"
-      ],
-      "notes": []
-    },
-    {
-      "source_seed_ids": [
-        "seed-0236"
-      ],
-      "source_shard_ids": [
-        "shard-0004"
-      ],
-      "canon_label": "Gaps / Problems Identified",
-      "obligation_type": "consumer",
-      "exact_tokens": [
-        "multi-account policy should support cooldown and retry-budget concepts, not just threshold + priority"
-      ],
-      "affected_doc_hints": [
-        "global_or_cross_cutting_no_single_doc_hint"
-      ],
-      "heading_hints": [
-        "Gaps / Problems Identified"
-      ],
-      "stale_residue_to_retire": [],
-      "source_evidence": [
-        "working_ledger.md:L766-L768"
-      ],
-      "notes": []
-    },
-    {
-      "source_seed_ids": [
-        "seed-0237"
-      ],
-      "source_shard_ids": [
-        "shard-0004"
-      ],
-      "canon_label": "Gaps / Problems Identified",
-      "obligation_type": "consumer",
-      "exact_tokens": [
-        "account selection should probably operate on a provider+role+namespace/pool snapshot rather than raw global account lists"
-      ],
-      "affected_doc_hints": [
-        "global_or_cross_cutting_no_single_doc_hint"
-      ],
-      "heading_hints": [
-        "Gaps / Problems Identified"
-      ],
-      "stale_residue_to_retire": [],
-      "source_evidence": [
-        "working_ledger.md:L769"
-      ],
-      "notes": []
-    },
-    {
-      "source_seed_ids": [
-        "seed-0238"
-      ],
-      "source_shard_ids": [
-        "shard-0004"
-      ],
-      "canon_label": "Gaps / Problems Identified",
-      "obligation_type": "layout_blocker",
-      "exact_tokens": [
-        "settings/UI likely need pool/account metadata and quota-pressure visibility in addition to simple threshold controls"
-      ],
-      "affected_doc_hints": [
-        "layout_blocker_target_known_from_notes"
-      ],
-      "heading_hints": [
-        "Gaps / Problems Identified"
-      ],
-      "stale_residue_to_retire": [],
-      "source_evidence": [
-        "working_ledger.md:L770"
-      ],
-      "notes": []
-    },
-    {
-      "source_seed_ids": [
-        "seed-0239"
-      ],
-      "source_shard_ids": [
-        "shard-0004"
-      ],
-      "canon_label": "Gaps / Problems Identified",
-      "obligation_type": "consumer",
-      "exact_tokens": [
-        "browser auto-relogin is potentially useful as an optional provider-specific recovery capability, but should not be a core cross-provider assumption for Puppet Master"
-      ],
-      "affected_doc_hints": [
-        "global_or_cross_cutting_no_single_doc_hint"
-      ],
-      "heading_hints": [
-        "Gaps / Problems Identified"
-      ],
-      "stale_residue_to_retire": [],
-      "source_evidence": [
-        "working_ledger.md:L771-L772"
-      ],
-      "notes": []
-    },
-    {
-      "source_seed_ids": [
-        "seed-0240"
-      ],
-      "source_shard_ids": [
-        "shard-0004"
-      ],
-      "canon_label": "Gaps / Problems Identified",
-      "obligation_type": "owner",
-      "exact_tokens": [
-        "log parsing should not be treated as canonical quota truth; at best it is a supplemental heuristic/evidence source"
-      ],
-      "affected_doc_hints": [
-        "ownership_target_unknown_pending_audit"
-      ],
-      "heading_hints": [
-        "Gaps / Problems Identified"
-      ],
-      "stale_residue_to_retire": [],
-      "source_evidence": [
-        "working_ledger.md:L771-L773"
-      ],
-      "notes": []
-    }
+  "assigned_input_boundaries": [
+    "seedgrp-013 seed-181..seed-195",
+    "seedgrp-014 seed-196..seed-210",
+    "seedgrp-015 seed-211..seed-225",
+    "seedgrp-016 seed-226..seed-240"
+  ],
+  "subagent_result_status": {
+    "canon-seedgrp-013": "completed",
+    "canon-seedgrp-014": "completed",
+    "canon-seedgrp-015": "completed",
+    "canon-seedgrp-016": "completed"
+  },
+  "completed_task_count": 4,
+  "failed_task_count": 0,
+  "seed_ids_assigned": [
+    "seed-181",
+    "seed-182",
+    "seed-183",
+    "seed-184",
+    "seed-185",
+    "seed-186",
+    "seed-187",
+    "seed-188",
+    "seed-189",
+    "seed-190",
+    "seed-191",
+    "seed-192",
+    "seed-193",
+    "seed-194",
+    "seed-195",
+    "seed-196",
+    "seed-197",
+    "seed-198",
+    "seed-199",
+    "seed-200",
+    "seed-201",
+    "seed-202",
+    "seed-203",
+    "seed-204",
+    "seed-205",
+    "seed-206",
+    "seed-207",
+    "seed-208",
+    "seed-209",
+    "seed-210",
+    "seed-211",
+    "seed-212",
+    "seed-213",
+    "seed-214",
+    "seed-215",
+    "seed-216",
+    "seed-217",
+    "seed-218",
+    "seed-219",
+    "seed-220",
+    "seed-221",
+    "seed-222",
+    "seed-223",
+    "seed-224",
+    "seed-225",
+    "seed-226",
+    "seed-227",
+    "seed-228",
+    "seed-229",
+    "seed-230",
+    "seed-231",
+    "seed-232",
+    "seed-233",
+    "seed-234",
+    "seed-235",
+    "seed-236",
+    "seed-237",
+    "seed-238",
+    "seed-239",
+    "seed-240"
+  ],
+  "seed_ids_completed": [
+    "seed-181",
+    "seed-182",
+    "seed-183",
+    "seed-184",
+    "seed-185",
+    "seed-186",
+    "seed-187",
+    "seed-188",
+    "seed-189",
+    "seed-190",
+    "seed-191",
+    "seed-192",
+    "seed-193",
+    "seed-194",
+    "seed-195",
+    "seed-196",
+    "seed-197",
+    "seed-198",
+    "seed-199",
+    "seed-200",
+    "seed-201",
+    "seed-202",
+    "seed-203",
+    "seed-204",
+    "seed-205",
+    "seed-206",
+    "seed-207",
+    "seed-208",
+    "seed-209",
+    "seed-210",
+    "seed-211",
+    "seed-212",
+    "seed-213",
+    "seed-214",
+    "seed-215",
+    "seed-216",
+    "seed-217",
+    "seed-218",
+    "seed-219",
+    "seed-220",
+    "seed-221",
+    "seed-222",
+    "seed-223",
+    "seed-224",
+    "seed-225",
+    "seed-226",
+    "seed-227",
+    "seed-228",
+    "seed-229",
+    "seed-230",
+    "seed-231",
+    "seed-232",
+    "seed-233",
+    "seed-234",
+    "seed-235",
+    "seed-236",
+    "seed-237",
+    "seed-238",
+    "seed-239",
+    "seed-240"
   ],
   "represented_seed_ids": [
-    "seed-0181",
-    "seed-0182",
-    "seed-0183",
-    "seed-0184",
-    "seed-0185",
-    "seed-0186",
-    "seed-0187",
-    "seed-0188",
-    "seed-0189",
-    "seed-0190",
-    "seed-0191",
-    "seed-0192",
-    "seed-0193",
-    "seed-0194",
-    "seed-0195",
-    "seed-0196",
-    "seed-0197",
-    "seed-0198",
-    "seed-0199",
-    "seed-0200",
-    "seed-0201",
-    "seed-0202",
-    "seed-0203",
-    "seed-0204",
-    "seed-0205",
-    "seed-0206",
-    "seed-0207",
-    "seed-0208",
-    "seed-0209",
-    "seed-0210",
-    "seed-0211",
-    "seed-0212",
-    "seed-0213",
-    "seed-0214",
-    "seed-0215",
-    "seed-0216",
-    "seed-0217",
-    "seed-0218",
-    "seed-0219",
-    "seed-0220",
-    "seed-0221",
-    "seed-0222",
-    "seed-0223",
-    "seed-0224",
-    "seed-0225",
-    "seed-0226",
-    "seed-0227",
-    "seed-0228",
-    "seed-0229",
-    "seed-0230",
-    "seed-0231",
-    "seed-0232",
-    "seed-0233",
-    "seed-0234",
-    "seed-0235",
-    "seed-0236",
-    "seed-0237",
-    "seed-0238",
-    "seed-0239",
-    "seed-0240"
+    "seed-181",
+    "seed-182",
+    "seed-183",
+    "seed-184",
+    "seed-185",
+    "seed-186",
+    "seed-187",
+    "seed-188",
+    "seed-189",
+    "seed-190",
+    "seed-191",
+    "seed-192",
+    "seed-193",
+    "seed-194",
+    "seed-195",
+    "seed-196",
+    "seed-197",
+    "seed-198",
+    "seed-199",
+    "seed-200",
+    "seed-201",
+    "seed-202",
+    "seed-203",
+    "seed-204",
+    "seed-205",
+    "seed-206",
+    "seed-207",
+    "seed-208",
+    "seed-209",
+    "seed-210",
+    "seed-211",
+    "seed-212",
+    "seed-213",
+    "seed-214",
+    "seed-215",
+    "seed-216",
+    "seed-217",
+    "seed-218",
+    "seed-219",
+    "seed-220",
+    "seed-221",
+    "seed-222",
+    "seed-223",
+    "seed-224",
+    "seed-225",
+    "seed-226",
+    "seed-227",
+    "seed-228",
+    "seed-229",
+    "seed-230",
+    "seed-231",
+    "seed-232",
+    "seed-233",
+    "seed-234",
+    "seed-235",
+    "seed-236",
+    "seed-237",
+    "seed-238",
+    "seed-239",
+    "seed-240"
   ],
   "represented_source_shard_ids": [
-    "shard-0004"
+    "shard-0045",
+    "shard-0046",
+    "shard-0047",
+    "shard-0048",
+    "shard-0049",
+    "shard-0050",
+    "shard-0051",
+    "shard-0052",
+    "shard-0053",
+    "shard-0054",
+    "shard-0055",
+    "shard-0056",
+    "shard-0057",
+    "shard-0058",
+    "shard-0059",
+    "shard-0060",
+    "shard-0061"
   ],
   "deferred_seed_ids": [],
   "noise_seed_ids": [],
-  "affected_doc_discovery_notes": []
+  "path_field_issues": []
 }

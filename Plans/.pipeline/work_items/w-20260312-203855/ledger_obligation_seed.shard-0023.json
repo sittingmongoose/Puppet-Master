@@ -1,1158 +1,131 @@
 {
-  "schema_id": "pm.ledger_obligation_seed_shard_result.v1",
+  "schema_id": "pm.ledger_obligation_seed_shard_result.v2",
   "work_id": "w-20260312-203855",
   "shard_id": "shard-0023",
   "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0023-L004401-L004600.md",
   "source_line_range": "L004401-L004600",
+  "covered_shard_id": "shard-0023",
   "seed_candidates": [
     {
-      "seed_type": "owner",
-      "canon_label_hint": "concern severity + blocking effect + owner + persistence decide escalation",
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "cross-surface escalation contract",
       "exact_items": [
-        "concern severity + blocking effect + owner + persistence decide escalation"
+        "There is no one explicit cross-surface escalation contract yet.",
+        "Define one escalation ladder shared across Orchestrator, Dashboard, thread badges, and notifications.",
+        "attention_required and blocked must remain distinct everywhere"
       ],
-      "affected_doc_hints": [],
-      "heading_hints": [],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0023",
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "doc_resolution_status": "unknown_pending_doc_discovery",
+      "heading_hints": [
+        "Contradictions / gaps surfaced",
+        "Candidate fixes to carry forward",
+        "Do-not-forget details"
+      ],
+      "stale_tokens": [
+        "attention_required",
+        "blocked"
+      ],
       "source_evidence": [
-        "working_ledger.md:L4401"
+        "working_ledger.md:L4406-L4420"
       ],
       "notes": []
     },
     {
       "seed_type": "layout_blocker",
-      "canon_label_hint": "Contradictions / gaps surfaced",
+      "canon_label_hint": "Orchestrator-wide scale contract",
       "exact_items": [
-        "There is no one explicit cross-surface escalation contract yet."
+        "There is no explicit Orchestrator-wide rule yet for: initial slice size, paging/search interplay, lazy expansion behavior, cross-tab inspector loading strategy, projection fallback behavior under large degraded datasets.",
+        "Add an Orchestrator-wide scale contract that sits above individual tab docs.",
+        "Make slice-based loading, virtualization, lazy expansion, and demand-loaded inspectors mandatory across dense tabs."
       ],
-      "affected_doc_hints": [],
+      "affected_doc_hints": [
+        "Plans/Run_Graph_View.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/storage-plan.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "doc_resolution_status": "global_or_cross_cutting",
       "heading_hints": [
-        "Contradictions / gaps surfaced"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0023",
-      "source_evidence": [
-        "working_ledger.md:L4407"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Candidate fixes to carry forward",
-      "exact_items": [
-        "Define one escalation ladder shared across Orchestrator, Dashboard, thread badges, and notifications."
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
+        "Research Progress - 2026-03-16 - Scale / Performance Model",
+        "Contradictions / gaps surfaced",
         "Candidate fixes to carry forward"
       ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0023",
+      "stale_tokens": [
+        "graph-scale guidance",
+        "thousands-of-node runs"
+      ],
       "source_evidence": [
-        "working_ledger.md:L4412"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Candidate fixes to carry forward",
-      "exact_items": [
-        "Add resurfacing rules based on change/persistence thresholds rather than repeated identical events."
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Candidate fixes to carry forward"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0023",
-      "source_evidence": [
-        "working_ledger.md:L4413"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "attention_required",
-      "exact_items": [
-        "`attention_required` and `blocked` must remain distinct everywhere"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Do-not-forget details"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0023",
-      "source_evidence": [
-        "working_ledger.md:L4418"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Do-not-forget details",
-      "exact_items": [
-        "resurfacing should respond to meaningful change, not spam the user on every scheduler tick"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Do-not-forget details"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0023",
-      "source_evidence": [
-        "working_ledger.md:L4419"
+        "working_ledger.md:L4422-L4534"
       ],
       "notes": []
     },
     {
       "seed_type": "layout_blocker",
-      "canon_label_hint": "Do-not-forget details",
+      "canon_label_hint": "dense tab slice-based browsing",
       "exact_items": [
-        "the system should not silently demote a persistent blocker into history just because time passed"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Do-not-forget details"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0023",
-      "source_evidence": [
-        "working_ledger.md:L4420"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Plans/Run_Graph_View.md",
-      "exact_items": [
-        "`Plans/Run_Graph_View.md`"
+        "Seams must use progressive disclosure rather than fully expanded seam/package/node trees.",
+        "Evidence records and artifacts need independent virtualization/paging.",
+        "History should be chronological but windowed.",
+        "Ledger must be exact, but exact does not mean fully materialized at once."
       ],
       "affected_doc_hints": [
-        "Plans/Run_Graph_View.md"
-      ],
-      "heading_hints": [
-        "Targeted docs read"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0023",
-      "source_evidence": [
-        "working_ledger.md:L4420-L4425"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Plans/FinalGUISpec.md",
-      "exact_items": [
-        "`Plans/FinalGUISpec.md`"
-      ],
-      "affected_doc_hints": [
-        "Plans/FinalGUISpec.md"
-      ],
-      "heading_hints": [
-        "Targeted docs read"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0023",
-      "source_evidence": [
-        "working_ledger.md:L4420-L4426"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Plans/storage-plan.md",
-      "exact_items": [
-        "`Plans/storage-plan.md`"
-      ],
-      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md",
         "Plans/storage-plan.md"
       ],
+      "doc_resolution_status": "global_or_cross_cutting",
       "heading_hints": [
-        "Targeted docs read"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0023",
-      "source_evidence": [
-        "working_ledger.md:L4427"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Plans/Orchestrator_Page.md",
-      "exact_items": [
-        "`Plans/Orchestrator_Page.md`"
-      ],
-      "affected_doc_hints": [
-        "Plans/Orchestrator_Page.md"
-      ],
-      "heading_hints": [
-        "Targeted docs read"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0023",
-      "source_evidence": [
-        "working_ledger.md:L4428"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "layout_blocker",
-      "canon_label_hint": "Key findings",
-      "exact_items": [
-        "The graph tab already has the strongest explicit scale contract in the current docs."
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Key findings"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0023",
-      "source_evidence": [
-        "working_ledger.md:L4431"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "layout_blocker",
-      "canon_label_hint": "Key findings",
-      "exact_items": [
-        "layout under 500ms at 500 nodes"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Key findings"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0023",
-      "source_evidence": [
-        "working_ledger.md:L4435"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "layout_blocker",
-      "canon_label_hint": "Key findings",
-      "exact_items": [
-        "per-generation layout caching"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Key findings"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0023",
-      "source_evidence": [
-        "working_ledger.md:L4440"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "storage-plan.md",
-      "exact_items": [
-        "`storage-plan.md` already supports the broader pattern the rewrite needs:"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Key findings"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0023",
-      "source_evidence": [
-        "working_ledger.md:L4444"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "layout_blocker",
-      "canon_label_hint": "Recommended scaling stance",
-      "exact_items": [
-        "treat scale as a cross-tab contract, not just a graph-tab concern"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Recommended scaling stance"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0023",
-      "source_evidence": [
-        "working_ledger.md:L4452"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Recommended scaling stance",
-      "exact_items": [
-        "That means the performance model must explicitly cover:"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Recommended scaling stance"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0023",
-      "source_evidence": [
-        "working_ledger.md:L4458"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "layout_blocker",
-      "canon_label_hint": "Recommended scaling stance",
-      "exact_items": [
-        "Progress widgets and cross-tab inspectors"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Recommended scaling stance"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0023",
-      "source_evidence": [
-        "working_ledger.md:L4464"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Tab-by-tab direction",
-      "exact_items": [
-        "preserve old generations in the data model, but do not render every historical path at full fidelity all the time"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Tab-by-tab direction"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0023",
-      "source_evidence": [
-        "working_ledger.md:L4469"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Tab-by-tab direction",
-      "exact_items": [
-        "must use progressive disclosure rather than fully expanded seam/package/node trees"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Tab-by-tab direction"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0023",
-      "source_evidence": [
-        "working_ledger.md:L4472"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Tab-by-tab direction",
-      "exact_items": [
-        "top-level seam rows should load compact rollups first"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Tab-by-tab direction"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0023",
-      "source_evidence": [
-        "working_ledger.md:L4473"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Tab-by-tab direction",
-      "exact_items": [
-        "package lists and node problem lists should expand lazily"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Tab-by-tab direction"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0023",
-      "source_evidence": [
-        "working_ledger.md:L4474"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Tab-by-tab direction",
-      "exact_items": [
-        "evidence records and artifacts need independent virtualization/paging"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Tab-by-tab direction"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0023",
-      "source_evidence": [
-        "working_ledger.md:L4476"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Tab-by-tab direction",
-      "exact_items": [
-        "heavy artifacts should stay metadata-first until opened"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Tab-by-tab direction"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0023",
-      "source_evidence": [
-        "working_ledger.md:L4477"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Tab-by-tab direction",
-      "exact_items": [
-        "artifact previews should be demand-loaded, not pre-rendered for long lists"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Tab-by-tab direction"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0023",
-      "source_evidence": [
-        "working_ledger.md:L4478"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Tab-by-tab direction",
-      "exact_items": [
-        "should be chronological but windowed"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Tab-by-tab direction"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0023",
-      "source_evidence": [
-        "working_ledger.md:L4480"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Tab-by-tab direction",
-      "exact_items": [
-        "initial load should show a recent slice, with explicit load-older / jump controls"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Tab-by-tab direction"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0023",
-      "source_evidence": [
-        "working_ledger.md:L4481"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Tab-by-tab direction",
-      "exact_items": [
-        "dense event bursts should be summarized when collapsed, not force every low-level record into the initial viewport"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Tab-by-tab direction"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0023",
-      "source_evidence": [
-        "working_ledger.md:L4482"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Tab-by-tab direction",
-      "exact_items": [
-        "must be exact, but exact does not mean fully materialized at once"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Tab-by-tab direction"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0023",
-      "source_evidence": [
-        "working_ledger.md:L4484"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Tab-by-tab direction",
-      "exact_items": [
-        "filtered query + paging + stable sort are required"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Tab-by-tab direction"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0023",
-      "source_evidence": [
-        "working_ledger.md:L4485"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Tab-by-tab direction",
-      "exact_items": [
-        "export can retrieve more than the viewport, but normal browsing should stay slice-based"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Tab-by-tab direction"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0023",
-      "source_evidence": [
-        "working_ledger.md:L4486"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Tab-by-tab direction",
-      "exact_items": [
-        "widgets should consume compact projections, not live-scan huge record sets per widget"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Tab-by-tab direction"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0023",
-      "source_evidence": [
-        "working_ledger.md:L4488"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "layout_blocker",
-      "canon_label_hint": "Tab-by-tab direction",
-      "exact_items": [
-        "a widget should deep-link to the native tab when the user wants dense detail"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Tab-by-tab direction"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0023",
-      "source_evidence": [
-        "working_ledger.md:L4489"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "layout_blocker",
-      "canon_label_hint": "Generation-heavy graph direction",
-      "exact_items": [
-        "generations should remain historically visible and clickable, but the UI should default to a focused generation plus nearby lineage context, not a fully expanded all-generations wall"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Generation-heavy graph direction"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0023",
-      "source_evidence": [
-        "working_ledger.md:L4494"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "layout_blocker",
-      "canon_label_hint": "Concern / lane / record density implication",
-      "exact_items": [
-        "So the rewrite should not assume the graph is the only heavy surface."
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
+        "Tab-by-tab direction",
         "Concern / lane / record density implication"
       ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0023",
+      "stale_tokens": [
+        "progressive disclosure",
+        "windowed",
+        "slice-based"
+      ],
       "source_evidence": [
-        "working_ledger.md:L4507"
+        "working_ledger.md:L4471-L4489"
       ],
       "notes": []
     },
     {
       "seed_type": "layout_blocker",
-      "canon_label_hint": "Concern / lane / record density implication",
+      "canon_label_hint": "command palette and bulk-action safety",
       "exact_items": [
-        "every dense Orchestrator tab needs first-class summarization, filtering, and paging before it needs more visual chrome"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Concern / lane / record density implication"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0023",
-      "source_evidence": [
-        "working_ledger.md:L4509"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "stale_retirement",
-      "canon_label_hint": "Projection trust implication",
-      "exact_items": [
-        "When projections are stale or degraded:"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Projection trust implication"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0023",
-      "source_evidence": [
-        "working_ledger.md:L4513"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Projection trust implication",
-      "exact_items": [
-        "large surfaces should degrade toward smaller, record-backed slices instead of trying to fake full live fidelity"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Projection trust implication"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0023",
-      "source_evidence": [
-        "working_ledger.md:L4513-L4514"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "stale_retirement",
-      "canon_label_hint": "Projection trust implication",
-      "exact_items": [
-        "stale graph projection might still support focused inspection of selected nodes/generations"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Projection trust implication"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0023",
-      "source_evidence": [
-        "working_ledger.md:L4516"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "stale_retirement",
-      "canon_label_hint": "Projection trust implication",
-      "exact_items": [
-        "stale ledger/history slices remain usable because they are closer to canonical records"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Projection trust implication"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0023",
-      "source_evidence": [
-        "working_ledger.md:L4516-L4517"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Contradictions / gaps surfaced",
-      "exact_items": [
-        "The current docs do not yet define how thousands-of-node runs with many generations should remain readable by default without collapsing history away."
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Contradictions / gaps surfaced"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0023",
-      "source_evidence": [
-        "working_ledger.md:L4517-L4521"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "layout_blocker",
-      "canon_label_hint": "Contradictions / gaps surfaced",
-      "exact_items": [
-        "cross-tab inspector loading strategy"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Contradictions / gaps surfaced"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0023",
-      "source_evidence": [
-        "working_ledger.md:L4526"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Contradictions / gaps surfaced",
-      "exact_items": [
-        "projection fallback behavior under large degraded datasets"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Contradictions / gaps surfaced"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0023",
-      "source_evidence": [
-        "working_ledger.md:L4527"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "layout_blocker",
-      "canon_label_hint": "Candidate fixes to carry forward",
-      "exact_items": [
-        "Add an Orchestrator-wide scale contract that sits above individual tab docs."
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Candidate fixes to carry forward"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0023",
-      "source_evidence": [
-        "working_ledger.md:L4530"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Candidate fixes to carry forward",
-      "exact_items": [
-        "Define generation visibility defaults so historical branches stay available without default graph overload."
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Candidate fixes to carry forward"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0023",
-      "source_evidence": [
-        "working_ledger.md:L4532"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Candidate fixes to carry forward",
-      "exact_items": [
-        "Require widgets to use compact projections only, with deep links to native dense tabs."
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Candidate fixes to carry forward"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0023",
-      "source_evidence": [
-        "working_ledger.md:L4533"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Candidate fixes to carry forward",
-      "exact_items": [
-        "Tie scale behavior to projection-trust state so degraded projections fail gracefully instead of pretending to be fully current."
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Candidate fixes to carry forward"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0023",
-      "source_evidence": [
-        "working_ledger.md:L4534"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Ledger",
-      "exact_items": [
-        "exact record inspection in `Ledger` still needs paging; exactness does not require eager full materialization"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Do-not-forget details"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0023",
-      "source_evidence": [
-        "working_ledger.md:L4537"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Do-not-forget details",
-      "exact_items": [
-        "historical graph generations must stay accessible without becoming the default visual density"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Do-not-forget details"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0023",
-      "source_evidence": [
-        "working_ledger.md:L4538"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Plans/FinalGUISpec.md",
-      "exact_items": [
-        "`Plans/FinalGUISpec.md`"
+        "What is still missing is a rewrite-specific action policy for: palette exposure, keyboard shortcuts, context menus, multi-select / bulk actions, action safety at live runtime scope.",
+        "bulk actions should default to navigation, triage, and low-risk state updates",
+        "live execution mutations should stay narrow unless the runtime has an explicit safe batch semantic for that exact action",
+        "broad destructive bulk mutations with ambiguous target sets"
       ],
       "affected_doc_hints": [
-        "Plans/FinalGUISpec.md"
-      ],
-      "heading_hints": [
-        "Targeted docs read"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0023",
-      "source_evidence": [
-        "working_ledger.md:L4544"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Plans/UI_Command_Catalog.md",
-      "exact_items": [
-        "`Plans/UI_Command_Catalog.md`"
-      ],
-      "affected_doc_hints": [
-        "Plans/UI_Command_Catalog.md"
-      ],
-      "heading_hints": [
-        "Targeted docs read"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0023",
-      "source_evidence": [
-        "working_ledger.md:L4545"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Plans/Orchestrator_Page.md",
-      "exact_items": [
-        "`Plans/Orchestrator_Page.md`"
-      ],
-      "affected_doc_hints": [
-        "Plans/Orchestrator_Page.md"
-      ],
-      "heading_hints": [
-        "Targeted docs read"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0023",
-      "source_evidence": [
-        "working_ledger.md:L4546"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Plans/Widget_System.md",
-      "exact_items": [
-        "`Plans/Widget_System.md`"
-      ],
-      "affected_doc_hints": [
-        "Plans/Widget_System.md"
-      ],
-      "heading_hints": [
-        "Targeted docs read"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0023",
-      "source_evidence": [
-        "working_ledger.md:L4547"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Plans/WorktreeGitImprovement.md",
-      "exact_items": [
-        "`Plans/WorktreeGitImprovement.md`"
-      ],
-      "affected_doc_hints": [
+        "Plans/UI_Command_Catalog.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/Widget_System.md",
         "Plans/WorktreeGitImprovement.md"
       ],
+      "doc_resolution_status": "unknown_pending_doc_discovery",
       "heading_hints": [
-        "Targeted docs read"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0023",
-      "source_evidence": [
-        "working_ledger.md:L4548"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Key findings",
-      "exact_items": [
-        "The platform already has a strong shared command foundation:"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Key findings"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0023",
-      "source_evidence": [
-        "working_ledger.md:L4551"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Ctrl+K",
-      "exact_items": [
-        "`Ctrl+K` / `Ctrl+P` command palette"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Key findings"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0023",
-      "source_evidence": [
-        "working_ledger.md:L4552"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Key findings",
-      "exact_items": [
-        "command registry"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Key findings"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0023",
-      "source_evidence": [
-        "working_ledger.md:L4553"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "owner",
-      "canon_label_hint": "cmd.runtime.*",
-      "exact_items": [
-        "canonical `cmd.runtime.*` recovery command family"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Key findings"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0023",
-      "source_evidence": [
-        "working_ledger.md:L4555"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "layout_blocker",
-      "canon_label_hint": "UI_Command_Catalog.md",
-      "exact_items": [
-        "`UI_Command_Catalog.md` already requires blocked-state actions to map from `allowed_action_ids[]` to canonical runtime commands rather than surface-local variants."
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Key findings"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0023",
-      "source_evidence": [
-        "working_ledger.md:L4556"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Key findings",
-      "exact_items": [
-        "What is still missing is a rewrite-specific action policy for:"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Key findings"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0023",
-      "source_evidence": [
-        "working_ledger.md:L4558"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "layout_blocker",
-      "canon_label_hint": "Recommended command-surface model",
-      "exact_items": [
-        "treat the command palette as a universal navigation and precise-action surface, not as a blanket permission to expose every dangerous runtime mutation as one keystroke away"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Recommended command-surface model"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0023",
-      "source_evidence": [
-        "working_ledger.md:L4567"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "layout_blocker",
-      "canon_label_hint": "Recommended command-surface model",
-      "exact_items": [
-        "open/focus tab"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Recommended command-surface model"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0023",
-      "source_evidence": [
-        "working_ledger.md:L4570"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "owner",
-      "canon_label_hint": "Recommended command-surface model",
-      "exact_items": [
-        "recover / retry / approve / decline / replan / restore / cleanup actions that already have canonical runtime semantics and confirmation rules"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Recommended command-surface model"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0023",
-      "source_evidence": [
-        "working_ledger.md:L4576"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "layout_blocker",
-      "canon_label_hint": "Bulk-action direction",
-      "exact_items": [
-        "bulk actions should default to navigation, triage, and low-risk state updates"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
+        "Research Progress - 2026-03-16 - Command Palette / Shortcuts / Bulk Actions",
+        "Recommended command-surface model",
         "Bulk-action direction"
       ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0023",
+      "stale_tokens": [
+        "Ctrl+K",
+        "Ctrl+P",
+        "cmd.runtime.*"
+      ],
       "source_evidence": [
-        "working_ledger.md:L4581-L4583"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Bulk-action direction",
-      "exact_items": [
-        "live execution mutations should stay narrow unless the runtime has an explicit safe batch semantic for that exact action"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Bulk-action direction"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0023",
-      "source_evidence": [
-        "working_ledger.md:L4584"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Shortcut direction",
-      "exact_items": [
-        "Keyboard shortcuts should stay useful but sparse."
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Shortcut direction"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0023",
-      "source_evidence": [
-        "working_ledger.md:L4597"
+        "working_ledger.md:L4541-L4594"
       ],
       "notes": []
     }
   ],
   "noise_items": [
-    {
-      "item": "- render target: 500 nodes, stretch 1000",
-      "source_evidence": [
-        "working_ledger.md:L4433"
-      ],
-      "reason": "metric/status/count/family or process line without concrete obligation-grade evidence"
-    }
+    "Research Progress - 2026-03-16 - Scale / Performance Model",
+    "Research Progress - 2026-03-16 - Command Palette / Shortcuts / Bulk Actions"
   ],
-  "uncertain_items": [],
-  "covered_shard_id": "shard-0023"
+  "uncertain_items": []
 }

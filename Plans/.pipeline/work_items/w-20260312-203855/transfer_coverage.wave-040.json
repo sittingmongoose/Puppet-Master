@@ -1,478 +1,357 @@
 {
-  "schema_id": "pm.transfer_coverage_wave.v1",
+  "schema_id": "pm.transfer_coverage_wave.v3",
   "work_id": "w-20260312-203855",
   "wave_id": "wave-040",
-  "row_groups": [
-    "rowgrp-0157",
-    "rowgrp-0158",
-    "rowgrp-0159",
-    "rowgrp-0160"
+  "timestamp_utc": "2026-04-28T20:58:29Z",
+  "subagent_tasks": [
+    "coverage-rowgrp-157",
+    "coverage-rowgrp-158",
+    "coverage-rowgrp-159",
+    "coverage-rowgrp-160"
   ],
-  "coverage_rows": [
+  "assigned_input_boundaries": [
+    "rowgrp-157 cov-636 Plans/Prompt_Pipeline.md",
+    "rowgrp-158 cov-730 Plans/Prompt_Pipeline.md",
+    "rowgrp-159 cov-074,cov-156,cov-183,cov-194,cov-289,cov-541,cov-559,cov-565,cov-628,cov-736 Plans/Prompt_Pipeline.md",
+    "rowgrp-160 cov-1140,cov-1167,cov-1218 Plans/Prompt_Pipeline.md"
+  ],
+  "subagent_result_status": {
+    "coverage-rowgrp-157": "completed_reduced_conservatively_with_schema_normalization",
+    "coverage-rowgrp-158": "completed_reduced_conservatively_with_schema_normalization",
+    "coverage-rowgrp-159": "completed_reduced_conservatively_with_schema_normalization",
+    "coverage-rowgrp-160": "completed_reduced_conservatively_with_schema_normalization"
+  },
+  "completed_task_count": 4,
+  "failed_task_count": 0,
+  "coverage_ids_assigned": [
+    "cov-636",
+    "cov-730",
+    "cov-074",
+    "cov-156",
+    "cov-183",
+    "cov-194",
+    "cov-289",
+    "cov-541",
+    "cov-559",
+    "cov-565",
+    "cov-628",
+    "cov-736",
+    "cov-1140",
+    "cov-1167",
+    "cov-1218"
+  ],
+  "coverage_ids_completed": [
+    "cov-636",
+    "cov-730",
+    "cov-074",
+    "cov-156",
+    "cov-183",
+    "cov-194",
+    "cov-289",
+    "cov-541",
+    "cov-559",
+    "cov-565",
+    "cov-628",
+    "cov-736",
+    "cov-1140",
+    "cov-1167",
+    "cov-1218"
+  ],
+  "path_groups_assigned": [
+    "Plans/Prompt_Pipeline.md"
+  ],
+  "rows": [
     {
-      "coverage_id": "cov-04097",
+      "coverage_id": "cov-636",
+      "status": "present",
+      "evidence": [
+        "Plans/Prompt_Pipeline.md:510-525 introduces execution_unit_context as the canonical runtime-facing context object, demotes TierContext to derived/compatibility-only status, anchors worker spawn/recovery/remediation/coordination/UI inspection to execution_unit_context, retires tier_id, and defines execution_unit_context fields"
+      ],
+      "required_action": "none",
+      "unresolved_reason": "",
       "source_obligation_ids": [
-        "obl-3943"
+        "obl-177"
       ],
       "source_seed_ids": [
-        "seed-5477"
+        "seed-177"
       ],
       "source_shard_ids": [
-        "shard-0074"
+        "shard-0044"
       ],
-      "canon_label": "Plans/UI_Command_Catalog.md",
-      "row_type": "layout_blocker",
-      "path": "Plans/UI_Command_Catalog.md",
-      "heading_hint": "Key findings",
-      "status": "present",
-      "exact_items": [
-        "`Plans/UI_Command_Catalog.md` is structurally ready for route/open adoption but still classifies several routed object actions as pure layout state:"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/UI_Command_Catalog.md:15",
-        "Plans/UI_Command_Catalog.md:484",
-        "Plans/UI_Command_Catalog.md:91",
-        "Plans/UI_Command_Catalog.md:206",
-        "Plans/UI_Command_Catalog.md:81",
-        "Plans/UI_Command_Catalog.md:314",
-        "Plans/UI_Command_Catalog.md:231"
-      ],
-      "required_action": "none"
+      "path_field_status": "match"
     },
     {
-      "coverage_id": "cov-04550",
+      "coverage_id": "cov-730",
+      "status": "present",
+      "evidence": [
+        "Plans/Prompt_Pipeline.md:500-508 defines the Effective resolution record, shared runtime identity fields, owner/consumer transfer fields, and the preserved requested/effective identity, execution_role, account_switch_lineage, account_pressure_owner, blocked_sequence, approval, and DAE posture fields"
+      ],
+      "required_action": "none",
+      "unresolved_reason": "",
       "source_obligation_ids": [
-        "obl-4283"
+        "obl-199"
       ],
       "source_seed_ids": [
-        "seed-6167"
+        "seed-199"
       ],
       "source_shard_ids": [
-        "shard-0082"
+        "shard-0050"
       ],
-      "canon_label": "Plans/*.md",
-      "row_type": "layout_blocker",
-      "path": "Plans/UI_Command_Catalog.md",
-      "heading_hint": "Do-not-forget details",
-      "status": "present",
-      "exact_items": [
-        "After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes."
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/UI_Command_Catalog.md:509",
-        "Plans/UI_Command_Catalog.md:414",
-        "Plans/UI_Command_Catalog.md:570",
-        "Plans/UI_Command_Catalog.md:580",
-        "Plans/UI_Command_Catalog.md:15",
-        "Plans/UI_Command_Catalog.md:79",
-        "Plans/UI_Command_Catalog.md:638",
-        "Plans/UI_Command_Catalog.md:149",
-        "Plans/UI_Command_Catalog.md:648",
-        "Plans/UI_Command_Catalog.md:111",
-        "Plans/UI_Command_Catalog.md:431"
-      ],
-      "required_action": "none"
+      "path_field_status": "match"
     },
     {
-      "coverage_id": "cov-05152",
+      "coverage_id": "cov-074",
+      "status": "partial",
+      "evidence": [
+        "Plans/Prompt_Pipeline.md:63-85 defines run-envelope node/package/lane/seam context fields and states node/package/lane/seam identity is canonical while surviving tier labels are derived grouping metadata only"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Node/package/lane/seam execution identity is covered, but active-agents.json, phase/task/subtask paths, lexicographic_node_id, package/seam/lane storage schema fields, and event-sourced state incompatibility are not directly covered in this file.",
       "source_obligation_ids": [
-        "obl-4826"
+        "obl-030"
       ],
       "source_seed_ids": [
-        "seed-6838"
+        "seed-030"
       ],
       "source_shard_ids": [
-        "shard-0089"
+        "shard-0007"
       ],
-      "canon_label": "Plans/UI_Command_Catalog.md",
-      "row_type": "layout_blocker",
-      "path": "Plans/UI_Command_Catalog.md",
-      "heading_hint": "Entry",
-      "status": "present",
-      "exact_items": [
-        "`Plans/UI_Command_Catalog.md` still lacks the exact `### 2.0 Command entry contract (doc-level)`, `Search-command routing`, and `Canonical runtime recovery command ownership` anchors even though real normalization content exists under `### 2.0A Promoted Section 15 command families`."
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/UI_Command_Catalog.md:15",
-        "Plans/UI_Command_Catalog.md:68",
-        "Plans/UI_Command_Catalog.md:65",
-        "Plans/UI_Command_Catalog.md:11",
-        "Plans/UI_Command_Catalog.md:1",
-        "Plans/UI_Command_Catalog.md:38",
-        "Plans/UI_Command_Catalog.md:66",
-        "Plans/UI_Command_Catalog.md:3",
-        "Plans/UI_Command_Catalog.md:150",
-        "Plans/UI_Command_Catalog.md:71",
-        "Plans/UI_Command_Catalog.md:144",
-        "Plans/UI_Command_Catalog.md:36"
-      ],
-      "required_action": "none"
+      "path_field_status": "match"
     },
     {
-      "coverage_id": "cov-00214",
+      "coverage_id": "cov-156",
+      "status": "present",
+      "evidence": [
+        "Plans/Prompt_Pipeline.md:427-435 defines runtime_selection_source including fallback and persists selection_reason",
+        "Plans/Prompt_Pipeline.md:468-486 adds requested_account_id, requested_account_binding, requested/effective identity through runtime/bridged-provider/permission envelopes, account_switch_reason, the source/request/execution settings model, deterministic resolver matrix, and resolver emit fields including selection_reason"
+      ],
+      "required_action": "none",
+      "unresolved_reason": "",
       "source_obligation_ids": [
-        "obl-0213"
+        "obl-043"
       ],
       "source_seed_ids": [
-        "seed-0213"
+        "seed-043"
       ],
       "source_shard_ids": [
-        "shard-0004"
+        "shard-0010"
       ],
-      "canon_label": "Plans/UI_Command_Catalog.md#Canonical Runtime Recovery Command Consolidation (2026-03-09)",
-      "row_type": "owner",
-      "path": "Plans/UI_Command_Catalog.md",
-      "heading_hint": "Canonical Runtime Recovery Command Consolidation (2026-03-09",
-      "status": "present",
-      "exact_items": [
-        "`Plans/UI_Command_Catalog.md#Canonical Runtime Recovery Command Consolidation (2026-03-09)` -> `approve_continue`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/UI_Command_Catalog.md:143",
-        "Plans/UI_Command_Catalog.md:15",
-        "Plans/UI_Command_Catalog.md:1",
-        "Plans/UI_Command_Catalog.md:66",
-        "Plans/UI_Command_Catalog.md:3",
-        "Plans/UI_Command_Catalog.md:249"
-      ],
-      "required_action": "none"
+      "path_field_status": "match"
     },
     {
-      "coverage_id": "cov-05054",
+      "coverage_id": "cov-183",
+      "status": "present",
+      "evidence": [
+        "Plans/Prompt_Pipeline.md:468-474 adds requested_account_id alongside requested_account_policy, models requested_account_id separately from policy so account choice and policy posture do not collapse, and retains requested_account_policy as routing posture"
+      ],
+      "required_action": "none",
+      "unresolved_reason": "",
       "source_obligation_ids": [
-        "obl-4730"
+        "obl-048"
       ],
       "source_seed_ids": [
-        "seed-6723"
+        "seed-048"
       ],
       "source_shard_ids": [
-        "shard-0088"
+        "shard-0006"
       ],
-      "canon_label": "Plans/UI_Command_Catalog.md",
-      "row_type": "owner",
-      "path": "Plans/UI_Command_Catalog.md",
-      "heading_hint": "Entry",
-      "status": "present",
-      "exact_items": [
-        "`Plans/UI_Command_Catalog.md` already has a real command-normalization owner block, but `cmd.search.open_result` and `cmd.search.replace_selected` still preserve `result_id`."
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/UI_Command_Catalog.md:15",
-        "Plans/UI_Command_Catalog.md:671",
-        "Plans/UI_Command_Catalog.md:672",
-        "Plans/UI_Command_Catalog.md:144",
-        "Plans/UI_Command_Catalog.md:36",
-        "Plans/UI_Command_Catalog.md:84",
-        "Plans/UI_Command_Catalog.md:5",
-        "Plans/UI_Command_Catalog.md:68"
-      ],
-      "required_action": "none"
+      "path_field_status": "match"
     },
     {
-      "coverage_id": "cov-04666",
+      "coverage_id": "cov-194",
+      "status": "partial",
+      "evidence": [
+        "Plans/Prompt_Pipeline.md:84 states node/package/lane/seam identity is canonical execution context and surviving tier labels are derived grouping metadata",
+        "Plans/Prompt_Pipeline.md:510-514 introduces execution_unit_context as canonical runtime-facing context, demotes TierContext, and retires tier_id in favor of execution_unit_type plus execution_unit_id"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Tier-bound identity replacement is covered, but override owner and execution framing cleanup are not directly addressed.",
       "source_obligation_ids": [
-        "obl-4381"
+        "obl-051"
       ],
       "source_seed_ids": [
-        "seed-6325"
+        "seed-051"
+      ],
+      "source_shard_ids": [
+        "shard-0006"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-289",
+      "status": "partial",
+      "evidence": [
+        "Plans/Prompt_Pipeline.md:466-486 freezes requested/effective identity before execution, defines source/request/execution, display grammar for requested/effective runtime values, deterministic resolver matrix order, and resolver emit fields",
+        "Plans/Prompt_Pipeline.md:548-550 requires inspectors to predict effective runtime pre-run and show frozen snapshots and provider deviations after run start"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Requested/effective display and frozen runtime visibility are covered, but exact origin badges, precedence disclosure, support-state disclosure, historical run view freeze language, and honored/skipped/clamped provider-gap taxonomy are incomplete.",
+      "source_obligation_ids": [
+        "obl-084"
+      ],
+      "source_seed_ids": [
+        "seed-084"
+      ],
+      "source_shard_ids": [
+        "shard-0020"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-541",
+      "status": "partial",
+      "evidence": [
+        "Plans/Prompt_Pipeline.md:468-476 defines requested_account_id, requested_account_binding, requested/effective account identity, execution_role, operational_identity, and account_switch_reason",
+        "Plans/Prompt_Pipeline.md:500-508 carries execution_role and requested/effective operational identity into shared runtime identity, effective-resolution, attempt, usage, and inspector surfaces"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Operational identity, execution_role, and requested concrete account are present, but actor_role is not directly named.",
+      "source_obligation_ids": [
+        "obl-155"
+      ],
+      "source_seed_ids": [
+        "seed-155"
+      ],
+      "source_shard_ids": [
+        "shard-0039"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-559",
+      "status": "partial",
+      "evidence": [
+        "Plans/Prompt_Pipeline.md:468-476 adds requested_account_id and requested_account_binding and includes requested/effective account identity, execution_role, operational_identity, and account_switch_reason in the shared identity envelope"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Requested concrete account and operational identity pieces are covered, but projection-freshness owner, route-payload schema owner, and project-summary/project-attention projection owner are not directly covered.",
+      "source_obligation_ids": [
+        "obl-159"
+      ],
+      "source_seed_ids": [
+        "seed-159"
+      ],
+      "source_shard_ids": [
+        "shard-0040"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-565",
+      "status": "partial",
+      "evidence": [
+        "Plans/Prompt_Pipeline.md:476 includes execution_role, operational_identity, and account_switch_reason in the shared identity envelope",
+        "Plans/Prompt_Pipeline.md:500-508 carries execution_role and requested/effective operational identity into effective-resolution, attempt, usage, and inspector surfaces and preserves account_switch_lineage[] and account_pressure_owner",
+        "Plans/Prompt_Pipeline.md:531 preserves execution role, requested/effective account identity, and switch history on usage surfaces when the effective provider or account changes"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Execution role, operational identity, account_switch_reason, and switch lineage are covered, but actor_kind and a durable switch pointer are not directly named.",
+      "source_obligation_ids": [
+        "obl-160"
+      ],
+      "source_seed_ids": [
+        "seed-160"
+      ],
+      "source_shard_ids": [
+        "shard-0040"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-628",
+      "status": "present",
+      "evidence": [
+        "Plans/Prompt_Pipeline.md:510-525 introduces execution_unit_context as the canonical runtime-facing context object and defines execution_unit_id, execution_unit_type, parent_execution_unit_id, execution_role, worktree_id, and ownership_transition_from"
+      ],
+      "required_action": "none",
+      "unresolved_reason": "",
+      "source_obligation_ids": [
+        "obl-175"
+      ],
+      "source_seed_ids": [
+        "seed-175"
+      ],
+      "source_shard_ids": [
+        "shard-0044"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-736",
+      "status": "partial",
+      "evidence": [
+        "Plans/Prompt_Pipeline.md:510-525 defines execution_unit_context and retires tier_id in favor of execution_unit_type plus execution_unit_id inside execution_unit_context"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Prompt_Pipeline defines execution_unit_context, but the row specifically calls for Executor_Protocol ownership and tier_runtime_record/dispatch-runtime field coverage, which are not directly satisfied here.",
+      "source_obligation_ids": [
+        "obl-203"
+      ],
+      "source_seed_ids": [
+        "seed-203"
+      ],
+      "source_shard_ids": [
+        "shard-0051"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-1140",
+      "status": "partial",
+      "evidence": [
+        "Plans/Prompt_Pipeline.md:476 defines stronger canonical runtime identity fields including requested_account_id, requested_account_binding, effective_provider_identity, execution_role, operational_identity, and account_switch_reason",
+        "Plans/Prompt_Pipeline.md:514 retires tier_id in favor of execution_unit_type plus execution_unit_id inside execution_unit_context"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Canonical runtime fields and tier_id retirement are present, but persona_override_owner_id cleanup is not directly present.",
+      "source_obligation_ids": [
+        "obl-332"
+      ],
+      "source_seed_ids": [
+        "seed-332"
       ],
       "source_shard_ids": [
         "shard-0084"
       ],
-      "canon_label": "Plans/UI_Command_Catalog.md",
-      "row_type": "stale_retirement",
-      "path": "Plans/UI_Command_Catalog.md",
-      "heading_hint": "Key findings",
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-1167",
       "status": "missing",
-      "exact_items": [
-        "`Plans/UI_Command_Catalog.md` is still publishing hard stale command canon:"
-      ],
-      "stale_tokens": [
-        "Plans/UI_Command_Catalog.md"
-      ],
-      "evidence": [
-        "Plans/UI_Command_Catalog.md:15"
-      ],
-      "required_action": "stale_retirement"
-    },
-    {
-      "coverage_id": "cov-05132",
+      "evidence": [],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Plans/Prompt_Pipeline.md does not directly contain MUST CHANGE, MUST RECONCILE, MUST VERIFY, or packet-category ownership rules.",
       "source_obligation_ids": [
-        "obl-4806"
+        "obl-339"
       ],
       "source_seed_ids": [
-        "seed-6808"
+        "seed-339"
       ],
       "source_shard_ids": [
-        "shard-0089"
+        "shard-0086"
       ],
-      "canon_label": "gap-002",
-      "row_type": "stale_retirement",
-      "path": "Plans/UI_Command_Catalog.md",
-      "heading_hint": "Entry",
-      "status": "missing",
-      "exact_items": [
-        "`gap-002` is primarily a missing-owner-heading problem in `Plans/UI_Command_Catalog.md`; `detached_window` and `result_id` remain real stale survivors, but the absent owner anchors are the sharper blocking defect."
-      ],
-      "stale_tokens": [
-        "gap-002",
-        "Plans/UI_Command_Catalog.md",
-        "detached_window",
-        "result_id"
-      ],
-      "evidence": [
-        "Plans/UI_Command_Catalog.md:15"
-      ],
-      "required_action": "stale_retirement"
+      "path_field_status": "match"
     },
     {
-      "coverage_id": "cov-05237",
-      "source_obligation_ids": [
-        "obl-4902"
-      ],
-      "source_seed_ids": [
-        "seed-6960"
-      ],
-      "source_shard_ids": [
-        "shard-0090"
-      ],
-      "canon_label": "gap-002",
-      "row_type": "stale_retirement",
-      "path": "Plans/UI_Command_Catalog.md",
-      "heading_hint": "Entry",
-      "status": "missing",
-      "exact_items": [
-        "Wave 1 targeted the structural/survivor subset around `gap-002`, `gap-006`, and `gap-007` (`Plans/UI_Command_Catalog.md`, `Plans/Glossary.md`, `Plans/Orchestrator_Page.md`, `Plans/GitHub_Integration.md`, `Plans/FinalGUISpec.md`) and only reconfirmed the already-recorded missing owner headings plus existing `detached_window`, `result_id`, `restore points`, and the broken `#11. Source Control boundary` reference."
-      ],
-      "stale_tokens": [
-        "gap-002",
-        "gap-006",
-        "gap-007",
-        "Plans/UI_Command_Catalog.md",
-        "Plans/Glossary.md",
-        "Plans/Orchestrator_Page.md",
-        "Plans/GitHub_Integration.md",
-        "Plans/FinalGUISpec.md",
-        "detached_window",
-        "result_id",
-        "restore points",
-        "#11. Source Control boundary"
-      ],
-      "evidence": [
-        "Plans/UI_Command_Catalog.md:15",
-        "Plans/UI_Command_Catalog.md:274",
-        "Plans/UI_Command_Catalog.md:187"
-      ],
-      "required_action": "stale_retirement"
-    },
-    {
-      "coverage_id": "cov-05294",
-      "source_obligation_ids": [
-        "obl-4948"
-      ],
-      "source_seed_ids": [
-        "seed-7074"
-      ],
-      "source_shard_ids": [
-        "shard-0091"
-      ],
-      "canon_label": "gap-002",
-      "row_type": "stale_retirement",
-      "path": "Plans/UI_Command_Catalog.md",
-      "heading_hint": "10. Search",
-      "status": "missing",
-      "exact_items": [
-        "`gap-002` sharpened: `Plans/UI_Command_Catalog.md` still points at the non-existent `Plans/Orchestrator_Page.md#10. Search, routing, and action policy`, and `result_id` remains live in `cmd.search.open_result` / `cmd.search.replace_selected` args rather than appearing only as stale residue."
-      ],
-      "stale_tokens": [
-        "gap-002",
-        "Plans/UI_Command_Catalog.md",
-        "Plans/Orchestrator_Page.md#10. Search, routing, and action policy",
-        "result_id",
-        "cmd.search.open_result",
-        "cmd.search.replace_selected"
-      ],
-      "evidence": [
-        "Plans/UI_Command_Catalog.md:15",
-        "Plans/UI_Command_Catalog.md:276",
-        "Plans/UI_Command_Catalog.md:671",
-        "Plans/UI_Command_Catalog.md:672"
-      ],
-      "required_action": "stale_retirement"
-    },
-    {
-      "coverage_id": "cov-02688",
-      "source_obligation_ids": [
-        "obl-2608"
-      ],
-      "source_seed_ids": [
-        "seed-3268",
-        "seed-3459",
-        "seed-3765",
-        "seed-3857",
-        "seed-3934",
-        "seed-3967",
-        "seed-4110",
-        "seed-4725",
-        "seed-4749",
-        "seed-5494"
-      ],
-      "source_shard_ids": [
-        "shard-0049",
-        "shard-0052",
-        "shard-0055",
-        "shard-0056",
-        "shard-0057",
-        "shard-0058",
-        "shard-0065",
-        "shard-0075"
-      ],
-      "canon_label": "Plans/UI_Wiring_Rules.md",
-      "row_type": "consumer",
-      "path": "Plans/UI_Wiring_Rules.md",
-      "heading_hint": "Targeted docs read",
-      "status": "partial",
-      "exact_items": [
-        "`Plans/UI_Wiring_Rules.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/UI_Wiring_Rules.md:105"
-      ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-02846",
-      "source_obligation_ids": [
-        "obl-2765"
-      ],
-      "source_seed_ids": [
-        "seed-3488",
-        "seed-3753",
-        "seed-3808",
-        "seed-3902",
-        "seed-3947",
-        "seed-3979",
-        "seed-4011",
-        "seed-4078",
-        "seed-4146",
-        "seed-4418",
-        "seed-4737",
-        "seed-4767",
-        "seed-4803",
-        "seed-5511",
-        "seed-6222"
-      ],
-      "source_shard_ids": [
-        "shard-0052",
-        "shard-0055",
-        "shard-0056",
-        "shard-0057",
-        "shard-0058",
-        "shard-0062",
-        "shard-0065",
-        "shard-0066",
-        "shard-0075",
-        "shard-0083"
-      ],
-      "canon_label": "Plans/UI_Wiring_Rules.md",
-      "row_type": "consumer",
-      "path": "Plans/UI_Wiring_Rules.md",
-      "heading_hint": "Impacted docs",
-      "status": "missing",
-      "exact_items": [
-        "`Plans/UI_Wiring_Rules.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/UI_Wiring_Rules.md:required_terms_absent"
-      ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-02878",
-      "source_obligation_ids": [
-        "obl-2797"
-      ],
-      "source_seed_ids": [
-        "seed-3532",
-        "seed-3845"
-      ],
-      "source_shard_ids": [
-        "shard-0052",
-        "shard-0056"
-      ],
-      "canon_label": "Plans/UI_Wiring_Rules.md",
-      "row_type": "consumer",
-      "path": "Plans/UI_Wiring_Rules.md",
-      "heading_hint": "Do-not-forget details",
-      "status": "missing",
-      "exact_items": [
-        "`Plans/UI_Wiring_Rules.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/UI_Wiring_Rules.md:required_terms_absent"
-      ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-03329",
-      "source_obligation_ids": [
-        "obl-3198"
-      ],
-      "source_seed_ids": [
-        "seed-4180"
-      ],
-      "source_shard_ids": [
-        "shard-0059"
-      ],
-      "canon_label": "Plans/*.md",
-      "row_type": "consumer",
-      "path": "Plans/UI_Wiring_Rules.md",
-      "heading_hint": "Do-not-forget details",
+      "coverage_id": "cov-1218",
       "status": "present",
-      "exact_items": [
-        "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage."
-      ],
-      "stale_tokens": [],
       "evidence": [
-        "Plans/UI_Wiring_Rules.md:3",
-        "Plans/UI_Wiring_Rules.md:16"
+        "Plans/Prompt_Pipeline.md:476 includes requested_account_id, execution_role, operational_identity, and account_switch_reason in the shared identity envelope",
+        "Plans/Prompt_Pipeline.md:500-508 transfers execution_role, requested_account_id, operational_identity, account-switch and pressure ownership, blocked_sequence minting, startup recovery handshake, DAE jail/approval policy, and usage switch-history/execution-role follow-through into owner and consumer docs",
+        "Plans/Prompt_Pipeline.md:527-531 mints blocked_sequence once, rebinds execution_unit_context/runtime identity/blocked_sequence during startup recovery, keeps DAE jail and approval posture attached to the effective-resolution record, and preserves switch history plus execution role in usage surfaces"
       ],
-      "required_action": "none"
-    },
-    {
-      "coverage_id": "cov-04468",
+      "required_action": "none",
+      "unresolved_reason": "",
       "source_obligation_ids": [
-        "obl-4262"
+        "obl-346"
       ],
       "source_seed_ids": [
-        "seed-6087"
+        "seed-346"
       ],
       "source_shard_ids": [
-        "shard-0082"
+        "shard-0088"
       ],
-      "canon_label": "39",
-      "row_type": "consumer",
-      "path": "Plans/UI_Wiring_Rules.md",
-      "heading_hint": "Do-not-forget details",
-      "status": "present",
-      "exact_items": [
-        "Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes."
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/UI_Wiring_Rules.md:128",
-        "Plans/UI_Wiring_Rules.md:3",
-        "Plans/UI_Wiring_Rules.md:16"
-      ],
-      "required_action": "none"
+      "path_field_status": "match"
     }
   ]
 }

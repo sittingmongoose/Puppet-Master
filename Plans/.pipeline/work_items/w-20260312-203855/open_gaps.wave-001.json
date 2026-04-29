@@ -1,0 +1,47 @@
+{
+  "schema_id": "pm.open_gaps_wave.v3",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-001",
+  "timestamp_utc": "2026-04-29T01:01:15Z",
+  "subagent_tasks": [
+    "opengaps-layout",
+    "opengaps-owner",
+    "opengaps-consumer",
+    "opengaps-stale"
+  ],
+  "assigned_input_boundaries": [
+    "first layout_blocker row group",
+    "first owner row group",
+    "first consumer row group",
+    "first stale_retirement row group"
+  ],
+  "subagent_result_status": {
+    "opengaps-layout": "completed_normalized",
+    "opengaps-owner": "completed_normalized",
+    "opengaps-consumer": "completed_normalized",
+    "opengaps-stale": "completed_normalized"
+  },
+  "completed_task_count": 4,
+  "failed_task_count": 0,
+  "coverage_row_ids_assigned": [
+    "cov-589",
+    "cov-088",
+    "cov-442",
+    "cov-171"
+  ],
+  "coverage_row_ids_completed": [
+    "cov-589",
+    "cov-088",
+    "cov-442",
+    "cov-171"
+  ],
+  "normalization_notes": [
+    "Reducer normalized non-canonical subagent labels into allowed open_gaps.v6 blocker_type, gap_class, severity, and next_resolution_stage values."
+  ],
+  "gap_candidates_reduced": [
+    "layout_blocker -> fix_backlog/packetizable_layout_defect/Packetizable Layout Repair",
+    "owner -> fix_backlog/missing_data_shape or stubbed_owner_section/Reconciliation Planner",
+    "consumer -> fix_backlog/stubbed_consumer_propagation/Reconciliation Planner",
+    "stale_retirement -> fix_backlog/stale_contradictory_survivor/Reconciliation Planner"
+  ]
+}

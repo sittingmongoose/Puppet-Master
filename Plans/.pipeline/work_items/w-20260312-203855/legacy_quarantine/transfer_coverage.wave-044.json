@@ -1,0 +1,252 @@
+{
+  "schema_id": "pm.transfer_coverage_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-044",
+  "row_groups": [
+    "rowgrp-0173",
+    "rowgrp-0174",
+    "rowgrp-0175",
+    "rowgrp-0176"
+  ],
+  "coverage_rows": [
+    {
+      "coverage_id": "cov-04025",
+      "source_obligation_ids": [
+        "obl-3871"
+      ],
+      "source_seed_ids": [
+        "seed-5383"
+      ],
+      "source_shard_ids": [
+        "shard-0073"
+      ],
+      "canon_label": "Plans/WorktreeGitImprovement.md",
+      "row_type": "owner",
+      "path": "Plans/WorktreeGitImprovement.md",
+      "heading_hint": "Key findings",
+      "status": "partial",
+      "exact_items": [
+        "`Plans/WorktreeGitImprovement.md` is still structurally tier-era in its low-level ownership model:"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/WorktreeGitImprovement.md:14",
+        "Plans/WorktreeGitImprovement.md:44"
+      ],
+      "required_action": "owner_create_or_rewrite"
+    },
+    {
+      "coverage_id": "cov-05338",
+      "source_obligation_ids": [
+        "obl-4982"
+      ],
+      "source_seed_ids": [
+        "seed-7133"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "canon_label": "gap-003",
+      "row_type": "stale_retirement",
+      "path": "Plans/WorktreeGitImprovement.md",
+      "heading_hint": "Canonical records",
+      "status": "missing",
+      "exact_items": [
+        "`gap-003` sharpened: `Plans/Contracts_V0.md` still points at the missing `Plans/storage-plan.md#Canonical records` anchor, and both `Plans/Orchestrator_Page.md` and `Plans/WorktreeGitImprovement.md` still point at the missing `Plans/storage-plan.md#Restart and stale history` anchor in addition to the already-carried missing `Canonical records` heading."
+      ],
+      "stale_tokens": [
+        "gap-003",
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md#Canonical records",
+        "Plans/Orchestrator_Page.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/storage-plan.md#Restart and stale history",
+        "Canonical records"
+      ],
+      "evidence": [
+        "Plans/WorktreeGitImprovement.md:85",
+        "Plans/WorktreeGitImprovement.md:389",
+        "Plans/WorktreeGitImprovement.md:14"
+      ],
+      "required_action": "stale_retirement"
+    },
+    {
+      "coverage_id": "cov-03333",
+      "source_obligation_ids": [
+        "obl-3198"
+      ],
+      "source_seed_ids": [
+        "seed-4180"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "canon_label": "Plans/*.md",
+      "row_type": "consumer",
+      "path": "Plans/agent-rules-context.md",
+      "heading_hint": "Do-not-forget details",
+      "status": "present",
+      "exact_items": [
+        "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/agent-rules-context.md:3",
+        "Plans/agent-rules-context.md:106",
+        "Plans/agent-rules-context.md:21",
+        "Plans/agent-rules-context.md:223",
+        "Plans/agent-rules-context.md:9"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-03477",
+      "source_obligation_ids": [
+        "obl-3329"
+      ],
+      "source_seed_ids": [
+        "seed-4439",
+        "seed-5087",
+        "seed-5928",
+        "seed-6014",
+        "seed-6106"
+      ],
+      "source_shard_ids": [
+        "shard-0062",
+        "shard-0070",
+        "shard-0081",
+        "shard-0082"
+      ],
+      "canon_label": "Plans/agent-rules-context.md",
+      "row_type": "consumer",
+      "path": "Plans/agent-rules-context.md",
+      "heading_hint": "Targeted docs read",
+      "status": "partial",
+      "exact_items": [
+        "`Plans/agent-rules-context.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/agent-rules-context.md:106",
+        "Plans/agent-rules-context.md:101"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-03501",
+      "source_obligation_ids": [
+        "obl-3353"
+      ],
+      "source_seed_ids": [
+        "seed-4466",
+        "seed-5125",
+        "seed-5963",
+        "seed-6050",
+        "seed-6138"
+      ],
+      "source_shard_ids": [
+        "shard-0062",
+        "shard-0070",
+        "shard-0081",
+        "shard-0082"
+      ],
+      "canon_label": "Plans/agent-rules-context.md",
+      "row_type": "consumer",
+      "path": "Plans/agent-rules-context.md",
+      "heading_hint": "Impacted docs",
+      "status": "partial",
+      "exact_items": [
+        "`Plans/agent-rules-context.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/agent-rules-context.md:106"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-04421",
+      "source_obligation_ids": [
+        "obl-4260"
+      ],
+      "source_seed_ids": [
+        "seed-6085"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "canon_label": "Plans/Plugins_System.md",
+      "row_type": "consumer",
+      "path": "Plans/agent-rules-context.md",
+      "heading_hint": "Candidate fixes to carry forward",
+      "status": "missing",
+      "exact_items": [
+        "with `Plans/Plugins_System.md`, `Plans/Skills_System.md`, `Plans/LSPSupport.md`, `Plans/Media_Generation_and_Capabilities.md`, and `Plans/agent-rules-context.md` still clearly active."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/agent-rules-context.md:required_terms_absent"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-04472",
+      "source_obligation_ids": [
+        "obl-4262"
+      ],
+      "source_seed_ids": [
+        "seed-6087"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "canon_label": "39",
+      "row_type": "consumer",
+      "path": "Plans/agent-rules-context.md",
+      "heading_hint": "Do-not-forget details",
+      "status": "present",
+      "exact_items": [
+        "Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/agent-rules-context.md:8",
+        "Plans/agent-rules-context.md:157",
+        "Plans/agent-rules-context.md:3",
+        "Plans/agent-rules-context.md:106",
+        "Plans/agent-rules-context.md:223"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-04555",
+      "source_obligation_ids": [
+        "obl-4283"
+      ],
+      "source_seed_ids": [
+        "seed-6167"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "canon_label": "Plans/*.md",
+      "row_type": "layout_blocker",
+      "path": "Plans/agent-rules-context.md",
+      "heading_hint": "Do-not-forget details",
+      "status": "present",
+      "exact_items": [
+        "After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/agent-rules-context.md:157",
+        "Plans/agent-rules-context.md:3",
+        "Plans/agent-rules-context.md:102",
+        "Plans/agent-rules-context.md:106",
+        "Plans/agent-rules-context.md:8",
+        "Plans/agent-rules-context.md:9"
+      ],
+      "required_action": "none"
+    }
+  ]
+}

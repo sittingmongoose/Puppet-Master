@@ -1,0 +1,23 @@
+{
+  "schema_id": "pm.transfer_coverage_noise.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-076",
+  "noise_findings": [
+    {
+      "source": "coverage-rowgrp-301",
+      "finding": "coverage_ids_completed was empty; reducer completed ten IDs, normalized descriptive actions, and retained partial/missing statuses."
+    },
+    {
+      "source": "coverage-rowgrp-302",
+      "finding": "coverage_ids_completed was empty; reducer completed three IDs, normalized actions, and retained partial/missing statuses."
+    },
+    {
+      "source": "coverage-rowgrp-303",
+      "finding": "coverage_ids_completed listed only cov-758; reducer completed all ten IDs, accepted cov-268 and cov-758 as present, and normalized actions."
+    },
+    {
+      "source": "coverage-rowgrp-304",
+      "finding": "coverage_ids_completed was empty; reducer completed cov-890 as missing."
+    }
+  ]
+}

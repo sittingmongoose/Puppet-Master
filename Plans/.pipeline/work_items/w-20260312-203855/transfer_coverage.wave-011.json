@@ -1,795 +1,170 @@
 {
-  "schema_id": "pm.transfer_coverage_wave.v1",
+  "schema_id": "pm.transfer_coverage_wave.v3",
   "work_id": "w-20260312-203855",
   "wave_id": "wave-011",
-  "row_groups": [
-    "rowgrp-0041",
-    "rowgrp-0042",
-    "rowgrp-0043",
-    "rowgrp-0044"
+  "timestamp_utc": "2026-04-28T19:40:32Z",
+  "subagent_tasks": [
+    "coverage-rowgrp-041",
+    "coverage-rowgrp-042",
+    "coverage-rowgrp-043",
+    "coverage-rowgrp-044"
   ],
-  "coverage_rows": [
+  "assigned_input_boundaries": [
+    "rowgrp-041 cov-1117 Plans/Decision_Log.md",
+    "rowgrp-042 cov-1102,cov-1169 Plans/Decision_Log.md",
+    "rowgrp-043 cov-1125 Plans/Decision_Log.md",
+    "rowgrp-044 cov-433,cov-716 Plans/Decision_Policy.md"
+  ],
+  "subagent_result_status": {
+    "coverage-rowgrp-041": "completed_reduced_conservatively",
+    "coverage-rowgrp-042": "completed_reduced_conservatively",
+    "coverage-rowgrp-043": "completed_lineage_corrected",
+    "coverage-rowgrp-044": "completed_reduced_conservatively"
+  },
+  "completed_task_count": 4,
+  "failed_task_count": 0,
+  "coverage_ids_assigned": [
+    "cov-1117",
+    "cov-1102",
+    "cov-1169",
+    "cov-1125",
+    "cov-433",
+    "cov-716"
+  ],
+  "coverage_ids_completed": [
+    "cov-1117",
+    "cov-1102",
+    "cov-1169",
+    "cov-1125",
+    "cov-433",
+    "cov-716"
+  ],
+  "path_groups_assigned": [
+    "Plans/Decision_Log.md",
+    "Plans/Decision_Policy.md"
+  ],
+  "rows": [
     {
-      "coverage_id": "cov-03295",
-      "source_obligation_ids": [
-        "obl-3198"
-      ],
-      "source_seed_ids": [
-        "seed-4180"
-      ],
-      "source_shard_ids": [
-        "shard-0059"
-      ],
-      "canon_label": "Plans/*.md",
-      "row_type": "consumer",
-      "path": "Plans/Document_Packaging_Policy.md",
-      "heading_hint": "Do-not-forget details",
-      "status": "present",
-      "exact_items": [
-        "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage."
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/Document_Packaging_Policy.md:3",
-        "Plans/Document_Packaging_Policy.md:66",
-        "Plans/Document_Packaging_Policy.md:121",
-        "Plans/Document_Packaging_Policy.md:161",
-        "Plans/Document_Packaging_Policy.md:146"
-      ],
-      "required_action": "none"
-    },
-    {
-      "coverage_id": "cov-03471",
-      "source_obligation_ids": [
-        "obl-3323"
-      ],
-      "source_seed_ids": [
-        "seed-4432",
-        "seed-5075",
-        "seed-5916",
-        "seed-6002",
-        "seed-6094"
-      ],
-      "source_shard_ids": [
-        "shard-0062",
-        "shard-0070",
-        "shard-0081",
-        "shard-0082"
-      ],
-      "canon_label": "Plans/Document_Packaging_Policy.md",
-      "row_type": "consumer",
-      "path": "Plans/Document_Packaging_Policy.md",
-      "heading_hint": "Targeted docs read",
-      "status": "present",
-      "exact_items": [
-        "`Plans/Document_Packaging_Policy.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/Document_Packaging_Policy.md:25",
-        "Plans/Document_Packaging_Policy.md:66",
-        "Plans/Document_Packaging_Policy.md:20"
-      ],
-      "required_action": "none"
-    },
-    {
-      "coverage_id": "cov-03495",
-      "source_obligation_ids": [
-        "obl-3347"
-      ],
-      "source_seed_ids": [
-        "seed-4459",
-        "seed-5113",
-        "seed-5951",
-        "seed-6038",
-        "seed-6126"
-      ],
-      "source_shard_ids": [
-        "shard-0062",
-        "shard-0070",
-        "shard-0081",
-        "shard-0082"
-      ],
-      "canon_label": "Plans/Document_Packaging_Policy.md",
-      "row_type": "consumer",
-      "path": "Plans/Document_Packaging_Policy.md",
-      "heading_hint": "Impacted docs",
+      "coverage_id": "cov-1117",
       "status": "partial",
-      "exact_items": [
-        "`Plans/Document_Packaging_Policy.md`"
-      ],
-      "stale_tokens": [],
       "evidence": [
-        "Plans/Document_Packaging_Policy.md:25",
-        "Plans/Document_Packaging_Policy.md:66"
+        "Plans/Decision_Log.md:18-26 records orchestration model and governance split decisions",
+        "Plans/Decision_Log.md:53-66 records runtime identity, blocked approval identity, and navigation primitive decisions"
       ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-04434",
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Decision_Log.md now contains several rewrite-era decisions, but the assigned row's broader owner-decision ledger coverage remains incomplete.",
       "source_obligation_ids": [
-        "obl-4262"
+        "obl-323"
       ],
       "source_seed_ids": [
-        "seed-6087"
+        "seed-323"
       ],
       "source_shard_ids": [
         "shard-0082"
       ],
-      "canon_label": "39",
-      "row_type": "consumer",
-      "path": "Plans/Document_Packaging_Policy.md",
-      "heading_hint": "Do-not-forget details",
-      "status": "present",
-      "exact_items": [
-        "Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes."
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/Document_Packaging_Policy.md:121",
-        "Plans/Document_Packaging_Policy.md:3",
-        "Plans/Document_Packaging_Policy.md:66",
-        "Plans/Document_Packaging_Policy.md:110",
-        "Plans/Document_Packaging_Policy.md:86",
-        "Plans/Document_Packaging_Policy.md:146"
-      ],
-      "required_action": "none"
+      "path_field_status": "match"
     },
     {
-      "coverage_id": "cov-04517",
-      "source_obligation_ids": [
-        "obl-4283"
-      ],
-      "source_seed_ids": [
-        "seed-6167"
-      ],
-      "source_shard_ids": [
-        "shard-0082"
-      ],
-      "canon_label": "Plans/*.md",
-      "row_type": "layout_blocker",
-      "path": "Plans/Document_Packaging_Policy.md",
-      "heading_hint": "Do-not-forget details",
-      "status": "present",
-      "exact_items": [
-        "After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes."
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/Document_Packaging_Policy.md:3",
-        "Plans/Document_Packaging_Policy.md:66",
-        "Plans/Document_Packaging_Policy.md:146"
-      ],
-      "required_action": "none"
-    },
-    {
-      "coverage_id": "cov-00212",
-      "source_obligation_ids": [
-        "obl-0211"
-      ],
-      "source_seed_ids": [
-        "seed-0211"
-      ],
-      "source_shard_ids": [
-        "shard-0004"
-      ],
-      "canon_label": "Plans/Executor_Protocol.md#5. Node execution fields",
-      "row_type": "consumer",
-      "path": "Plans/Executor_Protocol.md",
-      "heading_hint": "5. Node execution fields",
-      "status": "present",
-      "exact_items": [
-        "`Plans/Executor_Protocol.md#5. Node execution fields` -> `TierContext`, `tier_id`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/Executor_Protocol.md:15",
-        "Plans/Executor_Protocol.md:44",
-        "Plans/Executor_Protocol.md:32",
-        "Plans/Executor_Protocol.md:7"
-      ],
-      "required_action": "none"
-    },
-    {
-      "coverage_id": "cov-00305",
-      "source_obligation_ids": [
-        "obl-0304"
-      ],
-      "source_seed_ids": [
-        "seed-0305"
-      ],
-      "source_shard_ids": [
-        "shard-0005"
-      ],
-      "canon_label": "Plans/Executor_Protocol.md",
-      "row_type": "consumer",
-      "path": "Plans/Executor_Protocol.md",
-      "heading_hint": "Impacted Docs",
+      "coverage_id": "cov-1102",
       "status": "partial",
-      "exact_items": [
-        "`Plans/Executor_Protocol.md`"
-      ],
-      "stale_tokens": [],
       "evidence": [
-        "Plans/Executor_Protocol.md:15",
-        "Plans/Executor_Protocol.md:32"
+        "Plans/Decision_Log.md:18-20 canonical node graph, Feature Seam, Work Package, and Node decisions",
+        "Plans/Decision_Log.md:23-26 Package Overseer and Seam Overseer governance split",
+        "Plans/Decision_Log.md:53-56 requested/effective runtime identity is shared across actors",
+        "Plans/Decision_Log.md:58-61 blocked approval identity is anchored by run_id, node_id, blocked_sequence, and attempt_id?"
       ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-00412",
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Decision_Log.md covers several rewrite decisions, but does not cover all assigned architecture/decision owner gaps such as provider-pool concurrency, projection trust, and safe-point lineage exactness.",
       "source_obligation_ids": [
-        "obl-0410"
+        "obl-319"
       ],
       "source_seed_ids": [
-        "seed-0415"
+        "seed-319"
       ],
       "source_shard_ids": [
-        "shard-0006"
+        "shard-0081"
       ],
-      "canon_label": "Plans/Contracts_V0.md",
-      "row_type": "consumer",
-      "path": "Plans/Executor_Protocol.md",
-      "heading_hint": "Runtime / Storage / Contract Impacts",
-      "status": "present",
-      "exact_items": [
-        "`Plans/Contracts_V0.md` / `Plans/Executor_Protocol.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/Executor_Protocol.md:64",
-        "Plans/Executor_Protocol.md:15",
-        "Plans/Executor_Protocol.md:94",
-        "Plans/Executor_Protocol.md:254"
-      ],
-      "required_action": "none"
+      "path_field_status": "match"
     },
     {
-      "coverage_id": "cov-00479",
-      "source_obligation_ids": [
-        "obl-0471"
-      ],
-      "source_seed_ids": [
-        "seed-0476"
-      ],
-      "source_shard_ids": [
-        "shard-0007"
-      ],
-      "canon_label": "Plans/orchestrator-subagent-integration.md",
-      "row_type": "consumer",
-      "path": "Plans/Executor_Protocol.md",
-      "heading_hint": "Highest-Impact Docs",
-      "status": "present",
-      "exact_items": [
-        "**`Plans/orchestrator-subagent-integration.md` + `Plans/Executor_Protocol.md` + `Plans/Contracts_V0.md`**"
-      ],
-      "stale_tokens": [],
+      "coverage_id": "cov-1169",
+      "status": "missing",
       "evidence": [
-        "Plans/Executor_Protocol.md:102",
-        "Plans/Executor_Protocol.md:15",
-        "Plans/Executor_Protocol.md:64",
-        "Plans/Executor_Protocol.md:32"
+        "Plans/Decision_Log.md: assigned file reviewed; no matching MUST CHANGE / MUST RECONCILE / MUST VERIFY packet inclusion category coverage found"
       ],
-      "required_action": "none"
-    },
-    {
-      "coverage_id": "cov-00540",
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Assigned packet inclusion categories are absent from Plans/Decision_Log.md.",
       "source_obligation_ids": [
-        "obl-0521"
+        "obl-339"
       ],
       "source_seed_ids": [
-        "seed-0526"
-      ],
-      "source_shard_ids": [
-        "shard-0008"
-      ],
-      "canon_label": "Plans/Contracts_V0.md",
-      "row_type": "consumer",
-      "path": "Plans/Executor_Protocol.md",
-      "heading_hint": "Highest-Impact Docs",
-      "status": "present",
-      "exact_items": [
-        "**`Plans/Contracts_V0.md` + `Plans/Executor_Protocol.md` + `Plans/Orchestrator_Page.md`**"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/Executor_Protocol.md:64",
-        "Plans/Executor_Protocol.md:15",
-        "Plans/Executor_Protocol.md:102",
-        "Plans/Executor_Protocol.md:32"
-      ],
-      "required_action": "none"
-    },
-    {
-      "coverage_id": "cov-00591",
-      "source_obligation_ids": [
-        "obl-0562"
-      ],
-      "source_seed_ids": [
-        "seed-0567"
-      ],
-      "source_shard_ids": [
-        "shard-0008"
-      ],
-      "canon_label": "Plans/Orchestrator_Page.md",
-      "row_type": "consumer",
-      "path": "Plans/Executor_Protocol.md",
-      "heading_hint": "Highest-Impact Docs",
-      "status": "present",
-      "exact_items": [
-        "**`Plans/Orchestrator_Page.md` + `Plans/Executor_Protocol.md` + `Plans/Contracts_V0.md`**"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/Executor_Protocol.md:102",
-        "Plans/Executor_Protocol.md:15",
-        "Plans/Executor_Protocol.md:64",
-        "Plans/Executor_Protocol.md:32"
-      ],
-      "required_action": "none"
-    },
-    {
-      "coverage_id": "cov-00629",
-      "source_obligation_ids": [
-        "obl-0591"
-      ],
-      "source_seed_ids": [
-        "seed-0596",
-        "seed-0673"
-      ],
-      "source_shard_ids": [
-        "shard-0009",
-        "shard-0010"
-      ],
-      "canon_label": "Plans/Executor_Protocol.md",
-      "row_type": "consumer",
-      "path": "Plans/Executor_Protocol.md",
-      "heading_hint": "Cleanup Priorities",
-      "status": "partial",
-      "exact_items": [
-        "`Plans/Executor_Protocol.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/Executor_Protocol.md:15"
-      ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-00657",
-      "source_obligation_ids": [
-        "obl-0619"
-      ],
-      "source_seed_ids": [
-        "seed-0624"
-      ],
-      "source_shard_ids": [
-        "shard-0009"
-      ],
-      "canon_label": "Plans/Executor_Protocol.md",
-      "row_type": "consumer",
-      "path": "Plans/Executor_Protocol.md",
-      "heading_hint": "Highest-Impact Docs",
-      "status": "partial",
-      "exact_items": [
-        "`Plans/Executor_Protocol.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/Executor_Protocol.md:15",
-        "Plans/Executor_Protocol.md:32"
-      ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-00706",
-      "source_obligation_ids": [
-        "obl-0654"
-      ],
-      "source_seed_ids": [
-        "seed-0660"
-      ],
-      "source_shard_ids": [
-        "shard-0009"
-      ],
-      "canon_label": "Plans/Executor_Protocol.md",
-      "row_type": "consumer",
-      "path": "Plans/Executor_Protocol.md",
-      "heading_hint": "Runtime / Storage / Contract Impacts",
-      "status": "present",
-      "exact_items": [
-        "`Plans/Executor_Protocol.md`, `Plans/Progression_Gates.md`, `Plans/Run_Graph_View.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/Executor_Protocol.md:15",
-        "Plans/Executor_Protocol.md:76",
-        "Plans/Executor_Protocol.md:298",
-        "Plans/Executor_Protocol.md:94",
-        "Plans/Executor_Protocol.md:254",
-        "Plans/Executor_Protocol.md:64"
-      ],
-      "required_action": "none"
-    },
-    {
-      "coverage_id": "cov-00740",
-      "source_obligation_ids": [
-        "obl-0677"
-      ],
-      "source_seed_ids": [
-        "seed-0701"
-      ],
-      "source_shard_ids": [
-        "shard-0010"
-      ],
-      "canon_label": "Plans/Executor_Protocol.md",
-      "row_type": "consumer",
-      "path": "Plans/Executor_Protocol.md",
-      "heading_hint": "Contradictions To Resolve",
-      "status": "present",
-      "exact_items": [
-        "docs involved: `Plans/Executor_Protocol.md`, `Plans/Progression_Gates.md`, `Plans/plan_graph.schema.json`, `Plans/Run_Graph_View.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/Executor_Protocol.md:15",
-        "Plans/Executor_Protocol.md:76",
-        "Plans/Executor_Protocol.md:161",
-        "Plans/Executor_Protocol.md:298",
-        "Plans/Executor_Protocol.md:32",
-        "Plans/Executor_Protocol.md:129"
-      ],
-      "required_action": "none"
-    },
-    {
-      "coverage_id": "cov-01613",
-      "source_obligation_ids": [
-        "obl-1544"
-      ],
-      "source_seed_ids": [
-        "seed-1723",
-        "seed-2044",
-        "seed-2392",
-        "seed-2657",
-        "seed-2721",
-        "seed-2845",
-        "seed-2892",
-        "seed-2938",
-        "seed-3059",
-        "seed-3210",
-        "seed-3240",
-        "seed-3320",
-        "seed-3384",
-        "seed-5595",
-        "seed-5792",
-        "seed-6355"
-      ],
-      "source_shard_ids": [
-        "shard-0031",
-        "shard-0035",
-        "shard-0039",
-        "shard-0042",
-        "shard-0043",
-        "shard-0045",
-        "shard-0046",
-        "shard-0047",
-        "shard-0049",
-        "shard-0050",
-        "shard-0051",
-        "shard-0076",
-        "shard-0078",
-        "shard-0085"
-      ],
-      "canon_label": "Plans/Executor_Protocol.md",
-      "row_type": "consumer",
-      "path": "Plans/Executor_Protocol.md",
-      "heading_hint": "Targeted docs read",
-      "status": "present",
-      "exact_items": [
-        "`Plans/Executor_Protocol.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/Executor_Protocol.md:15",
-        "Plans/Executor_Protocol.md:32",
-        "Plans/Executor_Protocol.md:95"
-      ],
-      "required_action": "none"
-    },
-    {
-      "coverage_id": "cov-01626",
-      "source_obligation_ids": [
-        "obl-1557"
-      ],
-      "source_seed_ids": [
-        "seed-1737",
-        "seed-2761",
-        "seed-2795",
-        "seed-3255",
-        "seed-3336",
-        "seed-3405",
-        "seed-3504",
-        "seed-3824",
-        "seed-3918",
-        "seed-4162",
-        "seed-4470",
-        "seed-4658",
-        "seed-5129",
-        "seed-5605",
-        "seed-5967",
-        "seed-6054",
-        "seed-6143",
-        "seed-6243",
-        "seed-6309",
-        "seed-6366"
-      ],
-      "source_shard_ids": [
-        "shard-0032",
-        "shard-0044",
-        "shard-0049",
-        "shard-0050",
-        "shard-0051",
-        "shard-0052",
-        "shard-0056",
-        "shard-0058",
-        "shard-0062",
-        "shard-0064",
-        "shard-0070",
-        "shard-0076",
-        "shard-0081",
-        "shard-0082",
-        "shard-0083",
-        "shard-0084",
-        "shard-0085"
-      ],
-      "canon_label": "Plans/Executor_Protocol.md",
-      "row_type": "consumer",
-      "path": "Plans/Executor_Protocol.md",
-      "heading_hint": "Impacted docs",
-      "status": "partial",
-      "exact_items": [
-        "`Plans/Executor_Protocol.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/Executor_Protocol.md:15",
-        "Plans/Executor_Protocol.md:32"
-      ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-01859",
-      "source_obligation_ids": [
-        "obl-1785"
-      ],
-      "source_seed_ids": [
-        "seed-2062"
-      ],
-      "source_shard_ids": [
-        "shard-0035"
-      ],
-      "canon_label": "Plans/human-in-the-loop.md",
-      "row_type": "consumer",
-      "path": "Plans/Executor_Protocol.md",
-      "heading_hint": "Highest-risk impacted docs",
-      "status": "present",
-      "exact_items": [
-        "`Plans/human-in-the-loop.md` + `Plans/Executor_Protocol.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/Executor_Protocol.md:538",
-        "Plans/Executor_Protocol.md:15",
-        "Plans/Executor_Protocol.md:32"
-      ],
-      "required_action": "none"
-    },
-    {
-      "coverage_id": "cov-02288",
-      "source_obligation_ids": [
-        "obl-2208"
-      ],
-      "source_seed_ids": [
-        "seed-2672",
-        "seed-2916",
-        "seed-2963",
-        "seed-3083"
-      ],
-      "source_shard_ids": [
-        "shard-0043",
-        "shard-0045",
-        "shard-0046",
-        "shard-0047"
-      ],
-      "canon_label": "Plans/Executor_Protocol.md",
-      "row_type": "consumer",
-      "path": "Plans/Executor_Protocol.md",
-      "heading_hint": "Highest-risk impacted docs",
-      "status": "partial",
-      "exact_items": [
-        "`Plans/Executor_Protocol.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/Executor_Protocol.md:15",
-        "Plans/Executor_Protocol.md:32"
-      ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-02351",
-      "source_obligation_ids": [
-        "obl-2271"
-      ],
-      "source_seed_ids": [
-        "seed-2753",
-        "seed-5801",
-        "seed-6778",
-        "seed-6918",
-        "seed-7204"
-      ],
-      "source_shard_ids": [
-        "shard-0044",
-        "shard-0079",
-        "shard-0089",
-        "shard-0090",
-        "shard-0092"
-      ],
-      "canon_label": "Plans/Executor_Protocol.md",
-      "row_type": "consumer",
-      "path": "Plans/Executor_Protocol.md",
-      "heading_hint": "",
-      "status": "present",
-      "exact_items": [
-        "`Plans/Executor_Protocol.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/Executor_Protocol.md:15"
-      ],
-      "required_action": "none"
-    },
-    {
-      "coverage_id": "cov-03296",
-      "source_obligation_ids": [
-        "obl-3198"
-      ],
-      "source_seed_ids": [
-        "seed-4180"
-      ],
-      "source_shard_ids": [
-        "shard-0059"
-      ],
-      "canon_label": "Plans/*.md",
-      "row_type": "consumer",
-      "path": "Plans/Executor_Protocol.md",
-      "heading_hint": "Do-not-forget details",
-      "status": "present",
-      "exact_items": [
-        "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage."
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/Executor_Protocol.md:64",
-        "Plans/Executor_Protocol.md:260",
-        "Plans/Executor_Protocol.md:15",
-        "Plans/Executor_Protocol.md:32",
-        "Plans/Executor_Protocol.md:443",
-        "Plans/Executor_Protocol.md:5",
-        "Plans/Executor_Protocol.md:268",
-        "Plans/Executor_Protocol.md:40"
-      ],
-      "required_action": "none"
-    },
-    {
-      "coverage_id": "cov-04248",
-      "source_obligation_ids": [
-        "obl-4094"
-      ],
-      "source_seed_ids": [
-        "seed-5701"
-      ],
-      "source_shard_ids": [
-        "shard-0077"
-      ],
-      "canon_label": "Plans/Executor_Protocol.md",
-      "row_type": "consumer",
-      "path": "Plans/Executor_Protocol.md",
-      "heading_hint": "Priority merge",
-      "status": "present",
-      "exact_items": [
-        "`Plans/Executor_Protocol.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/Executor_Protocol.md:15",
-        "Plans/Executor_Protocol.md:282",
-        "Plans/Executor_Protocol.md:570"
-      ],
-      "required_action": "none"
-    },
-    {
-      "coverage_id": "cov-04435",
-      "source_obligation_ids": [
-        "obl-4262"
-      ],
-      "source_seed_ids": [
-        "seed-6087"
-      ],
-      "source_shard_ids": [
-        "shard-0082"
-      ],
-      "canon_label": "39",
-      "row_type": "consumer",
-      "path": "Plans/Executor_Protocol.md",
-      "heading_hint": "Do-not-forget details",
-      "status": "present",
-      "exact_items": [
-        "Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes."
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/Executor_Protocol.md:8",
-        "Plans/Executor_Protocol.md:297",
-        "Plans/Executor_Protocol.md:15",
-        "Plans/Executor_Protocol.md:32",
-        "Plans/Executor_Protocol.md:268",
-        "Plans/Executor_Protocol.md:146",
-        "Plans/Executor_Protocol.md:651"
-      ],
-      "required_action": "none"
-    },
-    {
-      "coverage_id": "cov-04781",
-      "source_obligation_ids": [
-        "obl-4496"
-      ],
-      "source_seed_ids": [
-        "seed-6488"
+        "seed-339"
       ],
       "source_shard_ids": [
         "shard-0086"
       ],
-      "canon_label": "Plans/Executor_Protocol.md",
-      "row_type": "consumer",
-      "path": "Plans/Executor_Protocol.md",
-      "heading_hint": "Docs clearly implicated",
-      "status": "partial",
-      "exact_items": [
-        "`Plans/Executor_Protocol.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/Executor_Protocol.md:15",
-        "Plans/Executor_Protocol.md:32"
-      ],
-      "required_action": "consumer_propagation"
+      "path_field_status": "match"
     },
     {
-      "coverage_id": "cov-04819",
+      "coverage_id": "cov-1125",
+      "status": "partial",
+      "evidence": [
+        "Plans/Decision_Log.md:21 ContractRef appears for the orchestrator execution model decision",
+        "Plans/Decision_Log.md:26 ContractRef appears for the governance split decision",
+        "Plans/Decision_Log.md:61 ContractRef appears for blocked approval identity",
+        "Plans/Decision_Log.md:66 ContractRef appears for navigation primitives"
+      ],
+      "required_action": "stale_retirement",
+      "unresolved_reason": "ContractRef anchors are present, but exact ContractRef/section-anchor/duplicate-number cleanup prioritization is not fully covered in Decision_Log.md.",
       "source_obligation_ids": [
-        "obl-4534"
+        "obl-326"
       ],
       "source_seed_ids": [
-        "seed-6526"
+        "seed-326"
       ],
       "source_shard_ids": [
-        "shard-0086"
+        "shard-0082"
       ],
-      "canon_label": "Plans/Executor_Protocol.md",
-      "row_type": "consumer",
-      "path": "Plans/Executor_Protocol.md",
-      "heading_hint": "MUST CHANGE",
-      "status": "present",
-      "exact_items": [
-        "`Plans/Executor_Protocol.md`"
-      ],
-      "stale_tokens": [],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-433",
+      "status": "missing",
       "evidence": [
-        "Plans/Executor_Protocol.md:15",
-        "Plans/Executor_Protocol.md:354"
+        "Plans/Decision_Policy.md:247-250 projection-state action policy exists, but no concern/corroboration/promotion object lifecycle, requested/effective identity model, or scheduler lane ordering coverage was found"
       ],
-      "required_action": "none"
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "Assigned governance-layer concern lifecycle / authority rules are not present in Plans/Decision_Policy.md.",
+      "source_obligation_ids": [
+        "obl-126"
+      ],
+      "source_seed_ids": [
+        "seed-126"
+      ],
+      "source_shard_ids": [
+        "shard-0031"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-716",
+      "status": "partial",
+      "evidence": [
+        "Plans/Decision_Policy.md:232-239 blocked and approval decisions resolve through runtime blocked episodes; blocked actions target run_id, node_id, blocked_sequence, and attempt_id?; request_id is lineage/compatibility only; allowed_action_ids[] is canonical",
+        "Plans/Decision_Policy.md:291-303 additional blocked defaults are present"
+      ],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "Blocked episode identity is partially covered, but startup_recovered and complete startup-recovery scheduler handshake ownership are not fully covered here.",
+      "source_obligation_ids": [
+        "obl-196"
+      ],
+      "source_seed_ids": [
+        "seed-196"
+      ],
+      "source_shard_ids": [
+        "shard-0049"
+      ],
+      "path_field_status": "match"
     }
   ]
 }

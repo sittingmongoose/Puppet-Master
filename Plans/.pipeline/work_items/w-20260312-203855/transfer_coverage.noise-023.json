@@ -1,0 +1,23 @@
+{
+  "schema_id": "pm.transfer_coverage_noise.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-023",
+  "noise_findings": [
+    {
+      "source": "coverage-rowgrp-089",
+      "finding": "Reducer preserved present status only for exact Source Control worktree ownership/context metadata; requested/effective identity rows remain partial and tier-era attribution pivot remains missing."
+    },
+    {
+      "source": "coverage-rowgrp-090",
+      "finding": "Subagent result was structurally complete; reducer preserved partial status because lane/worktree ownership evidence lacks explicit lifecycle split and cleanup vocabulary."
+    },
+    {
+      "source": "coverage-rowgrp-091",
+      "finding": "Reducer preserved partial status because Glossary covers three help layers and stable names but not click/hover term-badge-state behavior."
+    },
+    {
+      "source": "coverage-rowgrp-092",
+      "finding": "Reducer preserved partial statuses because Glossary has related consumer terms and help architecture but lacks full impacted-doc bundle and distinction-heavy concept coverage."
+    }
+  ]
+}

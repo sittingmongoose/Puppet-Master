@@ -1,0 +1,23 @@
+{
+  "schema_id": "pm.transfer_coverage_noise.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-041",
+  "noise_findings": [
+    {
+      "source": "coverage-rowgrp-161",
+      "finding": "Reducer stripped adjacent tier evidence from missing cov-554 and kept cov-1076 partial for direct tier/tier_id cleanup but incomplete stale-scope retirement set."
+    },
+    {
+      "source": "coverage-rowgrp-162",
+      "finding": "Reducer kept cov-546 partial: Provider_OpenCode has correlation and permission snapshot evidence but not the exact defect wording."
+    },
+    {
+      "source": "coverage-rowgrp-163",
+      "finding": "coverage_ids_completed was empty; reducer normalized cov-190 completion and kept partial for auth-realm/envelope evidence missing upstream-account attribution detail."
+    },
+    {
+      "source": "coverage-rowgrp-164",
+      "finding": "coverage_ids_completed was empty; reducer normalized cov-518 completion and kept partial for related server-bridged provider/correlation/approval_scope_key evidence."
+    }
+  ]
+}

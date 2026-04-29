@@ -1,0 +1,23 @@
+{
+  "schema_id": "pm.transfer_coverage_noise.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-051",
+  "noise_findings": [
+    {
+      "source": "coverage-rowgrp-201",
+      "finding": "coverage_ids_completed was empty; reducer completed five IDs and kept all partial for route/open/layout evidence with incomplete exact coverage."
+    },
+    {
+      "source": "coverage-rowgrp-202",
+      "finding": "coverage_ids_completed was empty; reducer completed ten IDs and kept all partial because action-policy/route/runtime recovery evidence exists but exact layout blockers remain."
+    },
+    {
+      "source": "coverage-rowgrp-203",
+      "finding": "coverage_ids_completed was empty; reducer completed five IDs, stripped generic evidence from missing cov-891, and retained other partials."
+    },
+    {
+      "source": "coverage-rowgrp-204",
+      "finding": "coverage_ids_completed was empty; reducer completed ten IDs, stripped generic target_kind evidence from missing cov-956, and retained other partials."
+    }
+  ]
+}
