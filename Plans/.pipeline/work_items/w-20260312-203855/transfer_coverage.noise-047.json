@@ -1,0 +1,23 @@
+{
+  "schema_id": "pm.transfer_coverage_noise.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-047",
+  "noise_findings": [
+    {
+      "source": "coverage-rowgrp-185",
+      "finding": "coverage_ids_completed was empty; reducer normalized actions and kept cov-600 partial/cov-863 missing."
+    },
+    {
+      "source": "coverage-rowgrp-186",
+      "finding": "coverage_ids_completed was empty and required_action strings were non-canonical; reducer normalized actions, upgraded cov-778 from missing to partial for artifact_id/attempt_id/open-flow evidence, and retained partials where direct bridge/index/attribution evidence exists."
+    },
+    {
+      "source": "coverage-rowgrp-187",
+      "finding": "coverage_ids_completed was empty; reducer normalized actions and upgraded cov-832 from partial to present based on direct export taxonomy, bundle manifest, provenance, and trust-state manifest coverage."
+    },
+    {
+      "source": "coverage-rowgrp-188",
+      "finding": "Subagent completed IDs included only cov-695; reducer normalized all completions/actions, upgraded cov-647 from partial to present based on schema-family plus attempt_id/bridge-field coverage, kept cov-695 present, and stripped generic evidence from missing rows."
+    }
+  ]
+}

@@ -1,0 +1,1402 @@
+{
+  "schema_id": "pm.canonical_obligations_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-003",
+  "seed_groups": [
+    "seedgrp-009",
+    "seedgrp-010",
+    "seedgrp-011",
+    "seedgrp-012"
+  ],
+  "obligation_candidates": [
+    {
+      "source_seed_ids": [
+        "seed-0121"
+      ],
+      "source_shard_ids": [
+        "shard-0003"
+      ],
+      "canon_label": "new multi-account failover / account-threshold / effective-account behavior should extend the ex",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "new multi-account failover / account-threshold / effective-account behavior should extend the existing usage model and projections"
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L430"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0122"
+      ],
+      "source_shard_ids": [
+        "shard-0003"
+      ],
+      "canon_label": "any provider-using actor must participate in the same pre-send and post-send account-health loop",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "any provider-using actor must participate in the same pre-send and post-send account-health loop"
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L432-L434"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0123"
+      ],
+      "source_shard_ids": [
+        "shard-0003"
+      ],
+      "canon_label": "assistant, interviewer, requirements-doc-builder, and PRD builder should share provider/account/",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "assistant, interviewer, requirements-doc-builder, and PRD builder should share provider/account/usage/runtime identity behavior, but they are not orchestration nodes/packages/seams"
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L437-L438"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0124"
+      ],
+      "source_shard_ids": [
+        "shard-0003"
+      ],
+      "canon_label": "the broader handoff chain described by the user is:",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "the broader handoff chain described by the user is:"
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L446"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0125"
+      ],
+      "source_shard_ids": [
+        "shard-0003"
+      ],
+      "canon_label": "handoff to Orchestrator",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "handoff to Orchestrator"
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L451"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0126"
+      ],
+      "source_shard_ids": [
+        "shard-0003"
+      ],
+      "canon_label": "chat-thread resolution surfaces for blocked/HITL/critical Orchestrator events should not be proj",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "chat-thread resolution surfaces for blocked/HITL/critical Orchestrator events should not be projected backwards onto normal assistant/interviewer/requirements-builder conversation in the same way"
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L454"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0127"
+      ],
+      "source_shard_ids": [
+        "shard-0003"
+      ],
+      "canon_label": "the old structured-attempt-handoff pattern should be retained in the new model",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "the old structured-attempt-handoff pattern should be retained in the new model"
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L456-L457"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0128"
+      ],
+      "source_shard_ids": [
+        "shard-0003"
+      ],
+      "canon_label": "each failed node attempt should leave a structured receipt/handoff artifact:",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "each failed node attempt should leave a structured receipt/handoff artifact:"
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L456-L458"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0129"
+      ],
+      "source_shard_ids": [
+        "shard-0003"
+      ],
+      "canon_label": "default retry model should use a fresh agent/subagent for the next attempt",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "default retry model should use a fresh agent/subagent for the next attempt"
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L463"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0130"
+      ],
+      "source_shard_ids": [
+        "shard-0003"
+      ],
+      "canon_label": "retries should remain policy-driven with budgets/caps; not blind infinite looping",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "retries should remain policy-driven with budgets/caps; not blind infinite looping"
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L464"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0131"
+      ],
+      "source_shard_ids": [
+        "shard-0003"
+      ],
+      "canon_label": "some failures should route to remediation, graph patch, or block/HITL instead of simple retry",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "some failures should route to remediation, graph patch, or block/HITL instead of simple retry"
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L465"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0132"
+      ],
+      "source_shard_ids": [
+        "shard-0003"
+      ],
+      "canon_label": "Targeted external loop research on a fresh-iteration coding loop found the most reusable handoff",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "Targeted external loop research on a fresh-iteration coding loop found the most reusable handoff ideas are simple and durable:"
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L466"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0133"
+      ],
+      "source_shard_ids": [
+        "shard-0003"
+      ],
+      "canon_label": "Strong reusable handoff pattern extracted:",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "Strong reusable handoff pattern extracted:"
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L479"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0134"
+      ],
+      "source_shard_ids": [
+        "shard-0003"
+      ],
+      "canon_label": "keep the value of fresh-worker retries with explicit handoff artifacts",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "keep the value of fresh-worker retries with explicit handoff artifacts"
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L485-L486"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0135"
+      ],
+      "source_shard_ids": [
+        "shard-0003"
+      ],
+      "canon_label": "our system needs richer handoff structure because retries may flow into:",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "our system needs richer handoff structure because retries may flow into:"
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L488"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0136"
+      ],
+      "source_shard_ids": [
+        "shard-0003"
+      ],
+      "canon_label": "Handoff-data implication:",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "Handoff-data implication:"
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L494"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0137"
+      ],
+      "source_shard_ids": [
+        "shard-0003"
+      ],
+      "canon_label": "each attempt should likely produce at least:",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "each attempt should likely produce at least:"
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L495"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0138"
+      ],
+      "source_shard_ids": [
+        "shard-0003"
+      ],
+      "canon_label": "\"JSON-like\" is too vague; the design still needs to pin down:",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "\"JSON-like\" is too vague; the design still needs to pin down:"
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L504"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0139"
+      ],
+      "source_shard_ids": [
+        "shard-0003"
+      ],
+      "canon_label": "how a worker actually receives the handoff packet (inline prompt block, referenced artifact, fet",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "how a worker actually receives the handoff packet (inline prompt block, referenced artifact, fetched context, or mixed model)"
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L507"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0140"
+      ],
+      "source_shard_ids": [
+        "shard-0003"
+      ],
+      "canon_label": "canonical handoff/retry memory should be structured runtime records, not loose markdown logs",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "canonical handoff/retry memory should be structured runtime records, not loose markdown logs"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L508-L509"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0141"
+      ],
+      "source_shard_ids": [
+        "shard-0003"
+      ],
+      "canon_label": "worker-facing handoff should be a synthesized bounded packet assembled from canonical records, n",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "worker-facing handoff should be a synthesized bounded packet assembled from canonical records, not full raw history"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L508-L510"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0142"
+      ],
+      "source_shard_ids": [
+        "shard-0003"
+      ],
+      "canon_label": "but exact storage medium/path/delivery mechanism remains an open design seam and needs to be spe",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "but exact storage medium/path/delivery mechanism remains an open design seam and needs to be specified concretely"
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L511"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0143"
+      ],
+      "source_shard_ids": [
+        "shard-0003"
+      ],
+      "canon_label": "seglog",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`seglog` = canonical append-only event source"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L512-L514"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0144"
+      ],
+      "source_shard_ids": [
+        "shard-0003"
+      ],
+      "canon_label": "layout/settings/state = redb",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "layout/settings/state = redb"
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L520"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0145"
+      ],
+      "source_shard_ids": [
+        "shard-0003"
+      ],
+      "canon_label": "attempt handoff artifacts",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "attempt handoff artifacts"
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L525"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0146"
+      ],
+      "source_shard_ids": [
+        "shard-0003"
+      ],
+      "canon_label": "worker handoff packets",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "worker handoff packets"
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L527"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0147"
+      ],
+      "source_shard_ids": [
+        "shard-0003"
+      ],
+      "canon_label": "canonical truth for these new orchestration artifacts should fit the documented stack:",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "canonical truth for these new orchestration artifacts should fit the documented stack:"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L528-L529"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0148"
+      ],
+      "source_shard_ids": [
+        "shard-0003"
+      ],
+      "canon_label": "exportability from the Orchestrator page is desirable",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "exportability from the Orchestrator page is desirable"
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L534-L535"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0149"
+      ],
+      "source_shard_ids": [
+        "shard-0003"
+      ],
+      "canon_label": "\"optional JSON\" wording should be removed from the design language unless JSON export is explici",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "\"optional JSON\" wording should be removed from the design language unless JSON export is explicitly about manual inspection/export, not canonical storage"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L534-L536"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0150"
+      ],
+      "source_shard_ids": [
+        "shard-0003"
+      ],
+      "canon_label": "New execution-policy settings requirement:",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "New execution-policy settings requirement:"
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L537"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0151"
+      ],
+      "source_shard_ids": [
+        "shard-0003"
+      ],
+      "canon_label": "GUI should let the user choose whether retries use:",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "GUI should let the user choose whether retries use:"
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L538"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0152"
+      ],
+      "source_shard_ids": [
+        "shard-0003"
+      ],
+      "canon_label": "GUI should also let the user choose whether node execution uses:",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "GUI should also let the user choose whether node execution uses:"
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L541"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0153"
+      ],
+      "source_shard_ids": [
+        "shard-0003"
+      ],
+      "canon_label": "chat already acts as a requested-identity override surface for provider/model/effort/persona and",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "chat already acts as a requested-identity override surface for provider/model/effort/persona and should align with the same requested-vs-effective model used by Orchestrator actors"
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L547-L549"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0154"
+      ],
+      "source_shard_ids": [
+        "shard-0003"
+      ],
+      "canon_label": "the next settings/UI seam must cover:",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "the next settings/UI seam must cover:"
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L550"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0155"
+      ],
+      "source_shard_ids": [
+        "shard-0003"
+      ],
+      "canon_label": "the primary node execution path should not be described as an edge-case if it is the common path",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "the primary node execution path should not be described as an edge-case if it is the common path"
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L562"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0156"
+      ],
+      "source_shard_ids": [
+        "shard-0003"
+      ],
+      "canon_label": "direct dispatch may need to be framed as an optimization/fallback/special policy mode rather tha",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "direct dispatch may need to be framed as an optimization/fallback/special policy mode rather than the baseline mental model"
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L563"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0157"
+      ],
+      "source_shard_ids": [
+        "shard-0003"
+      ],
+      "canon_label": "this aligns with the current discussion that quota/pressure detection will need mixed signal sou",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "this aligns with the current discussion that quota/pressure detection will need mixed signal sources (runtime outcomes, provider capabilities, heuristics/log-derived signals where necessary)"
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L566"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0158"
+      ],
+      "source_shard_ids": [
+        "shard-0003"
+      ],
+      "canon_label": "this aligns with the current per-project orchestration storage/projection direction",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "this aligns with the current per-project orchestration storage/projection direction"
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L569"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0159"
+      ],
+      "source_shard_ids": [
+        "shard-0003"
+      ],
+      "canon_label": "w-20260312-160857",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "Existing work item `w-20260312-160857` is for a different packetized research topic and should not be reused for Orchestrator."
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L572"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0160"
+      ],
+      "source_shard_ids": [
+        "shard-0003"
+      ],
+      "canon_label": "A new pre-packetize work item was required for this topic.",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "A new pre-packetize work item was required for this topic."
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L573"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0161"
+      ],
+      "source_shard_ids": [
+        "shard-0003"
+      ],
+      "canon_label": "Plans/Orchestrator_Page.md",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "`Plans/Orchestrator_Page.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L578"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0162"
+      ],
+      "source_shard_ids": [
+        "shard-0003"
+      ],
+      "canon_label": "Plans/orchestrator-subagent-integration.md",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "`Plans/orchestrator-subagent-integration.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/orchestrator-subagent-integration.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L579"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0163"
+      ],
+      "source_shard_ids": [
+        "shard-0003"
+      ],
+      "canon_label": "Plans/Orchestrator_Page.md",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "`Plans/Orchestrator_Page.md` is the UI/page-shell owner for a single-page six-tab Orchestrator surface: `Progress`, `Tiers`, `Node Graph Display`, `Evidence`, `History`, `Ledger`."
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L581"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0164"
+      ],
+      "source_shard_ids": [
+        "shard-0003"
+      ],
+      "canon_label": "Plans/orchestrator-subagent-integration.md",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`Plans/orchestrator-subagent-integration.md` treats Orchestrator as the primary consumer of canonical runtime scheduler contracts, not as a schema owner."
+      ],
+      "affected_doc_hints": [
+        "Plans/orchestrator-subagent-integration.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L581-L582"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0165"
+      ],
+      "source_shard_ids": [
+        "shard-0003"
+      ],
+      "canon_label": "orchestrator must consume canonical runtime fields and event names from shared contracts",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "orchestrator must consume canonical runtime fields and event names from shared contracts"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L585"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0166"
+      ],
+      "source_shard_ids": [
+        "shard-0003"
+      ],
+      "canon_label": "worktree-native isolation is explicitly required; file-lease orchestration is explicitly rejecte",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "worktree-native isolation is explicitly required; file-lease orchestration is explicitly rejected"
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L587"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0167"
+      ],
+      "source_shard_ids": [
+        "shard-0003"
+      ],
+      "canon_label": "Plans/orchestrator-subagent-integration.md",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "`Plans/orchestrator-subagent-integration.md` says Puppet Master orchestrator consumes sharded-only plan graphs and executes headless from `.puppet-master/project/plan_graph/index.json` and node shards"
+      ],
+      "affected_doc_hints": [
+        "Plans/orchestrator-subagent-integration.md"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L589"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0168"
+      ],
+      "source_shard_ids": [
+        "shard-0003"
+      ],
+      "canon_label": "the same doc says required execution inputs include plan-graph index and node shard files",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "the same doc says required execution inputs include plan-graph index and node shard files"
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L590"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0169"
+      ],
+      "source_shard_ids": [
+        "shard-0003"
+      ],
+      "canon_label": "hybrid becomes dangerous if tiers and graph both retain execution authority",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "hybrid becomes dangerous if tiers and graph both retain execution authority"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L592-L594"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0170"
+      ],
+      "source_shard_ids": [
+        "shard-0003"
+      ],
+      "canon_label": "User is now pressure-testing the missing runtime control pattern:",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "User is now pressure-testing the missing runtime control pattern:"
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L595"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0171"
+      ],
+      "source_shard_ids": [
+        "shard-0004"
+      ],
+      "canon_label": "when an overseer finds missing work / wiring / design correctness issues, two additional subagen",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "when an overseer finds missing work / wiring / design correctness issues, two additional subagents should be spawned to check whether the overseer's concern is valid before remediation or graph-change action proceeds"
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L604-L606"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0172"
+      ],
+      "source_shard_ids": [
+        "shard-0004"
+      ],
+      "canon_label": "work package overseer",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "there should be both a `work package overseer`"
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L606-L608"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0173"
+      ],
+      "source_shard_ids": [
+        "shard-0004"
+      ],
+      "canon_label": "settings / GUI must be updated for the new execution/governance model",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "settings / GUI must be updated for the new execution/governance model"
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L616"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0174"
+      ],
+      "source_shard_ids": [
+        "shard-0004"
+      ],
+      "canon_label": "provider/model resolution needs to be thought through across execution levels",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "provider/model resolution needs to be thought through across execution levels"
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L617"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0175"
+      ],
+      "source_shard_ids": [
+        "shard-0004"
+      ],
+      "canon_label": "worktree behavior needs explicit reconsideration under node/package/seam governance",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "worktree behavior needs explicit reconsideration under node/package/seam governance"
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L618"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0176"
+      ],
+      "source_shard_ids": [
+        "shard-0004"
+      ],
+      "canon_label": "persona assignment needs explicit rules: overseers configured, node workers dynamically assigned",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "persona assignment needs explicit rules: overseers configured, node workers dynamically assigned, overrides still possible"
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L619"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0177"
+      ],
+      "source_shard_ids": [
+        "shard-0004"
+      ],
+      "canon_label": "node personas should be auto-selected from node work/type",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "node personas should be auto-selected from node work/type"
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L620-L621"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0178"
+      ],
+      "source_shard_ids": [
+        "shard-0004"
+      ],
+      "canon_label": "node persona override should exist as a global node-worker policy override, not a per-node setti",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "node persona override should exist as a global node-worker policy override, not a per-node setting"
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L620-L622"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0179"
+      ],
+      "source_shard_ids": [
+        "shard-0004"
+      ],
+      "canon_label": "feature seam",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "`feature seam`, `work package`, and `node` should each have independent provider/model/effort settings with defaults plus overrideability"
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L623"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0180"
+      ],
+      "source_shard_ids": [
+        "shard-0004"
+      ],
+      "canon_label": "settings should define whether work-package overseers may spawn subagents for node work",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "settings should define whether work-package overseers may spawn subagents for node work"
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L624"
+      ],
+      "notes": []
+    }
+  ],
+  "represented_seed_ids": [
+    "seed-0121",
+    "seed-0122",
+    "seed-0123",
+    "seed-0124",
+    "seed-0125",
+    "seed-0126",
+    "seed-0127",
+    "seed-0128",
+    "seed-0129",
+    "seed-0130",
+    "seed-0131",
+    "seed-0132",
+    "seed-0133",
+    "seed-0134",
+    "seed-0135",
+    "seed-0136",
+    "seed-0137",
+    "seed-0138",
+    "seed-0139",
+    "seed-0140",
+    "seed-0141",
+    "seed-0142",
+    "seed-0143",
+    "seed-0144",
+    "seed-0145",
+    "seed-0146",
+    "seed-0147",
+    "seed-0148",
+    "seed-0149",
+    "seed-0150",
+    "seed-0151",
+    "seed-0152",
+    "seed-0153",
+    "seed-0154",
+    "seed-0155",
+    "seed-0156",
+    "seed-0157",
+    "seed-0158",
+    "seed-0159",
+    "seed-0160",
+    "seed-0161",
+    "seed-0162",
+    "seed-0163",
+    "seed-0164",
+    "seed-0165",
+    "seed-0166",
+    "seed-0167",
+    "seed-0168",
+    "seed-0169",
+    "seed-0170",
+    "seed-0171",
+    "seed-0172",
+    "seed-0173",
+    "seed-0174",
+    "seed-0175",
+    "seed-0176",
+    "seed-0177",
+    "seed-0178",
+    "seed-0179",
+    "seed-0180"
+  ],
+  "represented_source_shard_ids": [
+    "shard-0003",
+    "shard-0004"
+  ],
+  "deferred_seed_ids": [],
+  "noise_seed_ids": [],
+  "affected_doc_discovery_notes": []
+}

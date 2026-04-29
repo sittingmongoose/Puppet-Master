@@ -1,0 +1,23 @@
+{
+  "schema_id": "pm.transfer_coverage_noise.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-057",
+  "noise_findings": [
+    {
+      "source": "coverage-rowgrp-225",
+      "finding": "coverage_ids_completed was empty; reducer completed three IDs and kept partials for exact stale cmd.orchestrator.switch_tab/example route-open evidence."
+    },
+    {
+      "source": "coverage-rowgrp-226",
+      "finding": "coverage_ids_completed was empty; reducer completed cov-804/cov-810 and kept partials for GATE/schema evidence with missing correlation/evidence-schema expressiveness."
+    },
+    {
+      "source": "coverage-rowgrp-227",
+      "finding": "coverage_ids_completed was empty; reducer completed cov-873 and kept missing due to no route-target migration rule coverage."
+    },
+    {
+      "source": "coverage-rowgrp-228",
+      "finding": "coverage_ids_completed was empty; reducer completed four IDs, kept cov-154/cov-800/cov-815 partial, and kept cov-881 missing."
+    }
+  ]
+}

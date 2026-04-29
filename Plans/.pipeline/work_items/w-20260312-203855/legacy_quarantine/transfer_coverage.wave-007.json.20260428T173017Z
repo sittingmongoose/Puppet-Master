@@ -1,0 +1,820 @@
+{
+  "schema_id": "pm.transfer_coverage_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-007",
+  "row_groups": [
+    "rowgrp-0025",
+    "rowgrp-0026",
+    "rowgrp-0027",
+    "rowgrp-0028"
+  ],
+  "coverage_rows": [
+    {
+      "coverage_id": "cov-05154",
+      "source_obligation_ids": [
+        "obl-4827"
+      ],
+      "source_seed_ids": [
+        "seed-6839"
+      ],
+      "source_shard_ids": [
+        "shard-0089"
+      ],
+      "canon_label": "Plans/orchestrator-subagent-integration.md",
+      "row_type": "stale_retirement",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "Entry",
+      "status": "missing",
+      "exact_items": [
+        "`Plans/orchestrator-subagent-integration.md` still actively carries `TierContext` / `tier_id` residue, and `Plans/Contracts_V0.md` still preserves `detached_window`."
+      ],
+      "stale_tokens": [
+        "Plans/orchestrator-subagent-integration.md",
+        "TierContext",
+        "tier_id",
+        "Plans/Contracts_V0.md",
+        "detached_window"
+      ],
+      "evidence": [
+        "Plans/Contracts_V0.md:1515",
+        "Plans/Contracts_V0.md:14"
+      ],
+      "required_action": "stale_retirement"
+    },
+    {
+      "coverage_id": "cov-05335",
+      "source_obligation_ids": [
+        "obl-4982"
+      ],
+      "source_seed_ids": [
+        "seed-7133"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "canon_label": "gap-003",
+      "row_type": "stale_retirement",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "Canonical records",
+      "status": "missing",
+      "exact_items": [
+        "`gap-003` sharpened: `Plans/Contracts_V0.md` still points at the missing `Plans/storage-plan.md#Canonical records` anchor, and both `Plans/Orchestrator_Page.md` and `Plans/WorktreeGitImprovement.md` still point at the missing `Plans/storage-plan.md#Restart and stale history` anchor in addition to the already-carried missing `Canonical records` heading."
+      ],
+      "stale_tokens": [
+        "gap-003",
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md#Canonical records",
+        "Plans/Orchestrator_Page.md",
+        "Plans/WorktreeGitImprovement.md",
+        "Plans/storage-plan.md#Restart and stale history",
+        "Canonical records"
+      ],
+      "evidence": [
+        "Plans/Contracts_V0.md:14",
+        "Plans/Contracts_V0.md:341",
+        "Plans/Contracts_V0.md:841"
+      ],
+      "required_action": "stale_retirement"
+    },
+    {
+      "coverage_id": "cov-00438",
+      "source_obligation_ids": [
+        "obl-0434"
+      ],
+      "source_seed_ids": [
+        "seed-0439"
+      ],
+      "source_shard_ids": [
+        "shard-0007"
+      ],
+      "canon_label": "Plans/Glossary.md",
+      "row_type": "consumer",
+      "path": "Plans/Crosswalk.md",
+      "heading_hint": "Cleanup Priorities",
+      "status": "present",
+      "exact_items": [
+        "`Plans/Glossary.md`, `Plans/Decision_Policy.md`, `Plans/Crosswalk.md`: Need to adopt Seam/Lane/Overseer/Package terminology."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Crosswalk.md:59",
+        "Plans/Crosswalk.md:31",
+        "Plans/Crosswalk.md:14",
+        "Plans/Crosswalk.md:12"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00445",
+      "source_obligation_ids": [
+        "obl-0440"
+      ],
+      "source_seed_ids": [
+        "seed-0445"
+      ],
+      "source_shard_ids": [
+        "shard-0007"
+      ],
+      "canon_label": "Plans/orchestrator-subagent-integration.md",
+      "row_type": "consumer",
+      "path": "Plans/Crosswalk.md",
+      "heading_hint": "Highest-Impact Docs",
+      "status": "present",
+      "exact_items": [
+        "**`Plans/orchestrator-subagent-integration.md` + `Plans/Crosswalk.md` + `Plans/Glossary.md`** \u2014 Crosswalk and Glossary have near-zero coverage of overseer (package or seam), work package, feature seam, lane, attempt, or effective identity. These are the terminology authorities and their silence makes every other doc's usage inconsistent."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Crosswalk.md:145",
+        "Plans/Crosswalk.md:14",
+        "Plans/Crosswalk.md:59",
+        "Plans/Crosswalk.md:1",
+        "Plans/Crosswalk.md:7",
+        "Plans/Crosswalk.md:137",
+        "Plans/Crosswalk.md:102",
+        "Plans/Crosswalk.md:154",
+        "Plans/Crosswalk.md:39",
+        "Plans/Crosswalk.md:289",
+        "Plans/Crosswalk.md:67",
+        "Plans/Crosswalk.md:38"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00499",
+      "source_obligation_ids": [
+        "obl-0483"
+      ],
+      "source_seed_ids": [
+        "seed-0488"
+      ],
+      "source_shard_ids": [
+        "shard-0007"
+      ],
+      "canon_label": "Plans/Glossary.md",
+      "row_type": "consumer",
+      "path": "Plans/Crosswalk.md",
+      "heading_hint": "Highest-Impact Docs",
+      "status": "present",
+      "exact_items": [
+        "**`Plans/Glossary.md` + `Plans/Crosswalk.md` + `Plans/Decision_Policy.md` + `Plans/00-plans-index.md`**"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Crosswalk.md:59",
+        "Plans/Crosswalk.md:14",
+        "Plans/Crosswalk.md:31",
+        "Plans/Crosswalk.md:112"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00557",
+      "source_obligation_ids": [
+        "obl-0530"
+      ],
+      "source_seed_ids": [
+        "seed-0535"
+      ],
+      "source_shard_ids": [
+        "shard-0008"
+      ],
+      "canon_label": "Plans/storage-plan.md",
+      "row_type": "consumer",
+      "path": "Plans/Crosswalk.md",
+      "heading_hint": "Highest-Impact Docs",
+      "status": "present",
+      "exact_items": [
+        "**`Plans/storage-plan.md` + `Plans/usage-feature.md` + `Plans/Crosswalk.md` + `Plans/Glossary.md`**"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Crosswalk.md:72",
+        "Plans/Crosswalk.md:14",
+        "Plans/Crosswalk.md:59",
+        "Plans/Crosswalk.md:112"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00641",
+      "source_obligation_ids": [
+        "obl-0603"
+      ],
+      "source_seed_ids": [
+        "seed-0608",
+        "seed-0688"
+      ],
+      "source_shard_ids": [
+        "shard-0009",
+        "shard-0010"
+      ],
+      "canon_label": "Plans/Crosswalk.md",
+      "row_type": "consumer",
+      "path": "Plans/Crosswalk.md",
+      "heading_hint": "Cleanup Priorities",
+      "status": "partial",
+      "exact_items": [
+        "`Plans/Crosswalk.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Crosswalk.md:14",
+        "Plans/Crosswalk.md:12"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-00673",
+      "source_obligation_ids": [
+        "obl-0631"
+      ],
+      "source_seed_ids": [
+        "seed-0637"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "canon_label": "Plans/00-plans-index.md",
+      "row_type": "consumer",
+      "path": "Plans/Crosswalk.md",
+      "heading_hint": "Highest-Impact Docs",
+      "status": "present",
+      "exact_items": [
+        "`Plans/00-plans-index.md`, `Plans/Crosswalk.md`, `Plans/Glossary.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Crosswalk.md:14",
+        "Plans/Crosswalk.md:59",
+        "Plans/Crosswalk.md:112"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-01556",
+      "source_obligation_ids": [
+        "obl-1487"
+      ],
+      "source_seed_ids": [
+        "seed-1652",
+        "seed-3272",
+        "seed-3463",
+        "seed-3769",
+        "seed-3861",
+        "seed-4114",
+        "seed-4256",
+        "seed-4290",
+        "seed-4685",
+        "seed-4724",
+        "seed-4824",
+        "seed-5404",
+        "seed-5453",
+        "seed-5525",
+        "seed-6172",
+        "seed-6207"
+      ],
+      "source_shard_ids": [
+        "shard-0030",
+        "shard-0049",
+        "shard-0052",
+        "shard-0055",
+        "shard-0056",
+        "shard-0058",
+        "shard-0060",
+        "shard-0065",
+        "shard-0066",
+        "shard-0074",
+        "shard-0075",
+        "shard-0082",
+        "shard-0083"
+      ],
+      "canon_label": "Plans/Crosswalk.md",
+      "row_type": "consumer",
+      "path": "Plans/Crosswalk.md",
+      "heading_hint": "Targeted docs read",
+      "status": "present",
+      "exact_items": [
+        "`Plans/Crosswalk.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Crosswalk.md:14",
+        "Plans/Crosswalk.md:251",
+        "Plans/Crosswalk.md:112",
+        "Plans/Crosswalk.md:23"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-02715",
+      "source_obligation_ids": [
+        "obl-2635"
+      ],
+      "source_seed_ids": [
+        "seed-3301",
+        "seed-4875",
+        "seed-5296",
+        "seed-7206"
+      ],
+      "source_shard_ids": [
+        "shard-0050",
+        "shard-0067",
+        "shard-0073",
+        "shard-0092"
+      ],
+      "canon_label": "Plans/Crosswalk.md",
+      "row_type": "consumer",
+      "path": "Plans/Crosswalk.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "`Plans/Crosswalk.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Crosswalk.md:14"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-02847",
+      "source_obligation_ids": [
+        "obl-2766"
+      ],
+      "source_seed_ids": [
+        "seed-3492",
+        "seed-3812",
+        "seed-3906",
+        "seed-4150",
+        "seed-4268",
+        "seed-4301",
+        "seed-4331",
+        "seed-4357",
+        "seed-4415",
+        "seed-4512",
+        "seed-4539",
+        "seed-4565",
+        "seed-4591",
+        "seed-4626",
+        "seed-4670",
+        "seed-4703",
+        "seed-4735",
+        "seed-4771",
+        "seed-4805",
+        "seed-4842",
+        "seed-4931",
+        "seed-4952",
+        "seed-5016",
+        "seed-5059",
+        "seed-5131",
+        "seed-5224",
+        "seed-5330",
+        "seed-5373",
+        "seed-5414",
+        "seed-5462",
+        "seed-5534",
+        "seed-5968",
+        "seed-6055",
+        "seed-6142",
+        "seed-6183",
+        "seed-6221",
+        "seed-6240",
+        "seed-6334"
+      ],
+      "source_shard_ids": [
+        "shard-0052",
+        "shard-0056",
+        "shard-0058",
+        "shard-0060",
+        "shard-0061",
+        "shard-0062",
+        "shard-0063",
+        "shard-0064",
+        "shard-0065",
+        "shard-0066",
+        "shard-0067",
+        "shard-0068",
+        "shard-0069",
+        "shard-0070",
+        "shard-0072",
+        "shard-0073",
+        "shard-0074",
+        "shard-0075",
+        "shard-0081",
+        "shard-0082",
+        "shard-0083",
+        "shard-0084"
+      ],
+      "canon_label": "Plans/Crosswalk.md",
+      "row_type": "consumer",
+      "path": "Plans/Crosswalk.md",
+      "heading_hint": "Impacted docs",
+      "status": "partial",
+      "exact_items": [
+        "`Plans/Crosswalk.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Crosswalk.md:14",
+        "Plans/Crosswalk.md:112"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-03097",
+      "source_obligation_ids": [
+        "obl-3011"
+      ],
+      "source_seed_ids": [
+        "seed-3848"
+      ],
+      "source_shard_ids": [
+        "shard-0056"
+      ],
+      "canon_label": "Plans/Crosswalk.md",
+      "row_type": "consumer",
+      "path": "Plans/Crosswalk.md",
+      "heading_hint": "Do-not-forget details",
+      "status": "partial",
+      "exact_items": [
+        "`Plans/Crosswalk.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Crosswalk.md:14",
+        "Plans/Crosswalk.md:259"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-03291",
+      "source_obligation_ids": [
+        "obl-3198"
+      ],
+      "source_seed_ids": [
+        "seed-4180"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "canon_label": "Plans/*.md",
+      "row_type": "consumer",
+      "path": "Plans/Crosswalk.md",
+      "heading_hint": "Do-not-forget details",
+      "status": "present",
+      "exact_items": [
+        "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Crosswalk.md:31",
+        "Plans/Crosswalk.md:14",
+        "Plans/Crosswalk.md:112",
+        "Plans/Crosswalk.md:5",
+        "Plans/Crosswalk.md:154",
+        "Plans/Crosswalk.md:94",
+        "Plans/Crosswalk.md:259"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-03951",
+      "source_obligation_ids": [
+        "obl-3797"
+      ],
+      "source_seed_ids": [
+        "seed-5274"
+      ],
+      "source_shard_ids": [
+        "shard-0072"
+      ],
+      "canon_label": "Plans/Crosswalk.md",
+      "row_type": "consumer",
+      "path": "Plans/Crosswalk.md",
+      "heading_hint": "Key findings",
+      "status": "present",
+      "exact_items": [
+        "`Plans/Crosswalk.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Crosswalk.md:14",
+        "Plans/Crosswalk.md:76"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-04041",
+      "source_obligation_ids": [
+        "obl-3887"
+      ],
+      "source_seed_ids": [
+        "seed-5411"
+      ],
+      "source_shard_ids": [
+        "shard-0074"
+      ],
+      "canon_label": "Plans/Crosswalk.md",
+      "row_type": "consumer",
+      "path": "Plans/Crosswalk.md",
+      "heading_hint": "Key findings",
+      "status": "present",
+      "exact_items": [
+        "`Plans/Crosswalk.md` still does not declare the routing/open-by-identity primitives that these behaviors require."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Crosswalk.md:14",
+        "Plans/Crosswalk.md:94",
+        "Plans/Crosswalk.md:38",
+        "Plans/Crosswalk.md:39",
+        "Plans/Crosswalk.md:158",
+        "Plans/Crosswalk.md:76"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-04059",
+      "source_obligation_ids": [
+        "obl-3905"
+      ],
+      "source_seed_ids": [
+        "seed-5433"
+      ],
+      "source_shard_ids": [
+        "shard-0074"
+      ],
+      "canon_label": "Plans/Crosswalk.md",
+      "row_type": "consumer",
+      "path": "Plans/Crosswalk.md",
+      "heading_hint": "Reconciliation strata",
+      "status": "partial",
+      "exact_items": [
+        "`Plans/Crosswalk.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Crosswalk.md:14",
+        "Plans/Crosswalk.md:289"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-04210",
+      "source_obligation_ids": [
+        "obl-4056"
+      ],
+      "source_seed_ids": [
+        "seed-5663"
+      ],
+      "source_shard_ids": [
+        "shard-0077"
+      ],
+      "canon_label": "Plans/Crosswalk.md",
+      "row_type": "consumer",
+      "path": "Plans/Crosswalk.md",
+      "heading_hint": "Highest-priority owner cleanup set",
+      "status": "present",
+      "exact_items": [
+        "`Plans/Crosswalk.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Crosswalk.md:14",
+        "Plans/Crosswalk.md:17",
+        "Plans/Crosswalk.md:12"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-04234",
+      "source_obligation_ids": [
+        "obl-4080"
+      ],
+      "source_seed_ids": [
+        "seed-5687"
+      ],
+      "source_shard_ids": [
+        "shard-0077"
+      ],
+      "canon_label": "Plans/Crosswalk.md",
+      "row_type": "consumer",
+      "path": "Plans/Crosswalk.md",
+      "heading_hint": "Priority merge",
+      "status": "present",
+      "exact_items": [
+        "`Plans/Crosswalk.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Crosswalk.md:14",
+        "Plans/Crosswalk.md:207",
+        "Plans/Crosswalk.md:118"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-04430",
+      "source_obligation_ids": [
+        "obl-4262"
+      ],
+      "source_seed_ids": [
+        "seed-6087"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "canon_label": "39",
+      "row_type": "consumer",
+      "path": "Plans/Crosswalk.md",
+      "heading_hint": "Do-not-forget details",
+      "status": "present",
+      "exact_items": [
+        "Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Crosswalk.md:7",
+        "Plans/Crosswalk.md:198",
+        "Plans/Crosswalk.md:344",
+        "Plans/Crosswalk.md:14",
+        "Plans/Crosswalk.md:112",
+        "Plans/Crosswalk.md:259"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-04745",
+      "source_obligation_ids": [
+        "obl-4460"
+      ],
+      "source_seed_ids": [
+        "seed-6452"
+      ],
+      "source_shard_ids": [
+        "shard-0086"
+      ],
+      "canon_label": "Plans/Crosswalk.md",
+      "row_type": "consumer",
+      "path": "Plans/Crosswalk.md",
+      "heading_hint": "Targeted docs checked for coverage convergence",
+      "status": "present",
+      "exact_items": [
+        "`Plans/Crosswalk.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Crosswalk.md:14",
+        "Plans/Crosswalk.md:251",
+        "Plans/Crosswalk.md:112",
+        "Plans/Crosswalk.md:7"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-04773",
+      "source_obligation_ids": [
+        "obl-4488"
+      ],
+      "source_seed_ids": [
+        "seed-6480"
+      ],
+      "source_shard_ids": [
+        "shard-0086"
+      ],
+      "canon_label": "Plans/Crosswalk.md",
+      "row_type": "consumer",
+      "path": "Plans/Crosswalk.md",
+      "heading_hint": "Docs clearly implicated",
+      "status": "partial",
+      "exact_items": [
+        "`Plans/Crosswalk.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Crosswalk.md:14",
+        "Plans/Crosswalk.md:112"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-04811",
+      "source_obligation_ids": [
+        "obl-4526"
+      ],
+      "source_seed_ids": [
+        "seed-6518"
+      ],
+      "source_shard_ids": [
+        "shard-0086"
+      ],
+      "canon_label": "Plans/Crosswalk.md",
+      "row_type": "consumer",
+      "path": "Plans/Crosswalk.md",
+      "heading_hint": "MUST CHANGE",
+      "status": "present",
+      "exact_items": [
+        "`Plans/Crosswalk.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Crosswalk.md:14",
+        "Plans/Crosswalk.md:298"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-04994",
+      "source_obligation_ids": [
+        "obl-4684"
+      ],
+      "source_seed_ids": [
+        "seed-6676"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "canon_label": "Plans/Contracts_V0.md",
+      "row_type": "consumer",
+      "path": "Plans/Crosswalk.md",
+      "heading_hint": "Route / bridge / normalization misses remain refinement-heavy but are more specific now",
+      "status": "present",
+      "exact_items": [
+        "`Plans/Contracts_V0.md`, `Plans/storage-plan.md`, `Plans/UI_Command_Catalog.md`, `Plans/Crosswalk.md`, `Plans/Wiring_Matrix.md`, `Plans/Progression_Gates.md`, `Plans/FileManager.md`, `Plans/Project_Output_Artifacts.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Crosswalk.md:31",
+        "Plans/Crosswalk.md:72",
+        "Plans/Crosswalk.md:71",
+        "Plans/Crosswalk.md:14",
+        "Plans/Crosswalk.md:74",
+        "Plans/Crosswalk.md:77",
+        "Plans/Crosswalk.md:19",
+        "Plans/Crosswalk.md:69",
+        "Plans/Crosswalk.md:24",
+        "Plans/Crosswalk.md:48",
+        "Plans/Crosswalk.md:210"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-05382",
+      "source_obligation_ids": [
+        "obl-5023"
+      ],
+      "source_seed_ids": [
+        "seed-7218"
+      ],
+      "source_shard_ids": [
+        "shard-0092"
+      ],
+      "canon_label": "Plans/Crosswalk.md:88-94",
+      "row_type": "consumer",
+      "path": "Plans/Crosswalk.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "`Plans/Crosswalk.md:88-94`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Crosswalk.md:required_terms_absent"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-05390",
+      "source_obligation_ids": [
+        "obl-5026"
+      ],
+      "source_seed_ids": [
+        "seed-7221"
+      ],
+      "source_shard_ids": [
+        "shard-0092"
+      ],
+      "canon_label": "Plans/storage-plan.md",
+      "row_type": "consumer",
+      "path": "Plans/Crosswalk.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "Highest-pressure docs for condensation are `Plans/storage-plan.md`, `Plans/Contracts_V0.md`, `Plans/Models_System.md`, `Plans/Executor_Protocol.md`, `Plans/WorktreeGitImprovement.md`, `Plans/Crosswalk.md`, and `Plans/Orchestrator_Page.md`."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Crosswalk.md:72",
+        "Plans/Crosswalk.md:31",
+        "Plans/Crosswalk.md:107",
+        "Plans/Crosswalk.md:181",
+        "Plans/Crosswalk.md:73",
+        "Plans/Crosswalk.md:14",
+        "Plans/Crosswalk.md:234",
+        "Plans/Crosswalk.md:112"
+      ],
+      "required_action": "none"
+    }
+  ]
+}

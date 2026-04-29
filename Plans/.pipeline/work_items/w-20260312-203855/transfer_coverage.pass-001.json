@@ -1,13 +1,23 @@
 {
-  "schema_id": "pm.transfer_coverage.pass.v2",
+  "schema_id": "pm.transfer_coverage.pass.v3",
   "work_id": "w-20260312-203855",
   "pass_id": "pass-001",
+  "timestamp_utc": "2026-04-29T00:42:07Z",
+  "title": "row/source/path invariant pass",
   "material_coverage_rows": [],
   "material_coverage_updates": [],
+  "path_field_findings": [],
   "noise_findings": [
-    {
-      "item": "all canonical obligations have rows and source lineage; required_action/status checks are consistent",
-      "reason": "verification pass found no material coverage changes"
-    }
-  ]
+    "Every canonical obligation is represented by at least one row, every resolved doc-discovery row now has a concrete Plans path, and no invalid path values remain."
+  ],
+  "subagent_tasks": [],
+  "assigned_input_boundaries": [
+    "final coverage matrix invariant check"
+  ],
+  "subagent_result_status": "complete",
+  "completed_task_count": 0,
+  "failed_task_count": 0,
+  "coverage_ids_assigned": [],
+  "coverage_ids_completed": [],
+  "path_groups_assigned": []
 }

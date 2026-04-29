@@ -1,0 +1,244 @@
+{
+  "schema_id": "pm.doc_discovery_resolution_wave.v3",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-002",
+  "timestamp_utc": "2026-04-29T00:35:45Z",
+  "subagent_tasks": [
+    "docdisc-005-stale",
+    "docdisc-006-consumer",
+    "docdisc-recheck-layout",
+    "docdisc-recheck-settings"
+  ],
+  "assigned_input_boundaries": [
+    "discgrp-005 cov-352,cov-381",
+    "discgrp-006 cov-379,cov-1096",
+    "recheck cov-009,cov-010,cov-022",
+    "recheck cov-011,cov-012"
+  ],
+  "subagent_result_status": {
+    "docdisc-005-stale": "completed_reduced",
+    "docdisc-006-consumer": "completed_reduced",
+    "docdisc-recheck-layout": "completed_reduced",
+    "docdisc-recheck-settings": "completed_reduced"
+  },
+  "completed_task_count": 4,
+  "failed_task_count": 0,
+  "coverage_row_ids_assigned": [
+    "cov-009",
+    "cov-010",
+    "cov-011",
+    "cov-012",
+    "cov-022",
+    "cov-352",
+    "cov-379",
+    "cov-381",
+    "cov-1096"
+  ],
+  "coverage_row_ids_completed": [
+    "cov-009",
+    "cov-010",
+    "cov-011",
+    "cov-012",
+    "cov-022",
+    "cov-352",
+    "cov-379",
+    "cov-381",
+    "cov-1096"
+  ],
+  "resolutions": [
+    {
+      "coverage_id": "cov-009",
+      "source_obligation_ids": [
+        "obl-009"
+      ],
+      "source_seed_ids": [
+        "seed-009"
+      ],
+      "source_shard_ids": [
+        "shard-0002"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/usage-feature.md",
+      "new_heading_hint": "Projection freshness and health states",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/usage-feature.md:451-458",
+        "Plans/FinalGUISpec.md:944-957"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-010",
+      "source_obligation_ids": [
+        "obl-010"
+      ],
+      "source_seed_ids": [
+        "seed-010"
+      ],
+      "source_shard_ids": [
+        "shard-0002"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/usage-feature.md",
+      "new_heading_hint": "Projection freshness and health states",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/usage-feature.md:451-458",
+        "Plans/FinalGUISpec.md:944-957"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-022",
+      "source_obligation_ids": [
+        "obl-019"
+      ],
+      "source_seed_ids": [
+        "seed-019"
+      ],
+      "source_shard_ids": [
+        "shard-0003"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/orchestrator-subagent-integration.md",
+      "new_heading_hint": "Runtime Scheduler Consumer / Subagent Reconciliation Addendum",
+      "resolution_basis": "layout surface",
+      "evidence": [
+        "Plans/orchestrator-subagent-integration.md:6247-6257",
+        "Plans/orchestrator-subagent-integration.md:516-518",
+        "Plans/Personas.md:31-61"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-011",
+      "source_obligation_ids": [
+        "obl-011"
+      ],
+      "source_seed_ids": [
+        "seed-011"
+      ],
+      "source_shard_ids": [
+        "shard-0002"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/FinalGUISpec.md",
+      "new_heading_hint": "Settings and inspectors / identity resolver",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/FinalGUISpec.md:944-955",
+        "Plans/Permissions_System.md:47-60",
+        "Plans/Multi-Account.md:75-95"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-012",
+      "source_obligation_ids": [
+        "obl-012"
+      ],
+      "source_seed_ids": [
+        "seed-012"
+      ],
+      "source_shard_ids": [
+        "shard-0002"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/usage-feature.md",
+      "new_heading_hint": "Out of Scope for This Plan",
+      "resolution_basis": "stale-retirement surface",
+      "evidence": [
+        "Plans/usage-feature.md:640-648"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-352",
+      "source_obligation_ids": [
+        "obl-104"
+      ],
+      "source_seed_ids": [
+        "seed-104"
+      ],
+      "source_shard_ids": [
+        "shard-0026"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/storage-plan.md",
+      "new_heading_hint": "Worktree/lane lifecycle, handshake, and cleanup lineage baseline",
+      "resolution_basis": "stale-retirement surface",
+      "evidence": [
+        "Plans/storage-plan.md:476-479",
+        "Plans/storage-plan.md:501-504",
+        "Plans/storage-plan.md:1640-1643"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-381",
+      "source_obligation_ids": [
+        "obl-114"
+      ],
+      "source_seed_ids": [
+        "seed-114"
+      ],
+      "source_shard_ids": [
+        "shard-0028"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Runtime_Artifacts_Panel.md",
+      "new_heading_hint": "Export manifest requirements",
+      "resolution_basis": "stale-retirement surface",
+      "evidence": [
+        "Plans/Runtime_Artifacts_Panel.md:12-17",
+        "Plans/usage-feature.md:451-458",
+        "Plans/usage-feature.md:404-414"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "coverage_id": "cov-379",
+      "source_obligation_ids": [
+        "obl-112"
+      ],
+      "source_seed_ids": [
+        "seed-112"
+      ],
+      "source_shard_ids": [
+        "shard-0028"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/Runtime_Artifacts_Panel.md",
+      "new_heading_hint": "Export taxonomy and manifest contract",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/Runtime_Artifacts_Panel.md:7-17",
+        "Plans/usage-feature.md:7-15",
+        "Plans/storage-plan.md:31-40"
+      ],
+      "confidence": "high"
+    },
+    {
+      "coverage_id": "cov-1096",
+      "source_obligation_ids": [
+        "obl-315"
+      ],
+      "source_seed_ids": [
+        "seed-315"
+      ],
+      "source_shard_ids": [
+        "shard-0080"
+      ],
+      "old_path": "__DOC_DISCOVERY_REQUIRED__",
+      "new_path": "Plans/storage-plan.md",
+      "new_heading_hint": "Canonical scheduler/remediation event names and projection migration",
+      "resolution_basis": "consumer surface",
+      "evidence": [
+        "Plans/storage-plan.md:1526-1555",
+        "Plans/orchestrator-subagent-integration.md:6229-6276"
+      ],
+      "confidence": "high"
+    }
+  ],
+  "unresolved": []
+}

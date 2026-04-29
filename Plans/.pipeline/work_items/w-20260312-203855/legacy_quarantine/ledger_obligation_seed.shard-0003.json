@@ -1,0 +1,1091 @@
+{
+  "schema_id": "pm.ledger_obligation_seed_shard_result.v1",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-0003",
+  "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0003-L000401-L000600.md",
+  "source_line_range": "L000401-L000600",
+  "seed_candidates": [
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "users should not need a separate modal just to understand resolution/inheritance/fallback",
+      "exact_items": [
+        "users should not need a separate modal just to understand resolution/inheritance/fallback"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0003",
+      "source_evidence": [
+        "working_ledger.md:L403"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "Node Graph tab direction now includes:",
+      "exact_items": [
+        "Node Graph tab direction now includes:"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0003",
+      "source_evidence": [
+        "working_ledger.md:L404"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "node click should expose:",
+      "exact_items": [
+        "node click should expose:"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0003",
+      "source_evidence": [
+        "working_ledger.md:L404-L406"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "clicking evidence/artifact links from node detail should navigate to the Evidence tab with the r",
+      "exact_items": [
+        "clicking evidence/artifact links from node detail should navigate to the Evidence tab with the relevant evidence/artifact selected"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0003",
+      "source_evidence": [
+        "working_ledger.md:L413"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "Cross-tab navigation is now treated as a design contract:",
+      "exact_items": [
+        "Cross-tab navigation is now treated as a design contract:"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0003",
+      "source_evidence": [
+        "working_ledger.md:L414"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "important objects/events should be deep-linkable across Progress / Seams / Node Graph / Evidence",
+      "exact_items": [
+        "important objects/events should be deep-linkable across Progress / Seams / Node Graph / Evidence / History / Ledger"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0003",
+      "source_evidence": [
+        "working_ledger.md:L415"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "cross-tab navigation should preserve/filter/select the target context, not merely switch tabs",
+      "exact_items": [
+        "cross-tab navigation should preserve/filter/select the target context, not merely switch tabs"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0003",
+      "source_evidence": [
+        "working_ledger.md:L416"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Targeted usage-tracking doc check confirms usage is already heavily documented rather than missi",
+      "exact_items": [
+        "Targeted usage-tracking doc check confirms usage is already heavily documented rather than missing:"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0003",
+      "source_evidence": [
+        "working_ledger.md:L417"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Plans/usage-feature.md",
+      "exact_items": [
+        "`Plans/usage-feature.md` is the strongest current owner for usage/quota/alerts/analytics/product-shape discussion."
+      ],
+      "affected_doc_hints": [
+        "Plans/usage-feature.md"
+      ],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0003",
+      "source_evidence": [
+        "working_ledger.md:L417-L418"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "Plans/storage-plan.md",
+      "exact_items": [
+        "`Plans/storage-plan.md` and `Plans/FinalGUISpec.md` also carry meaningful usage/runtime/event/GUI assumptions."
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0003",
+      "source_evidence": [
+        "working_ledger.md:L418-L419"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "usage is already treated as a first-class cross-surface concern, not a small side feature.",
+      "exact_items": [
+        "usage is already treated as a first-class cross-surface concern, not a small side feature."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0003",
+      "source_evidence": [
+        "working_ledger.md:L418-L420"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "new multi-account failover / account-threshold / effective-account behavior should extend the ex",
+      "exact_items": [
+        "new multi-account failover / account-threshold / effective-account behavior should extend the existing usage model and projections"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0003",
+      "source_evidence": [
+        "working_ledger.md:L430"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "any provider-using actor must participate in the same pre-send and post-send account-health loop",
+      "exact_items": [
+        "any provider-using actor must participate in the same pre-send and post-send account-health loop"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0003",
+      "source_evidence": [
+        "working_ledger.md:L432-L434"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "assistant, interviewer, requirements-doc-builder, and PRD builder should share provider/account/",
+      "exact_items": [
+        "assistant, interviewer, requirements-doc-builder, and PRD builder should share provider/account/usage/runtime identity behavior, but they are not orchestration nodes/packages/seams"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0003",
+      "source_evidence": [
+        "working_ledger.md:L437-L438"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "the broader handoff chain described by the user is:",
+      "exact_items": [
+        "the broader handoff chain described by the user is:"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0003",
+      "source_evidence": [
+        "working_ledger.md:L446"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "handoff to Orchestrator",
+      "exact_items": [
+        "handoff to Orchestrator"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0003",
+      "source_evidence": [
+        "working_ledger.md:L451"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "chat-thread resolution surfaces for blocked/HITL/critical Orchestrator events should not be proj",
+      "exact_items": [
+        "chat-thread resolution surfaces for blocked/HITL/critical Orchestrator events should not be projected backwards onto normal assistant/interviewer/requirements-builder conversation in the same way"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0003",
+      "source_evidence": [
+        "working_ledger.md:L454"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "the old structured-attempt-handoff pattern should be retained in the new model",
+      "exact_items": [
+        "the old structured-attempt-handoff pattern should be retained in the new model"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0003",
+      "source_evidence": [
+        "working_ledger.md:L456-L457"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "each failed node attempt should leave a structured receipt/handoff artifact:",
+      "exact_items": [
+        "each failed node attempt should leave a structured receipt/handoff artifact:"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0003",
+      "source_evidence": [
+        "working_ledger.md:L456-L458"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "default retry model should use a fresh agent/subagent for the next attempt",
+      "exact_items": [
+        "default retry model should use a fresh agent/subagent for the next attempt"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0003",
+      "source_evidence": [
+        "working_ledger.md:L463"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "retries should remain policy-driven with budgets/caps; not blind infinite looping",
+      "exact_items": [
+        "retries should remain policy-driven with budgets/caps; not blind infinite looping"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0003",
+      "source_evidence": [
+        "working_ledger.md:L464"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "some failures should route to remediation, graph patch, or block/HITL instead of simple retry",
+      "exact_items": [
+        "some failures should route to remediation, graph patch, or block/HITL instead of simple retry"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0003",
+      "source_evidence": [
+        "working_ledger.md:L465"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Targeted external loop research on a fresh-iteration coding loop found the most reusable handoff",
+      "exact_items": [
+        "Targeted external loop research on a fresh-iteration coding loop found the most reusable handoff ideas are simple and durable:"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0003",
+      "source_evidence": [
+        "working_ledger.md:L466"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Strong reusable handoff pattern extracted:",
+      "exact_items": [
+        "Strong reusable handoff pattern extracted:"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0003",
+      "source_evidence": [
+        "working_ledger.md:L479"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "keep the value of fresh-worker retries with explicit handoff artifacts",
+      "exact_items": [
+        "keep the value of fresh-worker retries with explicit handoff artifacts"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0003",
+      "source_evidence": [
+        "working_ledger.md:L485-L486"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "our system needs richer handoff structure because retries may flow into:",
+      "exact_items": [
+        "our system needs richer handoff structure because retries may flow into:"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0003",
+      "source_evidence": [
+        "working_ledger.md:L488"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Handoff-data implication:",
+      "exact_items": [
+        "Handoff-data implication:"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0003",
+      "source_evidence": [
+        "working_ledger.md:L494"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "each attempt should likely produce at least:",
+      "exact_items": [
+        "each attempt should likely produce at least:"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0003",
+      "source_evidence": [
+        "working_ledger.md:L495"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "\"JSON-like\" is too vague; the design still needs to pin down:",
+      "exact_items": [
+        "\"JSON-like\" is too vague; the design still needs to pin down:"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0003",
+      "source_evidence": [
+        "working_ledger.md:L504"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "how a worker actually receives the handoff packet (inline prompt block, referenced artifact, fet",
+      "exact_items": [
+        "how a worker actually receives the handoff packet (inline prompt block, referenced artifact, fetched context, or mixed model)"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0003",
+      "source_evidence": [
+        "working_ledger.md:L507"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "canonical handoff/retry memory should be structured runtime records, not loose markdown logs",
+      "exact_items": [
+        "canonical handoff/retry memory should be structured runtime records, not loose markdown logs"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0003",
+      "source_evidence": [
+        "working_ledger.md:L508-L509"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "worker-facing handoff should be a synthesized bounded packet assembled from canonical records, n",
+      "exact_items": [
+        "worker-facing handoff should be a synthesized bounded packet assembled from canonical records, not full raw history"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0003",
+      "source_evidence": [
+        "working_ledger.md:L508-L510"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "but exact storage medium/path/delivery mechanism remains an open design seam and needs to be spe",
+      "exact_items": [
+        "but exact storage medium/path/delivery mechanism remains an open design seam and needs to be specified concretely"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0003",
+      "source_evidence": [
+        "working_ledger.md:L511"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/storage-plan.md",
+      "exact_items": [
+        "`Plans/storage-plan.md` already declares:"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0003",
+      "source_evidence": [
+        "working_ledger.md:L512-L513"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "seglog",
+      "exact_items": [
+        "`seglog` = canonical append-only event source"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0003",
+      "source_evidence": [
+        "working_ledger.md:L512-L514"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "JSONL mirror = disposable projector output, not canonical truth",
+      "exact_items": [
+        "JSONL mirror = disposable projector output, not canonical truth"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0003",
+      "source_evidence": [
+        "working_ledger.md:L517"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/FinalGUISpec.md",
+      "exact_items": [
+        "`Plans/FinalGUISpec.md` aligns with this:"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0003",
+      "source_evidence": [
+        "working_ledger.md:L518"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "layout/settings/state = redb",
+      "exact_items": [
+        "layout/settings/state = redb"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0003",
+      "source_evidence": [
+        "working_ledger.md:L520"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "the broad canonical runtime storage model *has* been decided/documented at stack level",
+      "exact_items": [
+        "the broad canonical runtime storage model *has* been decided/documented at stack level"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0003",
+      "source_evidence": [
+        "working_ledger.md:L522"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "attempt handoff artifacts",
+      "exact_items": [
+        "attempt handoff artifacts"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0003",
+      "source_evidence": [
+        "working_ledger.md:L525"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "worker handoff packets",
+      "exact_items": [
+        "worker handoff packets"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0003",
+      "source_evidence": [
+        "working_ledger.md:L527"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "canonical truth for these new orchestration artifacts should fit the documented stack:",
+      "exact_items": [
+        "canonical truth for these new orchestration artifacts should fit the documented stack:"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0003",
+      "source_evidence": [
+        "working_ledger.md:L528-L529"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "avoid making loose JSON files the canonical source",
+      "exact_items": [
+        "avoid making loose JSON files the canonical source"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0003",
+      "source_evidence": [
+        "working_ledger.md:L533"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "exportability from the Orchestrator page is desirable",
+      "exact_items": [
+        "exportability from the Orchestrator page is desirable"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0003",
+      "source_evidence": [
+        "working_ledger.md:L534-L535"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "\"optional JSON\" wording should be removed from the design language unless JSON export is explici",
+      "exact_items": [
+        "\"optional JSON\" wording should be removed from the design language unless JSON export is explicitly about manual inspection/export, not canonical storage"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0003",
+      "source_evidence": [
+        "working_ledger.md:L534-L536"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "New execution-policy settings requirement:",
+      "exact_items": [
+        "New execution-policy settings requirement:"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0003",
+      "source_evidence": [
+        "working_ledger.md:L537"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "GUI should let the user choose whether retries use:",
+      "exact_items": [
+        "GUI should let the user choose whether retries use:"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0003",
+      "source_evidence": [
+        "working_ledger.md:L538"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "GUI should also let the user choose whether node execution uses:",
+      "exact_items": [
+        "GUI should also let the user choose whether node execution uses:"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0003",
+      "source_evidence": [
+        "working_ledger.md:L541"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "chat already acts as a requested-identity override surface for provider/model/effort/persona and",
+      "exact_items": [
+        "chat already acts as a requested-identity override surface for provider/model/effort/persona and should align with the same requested-vs-effective model used by Orchestrator actors"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0003",
+      "source_evidence": [
+        "working_ledger.md:L547-L549"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "the next settings/UI seam must cover:",
+      "exact_items": [
+        "the next settings/UI seam must cover:"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0003",
+      "source_evidence": [
+        "working_ledger.md:L550"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "the primary node execution path should not be described as an edge-case if it is the common path",
+      "exact_items": [
+        "the primary node execution path should not be described as an edge-case if it is the common path"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0003",
+      "source_evidence": [
+        "working_ledger.md:L562"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "direct dispatch may need to be framed as an optimization/fallback/special policy mode rather tha",
+      "exact_items": [
+        "direct dispatch may need to be framed as an optimization/fallback/special policy mode rather than the baseline mental model"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0003",
+      "source_evidence": [
+        "working_ledger.md:L563"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "this aligns with the current discussion that quota/pressure detection will need mixed signal sou",
+      "exact_items": [
+        "this aligns with the current discussion that quota/pressure detection will need mixed signal sources (runtime outcomes, provider capabilities, heuristics/log-derived signals where necessary)"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0003",
+      "source_evidence": [
+        "working_ledger.md:L566"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "this aligns with the current per-project orchestration storage/projection direction",
+      "exact_items": [
+        "this aligns with the current per-project orchestration storage/projection direction"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0003",
+      "source_evidence": [
+        "working_ledger.md:L569"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "w-20260312-160857",
+      "exact_items": [
+        "Existing work item `w-20260312-160857` is for a different packetized research topic and should not be reused for Orchestrator."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0003",
+      "source_evidence": [
+        "working_ledger.md:L572"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "A new pre-packetize work item was required for this topic.",
+      "exact_items": [
+        "A new pre-packetize work item was required for this topic."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0003",
+      "source_evidence": [
+        "working_ledger.md:L573"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/Orchestrator_Page.md",
+      "exact_items": [
+        "`Plans/Orchestrator_Page.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md"
+      ],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0003",
+      "source_evidence": [
+        "working_ledger.md:L578"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/orchestrator-subagent-integration.md",
+      "exact_items": [
+        "`Plans/orchestrator-subagent-integration.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/orchestrator-subagent-integration.md"
+      ],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0003",
+      "source_evidence": [
+        "working_ledger.md:L579"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "Plans/Orchestrator_Page.md",
+      "exact_items": [
+        "`Plans/Orchestrator_Page.md` is the UI/page-shell owner for a single-page six-tab Orchestrator surface: `Progress`, `Tiers`, `Node Graph Display`, `Evidence`, `History`, `Ledger`."
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md"
+      ],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0003",
+      "source_evidence": [
+        "working_ledger.md:L581"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Plans/orchestrator-subagent-integration.md",
+      "exact_items": [
+        "`Plans/orchestrator-subagent-integration.md` treats Orchestrator as the primary consumer of canonical runtime scheduler contracts, not as a schema owner."
+      ],
+      "affected_doc_hints": [
+        "Plans/orchestrator-subagent-integration.md"
+      ],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0003",
+      "source_evidence": [
+        "working_ledger.md:L581-L582"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "orchestrator must consume canonical runtime fields and event names from shared contracts",
+      "exact_items": [
+        "orchestrator must consume canonical runtime fields and event names from shared contracts"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0003",
+      "source_evidence": [
+        "working_ledger.md:L585"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "worktree-native isolation is explicitly required; file-lease orchestration is explicitly rejecte",
+      "exact_items": [
+        "worktree-native isolation is explicitly required; file-lease orchestration is explicitly rejected"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0003",
+      "source_evidence": [
+        "working_ledger.md:L587"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Current docs do say Orchestrator consumes the plan/node graph for execution:",
+      "exact_items": [
+        "Current docs do say Orchestrator consumes the plan/node graph for execution:"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0003",
+      "source_evidence": [
+        "working_ledger.md:L588"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/orchestrator-subagent-integration.md",
+      "exact_items": [
+        "`Plans/orchestrator-subagent-integration.md` says Puppet Master orchestrator consumes sharded-only plan graphs and executes headless from `.puppet-master/project/plan_graph/index.json` and node shards"
+      ],
+      "affected_doc_hints": [
+        "Plans/orchestrator-subagent-integration.md"
+      ],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0003",
+      "source_evidence": [
+        "working_ledger.md:L589"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "the same doc says required execution inputs include plan-graph index and node shard files",
+      "exact_items": [
+        "the same doc says required execution inputs include plan-graph index and node shard files"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0003",
+      "source_evidence": [
+        "working_ledger.md:L590"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "hybrid is acceptable only if graph execution remains canonical and tiers become a derived human-",
+      "exact_items": [
+        "hybrid is acceptable only if graph execution remains canonical and tiers become a derived human-facing lens"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0003",
+      "source_evidence": [
+        "working_ledger.md:L592-L593"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "hybrid becomes dangerous if tiers and graph both retain execution authority",
+      "exact_items": [
+        "hybrid becomes dangerous if tiers and graph both retain execution authority"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0003",
+      "source_evidence": [
+        "working_ledger.md:L592-L594"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "User is now pressure-testing the missing runtime control pattern:",
+      "exact_items": [
+        "User is now pressure-testing the missing runtime control pattern:"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0003",
+      "source_evidence": [
+        "working_ledger.md:L595"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "keep the canonical graph as execution truth",
+      "exact_items": [
+        "keep the canonical graph as execution truth"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0003",
+      "source_evidence": [
+        "working_ledger.md:L599-L600"
+      ],
+      "notes": []
+    }
+  ],
+  "noise_items": [
+    {
+      "item": "- persistent reusable-pattern summary",
+      "source_evidence": [
+        "working_ledger.md:L472"
+      ],
+      "reason": "metric/status/count/family or process line without concrete obligation-grade evidence"
+    }
+  ],
+  "uncertain_items": [
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "key unresolved design seam: what is the governing intelligence/control loop in a graph-canonical",
+      "exact_items": [
+        "key unresolved design seam: what is the governing intelligence/control loop in a graph-canonical system"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0003",
+      "source_evidence": [
+        "working_ledger.md:L598"
+      ],
+      "notes": [],
+      "reason": "open or unresolved wording may need later human classification"
+    }
+  ],
+  "covered_shard_id": "shard-0003"
+}

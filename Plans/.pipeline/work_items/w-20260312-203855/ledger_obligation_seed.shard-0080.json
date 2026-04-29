@@ -1,977 +1,119 @@
 {
-  "schema_id": "pm.ledger_obligation_seed_shard_result.v1",
+  "schema_id": "pm.ledger_obligation_seed_shard_result.v2",
   "work_id": "w-20260312-203855",
   "shard_id": "shard-0080",
   "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0080-L015801-L016000.md",
   "source_line_range": "L015801-L016000",
   "seed_candidates": [
     {
-      "seed_type": "stale_retirement",
-      "canon_label_hint": "Contradictions / gaps surfaced",
-      "exact_items": [
-        "The same consumer docs now rely on canonical blocked/scheduler/remediation lineage in one section and legacy tier-event push streams in another."
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Contradictions / gaps surfaced"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0080",
-      "source_evidence": [
-        "working_ledger.md:L15803"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "owner",
-      "canon_label_hint": "TierChanged",
-      "exact_items": [
-        "That split keeps teaching implementers that `TierChanged` and `UserInteractionRequired` are the primary operational truth even though the runtime/storage owner docs have already moved to canonical event and projection families."
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Contradictions / gaps surfaced"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0080",
-      "source_evidence": [
-        "working_ledger.md:L15803-L15804"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "owner",
-      "canon_label_hint": "Contradictions / gaps surfaced",
-      "exact_items": [
-        "graph/orchestrator live-status bindings that bypass canonical blocked projections"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Contradictions / gaps surfaced"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0080",
-      "source_evidence": [
-        "working_ledger.md:L15808"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "owner",
-      "canon_label_hint": "Candidate fixes to carry forward",
-      "exact_items": [
-        "Reconcile the live-status source tables in graph and Orchestrator docs so they consume canonical runtime records/projections first."
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Candidate fixes to carry forward"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0080",
-      "source_evidence": [
-        "working_ledger.md:L15811"
-      ],
-      "notes": []
-    },
-    {
       "seed_type": "consumer",
-      "canon_label_hint": "TierChanged",
+      "canon_label_hint": "canonical runtime lineage versus legacy tier-event streams",
       "exact_items": [
-        "Reconcile worker output and evidence update rules so they align with attempt/node/runtime lineage rather than `TierChanged`-driven active-tier state."
+        "The same consumer docs now rely on canonical blocked/scheduler/remediation lineage in one section and legacy tier-event push streams in another.",
+        "That split keeps teaching implementers that TierChanged and UserInteractionRequired are the primary operational truth even though the runtime/storage owner docs have already moved to canonical event and projection families."
       ],
       "affected_doc_hints": [],
-      "heading_hints": [
-        "Candidate fixes to carry forward"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0080",
-      "source_evidence": [
-        "working_ledger.md:L15813"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Do-not-forget details",
-      "exact_items": [
-        "This seam is now a consumer-doc sourcing problem, not a missing-runtime-contract problem."
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Do-not-forget details"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0080",
-      "source_evidence": [
-        "working_ledger.md:L15816"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "owner",
-      "canon_label_hint": "Do-not-forget details",
-      "exact_items": [
-        "The owner docs already have the stronger source model."
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Do-not-forget details"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0080",
-      "source_evidence": [
-        "working_ledger.md:L15816-L15817"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Plans/Run_Graph_View.md",
-      "exact_items": [
-        "`Plans/Run_Graph_View.md`"
-      ],
-      "affected_doc_hints": [
-        "Plans/Run_Graph_View.md"
-      ],
-      "heading_hints": [
-        "Targeted docs read"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0080",
-      "source_evidence": [
-        "working_ledger.md:L15817-L15822"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Plans/Run_Graph_View.md",
-      "exact_items": [
-        "`Plans/Run_Graph_View.md` now has a clear split between:"
-      ],
-      "affected_doc_hints": [
-        "Plans/Run_Graph_View.md"
-      ],
-      "heading_hints": [
-        "Key findings"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0080",
-      "source_evidence": [
-        "working_ledger.md:L15817-L15825"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "stale_retirement",
-      "canon_label_hint": "GraphNode",
-      "exact_items": [
-        "The base `GraphNode` struct still preserves stale fields as if they were core model state:"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Key findings"
-      ],
+      "doc_resolution_status": "global_or_cross_cutting",
+      "heading_hints": [],
       "stale_tokens": [
-        "GraphNode"
+        "TierChanged",
+        "UserInteractionRequired"
       ],
-      "source_shard_id": "shard-0080",
       "source_evidence": [
-        "working_ledger.md:L15828"
+        "working_ledger.md:L15803-L15812"
       ],
       "notes": []
     },
     {
       "seed_type": "consumer",
-      "canon_label_hint": "Key findings",
+      "canon_label_hint": "Run Graph stale GraphNode fields",
       "exact_items": [
-        "Later addenda already require the stronger model:"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Key findings"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0080",
-      "source_evidence": [
-        "working_ledger.md:L15838"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "owner",
-      "canon_label_hint": "Key findings",
-      "exact_items": [
-        "queue-analysis and blocked-state rendering rules keyed to canonical runtime records"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Key findings"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0080",
-      "source_evidence": [
-        "working_ledger.md:L15845"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "stale_retirement",
-      "canon_label_hint": "Impacted docs",
-      "exact_items": [
-        "Primary stale consumer:"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Impacted docs"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0080",
-      "source_evidence": [
-        "working_ledger.md:L15848"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Plans/Run_Graph_View.md",
-      "exact_items": [
-        "`Plans/Run_Graph_View.md`"
+        "The base GraphNode struct still preserves stale fields as if they were core model state: tier_type, worker_provider, worker_model, verifier_provider, verifier_model, hitl_request_id.",
+        "The Slint-facing GraphNodeUI and callbacks still preserve the same assumptions: tier_type string in UI state; hitl_action(node_id, action, rationale) callback rather than a runtime-native blocked action target.",
+        "Later addenda already require the stronger model: attempt_id, blocked_reason_code, allowed_action_ids[], safe_point_id, remediation lineage identifiers, replan_generation, queue-analysis and blocked-state rendering rules keyed to canonical runtime records."
       ],
       "affected_doc_hints": [
         "Plans/Run_Graph_View.md"
       ],
-      "heading_hints": [
-        "Impacted docs"
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [
+        "GraphNode",
+        "tier_type",
+        "worker_provider",
+        "worker_model",
+        "verifier_provider",
+        "verifier_model",
+        "hitl_request_id",
+        "GraphNodeUI",
+        "hitl_action",
+        "attempt_id",
+        "blocked_reason_code",
+        "allowed_action_ids[]",
+        "safe_point_id",
+        "replan_generation"
       ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0080",
       "source_evidence": [
-        "working_ledger.md:L15848-L15849"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "owner",
-      "canon_label_hint": "hitl_request_id",
-      "exact_items": [
-        "`hitl_request_id` is now especially out of place because the same doc later centers `blocked_sequence` and canonical runtime commands."
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Contradictions / gaps surfaced"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0080",
-      "source_evidence": [
-        "working_ledger.md:L15855"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "layout_blocker",
-      "canon_label_hint": "tier_type",
-      "exact_items": [
-        "`tier_type` still appears as a core node UI field even though the broader rewrite direction is to demote tier/phase labels to derived or compatibility-only view context."
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Contradictions / gaps surfaced"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0080",
-      "source_evidence": [
-        "working_ledger.md:L15856"
+        "working_ledger.md:L15825-L15845"
       ],
       "notes": []
     },
     {
       "seed_type": "consumer",
-      "canon_label_hint": "GraphNode",
+      "canon_label_hint": "Orchestrator Progress widget tier semantics",
       "exact_items": [
-        "Reconcile the base `GraphNode` and `GraphNodeUI` contracts to the later runtime-lineage model."
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Candidate fixes to carry forward"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0080",
-      "source_evidence": [
-        "working_ledger.md:L15856-L15859"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "owner",
-      "canon_label_hint": "Candidate fixes to carry forward",
-      "exact_items": [
-        "Reconcile the HITL callback model so graph actions normalize through canonical runtime action targets rather than graph-local request callbacks."
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Candidate fixes to carry forward"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0080",
-      "source_evidence": [
-        "working_ledger.md:L15862"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Do-not-forget details",
-      "exact_items": [
-        "The later addenda already define the stronger direction; the base model has not caught up."
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Do-not-forget details"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0080",
-      "source_evidence": [
-        "working_ledger.md:L15866"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Plans/Orchestrator_Page.md",
-      "exact_items": [
-        "`Plans/Orchestrator_Page.md`"
+        "Default widget semantics still say: widget.current_task = active tier title/objective/platform/model; widget.progress_bars = phase/task/subtask completion bars; widget.agent_terminal = current worker output; widget.completed_prose = completed tier summaries.",
+        "Terminal widget behavior is also still tier-targeted: terminal instances can be pinned to a specific tier_id; auto follows the most recently started worker.",
+        "The same doc already has stronger later sections for blocked/recovery state, scheduler pass lineage, remediation lineage, evidence summaries as record-backed surfaces."
       ],
       "affected_doc_hints": [
         "Plans/Orchestrator_Page.md"
       ],
-      "heading_hints": [
-        "Targeted docs read"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0080",
-      "source_evidence": [
-        "working_ledger.md:L15866-L15871"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "layout_blocker",
-      "canon_label_hint": "Progress",
-      "exact_items": [
-        "The `Progress` tab is already correctly identified as widget-composed, but its default widget contract is still strongly tier-era."
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Key findings"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0080",
-      "source_evidence": [
-        "working_ledger.md:L15866-L15874"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "layout_blocker",
-      "canon_label_hint": "Key findings",
-      "exact_items": [
-        "So the widget layer is now lagging the rest of the page\u2019s own rewrite direction."
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Key findings"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0080",
-      "source_evidence": [
-        "working_ledger.md:L15888"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "stale_retirement",
-      "canon_label_hint": "Impacted docs",
-      "exact_items": [
-        "Primary stale consumer:"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Impacted docs"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0080",
-      "source_evidence": [
-        "working_ledger.md:L15888-L15891"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Plans/Orchestrator_Page.md",
-      "exact_items": [
-        "`Plans/Orchestrator_Page.md`"
-      ],
-      "affected_doc_hints": [
-        "Plans/Orchestrator_Page.md"
-      ],
-      "heading_hints": [
-        "Impacted docs"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0080",
-      "source_evidence": [
-        "working_ledger.md:L15891-L15892"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Contradictions / gaps surfaced",
-      "exact_items": [
-        "worker/runtime detail should key from runtime identity, not only active-tier heuristics"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Contradictions / gaps surfaced"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0080",
-      "source_evidence": [
-        "working_ledger.md:L15899"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Candidate fixes to carry forward",
-      "exact_items": [
-        "Reconcile Progress widgets away from active-tier-first semantics."
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Candidate fixes to carry forward"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0080",
-      "source_evidence": [
-        "working_ledger.md:L15903"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "owner",
-      "canon_label_hint": "Candidate fixes to carry forward",
-      "exact_items": [
-        "Keep Progress widget composition, but bind widgets to canonical runtime and orchestration objects:"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Candidate fixes to carry forward"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0080",
-      "source_evidence": [
-        "working_ledger.md:L15904"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "tier_id",
-      "exact_items": [
-        "Reconcile terminal widgets so targeting uses runtime/worker identity rather than `tier_id` as the primary selector."
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Candidate fixes to carry forward"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0080",
-      "source_evidence": [
-        "working_ledger.md:L15909"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "layout_blocker",
-      "canon_label_hint": "Do-not-forget details",
-      "exact_items": [
-        "This is one of the clearest remaining consumer-layer pockets where the old execution model still shapes the UI."
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Do-not-forget details"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0080",
-      "source_evidence": [
-        "working_ledger.md:L15912"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Do-not-forget details",
-      "exact_items": [
-        "The later sections in the same doc already show the stronger direction, so this is a local reconciliation problem rather than a missing concept."
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Do-not-forget details"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0080",
-      "source_evidence": [
-        "working_ledger.md:L15912-L15913"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Plans/Widget_System.md",
-      "exact_items": [
-        "`Plans/Widget_System.md`"
-      ],
-      "affected_doc_hints": [
-        "Plans/Widget_System.md"
-      ],
-      "heading_hints": [
-        "Targeted docs read"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0080",
-      "source_evidence": [
-        "working_ledger.md:L15913-L15918"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Plans/Widget_System.md",
-      "exact_items": [
-        "`Plans/Widget_System.md` is still carrying a broad pre-rewrite Orchestrator widget model."
-      ],
-      "affected_doc_hints": [
-        "Plans/Widget_System.md"
-      ],
-      "heading_hints": [
-        "Key findings"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0080",
-      "source_evidence": [
-        "working_ledger.md:L15913-L15921"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "stale_retirement",
-      "canon_label_hint": "Impacted docs",
-      "exact_items": [
-        "Primary stale owner/consumer hybrid:"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Impacted docs"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0080",
-      "source_evidence": [
-        "working_ledger.md:L15943"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Plans/Widget_System.md",
-      "exact_items": [
-        "`Plans/Widget_System.md`"
-      ],
-      "affected_doc_hints": [
-        "Plans/Widget_System.md"
-      ],
-      "heading_hints": [
-        "Impacted docs"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0080",
-      "source_evidence": [
-        "working_ledger.md:L15943-L15944"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "stale_retirement",
-      "canon_label_hint": "Contradictions / gaps surfaced",
-      "exact_items": [
-        "Because this document is cross-cutting, its stale hostability rules can easily reintroduce drift into:"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Contradictions / gaps surfaced"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0080",
-      "source_evidence": [
-        "working_ledger.md:L15949"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "stale_retirement",
-      "canon_label_hint": "widget.tier_tree",
-      "exact_items": [
-        "Retire `widget.tier_tree` as a first-class Orchestrator widget in favor of native `Seams` and native graph/history/evidence/ledger tabs."
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Candidate fixes to carry forward"
-      ],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
       "stale_tokens": [
+        "widget.current_task",
+        "widget.progress_bars",
+        "widget.agent_terminal",
+        "widget.completed_prose",
+        "tier_id"
+      ],
+      "source_evidence": [
+        "working_ledger.md:L15874-L15909"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Widget System non-Progress Orchestrator hostability retirement",
+      "exact_items": [
+        "The Dashboard / Orchestrator Progress widget catalog still says: widget.current_task = active tier title/objective/elapsed; widget.progress_bars = phase/task/subtask completion bars; widget.cta_stack sourced from PuppetMasterEvent::UserInteractionRequired; widget.agent_terminal filtered by tier_id; widget.completed_prose = finished phases/tasks.",
+        "The doc also still exposes widgetized non-Progress Orchestrator tabs: widget_layout:v1:orchestrator:tiers, widget_layout:v1:orchestrator:evidence, widget_layout:v1:orchestrator:history, widget_layout:v1:orchestrator:ledger, widget.tier_tree hosted on Orch/Tiers.",
+        "The widget data contract section is also still sourced from: PuppetMasterEvent::TierChanged, PuppetMasterEvent::UserInteractionRequired, tier-targeted PTY filtering.",
+        "Narrow Orchestrator widget hostability to Progress only."
+      ],
+      "affected_doc_hints": [
+        "Plans/Widget_System.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_tokens": [
+        "widget_layout:v1:orchestrator:tiers",
+        "widget_layout:v1:orchestrator:evidence",
+        "widget_layout:v1:orchestrator:history",
+        "widget_layout:v1:orchestrator:ledger",
         "widget.tier_tree",
-        "Seams"
+        "Orch/Tiers",
+        "Progress"
       ],
-      "source_shard_id": "shard-0080",
       "source_evidence": [
-        "working_ledger.md:L15956"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "owner",
-      "canon_label_hint": "TierChanged",
-      "exact_items": [
-        "Reconcile widget data contracts away from `TierChanged`, `UserInteractionRequired`, and tier-targeted worker filters toward canonical runtime and attention projections."
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Candidate fixes to carry forward"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0080",
-      "source_evidence": [
-        "working_ledger.md:L15956-L15957"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "stale_retirement",
-      "canon_label_hint": "Candidate fixes to carry forward",
-      "exact_items": [
-        "Reconcile widget layout persistence keys so stale non-Progress Orchestrator widget-layout keys are not left as live canon."
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Candidate fixes to carry forward"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0080",
-      "source_evidence": [
-        "working_ledger.md:L15956-L15958"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "layout_blocker",
-      "canon_label_hint": "Do-not-forget details",
-      "exact_items": [
-        "This is a cross-cutting SSOT problem, not just a page-local doc issue."
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Do-not-forget details"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0080",
-      "source_evidence": [
-        "working_ledger.md:L15958-L15961"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "stale_retirement",
-      "canon_label_hint": "Widget_System.md",
-      "exact_items": [
-        "`Widget_System.md` can re-spread stale Orchestrator assumptions if it is not reconciled early."
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Do-not-forget details"
-      ],
-      "stale_tokens": [
-        "Widget_System.md"
-      ],
-      "source_shard_id": "shard-0080",
-      "source_evidence": [
-        "working_ledger.md:L15958-L15962"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Plans/Widget_System.md",
-      "exact_items": [
-        "`Plans/Widget_System.md`"
-      ],
-      "affected_doc_hints": [
-        "Plans/Widget_System.md"
-      ],
-      "heading_hints": [
-        "Targeted docs read"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0080",
-      "source_evidence": [
-        "working_ledger.md:L15962-L15967"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Plans/FinalGUISpec.md",
-      "exact_items": [
-        "`Plans/FinalGUISpec.md`"
-      ],
-      "affected_doc_hints": [
-        "Plans/FinalGUISpec.md"
-      ],
-      "heading_hints": [
-        "Targeted docs read"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0080",
-      "source_evidence": [
-        "working_ledger.md:L15962-L15968"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "layout_blocker",
-      "canon_label_hint": "Key findings",
-      "exact_items": [
-        "The widget layout migration contract now has an exact persistence-rule contradiction."
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Key findings"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0080",
-      "source_evidence": [
-        "working_ledger.md:L15971"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "layout_blocker",
-      "canon_label_hint": "Plans/Widget_System.md",
-      "exact_items": [
-        "`Plans/Widget_System.md` says in section 7.3:"
-      ],
-      "affected_doc_hints": [
-        "Plans/Widget_System.md"
-      ],
-      "heading_hints": [
-        "Key findings"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0080",
-      "source_evidence": [
-        "working_ledger.md:L15972"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "stale_retirement",
-      "canon_label_hint": "Key findings",
-      "exact_items": [
-        "after migration, the legacy key is deleted"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Key findings"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0080",
-      "source_evidence": [
-        "working_ledger.md:L15976"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Plans/FinalGUISpec.md",
-      "exact_items": [
-        "`Plans/FinalGUISpec.md` appendix C.5 mirrors the backup-preserving version:"
-      ],
-      "affected_doc_hints": [
-        "Plans/FinalGUISpec.md"
-      ],
-      "heading_hints": [
-        "Key findings"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0080",
-      "source_evidence": [
-        "working_ledger.md:L15977"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "layout_blocker",
-      "canon_label_hint": "Key findings",
-      "exact_items": [
-        "widget layout takes precedence"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Key findings"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0080",
-      "source_evidence": [
-        "working_ledger.md:L15980"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Plans/Widget_System.md",
-      "exact_items": [
-        "`Plans/Widget_System.md`"
-      ],
-      "affected_doc_hints": [
-        "Plans/Widget_System.md"
-      ],
-      "heading_hints": [
-        "Impacted docs"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0080",
-      "source_evidence": [
-        "working_ledger.md:L15984"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Plans/FinalGUISpec.md",
-      "exact_items": [
-        "`Plans/FinalGUISpec.md`"
-      ],
-      "affected_doc_hints": [
-        "Plans/FinalGUISpec.md"
-      ],
-      "heading_hints": [
-        "Impacted docs"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0080",
-      "source_evidence": [
-        "working_ledger.md:L15985"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "stale_retirement",
-      "canon_label_hint": "Contradictions / gaps surfaced",
-      "exact_items": [
-        "preserve legacy backup"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Contradictions / gaps surfaced"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0080",
-      "source_evidence": [
-        "working_ledger.md:L15989"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "stale_retirement",
-      "canon_label_hint": "Contradictions / gaps surfaced",
-      "exact_items": [
-        "delete legacy key"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Contradictions / gaps surfaced"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0080",
-      "source_evidence": [
-        "working_ledger.md:L15990"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "layout_blocker",
-      "canon_label_hint": "Widget_System.md",
-      "exact_items": [
-        "Because `Widget_System.md` claims SSOT precedence for widget layout key handling, this contradiction is more than editorial drift."
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Contradictions / gaps surfaced"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0080",
-      "source_evidence": [
-        "working_ledger.md:L15992"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Plans/Widget_System.md",
-      "exact_items": [
-        "`Plans/Widget_System.md`"
-      ],
-      "affected_doc_hints": [
-        "Plans/Widget_System.md"
-      ],
-      "heading_hints": [
-        "Candidate fixes to carry forward"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0080",
-      "source_evidence": [
-        "working_ledger.md:L15997"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Plans/FinalGUISpec.md",
-      "exact_items": [
-        "`Plans/FinalGUISpec.md`"
-      ],
-      "affected_doc_hints": [
-        "Plans/FinalGUISpec.md"
-      ],
-      "heading_hints": [
-        "Candidate fixes to carry forward"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0080",
-      "source_evidence": [
-        "working_ledger.md:L15998"
+        "working_ledger.md:L15921-L15958"
       ],
       "notes": []
     }
   ],
-  "noise_items": [
-    {
-      "item": "- `widget.completed_prose` is also still described as completed tier summaries even though evidence and summary records are moving toward stronger object-backed surfaces.",
-      "source_evidence": [
-        "working_ledger.md:L15900"
-      ],
-      "reason": "metric/status/count/family or process line without concrete obligation-grade evidence"
-    }
-  ],
+  "noise_items": [],
   "uncertain_items": [],
   "covered_shard_id": "shard-0080"
 }

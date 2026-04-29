@@ -1,0 +1,23 @@
+{
+  "schema_id": "pm.transfer_coverage_noise.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-075",
+  "noise_findings": [
+    {
+      "source": "coverage-rowgrp-297",
+      "finding": "coverage_ids_completed omitted cov-127 and cov-235; reducer completed all ten IDs, normalized noncanonical actions, stripped line-zero evidence, and retained partial/missing statuses."
+    },
+    {
+      "source": "coverage-rowgrp-298",
+      "finding": "coverage_ids_completed was empty; reducer completed all seven IDs, normalized descriptive actions, stripped absolute paths, and retained partial/missing statuses."
+    },
+    {
+      "source": "coverage-rowgrp-299",
+      "finding": "coverage_ids_completed was empty; reducer completed all six IDs, normalized descriptive actions, stripped absolute paths and line-zero placeholders."
+    },
+    {
+      "source": "coverage-rowgrp-300",
+      "finding": "coverage_ids_completed was empty; reducer completed all ten IDs, normalized descriptive actions, stripped absolute paths, and retained partial/missing statuses."
+    }
+  ]
+}

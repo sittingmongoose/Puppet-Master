@@ -1,734 +1,303 @@
 {
-  "schema_id": "pm.transfer_coverage_wave.v1",
+  "schema_id": "pm.transfer_coverage_wave.v3",
   "work_id": "w-20260312-203855",
   "wave_id": "wave-029",
-  "row_groups": [
-    "rowgrp-0113",
-    "rowgrp-0114",
-    "rowgrp-0115",
-    "rowgrp-0116"
+  "timestamp_utc": "2026-04-28T20:31:46Z",
+  "subagent_tasks": [
+    "coverage-rowgrp-113",
+    "coverage-rowgrp-114",
+    "coverage-rowgrp-115",
+    "coverage-rowgrp-116"
   ],
-  "coverage_rows": [
+  "assigned_input_boundaries": [
+    "rowgrp-113 cov-1110 Plans/OpenCode_Coverage_Matrix.md",
+    "rowgrp-114 cov-1107 Plans/OpenCode_Coverage_Matrix.md",
+    "rowgrp-115 cov-1108 Plans/OpenCode_Deep_Extraction.md",
+    "rowgrp-116 cov-032,cov-274,cov-330,cov-333,cov-453,cov-469,cov-629,cov-675,cov-852,cov-899 Plans/Orchestrator_Page.md"
+  ],
+  "subagent_result_status": {
+    "coverage-rowgrp-113": "completed_reduced_conservatively",
+    "coverage-rowgrp-114": "completed_reduced_conservatively",
+    "coverage-rowgrp-115": "completed_reduced_conservatively",
+    "coverage-rowgrp-116": "completed_reduced_conservatively"
+  },
+  "completed_task_count": 4,
+  "failed_task_count": 0,
+  "coverage_ids_assigned": [
+    "cov-1110",
+    "cov-1107",
+    "cov-1108",
+    "cov-032",
+    "cov-274",
+    "cov-330",
+    "cov-333",
+    "cov-453",
+    "cov-469",
+    "cov-629",
+    "cov-675",
+    "cov-852",
+    "cov-899"
+  ],
+  "coverage_ids_completed": [
+    "cov-1110",
+    "cov-1107",
+    "cov-1108",
+    "cov-032",
+    "cov-274",
+    "cov-330",
+    "cov-333",
+    "cov-453",
+    "cov-469",
+    "cov-629",
+    "cov-675",
+    "cov-852",
+    "cov-899"
+  ],
+  "path_groups_assigned": [
+    "Plans/OpenCode_Coverage_Matrix.md",
+    "Plans/OpenCode_Deep_Extraction.md",
+    "Plans/Orchestrator_Page.md"
+  ],
+  "rows": [
     {
-      "coverage_id": "cov-03316",
+      "coverage_id": "cov-1110",
+      "status": "missing",
+      "evidence": [],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "OpenCode_Coverage_Matrix.md contains only general matrix criteria/header material, not direct caller-scoped identity, server-global SSE, or media capability request/event surface coverage.",
       "source_obligation_ids": [
-        "obl-3198"
+        "obl-321"
       ],
       "source_seed_ids": [
-        "seed-4180"
-      ],
-      "source_shard_ids": [
-        "shard-0059"
-      ],
-      "canon_label": "Plans/*.md",
-      "row_type": "consumer",
-      "path": "Plans/Plugins_System.md",
-      "heading_hint": "Do-not-forget details",
-      "status": "present",
-      "exact_items": [
-        "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage."
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/Plugins_System.md:3",
-        "Plans/Plugins_System.md:430",
-        "Plans/Plugins_System.md:103",
-        "Plans/Plugins_System.md:22",
-        "Plans/Plugins_System.md:404"
-      ],
-      "required_action": "none"
-    },
-    {
-      "coverage_id": "cov-03603",
-      "source_obligation_ids": [
-        "obl-3454"
-      ],
-      "source_seed_ids": [
-        "seed-4635",
-        "seed-5084",
-        "seed-5925",
-        "seed-6011",
-        "seed-6103"
-      ],
-      "source_shard_ids": [
-        "shard-0064",
-        "shard-0070",
-        "shard-0081",
-        "shard-0082"
-      ],
-      "canon_label": "Plans/Plugins_System.md",
-      "row_type": "consumer",
-      "path": "Plans/Plugins_System.md",
-      "heading_hint": "Targeted docs read",
-      "status": "partial",
-      "exact_items": [
-        "`Plans/Plugins_System.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/Plugins_System.md:7",
-        "Plans/Plugins_System.md:79"
-      ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-03620",
-      "source_obligation_ids": [
-        "obl-3471"
-      ],
-      "source_seed_ids": [
-        "seed-4653",
-        "seed-5122",
-        "seed-5960",
-        "seed-6047",
-        "seed-6135"
-      ],
-      "source_shard_ids": [
-        "shard-0064",
-        "shard-0070",
-        "shard-0081",
-        "shard-0082"
-      ],
-      "canon_label": "Plans/Plugins_System.md",
-      "row_type": "consumer",
-      "path": "Plans/Plugins_System.md",
-      "heading_hint": "Impacted docs",
-      "status": "partial",
-      "exact_items": [
-        "`Plans/Plugins_System.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/Plugins_System.md:7"
-      ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-03630",
-      "source_obligation_ids": [
-        "obl-3481"
-      ],
-      "source_seed_ids": [
-        "seed-4676"
-      ],
-      "source_shard_ids": [
-        "shard-0064"
-      ],
-      "canon_label": "Plans/Plugins_System.md",
-      "row_type": "consumer",
-      "path": "Plans/Plugins_System.md",
-      "heading_hint": "Candidate fixes to carry forward",
-      "status": "partial",
-      "exact_items": [
-        "`Plans/Plugins_System.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/Plugins_System.md:7"
-      ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-03884",
-      "source_obligation_ids": [
-        "obl-3732"
-      ],
-      "source_seed_ids": [
-        "seed-5156"
-      ],
-      "source_shard_ids": [
-        "shard-0070"
-      ],
-      "canon_label": "Plans/00-plans-index.md",
-      "row_type": "consumer",
-      "path": "Plans/Plugins_System.md",
-      "heading_hint": "Candidate fixes to carry forward",
-      "status": "present",
-      "exact_items": [
-        "with `Plans/00-plans-index.md`, `Plans/GUI_Rebuild_Requirements_Checklist.md`, `Plans/Plugins_System.md`, `Plans/Skills_System.md`, and `Plans/Formatters_System.md` also still clearly above the noise floor."
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/Plugins_System.md:7",
-        "Plans/Plugins_System.md:406",
-        "Plans/Plugins_System.md:21"
-      ],
-      "required_action": "none"
-    },
-    {
-      "coverage_id": "cov-04393",
-      "source_obligation_ids": [
-        "obl-4238"
-      ],
-      "source_seed_ids": [
-        "seed-5993"
+        "seed-321"
       ],
       "source_shard_ids": [
         "shard-0081"
       ],
-      "canon_label": "Plans/GUI_Rebuild_Requirements_Checklist.md",
-      "row_type": "consumer",
-      "path": "Plans/Plugins_System.md",
-      "heading_hint": "Candidate fixes to carry forward",
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-1107",
       "status": "partial",
-      "exact_items": [
-        "with `Plans/GUI_Rebuild_Requirements_Checklist.md`, `Plans/Plugins_System.md`, `Plans/Skills_System.md`, and `Plans/LSPSupport.md` still clearly active."
-      ],
-      "stale_tokens": [],
       "evidence": [
-        "Plans/Plugins_System.md:7",
-        "Plans/Plugins_System.md:406"
+        "Plans/OpenCode_Coverage_Matrix.md:76 shows a partial GUI Skills wiring row",
+        "Plans/OpenCode_Coverage_Matrix.md:93-101 lists missing stable anchors",
+        "Plans/OpenCode_Coverage_Matrix.md:173-181 lists anchor additions still needed"
       ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-04417",
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "The matrix exposes incomplete/stale coverage and fix items, but does not directly complete the owner cleanup for duplicated sections, malformed ContractRefs, phantom command IDs, and current identity-contract assumptions.",
       "source_obligation_ids": [
-        "obl-4260"
+        "obl-320"
       ],
       "source_seed_ids": [
-        "seed-6085"
+        "seed-320"
       ],
       "source_shard_ids": [
-        "shard-0082"
+        "shard-0081"
       ],
-      "canon_label": "Plans/Plugins_System.md",
-      "row_type": "consumer",
-      "path": "Plans/Plugins_System.md",
-      "heading_hint": "Candidate fixes to carry forward",
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-1108",
       "status": "partial",
-      "exact_items": [
-        "with `Plans/Plugins_System.md`, `Plans/Skills_System.md`, `Plans/LSPSupport.md`, `Plans/Media_Generation_and_Capabilities.md`, and `Plans/agent-rules-context.md` still clearly active."
-      ],
-      "stale_tokens": [],
       "evidence": [
-        "Plans/Plugins_System.md:7",
-        "Plans/Plugins_System.md:406"
+        "Plans/OpenCode_Deep_Extraction.md:644-646 covers session-scoped approvals and GUI approval flow wiring",
+        "Plans/OpenCode_Deep_Extraction.md:691-699 covers permission/route handling plus provider/model transform and error layers"
       ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-04455",
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "OpenCode_Deep_Extraction.md covers related session-scoped approvals and provider transform/error layers, but not the full caller-scoped identity, server-global SSE, or media capability request/event surface obligations.",
       "source_obligation_ids": [
-        "obl-4262"
+        "obl-321"
       ],
       "source_seed_ids": [
-        "seed-6087"
+        "seed-321"
       ],
       "source_shard_ids": [
-        "shard-0082"
+        "shard-0081"
       ],
-      "canon_label": "39",
-      "row_type": "consumer",
-      "path": "Plans/Plugins_System.md",
-      "heading_hint": "Do-not-forget details",
-      "status": "present",
-      "exact_items": [
-        "Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes."
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/Plugins_System.md:70",
-        "Plans/Plugins_System.md:3",
-        "Plans/Plugins_System.md:430",
-        "Plans/Plugins_System.md:209",
-        "Plans/Plugins_System.md:404"
-      ],
-      "required_action": "none"
+      "path_field_status": "match"
     },
     {
-      "coverage_id": "cov-04538",
-      "source_obligation_ids": [
-        "obl-4283"
-      ],
-      "source_seed_ids": [
-        "seed-6167"
-      ],
-      "source_shard_ids": [
-        "shard-0082"
-      ],
-      "canon_label": "Plans/*.md",
-      "row_type": "layout_blocker",
-      "path": "Plans/Plugins_System.md",
-      "heading_hint": "Do-not-forget details",
-      "status": "present",
-      "exact_items": [
-        "After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes."
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/Plugins_System.md:70",
-        "Plans/Plugins_System.md:3",
-        "Plans/Plugins_System.md:152",
-        "Plans/Plugins_System.md:430",
-        "Plans/Plugins_System.md:103",
-        "Plans/Plugins_System.md:22",
-        "Plans/Plugins_System.md:404"
-      ],
-      "required_action": "none"
-    },
-    {
-      "coverage_id": "cov-00416",
-      "source_obligation_ids": [
-        "obl-0414"
-      ],
-      "source_seed_ids": [
-        "seed-0419"
-      ],
-      "source_shard_ids": [
-        "shard-0006"
-      ],
-      "canon_label": "Plans/Progression_Gates.md",
-      "row_type": "consumer",
-      "path": "Plans/Progression_Gates.md",
-      "heading_hint": "Runtime / Storage / Contract Impacts",
-      "status": "present",
-      "exact_items": [
-        "`Plans/Progression_Gates.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/Progression_Gates.md:14",
-        "Plans/Progression_Gates.md:122",
-        "Plans/Progression_Gates.md:497",
-        "Plans/Progression_Gates.md:19"
-      ],
-      "required_action": "none"
-    },
-    {
-      "coverage_id": "cov-00707",
-      "source_obligation_ids": [
-        "obl-0654"
-      ],
-      "source_seed_ids": [
-        "seed-0660"
-      ],
-      "source_shard_ids": [
-        "shard-0009"
-      ],
-      "canon_label": "Plans/Executor_Protocol.md",
-      "row_type": "consumer",
-      "path": "Plans/Progression_Gates.md",
-      "heading_hint": "Runtime / Storage / Contract Impacts",
-      "status": "present",
-      "exact_items": [
-        "`Plans/Executor_Protocol.md`, `Plans/Progression_Gates.md`, `Plans/Run_Graph_View.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/Progression_Gates.md:126",
-        "Plans/Progression_Gates.md:14",
-        "Plans/Progression_Gates.md:122",
-        "Plans/Progression_Gates.md:497",
-        "Plans/Progression_Gates.md:19"
-      ],
-      "required_action": "none"
-    },
-    {
-      "coverage_id": "cov-00741",
-      "source_obligation_ids": [
-        "obl-0677"
-      ],
-      "source_seed_ids": [
-        "seed-0701"
-      ],
-      "source_shard_ids": [
-        "shard-0010"
-      ],
-      "canon_label": "Plans/Executor_Protocol.md",
-      "row_type": "consumer",
-      "path": "Plans/Progression_Gates.md",
-      "heading_hint": "Contradictions To Resolve",
-      "status": "present",
-      "exact_items": [
-        "docs involved: `Plans/Executor_Protocol.md`, `Plans/Progression_Gates.md`, `Plans/plan_graph.schema.json`, `Plans/Run_Graph_View.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/Progression_Gates.md:126",
-        "Plans/Progression_Gates.md:14",
-        "Plans/Progression_Gates.md:158",
-        "Plans/Progression_Gates.md:191",
-        "Plans/Progression_Gates.md:44"
-      ],
-      "required_action": "none"
-    },
-    {
-      "coverage_id": "cov-02690",
-      "source_obligation_ids": [
-        "obl-2610"
-      ],
-      "source_seed_ids": [
-        "seed-3275",
-        "seed-3466",
-        "seed-3772",
-        "seed-3864",
-        "seed-3965",
-        "seed-4117",
-        "seed-4751",
-        "seed-4789",
-        "seed-5498",
-        "seed-6204"
-      ],
-      "source_shard_ids": [
-        "shard-0049",
-        "shard-0052",
-        "shard-0055",
-        "shard-0056",
-        "shard-0057",
-        "shard-0058",
-        "shard-0065",
-        "shard-0066",
-        "shard-0075",
-        "shard-0083"
-      ],
-      "canon_label": "Plans/Progression_Gates.md",
-      "row_type": "consumer",
-      "path": "Plans/Progression_Gates.md",
-      "heading_hint": "Targeted docs read",
-      "status": "present",
-      "exact_items": [
-        "`Plans/Progression_Gates.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/Progression_Gates.md:14",
-        "Plans/Progression_Gates.md:309",
-        "Plans/Progression_Gates.md:191",
-        "Plans/Progression_Gates.md:44"
-      ],
-      "required_action": "none"
-    },
-    {
-      "coverage_id": "cov-02849",
-      "source_obligation_ids": [
-        "obl-2768"
-      ],
-      "source_seed_ids": [
-        "seed-3495",
-        "seed-3815",
-        "seed-3909",
-        "seed-3954",
-        "seed-3977",
-        "seed-4153",
-        "seed-4769",
-        "seed-4804",
-        "seed-5514",
-        "seed-6185",
-        "seed-6218"
-      ],
-      "source_shard_ids": [
-        "shard-0052",
-        "shard-0056",
-        "shard-0057",
-        "shard-0058",
-        "shard-0065",
-        "shard-0066",
-        "shard-0075",
-        "shard-0082",
-        "shard-0083"
-      ],
-      "canon_label": "Plans/Progression_Gates.md",
-      "row_type": "consumer",
-      "path": "Plans/Progression_Gates.md",
-      "heading_hint": "Impacted docs",
-      "status": "present",
-      "exact_items": [
-        "`Plans/Progression_Gates.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/Progression_Gates.md:14",
-        "Plans/Progression_Gates.md:416",
-        "Plans/Progression_Gates.md:191"
-      ],
-      "required_action": "none"
-    },
-    {
-      "coverage_id": "cov-02883",
-      "source_obligation_ids": [
-        "obl-2802"
-      ],
-      "source_seed_ids": [
-        "seed-3537",
-        "seed-3851"
-      ],
-      "source_shard_ids": [
-        "shard-0052",
-        "shard-0056"
-      ],
-      "canon_label": "Plans/Progression_Gates.md",
-      "row_type": "consumer",
-      "path": "Plans/Progression_Gates.md",
-      "heading_hint": "Do-not-forget details",
+      "coverage_id": "cov-032",
       "status": "partial",
-      "exact_items": [
-        "`Plans/Progression_Gates.md`"
-      ],
-      "stale_tokens": [],
       "evidence": [
-        "Plans/Progression_Gates.md:14"
+        "Plans/Orchestrator_Page.md:450-455 defines promotion classes, evidence expectations, Source Control/worktree handshake, and worktree rows with package/lane/run refs",
+        "Plans/Orchestrator_Page.md:421-431 defines project summary, attention, escalation, and scale sections"
       ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-03317",
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "Package/seam promotion, worktree rows, and project summary areas are related, but the full GUI surface set, seam-level acceptance/weak-integration/corroboration affordance, and project-summary aggregation details are incomplete.",
       "source_obligation_ids": [
-        "obl-3198"
+        "obl-023"
       ],
       "source_seed_ids": [
-        "seed-4180"
+        "seed-023"
       ],
       "source_shard_ids": [
-        "shard-0059"
+        "shard-0004"
       ],
-      "canon_label": "Plans/*.md",
-      "row_type": "consumer",
-      "path": "Plans/Progression_Gates.md",
-      "heading_hint": "Do-not-forget details",
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-274",
       "status": "present",
-      "exact_items": [
-        "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage."
-      ],
-      "stale_tokens": [],
       "evidence": [
-        "Plans/Progression_Gates.md:509",
-        "Plans/Progression_Gates.md:19",
-        "Plans/Progression_Gates.md:14",
-        "Plans/Progression_Gates.md:191",
-        "Plans/Progression_Gates.md:5",
-        "Plans/Progression_Gates.md:110",
-        "Plans/Progression_Gates.md:357",
-        "Plans/Progression_Gates.md:122",
-        "Plans/Progression_Gates.md:276"
+        "Plans/Orchestrator_Page.md:471-473 defines a shared record envelope and keeps record objects distinct from artifacts, receipts, and rendered summaries",
+        "Plans/Orchestrator_Page.md:492-497 separates source events, durable records, projections, evidence refs, artifact refs, and lineage refs"
       ],
-      "required_action": "none"
-    },
-    {
-      "coverage_id": "cov-04119",
+      "required_action": "none",
+      "unresolved_reason": "",
       "source_obligation_ids": [
-        "obl-3965"
+        "obl-078"
       ],
       "source_seed_ids": [
-        "seed-5506"
+        "seed-078"
       ],
       "source_shard_ids": [
-        "shard-0075"
+        "shard-0018"
       ],
-      "canon_label": "Plans/Progression_Gates.md",
-      "row_type": "consumer",
-      "path": "Plans/Progression_Gates.md",
-      "heading_hint": "Key findings",
-      "status": "present",
-      "exact_items": [
-        "`Plans/Progression_Gates.md` and `UI_Wiring_Rules.md` still assume command verification is:"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/Progression_Gates.md:14",
-        "Plans/Progression_Gates.md:271",
-        "Plans/Progression_Gates.md:60",
-        "Plans/Progression_Gates.md:23"
-      ],
-      "required_action": "none"
+      "path_field_status": "match"
     },
     {
-      "coverage_id": "cov-04456",
+      "coverage_id": "cov-330",
+      "status": "missing",
+      "evidence": [],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "Plans/Orchestrator_Page.md does not directly define object-specific context-menu action policy or canonical runtime labels for valid object actions.",
       "source_obligation_ids": [
-        "obl-4262"
+        "obl-098"
       ],
       "source_seed_ids": [
-        "seed-6087"
+        "seed-098"
       ],
       "source_shard_ids": [
-        "shard-0082"
+        "shard-0024"
       ],
-      "canon_label": "39",
-      "row_type": "consumer",
-      "path": "Plans/Progression_Gates.md",
-      "heading_hint": "Do-not-forget details",
-      "status": "present",
-      "exact_items": [
-        "Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes."
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/Progression_Gates.md:8",
-        "Plans/Progression_Gates.md:46",
-        "Plans/Progression_Gates.md:117",
-        "Plans/Progression_Gates.md:14",
-        "Plans/Progression_Gates.md:191",
-        "Plans/Progression_Gates.md:110",
-        "Plans/Progression_Gates.md:11",
-        "Plans/Progression_Gates.md:509"
-      ],
-      "required_action": "none"
+      "path_field_status": "match"
     },
     {
-      "coverage_id": "cov-04752",
+      "coverage_id": "cov-333",
+      "status": "missing",
+      "evidence": [],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "Plans/Orchestrator_Page.md does not directly define a shared destination payload model across command palette, shortcuts, context menus, and widgets with the requested fields.",
       "source_obligation_ids": [
-        "obl-4467"
+        "obl-099"
       ],
       "source_seed_ids": [
-        "seed-6459"
+        "seed-099"
       ],
       "source_shard_ids": [
-        "shard-0086"
+        "shard-0024"
       ],
-      "canon_label": "Plans/Progression_Gates.md",
-      "row_type": "consumer",
-      "path": "Plans/Progression_Gates.md",
-      "heading_hint": "Targeted docs checked for coverage convergence",
-      "status": "present",
-      "exact_items": [
-        "`Plans/Progression_Gates.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/Progression_Gates.md:14",
-        "Plans/Progression_Gates.md:309",
-        "Plans/Progression_Gates.md:191",
-        "Plans/Progression_Gates.md:8"
-      ],
-      "required_action": "none"
+      "path_field_status": "match"
     },
     {
-      "coverage_id": "cov-04780",
-      "source_obligation_ids": [
-        "obl-4495"
-      ],
-      "source_seed_ids": [
-        "seed-6487"
-      ],
-      "source_shard_ids": [
-        "shard-0086"
-      ],
-      "canon_label": "Plans/Progression_Gates.md",
-      "row_type": "consumer",
-      "path": "Plans/Progression_Gates.md",
-      "heading_hint": "Docs clearly implicated",
+      "coverage_id": "cov-453",
       "status": "partial",
-      "exact_items": [
-        "`Plans/Progression_Gates.md`"
-      ],
-      "stale_tokens": [],
       "evidence": [
-        "Plans/Progression_Gates.md:14",
-        "Plans/Progression_Gates.md:191"
+        "Plans/Orchestrator_Page.md:173-183 states inline help, context help, canonical help-entry layers, and stable canonical term names",
+        "Plans/Orchestrator_Page.md:461 states help is layered while canonical term names stay stable"
       ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-04818",
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "The help layers and stable naming are present, but the click/hover behavior that chooses tooltip, side explanation, or dedicated help entry is not fully direct.",
       "source_obligation_ids": [
-        "obl-4533"
+        "obl-132"
       ],
       "source_seed_ids": [
-        "seed-6525"
+        "seed-132"
       ],
       "source_shard_ids": [
-        "shard-0086"
+        "shard-0033"
       ],
-      "canon_label": "Plans/Progression_Gates.md",
-      "row_type": "consumer",
-      "path": "Plans/Progression_Gates.md",
-      "heading_hint": "MUST CHANGE",
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-469",
       "status": "present",
-      "exact_items": [
-        "`Plans/Progression_Gates.md`"
-      ],
-      "stale_tokens": [],
       "evidence": [
-        "Plans/Progression_Gates.md:14",
-        "Plans/Progression_Gates.md:58"
+        "Plans/Orchestrator_Page.md:375-388 maps Progress widgets to focused_run_id-scoped run, lane, concern, artifact, worktree, account, and attention projections",
+        "Plans/Orchestrator_Page.md:396-398 defines focused_run_id with live/historical focus_mode and keeps cross-tab pivots coherent on the focused run"
       ],
-      "required_action": "none"
-    },
-    {
-      "coverage_id": "cov-04859",
+      "required_action": "none",
+      "unresolved_reason": "",
       "source_obligation_ids": [
-        "obl-4574"
+        "obl-137"
       ],
       "source_seed_ids": [
-        "seed-6566"
+        "seed-137"
       ],
       "source_shard_ids": [
-        "shard-0086"
+        "shard-0034"
       ],
-      "canon_label": "Plans/Progression_Gates.md",
-      "row_type": "consumer",
-      "path": "Plans/Progression_Gates.md",
-      "heading_hint": "Same-file supersession hot list",
-      "status": "partial",
-      "exact_items": [
-        "`Plans/Progression_Gates.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/Progression_Gates.md:14",
-        "Plans/Progression_Gates.md:175"
-      ],
-      "required_action": "consumer_propagation"
+      "path_field_status": "match"
     },
     {
-      "coverage_id": "cov-04897",
+      "coverage_id": "cov-629",
+      "status": "missing",
+      "evidence": [],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "Plans/Orchestrator_Page.md does not directly list multiple downstream docs as impacted consumers of execution-context changes.",
       "source_obligation_ids": [
-        "obl-4611"
+        "obl-176"
       ],
       "source_seed_ids": [
-        "seed-6603"
+        "seed-176"
       ],
       "source_shard_ids": [
-        "shard-0087"
+        "shard-0044"
       ],
-      "canon_label": "Plans/Wiring_Matrix.md",
-      "row_type": "consumer",
-      "path": "Plans/Progression_Gates.md",
-      "heading_hint": "Cluster D - Route / open-subject / bridge-field refinement misses",
-      "status": "present",
-      "exact_items": [
-        "`Plans/Wiring_Matrix.md`, `Plans/Progression_Gates.md`, `evidence.schema.json`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/Progression_Gates.md:14",
-        "Plans/Progression_Gates.md:159",
-        "Plans/Progression_Gates.md:37"
-      ],
-      "required_action": "none"
+      "path_field_status": "match"
     },
     {
-      "coverage_id": "cov-04996",
+      "coverage_id": "cov-675",
+      "status": "missing",
+      "evidence": [],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "Plans/Orchestrator_Page.md does not directly list the requested truthful-lineage downstream/highest-risk consumer docs.",
       "source_obligation_ids": [
-        "obl-4684"
+        "obl-189"
       ],
       "source_seed_ids": [
-        "seed-6676"
+        "seed-189"
       ],
       "source_shard_ids": [
-        "shard-0088"
+        "shard-0047"
       ],
-      "canon_label": "Plans/Contracts_V0.md",
-      "row_type": "consumer",
-      "path": "Plans/Progression_Gates.md",
-      "heading_hint": "Route / bridge / normalization misses remain refinement-heavy but are more specific now",
-      "status": "present",
-      "exact_items": [
-        "`Plans/Contracts_V0.md`, `Plans/storage-plan.md`, `Plans/UI_Command_Catalog.md`, `Plans/Crosswalk.md`, `Plans/Wiring_Matrix.md`, `Plans/Progression_Gates.md`, `Plans/FileManager.md`, `Plans/Project_Output_Artifacts.md`"
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-852",
+      "status": "missing",
+      "evidence": [],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "Plans/Orchestrator_Page.md does not directly require surface docs to consume shared navigation primitives instead of local semantics.",
+      "source_obligation_ids": [
+        "obl-237"
       ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/Progression_Gates.md:19",
-        "Plans/Progression_Gates.md:261",
-        "Plans/Progression_Gates.md:14",
-        "Plans/Progression_Gates.md:112",
-        "Plans/Progression_Gates.md:37",
-        "Plans/Progression_Gates.md:500",
-        "Plans/Progression_Gates.md:114",
-        "Plans/Progression_Gates.md:149",
-        "Plans/Progression_Gates.md:118"
+      "source_seed_ids": [
+        "seed-237"
       ],
-      "required_action": "none"
+      "source_shard_ids": [
+        "shard-0060"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-899",
+      "status": "missing",
+      "evidence": [],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "Plans/Orchestrator_Page.md does not directly define route activation override boundaries or persisted-state reuse constraints.",
+      "source_obligation_ids": [
+        "obl-253"
+      ],
+      "source_seed_ids": [
+        "seed-253"
+      ],
+      "source_shard_ids": [
+        "shard-0064"
+      ],
+      "path_field_status": "match"
     }
   ]
 }

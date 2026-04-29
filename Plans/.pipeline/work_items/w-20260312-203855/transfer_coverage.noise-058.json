@@ -1,0 +1,23 @@
+{
+  "schema_id": "pm.transfer_coverage_noise.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-058",
+  "noise_findings": [
+    {
+      "source": "coverage-rowgrp-229",
+      "finding": "coverage_ids_completed was empty; reducer completed cov-930 and stripped generic schema evidence from missing row."
+    },
+    {
+      "source": "coverage-rowgrp-230",
+      "finding": "coverage_ids_completed was empty; reducer completed cov-936 and kept partial for ui_command_id/handler_location schema fields."
+    },
+    {
+      "source": "coverage-rowgrp-231",
+      "finding": "coverage_ids_completed was empty; reducer completed cov-805 and stripped generic schema evidence from missing row."
+    },
+    {
+      "source": "coverage-rowgrp-232",
+      "finding": "coverage_ids_completed was empty; reducer completed cov-684 and kept partial for impacted-doc ContractRef evidence."
+    }
+  ]
+}

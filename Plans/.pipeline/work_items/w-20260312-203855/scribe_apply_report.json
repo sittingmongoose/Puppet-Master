@@ -1,0 +1,229 @@
+{
+  "schema_id": "pm.scribe_apply_report.v3",
+  "work_id": "w-20260312-203855",
+  "run_id": "r-20260312-203855-run-032",
+  "status": "blocked",
+  "triage_class": "reconciliation_plan_defect",
+  "docs_touched": [],
+  "targets_applied": [],
+  "targets_blocked": [
+    {
+      "doc_intent_index": 35,
+      "target_id": "packet-state-files-common-writer",
+      "source_reconciliation_target_ids": [
+        "target-157"
+      ],
+      "path": "Plans/STATE_FILES.md",
+      "status": "blocked",
+      "reason": "update target file is missing",
+      "coverage_row_ids": [
+        "cov-793"
+      ],
+      "source_obligation_ids": [
+        "obl-220"
+      ],
+      "source_seed_ids": [
+        "seed-220"
+      ],
+      "source_shard_ids": [
+        "shard-0056"
+      ],
+      "fidelity_gap_refs": []
+    },
+    {
+      "doc_intent_index": 51,
+      "target_id": "packet-ledger-common-writer",
+      "source_reconciliation_target_ids": [
+        "target-221"
+      ],
+      "path": "Plans/ledger.md",
+      "status": "blocked",
+      "reason": "update target file is missing",
+      "coverage_row_ids": [
+        "cov-285"
+      ],
+      "source_obligation_ids": [
+        "obl-083"
+      ],
+      "source_seed_ids": [
+        "seed-083"
+      ],
+      "source_shard_ids": [
+        "shard-0019"
+      ],
+      "fidelity_gap_refs": []
+    }
+  ],
+  "exact_blockers": [
+    "Plans/STATE_FILES.md is missing for update doc_intent 35 (packet-state-files-common-writer); Scribe cannot create files unless packet intent says create.",
+    "Plans/ledger.md is missing for update doc_intent 51 (packet-ledger-common-writer); Scribe cannot create files unless packet intent says create."
+  ],
+  "packet_span_safety": "pass",
+  "path_field_status": "pass",
+  "next_required_stage": "Reconciliation Planner",
+  "subagent_tasks": [
+    "scribe32-inspect-001-015",
+    "scribe32-inspect-016-030",
+    "scribe32-inspect-031-045",
+    "scribe32-inspect-046-060"
+  ],
+  "assigned_input_boundaries": [
+    {
+      "task": "scribe32-inspect-001-015",
+      "doc_intents": "1-15",
+      "allowed_reads": "active packet, active shape reports, packet_span_conflict_report.json, targeted Plans docs only"
+    },
+    {
+      "task": "scribe32-inspect-016-030",
+      "doc_intents": "16-30",
+      "allowed_reads": "active packet, active shape reports, packet_span_conflict_report.json, targeted Plans docs only"
+    },
+    {
+      "task": "scribe32-inspect-031-045",
+      "doc_intents": "31-45",
+      "allowed_reads": "active packet, active shape reports, packet_span_conflict_report.json, targeted Plans docs only"
+    },
+    {
+      "task": "scribe32-inspect-046-060",
+      "doc_intents": "46-60",
+      "allowed_reads": "active packet, active shape reports, packet_span_conflict_report.json, targeted Plans docs only"
+    }
+  ],
+  "subagent_result_status": {
+    "scribe32-inspect-001-015": "pass",
+    "scribe32-inspect-016-030": "non_material_payload_false_positive; mechanical packet check found content_markdown present",
+    "scribe32-inspect-031-045": "blocked: Plans/STATE_FILES.md missing",
+    "scribe32-inspect-046-060": "blocked: Plans/ledger.md missing"
+  },
+  "completed_task_count": 4,
+  "failed_task_count": 0,
+  "packet_target_ids_assigned": [
+    "packet-00-plans-index-common-writer",
+    "packet-architecture-invariants-common-writer",
+    "packet-cli-bridged-providers-common-writer",
+    "packet-commands-system-common-writer",
+    "packet-contracts-v0-common-writer",
+    "packet-crosswalk-common-writer",
+    "packet-dry-rules-common-writer",
+    "packet-decision-log-common-writer",
+    "packet-decision-policy-common-writer",
+    "packet-executor-protocol-common-writer",
+    "packet-filemanager-common-writer",
+    "packet-filesafe-common-writer",
+    "packet-finalguispec-common-writer",
+    "packet-gui-rebuild-requirements-checklist-common-writer",
+    "packet-github-api-auth-and-flows-common-writer",
+    "packet-github-integration-common-writer",
+    "packet-glossary-common-writer",
+    "packet-media-generation-and-capabilities-common-writer",
+    "packet-miscplan-common-writer",
+    "packet-models-system-common-writer",
+    "packet-multi-account-common-writer",
+    "packet-opencode-coverage-matrix-common-writer",
+    "packet-opencode-deep-extraction-common-writer",
+    "packet-orchestrator-page-common-writer",
+    "packet-permissions-system-common-writer",
+    "packet-personas-common-writer",
+    "packet-progression-gates-common-writer",
+    "packet-project-output-artifacts-common-writer",
+    "packet-prompt-pipeline-common-writer",
+    "packet-provider-opencode-common-writer",
+    "packet-provider-stream-mapping-external-reference-a2a-common-writer",
+    "packet-run-graph-view-common-writer",
+    "packet-run-modes-common-writer",
+    "packet-runtime-artifacts-panel-common-writer",
+    "packet-state-files-common-writer",
+    "packet-section15-mvp-promoted-features-spec-common-writer",
+    "packet-tools-common-writer",
+    "packet-ui-command-catalog-common-writer",
+    "packet-ui-wiring-rules-common-writer",
+    "packet-widget-system-common-writer",
+    "packet-wiring-matrix-common-writer",
+    "packet-wiring-matrix-schema-common-writer",
+    "packet-worktreegitimprovement-common-writer",
+    "packet-assistant-chat-design-common-writer",
+    "packet-assistant-memory-subsystem-common-writer",
+    "packet-chain-wizard-flexibility-common-writer",
+    "packet-evidence-schema-common-writer",
+    "packet-feature-list-common-writer",
+    "packet-human-in-the-loop-common-writer",
+    "packet-interview-subagent-integration-common-writer",
+    "packet-ledger-common-writer",
+    "packet-newfeatures-common-writer",
+    "packet-newtools-common-writer",
+    "packet-orchestrator-subagent-integration-common-writer",
+    "packet-plan-graph-schema-common-writer",
+    "packet-project-plan-graph-index-schema-common-writer",
+    "packet-project-plan-node-schema-common-writer",
+    "packet-rewrite-tie-in-memo-common-writer",
+    "packet-storage-plan-common-writer",
+    "packet-usage-feature-common-writer"
+  ],
+  "packet_target_ids_completed": [
+    "packet-00-plans-index-common-writer",
+    "packet-architecture-invariants-common-writer",
+    "packet-cli-bridged-providers-common-writer",
+    "packet-commands-system-common-writer",
+    "packet-contracts-v0-common-writer",
+    "packet-crosswalk-common-writer",
+    "packet-dry-rules-common-writer",
+    "packet-decision-log-common-writer",
+    "packet-decision-policy-common-writer",
+    "packet-executor-protocol-common-writer",
+    "packet-filemanager-common-writer",
+    "packet-filesafe-common-writer",
+    "packet-finalguispec-common-writer",
+    "packet-gui-rebuild-requirements-checklist-common-writer",
+    "packet-github-api-auth-and-flows-common-writer",
+    "packet-github-integration-common-writer",
+    "packet-glossary-common-writer",
+    "packet-media-generation-and-capabilities-common-writer",
+    "packet-miscplan-common-writer",
+    "packet-models-system-common-writer",
+    "packet-multi-account-common-writer",
+    "packet-opencode-coverage-matrix-common-writer",
+    "packet-opencode-deep-extraction-common-writer",
+    "packet-orchestrator-page-common-writer",
+    "packet-permissions-system-common-writer",
+    "packet-personas-common-writer",
+    "packet-progression-gates-common-writer",
+    "packet-project-output-artifacts-common-writer",
+    "packet-prompt-pipeline-common-writer",
+    "packet-provider-opencode-common-writer",
+    "packet-provider-stream-mapping-external-reference-a2a-common-writer",
+    "packet-run-graph-view-common-writer",
+    "packet-run-modes-common-writer",
+    "packet-runtime-artifacts-panel-common-writer",
+    "packet-state-files-common-writer",
+    "packet-section15-mvp-promoted-features-spec-common-writer",
+    "packet-tools-common-writer",
+    "packet-ui-command-catalog-common-writer",
+    "packet-ui-wiring-rules-common-writer",
+    "packet-widget-system-common-writer",
+    "packet-wiring-matrix-common-writer",
+    "packet-wiring-matrix-schema-common-writer",
+    "packet-worktreegitimprovement-common-writer",
+    "packet-assistant-chat-design-common-writer",
+    "packet-assistant-memory-subsystem-common-writer",
+    "packet-chain-wizard-flexibility-common-writer",
+    "packet-evidence-schema-common-writer",
+    "packet-feature-list-common-writer",
+    "packet-human-in-the-loop-common-writer",
+    "packet-interview-subagent-integration-common-writer",
+    "packet-ledger-common-writer",
+    "packet-newfeatures-common-writer",
+    "packet-newtools-common-writer",
+    "packet-orchestrator-subagent-integration-common-writer",
+    "packet-plan-graph-schema-common-writer",
+    "packet-project-plan-graph-index-schema-common-writer",
+    "packet-project-plan-node-schema-common-writer",
+    "packet-rewrite-tie-in-memo-common-writer",
+    "packet-storage-plan-common-writer",
+    "packet-usage-feature-common-writer"
+  ],
+  "packet_target_ids_blocked": [
+    "packet-state-files-common-writer",
+    "packet-ledger-common-writer"
+  ],
+  "packet_target_ids_applied": []
+}

@@ -1,0 +1,23 @@
+{
+  "schema_id": "pm.transfer_coverage_noise.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-032",
+  "noise_findings": [
+    {
+      "source": "coverage-rowgrp-125",
+      "finding": "Subagent returned malformed assigned/completed IDs; reducer normalized schema, downgraded catalog/GUI/help rows where Orchestrator_Page only has adjacent local evidence."
+    },
+    {
+      "source": "coverage-rowgrp-126",
+      "finding": "Reducer preserved owner rows mostly partial; page-shell, route-target, export, and action-policy evidence is adjacent but not full owner-contract coverage."
+    },
+    {
+      "source": "coverage-rowgrp-127",
+      "finding": "Reducer preserved cov-412 present for exact concern record/lifecycle/minimum shape; all other identity, project-state, help, and projection-trust rows remain partial."
+    },
+    {
+      "source": "coverage-rowgrp-128",
+      "finding": "Reducer downgraded cov-1000 from partial to missing because focused-run evidence does not cover blocked_sequence; kept account-switch and worktree lifecycle rows partial where adjacent evidence exists."
+    }
+  ]
+}

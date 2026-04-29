@@ -1,453 +1,445 @@
 {
-  "schema_id": "pm.transfer_coverage_wave.v1",
+  "schema_id": "pm.transfer_coverage_wave.v3",
   "work_id": "w-20260312-203855",
   "wave_id": "wave-052",
-  "row_groups": [
-    "rowgrp-0205",
-    "rowgrp-0206",
-    "rowgrp-0207",
-    "rowgrp-0208"
+  "timestamp_utc": "2026-04-28T21:21:22Z",
+  "subagent_tasks": [
+    "coverage-rowgrp-205",
+    "coverage-rowgrp-206",
+    "coverage-rowgrp-207",
+    "coverage-rowgrp-208"
   ],
-  "coverage_rows": [
+  "assigned_input_boundaries": [
+    "rowgrp-205 cov-1052,cov-1132,cov-1176,cov-1229 Plans/UI_Command_Catalog.md",
+    "rowgrp-206 cov-872,cov-902 Plans/UI_Command_Catalog.md",
+    "rowgrp-207 cov-040,cov-153,cov-494,cov-537,cov-646,cov-726,cov-801,cov-816,cov-879,cov-933 Plans/UI_Command_Catalog.md",
+    "rowgrp-208 cov-1044,cov-1135,cov-1257 Plans/UI_Command_Catalog.md"
+  ],
+  "subagent_result_status": {
+    "coverage-rowgrp-205": "completed_reduced_conservatively_with_schema_normalization",
+    "coverage-rowgrp-206": "completed_reduced_conservatively_with_schema_normalization",
+    "coverage-rowgrp-207": "completed_reduced_conservatively_with_schema_normalization",
+    "coverage-rowgrp-208": "completed_reduced_conservatively_with_schema_normalization"
+  },
+  "completed_task_count": 4,
+  "failed_task_count": 0,
+  "coverage_ids_assigned": [
+    "cov-1052",
+    "cov-1132",
+    "cov-1176",
+    "cov-1229",
+    "cov-872",
+    "cov-902",
+    "cov-040",
+    "cov-153",
+    "cov-494",
+    "cov-537",
+    "cov-646",
+    "cov-726",
+    "cov-801",
+    "cov-816",
+    "cov-879",
+    "cov-933",
+    "cov-1044",
+    "cov-1135",
+    "cov-1257"
+  ],
+  "coverage_ids_completed": [
+    "cov-1052",
+    "cov-1132",
+    "cov-1176",
+    "cov-1229",
+    "cov-872",
+    "cov-902",
+    "cov-040",
+    "cov-153",
+    "cov-494",
+    "cov-537",
+    "cov-646",
+    "cov-726",
+    "cov-801",
+    "cov-816",
+    "cov-879",
+    "cov-933",
+    "cov-1044",
+    "cov-1135",
+    "cov-1257"
+  ],
+  "path_groups_assigned": [
+    "Plans/UI_Command_Catalog.md"
+  ],
+  "rows": [
     {
-      "coverage_id": "cov-04563",
-      "source_obligation_ids": [
-        "obl-4283"
-      ],
-      "source_seed_ids": [
-        "seed-6167"
-      ],
-      "source_shard_ids": [
-        "shard-0082"
-      ],
-      "canon_label": "Plans/*.md",
-      "row_type": "layout_blocker",
-      "path": "Plans/newfeatures.md",
-      "heading_hint": "Do-not-forget details",
-      "status": "present",
-      "exact_items": [
-        "After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes."
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/newfeatures.md:15",
-        "Plans/newfeatures.md:18",
-        "Plans/newfeatures.md:11",
-        "Plans/newfeatures.md:8"
-      ],
-      "required_action": "none"
-    },
-    {
-      "coverage_id": "cov-04732",
-      "source_obligation_ids": [
-        "obl-4447"
-      ],
-      "source_seed_ids": [
-        "seed-6428"
-      ],
-      "source_shard_ids": [
-        "shard-0085"
-      ],
-      "canon_label": "Plans/newfeatures.md",
-      "row_type": "layout_blocker",
-      "path": "Plans/newfeatures.md",
-      "heading_hint": "Key findings",
+      "coverage_id": "cov-1052",
       "status": "partial",
-      "exact_items": [
-        "`Plans/newfeatures.md` is also still mirroring older surface/runtime language:"
-      ],
-      "stale_tokens": [],
       "evidence": [
-        "Plans/newfeatures.md:59"
+        "Plans/UI_Command_Catalog.md:247-272 classifies Orchestrator object opens as route-consuming navigation wrappers, not layout-only commands, and defines canonical route_target semantics"
       ],
-      "required_action": "packetizable_layout_repair"
-    },
-    {
-      "coverage_id": "cov-00495",
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Related route-consuming/layout-only command language exists, but cmd.panel.switch overload and shell_view/navigation_wrapper/domain_action classification are absent.",
       "source_obligation_ids": [
-        "obl-0480"
+        "obl-298"
       ],
       "source_seed_ids": [
-        "seed-0485"
+        "seed-298"
       ],
       "source_shard_ids": [
-        "shard-0007"
+        "shard-0075"
       ],
-      "canon_label": "Plans/FileSafe.md",
-      "row_type": "consumer",
-      "path": "Plans/newtools.md",
-      "heading_hint": "Highest-Impact Docs",
-      "status": "present",
-      "exact_items": [
-        "**`Plans/FileSafe.md` + `Plans/WorktreeGitImprovement.md` + `Plans/newtools.md`**"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/newtools.md:115",
-        "Plans/newtools.md:304",
-        "Plans/newtools.md:56"
-      ],
-      "required_action": "none"
+      "path_field_status": "match"
     },
     {
-      "coverage_id": "cov-00549",
-      "source_obligation_ids": [
-        "obl-0527"
-      ],
-      "source_seed_ids": [
-        "seed-0532"
-      ],
-      "source_shard_ids": [
-        "shard-0008"
-      ],
-      "canon_label": "Plans/newtools.md",
-      "row_type": "consumer",
-      "path": "Plans/newtools.md",
-      "heading_hint": "Highest-Impact Docs",
-      "status": "present",
-      "exact_items": [
-        "**`Plans/newtools.md` + `Plans/FileSafe.md` + `Plans/WorktreeGitImprovement.md` + `Plans/MiscPlan.md`**"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/newtools.md:304",
-        "Plans/newtools.md:115",
-        "Plans/newtools.md:116",
-        "Plans/newtools.md:56"
-      ],
-      "required_action": "none"
-    },
-    {
-      "coverage_id": "cov-00717",
-      "source_obligation_ids": [
-        "obl-0659"
-      ],
-      "source_seed_ids": [
-        "seed-0665"
-      ],
-      "source_shard_ids": [
-        "shard-0010"
-      ],
-      "canon_label": "Plans/newtools.md",
-      "row_type": "consumer",
-      "path": "Plans/newtools.md",
-      "heading_hint": "Settings / Provider / Persona / Account Impacts",
-      "status": "present",
-      "exact_items": [
-        "`Plans/newtools.md`, `Plans/assistant-chat-design.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/newtools.md:304",
-        "Plans/newtools.md:564",
-        "Plans/newtools.md:71",
-        "Plans/newtools.md:18",
-        "Plans/newtools.md:22"
-      ],
-      "required_action": "none"
-    },
-    {
-      "coverage_id": "cov-00728",
-      "source_obligation_ids": [
-        "obl-0667"
-      ],
-      "source_seed_ids": [
-        "seed-0684"
-      ],
-      "source_shard_ids": [
-        "shard-0010"
-      ],
-      "canon_label": "Plans/newtools.md",
-      "row_type": "consumer",
-      "path": "Plans/newtools.md",
-      "heading_hint": "Cleanup Priorities",
+      "coverage_id": "cov-1132",
       "status": "partial",
-      "exact_items": [
-        "`Plans/newtools.md`"
-      ],
-      "stale_tokens": [],
       "evidence": [
-        "Plans/newtools.md:304",
-        "Plans/newtools.md:109"
+        "Plans/UI_Command_Catalog.md:68-77 defines the command entry contract and route_target canonical open/focus ownership",
+        "Plans/UI_Command_Catalog.md:95-103 defines canonical route payload and route/open tail rules including route_target and OpenSubject",
+        "Plans/UI_Command_Catalog.md:123-137 includes route_target/open_subject in normalized command records and preserves them"
       ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-02691",
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "route_target/OpenSubject are present in UI_Command_Catalog, but the row requires Contracts_V0 owner-contract insertion and owner-doc drift repair, so direct coverage is incomplete.",
       "source_obligation_ids": [
-        "obl-2611"
+        "obl-329"
       ],
       "source_seed_ids": [
-        "seed-3276",
-        "seed-3467",
-        "seed-3773",
-        "seed-3865",
-        "seed-4118"
+        "seed-329"
       ],
       "source_shard_ids": [
-        "shard-0049",
-        "shard-0052",
-        "shard-0055",
-        "shard-0056",
-        "shard-0058"
+        "shard-0083"
       ],
-      "canon_label": "Plans/newtools.md",
-      "row_type": "consumer",
-      "path": "Plans/newtools.md",
-      "heading_hint": "Targeted docs read",
-      "status": "present",
-      "exact_items": [
-        "`Plans/newtools.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/newtools.md:304",
-        "Plans/newtools.md:575",
-        "Plans/newtools.md:56",
-        "Plans/newtools.md:113"
-      ],
-      "required_action": "none"
+      "path_field_status": "match"
     },
     {
-      "coverage_id": "cov-02719",
+      "coverage_id": "cov-1176",
+      "status": "missing",
+      "evidence": [],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Plans/UI_Command_Catalog.md does not contain MUST CHANGE, MUST RECONCILE, or MUST VERIFY packet classification guidance.",
       "source_obligation_ids": [
-        "obl-2639"
+        "obl-339"
       ],
       "source_seed_ids": [
-        "seed-3305"
+        "seed-339"
       ],
       "source_shard_ids": [
-        "shard-0050"
+        "shard-0086"
       ],
-      "canon_label": "Plans/newtools.md",
-      "row_type": "consumer",
-      "path": "Plans/newtools.md",
-      "heading_hint": "",
-      "status": "present",
-      "exact_items": [
-        "`Plans/newtools.md` and `Plans/assistant-memory-subsystem.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/newtools.md:304",
-        "Plans/newtools.md:556"
-      ],
-      "required_action": "none"
+      "path_field_status": "match"
     },
     {
-      "coverage_id": "cov-02850",
+      "coverage_id": "cov-1229",
+      "status": "partial",
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:68-77 has the exact 2.0 Command entry contract doc-level anchor",
+        "Plans/UI_Command_Catalog.md:674-677 defines search command routing through route_target and references search routing policy",
+        "Plans/UI_Command_Catalog.md:247-255 defines runtime recovery command normalization and route_target semantics"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Related anchors exist, but Canonical runtime recovery command ownership is not an exact heading and orchestrator.project_state.{project_id} is absent.",
       "source_obligation_ids": [
-        "obl-2769"
+        "obl-347"
       ],
       "source_seed_ids": [
-        "seed-3496",
-        "seed-3816",
-        "seed-3910",
-        "seed-4154",
-        "seed-4474"
+        "seed-347"
       ],
       "source_shard_ids": [
-        "shard-0052",
-        "shard-0056",
-        "shard-0058",
+        "shard-0089"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-872",
+      "status": "partial",
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:95-109 defines canonical route payload and route/open tail rules for route_target, OpenSubject, execution_unit_context, approval_scope_key, and operational_identity",
+        "Plans/UI_Command_Catalog.md:308 routes Orchestrator commands through the shared route payload when navigating"
+      ],
+      "required_action": "stale_retirement",
+      "unresolved_reason": "Canonical route-payload language exists, but migration rules for producers/consumers and non-permanent aliases are absent.",
+      "source_obligation_ids": [
+        "obl-245"
+      ],
+      "source_seed_ids": [
+        "seed-245"
+      ],
+      "source_shard_ids": [
         "shard-0062"
       ],
-      "canon_label": "Plans/newtools.md",
-      "row_type": "consumer",
-      "path": "Plans/newtools.md",
-      "heading_hint": "Impacted docs",
-      "status": "partial",
-      "exact_items": [
-        "`Plans/newtools.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/newtools.md:304",
-        "Plans/newtools.md:56"
-      ],
-      "required_action": "consumer_propagation"
+      "path_field_status": "match"
     },
     {
-      "coverage_id": "cov-02884",
+      "coverage_id": "cov-902",
+      "status": "partial",
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:95-109 defines canonical route payload and route/open tail rules",
+        "Plans/UI_Command_Catalog.md:754 routes selector precedence and scoped resolver behavior through canonical route payload rules"
+      ],
+      "required_action": "stale_retirement",
+      "unresolved_reason": "Canonical route payload rules exist, but no direct retirement of docs that package destination selection and panel-local state together is present.",
       "source_obligation_ids": [
-        "obl-2803"
+        "obl-254"
       ],
       "source_seed_ids": [
-        "seed-3538",
-        "seed-3852"
+        "seed-254"
       ],
       "source_shard_ids": [
-        "shard-0052",
+        "shard-0064"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-040",
+      "status": "partial",
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:141-143 retires TierContext, tier_id, TierType, Tiers, Phase-Task-Subtask runtime canon, allowed_actions[], reason_code, recovery_options[], and approve_continue"
+      ],
+      "required_action": "stale_retirement",
+      "unresolved_reason": "TierContext/Phase/tier-era tokens are covered, but Overseer and PuppetMasterEvent::* are absent.",
+      "source_obligation_ids": [
+        "obl-024"
+      ],
+      "source_seed_ids": [
+        "seed-024"
+      ],
+      "source_shard_ids": [
+        "shard-0004"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-153",
+      "status": "partial",
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:142-143 retires allowed_actions[] survivors from live blocked/HITL contracts",
+        "Plans/UI_Command_Catalog.md:253-254 retires cmd.graph.approve_hitl/cmd.graph.deny_hitl as canonical command IDs and normalizes graph wrappers to cmd.runtime.*"
+      ],
+      "required_action": "stale_retirement",
+      "unresolved_reason": "allowed_actions and graph/runtime recovery evidence exists, but tier-boundary HITL wording and compatibility policy remain incomplete.",
+      "source_obligation_ids": [
+        "obl-042"
+      ],
+      "source_seed_ids": [
+        "seed-042"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-494",
+      "status": "partial",
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:694-703 defines canonical cmd.runtime.* recovery commands with run_id, node_id, blocked_sequence, and attempt_id fields",
+        "Plans/UI_Command_Catalog.md:716 maps blocked-state recovery buttons/menu entries from allowed_action_ids[] to canonical runtime commands"
+      ],
+      "required_action": "stale_retirement",
+      "unresolved_reason": "Some runtime IDs and allowed_action_ids coverage exists, but provider account snapshot and requested/effective account span tokens are absent.",
+      "source_obligation_ids": [
+        "obl-142"
+      ],
+      "source_seed_ids": [
+        "seed-142"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-537",
+      "status": "partial",
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:236-241 lists cmd.widget.* commands with page arguments for add/remove/resize/configure/move/reset layout"
+      ],
+      "required_action": "stale_retirement",
+      "unresolved_reason": "The widget family and page field are present, but the typed-routing replacement for generic page:string is not stated.",
+      "source_obligation_ids": [
+        "obl-154"
+      ],
+      "source_seed_ids": [
+        "seed-154"
+      ],
+      "source_shard_ids": [
+        "shard-0038"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-646",
+      "status": "partial",
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:142-143 retires allowed_actions[] and approve_continue survivors",
+        "Plans/UI_Command_Catalog.md:711 states pre-attempt blocked episodes must not fabricate attempt_id",
+        "Plans/UI_Command_Catalog.md:716 maps blocked-state recovery from allowed_action_ids[] to canonical runtime commands"
+      ],
+      "required_action": "stale_retirement",
+      "unresolved_reason": "Legacy fields and pre-attempt rule exist, but explicit compatibility-only retirement wording is incomplete.",
+      "source_obligation_ids": [
+        "obl-182"
+      ],
+      "source_seed_ids": [
+        "seed-182"
+      ],
+      "source_shard_ids": [
+        "shard-0045"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-726",
+      "status": "partial",
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:141-144 limits the subsection to tier-era retirement and retires tier-era runtime canon",
+        "Plans/UI_Command_Catalog.md:384-385 distinguishes project-scope cmd.git.worktree.* inventory from thread-scoped cmd.chat.worktree.* wrappers"
+      ],
+      "required_action": "stale_retirement",
+      "unresolved_reason": "Tier-era retirement and worktree wording exist, but lane/worktree/package/seam cleanup guidance is absent.",
+      "source_obligation_ids": [
+        "obl-198"
+      ],
+      "source_seed_ids": [
+        "seed-198"
+      ],
+      "source_shard_ids": [
+        "shard-0049"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-801",
+      "status": "partial",
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:147-156 requires command verification through Wiring_Matrix.schema.json and GATE-010 hooks",
+        "Plans/UI_Command_Catalog.md:690 defines cmd.runtime.* as the shared canonical recovery namespace"
+      ],
+      "required_action": "stale_retirement",
+      "unresolved_reason": "Command/schema evidence exists, but the row-specific warning about plain cmd.* stale tokens and mechanical false positives/negatives is absent.",
+      "source_obligation_ids": [
+        "obl-223"
+      ],
+      "source_seed_ids": [
+        "seed-223"
+      ],
+      "source_shard_ids": [
         "shard-0056"
       ],
-      "canon_label": "Plans/newtools.md",
-      "row_type": "consumer",
-      "path": "Plans/newtools.md",
-      "heading_hint": "Do-not-forget details",
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-816",
       "status": "partial",
-      "exact_items": [
-        "`Plans/newtools.md`"
-      ],
-      "stale_tokens": [],
       "evidence": [
-        "Plans/newtools.md:304",
-        "Plans/newtools.md:21"
+        "Plans/UI_Command_Catalog.md:147-156 defines wiring matrix/schema and GATE-010 verification requirements"
       ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-03342",
+      "required_action": "stale_retirement",
+      "unresolved_reason": "Wiring verification exists, but cmd.nav.* family and stale example cleanup are absent.",
       "source_obligation_ids": [
-        "obl-3198"
+        "obl-227"
       ],
       "source_seed_ids": [
-        "seed-4180"
+        "seed-227"
       ],
       "source_shard_ids": [
-        "shard-0059"
+        "shard-0057"
       ],
-      "canon_label": "Plans/*.md",
-      "row_type": "consumer",
-      "path": "Plans/newtools.md",
-      "heading_hint": "Do-not-forget details",
-      "status": "present",
-      "exact_items": [
-        "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage."
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/newtools.md:1232",
-        "Plans/newtools.md:3",
-        "Plans/newtools.md:90",
-        "Plans/newtools.md:56",
-        "Plans/newtools.md:22",
-        "Plans/newtools.md:292",
-        "Plans/newtools.md:10",
-        "Plans/newtools.md:19",
-        "Plans/newtools.md:21"
-      ],
-      "required_action": "none"
+      "path_field_status": "match"
     },
     {
-      "coverage_id": "cov-04481",
-      "source_obligation_ids": [
-        "obl-4262"
-      ],
-      "source_seed_ids": [
-        "seed-6087"
-      ],
-      "source_shard_ids": [
-        "shard-0082"
-      ],
-      "canon_label": "39",
-      "row_type": "consumer",
-      "path": "Plans/newtools.md",
-      "heading_hint": "Do-not-forget details",
-      "status": "present",
-      "exact_items": [
-        "Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes."
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/newtools.md:145",
-        "Plans/newtools.md:7",
-        "Plans/newtools.md:93",
-        "Plans/newtools.md:495",
-        "Plans/newtools.md:3",
-        "Plans/newtools.md:56",
-        "Plans/newtools.md:10",
-        "Plans/newtools.md:271",
-        "Plans/newtools.md:1232",
-        "Plans/newtools.md:21"
-      ],
-      "required_action": "none"
-    },
-    {
-      "coverage_id": "cov-04807",
-      "source_obligation_ids": [
-        "obl-4522"
-      ],
-      "source_seed_ids": [
-        "seed-6514"
-      ],
-      "source_shard_ids": [
-        "shard-0086"
-      ],
-      "canon_label": "Plans/newtools.md",
-      "row_type": "consumer",
-      "path": "Plans/newtools.md",
-      "heading_hint": "Docs that could drift if left untouched",
+      "coverage_id": "cov-879",
       "status": "partial",
-      "exact_items": [
-        "`Plans/newtools.md`"
-      ],
-      "stale_tokens": [],
       "evidence": [
-        "Plans/newtools.md:304",
-        "Plans/newtools.md:56"
+        "Plans/UI_Command_Catalog.md:286-288 lists subject_id, object_kind, and object_id fields",
+        "Plans/UI_Command_Catalog.md:671-672 uses subject_id for cmd.search.open_result and cmd.search.replace_selected canonical subject identity"
       ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-04845",
+      "required_action": "stale_retirement",
+      "unresolved_reason": "Subject/object identity exists, but explicit migration discipline for replacing raw local IDs is absent.",
       "source_obligation_ids": [
-        "obl-4560"
+        "obl-247"
       ],
       "source_seed_ids": [
-        "seed-6552"
+        "seed-247"
       ],
       "source_shard_ids": [
-        "shard-0086"
+        "shard-0062"
       ],
-      "canon_label": "Plans/newtools.md",
-      "row_type": "consumer",
-      "path": "Plans/newtools.md",
-      "heading_hint": "MUST VERIFY",
-      "status": "present",
-      "exact_items": [
-        "`Plans/newtools.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/newtools.md:304",
-        "Plans/newtools.md:103"
-      ],
-      "required_action": "none"
+      "path_field_status": "match"
     },
     {
-      "coverage_id": "cov-04564",
+      "coverage_id": "cov-933",
+      "status": "partial",
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:156 references Gate:GATE-010"
+      ],
+      "required_action": "stale_retirement",
+      "unresolved_reason": "GATE-010 appears, but deprecated alias metadata and alias-resolution verification are absent.",
       "source_obligation_ids": [
-        "obl-4283"
+        "obl-262"
       ],
       "source_seed_ids": [
-        "seed-6167"
+        "seed-262"
       ],
       "source_shard_ids": [
-        "shard-0082"
+        "shard-0066"
       ],
-      "canon_label": "Plans/*.md",
-      "row_type": "layout_blocker",
-      "path": "Plans/newtools.md",
-      "heading_hint": "Do-not-forget details",
-      "status": "present",
-      "exact_items": [
-        "After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes."
-      ],
-      "stale_tokens": [],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-1044",
+      "status": "partial",
       "evidence": [
-        "Plans/newtools.md:93",
-        "Plans/newtools.md:114",
-        "Plans/newtools.md:495",
-        "Plans/newtools.md:3",
-        "Plans/newtools.md:580",
-        "Plans/newtools.md:316",
-        "Plans/newtools.md:56",
-        "Plans/newtools.md:7",
-        "Plans/newtools.md:22",
-        "Plans/newtools.md:19",
-        "Plans/newtools.md:21"
+        "Plans/UI_Command_Catalog.md:439 retires cmd.chat.open_thread_usage, cmd.chat.focus_thread_usage, and cmd.chat.close_thread_usage as non-canonical IDs",
+        "Plans/UI_Command_Catalog.md:314 references Source Control cmd.source_control.* as an operational command group"
       ],
-      "required_action": "none"
+      "required_action": "stale_retirement",
+      "unresolved_reason": "Chat usage IDs are directly retired, but cmd.source_control.select_worktree and cmd.panel.switch are not directly covered.",
+      "source_obligation_ids": [
+        "obl-294"
+      ],
+      "source_seed_ids": [
+        "seed-294"
+      ],
+      "source_shard_ids": [
+        "shard-0074"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-1135",
+      "status": "partial",
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:141-144 retires tier_id and allowed_actions[] survivors from blocked/HITL contracts",
+        "Plans/UI_Command_Catalog.md:252-254 moves graph approval/recovery commands to blocked/runtime identity, not request_id, and retires graph HITL command IDs"
+      ],
+      "required_action": "stale_retirement",
+      "unresolved_reason": "Some request/tier/runtime retirement themes are present, but request_kind=tier_boundary_approval, tier_type, and ordered allowed_action_ids[] are incomplete.",
+      "source_obligation_ids": [
+        "obl-330"
+      ],
+      "source_seed_ids": [
+        "seed-330"
+      ],
+      "source_shard_ids": [
+        "shard-0083"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-1257",
+      "status": "missing",
+      "evidence": [],
+      "required_action": "stale_retirement",
+      "unresolved_reason": "Plans/UI_Command_Catalog.md has no direct coverage for blocked_notice, escalation_level, action_available, detached_window, result_id, stale verdicts, or restore-point contradiction text.",
+      "source_obligation_ids": [
+        "obl-355"
+      ],
+      "source_seed_ids": [
+        "seed-355"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "path_field_status": "match"
     }
   ]
 }

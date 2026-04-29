@@ -1,392 +1,273 @@
 {
-  "schema_id": "pm.transfer_coverage_wave.v1",
+  "schema_id": "pm.transfer_coverage_wave.v3",
   "work_id": "w-20260312-203855",
   "wave_id": "wave-010",
-  "row_groups": [
-    "rowgrp-0037",
-    "rowgrp-0038",
-    "rowgrp-0039",
-    "rowgrp-0040"
+  "timestamp_utc": "2026-04-28T19:38:34Z",
+  "subagent_tasks": [
+    "coverage-rowgrp-037",
+    "coverage-rowgrp-038",
+    "coverage-rowgrp-039",
+    "coverage-rowgrp-040"
   ],
-  "coverage_rows": [
+  "assigned_input_boundaries": [
+    "rowgrp-037 cov-172,cov-405,cov-728,cov-866,cov-880,cov-1127 Plans/Crosswalk.md",
+    "rowgrp-038 cov-1118 Plans/DRY_Rules.md",
+    "rowgrp-039 cov-1105,cov-1130,cov-1170 Plans/DRY_Rules.md",
+    "rowgrp-040 cov-1126 Plans/DRY_Rules.md"
+  ],
+  "subagent_result_status": {
+    "coverage-rowgrp-037": "completed_reduced_conservatively",
+    "coverage-rowgrp-038": "completed_reduced_conservatively",
+    "coverage-rowgrp-039": "completed",
+    "coverage-rowgrp-040": "completed_reduced_conservatively"
+  },
+  "completed_task_count": 4,
+  "failed_task_count": 0,
+  "coverage_ids_assigned": [
+    "cov-172",
+    "cov-405",
+    "cov-728",
+    "cov-866",
+    "cov-880",
+    "cov-1127",
+    "cov-1118",
+    "cov-1105",
+    "cov-1130",
+    "cov-1170",
+    "cov-1126"
+  ],
+  "coverage_ids_completed": [
+    "cov-172",
+    "cov-405",
+    "cov-728",
+    "cov-866",
+    "cov-880",
+    "cov-1127",
+    "cov-1118",
+    "cov-1105",
+    "cov-1130",
+    "cov-1170",
+    "cov-1126"
+  ],
+  "path_groups_assigned": [
+    "Plans/Crosswalk.md",
+    "Plans/DRY_Rules.md"
+  ],
+  "rows": [
     {
-      "coverage_id": "cov-04571",
+      "coverage_id": "cov-172",
+      "status": "missing",
+      "evidence": [
+        "Plans/Crosswalk.md: assigned file reviewed; no live tier-boundary, single-Overseer, or tier-terms cleanup coverage found"
+      ],
+      "required_action": "stale_retirement",
+      "unresolved_reason": "No live stale-token occurrence or row-specific cleanup coverage was found in Plans/Crosswalk.md.",
       "source_obligation_ids": [
-        "obl-4286"
+        "obl-046"
       ],
       "source_seed_ids": [
-        "seed-6173"
+        "seed-046"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-405",
+      "status": "partial",
+      "evidence": [
+        "Plans/Crosswalk.md:199 historical projection behavior is referenced"
+      ],
+      "required_action": "stale_retirement",
+      "unresolved_reason": "Only adjacent historical vocabulary appears; the full shared historical-semantic vocabulary is not covered in Crosswalk.md.",
+      "source_obligation_ids": [
+        "obl-119"
+      ],
+      "source_seed_ids": [
+        "seed-119"
+      ],
+      "source_shard_ids": [
+        "shard-0030"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-728",
+      "status": "missing",
+      "evidence": [
+        "Plans/Crosswalk.md: assigned file reviewed; no matching tier-era consumer or old worktree/tier cleanup coverage found"
+      ],
+      "required_action": "stale_retirement",
+      "unresolved_reason": "No live stale-token occurrence or row-specific cleanup coverage was found in Plans/Crosswalk.md.",
+      "source_obligation_ids": [
+        "obl-198"
+      ],
+      "source_seed_ids": [
+        "seed-198"
+      ],
+      "source_shard_ids": [
+        "shard-0049"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-866",
+      "status": "partial",
+      "evidence": [
+        "Plans/Crosswalk.md:88 route_target strings resolve through a cascade"
+      ],
+      "required_action": "stale_retirement",
+      "unresolved_reason": "route_target appears in Crosswalk.md, but route-local surrogate ID retirement is not fully covered.",
+      "source_obligation_ids": [
+        "obl-243"
+      ],
+      "source_seed_ids": [
+        "seed-243"
+      ],
+      "source_shard_ids": [
+        "shard-0061"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-880",
+      "status": "missing",
+      "evidence": [
+        "Plans/Crosswalk.md: assigned file reviewed; no live cmd.runtime.*, subject_id, object_kind, or object_id migration-discipline coverage found"
+      ],
+      "required_action": "stale_retirement",
+      "unresolved_reason": "No row-specific raw local ID migration discipline coverage was found in Plans/Crosswalk.md.",
+      "source_obligation_ids": [
+        "obl-247"
+      ],
+      "source_seed_ids": [
+        "seed-247"
+      ],
+      "source_shard_ids": [
+        "shard-0062"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-1127",
+      "status": "partial",
+      "evidence": [
+        "Plans/Crosswalk.md:50 ContractRef is present",
+        "Plans/Crosswalk.md:81 ContractRef uses ContractName:Contracts_V0.md without the Plans/ path form"
+      ],
+      "required_action": "stale_retirement",
+      "unresolved_reason": "ContractRef anchor cleanup pressure is visible, but duplicate-number and section-anchor cleanup are not fully covered.",
+      "source_obligation_ids": [
+        "obl-326"
+      ],
+      "source_seed_ids": [
+        "seed-326"
       ],
       "source_shard_ids": [
         "shard-0082"
       ],
-      "canon_label": "Plans/Decision_Log.md",
-      "row_type": "owner",
-      "path": "Plans/Decision_Log.md",
-      "heading_hint": "Key findings",
-      "status": "present",
-      "exact_items": [
-        "`Plans/Decision_Log.md` is not functioning as a rewrite-era decision ledger. It contains only two OpenCode extraction entries from `2026-02-27` and none of the major owner decisions already established across this research wave:"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/Decision_Log.md:1",
-        "Plans/Decision_Log.md:12",
-        "Plans/Decision_Log.md:10",
-        "Plans/Decision_Log.md:13",
-        "Plans/Decision_Log.md:6",
-        "Plans/Decision_Log.md:54"
-      ],
-      "required_action": "none"
+      "path_field_status": "match"
     },
     {
-      "coverage_id": "cov-00437",
-      "source_obligation_ids": [
-        "obl-0434"
-      ],
-      "source_seed_ids": [
-        "seed-0439"
-      ],
-      "source_shard_ids": [
-        "shard-0007"
-      ],
-      "canon_label": "Plans/Glossary.md",
-      "row_type": "consumer",
-      "path": "Plans/Decision_Policy.md",
-      "heading_hint": "Cleanup Priorities",
-      "status": "present",
-      "exact_items": [
-        "`Plans/Glossary.md`, `Plans/Decision_Policy.md`, `Plans/Crosswalk.md`: Need to adopt Seam/Lane/Overseer/Package terminology."
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/Decision_Policy.md:28",
-        "Plans/Decision_Policy.md:3",
-        "Plans/Decision_Policy.md:26",
-        "Plans/Decision_Policy.md:278"
-      ],
-      "required_action": "none"
-    },
-    {
-      "coverage_id": "cov-00500",
-      "source_obligation_ids": [
-        "obl-0483"
-      ],
-      "source_seed_ids": [
-        "seed-0488"
-      ],
-      "source_shard_ids": [
-        "shard-0007"
-      ],
-      "canon_label": "Plans/Glossary.md",
-      "row_type": "consumer",
-      "path": "Plans/Decision_Policy.md",
-      "heading_hint": "Highest-Impact Docs",
-      "status": "present",
-      "exact_items": [
-        "**`Plans/Glossary.md` + `Plans/Crosswalk.md` + `Plans/Decision_Policy.md` + `Plans/00-plans-index.md`**"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/Decision_Policy.md:28",
-        "Plans/Decision_Policy.md:26",
-        "Plans/Decision_Policy.md:3",
-        "Plans/Decision_Policy.md:130"
-      ],
-      "required_action": "none"
-    },
-    {
-      "coverage_id": "cov-01610",
-      "source_obligation_ids": [
-        "obl-1541"
-      ],
-      "source_seed_ids": [
-        "seed-1719",
-        "seed-3243",
-        "seed-3273",
-        "seed-3464",
-        "seed-3770",
-        "seed-3862",
-        "seed-4115"
-      ],
-      "source_shard_ids": [
-        "shard-0031",
-        "shard-0049",
-        "shard-0052",
-        "shard-0055",
-        "shard-0056",
-        "shard-0058"
-      ],
-      "canon_label": "Plans/Decision_Policy.md",
-      "row_type": "consumer",
-      "path": "Plans/Decision_Policy.md",
-      "heading_hint": "Targeted docs read",
-      "status": "present",
-      "exact_items": [
-        "`Plans/Decision_Policy.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/Decision_Policy.md:3",
-        "Plans/Decision_Policy.md:130",
-        "Plans/Decision_Policy.md:63"
-      ],
-      "required_action": "none"
-    },
-    {
-      "coverage_id": "cov-01621",
-      "source_obligation_ids": [
-        "obl-1552"
-      ],
-      "source_seed_ids": [
-        "seed-1732",
-        "seed-3259",
-        "seed-3493",
-        "seed-3813",
-        "seed-3907",
-        "seed-3986",
-        "seed-4151"
-      ],
-      "source_shard_ids": [
-        "shard-0032",
-        "shard-0049",
-        "shard-0052",
-        "shard-0056",
-        "shard-0057",
-        "shard-0058"
-      ],
-      "canon_label": "Plans/Decision_Policy.md",
-      "row_type": "consumer",
-      "path": "Plans/Decision_Policy.md",
-      "heading_hint": "Impacted docs",
+      "coverage_id": "cov-1118",
       "status": "partial",
-      "exact_items": [
-        "`Plans/Decision_Policy.md`"
-      ],
-      "stale_tokens": [],
       "evidence": [
-        "Plans/Decision_Policy.md:3",
-        "Plans/Decision_Policy.md:130"
+        "Plans/DRY_Rules.md:56 ContractName:Plans/Contracts_V0.md is used in section 2",
+        "Plans/DRY_Rules.md:105 ContractName:<path>#<anchor> is allowed by taxonomy",
+        "Plans/DRY_Rules.md:126 ContractRef references GATE-009",
+        "Plans/DRY_Rules.md:185-197 references GATE-011 in the coverage/reference area"
       ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-02717",
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "The traceability-format weakness is evidenced, but the blocker is not fully resolved in DRY_Rules.md.",
       "source_obligation_ids": [
-        "obl-2637"
+        "obl-324"
       ],
       "source_seed_ids": [
-        "seed-3303"
-      ],
-      "source_shard_ids": [
-        "shard-0050"
-      ],
-      "canon_label": "Plans/Decision_Policy.md",
-      "row_type": "consumer",
-      "path": "Plans/Decision_Policy.md",
-      "heading_hint": "",
-      "status": "present",
-      "exact_items": [
-        "`Plans/Decision_Policy.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/Decision_Policy.md:3"
-      ],
-      "required_action": "none"
-    },
-    {
-      "coverage_id": "cov-02881",
-      "source_obligation_ids": [
-        "obl-2800"
-      ],
-      "source_seed_ids": [
-        "seed-3535",
-        "seed-3849"
-      ],
-      "source_shard_ids": [
-        "shard-0052",
-        "shard-0056"
-      ],
-      "canon_label": "Plans/Decision_Policy.md",
-      "row_type": "consumer",
-      "path": "Plans/Decision_Policy.md",
-      "heading_hint": "Do-not-forget details",
-      "status": "partial",
-      "exact_items": [
-        "`Plans/Decision_Policy.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/Decision_Policy.md:3"
-      ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-03294",
-      "source_obligation_ids": [
-        "obl-3198"
-      ],
-      "source_seed_ids": [
-        "seed-4180"
-      ],
-      "source_shard_ids": [
-        "shard-0059"
-      ],
-      "canon_label": "Plans/*.md",
-      "row_type": "consumer",
-      "path": "Plans/Decision_Policy.md",
-      "heading_hint": "Do-not-forget details",
-      "status": "present",
-      "exact_items": [
-        "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage."
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/Decision_Policy.md:3",
-        "Plans/Decision_Policy.md:130",
-        "Plans/Decision_Policy.md:62",
-        "Plans/Decision_Policy.md:212",
-        "Plans/Decision_Policy.md:245"
-      ],
-      "required_action": "none"
-    },
-    {
-      "coverage_id": "cov-04433",
-      "source_obligation_ids": [
-        "obl-4262"
-      ],
-      "source_seed_ids": [
-        "seed-6087"
+        "seed-324"
       ],
       "source_shard_ids": [
         "shard-0082"
       ],
-      "canon_label": "39",
-      "row_type": "consumer",
-      "path": "Plans/Decision_Policy.md",
-      "heading_hint": "Do-not-forget details",
-      "status": "present",
-      "exact_items": [
-        "Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes."
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/Decision_Policy.md:130",
-        "Plans/Decision_Policy.md:3",
-        "Plans/Decision_Policy.md:212",
-        "Plans/Decision_Policy.md:262"
-      ],
-      "required_action": "none"
+      "path_field_status": "match"
     },
     {
-      "coverage_id": "cov-04805",
+      "coverage_id": "cov-1105",
+      "status": "missing",
+      "evidence": [
+        "Plans/DRY_Rules.md:41 stale canonical text must be replaced or retired"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Only generic stale-canon guidance appears; the duplicated canonical sections, malformed ContractRefs, lowercase normative text, and OpenCode/GUI checklist owner gaps are not covered.",
       "source_obligation_ids": [
-        "obl-4520"
+        "obl-320"
       ],
       "source_seed_ids": [
-        "seed-6512"
+        "seed-320"
+      ],
+      "source_shard_ids": [
+        "shard-0081"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-1130",
+      "status": "missing",
+      "evidence": [
+        "Plans/DRY_Rules.md:100-115 ContractRef taxonomy is defined"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "DRY_Rules.md defines the taxonomy but does not contain or resolve the assigned Progression_Gates taxonomy violation.",
+      "source_obligation_ids": [
+        "obl-328"
+      ],
+      "source_seed_ids": [
+        "seed-328"
+      ],
+      "source_shard_ids": [
+        "shard-0083"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-1170",
+      "status": "missing",
+      "evidence": [
+        "Plans/DRY_Rules.md: assigned file reviewed; no matching MUST CHANGE / MUST RECONCILE / MUST VERIFY packet inclusion category coverage found"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Assigned packet inclusion categories are absent from Plans/DRY_Rules.md.",
+      "source_obligation_ids": [
+        "obl-339"
+      ],
+      "source_seed_ids": [
+        "seed-339"
       ],
       "source_shard_ids": [
         "shard-0086"
       ],
-      "canon_label": "Plans/Decision_Policy.md",
-      "row_type": "consumer",
-      "path": "Plans/Decision_Policy.md",
-      "heading_hint": "Docs probably implicated",
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-1126",
       "status": "partial",
-      "exact_items": [
-        "`Plans/Decision_Policy.md`"
-      ],
-      "stale_tokens": [],
       "evidence": [
-        "Plans/Decision_Policy.md:3",
-        "Plans/Decision_Policy.md:130"
+        "Plans/DRY_Rules.md:19 ContractRef is present",
+        "Plans/DRY_Rules.md:126 ContractRef anchors GATE-009",
+        "Plans/DRY_Rules.md:185-197 GATE-011 and requirement coverage references appear"
       ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-04839",
+      "required_action": "stale_retirement",
+      "unresolved_reason": "ContractRef anchor cleanup pressure is visible, but duplicate-number and section-anchor cleanup prioritization is not fully covered.",
       "source_obligation_ids": [
-        "obl-4554"
+        "obl-326"
       ],
       "source_seed_ids": [
-        "seed-6546"
-      ],
-      "source_shard_ids": [
-        "shard-0086"
-      ],
-      "canon_label": "Plans/Decision_Policy.md",
-      "row_type": "consumer",
-      "path": "Plans/Decision_Policy.md",
-      "heading_hint": "MUST RECONCILE",
-      "status": "partial",
-      "exact_items": [
-        "`Plans/Decision_Policy.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/Decision_Policy.md:3"
-      ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-04967",
-      "source_obligation_ids": [
-        "obl-4671"
-      ],
-      "source_seed_ids": [
-        "seed-6663"
-      ],
-      "source_shard_ids": [
-        "shard-0087"
-      ],
-      "canon_label": "Plans/Contracts_V0.md",
-      "row_type": "consumer",
-      "path": "Plans/Decision_Policy.md",
-      "heading_hint": "Concern/governance record and confirmation policy transfer is weaker than the earlier synthesis stated",
-      "status": "present",
-      "exact_items": [
-        "`Plans/Contracts_V0.md`, `Plans/storage-plan.md`, `Plans/Decision_Policy.md`, `Plans/FinalGUISpec.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/Decision_Policy.md:3",
-        "Plans/Decision_Policy.md:250",
-        "Plans/Decision_Policy.md:1",
-        "Plans/Decision_Policy.md:267"
-      ],
-      "required_action": "none"
-    },
-    {
-      "coverage_id": "cov-04516",
-      "source_obligation_ids": [
-        "obl-4283"
-      ],
-      "source_seed_ids": [
-        "seed-6167"
+        "seed-326"
       ],
       "source_shard_ids": [
         "shard-0082"
       ],
-      "canon_label": "Plans/*.md",
-      "row_type": "layout_blocker",
-      "path": "Plans/Decision_Policy.md",
-      "heading_hint": "Do-not-forget details",
-      "status": "present",
-      "exact_items": [
-        "After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes."
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/Decision_Policy.md:130",
-        "Plans/Decision_Policy.md:3",
-        "Plans/Decision_Policy.md:190",
-        "Plans/Decision_Policy.md:212",
-        "Plans/Decision_Policy.md:48",
-        "Plans/Decision_Policy.md:245"
-      ],
-      "required_action": "none"
+      "path_field_status": "match"
     }
   ]
 }

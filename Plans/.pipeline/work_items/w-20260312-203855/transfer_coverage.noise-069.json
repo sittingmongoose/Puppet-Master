@@ -1,0 +1,23 @@
+{
+  "schema_id": "pm.transfer_coverage_noise.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-069",
+  "noise_findings": [
+    {
+      "source": "coverage-rowgrp-273",
+      "finding": "coverage_ids_completed was empty; reducer completed cov-1183 and retained partial for summary/non-owner evidence without mirror sequencing."
+    },
+    {
+      "source": "coverage-rowgrp-274",
+      "finding": "coverage_ids_completed was empty; reducer completed cov-123,cov-163 and retained partial statuses."
+    },
+    {
+      "source": "coverage-rowgrp-275",
+      "finding": "coverage_ids_completed was empty; reducer completed cov-084,cov-100 and stripped adjacent identity/auth evidence from missing cov-100."
+    },
+    {
+      "source": "coverage-rowgrp-276",
+      "finding": "coverage_ids_completed was empty; reducer completed cov-161,cov-791 and retained partial statuses."
+    }
+  ]
+}

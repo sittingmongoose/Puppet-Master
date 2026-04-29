@@ -1,818 +1,607 @@
 {
-  "schema_id": "pm.transfer_coverage_wave.v1",
+  "schema_id": "pm.transfer_coverage_wave.v3",
   "work_id": "w-20260312-203855",
   "wave_id": "wave-050",
-  "row_groups": [
-    "rowgrp-0197",
-    "rowgrp-0198",
-    "rowgrp-0199",
-    "rowgrp-0200"
+  "timestamp_utc": "2026-04-28T21:17:10Z",
+  "subagent_tasks": [
+    "coverage-rowgrp-197",
+    "coverage-rowgrp-198",
+    "coverage-rowgrp-199",
+    "coverage-rowgrp-200"
   ],
-  "coverage_rows": [
+  "assigned_input_boundaries": [
+    "rowgrp-197 cov-1236 Plans/Tools.md",
+    "rowgrp-198 cov-617,cov-633,cov-677,cov-811,cov-849,cov-887,cov-896,cov-929,cov-1199 Plans/UI_Command_Catalog.md",
+    "rowgrp-199 cov-389,cov-396,cov-643,cov-712,cov-796,cov-868,cov-915,cov-992,cov-1001,cov-1027 Plans/UI_Command_Catalog.md",
+    "rowgrp-200 cov-1029,cov-1086,cov-1090,cov-1162,cov-1212,cov-1251 Plans/UI_Command_Catalog.md"
+  ],
+  "subagent_result_status": {
+    "coverage-rowgrp-197": "completed_reduced_conservatively_with_schema_normalization",
+    "coverage-rowgrp-198": "completed_reduced_conservatively_with_schema_normalization",
+    "coverage-rowgrp-199": "completed_reduced_conservatively_with_schema_normalization",
+    "coverage-rowgrp-200": "completed_reduced_conservatively_with_schema_normalization"
+  },
+  "completed_task_count": 4,
+  "failed_task_count": 0,
+  "coverage_ids_assigned": [
+    "cov-1236",
+    "cov-617",
+    "cov-633",
+    "cov-677",
+    "cov-811",
+    "cov-849",
+    "cov-887",
+    "cov-896",
+    "cov-929",
+    "cov-1199",
+    "cov-389",
+    "cov-396",
+    "cov-643",
+    "cov-712",
+    "cov-796",
+    "cov-868",
+    "cov-915",
+    "cov-992",
+    "cov-1001",
+    "cov-1027",
+    "cov-1029",
+    "cov-1086",
+    "cov-1090",
+    "cov-1162",
+    "cov-1212",
+    "cov-1251"
+  ],
+  "coverage_ids_completed": [
+    "cov-1236",
+    "cov-617",
+    "cov-633",
+    "cov-677",
+    "cov-811",
+    "cov-849",
+    "cov-887",
+    "cov-896",
+    "cov-929",
+    "cov-1199",
+    "cov-389",
+    "cov-396",
+    "cov-643",
+    "cov-712",
+    "cov-796",
+    "cov-868",
+    "cov-915",
+    "cov-992",
+    "cov-1001",
+    "cov-1027",
+    "cov-1029",
+    "cov-1086",
+    "cov-1090",
+    "cov-1162",
+    "cov-1212",
+    "cov-1251"
+  ],
+  "path_groups_assigned": [
+    "Plans/Tools.md",
+    "Plans/UI_Command_Catalog.md"
+  ],
+  "rows": [
     {
-      "coverage_id": "cov-04853",
-      "source_obligation_ids": [
-        "obl-4568"
-      ],
-      "source_seed_ids": [
-        "seed-6560"
-      ],
-      "source_shard_ids": [
-        "shard-0086"
-      ],
-      "canon_label": "Plans/human-in-the-loop.md",
-      "row_type": "consumer",
-      "path": "Plans/human-in-the-loop.md",
-      "heading_hint": "Same-file supersession hot list",
+      "coverage_id": "cov-1236",
       "status": "partial",
-      "exact_items": [
-        "`Plans/human-in-the-loop.md`"
-      ],
-      "stale_tokens": [],
       "evidence": [
-        "Plans/human-in-the-loop.md:15"
+        "Plans/Tools.md:162-173 includes tool_name and options in tool/question usage contexts",
+        "Plans/Tools.md:184-185 mentions tool_name in debug-capable tool-family metadata contexts"
       ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-04907",
+      "required_action": "stale_retirement",
+      "unresolved_reason": "Plans/Tools.md contains related live tool-schema terms, but does not retire the full stale tuple {tool_name, invocation_summary, options} or cross-doc stale targets TierContext, tier_id, detached_window, No remaining gaps, and restore points.",
       "source_obligation_ids": [
-        "obl-4620"
+        "obl-349"
       ],
       "source_seed_ids": [
-        "seed-6612"
-      ],
-      "source_shard_ids": [
-        "shard-0087"
-      ],
-      "canon_label": "Plans/human-in-the-loop.md",
-      "row_type": "consumer",
-      "path": "Plans/human-in-the-loop.md",
-      "heading_hint": "Cluster F - Same-file supersession failures",
-      "status": "partial",
-      "exact_items": [
-        "`Plans/human-in-the-loop.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/human-in-the-loop.md:15",
-        "Plans/human-in-the-loop.md:38"
-      ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-04933",
-      "source_obligation_ids": [
-        "obl-4643"
-      ],
-      "source_seed_ids": [
-        "seed-6635"
-      ],
-      "source_shard_ids": [
-        "shard-0087"
-      ],
-      "canon_label": "Plans/human-in-the-loop.md",
-      "row_type": "consumer",
-      "path": "Plans/human-in-the-loop.md",
-      "heading_hint": "Impacted docs and likely owner order",
-      "status": "present",
-      "exact_items": [
-        "`Plans/human-in-the-loop.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/human-in-the-loop.md:15",
-        "Plans/human-in-the-loop.md:42",
-        "Plans/human-in-the-loop.md:36",
-        "Plans/human-in-the-loop.md:5"
-      ],
-      "required_action": "none"
-    },
-    {
-      "coverage_id": "cov-05014",
-      "source_obligation_ids": [
-        "obl-4692"
-      ],
-      "source_seed_ids": [
-        "seed-6684"
-      ],
-      "source_shard_ids": [
-        "shard-0088"
-      ],
-      "canon_label": "Plans/Prompt_Pipeline.md",
-      "row_type": "consumer",
-      "path": "Plans/human-in-the-loop.md",
-      "heading_hint": "Identity / attribution / blocked-policy misses were reconfirmed with stronger specificity",
-      "status": "present",
-      "exact_items": [
-        "`Plans/Prompt_Pipeline.md`, `Plans/Contracts_V0.md`, `Plans/Tools.md`, `Plans/GitHub_API_Auth_and_Flows.md`, `Plans/orchestrator-subagent-integration.md`, `Plans/Architecture_Invariants.md`, `Plans/Run_Modes.md`, `Plans/Executor_Protocol.md`, `Plans/human-in-the-loop.md`, `Plans/usage-feature.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/human-in-the-loop.md:62",
-        "Plans/human-in-the-loop.md:116",
-        "Plans/human-in-the-loop.md:131",
-        "Plans/human-in-the-loop.md:145",
-        "Plans/human-in-the-loop.md:15",
-        "Plans/human-in-the-loop.md:38",
-        "Plans/human-in-the-loop.md:237"
-      ],
-      "required_action": "none"
-    },
-    {
-      "coverage_id": "cov-05060",
-      "source_obligation_ids": [
-        "obl-4735"
-      ],
-      "source_seed_ids": [
-        "seed-6728"
-      ],
-      "source_shard_ids": [
-        "shard-0088"
-      ],
-      "canon_label": "Plans/human-in-the-loop.md",
-      "row_type": "consumer",
-      "path": "Plans/human-in-the-loop.md",
-      "heading_hint": "Entry",
-      "status": "present",
-      "exact_items": [
-        "`Plans/human-in-the-loop.md` already carries `blocked_sequence` and `approval_scope_key`."
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/human-in-the-loop.md:15",
-        "Plans/human-in-the-loop.md:42",
-        "Plans/human-in-the-loop.md:91"
-      ],
-      "required_action": "none"
-    },
-    {
-      "coverage_id": "cov-05067",
-      "source_obligation_ids": [
-        "obl-4741"
-      ],
-      "source_seed_ids": [
-        "seed-6734",
-        "seed-6854",
-        "seed-6888",
-        "seed-7042",
-        "seed-7172"
-      ],
-      "source_shard_ids": [
-        "shard-0088",
-        "shard-0089",
-        "shard-0090",
-        "shard-0091"
-      ],
-      "canon_label": "Plans/human-in-the-loop.md",
-      "row_type": "consumer",
-      "path": "Plans/human-in-the-loop.md",
-      "heading_hint": "Entry",
-      "status": "partial",
-      "exact_items": [
-        "`Plans/human-in-the-loop.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/human-in-the-loop.md:15"
-      ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-05082",
-      "source_obligation_ids": [
-        "obl-4756"
-      ],
-      "source_seed_ids": [
-        "seed-6749"
-      ],
-      "source_shard_ids": [
-        "shard-0088"
-      ],
-      "canon_label": "Plans/human-in-the-loop.md:29-33",
-      "row_type": "consumer",
-      "path": "Plans/human-in-the-loop.md",
-      "heading_hint": "Entry",
-      "status": "missing",
-      "exact_items": [
-        "`Plans/human-in-the-loop.md:29-33`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/human-in-the-loop.md:required_terms_absent"
-      ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-05083",
-      "source_obligation_ids": [
-        "obl-4757"
-      ],
-      "source_seed_ids": [
-        "seed-6750"
-      ],
-      "source_shard_ids": [
-        "shard-0088"
-      ],
-      "canon_label": "Plans/human-in-the-loop.md:96",
-      "row_type": "consumer",
-      "path": "Plans/human-in-the-loop.md",
-      "heading_hint": "Entry",
-      "status": "missing",
-      "exact_items": [
-        "`Plans/human-in-the-loop.md:96`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/human-in-the-loop.md:required_terms_absent"
-      ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-05174",
-      "source_obligation_ids": [
-        "obl-4844"
-      ],
-      "source_seed_ids": [
-        "seed-6876",
-        "seed-6892"
+        "seed-349"
       ],
       "source_shard_ids": [
         "shard-0089"
       ],
-      "canon_label": "Plans/human-in-the-loop.md:22-49",
-      "row_type": "consumer",
-      "path": "Plans/human-in-the-loop.md",
-      "heading_hint": "Entry",
-      "status": "missing",
-      "exact_items": [
-        "`Plans/human-in-the-loop.md:22-49`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/human-in-the-loop.md:required_terms_absent"
-      ],
-      "required_action": "consumer_propagation"
+      "path_field_status": "match"
     },
     {
-      "coverage_id": "cov-05281",
-      "source_obligation_ids": [
-        "obl-4935"
-      ],
-      "source_seed_ids": [
-        "seed-7059"
-      ],
-      "source_shard_ids": [
-        "shard-0091"
-      ],
-      "canon_label": "Plans/human-in-the-loop.md:22-49",
-      "row_type": "consumer",
-      "path": "Plans/human-in-the-loop.md",
-      "heading_hint": "",
-      "status": "missing",
-      "exact_items": [
-        "`Plans/human-in-the-loop.md:22-49`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/human-in-the-loop.md:required_terms_absent"
-      ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-04561",
-      "source_obligation_ids": [
-        "obl-4283"
-      ],
-      "source_seed_ids": [
-        "seed-6167"
-      ],
-      "source_shard_ids": [
-        "shard-0082"
-      ],
-      "canon_label": "Plans/*.md",
-      "row_type": "layout_blocker",
-      "path": "Plans/human-in-the-loop.md",
-      "heading_hint": "Do-not-forget details",
-      "status": "present",
-      "exact_items": [
-        "After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes."
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/human-in-the-loop.md:38",
-        "Plans/human-in-the-loop.md:131",
-        "Plans/human-in-the-loop.md:15",
-        "Plans/human-in-the-loop.md:209",
-        "Plans/human-in-the-loop.md:42",
-        "Plans/human-in-the-loop.md:67",
-        "Plans/human-in-the-loop.md:69"
-      ],
-      "required_action": "none"
-    },
-    {
-      "coverage_id": "cov-01167",
-      "source_obligation_ids": [
-        "obl-1098"
-      ],
-      "source_seed_ids": [
-        "seed-1183",
-        "seed-1489",
-        "seed-1542",
-        "seed-2265",
-        "seed-2630",
-        "seed-2847",
-        "seed-2894",
-        "seed-2940",
-        "seed-3022",
-        "seed-3061",
-        "seed-4089"
-      ],
-      "source_shard_ids": [
-        "shard-0020",
-        "shard-0027",
-        "shard-0028",
-        "shard-0037",
-        "shard-0042",
-        "shard-0045",
-        "shard-0046",
-        "shard-0047",
-        "shard-0058"
-      ],
-      "canon_label": "Plans/interview-subagent-integration.md",
-      "row_type": "consumer",
-      "path": "Plans/interview-subagent-integration.md",
-      "heading_hint": "Targeted docs read",
+      "coverage_id": "cov-617",
       "status": "partial",
-      "exact_items": [
-        "`Plans/interview-subagent-integration.md`"
-      ],
-      "stale_tokens": [],
       "evidence": [
-        "Plans/interview-subagent-integration.md:14",
-        "Plans/interview-subagent-integration.md:40"
+        "Plans/UI_Command_Catalog.md:64-77 normalizes command families around shared navigation, search routing, runtime recovery ownership, and route_target canonical open/focus identity",
+        "Plans/UI_Command_Catalog.md:97-109 requires route/open commands to preserve route_target, OpenSubject, execution_unit_context, approval_scope_key, and operational_identity",
+        "Plans/UI_Command_Catalog.md:146-154 requires command catalog entries to be verifiable through wiring matrix handler registration, UI element binding, and acceptance checks"
       ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-02024",
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "Route/open and wiring coverage exists, but node-native plan ingest, lane-aware scheduling, and worktree/active-agent tracking propagation are absent.",
       "source_obligation_ids": [
-        "obl-1946"
+        "obl-172"
       ],
       "source_seed_ids": [
-        "seed-2282"
+        "seed-172"
       ],
       "source_shard_ids": [
-        "shard-0038"
+        "shard-0043"
       ],
-      "canon_label": "Plans/assistant-chat-design.md",
-      "row_type": "consumer",
-      "path": "Plans/interview-subagent-integration.md",
-      "heading_hint": "",
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-633",
       "status": "partial",
-      "exact_items": [
-        "`Plans/assistant-chat-design.md` + `Plans/interview-subagent-integration.md`"
-      ],
-      "stale_tokens": [],
       "evidence": [
-        "Plans/interview-subagent-integration.md:14"
+        "Plans/UI_Command_Catalog.md:95-103 defines route/open tail rules including execution_unit_context, approval_scope_key, and operational_identity",
+        "Plans/UI_Command_Catalog.md:186-197 references GitHub Integration and chain wizard command consumers",
+        "Plans/UI_Command_Catalog.md:247-276 references Run Graph, human-in-the-loop, Orchestrator Page, and Final GUI contracts"
       ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-02270",
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "The catalog shows multiple downstream consumer docs, but does not directly state those docs are impacted consumers of execution-context changes.",
       "source_obligation_ids": [
-        "obl-2190"
+        "obl-176"
       ],
       "source_seed_ids": [
-        "seed-2646",
-        "seed-2918",
-        "seed-2965",
-        "seed-3085"
+        "seed-176"
       ],
       "source_shard_ids": [
-        "shard-0042",
-        "shard-0045",
-        "shard-0046",
+        "shard-0044"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-677",
+      "status": "partial",
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:274-276 references Contracts_V0, Orchestrator_Page, and FinalGUISpec contracts",
+        "Plans/UI_Command_Catalog.md:387-417 references assistant-chat-design, Contracts_V0, and Commands_System contracts",
+        "Plans/UI_Command_Catalog.md:428-471 references Runtime_Artifacts_Panel, FinalGUISpec, storage-plan, and assistant-chat-design from chat/render-browser preview command sections"
+      ],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "Several named consumer docs appear, but the full impacted set in the row is not covered.",
+      "source_obligation_ids": [
+        "obl-189"
+      ],
+      "source_seed_ids": [
+        "seed-189"
+      ],
+      "source_shard_ids": [
         "shard-0047"
       ],
-      "canon_label": "Plans/interview-subagent-integration.md",
-      "row_type": "consumer",
-      "path": "Plans/interview-subagent-integration.md",
-      "heading_hint": "Highest-risk impacted docs",
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-811",
       "status": "partial",
-      "exact_items": [
-        "`Plans/interview-subagent-integration.md`"
-      ],
-      "stale_tokens": [],
       "evidence": [
-        "Plans/interview-subagent-integration.md:14"
+        "Plans/UI_Command_Catalog.md:68-77 defines command metadata and route_target as canonical open/focus identity",
+        "Plans/UI_Command_Catalog.md:113-135 normalizes commands to a standard record and preserves user intent without rewriting route_target or OpenSubject",
+        "Plans/UI_Command_Catalog.md:249-255 requires graph-facing wrapper commands to normalize to runtime command family and canonical route_target semantics"
       ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-02528",
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "Wrapper normalization and payload fields are present, but the flat-peer/event-aliasing limitation and wrapper-vs-canonical-target distinction are not directly stated.",
       "source_obligation_ids": [
-        "obl-2448"
+        "obl-226"
       ],
       "source_seed_ids": [
-        "seed-3036",
-        "seed-4095"
+        "seed-226"
       ],
       "source_shard_ids": [
-        "shard-0047",
-        "shard-0058"
+        "shard-0057"
       ],
-      "canon_label": "Plans/interview-subagent-integration.md",
-      "row_type": "consumer",
-      "path": "Plans/interview-subagent-integration.md",
-      "heading_hint": "Impacted docs",
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-849",
       "status": "partial",
-      "exact_items": [
-        "`Plans/interview-subagent-integration.md`"
-      ],
-      "stale_tokens": [],
       "evidence": [
-        "Plans/interview-subagent-integration.md:14"
+        "Plans/UI_Command_Catalog.md:64-77 normalizes command families around shared navigation and route_target canonical identity",
+        "Plans/UI_Command_Catalog.md:97-109 requires route/open commands to preserve route_target, OpenSubject, and execution/runtime identity fields",
+        "Plans/UI_Command_Catalog.md:307-313 routes Orchestrator commands through the shared route payload when navigating"
       ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-03340",
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "Shared route primitives are present, but the file does not explicitly reconcile surface docs to consume shared navigation primitives instead of local semantics.",
       "source_obligation_ids": [
-        "obl-3198"
+        "obl-237"
       ],
       "source_seed_ids": [
-        "seed-4180"
+        "seed-237"
       ],
       "source_shard_ids": [
-        "shard-0059"
+        "shard-0060"
       ],
-      "canon_label": "Plans/*.md",
-      "row_type": "consumer",
-      "path": "Plans/interview-subagent-integration.md",
-      "heading_hint": "Do-not-forget details",
-      "status": "present",
-      "exact_items": [
-        "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage."
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/interview-subagent-integration.md:19",
-        "Plans/interview-subagent-integration.md:14",
-        "Plans/interview-subagent-integration.md:5",
-        "Plans/interview-subagent-integration.md:37"
-      ],
-      "required_action": "none"
+      "path_field_status": "match"
     },
     {
-      "coverage_id": "cov-04479",
-      "source_obligation_ids": [
-        "obl-4262"
-      ],
-      "source_seed_ids": [
-        "seed-6087"
-      ],
-      "source_shard_ids": [
-        "shard-0082"
-      ],
-      "canon_label": "39",
-      "row_type": "consumer",
-      "path": "Plans/interview-subagent-integration.md",
-      "heading_hint": "Do-not-forget details",
-      "status": "present",
-      "exact_items": [
-        "Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes."
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/interview-subagent-integration.md:8",
-        "Plans/interview-subagent-integration.md:14",
-        "Plans/interview-subagent-integration.md:25"
-      ],
-      "required_action": "none"
-    },
-    {
-      "coverage_id": "cov-04808",
-      "source_obligation_ids": [
-        "obl-4523"
-      ],
-      "source_seed_ids": [
-        "seed-6515"
-      ],
-      "source_shard_ids": [
-        "shard-0086"
-      ],
-      "canon_label": "Plans/interview-subagent-integration.md",
-      "row_type": "consumer",
-      "path": "Plans/interview-subagent-integration.md",
-      "heading_hint": "Docs that could drift if left untouched",
+      "coverage_id": "cov-887",
       "status": "partial",
-      "exact_items": [
-        "`Plans/interview-subagent-integration.md`"
-      ],
-      "stale_tokens": [],
       "evidence": [
-        "Plans/interview-subagent-integration.md:14"
+        "Plans/UI_Command_Catalog.md:97-109 preserves route_target/OpenSubject and errors without fallback mutation when route_target is unreachable",
+        "Plans/UI_Command_Catalog.md:268-272 preserves project_id, focused_run_id, object identity, and inspector focus in cross-tab deep links",
+        "Plans/UI_Command_Catalog.md:477-513 defines terminal promotion/handoff commands with stable terminal session identity and owned command rows"
       ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-04846",
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "Stable identity/focus evidence exists, but deterministic deep-link decoding and ephemeral-layout exclusion are not fully stated.",
       "source_obligation_ids": [
-        "obl-4561"
+        "obl-250"
       ],
       "source_seed_ids": [
-        "seed-6553"
+        "seed-250"
       ],
       "source_shard_ids": [
-        "shard-0086"
+        "shard-0063"
       ],
-      "canon_label": "Plans/interview-subagent-integration.md",
-      "row_type": "consumer",
-      "path": "Plans/interview-subagent-integration.md",
-      "heading_hint": "MUST VERIFY",
-      "status": "partial",
-      "exact_items": [
-        "`Plans/interview-subagent-integration.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/interview-subagent-integration.md:14"
-      ],
-      "required_action": "consumer_propagation"
+      "path_field_status": "match"
     },
     {
-      "coverage_id": "cov-05095",
+      "coverage_id": "cov-896",
+      "status": "partial",
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:97-109 preserves route_target, OpenSubject, execution_unit_context, approval_scope_key, and operational_identity",
+        "Plans/UI_Command_Catalog.md:133-135 preserves user intent without rewriting route_target or OpenSubject",
+        "Plans/UI_Command_Catalog.md:307-313 routes Orchestrator commands through shared route payloads"
+      ],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "Preservation semantics exist, but the explicit consumer override and persisted-state reuse rule is absent.",
       "source_obligation_ids": [
-        "obl-4769"
+        "obl-253"
       ],
       "source_seed_ids": [
-        "seed-6762"
+        "seed-253"
+      ],
+      "source_shard_ids": [
+        "shard-0064"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-929",
+      "status": "partial",
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:68-77 defines route_target ownership and command normalization metadata",
+        "Plans/UI_Command_Catalog.md:146-156 requires wiring-matrix verifiability for commands, handlers, UI binding, and acceptance checks",
+        "Plans/UI_Command_Catalog.md:274-276 references Orchestrator_Page and FinalGUISpec contracts"
+      ],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "The catalog/wiring/route boundary is present, but the exact consumer triad and ownership split are incomplete.",
+      "source_obligation_ids": [
+        "obl-261"
+      ],
+      "source_seed_ids": [
+        "seed-261"
+      ],
+      "source_shard_ids": [
+        "shard-0066"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-1199",
+      "status": "partial",
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:139-144 retires TierContext, tier_id, TierType, Tiers, allowed_actions[], reason_code, recovery_options[], and approve_continue as tier-era compatibility targets",
+        "Plans/UI_Command_Catalog.md:3-6 identifies fidelity recovery addenda preserving row-level repairs"
+      ],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "Tier-era retirement language exists, but mixed-era coexistence and incomplete usage-event guidance are not directly covered.",
+      "source_obligation_ids": [
+        "obl-342"
+      ],
+      "source_seed_ids": [
+        "seed-342"
+      ],
+      "source_shard_ids": [
+        "shard-0087"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-389",
+      "status": "partial",
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:95-103 requires route/open commands to preserve route_target, OpenSubject, execution_unit_context, approval_scope_key, and operational_identity",
+        "Plans/UI_Command_Catalog.md:671-675 routes search open_result through route_target and resolves search routing through route_target"
+      ],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "Shared route/open terms are present, but the exact shared routing payload contract and thin-wrapper Open/Show action coverage are incomplete.",
+      "source_obligation_ids": [
+        "obl-116"
+      ],
+      "source_seed_ids": [
+        "seed-116"
+      ],
+      "source_shard_ids": [
+        "shard-0029"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-396",
+      "status": "partial",
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:97-103 preserves route_target, OpenSubject, execution_unit_context, approval_scope_key, and operational_identity",
+        "Plans/UI_Command_Catalog.md:113-129 defines a normalized command record with target_scope, target_id, and parameters"
+      ],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "Deep-link/search routing primitives are present, but the candidate object-kind vocabulary is not enumerated.",
+      "source_obligation_ids": [
+        "obl-117"
+      ],
+      "source_seed_ids": [
+        "seed-117"
+      ],
+      "source_shard_ids": [
+        "shard-0029"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-643",
+      "status": "partial",
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:690-718 defines cmd.runtime.* canonical recovery commands, makes legacy recovery namespaces deprecated aliases only, and disallows graph-local recovery families",
+        "Plans/UI_Command_Catalog.md:718-720 states no surface may introduce thread-local, graph-local, or provider-local recovery command families for the same semantics"
+      ],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "Runtime deprecation is present, but the file does not directly name the stale graph-local HITL IDs cmd.graph.approve_hitl and cmd.graph.deny_hitl.",
+      "source_obligation_ids": [
+        "obl-180"
+      ],
+      "source_seed_ids": [
+        "seed-180"
+      ],
+      "source_shard_ids": [
+        "shard-0045"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-712",
+      "status": "partial",
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:690-718 retires allowed_actions[] and maps runtime recovery through blocked_sequence and allowed_action_ids[] to canonical cmd.runtime.* commands",
+        "Plans/UI_Command_Catalog.md:710-716 defines pre-attempt blocked handling with blocked_sequence and blocked-state recovery from allowed_action_ids[]"
+      ],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "blocked_sequence and allowed_action_ids[] mapping exist, but request_id and startup_recovered restore-handshake coverage is absent.",
+      "source_obligation_ids": [
+        "obl-196"
+      ],
+      "source_seed_ids": [
+        "seed-196"
+      ],
+      "source_shard_ids": [
+        "shard-0049"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-796",
+      "status": "partial",
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:716-718 requires blocked-state recovery buttons and menu entries to map from allowed_action_ids[] to canonical runtime commands and disallows graph-local recovery families"
+      ],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "The mapping rule exists, but not the explicit admission-only rule tied to the current blocked episode exposing ordered allowed_action_ids[].",
+      "source_obligation_ids": [
+        "obl-221"
+      ],
+      "source_seed_ids": [
+        "seed-221"
+      ],
+      "source_shard_ids": [
+        "shard-0056"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-868",
+      "status": "partial",
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:76-77 states route_target owns canonical open and focus identity",
+        "Plans/UI_Command_Catalog.md:97-103 requires route/open commands to preserve route_target and OpenSubject",
+        "Plans/UI_Command_Catalog.md:135-137 preserves user intent without rewriting route_target or OpenSubject"
+      ],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "Normalization through route_target/OpenSubject exists, but the older-payload-shape migration acceptance is absent.",
+      "source_obligation_ids": [
+        "obl-244"
+      ],
+      "source_seed_ids": [
+        "seed-244"
+      ],
+      "source_shard_ids": [
+        "shard-0062"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-915",
+      "status": "partial",
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:76-77 states route_target owns canonical open and focus identity"
+      ],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "route_target ownership exists, but cmd.panel.switch and cmd.source_control.switch_subview handling is absent.",
+      "source_obligation_ids": [
+        "obl-257"
+      ],
+      "source_seed_ids": [
+        "seed-257"
+      ],
+      "source_shard_ids": [
+        "shard-0065"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-992",
+      "status": "missing",
+      "evidence": [],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "No direct target_kind=side_panel, object_kind=message, or object_id=<message_id> coverage exists in Plans/UI_Command_Catalog.md.",
+      "source_obligation_ids": [
+        "obl-277"
+      ],
+      "source_seed_ids": [
+        "seed-277"
+      ],
+      "source_shard_ids": [
+        "shard-0070"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-1001",
+      "status": "partial",
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:705-708 lists cmd.runtime.open_queue_analysis, cmd.runtime.open_remediation_lineage, and cmd.runtime.open_safe_point_history with route-relevant runtime identifiers"
+      ],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "The runtime history/remediation commands are present, but the row also requires route-contract ownership of examples and retirement of attempt-only history assumptions, which are not directly satisfied.",
+      "source_obligation_ids": [
+        "obl-281"
+      ],
+      "source_seed_ids": [
+        "seed-281"
+      ],
+      "source_shard_ids": [
+        "shard-0071"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-1027",
+      "status": "missing",
+      "evidence": [],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "Plans/UI_Command_Catalog.md only mentions Tiers as retired vocabulary; it does not cover Orchestrator_Page tab-2 Tiers or six-tab shell structure.",
+      "source_obligation_ids": [
+        "obl-288"
+      ],
+      "source_seed_ids": [
+        "seed-288"
+      ],
+      "source_shard_ids": [
+        "shard-0073"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-1029",
+      "status": "partial",
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:141-144 retires TierContext, tier_id, TierType, Tiers, allowed_actions[], reason_code, recovery_options[], and approve_continue",
+        "Plans/UI_Command_Catalog.md:706-708 lists runtime navigation commands with scheduler_pass_id, remediation_root_id, and safe_point_id"
+      ],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "Tier-era retirement and newer runtime identity tokens exist, but older detail-pane/worker/verification/Usage-link correlation by tier_id/tier_type is not directly covered.",
+      "source_obligation_ids": [
+        "obl-289"
+      ],
+      "source_seed_ids": [
+        "seed-289"
+      ],
+      "source_shard_ids": [
+        "shard-0073"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-1086",
+      "status": "partial",
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:716-750 maps blocked-state recovery buttons/menu entries from allowed_action_ids[] to canonical cmd.runtime.* commands",
+        "Plans/UI_Command_Catalog.md:251-254 states graph approval and recovery commands target blocked/runtime identity, not request_id"
+      ],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "Canonical allowed_action_ids[] mapping exists, but graph approval targeting request_id and hitl_request_id graph view-model coverage is incomplete.",
+      "source_obligation_ids": [
+        "obl-311"
+      ],
+      "source_seed_ids": [
+        "seed-311"
+      ],
+      "source_shard_ids": [
+        "shard-0079"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-1090",
+      "status": "partial",
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:694-699 defines cmd.runtime.approve and cmd.runtime.decline with run_id, node_id, blocked_sequence, and optional attempt_id",
+        "Plans/UI_Command_Catalog.md:251-254 states graph approval and recovery commands target blocked/runtime identity, not request_id, and cmd.graph.approve_hitl/cmd.graph.deny_hitl do not remain canonical"
+      ],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "Runtime approve/decline args and graph-ID retirement are present, but the stale graph HITL arg shapes are absent.",
+      "source_obligation_ids": [
+        "obl-313"
+      ],
+      "source_seed_ids": [
+        "seed-313"
+      ],
+      "source_shard_ids": [
+        "shard-0079"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-1162",
+      "status": "partial",
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:256-276 references Run_Graph_View, human-in-the-loop, Orchestrator_Page, and related route/action contracts",
+        "Plans/UI_Command_Catalog.md:308-309 requires Orchestrator commands to encode action-surface policy and route through shared route payloads"
+      ],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "Run Graph is referenced, but graph-detail/usage-pivot alignment to node/attempt/runtime identity and Progress-only widget hostability are absent.",
+      "source_obligation_ids": [
+        "obl-338"
+      ],
+      "source_seed_ids": [
+        "seed-338"
+      ],
+      "source_shard_ids": [
+        "shard-0085"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-1212",
+      "status": "partial",
+      "evidence": [
+        "Plans/UI_Command_Catalog.md:753-755 requires normalization metadata to survive wrappers/deprecated aliases and marks timestamp/run/thread fallback compatibility-only when stronger route identity is unavailable",
+        "Plans/UI_Command_Catalog.md:351 references FinalGUISpec, Wiring_Matrix, and storage-plan contracts"
+      ],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "Compatibility-only fallback exists, but bridge-field precedence and attempt-to-provider-to-usage-to-receipt join model are absent.",
+      "source_obligation_ids": [
+        "obl-345"
+      ],
+      "source_seed_ids": [
+        "seed-345"
       ],
       "source_shard_ids": [
         "shard-0088"
       ],
-      "canon_label": "Plans/interview-subagent-integration.md",
-      "row_type": "consumer",
-      "path": "Plans/interview-subagent-integration.md",
-      "heading_hint": "Entry",
-      "status": "present",
-      "exact_items": [
-        "`Plans/interview-subagent-integration.md` already carries requested/effective runtime visibility and `operational_identity`."
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/interview-subagent-integration.md:14",
-        "Plans/interview-subagent-integration.md:37",
-        "Plans/interview-subagent-integration.md:41",
-        "Plans/interview-subagent-integration.md:7"
-      ],
-      "required_action": "none"
+      "path_field_status": "match"
     },
     {
-      "coverage_id": "cov-05101",
-      "source_obligation_ids": [
-        "obl-4775"
-      ],
-      "source_seed_ids": [
-        "seed-6770"
-      ],
-      "source_shard_ids": [
-        "shard-0089"
-      ],
-      "canon_label": "Plans/interview-subagent-integration.md",
-      "row_type": "consumer",
-      "path": "Plans/interview-subagent-integration.md",
-      "heading_hint": "",
-      "status": "present",
-      "exact_items": [
-        "`Plans/interview-subagent-integration.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/interview-subagent-integration.md:14"
-      ],
-      "required_action": "none"
-    },
-    {
-      "coverage_id": "cov-05111",
-      "source_obligation_ids": [
-        "obl-4785"
-      ],
-      "source_seed_ids": [
-        "seed-6787"
-      ],
-      "source_shard_ids": [
-        "shard-0089"
-      ],
-      "canon_label": "Plans/interview-subagent-integration.md:257",
-      "row_type": "consumer",
-      "path": "Plans/interview-subagent-integration.md",
-      "heading_hint": "",
-      "status": "missing",
-      "exact_items": [
-        "`Plans/interview-subagent-integration.md:257`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/interview-subagent-integration.md:required_terms_absent"
-      ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-05112",
-      "source_obligation_ids": [
-        "obl-4786"
-      ],
-      "source_seed_ids": [
-        "seed-6788"
-      ],
-      "source_shard_ids": [
-        "shard-0089"
-      ],
-      "canon_label": "Plans/interview-subagent-integration.md:1692-1698",
-      "row_type": "consumer",
-      "path": "Plans/interview-subagent-integration.md",
-      "heading_hint": "",
-      "status": "missing",
-      "exact_items": [
-        "`Plans/interview-subagent-integration.md:1692-1698`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/interview-subagent-integration.md:required_terms_absent"
-      ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-05113",
-      "source_obligation_ids": [
-        "obl-4787"
-      ],
-      "source_seed_ids": [
-        "seed-6789"
-      ],
-      "source_shard_ids": [
-        "shard-0089"
-      ],
-      "canon_label": "Plans/interview-subagent-integration.md:1966",
-      "row_type": "consumer",
-      "path": "Plans/interview-subagent-integration.md",
-      "heading_hint": "",
-      "status": "missing",
-      "exact_items": [
-        "`Plans/interview-subagent-integration.md:1966`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/interview-subagent-integration.md:required_terms_absent"
-      ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-05162",
-      "source_obligation_ids": [
-        "obl-4832"
-      ],
-      "source_seed_ids": [
-        "seed-6853",
-        "seed-6899",
-        "seed-6938",
-        "seed-6950",
-        "seed-6971",
-        "seed-7011",
-        "seed-7043",
-        "seed-7177"
-      ],
-      "source_shard_ids": [
-        "shard-0089",
-        "shard-0090",
-        "shard-0091"
-      ],
-      "canon_label": "Plans/interview-subagent-integration.md",
-      "row_type": "consumer",
-      "path": "Plans/interview-subagent-integration.md",
-      "heading_hint": "Entry",
+      "coverage_id": "cov-1251",
       "status": "partial",
-      "exact_items": [
-        "`Plans/interview-subagent-integration.md`"
-      ],
-      "stale_tokens": [],
       "evidence": [
-        "Plans/interview-subagent-integration.md:14"
+        "Plans/UI_Command_Catalog.md:668-677 defines cmd.search.open_result and cmd.search.replace_selected with project_id, query_session_id, subject_id, disposition, route_target, and canonical search routing policy"
       ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-05173",
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "Search routing coverage exists, but the non-existent Orchestrator_Page#10 anchor issue and result_id stale-residue requirement are not directly satisfied.",
       "source_obligation_ids": [
-        "obl-4843"
+        "obl-354"
       ],
       "source_seed_ids": [
-        "seed-6875",
-        "seed-6941"
-      ],
-      "source_shard_ids": [
-        "shard-0089",
-        "shard-0090"
-      ],
-      "canon_label": "Plans/interview-subagent-integration.md:1692-1698",
-      "row_type": "consumer",
-      "path": "Plans/interview-subagent-integration.md",
-      "heading_hint": "Entry",
-      "status": "missing",
-      "exact_items": [
-        "`Plans/interview-subagent-integration.md:1692-1698`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/interview-subagent-integration.md:required_terms_absent"
-      ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-05186",
-      "source_obligation_ids": [
-        "obl-4856"
-      ],
-      "source_seed_ids": [
-        "seed-6895"
-      ],
-      "source_shard_ids": [
-        "shard-0089"
-      ],
-      "canon_label": "Plans/interview-subagent-integration.md",
-      "row_type": "consumer",
-      "path": "Plans/interview-subagent-integration.md",
-      "heading_hint": "Entry",
-      "status": "present",
-      "exact_items": [
-        "`Plans/interview-subagent-integration.md` does contain `### Runtime identity visibility`, but its required fields still stop at `requested_account_binding` / `operational_identity` and do not carry `requested_account_policy` or `tool_use_id`."
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/interview-subagent-integration.md:14",
-        "Plans/interview-subagent-integration.md:37",
-        "Plans/interview-subagent-integration.md:5",
-        "Plans/interview-subagent-integration.md:7",
-        "Plans/interview-subagent-integration.md:11"
-      ],
-      "required_action": "none"
-    },
-    {
-      "coverage_id": "cov-05194",
-      "source_obligation_ids": [
-        "obl-4862"
-      ],
-      "source_seed_ids": [
-        "seed-6904",
-        "seed-6954",
-        "seed-6987",
-        "seed-7031"
-      ],
-      "source_shard_ids": [
-        "shard-0089",
-        "shard-0090"
-      ],
-      "canon_label": "Plans/interview-subagent-integration.md:1686-1698",
-      "row_type": "consumer",
-      "path": "Plans/interview-subagent-integration.md",
-      "heading_hint": "Entry",
-      "status": "missing",
-      "exact_items": [
-        "`Plans/interview-subagent-integration.md:1686-1698`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/interview-subagent-integration.md:required_terms_absent"
-      ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-05282",
-      "source_obligation_ids": [
-        "obl-4936"
-      ],
-      "source_seed_ids": [
-        "seed-7060"
+        "seed-354"
       ],
       "source_shard_ids": [
         "shard-0091"
       ],
-      "canon_label": "Plans/interview-subagent-integration.md:1686-1698",
-      "row_type": "consumer",
-      "path": "Plans/interview-subagent-integration.md",
-      "heading_hint": "",
-      "status": "missing",
-      "exact_items": [
-        "`Plans/interview-subagent-integration.md:1686-1698`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/interview-subagent-integration.md:required_terms_absent"
-      ],
-      "required_action": "consumer_propagation"
+      "path_field_status": "match"
     }
   ]
 }

@@ -1,353 +1,228 @@
 {
-  "schema_id": "pm.transfer_coverage_wave.v1",
+  "schema_id": "pm.transfer_coverage_wave.v3",
   "work_id": "w-20260312-203855",
   "wave_id": "wave-002",
-  "row_groups": [
-    "rowgrp-0005",
-    "rowgrp-0006",
-    "rowgrp-0007",
-    "rowgrp-0008"
+  "timestamp_utc": "2026-04-28T19:17:32Z",
+  "subagent_tasks": [
+    "coverage-rowgrp-005",
+    "coverage-rowgrp-006",
+    "coverage-rowgrp-007",
+    "coverage-rowgrp-008"
   ],
-  "coverage_rows": [
+  "assigned_input_boundaries": [
+    "rowgrp-005 cov-446 Plans/Architecture_Invariants.md",
+    "rowgrp-006 cov-547 Plans/CLI_Bridged_Providers.md",
+    "rowgrp-007 cov-189,cov-474 Plans/CLI_Bridged_Providers.md",
+    "rowgrp-008 cov-589 Plans/CLI_Bridged_Providers.md"
+  ],
+  "subagent_result_status": {
+    "coverage-rowgrp-005": "completed",
+    "coverage-rowgrp-006": "completed",
+    "coverage-rowgrp-007": "completed",
+    "coverage-rowgrp-008": "completed"
+  },
+  "completed_task_count": 4,
+  "failed_task_count": 0,
+  "coverage_ids_assigned": [
+    "cov-446",
+    "cov-547",
+    "cov-189",
+    "cov-474",
+    "cov-589"
+  ],
+  "coverage_ids_completed": [
+    "cov-446",
+    "cov-547",
+    "cov-189",
+    "cov-474",
+    "cov-589"
+  ],
+  "path_groups_assigned": [
+    "Plans/Architecture_Invariants.md",
+    "Plans/CLI_Bridged_Providers.md"
+  ],
+  "rows": [
     {
-      "coverage_id": "cov-04506",
+      "coverage_id": "cov-189",
       "source_obligation_ids": [
-        "obl-4283"
+        "obl-050"
       ],
       "source_seed_ids": [
-        "seed-6167"
+        "seed-050"
       ],
       "source_shard_ids": [
-        "shard-0082"
+        "shard-0006"
       ],
-      "canon_label": "Plans/*.md",
-      "row_type": "layout_blocker",
-      "path": "Plans/00-plans-index.md",
-      "heading_hint": "Do-not-forget details",
-      "status": "present",
+      "canon_label": "bridged-provider auth/account envelope parity",
+      "row_type": "consumer",
+      "path": "Plans/CLI_Bridged_Providers.md",
+      "heading_hint": "Key findings",
+      "status": "partial",
       "exact_items": [
-        "After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes."
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/00-plans-index.md:39",
-        "Plans/00-plans-index.md:109",
-        "Plans/00-plans-index.md:135",
-        "Plans/00-plans-index.md:3",
-        "Plans/00-plans-index.md:62",
-        "Plans/00-plans-index.md:27",
-        "Plans/00-plans-index.md:48",
-        "Plans/00-plans-index.md:44",
-        "Plans/00-plans-index.md:113"
-      ],
-      "required_action": "none"
-    },
-    {
-      "coverage_id": "cov-00447",
-      "source_obligation_ids": [
-        "obl-0441"
-      ],
-      "source_seed_ids": [
-        "seed-0446"
-      ],
-      "source_shard_ids": [
-        "shard-0007"
-      ],
-      "canon_label": "Plans/00-plans-index.md",
-      "row_type": "stale_retirement",
-      "path": "Plans/00-plans-index.md",
-      "heading_hint": "Highest-Impact Docs",
-      "status": "present",
-      "exact_items": [
-        "**`Plans/00-plans-index.md`** and **`Plans/feature-list.md`** \u2014 feature-list has 13 addenda and 63 legacy tier hits. Many feature entries still describe tier-scoped behavior. The index links to docs whose execution models are now divergent."
+        "CLI_Bridged_Providers.md request and persistence envelopes still omit requested/effective auth/account fields",
+        "Provider_OpenCode.md never explains how PM obtains upstream account identity from behind the server bridge",
+        "Provider_Stream_Mapping_External_Reference_A2A.md maps usage and diagnostics without effective-account attribution",
+        "Unify bridged-provider request/persistence envelopes around the same auth/account fields already used by Contracts_V0.md and Prompt_Pipeline.md"
       ],
       "stale_tokens": [
-        "Plans/00-plans-index.md",
-        "Plans/feature-list.md"
+        "bridged-provider",
+        "effective-account attribution"
       ],
       "evidence": [
-        "Plans/00-plans-index.md:27"
+        "Plans/CLI_Bridged_Providers.md:27-33 bridged-provider goals and boundaries",
+        "Plans/CLI_Bridged_Providers.md:49-70 request envelope includes account_id"
       ],
-      "required_action": "none"
+      "required_action": "consumer_propagation",
+      "doc_resolution_status": "concrete",
+      "verification_status": "verified",
+      "source_doc_resolution_status": "concrete",
+      "unresolved_reason": "File includes account_id in request envelope, but does not define requested/effective auth/account propagation or persistence/permission envelope alignment."
     },
     {
-      "coverage_id": "cov-01611",
+      "coverage_id": "cov-446",
       "source_obligation_ids": [
-        "obl-1542"
+        "obl-130"
       ],
       "source_seed_ids": [
-        "seed-1720",
-        "seed-2048",
-        "seed-4430",
-        "seed-5070",
-        "seed-5911",
-        "seed-5997",
-        "seed-6089"
+        "seed-130"
       ],
       "source_shard_ids": [
-        "shard-0031",
-        "shard-0035",
-        "shard-0062",
-        "shard-0070",
-        "shard-0081",
-        "shard-0082"
+        "shard-0032"
       ],
-      "canon_label": "Plans/Architecture_Invariants.md",
-      "row_type": "consumer",
+      "canon_label": "Monolithic authority / tier-era ownership language",
+      "row_type": "stale_retirement",
       "path": "Plans/Architecture_Invariants.md",
-      "heading_hint": "Targeted docs read",
-      "status": "present",
-      "exact_items": [
-        "`Plans/Architecture_Invariants.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/Architecture_Invariants.md:127",
-        "Plans/Architecture_Invariants.md:46",
-        "Plans/Architecture_Invariants.md:26"
-      ],
-      "required_action": "none"
-    },
-    {
-      "coverage_id": "cov-01623",
-      "source_obligation_ids": [
-        "obl-1554"
-      ],
-      "source_seed_ids": [
-        "seed-1734",
-        "seed-4457",
-        "seed-5108",
-        "seed-5946",
-        "seed-6033",
-        "seed-6121"
-      ],
-      "source_shard_ids": [
-        "shard-0032",
-        "shard-0062",
-        "shard-0070",
-        "shard-0081",
-        "shard-0082"
-      ],
-      "canon_label": "Plans/Architecture_Invariants.md",
-      "row_type": "consumer",
-      "path": "Plans/Architecture_Invariants.md",
-      "heading_hint": "Impacted docs",
+      "heading_hint": "Authority is still framed too monolithically in several places",
       "status": "partial",
       "exact_items": [
-        "`Plans/Architecture_Invariants.md`"
+        "stronger single \"Puppet Master\" authority center",
+        "seam/package overseer scopes",
+        "blocked-owner attribution",
+        "runtime/system/user authority",
+        "tier context",
+        "less precise ownership terms"
       ],
-      "stale_tokens": [],
+      "stale_tokens": [
+        "Puppet Master",
+        "tier context"
+      ],
       "evidence": [
-        "Plans/Architecture_Invariants.md:127",
-        "Plans/Architecture_Invariants.md:46"
+        "Plans/Architecture_Invariants.md:3 generic Puppet Master title/context",
+        "Plans/Architecture_Invariants.md:10 architecture invariants context",
+        "Plans/Architecture_Invariants.md:100 invariant context",
+        "Plans/Architecture_Invariants.md:223-226 runtime identity/blocked-state language"
       ],
-      "required_action": "consumer_propagation"
+      "required_action": "stale_retirement",
+      "doc_resolution_status": "concrete",
+      "verification_status": "verified",
+      "source_doc_resolution_status": "global_or_cross_cutting",
+      "unresolved_reason": "Generic Puppet Master naming and runtime identity/blocked-state language exist, but seam/package overseer scopes, blocked-owner attribution, runtime/system/user authority, and tier-context retirement are not fully evidenced."
     },
     {
-      "coverage_id": "cov-03285",
+      "coverage_id": "cov-474",
       "source_obligation_ids": [
-        "obl-3198"
+        "obl-139"
       ],
       "source_seed_ids": [
-        "seed-4180"
+        "seed-139"
       ],
       "source_shard_ids": [
-        "shard-0059"
+        "shard-0035"
       ],
-      "canon_label": "Plans/*.md",
+      "canon_label": "multi-account + bridged-provider durable identity gaps",
       "row_type": "consumer",
-      "path": "Plans/Architecture_Invariants.md",
-      "heading_hint": "Do-not-forget details",
-      "status": "present",
+      "path": "Plans/CLI_Bridged_Providers.md",
+      "heading_hint": "Research Progress",
+      "status": "missing",
       "exact_items": [
-        "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage."
+        "CLI_Bridged_Providers.md imposes shared-runtime snapshot language and multi-account capability declarations on direct providers but leaves bridged providers exempt by omission.",
+        "Multi-Account.md requires switch notifications/history semantics that storage-plan.md, Prompt_Pipeline.md, and bridged-provider stream contracts still cannot represent durably.",
+        "Permissions_System.md still treats session cache and reject-cascade as globally session-scoped, which directly conflicts with multi-lane isolation and shared-runtime actor separation."
       ],
-      "stale_tokens": [],
+      "stale_tokens": [
+        "shared-runtime snapshot language",
+        "multi-account capability declarations",
+        "switch notifications/history semantics",
+        "session cache",
+        "reject-cascade",
+        "globally session-scoped"
+      ],
       "evidence": [
-        "Plans/Architecture_Invariants.md:3",
-        "Plans/Architecture_Invariants.md:46",
-        "Plans/Architecture_Invariants.md:225"
+        "Plans/CLI_Bridged_Providers.md:27-33 bridged-provider goals and boundaries reviewed",
+        "Plans/CLI_Bridged_Providers.md:37-43 non-goals reviewed",
+        "Plans/CLI_Bridged_Providers.md:49-70 request envelope reviewed"
       ],
-      "required_action": "none"
+      "required_action": "consumer_propagation",
+      "doc_resolution_status": "concrete",
+      "verification_status": "verified",
+      "source_doc_resolution_status": "unknown_pending_doc_discovery",
+      "unresolved_reason": "No shared-runtime snapshot language, multi-account capability declarations, switch notification/history semantics, session cache, or reject-cascade behavior found."
     },
     {
-      "coverage_id": "cov-03506",
+      "coverage_id": "cov-547",
       "source_obligation_ids": [
-        "obl-3358"
+        "obl-156"
       ],
       "source_seed_ids": [
-        "seed-4482",
-        "seed-5146",
-        "seed-5982",
-        "seed-6073"
+        "seed-156"
       ],
       "source_shard_ids": [
-        "shard-0062",
-        "shard-0070",
-        "shard-0081",
-        "shard-0082"
+        "shard-0039"
       ],
-      "canon_label": "Plans/Architecture_Invariants.md",
+      "canon_label": "provider/open-code and permission identity gaps",
       "row_type": "consumer",
-      "path": "Plans/Architecture_Invariants.md",
-      "heading_hint": "Candidate fixes to carry forward",
+      "path": "Plans/CLI_Bridged_Providers.md",
+      "heading_hint": "",
       "status": "partial",
       "exact_items": [
-        "`Plans/Architecture_Invariants.md`"
+        "Provider_OpenCode.md contains a direct identity-mapping bug at the contract level",
+        "Bridge/event contracts are still too thin for rewrite-era correlation",
+        "Permissions are still under-specified for parallel actors",
+        "Permission snapshots still do not satisfy rewrite-era requested/effective disclosure"
       ],
       "stale_tokens": [],
       "evidence": [
-        "Plans/Architecture_Invariants.md:127",
-        "Plans/Architecture_Invariants.md:62"
+        "Plans/CLI_Bridged_Providers.md:31 mentions Tool-call correlation + reconciliation",
+        "Plans/CLI_Bridged_Providers.md:49-70 includes account_id and execution_role in BRIDGE_INVOKE_OPTIONS"
       ],
-      "required_action": "consumer_propagation"
+      "required_action": "consumer_propagation",
+      "doc_resolution_status": "concrete",
+      "verification_status": "verified",
+      "source_doc_resolution_status": "global_or_cross_cutting",
+      "unresolved_reason": "Generic correlation and schema fields exist, but the four exact identity/permission gap requirements are not directly evidenced."
     },
     {
-      "coverage_id": "cov-04252",
+      "coverage_id": "cov-589",
       "source_obligation_ids": [
-        "obl-4098"
+        "obl-166"
       ],
       "source_seed_ids": [
-        "seed-5705"
+        "seed-166"
       ],
       "source_shard_ids": [
-        "shard-0077"
+        "shard-0041"
       ],
-      "canon_label": "Plans/Architecture_Invariants.md",
-      "row_type": "consumer",
-      "path": "Plans/Architecture_Invariants.md",
-      "heading_hint": "Priority merge",
-      "status": "partial",
-      "exact_items": [
-        "`Plans/Architecture_Invariants.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/Architecture_Invariants.md:127"
-      ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-04424",
-      "source_obligation_ids": [
-        "obl-4262"
-      ],
-      "source_seed_ids": [
-        "seed-6087"
-      ],
-      "source_shard_ids": [
-        "shard-0082"
-      ],
-      "canon_label": "39",
-      "row_type": "consumer",
-      "path": "Plans/Architecture_Invariants.md",
-      "heading_hint": "Do-not-forget details",
-      "status": "present",
-      "exact_items": [
-        "Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes."
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/Architecture_Invariants.md:116",
-        "Plans/Architecture_Invariants.md:3",
-        "Plans/Architecture_Invariants.md:46",
-        "Plans/Architecture_Invariants.md:150"
-      ],
-      "required_action": "none"
-    },
-    {
-      "coverage_id": "cov-04596",
-      "source_obligation_ids": [
-        "obl-4311"
-      ],
-      "source_seed_ids": [
-        "seed-6209"
-      ],
-      "source_shard_ids": [
-        "shard-0083"
-      ],
-      "canon_label": "ContractRef: Plans/Architecture_Invariants.md#INV-002, Plans/Architecture_Invariants.md#INV-010,",
-      "row_type": "consumer",
-      "path": "Plans/Architecture_Invariants.md",
-      "heading_hint": "INV-002",
-      "status": "present",
-      "exact_items": [
-        "`ContractRef: Plans/Architecture_Invariants.md#INV-002, Plans/Architecture_Invariants.md#INV-010, SchemaID:evidence.schema.json`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/Architecture_Invariants.md:17",
-        "Plans/Architecture_Invariants.md:127",
-        "Plans/Architecture_Invariants.md:31",
-        "Plans/Architecture_Invariants.md:98",
-        "Plans/Architecture_Invariants.md:43"
-      ],
-      "required_action": "none"
-    },
-    {
-      "coverage_id": "cov-05011",
-      "source_obligation_ids": [
-        "obl-4692"
-      ],
-      "source_seed_ids": [
-        "seed-6684"
-      ],
-      "source_shard_ids": [
-        "shard-0088"
-      ],
-      "canon_label": "Plans/Prompt_Pipeline.md",
-      "row_type": "consumer",
-      "path": "Plans/Architecture_Invariants.md",
-      "heading_hint": "Identity / attribution / blocked-policy misses were reconfirmed with stronger specificity",
-      "status": "present",
-      "exact_items": [
-        "`Plans/Prompt_Pipeline.md`, `Plans/Contracts_V0.md`, `Plans/Tools.md`, `Plans/GitHub_API_Auth_and_Flows.md`, `Plans/orchestrator-subagent-integration.md`, `Plans/Architecture_Invariants.md`, `Plans/Run_Modes.md`, `Plans/Executor_Protocol.md`, `Plans/human-in-the-loop.md`, `Plans/usage-feature.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/Architecture_Invariants.md:216",
-        "Plans/Architecture_Invariants.md:3",
-        "Plans/Architecture_Invariants.md:43",
-        "Plans/Architecture_Invariants.md:86",
-        "Plans/Architecture_Invariants.md:221",
-        "Plans/Architecture_Invariants.md:127",
-        "Plans/Architecture_Invariants.md:211",
-        "Plans/Architecture_Invariants.md:133",
-        "Plans/Architecture_Invariants.md:142",
-        "Plans/Architecture_Invariants.md:209",
-        "Plans/Architecture_Invariants.md:224",
-        "Plans/Architecture_Invariants.md:223"
-      ],
-      "required_action": "none"
-    },
-    {
-      "coverage_id": "cov-04507",
-      "source_obligation_ids": [
-        "obl-4283"
-      ],
-      "source_seed_ids": [
-        "seed-6167"
-      ],
-      "source_shard_ids": [
-        "shard-0082"
-      ],
-      "canon_label": "Plans/*.md",
+      "canon_label": "bridged correlation/account/trust metadata gaps",
       "row_type": "layout_blocker",
-      "path": "Plans/Architecture_Invariants.md",
-      "heading_hint": "Do-not-forget details",
-      "status": "present",
+      "path": "Plans/CLI_Bridged_Providers.md",
+      "heading_hint": "",
+      "status": "missing",
       "exact_items": [
-        "After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes."
+        "Bridged contracts still cannot legally carry all correlation/account/trust metadata their addenda already imply",
+        "A2A still blocks clean category growth despite rewrite-era semantics needing first-class stream representation",
+        "Permission mode override semantics still conflict on remote side effects",
+        "Permission snapshots still do not project requested/effective identity richly enough"
       ],
       "stale_tokens": [],
       "evidence": [
-        "Plans/Architecture_Invariants.md:3",
-        "Plans/Architecture_Invariants.md:121",
-        "Plans/Architecture_Invariants.md:46",
-        "Plans/Architecture_Invariants.md:24",
-        "Plans/Architecture_Invariants.md:225"
+        "Plans/CLI_Bridged_Providers.md:26-37 related bridged-provider contract area reviewed",
+        "Plans/CLI_Bridged_Providers.md:45-73 related invoke options reviewed"
       ],
-      "required_action": "none"
+      "required_action": "packetizable_layout_repair",
+      "doc_resolution_status": "concrete",
+      "verification_status": "verified",
+      "source_doc_resolution_status": "global_or_cross_cutting",
+      "unresolved_reason": "No exact row text found; only related identity/correlation contract fields exist."
     }
   ]
 }

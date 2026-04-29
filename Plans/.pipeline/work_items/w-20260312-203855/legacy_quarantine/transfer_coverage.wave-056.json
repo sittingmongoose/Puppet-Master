@@ -1,0 +1,1010 @@
+{
+  "schema_id": "pm.transfer_coverage_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-056",
+  "row_groups": [
+    "rowgrp-0221",
+    "rowgrp-0222",
+    "rowgrp-0223",
+    "rowgrp-0224"
+  ],
+  "coverage_rows": [
+    {
+      "coverage_id": "cov-05093",
+      "source_obligation_ids": [
+        "obl-4767"
+      ],
+      "source_seed_ids": [
+        "seed-6760"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "canon_label": "Plans/storage-plan.md",
+      "row_type": "consumer",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "Entry",
+      "status": "present",
+      "exact_items": [
+        "`Plans/storage-plan.md` already carries `workflow_refs`, `docker_refs`, `kubernetes_refs`, `provider_attempt_ref`, `usage_event_ref`, `workflow_run_id`, `validation lineage`, `account_pressure_episode`, `account_switch_event`, `projection_freshness`, `projection_health`, `requested_account_id`, `effective_account_id`, `execution_role`, and `account_switch_reason`."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:14",
+        "Plans/storage-plan.md:561",
+        "Plans/storage-plan.md:562",
+        "Plans/storage-plan.md:563",
+        "Plans/storage-plan.md:181",
+        "Plans/storage-plan.md:565",
+        "Plans/storage-plan.md:574",
+        "Plans/storage-plan.md:529",
+        "Plans/storage-plan.md:530",
+        "Plans/storage-plan.md:590",
+        "Plans/storage-plan.md:927",
+        "Plans/storage-plan.md:929"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-05103",
+      "source_obligation_ids": [
+        "obl-4777"
+      ],
+      "source_seed_ids": [
+        "seed-6779"
+      ],
+      "source_shard_ids": [
+        "shard-0089"
+      ],
+      "canon_label": "Plans/storage-plan.md:330-337",
+      "row_type": "consumer",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "`Plans/storage-plan.md:330-337`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:required_terms_absent"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-05104",
+      "source_obligation_ids": [
+        "obl-4778"
+      ],
+      "source_seed_ids": [
+        "seed-6780"
+      ],
+      "source_shard_ids": [
+        "shard-0089"
+      ],
+      "canon_label": "Plans/storage-plan.md:468-590",
+      "row_type": "consumer",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "`Plans/storage-plan.md:468-590`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:required_terms_absent"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-05105",
+      "source_obligation_ids": [
+        "obl-4779"
+      ],
+      "source_seed_ids": [
+        "seed-6781"
+      ],
+      "source_shard_ids": [
+        "shard-0089"
+      ],
+      "canon_label": "Plans/storage-plan.md:788-817",
+      "row_type": "consumer",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "`Plans/storage-plan.md:788-817`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:required_terms_absent"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-05106",
+      "source_obligation_ids": [
+        "obl-4780"
+      ],
+      "source_seed_ids": [
+        "seed-6782"
+      ],
+      "source_shard_ids": [
+        "shard-0089"
+      ],
+      "canon_label": "Plans/storage-plan.md:1330-1391",
+      "row_type": "consumer",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "`Plans/storage-plan.md:1330-1391`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:required_terms_absent"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-05140",
+      "source_obligation_ids": [
+        "obl-4814"
+      ],
+      "source_seed_ids": [
+        "seed-6824"
+      ],
+      "source_shard_ids": [
+        "shard-0089"
+      ],
+      "canon_label": "Plans/storage-plan.md:330-337",
+      "row_type": "consumer",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "Entry",
+      "status": "partial",
+      "exact_items": [
+        "`Plans/storage-plan.md:330-337`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:349"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-05141",
+      "source_obligation_ids": [
+        "obl-4815"
+      ],
+      "source_seed_ids": [
+        "seed-6825"
+      ],
+      "source_shard_ids": [
+        "shard-0089"
+      ],
+      "canon_label": "Plans/storage-plan.md:468-590",
+      "row_type": "consumer",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "Entry",
+      "status": "partial",
+      "exact_items": [
+        "`Plans/storage-plan.md:468-590`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:349"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-05142",
+      "source_obligation_ids": [
+        "obl-4816"
+      ],
+      "source_seed_ids": [
+        "seed-6826",
+        "seed-6855"
+      ],
+      "source_shard_ids": [
+        "shard-0089"
+      ],
+      "canon_label": "Plans/storage-plan.md:1330-1391",
+      "row_type": "consumer",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "Entry",
+      "status": "partial",
+      "exact_items": [
+        "`Plans/storage-plan.md:1330-1391`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:349"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-05148",
+      "source_obligation_ids": [
+        "obl-4822"
+      ],
+      "source_seed_ids": [
+        "seed-6834"
+      ],
+      "source_shard_ids": [
+        "shard-0089"
+      ],
+      "canon_label": "historical_lineage_refs[]",
+      "row_type": "consumer",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "Entry",
+      "status": "present",
+      "exact_items": [
+        "`historical_lineage_refs[]` is already present in `Plans/storage-plan.md`, so it no longer belongs in `gap-003`'s exact-missing list."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:1632",
+        "Plans/storage-plan.md:14",
+        "Plans/storage-plan.md:13",
+        "Plans/storage-plan.md:578",
+        "Plans/storage-plan.md:1515",
+        "Plans/storage-plan.md:349"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-05150",
+      "source_obligation_ids": [
+        "obl-4824"
+      ],
+      "source_seed_ids": [
+        "seed-6836"
+      ],
+      "source_shard_ids": [
+        "shard-0089"
+      ],
+      "canon_label": "Plans/storage-plan.md",
+      "row_type": "consumer",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "Entry",
+      "status": "present",
+      "exact_items": [
+        "`Plans/storage-plan.md` still omits `run_id` from the receipt minimum-fields list and still does not carry `pass_verdict`, `phase_plan_ref`, or `requirements_quality_report_ref`."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:14",
+        "Plans/storage-plan.md:71",
+        "Plans/storage-plan.md:567",
+        "Plans/storage-plan.md:568",
+        "Plans/storage-plan.md:569",
+        "Plans/storage-plan.md:170",
+        "Plans/storage-plan.md:224",
+        "Plans/storage-plan.md:595",
+        "Plans/storage-plan.md:148",
+        "Plans/storage-plan.md:349"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-05163",
+      "source_obligation_ids": [
+        "obl-4833"
+      ],
+      "source_seed_ids": [
+        "seed-6856",
+        "seed-6984"
+      ],
+      "source_shard_ids": [
+        "shard-0089",
+        "shard-0090"
+      ],
+      "canon_label": "Plans/storage-plan.md:1548-1568",
+      "row_type": "consumer",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "Entry",
+      "status": "partial",
+      "exact_items": [
+        "`Plans/storage-plan.md:1548-1568`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:349"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-05233",
+      "source_obligation_ids": [
+        "obl-4898"
+      ],
+      "source_seed_ids": [
+        "seed-6956"
+      ],
+      "source_shard_ids": [
+        "shard-0090"
+      ],
+      "canon_label": "Plans/storage-plan.md:322-337",
+      "row_type": "consumer",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "Entry",
+      "status": "partial",
+      "exact_items": [
+        "`Plans/storage-plan.md:322-337`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:349"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-05234",
+      "source_obligation_ids": [
+        "obl-4899"
+      ],
+      "source_seed_ids": [
+        "seed-6957"
+      ],
+      "source_shard_ids": [
+        "shard-0090"
+      ],
+      "canon_label": "Plans/storage-plan.md:941-956",
+      "row_type": "consumer",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "Entry",
+      "status": "partial",
+      "exact_items": [
+        "`Plans/storage-plan.md:941-956`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:349"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-05250",
+      "source_obligation_ids": [
+        "obl-4905"
+      ],
+      "source_seed_ids": [
+        "seed-6983"
+      ],
+      "source_shard_ids": [
+        "shard-0090"
+      ],
+      "canon_label": "Plans/storage-plan.md:1289-1300",
+      "row_type": "consumer",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "Entry",
+      "status": "partial",
+      "exact_items": [
+        "`Plans/storage-plan.md:1289-1300`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:349"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-05253",
+      "source_obligation_ids": [
+        "obl-4908"
+      ],
+      "source_seed_ids": [
+        "seed-6993"
+      ],
+      "source_shard_ids": [
+        "shard-0090"
+      ],
+      "canon_label": "Plans/storage-plan.md",
+      "row_type": "consumer",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "Entry",
+      "status": "present",
+      "exact_items": [
+        "`Plans/storage-plan.md` already includes `run_id` in the runtime receipt minimum-fields list, so `gap-004` must no longer treat that field as unresolved."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:14",
+        "Plans/storage-plan.md:71",
+        "Plans/storage-plan.md:77",
+        "Plans/storage-plan.md:19",
+        "Plans/storage-plan.md:170",
+        "Plans/storage-plan.md:224",
+        "Plans/storage-plan.md:252",
+        "Plans/storage-plan.md:177",
+        "Plans/storage-plan.md:349"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-05255",
+      "source_obligation_ids": [
+        "obl-4910"
+      ],
+      "source_seed_ids": [
+        "seed-6995"
+      ],
+      "source_shard_ids": [
+        "shard-0090"
+      ],
+      "canon_label": "Plans/storage-plan.md",
+      "row_type": "consumer",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "Entry",
+      "status": "present",
+      "exact_items": [
+        "`Plans/storage-plan.md` already carries the broader `project_summary.v1:{project_id}` record family, but the exact `orchestrator.project_state.{project_id}` key family still is not present as named canon."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:14",
+        "Plans/storage-plan.md:527",
+        "Plans/storage-plan.md:651",
+        "Plans/storage-plan.md:48",
+        "Plans/storage-plan.md:19",
+        "Plans/storage-plan.md:43",
+        "Plans/storage-plan.md:11",
+        "Plans/storage-plan.md:13",
+        "Plans/storage-plan.md:1214",
+        "Plans/storage-plan.md:349"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-05261",
+      "source_obligation_ids": [
+        "obl-4915"
+      ],
+      "source_seed_ids": [
+        "seed-7012"
+      ],
+      "source_shard_ids": [
+        "shard-0090"
+      ],
+      "canon_label": "Plans/storage-plan.md:324-337",
+      "row_type": "consumer",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "Entry",
+      "status": "partial",
+      "exact_items": [
+        "`Plans/storage-plan.md:324-337`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:349"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-05262",
+      "source_obligation_ids": [
+        "obl-4916"
+      ],
+      "source_seed_ids": [
+        "seed-7013"
+      ],
+      "source_shard_ids": [
+        "shard-0090"
+      ],
+      "canon_label": "Plans/storage-plan.md:541-590",
+      "row_type": "consumer",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "Entry",
+      "status": "partial",
+      "exact_items": [
+        "`Plans/storage-plan.md:541-590`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:349"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-05263",
+      "source_obligation_ids": [
+        "obl-4917"
+      ],
+      "source_seed_ids": [
+        "seed-7014"
+      ],
+      "source_shard_ids": [
+        "shard-0090"
+      ],
+      "canon_label": "Plans/storage-plan.md:1289-1391",
+      "row_type": "consumer",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "Entry",
+      "status": "partial",
+      "exact_items": [
+        "`Plans/storage-plan.md:1289-1391`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:349"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-05276",
+      "source_obligation_ids": [
+        "obl-4930"
+      ],
+      "source_seed_ids": [
+        "seed-7052"
+      ],
+      "source_shard_ids": [
+        "shard-0090"
+      ],
+      "canon_label": "Plans/storage-plan.md:1322-1391",
+      "row_type": "consumer",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "Entry",
+      "status": "partial",
+      "exact_items": [
+        "`Plans/storage-plan.md:1322-1391`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:349"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-05300",
+      "source_obligation_ids": [
+        "obl-4951"
+      ],
+      "source_seed_ids": [
+        "seed-7077"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "canon_label": "gap-007",
+      "row_type": "consumer",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "11. Source Control boundary",
+      "status": "present",
+      "exact_items": [
+        "`gap-007` sharpened: the broken `Plans/Orchestrator_Page.md#11. Source Control boundary` reference survives not only in `Plans/GitHub_Integration.md` but also in `Plans/storage-plan.md` and `Plans/WorktreeGitImprovement.md`, while `Plans/FinalGUISpec.md` still preserves the `restore points` contradiction."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:300",
+        "Plans/storage-plan.md:14",
+        "Plans/storage-plan.md:963",
+        "Plans/storage-plan.md:249",
+        "Plans/storage-plan.md:1664",
+        "Plans/storage-plan.md:1679",
+        "Plans/storage-plan.md:48",
+        "Plans/storage-plan.md:79",
+        "Plans/storage-plan.md:366",
+        "Plans/storage-plan.md:77",
+        "Plans/storage-plan.md:1586",
+        "Plans/storage-plan.md:538"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-05311",
+      "source_obligation_ids": [
+        "obl-4960"
+      ],
+      "source_seed_ids": [
+        "seed-7099"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "canon_label": "Plans/storage-plan.md:1650-1654",
+      "row_type": "consumer",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "Entry",
+      "status": "partial",
+      "exact_items": [
+        "`Plans/storage-plan.md:1650-1654`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:349"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-05322",
+      "source_obligation_ids": [
+        "obl-4969"
+      ],
+      "source_seed_ids": [
+        "seed-7117",
+        "seed-7186"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "canon_label": "Plans/storage-plan.md:1389-1396",
+      "row_type": "consumer",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "Entry",
+      "status": "partial",
+      "exact_items": [
+        "`Plans/storage-plan.md:1389-1396`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:349"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-05348",
+      "source_obligation_ids": [
+        "obl-4990"
+      ],
+      "source_seed_ids": [
+        "seed-7153"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "canon_label": "Plans/storage-plan.md:1616-1625",
+      "row_type": "consumer",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "Entry",
+      "status": "partial",
+      "exact_items": [
+        "`Plans/storage-plan.md:1616-1625`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:349"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-05363",
+      "source_obligation_ids": [
+        "obl-5004"
+      ],
+      "source_seed_ids": [
+        "seed-7184"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "canon_label": "Plans/storage-plan.md:323-337",
+      "row_type": "consumer",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "Entry",
+      "status": "partial",
+      "exact_items": [
+        "`Plans/storage-plan.md:323-337`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:349"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-05364",
+      "source_obligation_ids": [
+        "obl-5005"
+      ],
+      "source_seed_ids": [
+        "seed-7185"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "canon_label": "Plans/storage-plan.md:941-954",
+      "row_type": "consumer",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "Entry",
+      "status": "partial",
+      "exact_items": [
+        "`Plans/storage-plan.md:941-954`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:349"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-05374",
+      "source_obligation_ids": [
+        "obl-5015"
+      ],
+      "source_seed_ids": [
+        "seed-7210"
+      ],
+      "source_shard_ids": [
+        "shard-0092"
+      ],
+      "canon_label": "Plans/storage-plan.md:294",
+      "row_type": "consumer",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "`Plans/storage-plan.md:294`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:required_terms_absent"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-05385",
+      "source_obligation_ids": [
+        "obl-5026"
+      ],
+      "source_seed_ids": [
+        "seed-7221"
+      ],
+      "source_shard_ids": [
+        "shard-0092"
+      ],
+      "canon_label": "Plans/storage-plan.md",
+      "row_type": "consumer",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "Highest-pressure docs for condensation are `Plans/storage-plan.md`, `Plans/Contracts_V0.md`, `Plans/Models_System.md`, `Plans/Executor_Protocol.md`, `Plans/WorktreeGitImprovement.md`, `Plans/Crosswalk.md`, and `Plans/Orchestrator_Page.md`."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:14",
+        "Plans/storage-plan.md:221",
+        "Plans/storage-plan.md:388",
+        "Plans/storage-plan.md:963",
+        "Plans/storage-plan.md:1679",
+        "Plans/storage-plan.md:296"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00119",
+      "source_obligation_ids": [
+        "obl-0119"
+      ],
+      "source_seed_ids": [
+        "seed-0119"
+      ],
+      "source_shard_ids": [
+        "shard-0003"
+      ],
+      "canon_label": "Plans/storage-plan.md",
+      "row_type": "layout_blocker",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "`Plans/storage-plan.md` and `Plans/FinalGUISpec.md` also carry meaningful usage/runtime/event/GUI assumptions."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:14",
+        "Plans/storage-plan.md:249",
+        "Plans/storage-plan.md:148"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-04168",
+      "source_obligation_ids": [
+        "obl-4014"
+      ],
+      "source_seed_ids": [
+        "seed-5597"
+      ],
+      "source_shard_ids": [
+        "shard-0076"
+      ],
+      "canon_label": "Plans/storage-plan.md",
+      "row_type": "layout_blocker",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "Key findings",
+      "status": "present",
+      "exact_items": [
+        "`Plans/storage-plan.md` is still carrying two execution models at once inside its canonical-record section."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:14",
+        "Plans/storage-plan.md:458",
+        "Plans/storage-plan.md:43",
+        "Plans/storage-plan.md:289",
+        "Plans/storage-plan.md:466",
+        "Plans/storage-plan.md:533"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-04567",
+      "source_obligation_ids": [
+        "obl-4283"
+      ],
+      "source_seed_ids": [
+        "seed-6167"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "canon_label": "Plans/*.md",
+      "row_type": "layout_blocker",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "Do-not-forget details",
+      "status": "present",
+      "exact_items": [
+        "After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:12",
+        "Plans/storage-plan.md:60",
+        "Plans/storage-plan.md:431",
+        "Plans/storage-plan.md:1388",
+        "Plans/storage-plan.md:14",
+        "Plans/storage-plan.md:481",
+        "Plans/storage-plan.md:296",
+        "Plans/storage-plan.md:277",
+        "Plans/storage-plan.md:582",
+        "Plans/storage-plan.md:252"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-05315",
+      "source_obligation_ids": [
+        "obl-4964"
+      ],
+      "source_seed_ids": [
+        "seed-7105"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "canon_label": "gap-003",
+      "row_type": "layout_blocker",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "Canonical records",
+      "status": "present",
+      "exact_items": [
+        "`gap-003` sharpened: `Plans/storage-plan.md` still lacks a discoverable `Canonical records` heading even though it contains inline `Canonical records for this feature set...` prose and a `canonical_record.v1:{project_id}:{record_id}` authoritative container, and `Plans/Orchestrator_Page.md` still points at the missing `Plans/storage-plan.md#Canonical records` anchor from three different sections."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:14",
+        "Plans/storage-plan.md:457",
+        "Plans/storage-plan.md:1679",
+        "Plans/storage-plan.md:641",
+        "Plans/storage-plan.md:23",
+        "Plans/storage-plan.md:370",
+        "Plans/storage-plan.md:155",
+        "Plans/storage-plan.md:955",
+        "Plans/storage-plan.md:1280",
+        "Plans/storage-plan.md:225",
+        "Plans/storage-plan.md:669",
+        "Plans/storage-plan.md:48"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-05340",
+      "source_obligation_ids": [
+        "obl-4983"
+      ],
+      "source_seed_ids": [
+        "seed-7134"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "canon_label": "gap-004",
+      "row_type": "layout_blocker",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "Cross-surface receipt record",
+      "status": "present",
+      "exact_items": [
+        "`gap-004` sharpened: `Plans/Runtime_Artifacts_Panel.md` still points directly at the missing `Plans/storage-plan.md#Cross-surface receipt record` anchor, so the receipt blocker now includes a live broken consumer reference rather than only missing owner/consumer headings."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:395",
+        "Plans/storage-plan.md:231",
+        "Plans/storage-plan.md:1129",
+        "Plans/storage-plan.md:1080",
+        "Plans/storage-plan.md:14",
+        "Plans/storage-plan.md:481",
+        "Plans/storage-plan.md:170",
+        "Plans/storage-plan.md:19",
+        "Plans/storage-plan.md:5",
+        "Plans/storage-plan.md:143",
+        "Plans/storage-plan.md:77",
+        "Plans/storage-plan.md:71"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-05341",
+      "source_obligation_ids": [
+        "obl-4984"
+      ],
+      "source_seed_ids": [
+        "seed-7135"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "canon_label": "gap-007",
+      "row_type": "layout_blocker",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "Entry",
+      "status": "present",
+      "exact_items": [
+        "`gap-007` downgraded: the prior `restore points` contradiction was overstated because `Plans/storage-plan.md` now cleanly separates runtime safe points from project-scoped restore points and `Plans/FinalGUISpec.md` explicitly forbids presenting safe points as restore points; the remaining blocker is structural-heading and broken-reference drift."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:1664",
+        "Plans/storage-plan.md:14",
+        "Plans/storage-plan.md:249",
+        "Plans/storage-plan.md:1061",
+        "Plans/storage-plan.md:269",
+        "Plans/storage-plan.md:231",
+        "Plans/storage-plan.md:358",
+        "Plans/storage-plan.md:19",
+        "Plans/storage-plan.md:1025",
+        "Plans/storage-plan.md:289",
+        "Plans/storage-plan.md:1012",
+        "Plans/storage-plan.md:1293"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-05356",
+      "source_obligation_ids": [
+        "obl-4998"
+      ],
+      "source_seed_ids": [
+        "seed-7163"
+      ],
+      "source_shard_ids": [
+        "shard-0091"
+      ],
+      "canon_label": "gap-003",
+      "row_type": "layout_blocker",
+      "path": "Plans/storage-plan.md",
+      "heading_hint": "Entry",
+      "status": "present",
+      "exact_items": [
+        "Wave 1 rechecked `gap-003`, `gap-004`, and `gap-008` against live storage, runtime-artifact, receipt, and usage docs and only reconfirmed the already-recorded missing storage/receipt headings, broken `Plans/storage-plan.md` anchor consumers, missing `orchestrator.project_state.{project_id}` naming, and missing usage-side account-history / degrade sections."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/storage-plan.md:14",
+        "Plans/storage-plan.md:651",
+        "Plans/storage-plan.md:372",
+        "Plans/storage-plan.md:71",
+        "Plans/storage-plan.md:1",
+        "Plans/storage-plan.md:984",
+        "Plans/storage-plan.md:170",
+        "Plans/storage-plan.md:296",
+        "Plans/storage-plan.md:1080",
+        "Plans/storage-plan.md:5",
+        "Plans/storage-plan.md:596",
+        "Plans/storage-plan.md:48"
+      ],
+      "required_action": "none"
+    }
+  ]
+}

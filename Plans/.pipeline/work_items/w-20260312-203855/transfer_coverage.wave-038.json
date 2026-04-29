@@ -1,391 +1,184 @@
 {
-  "schema_id": "pm.transfer_coverage_wave.v1",
+  "schema_id": "pm.transfer_coverage_wave.v3",
   "work_id": "w-20260312-203855",
   "wave_id": "wave-038",
-  "row_groups": [
-    "rowgrp-0149",
-    "rowgrp-0150",
-    "rowgrp-0151",
-    "rowgrp-0152"
+  "timestamp_utc": "2026-04-28T20:53:52Z",
+  "subagent_tasks": [
+    "coverage-rowgrp-149",
+    "coverage-rowgrp-150",
+    "coverage-rowgrp-151",
+    "coverage-rowgrp-152"
   ],
-  "coverage_rows": [
+  "assigned_input_boundaries": [
+    "rowgrp-149 cov-932 Plans/Progression_Gates.md",
+    "rowgrp-150 cov-1217 Plans/Project_Output_Artifacts.md",
+    "rowgrp-151 cov-182,cov-721,cov-1241 Plans/Project_Output_Artifacts.md",
+    "rowgrp-152 cov-666,cov-773 Plans/Project_Output_Artifacts.md"
+  ],
+  "subagent_result_status": {
+    "coverage-rowgrp-149": "completed_reduced_conservatively_with_schema_normalization",
+    "coverage-rowgrp-150": "completed_reduced_conservatively_with_schema_normalization",
+    "coverage-rowgrp-151": "completed_reduced_conservatively_with_schema_normalization",
+    "coverage-rowgrp-152": "completed_reduced_conservatively_with_schema_normalization"
+  },
+  "completed_task_count": 4,
+  "failed_task_count": 0,
+  "coverage_ids_assigned": [
+    "cov-932",
+    "cov-1217",
+    "cov-182",
+    "cov-721",
+    "cov-1241",
+    "cov-666",
+    "cov-773"
+  ],
+  "coverage_ids_completed": [
+    "cov-932",
+    "cov-1217",
+    "cov-182",
+    "cov-721",
+    "cov-1241",
+    "cov-666",
+    "cov-773"
+  ],
+  "path_groups_assigned": [
+    "Plans/Progression_Gates.md",
+    "Plans/Project_Output_Artifacts.md"
+  ],
+  "rows": [
     {
-      "coverage_id": "cov-05118",
-      "source_obligation_ids": [
-        "obl-4792"
-      ],
-      "source_seed_ids": [
-        "seed-6794"
-      ],
-      "source_shard_ids": [
-        "shard-0089"
-      ],
-      "canon_label": "Plans/Tools.md:866-916",
-      "row_type": "consumer",
-      "path": "Plans/Tools.md",
-      "heading_hint": "",
-      "status": "missing",
-      "exact_items": [
-        "`Plans/Tools.md:866-916`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/Tools.md:required_terms_absent"
-      ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-05119",
-      "source_obligation_ids": [
-        "obl-4793"
-      ],
-      "source_seed_ids": [
-        "seed-6795"
-      ],
-      "source_shard_ids": [
-        "shard-0089"
-      ],
-      "canon_label": "Plans/Tools.md:1262-1284",
-      "row_type": "consumer",
-      "path": "Plans/Tools.md",
-      "heading_hint": "",
-      "status": "missing",
-      "exact_items": [
-        "`Plans/Tools.md:1262-1284`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/Tools.md:required_terms_absent"
-      ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-05160",
-      "source_obligation_ids": [
-        "obl-4830"
-      ],
-      "source_seed_ids": [
-        "seed-6847",
-        "seed-6887",
-        "seed-6973",
-        "seed-7005",
-        "seed-7041",
-        "seed-7173"
-      ],
-      "source_shard_ids": [
-        "shard-0089",
-        "shard-0090",
-        "shard-0091"
-      ],
-      "canon_label": "Plans/Tools.md",
-      "row_type": "consumer",
-      "path": "Plans/Tools.md",
-      "heading_hint": "Entry",
-      "status": "present",
-      "exact_items": [
-        "`Plans/Tools.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/Tools.md:860",
-        "Plans/Tools.md:190"
-      ],
-      "required_action": "none"
-    },
-    {
-      "coverage_id": "cov-05167",
-      "source_obligation_ids": [
-        "obl-4837"
-      ],
-      "source_seed_ids": [
-        "seed-6865",
-        "seed-6891",
-        "seed-6990"
-      ],
-      "source_shard_ids": [
-        "shard-0089",
-        "shard-0090"
-      ],
-      "canon_label": "Plans/Tools.md:866-920",
-      "row_type": "consumer",
-      "path": "Plans/Tools.md",
-      "heading_hint": "Entry",
+      "coverage_id": "cov-932",
       "status": "partial",
-      "exact_items": [
-        "`Plans/Tools.md:866-920`"
-      ],
-      "stale_tokens": [],
       "evidence": [
-        "Plans/Tools.md:190"
+        "Plans/Progression_Gates.md:249-257 defines GATE-010, canonical command binding and route-aware navigation normalization, and failure when a deprecated alias is treated as an independent canonical command"
       ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-05168",
+      "required_action": "stale_retirement",
+      "unresolved_reason": "GATE-010 alias handling exists, but deprecated alias metadata lifecycle/separation and alias-to-real-canonical-command resolution are not fully explicit.",
       "source_obligation_ids": [
-        "obl-4838"
+        "obl-262"
       ],
       "source_seed_ids": [
-        "seed-6866"
+        "seed-262"
+      ],
+      "source_shard_ids": [
+        "shard-0066"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-1217",
+      "status": "missing",
+      "evidence": [],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "Plans/Project_Output_Artifacts.md does not directly cover bridge-field precedence, compatibility-only timestamp/run/thread fallback, attempt/provider/usage/receipt join model, RouteTarget/OpenSubject primitive index gaps, wrapper normalization, selector precedence, closed tab_id vocabulary, route examples, ref-family split, or resume_url demotion.",
+      "source_obligation_ids": [
+        "obl-345"
+      ],
+      "source_seed_ids": [
+        "seed-345"
+      ],
+      "source_shard_ids": [
+        "shard-0088"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-182",
+      "status": "missing",
+      "evidence": [],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "Plans/Project_Output_Artifacts.md does not contain the assigned blocked-action stale tokens or the scheduler/HITL contradictions for this layout blocker.",
+      "source_obligation_ids": [
+        "obl-047"
+      ],
+      "source_seed_ids": [
+        "seed-047"
+      ],
+      "source_shard_ids": [
+        "shard-0010"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-721",
+      "status": "partial",
+      "evidence": [
+        "Plans/Project_Output_Artifacts.md:62-65 requires both wiring_matrix.json and ui_command_catalog.json when GUI surfaces dispatch UICommand IDs",
+        "Plans/Project_Output_Artifacts.md:385-418 defines artifact_id, artifact_type, and ui_wiring_matrix/ui_command_catalog artifact types"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "Related GUI artifact and artifact-event fields exist, but ghost command IDs, cmd.chat.run_user_command registration, dispatcher preconditions, duplicated executor canon, and FileManager addendum gaps are not directly resolved.",
+      "source_obligation_ids": [
+        "obl-197"
+      ],
+      "source_seed_ids": [
+        "seed-197"
+      ],
+      "source_shard_ids": [
+        "shard-0049"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-1241",
+      "status": "partial",
+      "evidence": [
+        "Plans/Project_Output_Artifacts.md:485-541 defines validation pass report lineage, required fields, bridge into launchable execution, permission carry-through, and traceability outputs",
+        "Plans/Project_Output_Artifacts.md:723-733 adds a validation artifact lineage section with validation_pass_report, workflow_run_id, pass_verdict, phase_plan_ref, and requirements_quality_report_ref"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "Validation artifact lineage is present, but artifact drill-through, bridge-field viewer, and validation/report section headings are not all directly present in the assigned file.",
+      "source_obligation_ids": [
+        "obl-350"
+      ],
+      "source_seed_ids": [
+        "seed-350"
       ],
       "source_shard_ids": [
         "shard-0089"
       ],
-      "canon_label": "Plans/Tools.md:1262-1288",
-      "row_type": "consumer",
-      "path": "Plans/Tools.md",
-      "heading_hint": "Entry",
-      "status": "partial",
-      "exact_items": [
-        "`Plans/Tools.md:1262-1288`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/Tools.md:190"
-      ],
-      "required_action": "consumer_propagation"
+      "path_field_status": "match"
     },
     {
-      "coverage_id": "cov-05206",
-      "source_obligation_ids": [
-        "obl-4873"
-      ],
-      "source_seed_ids": [
-        "seed-6915"
-      ],
-      "source_shard_ids": [
-        "shard-0090"
-      ],
-      "canon_label": "Plans/Tools.md",
-      "row_type": "consumer",
-      "path": "Plans/Tools.md",
-      "heading_hint": "",
+      "coverage_id": "cov-666",
       "status": "present",
-      "exact_items": [
-        "`Plans/Tools.md`, `Plans/assistant-chat-design.md`, and `Plans/usage-feature.md` still do not carry `report_ref`, `startup_recovered`, or `escalation_level` through the blocked-packet consumer surfaces under audit."
-      ],
-      "stale_tokens": [],
       "evidence": [
-        "Plans/Tools.md:860",
-        "Plans/Tools.md:116",
-        "Plans/Tools.md:873",
-        "Plans/Tools.md:183",
-        "Plans/Tools.md:96",
-        "Plans/Tools.md:820",
-        "Plans/Tools.md:114",
-        "Plans/Tools.md:191"
+        "Plans/Project_Output_Artifacts.md:418 defines validation_pass_report as one per pass, N=1,2,3, under project validation artifacts",
+        "Plans/Project_Output_Artifacts.md:457-465 requires exactly three validation_pass_report events per validation sweep sharing workflow_run_id, pass_number 1/2/3, provider/model linkage, deterministic sweep provenance, and post-pass artifact finality",
+        "Plans/Project_Output_Artifacts.md:485-533 defines validation pass reports as upstream governance artifacts with project_id, wizard_id, thread_id, phase_plan_ref, staged bundle refs, requirements_quality_report_ref, workflow_run_id, requested/effective runtime identity refs, effective_account_id, execution_role, launched run_id, first-class History/Ledger/export status, and pass fields"
       ],
-      "required_action": "none"
-    },
-    {
-      "coverage_id": "cov-05214",
+      "required_action": "none",
+      "unresolved_reason": "",
       "source_obligation_ids": [
-        "obl-4879"
+        "obl-188"
       ],
       "source_seed_ids": [
-        "seed-6927"
+        "seed-188"
       ],
       "source_shard_ids": [
-        "shard-0090"
+        "shard-0047"
       ],
-      "canon_label": "Plans/Tools.md:866-920",
-      "row_type": "consumer",
-      "path": "Plans/Tools.md",
-      "heading_hint": "",
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-773",
       "status": "missing",
-      "exact_items": [
-        "`Plans/Tools.md:866-920`"
-      ],
-      "stale_tokens": [],
       "evidence": [
-        "Plans/Tools.md:required_terms_absent"
+        "Plans/Project_Output_Artifacts.md:19 separates Project Plan Package artifacts from Runtime Artifacts and points the full Runtime Artifacts spec to Plans/Runtime_Artifacts_Panel.md",
+        "Plans/Project_Output_Artifacts.md:385-418 uses artifact_id for Project Plan Package artifact events and artifact types"
       ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-05267",
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "The assigned file does not promote the runtime-artifact envelope to a common field contract or define the FileManager second runtime-artifact open category by artifact_id.",
       "source_obligation_ids": [
-        "obl-4921"
+        "obl-213"
       ],
       "source_seed_ids": [
-        "seed-7023"
+        "seed-213"
       ],
       "source_shard_ids": [
-        "shard-0090"
+        "shard-0054"
       ],
-      "canon_label": "Plans/Tools.md:1131-1135",
-      "row_type": "consumer",
-      "path": "Plans/Tools.md",
-      "heading_hint": "Entry",
-      "status": "partial",
-      "exact_items": [
-        "`Plans/Tools.md:1131-1135`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/Tools.md:190"
-      ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-05280",
-      "source_obligation_ids": [
-        "obl-4934"
-      ],
-      "source_seed_ids": [
-        "seed-7058"
-      ],
-      "source_shard_ids": [
-        "shard-0091"
-      ],
-      "canon_label": "Plans/Tools.md:1131-1135",
-      "row_type": "consumer",
-      "path": "Plans/Tools.md",
-      "heading_hint": "",
-      "status": "missing",
-      "exact_items": [
-        "`Plans/Tools.md:1131-1135`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/Tools.md:required_terms_absent"
-      ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-04549",
-      "source_obligation_ids": [
-        "obl-4283"
-      ],
-      "source_seed_ids": [
-        "seed-6167"
-      ],
-      "source_shard_ids": [
-        "shard-0082"
-      ],
-      "canon_label": "Plans/*.md",
-      "row_type": "layout_blocker",
-      "path": "Plans/Tools.md",
-      "heading_hint": "Do-not-forget details",
-      "status": "present",
-      "exact_items": [
-        "After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes."
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/Tools.md:51",
-        "Plans/Tools.md:61",
-        "Plans/Tools.md:488",
-        "Plans/Tools.md:3",
-        "Plans/Tools.md:114",
-        "Plans/Tools.md:265",
-        "Plans/Tools.md:5",
-        "Plans/Tools.md:523",
-        "Plans/Tools.md:76",
-        "Plans/Tools.md:841"
-      ],
-      "required_action": "none"
-    },
-    {
-      "coverage_id": "cov-05247",
-      "source_obligation_ids": [
-        "obl-4903"
-      ],
-      "source_seed_ids": [
-        "seed-6961"
-      ],
-      "source_shard_ids": [
-        "shard-0090"
-      ],
-      "canon_label": "gap-003",
-      "row_type": "owner",
-      "path": "Plans/Tools.md",
-      "heading_hint": "Entry",
-      "status": "present",
-      "exact_items": [
-        "Wave 2 targeted the storage/receipt/blocked subset around `gap-003`, `gap-004`, and `gap-005` (`Plans/storage-plan.md`, `Plans/Project_Output_Artifacts.md`, `Plans/Runtime_Artifacts_Panel.md`, `Plans/interview-subagent-integration.md`, `Plans/usage-feature.md`, `Plans/Tools.md`, `Plans/assistant-chat-design.md`) and only reconfirmed the already-recorded missing anchors/fields plus the already-known owner-vs-consumer split for blocked-packet fields."
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/Tools.md:67",
-        "Plans/Tools.md:187",
-        "Plans/Tools.md:761",
-        "Plans/Tools.md:860",
-        "Plans/Tools.md:116",
-        "Plans/Tools.md:169",
-        "Plans/Tools.md:1648",
-        "Plans/Tools.md:162",
-        "Plans/Tools.md:767",
-        "Plans/Tools.md:1132",
-        "Plans/Tools.md:1509",
-        "Plans/Tools.md:190"
-      ],
-      "required_action": "none"
-    },
-    {
-      "coverage_id": "cov-05155",
-      "source_obligation_ids": [
-        "obl-4828"
-      ],
-      "source_seed_ids": [
-        "seed-6840"
-      ],
-      "source_shard_ids": [
-        "shard-0089"
-      ],
-      "canon_label": "Plans/Tools.md",
-      "row_type": "stale_retirement",
-      "path": "Plans/Tools.md",
-      "heading_hint": "Entry",
-      "status": "missing",
-      "exact_items": [
-        "`Plans/Tools.md` still carries the stale tuple `{ tool_name, invocation_summary, options }`, `Plans/assistant-chat-design.md` still carries `No remaining gaps`, and `Plans/FinalGUISpec.md` still carries the `restore points` contradiction."
-      ],
-      "stale_tokens": [
-        "Plans/Tools.md",
-        "{ tool_name, invocation_summary, options }",
-        "Plans/assistant-chat-design.md",
-        "No remaining gaps",
-        "Plans/FinalGUISpec.md",
-        "restore points"
-      ],
-      "evidence": [
-        "Plans/Tools.md:860",
-        "Plans/Tools.md:116",
-        "Plans/Tools.md:31"
-      ],
-      "required_action": "stale_retirement"
-    },
-    {
-      "coverage_id": "cov-05258",
-      "source_obligation_ids": [
-        "obl-4913"
-      ],
-      "source_seed_ids": [
-        "seed-6998"
-      ],
-      "source_shard_ids": [
-        "shard-0090"
-      ],
-      "canon_label": "Plans/Tools.md",
-      "row_type": "stale_retirement",
-      "path": "Plans/Tools.md",
-      "heading_hint": "Entry",
-      "status": "missing",
-      "exact_items": [
-        "`Plans/Tools.md` still carries the stale ask tuple `{ tool_name, invocation_summary, options }`, and `Plans/assistant-chat-design.md` still carries the stale self-verdict `No remaining gaps`."
-      ],
-      "stale_tokens": [
-        "Plans/Tools.md",
-        "{ tool_name, invocation_summary, options }",
-        "Plans/assistant-chat-design.md",
-        "No remaining gaps"
-      ],
-      "evidence": [
-        "Plans/Tools.md:860",
-        "Plans/Tools.md:116"
-      ],
-      "required_action": "stale_retirement"
+      "path_field_status": "match"
     }
   ]
 }

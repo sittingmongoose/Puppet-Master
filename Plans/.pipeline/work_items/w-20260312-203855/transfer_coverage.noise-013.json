@@ -1,0 +1,23 @@
+{
+  "schema_id": "pm.transfer_coverage_noise.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-013",
+  "noise_findings": [
+    {
+      "source": "coverage-rowgrp-049",
+      "finding": "Subagent used row-inventory status language in unresolved_reason; reducer stripped artifact inference and kept row missing based on direct Executor evidence."
+    },
+    {
+      "source": "coverage-rowgrp-050",
+      "finding": "Subagent evidence used absolute paths; reducer normalized to relative Plans paths and credited bounded partial evidence."
+    },
+    {
+      "source": "coverage-rowgrp-051",
+      "finding": "Subagent evidence lacked exact line numbers; reducer replaced with direct line-referenced Executor evidence."
+    },
+    {
+      "source": "coverage-rowgrp-052",
+      "finding": "Subagent marked cov-1143 present from generic retired-token-safe wording; reducer downgraded to missing because row-specific Prompt Pipeline stale-scope evidence is absent."
+    }
+  ]
+}

@@ -1,1053 +1,553 @@
 {
-  "schema_id": "pm.transfer_coverage_wave.v1",
+  "schema_id": "pm.transfer_coverage_wave.v3",
   "work_id": "w-20260312-203855",
   "wave_id": "wave-078",
-  "row_groups": [
-    "rowgrp-0309",
-    "rowgrp-0310",
-    "rowgrp-0311",
-    "rowgrp-0312"
+  "timestamp_utc": "2026-04-28T22:05:28Z",
+  "subagent_tasks": [
+    "coverage-rowgrp-309",
+    "coverage-rowgrp-310",
+    "coverage-rowgrp-311",
+    "coverage-rowgrp-312"
   ],
-  "coverage_rows": [
+  "assigned_input_boundaries": [
+    "rowgrp-309 cov-1228,cov-1265 Plans/storage-plan.md",
+    "rowgrp-310 cov-843,cov-901 Plans/storage-plan.md",
+    "rowgrp-311 cov-019,cov-113,cov-134,cov-238,cov-243,cov-275,cov-286,cov-349,cov-397,cov-406 Plans/storage-plan.md",
+    "rowgrp-312 cov-472,cov-491,cov-587,cov-612,cov-622,cov-640,cov-656,cov-742,cov-768,cov-867 Plans/storage-plan.md"
+  ],
+  "subagent_result_status": {
+    "coverage-rowgrp-309": "completed_reduced_conservatively_with_action_and_path_normalization",
+    "coverage-rowgrp-310": "completed_reduced_conservatively_with_action_and_path_normalization",
+    "coverage-rowgrp-311": "completed_reduced_conservatively_with_action_and_path_normalization",
+    "coverage-rowgrp-312": "completed_reduced_conservatively_with_action_and_path_normalization"
+  },
+  "completed_task_count": 4,
+  "failed_task_count": 0,
+  "coverage_ids_assigned": [
+    "cov-1228",
+    "cov-1265",
+    "cov-843",
+    "cov-901",
+    "cov-019",
+    "cov-113",
+    "cov-134",
+    "cov-238",
+    "cov-243",
+    "cov-275",
+    "cov-286",
+    "cov-349",
+    "cov-397",
+    "cov-406",
+    "cov-472",
+    "cov-491",
+    "cov-587",
+    "cov-612",
+    "cov-622",
+    "cov-640",
+    "cov-656",
+    "cov-742",
+    "cov-768",
+    "cov-867"
+  ],
+  "coverage_ids_completed": [
+    "cov-1228",
+    "cov-1265",
+    "cov-843",
+    "cov-901",
+    "cov-019",
+    "cov-113",
+    "cov-134",
+    "cov-238",
+    "cov-243",
+    "cov-275",
+    "cov-286",
+    "cov-349",
+    "cov-397",
+    "cov-406",
+    "cov-472",
+    "cov-491",
+    "cov-587",
+    "cov-612",
+    "cov-622",
+    "cov-640",
+    "cov-656",
+    "cov-742",
+    "cov-768",
+    "cov-867"
+  ],
+  "path_groups_assigned": [
+    "Plans/storage-plan.md"
+  ],
+  "rows": [
     {
-      "coverage_id": "cov-01677",
+      "coverage_id": "cov-1228",
+      "status": "partial",
+      "evidence": [
+        "Plans/storage-plan.md:643-651 defines required redb keys under owner reconciliation, including orchestrator.project_state.{project_id}",
+        "Plans/storage-plan.md:1625-1642 defines Restart and stale history fields including historical lineage, worktree/lane refs, and owner run/attempt IDs"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Storage-plan now has the required redb-key and restart/stale-history anchors, but the first heading is a variant and the paired UI_Command_Catalog command-entry anchors are outside this row path.",
       "source_obligation_ids": [
-        "obl-1608"
+        "obl-347"
       ],
       "source_seed_ids": [
-        "seed-1820"
+        "seed-347"
       ],
       "source_shard_ids": [
-        "shard-0032"
+        "shard-0089"
       ],
-      "canon_label": "Candidate fixes to carry forward",
-      "row_type": "consumer",
-      "path": "__DOC_DISCOVERY_REQUIRED__",
-      "heading_hint": "Candidate fixes to carry forward",
-      "status": "missing",
-      "exact_items": [
-        "Reconcile event-table rows with the richer prose MUSTs for:"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "doc_discovery_required:no concrete Plans path in canonical obligation"
-      ],
-      "required_action": "consumer_propagation",
-      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+      "path_field_status": "match"
     },
     {
-      "coverage_id": "cov-01681",
+      "coverage_id": "cov-1265",
+      "status": "partial",
+      "evidence": [
+        "Plans/storage-plan.md:532-535 defines concern as a durable record with active, acknowledged, resolved, and dismissed lifecycle states plus resolution_kind including accepted_risk"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Concern lifecycle states and accepted_risk are covered, but a concrete concern-action confirmation matrix is still not present.",
       "source_obligation_ids": [
-        "obl-1612"
+        "obl-357"
       ],
       "source_seed_ids": [
-        "seed-1824"
+        "seed-357"
       ],
       "source_shard_ids": [
-        "shard-0032"
+        "shard-0092"
       ],
-      "canon_label": "Do-not-forget details",
-      "row_type": "consumer",
-      "path": "__DOC_DISCOVERY_REQUIRED__",
-      "heading_hint": "Do-not-forget details",
-      "status": "missing",
-      "exact_items": [
-        "event/addendum supersession should be explicit enough that implementers do not need to diff three addenda to know the final field set"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "doc_discovery_required:no concrete Plans path in canonical obligation"
-      ],
-      "required_action": "consumer_propagation",
-      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+      "path_field_status": "match"
     },
     {
-      "coverage_id": "cov-01682",
+      "coverage_id": "cov-843",
+      "status": "partial",
+      "evidence": [
+        "Plans/storage-plan.md:512 says owner-doc corrections must be applied before consumer and mirror cleanup",
+        "Plans/storage-plan.md:1658 says storage-plan must reference the owner-doc schema instead of embedding a competing schema copy"
+      ],
+      "required_action": "stale_retirement",
+      "unresolved_reason": "Owner-doc correction/schema-reference coverage exists, but fragmented owner-doc convention retirement and canonical routing/governance ownership are not fully specified.",
       "source_obligation_ids": [
-        "obl-1613"
+        "obl-235"
       ],
       "source_seed_ids": [
-        "seed-1831"
+        "seed-235"
       ],
       "source_shard_ids": [
-        "shard-0033"
+        "shard-0059"
       ],
-      "canon_label": "Key findings",
-      "row_type": "consumer",
-      "path": "__DOC_DISCOVERY_REQUIRED__",
-      "heading_hint": "Key findings",
-      "status": "missing",
-      "exact_items": [
-        "durable state transitions often require explicit confirmation or explicit rationale"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "doc_discovery_required:no concrete Plans path in canonical obligation"
-      ],
-      "required_action": "consumer_propagation",
-      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+      "path_field_status": "match"
     },
     {
-      "coverage_id": "cov-01685",
+      "coverage_id": "cov-901",
+      "status": "partial",
+      "evidence": [
+        "Plans/storage-plan.md:621 says export manifests and artifact indices carry route/open linkage by reference rather than redefining route payload shapes locally",
+        "Plans/storage-plan.md:1336 stores search projection query, results, filter state, and scope separately"
+      ],
+      "required_action": "stale_retirement",
+      "unresolved_reason": "Route linkage and filter state are separated, but the exact retirement of packaging destination selection with panel-local state is incomplete.",
       "source_obligation_ids": [
-        "obl-1616"
+        "obl-254"
       ],
       "source_seed_ids": [
-        "seed-1834"
+        "seed-254"
       ],
       "source_shard_ids": [
-        "shard-0033"
+        "shard-0064"
       ],
-      "canon_label": "dismiss",
-      "row_type": "consumer",
-      "path": "__DOC_DISCOVERY_REQUIRED__",
-      "heading_hint": "Key findings",
-      "status": "missing",
-      "exact_items": [
-        "`dismiss` is a durable semantic judgment and must not look like closing a toast"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "doc_discovery_required:no concrete Plans path in canonical obligation"
-      ],
-      "required_action": "consumer_propagation",
-      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+      "path_field_status": "match"
     },
     {
-      "coverage_id": "cov-01686",
+      "coverage_id": "cov-019",
+      "status": "present",
+      "evidence": [
+        "Plans/storage-plan.md:399 says canonical payload codec is MessagePack and JSON mirrors/diagnostics are not the on-disk authority",
+        "Plans/storage-plan.md:448 says JSONL mirror files are rebuildable from seglog plus checkpoints and do not outrank seglog authority"
+      ],
+      "required_action": "none",
+      "unresolved_reason": "JSON is directly framed as mirror/diagnostic/export material rather than canonical storage truth.",
       "source_obligation_ids": [
-        "obl-1617"
+        "obl-017"
       ],
       "source_seed_ids": [
-        "seed-1835"
+        "seed-017"
       ],
       "source_shard_ids": [
-        "shard-0033"
+        "shard-0003"
       ],
-      "canon_label": "resolve",
-      "row_type": "consumer",
-      "path": "__DOC_DISCOVERY_REQUIRED__",
-      "heading_hint": "Key findings",
-      "status": "missing",
-      "exact_items": [
-        "`resolve` is not one generic operation; it needs `resolution_kind`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "doc_discovery_required:no concrete Plans path in canonical obligation"
-      ],
-      "required_action": "consumer_propagation",
-      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+      "path_field_status": "match"
     },
     {
-      "coverage_id": "cov-01687",
+      "coverage_id": "cov-113",
+      "status": "partial",
+      "evidence": [
+        "Plans/storage-plan.md:732-733 defines blocked_projection with blocked_reason_code and allowed_action_ids[] and supersedes older run-scoped variants as migration-read aliases"
+      ],
+      "required_action": "stale_retirement",
+      "unresolved_reason": "Canonical blocked-state fields are covered, but lexicographic/scored scheduling, depends_on versus blockers/unblocks, and graph-local recovery action retirement are incomplete.",
       "source_obligation_ids": [
-        "obl-1618"
+        "obl-035"
       ],
       "source_seed_ids": [
-        "seed-1836"
+        "seed-035"
       ],
       "source_shard_ids": [
-        "shard-0033"
+        "shard-0008"
       ],
-      "canon_label": "reopened",
-      "row_type": "consumer",
-      "path": "__DOC_DISCOVERY_REQUIRED__",
-      "heading_hint": "Key findings",
-      "status": "missing",
-      "exact_items": [
-        "concern \"undo\" should generally be implemented as compensating follow-up records (`reopened`, reverse-merge lineage, successor concern, etc.), not history erasure"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "doc_discovery_required:no concrete Plans path in canonical obligation"
-      ],
-      "required_action": "consumer_propagation",
-      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+      "path_field_status": "match"
     },
     {
-      "coverage_id": "cov-01690",
+      "coverage_id": "cov-134",
+      "status": "partial",
+      "evidence": [
+        "Plans/storage-plan.md:448-451 says redb projections, JSONL mirrors, and Tantivy indices are rebuildable from seglog plus checkpoints and do not outrank seglog authority",
+        "Plans/storage-plan.md:985 says projection state and projector checkpoints must be first-class rather than panel-owned leftovers"
+      ],
+      "required_action": "stale_retirement",
+      "unresolved_reason": "Runtime storage authority is covered, but mutable plan shards and JSON sidecars are not explicitly retired as runtime truth.",
       "source_obligation_ids": [
-        "obl-1621"
+        "obl-037"
       ],
       "source_seed_ids": [
-        "seed-1843"
+        "seed-037"
       ],
       "source_shard_ids": [
-        "shard-0033"
+        "shard-0009"
       ],
-      "canon_label": "dismissed",
-      "row_type": "consumer",
-      "path": "__DOC_DISCOVERY_REQUIRED__",
-      "heading_hint": "Contradictions / gaps surfaced",
-      "status": "missing",
-      "exact_items": [
-        "`dismissed` without required rationale will look too much like a convenience close"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "doc_discovery_required:no concrete Plans path in canonical obligation"
-      ],
-      "required_action": "consumer_propagation",
-      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+      "path_field_status": "match"
     },
     {
-      "coverage_id": "cov-01691",
+      "coverage_id": "cov-238",
+      "status": "partial",
+      "evidence": [
+        "Plans/storage-plan.md:904-906 says blocked projections remain historical after resolution and attempts from older generations remain queryable but stale/non-resumable",
+        "Plans/storage-plan.md:733 keeps older key variants as migration-read aliases only"
+      ],
+      "required_action": "stale_retirement",
+      "unresolved_reason": "Historical blocked projections and stale older attempts are covered, but lineage visibility after live targets disappear is incomplete.",
       "source_obligation_ids": [
-        "obl-1622"
+        "obl-067"
       ],
       "source_seed_ids": [
-        "seed-1844"
+        "seed-067"
       ],
       "source_shard_ids": [
-        "shard-0033"
+        "shard-0014"
       ],
-      "canon_label": "resolved",
-      "row_type": "consumer",
-      "path": "__DOC_DISCOVERY_REQUIRED__",
-      "heading_hint": "Contradictions / gaps surfaced",
-      "status": "missing",
-      "exact_items": [
-        "`resolved` without required `resolution_kind` will collapse meaningful semantic differences"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "doc_discovery_required:no concrete Plans path in canonical obligation"
-      ],
-      "required_action": "consumer_propagation",
-      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+      "path_field_status": "match"
     },
     {
-      "coverage_id": "cov-01696",
+      "coverage_id": "cov-243",
+      "status": "present",
+      "evidence": [
+        "Plans/storage-plan.md:477-479 defines shared historical vocabulary including historical, stale_historical, superseded, revoked, reopened, archived, and removed",
+        "Plans/storage-plan.md:538 keeps those terms explicit as shared storage terms while preserving family-local workflow states"
+      ],
+      "required_action": "none",
+      "unresolved_reason": "Shared historical vocabulary is directly represented.",
       "source_obligation_ids": [
-        "obl-1627"
+        "obl-068"
       ],
       "source_seed_ids": [
-        "seed-1849"
+        "seed-068"
       ],
       "source_shard_ids": [
-        "shard-0033"
+        "shard-0015"
       ],
-      "canon_label": "dismiss",
-      "row_type": "consumer",
-      "path": "__DOC_DISCOVERY_REQUIRED__",
-      "heading_hint": "Candidate fixes to carry forward",
-      "status": "missing",
-      "exact_items": [
-        "`dismiss`: confirmation `strong`; rationale required; reversibility `compensating_action_only` via explicit `reopened`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "doc_discovery_required:no concrete Plans path in canonical obligation"
-      ],
-      "required_action": "consumer_propagation",
-      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+      "path_field_status": "match"
     },
     {
-      "coverage_id": "cov-01697",
+      "coverage_id": "cov-275",
+      "status": "partial",
+      "evidence": [
+        "Plans/storage-plan.md:538 defines historical, stale_historical, superseded, revoked, reopened, archived, and removed as shared storage terms",
+        "Plans/storage-plan.md:733 says older variants are superseded and retained as migration-read aliases only"
+      ],
+      "required_action": "stale_retirement",
+      "unresolved_reason": "Historical/superseded/removed vocabulary exists, but backing-object handling is not explicit.",
       "source_obligation_ids": [
-        "obl-1628"
+        "obl-079"
       ],
       "source_seed_ids": [
-        "seed-1850"
+        "seed-079"
       ],
       "source_shard_ids": [
-        "shard-0033"
+        "shard-0018"
       ],
-      "canon_label": "merge",
-      "row_type": "consumer",
-      "path": "__DOC_DISCOVERY_REQUIRED__",
-      "heading_hint": "Candidate fixes to carry forward",
-      "status": "missing",
-      "exact_items": [
-        "`merge` / `split` / `supersede`: confirmation `strong`; rationale required; reversibility `compensating_action_only` through new lineage records, never silent history rewrite"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "doc_discovery_required:no concrete Plans path in canonical obligation"
-      ],
-      "required_action": "consumer_propagation",
-      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+      "path_field_status": "match"
     },
     {
-      "coverage_id": "cov-01698",
+      "coverage_id": "cov-286",
+      "status": "partial",
+      "evidence": [
+        "Plans/storage-plan.md:912-925 lists requested/effective runtime, model, auth, account, and billing identity fields",
+        "Plans/storage-plan.md:1178-1186 persists requested/effective identity and permission snapshots for attempts"
+      ],
+      "required_action": "stale_retirement",
+      "unresolved_reason": "Requested/effective identity persistence exists, but historical frozen policy snapshot versus live runtime decision is incomplete.",
       "source_obligation_ids": [
-        "obl-1629"
+        "obl-083"
       ],
       "source_seed_ids": [
-        "seed-1851"
+        "seed-083"
       ],
       "source_shard_ids": [
-        "shard-0033"
+        "shard-0019"
       ],
-      "canon_label": "Candidate fixes to carry forward",
-      "row_type": "consumer",
-      "path": "__DOC_DISCOVERY_REQUIRED__",
-      "heading_hint": "Candidate fixes to carry forward",
-      "status": "missing",
-      "exact_items": [
-        "admin repair"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "doc_discovery_required:no concrete Plans path in canonical obligation"
-      ],
-      "required_action": "consumer_propagation",
-      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+      "path_field_status": "match"
     },
     {
-      "coverage_id": "cov-01701",
+      "coverage_id": "cov-349",
+      "status": "partial",
+      "evidence": [
+        "Plans/storage-plan.md:501-504 says worktree lifecycle records track allocation, usage, reclamation, handshake, and cleanup lineage",
+        "Plans/storage-plan.md:623-629 splits lane-pool operational truth from source-control worktree operation and registers worktree/lane record and projection families"
+      ],
+      "required_action": "stale_retirement",
+      "unresolved_reason": "Lane/worktree lifecycle ownership is covered, but the required state/posture lists are incomplete.",
       "source_obligation_ids": [
-        "obl-1632"
+        "obl-103"
       ],
       "source_seed_ids": [
-        "seed-1854"
+        "seed-103"
       ],
       "source_shard_ids": [
-        "shard-0033"
+        "shard-0025"
       ],
-      "canon_label": "dismissed",
-      "row_type": "consumer",
-      "path": "__DOC_DISCOVERY_REQUIRED__",
-      "heading_hint": "Do-not-forget details",
-      "status": "missing",
-      "exact_items": [
-        "narrow surfaces must not compress `dismissed` and `resolved` into one generic \"closed\" action"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "doc_discovery_required:no concrete Plans path in canonical obligation"
-      ],
-      "required_action": "consumer_propagation",
-      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+      "path_field_status": "match"
     },
     {
-      "coverage_id": "cov-01702",
+      "coverage_id": "cov-397",
+      "status": "partial",
+      "evidence": [
+        "Plans/storage-plan.md:904-906 says blocked projections remain historical after resolution and older attempts are stale/non-resumable",
+        "Plans/storage-plan.md:477-479 defines shared historical vocabulary including stale_historical, superseded, revoked, archived, and removed"
+      ],
+      "required_action": "stale_retirement",
+      "unresolved_reason": "Blocked projection and stale attempt history are covered, but worktree references surviving live prune/retire are incomplete.",
       "source_obligation_ids": [
-        "obl-1633"
+        "obl-118"
       ],
       "source_seed_ids": [
-        "seed-1855"
+        "seed-118"
       ],
       "source_shard_ids": [
-        "shard-0033"
+        "shard-0029"
       ],
-      "canon_label": "Do-not-forget details",
-      "row_type": "consumer",
-      "path": "__DOC_DISCOVERY_REQUIRED__",
-      "heading_hint": "Do-not-forget details",
-      "status": "missing",
-      "exact_items": [
-        "the audit trail should preserve who acknowledged/dismissed/resolved/reopened and why, even when the visible current state looks simple"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "doc_discovery_required:no concrete Plans path in canonical obligation"
-      ],
-      "required_action": "consumer_propagation",
-      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+      "path_field_status": "match"
     },
     {
-      "coverage_id": "cov-01703",
+      "coverage_id": "cov-406",
+      "status": "present",
+      "evidence": [
+        "Plans/storage-plan.md:477-479 defines shared historical vocabulary including historical, stale_historical, superseded, revoked, reopened, archived, and removed",
+        "Plans/storage-plan.md:538 keeps those terms explicit as shared storage terms while preserving family-local workflow states"
+      ],
+      "required_action": "none",
+      "unresolved_reason": "Shared historical/storage vocabulary is directly represented.",
       "source_obligation_ids": [
-        "obl-1634"
+        "obl-119"
       ],
       "source_seed_ids": [
-        "seed-1856"
+        "seed-119"
       ],
       "source_shard_ids": [
-        "shard-0033"
+        "shard-0030"
       ],
-      "canon_label": "Do-not-forget details",
-      "row_type": "consumer",
-      "path": "__DOC_DISCOVERY_REQUIRED__",
-      "heading_hint": "Do-not-forget details",
-      "status": "missing",
-      "exact_items": [
-        "if a concern is currently tied to active blocked status, acknowledgment alone must not clear the block"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "doc_discovery_required:no concrete Plans path in canonical obligation"
-      ],
-      "required_action": "consumer_propagation",
-      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+      "path_field_status": "match"
     },
     {
-      "coverage_id": "cov-01704",
-      "source_obligation_ids": [
-        "obl-1635"
-      ],
-      "source_seed_ids": [
-        "seed-1857"
-      ],
-      "source_shard_ids": [
-        "shard-0033"
-      ],
-      "canon_label": "merge",
-      "row_type": "consumer",
-      "path": "__DOC_DISCOVERY_REQUIRED__",
-      "heading_hint": "Do-not-forget details",
+      "coverage_id": "cov-472",
       "status": "missing",
-      "exact_items": [
-        "structural concern actions (`merge`, `split`, `supersede`) likely need guided flows rather than one-click menus because they change search/history/ledger interpretation"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "doc_discovery_required:no concrete Plans path in canonical obligation"
-      ],
-      "required_action": "consumer_propagation",
-      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
-    },
-    {
-      "coverage_id": "cov-01705",
+      "evidence": [],
+      "required_action": "stale_retirement",
+      "unresolved_reason": "No dashboard_layout:v1 backup/delete legacy-key contradiction coverage was found in storage-plan; terminal_layout evidence is unrelated.",
       "source_obligation_ids": [
-        "obl-1636"
+        "obl-138"
       ],
       "source_seed_ids": [
-        "seed-1864"
-      ],
-      "source_shard_ids": [
-        "shard-0033"
-      ],
-      "canon_label": "FinalGUISpec.md",
-      "row_type": "consumer",
-      "path": "__DOC_DISCOVERY_REQUIRED__",
-      "heading_hint": "Key findings",
-      "status": "missing",
-      "exact_items": [
-        "`FinalGUISpec.md`, `Personas.md`, and `Models_System.md` consistently require dual copy variants for tooltips/help strings"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "doc_discovery_required:no concrete Plans path in canonical obligation"
-      ],
-      "required_action": "consumer_propagation",
-      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
-    },
-    {
-      "coverage_id": "cov-01707",
-      "source_obligation_ids": [
-        "obl-1638"
-      ],
-      "source_seed_ids": [
-        "seed-1866"
-      ],
-      "source_shard_ids": [
-        "shard-0033"
-      ],
-      "canon_label": "Key findings",
-      "row_type": "consumer",
-      "path": "__DOC_DISCOVERY_REQUIRED__",
-      "heading_hint": "Key findings",
-      "status": "missing",
-      "exact_items": [
-        "it does not yet carry the terms that now need stable cross-doc meaning in Orchestrator, Source Control, search, history, ledger, and help"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "doc_discovery_required:no concrete Plans path in canonical obligation"
-      ],
-      "required_action": "consumer_propagation",
-      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
-    },
-    {
-      "coverage_id": "cov-01710",
-      "source_obligation_ids": [
-        "obl-1641"
-      ],
-      "source_seed_ids": [
-        "seed-1869"
-      ],
-      "source_shard_ids": [
-        "shard-0033"
-      ],
-      "canon_label": "Key findings",
-      "row_type": "consumer",
-      "path": "__DOC_DISCOVERY_REQUIRED__",
-      "heading_hint": "Key findings",
-      "status": "missing",
-      "exact_items": [
-        "That missing depth model matters more now because several concepts are easy to misuse if reduced to a one-line tooltip:"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "doc_discovery_required:no concrete Plans path in canonical obligation"
-      ],
-      "required_action": "consumer_propagation",
-      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
-    },
-    {
-      "coverage_id": "cov-01713",
-      "source_obligation_ids": [
-        "obl-1644"
-      ],
-      "source_seed_ids": [
-        "seed-1876"
-      ],
-      "source_shard_ids": [
-        "shard-0033"
-      ],
-      "canon_label": "Feature Seam",
-      "row_type": "consumer",
-      "path": "__DOC_DISCOVERY_REQUIRED__",
-      "heading_hint": "Contradictions / gaps surfaced",
-      "status": "missing",
-      "exact_items": [
-        "for example, `Feature Seam` should remain the term in both modes even if the ELI5 explanation is plainer"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "doc_discovery_required:no concrete Plans path in canonical obligation"
-      ],
-      "required_action": "consumer_propagation",
-      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
-    },
-    {
-      "coverage_id": "cov-01714",
-      "source_obligation_ids": [
-        "obl-1645"
-      ],
-      "source_seed_ids": [
-        "seed-1877"
-      ],
-      "source_shard_ids": [
-        "shard-0033"
-      ],
-      "canon_label": "Contradictions / gaps surfaced",
-      "row_type": "consumer",
-      "path": "__DOC_DISCOVERY_REQUIRED__",
-      "heading_hint": "Contradictions / gaps surfaced",
-      "status": "missing",
-      "exact_items": [
-        "small surfaces need compact labels plus deeper linked/contextual help, not renamed local jargon"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "doc_discovery_required:no concrete Plans path in canonical obligation"
-      ],
-      "required_action": "consumer_propagation",
-      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
-    },
-    {
-      "coverage_id": "cov-01716",
-      "source_obligation_ids": [
-        "obl-1647"
-      ],
-      "source_seed_ids": [
-        "seed-1879"
-      ],
-      "source_shard_ids": [
-        "shard-0033"
-      ],
-      "canon_label": "Candidate fixes to carry forward",
-      "row_type": "consumer",
-      "path": "__DOC_DISCOVERY_REQUIRED__",
-      "heading_hint": "Candidate fixes to carry forward",
-      "status": "missing",
-      "exact_items": [
-        "Define a three-depth help contract:"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "doc_discovery_required:no concrete Plans path in canonical obligation"
-      ],
-      "required_action": "consumer_propagation",
-      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
-    },
-    {
-      "coverage_id": "cov-01717",
-      "source_obligation_ids": [
-        "obl-1648"
-      ],
-      "source_seed_ids": [
-        "seed-1880"
-      ],
-      "source_shard_ids": [
-        "shard-0033"
-      ],
-      "canon_label": "inline help",
-      "row_type": "consumer",
-      "path": "__DOC_DISCOVERY_REQUIRED__",
-      "heading_hint": "Candidate fixes to carry forward",
-      "status": "missing",
-      "exact_items": [
-        "`inline help`: short tooltip / badge explainer / field helper text"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "doc_discovery_required:no concrete Plans path in canonical obligation"
-      ],
-      "required_action": "consumer_propagation",
-      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
-    },
-    {
-      "coverage_id": "cov-01720",
-      "source_obligation_ids": [
-        "obl-1651"
-      ],
-      "source_seed_ids": [
-        "seed-1883"
-      ],
-      "source_shard_ids": [
-        "shard-0033"
-      ],
-      "canon_label": "Candidate fixes to carry forward",
-      "row_type": "consumer",
-      "path": "__DOC_DISCOVERY_REQUIRED__",
-      "heading_hint": "Candidate fixes to carry forward",
-      "status": "missing",
-      "exact_items": [
-        "Add an anti-drift rule:"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "doc_discovery_required:no concrete Plans path in canonical obligation"
-      ],
-      "required_action": "consumer_propagation",
-      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
-    },
-    {
-      "coverage_id": "cov-01723",
-      "source_obligation_ids": [
-        "obl-1654"
-      ],
-      "source_seed_ids": [
-        "seed-1886"
-      ],
-      "source_shard_ids": [
-        "shard-0033"
-      ],
-      "canon_label": "History",
-      "row_type": "consumer",
-      "path": "__DOC_DISCOVERY_REQUIRED__",
-      "heading_hint": "Do-not-forget details",
-      "status": "missing",
-      "exact_items": [
-        "`History` and `Ledger` especially need precise help because they are easy to collapse into one generic \u201cpast activity\u201d concept"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "doc_discovery_required:no concrete Plans path in canonical obligation"
-      ],
-      "required_action": "consumer_propagation",
-      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
-    },
-    {
-      "coverage_id": "cov-01724",
-      "source_obligation_ids": [
-        "obl-1655"
-      ],
-      "source_seed_ids": [
-        "seed-1887"
-      ],
-      "source_shard_ids": [
-        "shard-0033"
-      ],
-      "canon_label": "lane",
-      "row_type": "consumer",
-      "path": "__DOC_DISCOVERY_REQUIRED__",
-      "heading_hint": "Do-not-forget details",
-      "status": "missing",
-      "exact_items": [
-        "`lane` and `worktree` need asymmetric help across surfaces:"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "doc_discovery_required:no concrete Plans path in canonical obligation"
-      ],
-      "required_action": "consumer_propagation",
-      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
-    },
-    {
-      "coverage_id": "cov-01730",
-      "source_obligation_ids": [
-        "obl-1661"
-      ],
-      "source_seed_ids": [
-        "seed-1894"
+        "seed-138"
       ],
       "source_shard_ids": [
         "shard-0034"
       ],
-      "canon_label": "current ledger widget/projection/multi-run clusters",
-      "row_type": "consumer",
-      "path": "__DOC_DISCOVERY_REQUIRED__",
-      "heading_hint": "",
-      "status": "missing",
-      "exact_items": [
-        "current ledger widget/projection/multi-run clusters"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "doc_discovery_required:no concrete Plans path in canonical obligation"
-      ],
-      "required_action": "consumer_propagation",
-      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+      "path_field_status": "match"
     },
     {
-      "coverage_id": "cov-01732",
+      "coverage_id": "cov-491",
+      "status": "partial",
+      "evidence": [
+        "Plans/storage-plan.md:1526-1541 lists canonical scheduler, safe-point, and remediation event families",
+        "Plans/storage-plan.md:573 defines provider_attempt_ref, usage_event_ref, and receipt refs as bridge fields that do not replace the local key"
+      ],
+      "required_action": "stale_retirement",
+      "unresolved_reason": "Scheduler/safe-point/remediation events and bridge refs are covered, but the full canonical payload block gaps remain incomplete.",
       "source_obligation_ids": [
-        "obl-1663"
+        "obl-142"
       ],
       "source_seed_ids": [
-        "seed-1896"
+        "seed-142"
       ],
       "source_shard_ids": [
-        "shard-0034"
+        "shard-0035"
       ],
-      "canon_label": "Key findings",
-      "row_type": "consumer",
-      "path": "__DOC_DISCOVERY_REQUIRED__",
-      "heading_hint": "Key findings",
-      "status": "missing",
-      "exact_items": [
-        "The current widget contract mixes three different things that now need to stay separate:"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "doc_discovery_required:no concrete Plans path in canonical obligation"
-      ],
-      "required_action": "consumer_propagation",
-      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+      "path_field_status": "match"
     },
     {
-      "coverage_id": "cov-01735",
+      "coverage_id": "cov-587",
+      "status": "partial",
+      "evidence": [
+        "Plans/storage-plan.md:1 defines seglog as the canonical append-only event stream",
+        "Plans/storage-plan.md:610 persists execution_unit_context with account pressure episodes, switch history, runtime artifacts, receipts, and usage joins"
+      ],
+      "required_action": "stale_retirement",
+      "unresolved_reason": "Append-only storage and pressure/switch history are present, but explicit switch/pressure episode families are incomplete.",
       "source_obligation_ids": [
-        "obl-1666"
+        "obl-165"
       ],
       "source_seed_ids": [
-        "seed-1899"
+        "seed-165"
       ],
       "source_shard_ids": [
-        "shard-0034"
+        "shard-0041"
       ],
-      "canon_label": "Key findings",
-      "row_type": "consumer",
-      "path": "__DOC_DISCOVERY_REQUIRED__",
-      "heading_hint": "Key findings",
-      "status": "missing",
-      "exact_items": [
-        "widgets may add presentation or sub-filter choices, but they must not secretly select a different run or redefine the operational scope"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "doc_discovery_required:no concrete Plans path in canonical obligation"
-      ],
-      "required_action": "consumer_propagation",
-      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+      "path_field_status": "match"
     },
     {
-      "coverage_id": "cov-01736",
+      "coverage_id": "cov-612",
+      "status": "partial",
+      "evidence": [
+        "Plans/storage-plan.md:603-612 introduces execution_unit_context, demotes TierContext, and bars TierContext/tier_id from owning runtime canon, storage keys, or join identity"
+      ],
+      "required_action": "stale_retirement",
+      "unresolved_reason": "Runtime/tier execution split is covered, but node-native versus tier-native language and concern/corroboration/wake gaps are incomplete.",
       "source_obligation_ids": [
-        "obl-1667"
+        "obl-170"
       ],
       "source_seed_ids": [
-        "seed-1900"
+        "seed-170"
       ],
       "source_shard_ids": [
-        "shard-0034"
+        "shard-0042"
       ],
-      "canon_label": "Progress",
-      "row_type": "consumer",
-      "path": "__DOC_DISCOVERY_REQUIRED__",
-      "heading_hint": "Key findings",
-      "status": "missing",
-      "exact_items": [
-        "`Progress` widgets must render against the current `focused_run_id`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "doc_discovery_required:no concrete Plans path in canonical obligation"
-      ],
-      "required_action": "consumer_propagation",
-      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+      "path_field_status": "match"
     },
     {
-      "coverage_id": "cov-01737",
+      "coverage_id": "cov-622",
+      "status": "partial",
+      "evidence": [
+        "Plans/storage-plan.md:623-629 defines worktree/lane lifecycle ownership, lane_record/lane_projection families, durable worktree_id/lane_id identities, and cleanup/archive lineage",
+        "Plans/storage-plan.md:591-598 reserves trust_tier for preview/browser semantics and retires it as canonical projection vocabulary"
+      ],
+      "required_action": "stale_retirement",
+      "unresolved_reason": "Worktree/lane lineage and trust_tier retirement are covered, but scheduler_lane structural ownership is incomplete.",
       "source_obligation_ids": [
-        "obl-1668"
+        "obl-174"
       ],
       "source_seed_ids": [
-        "seed-1901"
+        "seed-174"
       ],
       "source_shard_ids": [
-        "shard-0034"
+        "shard-0043"
       ],
-      "canon_label": "Key findings",
-      "row_type": "consumer",
-      "path": "__DOC_DISCOVERY_REQUIRED__",
-      "heading_hint": "Key findings",
-      "status": "missing",
-      "exact_items": [
-        "moving between live and historical mode should not require per-widget manual retargeting"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "doc_discovery_required:no concrete Plans path in canonical obligation"
-      ],
-      "required_action": "consumer_propagation",
-      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+      "path_field_status": "match"
     },
     {
-      "coverage_id": "cov-01739",
+      "coverage_id": "cov-640",
+      "status": "partial",
+      "evidence": [
+        "Plans/storage-plan.md:591-598 reserves trust_tier for preview/browser semantics and retires it as canonical projection vocabulary",
+        "Plans/storage-plan.md:604-611 demotes TierContext/tier_id to compatibility-only derived metadata that must not own runtime canon, storage keys, or join identity"
+      ],
+      "required_action": "stale_retirement",
+      "unresolved_reason": "Legacy tier compatibility/retirement is covered, but full migration/retirement of tier language and keys is incomplete.",
       "source_obligation_ids": [
-        "obl-1670"
+        "obl-178"
       ],
       "source_seed_ids": [
-        "seed-1903"
+        "seed-178"
       ],
       "source_shard_ids": [
-        "shard-0034"
+        "shard-0044"
       ],
-      "canon_label": "Key findings",
-      "row_type": "consumer",
-      "path": "__DOC_DISCOVERY_REQUIRED__",
-      "heading_hint": "Key findings",
-      "status": "missing",
-      "exact_items": [
-        "that is a direct migration contradiction, not a minor wording issue"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "doc_discovery_required:no concrete Plans path in canonical obligation"
-      ],
-      "required_action": "consumer_propagation",
-      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+      "path_field_status": "match"
     },
     {
-      "coverage_id": "cov-01745",
+      "coverage_id": "cov-656",
+      "status": "partial",
+      "evidence": [
+        "Plans/storage-plan.md:732-733 defines allowed_action_ids[] on blocked_projection and supersedes older run-scoped variants as migration-read aliases only"
+      ],
+      "required_action": "stale_retirement",
+      "unresolved_reason": "allowed_action_ids[] is canonical in storage-plan, but allowed_actions[] deprecation is not explicit.",
       "source_obligation_ids": [
-        "obl-1676"
+        "obl-185"
       ],
       "source_seed_ids": [
-        "seed-1913"
+        "seed-185"
       ],
       "source_shard_ids": [
-        "shard-0034"
+        "shard-0046"
       ],
-      "canon_label": "Contradictions / gaps surfaced",
-      "row_type": "consumer",
-      "path": "__DOC_DISCOVERY_REQUIRED__",
-      "heading_hint": "Contradictions / gaps surfaced",
-      "status": "missing",
-      "exact_items": [
-        "Migration contradiction:"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "doc_discovery_required:no concrete Plans path in canonical obligation"
-      ],
-      "required_action": "consumer_propagation",
-      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+      "path_field_status": "match"
     },
     {
-      "coverage_id": "cov-01750",
+      "coverage_id": "cov-742",
+      "status": "missing",
+      "evidence": [],
+      "required_action": "stale_retirement",
+      "unresolved_reason": "No tier_runtime_record compatibility/overlay projection-only coverage was found; generic storage-mode evidence was stripped.",
       "source_obligation_ids": [
-        "obl-1681"
+        "obl-205"
       ],
       "source_seed_ids": [
-        "seed-1918"
+        "seed-205"
       ],
       "source_shard_ids": [
-        "shard-0034"
+        "shard-0051"
       ],
-      "canon_label": "Candidate fixes to carry forward",
-      "row_type": "consumer",
-      "path": "__DOC_DISCOVERY_REQUIRED__",
-      "heading_hint": "Candidate fixes to carry forward",
-      "status": "missing",
-      "exact_items": [
-        "Add a hard anti-drift rule for Orchestrator widgets:"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "doc_discovery_required:no concrete Plans path in canonical obligation"
-      ],
-      "required_action": "consumer_propagation",
-      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+      "path_field_status": "match"
     },
     {
-      "coverage_id": "cov-01753",
+      "coverage_id": "cov-768",
+      "status": "present",
+      "evidence": [
+        "Plans/storage-plan.md:177-186 adds bridge-field precedence for attempt/provider/usage/receipt joins and says bridge fields do not replace the primary local key",
+        "Plans/storage-plan.md:1263-1264 defines provider_attempt_ref as subordinate to attempt_id and usage_event_ref as the usage-side accounting/evidence join reference"
+      ],
+      "required_action": "none",
+      "unresolved_reason": "Bridge-field precedence and coherent join ownership are directly represented.",
       "source_obligation_ids": [
-        "obl-1684"
+        "obl-212"
       ],
       "source_seed_ids": [
-        "seed-1921"
+        "seed-212"
       ],
       "source_shard_ids": [
-        "shard-0034"
+        "shard-0053"
       ],
-      "canon_label": "Candidate fixes to carry forward",
-      "row_type": "consumer",
-      "path": "__DOC_DISCOVERY_REQUIRED__",
-      "heading_hint": "Candidate fixes to carry forward",
-      "status": "missing",
-      "exact_items": [
-        "Reconcile widget persistence scope:"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "doc_discovery_required:no concrete Plans path in canonical obligation"
-      ],
-      "required_action": "consumer_propagation",
-      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+      "path_field_status": "match"
     },
     {
-      "coverage_id": "cov-01755",
+      "coverage_id": "cov-867",
+      "status": "present",
+      "evidence": [
+        "Plans/storage-plan.md:619-621 says Contracts_V0 owns canonical route_target/OpenSubject contracts and route/open linkage is carried by reference rather than redefining route payload shapes locally",
+        "Plans/storage-plan.md:728-733 reconciles canonical local keys for attempt and blocked projections instead of route-local surrogate key shapes"
+      ],
+      "required_action": "none",
+      "unresolved_reason": "Route target ownership and avoidance of route-local surrogate shapes are directly represented.",
       "source_obligation_ids": [
-        "obl-1686"
+        "obl-243"
       ],
       "source_seed_ids": [
-        "seed-1923"
+        "seed-243"
       ],
       "source_shard_ids": [
-        "shard-0034"
+        "shard-0061"
       ],
-      "canon_label": "orchestrator:progress",
-      "row_type": "consumer",
-      "path": "__DOC_DISCOVERY_REQUIRED__",
-      "heading_hint": "Candidate fixes to carry forward",
-      "status": "missing",
-      "exact_items": [
-        "`orchestrator:progress` likely needs project-scoped persistence, or a layered model of app-default plus project override"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "doc_discovery_required:no concrete Plans path in canonical obligation"
-      ],
-      "required_action": "consumer_propagation",
-      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
-    },
-    {
-      "coverage_id": "cov-01757",
-      "source_obligation_ids": [
-        "obl-1688"
-      ],
-      "source_seed_ids": [
-        "seed-1925"
-      ],
-      "source_shard_ids": [
-        "shard-0034"
-      ],
-      "canon_label": "dashboard_layout:v1",
-      "row_type": "consumer",
-      "path": "__DOC_DISCOVERY_REQUIRED__",
-      "heading_hint": "Candidate fixes to carry forward",
-      "status": "missing",
-      "exact_items": [
-        "Resolve the `dashboard_layout:v1` migration contradiction in one place and cross-reference it from `FinalGUISpec.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "doc_discovery_required:no concrete Plans path in canonical obligation"
-      ],
-      "required_action": "consumer_propagation",
-      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
-    },
-    {
-      "coverage_id": "cov-01761",
-      "source_obligation_ids": [
-        "obl-1692"
-      ],
-      "source_seed_ids": [
-        "seed-1938"
-      ],
-      "source_shard_ids": [
-        "shard-0034"
-      ],
-      "canon_label": "Contracts_V0.md",
-      "row_type": "consumer",
-      "path": "__DOC_DISCOVERY_REQUIRED__",
-      "heading_hint": "Key findings",
-      "status": "missing",
-      "exact_items": [
-        "`Contracts_V0.md` and `storage-plan.md` say run/attempt state must carry full requested/effective persona/runtime/auth/account identity"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "doc_discovery_required:no concrete Plans path in canonical obligation"
-      ],
-      "required_action": "consumer_propagation",
-      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
-    },
-    {
-      "coverage_id": "cov-01764",
-      "source_obligation_ids": [
-        "obl-1695"
-      ],
-      "source_seed_ids": [
-        "seed-1941"
-      ],
-      "source_shard_ids": [
-        "shard-0034"
-      ],
-      "canon_label": "request_id",
-      "row_type": "consumer",
-      "path": "__DOC_DISCOVERY_REQUIRED__",
-      "heading_hint": "Key findings",
-      "status": "missing",
-      "exact_items": [
-        "HITL commands already require `request_id`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "doc_discovery_required:no concrete Plans path in canonical obligation"
-      ],
-      "required_action": "consumer_propagation",
-      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
-    },
-    {
-      "coverage_id": "cov-01766",
-      "source_obligation_ids": [
-        "obl-1697"
-      ],
-      "source_seed_ids": [
-        "seed-1943"
-      ],
-      "source_shard_ids": [
-        "shard-0034"
-      ],
-      "canon_label": "Key findings",
-      "row_type": "consumer",
-      "path": "__DOC_DISCOVERY_REQUIRED__",
-      "heading_hint": "Key findings",
-      "status": "missing",
-      "exact_items": [
-        "Orchestrator deep links already prefer attempt/receipt/worktree/workflow refs"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "doc_discovery_required:no concrete Plans path in canonical obligation"
-      ],
-      "required_action": "consumer_propagation",
-      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
-    },
-    {
-      "coverage_id": "cov-01767",
-      "source_obligation_ids": [
-        "obl-1698"
-      ],
-      "source_seed_ids": [
-        "seed-1944"
-      ],
-      "source_shard_ids": [
-        "shard-0034"
-      ],
-      "canon_label": "Widget_System.md",
-      "row_type": "consumer",
-      "path": "__DOC_DISCOVERY_REQUIRED__",
-      "heading_hint": "Key findings",
-      "status": "missing",
-      "exact_items": [
-        "`Widget_System.md` still references the wrong multi-account keyspace and does not yet define one shared projection-trust chrome contract"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "doc_discovery_required:no concrete Plans path in canonical obligation"
-      ],
-      "required_action": "consumer_propagation",
-      "unresolved_reason": "target path cannot be determined from canonical affected_doc_hints"
+      "path_field_status": "match"
     }
   ]
 }

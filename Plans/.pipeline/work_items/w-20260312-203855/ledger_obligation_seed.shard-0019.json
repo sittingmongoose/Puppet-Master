@@ -1,5 +1,5 @@
 {
-  "schema_id": "pm.ledger_obligation_seed_shard_result.v1",
+  "schema_id": "pm.ledger_obligation_seed_shard_result.v2",
   "work_id": "w-20260312-203855",
   "shard_id": "shard-0019",
   "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0019-L003601-L003800.md",
@@ -7,674 +7,123 @@
   "seed_candidates": [
     {
       "seed_type": "layout_blocker",
-      "canon_label_hint": "Record-shaped export rule",
+      "canon_label_hint": "settings / orchestrator presentation coherence",
       "exact_items": [
-        "exact-record surfaces should export canonical records, not UI-specific transformed rows"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Record-shaped export rule"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0019",
-      "source_evidence": [
-        "working_ledger.md:L3613"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "owner",
-      "canon_label_hint": "Ledger",
-      "exact_items": [
-        "`Ledger` export should preserve canonical ids and structured fields"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Record-shaped export rule"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0019",
-      "source_evidence": [
-        "working_ledger.md:L3615"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Record-shaped export rule",
-      "exact_items": [
-        "CSV is fine as a convenience projection"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Record-shaped export rule"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0019",
-      "source_evidence": [
-        "working_ledger.md:L3616"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "owner",
-      "canon_label_hint": "Record-shaped export rule",
-      "exact_items": [
-        "JSON/JSONL should remain close to canonical record structure"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Record-shaped export rule"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0019",
-      "source_evidence": [
-        "working_ledger.md:L3617"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Evidence / artifact export direction",
-      "exact_items": [
-        "Evidence export should likely include:"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Evidence / artifact export direction"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0019",
-      "source_evidence": [
-        "working_ledger.md:L3620"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Evidence / artifact export direction",
-      "exact_items": [
-        "linked artifact refs"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Evidence / artifact export direction"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0019",
-      "source_evidence": [
-        "working_ledger.md:L3622"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Evidence / artifact export direction",
-      "exact_items": [
-        "Artifact export should likely focus on:"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Evidence / artifact export direction"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0019",
-      "source_evidence": [
-        "working_ledger.md:L3625"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Evidence / artifact export direction",
-      "exact_items": [
-        "exporting an artifact alone should still preserve enough metadata to know what record/run/object it came from"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Evidence / artifact export direction"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0019",
-      "source_evidence": [
-        "working_ledger.md:L3630"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Historical / removed-object implication",
-      "exact_items": [
-        "Exports must preserve historical truth even when live backing objects no longer exist."
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Historical / removed-object implication"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0019",
-      "source_evidence": [
-        "working_ledger.md:L3633"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "stale_retirement",
-      "canon_label_hint": "Historical / removed-object implication",
-      "exact_items": [
-        "removed worktree or retired graph path still exports as record metadata with historical status"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Historical / removed-object implication"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0019",
-      "source_evidence": [
-        "working_ledger.md:L3635"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Historical / removed-object implication",
-      "exact_items": [
-        "absence of a live backing file/worktree should not corrupt the exported record bundle"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Historical / removed-object implication"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0019",
-      "source_evidence": [
-        "working_ledger.md:L3636"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "view export",
-      "exact_items": [
-        "`view export` is still useful, but should be clearly labeled as a convenience format."
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Filtered-view export direction"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0019",
-      "source_evidence": [
-        "working_ledger.md:L3639"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "owner",
-      "canon_label_hint": "Filtered-view export direction",
-      "exact_items": [
-        "These should not be treated as canonical archival formats."
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Filtered-view export direction"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0019",
-      "source_evidence": [
-        "working_ledger.md:L3644"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Candidate fixes to carry forward",
-      "exact_items": [
-        "Add a shared Orchestrator export manifest contract."
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Candidate fixes to carry forward"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0019",
-      "source_evidence": [
-        "working_ledger.md:L3652"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Candidate fixes to carry forward",
-      "exact_items": [
-        "Define record-first exports for Ledger/History/concern/review/promotion/patch/recovery families."
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Candidate fixes to carry forward"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0019",
-      "source_evidence": [
-        "working_ledger.md:L3653"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "owner",
-      "canon_label_hint": "Candidate fixes to carry forward",
-      "exact_items": [
-        "Keep CSV/table exports as convenience view exports, not as canonical archival exports."
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Candidate fixes to carry forward"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0019",
-      "source_evidence": [
-        "working_ledger.md:L3654"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Do-not-forget details",
-      "exact_items": [
-        "Evidence and artifact exports should not collapse into one undifferentiated zip of files"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Do-not-forget details"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0019",
-      "source_evidence": [
-        "working_ledger.md:L3659"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Do-not-forget details",
-      "exact_items": [
-        "export/import of config bundles is already strong; Orchestrator exports should reach similar clarity"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Do-not-forget details"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0019",
-      "source_evidence": [
-        "working_ledger.md:L3660"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Plans/Multi-Account.md",
-      "exact_items": [
-        "`Plans/Multi-Account.md`"
+        "treat source/request/execution as three separate axes",
+        "UI should show the winning source, not force the user to reconstruct precedence from docs",
+        "if requested == effective and nothing was skipped/clamped, compact display is fine; otherwise expand/disclose the difference visibly"
       ],
       "affected_doc_hints": [
-        "Plans/Multi-Account.md"
-      ],
-      "heading_hints": [
-        "Targeted docs read"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0019",
-      "source_evidence": [
-        "working_ledger.md:L3665"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Plans/Models_System.md",
-      "exact_items": [
-        "`Plans/Models_System.md`"
-      ],
-      "affected_doc_hints": [
-        "Plans/Models_System.md"
-      ],
-      "heading_hints": [
-        "Targeted docs read"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0019",
-      "source_evidence": [
-        "working_ledger.md:L3666"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Plans/Prompt_Pipeline.md",
-      "exact_items": [
-        "`Plans/Prompt_Pipeline.md`"
-      ],
-      "affected_doc_hints": [
-        "Plans/Prompt_Pipeline.md"
-      ],
-      "heading_hints": [
-        "Targeted docs read"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0019",
-      "source_evidence": [
-        "working_ledger.md:L3667"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Plans/Personas.md",
-      "exact_items": [
-        "`Plans/Personas.md`"
-      ],
-      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md",
         "Plans/Personas.md"
       ],
+      "doc_resolution_status": "layout_target_in_notes",
       "heading_hints": [
-        "Targeted docs read"
+        "Recommended conceptual split",
+        "Recommended display grammar",
+        "Surface-specific presentation direction"
       ],
       "stale_tokens": [],
-      "source_shard_id": "shard-0019",
       "source_evidence": [
-        "working_ledger.md:L3668"
+        "working_ledger.md:L003686-L003749"
       ],
-      "notes": []
+      "notes": [
+        "Presentation grammar and disclosure rules for settings/runtime views."
+      ]
     },
     {
       "seed_type": "consumer",
-      "canon_label_hint": "Plans/FinalGUISpec.md",
+      "canon_label_hint": "history / ledger audit trail",
       "exact_items": [
-        "`Plans/FinalGUISpec.md`"
+        "History / Ledger: exact audit trail of requested/effective + reason + source snapshot refs",
+        "Historical run views should show the frozen requested/effective state from that run, not recompute from current settings"
       ],
       "affected_doc_hints": [
-        "Plans/FinalGUISpec.md"
-      ],
-      "heading_hints": [
-        "Targeted docs read"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0019",
-      "source_evidence": [
-        "working_ledger.md:L3669"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Plans/Orchestrator_Page.md",
-      "exact_items": [
-        "`Plans/Orchestrator_Page.md`"
-      ],
-      "affected_doc_hints": [
-        "Plans/Orchestrator_Page.md"
-      ],
-      "heading_hints": [
-        "Targeted docs read"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0019",
-      "source_evidence": [
-        "working_ledger.md:L3670"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Plans/storage-plan.md",
-      "exact_items": [
-        "`Plans/storage-plan.md`"
-      ],
-      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md",
         "Plans/storage-plan.md"
       ],
+      "doc_resolution_status": "concrete",
       "heading_hints": [
-        "Targeted docs read"
+        "Requested/effective direction",
+        "Surface-specific presentation direction",
+        "Historical-run implication"
       ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0019",
+      "stale_tokens": [
+        "frozen",
+        "historical run views"
+      ],
       "source_evidence": [
-        "working_ledger.md:L3671"
+        "working_ledger.md:L003738-L003800"
       ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Key findings",
-      "exact_items": [
-        "The docs already define most of the raw data needed for this seam:"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Key findings"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0019",
-      "source_evidence": [
-        "working_ledger.md:L3674"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "layout_blocker",
-      "canon_label_hint": "Key findings",
-      "exact_items": [
-        "The system currently has at least three different concepts that the UI must not blur:"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Key findings"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0019",
-      "source_evidence": [
-        "working_ledger.md:L3680-L3681"
-      ],
-      "notes": []
+      "notes": [
+        "Consumer-facing audit/history requirement; avoids recomputation from live settings."
+      ]
     },
     {
       "seed_type": "owner",
-      "canon_label_hint": "Recommended display grammar",
+      "canon_label_hint": "source-layer labeling and override provenance",
       "exact_items": [
-        "Good canonical display groups:"
+        "Likely source layers that need explicit labeling: app default, project override, surface default, role policy, seam/package/node mapping, manual override, turn/session/run/task/subagent scoped override",
+        "UI should show the winning source"
       ],
-      "affected_doc_hints": [],
+      "affected_doc_hints": [
+        "Plans/Multi-Account.md",
+        "Plans/Personas.md",
+        "Plans/Models_System.md"
+      ],
+      "doc_resolution_status": "concrete",
       "heading_hints": [
+        "Source-layer direction",
         "Recommended display grammar"
       ],
       "stale_tokens": [],
-      "source_shard_id": "shard-0019",
       "source_evidence": [
-        "working_ledger.md:L3702"
+        "working_ledger.md:L003720-L003736"
       ],
-      "notes": []
+      "notes": [
+        "Owner/provenance labeling for configuration hierarchy and precedence."
+      ]
     },
     {
-      "seed_type": "consumer",
-      "canon_label_hint": "Source-layer direction",
+      "seed_type": "stale_retirement",
+      "canon_label_hint": "frozen historical state vs live settings drift",
       "exact_items": [
-        "Likely source layers that need explicit labeling:"
+        "Historical-run implication: show frozen requested/effective state from that run, not current settings",
+        "multi-account/project policy snapshot is not the same as live runtime decision"
       ],
-      "affected_doc_hints": [],
+      "affected_doc_hints": [
+        "Plans/ledger.md",
+        "Plans/storage-plan.md",
+        "Plans/Orchestrator_Page.md"
+      ],
+      "doc_resolution_status": "concrete",
       "heading_hints": [
-        "Source-layer direction"
+        "Historical-run implication",
+        "Multi-account implication"
       ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0019",
+      "stale_tokens": [
+        "frozen",
+        "snapshot",
+        "live runtime decision"
+      ],
       "source_evidence": [
-        "working_ledger.md:L3721"
+        "working_ledger.md:L003789-L003800"
       ],
-      "notes": []
-    },
-    {
-      "seed_type": "layout_blocker",
-      "canon_label_hint": "Source-layer direction",
-      "exact_items": [
-        "surface default"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Source-layer direction"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0019",
-      "source_evidence": [
-        "working_ledger.md:L3724"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "layout_blocker",
-      "canon_label_hint": "Source-layer direction",
-      "exact_items": [
-        "UI should show the winning source, not force the user to reconstruct precedence from docs"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Source-layer direction"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0019",
-      "source_evidence": [
-        "working_ledger.md:L3730"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Requested/effective direction",
-      "exact_items": [
-        "Requested/effective must remain runtime-facing and auditable."
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Requested/effective direction"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0019",
-      "source_evidence": [
-        "working_ledger.md:L3739"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "layout_blocker",
-      "canon_label_hint": "Requested/effective direction",
-      "exact_items": [
-        "if they differ, the UI must expand/disclose the difference visibly"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Requested/effective direction"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0019",
-      "source_evidence": [
-        "working_ledger.md:L3749"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Surface-specific presentation direction",
-      "exact_items": [
-        "should answer: \"what will be requested if I run from here?\""
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Surface-specific presentation direction"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0019",
-      "source_evidence": [
-        "working_ledger.md:L3769"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Surface-specific presentation direction",
-      "exact_items": [
-        "should answer: \"what did this run/attempt request, what actually happened, and why?\""
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Surface-specific presentation direction"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0019",
-      "source_evidence": [
-        "working_ledger.md:L3772"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Worker-policy implication",
-      "exact_items": [
-        "The same display grammar should extend beyond provider/model/persona/account."
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Worker-policy implication"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0019",
-      "source_evidence": [
-        "working_ledger.md:L3781"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Worker-policy implication",
-      "exact_items": [
-        "Worker policy likely needs the same treatment:"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Worker-policy implication"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0019",
-      "source_evidence": [
-        "working_ledger.md:L3782"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Historical-run implication",
-      "exact_items": [
-        "Historical run views should show the frozen requested/effective state from that run, not recompute from current settings."
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Historical-run implication"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0019",
-      "source_evidence": [
-        "working_ledger.md:L3800"
-      ],
-      "notes": []
+      "notes": [
+        "Stale-retirement style preservation of archived run truth against current-setting drift."
+      ]
     }
   ],
   "noise_items": [
-    {
-      "item": "- compact requested/effective summary for live context",
-      "source_evidence": [
-        "working_ledger.md:L3774"
-      ],
-      "reason": "metric/status/count/family or process line without concrete obligation-grade evidence"
-    }
+    "targeted docs read list",
+    "key findings boilerplate",
+    "recommended display examples",
+    "status-ish wording like strong recommendation / good canonical display groups"
   ],
-  "uncertain_items": [],
+  "uncertain_items": [
+    "Whether a dedicated config/export seed belongs here or in a neighboring shard",
+    "Exact target doc names for the settings/runtime split beyond the hinted Plans docs"
+  ],
   "covered_shard_id": "shard-0019"
 }

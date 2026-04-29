@@ -1,0 +1,473 @@
+{
+  "schema_id": "pm.transfer_coverage_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-024",
+  "row_groups": [
+    "rowgrp-0093",
+    "rowgrp-0094",
+    "rowgrp-0095",
+    "rowgrp-0096"
+  ],
+  "coverage_rows": [
+    {
+      "coverage_id": "cov-04532",
+      "source_obligation_ids": [
+        "obl-4283"
+      ],
+      "source_seed_ids": [
+        "seed-6167"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "canon_label": "Plans/*.md",
+      "row_type": "layout_blocker",
+      "path": "Plans/Multi-Account.md",
+      "heading_hint": "Do-not-forget details",
+      "status": "present",
+      "exact_items": [
+        "After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/Multi-Account.md:124",
+        "Plans/Multi-Account.md:330",
+        "Plans/Multi-Account.md:383",
+        "Plans/Multi-Account.md:16",
+        "Plans/Multi-Account.md:46",
+        "Plans/Multi-Account.md:135",
+        "Plans/Multi-Account.md:104",
+        "Plans/Multi-Account.md:7",
+        "Plans/Multi-Account.md:47",
+        "Plans/Multi-Account.md:549"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-00644",
+      "source_obligation_ids": [
+        "obl-0606"
+      ],
+      "source_seed_ids": [
+        "seed-0611",
+        "seed-0691"
+      ],
+      "source_shard_ids": [
+        "shard-0009",
+        "shard-0010"
+      ],
+      "canon_label": "Plans/OpenCode_Coverage_Matrix.md",
+      "row_type": "consumer",
+      "path": "Plans/OpenCode_Coverage_Matrix.md",
+      "heading_hint": "Cleanup Priorities",
+      "status": "missing",
+      "exact_items": [
+        "`Plans/OpenCode_Coverage_Matrix.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/OpenCode_Coverage_Matrix.md:required_terms_absent"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-03311",
+      "source_obligation_ids": [
+        "obl-3198"
+      ],
+      "source_seed_ids": [
+        "seed-4180"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "canon_label": "Plans/*.md",
+      "row_type": "consumer",
+      "path": "Plans/OpenCode_Coverage_Matrix.md",
+      "heading_hint": "Do-not-forget details",
+      "status": "present",
+      "exact_items": [
+        "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/OpenCode_Coverage_Matrix.md:3",
+        "Plans/OpenCode_Coverage_Matrix.md:19",
+        "Plans/OpenCode_Coverage_Matrix.md:39",
+        "Plans/OpenCode_Coverage_Matrix.md:45",
+        "Plans/OpenCode_Coverage_Matrix.md:80"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-03602",
+      "source_obligation_ids": [
+        "obl-3453"
+      ],
+      "source_seed_ids": [
+        "seed-4634",
+        "seed-5082",
+        "seed-5923",
+        "seed-6009",
+        "seed-6101"
+      ],
+      "source_shard_ids": [
+        "shard-0064",
+        "shard-0070",
+        "shard-0081",
+        "shard-0082"
+      ],
+      "canon_label": "Plans/OpenCode_Coverage_Matrix.md",
+      "row_type": "consumer",
+      "path": "Plans/OpenCode_Coverage_Matrix.md",
+      "heading_hint": "Targeted docs read",
+      "status": "partial",
+      "exact_items": [
+        "`Plans/OpenCode_Coverage_Matrix.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/OpenCode_Coverage_Matrix.md:19",
+        "Plans/OpenCode_Coverage_Matrix.md:87"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-03619",
+      "source_obligation_ids": [
+        "obl-3470"
+      ],
+      "source_seed_ids": [
+        "seed-4652",
+        "seed-5120",
+        "seed-5958",
+        "seed-6045",
+        "seed-6133"
+      ],
+      "source_shard_ids": [
+        "shard-0064",
+        "shard-0070",
+        "shard-0081",
+        "shard-0082"
+      ],
+      "canon_label": "Plans/OpenCode_Coverage_Matrix.md",
+      "row_type": "consumer",
+      "path": "Plans/OpenCode_Coverage_Matrix.md",
+      "heading_hint": "Impacted docs",
+      "status": "partial",
+      "exact_items": [
+        "`Plans/OpenCode_Coverage_Matrix.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/OpenCode_Coverage_Matrix.md:19"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-03629",
+      "source_obligation_ids": [
+        "obl-3480"
+      ],
+      "source_seed_ids": [
+        "seed-4675",
+        "seed-5150",
+        "seed-5986",
+        "seed-6079"
+      ],
+      "source_shard_ids": [
+        "shard-0064",
+        "shard-0070",
+        "shard-0081",
+        "shard-0082"
+      ],
+      "canon_label": "Plans/OpenCode_Coverage_Matrix.md",
+      "row_type": "consumer",
+      "path": "Plans/OpenCode_Coverage_Matrix.md",
+      "heading_hint": "Candidate fixes to carry forward",
+      "status": "partial",
+      "exact_items": [
+        "`Plans/OpenCode_Coverage_Matrix.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/OpenCode_Coverage_Matrix.md:99"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-04256",
+      "source_obligation_ids": [
+        "obl-4102"
+      ],
+      "source_seed_ids": [
+        "seed-5709"
+      ],
+      "source_shard_ids": [
+        "shard-0077"
+      ],
+      "canon_label": "Plans/OpenCode_Coverage_Matrix.md",
+      "row_type": "consumer",
+      "path": "Plans/OpenCode_Coverage_Matrix.md",
+      "heading_hint": "Priority merge",
+      "status": "partial",
+      "exact_items": [
+        "`Plans/OpenCode_Coverage_Matrix.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/OpenCode_Coverage_Matrix.md:58"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-04450",
+      "source_obligation_ids": [
+        "obl-4262"
+      ],
+      "source_seed_ids": [
+        "seed-6087"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "canon_label": "39",
+      "row_type": "consumer",
+      "path": "Plans/OpenCode_Coverage_Matrix.md",
+      "heading_hint": "Do-not-forget details",
+      "status": "present",
+      "exact_items": [
+        "Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/OpenCode_Coverage_Matrix.md:77",
+        "Plans/OpenCode_Coverage_Matrix.md:60",
+        "Plans/OpenCode_Coverage_Matrix.md:1",
+        "Plans/OpenCode_Coverage_Matrix.md:26",
+        "Plans/OpenCode_Coverage_Matrix.md:3",
+        "Plans/OpenCode_Coverage_Matrix.md:19",
+        "Plans/OpenCode_Coverage_Matrix.md:39",
+        "Plans/OpenCode_Coverage_Matrix.md:80"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-04533",
+      "source_obligation_ids": [
+        "obl-4283"
+      ],
+      "source_seed_ids": [
+        "seed-6167"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "canon_label": "Plans/*.md",
+      "row_type": "layout_blocker",
+      "path": "Plans/OpenCode_Coverage_Matrix.md",
+      "heading_hint": "Do-not-forget details",
+      "status": "present",
+      "exact_items": [
+        "After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/OpenCode_Coverage_Matrix.md:26",
+        "Plans/OpenCode_Coverage_Matrix.md:3",
+        "Plans/OpenCode_Coverage_Matrix.md:55",
+        "Plans/OpenCode_Coverage_Matrix.md:19",
+        "Plans/OpenCode_Coverage_Matrix.md:129",
+        "Plans/OpenCode_Coverage_Matrix.md:45",
+        "Plans/OpenCode_Coverage_Matrix.md:80"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-03312",
+      "source_obligation_ids": [
+        "obl-3198"
+      ],
+      "source_seed_ids": [
+        "seed-4180"
+      ],
+      "source_shard_ids": [
+        "shard-0059"
+      ],
+      "canon_label": "Plans/*.md",
+      "row_type": "consumer",
+      "path": "Plans/OpenCode_Deep_Extraction.md",
+      "heading_hint": "Do-not-forget details",
+      "status": "present",
+      "exact_items": [
+        "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/OpenCode_Deep_Extraction.md:88",
+        "Plans/OpenCode_Deep_Extraction.md:316",
+        "Plans/OpenCode_Deep_Extraction.md:3",
+        "Plans/OpenCode_Deep_Extraction.md:48",
+        "Plans/OpenCode_Deep_Extraction.md:177",
+        "Plans/OpenCode_Deep_Extraction.md:630",
+        "Plans/OpenCode_Deep_Extraction.md:29"
+      ],
+      "required_action": "none"
+    },
+    {
+      "coverage_id": "cov-03475",
+      "source_obligation_ids": [
+        "obl-3327"
+      ],
+      "source_seed_ids": [
+        "seed-4437",
+        "seed-5083",
+        "seed-5924",
+        "seed-6010",
+        "seed-6102"
+      ],
+      "source_shard_ids": [
+        "shard-0062",
+        "shard-0070",
+        "shard-0081",
+        "shard-0082"
+      ],
+      "canon_label": "Plans/OpenCode_Deep_Extraction.md",
+      "row_type": "consumer",
+      "path": "Plans/OpenCode_Deep_Extraction.md",
+      "heading_hint": "Targeted docs read",
+      "status": "partial",
+      "exact_items": [
+        "`Plans/OpenCode_Deep_Extraction.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/OpenCode_Deep_Extraction.md:48",
+        "Plans/OpenCode_Deep_Extraction.md:57"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-03499",
+      "source_obligation_ids": [
+        "obl-3351"
+      ],
+      "source_seed_ids": [
+        "seed-4464",
+        "seed-5121",
+        "seed-5959",
+        "seed-6046",
+        "seed-6134"
+      ],
+      "source_shard_ids": [
+        "shard-0062",
+        "shard-0070",
+        "shard-0081",
+        "shard-0082"
+      ],
+      "canon_label": "Plans/OpenCode_Deep_Extraction.md",
+      "row_type": "consumer",
+      "path": "Plans/OpenCode_Deep_Extraction.md",
+      "heading_hint": "Impacted docs",
+      "status": "partial",
+      "exact_items": [
+        "`Plans/OpenCode_Deep_Extraction.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/OpenCode_Deep_Extraction.md:48"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-03511",
+      "source_obligation_ids": [
+        "obl-3363"
+      ],
+      "source_seed_ids": [
+        "seed-4487",
+        "seed-5149",
+        "seed-5985",
+        "seed-6078"
+      ],
+      "source_shard_ids": [
+        "shard-0062",
+        "shard-0070",
+        "shard-0081",
+        "shard-0082"
+      ],
+      "canon_label": "Plans/OpenCode_Deep_Extraction.md",
+      "row_type": "consumer",
+      "path": "Plans/OpenCode_Deep_Extraction.md",
+      "heading_hint": "Candidate fixes to carry forward",
+      "status": "partial",
+      "exact_items": [
+        "`Plans/OpenCode_Deep_Extraction.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/OpenCode_Deep_Extraction.md:692"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-04255",
+      "source_obligation_ids": [
+        "obl-4101"
+      ],
+      "source_seed_ids": [
+        "seed-5708"
+      ],
+      "source_shard_ids": [
+        "shard-0077"
+      ],
+      "canon_label": "Plans/OpenCode_Deep_Extraction.md",
+      "row_type": "consumer",
+      "path": "Plans/OpenCode_Deep_Extraction.md",
+      "heading_hint": "Priority merge",
+      "status": "partial",
+      "exact_items": [
+        "`Plans/OpenCode_Deep_Extraction.md`"
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/OpenCode_Deep_Extraction.md:216",
+        "Plans/OpenCode_Deep_Extraction.md:157"
+      ],
+      "required_action": "consumer_propagation"
+    },
+    {
+      "coverage_id": "cov-04451",
+      "source_obligation_ids": [
+        "obl-4262"
+      ],
+      "source_seed_ids": [
+        "seed-6087"
+      ],
+      "source_shard_ids": [
+        "shard-0082"
+      ],
+      "canon_label": "39",
+      "row_type": "consumer",
+      "path": "Plans/OpenCode_Deep_Extraction.md",
+      "heading_hint": "Do-not-forget details",
+      "status": "present",
+      "exact_items": [
+        "Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes."
+      ],
+      "stale_tokens": [],
+      "evidence": [
+        "Plans/OpenCode_Deep_Extraction.md:292",
+        "Plans/OpenCode_Deep_Extraction.md:88",
+        "Plans/OpenCode_Deep_Extraction.md:75",
+        "Plans/OpenCode_Deep_Extraction.md:155",
+        "Plans/OpenCode_Deep_Extraction.md:3",
+        "Plans/OpenCode_Deep_Extraction.md:48",
+        "Plans/OpenCode_Deep_Extraction.md:199",
+        "Plans/OpenCode_Deep_Extraction.md:316",
+        "Plans/OpenCode_Deep_Extraction.md:29"
+      ],
+      "required_action": "none"
+    }
+  ]
+}

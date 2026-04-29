@@ -1,0 +1,19 @@
+{
+  "schema_id": "pm.transfer_coverage_noise.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-016",
+  "noise_findings": [
+    {
+      "source": "coverage-rowgrp-061",
+      "finding": "Subagent included worklist/inventory evidence and generic token references; reducer stripped artifact evidence and kept cov-124 missing."
+    },
+    {
+      "source": "coverage-rowgrp-062",
+      "finding": "Subagent marked all three FileSafe layout rows present; reducer downgraded to partial because live evidence covers only subsets of each row."
+    },
+    {
+      "source": "coverage-rowgrp-063",
+      "finding": "Subagent marked cov-1104 missing from artifact/status evidence; reducer credited FileSafe safe-point and canonical-lineage evidence as partial."
+    }
+  ]
+}

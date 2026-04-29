@@ -1,0 +1,1463 @@
+{
+  "schema_id": "pm.ledger_obligation_seed_shard_result.v1",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-0048",
+  "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0048-L009401-L009600.md",
+  "source_line_range": "L009401-L009600",
+  "seed_candidates": [
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Do-not-forget details",
+      "exact_items": [
+        "these reports should bridge into execution; they should not be mistaken for execution"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Do-not-forget details"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0048",
+      "source_evidence": [
+        "working_ledger.md:L9405"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/storage-plan.md",
+      "exact_items": [
+        "`Plans/storage-plan.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [
+        "Targeted docs read"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0048",
+      "source_evidence": [
+        "working_ledger.md:L9410"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/Runtime_Artifacts_Panel.md",
+      "exact_items": [
+        "`Plans/Runtime_Artifacts_Panel.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Runtime_Artifacts_Panel.md"
+      ],
+      "heading_hints": [
+        "Targeted docs read"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0048",
+      "source_evidence": [
+        "working_ledger.md:L9411"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/WorktreeGitImprovement.md",
+      "exact_items": [
+        "`Plans/WorktreeGitImprovement.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/WorktreeGitImprovement.md"
+      ],
+      "heading_hints": [
+        "Targeted docs read"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0048",
+      "source_evidence": [
+        "working_ledger.md:L9412"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/Orchestrator_Page.md",
+      "exact_items": [
+        "`Plans/Orchestrator_Page.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md"
+      ],
+      "heading_hints": [
+        "Targeted docs read"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0048",
+      "source_evidence": [
+        "working_ledger.md:L9413"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/FinalGUISpec.md",
+      "exact_items": [
+        "`Plans/FinalGUISpec.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [
+        "Targeted docs read"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0048",
+      "source_evidence": [
+        "working_ledger.md:L9414"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "orchestrator.receipt.{run_id}.{attempt_id}",
+      "exact_items": [
+        "cross-surface `orchestrator.receipt.{run_id}.{attempt_id}`"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Key findings"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0048",
+      "source_evidence": [
+        "working_ledger.md:L9423"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "storage-plan.md",
+      "exact_items": [
+        "But several downstream docs already assume additional record/projection families that `storage-plan.md` still does not actually own in concrete form."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Key findings"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0048",
+      "source_evidence": [
+        "working_ledger.md:L9424"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Key findings",
+      "exact_items": [
+        "The clearest missing family is the runtime-artifact index side:"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Key findings"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0048",
+      "source_evidence": [
+        "working_ledger.md:L9425"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Key findings",
+      "exact_items": [
+        "declares envelope and per-type schema files"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Key findings"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0048",
+      "source_evidence": [
+        "working_ledger.md:L9428"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "storage-plan.md",
+      "exact_items": [
+        "`storage-plan.md` still does not clearly register that artifacts index family alongside the other canonical keys, and the broader doc set still shows signs that the schema family itself may not yet exist"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Key findings"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0048",
+      "source_evidence": [
+        "working_ledger.md:L9429"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Key findings",
+      "exact_items": [
+        "The other major missing family is worktree/lane lifecycle state:"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Key findings"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0048",
+      "source_evidence": [
+        "working_ledger.md:L9430"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "WorktreeGitImprovement.md",
+      "exact_items": [
+        "`WorktreeGitImprovement.md` now expects durable worktree identity, restart recovery, ownership, conflict state, historical lineage, and cross-surface CTAs"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Key findings"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0048",
+      "source_evidence": [
+        "working_ledger.md:L9430-L9431"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "storage-plan.md",
+      "exact_items": [
+        "`storage-plan.md` currently has only adjacent state like `source_control.project_state.{project_id}` and `orchestrator.receipt.{run_id}.{attempt_id}`; it does not yet define a proper durable worktree record/projection family for lifecycle/history/audit"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Key findings"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0048",
+      "source_evidence": [
+        "working_ledger.md:L9433"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "orchestrator.receipt",
+      "exact_items": [
+        "This means several surfaces are currently leaning on the same narrow bridge object (`orchestrator.receipt`) to explain more than it should:"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Key findings"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0048",
+      "source_evidence": [
+        "working_ledger.md:L9434"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "Key findings",
+      "exact_items": [
+        "receipts are good for cross-surface pivots"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Key findings"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0048",
+      "source_evidence": [
+        "working_ledger.md:L9435"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "Key findings",
+      "exact_items": [
+        "A similar pattern exists for the artifact panel:"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Key findings"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0048",
+      "source_evidence": [
+        "working_ledger.md:L9437"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Key findings",
+      "exact_items": [
+        "but the storage owner doc does not yet make it a first-class family with key registration, lifecycle, and failure/rebuild semantics at the same level as the newer runtime records"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Key findings"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0048",
+      "source_evidence": [
+        "working_ledger.md:L9439"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "Key findings",
+      "exact_items": [
+        "The broader lesson is that storage ownership is lagging behind the rewrite\u2019s stronger UI/runtime object model. Some downstream docs are not merely \u201ctoo detailed\u201d; they are revealing object families the storage plan now genuinely needs."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Key findings"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0048",
+      "source_evidence": [
+        "working_ledger.md:L9439-L9440"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/storage-plan.md",
+      "exact_items": [
+        "`Plans/storage-plan.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [
+        "Impacted docs"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0048",
+      "source_evidence": [
+        "working_ledger.md:L9439-L9443"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/Runtime_Artifacts_Panel.md",
+      "exact_items": [
+        "`Plans/Runtime_Artifacts_Panel.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Runtime_Artifacts_Panel.md"
+      ],
+      "heading_hints": [
+        "Impacted docs"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0048",
+      "source_evidence": [
+        "working_ledger.md:L9444"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/WorktreeGitImprovement.md",
+      "exact_items": [
+        "`Plans/WorktreeGitImprovement.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/WorktreeGitImprovement.md"
+      ],
+      "heading_hints": [
+        "Impacted docs"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0048",
+      "source_evidence": [
+        "working_ledger.md:L9445"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/Orchestrator_Page.md",
+      "exact_items": [
+        "`Plans/Orchestrator_Page.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md"
+      ],
+      "heading_hints": [
+        "Impacted docs"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0048",
+      "source_evidence": [
+        "working_ledger.md:L9446"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/FinalGUISpec.md",
+      "exact_items": [
+        "`Plans/FinalGUISpec.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [
+        "Impacted docs"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0048",
+      "source_evidence": [
+        "working_ledger.md:L9447"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/usage-feature.md",
+      "exact_items": [
+        "`Plans/usage-feature.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/usage-feature.md"
+      ],
+      "heading_hints": [
+        "Impacted docs"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0048",
+      "source_evidence": [
+        "working_ledger.md:L9450"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/Project_Output_Artifacts.md",
+      "exact_items": [
+        "`Plans/Project_Output_Artifacts.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Project_Output_Artifacts.md"
+      ],
+      "heading_hints": [
+        "Impacted docs"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0048",
+      "source_evidence": [
+        "working_ledger.md:L9451"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Runtime_Artifacts_Panel.md",
+      "exact_items": [
+        "`Runtime_Artifacts_Panel.md` names `artifacts_index:v1:{project_id}` as canonical, but `storage-plan.md` does not appear to register/own that family at the same level as other redb families."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Contradictions / gaps surfaced"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0048",
+      "source_evidence": [
+        "working_ledger.md:L9454"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Contradictions / gaps surfaced",
+      "exact_items": [
+        "Runtime artifact schema ownership is still split awkwardly:"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Contradictions / gaps surfaced"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0048",
+      "source_evidence": [
+        "working_ledger.md:L9455"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "Contradictions / gaps surfaced",
+      "exact_items": [
+        "panel doc names required schema files"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Contradictions / gaps surfaced"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0048",
+      "source_evidence": [
+        "working_ledger.md:L9456"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "Contradictions / gaps surfaced",
+      "exact_items": [
+        "storage doc refers to runtime-artifact payloads but does not fully anchor the family"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Contradictions / gaps surfaced"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0048",
+      "source_evidence": [
+        "working_ledger.md:L9457"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "WorktreeGitImprovement.md",
+      "exact_items": [
+        "`WorktreeGitImprovement.md` and Orchestrator/Source Control docs now assume durable worktree identity and lineage, but storage only clearly owns surface state (`selected_worktree_id?`) and receipt linkage (`worktree_id?`), not full lifecycle records."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Contradictions / gaps surfaced"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0048",
+      "source_evidence": [
+        "working_ledger.md:L9459"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Candidate fixes to carry forward",
+      "exact_items": [
+        "Add explicit first-class storage families for runtime-artifact indexing/projection:"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Candidate fixes to carry forward"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0048",
+      "source_evidence": [
+        "working_ledger.md:L9463"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Candidate fixes to carry forward",
+      "exact_items": [
+        "canonical redb key registration"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Candidate fixes to carry forward"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0048",
+      "source_evidence": [
+        "working_ledger.md:L9464"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Candidate fixes to carry forward",
+      "exact_items": [
+        "projector ownership/checkpoint semantics"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Candidate fixes to carry forward"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0048",
+      "source_evidence": [
+        "working_ledger.md:L9465"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Candidate fixes to carry forward",
+      "exact_items": [
+        "clear schema ownership boundary"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Candidate fixes to carry forward"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0048",
+      "source_evidence": [
+        "working_ledger.md:L9467"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Candidate fixes to carry forward",
+      "exact_items": [
+        "Add explicit first-class storage families for durable worktree/lane lifecycle:"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Candidate fixes to carry forward"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0048",
+      "source_evidence": [
+        "working_ledger.md:L9468"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Candidate fixes to carry forward",
+      "exact_items": [
+        "lane/worktree projection for current state"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Candidate fixes to carry forward"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0048",
+      "source_evidence": [
+        "working_ledger.md:L9470"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "orchestrator.receipt",
+      "exact_items": [
+        "Keep `orchestrator.receipt` as the cross-surface bridge object, but stop letting it impersonate missing lifecycle records for artifacts or worktrees."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Candidate fixes to carry forward"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0048",
+      "source_evidence": [
+        "working_ledger.md:L9473"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Candidate fixes to carry forward",
+      "exact_items": [
+        "projection freshness/health fields on projections"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Candidate fixes to carry forward"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0048",
+      "source_evidence": [
+        "working_ledger.md:L9478"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Do-not-forget details",
+      "exact_items": [
+        "the storage gap is now about concrete missing object families, not just incomplete wording"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Do-not-forget details"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0048",
+      "source_evidence": [
+        "working_ledger.md:L9481"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Do-not-forget details",
+      "exact_items": [
+        "artifacts index and worktree lifecycle look like the clearest missing families right now"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Do-not-forget details"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0048",
+      "source_evidence": [
+        "working_ledger.md:L9481-L9482"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Do-not-forget details",
+      "exact_items": [
+        "receipt linkage is necessary but not sufficient; it cannot carry the full weight of lifecycle/history/state projection"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Do-not-forget details"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0048",
+      "source_evidence": [
+        "working_ledger.md:L9482-L9483"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/storage-plan.md",
+      "exact_items": [
+        "`Plans/storage-plan.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [
+        "Targeted docs read"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0048",
+      "source_evidence": [
+        "working_ledger.md:L9482-L9488"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/WorktreeGitImprovement.md",
+      "exact_items": [
+        "`Plans/WorktreeGitImprovement.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/WorktreeGitImprovement.md"
+      ],
+      "heading_hints": [
+        "Targeted docs read"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0048",
+      "source_evidence": [
+        "working_ledger.md:L9489"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/Runtime_Artifacts_Panel.md",
+      "exact_items": [
+        "`Plans/Runtime_Artifacts_Panel.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Runtime_Artifacts_Panel.md"
+      ],
+      "heading_hints": [
+        "Targeted docs read"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0048",
+      "source_evidence": [
+        "working_ledger.md:L9490"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/Orchestrator_Page.md",
+      "exact_items": [
+        "`Plans/Orchestrator_Page.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md"
+      ],
+      "heading_hints": [
+        "Targeted docs read"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0048",
+      "source_evidence": [
+        "working_ledger.md:L9491"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Key findings",
+      "exact_items": [
+        "The missing storage-owner work is now specific enough to propose concrete families rather than leaving it as a generic gap."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Key findings"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0048",
+      "source_evidence": [
+        "working_ledger.md:L9494"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Key findings",
+      "exact_items": [
+        "runtime artifact indexing/projection"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Key findings"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0048",
+      "source_evidence": [
+        "working_ledger.md:L9494-L9496"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "runtime_artifact.*",
+      "exact_items": [
+        "Keep seglog `runtime_artifact.*` events as canonical source."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Recommended artifact-index storage family"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0048",
+      "source_evidence": [
+        "working_ledger.md:L9500"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "storage-plan.md",
+      "exact_items": [
+        "Add explicit redb/projector ownership in `storage-plan.md` for:"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Recommended artifact-index storage family"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0048",
+      "source_evidence": [
+        "working_ledger.md:L9501"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Recommended artifact-index storage family",
+      "exact_items": [
+        "current lookup/index row for one runtime artifact"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Recommended artifact-index storage family"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0048",
+      "source_evidence": [
+        "working_ledger.md:L9503"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "Recommended artifact-index storage family",
+      "exact_items": [
+        "optional UI/projector cursor/filter/health metadata if needed"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Recommended artifact-index storage family"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0048",
+      "source_evidence": [
+        "working_ledger.md:L9505"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Recommended artifact-index storage family",
+      "exact_items": [
+        "Minimum indexed fields should include:"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Recommended artifact-index storage family"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0048",
+      "source_evidence": [
+        "working_ledger.md:L9508"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "linked_artifact_id?",
+      "exact_items": [
+        "primary refs (`linked_artifact_id?`, `usage_event_ref?`, receipt/open refs)"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Recommended artifact-index storage family"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0048",
+      "source_evidence": [
+        "working_ledger.md:L9518"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Recommended artifact-index storage family",
+      "exact_items": [
+        "projection freshness/health markers if projector state is degraded"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Recommended artifact-index storage family"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0048",
+      "source_evidence": [
+        "working_ledger.md:L9519"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "Recommended artifact-index storage family",
+      "exact_items": [
+        "the index is a projection for lookup/filter/navigation"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Recommended artifact-index storage family"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0048",
+      "source_evidence": [
+        "working_ledger.md:L9521"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Recommended artifact-index storage family",
+      "exact_items": [
+        "it must be rebuildable from seglog"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Recommended artifact-index storage family"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0048",
+      "source_evidence": [
+        "working_ledger.md:L9522"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Recommended artifact-index storage family",
+      "exact_items": [
+        "missing/corrupt index rows must degrade to record-backed views rather than implying artifact loss"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Recommended artifact-index storage family"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0048",
+      "source_evidence": [
+        "working_ledger.md:L9523"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "Recommended worktree/lane storage family",
+      "exact_items": [
+        "Keep Source Control worktree-first at the UI level, but storage needs both durable worktree identity and lane lineage."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Recommended worktree/lane storage family"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0048",
+      "source_evidence": [
+        "working_ledger.md:L9523-L9526"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Recommended worktree/lane storage family",
+      "exact_items": [
+        "current lifecycle/status projection for the worktree"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Recommended worktree/lane storage family"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0048",
+      "source_evidence": [
+        "working_ledger.md:L9533"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Recommended worktree/lane storage family",
+      "exact_items": [
+        "current lane lifecycle/status projection"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Recommended worktree/lane storage family"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0048",
+      "source_evidence": [
+        "working_ledger.md:L9535"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "path_ref",
+      "exact_items": [
+        "`path_ref` or canonical path snapshot"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Recommended worktree/lane storage family"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0048",
+      "source_evidence": [
+        "working_ledger.md:L9540"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "lane_record",
+      "exact_items": [
+        "Minimum `lane_record` / `lane_projection` should preserve:"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Recommended worktree/lane storage family"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0048",
+      "source_evidence": [
+        "working_ledger.md:L9558"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "storage-plan.md",
+      "exact_items": [
+        "`storage-plan.md` should own:"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Ownership guidance"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0048",
+      "source_evidence": [
+        "working_ledger.md:L9566"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Ownership guidance",
+      "exact_items": [
+        "current vs historical projection rules"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Ownership guidance"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0048",
+      "source_evidence": [
+        "working_ledger.md:L9569"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "WorktreeGitImprovement.md",
+      "exact_items": [
+        "`WorktreeGitImprovement.md` should own:"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Ownership guidance"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0048",
+      "source_evidence": [
+        "working_ledger.md:L9570"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Runtime_Artifacts_Panel.md",
+      "exact_items": [
+        "`Runtime_Artifacts_Panel.md` should own:"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Ownership guidance"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0048",
+      "source_evidence": [
+        "working_ledger.md:L9574"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Ownership guidance",
+      "exact_items": [
+        "artifact-type semantics"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Ownership guidance"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0048",
+      "source_evidence": [
+        "working_ledger.md:L9575"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Ownership guidance",
+      "exact_items": [
+        "schema family references"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Ownership guidance"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0048",
+      "source_evidence": [
+        "working_ledger.md:L9577"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "orchestrator.receipt",
+      "exact_items": [
+        "`orchestrator.receipt` should remain the cross-surface bridge record, not the substitute for these families."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Ownership guidance"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0048",
+      "source_evidence": [
+        "working_ledger.md:L9578"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/storage-plan.md",
+      "exact_items": [
+        "`Plans/storage-plan.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [
+        "Impacted docs"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0048",
+      "source_evidence": [
+        "working_ledger.md:L9581"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/Runtime_Artifacts_Panel.md",
+      "exact_items": [
+        "`Plans/Runtime_Artifacts_Panel.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Runtime_Artifacts_Panel.md"
+      ],
+      "heading_hints": [
+        "Impacted docs"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0048",
+      "source_evidence": [
+        "working_ledger.md:L9582"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/WorktreeGitImprovement.md",
+      "exact_items": [
+        "`Plans/WorktreeGitImprovement.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/WorktreeGitImprovement.md"
+      ],
+      "heading_hints": [
+        "Impacted docs"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0048",
+      "source_evidence": [
+        "working_ledger.md:L9583"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/Orchestrator_Page.md",
+      "exact_items": [
+        "`Plans/Orchestrator_Page.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md"
+      ],
+      "heading_hints": [
+        "Impacted docs"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0048",
+      "source_evidence": [
+        "working_ledger.md:L9584"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "artifacts_index:v1:{project_id}",
+      "exact_items": [
+        "`artifacts_index:v1:{project_id}` is too underspecified to function as the sole canonical index contract; it needs row identity and projector ownership."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Contradictions / gaps surfaced"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0048",
+      "source_evidence": [
+        "working_ledger.md:L9588"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "orchestrator.receipt",
+      "exact_items": [
+        "`orchestrator.receipt` already carries `worktree_id?`, which is useful, but without a worktree record/projection family there is nowhere canonical for lifecycle/history to live."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Contradictions / gaps surfaced"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0048",
+      "source_evidence": [
+        "working_ledger.md:L9590"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "storage-plan.md",
+      "exact_items": [
+        "Expand `storage-plan.md` with explicit artifact-index and worktree/lane family registration."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Candidate fixes to carry forward"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0048",
+      "source_evidence": [
+        "working_ledger.md:L9593"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "attempt_id?",
+      "exact_items": [
+        "Align artifact ID guidance so `attempt_id?` and `node_id?` are first-class indexed refs where relevant."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Candidate fixes to carry forward"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0048",
+      "source_evidence": [
+        "working_ledger.md:L9594"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "worktree_id",
+      "exact_items": [
+        "Align worktree docs around `worktree_id` as durable identity and `lane_id` as operational lineage, rather than continuing to let tier IDs or raw paths carry canonical meaning."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Candidate fixes to carry forward"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0048",
+      "source_evidence": [
+        "working_ledger.md:L9595"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "Do-not-forget details",
+      "exact_items": [
+        "Source Control being worktree-first in UI does not remove the need for lane lineage in storage"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Do-not-forget details"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0048",
+      "source_evidence": [
+        "working_ledger.md:L9599"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "stale_retirement",
+      "canon_label_hint": "Do-not-forget details",
+      "exact_items": [
+        "artifact index rows should degrade cleanly to seglog-backed inspection if projector state is stale or missing"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Do-not-forget details"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0048",
+      "source_evidence": [
+        "working_ledger.md:L9600"
+      ],
+      "notes": []
+    }
+  ],
+  "noise_items": [
+    {
+      "item": "- project summary / attention items",
+      "source_evidence": [
+        "working_ledger.md:L9475"
+      ],
+      "reason": "metric/status/count/family or process line without concrete obligation-grade evidence"
+    },
+    {
+      "item": "- `summary`",
+      "source_evidence": [
+        "working_ledger.md:L9517"
+      ],
+      "reason": "metric/status/count/family or process line without concrete obligation-grade evidence"
+    }
+  ],
+  "uncertain_items": [
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Contradictions / gaps surfaced",
+      "exact_items": [
+        "this makes it unclear where authoritative schema registration and projector ownership actually live"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Contradictions / gaps surfaced"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0048",
+      "source_evidence": [
+        "working_ledger.md:L9458"
+      ],
+      "notes": [],
+      "reason": "open or unresolved wording may need later human classification"
+    }
+  ],
+  "covered_shard_id": "shard-0048"
+}

@@ -1,0 +1,23 @@
+{
+  "schema_id": "pm.transfer_coverage_noise.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-030",
+  "noise_findings": [
+    {
+      "source": "coverage-rowgrp-117",
+      "finding": "Subagent returned empty coverage_ids_completed and evidence objects/path_field_status missing; reducer normalized schema and preserved cov-1145 partial, cov-1203 missing."
+    },
+    {
+      "source": "coverage-rowgrp-118",
+      "finding": "Subagent used id instead of coverage_id and evidence objects; reducer normalized schema and upgraded cov-144/cov-221 to partial due direct related live evidence."
+    },
+    {
+      "source": "coverage-rowgrp-119",
+      "finding": "Reducer preserved project summary, pressure, and usage_event_ref rows as partial while keeping route payload/object-kind/identity rows missing."
+    },
+    {
+      "source": "coverage-rowgrp-120",
+      "finding": "Reducer preserved most exact stale-token/identity command rows missing, but kept cov-777 and cov-1024 partial for related artifact routing and non-tier Progress catalog evidence."
+    }
+  ]
+}

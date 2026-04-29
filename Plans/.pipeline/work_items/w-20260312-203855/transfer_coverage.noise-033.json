@@ -1,0 +1,23 @@
+{
+  "schema_id": "pm.transfer_coverage_noise.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-033",
+  "noise_findings": [
+    {
+      "source": "coverage-rowgrp-129",
+      "finding": "Subagent completed_ids listed only cov-1264; reducer normalized all assigned IDs and preserved cov-1264 present while keeping unrelated Crosswalk/storage packet rows missing or partial."
+    },
+    {
+      "source": "coverage-rowgrp-130",
+      "finding": "Reducer upgraded cov-205, cov-228, cov-287, and cov-350 to partial where direct adjacent projection/widget/worktree evidence exists; stale-token retirement remains incomplete."
+    },
+    {
+      "source": "coverage-rowgrp-131",
+      "finding": "Reducer preserved historical/help/usage_event_ref rows as partial and kept tier_runtime_record and PuppetMasterEvent cleanup rows missing."
+    },
+    {
+      "source": "coverage-rowgrp-132",
+      "finding": "Permissions_System rows are partial: actor/lane/run/account approval scope is direct, but full OpenCode and conversational runtime identity gaps remain incomplete."
+    }
+  ]
+}

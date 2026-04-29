@@ -1,675 +1,136 @@
 {
-  "schema_id": "pm.ledger_obligation_seed_shard_result.v1",
+  "schema_id": "pm.ledger_obligation_seed_shard_result.v2",
   "work_id": "w-20260312-203855",
   "shard_id": "shard-0027",
   "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0027-L005201-L005400.md",
   "source_line_range": "L005201-L005400",
+  "covered_shard_id": "shard-0027",
   "seed_candidates": [
     {
-      "seed_type": "consumer",
-      "canon_label_hint": "Plans/assistant-chat-design.md",
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "explicit shared-runtime boundary statement",
       "exact_items": [
-        "`Plans/assistant-chat-design.md`"
+        "assistant/interviewer/builders share provider/account/runtime identity semantics with Orchestrator",
+        "remain upstream conversational/document-production actors, not package/seam/node execution objects"
       ],
       "affected_doc_hints": [
-        "Plans/assistant-chat-design.md"
-      ],
-      "heading_hints": [
-        "Targeted docs read"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0027",
-      "source_evidence": [
-        "working_ledger.md:L5203"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Plans/interview-subagent-integration.md",
-      "exact_items": [
-        "`Plans/interview-subagent-integration.md`"
-      ],
-      "affected_doc_hints": [
-        "Plans/interview-subagent-integration.md"
-      ],
-      "heading_hints": [
-        "Targeted docs read"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0027",
-      "source_evidence": [
-        "working_ledger.md:L5204"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Plans/chain-wizard-flexibility.md",
-      "exact_items": [
-        "`Plans/chain-wizard-flexibility.md`"
-      ],
-      "affected_doc_hints": [
-        "Plans/chain-wizard-flexibility.md"
-      ],
-      "heading_hints": [
-        "Targeted docs read"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0027",
-      "source_evidence": [
-        "working_ledger.md:L5205"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Plans/FinalGUISpec.md",
-      "exact_items": [
-        "`Plans/FinalGUISpec.md`"
-      ],
-      "affected_doc_hints": [
+        "Plans/Multi-Account.md",
+        "Plans/assistant-chat-design.md",
+        "Plans/interview-subagent-integration.md",
+        "Plans/chain-wizard-flexibility.md",
         "Plans/FinalGUISpec.md"
       ],
+      "doc_resolution_status": "concrete",
       "heading_hints": [
-        "Targeted docs read"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0027",
-      "source_evidence": [
-        "working_ledger.md:L5206"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Plans/Multi-Account.md",
-      "exact_items": [
-        "`Plans/Multi-Account.md`"
-      ],
-      "affected_doc_hints": [
-        "Plans/Multi-Account.md"
-      ],
-      "heading_hints": [
-        "Targeted docs read"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0027",
-      "source_evidence": [
-        "working_ledger.md:L5207"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Plans/Personas.md",
-      "exact_items": [
-        "`Plans/Personas.md`"
-      ],
-      "affected_doc_hints": [
-        "Plans/Personas.md"
-      ],
-      "heading_hints": [
-        "Targeted docs read"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0027",
-      "source_evidence": [
-        "working_ledger.md:L5208"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Plans/Models_System.md",
-      "exact_items": [
-        "`Plans/Models_System.md`"
-      ],
-      "affected_doc_hints": [
-        "Plans/Models_System.md"
-      ],
-      "heading_hints": [
-        "Targeted docs read"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0027",
-      "source_evidence": [
-        "working_ledger.md:L5209"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Key findings",
-      "exact_items": [
-        "The conversational/document-production surfaces already require runtime-identity visibility:"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Key findings"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0027",
-      "source_evidence": [
-        "working_ledger.md:L5215"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Key findings",
-      "exact_items": [
-        "Interview activity pane and chat must show effective Persona, selection reason, effective platform/model, and skipped-control disclosure"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Key findings"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0027",
-      "source_evidence": [
-        "working_ledger.md:L5216"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Key findings",
-      "exact_items": [
-        "Requirements Builder must show effective Persona, selection reason, effective platform/model, and skipped unsupported Persona controls for the active stage/pass"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Key findings"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0027",
-      "source_evidence": [
-        "working_ledger.md:L5217"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "owner",
-      "canon_label_hint": "allowed_action_ids[]",
-      "exact_items": [
-        "chat blocked notices render from canonical `allowed_action_ids[]` and blocked metadata instead of inventing thread-local recovery semantics"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Key findings"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0027",
-      "source_evidence": [
-        "working_ledger.md:L5221"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Identity-model direction",
-      "exact_items": [
-        "The docs imply multiple identity families that must stay distinct:"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Identity-model direction"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0027",
-      "source_evidence": [
-        "working_ledger.md:L5242"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Identity-model direction",
-      "exact_items": [
-        "These can be linked, but should not be collapsed into one object model."
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Identity-model direction"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0027",
-      "source_evidence": [
-        "working_ledger.md:L5253"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Shared-runtime surface parity direction",
-      "exact_items": [
-        "when multiple surfaces present the same active conversational/document-production run, they should consume the same underlying runtime state and expose the same requested/effective visibility fields"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Shared-runtime surface parity direction"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0027",
-      "source_evidence": [
-        "working_ledger.md:L5260"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "layout_blocker",
-      "canon_label_hint": "Shared-runtime surface parity direction",
-      "exact_items": [
-        "Interview chat surface and Interview activity pane share the same active run state"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Shared-runtime surface parity direction"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0027",
-      "source_evidence": [
-        "working_ledger.md:L5262"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Blocked-state implication",
-      "exact_items": [
-        "This is useful because it means the shared runtime contract should stay broad."
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Blocked-state implication"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0027",
-      "source_evidence": [
-        "working_ledger.md:L5275"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Blocked-state implication",
-      "exact_items": [
-        "But it also means reconciliation later must avoid accidentally renaming all blocked semantics as \u201cOrchestrator\u201d semantics."
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Blocked-state implication"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0027",
-      "source_evidence": [
-        "working_ledger.md:L5276"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Search / record implication",
-      "exact_items": [
-        "Search and record systems should be able to span these actors without flattening them into one type."
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Search / record implication"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0027",
-      "source_evidence": [
-        "working_ledger.md:L5292"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Search / record implication",
-      "exact_items": [
-        "keep a shared runtime-identity field family"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Search / record implication"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0027",
-      "source_evidence": [
-        "working_ledger.md:L5293-L5294"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "layout_blocker",
-      "canon_label_hint": "Search / record implication",
-      "exact_items": [
-        "This makes cross-surface search and ledger inspection possible without pretending they are all graph nodes."
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Search / record implication"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0027",
-      "source_evidence": [
-        "working_ledger.md:L5301"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Candidate fixes to carry forward",
-      "exact_items": [
-        "Add an explicit shared-runtime boundary statement:"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
+        "Main boundary clarification",
         "Candidate fixes to carry forward"
       ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0027",
+      "stale_tokens": [
+        "shared runtime, separate ontology",
+        "boundary rule"
+      ],
       "source_evidence": [
-        "working_ledger.md:L5312"
+        "working_ledger.md:L5312-L5315"
       ],
       "notes": []
     },
     {
-      "seed_type": "consumer",
-      "canon_label_hint": "thread_id",
+      "seed_type": "owner",
+      "canon_label_hint": "preserve distinct actor/run kinds in record/search/routing contracts",
       "exact_items": [
-        "`thread_id`, `wizard_id`, bundle/review ids, and orchestration `run_id`/attempt ids must remain linkable but distinct"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Do-not-forget details"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0027",
-      "source_evidence": [
-        "working_ledger.md:L5320"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Do-not-forget details",
-      "exact_items": [
-        "chat blocked notices already prove shared blocked taxonomy does not require shared object ontology"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Do-not-forget details"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0027",
-      "source_evidence": [
-        "working_ledger.md:L5321"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "layout_blocker",
-      "canon_label_hint": "Do-not-forget details",
-      "exact_items": [
-        "Builder/Interview activity panes already give a concrete model for \u201csame runtime state, different surface\u201d"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Do-not-forget details"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0027",
-      "source_evidence": [
-        "working_ledger.md:L5322"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Plans/usage-feature.md",
-      "exact_items": [
-        "`Plans/usage-feature.md`"
+        "Preserve distinct actor/run kinds in record/search/routing contracts",
+        "Reuse one runtime-identity disclosure grammar across these surfaces without collapsing their lifecycle models",
+        "Keep blocked/remediation taxonomy shared, while preserving actor-specific state machines and object identities"
       ],
       "affected_doc_hints": [
-        "Plans/usage-feature.md"
-      ],
-      "heading_hints": [
-        "Targeted docs read"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0027",
-      "source_evidence": [
-        "working_ledger.md:L5327"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Plans/FinalGUISpec.md",
-      "exact_items": [
-        "`Plans/FinalGUISpec.md`"
-      ],
-      "affected_doc_hints": [
-        "Plans/FinalGUISpec.md"
-      ],
-      "heading_hints": [
-        "Targeted docs read"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0027",
-      "source_evidence": [
-        "working_ledger.md:L5328"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Plans/Orchestrator_Page.md",
-      "exact_items": [
-        "`Plans/Orchestrator_Page.md`"
-      ],
-      "affected_doc_hints": [
-        "Plans/Orchestrator_Page.md"
-      ],
-      "heading_hints": [
-        "Targeted docs read"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0027",
-      "source_evidence": [
-        "working_ledger.md:L5329"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Plans/storage-plan.md",
-      "exact_items": [
-        "`Plans/storage-plan.md`"
-      ],
-      "affected_doc_hints": [
+        "Plans/assistant-chat-design.md",
+        "Plans/interview-subagent-integration.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Orchestrator_Page.md",
         "Plans/storage-plan.md"
       ],
+      "doc_resolution_status": "concrete",
       "heading_hints": [
-        "Targeted docs read"
+        "Search / record implication",
+        "Candidate fixes to carry forward",
+        "Do-not-forget details"
       ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0027",
+      "stale_tokens": [
+        "thread_id",
+        "wizard_id",
+        "run_id",
+        "attempt ids"
+      ],
       "source_evidence": [
-        "working_ledger.md:L5330"
+        "working_ledger.md:L5291-L5317"
       ],
       "notes": []
     },
     {
       "seed_type": "consumer",
-      "canon_label_hint": "Plans/Runtime_Artifacts_Panel.md",
+      "canon_label_hint": "shared runtime-identity disclosure grammar across surfaces",
       "exact_items": [
-        "`Plans/Runtime_Artifacts_Panel.md`"
+        "when multiple surfaces present the same active conversational/document-production run, they should consume the same underlying runtime state and expose the same requested/effective visibility fields",
+        "Interview chat surface and Interview activity pane share the same active run state",
+        "Builder and Interview reuse the shared agent activity pane",
+        "chat subagent blocks preserve persona/task/runtime identity in-thread rather than using a separate weaker model"
       ],
       "affected_doc_hints": [
-        "Plans/Runtime_Artifacts_Panel.md"
+        "Plans/assistant-chat-design.md",
+        "Plans/interview-subagent-integration.md",
+        "Plans/FinalGUISpec.md"
       ],
+      "doc_resolution_status": "concrete",
       "heading_hints": [
-        "Targeted docs read"
+        "Shared-runtime surface parity direction"
       ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0027",
+      "stale_tokens": [
+        "requested/effective visibility fields",
+        "shared agent activity pane"
+      ],
       "source_evidence": [
-        "working_ledger.md:L5331"
+        "working_ledger.md:L5258-L5264"
       ],
       "notes": []
     },
     {
-      "seed_type": "consumer",
-      "canon_label_hint": "Plans/chain-wizard-flexibility.md",
+      "seed_type": "stale_retirement",
+      "canon_label_hint": "avoid renaming all blocked semantics as Orchestrator semantics",
       "exact_items": [
-        "`Plans/chain-wizard-flexibility.md`"
+        "blocked state is not Orchestrator-exclusive",
+        "Chat, Interview, and Wizard flows already use attention_required, blocked, blocked_reason_code, allowed_action_ids[], resume_url",
+        "reconciliation later must avoid accidentally renaming all blocked semantics as Orchestrator semantics"
       ],
       "affected_doc_hints": [
-        "Plans/chain-wizard-flexibility.md"
+        "Plans/assistant-chat-design.md",
+        "Plans/interview-subagent-integration.md",
+        "Plans/chain-wizard-flexibility.md",
+        "Plans/Orchestrator_Page.md"
       ],
+      "doc_resolution_status": "concrete",
       "heading_hints": [
-        "Targeted docs read"
+        "Blocked-state implication",
+        "Non-goal / anti-drift rule"
       ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0027",
+      "stale_tokens": [
+        "attention_required",
+        "blocked_reason_code",
+        "allowed_action_ids[]",
+        "resume_url"
+      ],
       "source_evidence": [
-        "working_ledger.md:L5332"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "layout_blocker",
-      "canon_label_hint": "Key findings",
-      "exact_items": [
-        "runtime artifact export from the Artifacts panel"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Key findings"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0027",
-      "source_evidence": [
-        "working_ledger.md:L5338"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "owner",
-      "canon_label_hint": "Key findings",
-      "exact_items": [
-        "artifacts stay on canonical runtime identity"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Key findings"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0027",
-      "source_evidence": [
-        "working_ledger.md:L5344"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "layout_blocker",
-      "canon_label_hint": "Show in Ledger",
-      "exact_items": [
-        "`Show in Ledger` / `Show in Usage` route back to canonical surfaces"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Key findings"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0027",
-      "source_evidence": [
-        "working_ledger.md:L5345"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "owner",
-      "canon_label_hint": "chain-wizard-flexibility.md",
-      "exact_items": [
-        "`chain-wizard-flexibility.md` is also disciplined on canonical vs derived export:"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Key findings"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0027",
-      "source_evidence": [
-        "working_ledger.md:L5347"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "owner",
-      "canon_label_hint": "Key findings",
-      "exact_items": [
-        "sharded plan graph is canonical"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Key findings"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0027",
-      "source_evidence": [
-        "working_ledger.md:L5348"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "owner",
-      "canon_label_hint": "Recommended export taxonomy",
-      "exact_items": [
-        "exact canonical record(s) with stable ids/refs and schema-aware payloads"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Recommended export taxonomy"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0027",
-      "source_evidence": [
-        "working_ledger.md:L5362"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Manifest direction",
-      "exact_items": [
-        "any non-trivial Orchestrator bundle export should carry a manifest"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Manifest direction"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0027",
-      "source_evidence": [
-        "working_ledger.md:L5389"
+        "working_ledger.md:L5266-L5276"
       ],
       "notes": []
     }
   ],
   "noise_items": [
-    {
-      "item": "- user-facing filtered table/render output such as CSV, JSON summary, rendered image, or currently filtered list",
-      "source_evidence": [
-        "working_ledger.md:L5366"
-      ],
-      "reason": "metric/status/count/family or process line without concrete obligation-grade evidence"
-    }
+    "L005201-L005209 targeted docs read",
+    "L005324-L005332 export target docs",
+    "L005335 existing export families",
+    "L005354 taxonomy heading",
+    "L005368 orchestrator-specific heading",
+    "L005387 manifest heading"
   ],
-  "uncertain_items": [],
-  "covered_shard_id": "shard-0027"
+  "uncertain_items": []
 }

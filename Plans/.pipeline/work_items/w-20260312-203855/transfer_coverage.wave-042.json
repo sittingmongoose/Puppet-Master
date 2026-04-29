@@ -1,400 +1,144 @@
 {
-  "schema_id": "pm.transfer_coverage_wave.v1",
+  "schema_id": "pm.transfer_coverage_wave.v3",
   "work_id": "w-20260312-203855",
   "wave_id": "wave-042",
-  "row_groups": [
-    "rowgrp-0165",
-    "rowgrp-0166",
-    "rowgrp-0167",
-    "rowgrp-0168"
+  "timestamp_utc": "2026-04-28T21:02:15Z",
+  "subagent_tasks": [
+    "coverage-rowgrp-165",
+    "coverage-rowgrp-166",
+    "coverage-rowgrp-167",
+    "coverage-rowgrp-168"
   ],
-  "coverage_rows": [
+  "assigned_input_boundaries": [
+    "rowgrp-165 cov-582 Plans/Provider_OpenCode.md",
+    "rowgrp-166 cov-548 Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+    "rowgrp-167 cov-146,cov-191 Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+    "rowgrp-168 cov-590 Plans/Provider_Stream_Mapping_External_Reference_A2A.md"
+  ],
+  "subagent_result_status": {
+    "coverage-rowgrp-165": "completed_reduced_conservatively",
+    "coverage-rowgrp-166": "completed_reduced_conservatively_with_schema_normalization",
+    "coverage-rowgrp-167": "completed_reduced_conservatively_with_schema_normalization",
+    "coverage-rowgrp-168": "completed_reduced_conservatively_with_schema_normalization"
+  },
+  "completed_task_count": 4,
+  "failed_task_count": 0,
+  "coverage_ids_assigned": [
+    "cov-582",
+    "cov-548",
+    "cov-146",
+    "cov-191",
+    "cov-590"
+  ],
+  "coverage_ids_completed": [
+    "cov-582",
+    "cov-548",
+    "cov-146",
+    "cov-191",
+    "cov-590"
+  ],
+  "path_groups_assigned": [
+    "Plans/Provider_OpenCode.md",
+    "Plans/Provider_Stream_Mapping_External_Reference_A2A.md"
+  ],
+  "rows": [
     {
-      "coverage_id": "cov-00899",
+      "coverage_id": "cov-582",
+      "status": "partial",
+      "evidence": [
+        "Plans/Provider_OpenCode.md:62-70 moves OpenCode session IDs to provider-native correlation fields instead of canonical thread_id, requires OpenCode session IDs to never replace canonical thread_id, and defines approval_scope_key over actor, lane/package/run, and account/server-profile context",
+        "Plans/Provider_OpenCode.md:191-207 preserves PM thread_id/run lineage as canonical PM lineage fields, treats OpenCode session IDs as additive provider correlation fields only, and prohibits rewriting thread_id into an OpenCode session ID"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "The thread_id collision and provider-native correlation repair are directly related, but the row-specific shared-runtime event-join trust language is not explicit.",
       "source_obligation_ids": [
-        "obl-0830"
+        "obl-163"
       ],
       "source_seed_ids": [
-        "seed-0866"
+        "seed-163"
       ],
       "source_shard_ids": [
-        "shard-0012"
+        "shard-0041"
       ],
-      "canon_label": "Plans/Widget_System.md",
-      "row_type": "layout_blocker",
-      "path": "Plans/Widget_System.md",
-      "heading_hint": "Persistence impact",
-      "status": "present",
-      "exact_items": [
-        "`Plans/Widget_System.md` currently defines layout keys for multiple Orchestrator tabs."
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/Widget_System.md:14",
-        "Plans/Widget_System.md:12",
-        "Plans/Widget_System.md:63",
-        "Plans/Widget_System.md:5",
-        "Plans/Widget_System.md:11",
-        "Plans/Widget_System.md:46"
-      ],
-      "required_action": "none"
+      "path_field_status": "match"
     },
     {
-      "coverage_id": "cov-04552",
-      "source_obligation_ids": [
-        "obl-4283"
-      ],
-      "source_seed_ids": [
-        "seed-6167"
-      ],
-      "source_shard_ids": [
-        "shard-0082"
-      ],
-      "canon_label": "Plans/*.md",
-      "row_type": "layout_blocker",
-      "path": "Plans/Widget_System.md",
-      "heading_hint": "Do-not-forget details",
-      "status": "present",
-      "exact_items": [
-        "After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes."
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/Widget_System.md:91",
-        "Plans/Widget_System.md:14",
-        "Plans/Widget_System.md:11",
-        "Plans/Widget_System.md:90",
-        "Plans/Widget_System.md:20"
-      ],
-      "required_action": "none"
-    },
-    {
-      "coverage_id": "cov-04707",
-      "source_obligation_ids": [
-        "obl-4422"
-      ],
-      "source_seed_ids": [
-        "seed-6389"
-      ],
-      "source_shard_ids": [
-        "shard-0085"
-      ],
-      "canon_label": "Plans/Widget_System.md",
-      "row_type": "stale_retirement",
-      "path": "Plans/Widget_System.md",
-      "heading_hint": "Key findings",
+      "coverage_id": "cov-548",
       "status": "missing",
-      "exact_items": [
-        "`Plans/Widget_System.md` remains a major stale hostability owner:"
-      ],
-      "stale_tokens": [
-        "Plans/Widget_System.md"
-      ],
-      "evidence": [
-        "Plans/Widget_System.md:14"
-      ],
-      "required_action": "stale_retirement"
-    },
-    {
-      "coverage_id": "cov-00688",
+      "evidence": [],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "Plans/Provider_Stream_Mapping_External_Reference_A2A.md only scopes requested/effective runtime state and permissions to other SSOTs; it does not directly cover the identity-mapping bug, bridge/event contract thinness, parallel-actor permission gaps, or requested/effective disclosure defects.",
       "source_obligation_ids": [
-        "obl-0639"
+        "obl-156"
       ],
       "source_seed_ids": [
-        "seed-0645"
+        "seed-156"
+      ],
+      "source_shard_ids": [
+        "shard-0039"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-146",
+      "status": "partial",
+      "evidence": [
+        "Plans/Provider_Stream_Mapping_External_Reference_A2A.md:49 references Overseer responsibilities",
+        "Plans/Provider_Stream_Mapping_External_Reference_A2A.md:99-104 defines overseer_audit_* diagnostic events with tier audit fields",
+        "Plans/Provider_Stream_Mapping_External_Reference_A2A.md:249-277 defines Overseer subjective audits at tier boundaries, reviewer spawning, consensus, verdict override, auditability, and role-boundary DRY references"
+      ],
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "The file contains Overseer and tier-boundary audit instrumentation, but does not directly resolve single Overseer versus package/seam overseer split or ambiguous scheduling/review/recovery/promotion ownership.",
+      "source_obligation_ids": [
+        "obl-040"
+      ],
+      "source_seed_ids": [
+        "seed-040"
       ],
       "source_shard_ids": [
         "shard-0009"
       ],
-      "canon_label": "Plans/UI_Command_Catalog.md",
-      "row_type": "consumer",
-      "path": "Plans/Wiring_Matrix.md",
-      "heading_hint": "GUI / UX Impacts",
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-191",
       "status": "partial",
-      "exact_items": [
-        "`Plans/UI_Command_Catalog.md`, `Plans/Wiring_Matrix.md`"
-      ],
-      "stale_tokens": [],
       "evidence": [
-        "Plans/Wiring_Matrix.md:69",
-        "Plans/Wiring_Matrix.md:14"
+        "Plans/Provider_Stream_Mapping_External_Reference_A2A.md:66-67 defines auth_state and diagnostic event categories",
+        "Plans/Provider_Stream_Mapping_External_Reference_A2A.md:200-204 maps authenticated metadata/card fetch barriers to auth_state and delegates auth recovery policy to the PM auth subsystem"
       ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-02687",
+      "required_action": "consumer_propagation",
+      "unresolved_reason": "Auth-state mapping exists, but requested/effective auth/account fields, effective-account attribution for usage/diagnostics, and unified bridged-provider request/persistence envelopes are not directly covered.",
       "source_obligation_ids": [
-        "obl-2607"
+        "obl-050"
       ],
       "source_seed_ids": [
-        "seed-3267",
-        "seed-3458",
-        "seed-3764",
-        "seed-3856",
-        "seed-3935",
-        "seed-3968",
-        "seed-4109",
-        "seed-4401",
-        "seed-4726",
-        "seed-4750",
-        "seed-5496"
+        "seed-050"
       ],
       "source_shard_ids": [
-        "shard-0049",
-        "shard-0052",
-        "shard-0055",
-        "shard-0056",
-        "shard-0057",
-        "shard-0058",
-        "shard-0062",
-        "shard-0065",
-        "shard-0075"
+        "shard-0006"
       ],
-      "canon_label": "Plans/Wiring_Matrix.md",
-      "row_type": "consumer",
-      "path": "Plans/Wiring_Matrix.md",
-      "heading_hint": "Targeted docs read",
-      "status": "present",
-      "exact_items": [
-        "`Plans/Wiring_Matrix.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/Wiring_Matrix.md:14",
-        "Plans/Wiring_Matrix.md:495",
-        "Plans/Wiring_Matrix.md:11"
-      ],
-      "required_action": "none"
+      "path_field_status": "match"
     },
     {
-      "coverage_id": "cov-02845",
-      "source_obligation_ids": [
-        "obl-2764"
-      ],
-      "source_seed_ids": [
-        "seed-3487",
-        "seed-3752",
-        "seed-3807",
-        "seed-3901",
-        "seed-3948",
-        "seed-3980",
-        "seed-4012",
-        "seed-4079",
-        "seed-4145",
-        "seed-4417",
-        "seed-4738",
-        "seed-4768"
-      ],
-      "source_shard_ids": [
-        "shard-0052",
-        "shard-0055",
-        "shard-0056",
-        "shard-0057",
-        "shard-0058",
-        "shard-0062",
-        "shard-0065"
-      ],
-      "canon_label": "Plans/Wiring_Matrix.md",
-      "row_type": "consumer",
-      "path": "Plans/Wiring_Matrix.md",
-      "heading_hint": "Impacted docs",
+      "coverage_id": "cov-590",
       "status": "partial",
-      "exact_items": [
-        "`Plans/Wiring_Matrix.md`"
-      ],
-      "stale_tokens": [],
       "evidence": [
-        "Plans/Wiring_Matrix.md:14",
-        "Plans/Wiring_Matrix.md:495"
+        "Plans/Provider_Stream_Mapping_External_Reference_A2A.md:27 states requested/effective runtime state and PM-native lineage are owned by orchestrator-subagent-integration, Contracts_V0, and storage-plan",
+        "Plans/Provider_Stream_Mapping_External_Reference_A2A.md:336-354 separates runtime attempt identity from provider continuity, requires provider_attempt_ref for upstream continuity, forbids provider/session IDs as runtime attempt_id, moves OpenCode/A2A session identifiers to provider-native correlation fields, and reuses approval_scope_key across permissions, HITL, doom-loop protection, and session approval caching"
       ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-02877",
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "A2A bridge correlation and approval-scope coverage is present, but first-class stream representation, permission override side effects, and rich requested/effective identity projection are not directly covered.",
       "source_obligation_ids": [
-        "obl-2796"
+        "obl-166"
       ],
       "source_seed_ids": [
-        "seed-3531",
-        "seed-3844"
+        "seed-166"
       ],
       "source_shard_ids": [
-        "shard-0052",
-        "shard-0056"
+        "shard-0041"
       ],
-      "canon_label": "Plans/Wiring_Matrix.md",
-      "row_type": "consumer",
-      "path": "Plans/Wiring_Matrix.md",
-      "heading_hint": "Do-not-forget details",
-      "status": "partial",
-      "exact_items": [
-        "`Plans/Wiring_Matrix.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/Wiring_Matrix.md:14",
-        "Plans/Wiring_Matrix.md:239"
-      ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-03331",
-      "source_obligation_ids": [
-        "obl-3198"
-      ],
-      "source_seed_ids": [
-        "seed-4180"
-      ],
-      "source_shard_ids": [
-        "shard-0059"
-      ],
-      "canon_label": "Plans/*.md",
-      "row_type": "consumer",
-      "path": "Plans/Wiring_Matrix.md",
-      "heading_hint": "Do-not-forget details",
-      "status": "present",
-      "exact_items": [
-        "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage."
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/Wiring_Matrix.md:19",
-        "Plans/Wiring_Matrix.md:14",
-        "Plans/Wiring_Matrix.md:495",
-        "Plans/Wiring_Matrix.md:5",
-        "Plans/Wiring_Matrix.md:321",
-        "Plans/Wiring_Matrix.md:378",
-        "Plans/Wiring_Matrix.md:301",
-        "Plans/Wiring_Matrix.md:239"
-      ],
-      "required_action": "none"
-    },
-    {
-      "coverage_id": "cov-04470",
-      "source_obligation_ids": [
-        "obl-4262"
-      ],
-      "source_seed_ids": [
-        "seed-6087"
-      ],
-      "source_shard_ids": [
-        "shard-0082"
-      ],
-      "canon_label": "39",
-      "row_type": "consumer",
-      "path": "Plans/Wiring_Matrix.md",
-      "heading_hint": "Do-not-forget details",
-      "status": "present",
-      "exact_items": [
-        "Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes."
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/Wiring_Matrix.md:8",
-        "Plans/Wiring_Matrix.md:329",
-        "Plans/Wiring_Matrix.md:14",
-        "Plans/Wiring_Matrix.md:495",
-        "Plans/Wiring_Matrix.md:321",
-        "Plans/Wiring_Matrix.md:223",
-        "Plans/Wiring_Matrix.md:239"
-      ],
-      "required_action": "none"
-    },
-    {
-      "coverage_id": "cov-04896",
-      "source_obligation_ids": [
-        "obl-4611"
-      ],
-      "source_seed_ids": [
-        "seed-6603"
-      ],
-      "source_shard_ids": [
-        "shard-0087"
-      ],
-      "canon_label": "Plans/Wiring_Matrix.md",
-      "row_type": "consumer",
-      "path": "Plans/Wiring_Matrix.md",
-      "heading_hint": "Cluster D - Route / open-subject / bridge-field refinement misses",
-      "status": "present",
-      "exact_items": [
-        "`Plans/Wiring_Matrix.md`, `Plans/Progression_Gates.md`, `evidence.schema.json`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/Wiring_Matrix.md:14",
-        "Plans/Wiring_Matrix.md:160",
-        "Plans/Wiring_Matrix.md:339",
-        "Plans/Wiring_Matrix.md:7"
-      ],
-      "required_action": "none"
-    },
-    {
-      "coverage_id": "cov-04995",
-      "source_obligation_ids": [
-        "obl-4684"
-      ],
-      "source_seed_ids": [
-        "seed-6676"
-      ],
-      "source_shard_ids": [
-        "shard-0088"
-      ],
-      "canon_label": "Plans/Contracts_V0.md",
-      "row_type": "consumer",
-      "path": "Plans/Wiring_Matrix.md",
-      "heading_hint": "Route / bridge / normalization misses remain refinement-heavy but are more specific now",
-      "status": "present",
-      "exact_items": [
-        "`Plans/Contracts_V0.md`, `Plans/storage-plan.md`, `Plans/UI_Command_Catalog.md`, `Plans/Crosswalk.md`, `Plans/Wiring_Matrix.md`, `Plans/Progression_Gates.md`, `Plans/FileManager.md`, `Plans/Project_Output_Artifacts.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/Wiring_Matrix.md:19",
-        "Plans/Wiring_Matrix.md:364",
-        "Plans/Wiring_Matrix.md:69",
-        "Plans/Wiring_Matrix.md:14",
-        "Plans/Wiring_Matrix.md:160",
-        "Plans/Wiring_Matrix.md:433",
-        "Plans/Wiring_Matrix.md:7",
-        "Plans/Wiring_Matrix.md:12",
-        "Plans/Wiring_Matrix.md:274",
-        "Plans/Wiring_Matrix.md:307",
-        "Plans/Wiring_Matrix.md:262"
-      ],
-      "required_action": "none"
-    },
-    {
-      "coverage_id": "cov-04553",
-      "source_obligation_ids": [
-        "obl-4283"
-      ],
-      "source_seed_ids": [
-        "seed-6167"
-      ],
-      "source_shard_ids": [
-        "shard-0082"
-      ],
-      "canon_label": "Plans/*.md",
-      "row_type": "layout_blocker",
-      "path": "Plans/Wiring_Matrix.md",
-      "heading_hint": "Do-not-forget details",
-      "status": "present",
-      "exact_items": [
-        "After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes."
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/Wiring_Matrix.md:329",
-        "Plans/Wiring_Matrix.md:397",
-        "Plans/Wiring_Matrix.md:14",
-        "Plans/Wiring_Matrix.md:47",
-        "Plans/Wiring_Matrix.md:495",
-        "Plans/Wiring_Matrix.md:167",
-        "Plans/Wiring_Matrix.md:378",
-        "Plans/Wiring_Matrix.md:301",
-        "Plans/Wiring_Matrix.md:239"
-      ],
-      "required_action": "none"
+      "path_field_status": "match"
     }
   ]
 }

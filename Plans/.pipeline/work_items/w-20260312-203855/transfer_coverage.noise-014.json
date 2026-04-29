@@ -1,0 +1,19 @@
+{
+  "schema_id": "pm.transfer_coverage_noise.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-014",
+  "noise_findings": [
+    {
+      "source": "coverage-rowgrp-053",
+      "finding": "Subagent included row-inventory artifact evidence; reducer stripped artifact references and kept direct Executor evidence only."
+    },
+    {
+      "source": "coverage-rowgrp-054",
+      "finding": "Subagent marked all rows missing; reducer credited direct live token or tier-retirement evidence as partial where applicable."
+    },
+    {
+      "source": "coverage-rowgrp-055",
+      "finding": "Subagent returned line-less FileManager evidence; reducer replaced it with direct line-referenced evidence."
+    }
+  ]
+}

@@ -1,0 +1,1486 @@
+{
+  "schema_id": "pm.canonical_obligations_wave.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-006",
+  "seed_groups": [
+    "seedgrp-021",
+    "seedgrp-022",
+    "seedgrp-023",
+    "seedgrp-024"
+  ],
+  "obligation_candidates": [
+    {
+      "source_seed_ids": [
+        "seed-0301"
+      ],
+      "source_shard_ids": [
+        "shard-0005"
+      ],
+      "canon_label": "Plans/Orchestrator_Page.md",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "`Plans/Orchestrator_Page.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md"
+      ],
+      "heading_hints": [
+        "Impacted Docs"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L903"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0302"
+      ],
+      "source_shard_ids": [
+        "shard-0005"
+      ],
+      "canon_label": "Plans/Run_Graph_View.md",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "`Plans/Run_Graph_View.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Run_Graph_View.md"
+      ],
+      "heading_hints": [
+        "Impacted Docs"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L904"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0303"
+      ],
+      "source_shard_ids": [
+        "shard-0005"
+      ],
+      "canon_label": "Plans/Orchestrator_Page.md",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "`Plans/Orchestrator_Page.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md"
+      ],
+      "heading_hints": [
+        "Impacted Docs"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L905"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0304"
+      ],
+      "source_shard_ids": [
+        "shard-0005"
+      ],
+      "canon_label": "Plans/orchestrator-subagent-integration.md",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "`Plans/orchestrator-subagent-integration.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/orchestrator-subagent-integration.md"
+      ],
+      "heading_hints": [
+        "Impacted Docs"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L906"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0305"
+      ],
+      "source_shard_ids": [
+        "shard-0005"
+      ],
+      "canon_label": "Plans/Executor_Protocol.md",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "`Plans/Executor_Protocol.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Executor_Protocol.md"
+      ],
+      "heading_hints": [
+        "Impacted Docs"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L908"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0306"
+      ],
+      "source_shard_ids": [
+        "shard-0005"
+      ],
+      "canon_label": "Plans/Contracts_V0.md",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "`Plans/Contracts_V0.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md"
+      ],
+      "heading_hints": [
+        "Impacted Docs"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L909"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0307"
+      ],
+      "source_shard_ids": [
+        "shard-0005"
+      ],
+      "canon_label": "Plans/Run_Graph_View.md",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "`Plans/Run_Graph_View.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Run_Graph_View.md"
+      ],
+      "heading_hints": [
+        "Impacted Docs"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L910"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0308"
+      ],
+      "source_shard_ids": [
+        "shard-0005"
+      ],
+      "canon_label": "Plans/storage-plan.md",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "`Plans/storage-plan.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [
+        "Impacted Docs"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L911"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0309"
+      ],
+      "source_shard_ids": [
+        "shard-0005"
+      ],
+      "canon_label": "Plans/usage-feature.md",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "`Plans/usage-feature.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/usage-feature.md"
+      ],
+      "heading_hints": [
+        "Impacted Docs"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L912"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0310"
+      ],
+      "source_shard_ids": [
+        "shard-0005"
+      ],
+      "canon_label": "Plans/FinalGUISpec.md",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "`Plans/FinalGUISpec.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [
+        "Impacted Docs"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L913"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0311"
+      ],
+      "source_shard_ids": [
+        "shard-0005"
+      ],
+      "canon_label": "active",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "Work item status should remain `active` until research is ready for reconciliation."
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [
+        "Decisions Already Resolved"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L918"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0312"
+      ],
+      "source_shard_ids": [
+        "shard-0005"
+      ],
+      "canon_label": "Decisions Already Resolved",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "First targeted reading should stay narrow and centered on Orchestrator docs plus direct owner contracts, not a repo-wide sweep."
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [
+        "Decisions Already Resolved"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L919"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0313"
+      ],
+      "source_shard_ids": [
+        "shard-0005"
+      ],
+      "canon_label": "Decisions Already Resolved",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "Current discussion should stay centered on the node-graph / Orchestrator relationship before expanding into other seams."
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [
+        "Decisions Already Resolved"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L919-L920"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0314"
+      ],
+      "source_shard_ids": [
+        "shard-0005"
+      ],
+      "canon_label": "Decisions Already Resolved",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "User explicitly wants to keep researching in this thread; prior readiness marker should not be treated as a handoff decision."
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [
+        "Decisions Already Resolved"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L919-L921"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0315"
+      ],
+      "source_shard_ids": [
+        "shard-0005"
+      ],
+      "canon_label": "Decisions Already Resolved",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "Current working focus is moving into projection ownership by surface rather than reconciliation."
+      ],
+      "affected_doc_hints": [
+        "layout_blocker_target_known_from_notes"
+      ],
+      "heading_hints": [
+        "Decisions Already Resolved"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L922"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0316"
+      ],
+      "source_shard_ids": [
+        "shard-0005"
+      ],
+      "canon_label": "2-of-3",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`2-of-3` accepts the high-impact claim as canonical"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [
+        "Open Questions / Uncertainties"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L926"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0317"
+      ],
+      "source_shard_ids": [
+        "shard-0005"
+      ],
+      "canon_label": "2-of-3",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "no `2-of-3` means the high-impact claim is not accepted as blocking/canonical truth"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [
+        "Open Questions / Uncertainties"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L927"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0318"
+      ],
+      "source_shard_ids": [
+        "shard-0005"
+      ],
+      "canon_label": "Open Questions / Uncertainties",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "if disagreement still surfaces a credible lesser concern, runtime should always emit a non-blocking advisory/minor finding rather than dropping it"
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [
+        "Open Questions / Uncertainties"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L928"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0319"
+      ],
+      "source_shard_ids": [
+        "shard-0005"
+      ],
+      "canon_label": "Open Questions / Uncertainties",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "that advisory/minor finding should be visible on the Orchestrator page"
+      ],
+      "affected_doc_hints": [
+        "layout_blocker_target_known_from_notes"
+      ],
+      "heading_hints": [
+        "Open Questions / Uncertainties"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L929"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0320"
+      ],
+      "source_shard_ids": [
+        "shard-0005"
+      ],
+      "canon_label": "Open Questions / Uncertainties",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "the graph should show the full lineage, including historical branches and patched fork/rejoin paths"
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [
+        "Open Questions / Uncertainties"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L930-L931"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0321"
+      ],
+      "source_shard_ids": [
+        "shard-0005"
+      ],
+      "canon_label": "Open Questions / Uncertainties",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "zoom + pan + minimap are expected to be primary navigation tools; full-graph visibility should not be replaced by default collapsing of history"
+      ],
+      "affected_doc_hints": [
+        "layout_blocker_target_known_from_notes"
+      ],
+      "heading_hints": [
+        "Open Questions / Uncertainties"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L933"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0322"
+      ],
+      "source_shard_ids": [
+        "shard-0005"
+      ],
+      "canon_label": "Open Questions / Uncertainties",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "seam and package boundaries should be visible as toggleable overlays"
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [
+        "Open Questions / Uncertainties"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L934"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0323"
+      ],
+      "source_shard_ids": [
+        "shard-0005"
+      ],
+      "canon_label": "Open Questions / Uncertainties",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "node visuals should carry execution/governance state"
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [
+        "Open Questions / Uncertainties"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L935"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0324"
+      ],
+      "source_shard_ids": [
+        "shard-0005"
+      ],
+      "canon_label": "Open Questions / Uncertainties",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "edge/path visuals should carry structure/lineage meaning"
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [
+        "Open Questions / Uncertainties"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L936"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0325"
+      ],
+      "source_shard_ids": [
+        "shard-0005"
+      ],
+      "canon_label": "Open Questions / Uncertainties",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "boundaries should carry grouping only, not duplicate state/severity semantics"
+      ],
+      "affected_doc_hints": [
+        "layout_blocker_target_known_from_notes"
+      ],
+      "heading_hints": [
+        "Open Questions / Uncertainties"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L937"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0326"
+      ],
+      "source_shard_ids": [
+        "shard-0005"
+      ],
+      "canon_label": "Open Questions / Uncertainties",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "label density should be zoom-dependent:"
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [
+        "Open Questions / Uncertainties"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L938-L939"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0327"
+      ],
+      "source_shard_ids": [
+        "shard-0005"
+      ],
+      "canon_label": "Open Questions / Uncertainties",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "selected objects should still expose strong detail via the right-side inspector regardless of zoom"
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [
+        "Open Questions / Uncertainties"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L943"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0328"
+      ],
+      "source_shard_ids": [
+        "shard-0005"
+      ],
+      "canon_label": "Open Questions / Uncertainties",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "graph search/focus should support:"
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [
+        "Open Questions / Uncertainties"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L944-L945"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0329"
+      ],
+      "source_shard_ids": [
+        "shard-0005"
+      ],
+      "canon_label": "Open Questions / Uncertainties",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "focus should pan/zoom to target regions while preserving full-graph context rather than replacing the graph with a separate local-only view"
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [
+        "Open Questions / Uncertainties"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L951"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0330"
+      ],
+      "source_shard_ids": [
+        "shard-0005"
+      ],
+      "canon_label": "Open Questions / Uncertainties",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "widget-system contract, hostability rules, persistence, and tab/widget filter interactions"
+      ],
+      "affected_doc_hints": [
+        "layout_blocker_target_known_from_notes"
+      ],
+      "heading_hints": [
+        "Open Questions / Uncertainties"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L954"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0331"
+      ],
+      "source_shard_ids": [
+        "shard-0005"
+      ],
+      "canon_label": "Open Questions / Uncertainties",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "command palette / shortcut / context-menu / bulk-action integration"
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [
+        "Open Questions / Uncertainties"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L955"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0332"
+      ],
+      "source_shard_ids": [
+        "shard-0005"
+      ],
+      "canon_label": "Open Questions / Uncertainties",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "notification/escalation cadence beyond in-page alerts"
+      ],
+      "affected_doc_hints": [
+        "layout_blocker_target_known_from_notes"
+      ],
+      "heading_hints": [
+        "Open Questions / Uncertainties"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L959"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0333"
+      ],
+      "source_shard_ids": [
+        "shard-0005"
+      ],
+      "canon_label": "Open Questions / Uncertainties",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "exact artifact shapes for package review, seam review, corroboration packets, graph patch requests, and state transition reports"
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [
+        "Open Questions / Uncertainties"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L962"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0334"
+      ],
+      "source_shard_ids": [
+        "shard-0005"
+      ],
+      "canon_label": "Open Questions / Uncertainties",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "In a graph-canonical design, what should own top-level governance:"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [
+        "Open Questions / Uncertainties"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L967"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0335"
+      ],
+      "source_shard_ids": [
+        "shard-0005"
+      ],
+      "canon_label": "Open Questions / Uncertainties",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "How should bounded context be enforced so one agent never accumulates the whole graph as working memory?"
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [
+        "Open Questions / Uncertainties"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L971"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0336"
+      ],
+      "source_shard_ids": [
+        "shard-0005"
+      ],
+      "canon_label": "Open Questions / Uncertainties",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "Should overseer corroboration use:"
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [
+        "Open Questions / Uncertainties"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L972"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0337"
+      ],
+      "source_shard_ids": [
+        "shard-0005"
+      ],
+      "canon_label": "Open Questions / Uncertainties",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "What should the feature-seam overseer uniquely own:"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [
+        "Open Questions / Uncertainties"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L976"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0338"
+      ],
+      "source_shard_ids": [
+        "shard-0005"
+      ],
+      "canon_label": "Open Questions / Uncertainties",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "authority to withhold seam completion when integration quality is weak even if constituent packages passed"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [
+        "Open Questions / Uncertainties"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L981"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0339"
+      ],
+      "source_shard_ids": [
+        "shard-0005"
+      ],
+      "canon_label": "Open Questions / Uncertainties",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "missing or inconsistent state transitions across package boundaries"
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [
+        "Open Questions / Uncertainties"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L983"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0340"
+      ],
+      "source_shard_ids": [
+        "shard-0005"
+      ],
+      "canon_label": "Open Questions / Uncertainties",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "duplicated logic or contradictory contract interpretation across packages"
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [
+        "Open Questions / Uncertainties"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L983-L985"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0341"
+      ],
+      "source_shard_ids": [
+        "shard-0005"
+      ],
+      "canon_label": "Open Questions / Uncertainties",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "logic is technically wired but not wired into the actual user workflow or operator control surface"
+      ],
+      "affected_doc_hints": [
+        "layout_blocker_target_known_from_notes"
+      ],
+      "heading_hints": [
+        "Open Questions / Uncertainties"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L989"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0342"
+      ],
+      "source_shard_ids": [
+        "shard-0005"
+      ],
+      "canon_label": "Open Questions / Uncertainties",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "missing GUI representation of runtime/governance state"
+      ],
+      "affected_doc_hints": [
+        "layout_blocker_target_known_from_notes"
+      ],
+      "heading_hints": [
+        "Open Questions / Uncertainties"
+      ],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L991"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0343"
+      ],
+      "source_shard_ids": [
+        "shard-0006"
+      ],
+      "canon_label": "missing degraded/recovery behavior",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "missing degraded/recovery behavior"
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L1011"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0344"
+      ],
+      "source_shard_ids": [
+        "shard-0006"
+      ],
+      "canon_label": "invisible governance / missing operator affordances",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "invisible governance / missing operator affordances"
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L1014"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0345"
+      ],
+      "source_shard_ids": [
+        "shard-0006"
+      ],
+      "canon_label": "define concrete seam review loop behavior",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "define concrete seam review loop behavior"
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L1014-L1016"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0346"
+      ],
+      "source_shard_ids": [
+        "shard-0006"
+      ],
+      "canon_label": "corroboration requirement and outcome when invoked",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "corroboration requirement and outcome when invoked"
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L1028"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0347"
+      ],
+      "source_shard_ids": [
+        "shard-0006"
+      ],
+      "canon_label": "what happens to worktree ownership during remediation, corroboration, or graph-patch-triggered w",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "what happens to worktree ownership during remediation, corroboration, or graph-patch-triggered work"
+      ],
+      "affected_doc_hints": [
+        "ownership_target_unknown_pending_audit"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L1036"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0348"
+      ],
+      "source_shard_ids": [
+        "shard-0006"
+      ],
+      "canon_label": "should overseer-spawned node workers default to node-effective provider/model/effort, or to a di",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "should overseer-spawned node workers default to node-effective provider/model/effort, or to a distinct delegated-worker policy"
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L1037-L1038"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0349"
+      ],
+      "source_shard_ids": [
+        "shard-0006"
+      ],
+      "canon_label": "for package-based worktree pools, when two nodes in the same package have dependency ordering, s",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "for package-based worktree pools, when two nodes in the same package have dependency ordering, should the downstream node reuse the same worktree lane, or start a fresh lane from the promoted upstream result"
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L1040"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0350"
+      ],
+      "source_shard_ids": [
+        "shard-0006"
+      ],
+      "canon_label": "how should snapshots / safe points / restore points relate to graph execution:",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "how should snapshots / safe points / restore points relate to graph execution:"
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L1042"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0351"
+      ],
+      "source_shard_ids": [
+        "shard-0006"
+      ],
+      "canon_label": "next seam to define: concrete snapshot policy, restore policy, trigger classes, and scope bounda",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "next seam to define: concrete snapshot policy, restore policy, trigger classes, and scope boundaries across lane/package/seam/remediation"
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L1046"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0352"
+      ],
+      "source_shard_ids": [
+        "shard-0006"
+      ],
+      "canon_label": "next subtopic: map failure classes to restore behavior, remediation/escalation posture, and what",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "next subtopic: map failure classes to restore behavior, remediation/escalation posture, and what must be surfaced in UI/settings versus kept runtime-internal"
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L1047"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0353"
+      ],
+      "source_shard_ids": [
+        "shard-0006"
+      ],
+      "canon_label": "promotion/review policy must account for both:",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "promotion/review policy must account for both:"
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L1049"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0354"
+      ],
+      "source_shard_ids": [
+        "shard-0006"
+      ],
+      "canon_label": "blocking/HITL/critical-decision events need multi-surface notification and a chat-thread-based r",
+      "obligation_type": "layout_blocker",
+      "exact_tokens": [
+        "blocking/HITL/critical-decision events need multi-surface notification and a chat-thread-based resolution flow"
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L1052"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0355"
+      ],
+      "source_shard_ids": [
+        "shard-0006"
+      ],
+      "canon_label": "next subtopic: exact automated gate checks for each promotion class",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "next subtopic: exact automated gate checks for each promotion class"
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L1053"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0356"
+      ],
+      "source_shard_ids": [
+        "shard-0006"
+      ],
+      "canon_label": "What should remain package-overseer-only:",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "What should remain package-overseer-only:"
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L1054"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0357"
+      ],
+      "source_shard_ids": [
+        "shard-0006"
+      ],
+      "canon_label": "Which issue classes require corroboration:",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "Which issue classes require corroboration:"
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L1058"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0358"
+      ],
+      "source_shard_ids": [
+        "shard-0006"
+      ],
+      "canon_label": "missing wiring",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "missing wiring"
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L1059"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0359"
+      ],
+      "source_shard_ids": [
+        "shard-0006"
+      ],
+      "canon_label": "missing spec / hidden dependency",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "missing spec / hidden dependency"
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L1062"
+      ],
+      "notes": []
+    },
+    {
+      "source_seed_ids": [
+        "seed-0360"
+      ],
+      "source_shard_ids": [
+        "shard-0006"
+      ],
+      "canon_label": "Which Orchestrator seam should lead the discussion:",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "Which Orchestrator seam should lead the discussion:"
+      ],
+      "affected_doc_hints": [
+        "global_or_cross_cutting_no_single_doc_hint"
+      ],
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "source_evidence": [
+        "working_ledger.md:L1062-L1064"
+      ],
+      "notes": []
+    }
+  ],
+  "represented_seed_ids": [
+    "seed-0301",
+    "seed-0302",
+    "seed-0303",
+    "seed-0304",
+    "seed-0305",
+    "seed-0306",
+    "seed-0307",
+    "seed-0308",
+    "seed-0309",
+    "seed-0310",
+    "seed-0311",
+    "seed-0312",
+    "seed-0313",
+    "seed-0314",
+    "seed-0315",
+    "seed-0316",
+    "seed-0317",
+    "seed-0318",
+    "seed-0319",
+    "seed-0320",
+    "seed-0321",
+    "seed-0322",
+    "seed-0323",
+    "seed-0324",
+    "seed-0325",
+    "seed-0326",
+    "seed-0327",
+    "seed-0328",
+    "seed-0329",
+    "seed-0330",
+    "seed-0331",
+    "seed-0332",
+    "seed-0333",
+    "seed-0334",
+    "seed-0335",
+    "seed-0336",
+    "seed-0337",
+    "seed-0338",
+    "seed-0339",
+    "seed-0340",
+    "seed-0341",
+    "seed-0342",
+    "seed-0343",
+    "seed-0344",
+    "seed-0345",
+    "seed-0346",
+    "seed-0347",
+    "seed-0348",
+    "seed-0349",
+    "seed-0350",
+    "seed-0351",
+    "seed-0352",
+    "seed-0353",
+    "seed-0354",
+    "seed-0355",
+    "seed-0356",
+    "seed-0357",
+    "seed-0358",
+    "seed-0359",
+    "seed-0360"
+  ],
+  "represented_source_shard_ids": [
+    "shard-0005",
+    "shard-0006"
+  ],
+  "deferred_seed_ids": [],
+  "noise_seed_ids": [],
+  "affected_doc_discovery_notes": []
+}

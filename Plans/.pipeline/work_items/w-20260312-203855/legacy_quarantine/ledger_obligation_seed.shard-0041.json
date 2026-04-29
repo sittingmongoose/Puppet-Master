@@ -1,0 +1,1021 @@
+{
+  "schema_id": "pm.ledger_obligation_seed_shard_result.v1",
+  "work_id": "w-20260312-203855",
+  "shard_id": "shard-0041",
+  "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0041-L008001-L008200.md",
+  "source_line_range": "L008001-L008200",
+  "seed_candidates": [
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "thread_id",
+      "exact_items": [
+        "canonical `thread_id` remains PM correlation"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0041",
+      "source_evidence": [
+        "working_ledger.md:L8002"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "OpenCode session ID is still being treated as if it were that canonical field",
+      "exact_items": [
+        "OpenCode session ID is still being treated as if it were that canonical field"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0041",
+      "source_evidence": [
+        "working_ledger.md:L8003"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "this must move into provider-native correlation before shared-runtime event joins become trustwo",
+      "exact_items": [
+        "this must move into provider-native correlation before shared-runtime event joins become trustworthy"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0041",
+      "source_evidence": [
+        "working_ledger.md:L8004"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "A2A still forbids new categories while the rewrite needs actor/role/account/switch/trust signals",
+      "exact_items": [
+        "A2A still forbids new categories while the rewrite needs actor/role/account/switch/trust signals at the stream layer"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0041",
+      "source_evidence": [
+        "working_ledger.md:L8007"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "provider_attempt_ref?",
+      "exact_items": [
+        "`provider_attempt_ref?` and similar continuity fields are still conceptually present but not fully owned by a stable schema slot"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0041",
+      "source_evidence": [
+        "working_ledger.md:L8008"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Codex added a stronger **permission semantics contradiction**:",
+      "exact_items": [
+        "Codex added a stronger **permission semantics contradiction**:"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0041",
+      "source_evidence": [
+        "working_ledger.md:L8009"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "until reconciled, remote side-effect approval behavior can diverge by surface or mode",
+      "exact_items": [
+        "until reconciled, remote side-effect approval behavior can diverge by surface or mode"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0041",
+      "source_evidence": [
+        "working_ledger.md:L8011"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Permission control is still unsafe for parallel actors unless it gets a canonical scope key:",
+      "exact_items": [
+        "Permission control is still unsafe for parallel actors unless it gets a canonical scope key:"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0041",
+      "source_evidence": [
+        "working_ledger.md:L8012"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Permission snapshots remain thinner than rewrite needs:",
+      "exact_items": [
+        "Permission snapshots remain thinner than rewrite needs:"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0041",
+      "source_evidence": [
+        "working_ledger.md:L8015"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "requested/effective capability state is required conceptually",
+      "exact_items": [
+        "requested/effective capability state is required conceptually"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0041",
+      "source_evidence": [
+        "working_ledger.md:L8016"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "but snapshots still omit requested values, downgrade reasons, effective account/operational iden",
+      "exact_items": [
+        "but snapshots still omit requested values, downgrade reasons, effective account/operational identity, and actor/surface scope"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0041",
+      "source_evidence": [
+        "working_ledger.md:L8017"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/Provider_OpenCode.md",
+      "exact_items": [
+        "`Plans/Provider_OpenCode.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Provider_OpenCode.md"
+      ],
+      "heading_hints": [
+        "Highest-risk impacted docs"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0041",
+      "source_evidence": [
+        "working_ledger.md:L8021"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Highest-risk impacted docs",
+      "exact_items": [
+        "needs immediate correction of canonical/session identity ownership"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Highest-risk impacted docs"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0041",
+      "source_evidence": [
+        "working_ledger.md:L8022"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/CLI_Bridged_Providers.md",
+      "exact_items": [
+        "`Plans/CLI_Bridged_Providers.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/CLI_Bridged_Providers.md"
+      ],
+      "heading_hints": [
+        "Highest-risk impacted docs"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0041",
+      "source_evidence": [
+        "working_ledger.md:L8023"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Highest-risk impacted docs",
+      "exact_items": [
+        "needs a versioned correlation/context block and account-health semantics stronger than auth lifecycle alone"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Highest-risk impacted docs"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0041",
+      "source_evidence": [
+        "working_ledger.md:L8024"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/Provider_Stream_Mapping_External_Reference_A2A.md",
+      "exact_items": [
+        "`Plans/Provider_Stream_Mapping_External_Reference_A2A.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Provider_Stream_Mapping_External_Reference_A2A.md"
+      ],
+      "heading_hints": [
+        "Highest-risk impacted docs"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0041",
+      "source_evidence": [
+        "working_ledger.md:L8025"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Highest-risk impacted docs",
+      "exact_items": [
+        "needs stream version governance before actor/account/trust semantics can be added cleanly"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Highest-risk impacted docs"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0041",
+      "source_evidence": [
+        "working_ledger.md:L8026"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/Permissions_System.md",
+      "exact_items": [
+        "`Plans/Permissions_System.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Permissions_System.md"
+      ],
+      "heading_hints": [
+        "Highest-risk impacted docs"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0041",
+      "source_evidence": [
+        "working_ledger.md:L8027"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Highest-risk impacted docs",
+      "exact_items": [
+        "needs scope-keyed approval semantics and richer permission snapshots"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Highest-risk impacted docs"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0041",
+      "source_evidence": [
+        "working_ledger.md:L8028"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/Contracts_V0.md",
+      "exact_items": [
+        "`Plans/Contracts_V0.md` + `Plans/storage-plan.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md",
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [
+        "Highest-risk impacted docs"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0041",
+      "source_evidence": [
+        "working_ledger.md:L8029"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Highest-risk impacted docs",
+      "exact_items": [
+        "likely owners for canonical blocked/approval identity linkage and pressure/switch projection families"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Highest-risk impacted docs"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0041",
+      "source_evidence": [
+        "working_ledger.md:L8030"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "thread_id",
+      "exact_items": [
+        "OpenCode still misuses canonical `thread_id` for provider-native session identity."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Contradictions / gaps surfaced"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0041",
+      "source_evidence": [
+        "working_ledger.md:L8033"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Candidate fixes to carry forward",
+      "exact_items": [
+        "Add a versioned stream/provider correlation block for actor/attempt/account/trust metadata."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Candidate fixes to carry forward"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0041",
+      "source_evidence": [
+        "working_ledger.md:L8042"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "ask/plan",
+      "exact_items": [
+        "Reconcile `ask/plan` and `external_publish_side_effect` semantics in one canonical algorithm."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Candidate fixes to carry forward"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0041",
+      "source_evidence": [
+        "working_ledger.md:L8043"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Candidate fixes to carry forward",
+      "exact_items": [
+        "Define an Approval Scope Key spanning actor/lane/run/account context."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Candidate fixes to carry forward"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0041",
+      "source_evidence": [
+        "working_ledger.md:L8044"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Candidate fixes to carry forward",
+      "exact_items": [
+        "Add explicit versioning/migration notes where A2A or bridged categories/fields must grow."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Candidate fixes to carry forward"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0041",
+      "source_evidence": [
+        "working_ledger.md:L8046"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "origin",
+      "exact_items": [
+        "`origin` must remain audit-only even after actor identity becomes first-class elsewhere."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Do-not-forget details"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0041",
+      "source_evidence": [
+        "working_ledger.md:L8049"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/Multi-Account.md",
+      "exact_items": [
+        "`Plans/Multi-Account.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Multi-Account.md"
+      ],
+      "heading_hints": [
+        "Targeted docs read"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0041",
+      "source_evidence": [
+        "working_ledger.md:L8056"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/storage-plan.md",
+      "exact_items": [
+        "`Plans/storage-plan.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [
+        "Targeted docs read"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0041",
+      "source_evidence": [
+        "working_ledger.md:L8057"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/Contracts_V0.md",
+      "exact_items": [
+        "`Plans/Contracts_V0.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md"
+      ],
+      "heading_hints": [
+        "Targeted docs read"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0041",
+      "source_evidence": [
+        "working_ledger.md:L8058"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/Prompt_Pipeline.md",
+      "exact_items": [
+        "`Plans/Prompt_Pipeline.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Prompt_Pipeline.md"
+      ],
+      "heading_hints": [
+        "Targeted docs read"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0041",
+      "source_evidence": [
+        "working_ledger.md:L8059"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/usage-feature.md",
+      "exact_items": [
+        "`Plans/usage-feature.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/usage-feature.md"
+      ],
+      "heading_hints": [
+        "Targeted docs read"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0041",
+      "source_evidence": [
+        "working_ledger.md:L8060"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/Orchestrator_Page.md",
+      "exact_items": [
+        "`Plans/Orchestrator_Page.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Orchestrator_Page.md"
+      ],
+      "heading_hints": [
+        "Targeted docs read"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0041",
+      "source_evidence": [
+        "working_ledger.md:L8061"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Key findings",
+      "exact_items": [
+        "the system also needs operational identity classes like GitHub API identity, registry/namespace identity, and Kubernetes context/cluster identity"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Key findings"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0041",
+      "source_evidence": [
+        "working_ledger.md:L8066"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Key findings",
+      "exact_items": [
+        "current canonical fields cover provider/model/auth/account identity"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Key findings"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0041",
+      "source_evidence": [
+        "working_ledger.md:L8068"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "execution_role",
+      "exact_items": [
+        "A second missing dimension is `execution_role` / `actor_role`."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Key findings"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0041",
+      "source_evidence": [
+        "working_ledger.md:L8070"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "effective_project_id",
+      "exact_items": [
+        "Current fields like `effective_project_id` or receipt refs do not solve this."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Key findings"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0041",
+      "source_evidence": [
+        "working_ledger.md:L8076"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "Recommended contract direction",
+      "exact_items": [
+        "future provider/surface-specific kinds as needed"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Recommended contract direction"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0041",
+      "source_evidence": [
+        "working_ledger.md:L8106"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Recommended contract direction",
+      "exact_items": [
+        "but it must not be implied to share the same ownership or token source unless the owning auth contract says so"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Recommended contract direction"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0041",
+      "source_evidence": [
+        "working_ledger.md:L8109"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/Multi-Account.md",
+      "exact_items": [
+        "`Plans/Multi-Account.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Multi-Account.md"
+      ],
+      "heading_hints": [
+        "Impacted docs"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0041",
+      "source_evidence": [
+        "working_ledger.md:L8112"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/Contracts_V0.md",
+      "exact_items": [
+        "`Plans/Contracts_V0.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md"
+      ],
+      "heading_hints": [
+        "Impacted docs"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0041",
+      "source_evidence": [
+        "working_ledger.md:L8113"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/Prompt_Pipeline.md",
+      "exact_items": [
+        "`Plans/Prompt_Pipeline.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Prompt_Pipeline.md"
+      ],
+      "heading_hints": [
+        "Impacted docs"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0041",
+      "source_evidence": [
+        "working_ledger.md:L8114"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/storage-plan.md",
+      "exact_items": [
+        "`Plans/storage-plan.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [
+        "Impacted docs"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0041",
+      "source_evidence": [
+        "working_ledger.md:L8115"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/usage-feature.md",
+      "exact_items": [
+        "`Plans/usage-feature.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/usage-feature.md"
+      ],
+      "heading_hints": [
+        "Impacted docs"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0041",
+      "source_evidence": [
+        "working_ledger.md:L8116"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Impacted docs",
+      "exact_items": [
+        "consumer docs for graph/detail/history/ledger/runtime inspectors"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Impacted docs"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0041",
+      "source_evidence": [
+        "working_ledger.md:L8117"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Contradictions / gaps surfaced",
+      "exact_items": [
+        "Usage and receipt surfaces can correlate to external systems via refs, but that is weaker than first-class requested/effective operational identity disclosure."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Contradictions / gaps surfaced"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0041",
+      "source_evidence": [
+        "working_ledger.md:L8122"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "execution_role",
+      "exact_items": [
+        "Add `execution_role` to:"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Candidate fixes to carry forward"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0041",
+      "source_evidence": [
+        "working_ledger.md:L8128"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Candidate fixes to carry forward",
+      "exact_items": [
+        "Add operational-identity blocks to runtime records where side-effectful or externally-scoped actions matter."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Candidate fixes to carry forward"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0041",
+      "source_evidence": [
+        "working_ledger.md:L8133"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "layout_blocker",
+      "canon_label_hint": "Candidate fixes to carry forward",
+      "exact_items": [
+        "Keep cross-surface receipt refs, but treat them as linkage, not as the sole operational-identity disclosure model."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Candidate fixes to carry forward"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0041",
+      "source_evidence": [
+        "working_ledger.md:L8134"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/Multi-Account.md",
+      "exact_items": [
+        "`Plans/Multi-Account.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Multi-Account.md"
+      ],
+      "heading_hints": [
+        "Targeted docs read"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0041",
+      "source_evidence": [
+        "working_ledger.md:L8150"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/storage-plan.md",
+      "exact_items": [
+        "`Plans/storage-plan.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/storage-plan.md"
+      ],
+      "heading_hints": [
+        "Targeted docs read"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0041",
+      "source_evidence": [
+        "working_ledger.md:L8151"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/usage-feature.md",
+      "exact_items": [
+        "`Plans/usage-feature.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/usage-feature.md"
+      ],
+      "heading_hints": [
+        "Targeted docs read"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0041",
+      "source_evidence": [
+        "working_ledger.md:L8152"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/Contracts_V0.md",
+      "exact_items": [
+        "`Plans/Contracts_V0.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Contracts_V0.md"
+      ],
+      "heading_hints": [
+        "Targeted docs read"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0041",
+      "source_evidence": [
+        "working_ledger.md:L8153"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/Prompt_Pipeline.md",
+      "exact_items": [
+        "`Plans/Prompt_Pipeline.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Prompt_Pipeline.md"
+      ],
+      "heading_hints": [
+        "Targeted docs read"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0041",
+      "source_evidence": [
+        "working_ledger.md:L8154"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Plans/FinalGUISpec.md",
+      "exact_items": [
+        "`Plans/FinalGUISpec.md`"
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "heading_hints": [
+        "Targeted docs read"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0041",
+      "source_evidence": [
+        "working_ledger.md:L8155"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Key findings",
+      "exact_items": [
+        "The missing piece is an append-only switch/pressure episode family."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Key findings"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0041",
+      "source_evidence": [
+        "working_ledger.md:L8170"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "owner",
+      "canon_label_hint": "Recommended contract direction",
+      "exact_items": [
+        "Add a canonical append-only event/record family for account-pressure and switching."
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Recommended contract direction"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0041",
+      "source_evidence": [
+        "working_ledger.md:L8188"
+      ],
+      "notes": []
+    },
+    {
+      "seed_type": "consumer",
+      "canon_label_hint": "Recommended contract direction",
+      "exact_items": [
+        "it still needs both pressure cause and switch outcome fields; otherwise history will stay ambiguous"
+      ],
+      "affected_doc_hints": [],
+      "heading_hints": [
+        "Recommended contract direction"
+      ],
+      "stale_tokens": [],
+      "source_shard_id": "shard-0041",
+      "source_evidence": [
+        "working_ledger.md:L8196"
+      ],
+      "notes": []
+    }
+  ],
+  "noise_items": [],
+  "uncertain_items": [],
+  "covered_shard_id": "shard-0041"
+}

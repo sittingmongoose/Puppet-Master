@@ -1,0 +1,23 @@
+{
+  "schema_id": "pm.transfer_coverage_noise.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-017",
+  "noise_findings": [
+    {
+      "source": "coverage-rowgrp-065",
+      "finding": "Subagent marked all rows missing; reducer credited shared route/open FinalGUISpec evidence as partial for route-boundary rows."
+    },
+    {
+      "source": "coverage-rowgrp-066",
+      "finding": "Subagent used only row_inventory evidence; reducer stripped artifact evidence and credited direct projection, search, resolver, and routing lines where applicable."
+    },
+    {
+      "source": "coverage-rowgrp-067",
+      "finding": "Subagent treated projection recovery lines as unrelated for all rows; reducer credited direct shared routing payload and object-kind/switch_reason evidence where applicable."
+    },
+    {
+      "source": "coverage-rowgrp-068",
+      "finding": "Subagent included worklist/inventory evidence; reducer stripped artifact evidence and credited direct subject/object routing, Progress-only hostability, and blocked-card field lines where applicable."
+    }
+  ]
+}

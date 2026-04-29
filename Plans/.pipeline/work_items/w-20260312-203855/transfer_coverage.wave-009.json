@@ -1,353 +1,455 @@
 {
-  "schema_id": "pm.transfer_coverage_wave.v1",
+  "schema_id": "pm.transfer_coverage_wave.v3",
   "work_id": "w-20260312-203855",
   "wave_id": "wave-009",
-  "row_groups": [
-    "rowgrp-0033",
-    "rowgrp-0034",
-    "rowgrp-0035",
-    "rowgrp-0036"
+  "timestamp_utc": "2026-04-28T19:35:33Z",
+  "subagent_tasks": [
+    "coverage-rowgrp-033",
+    "coverage-rowgrp-034",
+    "coverage-rowgrp-035",
+    "coverage-rowgrp-036"
   ],
-  "coverage_rows": [
+  "assigned_input_boundaries": [
+    "rowgrp-033 cov-106,cov-724,cov-855,cov-914,cov-1128 Plans/Crosswalk.md",
+    "rowgrp-034 cov-844,cov-885,cov-1021 Plans/Crosswalk.md",
+    "rowgrp-035 cov-086,cov-858,cov-920,cov-925,cov-945,cov-952,cov-1017,cov-1041,cov-1121,cov-1164 Plans/Crosswalk.md",
+    "rowgrp-036 cov-1271 Plans/Crosswalk.md"
+  ],
+  "subagent_result_status": {
+    "coverage-rowgrp-033": "completed",
+    "coverage-rowgrp-034": "completed",
+    "coverage-rowgrp-035": "completed_reduced_conservatively",
+    "coverage-rowgrp-036": "completed"
+  },
+  "completed_task_count": 4,
+  "failed_task_count": 0,
+  "coverage_ids_assigned": [
+    "cov-106",
+    "cov-724",
+    "cov-855",
+    "cov-914",
+    "cov-1128",
+    "cov-844",
+    "cov-885",
+    "cov-1021",
+    "cov-086",
+    "cov-858",
+    "cov-920",
+    "cov-925",
+    "cov-945",
+    "cov-952",
+    "cov-1017",
+    "cov-1041",
+    "cov-1121",
+    "cov-1164",
+    "cov-1271"
+  ],
+  "coverage_ids_completed": [
+    "cov-106",
+    "cov-724",
+    "cov-855",
+    "cov-914",
+    "cov-1128",
+    "cov-844",
+    "cov-885",
+    "cov-1021",
+    "cov-086",
+    "cov-858",
+    "cov-920",
+    "cov-925",
+    "cov-945",
+    "cov-952",
+    "cov-1017",
+    "cov-1041",
+    "cov-1121",
+    "cov-1164",
+    "cov-1271"
+  ],
+  "path_groups_assigned": [
+    "Plans/Crosswalk.md"
+  ],
+  "rows": [
     {
-      "coverage_id": "cov-04514",
+      "coverage_id": "cov-106",
+      "status": "partial",
+      "evidence": [
+        "Plans/Crosswalk.md:125 projection freshness/health vocabulary includes stale state",
+        "Plans/Crosswalk.md:135 stale/degraded/unavailable execution gating ownership is referenced",
+        "Plans/Crosswalk.md:313 stale canonical text must be replaced or retired"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "Crosswalk has generic stale/ownership guidance, but not the full cleanup-priority and layout blocker coverage for cov-106.",
       "source_obligation_ids": [
-        "obl-4283"
+        "obl-034"
       ],
       "source_seed_ids": [
-        "seed-6167"
+        "seed-034"
       ],
       "source_shard_ids": [
-        "shard-0082"
+        "shard-0008"
       ],
-      "canon_label": "Plans/*.md",
-      "row_type": "layout_blocker",
-      "path": "Plans/DRY_Rules.md",
-      "heading_hint": "Do-not-forget details",
-      "status": "present",
-      "exact_items": [
-        "After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes."
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/DRY_Rules.md:43",
-        "Plans/DRY_Rules.md:69",
-        "Plans/DRY_Rules.md:3",
-        "Plans/DRY_Rules.md:40",
-        "Plans/DRY_Rules.md:121",
-        "Plans/DRY_Rules.md:49",
-        "Plans/DRY_Rules.md:42",
-        "Plans/DRY_Rules.md:74"
-      ],
-      "required_action": "none"
+      "path_field_status": "match"
     },
     {
-      "coverage_id": "cov-04597",
+      "coverage_id": "cov-724",
+      "status": "missing",
+      "evidence": [
+        "Plans/Crosswalk.md: assigned file reviewed; generic stale-token language exists, but no row-specific ghost-command/schema integrity coverage was found"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "Crosswalk.md does not contain matching fulfillment for ghost command IDs, missing catalog rows, runtime artifact schema registration, or duplicated executor canon.",
       "source_obligation_ids": [
-        "obl-4312"
+        "obl-197"
       ],
       "source_seed_ids": [
-        "seed-6210"
+        "seed-197"
+      ],
+      "source_shard_ids": [
+        "shard-0049"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-855",
+      "status": "partial",
+      "evidence": [
+        "Plans/Crosswalk.md:83 Primitive:RouteTarget / Primitive:OpenSubject is present",
+        "Plans/Crosswalk.md:85 route targets and open subjects are canonical destination/inspection names",
+        "Plans/Crosswalk.md:94 Crosswalk documents how route decisions flow through UI"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "RouteTarget/OpenSubject layering exists, but the full navigation-payload normalization blocker is not fully covered.",
+      "source_obligation_ids": [
+        "obl-239"
+      ],
+      "source_seed_ids": [
+        "seed-239"
+      ],
+      "source_shard_ids": [
+        "shard-0060"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-914",
+      "status": "partial",
+      "evidence": [
+        "Plans/Crosswalk.md:83 Primitive:RouteTarget / Primitive:OpenSubject is present",
+        "Plans/Crosswalk.md:85 route/open ownership boundary is described",
+        "Plans/Crosswalk.md:96-100 OpenSubject navigation rules are present"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "Navigation primitive boundary is present, but the three-way command taxonomy is not fully formalized here.",
+      "source_obligation_ids": [
+        "obl-256"
+      ],
+      "source_seed_ids": [
+        "seed-256"
+      ],
+      "source_shard_ids": [
+        "shard-0065"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-1128",
+      "status": "partial",
+      "evidence": [
+        "Plans/Crosswalk.md:83 Primitive:RouteTarget / Primitive:OpenSubject is present",
+        "Plans/Crosswalk.md:85 Crosswalk clarifies the route/open boundary",
+        "Plans/Crosswalk.md:313 stale canonical text must be replaced or retired"
+      ],
+      "required_action": "packetizable_layout_repair",
+      "unresolved_reason": "RouteTarget/OpenSubject primitive ownership is present, but section numbering and other stale Crosswalk text are not fully resolved.",
+      "source_obligation_ids": [
+        "obl-327"
+      ],
+      "source_seed_ids": [
+        "seed-327"
       ],
       "source_shard_ids": [
         "shard-0083"
       ],
-      "canon_label": "ContractName:",
-      "row_type": "owner",
-      "path": "Plans/DRY_Rules.md",
-      "heading_hint": "Key findings",
-      "status": "present",
-      "exact_items": [
-        "This bypasses the `ContractName:` taxonomy that `Plans/DRY_Rules.md` says is canonical."
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/DRY_Rules.md:45",
-        "Plans/DRY_Rules.md:3",
-        "Plans/DRY_Rules.md:100"
-      ],
-      "required_action": "none"
+      "path_field_status": "match"
     },
     {
-      "coverage_id": "cov-03293",
-      "source_obligation_ids": [
-        "obl-3198"
-      ],
-      "source_seed_ids": [
-        "seed-4180"
-      ],
-      "source_shard_ids": [
-        "shard-0059"
-      ],
-      "canon_label": "Plans/*.md",
-      "row_type": "consumer",
-      "path": "Plans/Decision_Log.md",
-      "heading_hint": "Do-not-forget details",
-      "status": "present",
-      "exact_items": [
-        "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage."
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/Decision_Log.md:3",
-        "Plans/Decision_Log.md:16",
-        "Plans/Decision_Log.md:54",
-        "Plans/Decision_Log.md:18"
-      ],
-      "required_action": "none"
-    },
-    {
-      "coverage_id": "cov-03600",
-      "source_obligation_ids": [
-        "obl-3451"
-      ],
-      "source_seed_ids": [
-        "seed-4632",
-        "seed-5074",
-        "seed-5915",
-        "seed-6001",
-        "seed-6093",
-        "seed-6170"
-      ],
-      "source_shard_ids": [
-        "shard-0064",
-        "shard-0070",
-        "shard-0081",
-        "shard-0082"
-      ],
-      "canon_label": "Plans/Decision_Log.md",
-      "row_type": "consumer",
-      "path": "Plans/Decision_Log.md",
-      "heading_hint": "Targeted docs read",
+      "coverage_id": "cov-844",
       "status": "partial",
-      "exact_items": [
-        "`Plans/Decision_Log.md`"
-      ],
-      "stale_tokens": [],
       "evidence": [
-        "Plans/Decision_Log.md:16",
-        "Plans/Decision_Log.md:24"
+        "Plans/Crosswalk.md:83-85 RouteTarget/OpenSubject boundary and ownership are stated",
+        "Plans/Crosswalk.md:96-100 OpenSubject navigation rules are present"
       ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-03617",
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Route-target/open-subject ownership is described, but open-by-identity and route payload boundaries are not stated completely.",
       "source_obligation_ids": [
-        "obl-3468"
+        "obl-236"
       ],
       "source_seed_ids": [
-        "seed-4650",
-        "seed-5112",
-        "seed-5950",
-        "seed-6037",
-        "seed-6125",
-        "seed-6181"
+        "seed-236"
       ],
       "source_shard_ids": [
-        "shard-0064",
-        "shard-0070",
-        "shard-0081",
-        "shard-0082"
+        "shard-0060"
       ],
-      "canon_label": "Plans/Decision_Log.md",
-      "row_type": "consumer",
-      "path": "Plans/Decision_Log.md",
-      "heading_hint": "Impacted docs",
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-885",
       "status": "partial",
-      "exact_items": [
-        "`Plans/Decision_Log.md`"
-      ],
-      "stale_tokens": [],
       "evidence": [
-        "Plans/Decision_Log.md:16"
+        "Plans/Crosswalk.md:87-100 route/open navigation rules are present",
+        "Plans/Crosswalk.md:101-105 FileManager owns source control lane, worktree, and open-file system"
       ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-03627",
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Routing/open semantics are present, but shell-state responsibility for docking/floating and workspace layout is not covered in Crosswalk.",
       "source_obligation_ids": [
-        "obl-3478"
+        "obl-249"
       ],
       "source_seed_ids": [
-        "seed-4673",
-        "seed-5155",
-        "seed-5989",
-        "seed-6077"
+        "seed-249"
       ],
       "source_shard_ids": [
-        "shard-0064",
-        "shard-0070",
-        "shard-0081",
+        "shard-0063"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-1021",
+      "status": "partial",
+      "evidence": [
+        "Plans/Crosswalk.md:54-60 Crosswalk precedence is defined above several docs",
+        "Plans/Crosswalk.md:83-100 route/open primitive boundary and navigation rules are present"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Crosswalk defines precedence and routing boundaries, but does not state that its routing model is ahead of the listed owner docs.",
+      "source_obligation_ids": [
+        "obl-287"
+      ],
+      "source_seed_ids": [
+        "seed-287"
+      ],
+      "source_shard_ids": [
+        "shard-0073"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-086",
+      "status": "missing",
+      "evidence": [
+        "Plans/Crosswalk.md: assigned file reviewed; no matching coverage found for feature seam, work package, package/seam overseers, lane pools, contamination, safe points, or effective execution identity ownership"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Crosswalk only has generic stale/projection language in the checked passages, not the assigned terminology authority coverage.",
+      "source_obligation_ids": [
+        "obl-033"
+      ],
+      "source_seed_ids": [
+        "seed-033"
+      ],
+      "source_shard_ids": [
+        "shard-0007"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-858",
+      "status": "partial",
+      "evidence": [
+        "Plans/Crosswalk.md:83-85 route targets are canonical destination names",
+        "Plans/Crosswalk.md:87-94 route_target strings resolve through a cascade"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Route target semantics are present, but the base-field boundary and selector/subtarget rules are not fully covered.",
+      "source_obligation_ids": [
+        "obl-240"
+      ],
+      "source_seed_ids": [
+        "seed-240"
+      ],
+      "source_shard_ids": [
+        "shard-0061"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-920",
+      "status": "partial",
+      "evidence": [
+        "Plans/Crosswalk.md:85 canonical semantics live in Contracts_V0.md and Crosswalk explains surface navigation",
+        "Plans/Crosswalk.md:96-100 OpenSubject rules are present"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Route contract ownership is mentioned, but wrapper/catalog normalization requirements are not fully stated.",
+      "source_obligation_ids": [
+        "obl-258"
+      ],
+      "source_seed_ids": [
+        "seed-258"
+      ],
+      "source_shard_ids": [
+        "shard-0065"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-925",
+      "status": "partial",
+      "evidence": [
+        "Plans/Crosswalk.md:83-85 Crosswalk declares RouteTarget/OpenSubject primitive boundary and delegates canonical semantics to Contracts_V0.md",
+        "Plans/Crosswalk.md:99 canonical ownership rules are in Contracts_V0.md"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "The route/open owner split is partly present, but storage-plan consumer and resume_url persisted-ref split are not fully stated.",
+      "source_obligation_ids": [
+        "obl-260"
+      ],
+      "source_seed_ids": [
+        "seed-260"
+      ],
+      "source_shard_ids": [
+        "shard-0066"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-945",
+      "status": "partial",
+      "evidence": [
+        "Plans/Crosswalk.md:83-85 route targets are canonical destination names",
+        "Plans/Crosswalk.md:87-94 route target navigation rules are listed"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "RouteTarget exists, but the canonical minimum field set and selector rule are not fully specified in Crosswalk.",
+      "source_obligation_ids": [
+        "obl-265"
+      ],
+      "source_seed_ids": [
+        "seed-265"
+      ],
+      "source_shard_ids": [
+        "shard-0067"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-952",
+      "status": "partial",
+      "evidence": [
+        "Plans/Crosswalk.md:96-100 OpenSubject navigation rules are present",
+        "Plans/Crosswalk.md:101-105 FileManager owns the open-file system"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Open/open-file ownership is partially represented, but OpenFile as the path-based editor contract and route/OpenSubject non-overlap are not fully covered.",
+      "source_obligation_ids": [
+        "obl-266"
+      ],
+      "source_seed_ids": [
+        "seed-266"
+      ],
+      "source_shard_ids": [
+        "shard-0067"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-1017",
+      "status": "partial",
+      "evidence": [
+        "Plans/Crosswalk.md:71 Primitive:UICommand references stable UI command IDs",
+        "Plans/Crosswalk.md:83-85 RouteTarget/OpenSubject primitive boundary is present"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Owner adoption split is partially reflected, but route validation/rejection ownership and command taxonomy are not fully covered.",
+      "source_obligation_ids": [
+        "obl-286"
+      ],
+      "source_seed_ids": [
+        "seed-286"
+      ],
+      "source_shard_ids": [
+        "shard-0072"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-1041",
+      "status": "partial",
+      "evidence": [
+        "Plans/Crosswalk.md:83 Primitive:RouteTarget / Primitive:OpenSubject is present",
+        "Plans/Crosswalk.md:85 route/open ownership boundary is stated"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Route/open primitive boundary is present, but UICommand boundary updates and stale OrchestratorPage boundary cleanup are not fully covered.",
+      "source_obligation_ids": [
+        "obl-293"
+      ],
+      "source_seed_ids": [
+        "seed-293"
+      ],
+      "source_shard_ids": [
+        "shard-0074"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-1121",
+      "status": "partial",
+      "evidence": [
+        "Plans/Crosswalk.md:83 Primitive:RouteTarget / Primitive:OpenSubject is present",
+        "Plans/Crosswalk.md:313 stale canonical text must be replaced or retired"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "RouteTarget/OpenSubject primitive ownership is now present, but stale primitive text and duplicate numbering concerns are not fully resolved in the checked evidence.",
+      "source_obligation_ids": [
+        "obl-325"
+      ],
+      "source_seed_ids": [
+        "seed-325"
+      ],
+      "source_shard_ids": [
         "shard-0082"
       ],
-      "canon_label": "Plans/Decision_Log.md",
-      "row_type": "consumer",
-      "path": "Plans/Decision_Log.md",
-      "heading_hint": "Candidate fixes to carry forward",
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-1164",
       "status": "missing",
-      "exact_items": [
-        "`Plans/Decision_Log.md`"
-      ],
-      "stale_tokens": [],
       "evidence": [
-        "Plans/Decision_Log.md:required_terms_absent"
+        "Plans/Crosswalk.md: assigned file reviewed; no matching MUST CHANGE / MUST RECONCILE / MUST VERIFY packet inclusion category coverage found"
       ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-04238",
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Assigned packet inclusion categories are absent from Plans/Crosswalk.md.",
       "source_obligation_ids": [
-        "obl-4084"
+        "obl-339"
       ],
       "source_seed_ids": [
-        "seed-5691"
-      ],
-      "source_shard_ids": [
-        "shard-0077"
-      ],
-      "canon_label": "Plans/Decision_Log.md",
-      "row_type": "consumer",
-      "path": "Plans/Decision_Log.md",
-      "heading_hint": "Priority merge",
-      "status": "missing",
-      "exact_items": [
-        "`Plans/Decision_Log.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/Decision_Log.md:required_terms_absent"
-      ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-04432",
-      "source_obligation_ids": [
-        "obl-4262"
-      ],
-      "source_seed_ids": [
-        "seed-6087"
-      ],
-      "source_shard_ids": [
-        "shard-0082"
-      ],
-      "canon_label": "39",
-      "row_type": "consumer",
-      "path": "Plans/Decision_Log.md",
-      "heading_hint": "Do-not-forget details",
-      "status": "present",
-      "exact_items": [
-        "Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes."
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/Decision_Log.md:3",
-        "Plans/Decision_Log.md:16",
-        "Plans/Decision_Log.md:29"
-      ],
-      "required_action": "none"
-    },
-    {
-      "coverage_id": "cov-04750",
-      "source_obligation_ids": [
-        "obl-4465"
-      ],
-      "source_seed_ids": [
-        "seed-6457"
+        "seed-339"
       ],
       "source_shard_ids": [
         "shard-0086"
       ],
-      "canon_label": "Plans/Decision_Log.md",
-      "row_type": "consumer",
-      "path": "Plans/Decision_Log.md",
-      "heading_hint": "Targeted docs checked for coverage convergence",
-      "status": "partial",
-      "exact_items": [
-        "`Plans/Decision_Log.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/Decision_Log.md:16"
-      ],
-      "required_action": "consumer_propagation"
+      "path_field_status": "match"
     },
     {
-      "coverage_id": "cov-04778",
-      "source_obligation_ids": [
-        "obl-4493"
-      ],
-      "source_seed_ids": [
-        "seed-6485"
-      ],
-      "source_shard_ids": [
-        "shard-0086"
-      ],
-      "canon_label": "Plans/Decision_Log.md",
-      "row_type": "consumer",
-      "path": "Plans/Decision_Log.md",
-      "heading_hint": "Docs clearly implicated",
-      "status": "partial",
-      "exact_items": [
-        "`Plans/Decision_Log.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/Decision_Log.md:16"
-      ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-04816",
-      "source_obligation_ids": [
-        "obl-4531"
-      ],
-      "source_seed_ids": [
-        "seed-6523"
-      ],
-      "source_shard_ids": [
-        "shard-0086"
-      ],
-      "canon_label": "Plans/Decision_Log.md",
-      "row_type": "consumer",
-      "path": "Plans/Decision_Log.md",
-      "heading_hint": "MUST CHANGE",
+      "coverage_id": "cov-1271",
       "status": "missing",
-      "exact_items": [
-        "`Plans/Decision_Log.md`"
-      ],
-      "stale_tokens": [],
       "evidence": [
-        "Plans/Decision_Log.md:required_terms_absent"
+        "Plans/Crosswalk.md:125 projection state includes stale vocabulary",
+        "Plans/Crosswalk.md:270 stale mutating annotations are mentioned",
+        "Plans/Crosswalk.md:313 stale canonical text retirement rule exists"
       ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-04515",
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Crosswalk only shows generic stale-token-related policy text, not worktree allocation strategy, contamination, reuse, or cleanup rules.",
       "source_obligation_ids": [
-        "obl-4283"
+        "obl-359"
       ],
       "source_seed_ids": [
-        "seed-6167"
+        "seed-359"
       ],
       "source_shard_ids": [
-        "shard-0082"
+        "shard-0092"
       ],
-      "canon_label": "Plans/*.md",
-      "row_type": "layout_blocker",
-      "path": "Plans/Decision_Log.md",
-      "heading_hint": "Do-not-forget details",
-      "status": "present",
-      "exact_items": [
-        "After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes."
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/Decision_Log.md:3",
-        "Plans/Decision_Log.md:16",
-        "Plans/Decision_Log.md:54",
-        "Plans/Decision_Log.md:18"
-      ],
-      "required_action": "none"
+      "path_field_status": "match"
     }
   ]
 }

@@ -1,417 +1,300 @@
 {
-  "schema_id": "pm.transfer_coverage_wave.v1",
+  "schema_id": "pm.transfer_coverage_wave.v3",
   "work_id": "w-20260312-203855",
   "wave_id": "wave-028",
-  "row_groups": [
-    "rowgrp-0109",
-    "rowgrp-0110",
-    "rowgrp-0111",
-    "rowgrp-0112"
+  "timestamp_utc": "2026-04-28T20:29:02Z",
+  "subagent_tasks": [
+    "coverage-rowgrp-109",
+    "coverage-rowgrp-110",
+    "coverage-rowgrp-111",
+    "coverage-rowgrp-112"
   ],
-  "coverage_rows": [
+  "assigned_input_boundaries": [
+    "rowgrp-109 cov-362 Plans/Multi-Account.md",
+    "rowgrp-110 cov-282 Plans/Multi-Account.md",
+    "rowgrp-111 cov-158,cov-309,cov-357,cov-487,cov-539,cov-562,cov-568,cov-1142 Plans/Multi-Account.md",
+    "rowgrp-112 cov-553,cov-586 Plans/Multi-Account.md"
+  ],
+  "subagent_result_status": {
+    "coverage-rowgrp-109": "completed_reduced_conservatively",
+    "coverage-rowgrp-110": "completed_reduced_conservatively",
+    "coverage-rowgrp-111": "completed_reduced_conservatively",
+    "coverage-rowgrp-112": "completed_reduced_conservatively"
+  },
+  "completed_task_count": 4,
+  "failed_task_count": 0,
+  "coverage_ids_assigned": [
+    "cov-362",
+    "cov-282",
+    "cov-158",
+    "cov-309",
+    "cov-357",
+    "cov-487",
+    "cov-539",
+    "cov-562",
+    "cov-568",
+    "cov-1142",
+    "cov-553",
+    "cov-586"
+  ],
+  "coverage_ids_completed": [
+    "cov-362",
+    "cov-282",
+    "cov-158",
+    "cov-309",
+    "cov-357",
+    "cov-487",
+    "cov-539",
+    "cov-562",
+    "cov-568",
+    "cov-1142",
+    "cov-553",
+    "cov-586"
+  ],
+  "path_groups_assigned": [
+    "Plans/Multi-Account.md"
+  ],
+  "rows": [
     {
-      "coverage_id": "cov-04536",
+      "coverage_id": "cov-362",
+      "status": "present",
+      "evidence": [
+        "Plans/Multi-Account.md:27-28 states assistant/chat/interview/builder actors share provider/runtime identity semantics with Orchestrator and remain distinct actor/run kinds",
+        "Plans/Multi-Account.md:97-100 repeats the shared actor/runtime boundary and requires preserving actor kind and execution context"
+      ],
+      "required_action": "none",
+      "unresolved_reason": "",
       "source_obligation_ids": [
-        "obl-4283"
+        "obl-108"
       ],
       "source_seed_ids": [
-        "seed-6167"
+        "seed-108"
       ],
       "source_shard_ids": [
-        "shard-0082"
+        "shard-0027"
       ],
-      "canon_label": "Plans/*.md",
-      "row_type": "layout_blocker",
-      "path": "Plans/Permissions_System.md",
-      "heading_hint": "Do-not-forget details",
-      "status": "present",
-      "exact_items": [
-        "After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes."
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/Permissions_System.md:103",
-        "Plans/Permissions_System.md:626",
-        "Plans/Permissions_System.md:16",
-        "Plans/Permissions_System.md:93",
-        "Plans/Permissions_System.md:307",
-        "Plans/Permissions_System.md:7",
-        "Plans/Permissions_System.md:180",
-        "Plans/Permissions_System.md:554",
-        "Plans/Permissions_System.md:83"
-      ],
-      "required_action": "none"
+      "path_field_status": "match"
     },
     {
-      "coverage_id": "cov-00421",
-      "source_obligation_ids": [
-        "obl-0419"
-      ],
-      "source_seed_ids": [
-        "seed-0424"
-      ],
-      "source_shard_ids": [
-        "shard-0007"
-      ],
-      "canon_label": "Plans/Personas.md",
-      "row_type": "consumer",
-      "path": "Plans/Personas.md",
-      "heading_hint": "Settings / Provider / Persona / Account Impacts",
-      "status": "present",
-      "exact_items": [
-        "`Plans/Personas.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/Personas.md:7",
-        "Plans/Personas.md:193",
-        "Plans/Personas.md:33",
-        "Plans/Personas.md:1"
-      ],
-      "required_action": "none"
-    },
-    {
-      "coverage_id": "cov-00668",
-      "source_obligation_ids": [
-        "obl-0628"
-      ],
-      "source_seed_ids": [
-        "seed-0634"
-      ],
-      "source_shard_ids": [
-        "shard-0009"
-      ],
-      "canon_label": "Plans/Prompt_Pipeline.md",
-      "row_type": "consumer",
-      "path": "Plans/Personas.md",
-      "heading_hint": "Highest-Impact Docs",
+      "coverage_id": "cov-282",
       "status": "partial",
-      "exact_items": [
-        "`Plans/Prompt_Pipeline.md`, `Plans/Personas.md`, `Plans/Provider_Stream_Mapping_External_Reference_A2A.md`"
-      ],
-      "stale_tokens": [],
       "evidence": [
-        "Plans/Personas.md:40",
-        "Plans/Personas.md:7"
+        "Plans/Multi-Account.md:51-53 defines default behavior, project-owned policy, run snapshots, and visible requested/effective identity",
+        "Plans/Multi-Account.md:268-275 defines requested state recovery and binding-based fallback behavior",
+        "Plans/Multi-Account.md:317-320 manual controls record requested vs effective account identity and switch reason",
+        "Plans/Multi-Account.md:382-386 labels authoritative vs estimated Gemini usage sources"
       ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-00711",
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Default, policy, manual override, and source-confidence labels exist, but the exact app default/project override/surface default/role policy/seam-package-node/turn-session-run-task-subagent source-layer list and winning-source UI rule are not fully direct.",
       "source_obligation_ids": [
-        "obl-0655"
+        "obl-082"
       ],
       "source_seed_ids": [
-        "seed-0661"
+        "seed-082"
+      ],
+      "source_shard_ids": [
+        "shard-0019"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-158",
+      "status": "present",
+      "evidence": [
+        "Plans/Multi-Account.md:77 owns the canonical requested/effective account identity contract",
+        "Plans/Multi-Account.md:81-88 requires requested_account_id, requested_account_policy, requested_account_binding, effective_account_id, effective_provider_identity, execution_role, and operational_identity",
+        "Plans/Multi-Account.md:91-95 adds requested account fields and binding-governed fallback behavior",
+        "Plans/Multi-Account.md:270-275 keeps requested/effective account state explicit and makes fallback depend on binding",
+        "Plans/Multi-Account.md:320 records requested vs effective account identity and switch reason for manual controls"
+      ],
+      "required_action": "none",
+      "unresolved_reason": "",
+      "source_obligation_ids": [
+        "obl-043"
+      ],
+      "source_seed_ids": [
+        "seed-043"
       ],
       "source_shard_ids": [
         "shard-0010"
       ],
-      "canon_label": "Plans/Models_System.md",
-      "row_type": "consumer",
-      "path": "Plans/Personas.md",
-      "heading_hint": "Settings / Provider / Persona / Account Impacts",
-      "status": "present",
-      "exact_items": [
-        "`Plans/Models_System.md`, `Plans/Prompt_Pipeline.md`, `Plans/Personas.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/Personas.md:23",
-        "Plans/Personas.md:40",
-        "Plans/Personas.md:7",
-        "Plans/Personas.md:193",
-        "Plans/Personas.md:33",
-        "Plans/Personas.md:1"
-      ],
-      "required_action": "none"
+      "path_field_status": "match"
     },
     {
-      "coverage_id": "cov-00776",
+      "coverage_id": "cov-309",
+      "status": "missing",
+      "evidence": [],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Plans/Multi-Account.md does not directly define the project health, project activity, and project attention split.",
       "source_obligation_ids": [
-        "obl-0708"
+        "obl-088"
       ],
       "source_seed_ids": [
-        "seed-0736",
-        "seed-6068"
+        "seed-088"
       ],
       "source_shard_ids": [
-        "shard-0011",
-        "shard-0082"
+        "shard-0021"
       ],
-      "canon_label": "Plans/Personas.md",
-      "row_type": "consumer",
-      "path": "Plans/Personas.md",
-      "heading_hint": "",
-      "status": "present",
-      "exact_items": [
-        "`Plans/Personas.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/Personas.md:7"
-      ],
-      "required_action": "none"
+      "path_field_status": "match"
     },
     {
-      "coverage_id": "cov-00790",
+      "coverage_id": "cov-357",
+      "status": "missing",
+      "evidence": [],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Plans/Multi-Account.md does not own the requested rewrite-critical Orchestrator glossary term set.",
       "source_obligation_ids": [
-        "obl-0722"
+        "obl-105"
       ],
       "source_seed_ids": [
-        "seed-0750",
-        "seed-1987"
+        "seed-105"
       ],
       "source_shard_ids": [
-        "shard-0011",
-        "shard-0034"
+        "shard-0026"
       ],
-      "canon_label": "Plans/Personas.md",
-      "row_type": "consumer",
-      "path": "Plans/Personas.md",
-      "heading_hint": "Highest-risk impacted docs",
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-487",
       "status": "partial",
-      "exact_items": [
-        "`Plans/Personas.md`"
-      ],
-      "stale_tokens": [],
       "evidence": [
-        "Plans/Personas.md:7"
+        "Plans/Multi-Account.md:81-88 preserves account identity fields in runtime and permission-facing envelopes",
+        "Plans/Multi-Account.md:97-100 preserves actor kind and execution context across shared requested/effective identity envelopes",
+        "Plans/Multi-Account.md:277-278 keeps effective account identity available to permission and approval consumers"
       ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-01148",
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Actor-envelope preservation is present, but stream-schema items such as tier_boundary, audit_kind, attempt_id category schemas, input_required/input_provided distinctions, handoff context, and SelectSpeakerEvent treatment are not directly owned here.",
       "source_obligation_ids": [
-        "obl-1079"
+        "obl-141"
       ],
       "source_seed_ids": [
-        "seed-1159",
-        "seed-1181",
-        "seed-1213",
-        "seed-1474",
-        "seed-1493",
-        "seed-1862",
-        "seed-1974",
-        "seed-2229",
-        "seed-2354",
-        "seed-2480"
+        "seed-141"
       ],
       "source_shard_ids": [
-        "shard-0019",
-        "shard-0020",
-        "shard-0021",
-        "shard-0026",
-        "shard-0027",
-        "shard-0033",
-        "shard-0034",
-        "shard-0037",
-        "shard-0039",
+        "shard-0035"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-539",
+      "status": "present",
+      "evidence": [
+        "Plans/Multi-Account.md:77 owns the canonical requested/effective account identity contract",
+        "Plans/Multi-Account.md:81-88 requires requested account fields, execution_role, and operational_identity in account-carrying envelopes",
+        "Plans/Multi-Account.md:91-95 adds requested_account_id and requested_account_binding and governs provider_account_id as subordinate metadata",
+        "Plans/Multi-Account.md:259-262 lists requested/effective execution identity, effective_provider_identity, execution_role, and operational_identity as canonical terms"
+      ],
+      "required_action": "none",
+      "unresolved_reason": "",
+      "source_obligation_ids": [
+        "obl-155"
+      ],
+      "source_seed_ids": [
+        "seed-155"
+      ],
+      "source_shard_ids": [
+        "shard-0039"
+      ],
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-562",
+      "status": "partial",
+      "evidence": [
+        "Plans/Multi-Account.md:81-88 requires requested_account_id, requested_account_binding, execution_role, and operational_identity",
+        "Plans/Multi-Account.md:238-247 lists requested account fields, execution_role, and operational_identity",
+        "Plans/Multi-Account.md:356-362 required account-binding/runtime fields include requested_account_id, requested_account_binding, effective_account_id, account_switch_reason, and execution_role"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Requested concrete-account and execution-role fields are present, but projection-freshness owner, route-payload schema owner, and project-summary/project-attention owner criteria are not directly stated.",
+      "source_obligation_ids": [
+        "obl-159"
+      ],
+      "source_seed_ids": [
+        "seed-159"
+      ],
+      "source_shard_ids": [
         "shard-0040"
       ],
-      "canon_label": "Plans/Personas.md",
-      "row_type": "consumer",
-      "path": "Plans/Personas.md",
-      "heading_hint": "Targeted docs read",
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-568",
       "status": "partial",
-      "exact_items": [
-        "`Plans/Personas.md`"
-      ],
-      "stale_tokens": [],
       "evidence": [
-        "Plans/Personas.md:7",
-        "Plans/Personas.md:152"
+        "Plans/Multi-Account.md:81-88 requires execution_role and operational_identity in runtime, bridged-provider, and permission-facing envelopes",
+        "Plans/Multi-Account.md:97-100 requires preserving actor kind and execution context for shared identity envelopes",
+        "Plans/Multi-Account.md:356-372 defines account_switch_reason, execution_role, and durable account_switch_event/account_pressure_episode history"
       ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-03315",
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Actor kind, execution_role, operational_identity, switch reason, and durable switch/pressure history are related coverage, but durable projection schema, usage records, surface payloads, and durable switch pointer are not fully direct.",
       "source_obligation_ids": [
-        "obl-3198"
+        "obl-160"
       ],
       "source_seed_ids": [
-        "seed-4180"
+        "seed-160"
       ],
       "source_shard_ids": [
-        "shard-0059"
+        "shard-0040"
       ],
-      "canon_label": "Plans/*.md",
-      "row_type": "consumer",
-      "path": "Plans/Personas.md",
-      "heading_hint": "Do-not-forget details",
-      "status": "present",
-      "exact_items": [
-        "The key remaining question is breadth: how many authored `Plans/*.md` docs are still only Gemini or otherwise below full requested model coverage."
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/Personas.md:3",
-        "Plans/Personas.md:46",
-        "Plans/Personas.md:177",
-        "Plans/Personas.md:23"
-      ],
-      "required_action": "none"
+      "path_field_status": "match"
     },
     {
-      "coverage_id": "cov-04454",
+      "coverage_id": "cov-1142",
+      "status": "missing",
+      "evidence": [],
+      "required_action": "owner_create_or_rewrite",
+      "unresolved_reason": "Plans/Multi-Account.md does not contain Prompt_Pipeline persona_override_owner_id or tier_id scope-vocabulary cleanup.",
       "source_obligation_ids": [
-        "obl-4262"
+        "obl-332"
       ],
       "source_seed_ids": [
-        "seed-6087"
+        "seed-332"
       ],
       "source_shard_ids": [
-        "shard-0082"
+        "shard-0084"
       ],
-      "canon_label": "39",
-      "row_type": "consumer",
-      "path": "Plans/Personas.md",
-      "heading_hint": "Do-not-forget details",
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-553",
       "status": "partial",
-      "exact_items": [
-        "Coverage has been re-audited after the merge: `39` top-level `Plans/*.md` docs are full six-pass complete and the remaining `22` docs are now uniformly at five passes."
-      ],
-      "stale_tokens": [],
       "evidence": [
-        "Plans/Personas.md:3"
+        "Plans/Multi-Account.md:53 keeps requested/effective persona/auth/account identity visible and queryable",
+        "Plans/Multi-Account.md:81-95 defines the requested/effective account identity fields without requested_persona_id or effective_persona_id tokens"
       ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-04498",
+      "required_action": "stale_retirement",
+      "unresolved_reason": "Requested/effective identity is present and stale persona field tokens are not used in this section, but there is no direct row-specific retirement statement for requested_persona_id/effective_persona_id.",
       "source_obligation_ids": [
-        "obl-4275"
+        "obl-157"
       ],
       "source_seed_ids": [
-        "seed-6158"
+        "seed-157"
       ],
       "source_shard_ids": [
-        "shard-0082"
+        "shard-0039"
       ],
-      "canon_label": "Plans/Personas.md",
-      "row_type": "consumer",
-      "path": "Plans/Personas.md",
-      "heading_hint": "Impacted docs",
+      "path_field_status": "match"
+    },
+    {
+      "coverage_id": "cov-586",
       "status": "partial",
-      "exact_items": [
-        "`Plans/Personas.md`"
-      ],
-      "stale_tokens": [],
       "evidence": [
-        "Plans/Personas.md:7"
+        "Plans/Multi-Account.md:286-290 allows auto-switching for hard exhaustion, projected quota pressure, rate-limit pressure, and unavailable/capacity-constrained accounts",
+        "Plans/Multi-Account.md:356-372 defines account_switch_reason and persists durable switch and pressure history through account_switch_event and account_pressure_episode"
       ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-04796",
+      "required_action": "stale_retirement",
+      "unresolved_reason": "Switch and pressure history exists, but the exact append-only family split, soft vs hard switching, and role/account interaction coverage are incomplete.",
       "source_obligation_ids": [
-        "obl-4511"
+        "obl-165"
       ],
       "source_seed_ids": [
-        "seed-6503"
+        "seed-165"
       ],
       "source_shard_ids": [
-        "shard-0086"
+        "shard-0041"
       ],
-      "canon_label": "Plans/Personas.md",
-      "row_type": "consumer",
-      "path": "Plans/Personas.md",
-      "heading_hint": "Docs probably implicated",
-      "status": "partial",
-      "exact_items": [
-        "`Plans/Personas.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/Personas.md:7"
-      ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-04830",
-      "source_obligation_ids": [
-        "obl-4545"
-      ],
-      "source_seed_ids": [
-        "seed-6537"
-      ],
-      "source_shard_ids": [
-        "shard-0086"
-      ],
-      "canon_label": "Plans/Personas.md",
-      "row_type": "consumer",
-      "path": "Plans/Personas.md",
-      "heading_hint": "MUST RECONCILE",
-      "status": "partial",
-      "exact_items": [
-        "`Plans/Personas.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/Personas.md:7"
-      ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-04977",
-      "source_obligation_ids": [
-        "obl-4675"
-      ],
-      "source_seed_ids": [
-        "seed-6667"
-      ],
-      "source_shard_ids": [
-        "shard-0088"
-      ],
-      "canon_label": "Plans/Orchestrator_Page.md",
-      "row_type": "consumer",
-      "path": "Plans/Personas.md",
-      "heading_hint": "Export / settings / persona transfer gaps are broader than first summarized",
-      "status": "present",
-      "exact_items": [
-        "`Plans/Orchestrator_Page.md`, `Plans/storage-plan.md`, `Plans/FinalGUISpec.md`, `Plans/Models_System.md`, `Plans/Multi-Account.md`, `Plans/Personas.md`, `Plans/Prompt_Pipeline.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/Personas.md:267",
-        "Plans/Personas.md:193",
-        "Plans/Personas.md:23",
-        "Plans/Personas.md:7",
-        "Plans/Personas.md:40",
-        "Plans/Personas.md:45",
-        "Plans/Personas.md:1",
-        "Plans/Personas.md:317",
-        "Plans/Personas.md:307"
-      ],
-      "required_action": "none"
-    },
-    {
-      "coverage_id": "cov-04537",
-      "source_obligation_ids": [
-        "obl-4283"
-      ],
-      "source_seed_ids": [
-        "seed-6167"
-      ],
-      "source_shard_ids": [
-        "shard-0082"
-      ],
-      "canon_label": "Plans/*.md",
-      "row_type": "layout_blocker",
-      "path": "Plans/Personas.md",
-      "heading_hint": "Do-not-forget details",
-      "status": "present",
-      "exact_items": [
-        "After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes."
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/Personas.md:3",
-        "Plans/Personas.md:319",
-        "Plans/Personas.md:177",
-        "Plans/Personas.md:23"
-      ],
-      "required_action": "none"
+      "path_field_status": "match"
     }
   ]
 }

@@ -1,584 +1,1569 @@
 {
-  "schema_id": "pm.transfer_coverage_wave.v1",
+  "schema_id": "pm.transfer_coverage_wave.v3",
   "work_id": "w-20260312-203855",
   "wave_id": "wave-006",
-  "row_groups": [
-    "rowgrp-0021",
-    "rowgrp-0022",
-    "rowgrp-0023",
-    "rowgrp-0024"
+  "timestamp_utc": "2026-04-28T19:26:39Z",
+  "subagent_tasks": [
+    "coverage-rowgrp-021",
+    "coverage-rowgrp-022",
+    "coverage-rowgrp-023",
+    "coverage-rowgrp-024"
   ],
-  "coverage_rows": [
+  "assigned_input_boundaries": [
+    "rowgrp-021 cov-071,cov-141,cov-184,cov-258,cov-417,cov-427,cov-486,cov-496,cov-542,cov-560 Plans/Contracts_V0.md",
+    "rowgrp-022 cov-583,cov-627,cov-642,cov-649,cov-668,cov-705,cov-735,cov-746,cov-772,cov-857 Plans/Contracts_V0.md",
+    "rowgrp-023 cov-882,cov-918,cov-924,cov-938,cov-944,cov-954,cov-955,cov-959,cov-964,cov-968 Plans/Contracts_V0.md",
+    "rowgrp-024 cov-971,cov-978,cov-995,cov-998,cov-1010,cov-1016,cov-1040,cov-1053,cov-1059,cov-1131 Plans/Contracts_V0.md"
+  ],
+  "subagent_result_status": {
+    "coverage-rowgrp-021": "completed",
+    "coverage-rowgrp-022": "completed",
+    "coverage-rowgrp-023": "completed",
+    "coverage-rowgrp-024": "completed"
+  },
+  "completed_task_count": 4,
+  "failed_task_count": 0,
+  "coverage_ids_assigned": [
+    "cov-071",
+    "cov-141",
+    "cov-184",
+    "cov-258",
+    "cov-417",
+    "cov-427",
+    "cov-486",
+    "cov-496",
+    "cov-542",
+    "cov-560",
+    "cov-583",
+    "cov-627",
+    "cov-642",
+    "cov-649",
+    "cov-668",
+    "cov-705",
+    "cov-735",
+    "cov-746",
+    "cov-772",
+    "cov-857",
+    "cov-882",
+    "cov-918",
+    "cov-924",
+    "cov-938",
+    "cov-944",
+    "cov-954",
+    "cov-955",
+    "cov-959",
+    "cov-964",
+    "cov-968",
+    "cov-971",
+    "cov-978",
+    "cov-995",
+    "cov-998",
+    "cov-1010",
+    "cov-1016",
+    "cov-1040",
+    "cov-1053",
+    "cov-1059",
+    "cov-1131"
+  ],
+  "coverage_ids_completed": [
+    "cov-071",
+    "cov-141",
+    "cov-184",
+    "cov-258",
+    "cov-417",
+    "cov-427",
+    "cov-486",
+    "cov-496",
+    "cov-542",
+    "cov-560",
+    "cov-583",
+    "cov-627",
+    "cov-642",
+    "cov-649",
+    "cov-668",
+    "cov-705",
+    "cov-735",
+    "cov-746",
+    "cov-772",
+    "cov-857",
+    "cov-882",
+    "cov-918",
+    "cov-924",
+    "cov-938",
+    "cov-944",
+    "cov-954",
+    "cov-955",
+    "cov-959",
+    "cov-964",
+    "cov-968",
+    "cov-971",
+    "cov-978",
+    "cov-995",
+    "cov-998",
+    "cov-1010",
+    "cov-1016",
+    "cov-1040",
+    "cov-1053",
+    "cov-1059",
+    "cov-1131"
+  ],
+  "path_groups_assigned": [
+    "Plans/Contracts_V0.md"
+  ],
+  "rows": [
     {
-      "coverage_id": "cov-05126",
+      "coverage_id": "cov-071",
       "source_obligation_ids": [
-        "obl-4800"
+        "obl-030"
       ],
       "source_seed_ids": [
-        "seed-6802"
+        "seed-030"
       ],
       "source_shard_ids": [
-        "shard-0089"
+        "shard-0007"
       ],
-      "canon_label": "Plans/Contracts_V0.md:778-806",
-      "row_type": "consumer",
+      "canon_label": "tier-rooted runtime/storage identity gaps",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "Runtime / Storage / Contract Impacts",
+      "status": "missing",
+      "exact_items": [
+        "active-agents.json is incompatible with event-sourced state",
+        "Contracts_V0.md, Executor_Protocol.md use tier-based paths <phase>/<task>/<subtask>",
+        "Progression_Gates.md gates are phase/task boundaries; package-complete and seam-complete gates are undefined",
+        "Prompt_Pipeline.md run envelope/instruction bundle embeds tier/mode; no node/package/lane identity fields",
+        "storage-plan event schemas lack package_id, seam_id, lane_id, attempt_id, effective_identity"
+      ],
+      "stale_tokens": [
+        "active-agents.json",
+        "phase/task/subtask",
+        "tier-identity",
+        "tier-scoped",
+        "lexicographic_node_id"
+      ],
+      "evidence": [
+        "Plans/Contracts_V0.md: assigned file reviewed; no matching live stale-token occurrence or row-specific owner text found"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "doc_resolution_status": "concrete",
+      "verification_status": "verified",
+      "source_doc_resolution_status": "concrete",
+      "unresolved_reason": "No live stale-token occurrence or row-specific owner coverage found in Plans/Contracts_V0.md."
+    },
+    {
+      "coverage_id": "cov-141",
+      "source_obligation_ids": [
+        "obl-039"
+      ],
+      "source_seed_ids": [
+        "seed-039"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "canon_label": "requested/effective execution identity must include account and overseer role",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "Settings / Provider / Persona / Account Impacts",
+      "status": "missing",
+      "exact_items": [
+        "Multi-account is surfaced in UX before it is modeled canonically in runtime records.",
+        "almost no equivalent requested/effective account fields in runtime/storage/schema contracts",
+        "requested/effective runtime identity to include account and overseer role"
+      ],
+      "stale_tokens": [
+        "requested_persona_id",
+        "effective_persona_id",
+        "requested_persona",
+        "effective_persona"
+      ],
+      "evidence": [
+        "Plans/Contracts_V0.md: assigned file reviewed; no matching live stale-token occurrence or row-specific owner text found"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "doc_resolution_status": "concrete",
+      "verification_status": "verified",
+      "source_doc_resolution_status": "global_or_cross_cutting",
+      "unresolved_reason": "No live stale-token occurrence or row-specific owner coverage found in Plans/Contracts_V0.md."
+    },
+    {
+      "coverage_id": "cov-184",
+      "source_obligation_ids": [
+        "obl-048"
+      ],
+      "source_seed_ids": [
+        "seed-048"
+      ],
+      "source_shard_ids": [
+        "shard-0006"
+      ],
+      "canon_label": "requested-side concrete account anchor",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "Key findings",
+      "status": "missing",
+      "exact_items": [
+        "no canonical requested concrete-account anchor exists when a user pins a specific account",
+        "Prompt_Pipeline.md and Contracts_V0.md carry requested_account_policy, but no parallel requested-side concrete account field exists",
+        "Add one canonical requested-side concrete-account field to the requested/effective runtime identity bundle, while retaining requested_account_policy as the routing rule rather than the selected account"
+      ],
+      "stale_tokens": [
+        "requested_account_policy"
+      ],
+      "evidence": [
+        "Plans/Contracts_V0.md: assigned file reviewed; no matching live stale-token occurrence or row-specific owner text found"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "doc_resolution_status": "concrete",
+      "verification_status": "verified",
+      "source_doc_resolution_status": "concrete",
+      "unresolved_reason": "No live stale-token occurrence or row-specific owner coverage found in Plans/Contracts_V0.md."
+    },
+    {
+      "coverage_id": "cov-258",
+      "source_obligation_ids": [
+        "obl-072"
+      ],
+      "source_seed_ids": [
+        "seed-072"
+      ],
+      "source_shard_ids": [
+        "shard-0016"
+      ],
+      "canon_label": "Canonical concern record family",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "Recommended minimum concern record shape",
+      "status": "missing",
+      "exact_items": [
+        "Add a canonical concern record family and corresponding projection contract.",
+        "Concern should likely carry: concern_id, project_id, owner_kind, owner_ref?, source_refs[], evidence_refs[], artifact_refs[], review_refs[], corroboration_refs[], graph_patch_refs[], recovery_refs[]"
+      ],
+      "stale_tokens": [
+        "discussion-only",
+        "underdefined",
+        "no obvious current concern event family"
+      ],
+      "evidence": [
+        "Plans/Contracts_V0.md: assigned file reviewed; no matching live stale-token occurrence or row-specific owner text found"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "doc_resolution_status": "concrete",
+      "verification_status": "verified",
+      "source_doc_resolution_status": "unknown_pending_doc_discovery",
+      "unresolved_reason": "No live stale-token occurrence or row-specific owner coverage found in Plans/Contracts_V0.md."
+    },
+    {
+      "coverage_id": "cov-417",
+      "source_obligation_ids": [
+        "obl-124"
+      ],
+      "source_seed_ids": [
+        "seed-124"
+      ],
+      "source_shard_ids": [
+        "shard-0031"
+      ],
+      "canon_label": "requested/effective identity disclosure contract",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "Impact of findings",
+      "status": "missing",
+      "exact_items": [
+        "Define one shared requested/effective identity disclosure contract reusable across graph detail, artifacts, GitHub/auth surfaces, usage/account-pressure surfaces."
+      ],
+      "stale_tokens": [
+        "requested identity",
+        "effective identity",
+        "provider/account identity"
+      ],
+      "evidence": [
+        "Plans/Contracts_V0.md: assigned file reviewed; no matching live stale-token occurrence or row-specific owner text found"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "doc_resolution_status": "concrete",
+      "verification_status": "verified",
+      "source_doc_resolution_status": "global_or_cross_cutting",
+      "unresolved_reason": "No live stale-token occurrence or row-specific owner coverage found in Plans/Contracts_V0.md."
+    },
+    {
+      "coverage_id": "cov-427",
+      "source_obligation_ids": [
+        "obl-125"
+      ],
+      "source_seed_ids": [
+        "seed-125"
+      ],
+      "source_shard_ids": [
+        "shard-0031"
+      ],
+      "canon_label": "storage / usage attribution pivot away from tier-era routing",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "Key findings",
+      "status": "missing",
+      "exact_items": [
+        "Rework storage/usage attribution to treat seam_id, package_id, lane_id, and attempt_id as first-class where the runtime model now requires them, instead of centering tier_id.",
+        "Replace or deprecate tier-era event and widget assumptions: run.tier_* -> seam/package/lane-aware runtime events; tier_tree / Tiers ownership -> seam/worktree/package-native surfaces."
+      ],
+      "stale_tokens": [
+        "tier_id",
+        "run.tier_*",
+        "tier_tree",
+        "Tiers"
+      ],
+      "evidence": [
+        "Plans/Contracts_V0.md: assigned file reviewed; no matching live stale-token occurrence or row-specific owner text found"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "doc_resolution_status": "concrete",
+      "verification_status": "verified",
+      "source_doc_resolution_status": "global_or_cross_cutting",
+      "unresolved_reason": "No live stale-token occurrence or row-specific owner coverage found in Plans/Contracts_V0.md."
+    },
+    {
+      "coverage_id": "cov-486",
+      "source_obligation_ids": [
+        "obl-141"
+      ],
+      "source_seed_ids": [
+        "seed-141"
+      ],
+      "source_shard_ids": [
+        "shard-0035"
+      ],
+      "canon_label": "stream-schema ownership and actor-envelope completeness",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "Research Progress",
+      "status": "missing",
+      "exact_items": [
+        "tier_boundary is not just stale prose here; it is a reserved diagnostic category with hard detail keys (from_tier / to_tier).",
+        "The Overseer audit protocol is structurally incompatible with the rewrite: singular Overseer, audit_kind = start_of_tier | end_of_tier, hard exactly 2 reviewer subagents, no minority-advisory outcome for the now-required 2-of-3 corroboration pattern",
+        "2026-03-09 addenda say normalized streams MUST preserve attempt_id but none of the reserved diagnostic category schemas actually expose attempt_id",
+        "usage events carry no account attribution",
+        "auth_state carries no pool-member / account context for failover rotation",
+        "input_required / input_provided cannot distinguish node HITL, corroboration pause, or conversational user-input pause",
+        "no actor_kind",
+        "handoff uses bare agent names with no package/seam/lane context",
+        "SelectSpeakerEvent is demoted to raw_observation, which hides governance-relevant speaker/overseer transitions from downstream projections"
+      ],
+      "stale_tokens": [
+        "tier_boundary",
+        "Overseer",
+        "audit_kind",
+        "exactly 2 reviewer subagents",
+        "minority-advisory",
+        "attempt_id",
+        "usage",
+        "auth_state",
+        "input_required",
+        "input_provided",
+        "actor_kind",
+        "handoff",
+        "SelectSpeakerEvent",
+        "raw_observation"
+      ],
+      "evidence": [
+        "Plans/Contracts_V0.md: assigned file reviewed; no matching live stale-token occurrence or row-specific owner text found"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "doc_resolution_status": "concrete",
+      "verification_status": "verified",
+      "source_doc_resolution_status": "unknown_pending_doc_discovery",
+      "unresolved_reason": "No live stale-token occurrence or row-specific owner coverage found in Plans/Contracts_V0.md."
+    },
+    {
+      "coverage_id": "cov-496",
+      "source_obligation_ids": [
+        "obl-143"
+      ],
+      "source_seed_ids": [
+        "seed-143"
+      ],
+      "source_shard_ids": [
+        "shard-0036"
+      ],
+      "canon_label": "canonical payload block and actor envelope",
+      "row_type": "owner",
       "path": "Plans/Contracts_V0.md",
       "heading_hint": "",
       "status": "missing",
       "exact_items": [
-        "`Plans/Contracts_V0.md:778-806`"
+        "Publish a single superseding canonical payload block in Contracts_V0.md for scheduler/safe-point/remediation records and explicitly demote older variants.",
+        "Add a canonical actor envelope shared by runtime records, provider-account snapshots, receipts, Usage pivots, and conversational actor telemetry.",
+        "Define usage_event_ref once as a locator-grade canonical reference and reuse it everywhere rather than inventing a new opaque ID family."
       ],
-      "stale_tokens": [],
+      "stale_tokens": [
+        "usage_event_ref"
+      ],
       "evidence": [
-        "Plans/Contracts_V0.md:required_terms_absent"
+        "Plans/Contracts_V0.md: assigned file reviewed; no matching live stale-token occurrence or row-specific owner text found"
       ],
-      "required_action": "consumer_propagation"
+      "required_action": "owner_create_or_rewrite",
+      "doc_resolution_status": "concrete",
+      "verification_status": "verified",
+      "source_doc_resolution_status": "concrete",
+      "unresolved_reason": "No live stale-token occurrence or row-specific owner coverage found in Plans/Contracts_V0.md."
     },
     {
-      "coverage_id": "cov-05136",
+      "coverage_id": "cov-542",
       "source_obligation_ids": [
-        "obl-4810"
+        "obl-155"
       ],
       "source_seed_ids": [
-        "seed-6812",
-        "seed-6845",
-        "seed-7044",
-        "seed-7080",
-        "seed-7138",
-        "seed-7167"
+        "seed-155"
       ],
       "source_shard_ids": [
-        "shard-0089",
-        "shard-0090",
-        "shard-0091"
+        "shard-0039"
       ],
-      "canon_label": "Plans/Contracts_V0.md",
-      "row_type": "consumer",
-      "path": "Plans/Contracts_V0.md",
-      "heading_hint": "Entry",
-      "status": "present",
-      "exact_items": [
-        "`Plans/Contracts_V0.md`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/Contracts_V0.md:14",
-        "Plans/Contracts_V0.md:621"
-      ],
-      "required_action": "none"
-    },
-    {
-      "coverage_id": "cov-05202",
-      "source_obligation_ids": [
-        "obl-4870"
-      ],
-      "source_seed_ids": [
-        "seed-6912"
-      ],
-      "source_shard_ids": [
-        "shard-0090"
-      ],
-      "canon_label": "Plans/Contracts_V0.md",
-      "row_type": "consumer",
-      "path": "Plans/Contracts_V0.md",
-      "heading_hint": "",
-      "status": "present",
-      "exact_items": [
-        "`Plans/Contracts_V0.md` already carries `report_ref` in the blocked-episode contract."
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/Contracts_V0.md:14",
-        "Plans/Contracts_V0.md:484",
-        "Plans/Contracts_V0.md:291",
-        "Plans/Contracts_V0.md:169",
-        "Plans/Contracts_V0.md:309"
-      ],
-      "required_action": "none"
-    },
-    {
-      "coverage_id": "cov-05203",
-      "source_obligation_ids": [
-        "obl-4871"
-      ],
-      "source_seed_ids": [
-        "seed-6913"
-      ],
-      "source_shard_ids": [
-        "shard-0090"
-      ],
-      "canon_label": "Plans/Contracts_V0.md",
-      "row_type": "consumer",
-      "path": "Plans/Contracts_V0.md",
-      "heading_hint": "",
-      "status": "present",
-      "exact_items": [
-        "`Plans/Contracts_V0.md` and `Plans/Executor_Protocol.md` already carry `startup_recovered` in runtime wake canon."
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/Contracts_V0.md:14",
-        "Plans/Contracts_V0.md:702",
-        "Plans/Contracts_V0.md:1341",
-        "Plans/Contracts_V0.md:25",
-        "Plans/Contracts_V0.md:1127"
-      ],
-      "required_action": "none"
-    },
-    {
-      "coverage_id": "cov-05210",
-      "source_obligation_ids": [
-        "obl-4875"
-      ],
-      "source_seed_ids": [
-        "seed-6923"
-      ],
-      "source_shard_ids": [
-        "shard-0090"
-      ],
-      "canon_label": "Plans/Contracts_V0.md:684-692",
-      "row_type": "consumer",
+      "canon_label": "operational identity layer and execution role",
+      "row_type": "owner",
       "path": "Plans/Contracts_V0.md",
       "heading_hint": "",
       "status": "missing",
       "exact_items": [
-        "`Plans/Contracts_V0.md:684-692`"
+        "The rewrite now needs one explicit operational identity layer in addition to provider-account identity",
+        "there is still no canonical execution_role / actor_role field",
+        "there is still no canonical requested concrete-account field"
       ],
-      "stale_tokens": [],
+      "stale_tokens": [
+        "execution_role",
+        "actor_role"
+      ],
       "evidence": [
-        "Plans/Contracts_V0.md:required_terms_absent"
+        "Plans/Contracts_V0.md: assigned file reviewed; no matching live stale-token occurrence or row-specific owner text found"
       ],
-      "required_action": "consumer_propagation"
+      "required_action": "owner_create_or_rewrite",
+      "doc_resolution_status": "concrete",
+      "verification_status": "verified",
+      "source_doc_resolution_status": "global_or_cross_cutting",
+      "unresolved_reason": "No live stale-token occurrence or row-specific owner coverage found in Plans/Contracts_V0.md."
     },
     {
-      "coverage_id": "cov-05211",
+      "coverage_id": "cov-560",
       "source_obligation_ids": [
-        "obl-4876"
+        "obl-159"
       ],
       "source_seed_ids": [
-        "seed-6924"
+        "seed-159"
       ],
       "source_shard_ids": [
-        "shard-0090"
+        "shard-0040"
       ],
-      "canon_label": "Plans/Contracts_V0.md:1218-1229",
-      "row_type": "consumer",
+      "canon_label": "requested concrete-account and owner criteria",
+      "row_type": "owner",
       "path": "Plans/Contracts_V0.md",
       "heading_hint": "",
       "status": "missing",
       "exact_items": [
-        "`Plans/Contracts_V0.md:1218-1229`"
+        "criteria require one canonical decision for requested concrete-account representation, operational identity / execution role disclosure, projection-freshness vocabulary and owner doc, route-payload schema owner, and project-summary / project-attention projection owner",
+        "canonical docs model requested/effective account fields but lack a canonical way to represent requested concrete account; recommends requested_account_id? + requested_account_binding"
       ],
-      "stale_tokens": [],
+      "stale_tokens": [
+        "requested_account_id",
+        "requested_account_binding"
+      ],
       "evidence": [
-        "Plans/Contracts_V0.md:required_terms_absent"
+        "Plans/Contracts_V0.md: assigned file reviewed; no matching live stale-token occurrence or row-specific owner text found"
       ],
-      "required_action": "consumer_propagation"
+      "required_action": "owner_create_or_rewrite",
+      "doc_resolution_status": "concrete",
+      "verification_status": "verified",
+      "source_doc_resolution_status": "global_or_cross_cutting",
+      "unresolved_reason": "No live stale-token occurrence or row-specific owner coverage found in Plans/Contracts_V0.md."
     },
     {
-      "coverage_id": "cov-05283",
+      "coverage_id": "cov-583",
       "source_obligation_ids": [
-        "obl-4937"
+        "obl-163"
       ],
       "source_seed_ids": [
-        "seed-7061"
+        "seed-163"
       ],
       "source_shard_ids": [
-        "shard-0091"
+        "shard-0041"
       ],
-      "canon_label": "Plans/Contracts_V0.md:461-465",
-      "row_type": "consumer",
+      "canon_label": "OpenCode thread_id correlation ownership",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "",
+      "status": "partial",
+      "exact_items": [
+        "OpenCode thread_id collision",
+        "canonical thread_id remains PM correlation",
+        "OpenCode session ID is still being treated as if it were that canonical field",
+        "this must move into provider-native correlation before shared-runtime event joins become trustworthy"
+      ],
+      "stale_tokens": [
+        "thread_id"
+      ],
+      "evidence": [
+        "Plans/Contracts_V0.md:24,26,30,32 retired-token-safe wording reviewed"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "doc_resolution_status": "concrete",
+      "verification_status": "verified",
+      "source_doc_resolution_status": "concrete",
+      "unresolved_reason": "Related retired-token-safe wording exists, but not a completed stale-token coverage statement for the assigned row."
+    },
+    {
+      "coverage_id": "cov-627",
+      "source_obligation_ids": [
+        "obl-175"
+      ],
+      "source_seed_ids": [
+        "seed-175"
+      ],
+      "source_shard_ids": [
+        "shard-0044"
+      ],
+      "canon_label": "execution_unit_context owner contract",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "",
+      "status": "partial",
+      "exact_items": [
+        "Execution identity is split across incompatible keys",
+        "a canonical execution_unit_context is proposed as the owner doc"
+      ],
+      "stale_tokens": [
+        "execution_unit_context"
+      ],
+      "evidence": [
+        "Plans/Contracts_V0.md:24,26,30,32 retired-token-safe wording reviewed"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "doc_resolution_status": "concrete",
+      "verification_status": "verified",
+      "source_doc_resolution_status": "global_or_cross_cutting",
+      "unresolved_reason": "Related retired-token-safe wording exists, but not a completed stale-token coverage statement for the assigned row."
+    },
+    {
+      "coverage_id": "cov-642",
+      "source_obligation_ids": [
+        "obl-179"
+      ],
+      "source_seed_ids": [
+        "seed-179"
+      ],
+      "source_shard_ids": [
+        "shard-0045"
+      ],
+      "canon_label": "approval scope anchoring and approver identity",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "",
+      "status": "partial",
+      "exact_items": [
+        "The missing structural piece is approval scope anchoring. Under the rewrite, approval must anchor to canonical execution-unit context first.",
+        "Contracts_V0.md still publishes HITLRequest with legacy allowed_actions[] and approve_continue. No durable approver identity is defined on approval/rejection events yet."
+      ],
+      "stale_tokens": [
+        "allowed_actions[]",
+        "approve_continue"
+      ],
+      "evidence": [
+        "Plans/Contracts_V0.md:24,26,30,32 retired-token-safe wording reviewed"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "doc_resolution_status": "concrete",
+      "verification_status": "verified",
+      "source_doc_resolution_status": "global_or_cross_cutting",
+      "unresolved_reason": "Related retired-token-safe wording exists, but not a completed stale-token coverage statement for the assigned row."
+    },
+    {
+      "coverage_id": "cov-649",
+      "source_obligation_ids": [
+        "obl-183"
+      ],
+      "source_seed_ids": [
+        "seed-183"
+      ],
+      "source_shard_ids": [
+        "shard-0046"
+      ],
+      "canon_label": "runtime artifact schema family and identity ownership",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "",
+      "status": "partial",
+      "exact_items": [
+        "The required runtime-artifact schema family is not merely incomplete; it is absent.",
+        "Runtime_Artifacts_Panel.md canonical id set includes artifact_id, run_id, thread_id, task_id, linked_artifact_id, logical_artifact_id",
+        "it still omits attempt_id and node_id from the canonical id set even though receipt linkage and the run-graph model now rely on attempt-level identity"
+      ],
+      "stale_tokens": [
+        "task_id",
+        "attempt_id",
+        "node_id",
+        "usage_event_ref?",
+        "receipt-like artifacts"
+      ],
+      "evidence": [
+        "Plans/Contracts_V0.md:24,26,30,32 retired-token-safe wording reviewed"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "doc_resolution_status": "concrete",
+      "verification_status": "verified",
+      "source_doc_resolution_status": "unknown_pending_doc_discovery",
+      "unresolved_reason": "Related retired-token-safe wording exists, but not a completed stale-token coverage statement for the assigned row."
+    },
+    {
+      "coverage_id": "cov-668",
+      "source_obligation_ids": [
+        "obl-188"
+      ],
+      "source_seed_ids": [
+        "seed-188"
+      ],
+      "source_shard_ids": [
+        "shard-0047"
+      ],
+      "canon_label": "validation pass report identity and launch bridge",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "",
+      "status": "partial",
+      "exact_items": [
+        "Validation-pass reports are already treated as canonical first-class artifacts: exactly three per sweep, grouped by workflow_run_id, stored in seglog as artifact_type: validation_pass_report, required to include pass_number, pass_name, pass_verdict, verdict_reason, provider / model",
+        "it still does not carry enough context to explain which wizard/runtime state produced the sweep and what later execution it seeded",
+        "missing fields: wizard_id, project_id, thread_id?, phase_plan_ref?, staged_bundle_ref?, requirements_quality_report_ref?, richer requested/effective runtime snapshot, effective_account_id?, execution_role, permission/runtime snapshot refs, stable ref from accepted/final sweep output into launched execution run, eventual run_id? or launch receipt ref",
+        "These reports are upstream artifacts, not execution attempts, so they should not pretend to be run/node/attempt records."
+      ],
+      "stale_tokens": [
+        "workflow_run_id",
+        "artifact_type: validation_pass_report"
+      ],
+      "evidence": [
+        "Plans/Contracts_V0.md:24,26,30,32 retired-token-safe wording reviewed"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "doc_resolution_status": "concrete",
+      "verification_status": "verified",
+      "source_doc_resolution_status": "unknown_pending_doc_discovery",
+      "unresolved_reason": "Related retired-token-safe wording exists, but not a completed stale-token coverage statement for the assigned row."
+    },
+    {
+      "coverage_id": "cov-705",
+      "source_obligation_ids": [
+        "obl-195"
+      ],
+      "source_seed_ids": [
+        "seed-195"
+      ],
+      "source_shard_ids": [
+        "shard-0049"
+      ],
+      "canon_label": "blocked sequence and execution-context ownership",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "",
+      "status": "partial",
+      "exact_items": [
+        "canonical execution-context replacement / TierContext successor ownership; blocked/approval identity minting and scope (blocked_sequence, approval scope key, request/block bridge); missing storage families for runtime-artifact indexing and worktree/lane lifecycle; durable lineage bridges from planning/wizard/validation into launched execution",
+        "execution-unit context owner and minimum field contract; blocked approval identity/scope and blocked_sequence minting ownership; durable storage families for runtime-artifact indexing/projection; worktree/lane lifecycle; validation/wizard/interview lineage bridge into launched execution",
+        "no doc clearly says who mints blocked_sequence; no doc clearly says when a new blocked episode starts versus an existing one being updated; request_id still competes with blocked_sequence in HITL/storage examples; startup recovery wakeups are named but not tied to a concrete blocked-episode restoration rule"
+      ],
+      "stale_tokens": [
+        "blocked_sequence",
+        "TierContext",
+        "request_id"
+      ],
+      "evidence": [
+        "Plans/Contracts_V0.md:24,26,30,32 retired-token-safe wording reviewed"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "doc_resolution_status": "concrete",
+      "verification_status": "verified",
+      "source_doc_resolution_status": "global_or_cross_cutting",
+      "unresolved_reason": "Related retired-token-safe wording exists, but not a completed stale-token coverage statement for the assigned row."
+    },
+    {
+      "coverage_id": "cov-735",
+      "source_obligation_ids": [
+        "obl-203"
+      ],
+      "source_seed_ids": [
+        "seed-203"
+      ],
+      "source_shard_ids": [
+        "shard-0051"
+      ],
+      "canon_label": "executor-facing execution_unit_context contract",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "Concrete executor-facing execution_unit_context field contract",
+      "status": "partial",
+      "exact_items": [
+        "Add an explicit execution_unit_context section to Executor_Protocol.md that names required context fields.",
+        "execution_unit_context should be defined as a runtime contract with dispatch/runtime fields."
+      ],
+      "stale_tokens": [
+        "tier_runtime_record",
+        "tier_id"
+      ],
+      "evidence": [
+        "Plans/Contracts_V0.md:24,26,30,32 retired-token-safe wording reviewed"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "doc_resolution_status": "concrete",
+      "verification_status": "verified",
+      "source_doc_resolution_status": "unknown_pending_doc_discovery",
+      "unresolved_reason": "Related retired-token-safe wording exists, but not a completed stale-token coverage statement for the assigned row."
+    },
+    {
+      "coverage_id": "cov-746",
+      "source_obligation_ids": [
+        "obl-206"
+      ],
+      "source_seed_ids": [
+        "seed-206"
+      ],
+      "source_shard_ids": [
+        "shard-0052"
+      ],
+      "canon_label": "execution_role and operational_identity contract additions",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "",
+      "status": "partial",
+      "exact_items": [
+        "Recommended minimum contract additions: add execution_role to runtime handoff bundle, attempt.started, attempt_record, worker identity/detail inspectors; add operational_identity? to attempt_record, operational receipt/bridge records, and relevant tool/runtime artifact payloads.",
+        "Candidate fixes: make execution_role part of the canonical attempt packet in Contracts_V0.md and storage-plan.md; define operational_identity as a separate optional field family for receipts, artifacts, and side-effect-bearing attempt/tool records."
+      ],
+      "stale_tokens": [
+        "execution_role",
+        "operational_identity"
+      ],
+      "evidence": [
+        "Plans/Contracts_V0.md:24,26,30,32 retired-token-safe wording reviewed"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "doc_resolution_status": "concrete",
+      "verification_status": "verified",
+      "source_doc_resolution_status": "concrete",
+      "unresolved_reason": "Related retired-token-safe wording exists, but not a completed stale-token coverage statement for the assigned row."
+    },
+    {
+      "coverage_id": "cov-772",
+      "source_obligation_ids": [
+        "obl-213"
+      ],
+      "source_seed_ids": [
+        "seed-213"
+      ],
+      "source_shard_ids": [
+        "shard-0054"
+      ],
+      "canon_label": "runtime-artifact envelope common field contract",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "",
+      "status": "partial",
+      "exact_items": [
+        "Promote the runtime-artifact envelope from a named schema file to a clearly stated common field contract in Runtime_Artifacts_Panel.md.",
+        "FileManager.md still states one canonical open contract, but later addenda already require a second category of opens for runtime artifacts by artifact_id."
+      ],
+      "stale_tokens": [
+        "artifact_id"
+      ],
+      "evidence": [
+        "Plans/Contracts_V0.md:24,26,30,32 retired-token-safe wording reviewed"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "doc_resolution_status": "concrete",
+      "verification_status": "verified",
+      "source_doc_resolution_status": "concrete",
+      "unresolved_reason": "Related retired-token-safe wording exists, but not a completed stale-token coverage statement for the assigned row."
+    },
+    {
+      "coverage_id": "cov-857",
+      "source_obligation_ids": [
+        "obl-240"
+      ],
+      "source_seed_ids": [
+        "seed-240"
+      ],
+      "source_shard_ids": [
+        "shard-0061"
+      ],
+      "canon_label": "route target base-field boundaries",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "",
+      "status": "partial",
+      "exact_items": [
+        "step selection should ride in a specialized subtarget/detail field or in serialized resume_url, not as a universal base field",
+        "Keep route_target intentionally small and force normalization pressure through subject_id and object_kind/object_id.",
+        "If a target requires both identity and sub-selection, keep the main identity in object_kind/object_id and use inspector_target or a specialized verb for the sub-selection."
+      ],
+      "stale_tokens": [
+        "resume_url",
+        "route_target",
+        "subject_id",
+        "object_kind",
+        "object_id",
+        "inspector_target"
+      ],
+      "evidence": [
+        "Plans/Contracts_V0.md:24,26,30,32 retired-token-safe wording reviewed"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "doc_resolution_status": "concrete",
+      "verification_status": "verified",
+      "source_doc_resolution_status": "global_or_cross_cutting",
+      "unresolved_reason": "Related retired-token-safe wording exists, but not a completed stale-token coverage statement for the assigned row."
+    },
+    {
+      "coverage_id": "cov-882",
+      "source_obligation_ids": [
+        "obl-248"
+      ],
+      "source_seed_ids": [
+        "seed-248"
+      ],
+      "source_shard_ids": [
+        "shard-0063"
+      ],
+      "canon_label": "resume_url serialized route-target transport",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "",
+      "status": "partial",
+      "exact_items": [
+        "The internal route_target model can and should be richer than the serialized URL form.",
+        "Internal: canonical route_target",
+        "External / persisted transport: narrowed serializable form that decodes into route_target",
+        "Define resume_url as a serialized route-target transport in the contract layer once route_target exists."
+      ],
+      "stale_tokens": [
+        "route_target",
+        "resume_url"
+      ],
+      "evidence": [
+        "Plans/Contracts_V0.md:319-320 route_target/resume_url transport relationship",
+        "Plans/Contracts_V0.md:979 resume_url serialized transport wording"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "doc_resolution_status": "concrete",
+      "verification_status": "verified",
+      "source_doc_resolution_status": "global_or_cross_cutting",
+      "unresolved_reason": "route_target/resume_url transport is present, but exact serialized-URL transport split is not fully anchored to this row wording."
+    },
+    {
+      "coverage_id": "cov-918",
+      "source_obligation_ids": [
+        "obl-258"
+      ],
+      "source_seed_ids": [
+        "seed-258"
+      ],
+      "source_shard_ids": [
+        "shard-0065"
+      ],
+      "canon_label": "route contract and wrapper normalization ownership",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "",
+      "status": "partial",
+      "exact_items": [
+        "contract layer owns route_target and OpenSubject",
+        "catalog keeps stable domain-facing wrapper/open/focus commands",
+        "wrappers normalize to canonical route semantics internally"
+      ],
+      "stale_tokens": [
+        "route_target",
+        "OpenSubject"
+      ],
+      "evidence": [
+        "Plans/Contracts_V0.md:320-323 route/open ownership and normalization",
+        "Plans/Contracts_V0.md:315-323 route_target/OpenSubject command normalization section"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "doc_resolution_status": "concrete",
+      "verification_status": "verified",
+      "source_doc_resolution_status": "global_or_cross_cutting",
+      "unresolved_reason": "Ownership/normalization is mentioned, but wrapper/catalog normalization requirement is not fully stated."
+    },
+    {
+      "coverage_id": "cov-924",
+      "source_obligation_ids": [
+        "obl-260"
+      ],
+      "source_seed_ids": [
+        "seed-260"
+      ],
+      "source_shard_ids": [
+        "shard-0066"
+      ],
+      "canon_label": "route target owner split",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "",
+      "status": "partial",
+      "exact_items": [
+        "Contracts_V0.md is the correct owner for the canonical route contract.",
+        "Crosswalk.md is the correct owner for the primitive boundary declaration.",
+        "storage-plan.md is a consumer of navigation identity, not the owner of it.",
+        "The clean owner split is: Contracts_V0.md owns route_target and OpenSubject; Crosswalk.md declares a primitive boundary for route-target / subject-open navigation; storage-plan.md owns persisted refs and projections that store navigation-related fields such as resume_url."
+      ],
+      "stale_tokens": [
+        "route_target",
+        "OpenSubject",
+        "resume_url"
+      ],
+      "evidence": [
+        "Plans/Contracts_V0.md:320-323 route/open ownership split",
+        "Plans/Contracts_V0.md:318-323 route/open normalization guidance"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "doc_resolution_status": "concrete",
+      "verification_status": "verified",
+      "source_doc_resolution_status": "global_or_cross_cutting",
+      "unresolved_reason": "Owner split is directionally present, but full Contracts/Crosswalk/storage-plan split is not fully spelled out."
+    },
+    {
+      "coverage_id": "cov-938",
+      "source_obligation_ids": [
+        "obl-264"
+      ],
+      "source_seed_ids": [
+        "seed-264"
+      ],
+      "source_shard_ids": [
+        "shard-0067"
+      ],
+      "canon_label": "OpenSubject contract definition",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "Define OpenSubject in Contracts_V0.md with: subject_id, open_intent.",
+        "Keep resolver-support metadata out of the contract.",
+        "OpenSubject is identity plus open intent.",
+        "It is not storage metadata.",
+        "It is not shell routing.",
+        "It is not transport detail."
+      ],
+      "stale_tokens": [
+        "OpenSubject",
+        "subject_id",
+        "open_intent"
+      ],
+      "evidence": [
+        "Plans/Contracts_V0.md:995-1000 OpenSubject definition and fields",
+        "Plans/Contracts_V0.md:1002-1008 OpenSubject boundary rules"
+      ],
+      "required_action": "none",
+      "doc_resolution_status": "concrete",
+      "verification_status": "verified",
+      "source_doc_resolution_status": "global_or_cross_cutting"
+    },
+    {
+      "coverage_id": "cov-944",
+      "source_obligation_ids": [
+        "obl-265"
+      ],
+      "source_seed_ids": [
+        "seed-265"
+      ],
+      "source_shard_ids": [
+        "shard-0067"
+      ],
+      "canon_label": "route_target field set and selector rule",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "Define route_target as the canonical navigation-and-focus contract.",
+        "The canonical minimum field set is: target_kind, project_id, one canonical target selector (subject_id or object_kind + object_id).",
+        "project_id is required.",
+        "exactly one canonical target selector is required: subject_id or object_kind + object_id.",
+        "target_kind is required because the route layer still needs to know what class of destination it is restoring, rather than infer everything from object identity.",
+        "focused_run_id and thread_id remain route fields because they are scope restorers, not just object metadata.",
+        "tab_id remains allowed because top-level tab restoration is part of route/focus behavior."
+      ],
+      "stale_tokens": [
+        "route_target",
+        "target_kind",
+        "project_id",
+        "subject_id",
+        "object_kind",
+        "object_id",
+        "focused_run_id",
+        "thread_id",
+        "tab_id"
+      ],
+      "evidence": [
+        "Plans/Contracts_V0.md:903-907 route_target definition and required fields",
+        "Plans/Contracts_V0.md:974-979 resume_url/transport constraints"
+      ],
+      "required_action": "none",
+      "doc_resolution_status": "concrete",
+      "verification_status": "verified",
+      "source_doc_resolution_status": "global_or_cross_cutting"
+    },
+    {
+      "coverage_id": "cov-954",
+      "source_obligation_ids": [
+        "obl-267"
+      ],
+      "source_seed_ids": [
+        "seed-267"
+      ],
+      "source_shard_ids": [
+        "shard-0068"
+      ],
+      "canon_label": "route_target bounded field set selector rule",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "Define route_target in Contracts_V0.md with the bounded field set above.",
+        "State the selector rule directly: subject_id or object_kind + object_id; never both as independent primary selectors for the same target.",
+        "Normalize legacy/special-case IDs into subject_id or object_kind/object_id."
+      ],
+      "stale_tokens": [
+        "route_target",
+        "subject_id",
+        "object_kind",
+        "object_id"
+      ],
+      "evidence": [
+        "Plans/Contracts_V0.md:921-923 route target selector rule",
+        "Plans/Contracts_V0.md:974-979 route target normalization constraints"
+      ],
+      "required_action": "none",
+      "doc_resolution_status": "concrete",
+      "verification_status": "verified",
+      "source_doc_resolution_status": "concrete"
+    },
+    {
+      "coverage_id": "cov-955",
+      "source_obligation_ids": [
+        "obl-268"
+      ],
+      "source_seed_ids": [
+        "seed-268"
+      ],
+      "source_shard_ids": [
+        "shard-0068"
+      ],
+      "canon_label": "target_kind vocabulary",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "The canonical target_kind vocabulary is primary_view, side_panel, bottom_panel, embedded_surface, page_tab.",
+        "Keep destination-local refinements outside the enum and outside the base route contract.",
+        "Use page_tab when the routed destination must land inside a known page and force a specific tab."
+      ],
+      "stale_tokens": [
+        "target_kind",
+        "primary_view",
+        "side_panel",
+        "bottom_panel",
+        "embedded_surface",
+        "page_tab"
+      ],
+      "evidence": [
+        "Plans/Contracts_V0.md:925-930 target_kind vocabulary"
+      ],
+      "required_action": "none",
+      "doc_resolution_status": "concrete",
+      "verification_status": "verified",
+      "source_doc_resolution_status": "global_or_cross_cutting"
+    },
+    {
+      "coverage_id": "cov-959",
+      "source_obligation_ids": [
+        "obl-269"
+      ],
+      "source_seed_ids": [
+        "seed-269"
+      ],
+      "source_shard_ids": [
+        "shard-0068"
+      ],
+      "canon_label": "route selector precedence rule",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "State the precedence rule directly in Contracts_V0.md.",
+        "Reject multi-selector route payloads as non-canonical.",
+        "Normalize all special-case ids into subject_id or object_kind + object_id before they enter the canonical route layer."
+      ],
+      "stale_tokens": [
+        "subject_id",
+        "object_kind",
+        "object_id"
+      ],
+      "evidence": [
+        "Plans/Contracts_V0.md:921-923 subject_id vs object_kind/object_id selector rule",
+        "Plans/Contracts_V0.md:973-979 normalization/transport constraints"
+      ],
+      "required_action": "none",
+      "doc_resolution_status": "concrete",
+      "verification_status": "verified",
+      "source_doc_resolution_status": "global_or_cross_cutting"
+    },
+    {
+      "coverage_id": "cov-964",
+      "source_obligation_ids": [
+        "obl-270"
+      ],
+      "source_seed_ids": [
+        "seed-270"
+      ],
+      "source_shard_ids": [
+        "shard-0068"
+      ],
+      "canon_label": "resume_url route_target transport boundary",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "resume_url is a serialized transport of route_target.",
+        "resume_url must stay narrower than the internal route contract.",
+        "resume_url does not define a second routing ontology."
+      ],
+      "stale_tokens": [
+        "resume_url",
+        "route_target"
+      ],
+      "evidence": [
+        "Plans/Contracts_V0.md:514-519 resume_url transport semantics",
+        "Plans/Contracts_V0.md:979 resume_url is serialized route-target transport"
+      ],
+      "required_action": "none",
+      "doc_resolution_status": "concrete",
+      "verification_status": "verified",
+      "source_doc_resolution_status": "global_or_cross_cutting"
+    },
+    {
+      "coverage_id": "cov-968",
+      "source_obligation_ids": [
+        "obl-271"
+      ],
+      "source_seed_ids": [
+        "seed-271"
+      ],
+      "source_shard_ids": [
+        "shard-0069"
+      ],
+      "canon_label": "resume_url serialized route_target transport",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "",
+      "status": "present",
+      "exact_items": [
+        "Define resume_url as serialized route_target transport in Contracts_V0.md.",
+        "State the allowed serialized data classes directly.",
+        "Keep wizard-step detail as a narrow serialized anchor, not a new top-level base route field."
+      ],
+      "stale_tokens": [
+        "resume_url",
+        "route_target"
+      ],
+      "evidence": [
+        "Plans/Contracts_V0.md:319-320 route_target transport split",
+        "Plans/Contracts_V0.md:979 resume_url serialized route-target transport"
+      ],
+      "required_action": "none",
+      "doc_resolution_status": "concrete",
+      "verification_status": "verified",
+      "source_doc_resolution_status": "global_or_cross_cutting"
+    },
+    {
+      "coverage_id": "cov-971",
+      "source_obligation_ids": [
+        "obl-272"
+      ],
+      "source_seed_ids": [
+        "seed-272"
+      ],
+      "source_shard_ids": [
+        "shard-0069"
+      ],
+      "canon_label": "object_kind vocabulary and blocked_episode identity",
+      "row_type": "owner",
       "path": "Plans/Contracts_V0.md",
       "heading_hint": "",
       "status": "missing",
       "exact_items": [
-        "`Plans/Contracts_V0.md:461-465`"
+        "Define the canonical object_kind enum in Contracts_V0.md.",
+        "Add the vocabulary to Glossary.md so downstream copy and help stop drifting.",
+        "State blocked-episode identity directly: object_kind = blocked_episode, project_id, focused_run_id = run_id, object_id = blocked_sequence, object scope = node_id within run."
       ],
-      "stale_tokens": [],
+      "stale_tokens": [
+        "object_kind",
+        "blocked_episode",
+        "project_id",
+        "focused_run_id",
+        "object_id",
+        "blocked_sequence",
+        "node_id"
+      ],
       "evidence": [
-        "Plans/Contracts_V0.md:required_terms_absent"
+        "Plans/Contracts_V0.md:315 route_target/OpenSubject command normalization section",
+        "Plans/Contracts_V0.md:322 closed tab_id vocabulary",
+        "Plans/Contracts_V0.md:910 focused_run_id",
+        "Plans/Contracts_V0.md:936 object_kind closed vocabulary"
       ],
-      "required_action": "consumer_propagation"
+      "required_action": "owner_create_or_rewrite",
+      "doc_resolution_status": "concrete",
+      "verification_status": "verified",
+      "source_doc_resolution_status": "global_or_cross_cutting",
+      "unresolved_reason": "Exact repair text not found in Plans/Contracts_V0.md; only related live route/open vocabulary appears."
     },
     {
-      "coverage_id": "cov-05306",
+      "coverage_id": "cov-978",
       "source_obligation_ids": [
-        "obl-4955"
+        "obl-273"
       ],
       "source_seed_ids": [
-        "seed-7089"
+        "seed-273"
       ],
       "source_shard_ids": [
-        "shard-0091"
+        "shard-0069"
       ],
-      "canon_label": "Plans/Contracts_V0.md:557-624",
-      "row_type": "consumer",
-      "path": "Plans/Contracts_V0.md",
-      "heading_hint": "Entry",
-      "status": "partial",
-      "exact_items": [
-        "`Plans/Contracts_V0.md:557-624`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/Contracts_V0.md:621"
-      ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-05345",
-      "source_obligation_ids": [
-        "obl-4987"
-      ],
-      "source_seed_ids": [
-        "seed-7146"
-      ],
-      "source_shard_ids": [
-        "shard-0091"
-      ],
-      "canon_label": "Plans/Contracts_V0.md:55-60",
-      "row_type": "consumer",
-      "path": "Plans/Contracts_V0.md",
-      "heading_hint": "Entry",
-      "status": "partial",
-      "exact_items": [
-        "`Plans/Contracts_V0.md:55-60`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/Contracts_V0.md:621"
-      ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-05346",
-      "source_obligation_ids": [
-        "obl-4988"
-      ],
-      "source_seed_ids": [
-        "seed-7147"
-      ],
-      "source_shard_ids": [
-        "shard-0091"
-      ],
-      "canon_label": "Plans/Contracts_V0.md:800-807",
-      "row_type": "consumer",
-      "path": "Plans/Contracts_V0.md",
-      "heading_hint": "Entry",
-      "status": "partial",
-      "exact_items": [
-        "`Plans/Contracts_V0.md:800-807`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/Contracts_V0.md:621"
-      ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-05361",
-      "source_obligation_ids": [
-        "obl-5002"
-      ],
-      "source_seed_ids": [
-        "seed-7182"
-      ],
-      "source_shard_ids": [
-        "shard-0091"
-      ],
-      "canon_label": "Plans/Contracts_V0.md:50-58",
-      "row_type": "consumer",
-      "path": "Plans/Contracts_V0.md",
-      "heading_hint": "Entry",
-      "status": "partial",
-      "exact_items": [
-        "`Plans/Contracts_V0.md:50-58`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/Contracts_V0.md:621"
-      ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-05362",
-      "source_obligation_ids": [
-        "obl-5003"
-      ],
-      "source_seed_ids": [
-        "seed-7183"
-      ],
-      "source_shard_ids": [
-        "shard-0091"
-      ],
-      "canon_label": "Plans/Contracts_V0.md:800-806",
-      "row_type": "consumer",
-      "path": "Plans/Contracts_V0.md",
-      "heading_hint": "Entry",
-      "status": "partial",
-      "exact_items": [
-        "`Plans/Contracts_V0.md:800-806`"
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/Contracts_V0.md:621"
-      ],
-      "required_action": "consumer_propagation"
-    },
-    {
-      "coverage_id": "cov-05375",
-      "source_obligation_ids": [
-        "obl-5016"
-      ],
-      "source_seed_ids": [
-        "seed-7211"
-      ],
-      "source_shard_ids": [
-        "shard-0092"
-      ],
-      "canon_label": "Plans/Contracts_V0.md:649",
-      "row_type": "consumer",
+      "canon_label": "inspector_target closed enum",
+      "row_type": "owner",
       "path": "Plans/Contracts_V0.md",
       "heading_hint": "",
       "status": "missing",
       "exact_items": [
-        "`Plans/Contracts_V0.md:649`"
+        "Define the closed inspector_target enum in Contracts_V0.md.",
+        "Keep all message-step-line-range style anchors out of inspector_target.",
+        "Use domain-local serialized anchor detail only when the target cannot be expressed through the closed inspector vocabulary."
       ],
-      "stale_tokens": [],
+      "stale_tokens": [
+        "inspector_target"
+      ],
       "evidence": [
-        "Plans/Contracts_V0.md:required_terms_absent"
+        "Plans/Contracts_V0.md:315 route_target/OpenSubject command normalization section",
+        "Plans/Contracts_V0.md:322 closed tab_id vocabulary",
+        "Plans/Contracts_V0.md:910 focused_run_id",
+        "Plans/Contracts_V0.md:936 object_kind closed vocabulary"
       ],
-      "required_action": "consumer_propagation"
+      "required_action": "owner_create_or_rewrite",
+      "doc_resolution_status": "concrete",
+      "verification_status": "verified",
+      "source_doc_resolution_status": "global_or_cross_cutting",
+      "unresolved_reason": "Exact repair text not found in Plans/Contracts_V0.md; only related live route/open vocabulary appears."
     },
     {
-      "coverage_id": "cov-05386",
+      "coverage_id": "cov-995",
       "source_obligation_ids": [
-        "obl-5026"
+        "obl-279"
       ],
       "source_seed_ids": [
-        "seed-7221"
+        "seed-279"
       ],
       "source_shard_ids": [
-        "shard-0092"
+        "shard-0071"
       ],
-      "canon_label": "Plans/storage-plan.md",
-      "row_type": "consumer",
+      "canon_label": "usage_event_ref route normalization",
+      "row_type": "owner",
       "path": "Plans/Contracts_V0.md",
       "heading_hint": "",
-      "status": "present",
+      "status": "missing",
       "exact_items": [
-        "Highest-pressure docs for condensation are `Plans/storage-plan.md`, `Plans/Contracts_V0.md`, `Plans/Models_System.md`, `Plans/Executor_Protocol.md`, `Plans/WorktreeGitImprovement.md`, `Plans/Crosswalk.md`, and `Plans/Orchestrator_Page.md`."
+        "usage_event_ref still appears in current docs as if it can remain a top-level route field.",
+        "Normalize usage_event_ref into object_kind = usage_event.",
+        "Keep wizard-step focus in serialized anchor detail, not in the base route contract."
       ],
-      "stale_tokens": [],
+      "stale_tokens": [
+        "usage_event_ref",
+        "object_kind",
+        "usage_event"
+      ],
       "evidence": [
-        "Plans/Contracts_V0.md:340",
-        "Plans/Contracts_V0.md:14",
-        "Plans/Contracts_V0.md:1088",
-        "Plans/Contracts_V0.md:702",
-        "Plans/Contracts_V0.md:882",
-        "Plans/Contracts_V0.md:841",
-        "Plans/Contracts_V0.md:322"
+        "Plans/Contracts_V0.md:433 usage_event_ref",
+        "Plans/Contracts_V0.md:457 usage_event_ref",
+        "Plans/Contracts_V0.md:505 usage_event_ref",
+        "Plans/Contracts_V0.md:1301 wizard.blocked"
       ],
-      "required_action": "none"
+      "required_action": "owner_create_or_rewrite",
+      "doc_resolution_status": "concrete",
+      "verification_status": "verified",
+      "source_doc_resolution_status": "global_or_cross_cutting",
+      "unresolved_reason": "Exact repair text not found in Plans/Contracts_V0.md; only related live route/open vocabulary appears."
     },
     {
-      "coverage_id": "cov-03233",
+      "coverage_id": "cov-998",
       "source_obligation_ids": [
-        "obl-3147"
+        "obl-280"
       ],
       "source_seed_ids": [
-        "seed-4082"
+        "seed-280"
       ],
       "source_shard_ids": [
-        "shard-0058"
+        "shard-0071"
       ],
-      "canon_label": "Plans/Contracts_V0.md",
-      "row_type": "layout_blocker",
+      "canon_label": "blocked_sequence lineage identity",
+      "row_type": "owner",
       "path": "Plans/Contracts_V0.md",
-      "heading_hint": "Candidate fixes to carry forward",
-      "status": "present",
+      "heading_hint": "",
+      "status": "missing",
       "exact_items": [
-        "Add a canonical route-target / subject-open contract family to `Plans/Contracts_V0.md`, above individual surface commands."
+        "blocked_sequence is the canonical id",
+        "run and node scope remain required resolver context",
+        "Runtime lineage is now object-first, not attempt-first."
       ],
-      "stale_tokens": [],
+      "stale_tokens": [
+        "blocked_sequence"
+      ],
       "evidence": [
-        "Plans/Contracts_V0.md:14",
-        "Plans/Contracts_V0.md:1",
-        "Plans/Contracts_V0.md:47",
-        "Plans/Contracts_V0.md:1319",
-        "Plans/Contracts_V0.md:1069",
-        "Plans/Contracts_V0.md:215",
-        "Plans/Contracts_V0.md:25"
+        "Plans/Contracts_V0.md:433 usage_event_ref",
+        "Plans/Contracts_V0.md:457 usage_event_ref",
+        "Plans/Contracts_V0.md:910 focused_run_id",
+        "Plans/Contracts_V0.md:936 object_kind closed vocabulary"
       ],
-      "required_action": "none"
+      "required_action": "owner_create_or_rewrite",
+      "doc_resolution_status": "concrete",
+      "verification_status": "verified",
+      "source_doc_resolution_status": "global_or_cross_cutting",
+      "unresolved_reason": "Exact repair text not found in Plans/Contracts_V0.md; only related live route/open vocabulary appears."
     },
     {
-      "coverage_id": "cov-04512",
+      "coverage_id": "cov-1010",
       "source_obligation_ids": [
-        "obl-4283"
+        "obl-284"
       ],
       "source_seed_ids": [
-        "seed-6167"
+        "seed-284"
       ],
       "source_shard_ids": [
-        "shard-0082"
+        "shard-0072"
       ],
-      "canon_label": "Plans/*.md",
-      "row_type": "layout_blocker",
+      "canon_label": "tab_id stable page-tab focus",
+      "row_type": "owner",
       "path": "Plans/Contracts_V0.md",
-      "heading_hint": "Do-not-forget details",
-      "status": "present",
+      "heading_hint": "",
+      "status": "missing",
       "exact_items": [
-        "After this merge, the authored top-level `Plans/*.md` surface is fully covered: all `61` docs now have all six requested model passes."
+        "tab_id is route focus refinement, not destination class and not object identity.",
+        "tab_id should be used only when the destination surface itself contains stable first-class tabs",
+        "Define tab_id as stable page-tab focus only."
       ],
-      "stale_tokens": [],
+      "stale_tokens": [
+        "tab_id"
+      ],
       "evidence": [
-        "Plans/Contracts_V0.md:12",
-        "Plans/Contracts_V0.md:64",
-        "Plans/Contracts_V0.md:14",
-        "Plans/Contracts_V0.md:215",
-        "Plans/Contracts_V0.md:1537",
-        "Plans/Contracts_V0.md:322",
-        "Plans/Contracts_V0.md:19",
-        "Plans/Contracts_V0.md:71",
-        "Plans/Contracts_V0.md:971"
+        "Plans/Contracts_V0.md:322 closed tab_id vocabulary",
+        "Plans/Contracts_V0.md:869 shell_view command kind",
+        "Plans/Contracts_V0.md:870 navigation_wrapper command kind",
+        "Plans/Contracts_V0.md:871 domain_action command kind"
       ],
-      "required_action": "none"
+      "required_action": "owner_create_or_rewrite",
+      "doc_resolution_status": "concrete",
+      "verification_status": "verified",
+      "source_doc_resolution_status": "global_or_cross_cutting",
+      "unresolved_reason": "Exact repair text not found in Plans/Contracts_V0.md; only related live route/open vocabulary appears."
     },
     {
-      "coverage_id": "cov-05057",
+      "coverage_id": "cov-1016",
       "source_obligation_ids": [
-        "obl-4732"
+        "obl-286"
       ],
       "source_seed_ids": [
-        "seed-6725"
+        "seed-286"
       ],
       "source_shard_ids": [
-        "shard-0088"
+        "shard-0072"
       ],
-      "canon_label": "Plans/Executor_Protocol.md",
-      "row_type": "layout_blocker",
+      "canon_label": "owner adoption split for route validation primitives and command taxonomy",
+      "row_type": "owner",
       "path": "Plans/Contracts_V0.md",
-      "heading_hint": "Entry",
-      "status": "present",
+      "heading_hint": "",
+      "status": "missing",
       "exact_items": [
-        "`Plans/Executor_Protocol.md` already carries a strong `execution_unit_context` owner field block, but `Plans/Contracts_V0.md` still lacks the exact `### 5.1B Persona/Runtime Snapshot Payload Contract` heading."
+        "The owner-doc adoption split is:",
+        "Plans/Contracts_V0.md - own route validation and rejection rules",
+        "Plans/Crosswalk.md - declare primitive ownership for route-target / open-subject navigation",
+        "Plans/UI_Command_Catalog.md - classify commands as shell_view, navigation_wrapper, or domain_action"
       ],
-      "stale_tokens": [],
+      "stale_tokens": [
+        "shell_view",
+        "navigation_wrapper",
+        "domain_action"
+      ],
       "evidence": [
-        "Plans/Contracts_V0.md:702",
-        "Plans/Contracts_V0.md:775",
-        "Plans/Contracts_V0.md:14",
-        "Plans/Contracts_V0.md:774",
-        "Plans/Contracts_V0.md:291",
-        "Plans/Contracts_V0.md:979",
-        "Plans/Contracts_V0.md:7",
-        "Plans/Contracts_V0.md:75",
-        "Plans/Contracts_V0.md:51",
-        "Plans/Contracts_V0.md:11",
-        "Plans/Contracts_V0.md:290",
-        "Plans/Contracts_V0.md:318"
+        "Plans/Contracts_V0.md:869 shell_view command kind",
+        "Plans/Contracts_V0.md:870 navigation_wrapper command kind",
+        "Plans/Contracts_V0.md:871 domain_action command kind",
+        "Plans/Contracts_V0.md:936 object_kind closed vocabulary"
       ],
-      "required_action": "none"
+      "required_action": "owner_create_or_rewrite",
+      "doc_resolution_status": "concrete",
+      "verification_status": "verified",
+      "source_doc_resolution_status": "global_or_cross_cutting",
+      "unresolved_reason": "Exact repair text not found in Plans/Contracts_V0.md; only related live route/open vocabulary appears."
     },
     {
-      "coverage_id": "cov-05293",
+      "coverage_id": "cov-1040",
       "source_obligation_ids": [
-        "obl-4947"
+        "obl-292"
       ],
       "source_seed_ids": [
-        "seed-7073"
-      ],
-      "source_shard_ids": [
-        "shard-0091"
-      ],
-      "canon_label": "gap-001",
-      "row_type": "layout_blocker",
-      "path": "Plans/Contracts_V0.md",
-      "heading_hint": "### 5.1B Persona/Runtime Snapshot Payload Contract",
-      "status": "present",
-      "exact_items": [
-        "`gap-001` sharpened: the exact owner anchor `### 5.1B Persona/Runtime Snapshot Payload Contract` is still absent, and the explicit `execution_unit_context` required-field list in `Plans/Contracts_V0.md` still omits `requested_account_binding`, `requested_account_policy`, and `operational_identity` even though the surrounding canon expects requested/effective identity carry-through."
-      ],
-      "stale_tokens": [],
-      "evidence": [
-        "Plans/Contracts_V0.md:774",
-        "Plans/Contracts_V0.md:775",
-        "Plans/Contracts_V0.md:14",
-        "Plans/Contracts_V0.md:274",
-        "Plans/Contracts_V0.md:23",
-        "Plans/Contracts_V0.md:328",
-        "Plans/Contracts_V0.md:11",
-        "Plans/Contracts_V0.md:7",
-        "Plans/Contracts_V0.md:5",
-        "Plans/Contracts_V0.md:290",
-        "Plans/Contracts_V0.md:318",
-        "Plans/Contracts_V0.md:1"
-      ],
-      "required_action": "none"
-    },
-    {
-      "coverage_id": "cov-04042",
-      "source_obligation_ids": [
-        "obl-3888"
-      ],
-      "source_seed_ids": [
-        "seed-5412"
+        "seed-292"
       ],
       "source_shard_ids": [
         "shard-0074"
       ],
-      "canon_label": "Plans/Contracts_V0.md",
+      "canon_label": "Contracts chapter route_target OpenSubject placement",
       "row_type": "owner",
       "path": "Plans/Contracts_V0.md",
-      "heading_hint": "Key findings",
-      "status": "present",
+      "heading_hint": "",
+      "status": "missing",
       "exact_items": [
-        "`Plans/Contracts_V0.md` still has `resume_url`, `detail_ref`, and event-local linkage fields, but it still does not own a named `route_target` or `OpenSubject` contract."
+        "add canonical route_target contract section under chapter 7",
+        "add canonical OpenSubject contract section under chapter 7",
+        "keep WiringEntry after them"
       ],
-      "stale_tokens": [],
+      "stale_tokens": [
+        "route_target",
+        "OpenSubject",
+        "WiringEntry"
+      ],
       "evidence": [
-        "Plans/Contracts_V0.md:14",
-        "Plans/Contracts_V0.md:319",
-        "Plans/Contracts_V0.md:502",
-        "Plans/Contracts_V0.md:253",
-        "Plans/Contracts_V0.md:83",
-        "Plans/Contracts_V0.md:75",
-        "Plans/Contracts_V0.md:355",
-        "Plans/Contracts_V0.md:309",
-        "Plans/Contracts_V0.md:1426"
+        "Plans/Contracts_V0.md:902 route_target section",
+        "Plans/Contracts_V0.md:910 focused_run_id",
+        "Plans/Contracts_V0.md:912 tab_id",
+        "Plans/Contracts_V0.md:995 OpenSubject section"
       ],
-      "required_action": "none"
+      "required_action": "owner_create_or_rewrite",
+      "doc_resolution_status": "concrete",
+      "verification_status": "verified",
+      "source_doc_resolution_status": "concrete",
+      "unresolved_reason": "Exact repair text not found in Plans/Contracts_V0.md; only related live route/open vocabulary appears."
     },
     {
-      "coverage_id": "cov-04264",
+      "coverage_id": "cov-1053",
       "source_obligation_ids": [
-        "obl-4110"
+        "obl-299"
       ],
       "source_seed_ids": [
-        "seed-5721"
+        "seed-299"
       ],
       "source_shard_ids": [
-        "shard-0077"
+        "shard-0076"
       ],
-      "canon_label": "Plans/Contracts_V0.md",
+      "canon_label": "route-open identity versus record provenance refs",
       "row_type": "owner",
       "path": "Plans/Contracts_V0.md",
-      "heading_hint": "Key findings",
-      "status": "present",
+      "heading_hint": "",
+      "status": "missing",
       "exact_items": [
-        "`Plans/Contracts_V0.md` explicitly forbids parallel canonical fields:"
+        "Make the owner-doc distinction explicit: inspection/provenance refs stay in event and record payloads; route/open contracts own navigation identity.",
+        "Keep detail_ref, report_ref, evidence_ref, usage_event_ref, workflow_refs, docker_refs, kubernetes_refs as record/provenance families, not route payload surrogates.",
+        "Keep resume_url only as serialized transport derived from canonical route identity."
       ],
-      "stale_tokens": [],
+      "stale_tokens": [
+        "detail_ref",
+        "report_ref",
+        "evidence_ref",
+        "usage_event_ref",
+        "workflow_refs",
+        "docker_refs",
+        "kubernetes_refs",
+        "resume_url"
+      ],
       "evidence": [
-        "Plans/Contracts_V0.md:14",
-        "Plans/Contracts_V0.md:204",
-        "Plans/Contracts_V0.md:979",
-        "Plans/Contracts_V0.md:1",
-        "Plans/Contracts_V0.md:528",
-        "Plans/Contracts_V0.md:1426"
+        "Plans/Contracts_V0.md:433 usage_event_ref",
+        "Plans/Contracts_V0.md:505 usage_event_ref",
+        "Plans/Contracts_V0.md:936 object_kind closed vocabulary",
+        "Plans/Contracts_V0.md:995 OpenSubject section"
       ],
-      "required_action": "none"
+      "required_action": "owner_create_or_rewrite",
+      "doc_resolution_status": "concrete",
+      "verification_status": "verified",
+      "source_doc_resolution_status": "global_or_cross_cutting",
+      "unresolved_reason": "Exact repair text not found in Plans/Contracts_V0.md; only related live route/open vocabulary appears."
+    },
+    {
+      "coverage_id": "cov-1059",
+      "source_obligation_ids": [
+        "obl-301"
+      ],
+      "source_seed_ids": [
+        "seed-301"
+      ],
+      "source_shard_ids": [
+        "shard-0076"
+      ],
+      "canon_label": "blocked family cross-family minimum fields",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "Define a cross-family blocked minimum for canonical blocked objects: blocked reason; ordered allowed actions where applicable; preserved-work / local-state disclosure where applicable; stable blocked-episode identity or family-local equivalent; detail/report inspection refs.",
+        "Keep family-local additions separate: node-blocked keeps blocked_sequence, attempt_id, failure_class; wizard-blocked keeps wizard-specific clarification/report fields; thread blocked notices stay as rendered/persisted consumer state, not canonical blocked ownership.",
+        "Reconcile the early thin wizard.blocked definition out of Contracts_V0.md."
+      ],
+      "stale_tokens": [
+        "blocked_sequence",
+        "attempt_id",
+        "failure_class",
+        "wizard.blocked"
+      ],
+      "evidence": [
+        "Plans/Contracts_V0.md:1301 wizard.blocked",
+        "Plans/Contracts_V0.md:322 closed tab_id vocabulary",
+        "Plans/Contracts_V0.md:936 object_kind closed vocabulary"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "doc_resolution_status": "concrete",
+      "verification_status": "verified",
+      "source_doc_resolution_status": "global_or_cross_cutting",
+      "unresolved_reason": "Exact repair text not found in Plans/Contracts_V0.md; only related live route/open vocabulary appears."
+    },
+    {
+      "coverage_id": "cov-1131",
+      "source_obligation_ids": [
+        "obl-329"
+      ],
+      "source_seed_ids": [
+        "seed-329"
+      ],
+      "source_shard_ids": [
+        "shard-0083"
+      ],
+      "canon_label": "Contracts route_target OpenSubject missing named contracts",
+      "row_type": "owner",
+      "path": "Plans/Contracts_V0.md",
+      "heading_hint": "",
+      "status": "missing",
+      "exact_items": [
+        "Plans/Contracts_V0.md still lacks named canonical contracts for: route_target and OpenSubject",
+        "The owner doc is ahead in late addenda and behind in its main body, which makes it a direct source of downstream drift across Orchestrator, Graph, HITL, storage, and command docs.",
+        "insert route_target and OpenSubject into the UI-command/navigation section"
+      ],
+      "stale_tokens": [
+        "route_target",
+        "OpenSubject"
+      ],
+      "evidence": [
+        "Plans/Contracts_V0.md:936 object_kind closed vocabulary",
+        "Plans/Contracts_V0.md:902 route_target section",
+        "Plans/Contracts_V0.md:995 OpenSubject section",
+        "Plans/Contracts_V0.md:322 closed tab_id vocabulary"
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "doc_resolution_status": "concrete",
+      "verification_status": "verified",
+      "source_doc_resolution_status": "concrete",
+      "unresolved_reason": "Exact repair text not found in Plans/Contracts_V0.md; only related live route/open vocabulary appears."
     }
   ]
 }

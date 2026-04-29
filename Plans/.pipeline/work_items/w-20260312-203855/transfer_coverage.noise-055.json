@@ -1,0 +1,23 @@
+{
+  "schema_id": "pm.transfer_coverage_noise.v1",
+  "work_id": "w-20260312-203855",
+  "wave_id": "wave-055",
+  "noise_findings": [
+    {
+      "source": "coverage-rowgrp-217",
+      "finding": "coverage_ids_completed was empty and some required_action values were blank; reducer completed all four IDs, normalized actions, and kept only cov-464 partial."
+    },
+    {
+      "source": "coverage-rowgrp-218",
+      "finding": "coverage_ids_completed was empty and required_action values were non-canonical; reducer normalized actions, upgraded cov-077/cov-1150 from missing to partial for Progress-only native-view evidence, downgraded cov-1155 from present to partial because tier_id/Tiers replacement details are incomplete."
+    },
+    {
+      "source": "coverage-rowgrp-219",
+      "finding": "coverage_ids_completed was empty; reducer completed cov-272/cov-468 and retained missing/partial statuses."
+    },
+    {
+      "source": "coverage-rowgrp-220",
+      "finding": "coverage_ids_completed was empty; reducer completed all four IDs, stripped generic projection evidence from missing rows, and upgraded cov-1122 from missing to partial for local Progress-only correction while noting Crosswalk guidance is absent."
+    }
+  ]
+}

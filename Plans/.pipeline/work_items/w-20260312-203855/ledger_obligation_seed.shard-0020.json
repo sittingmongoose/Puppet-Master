@@ -1,591 +1,85 @@
 {
-  "schema_id": "pm.ledger_obligation_seed_shard_result.v1",
+  "schema_id": "pm.ledger_obligation_seed_shard_result.v2",
   "work_id": "w-20260312-203855",
   "shard_id": "shard-0020",
   "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0020-L003801-L004000.md",
   "source_line_range": "L003801-L004000",
   "seed_candidates": [
     {
-      "seed_type": "consumer",
-      "canon_label_hint": "Current settings/inheritance may still be shown elsewhere, but must not overwrite history.",
+      "seed_type": "owner",
+      "canon_label_hint": "shared override-display grammar",
       "exact_items": [
-        "Current settings/inheritance may still be shown elsewhere, but must not overwrite history."
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0020",
-      "source_evidence": [
-        "working_ledger.md:L3801"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Candidate fixes to carry forward",
-      "exact_items": [
-        "Define a shared override-display grammar for all runtime-related settings surfaces."
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Candidate fixes to carry forward"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0020",
-      "source_evidence": [
-        "working_ledger.md:L3824"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Candidate fixes to carry forward",
-      "exact_items": [
-        "Add origin badges / precedence disclosure in Settings."
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Candidate fixes to carry forward"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0020",
-      "source_evidence": [
-        "working_ledger.md:L3826"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Candidate fixes to carry forward",
-      "exact_items": [
+        "Define a shared override-display grammar for all runtime-related settings surfaces.",
+        "Separate source, requested, and effective in UI language and data models.",
+        "Add origin badges / precedence disclosure in Settings.",
         "Add requested/effective + support-state disclosure blocks in runtime/history surfaces."
       ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Candidate fixes to carry forward"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0020",
-      "source_evidence": [
-        "working_ledger.md:L3827"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Do-not-forget details",
-      "exact_items": [
-        "historical run views must stay frozen to historical requested/effective state"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Do-not-forget details"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0020",
-      "source_evidence": [
-        "working_ledger.md:L3831"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Do-not-forget details",
-      "exact_items": [
-        "compact surfaces should show deltas only when they matter"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Do-not-forget details"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0020",
-      "source_evidence": [
-        "working_ledger.md:L3832"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Plans/Personas.md",
-      "exact_items": [
-        "`Plans/Personas.md`"
-      ],
       "affected_doc_hints": [
-        "Plans/Personas.md"
-      ],
-      "heading_hints": [
-        "Targeted docs read"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0020",
-      "source_evidence": [
-        "working_ledger.md:L3833-L3838"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Plans/Prompt_Pipeline.md",
-      "exact_items": [
-        "`Plans/Prompt_Pipeline.md`"
-      ],
-      "affected_doc_hints": [
-        "Plans/Prompt_Pipeline.md"
-      ],
-      "heading_hints": [
-        "Targeted docs read"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0020",
-      "source_evidence": [
-        "working_ledger.md:L3833-L3839"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Plans/interview-subagent-integration.md",
-      "exact_items": [
-        "`Plans/interview-subagent-integration.md`"
-      ],
-      "affected_doc_hints": [
-        "Plans/interview-subagent-integration.md"
-      ],
-      "heading_hints": [
-        "Targeted docs read"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0020",
-      "source_evidence": [
-        "working_ledger.md:L3840"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Plans/Models_System.md",
-      "exact_items": [
-        "`Plans/Models_System.md`"
-      ],
-      "affected_doc_hints": [
-        "Plans/Models_System.md"
-      ],
-      "heading_hints": [
-        "Targeted docs read"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0020",
-      "source_evidence": [
-        "working_ledger.md:L3841"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Plans/orchestrator-subagent-integration.md",
-      "exact_items": [
-        "`Plans/orchestrator-subagent-integration.md`"
-      ],
-      "affected_doc_hints": [
-        "Plans/orchestrator-subagent-integration.md"
-      ],
-      "heading_hints": [
-        "Targeted docs read"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0020",
-      "source_evidence": [
-        "working_ledger.md:L3842"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Plans/FinalGUISpec.md",
-      "exact_items": [
-        "`Plans/FinalGUISpec.md`"
-      ],
-      "affected_doc_hints": [
+        "Plans/Personas.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/interview-subagent-integration.md",
+        "Plans/Models_System.md",
+        "Plans/orchestrator-subagent-integration.md",
         "Plans/FinalGUISpec.md"
       ],
+      "doc_resolution_status": "concrete",
       "heading_hints": [
-        "Targeted docs read"
+        "Contradictions / gaps surfaced",
+        "Candidate fixes to carry forward"
       ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0020",
+      "stale_tokens": [
+        "historical run views must stay frozen to historical requested/effective state",
+        "provider-gap disclosure (honored / skipped / clamped) is a third concept"
+      ],
       "source_evidence": [
-        "working_ledger.md:L3843"
+        "working_ledger.md:L3815-L3828"
       ],
-      "notes": []
+      "notes": [
+        "Cross-surface UI/data-model obligation for runtime-related settings and history."
+      ]
     },
     {
       "seed_type": "consumer",
-      "canon_label_hint": "Key findings",
+      "canon_label_hint": "deterministic orchestrator auto-resolver",
       "exact_items": [
-        "The global requested-Persona precedence is already strong and should remain the backbone:"
+        "keep one global precedence chain",
+        "each surface auto resolver to emit a deterministic ranked candidate set plus explanation metadata",
+        "actor type and operation type should dominate stack hints",
+        "if the preferred candidate is unavailable after capability/provider/model filtering, fall through deterministically to the next candidate"
       ],
-      "affected_doc_hints": [],
+      "affected_doc_hints": [
+        "Plans/Personas.md",
+        "Plans/Prompt_Pipeline.md",
+        "Plans/interview-subagent-integration.md",
+        "Plans/Models_System.md",
+        "Plans/orchestrator-subagent-integration.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "doc_resolution_status": "concrete",
       "heading_hints": [
-        "Key findings"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0020",
-      "source_evidence": [
-        "working_ledger.md:L3846"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "layout_blocker",
-      "canon_label_hint": "Key findings",
-      "exact_items": [
-        "surface-specific explicit mapping"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Key findings"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0020",
-      "source_evidence": [
-        "working_ledger.md:L3849"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "layout_blocker",
-      "canon_label_hint": "Key findings",
-      "exact_items": [
-        "surface auto resolver candidate"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Key findings"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0020",
-      "source_evidence": [
-        "working_ledger.md:L3850"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "owner",
-      "canon_label_hint": "Key findings",
-      "exact_items": [
-        "canonical fallback"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Key findings"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0020",
-      "source_evidence": [
-        "working_ledger.md:L3850-L3852"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "layout_blocker",
-      "canon_label_hint": "Key findings",
-      "exact_items": [
-        "The remaining gap is mostly for Orchestrator and cross-surface explanation:"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Key findings"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0020",
-      "source_evidence": [
-        "working_ledger.md:L3861"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "layout_blocker",
-      "canon_label_hint": "Recommended resolver shape",
-      "exact_items": [
-        "but require each surface auto resolver to emit a deterministic ranked candidate set plus explanation metadata"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Recommended resolver shape"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0020",
-      "source_evidence": [
-        "working_ledger.md:L3870"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Recommended resolver shape",
-      "exact_items": [
-        "Candidate resolver inputs for Orchestrator should likely include:"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Recommended resolver shape"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0020",
-      "source_evidence": [
-        "working_ledger.md:L3870-L3871"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "layout_blocker",
-      "canon_label_hint": "Deterministic input priority direction",
-      "exact_items": [
-        "hard requirement from plan/tier/surface contract"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Deterministic input priority direction"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0020",
-      "source_evidence": [
-        "working_ledger.md:L3900"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Deterministic input priority direction",
-      "exact_items": [
-        "actor type and operation type should dominate stack hints"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Deterministic input priority direction"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0020",
-      "source_evidence": [
-        "working_ledger.md:L3908"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Deterministic input priority direction",
-      "exact_items": [
-        "a reviewer/reviewer-pass should not silently become a coding persona just because the repo is Rust-heavy"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Deterministic input priority direction"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0020",
-      "source_evidence": [
-        "working_ledger.md:L3910"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Deterministic input priority direction",
-      "exact_items": [
-        "a seam overseer should not collapse into a narrow implementation persona just because a framework is detected"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Deterministic input priority direction"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0020",
-      "source_evidence": [
-        "working_ledger.md:L3911"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Orchestrator-specific direction",
-      "exact_items": [
-        "The exact persona ids may still evolve, but the mapping policy should be explicit now."
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Orchestrator-specific direction"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0020",
-      "source_evidence": [
-        "working_ledger.md:L3929"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Fallback direction",
-      "exact_items": [
-        "Only hard requirements should force stronger handling."
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
+        "Recommended resolver shape",
+        "Deterministic input priority direction",
         "Fallback direction"
       ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0020",
+      "stale_tokens": [
+        "reviewer/reviewer-pass should not silently become a coding persona",
+        "a seam overseer should not collapse into a narrow implementation persona"
+      ],
       "source_evidence": [
-        "working_ledger.md:L3940"
+        "working_ledger.md:L3867-L3940"
       ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Clarification rule",
-      "exact_items": [
-        "this should probably be rare and usually resolved by actor type + operation type"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Clarification rule"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0020",
-      "source_evidence": [
-        "working_ledger.md:L3946"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Explanation / selection-reason direction",
-      "exact_items": [
-        "The auto resolver should emit concise but structured reason text."
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Explanation / selection-reason direction"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0020",
-      "source_evidence": [
-        "working_ledger.md:L3950"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "layout_blocker",
-      "canon_label_hint": "Explanation / selection-reason direction",
-      "exact_items": [
-        "The UI should not expose a noisy \u201cscored all candidates\u201d explanation by default."
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Explanation / selection-reason direction"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0020",
-      "source_evidence": [
-        "working_ledger.md:L3961"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "task",
-      "exact_items": [
-        "Orchestrator work likely needs careful treatment of `task` / `run` / `subagent` scopes so:"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Scope / override lifecycle direction"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0020",
-      "source_evidence": [
-        "working_ledger.md:L3970"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Cross-surface consistency direction",
-      "exact_items": [
-        "Orchestrator should gain the same clarity:"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Cross-surface consistency direction"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0020",
-      "source_evidence": [
-        "working_ledger.md:L3980"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Cross-surface consistency direction",
-      "exact_items": [
-        "Chat/Interview/Builder/Orchestrator should still share the same effective resolution record and display grammar."
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Cross-surface consistency direction"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0020",
-      "source_evidence": [
-        "working_ledger.md:L3987"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Candidate fixes to carry forward",
-      "exact_items": [
-        "Define a deterministic Orchestrator auto-resolver matrix by:"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Candidate fixes to carry forward"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0020",
-      "source_evidence": [
-        "working_ledger.md:L3995"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Candidate fixes to carry forward",
-      "exact_items": [
-        "Require each auto resolver to emit:"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Candidate fixes to carry forward"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0020",
-      "source_evidence": [
-        "working_ledger.md:L4000"
-      ],
-      "notes": []
+      "notes": [
+        "Needs explicit matrix for actor type, operation type, scope, and stack/domain hints."
+      ]
     }
   ],
   "noise_items": [
-    {
-      "item": "- support-status chips for controls",
-      "source_evidence": [
-        "working_ledger.md:L3809"
-      ],
-      "reason": "metric/status/count/family or process line without concrete obligation-grade evidence"
-    }
+    "Current settings/inheritance may still be shown elsewhere, but must not overwrite history.",
+    "The global precedence chain is clear, but Orchestrator auto-resolver specifics are still too qualitative."
   ],
-  "uncertain_items": [],
+  "uncertain_items": [
+    "Exact doc ownership among the listed Plans/** files is not resolved in this shard.",
+    "working_ledger.md line mapping is inferred from the shard text, not directly verified here."
+  ],
   "covered_shard_id": "shard-0020"
 }

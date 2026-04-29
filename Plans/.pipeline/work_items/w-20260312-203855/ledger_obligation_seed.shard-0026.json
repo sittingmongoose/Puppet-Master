@@ -1,647 +1,181 @@
 {
-  "schema_id": "pm.ledger_obligation_seed_shard_result.v1",
+  "schema_id": "pm.ledger_obligation_seed_shard_result.v2",
   "work_id": "w-20260312-203855",
   "shard_id": "shard-0026",
   "source_path": "Plans/.pipeline/work_items/w-20260312-203855/ledger_shards/shard-0026-L005001-L005200.md",
   "source_line_range": "L005001-L005200",
+  "covered_shard_id": "shard-0026",
   "seed_candidates": [
     {
-      "seed_type": "consumer",
-      "canon_label_hint": "attempt to restore or reconcile a suspect/orphaned/conflicted worktree into a safe known state",
-      "exact_items": [
-        "attempt to restore or reconcile a suspect/orphaned/conflicted worktree into a safe known state"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0026",
-      "source_evidence": [
-        "working_ledger.md:L5003"
-      ],
-      "notes": []
-    },
-    {
       "seed_type": "stale_retirement",
-      "canon_label_hint": "retire from active use while preserving enough identity/metadata/lineage for historical browsing",
+      "canon_label_hint": "worktree cleanup lifecycle / historical lineage preservation",
       "exact_items": [
-        "retire from active use while preserving enough identity/metadata/lineage for historical browsing"
+        "archive",
+        "prune",
+        "remove",
+        "cleanup_eligible",
+        "retained",
+        "suspect",
+        "restoring"
       ],
       "affected_doc_hints": [],
-      "heading_hints": [],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0026",
-      "source_evidence": [
-        "working_ledger.md:L5005"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "stale_retirement",
-      "canon_label_hint": "cleanup-oriented action for items already policy-eligible; narrower than generic remove and typi",
-      "exact_items": [
-        "cleanup-oriented action for items already policy-eligible; narrower than generic remove and typically scoped to obviously stale/orphaned/live-no-longer-needed worktrees"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0026",
-      "source_evidence": [
-        "working_ledger.md:L5005-L5007"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "archive",
-      "exact_items": [
-        "The historical lane/worktree record must survive `archive`, `prune`, and `remove`."
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0026",
-      "source_evidence": [
-        "working_ledger.md:L5010"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Eligibility / gating direction",
-      "exact_items": [
-        "Cleanup must be gated by more than age."
-      ],
-      "affected_doc_hints": [],
+      "doc_resolution_status": "global_or_cross_cutting",
       "heading_hints": [
-        "Eligibility / gating direction"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0026",
-      "source_evidence": [
-        "working_ledger.md:L5013"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "owner",
-      "canon_label_hint": "Eligibility / gating direction",
-      "exact_items": [
-        "no active-run ownership"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Eligibility / gating direction"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0026",
-      "source_evidence": [
-        "working_ledger.md:L5015"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Eligibility / gating direction",
-      "exact_items": [
-        "no required safe-point restore targeting that worktree/baseline"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Eligibility / gating direction"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0026",
-      "source_evidence": [
-        "working_ledger.md:L5017"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "retained",
-      "exact_items": [
-        "If any of those hold, the object should remain `retained`, `suspect`, or `restoring`, not `cleanup_eligible`."
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Eligibility / gating direction"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0026",
-      "source_evidence": [
-        "working_ledger.md:L5020"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Trigger direction",
-      "exact_items": [
-        "revoked/reopened flow leaves an old lane/worktree no longer needed live"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Trigger direction"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0026",
-      "source_evidence": [
-        "working_ledger.md:L5026"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Trigger direction",
-      "exact_items": [
-        "recovery completed and old broken backing is no longer needed"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Trigger direction"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0026",
-      "source_evidence": [
-        "working_ledger.md:L5027"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Source Control vs Orchestrator boundary",
-      "exact_items": [
-        "Because Source Control is narrow, it should default to compact current/live worktree rows with filters/toggles for:"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Source Control vs Orchestrator boundary"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0026",
-      "source_evidence": [
-        "working_ledger.md:L5038"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "History",
-      "exact_items": [
-        "live cleanup must never erase run/lane/worktree lineage from `History`, `Ledger`, or graph-linked inspection"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Historical-lineage rule"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0026",
-      "source_evidence": [
-        "working_ledger.md:L5046"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "strong",
-      "exact_items": [
-        "prune/remove should usually be `strong`"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Confirmation / undo implication"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0026",
-      "source_evidence": [
-        "working_ledger.md:L5054"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Contradictions / gaps surfaced",
-      "exact_items": [
-        "Current docs expose worktree actions and blocked classifications, but they do not yet define the full lane/worktree cleanup lifecycle."
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
+        "Eligibility / gating direction",
+        "Trigger direction",
+        "Historical-lineage rule",
+        "Confirmation / undo implication",
         "Contradictions / gaps surfaced"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0026",
-      "source_evidence": [
-        "working_ledger.md:L5060"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "layout_blocker",
-      "canon_label_hint": "historical",
-      "exact_items": [
-        "`historical`, `archived`, `removed`, `retained`, and `cleanup_eligible` still need sharper cross-surface meanings."
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Contradictions / gaps surfaced"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0026",
-      "source_evidence": [
-        "working_ledger.md:L5061"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Candidate fixes to carry forward",
-      "exact_items": [
-        "Define distinct lane and worktree lifecycle states, with explicit mapping but no forced identity collapse."
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Candidate fixes to carry forward"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0026",
-      "source_evidence": [
-        "working_ledger.md:L5067"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "owner",
-      "canon_label_hint": "Do-not-forget details",
-      "exact_items": [
-        "active-run ownership must be visible before destructive worktree actions"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Do-not-forget details"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0026",
-      "source_evidence": [
-        "working_ledger.md:L5073"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Do-not-forget details",
-      "exact_items": [
-        "cleanup should reduce live clutter without erasing the historical object model"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Do-not-forget details"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0026",
-      "source_evidence": [
-        "working_ledger.md:L5075"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Plans/Glossary.md",
-      "exact_items": [
-        "`Plans/Glossary.md`"
-      ],
-      "affected_doc_hints": [
-        "Plans/Glossary.md"
-      ],
-      "heading_hints": [
-        "Targeted docs read"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0026",
-      "source_evidence": [
-        "working_ledger.md:L5080"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Plans/FinalGUISpec.md",
-      "exact_items": [
-        "`Plans/FinalGUISpec.md`"
-      ],
-      "affected_doc_hints": [
-        "Plans/FinalGUISpec.md"
-      ],
-      "heading_hints": [
-        "Targeted docs read"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0026",
-      "source_evidence": [
-        "working_ledger.md:L5081"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Plans/Personas.md",
-      "exact_items": [
-        "`Plans/Personas.md`"
-      ],
-      "affected_doc_hints": [
-        "Plans/Personas.md"
-      ],
-      "heading_hints": [
-        "Targeted docs read"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0026",
-      "source_evidence": [
-        "working_ledger.md:L5082"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Plans/Models_System.md",
-      "exact_items": [
-        "`Plans/Models_System.md`"
-      ],
-      "affected_doc_hints": [
-        "Plans/Models_System.md"
-      ],
-      "heading_hints": [
-        "Targeted docs read"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0026",
-      "source_evidence": [
-        "working_ledger.md:L5083"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Plans/Multi-Account.md",
-      "exact_items": [
-        "`Plans/Multi-Account.md`"
-      ],
-      "affected_doc_hints": [
-        "Plans/Multi-Account.md"
-      ],
-      "heading_hints": [
-        "Targeted docs read"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0026",
-      "source_evidence": [
-        "working_ledger.md:L5084"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Key findings",
-      "exact_items": [
-        "source control / Docker / GitHub / operation receipt"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Key findings"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0026",
-      "source_evidence": [
-        "working_ledger.md:L5096"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Terms that now need canonical glossary ownership",
-      "exact_items": [
-        "projection trust terms:"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Terms that now need canonical glossary ownership"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0026",
-      "source_evidence": [
-        "working_ledger.md:L5121"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "stale_retirement",
-      "canon_label_hint": "stale",
-      "exact_items": [
-        "`stale`"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Terms that now need canonical glossary ownership"
       ],
       "stale_tokens": [
-        "stale"
+        "historical",
+        "archived",
+        "removed",
+        "retained",
+        "cleanup_eligible"
       ],
-      "source_shard_id": "shard-0026",
       "source_evidence": [
-        "working_ledger.md:L5124"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "record",
-      "exact_items": [
-        "`record` vs `artifact`"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Terms that need explicit distinction rules"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0026",
-      "source_evidence": [
-        "working_ledger.md:L5131"
+        "working_ledger.md:L5010-L5020",
+        "working_ledger.md:L5023-L5031",
+        "working_ledger.md:L5045-L5057",
+        "working_ledger.md:L5060-L5070"
       ],
       "notes": []
     },
     {
       "seed_type": "owner",
-      "canon_label_hint": "Help-system implication",
+      "canon_label_hint": "canonical glossary ownership for rewrite-critical Orchestrator terms",
       "exact_items": [
-        "glossary owns short canonical definitions"
+        "Feature Seam",
+        "Work Package",
+        "Node",
+        "Package Overseer",
+        "Seam Overseer",
+        "Weak Integration",
+        "Promotion",
+        "Corroboration",
+        "Graph Patch",
+        "Graph Generation",
+        "Concern",
+        "Lane",
+        "Lane Pool",
+        "Worktree",
+        "Historical Run",
+        "Reopened",
+        "Revoked",
+        "Superseded",
+        "stale_historical",
+        "current",
+        "refreshing",
+        "stale",
+        "degraded",
+        "unavailable"
       ],
-      "affected_doc_hints": [],
+      "affected_doc_hints": [
+        "Plans/Glossary.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/Personas.md",
+        "Plans/Models_System.md",
+        "Plans/Multi-Account.md"
+      ],
+      "doc_resolution_status": "concrete",
       "heading_hints": [
-        "Help-system implication"
+        "Terms that now need canonical glossary ownership",
+        "Terms that need explicit distinction rules",
+        "Help-system implication",
+        "GUI copy implication"
       ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0026",
+      "stale_tokens": [
+        "requested",
+        "effective",
+        "historical",
+        "superseded",
+        "revoked"
+      ],
       "source_evidence": [
-        "working_ledger.md:L5145"
+        "working_ledger.md:L5100-L5127",
+        "working_ledger.md:L5128-L5140",
+        "working_ledger.md:L5142-L5158",
+        "working_ledger.md:L5170-L5178"
       ],
       "notes": []
     },
     {
       "seed_type": "consumer",
-      "canon_label_hint": "Help-system implication",
+      "canon_label_hint": "help-system entries for distinction-heavy concepts",
       "exact_items": [
-        "contextual help can simplify wording, but must not mutate the underlying semantics"
+        "Weak Integration",
+        "Corroboration",
+        "Graph Patch",
+        "Promotion",
+        "Concern lifecycle",
+        "Lane vs Worktree",
+        "requested vs effective",
+        "safe point vs restore point",
+        "historical vs superseded vs revoked"
       ],
-      "affected_doc_hints": [],
+      "affected_doc_hints": [
+        "Plans/Glossary.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "doc_resolution_status": "concrete",
       "heading_hints": [
-        "Help-system implication"
+        "Help-system implication",
+        "Shared provider-runtime impact",
+        "GUI copy implication"
       ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0026",
+      "stale_tokens": [
+        "retry",
+        "old",
+        "completed",
+        "degraded",
+        "history"
+      ],
       "source_evidence": [
-        "working_ledger.md:L5147"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Shared provider-runtime impact",
-      "exact_items": [
-        "This means those docs are less likely to need conceptual rewrite than the Orchestrator and glossary/help surfaces."
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Shared provider-runtime impact"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0026",
-      "source_evidence": [
-        "working_ledger.md:L5167"
+        "working_ledger.md:L5142-L5157",
+        "working_ledger.md:L5170-L5179",
+        "working_ledger.md:L5180-L5193"
       ],
       "notes": []
     },
     {
       "seed_type": "layout_blocker",
-      "canon_label_hint": "GUI copy implication",
+      "canon_label_hint": "cross-surface copy discipline / UI terminology drift",
       "exact_items": [
-        "The rewrite now needs a stronger cross-cutting copy discipline so the UI does not casually say:"
+        "Orchestrator tabs",
+        "Source Control / lane/worktree language",
+        "blocked/recovery actions",
+        "concerns/promotions/patches/history/ledger labels"
       ],
-      "affected_doc_hints": [],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Glossary.md"
+      ],
+      "doc_resolution_status": "layout_target_in_notes",
       "heading_hints": [
-        "GUI copy implication"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0026",
-      "source_evidence": [
-        "working_ledger.md:L5172"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "owner",
-      "canon_label_hint": "GUI copy implication",
-      "exact_items": [
-        "when a more precise canonical term is required"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "GUI copy implication"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0026",
-      "source_evidence": [
-        "working_ledger.md:L5178"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "owner",
-      "canon_label_hint": "Candidate fixes to carry forward",
-      "exact_items": [
-        "Use glossary definitions as the canonical short-definition source for future help entries."
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
+        "GUI copy implication",
+        "Contradictions / gaps surfaced",
         "Candidate fixes to carry forward"
       ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0026",
+      "stale_tokens": [
+        "retry",
+        "old",
+        "completed",
+        "degraded",
+        "history"
+      ],
       "source_evidence": [
-        "working_ledger.md:L5191"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Candidate fixes to carry forward",
-      "exact_items": [
-        "Add explicit distinction guidance for the high-risk word pairs above."
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Candidate fixes to carry forward"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0026",
-      "source_evidence": [
-        "working_ledger.md:L5192"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "owner",
-      "canon_label_hint": "FinalGUISpec.md",
-      "exact_items": [
-        "Re-check `FinalGUISpec.md` and related UX docs later for copy that uses informal synonyms where canonical terms are now required."
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Candidate fixes to carry forward"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0026",
-      "source_evidence": [
-        "working_ledger.md:L5193"
-      ],
-      "notes": []
-    },
-    {
-      "seed_type": "layout_blocker",
-      "canon_label_hint": "Do-not-forget details",
-      "exact_items": [
-        "glossary/help need to catch up to Orchestrator object semantics before UI copy starts crystallizing around weaker synonyms"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Do-not-forget details"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0026",
-      "source_evidence": [
-        "working_ledger.md:L5197"
+        "working_ledger.md:L5170-L5187",
+        "working_ledger.md:L5189-L5193"
       ],
       "notes": []
     }
   ],
-  "noise_items": [],
-  "uncertain_items": [
-    {
-      "seed_type": "consumer",
-      "canon_label_hint": "Eligibility / gating direction",
-      "exact_items": [
-        "no unresolved conflict workflow the user still needs to inspect"
-      ],
-      "affected_doc_hints": [],
-      "heading_hints": [
-        "Eligibility / gating direction"
-      ],
-      "stale_tokens": [],
-      "source_shard_id": "shard-0026",
-      "source_evidence": [
-        "working_ledger.md:L5018"
-      ],
-      "notes": [],
-      "reason": "open or unresolved wording may need later human classification"
-    }
+  "noise_items": [
+    "working_ledger.md:L5001-L5009",
+    "working_ledger.md:L5077-L5099",
+    "working_ledger.md:L5159-L5168",
+    "working_ledger.md:L5195-L5200"
   ],
-  "covered_shard_id": "shard-0026"
+  "uncertain_items": []
 }
