@@ -1,0 +1,73 @@
+{
+  "schema_id": "pm.coverage_evidence_result_group.v2",
+  "work_id": "w-20260328-192905",
+  "group_id": "ceg-010",
+  "coverage_results": [
+    {
+      "coverage_id": "cov-00009",
+      "source_obligation_ids": [
+        "obl-009"
+      ],
+      "source_seed_ids": [
+        "seed-007"
+      ],
+      "source_shard_ids": [
+        "shard-0003"
+      ],
+      "path": "Plans/Personas.md",
+      "row_type": "stale_retirement",
+      "status": "present",
+      "evidence": [],
+      "required_action": "none",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean"
+    },
+    {
+      "coverage_id": "cov-00010",
+      "source_obligation_ids": [
+        "obl-010"
+      ],
+      "source_seed_ids": [
+        "seed-008"
+      ],
+      "source_shard_ids": [
+        "shard-0003"
+      ],
+      "path": "Plans/Personas.md",
+      "row_type": "stale_retirement",
+      "status": "present",
+      "evidence": [],
+      "required_action": "none",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean"
+    },
+    {
+      "coverage_id": "cov-00011",
+      "source_obligation_ids": [
+        "obl-011"
+      ],
+      "source_seed_ids": [
+        "seed-009"
+      ],
+      "source_shard_ids": [
+        "shard-0003"
+      ],
+      "path": "Plans/Personas.md",
+      "row_type": "stale_retirement",
+      "status": "present",
+      "evidence": [],
+      "required_action": "none",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean"
+    }
+  ],
+  "blocked_rows": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

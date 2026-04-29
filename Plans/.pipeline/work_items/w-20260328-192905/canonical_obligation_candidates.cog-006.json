@@ -1,0 +1,53 @@
+{
+  "schema_id": "pm.canonical_obligation_candidate_group.v2",
+  "work_id": "w-20260328-192905",
+  "group_id": "cog-006",
+  "represented_seed_ids": [
+    "seed-016"
+  ],
+  "source_shard_ids": [
+    "shard-0004"
+  ],
+  "obligation_candidates": [
+    {
+      "candidate_id": "obl-cand-001",
+      "source_seed_ids": [
+        "seed-016"
+      ],
+      "source_shard_ids": [
+        "shard-0004"
+      ],
+      "canon_label": "Persona terminology must stay normalized so docs distinguish Persona definitions, `persona_registry` entries, `subagent_registry` launch types, requested Personas, effective Personas, and selection sources or reasons.",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Persona terminology must be normalized across docs so they consistently distinguish Persona definition, `persona_registry` entry, `subagent_registry` launch type, requested Persona, effective Persona, and selection source or reason."
+      ],
+      "affected_doc_hints": [
+        "Plans/Personas.md",
+        "Plans/interview-subagent-integration.md",
+        "Plans/orchestrator-subagent-integration.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "Persona Terminology"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L631-L637"
+      ],
+      "notes": []
+    }
+  ],
+  "deferred_seed_ids": [],
+  "noise_seed_ids": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

@@ -1,0 +1,1139 @@
+{
+  "schema_id": "pm.canonical_obligations.v2",
+  "work_id": "w-20260328-192905",
+  "source_seed": "Plans/.pipeline/work_items/w-20260328-192905/ledger_obligation_seed.json",
+  "source_sha256": "4369b596a2b2da303860f1896dbb2c97d61e06bb42d8ed2f280723199eae31cb",
+  "summary": {
+    "obligations_total": 34,
+    "seed_items_total": 39,
+    "seed_items_represented": 39,
+    "seed_items_deferred": 0,
+    "seed_items_noise": 0,
+    "source_shards_represented": 9,
+    "docs_affected": 9,
+    "missing_doc_paths_referenced": 0,
+    "process_artifact_refs_count": 0,
+    "path_quarantine_violations": 0,
+    "canonical_replacement_unknown_obligations": 1
+  },
+  "obligations": [
+    {
+      "source_seed_ids": [
+        "seed-001"
+      ],
+      "source_shard_ids": [
+        "shard-0001"
+      ],
+      "canon_label": "Core Personas are protected built-ins and cannot be deleted or modified.",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Core Personas are protected built-ins.",
+        "Core Personas cannot be deleted.",
+        "Core Personas cannot be modified."
+      ],
+      "affected_doc_hints": [
+        "Plans/Personas.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "Core Personas"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L67-L70"
+      ],
+      "notes": [],
+      "obligation_id": "obl-001"
+    },
+    {
+      "source_seed_ids": [
+        "seed-003"
+      ],
+      "source_shard_ids": [
+        "shard-0002"
+      ],
+      "canon_label": "Bundled PM-native specialty prompt templates must stay concise and specify role posture, usage boundaries, workflow, guardrails, and handoffs.",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "PM-native bundled specialty prompts should be much smaller and sharper.",
+        "The PM-native specialty prompt template should emphasize mission or role posture, when to use and when not to use, response approach or operating sequence, key heuristics or guardrails, and handoff expectations to neighboring personas when relevant."
+      ],
+      "affected_doc_hints": [
+        "Plans/Personas.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "Specialty Prompt Template"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L377-L386"
+      ],
+      "notes": [],
+      "obligation_id": "obl-002"
+    },
+    {
+      "source_seed_ids": [
+        "seed-004"
+      ],
+      "source_shard_ids": [
+        "shard-0002"
+      ],
+      "canon_label": "PM-native specialty prompts must avoid vendor encyclopedias, guarantee-like numeric targets, raw JSON protocol examples, mandatory context-manager infrastructure, redundant tooling lists, and inflated completion claims.",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "PM-native specialty prompts should avoid vendor or version encyclopedias unless the persona is explicitly stack-specific.",
+        "PM-native specialty prompts should avoid hard numeric goals that read like guarantees rather than heuristics, raw JSON communication protocol examples, references to a separate context-manager service as mandatory infrastructure, long generic tooling lists that metadata can already express, and inflated completion claims."
+      ],
+      "affected_doc_hints": [
+        "Plans/Personas.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "Specialty Prompt Template"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L387-L393"
+      ],
+      "notes": [],
+      "obligation_id": "obl-003"
+    },
+    {
+      "source_seed_ids": [
+        "seed-005"
+      ],
+      "source_shard_ids": [
+        "shard-0002"
+      ],
+      "canon_label": "Specialty personas must adapt repo-first, follow existing stack and design patterns, keep tool posture in metadata, distinguish persona roles, and strip vanity boilerplate.",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "All specialty personas should prefer repo-first adaptation over canned best-practice dumping.",
+        "All specialty personas should default to the codebase's existing stack, patterns, constraints, and design system.",
+        "All specialty personas should keep tool posture and permissions in metadata while keeping the prompt body focused on judgment and workflow.",
+        "All specialty personas should explicitly distinguish build, review, investigator, planner, and documentation personas and use fallback or handoff wording when another specialty is a better fit.",
+        "All specialty personas should preserve expertise while stripping vanity metrics and boilerplate ceremony."
+      ],
+      "affected_doc_hints": [
+        "Plans/Personas.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "Specialty Prompt Template"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L394-L400"
+      ],
+      "notes": [],
+      "obligation_id": "obl-004"
+    },
+    {
+      "source_seed_ids": [
+        "seed-006"
+      ],
+      "source_shard_ids": [
+        "shard-0002"
+      ],
+      "canon_label": "External persona prompts must be adapted into PM-native form before they enter the bundled canon.",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Migrating external persona prompts into PM Personas is not just file-copying; the prompts need PM-native adaptation before they enter bundled canon."
+      ],
+      "affected_doc_hints": [
+        "Plans/Personas.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L270-L277"
+      ],
+      "notes": [],
+      "obligation_id": "obl-005"
+    },
+    {
+      "source_seed_ids": [
+        "seed-010"
+      ],
+      "source_shard_ids": [
+        "shard-0003"
+      ],
+      "canon_label": "The approved specialty catalog must include docker-expert, github-actions-expert, graphql-expert, openapi-expert, and postgres-expert.",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Add the narrow specialists `docker-expert`, `github-actions-expert`, `graphql-expert`, `openapi-expert`, and `postgres-expert` to the approved specialty catalog."
+      ],
+      "affected_doc_hints": [
+        "Plans/Personas.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "Specialty Personas"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L406-L406"
+      ],
+      "notes": [],
+      "obligation_id": "obl-006"
+    },
+    {
+      "source_seed_ids": [
+        "seed-013"
+      ],
+      "source_shard_ids": [
+        "shard-0003"
+      ],
+      "canon_label": "Specialty Personas must not share one default permissions or tool posture.",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Puppet Master should not stamp one default permissions or tool posture onto all specialty Personas."
+      ],
+      "affected_doc_hints": [
+        "Plans/Personas.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "Specialty Personas"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L567-L577"
+      ],
+      "notes": [],
+      "obligation_id": "obl-007"
+    },
+    {
+      "source_seed_ids": [
+        "seed-015"
+      ],
+      "source_shard_ids": [
+        "shard-0004"
+      ],
+      "canon_label": "The canonical Persona catalog must distinguish built-ins, first-party specialty Personas, stage or tier defaults, legacy aliases, and registry-only launch types.",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "The canonical Persona catalog must explicitly distinguish built-ins, first-party specialty Personas, stage or tier defaults, legacy aliases, and registry-only launch types."
+      ],
+      "affected_doc_hints": [
+        "Plans/Personas.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "Persona Catalog"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L625-L630"
+      ],
+      "notes": [],
+      "obligation_id": "obl-008"
+    },
+    {
+      "source_seed_ids": [
+        "seed-007"
+      ],
+      "source_shard_ids": [
+        "shard-0003"
+      ],
+      "canon_label": "Retire `project-manager` from the bundled specialty Persona catalog and do not recreate it as a PM Persona.",
+      "obligation_type": "stale_retirement",
+      "exact_tokens": [
+        "Retire `project-manager` from the bundled specialty Persona catalog and do not recreate it as a PM Persona.",
+        "`project-manager`",
+        "project-manager"
+      ],
+      "affected_doc_hints": [
+        "Plans/Personas.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "Specialty Personas"
+      ],
+      "stale_residue_to_retire": [
+        "project-manager"
+      ],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L403-L410"
+      ],
+      "notes": [],
+      "obligation_id": "obl-009"
+    },
+    {
+      "source_seed_ids": [
+        "seed-008"
+      ],
+      "source_shard_ids": [
+        "shard-0003"
+      ],
+      "canon_label": "Retire `product-manager` from the bundled specialty Persona catalog and do not recreate it as a PM Persona.",
+      "obligation_type": "stale_retirement",
+      "exact_tokens": [
+        "Retire `product-manager` from the bundled specialty Persona catalog and do not recreate it as a PM Persona.",
+        "`product-manager`",
+        "product-manager"
+      ],
+      "affected_doc_hints": [
+        "Plans/Personas.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "Specialty Personas"
+      ],
+      "stale_residue_to_retire": [
+        "product-manager"
+      ],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L404-L410"
+      ],
+      "notes": [],
+      "obligation_id": "obl-010"
+    },
+    {
+      "source_seed_ids": [
+        "seed-009"
+      ],
+      "source_shard_ids": [
+        "shard-0003"
+      ],
+      "canon_label": "Retire `context-manager` as a bundled specialty Persona and satisfy its former role through PM-native context and memory systems rather than a user-facing replacement Persona.",
+      "obligation_type": "stale_retirement",
+      "exact_tokens": [
+        "Retire `context-manager` as a Persona and replace its role with PM-native context and memory systems rather than a user-facing replacement Persona.",
+        "`context-manager`",
+        "context-manager"
+      ],
+      "affected_doc_hints": [
+        "Plans/Personas.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "Specialty Personas"
+      ],
+      "stale_residue_to_retire": [
+        "context-manager"
+      ],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L405-L413"
+      ],
+      "notes": [],
+      "obligation_id": "obl-011"
+    },
+    {
+      "source_seed_ids": [
+        "seed-011",
+        "seed-020"
+      ],
+      "source_shard_ids": [
+        "shard-0003",
+        "shard-0004"
+      ],
+      "canon_label": "`Overseer` canon across governance roles, delegation/review responsibilities, and non-ownership of scheduler/runtime state",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`Overseer`",
+        "user-facing governance abstraction",
+        "not the scheduler personified",
+        "not the canonical runtime-state owner",
+        "`Package Overseer`",
+        "`Seam Overseer`",
+        "governance roles",
+        "delegation",
+        "review",
+        "promotion",
+        "integration quality",
+        "remediation judgment"
+      ],
+      "affected_doc_hints": [
+        "Plans/Glossary.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/orchestrator-subagent-integration.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "Overseer"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L509-L512",
+        "working_ledger.md:L664-L668"
+      ],
+      "notes": [],
+      "obligation_id": "obl-012"
+    },
+    {
+      "source_seed_ids": [
+        "seed-012"
+      ],
+      "source_shard_ids": [
+        "shard-0003"
+      ],
+      "canon_label": "`Teacher` documentation coverage across PM capabilities, settings, modes, GUI locations, workflows, and terminology",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`Teacher`",
+        "reliable",
+        "current",
+        "broad documentation",
+        "Puppet Master capabilities",
+        "settings",
+        "modes",
+        "GUI locations",
+        "workflows",
+        "terminology"
+      ],
+      "affected_doc_hints": [
+        "Plans/Personas.md",
+        "Plans/Models_System.md",
+        "Plans/FinalGUISpec.md",
+        "Plans/assistant-chat-design.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "Teacher"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L557-L560"
+      ],
+      "notes": [],
+      "obligation_id": "obl-013"
+    },
+    {
+      "source_seed_ids": [
+        "seed-014"
+      ],
+      "source_shard_ids": [
+        "shard-0003"
+      ],
+      "canon_label": "Specialty Persona selection must normalize overlapping specialty clusters with explicit picker rules and deterministic auto-resolution behavior so selection is not noisy or arbitrary.",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Puppet Master should normalize overlapping specialty clusters with explicit picker rules and auto-resolution behavior so persona selection is not noisy or arbitrary.",
+        "The UI should not expose a noisy \u201cscored all candidates\u201d explanation by default."
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Personas.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "Specialty Personas"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L591-L600"
+      ],
+      "notes": [],
+      "obligation_id": "obl-014"
+    },
+    {
+      "source_seed_ids": [
+        "seed-016"
+      ],
+      "source_shard_ids": [
+        "shard-0004"
+      ],
+      "canon_label": "Persona terminology must stay normalized so docs distinguish Persona definitions, `persona_registry` entries, `subagent_registry` launch types, requested Personas, effective Personas, and selection sources or reasons.",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Persona terminology must be normalized across docs so they consistently distinguish Persona definition, `persona_registry` entry, `subagent_registry` launch type, requested Persona, effective Persona, and selection source or reason."
+      ],
+      "affected_doc_hints": [
+        "Plans/Personas.md",
+        "Plans/interview-subagent-integration.md",
+        "Plans/orchestrator-subagent-integration.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "Persona Terminology"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L631-L637"
+      ],
+      "notes": [],
+      "obligation_id": "obl-015"
+    },
+    {
+      "source_seed_ids": [
+        "seed-017"
+      ],
+      "source_shard_ids": [
+        "shard-0004"
+      ],
+      "canon_label": "Canonical Persona management belongs in Agent Config, while Settings is limited to cross-cutting runtime policy knobs.",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "Canonical Persona management belongs in Agent Config as the primary owner surface, while Settings is limited to cross-cutting runtime policy knobs."
+      ],
+      "affected_doc_hints": [
+        "Plans/Personas.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "Agent Config Personas"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L643-L644"
+      ],
+      "notes": [],
+      "obligation_id": "obl-016"
+    },
+    {
+      "source_seed_ids": [
+        "seed-018",
+        "seed-019"
+      ],
+      "source_shard_ids": [
+        "shard-0004"
+      ],
+      "canon_label": "Agent Config > Personas must provide the canonical Persona library and editing surface, including compatibility disclosure, requested-versus-effective preview, and one shared capability-and-availability presentation model across editor and runtime views.",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "Agent Config > Personas must provide a real library surface with a list, filters or groups, a scope badge, prompt preview or editor, an effective runtime summary, provider compatibility disclosure, and a requested-versus-effective preview.",
+        "Persona editor and runtime surfaces need one shared capability-and-availability presentation model so they explain provider support, skipped controls, and fallback reasons consistently."
+      ],
+      "affected_doc_hints": [
+        "Plans/FinalGUISpec.md",
+        "Plans/Personas.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "Agent Config Personas"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L641-L641",
+        "working_ledger.md:L645-L653"
+      ],
+      "notes": [],
+      "obligation_id": "obl-017"
+    },
+    {
+      "source_seed_ids": [
+        "seed-021"
+      ],
+      "source_shard_ids": [
+        "shard-0005"
+      ],
+      "canon_label": "Specialty Personas should support restore-to-default behavior after user modification.",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "Specialty Personas should support restore-to-default behavior after user modification."
+      ],
+      "affected_doc_hints": [
+        "Plans/Personas.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "Specialty Personas"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L831-L831"
+      ],
+      "notes": [],
+      "obligation_id": "obl-018"
+    },
+    {
+      "source_seed_ids": [
+        "seed-022"
+      ],
+      "source_shard_ids": [
+        "shard-0005"
+      ],
+      "canon_label": "Once a plan is produced, the planning UX must offer exactly four options: Accept the plan and build with Yolo; Accept the plan and build on default permissions; Exit plan; Suggest plan changes.",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "Once a plan is produced, the agent must offer exactly these options: Accept the plan and build with Yolo; Accept the plan and build on default permissions; Exit plan; Suggest plan changes.",
+        "Accept the plan and build with Yolo",
+        "Accept the plan and build on default permissions",
+        "Exit plan",
+        "Suggest plan changes"
+      ],
+      "affected_doc_hints": [
+        "Plans/assistant-chat-design.md",
+        "Plans/FinalGUISpec.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "Planning UX"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L841-L846"
+      ],
+      "notes": [],
+      "obligation_id": "obl-019"
+    },
+    {
+      "source_seed_ids": [
+        "seed-023",
+        "seed-037"
+      ],
+      "source_shard_ids": [
+        "shard-0005",
+        "shard-0009"
+      ],
+      "canon_label": "Persona model defaults must stay Auto by default, inherit from parent or surface settings, and ignore external repository model recommendations.",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Persona should default to Auto.",
+        "Ignore external repos' model recommendations; PM Persona model behavior should remain Auto by default and inherit from parent or surface settings."
+      ],
+      "affected_doc_hints": [
+        "Plans/Models_System.md",
+        "Plans/Personas.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "Persona Defaults"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L1641-L1641",
+        "working_ledger.md:L862-L863"
+      ],
+      "notes": [],
+      "obligation_id": "obl-020"
+    },
+    {
+      "source_seed_ids": [
+        "seed-024",
+        "seed-029"
+      ],
+      "source_shard_ids": [
+        "shard-0005",
+        "shard-0006"
+      ],
+      "canon_label": "`Assistant` must be the default user-facing chat Persona, combine conversation, clarification, reasoning, and action, and never serve as a subagent Persona.",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "`Assistant` should be the default Persona for chat and must not be used as a subagent Persona.",
+        "`Assistant` should be the default user-facing PM Persona in chat and should combine conversation, clarification, reasoning, and action without becoming fluffy, passive, or a hidden worker Persona."
+      ],
+      "affected_doc_hints": [
+        "Plans/Personas.md",
+        "Plans/assistant-chat-design.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "Assistant"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L1109-L1113",
+        "working_ledger.md:L1122-L1126",
+        "working_ledger.md:L878-L879"
+      ],
+      "notes": [],
+      "obligation_id": "obl-021"
+    },
+    {
+      "source_seed_ids": [
+        "seed-030"
+      ],
+      "source_shard_ids": [
+        "shard-0006"
+      ],
+      "canon_label": "`Teacher` should be the warm, helpful explainer Persona for simple guidance about settings and major PM systems, not the main coding or execution Persona.",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "`Teacher` should explain things in simple terms, know where settings are and how major PM systems work, remain warm and helpful, and should not be the main coding or execution Persona."
+      ],
+      "affected_doc_hints": [
+        "Plans/Personas.md",
+        "Plans/assistant-chat-design.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "Teacher"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L1173-L1178",
+        "working_ledger.md:L1199-L1200"
+      ],
+      "notes": [],
+      "obligation_id": "obl-022"
+    },
+    {
+      "source_seed_ids": [
+        "seed-025"
+      ],
+      "source_shard_ids": [
+        "shard-0005"
+      ],
+      "canon_label": "The `explorer` Persona must not modify files and should prefer parallel exploration when exploration may generate large intermediate output.",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`explorer` should not modify files and should prefer parallel exploration because exploration can generate large intermediate output."
+      ],
+      "affected_doc_hints": [
+        "Plans/Personas.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "Explorer"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L820-L823"
+      ],
+      "notes": [],
+      "obligation_id": "obl-023"
+    },
+    {
+      "source_seed_ids": [
+        "seed-026"
+      ],
+      "source_shard_ids": [
+        "shard-0006"
+      ],
+      "canon_label": "The `bash` Persona must report the failing command, exit signal or status when available, and the smallest useful error context, while distinguishing command failure, output-indicated problems, and successful execution with intended effect.",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`bash` should report the failing command, exit signal or status when available, and the smallest useful error context; it should distinguish command failure from output-indicated problems and from successful execution with intended effect."
+      ],
+      "affected_doc_hints": [
+        "Plans/Personas.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "Bash"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L1008-L1012"
+      ],
+      "notes": [],
+      "obligation_id": "obl-024"
+    },
+    {
+      "source_seed_ids": [
+        "seed-027",
+        "seed-028"
+      ],
+      "source_shard_ids": [
+        "shard-0006"
+      ],
+      "canon_label": "`General` should be the default broad-capability Persona for mixed tasks, but it must yield to clearly better specialists and should not over-delegate work it can complete coherently itself.",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`General` should handle mixed tasks that combine inspection, reasoning, modification, and follow-up verification, and it should serve as the default broad-capability worker when no specialist core Persona is the obvious best choice.",
+        "`General` should not replace clearly better specialist Personas, should not become a dumping ground for vague behavior, and should not over-delegate when it can complete the task coherently itself."
+      ],
+      "affected_doc_hints": [
+        "Plans/Personas.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "General"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L1042-L1046",
+        "working_ledger.md:L1054-L1057"
+      ],
+      "notes": [],
+      "obligation_id": "obl-025"
+    },
+    {
+      "source_seed_ids": [
+        "seed-032"
+      ],
+      "source_shard_ids": [
+        "shard-0007"
+      ],
+      "canon_label": "Research Personas must remain read-only, escalate implementation work, use current external sources when needed, filter evidence, and compare sources for contradictions, recency, and bias.",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Research-oriented Personas should stay read-only, must not edit files or take over implementation when the user wants changes made, should not become purely local explorers when current outside information is needed, should not dump unfiltered source noise, and should compare claims across multiple sources for contradictions, recency issues, or bias."
+      ],
+      "affected_doc_hints": [
+        "Plans/Personas.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "Research Personas"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L1291-L1303",
+        "working_ledger.md:L1389-L1389"
+      ],
+      "notes": [],
+      "obligation_id": "obl-026"
+    },
+    {
+      "source_seed_ids": [
+        "seed-039"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "canon_label": "PM-native Persona canon should retain useful source-prompt flavor while normalizing or dropping hard thresholds and source-side outcome claims.",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Preserve the distinction between source-prompt flavor worth keeping and source-side hard thresholds or outcome claims that should be normalized or dropped in PM-native canon."
+      ],
+      "affected_doc_hints": [
+        "Plans/Personas.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "Specialty Prompt Template"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L1620-L1622"
+      ],
+      "notes": [],
+      "obligation_id": "obl-027"
+    },
+    {
+      "source_seed_ids": [
+        "seed-002"
+      ],
+      "source_shard_ids": [
+        "shard-0001"
+      ],
+      "canon_label": "Specialty Personas must remain a flexible, user-controlled layer that users can modify or disable.",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "Specialty Personas remain the flexible layer.",
+        "Specialty Personas can be modified.",
+        "Specialty Personas can be turned off or disabled."
+      ],
+      "affected_doc_hints": [
+        "Plans/Personas.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "Specialty Personas"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L70-L72"
+      ],
+      "notes": [],
+      "obligation_id": "obl-028"
+    },
+    {
+      "source_seed_ids": [
+        "seed-031"
+      ],
+      "source_shard_ids": [
+        "shard-0007"
+      ],
+      "canon_label": "`Teacher` should start with simple explanations, define unfamiliar terms in context, avoid assuming PM or adjacent-tool knowledge, and hand implementation or build work to an execution Persona.",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "Teaching-oriented Personas should explain the concept in simple terms first, define unfamiliar terms as they appear, avoid assuming prior knowledge of PM or adjacent tools, and hand off to an execution Persona when the request becomes real implementation or build work."
+      ],
+      "affected_doc_hints": [
+        "Plans/Personas.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "Teacher"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L1201-L1211",
+        "working_ledger.md:L1239-L1244"
+      ],
+      "notes": [],
+      "obligation_id": "obl-029"
+    },
+    {
+      "source_seed_ids": [
+        "seed-033"
+      ],
+      "source_shard_ids": [
+        "shard-0008"
+      ],
+      "canon_label": "Research Personas should return structured answers with a current conclusion, major-option comparison, local findings plus cited external evidence, caveats or conflicts, and clear next steps.",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "Research-oriented Personas should return a structured answer containing the best current conclusion, comparison of major options, local codebase findings plus cited external evidence, important caveats or source conflicts or remaining uncertainties, and clear next steps."
+      ],
+      "affected_doc_hints": [
+        "Plans/Personas.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "Research Personas"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L1424-L1429"
+      ],
+      "notes": [],
+      "obligation_id": "obl-030"
+    },
+    {
+      "source_seed_ids": [
+        "seed-034"
+      ],
+      "source_shard_ids": [
+        "shard-0008"
+      ],
+      "canon_label": "The Orchestrator UI must expose the six-tab operational surface: Progress, Seams, Node Graph, Evidence, History, and Ledger.",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "The Orchestrator UI must expose the six-tab operational surface: Progress, Seams, Node Graph, Evidence, History, and Ledger."
+      ],
+      "affected_doc_hints": [
+        "Plans/orchestrator-subagent-integration.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "Orchestrator UI"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L1472-L1476"
+      ],
+      "notes": [],
+      "obligation_id": "obl-031"
+    },
+    {
+      "source_seed_ids": [
+        "seed-035"
+      ],
+      "source_shard_ids": [
+        "shard-0008"
+      ],
+      "canon_label": "Plans and deep_plan must remain workflow overlays on the canonical runtime plan, and unresolved clarification or failed validation must block orchestrator start and runtime execution.",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Plans and deep_plan are workflow overlays on the canonical runtime plan; unresolved clarification or failed validation must block orchestrator start, and runtime execution must not begin while planning questions remain open."
+      ],
+      "affected_doc_hints": [
+        "Plans/Executor_Protocol.md",
+        "Plans/orchestrator-subagent-integration.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "Orchestrator Planning"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L1496-L1500"
+      ],
+      "notes": [],
+      "obligation_id": "obl-032"
+    },
+    {
+      "source_seed_ids": [
+        "seed-036"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "canon_label": "Persona terminology must distinguish protected built-in Persona IDs, persona registry names, legacy `*_persona_id` fields, and the canonical `requested_persona_id` and `effective_persona_id` fields.",
+      "obligation_type": "stale_token_replacement",
+      "exact_tokens": [
+        "Preserve the distinction between protected built-in Persona IDs, broader persona registry names, legacy `*_persona_id` field names, and the canonical `requested_persona_id` and `effective_persona_id` field names.",
+        "`*_persona_id`",
+        "`requested_persona_id`",
+        "`effective_persona_id`"
+      ],
+      "affected_doc_hints": [
+        "Plans/Personas.md",
+        "Plans/orchestrator-subagent-integration.md",
+        "Plans/interview-subagent-integration.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "Persona Terminology"
+      ],
+      "stale_residue_to_retire": [
+        "*_persona_id"
+      ],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "unknown",
+      "source_evidence": [
+        "working_ledger.md:L1608-L1612"
+      ],
+      "notes": [],
+      "obligation_id": "obl-033"
+    },
+    {
+      "source_seed_ids": [
+        "seed-038"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "canon_label": "The `explorer` and `bash` Personas must remain explicitly subagent-only and must not be user-selectable in chat.",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`explorer` and `bash` are explicitly subagent-only Personas and are not user-selectable in chat."
+      ],
+      "affected_doc_hints": [
+        "Plans/Personas.md",
+        "Plans/assistant-chat-design.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "Bash",
+        "Explorer"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L1648-L1648"
+      ],
+      "notes": [],
+      "obligation_id": "obl-034"
+    }
+  ],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  },
+  "next_required_stage": "Coverage Row Inventory Builder"
+}

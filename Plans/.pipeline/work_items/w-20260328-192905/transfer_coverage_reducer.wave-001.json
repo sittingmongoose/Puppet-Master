@@ -1,0 +1,48 @@
+{
+  "schema_id": "pm.transfer_coverage_reducer.wave.v2",
+  "work_id": "w-20260328-192905",
+  "wave_id": "wave-001",
+  "subagent_tasks": [
+    {
+      "agent": "coverage-reducer-b1",
+      "task": "Validate transfer coverage merge readiness for ceg-001 through ceg-006."
+    }
+  ],
+  "assigned_input_boundaries": [
+    "ceg-001",
+    "ceg-002",
+    "ceg-003",
+    "ceg-004",
+    "ceg-005",
+    "ceg-006"
+  ],
+  "subagent_result_status": "complete",
+  "completed_task_count": 1,
+  "failed_task_count": 0,
+  "coverage_ids_assigned": [
+    "cov-00047",
+    "cov-00025",
+    "cov-00026",
+    "cov-00029",
+    "cov-00031",
+    "cov-00017",
+    "cov-00019",
+    "cov-00012",
+    "cov-00016",
+    "cov-00032",
+    "cov-00013"
+  ],
+  "coverage_ids_completed": [
+    "cov-00047",
+    "cov-00025",
+    "cov-00026",
+    "cov-00029",
+    "cov-00031",
+    "cov-00017",
+    "cov-00019",
+    "cov-00012",
+    "cov-00016",
+    "cov-00032",
+    "cov-00013"
+  ]
+}

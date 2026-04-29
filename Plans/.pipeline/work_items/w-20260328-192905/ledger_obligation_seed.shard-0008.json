@@ -1,0 +1,92 @@
+{
+  "schema_id": "pm.ledger_obligation_seed_shard_result.v2",
+  "work_id": "w-20260328-192905",
+  "shard_id": "shard-0008",
+  "seed_candidates": [
+    {
+      "seed_id": "seed-033",
+      "seed_type": "consumer",
+      "exact_items": [
+        "Research-oriented Personas should return a structured answer containing the best current conclusion, comparison of major options, local codebase findings plus cited external evidence, important caveats or source conflicts or remaining uncertainties, and clear next steps."
+      ],
+      "affected_doc_hints": [
+        "Plans/Personas.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "Research Personas"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0008",
+      "source_evidence": [
+        "working_ledger.md:L1424-L1429"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "seed-034",
+      "seed_type": "consumer",
+      "exact_items": [
+        "The Orchestrator UI must expose the six-tab operational surface: Progress, Seams, Node Graph, Evidence, History, and Ledger."
+      ],
+      "affected_doc_hints": [
+        "Plans/orchestrator-subagent-integration.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "Orchestrator UI"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0008",
+      "source_evidence": [
+        "working_ledger.md:L1472-L1476"
+      ],
+      "notes": []
+    },
+    {
+      "seed_id": "seed-035",
+      "seed_type": "owner",
+      "exact_items": [
+        "Plans and deep_plan are workflow overlays on the canonical runtime plan; unresolved clarification or failed validation must block orchestrator start, and runtime execution must not begin while planning questions remain open."
+      ],
+      "affected_doc_hints": [
+        "Plans/Executor_Protocol.md",
+        "Plans/orchestrator-subagent-integration.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "Orchestrator Planning"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_shard_id": "shard-0008",
+      "source_evidence": [
+        "working_ledger.md:L1496-L1500"
+      ],
+      "notes": []
+    }
+  ],
+  "noise_items": [
+    {
+      "text": "Open descriptive notes about persona traits and unresolved questions were treated as noise once the concrete UI and planning obligations were extracted.",
+      "source_evidence": [
+        "working_ledger.md:L1401-L1412",
+        "working_ledger.md:L1432-L1495",
+        "working_ledger.md:L1501-L1600"
+      ]
+    }
+  ],
+  "uncertain_items": [],
+  "path_quarantine_violations": []
+}

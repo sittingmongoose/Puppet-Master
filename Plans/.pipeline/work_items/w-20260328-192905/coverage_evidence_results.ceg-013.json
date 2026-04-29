@@ -1,0 +1,60 @@
+{
+  "schema_id": "pm.coverage_evidence_result_group.v2",
+  "work_id": "w-20260328-192905",
+  "group_id": "ceg-013",
+  "coverage_results": [
+    {
+      "coverage_id": "cov-00018",
+      "source_obligation_ids": [
+        "obl-013"
+      ],
+      "source_seed_ids": [
+        "seed-012"
+      ],
+      "source_shard_ids": [
+        "shard-0003"
+      ],
+      "path": "Plans/assistant-chat-design.md",
+      "row_type": "owner",
+      "status": "missing",
+      "evidence": [],
+      "required_action": "owner_create_or_rewrite",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean"
+    },
+    {
+      "coverage_id": "cov-00053",
+      "source_obligation_ids": [
+        "obl-034"
+      ],
+      "source_seed_ids": [
+        "seed-038"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "path": "Plans/assistant-chat-design.md",
+      "row_type": "owner",
+      "status": "missing",
+      "evidence": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "line_start": 2367,
+          "line_end": 2382,
+          "excerpt": "The natural-language Persona invocation section explicitly allows user requests such as \u201cUse Explorer\u201d and shows \u201cPersona: Explorer (User requested, session lock)\u201d in chat UI examples."
+        }
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean"
+    }
+  ],
+  "blocked_rows": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

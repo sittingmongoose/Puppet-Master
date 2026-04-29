@@ -1,0 +1,44 @@
+{
+  "schema_id": "pm.ledger_obligation_seed_wave.v2",
+  "work_id": "w-20260328-192905",
+  "wave_id": "wave-002",
+  "subagent_tasks": [
+    {
+      "agent": "seed-shard-0005-1",
+      "task": "Extract obligation-grade seed candidates from shard-0005."
+    },
+    {
+      "agent": "seed-shard-0006-1",
+      "task": "Extract obligation-grade seed candidates from shard-0006."
+    },
+    {
+      "agent": "seed-shard-0007-1",
+      "task": "Extract obligation-grade seed candidates from shard-0007."
+    },
+    {
+      "agent": "seed-shard-0008-1",
+      "task": "Extract obligation-grade seed candidates from shard-0008."
+    }
+  ],
+  "assigned_input_boundaries": [
+    "Plans/.pipeline/work_items/w-20260328-192905/ledger_shards/shard-0005-L000801-L001000.md",
+    "Plans/.pipeline/work_items/w-20260328-192905/ledger_shards/shard-0006-L001001-L001200.md",
+    "Plans/.pipeline/work_items/w-20260328-192905/ledger_shards/shard-0007-L001201-L001400.md",
+    "Plans/.pipeline/work_items/w-20260328-192905/ledger_shards/shard-0008-L001401-L001600.md"
+  ],
+  "subagent_result_status": "complete",
+  "completed_task_count": 4,
+  "failed_task_count": 0,
+  "shard_ids_assigned": [
+    "shard-0005",
+    "shard-0006",
+    "shard-0007",
+    "shard-0008"
+  ],
+  "shard_ids_completed": [
+    "shard-0005",
+    "shard-0006",
+    "shard-0007",
+    "shard-0008"
+  ]
+}

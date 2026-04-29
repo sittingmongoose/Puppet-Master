@@ -1,0 +1,57 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260328-192905",
+  "group_id": "gapgrp-024",
+  "coverage_row_ids_represented": [
+    "cov-00050"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "blocker",
+      "blocker_type": "planning",
+      "gap_class": "stale_token_replacement_unknown",
+      "description": "Resolve unknown canonical replacement wording for Plans/orchestrator-subagent-integration.md before live content can be reconciled.",
+      "affected_targets": [
+        {
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "heading": "Persona Terminology"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-00050"
+      ],
+      "source_obligation_ids": [
+        "obl-033"
+      ],
+      "source_seed_ids": [
+        "seed-036"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "exact_missing_items": [
+        "Preserve the distinction between protected built-in Persona IDs, broader persona registry names, legacy `*_persona_id` field names, and the canonical `requested_persona_id` and `effective_persona_id` field names.",
+        "`*_persona_id`",
+        "`requested_persona_id`",
+        "`effective_persona_id`"
+      ],
+      "stale_tokens": [
+        "*_persona_id"
+      ],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "unknown",
+      "blocking_reason": "Canonical replacement wording is unknown, so the stale token cannot be safely replaced in live content.",
+      "next_resolution_stage": "Audit Mode"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

@@ -1,0 +1,60 @@
+{
+  "schema_id": "pm.open_gaps_classifier.wave.v2",
+  "work_id": "w-20260328-192905",
+  "wave_id": "wave-001",
+  "subagent_tasks": [
+    {
+      "agent": "gapcand-001",
+      "task": "Classify open gap candidate group for gapgrp-001."
+    },
+    {
+      "agent": "gapcand-002",
+      "task": "Classify open gap candidate group for gapgrp-002."
+    },
+    {
+      "agent": "gapcand-003",
+      "task": "Classify open gap candidate group for gapgrp-003."
+    },
+    {
+      "agent": "gapcand-004",
+      "task": "Classify open gap candidate group for gapgrp-004."
+    }
+  ],
+  "assigned_input_boundaries": [
+    "gapgrp-001",
+    "gapgrp-002",
+    "gapgrp-003",
+    "gapgrp-004"
+  ],
+  "subagent_result_status": "complete",
+  "completed_task_count": 4,
+  "failed_task_count": 0,
+  "group_ids_assigned": [
+    "gapgrp-001",
+    "gapgrp-002",
+    "gapgrp-003",
+    "gapgrp-004"
+  ],
+  "group_ids_completed": [
+    "gapgrp-001",
+    "gapgrp-002",
+    "gapgrp-003",
+    "gapgrp-004"
+  ],
+  "coverage_row_ids_assigned": [
+    "cov-00047",
+    "cov-00025",
+    "cov-00029",
+    "cov-00026",
+    "cov-00031",
+    "cov-00017"
+  ],
+  "coverage_row_ids_completed": [
+    "cov-00047",
+    "cov-00025",
+    "cov-00029",
+    "cov-00026",
+    "cov-00031",
+    "cov-00017"
+  ]
+}

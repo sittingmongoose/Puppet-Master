@@ -1,0 +1,389 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260328-192905",
+  "group_id": "gapgrp-013",
+  "coverage_row_ids_represented": [
+    "cov-00001",
+    "cov-00002",
+    "cov-00004",
+    "cov-00005",
+    "cov-00007",
+    "cov-00008",
+    "cov-00020",
+    "cov-00033",
+    "cov-00038",
+    "cov-00040"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "over_summarized_transfer",
+      "description": "Plans/Personas.md has related coverage for 'Core Personas are protected built-ins and cannot be deleted or modified.' but remains incomplete.",
+      "affected_targets": [
+        {
+          "path": "Plans/Personas.md",
+          "heading": "Core Personas"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-00001"
+      ],
+      "source_obligation_ids": [
+        "obl-001"
+      ],
+      "source_seed_ids": [
+        "seed-001"
+      ],
+      "source_shard_ids": [
+        "shard-0001"
+      ],
+      "exact_missing_items": [
+        "Core Personas are protected built-ins.",
+        "Core Personas cannot be deleted.",
+        "Core Personas cannot be modified."
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Coverage row cov-00001 remains partial and requires owner_create_or_rewrite.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    },
+    {
+      "candidate_gap_id": "gap-cand-002",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "over_summarized_transfer",
+      "description": "Plans/Personas.md has related coverage for 'Bundled PM-native specialty prompt templates must stay concise and specify role posture, usage boundaries, workflow, guardrails, and handoffs.' but remains incomplete.",
+      "affected_targets": [
+        {
+          "path": "Plans/Personas.md",
+          "heading": "Specialty Prompt Template"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-00002"
+      ],
+      "source_obligation_ids": [
+        "obl-002"
+      ],
+      "source_seed_ids": [
+        "seed-003"
+      ],
+      "source_shard_ids": [
+        "shard-0002"
+      ],
+      "exact_missing_items": [
+        "PM-native bundled specialty prompts should be much smaller and sharper.",
+        "The PM-native specialty prompt template should emphasize mission or role posture, when to use and when not to use, response approach or operating sequence, key heuristics or guardrails, and handoff expectations to neighboring personas when relevant."
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Coverage row cov-00002 remains partial and requires owner_create_or_rewrite.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    },
+    {
+      "candidate_gap_id": "gap-cand-003",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "over_summarized_transfer",
+      "description": "Plans/Personas.md has related coverage for 'Specialty personas must adapt repo-first, follow existing stack and design patterns, keep tool posture in metadata, distinguish persona roles, and strip vanity boilerplate.' but remains incomplete.",
+      "affected_targets": [
+        {
+          "path": "Plans/Personas.md",
+          "heading": "Specialty Prompt Template"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-00004"
+      ],
+      "source_obligation_ids": [
+        "obl-004"
+      ],
+      "source_seed_ids": [
+        "seed-005"
+      ],
+      "source_shard_ids": [
+        "shard-0002"
+      ],
+      "exact_missing_items": [
+        "All specialty personas should prefer repo-first adaptation over canned best-practice dumping.",
+        "All specialty personas should default to the codebase's existing stack, patterns, constraints, and design system.",
+        "All specialty personas should keep tool posture and permissions in metadata while keeping the prompt body focused on judgment and workflow.",
+        "All specialty personas should explicitly distinguish build, review, investigator, planner, and documentation personas and use fallback or handoff wording when another specialty is a better fit.",
+        "All specialty personas should preserve expertise while stripping vanity metrics and boilerplate ceremony."
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Coverage row cov-00004 remains partial and requires owner_create_or_rewrite.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    },
+    {
+      "candidate_gap_id": "gap-cand-004",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "over_summarized_transfer",
+      "description": "Plans/Personas.md has related coverage for 'External persona prompts must be adapted into PM-native form before they enter the bundled canon.' but remains incomplete.",
+      "affected_targets": [
+        {
+          "path": "Plans/Personas.md",
+          "heading": ""
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-00005"
+      ],
+      "source_obligation_ids": [
+        "obl-005"
+      ],
+      "source_seed_ids": [
+        "seed-006"
+      ],
+      "source_shard_ids": [
+        "shard-0002"
+      ],
+      "exact_missing_items": [
+        "Migrating external persona prompts into PM Personas is not just file-copying; the prompts need PM-native adaptation before they enter bundled canon."
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Coverage row cov-00005 remains partial and requires owner_create_or_rewrite.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    },
+    {
+      "candidate_gap_id": "gap-cand-005",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "over_summarized_transfer",
+      "description": "Plans/Personas.md has related coverage for 'Specialty Personas must not share one default permissions or tool posture.' but remains incomplete.",
+      "affected_targets": [
+        {
+          "path": "Plans/Personas.md",
+          "heading": "Specialty Personas"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-00007"
+      ],
+      "source_obligation_ids": [
+        "obl-007"
+      ],
+      "source_seed_ids": [
+        "seed-013"
+      ],
+      "source_shard_ids": [
+        "shard-0003"
+      ],
+      "exact_missing_items": [
+        "Puppet Master should not stamp one default permissions or tool posture onto all specialty Personas."
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Coverage row cov-00007 remains partial and requires owner_create_or_rewrite.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    },
+    {
+      "candidate_gap_id": "gap-cand-006",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "over_summarized_transfer",
+      "description": "Plans/Personas.md has related coverage for 'The canonical Persona catalog must distinguish built-ins, first-party specialty Personas, stage or tier defaults, legacy aliases, and registry-only launch types.' but remains incomplete.",
+      "affected_targets": [
+        {
+          "path": "Plans/Personas.md",
+          "heading": "Persona Catalog"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-00008"
+      ],
+      "source_obligation_ids": [
+        "obl-008"
+      ],
+      "source_seed_ids": [
+        "seed-015"
+      ],
+      "source_shard_ids": [
+        "shard-0004"
+      ],
+      "exact_missing_items": [
+        "The canonical Persona catalog must explicitly distinguish built-ins, first-party specialty Personas, stage or tier defaults, legacy aliases, and registry-only launch types."
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Coverage row cov-00008 remains partial and requires owner_create_or_rewrite.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    },
+    {
+      "candidate_gap_id": "gap-cand-007",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "over_summarized_transfer",
+      "description": "Plans/Personas.md has related coverage for 'Specialty Persona selection must normalize overlapping specialty clusters with explicit picker rules and deterministic auto-resolution behavior so selection is not noisy or arbitrary.' but remains incomplete.",
+      "affected_targets": [
+        {
+          "path": "Plans/Personas.md",
+          "heading": "Specialty Personas"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-00020"
+      ],
+      "source_obligation_ids": [
+        "obl-014"
+      ],
+      "source_seed_ids": [
+        "seed-014"
+      ],
+      "source_shard_ids": [
+        "shard-0003"
+      ],
+      "exact_missing_items": [
+        "Puppet Master should normalize overlapping specialty clusters with explicit picker rules and auto-resolution behavior so persona selection is not noisy or arbitrary.",
+        "The UI should not expose a noisy \u201cscored all candidates\u201d explanation by default."
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Coverage row cov-00020 remains partial and requires owner_create_or_rewrite.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    },
+    {
+      "candidate_gap_id": "gap-cand-008",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "over_summarized_transfer",
+      "description": "Plans/Personas.md has related coverage for 'Persona model defaults must stay Auto by default, inherit from parent or surface settings, and ignore external repository model recommendations.' but remains incomplete.",
+      "affected_targets": [
+        {
+          "path": "Plans/Personas.md",
+          "heading": "Persona Defaults"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-00033"
+      ],
+      "source_obligation_ids": [
+        "obl-020"
+      ],
+      "source_seed_ids": [
+        "seed-023",
+        "seed-037"
+      ],
+      "source_shard_ids": [
+        "shard-0005",
+        "shard-0009"
+      ],
+      "exact_missing_items": [
+        "Persona should default to Auto.",
+        "Ignore external repos' model recommendations; PM Persona model behavior should remain Auto by default and inherit from parent or surface settings."
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Coverage row cov-00033 remains partial and requires owner_create_or_rewrite.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    },
+    {
+      "candidate_gap_id": "gap-cand-009",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "over_summarized_transfer",
+      "description": "Plans/Personas.md has related coverage for 'The `explorer` Persona must not modify files and should prefer parallel exploration when exploration may generate large intermediate output.' but remains incomplete.",
+      "affected_targets": [
+        {
+          "path": "Plans/Personas.md",
+          "heading": "Explorer"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-00038"
+      ],
+      "source_obligation_ids": [
+        "obl-023"
+      ],
+      "source_seed_ids": [
+        "seed-025"
+      ],
+      "source_shard_ids": [
+        "shard-0005"
+      ],
+      "exact_missing_items": [
+        "`explorer` should not modify files and should prefer parallel exploration because exploration can generate large intermediate output."
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Coverage row cov-00038 remains partial and requires owner_create_or_rewrite.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    },
+    {
+      "candidate_gap_id": "gap-cand-010",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "over_summarized_transfer",
+      "description": "Plans/Personas.md has related coverage for '`General` should be the default broad-capability Persona for mixed tasks, but it must yield to clearly better specialists and should not over-delegate work it can complete coherently itself.' but remains incomplete.",
+      "affected_targets": [
+        {
+          "path": "Plans/Personas.md",
+          "heading": "General"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-00040"
+      ],
+      "source_obligation_ids": [
+        "obl-025"
+      ],
+      "source_seed_ids": [
+        "seed-027",
+        "seed-028"
+      ],
+      "source_shard_ids": [
+        "shard-0006"
+      ],
+      "exact_missing_items": [
+        "`General` should handle mixed tasks that combine inspection, reasoning, modification, and follow-up verification, and it should serve as the default broad-capability worker when no specialist core Persona is the obvious best choice.",
+        "`General` should not replace clearly better specialist Personas, should not become a dumping ground for vague behavior, and should not over-delegate when it can complete the task coherently itself."
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Coverage row cov-00040 remains partial and requires owner_create_or_rewrite.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

@@ -1,0 +1,70 @@
+{
+  "schema_id": "pm.canonical_obligation_converter.wave.v2",
+  "work_id": "w-20260328-192905",
+  "wave_id": "wave-003",
+  "subagent_tasks": [
+    {
+      "agent": "write-cog-009",
+      "task": "Convert cog-009 into one canonical obligation candidate group output."
+    },
+    {
+      "agent": "write-cog-010",
+      "task": "Convert cog-010 into one canonical obligation candidate group output."
+    },
+    {
+      "agent": "write-cog-011",
+      "task": "Convert cog-011 into one canonical obligation candidate group output."
+    },
+    {
+      "agent": "write-cog-012",
+      "task": "Convert cog-012 into one canonical obligation candidate group output."
+    }
+  ],
+  "assigned_input_boundaries": [
+    "cog-009",
+    "cog-010",
+    "cog-011",
+    "cog-012"
+  ],
+  "subagent_result_status": "complete",
+  "completed_task_count": 4,
+  "failed_task_count": 0,
+  "group_ids_assigned": [
+    "cog-009",
+    "cog-010",
+    "cog-011",
+    "cog-012"
+  ],
+  "group_ids_completed": [
+    "cog-009",
+    "cog-010",
+    "cog-011",
+    "cog-012"
+  ],
+  "seed_ids_assigned": [
+    "seed-023",
+    "seed-037",
+    "seed-024",
+    "seed-029",
+    "seed-030",
+    "seed-025",
+    "seed-026",
+    "seed-027",
+    "seed-028",
+    "seed-032",
+    "seed-039"
+  ],
+  "seed_ids_completed": [
+    "seed-023",
+    "seed-037",
+    "seed-024",
+    "seed-029",
+    "seed-030",
+    "seed-025",
+    "seed-026",
+    "seed-027",
+    "seed-028",
+    "seed-032",
+    "seed-039"
+  ]
+}

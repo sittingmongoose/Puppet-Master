@@ -1,0 +1,157 @@
+{
+  "schema_id": "pm.transfer_coverage_reducer.worklist.v2",
+  "work_id": "w-20260328-192905",
+  "source_canonical_obligations": "Plans/.pipeline/work_items/w-20260328-192905/canonical_obligations.json",
+  "source_row_inventory": "Plans/.pipeline/work_items/w-20260328-192905/transfer_coverage.row_inventory.json",
+  "source_evidence_groups": [
+    "Plans/.pipeline/work_items/w-20260328-192905/coverage_evidence_results.ceg-001.json",
+    "Plans/.pipeline/work_items/w-20260328-192905/coverage_evidence_results.ceg-002.json",
+    "Plans/.pipeline/work_items/w-20260328-192905/coverage_evidence_results.ceg-003.json",
+    "Plans/.pipeline/work_items/w-20260328-192905/coverage_evidence_results.ceg-004.json",
+    "Plans/.pipeline/work_items/w-20260328-192905/coverage_evidence_results.ceg-005.json",
+    "Plans/.pipeline/work_items/w-20260328-192905/coverage_evidence_results.ceg-006.json",
+    "Plans/.pipeline/work_items/w-20260328-192905/coverage_evidence_results.ceg-007.json",
+    "Plans/.pipeline/work_items/w-20260328-192905/coverage_evidence_results.ceg-008.json",
+    "Plans/.pipeline/work_items/w-20260328-192905/coverage_evidence_results.ceg-009.json",
+    "Plans/.pipeline/work_items/w-20260328-192905/coverage_evidence_results.ceg-010.json",
+    "Plans/.pipeline/work_items/w-20260328-192905/coverage_evidence_results.ceg-011.json",
+    "Plans/.pipeline/work_items/w-20260328-192905/coverage_evidence_results.ceg-012.json",
+    "Plans/.pipeline/work_items/w-20260328-192905/coverage_evidence_results.ceg-013.json",
+    "Plans/.pipeline/work_items/w-20260328-192905/coverage_evidence_results.ceg-014.json",
+    "Plans/.pipeline/work_items/w-20260328-192905/coverage_evidence_results.ceg-015.json",
+    "Plans/.pipeline/work_items/w-20260328-192905/coverage_evidence_results.ceg-016.json",
+    "Plans/.pipeline/work_items/w-20260328-192905/coverage_evidence_results.ceg-017.json",
+    "Plans/.pipeline/work_items/w-20260328-192905/coverage_evidence_results.ceg-018.json"
+  ],
+  "result_group_total": 18,
+  "coverage_rows_total": 53,
+  "batches": [
+    {
+      "batch_id": "batch-001",
+      "agent": "coverage-reducer-b1",
+      "wave_id": "wave-001",
+      "group_ids": [
+        "ceg-001",
+        "ceg-002",
+        "ceg-003",
+        "ceg-004",
+        "ceg-005",
+        "ceg-006"
+      ],
+      "coverage_ids": [
+        "cov-00047",
+        "cov-00025",
+        "cov-00026",
+        "cov-00029",
+        "cov-00031",
+        "cov-00017",
+        "cov-00019",
+        "cov-00012",
+        "cov-00016",
+        "cov-00032",
+        "cov-00013"
+      ],
+      "result_group_paths": [
+        "Plans/.pipeline/work_items/w-20260328-192905/coverage_evidence_results.ceg-001.json",
+        "Plans/.pipeline/work_items/w-20260328-192905/coverage_evidence_results.ceg-002.json",
+        "Plans/.pipeline/work_items/w-20260328-192905/coverage_evidence_results.ceg-003.json",
+        "Plans/.pipeline/work_items/w-20260328-192905/coverage_evidence_results.ceg-004.json",
+        "Plans/.pipeline/work_items/w-20260328-192905/coverage_evidence_results.ceg-005.json",
+        "Plans/.pipeline/work_items/w-20260328-192905/coverage_evidence_results.ceg-006.json"
+      ]
+    },
+    {
+      "batch_id": "batch-002",
+      "agent": "coverage-reducer-b2",
+      "wave_id": "wave-002",
+      "group_ids": [
+        "ceg-007",
+        "ceg-008",
+        "ceg-009",
+        "ceg-010",
+        "ceg-011",
+        "ceg-012"
+      ],
+      "coverage_ids": [
+        "cov-00024",
+        "cov-00027",
+        "cov-00028",
+        "cov-00034",
+        "cov-00036",
+        "cov-00043",
+        "cov-00044",
+        "cov-00045",
+        "cov-00001",
+        "cov-00002",
+        "cov-00003",
+        "cov-00004",
+        "cov-00005",
+        "cov-00006",
+        "cov-00007",
+        "cov-00008",
+        "cov-00015",
+        "cov-00020",
+        "cov-00021",
+        "cov-00033",
+        "cov-00038",
+        "cov-00039",
+        "cov-00040",
+        "cov-00041",
+        "cov-00042",
+        "cov-00052",
+        "cov-00009",
+        "cov-00010",
+        "cov-00011",
+        "cov-00049",
+        "cov-00030",
+        "cov-00035",
+        "cov-00037"
+      ],
+      "result_group_paths": [
+        "Plans/.pipeline/work_items/w-20260328-192905/coverage_evidence_results.ceg-007.json",
+        "Plans/.pipeline/work_items/w-20260328-192905/coverage_evidence_results.ceg-008.json",
+        "Plans/.pipeline/work_items/w-20260328-192905/coverage_evidence_results.ceg-009.json",
+        "Plans/.pipeline/work_items/w-20260328-192905/coverage_evidence_results.ceg-010.json",
+        "Plans/.pipeline/work_items/w-20260328-192905/coverage_evidence_results.ceg-011.json",
+        "Plans/.pipeline/work_items/w-20260328-192905/coverage_evidence_results.ceg-012.json"
+      ]
+    },
+    {
+      "batch_id": "batch-003",
+      "agent": "coverage-reducer-b3",
+      "wave_id": "wave-003",
+      "group_ids": [
+        "ceg-013",
+        "ceg-014",
+        "ceg-015",
+        "ceg-016",
+        "ceg-017",
+        "ceg-018"
+      ],
+      "coverage_ids": [
+        "cov-00018",
+        "cov-00053",
+        "cov-00022",
+        "cov-00051",
+        "cov-00046",
+        "cov-00014",
+        "cov-00023",
+        "cov-00048",
+        "cov-00050"
+      ],
+      "result_group_paths": [
+        "Plans/.pipeline/work_items/w-20260328-192905/coverage_evidence_results.ceg-013.json",
+        "Plans/.pipeline/work_items/w-20260328-192905/coverage_evidence_results.ceg-014.json",
+        "Plans/.pipeline/work_items/w-20260328-192905/coverage_evidence_results.ceg-015.json",
+        "Plans/.pipeline/work_items/w-20260328-192905/coverage_evidence_results.ceg-016.json",
+        "Plans/.pipeline/work_items/w-20260328-192905/coverage_evidence_results.ceg-017.json",
+        "Plans/.pipeline/work_items/w-20260328-192905/coverage_evidence_results.ceg-018.json"
+      ]
+    }
+  ],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

@@ -1,0 +1,705 @@
+{
+  "schema_id": "pm.open_gaps_worklist.v2",
+  "work_id": "w-20260328-192905",
+  "source_transfer_coverage": "Plans/.pipeline/work_items/w-20260328-192905/transfer_coverage.json",
+  "summary": {
+    "actionable_rows_total": 49,
+    "row_groups_total": 24,
+    "doc_discovery_rows": 0,
+    "known_target_files_missing": 0,
+    "stale_token_replacement_unknown_rows": 3,
+    "path_quarantine_violations": 0
+  },
+  "row_groups": [
+    {
+      "group_id": "gapgrp-001",
+      "coverage_row_ids": [
+        "cov-00047"
+      ],
+      "source_obligation_ids": [
+        "obl-032"
+      ],
+      "source_seed_ids": [
+        "seed-035"
+      ],
+      "source_shard_ids": [
+        "shard-0008"
+      ],
+      "path": "Plans/Executor_Protocol.md",
+      "row_type": "owner",
+      "status": "partial",
+      "required_action": "owner_create_or_rewrite",
+      "missing_doc_path_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "classification_purpose": "fix_backlog_check"
+    },
+    {
+      "group_id": "gapgrp-002",
+      "coverage_row_ids": [
+        "cov-00025",
+        "cov-00029"
+      ],
+      "source_obligation_ids": [
+        "obl-016",
+        "obl-018"
+      ],
+      "source_seed_ids": [
+        "seed-017",
+        "seed-021"
+      ],
+      "source_shard_ids": [
+        "shard-0004",
+        "shard-0005"
+      ],
+      "path": "Plans/FinalGUISpec.md",
+      "row_type": "consumer",
+      "status": "missing",
+      "required_action": "consumer_propagation",
+      "missing_doc_path_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "classification_purpose": "fix_backlog_check"
+    },
+    {
+      "group_id": "gapgrp-003",
+      "coverage_row_ids": [
+        "cov-00026",
+        "cov-00031"
+      ],
+      "source_obligation_ids": [
+        "obl-017",
+        "obl-019"
+      ],
+      "source_seed_ids": [
+        "seed-018",
+        "seed-019",
+        "seed-022"
+      ],
+      "source_shard_ids": [
+        "shard-0004",
+        "shard-0005"
+      ],
+      "path": "Plans/FinalGUISpec.md",
+      "row_type": "consumer",
+      "status": "partial",
+      "required_action": "consumer_propagation",
+      "missing_doc_path_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "classification_purpose": "fix_backlog_check"
+    },
+    {
+      "group_id": "gapgrp-004",
+      "coverage_row_ids": [
+        "cov-00017"
+      ],
+      "source_obligation_ids": [
+        "obl-013"
+      ],
+      "source_seed_ids": [
+        "seed-012"
+      ],
+      "source_shard_ids": [
+        "shard-0003"
+      ],
+      "path": "Plans/FinalGUISpec.md",
+      "row_type": "owner",
+      "status": "missing",
+      "required_action": "owner_create_or_rewrite",
+      "missing_doc_path_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "classification_purpose": "fix_backlog_check"
+    },
+    {
+      "group_id": "gapgrp-005",
+      "coverage_row_ids": [
+        "cov-00019"
+      ],
+      "source_obligation_ids": [
+        "obl-014"
+      ],
+      "source_seed_ids": [
+        "seed-014"
+      ],
+      "source_shard_ids": [
+        "shard-0003"
+      ],
+      "path": "Plans/FinalGUISpec.md",
+      "row_type": "owner",
+      "status": "partial",
+      "required_action": "owner_create_or_rewrite",
+      "missing_doc_path_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "classification_purpose": "fix_backlog_check"
+    },
+    {
+      "group_id": "gapgrp-006",
+      "coverage_row_ids": [
+        "cov-00012"
+      ],
+      "source_obligation_ids": [
+        "obl-012"
+      ],
+      "source_seed_ids": [
+        "seed-011",
+        "seed-020"
+      ],
+      "source_shard_ids": [
+        "shard-0003",
+        "shard-0004"
+      ],
+      "path": "Plans/Glossary.md",
+      "row_type": "owner",
+      "status": "missing",
+      "required_action": "owner_create_or_rewrite",
+      "missing_doc_path_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "classification_purpose": "fix_backlog_check"
+    },
+    {
+      "group_id": "gapgrp-007",
+      "coverage_row_ids": [
+        "cov-00016"
+      ],
+      "source_obligation_ids": [
+        "obl-013"
+      ],
+      "source_seed_ids": [
+        "seed-012"
+      ],
+      "source_shard_ids": [
+        "shard-0003"
+      ],
+      "path": "Plans/Models_System.md",
+      "row_type": "owner",
+      "status": "missing",
+      "required_action": "owner_create_or_rewrite",
+      "missing_doc_path_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "classification_purpose": "fix_backlog_check"
+    },
+    {
+      "group_id": "gapgrp-008",
+      "coverage_row_ids": [
+        "cov-00032"
+      ],
+      "source_obligation_ids": [
+        "obl-020"
+      ],
+      "source_seed_ids": [
+        "seed-023",
+        "seed-037"
+      ],
+      "source_shard_ids": [
+        "shard-0005",
+        "shard-0009"
+      ],
+      "path": "Plans/Models_System.md",
+      "row_type": "owner",
+      "status": "partial",
+      "required_action": "owner_create_or_rewrite",
+      "missing_doc_path_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "classification_purpose": "fix_backlog_check"
+    },
+    {
+      "group_id": "gapgrp-009",
+      "coverage_row_ids": [
+        "cov-00013"
+      ],
+      "source_obligation_ids": [
+        "obl-012"
+      ],
+      "source_seed_ids": [
+        "seed-011",
+        "seed-020"
+      ],
+      "source_shard_ids": [
+        "shard-0003",
+        "shard-0004"
+      ],
+      "path": "Plans/Orchestrator_Page.md",
+      "row_type": "owner",
+      "status": "partial",
+      "required_action": "owner_create_or_rewrite",
+      "missing_doc_path_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "classification_purpose": "fix_backlog_check"
+    },
+    {
+      "group_id": "gapgrp-010",
+      "coverage_row_ids": [
+        "cov-00024",
+        "cov-00028",
+        "cov-00034",
+        "cov-00036",
+        "cov-00044"
+      ],
+      "source_obligation_ids": [
+        "obl-016",
+        "obl-018",
+        "obl-021",
+        "obl-022",
+        "obl-029"
+      ],
+      "source_seed_ids": [
+        "seed-017",
+        "seed-021",
+        "seed-024",
+        "seed-029",
+        "seed-030",
+        "seed-031"
+      ],
+      "source_shard_ids": [
+        "shard-0004",
+        "shard-0005",
+        "shard-0006",
+        "shard-0007"
+      ],
+      "path": "Plans/Personas.md",
+      "row_type": "consumer",
+      "status": "missing",
+      "required_action": "consumer_propagation",
+      "missing_doc_path_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "classification_purpose": "fix_backlog_check"
+    },
+    {
+      "group_id": "gapgrp-011",
+      "coverage_row_ids": [
+        "cov-00027",
+        "cov-00043",
+        "cov-00045"
+      ],
+      "source_obligation_ids": [
+        "obl-017",
+        "obl-028",
+        "obl-030"
+      ],
+      "source_seed_ids": [
+        "seed-002",
+        "seed-018",
+        "seed-019",
+        "seed-033"
+      ],
+      "source_shard_ids": [
+        "shard-0001",
+        "shard-0004",
+        "shard-0008"
+      ],
+      "path": "Plans/Personas.md",
+      "row_type": "consumer",
+      "status": "partial",
+      "required_action": "consumer_propagation",
+      "missing_doc_path_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "classification_purpose": "fix_backlog_check"
+    },
+    {
+      "group_id": "gapgrp-012",
+      "coverage_row_ids": [
+        "cov-00003",
+        "cov-00006",
+        "cov-00015",
+        "cov-00039",
+        "cov-00042",
+        "cov-00052"
+      ],
+      "source_obligation_ids": [
+        "obl-003",
+        "obl-006",
+        "obl-013",
+        "obl-024",
+        "obl-027",
+        "obl-034"
+      ],
+      "source_seed_ids": [
+        "seed-004",
+        "seed-010",
+        "seed-012",
+        "seed-026",
+        "seed-038",
+        "seed-039"
+      ],
+      "source_shard_ids": [
+        "shard-0002",
+        "shard-0003",
+        "shard-0006",
+        "shard-0009"
+      ],
+      "path": "Plans/Personas.md",
+      "row_type": "owner",
+      "status": "missing",
+      "required_action": "owner_create_or_rewrite",
+      "missing_doc_path_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "classification_purpose": "fix_backlog_check"
+    },
+    {
+      "group_id": "gapgrp-013",
+      "coverage_row_ids": [
+        "cov-00001",
+        "cov-00002",
+        "cov-00004",
+        "cov-00005",
+        "cov-00007",
+        "cov-00008",
+        "cov-00020",
+        "cov-00033",
+        "cov-00038",
+        "cov-00040"
+      ],
+      "source_obligation_ids": [
+        "obl-001",
+        "obl-002",
+        "obl-004",
+        "obl-005",
+        "obl-007",
+        "obl-008",
+        "obl-014",
+        "obl-020",
+        "obl-023",
+        "obl-025"
+      ],
+      "source_seed_ids": [
+        "seed-001",
+        "seed-003",
+        "seed-005",
+        "seed-006",
+        "seed-013",
+        "seed-014",
+        "seed-015",
+        "seed-023",
+        "seed-025",
+        "seed-027",
+        "seed-028",
+        "seed-037"
+      ],
+      "source_shard_ids": [
+        "shard-0001",
+        "shard-0002",
+        "shard-0003",
+        "shard-0004",
+        "shard-0005",
+        "shard-0006",
+        "shard-0009"
+      ],
+      "path": "Plans/Personas.md",
+      "row_type": "owner",
+      "status": "partial",
+      "required_action": "owner_create_or_rewrite",
+      "missing_doc_path_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "classification_purpose": "fix_backlog_check"
+    },
+    {
+      "group_id": "gapgrp-014",
+      "coverage_row_ids": [
+        "cov-00041"
+      ],
+      "source_obligation_ids": [
+        "obl-026"
+      ],
+      "source_seed_ids": [
+        "seed-032"
+      ],
+      "source_shard_ids": [
+        "shard-0007"
+      ],
+      "path": "Plans/Personas.md",
+      "row_type": "owner",
+      "status": "partial",
+      "required_action": "owner_create_or_rewrite",
+      "missing_doc_path_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "classification_purpose": "fix_backlog_check"
+    },
+    {
+      "group_id": "gapgrp-015",
+      "coverage_row_ids": [
+        "cov-00049"
+      ],
+      "source_obligation_ids": [
+        "obl-033"
+      ],
+      "source_seed_ids": [
+        "seed-036"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "path": "Plans/Personas.md",
+      "row_type": "stale_token_replacement",
+      "status": "missing",
+      "required_action": "stale_token_replacement_resolution",
+      "missing_doc_path_hints": [],
+      "canonical_replacement_status": "unknown",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "classification_purpose": "stale_token_replacement_check"
+    },
+    {
+      "group_id": "gapgrp-016",
+      "coverage_row_ids": [
+        "cov-00037"
+      ],
+      "source_obligation_ids": [
+        "obl-022"
+      ],
+      "source_seed_ids": [
+        "seed-030"
+      ],
+      "source_shard_ids": [
+        "shard-0006"
+      ],
+      "path": "Plans/assistant-chat-design.md",
+      "row_type": "consumer",
+      "status": "missing",
+      "required_action": "consumer_propagation",
+      "missing_doc_path_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "classification_purpose": "fix_backlog_check"
+    },
+    {
+      "group_id": "gapgrp-017",
+      "coverage_row_ids": [
+        "cov-00030",
+        "cov-00035"
+      ],
+      "source_obligation_ids": [
+        "obl-019",
+        "obl-021"
+      ],
+      "source_seed_ids": [
+        "seed-022",
+        "seed-024",
+        "seed-029"
+      ],
+      "source_shard_ids": [
+        "shard-0005",
+        "shard-0006"
+      ],
+      "path": "Plans/assistant-chat-design.md",
+      "row_type": "consumer",
+      "status": "partial",
+      "required_action": "consumer_propagation",
+      "missing_doc_path_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "classification_purpose": "fix_backlog_check"
+    },
+    {
+      "group_id": "gapgrp-018",
+      "coverage_row_ids": [
+        "cov-00018",
+        "cov-00053"
+      ],
+      "source_obligation_ids": [
+        "obl-013",
+        "obl-034"
+      ],
+      "source_seed_ids": [
+        "seed-012",
+        "seed-038"
+      ],
+      "source_shard_ids": [
+        "shard-0003",
+        "shard-0009"
+      ],
+      "path": "Plans/assistant-chat-design.md",
+      "row_type": "owner",
+      "status": "missing",
+      "required_action": "owner_create_or_rewrite",
+      "missing_doc_path_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "classification_purpose": "fix_backlog_check"
+    },
+    {
+      "group_id": "gapgrp-019",
+      "coverage_row_ids": [
+        "cov-00022"
+      ],
+      "source_obligation_ids": [
+        "obl-015"
+      ],
+      "source_seed_ids": [
+        "seed-016"
+      ],
+      "source_shard_ids": [
+        "shard-0004"
+      ],
+      "path": "Plans/interview-subagent-integration.md",
+      "row_type": "owner",
+      "status": "missing",
+      "required_action": "owner_create_or_rewrite",
+      "missing_doc_path_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "classification_purpose": "fix_backlog_check"
+    },
+    {
+      "group_id": "gapgrp-020",
+      "coverage_row_ids": [
+        "cov-00051"
+      ],
+      "source_obligation_ids": [
+        "obl-033"
+      ],
+      "source_seed_ids": [
+        "seed-036"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "path": "Plans/interview-subagent-integration.md",
+      "row_type": "stale_token_replacement",
+      "status": "missing",
+      "required_action": "stale_token_replacement_resolution",
+      "missing_doc_path_hints": [],
+      "canonical_replacement_status": "unknown",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "classification_purpose": "stale_token_replacement_check"
+    },
+    {
+      "group_id": "gapgrp-021",
+      "coverage_row_ids": [
+        "cov-00046"
+      ],
+      "source_obligation_ids": [
+        "obl-031"
+      ],
+      "source_seed_ids": [
+        "seed-034"
+      ],
+      "source_shard_ids": [
+        "shard-0008"
+      ],
+      "path": "Plans/orchestrator-subagent-integration.md",
+      "row_type": "consumer",
+      "status": "missing",
+      "required_action": "consumer_propagation",
+      "missing_doc_path_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "classification_purpose": "fix_backlog_check"
+    },
+    {
+      "group_id": "gapgrp-022",
+      "coverage_row_ids": [
+        "cov-00048"
+      ],
+      "source_obligation_ids": [
+        "obl-032"
+      ],
+      "source_seed_ids": [
+        "seed-035"
+      ],
+      "source_shard_ids": [
+        "shard-0008"
+      ],
+      "path": "Plans/orchestrator-subagent-integration.md",
+      "row_type": "owner",
+      "status": "missing",
+      "required_action": "owner_create_or_rewrite",
+      "missing_doc_path_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "classification_purpose": "fix_backlog_check"
+    },
+    {
+      "group_id": "gapgrp-023",
+      "coverage_row_ids": [
+        "cov-00014",
+        "cov-00023"
+      ],
+      "source_obligation_ids": [
+        "obl-012",
+        "obl-015"
+      ],
+      "source_seed_ids": [
+        "seed-011",
+        "seed-016",
+        "seed-020"
+      ],
+      "source_shard_ids": [
+        "shard-0003",
+        "shard-0004"
+      ],
+      "path": "Plans/orchestrator-subagent-integration.md",
+      "row_type": "owner",
+      "status": "partial",
+      "required_action": "owner_create_or_rewrite",
+      "missing_doc_path_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "classification_purpose": "fix_backlog_check"
+    },
+    {
+      "group_id": "gapgrp-024",
+      "coverage_row_ids": [
+        "cov-00050"
+      ],
+      "source_obligation_ids": [
+        "obl-033"
+      ],
+      "source_seed_ids": [
+        "seed-036"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "path": "Plans/orchestrator-subagent-integration.md",
+      "row_type": "stale_token_replacement",
+      "status": "missing",
+      "required_action": "stale_token_replacement_resolution",
+      "missing_doc_path_hints": [],
+      "canonical_replacement_status": "unknown",
+      "file_existence_observation": "exists",
+      "path_field_status": "clean",
+      "classification_purpose": "stale_token_replacement_check"
+    }
+  ],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null,
+    "wave_files_valid": true
+  },
+  "next_required_stage": "Open Gaps Classifier"
+}

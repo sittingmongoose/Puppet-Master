@@ -1,31 +1,45 @@
 {
-  "schema_id": "pm.legacy_sanitizer.worklist.v2",
+  "schema_id": "pm.legacy_sanitizer_worklist.v2",
   "work_id": "w-20260328-192905",
-  "status": "complete",
-  "generated_artifacts": [
-    {
-      "path": "Plans/.pipeline/work_items/w-20260328-192905/meta.json",
-      "classification": "state_file",
-      "action": "ignore",
-      "reason": "Active work-item metadata for the current pipeline state."
-    },
+  "root_files_total": 6,
+  "allowed_active_root_files": [
+    "current_state.md",
+    "legacy_sanitizer.wave-001.json",
+    "legacy_sanitizer.worklist.json",
+    "legacy_sanitizer_report.json",
+    "meta.json",
+    "working_ledger.md"
+  ],
+  "quarantine_candidates": [],
+  "explicitly_allowed_with_reason": [
     {
       "path": "Plans/.pipeline/work_items/w-20260328-192905/current_state.md",
-      "classification": "state_file",
-      "action": "ignore",
-      "reason": "Active work-item state file for the current pipeline state."
+      "reason": "Required work-item state file."
+    },
+    {
+      "path": "Plans/.pipeline/work_items/w-20260328-192905/legacy_sanitizer.wave-001.json",
+      "reason": "Sanitizer wave output written by this stage."
+    },
+    {
+      "path": "Plans/.pipeline/work_items/w-20260328-192905/legacy_sanitizer.worklist.json",
+      "reason": "Sanitizer worklist output written by this stage."
+    },
+    {
+      "path": "Plans/.pipeline/work_items/w-20260328-192905/legacy_sanitizer_report.json",
+      "reason": "Sanitizer report output written by this stage."
+    },
+    {
+      "path": "Plans/.pipeline/work_items/w-20260328-192905/meta.json",
+      "reason": "Required work-item metadata file."
     },
     {
       "path": "Plans/.pipeline/work_items/w-20260328-192905/working_ledger.md",
-      "classification": "protected_ledger",
-      "action": "ignore",
-      "reason": "Protected file; existence confirmed only and not eligible for quarantine."
+      "reason": "Protected source/state ledger; allowed active at root."
     }
   ],
-  "candidate_artifacts": [],
-  "legacy_quarantine_existing": [],
-  "notes": [
-    "No stale generated artifacts were present under the active work-item root.",
-    "No existing legacy_quarantine contents were present."
-  ]
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
 }

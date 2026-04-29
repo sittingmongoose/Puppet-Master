@@ -10,8 +10,7 @@
     }
   ],
   "assigned_input_boundaries": [
-    "Plans/.pipeline/work_items/w-20260328-192905/*",
-    "Plans/.pipeline/work_items/w-20260328-192905/legacy_quarantine/**"
+    "Plans/.pipeline/work_items/w-20260328-192905/{current_state.md,legacy_sanitizer.wave-001.json,legacy_sanitizer.worklist.json,legacy_sanitizer_report.json,meta.json,working_ledger.md}"
   ],
   "subagent_result_status": "complete",
   "completed_task_count": 1,
@@ -24,7 +23,22 @@
   "files_completed": [
     "Plans/.pipeline/work_items/w-20260328-192905/meta.json",
     "Plans/.pipeline/work_items/w-20260328-192905/current_state.md",
+    "Plans/.pipeline/work_items/w-20260328-192905/legacy_sanitizer.wave-001.json",
+    "Plans/.pipeline/work_items/w-20260328-192905/legacy_sanitizer.worklist.json",
+    "Plans/.pipeline/work_items/w-20260328-192905/legacy_sanitizer_report.json",
     "Plans/.pipeline/work_items/w-20260328-192905/working_ledger.md"
+  ],
+  "artifact_families_assigned": [
+    "work_item_meta",
+    "current_state",
+    "legacy_sanitizer",
+    "ledger"
+  ],
+  "artifact_families_completed": [
+    "work_item_meta",
+    "current_state",
+    "legacy_sanitizer",
+    "ledger"
   ],
   "files_to_quarantine": [],
   "files_to_ignore": [
@@ -35,6 +49,18 @@
     {
       "path": "Plans/.pipeline/work_items/w-20260328-192905/current_state.md",
       "reason": "Current work-item state file; retained in place."
+    },
+    {
+      "path": "Plans/.pipeline/work_items/w-20260328-192905/legacy_sanitizer.wave-001.json",
+      "reason": "Allowed sanitizer wave output at root."
+    },
+    {
+      "path": "Plans/.pipeline/work_items/w-20260328-192905/legacy_sanitizer.worklist.json",
+      "reason": "Allowed sanitizer worklist output at root."
+    },
+    {
+      "path": "Plans/.pipeline/work_items/w-20260328-192905/legacy_sanitizer_report.json",
+      "reason": "Allowed sanitizer report output at root."
     },
     {
       "path": "Plans/.pipeline/work_items/w-20260328-192905/working_ledger.md",

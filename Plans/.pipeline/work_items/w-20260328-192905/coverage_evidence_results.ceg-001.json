@@ -1,0 +1,52 @@
+{
+  "schema_id": "pm.coverage_evidence_result_group.v2",
+  "work_id": "w-20260328-192905",
+  "group_id": "ceg-001",
+  "coverage_results": [
+    {
+      "coverage_id": "cov-00047",
+      "source_obligation_ids": [
+        "obl-032"
+      ],
+      "source_seed_ids": [
+        "seed-035"
+      ],
+      "source_shard_ids": [
+        "shard-0008"
+      ],
+      "path": "Plans/Executor_Protocol.md",
+      "row_type": "owner",
+      "status": "partial",
+      "evidence": [
+        {
+          "path": "Plans/Executor_Protocol.md",
+          "line_start": 503,
+          "line_end": 509,
+          "excerpt": "A node is ready only if ... node is not blocked on HITL, clarification, external side-effect confirmation, permission denial, FileSafe, auth refresh, or replan-required state; the node's plan/spec generation is still valid for the active `replan_generation`."
+        },
+        {
+          "path": "Plans/Executor_Protocol.md",
+          "line_start": 897,
+          "line_end": 900,
+          "excerpt": "Class-driven next-step rules resolve prerequisites before dispatch begins, and dirty-baseline, merge-conflict, approval, auth, or validation blockers surface through the canonical blocked-episode contract."
+        },
+        {
+          "path": "Plans/Executor_Protocol.md",
+          "line_start": 1129,
+          "line_end": 1137,
+          "excerpt": "### Mode interaction ... All assistant chat modes (Ask, Agent, Plan, Deep Plan, Debug) operate within the thread's worktree when one is bound ... Plan/Deep Plan mode: plans execute in worktree context."
+        }
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean"
+    }
+  ],
+  "blocked_rows": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

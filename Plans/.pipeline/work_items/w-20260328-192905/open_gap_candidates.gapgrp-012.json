@@ -1,0 +1,242 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260328-192905",
+  "group_id": "gapgrp-012",
+  "coverage_row_ids_represented": [
+    "cov-00003",
+    "cov-00006",
+    "cov-00015",
+    "cov-00039",
+    "cov-00042",
+    "cov-00052"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_structural_heading",
+      "description": "Plans/Personas.md is missing required coverage for 'PM-native specialty prompts must avoid vendor encyclopedias, guarantee-like numeric targets, raw JSON protocol examples, mandatory context-manager infrastructure, redundant tooling lists, and inflated completion claims.'.",
+      "affected_targets": [
+        {
+          "path": "Plans/Personas.md",
+          "heading": "Specialty Prompt Template"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-00003"
+      ],
+      "source_obligation_ids": [
+        "obl-003"
+      ],
+      "source_seed_ids": [
+        "seed-004"
+      ],
+      "source_shard_ids": [
+        "shard-0002"
+      ],
+      "exact_missing_items": [
+        "PM-native specialty prompts should avoid vendor or version encyclopedias unless the persona is explicitly stack-specific.",
+        "PM-native specialty prompts should avoid hard numeric goals that read like guarantees rather than heuristics, raw JSON communication protocol examples, references to a separate context-manager service as mandatory infrastructure, long generic tooling lists that metadata can already express, and inflated completion claims."
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Coverage row cov-00003 remains missing and requires owner_create_or_rewrite.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    },
+    {
+      "candidate_gap_id": "gap-cand-002",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_structural_heading",
+      "description": "Plans/Personas.md is missing required coverage for 'The approved specialty catalog must include docker-expert, github-actions-expert, graphql-expert, openapi-expert, and postgres-expert.'.",
+      "affected_targets": [
+        {
+          "path": "Plans/Personas.md",
+          "heading": "Specialty Personas"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-00006"
+      ],
+      "source_obligation_ids": [
+        "obl-006"
+      ],
+      "source_seed_ids": [
+        "seed-010"
+      ],
+      "source_shard_ids": [
+        "shard-0003"
+      ],
+      "exact_missing_items": [
+        "Add the narrow specialists `docker-expert`, `github-actions-expert`, `graphql-expert`, `openapi-expert`, and `postgres-expert` to the approved specialty catalog."
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Coverage row cov-00006 remains missing and requires owner_create_or_rewrite.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    },
+    {
+      "candidate_gap_id": "gap-cand-003",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_structural_heading",
+      "description": "Plans/Personas.md is missing required coverage for '`Teacher` documentation coverage across PM capabilities, settings, modes, GUI locations, workflows, and terminology'.",
+      "affected_targets": [
+        {
+          "path": "Plans/Personas.md",
+          "heading": "Teacher"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-00015"
+      ],
+      "source_obligation_ids": [
+        "obl-013"
+      ],
+      "source_seed_ids": [
+        "seed-012"
+      ],
+      "source_shard_ids": [
+        "shard-0003"
+      ],
+      "exact_missing_items": [
+        "`Teacher`",
+        "reliable",
+        "current",
+        "broad documentation",
+        "Puppet Master capabilities",
+        "settings",
+        "modes",
+        "GUI locations",
+        "workflows",
+        "terminology"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Coverage row cov-00015 remains missing and requires owner_create_or_rewrite.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    },
+    {
+      "candidate_gap_id": "gap-cand-004",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_structural_heading",
+      "description": "Plans/Personas.md is missing required coverage for 'The `bash` Persona must report the failing command, exit signal or status when available, and the smallest useful error context, while distinguishing command failure, output-indicated problems, and successful execution with intended effect.'.",
+      "affected_targets": [
+        {
+          "path": "Plans/Personas.md",
+          "heading": "Bash"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-00039"
+      ],
+      "source_obligation_ids": [
+        "obl-024"
+      ],
+      "source_seed_ids": [
+        "seed-026"
+      ],
+      "source_shard_ids": [
+        "shard-0006"
+      ],
+      "exact_missing_items": [
+        "`bash` should report the failing command, exit signal or status when available, and the smallest useful error context; it should distinguish command failure from output-indicated problems and from successful execution with intended effect."
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Coverage row cov-00039 remains missing and requires owner_create_or_rewrite.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    },
+    {
+      "candidate_gap_id": "gap-cand-005",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "missing_structural_heading",
+      "description": "Plans/Personas.md is missing required coverage for 'PM-native Persona canon should retain useful source-prompt flavor while normalizing or dropping hard thresholds and source-side outcome claims.'.",
+      "affected_targets": [
+        {
+          "path": "Plans/Personas.md",
+          "heading": "Specialty Prompt Template"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-00042"
+      ],
+      "source_obligation_ids": [
+        "obl-027"
+      ],
+      "source_seed_ids": [
+        "seed-039"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "exact_missing_items": [
+        "Preserve the distinction between source-prompt flavor worth keeping and source-side hard thresholds or outcome claims that should be normalized or dropped in PM-native canon."
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Coverage row cov-00042 remains missing and requires owner_create_or_rewrite.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    },
+    {
+      "candidate_gap_id": "gap-cand-006",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "Plans/Personas.md is missing required coverage for 'The `explorer` and `bash` Personas must remain explicitly subagent-only and must not be user-selectable in chat.'.",
+      "affected_targets": [
+        {
+          "path": "Plans/Personas.md",
+          "heading": "Bash"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-00052"
+      ],
+      "source_obligation_ids": [
+        "obl-034"
+      ],
+      "source_seed_ids": [
+        "seed-038"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "exact_missing_items": [
+        "`explorer` and `bash` are explicitly subagent-only Personas and are not user-selectable in chat."
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Coverage row cov-00052 remains missing and requires owner_create_or_rewrite.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

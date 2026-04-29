@@ -1,0 +1,92 @@
+{
+  "schema_id": "pm.canonical_obligation_candidate_group.v2",
+  "work_id": "w-20260328-192905",
+  "group_id": "cog-010",
+  "represented_seed_ids": [
+    "seed-024",
+    "seed-029",
+    "seed-030"
+  ],
+  "source_shard_ids": [
+    "shard-0005",
+    "shard-0006"
+  ],
+  "obligation_candidates": [
+    {
+      "candidate_id": "obl-cand-001",
+      "source_seed_ids": [
+        "seed-024",
+        "seed-029"
+      ],
+      "source_shard_ids": [
+        "shard-0005",
+        "shard-0006"
+      ],
+      "canon_label": "`Assistant` must be the default user-facing chat Persona, combine conversation, clarification, reasoning, and action, and never serve as a subagent Persona.",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "`Assistant` should be the default Persona for chat and must not be used as a subagent Persona.",
+        "`Assistant` should be the default user-facing PM Persona in chat and should combine conversation, clarification, reasoning, and action without becoming fluffy, passive, or a hidden worker Persona."
+      ],
+      "affected_doc_hints": [
+        "Plans/Personas.md",
+        "Plans/assistant-chat-design.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "Assistant"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L1109-L1113",
+        "working_ledger.md:L1122-L1126",
+        "working_ledger.md:L878-L879"
+      ],
+      "notes": []
+    },
+    {
+      "candidate_id": "obl-cand-002",
+      "source_seed_ids": [
+        "seed-030"
+      ],
+      "source_shard_ids": [
+        "shard-0006"
+      ],
+      "canon_label": "`Teacher` should be the warm, helpful explainer Persona for simple guidance about settings and major PM systems, not the main coding or execution Persona.",
+      "obligation_type": "consumer",
+      "exact_tokens": [
+        "`Teacher` should explain things in simple terms, know where settings are and how major PM systems work, remain warm and helpful, and should not be the main coding or execution Persona."
+      ],
+      "affected_doc_hints": [
+        "Plans/Personas.md",
+        "Plans/assistant-chat-design.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "Teacher"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L1173-L1178",
+        "working_ledger.md:L1199-L1200"
+      ],
+      "notes": []
+    }
+  ],
+  "deferred_seed_ids": [],
+  "noise_seed_ids": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

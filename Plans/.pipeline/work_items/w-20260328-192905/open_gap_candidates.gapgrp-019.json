@@ -1,0 +1,52 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260328-192905",
+  "group_id": "gapgrp-019",
+  "coverage_row_ids_represented": [
+    "cov-00022"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_owner_section",
+      "description": "Plans/interview-subagent-integration.md is missing required coverage for 'Persona terminology must stay normalized so docs distinguish Persona definitions, `persona_registry` entries, `subagent_registry` launch types, requested Personas, effective Personas, and selection sources or reasons.'.",
+      "affected_targets": [
+        {
+          "path": "Plans/interview-subagent-integration.md",
+          "heading": "Persona Terminology"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-00022"
+      ],
+      "source_obligation_ids": [
+        "obl-015"
+      ],
+      "source_seed_ids": [
+        "seed-016"
+      ],
+      "source_shard_ids": [
+        "shard-0004"
+      ],
+      "exact_missing_items": [
+        "Persona terminology must be normalized across docs so they consistently distinguish Persona definition, `persona_registry` entry, `subagent_registry` launch type, requested Persona, effective Persona, and selection source or reason."
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Coverage row cov-00022 remains missing and requires owner_create_or_rewrite.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

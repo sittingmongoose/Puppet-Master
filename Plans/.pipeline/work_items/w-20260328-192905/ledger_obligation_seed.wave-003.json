@@ -1,0 +1,23 @@
+{
+  "schema_id": "pm.ledger_obligation_seed_wave.v2",
+  "work_id": "w-20260328-192905",
+  "wave_id": "wave-003",
+  "subagent_tasks": [
+    {
+      "agent": "seed-shard-0009-1",
+      "task": "Extract obligation-grade seed candidates from shard-0009."
+    }
+  ],
+  "assigned_input_boundaries": [
+    "Plans/.pipeline/work_items/w-20260328-192905/ledger_shards/shard-0009-L001601-L001661.md"
+  ],
+  "subagent_result_status": "complete",
+  "completed_task_count": 1,
+  "failed_task_count": 0,
+  "shard_ids_assigned": [
+    "shard-0009"
+  ],
+  "shard_ids_completed": [
+    "shard-0009"
+  ]
+}
