@@ -1,0 +1,29 @@
+{
+  "schema_id": "pm.canonical_obligation_converter.wave.v2",
+  "work_id": "w-20260328-192905",
+  "wave_id": "wave-005",
+  "subagent_tasks": [
+    {
+      "agent": "write-cog-017",
+      "task": "Convert cog-017 into one canonical obligation candidate group output."
+    }
+  ],
+  "assigned_input_boundaries": [
+    "cog-017"
+  ],
+  "subagent_result_status": "complete",
+  "completed_task_count": 1,
+  "failed_task_count": 0,
+  "group_ids_assigned": [
+    "cog-017"
+  ],
+  "group_ids_completed": [
+    "cog-017"
+  ],
+  "seed_ids_assigned": [
+    "seed-038"
+  ],
+  "seed_ids_completed": [
+    "seed-038"
+  ]
+}

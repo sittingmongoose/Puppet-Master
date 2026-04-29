@@ -1,0 +1,68 @@
+{
+  "schema_id": "pm.ledger_obligation_seed_worklist.v2",
+  "work_id": "w-20260328-192905",
+  "source_manifest": "Plans/.pipeline/work_items/w-20260328-192905/ledger_shards/manifest.json",
+  "source_sha256": "4369b596a2b2da303860f1896dbb2c97d61e06bb42d8ed2f280723199eae31cb",
+  "root_shard_count": 9,
+  "shards": [
+    {
+      "shard_id": "shard-0001",
+      "path": "Plans/.pipeline/work_items/w-20260328-192905/ledger_shards/shard-0001-L000001-L000200.md",
+      "output_path": "Plans/.pipeline/work_items/w-20260328-192905/ledger_obligation_seed.shard-0001.json",
+      "status": "completed"
+    },
+    {
+      "shard_id": "shard-0002",
+      "path": "Plans/.pipeline/work_items/w-20260328-192905/ledger_shards/shard-0002-L000201-L000400.md",
+      "output_path": "Plans/.pipeline/work_items/w-20260328-192905/ledger_obligation_seed.shard-0002.json",
+      "status": "completed"
+    },
+    {
+      "shard_id": "shard-0003",
+      "path": "Plans/.pipeline/work_items/w-20260328-192905/ledger_shards/shard-0003-L000401-L000600.md",
+      "output_path": "Plans/.pipeline/work_items/w-20260328-192905/ledger_obligation_seed.shard-0003.json",
+      "status": "completed"
+    },
+    {
+      "shard_id": "shard-0004",
+      "path": "Plans/.pipeline/work_items/w-20260328-192905/ledger_shards/shard-0004-L000601-L000800.md",
+      "output_path": "Plans/.pipeline/work_items/w-20260328-192905/ledger_obligation_seed.shard-0004.json",
+      "status": "completed"
+    },
+    {
+      "shard_id": "shard-0005",
+      "path": "Plans/.pipeline/work_items/w-20260328-192905/ledger_shards/shard-0005-L000801-L001000.md",
+      "output_path": "Plans/.pipeline/work_items/w-20260328-192905/ledger_obligation_seed.shard-0005.json",
+      "status": "completed"
+    },
+    {
+      "shard_id": "shard-0006",
+      "path": "Plans/.pipeline/work_items/w-20260328-192905/ledger_shards/shard-0006-L001001-L001200.md",
+      "output_path": "Plans/.pipeline/work_items/w-20260328-192905/ledger_obligation_seed.shard-0006.json",
+      "status": "completed"
+    },
+    {
+      "shard_id": "shard-0007",
+      "path": "Plans/.pipeline/work_items/w-20260328-192905/ledger_shards/shard-0007-L001201-L001400.md",
+      "output_path": "Plans/.pipeline/work_items/w-20260328-192905/ledger_obligation_seed.shard-0007.json",
+      "status": "completed"
+    },
+    {
+      "shard_id": "shard-0008",
+      "path": "Plans/.pipeline/work_items/w-20260328-192905/ledger_shards/shard-0008-L001401-L001600.md",
+      "output_path": "Plans/.pipeline/work_items/w-20260328-192905/ledger_obligation_seed.shard-0008.json",
+      "status": "completed"
+    },
+    {
+      "shard_id": "shard-0009",
+      "path": "Plans/.pipeline/work_items/w-20260328-192905/ledger_shards/shard-0009-L001601-L001661.md",
+      "output_path": "Plans/.pipeline/work_items/w-20260328-192905/ledger_obligation_seed.shard-0009.json",
+      "status": "completed"
+    }
+  ],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

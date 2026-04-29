@@ -1,0 +1,40 @@
+{
+  "schema_id": "pm.coverage_evidence_result_group.v2",
+  "work_id": "w-20260328-192905",
+  "group_id": "ceg-016",
+  "coverage_results": [
+    {
+      "coverage_id": "cov-00046",
+      "source_obligation_ids": [
+        "obl-031"
+      ],
+      "source_seed_ids": [
+        "seed-034"
+      ],
+      "source_shard_ids": [
+        "shard-0008"
+      ],
+      "path": "Plans/orchestrator-subagent-integration.md",
+      "row_type": "consumer",
+      "status": "missing",
+      "evidence": [
+        {
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "line_start": 6002,
+          "line_end": 6023,
+          "excerpt": "The Autonomous QA Loop addendum introduces progress tracking and visual status symbols, but it does not define the Orchestrator page as a six-tab UI surface."
+        }
+      ],
+      "required_action": "consumer_propagation",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean"
+    }
+  ],
+  "blocked_rows": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

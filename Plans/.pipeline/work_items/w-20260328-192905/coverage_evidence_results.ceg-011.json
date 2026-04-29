@@ -1,0 +1,46 @@
+{
+  "schema_id": "pm.coverage_evidence_result_group.v2",
+  "work_id": "w-20260328-192905",
+  "group_id": "ceg-011",
+  "coverage_results": [
+    {
+      "coverage_id": "cov-00049",
+      "source_obligation_ids": [
+        "obl-033"
+      ],
+      "source_seed_ids": [
+        "seed-036"
+      ],
+      "source_shard_ids": [
+        "shard-0009"
+      ],
+      "path": "Plans/Personas.md",
+      "row_type": "stale_token_replacement",
+      "status": "missing",
+      "evidence": [
+        {
+          "kind": "line_range",
+          "start_line": 377,
+          "end_line": 380,
+          "excerpt": "Interview stage configuration must persist canonical Persona-oriented field names ... stale `*_persona_id` drift should be normalized during reconciliation."
+        },
+        {
+          "kind": "line_range",
+          "start_line": 445,
+          "end_line": 447,
+          "excerpt": "Rules: `requested_persona_id` and `effective_persona_id` are not canonical persisted field names."
+        }
+      ],
+      "required_action": "stale_token_replacement_resolution",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean"
+    }
+  ],
+  "blocked_rows": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

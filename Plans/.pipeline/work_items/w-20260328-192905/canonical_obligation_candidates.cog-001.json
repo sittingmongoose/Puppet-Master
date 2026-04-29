@@ -1,0 +1,277 @@
+{
+  "schema_id": "pm.canonical_obligation_candidate_group.v2",
+  "work_id": "w-20260328-192905",
+  "group_id": "cog-001",
+  "represented_seed_ids": [
+    "seed-001",
+    "seed-003",
+    "seed-004",
+    "seed-005",
+    "seed-006",
+    "seed-010",
+    "seed-013",
+    "seed-015"
+  ],
+  "source_shard_ids": [
+    "shard-0001",
+    "shard-0002",
+    "shard-0003",
+    "shard-0004"
+  ],
+  "obligation_candidates": [
+    {
+      "candidate_id": "obl-cand-001",
+      "source_seed_ids": [
+        "seed-001"
+      ],
+      "source_shard_ids": [
+        "shard-0001"
+      ],
+      "canon_label": "Core Personas are protected built-ins and cannot be deleted or modified.",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Core Personas are protected built-ins.",
+        "Core Personas cannot be deleted.",
+        "Core Personas cannot be modified."
+      ],
+      "affected_doc_hints": [
+        "Plans/Personas.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "Core Personas"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L67-L70"
+      ],
+      "notes": []
+    },
+    {
+      "candidate_id": "obl-cand-002",
+      "source_seed_ids": [
+        "seed-003"
+      ],
+      "source_shard_ids": [
+        "shard-0002"
+      ],
+      "canon_label": "Bundled PM-native specialty prompt templates must stay concise and specify role posture, usage boundaries, workflow, guardrails, and handoffs.",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "PM-native bundled specialty prompts should be much smaller and sharper.",
+        "The PM-native specialty prompt template should emphasize mission or role posture, when to use and when not to use, response approach or operating sequence, key heuristics or guardrails, and handoff expectations to neighboring personas when relevant."
+      ],
+      "affected_doc_hints": [
+        "Plans/Personas.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "Specialty Prompt Template"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L377-L386"
+      ],
+      "notes": []
+    },
+    {
+      "candidate_id": "obl-cand-003",
+      "source_seed_ids": [
+        "seed-004"
+      ],
+      "source_shard_ids": [
+        "shard-0002"
+      ],
+      "canon_label": "PM-native specialty prompts must avoid vendor encyclopedias, guarantee-like numeric targets, raw JSON protocol examples, mandatory context-manager infrastructure, redundant tooling lists, and inflated completion claims.",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "PM-native specialty prompts should avoid vendor or version encyclopedias unless the persona is explicitly stack-specific.",
+        "PM-native specialty prompts should avoid hard numeric goals that read like guarantees rather than heuristics, raw JSON communication protocol examples, references to a separate context-manager service as mandatory infrastructure, long generic tooling lists that metadata can already express, and inflated completion claims."
+      ],
+      "affected_doc_hints": [
+        "Plans/Personas.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "Specialty Prompt Template"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L387-L393"
+      ],
+      "notes": []
+    },
+    {
+      "candidate_id": "obl-cand-004",
+      "source_seed_ids": [
+        "seed-005"
+      ],
+      "source_shard_ids": [
+        "shard-0002"
+      ],
+      "canon_label": "Specialty personas must adapt repo-first, follow existing stack and design patterns, keep tool posture in metadata, distinguish persona roles, and strip vanity boilerplate.",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "All specialty personas should prefer repo-first adaptation over canned best-practice dumping.",
+        "All specialty personas should default to the codebase's existing stack, patterns, constraints, and design system.",
+        "All specialty personas should keep tool posture and permissions in metadata while keeping the prompt body focused on judgment and workflow.",
+        "All specialty personas should explicitly distinguish build, review, investigator, planner, and documentation personas and use fallback or handoff wording when another specialty is a better fit.",
+        "All specialty personas should preserve expertise while stripping vanity metrics and boilerplate ceremony."
+      ],
+      "affected_doc_hints": [
+        "Plans/Personas.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "Specialty Prompt Template"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L394-L400"
+      ],
+      "notes": []
+    },
+    {
+      "candidate_id": "obl-cand-005",
+      "source_seed_ids": [
+        "seed-006"
+      ],
+      "source_shard_ids": [
+        "shard-0002"
+      ],
+      "canon_label": "External persona prompts must be adapted into PM-native form before they enter the bundled canon.",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Migrating external persona prompts into PM Personas is not just file-copying; the prompts need PM-native adaptation before they enter bundled canon."
+      ],
+      "affected_doc_hints": [
+        "Plans/Personas.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L270-L277"
+      ],
+      "notes": []
+    },
+    {
+      "candidate_id": "obl-cand-006",
+      "source_seed_ids": [
+        "seed-010"
+      ],
+      "source_shard_ids": [
+        "shard-0003"
+      ],
+      "canon_label": "The approved specialty catalog must include docker-expert, github-actions-expert, graphql-expert, openapi-expert, and postgres-expert.",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Add the narrow specialists `docker-expert`, `github-actions-expert`, `graphql-expert`, `openapi-expert`, and `postgres-expert` to the approved specialty catalog."
+      ],
+      "affected_doc_hints": [
+        "Plans/Personas.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "Specialty Personas"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L406-L406"
+      ],
+      "notes": []
+    },
+    {
+      "candidate_id": "obl-cand-007",
+      "source_seed_ids": [
+        "seed-013"
+      ],
+      "source_shard_ids": [
+        "shard-0003"
+      ],
+      "canon_label": "Specialty Personas must not share one default permissions or tool posture.",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "Puppet Master should not stamp one default permissions or tool posture onto all specialty Personas."
+      ],
+      "affected_doc_hints": [
+        "Plans/Personas.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "Specialty Personas"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L567-L577"
+      ],
+      "notes": []
+    },
+    {
+      "candidate_id": "obl-cand-008",
+      "source_seed_ids": [
+        "seed-015"
+      ],
+      "source_shard_ids": [
+        "shard-0004"
+      ],
+      "canon_label": "The canonical Persona catalog must distinguish built-ins, first-party specialty Personas, stage or tier defaults, legacy aliases, and registry-only launch types.",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "The canonical Persona catalog must explicitly distinguish built-ins, first-party specialty Personas, stage or tier defaults, legacy aliases, and registry-only launch types."
+      ],
+      "affected_doc_hints": [
+        "Plans/Personas.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "Persona Catalog"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L625-L630"
+      ],
+      "notes": []
+    }
+  ],
+  "deferred_seed_ids": [],
+  "noise_seed_ids": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

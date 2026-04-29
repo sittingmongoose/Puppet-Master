@@ -1,0 +1,62 @@
+{
+  "schema_id": "pm.coverage_evidence_classifier.wave.v2",
+  "work_id": "w-20260328-192905",
+  "wave_id": "wave-001",
+  "subagent_tasks": [
+    {
+      "agent": "evidence-orchestrator",
+      "task": "Classify coverage evidence for Executor, Glossary, Orchestrator, interview, and orchestrator-integration groups."
+    }
+  ],
+  "assigned_input_boundaries": [
+    "ceg-001",
+    "ceg-004",
+    "ceg-006",
+    "ceg-014",
+    "ceg-015",
+    "ceg-016",
+    "ceg-017",
+    "ceg-018"
+  ],
+  "subagent_result_status": "complete",
+  "completed_task_count": 1,
+  "failed_task_count": 0,
+  "coverage_ids_assigned": [
+    "cov-00047",
+    "cov-00012",
+    "cov-00013",
+    "cov-00022",
+    "cov-00051",
+    "cov-00046",
+    "cov-00014",
+    "cov-00023",
+    "cov-00048",
+    "cov-00050"
+  ],
+  "coverage_ids_completed": [
+    "cov-00047",
+    "cov-00012",
+    "cov-00013",
+    "cov-00022",
+    "cov-00051",
+    "cov-00046",
+    "cov-00014",
+    "cov-00023",
+    "cov-00048",
+    "cov-00050"
+  ],
+  "docs_assigned": [
+    "Plans/Executor_Protocol.md",
+    "Plans/Glossary.md",
+    "Plans/Orchestrator_Page.md",
+    "Plans/interview-subagent-integration.md",
+    "Plans/orchestrator-subagent-integration.md"
+  ],
+  "docs_completed": [
+    "Plans/Executor_Protocol.md",
+    "Plans/Glossary.md",
+    "Plans/Orchestrator_Page.md",
+    "Plans/interview-subagent-integration.md",
+    "Plans/orchestrator-subagent-integration.md"
+  ]
+}

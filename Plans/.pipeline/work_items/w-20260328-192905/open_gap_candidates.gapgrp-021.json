@@ -1,0 +1,52 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260328-192905",
+  "group_id": "gapgrp-021",
+  "coverage_row_ids_represented": [
+    "cov-00046"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "major",
+      "blocker_type": "fix_backlog",
+      "gap_class": "stubbed_consumer_propagation",
+      "description": "Plans/orchestrator-subagent-integration.md is missing required coverage for 'The Orchestrator UI must expose the six-tab operational surface: Progress, Seams, Node Graph, Evidence, History, and Ledger.'.",
+      "affected_targets": [
+        {
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "heading": "Orchestrator UI"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-00046"
+      ],
+      "source_obligation_ids": [
+        "obl-031"
+      ],
+      "source_seed_ids": [
+        "seed-034"
+      ],
+      "source_shard_ids": [
+        "shard-0008"
+      ],
+      "exact_missing_items": [
+        "The Orchestrator UI must expose the six-tab operational surface: Progress, Seams, Node Graph, Evidence, History, and Ledger."
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Coverage row cov-00046 remains missing and requires consumer_propagation.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

@@ -1,0 +1,55 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260328-192905",
+  "group_id": "gapgrp-008",
+  "coverage_row_ids_represented": [
+    "cov-00032"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "over_summarized_transfer",
+      "description": "Plans/Models_System.md has related coverage for 'Persona model defaults must stay Auto by default, inherit from parent or surface settings, and ignore external repository model recommendations.' but remains incomplete.",
+      "affected_targets": [
+        {
+          "path": "Plans/Models_System.md",
+          "heading": "Persona Defaults"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-00032"
+      ],
+      "source_obligation_ids": [
+        "obl-020"
+      ],
+      "source_seed_ids": [
+        "seed-023",
+        "seed-037"
+      ],
+      "source_shard_ids": [
+        "shard-0005",
+        "shard-0009"
+      ],
+      "exact_missing_items": [
+        "Persona should default to Auto.",
+        "Ignore external repos' model recommendations; PM Persona model behavior should remain Auto by default and inherit from parent or surface settings."
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Coverage row cov-00032 remains partial and requires owner_create_or_rewrite.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

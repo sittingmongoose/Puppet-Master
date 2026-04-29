@@ -1,0 +1,108 @@
+{
+  "schema_id": "pm.coverage_evidence_result_group.v2",
+  "work_id": "w-20260328-192905",
+  "group_id": "ceg-017",
+  "coverage_results": [
+    {
+      "coverage_id": "cov-00014",
+      "source_obligation_ids": [
+        "obl-012"
+      ],
+      "source_seed_ids": [
+        "seed-011",
+        "seed-020"
+      ],
+      "source_shard_ids": [
+        "shard-0003",
+        "shard-0004"
+      ],
+      "path": "Plans/orchestrator-subagent-integration.md",
+      "row_type": "owner",
+      "status": "partial",
+      "evidence": [
+        {
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "line_start": 396,
+          "line_end": 398,
+          "excerpt": "### Overseer (controlling role) ... The controlling AI role within the Orchestrator is the **Overseer**. Canonical definition and responsibilities are in **Plans/Glossary.md**."
+        }
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean"
+    },
+    {
+      "coverage_id": "cov-00023",
+      "source_obligation_ids": [
+        "obl-015"
+      ],
+      "source_seed_ids": [
+        "seed-016"
+      ],
+      "source_shard_ids": [
+        "shard-0004"
+      ],
+      "path": "Plans/orchestrator-subagent-integration.md",
+      "row_type": "owner",
+      "status": "partial",
+      "evidence": [
+        {
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "line_start": 6443,
+          "line_end": 6445,
+          "excerpt": "All configured Persona IDs MUST validate against `persona_registry`, not only `subagent_registry`. Delegated child-run validation still uses `subagent_registry`; surface-level runtime selection uses `persona_registry`."
+        },
+        {
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "line_start": 6464,
+          "line_end": 6475,
+          "excerpt": "Each orchestrator tier run must record requested Persona, effective Persona, selection source, selection reason, requested/effective platform/model/variant, applied Persona controls, and skipped Persona controls."
+        }
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean"
+    },
+    {
+      "coverage_id": "cov-00048",
+      "source_obligation_ids": [
+        "obl-032"
+      ],
+      "source_seed_ids": [
+        "seed-035"
+      ],
+      "source_shard_ids": [
+        "shard-0008"
+      ],
+      "path": "Plans/orchestrator-subagent-integration.md",
+      "row_type": "owner",
+      "status": "missing",
+      "evidence": [
+        {
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "line_start": 1096,
+          "line_end": 1111,
+          "excerpt": "The Gaps and Clarifications section covers `use_plan_mode_all_tiers` storage and GUI configuration, not plan/deep_plan overlay semantics."
+        },
+        {
+          "path": "Plans/orchestrator-subagent-integration.md",
+          "line_start": 2319,
+          "line_end": 2319,
+          "excerpt": "Interview phase quality review includes unresolved-clarification handling and output readiness for downstream plan generation."
+        }
+      ],
+      "required_action": "owner_create_or_rewrite",
+      "file_existence_observation": "exists",
+      "unresolved_reason": null,
+      "path_field_status": "clean"
+    }
+  ],
+  "blocked_rows": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

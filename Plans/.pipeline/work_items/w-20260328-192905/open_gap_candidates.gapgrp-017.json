@@ -1,0 +1,95 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260328-192905",
+  "group_id": "gapgrp-017",
+  "coverage_row_ids_represented": [
+    "cov-00030",
+    "cov-00035"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "over_summarized_transfer",
+      "description": "Plans/assistant-chat-design.md has related coverage for 'Once a plan is produced, the planning UX must offer exactly four options: Accept the plan and build with Yolo; Accept the plan and build on default permissions; Exit plan; Suggest plan changes.' but remains incomplete.",
+      "affected_targets": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "heading": "Planning UX"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-00030"
+      ],
+      "source_obligation_ids": [
+        "obl-019"
+      ],
+      "source_seed_ids": [
+        "seed-022"
+      ],
+      "source_shard_ids": [
+        "shard-0005"
+      ],
+      "exact_missing_items": [
+        "Once a plan is produced, the agent must offer exactly these options: Accept the plan and build with Yolo; Accept the plan and build on default permissions; Exit plan; Suggest plan changes.",
+        "Accept the plan and build with Yolo",
+        "Accept the plan and build on default permissions",
+        "Exit plan",
+        "Suggest plan changes"
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Coverage row cov-00030 remains partial and requires consumer_propagation.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    },
+    {
+      "candidate_gap_id": "gap-cand-002",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "over_summarized_transfer",
+      "description": "Plans/assistant-chat-design.md has related coverage for '`Assistant` must be the default user-facing chat Persona, combine conversation, clarification, reasoning, and action, and never serve as a subagent Persona.' but remains incomplete.",
+      "affected_targets": [
+        {
+          "path": "Plans/assistant-chat-design.md",
+          "heading": "Assistant"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-00035"
+      ],
+      "source_obligation_ids": [
+        "obl-021"
+      ],
+      "source_seed_ids": [
+        "seed-024",
+        "seed-029"
+      ],
+      "source_shard_ids": [
+        "shard-0005",
+        "shard-0006"
+      ],
+      "exact_missing_items": [
+        "`Assistant` should be the default Persona for chat and must not be used as a subagent Persona.",
+        "`Assistant` should be the default user-facing PM Persona in chat and should combine conversation, clarification, reasoning, and action without becoming fluffy, passive, or a hidden worker Persona."
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Coverage row cov-00035 remains partial and requires consumer_propagation.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

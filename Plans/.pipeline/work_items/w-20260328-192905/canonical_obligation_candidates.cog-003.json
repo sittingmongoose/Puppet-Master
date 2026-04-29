@@ -1,0 +1,69 @@
+{
+  "schema_id": "pm.canonical_obligation_candidate_group.v2",
+  "work_id": "w-20260328-192905",
+  "group_id": "cog-003",
+  "represented_seed_ids": [
+    "seed-011",
+    "seed-020"
+  ],
+  "source_shard_ids": [
+    "shard-0003",
+    "shard-0004"
+  ],
+  "obligation_candidates": [
+    {
+      "candidate_id": "obl-cand-001",
+      "source_seed_ids": [
+        "seed-011",
+        "seed-020"
+      ],
+      "source_shard_ids": [
+        "shard-0003",
+        "shard-0004"
+      ],
+      "canon_label": "`Overseer` canon across governance roles, delegation/review responsibilities, and non-ownership of scheduler/runtime state",
+      "obligation_type": "owner",
+      "exact_tokens": [
+        "`Overseer`",
+        "user-facing governance abstraction",
+        "not the scheduler personified",
+        "not the canonical runtime-state owner",
+        "`Package Overseer`",
+        "`Seam Overseer`",
+        "governance roles",
+        "delegation",
+        "review",
+        "promotion",
+        "integration quality",
+        "remediation judgment"
+      ],
+      "affected_doc_hints": [
+        "Plans/Glossary.md",
+        "Plans/Orchestrator_Page.md",
+        "Plans/orchestrator-subagent-integration.md"
+      ],
+      "missing_doc_path_hints": [],
+      "process_artifact_refs": [],
+      "doc_resolution_status": "concrete",
+      "heading_hints": [
+        "Overseer"
+      ],
+      "stale_residue_to_retire": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "source_evidence": [
+        "working_ledger.md:L509-L512",
+        "working_ledger.md:L664-L668"
+      ],
+      "notes": []
+    }
+  ],
+  "deferred_seed_ids": [],
+  "noise_seed_ids": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "schema_id": "pm.open_gap_candidate_group.v2",
+  "work_id": "w-20260328-192905",
+  "group_id": "gapgrp-005",
+  "coverage_row_ids_represented": [
+    "cov-00019"
+  ],
+  "gap_candidates": [
+    {
+      "candidate_gap_id": "gap-cand-001",
+      "severity": "minor",
+      "blocker_type": "fix_backlog",
+      "gap_class": "over_summarized_transfer",
+      "description": "Plans/FinalGUISpec.md has related coverage for 'Specialty Persona selection must normalize overlapping specialty clusters with explicit picker rules and deterministic auto-resolution behavior so selection is not noisy or arbitrary.' but remains incomplete.",
+      "affected_targets": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "heading": "Specialty Personas"
+        }
+      ],
+      "missing_doc_path_hints": [],
+      "file_existence_observation": "exists",
+      "coverage_row_ids": [
+        "cov-00019"
+      ],
+      "source_obligation_ids": [
+        "obl-014"
+      ],
+      "source_seed_ids": [
+        "seed-014"
+      ],
+      "source_shard_ids": [
+        "shard-0003"
+      ],
+      "exact_missing_items": [
+        "Puppet Master should normalize overlapping specialty clusters with explicit picker rules and auto-resolution behavior so persona selection is not noisy or arbitrary.",
+        "The UI should not expose a noisy \u201cscored all candidates\u201d explanation by default."
+      ],
+      "stale_tokens": [],
+      "canonical_replacement_hints": [],
+      "canonical_replacement_status": "not_applicable",
+      "blocking_reason": "Coverage row cov-00019 remains partial and requires owner_create_or_rewrite.",
+      "next_resolution_stage": "Reconciliation Worklist Builder"
+    }
+  ],
+  "noise_rows": [],
+  "path_quarantine_violations": [],
+  "subagent_execution": {
+    "required": true,
+    "used": true,
+    "skip_reason": null
+  }
+}
